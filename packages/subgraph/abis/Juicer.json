@@ -324,9 +324,9 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_allowList",
-        "type": "address[]"
+        "internalType": "address",
+        "name": "_contract",
+        "type": "address"
       }
     ],
     "name": "addToMigrationAllowList",

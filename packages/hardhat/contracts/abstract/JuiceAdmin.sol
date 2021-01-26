@@ -36,17 +36,8 @@ abstract contract JuiceAdmin is Ownable {
 
     event WithdrawFees(IERC20 token, uint256 amount, address to);
 
-    constructor(
-        IJuicer _juicer,
-        string memory _name,
-        string memory _symbol,
-        IERC20 _rewardToken,
-        UniswapV2Router02 _router
-    ) internal {
-        _juicer.budgetStore().claimOwnership();
-        _juicer.ticketStore().claimOwnership();
+    constructor(IJuicer _juicer, UniswapV2Router02 _router) internal {
         juicer = _juicer;
-        juicer.issueTickets(_name, _symbol, _rewardToken);
         router = _router;
     }
 

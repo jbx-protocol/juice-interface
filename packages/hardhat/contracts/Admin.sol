@@ -21,8 +21,11 @@ contract Admin is JuiceAdmin {
         IJuicer _juicer,
         UniswapV2Router02 _router,
         IERC20 _rewardToken
-    ) public JuiceAdmin(_juicer, "Juice", "JUICE", _rewardToken, _router) {
-        appointJuicer(_juicer);
+    ) public JuiceAdmin(_juicer, _router) {
+        juicer.budgetStore().claimOwnership();
+        juicer.ticketStore().claimOwnership();
+        appointJuicer(juicer);
+        juicer.issueTickets("Juice", "JUICE", _rewardToken);
     }
 
     /** 

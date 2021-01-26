@@ -11,14 +11,7 @@ contract YourContract is JuiceAdmin {
         IERC20 _want,
         IERC20 _rewardToken,
         UniswapV2Router02 _router
-    )
-        public
-        JuiceAdmin(
-            _controller,
-            "Your Contract",
-            "SYMBOL",
-            _rewardToken,
-            _router
-        )
-    {}
+    ) public JuiceAdmin(_controller, _router) {
+        juicer.issueTickets("Your Contract", "SYMBOL", _rewardToken);
+    }
 }

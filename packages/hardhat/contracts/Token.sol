@@ -3,6 +3,7 @@ pragma solidity >=0.6.0 <0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+// A contract used for local dev as a `want` token.
 contract Token is ERC20 {
     uint256 INITIAL_SUPPLY = 100000;
 

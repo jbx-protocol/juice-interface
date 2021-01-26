@@ -57,7 +57,7 @@ interface ITicketsController {
 
     function mintReservedTickets(address _issuer) external;
 
-    function addToMigrationAllowList(address[] calldata _allowList) external;
+    function addToMigrationAllowList(address _contract) external;
 
     function migrate(address _to) external;
 }

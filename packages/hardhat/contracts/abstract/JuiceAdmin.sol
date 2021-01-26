@@ -31,12 +31,6 @@ abstract contract JuiceAdmin is Ownable {
     /// @notice The Juicer contract that is being used.
     IJuicer public juicer;
 
-    /// @dev The latest proposed Budget configuration.
-    BudgetConfigurationProposal public proposedBudgetReconfiguration;
-
-    /// @dev The deadline for approving the latest Budget configuration proposal.
-    uint256 public proposalDeadline;
-
     /// @dev The router to use to execute swaps.
     UniswapV2Router02 public router;
 
@@ -51,29 +45,13 @@ abstract contract JuiceAdmin is Ownable {
     ) internal {
         _juicer.budgetStore().claimOwnership();
         _juicer.ticketStore().claimOwnership();
-        appointJuicer(_juicer);
-        setJuicer(_juicer);
+        juicer = _juicer;
         juicer.issueTickets(_name, _symbol, _rewardToken);
         router = _router;
     }
 
     /**
-        @notice This allows the contract owner to collect funds from your Budget.
-        @param _budgetId The ID of the Budget to collect funds from.
-        @param _amount The amount to tap into.
-        @param _beneficiary The address to tap funds into.
-    */
-    function tapBudget(
-        uint256 _budgetId,
-        uint256 _amount,
-        address _beneficiary
-    ) external onlyOwner {
-        juicer.tapBudget(_budgetId, _amount, _beneficiary);
-    }
-
-    /**
-        @notice This is how the tapper can propose a reconfiguration to this contract's Budget.
-        @dev The proposed changes will have to be approved by the redeemer.
+        @notice This is how the Budget is configured, and reconfiguration over time.
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
         @param _want The new token that your Budget wants.
@@ -90,7 +68,7 @@ abstract contract JuiceAdmin is Ownable {
         @param _bAddress The address of the beneficiary contract where a specified percentage is allocated.
         @return _budgetId The ID of the Budget that was reconfigured.
     */
-    function proposeBudgetReconfiguration(
+    function configureBudget(
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
@@ -101,54 +79,17 @@ abstract contract JuiceAdmin is Ownable {
         uint256 _b,
         address _bAddress
     ) external onlyOwner returns (uint256) {
-        proposedBudgetReconfiguration.target = _target;
-        proposedBudgetReconfiguration.duration = _duration;
-        proposedBudgetReconfiguration.want = _want;
-        proposedBudgetReconfiguration.brief = _brief;
-        proposedBudgetReconfiguration.link = _link;
-        proposedBudgetReconfiguration.bias = _bias;
-        proposedBudgetReconfiguration.o = _o;
-        proposedBudgetReconfiguration.b = _b;
-        proposedBudgetReconfiguration.bAddress = _bAddress;
-        proposalDeadline = block.timestamp.add(25920);
-    }
-
-    /** 
-        @notice Allows the contract owner to approve a proposed Budget reconfiguration
-        @dev The changes will take effect after your active Budget expires.
-        You may way to override this to create new permissions around who gets to decide
-        the new Budget parameters.
-        @return _budgetId The ID of the reconfigured Budget.
-    */
-    function approveBudgetReconfiguration()
-        external
-        onlyOwner
-        returns (uint256)
-    {
-        require(
-            proposalDeadline > block.timestamp,
-            "Admin::approveBudgetReconfiguration: NO_ACTIVE_PROPOSAL"
-        );
-
-        // Increse the allowance so that Fountain can transfer excess want tokens from this contract's wallet into a Budget.
-        proposedBudgetReconfiguration.want.safeApprove(
-            address(juicer),
-            100000000000000E18
-        );
-
-        proposalDeadline = 0;
-
         return
             juicer.configureBudget(
-                proposedBudgetReconfiguration.target,
-                proposedBudgetReconfiguration.duration,
-                proposedBudgetReconfiguration.want,
-                proposedBudgetReconfiguration.brief,
-                proposedBudgetReconfiguration.link,
-                proposedBudgetReconfiguration.bias,
-                proposedBudgetReconfiguration.o,
-                proposedBudgetReconfiguration.b,
-                proposedBudgetReconfiguration.bAddress
+                _target,
+                _duration,
+                _want,
+                _brief,
+                _link,
+                _bias,
+                _o,
+                _b,
+                _bAddress
             );
     }
 
@@ -196,35 +137,15 @@ abstract contract JuiceAdmin is Ownable {
         _juicer.payOwner(address(this), _amounts[2], _budget.want, _issuer);
     }
 
-    function setJuicer(IJuicer _juicer) public onlyOwner {
-        require(_juicer != IJuicer(0), "JuiceAdmin::setJuicer: ZERO_ADDRESS");
-        juicer = _juicer;
-    }
-
-    function appointJuicer(IJuicer _juicer) public onlyOwner {
-        ITicketStore _ticketStore = _juicer.ticketStore();
-        IBudgetStore _budgetStore = _juicer.budgetStore();
-        _ticketStore.grantRole_(
-            _ticketStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _budgetStore.grantRole_(
-            _budgetStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _juicer.setAdmin(address(this));
-    }
-
-    function deprecateJuicer(IJuicer _juicer) external onlyOwner {
-        IBudgetStore _budgetStore = _juicer.budgetStore();
-        ITicketStore _ticketStore = _juicer.ticketStore();
-        _ticketStore.revokeRole_(
-            _ticketStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _budgetStore.revokeRole_(
-            _budgetStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
+    /** 
+      @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
+      @dev The destination must be in the current Juicer's allow list.
+      @param _to The new contract that will manage your Tickets and it's funds.
+    */
+    function migrate(IJuicer _to) public onlyOwner {
+        require(_to != IJuicer(0), "JuiceAdmin::setJuicer: ZERO_ADDRESS");
+        juicer.migrate(address(_to));
+        // Sets the Juicer that this contract uses.
+        juicer = _to;
     }
 }

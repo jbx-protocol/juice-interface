@@ -715,17 +715,13 @@ contract Juicer is IJuicer {
 
     /**
         @notice Adds to the contract addresses that project owners can migrate their Tickets to.
-        @param _allowList The list of allowed addresses.
+        @param _contract The contract to allow.
     */
-    function addToMigrationAllowList(address[] calldata _allowList)
-        external
-        override
-    {
+    function addToMigrationAllowList(address _contract) external override {
         require(
             msg.sender == admin,
             "Controller::setMigrationAllowList: UNAUTHORIZED"
         );
-        for (uint256 i = 0; i < _allowList.length; i++)
-            migrationContractIsAllowed[_allowList[i]] = true;
+        migrationContractIsAllowed[_contract] = true;
     }
 }

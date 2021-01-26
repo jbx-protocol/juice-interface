@@ -14,7 +14,7 @@ const main = async () => {
   const ticketStore = await deploy("TicketStore");
   const controller = await deploy("Juicer", [budgetStore.address, ticketStore.address, 3, [token.address], "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]); 
   
-  const admin =  await deploy("Admin", [controller.address, "Juice Tickets", "JUICE-TICKETS", token.address, "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]);
+  const admin =  await deploy("Admin", [controller.address, token.address, "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]);
 
   // const exampleToken = await deploy("ExampleToken")
   // const examplePriceOracle = await deploy("ExamplePriceOracle")

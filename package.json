@@ -1,0 +1,74 @@
+{
+  "name": "@fountain.finance/wellhouse",
+  "version": "1.0.0",
+  "keywords": [
+    "ethereum",
+    "react",
+    "uniswap",
+    "workspaces",
+    "yarn"
+  ],
+  "private": true,
+  "scripts": {
+    "app:build": "yarn workspace @fountain.finance/app build --max-old-space-size=12288",
+    "app:build-ae": "yarn app:build && yarn bundle-ae-dist",
+    "bundle-ae-dist": "cd packages/app && rm -rf dist && mkdir dist && cp -R build dist/ && cp app.yaml dist/app.yaml",
+    "app:eject": "yarn workspace @fountain.finance/app eject",
+    "app:test": "yarn workspace @fountain.finance/app test",
+    "start": "yarn workspace @fountain.finance/app start",
+    "chain": "yarn workspace @fountain.finance/hardhat chain",
+    "test": "yarn workspace @fountain.finance/hardhat test",
+    "compile": "yarn workspace @fountain.finance/hardhat compile",
+    "deploy": "yarn workspace @fountain.finance/hardhat deploy && yarn cp-contracts-local",
+    "deploy-ropsten": "yarn workspace @fountain.finance/hardhat deploy-ropsten && yarn cp-contracts-ropsten",
+    "deploy-mainnet": "yarn workspace @fountain.finance/hardhat deploy-mainnet && yarn cp-contracts-mainnet",
+    "cp-contracts-local": "cd packages/app/src/contracts && cp -R temp/ local/ && rm -rf temp",
+    "cp-contracts-ropsten": "cd packages/app/src/contracts && cp -R temp/ ropsten/ && rm -rf temp",
+    "cp-contracts-mainnet": "cd packages/app/src/contracts && cp -R temp/ mainnet/ && rm -rf temp",
+    "watch": "yarn workspace @fountain.finance/hardhat watch",
+    "accounts": "yarn workspace @fountain.finance/hardhat accounts",
+    "balance": "yarn workspace @fountain.finance/hardhat balance",
+    "send": "yarn workspace @fountain.finance/hardhat send",
+    "ipfs": "yarn workspace @fountain.finance/app ipfs",
+    "surge": "yarn workspace @fountain.finance/app surge",
+    "s3": "yarn workspace @fountain.finance/app s3",
+    "ship": "yarn workspace @fountain.finance/app ship",
+    "generate": "cd packages/hardhat && npx hardhat generate",
+    "mine": "cd packages/hardhat && npx hardhat mine",
+    "account": "cd packages/hardhat && npx hardhat account",
+    "wallet": "cd packages/hardhat && npx hardhat wallet",
+    "fundedwallet": "cd packages/hardhat && npx hardhat fundedwallet",
+    "flatten": "cd packages/hardhat && npx hardhat flatten",
+    "graph-run-node": "cd docker/graph-node && docker-compose up",
+    "graph-remove-node": "cd docker/graph-node && docker-compose down",
+    "graph-prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph-codegen": "yarn workspace @fountain.finance/subgraph graph codegen",
+    "graph-build": "yarn workspace @fountain.finance/subgraph graph build",
+    "graph-create-local": "yarn workspace @fountain.finance/subgraph graph create --node http://localhost:8020/ scaffold-eth/your-contract",
+    "graph-remove-local": "yarn workspace @fountain.finance/subgraph graph remove --node http://localhost:8020/ scaffold-eth/your-contract",
+    "graph-deploy-local": "yarn workspace @fountain.finance/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 scaffold-eth/your-contract",
+    "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
+    "deploy-and-graph": "yarn deploy && yarn graph-ship-local"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run compile"
+    }
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.7"
+  },
+  "dependencies": {
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0"
+  }
+}

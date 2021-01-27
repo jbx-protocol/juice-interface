@@ -1,12 +1,12 @@
-const Fountain = artifacts.require("Fountain");
+const Juice = artifacts.require("Juice");
 const truffleAssert = require("truffle-assertions");
 const MockContract = artifacts.require("./MockContract.sol");
 const {
-  assertMoneyPoolCount,
+  assertBudgetCount,
   assertDuration,
   assertSustainabilityTarget,
-  assertConfigureMoneyPoolEvent,
-  assertSustainMoneyPoolEvent,
+  assertConfigureBudgetEvent,
+  assertSustainBudgetEvent,
   assertBalance,
   assertSustainmentAmount,
   assertRedistributionTrackerAmount,
@@ -14,11 +14,11 @@ const {
 } = require("../test-helpers/assertions.js");
 
 // TODO: document owner, creator, sustainer
-// owner: the address that deploys the Fountain contract
-// creator: an address that creates a MoneyPool
-// sustainer: an address that sustains a MoneyPool
-contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
-  let fountain;
+// owner: the address that deploys the Juice contract
+// creator: an address that creates a Budget
+// sustainer: an address that sustains a Budget
+contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
+  let juice;
   // let DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
   let erc20Mock;
 
@@ -27,17 +27,17 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       // Instantiate mock and make it return true for any invocation
       erc20Mock = await MockContract.new();
       await erc20Mock.givenAnyReturnBool(true);
-      // instantiate Fountain with mocked contract
-      fountain = await Fountain.new(erc20Mock.address); // create new instance each test
-      // fountain = await Fountain.deployed(); // reuse same instance each test
+      // instantiate Juice with mocked contract
+      juice = await Juice.new(erc20Mock.address); // create new instance each test
+      // juice = await Juice.deployed(); // reuse same instance each test
     });
 
-    it("initially has no MoneyPools", async () => {
-      assert.equal(await fountain.mpCount(), 0);
+    it("initially has no Budgets", async () => {
+      assert.equal(await juice.mpCount(), 0);
     });
 
     it("stores expected address for DAI", async () => {
-      assert.equal(await fountain.dai(), erc20Mock.address);
+      assert.equal(await juice.dai(), erc20Mock.address);
     });
   });
 
@@ -46,14 +46,14 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       // Instantiate mock and make it return true for any invocation
       erc20Mock = await MockContract.new();
       await erc20Mock.givenAnyReturnBool(true);
-      // instantiate Fountain with mocked contract
-      fountain = await Fountain.new(erc20Mock.address); // create new instance each test
+      // instantiate Juice with mocked contract
+      juice = await Juice.new(erc20Mock.address); // create new instance each test
     });
 
     it("initializes Money pool for an uninitialized address", async () => {
       const target = 100;
       const duration = 30;
-      const result = await fountain.configureMp(
+      const result = await juice.configureMp(
         target,
         duration,
         erc20Mock.address,
@@ -62,20 +62,20 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
         }
       );
       await assertSustainabilityTarget(
-        fountain,
+        juice,
         creator,
         target,
         "Invalid sustainability target"
       );
-      await assertDuration(fountain, creator, duration, "Invalid duration");
-      await assertMoneyPoolCount(
-        fountain,
+      await assertDuration(juice, creator, duration, "Invalid duration");
+      await assertBudgetCount(
+        juice,
         1,
         "Only one Money pool should exist"
       );
-      await assertConfigureMoneyPoolEvent(
+      await assertConfigureBudgetEvent(
         result, 
-        fountain, 
+        juice, 
         creator, 
         target, 
         duration, 
@@ -93,9 +93,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       // Instantiate mock and make it return true for any invocation
       erc20Mock = await MockContract.new();
       await erc20Mock.givenAnyReturnBool(true);
-      // instantiate Fountain with mocked contract
-      fountain = await Fountain.new(erc20Mock.address); // create new instance each test
-      await fountain.configureMp(
+      // instantiate Juice with mocked contract
+      juice = await Juice.new(erc20Mock.address); // create new instance each test
+      await juice.configureMp(
         initialTarget,
         initialDuration,
         erc20Mock.address,
@@ -105,21 +105,21 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       );
     });
 
-    it("configures existing MoneyPool", async () => {
+    it("configures existing Budget", async () => {
       const target = 200;
       const duration = 50;
-      const result = await fountain.configureMp(
+      const result = await juice.configureMp(
         target,
         duration,
         erc20Mock.address,
         {
-          // Using address that has already created a MoneyPool
+          // Using address that has already created a Budget
           from: creator,
         }
       );
-      await assertConfigureMoneyPoolEvent(
+      await assertConfigureBudgetEvent(
         result, 
-        fountain, 
+        juice, 
         creator, 
         target, 
         duration, 
@@ -127,14 +127,14 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
         "Invalid ConfigureMp event"
       );
       await assertSustainabilityTarget(
-        fountain,
+        juice,
         creator,
         target,
         "Invalid sustainability target"
       );
-      await assertDuration(fountain, creator, duration, "Invalid duration");
-      await assertMoneyPoolCount(
-        fountain,
+      await assertDuration(juice, creator, duration, "Invalid duration");
+      await assertBudgetCount(
+        juice,
         1,
         "Only one Money pool should exist"
       );
@@ -149,9 +149,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       // Instantiate mock and make it return true for any invocation
       erc20Mock = await MockContract.new();
       await erc20Mock.givenAnyReturnBool(true);
-      // instantiate Fountain with mocked contract
-      fountain = await Fountain.new(erc20Mock.address); // create new instance each test
-      await fountain.configureMp(
+      // instantiate Juice with mocked contract
+      juice = await Juice.new(erc20Mock.address); // create new instance each test
+      await juice.configureMp(
         initialTarget,
         initialDuration,
         erc20Mock.address,
@@ -161,9 +161,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       );
     });
 
-    // when there is an active money pool (tests getActiveMoneyPoolId)
-    // when there is no active money pool but there is a upcoming money pool (tests getUpcomingMoneyPoolId)
-    // when there is no upcoming money pool and the latest pool is cloned (tests createMoneyPoolFromId)
+    // when there is an active money pool (tests getActiveBudgetId)
+    // when there is no active money pool but there is a upcoming money pool (tests getUpcomingBudgetId)
+    // when there is no upcoming money pool and the latest pool is cloned (tests createBudgetFromId)
 
     const scenarios = [
       {
@@ -210,13 +210,13 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
 
     scenarios.forEach((scenario) => {
       it(`sustains existing money pool when ${scenario.description}`, async () => {
-        const result = await fountain.sustain(creator, scenario.amount, scenario.beneficiary, {
-          // Using address that did not create the MoneyPool
+        const result = await juice.sustain(creator, scenario.amount, scenario.beneficiary, {
+          // Using address that did not create the Budget
           from: sustainer,
         });
-        await assertSustainMoneyPoolEvent(
+        await assertSustainBudgetEvent(
           result, 
-          fountain, 
+          juice, 
           creator,
           scenario.beneficiary,
           sustainer, 
@@ -224,27 +224,27 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
           "Invalid SustainMp event"
         );
         await assertBalance(
-          fountain,
+          juice,
           creator,
           scenario.expectedCurrentSustainment,
           "Invalid currentSustainment"
         );
         await assertSustainmentAmount(
-          fountain,
+          juice,
           creator,
           scenario.beneficiary,
           scenario.expectedSustainmentAmount,
           "Invalid sustainment amount"
         );
         await assertRedistributionTrackerAmount(
-          fountain,
+          juice,
           creator,
           scenario.beneficiary,
           scenario.expectedRedistributionTrackerAmount,
           "Invalid redistributionTracker amount"
         );
         await assertSustainabilityPoolAmount(
-          fountain,
+          juice,
           creator,
           scenario.expectedSustainabilityPoolAmount,
           "Invalid sustainabilityPool amount"
@@ -255,21 +255,21 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
     it("fails when sustainment amount is not a positive amount", async () => {
       const amount = 0;
       await truffleAssert.fails(
-        // Using "creator" address which has a moneyPool
-        fountain.sustain(creator, amount, sustainer, {
-          // Using address that did not create the MoneyPool
+        // Using "creator" address which has a budget
+        juice.sustain(creator, amount, sustainer, {
+          // Using address that did not create the Budget
           from: sustainer,
         }),
         truffleAssert.ErrorType.REVERT
       );
     });
 
-    it("fails when no moneyPool found at address", async () => {
+    it("fails when no budget found at address", async () => {
       const amount = 10;
       await truffleAssert.fails(
-        // Using "owner" address which does not have a moneyPool
-        fountain.sustain(owner, amount, sustainer, {
-          // Using address that did not create the MoneyPool
+        // Using "owner" address which does not have a budget
+        juice.sustain(owner, amount, sustainer, {
+          // Using address that did not create the Budget
           from: sustainer,
         }),
         truffleAssert.ErrorType.REVERT
@@ -289,9 +289,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
   //     // Instantiate mock and make it return false for any invocation
   //     erc20Mock = await MockContract.new();
   //     await erc20Mock.givenAnyReturnBool(false);
-  //     // instantiate Fountain with mocked contract
-  //     fountain = await Fountain.new(erc20Mock.address); // create new instance each test
-  //     await fountain.configureMp(
+  //     // instantiate Juice with mocked contract
+  //     juice = await Juice.new(erc20Mock.address); // create new instance each test
+  //     await juice.configureMp(
   //       initialTarget,
   //       initialDuration,
   //       erc20Mock.address,
@@ -304,9 +304,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
   //   it("sustain fails when ERC20.transferFrom fails", async () => {
   //     const amount = 10;
   //     await truffleAssert.fails(
-  //       // Using "creator" address which has a moneyPool
-  //       fountain.sustain(creator, amount, sustainer, {
-  //         // Using address that did not create the MoneyPool
+  //       // Using "creator" address which has a budget
+  //       juice.sustain(creator, amount, sustainer, {
+  //         // Using address that did not create the Budget
   //         from: sustainer,
   //       }),
   //       truffleAssert.ErrorType.REVERT
@@ -322,9 +322,9 @@ contract("Fountain", ([owner, creator, sustainer, beneficiary]) => {
       // Instantiate mock and make it return false for any invocation
       erc20Mock = await MockContract.new();
       await erc20Mock.givenAnyReturnBool(true);
-      // instantiate Fountain with mocked contract
-      fountain = await Fountain.new(erc20Mock.address); // create new instance each test
-      await fountain.configureMp(
+      // instantiate Juice with mocked contract
+      juice = await Juice.new(erc20Mock.address); // create new instance each test
+      await juice.configureMp(
         initialTarget,
         initialDuration,
         erc20Mock.address,

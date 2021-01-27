@@ -97,7 +97,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "_mp",
         "type": "tuple"
       }
@@ -203,7 +203,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "_mp",
         "type": "tuple"
       }
@@ -392,7 +392,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
       }
@@ -518,7 +518,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
       }
@@ -644,7 +644,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
       }
@@ -763,7 +763,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "_mp",
         "type": "tuple"
       }
@@ -869,7 +869,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
       }
@@ -975,7 +975,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
       }
@@ -1188,7 +1188,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct MoneyPool.Data",
+        "internalType": "struct Budget.Data",
         "name": "_mp",
         "type": "tuple"
       }

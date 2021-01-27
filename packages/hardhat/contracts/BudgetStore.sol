@@ -229,7 +229,7 @@ contract BudgetStore is Store, IBudgetStore {
         onlyAdmin
         returns (Budget.Data memory _budget)
     {
-        // Cannot update active moneyPool, check if there is a standby moneyPool
+        // Cannot update active budget, check if there is a standby budget
         _budget = _standbyBudget(_owner);
         if (_budget.id > 0) return _budget;
         _budget = budgets[latestBudgetId[_owner]];

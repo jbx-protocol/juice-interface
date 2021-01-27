@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Gimme from './components/Gimme'
-import MoneyPools from './components/Owner'
+import Budgets from './components/Owner'
 import Owner from './components/Navbar'
 import { localProvider } from './constants/local-provider'
 import { web3Modal } from './constants/web3-modal'
@@ -14,7 +14,7 @@ import { createTransactor } from './helpers/Transactor'
 import { useContractLoader } from './hooks/ContractLoader'
 import { useGasPrice } from './hooks/GasPrice'
 import { useUserProvider } from './hooks/UserProvider'
-import MoneyPoolsHistory from './components/MoneyPoolsHistory'
+import BudgetsHistory from './components/BudgetsHistory'
 import InitTickets from './components/InitTickets'
 
 function App() {
@@ -66,10 +66,10 @@ function App() {
               <Gimme contracts={contracts} transactor={transactor} address={address}></Gimme>
             </Route>
             <Route exact path="/:owner">
-              <MoneyPools contracts={contracts} transactor={transactor} address={address} />
+              <Budgets contracts={contracts} transactor={transactor} address={address} />
             </Route>
             <Route exact path="/history/:number">
-              <MoneyPoolsHistory contracts={contracts} transactor={transactor} address={address} />
+              <BudgetsHistory contracts={contracts} transactor={transactor} address={address} />
             </Route>
           </Switch>
         </BrowserRouter>

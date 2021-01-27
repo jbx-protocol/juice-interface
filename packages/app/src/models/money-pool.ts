@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-export interface MoneyPool {
+export interface Budget {
   id: BigNumber
   owner: string
   previous: BigNumber

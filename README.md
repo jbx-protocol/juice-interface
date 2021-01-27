@@ -1,6 +1,6 @@
-# ⛲️ fountain.finance
+# ⛲️ jucie.work
 
-[fountain.finance](https://fountain.finance)
+[juice.work](https://juice.work)
 
 Built with [🏗 scaffold-eth](https://github.com/austintgriffith/scaffold-eth)
 
@@ -27,6 +27,7 @@ yarn chain
 ```bash
 yarn deploy
 ```
+
 > in a third terminal window, start the app and open http://localhost:3000 to view it
 
 ```bash
@@ -34,7 +35,6 @@ yarn start
 ```
 
 🔑 Create wallets links to your app with `yarn wallet` (empty) or `yarn fundedwallet` (pre-loaded with ETH)
-
 
 🔧 Configure 👷[HardHat](https://hardhat.org/config/) by editing `hardhat.config.js` in `packages/hardhat`
 
@@ -49,6 +49,7 @@ Contracts are located in `packages/hardhat/contracts`
 Each time contracts are deployed, artifacts are copied to `packages/app/src/contracts` where they're used by the frontend.
 
 By default, the frontend reads from a local blockchain. To use a public blockchain:
+
 - deploy contracts to that chain
 - edit `packages/app/.env` variable `REACT_APP_DEV_NETWORK` (i.e. `REACT_APP_DEV_NETWORK=ropsten`)
 - `yarn start` to start frontend using artifacts from latest deployment
@@ -81,6 +82,7 @@ Create new `packages/app/.env`, reference `packages/app/.example.env`
 REACT_APP_INFURA_ID=
 REACT_APP_DEV_NETWORK=
 ```
+
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
 
 `REACT_APP_DEV_NETWORK`: (options: `local`, `ropsten`, `mainnet`) network used by frontend during development. Requires contract artifacts to be present in `packages/app/src/contracts/<network-name>` which are generated after a deployment to that network.
@@ -101,7 +103,8 @@ The frontend has three different providers that provide different levels of acce
 
 ## Deploying frontend
 
-Deployment is managed via a CI workflow defined in `.github/workflows/main.yaml`, which runs for all commits to the `main` branch and depends on github secrets `GCP_PROD_SA_KEY` and `INFURA_ID`. 
+Deployment is managed via a CI workflow defined in `.github/workflows/main.yaml`, which runs for all commits to the `main` branch and depends on github secrets `GCP_PROD_SA_KEY` and `INFURA_ID`.
 
-The react app is packaged and published to the (fountain.finance/web-production Google Cloud App Engine)[https://console.cloud.google.com/appengine?project=web-production-294102&serviceId=default]. Once new versions have been published, they must be manually promoted in App Engine before they become live.# juicehouse
+The react app is packaged and published to the (juice.work/web-production Google Cloud App Engine)[https://console.cloud.google.com/appengine?project=web-production-294102&serviceId=default]. Once new versions have been published, they must be manually promoted in App Engine before they become live.# juicehouse
+
 # juicehouse

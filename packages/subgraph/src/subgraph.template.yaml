@@ -3,11 +3,11 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Fountain
+    name: Juice
     network: localhost
     source:
-      address: "{{FountainAddress}}"
-      abi: Fountain
+      address: "{{JuiceAddress}}"
+      abi: Juice
       startBlock: 1
     mapping:
       kind: ethereum/events
@@ -17,8 +17,8 @@ dataSources:
         - Purpose
         - Sender
       abis:
-        - name: Fountain
-          file: ./abis/Fountain.json
+        - name: Juice
+          file: ./abis/Juice.json
       eventHandlers:
         - event: SetPurpose(address,string)
           handler: handleSetPurpose

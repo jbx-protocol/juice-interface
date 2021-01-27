@@ -6,11 +6,11 @@ import { daiAddress } from '../constants/dai-address'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
-import { MoneyPool } from '../models/money-pool'
+import { Budget } from '../models/money-pool'
 import { Transactor } from '../models/transactor'
 import KeyValRow from './KeyValRow'
 
-export default function MoneyPoolDetail({
+export default function BudgetDetail({
   mp,
   contracts,
   transactor,
@@ -18,7 +18,7 @@ export default function MoneyPoolDetail({
   showTimeLeft,
   address,
 }: {
-  mp?: MoneyPool
+  mp?: Budget
   contracts?: Contracts
   transactor?: Transactor
   showSustained?: boolean

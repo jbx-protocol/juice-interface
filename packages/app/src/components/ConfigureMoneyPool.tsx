@@ -7,7 +7,7 @@ import { Transactor } from '../models/transactor'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import KeyValRow from './KeyValRow'
 
-export default function ConfigureMoneyPool({
+export default function ConfigureBudget({
   transactor,
   contracts,
 }: {

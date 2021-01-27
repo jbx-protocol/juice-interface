@@ -9,11 +9,11 @@ import useContractReader from '../hooks/ContractReader'
 import useEventListener from '../hooks/EventListener'
 import { Contracts } from '../models/contracts'
 import { SustainEvent } from '../models/events/sustain-event'
-import { MoneyPool } from '../models/money-pool'
+import { Budget } from '../models/money-pool'
 import { Transactor } from '../models/transactor'
-import ConfigureMoneyPool from './ConfigureMoneyPool'
+import ConfigureBudget from './ConfigureBudget'
 import KeyValRow from './KeyValRow'
-import MoneyPoolDetail from './MoneyPoolDetail'
+import BudgetDetail from './BudgetDetail'
 import TicketsBalance from './TicketsBalance'
 
 export default function Owner({
@@ -33,13 +33,13 @@ export default function Owner({
 
   const isOwner = owner === address
 
-  const currentMp = useContractReader<MoneyPool>({
+  const currentMp = useContractReader<Budget>({
     contract: contracts?.MpStore,
     functionName: 'getCurrentMp',
     args: [owner],
   })
 
-  const queuedMp = useContractReader<MoneyPool>({
+  const queuedMp = useContractReader<Budget>({
     contract: contracts?.MpStore,
     functionName: 'getQueuedMp',
     args: [owner],
@@ -76,7 +76,7 @@ export default function Owner({
     )
   }
 
-  const configureMoneyPool = <ConfigureMoneyPool transactor={transactor} contracts={contracts} />
+  const configureBudget = <ConfigureBudget transactor={transactor} contracts={contracts} />
 
   function header(text: string) {
     return (
@@ -144,7 +144,7 @@ export default function Owner({
         {header('Current money pool')}
 
         {currentMp ? (
-          <MoneyPoolDetail
+          <BudgetDetail
             address={address}
             mp={currentMp}
             showSustained={true}
@@ -228,7 +228,7 @@ export default function Owner({
             current ?? (
               <div>
                 <h1 style={{ marginTop: 0 }}>Create money pool</h1>
-                {configureMoneyPool}
+                {configureBudget}
               </div>
             ),
           )}
@@ -243,7 +243,7 @@ export default function Owner({
                 }}
               >
                 {header('Queued Money Pool')}
-                {queuedMp ? <MoneyPoolDetail mp={queuedMp} /> : <div>Nada</div>}
+                {queuedMp ? <BudgetDetail mp={queuedMp} /> : <div>Nada</div>}
               </div>
             ) : (
               undefined
@@ -254,7 +254,7 @@ export default function Owner({
             currentMp && isOwner ? (
               <div>
                 {header('Reconfigure')}
-                {configureMoneyPool}
+                {configureBudget}
               </div>
             ) : (
               undefined

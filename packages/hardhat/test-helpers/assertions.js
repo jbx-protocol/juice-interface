@@ -1,6 +1,6 @@
 const truffleAssert = require("truffle-assertions");
 
-exports.assertMoneyPoolCount = async (instance, count, message) => {
+exports.assertBudgetCount = async (instance, count, message) => {
   const currentCount = (await instance.mpCount()).toNumber();
   assert.equal(currentCount, count, message);
 };
@@ -28,7 +28,7 @@ exports.assertSustainabilityTarget = async (
   assert.equal(currentTarget, target, message);
 };
 
-exports.assertConfigureMoneyPoolEvent = async (
+exports.assertConfigureBudgetEvent = async (
   tx,
   instance,
   creator, 
@@ -49,7 +49,7 @@ exports.assertConfigureMoneyPoolEvent = async (
   }, message);
 };
 
-exports.assertSustainMoneyPoolEvent = async (
+exports.assertSustainBudgetEvent = async (
   tx,
   instance,
   creator,

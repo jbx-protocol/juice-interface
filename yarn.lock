@@ -1622,7 +1622,7 @@
     "@ethersproject/properties" "^5.0.3"
     "@ethersproject/strings" "^5.0.4"
 
-"@fountain.finance/app@file:/Users/joao/wellhouse/packages/app":
+"@juice.work/app@file:/Users/joao/wellhouse/packages/app":
   "resolved" "file:packages/app"
   "version" "0.1.0"
   dependencies:
@@ -1644,7 +1644,7 @@
     "web3" "^1.3.1"
     "web3modal" "^1.9.2"
 
-"@fountain.finance/hardhat@file:/Users/joao/wellhouse/packages/hardhat":
+"@juice.work/hardhat@file:/Users/joao/wellhouse/packages/hardhat":
   "resolved" "file:packages/hardhat"
   "version" "1.0.0"
   dependencies:
@@ -1660,7 +1660,7 @@
     "qrcode-terminal" "^0.12.0"
     "ramda" "^0.27.1"
 
-"@fountain.finance/subgraph@file:/Users/joao/wellhouse/packages/subgraph":
+"@juice.work/subgraph@file:/Users/joao/wellhouse/packages/subgraph":
   "resolved" "file:packages/subgraph"
   "version" "1.0.0"
   dependencies:

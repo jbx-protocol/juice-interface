@@ -108,7 +108,7 @@ abstract contract JuiceAdmin is Ownable {
 
         require(
             _rewardToken.approve(address(router), _amount),
-            "MoneyPoolAdmin::redeemTickets: APPROVE_FAILED."
+            "BudgetAdmin::redeemTickets: APPROVE_FAILED."
         );
 
         address[] memory path = new address[](2);

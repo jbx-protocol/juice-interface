@@ -23,7 +23,7 @@ export default function Navbar({
     >
       <span style={{ display: 'grid', gridAutoFlow: 'column', columnGap: 20, alignItems: 'center' }}>
         <a style={{ fontSize: 24 }} href="/">
-          ⛲️
+          🧃⚡️
         </a>
       </span>
       <Account userProvider={userProvider} loadWeb3Modal={onConnectWallet} address={address} />

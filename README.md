@@ -1,4 +1,4 @@
-# 🧃⚡️ jucie.work
+# 🧃⚡️ juice.work
 
 [juice.work](https://juice.work)
 

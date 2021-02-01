@@ -51,7 +51,7 @@ contract Juicer is IJuicer {
     /// @dev Limit sustain, redeem, swap, and tap to being called one at a time.
     uint256 private unlocked = 1;
     modifier lock() {
-        require(unlocked == 1, "Controller: LOCKED");
+        require(unlocked == 1, "Juicer: LOCKED");
         unlocked = 0;
         _;
         unlocked = 1;
@@ -109,7 +109,7 @@ contract Juicer is IJuicer {
         // If the owner doesn't have tickets, throw.
         require(
             _tickets != ITickets(0),
-            "Controller::mintReservedTickets: NOT_FOUND"
+            "Juicer::getReservedTickets: NOT_FOUND"
         );
 
         // Get a reference to the owner's latest Budget.
@@ -190,7 +190,7 @@ contract Juicer is IJuicer {
         // An owner only needs to issue their Tickets once before they can be used.
         require(
             ticketStore.tickets(msg.sender) == ITickets(0),
-            "Controller::issueTickets: ALREADY_ISSUED"
+            "Juicer::issueTickets: ALREADY_ISSUED"
         );
 
         // Save the created Tickets contract in the store.
@@ -238,22 +238,22 @@ contract Juicer is IJuicer {
         // The `want` token must be supported.
         require(
             wantTokenIsAllowed[_want],
-            "Controller::configureBudget: UNSUPPORTED_WANT"
+            "Juicer::configureBudget: UNSUPPORTED_WANT"
         );
         // The `bias` token must be between 95 and 100.
         require(
             _bias >= 95 && _bias <= 100,
-            "Controller:configureBudget: BAD_BIAS"
+            "Juicer:configureBudget: BAD_BIAS"
         );
         // If the beneficiary reserve percentage is greater than 0, an address must be provided.
         require(
             _b == 0 || _bAddress != address(0),
-            "Controller::configureBudget: BAD_ADDRESS"
+            "Juicer::configureBudget: BAD_ADDRESS"
         );
         // The reserved percentages must add up to less than or equal to 100.
         require(
             _o.add(_b).add(fee) <= 100,
-            "Controller::configureBudget: BAD_PERCENTAGES"
+            "Juicer::configureBudget: BAD_PERCENTAGES"
         );
 
         // Get a reference to the owner's Tickets.
@@ -262,7 +262,7 @@ contract Juicer is IJuicer {
         // Make sure the owner has already issued Tickets.
         require(
             _tickets != ITickets(0),
-            "Controller::configureBudget: NEEDS_INITIALIZATION"
+            "Juicer::configureBudget: NEEDS_INITIALIZATION"
         );
 
         // Return's the owner's editable budget. Creates one if one doesn't already exists.
@@ -324,7 +324,7 @@ contract Juicer is IJuicer {
         address _beneficiary
     ) external override lock returns (uint256) {
         // Positive contributions only.
-        require(_amount > 0, "Controller::sustainOwner: BAD_AMOUNT");
+        require(_amount > 0, "Juicer::sustainOwner: BAD_AMOUNT");
 
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
@@ -333,7 +333,7 @@ contract Juicer is IJuicer {
         // Make sure the token being contributed matches the Budget's `want` token.
         require(
             _token == _budget.want,
-            "Controller::sustainOwner: UNEXPECTED_WANT"
+            "Juicer::sustainOwner: UNEXPECTED_WANT"
         );
 
         // Add the amount to the Budget.
@@ -390,10 +390,7 @@ contract Juicer is IJuicer {
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        _tickets.mint(
-            _beneficiary,
-            _budget._weighted(_amount, _budget._unreserved(fee))
-        );
+        _tickets.mint(_beneficiary, _budget._weighted(_amount));
 
         emit SustainBudget(
             _budget.id,
@@ -494,7 +491,7 @@ contract Juicer is IJuicer {
         // The amount being claimed must be less than the amount claimable.
         require(
             _minRewardAmount >= _claimableRewardsAmount,
-            "Controller::redeem: INSUFFICIENT_FUNDS"
+            "Juicer::redeem: INSUFFICIENT_FUNDS"
         );
 
         // Burn the redeemed tickets.
@@ -528,15 +525,12 @@ contract Juicer is IJuicer {
         Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
 
         // Only a Budget owner can tap its funds.
-        require(
-            _budget.owner == msg.sender,
-            "Controller::tapBudget: UNAUTHORIZED"
-        );
+        require(_budget.owner == msg.sender, "Juicer::tapBudget: UNAUTHORIZED");
 
         // The amount being tapped must be less than the tappable amount.
         require(
             _amount <= _budget._tappableAmount(),
-            "Controller::tapBudget: INSUFFICIENT_FUNDS"
+            "Juicer::tapBudget: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the Budget's tapped amount.
@@ -563,15 +557,12 @@ contract Juicer is IJuicer {
         @dev This logic should be the same as mintReservedTickets.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
     */
-    function mintReservedTickets(address _issuer) external override {
+    function claim(address _issuer) external override {
         // Get a reference to the owner's tickets.
         ITickets _tickets = ticketStore.tickets(_issuer);
 
         // If the owner doesn't have tickets, throw.
-        require(
-            _tickets != ITickets(0),
-            "Controller::mintReservedTickets: NOT_FOUND"
-        );
+        require(_tickets != ITickets(0), "Juicer::claim: NOT_FOUND");
 
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
@@ -662,17 +653,14 @@ contract Juicer is IJuicer {
     function migrate(address _to) external override {
         require(
             migrationContractIsAllowed[_to],
-            "Controller:migrateTickets: BAD_DESTINATION"
+            "Juicer:migrateTickets: BAD_DESTINATION"
         );
 
         // Get a reference to the owner's Tickets.
         ITickets _tickets = ticketStore.tickets(msg.sender);
 
         // The owner must have issued Tickets.
-        require(
-            _tickets != ITickets(0),
-            "Controller::migrateTickets: NOT_FOUND"
-        );
+        require(_tickets != ITickets(0), "Juicer::migrateTickets: NOT_FOUND");
 
         // Give the new owner admin privileges.
         _tickets.grantRole_(_tickets.DEFAULT_ADMIN_ROLE_(), _to);
@@ -709,7 +697,7 @@ contract Juicer is IJuicer {
         @param _admin The admin to set.
     */
     function setAdmin(address _admin) external override {
-        require(admin == address(0), "Controller::setAdmin: ALREADY_SET");
+        require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
         admin = _admin;
     }
 
@@ -720,7 +708,7 @@ contract Juicer is IJuicer {
     function addToMigrationAllowList(address _contract) external override {
         require(
             msg.sender == admin,
-            "Controller::setMigrationAllowList: UNAUTHORIZED"
+            "Juicer::setMigrationAllowList: UNAUTHORIZED"
         );
         migrationContractIsAllowed[_contract] = true;
     }

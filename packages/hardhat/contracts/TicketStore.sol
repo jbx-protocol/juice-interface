@@ -103,6 +103,8 @@ contract TicketStore is Store, ITicketStore {
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
+        // Bonding curve depending on how much is left. This would give holders a slight advantage.
+
         return
             claimable[_issuer][_tickets.rewardToken()].mul(_amount).div(
                 _totalSupply

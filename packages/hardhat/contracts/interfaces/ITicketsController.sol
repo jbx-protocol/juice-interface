@@ -11,7 +11,12 @@ interface ITicketsController {
         IERC20 rewardToken
     );
 
-    event Redeem(address indexed holder, address beneficiary, uint256 amount);
+    event Redeem(
+        address indexed holder,
+        address beneficiary,
+        uint256 redeemedAmount,
+        uint256 rewardAmount
+    );
 
     event Migrate(address indexed to);
 

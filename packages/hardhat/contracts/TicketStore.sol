@@ -86,12 +86,16 @@ contract TicketStore is Store, ITicketStore {
         @param _amount The amount of Tickets being redeemed for rewards.
         Must be within the holder's balance.
         @param _issuer The issuer of the Tickets to get an amount for.
+        @param _proportion The proportion of the hodler's rewards to make claimable. Out of 1000.
+        This creates an opportunity for incenvizing HODLing.
+        If the specified `_holder` is the last holder, the proportion will fall back to 1000.
         @return _rewardAmount The amount of rewards redeemable.
     */
     function getClaimableRewardsAmount(
         address _holder,
         uint256 _amount,
-        address _issuer
+        address _issuer,
+        uint256 _proportion
     ) external view override returns (uint256) {
         ITickets _tickets = tickets[_issuer];
         uint256 _totalSupply = _tickets.totalSupply();
@@ -106,9 +110,11 @@ contract TicketStore is Store, ITicketStore {
         // Bonding curve depending on how much is left. This would give holders a slight advantage.
 
         return
-            claimable[_issuer][_tickets.rewardToken()].mul(_amount).div(
-                _totalSupply
-            );
+            claimable[_issuer][_tickets.rewardToken()]
+                .mul(_amount)
+                .div(_totalSupply)
+                .mul(_amount < _totalSupply ? _proportion : 1000)
+                .div(1000);
     }
 
     /**

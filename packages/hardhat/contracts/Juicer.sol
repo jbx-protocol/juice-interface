@@ -485,9 +485,14 @@ contract Juicer is IJuicer {
         _rewardToken = _tickets.rewardToken();
 
         // The amount of reward tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
-        // Multiply by the active proportion of the golden ratio. This incentizes hodling tickets.
+        // Multiply by the active proportion of the golden ratio. This incentizes HODLing tickets.
         uint256 _adjustedClaimableRewardsAmount =
-            ticketStore.getClaimableRewardsAmount(msg.sender, _amount, _issuer).mul(382).div(1000);
+            ticketStore.getClaimableRewardsAmount(
+                msg.sender,
+                _amount,
+                _issuer,
+                382
+            );
 
         // The amount being claimed must be less than the amount claimable.
         require(
@@ -511,7 +516,12 @@ contract Juicer is IJuicer {
             _adjustedClaimableRewardsAmount
         );
 
-        emit Redeem(msg.sender, _beneficiary, _amount);
+        emit Redeem(
+            msg.sender,
+            _beneficiary,
+            _amount,
+            _adjustedClaimableRewardsAmount
+        );
     }
 
     /**

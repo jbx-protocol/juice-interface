@@ -24,7 +24,8 @@ interface ITicketStore is IStore {
     function getClaimableRewardsAmount(
         address _holder,
         uint256 _amount,
-        address _issuer
+        address _issuer,
+        uint256 _proportion
     ) external view returns (uint256);
 
     function getTicketValue(address _issuer) external view returns (uint256);

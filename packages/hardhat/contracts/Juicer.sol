@@ -389,7 +389,7 @@ contract Juicer is IJuicer {
             );
         }
 
-        // Mint the appropriate amount of tickets and for the contributor.
+        // Mint the appropriate amount of tickets for the contributor.
         _tickets.mint(
             _beneficiary,
             _budget._weighted(_amount, _budget._unreserved(fee))

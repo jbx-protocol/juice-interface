@@ -11,8 +11,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./../interfaces/IJuicer.sol";
 import "./../interfaces/ITickets.sol";
+import "./JuiceBeneficiary.sol";
 
-abstract contract JuiceAdmin is Ownable {
+abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -85,7 +86,7 @@ abstract contract JuiceAdmin is Ownable {
     }
 
     /** 
-      @notice Redeem tickets that have been transfered to this contract.
+      @notice Redeem tickets that have been transfered to this contract and use it to fund this contract's budget.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount being redeemed.
       @param _minRewardAmount The minimum amount of rewards tokens expected in return.
@@ -93,7 +94,7 @@ abstract contract JuiceAdmin is Ownable {
              swapped to from the redeemed reward.
       @param _juicer The Juicer to redeem from.
     */
-    function redeemTickets(
+    function redeemTicketsAndFund(
         address _issuer,
         uint256 _amount,
         uint256 _minRewardAmount,
@@ -101,7 +102,7 @@ abstract contract JuiceAdmin is Ownable {
         IJuicer _juicer
     ) external {
         IERC20 _rewardToken =
-            _juicer.redeem(_issuer, _amount, _minRewardAmount, address(this));
+            _redeemTickets(_issuer, _amount, _minRewardAmount);
 
         Budget.Data memory _budget =
             _juicer.budgetStore().getCurrentBudget(address(this));

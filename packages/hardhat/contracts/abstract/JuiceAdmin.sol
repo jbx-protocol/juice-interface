@@ -114,7 +114,8 @@ abstract contract JuiceAdmin is Ownable {
         address[] memory path = new address[](2);
         path[0] = address(_rewardToken);
         path[1] = router.WETH();
-        path[2] = address(_budget.want);
+        // Add the destination of the route if it isn't WETH.
+        if (_budget.want != router.WETH()) path[2] = address(_budget.want);
         uint256[] memory _amounts =
             router.swapExactTokensForTokens(
                 _amount,
@@ -125,7 +126,12 @@ abstract contract JuiceAdmin is Ownable {
             );
 
         // Surplus goes back to the issuer.
-        _juicer.payOwner(address(this), _amounts[2], _budget.want, _issuer);
+        _juicer.payOwner(
+            address(this),
+            _amounts[_amounts - 1],
+            _budget.want,
+            _issuer
+        );
     }
 
     /** 

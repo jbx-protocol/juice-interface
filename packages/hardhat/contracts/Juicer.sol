@@ -68,19 +68,19 @@ contract Juicer is IJuicer {
     // --- public properties --- //
 
     /// @notice The admin of the contract who makes admin fees.
-    address public admin;
+    address public immutable admin;
 
     /// @notice The contract storing all Budget state variables.
-    IBudgetStore public override budgetStore;
+    IBudgetStore public immutable override budgetStore;
 
     /// @notice The contract that manages the Tickets.
-    ITicketStore public override ticketStore;
+    ITicketStore public immutable override ticketStore;
 
     /// @notice The percent fee the contract owner takes from overflow.
-    uint256 public fee;
+    uint256 public immutable fee;
 
     /// @notice The router that does the swaps.
-    UniswapV2Router02 public router;
+    UniswapV2Router02 public immutable router;
 
     // --- public views --- //
 

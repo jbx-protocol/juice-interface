@@ -102,7 +102,7 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         IJuicer _juicer
     ) external {
         IERC20 _rewardToken =
-            _redeemTickets(_issuer, _amount, _minRewardAmount);
+            redeemTickets(_issuer, _amount, _minRewardAmount, _juicer);
 
         Budget.Data memory _budget =
             _juicer.budgetStore().getCurrentBudget(address(this));
@@ -116,7 +116,8 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         path[0] = address(_rewardToken);
         path[1] = router.WETH();
         // Add the destination of the route if it isn't WETH.
-        if (_budget.want != router.WETH()) path[2] = address(_budget.want);
+        if (address(_budget.want) != router.WETH())
+            path[2] = address(_budget.want);
         uint256[] memory _amounts =
             router.swapExactTokensForTokens(
                 _amount,
@@ -129,7 +130,7 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         // Surplus goes back to the issuer.
         _juicer.payOwner(
             address(this),
-            _amounts[_amounts - 1],
+            _amounts[_amounts.length - 1],
             _budget.want,
             _issuer
         );

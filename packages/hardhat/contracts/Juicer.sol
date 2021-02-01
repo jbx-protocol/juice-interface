@@ -68,7 +68,7 @@ contract Juicer is IJuicer {
     // --- public properties --- //
 
     /// @notice The admin of the contract who makes admin fees.
-    address public immutable admin;
+    address public admin;
 
     /// @notice The contract storing all Budget state variables.
     IBudgetStore public immutable override budgetStore;
@@ -390,7 +390,10 @@ contract Juicer is IJuicer {
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        _tickets.mint(_beneficiary, _budget._weighted(_amount));
+        _tickets.mint(
+            _beneficiary,
+            _budget._weighted(_amount, _budget._unreserved(fee))
+        );
 
         emit SustainBudget(
             _budget.id,
@@ -571,7 +574,7 @@ contract Juicer is IJuicer {
         @dev This logic should be the same as mintReservedTickets.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
     */
-    function claim(address _issuer) external override {
+    function mintReservedTickets(address _issuer) external override {
         // Get a reference to the owner's tickets.
         ITickets _tickets = ticketStore.tickets(_issuer);
 

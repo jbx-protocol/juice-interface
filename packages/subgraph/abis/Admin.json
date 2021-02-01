@@ -224,6 +224,40 @@
         "type": "uint256"
       },
       {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      }
+    ],
+    "name": "redeemTickets",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_rewardToken",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minRewardAmount",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint256",
         "name": "_minSwappedAmount",
         "type": "uint256"
@@ -234,7 +268,7 @@
         "type": "address"
       }
     ],
-    "name": "redeemTickets",
+    "name": "redeemTicketsAndFund",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

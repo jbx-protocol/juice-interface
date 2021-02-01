@@ -19,7 +19,7 @@ contract JuiceBeneficiary {
         uint256 _amount,
         uint256 _minRewardAmount,
         IJuicer _juicer
-    ) external returns (IERC20 _rewardToken) {
+    ) public returns (IERC20 _rewardToken) {
         _rewardToken = _juicer.redeem(
             _issuer,
             _amount,

@@ -203,6 +203,11 @@
         "internalType": "address",
         "name": "_issuer",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_proportion",
+        "type": "uint256"
       }
     ],
     "name": "getClaimableRewardsAmount",

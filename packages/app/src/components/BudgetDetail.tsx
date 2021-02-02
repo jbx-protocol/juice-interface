@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Button } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 
@@ -6,28 +7,34 @@ import { daiAddress } from '../constants/dai-address'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
-import { Budget } from '../models/money-pool'
+import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
 import KeyValRow from './KeyValRow'
 
 export default function BudgetDetail({
-  mp,
+  budget,
   contracts,
   transactor,
   showSustained,
   showTimeLeft,
-  address,
+  providerAddress,
 }: {
-  mp?: Budget
+  budget?: Budget
   contracts?: Contracts
   transactor?: Transactor
   showSustained?: boolean
   showTimeLeft?: boolean
-  address?: string
+  providerAddress?: string
 }) {
   const [tapAmount, setTapAmount] = useState<number>(0)
 
-  const secondsLeft = mp && Math.floor(mp.start.toNumber() + mp.duration.toNumber() - new Date().valueOf() / 1000)
+  const secondsLeft =
+    budget &&
+    Math.floor(
+      budget.start.toNumber() +
+        budget.duration.toNumber() -
+        new Date().valueOf() / 1000,
+    )
 
   function expandedTimeString(millis: number) {
     if (!millis || millis <= 0) return 0
@@ -37,39 +44,41 @@ export default function BudgetDetail({
     const minutes = hours && (hours % 1) * 60
     const seconds = minutes && (minutes % 1) * 60
 
-    return `${days && days >= 1 ? Math.floor(days) + 'd ' : ''}${hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''}
+    return `${days && days >= 1 ? Math.floor(days) + 'd ' : ''}${
+      hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''
+    }
         ${minutes && minutes >= 1 ? Math.floor(minutes) + 'm ' : ''}
         ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
   }
 
-  const title = mp?.title && Web3.utils.hexToString(mp.title)
+  const title = budget?.title && Web3.utils.hexToString(budget.title)
 
-  const link = mp?.link && Web3.utils.hexToString(mp.link)
+  const link = budget?.link && Web3.utils.hexToString(budget.link)
 
-  const isOwner = mp?.owner === address
+  const isOwner = budget?.owner === providerAddress
 
   const rewardToken = useContractReader({
     contract: contracts?.TicketStore,
     functionName: 'getTicketRewardToken',
-    args: [mp?.owner],
+    args: [budget?.owner],
   })
 
   const swappable: number | undefined = useContractReader({
     contract: contracts?.TicketStore,
     functionName: 'swappable',
-    args: [mp?.owner, rewardToken, daiAddress],
+    args: [budget?.owner, rewardToken, daiAddress],
     formatter: (num: BigNumber | undefined) => num?.toNumber(),
   })
 
   const tappableAmount: number | undefined = useContractReader<number>({
-    contract: contracts?.MpStore,
+    contract: contracts?.BudgetStore,
     functionName: 'getTappableAmount',
-    args: [mp?.id],
+    args: [budget?.id],
     formatter: (result: BigNumber) => result?.toNumber(),
   })
 
   function swap() {
-    if (!transactor || !contracts || !mp || swappable === undefined) return
+    if (!transactor || !contracts || !budget || swappable === undefined) return
 
     const eth = new Web3(Web3.givenProvider).eth
 
@@ -77,31 +86,46 @@ export default function BudgetDetail({
     // TODO handle conversion. Use 1:1 for now
     const _expectedAmount = _swappable
 
-    console.log('🧃 Calling Controller.swap(owner, want, swappable, target, expectedAmount)', {
-      owner: mp.owner,
-      want: mp.want,
-      swappable: _swappable,
-      target: daiAddress,
-      expectedAmount: _expectedAmount,
-    })
+    console.log(
+      '🧃 Calling Controller.swap(owner, want, swappable, target, expectedAmount)',
+      {
+        owner: budget.owner,
+        want: budget.want,
+        swappable: _swappable,
+        target: daiAddress,
+        expectedAmount: _expectedAmount,
+      },
+    )
 
-    transactor(contracts.Controller.swap(mp.owner, mp.want, _swappable, daiAddress, _expectedAmount))
+    transactor(
+      contracts.Juicer.swap(
+        budget.owner,
+        budget.want,
+        _swappable,
+        daiAddress,
+        _expectedAmount,
+      ),
+    )
   }
 
   function tap() {
-    if (!transactor || !contracts?.Controller || !mp) return
+    if (!transactor || !contracts?.Juicer || !budget) return
 
     const eth = new Web3(Web3.givenProvider).eth
 
-    const id = eth.abi.encodeParameter('uint256', mp.id)
+    const id = eth.abi.encodeParameter('uint256', budget.id)
     const amount = eth.abi.encodeParameter('uint256', tapAmount)
 
-    console.log('🧃 Calling Controller.tapMp(number, amount, address)', { id, amount, address })
+    console.log('🧃 Calling Controller.tapBudget(number, amount, address)', {
+      id,
+      amount,
+      providerAddress,
+    })
 
-    transactor(contracts.Controller?.tapMp(id, amount, address))
+    transactor(contracts.Juicer?.tapBudget(id, amount, providerAddress))
   }
 
-  return mp ? (
+  return budget ? (
     <div>
       <div>
         <h2 style={{ margin: 0 }}>{title}</h2>
@@ -110,15 +134,31 @@ export default function BudgetDetail({
         </a>
       </div>
       <br />
-      {KeyValRow('ID', mp.id.toString())}
-      {KeyValRow('Target', mp.target.toString())}
-      {showSustained ? KeyValRow('Sustained', mp.total.toString()) : null}
-      {KeyValRow('Start', new Date(mp.start.toNumber() * 1000).toISOString())}
-      {KeyValRow('Duration', expandedTimeString(mp && mp.duration.toNumber() * 1000))}
-      {showTimeLeft ? KeyValRow('Time left', (secondsLeft && expandedTimeString(secondsLeft * 1000)) || 'Ended') : null}
-      {KeyValRow('Reserved for owner', <span>{mp.o?.toString()}%</span>)}
-      {mp?.bAddress ? KeyValRow('Reserved for beneficiary', <span>{mp.b?.toString()}%</span>) : null}
-      {mp?.bAddress
+      {KeyValRow('ID', budget.id.toString())}
+      {KeyValRow('Target', budget.target.toString())}
+      {showSustained ? KeyValRow('Sustained', budget.total.toString()) : null}
+      {KeyValRow(
+        'Start',
+        new Date(budget.start.toNumber() * 1000).toISOString(),
+      )}
+      {KeyValRow(
+        'Duration',
+        expandedTimeString(budget && budget.duration.toNumber() * 1000),
+      )}
+      {showTimeLeft
+        ? KeyValRow(
+            'Time left',
+            (secondsLeft && expandedTimeString(secondsLeft * 1000)) || 'Ended',
+          )
+        : null}
+      {KeyValRow('Reserved for owner', <span>{budget.o?.toString()}%</span>)}
+      {budget?.bAddress
+        ? KeyValRow(
+            'Reserved for beneficiary',
+            <span>{budget.b?.toString()}%</span>,
+          )
+        : null}
+      {budget?.bAddress
         ? KeyValRow(
             'Beneficiary address',
             <span
@@ -127,21 +167,24 @@ export default function BudgetDetail({
                 fontSize: 12,
               }}
             >
-              {mp.bAddress}
+              {budget.bAddress}
             </span>,
           )
         : null}
-      {KeyValRow('Bias', <span>{mp.bias?.toString()}%</span>)}
-      {KeyValRow('Weight', <span>{mp.weight?.toString()}</span>)}
-      {KeyValRow('Reserves', mp.hasMintedReserves ? 'Minted' : 'Not minted')}
+      {KeyValRow('Bias', <span>{budget.bias?.toString()}%</span>)}
+      {KeyValRow('Weight', <span>{budget.weight?.toString()}</span>)}
+      {KeyValRow(
+        'Reserves',
+        budget.hasMintedReserves ? 'Minted' : 'Not minted',
+      )}
       {KeyValRow(
         'Swappable',
         <span>
           {swappable}
           {swappable ? (
-            <button type="submit" onClick={swap}>
+            <Button htmlType="submit" onClick={swap}>
               Swap
-            </button>
+            </Button>
           ) : (
             undefined
           )}
@@ -163,9 +206,9 @@ export default function BudgetDetail({
                     placeholder="0"
                     onChange={e => setTapAmount(parseFloat(e.target.value))}
                   ></input>
-                  <button disabled={tapAmount > tappableAmount} onClick={tap}>
+                  <Button disabled={tapAmount > tappableAmount} onClick={tap}>
                     Withdraw
-                  </button>
+                  </Button>
                 </span>
               ) : null}
             </span>,

@@ -9,19 +9,21 @@ import useContractReader from '../hooks/ContractReader'
 import useEventListener from '../hooks/EventListener'
 import { Contracts } from '../models/contracts'
 import { SustainEvent } from '../models/events/sustain-event'
-import { Budget } from '../models/money-pool'
+import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
 import ConfigureBudget from './ConfigureBudget'
 import KeyValRow from './KeyValRow'
 import BudgetDetail from './BudgetDetail'
 import TicketsBalance from './TicketsBalance'
+import { padding } from '../constants/styles/padding'
+import { Button } from 'antd'
 
 export default function Owner({
-  address,
+  providerAddress,
   transactor,
   contracts,
 }: {
-  address?: string
+  providerAddress?: string
   transactor?: Transactor
   contracts?: Contracts
 }) {
@@ -31,52 +33,66 @@ export default function Owner({
 
   const spacing = 30
 
-  const isOwner = owner === address
+  const isOwner = owner === providerAddress
 
-  const currentMp = useContractReader<Budget>({
-    contract: contracts?.MpStore,
-    functionName: 'getCurrentMp',
+  const currentBudget = useContractReader<Budget>({
+    contract: contracts?.BudgetStore,
+    functionName: 'getCurrentBudget',
     args: [owner],
   })
 
-  const queuedMp = useContractReader<Budget>({
-    contract: contracts?.MpStore,
-    functionName: 'getQueuedMp',
+  const queuedBudget = useContractReader<Budget>({
+    contract: contracts?.BudgetStore,
+    functionName: 'getQueuedBudget',
     args: [owner],
   })
 
   const currentSustainEvents = (useEventListener({
     contracts,
-    contractName: ContractName.Controller,
-    eventName: 'SustainMp',
+    contractName: ContractName.Juicer,
+    eventName: 'SustainBudget',
     provider: localProvider,
     startBlock: 1,
     getInitial: true,
-    topics: currentMp?.id ? [BigNumber.from(currentMp?.id)] : [],
+    topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],
   }) as SustainEvent[])
     .filter(e => e.owner === owner)
-    .filter(e => e.mpId.toNumber() === currentMp?.id.toNumber())
+    .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
 
   function sustain() {
-    if (!transactor || !contracts?.Controller || !currentMp?.owner) return
+    if (!transactor || !contracts?.Juicer || !currentBudget?.owner) return
 
     const eth = new Web3(Web3.givenProvider).eth
 
-    const amount = sustainAmount !== undefined ? eth.abi.encodeParameter('uint256', sustainAmount) : undefined
+    const amount =
+      sustainAmount !== undefined
+        ? eth.abi.encodeParameter('uint256', sustainAmount)
+        : undefined
 
-    console.log('🧃 Calling Controller.sustain(owner, amount, want, address)', {
-      owner: currentMp.owner,
-      amount,
-      want: currentMp.want,
-      address,
-    })
+    console.log(
+      '🧃 Calling Controller.sustain(owner, amount, want, providerAddress)',
+      {
+        owner: currentBudget.owner,
+        amount,
+        want: currentBudget.want,
+        providerAddress,
+      },
+    )
 
-    transactor(contracts.Controller.sustainOwner(currentMp.owner, amount, currentMp.want, address), () =>
-      setSustainAmount(0),
+    transactor(
+      contracts.Juicer.sustainOwner(
+        currentBudget.owner,
+        amount,
+        currentBudget.want,
+        providerAddress,
+      ),
+      () => setSustainAmount(0),
     )
   }
 
-  const configureBudget = <ConfigureBudget transactor={transactor} contracts={contracts} />
+  const configureBudget = (
+    <ConfigureBudget transactor={transactor} contracts={contracts} />
+  )
 
   function header(text: string) {
     return (
@@ -132,7 +148,7 @@ export default function Owner({
     </div>
   )
 
-  const current = !currentMp ? null : (
+  const current = !currentBudget ? null : (
     <div
       style={{
         display: 'grid',
@@ -143,10 +159,10 @@ export default function Owner({
       <div>
         {header('Current money pool')}
 
-        {currentMp ? (
+        {currentBudget ? (
           <BudgetDetail
-            address={address}
-            mp={currentMp}
+            providerAddress={providerAddress}
+            budget={currentBudget}
             showSustained={true}
             showTimeLeft={true}
             contracts={contracts}
@@ -157,7 +173,7 @@ export default function Owner({
         )}
       </div>
 
-      {currentMp
+      {currentBudget
         ? KeyValRow(
             'Sustain money pool',
             <span>
@@ -167,14 +183,17 @@ export default function Owner({
                 placeholder="0"
                 onChange={e => setSustainAmount(parseFloat(e.target.value))}
               ></input>
-              <button onClick={sustain}>Sustain</button>
+              <Button onClick={sustain}>Sustain</Button>
             </span>,
           )
         : null}
 
       <a
         href={
-          '/history/' + (currentMp?.total?.toNumber() ? currentMp?.id?.toNumber() : currentMp?.previous?.toNumber())
+          '/history/' +
+          (currentBudget?.total?.toNumber()
+            ? currentBudget?.id?.toNumber()
+            : currentBudget?.previous?.toNumber())
         }
       >
         Pool history
@@ -187,82 +206,88 @@ export default function Owner({
       <TicketsBalance
         contracts={contracts}
         issuerAddress={owner}
-        ticketsHolderAddress={address}
+        ticketsHolderAddress={providerAddress}
         transactor={transactor}
       />
+      <div style={{ padding: padding.app }}>
+        <h3>{owner}</h3>
 
-      <h3>{owner}</h3>
+        <div
+          style={{
+            display: 'grid',
+            columnGap: spacing,
+            marginTop: 20,
+            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+          }}
+        >
+          <div>
+            {!currentBudget ? (
+              <a
+                style={{
+                  fontWeight: 600,
+                  color: '#fff',
+                  textDecoration: 'none',
+                }}
+                href="/init"
+              >
+                {section(
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    Initialize tickets if you haven't yet!<span>&gt;</span>
+                  </div>,
+                  '#2255ff',
+                )}
+              </a>
+            ) : null}
 
-      <div
-        style={{
-          display: 'grid',
-          columnGap: spacing,
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-        }}
-      >
-        <div>
-          {!currentMp ? (
-            <a
-              style={{
-                fontWeight: 600,
-                color: '#fff',
-                textDecoration: 'none',
-              }}
-              href="/init"
-            >
-              {section(
+            {section(
+              current ?? (
+                <div>
+                  <h1 style={{ marginTop: 0 }}>Create money pool</h1>
+                  {configureBudget}
+                </div>
+              ),
+            )}
+
+            {section(
+              currentBudget ? (
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    display: 'grid',
+                    gridAutoFlow: 'row',
+                    rowGap: spacing,
                   }}
                 >
-                  Initialize tickets if you haven't yet!<span>&gt;</span>
-                </div>,
-                '#2255ff',
-              )}
-            </a>
-          ) : null}
+                  {header('Queued Budget')}
+                  {queuedBudget ? (
+                    <BudgetDetail budget={queuedBudget} />
+                  ) : (
+                    <div>Nada</div>
+                  )}
+                </div>
+              ) : (
+                undefined
+              ),
+            )}
 
-          {section(
-            current ?? (
-              <div>
-                <h1 style={{ marginTop: 0 }}>Create money pool</h1>
-                {configureBudget}
-              </div>
-            ),
-          )}
+            {section(
+              currentBudget && isOwner ? (
+                <div>
+                  {header('Reconfigure')}
+                  {configureBudget}
+                </div>
+              ) : (
+                undefined
+              ),
+            )}
+          </div>
 
-          {section(
-            currentMp ? (
-              <div
-                style={{
-                  display: 'grid',
-                  gridAutoFlow: 'row',
-                  rowGap: spacing,
-                }}
-              >
-                {header('Queued Money Pool')}
-                {queuedMp ? <BudgetDetail mp={queuedMp} /> : <div>Nada</div>}
-              </div>
-            ) : (
-              undefined
-            ),
-          )}
-
-          {section(
-            currentMp && isOwner ? (
-              <div>
-                {header('Reconfigure')}
-                {configureBudget}
-              </div>
-            ) : (
-              undefined
-            ),
-          )}
+          {currentBudget ? sustainments : null}
         </div>
-
-        {currentMp ? sustainments : null}
       </div>
     </div>
   )

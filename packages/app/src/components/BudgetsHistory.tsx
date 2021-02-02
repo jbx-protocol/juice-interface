@@ -5,39 +5,47 @@ import Web3 from 'web3'
 
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
-import { Budget } from '../models/money-pool'
+import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
+import { padding } from '../constants/styles/padding'
 
 export default function BudgetsHistory({
   contracts,
   transactor,
-  address,
+  providerAddress,
 }: {
   contracts?: Contracts
   transactor?: Transactor
-  address?: string
+  providerAddress?: string
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
 
   const { number }: { number?: string } = useParams()
 
-  if (number !== undefined && !poolNumbers.length) setPoolNumbers([BigNumber.from(number)])
+  if (number !== undefined && !poolNumbers.length)
+    setPoolNumbers([BigNumber.from(number)])
 
   const allPoolsLoaded = budgets.length >= poolNumbers.length
-  const poolNumber = allPoolsLoaded ? undefined : poolNumbers[poolNumbers.length - 1]
+  const poolNumber = allPoolsLoaded
+    ? undefined
+    : poolNumbers[poolNumbers.length - 1]
   const pollTime = allPoolsLoaded ? undefined : 100
 
   useContractReader<Budget>({
-    contract: contracts?.MpStore,
-    functionName: 'getMp',
+    contract: contracts?.BudgetStore,
+    functionName: 'getBudge',
     args: [poolNumber],
     pollTime,
-    callback: mp => {
-      if (!mp || !poolNumber || poolNumbers.includes(mp.previous)) return
-      setBudgets([...budgets, mp])
-      setPoolNumbers([...poolNumbers, ...(mp.previous.toNumber() > 0 ? [mp.previous] : [])])
+    callback: budget => {
+      if (!budget || !poolNumber || poolNumbers.includes(budget.previous))
+        return
+      setBudgets([...budgets, budget])
+      setPoolNumbers([
+        ...poolNumbers,
+        ...(budget.previous.toNumber() > 0 ? [budget.previous] : []),
+      ])
     },
   })
 
@@ -47,13 +55,14 @@ export default function BudgetsHistory({
         display: 'grid',
         gridAutoFlow: 'row',
         rowGap: 40,
+        padding: padding.app,
       }}
     >
-      {budgets.map((mp, index) => (
+      {budgets.map((budget, index) => (
         <div key={index}>
           <BudgetDetail
-            address={address}
-            mp={mp}
+            providerAddress={providerAddress}
+            budget={budget}
             showSustained={true}
             transactor={transactor}
             contracts={contracts}

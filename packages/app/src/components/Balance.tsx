@@ -6,12 +6,12 @@ import React, { useState } from 'react'
 import { usePoller } from '../hooks/Poller'
 
 export default function Balance({
-  address,
+  providerAddress,
   provider,
   balance,
   dollarMultiplier,
 }: {
-  address?: string
+  providerAddress?: string
   provider?: JsonRpcProvider
   balance?: BigNumber
   dollarMultiplier: number
@@ -21,10 +21,10 @@ export default function Balance({
 
   // get updated balance
   usePoller(() => {
-    if (!address || !provider) return
+    if (!providerAddress || !provider) return
 
     try {
-      provider.getBalance(address).then(setBalance)
+      provider.getBalance(providerAddress).then(setBalance)
     } catch (e) {
       console.log(e)
     }
@@ -44,7 +44,7 @@ export default function Balance({
       ? `$${(floatBalance * dollarMultiplier).toFixed(2)}`
       : `${floatBalance.toFixed(4)}ETH`
 
-  if (!address) return null
+  if (!providerAddress) return null
 
   return (
     <span
@@ -55,7 +55,7 @@ export default function Balance({
       }}
       onClick={() => setDollarMode(!dollarMode)}
     >
-      Balance:{displayBalance}
+      {displayBalance}
     </span>
   )
 }

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@uniswap/sdk": "^3.0.3",
     "@walletconnect/web3-provider": "^1.3.2",
+    "antd": "^4.11.2",
     "axios": "^0.21.1",
     "bnc-notify": "^1.5.1",
     "burner-provider": "^1.0.38",
@@ -22,9 +23,10 @@
     "web3modal": "^1.9.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "compile-less": "lessc ./src/styles/antd.less ./src/styles/antd.css --js",
+    "start": "yarn compile-less && react-scripts start",
+    "build": "yarn compile-less && react-scripts build",
+    "test": "yarn compile-less && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,6 +52,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "antd-scss-theme-plugin": "^1.0.8",
+    "less": "^4.1.1"
   }
 }

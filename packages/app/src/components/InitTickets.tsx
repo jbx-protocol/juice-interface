@@ -25,10 +25,11 @@ export default function InitTickets({
     const _symbol = Web3.utils.utf8ToHex(form.getFieldValue('symbol'))
     const _rewardToken = contracts.Token.address
 
-    console.log(
-      '🧃 Calling Controller.issueTickets(name, symbol, rewardToken)',
-      { _name, _symbol, _rewardToken },
-    )
+    console.log('🧃 Calling Juicer.issueTickets(name, symbol, rewardToken)', {
+      _name,
+      _symbol,
+      _rewardToken,
+    })
 
     transactor(
       contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),

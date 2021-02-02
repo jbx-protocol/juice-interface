@@ -70,7 +70,7 @@ export default function Owner({
         : undefined
 
     console.log(
-      '🧃 Calling Controller.sustain(owner, amount, want, providerAddress)',
+      '🧃 Calling Juicer.sustain(owner, amount, want, providerAddress)',
       {
         owner: currentBudget.owner,
         amount,

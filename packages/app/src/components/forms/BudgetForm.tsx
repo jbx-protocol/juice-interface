@@ -12,9 +12,16 @@ export default function BudgetForm({
     link: string
   }>
 }) {
+  const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 12 },
+  }
+
   return (
-    <Form {...props}>
-      <h2>Configure your budgets</h2>
+    <Form {...props} {...layout}>
+      <Form.Item wrapperCol={{ offset: 6 }}>
+        <h2>Configure your budgets</h2>
+      </Form.Item>
 
       <Form.Item
         extra="The duration of your budgets."

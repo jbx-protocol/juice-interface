@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { colors } from '../../constants/styles/colors'
+import { shadowCard } from '../../constants/styles/shadow-card'
 
 export default function ExampleCard({
   title,
@@ -46,10 +48,8 @@ export default function ExampleCard({
   return (
     <div
       style={{
+        ...shadowCard,
         display: 'inline-block',
-        background: 'white',
-        boxShadow: '10px 10px black',
-        borderRadius: 4,
         marginRight: 40,
         width: 360,
         minWidth: 360,

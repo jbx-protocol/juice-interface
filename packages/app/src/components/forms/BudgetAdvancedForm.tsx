@@ -12,9 +12,16 @@ export default function BudgetAdvancedForm({
     bias: number
   }>
 }) {
+  const layout = {
+    labelCol: { span: 10 },
+    wrapperCol: { span: 12 },
+  }
+
   return (
-    <Form {...props}>
-      <h2>Advanced tuning</h2>
+    <Form {...props} {...layout}>
+      <Form.Item wrapperCol={{ offset: 10 }}>
+        <h2>Advanced tuning</h2>
+      </Form.Item>
 
       <Form.Item
         extra="The percentage of overflow that you’ll keep for yourself instead of returning to your contributors."
@@ -32,7 +39,7 @@ export default function BudgetAdvancedForm({
         <Input placeholder="0x01a2b3c..." />
       </Form.Item>
       <Form.Item
-        extra="The percentage of overflow that you’ll pre-allocate tothe beneficiary contract instead of returning to your contributors."
+        extra="The percentage of overflow that you’ll pre-allocate to the beneficiary contract instead of returning to your contributors."
         name="beneficiaryAllocation"
         label="Beneficiary allocation"
         initialValue={0}
@@ -40,7 +47,7 @@ export default function BudgetAdvancedForm({
         <Input dir="rtl" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
-        extra="The rate at which contributions to future budgets are valued compared to contributions to this budget."
+        extra="The rate (95-100) at which contributions to future budgets are valued compared to contributions to this budget."
         name="bias"
         label="Bias"
         initialValue={100}
@@ -54,7 +61,6 @@ export default function BudgetAdvancedForm({
             max={100}
             placeholder="100"
           />
-          <span style={{ width: 240, marginLeft: 10 }}>(Between 95%-100%)</span>
         </div>
       </Form.Item>
     </Form>

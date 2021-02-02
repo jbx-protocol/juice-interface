@@ -35,8 +35,8 @@ export default function TicketsForm({
         initialValue={tokenOptions[0].value}
       >
         <Select>
-          {tokenOptions.map(opt => (
-            <Select.Option value={opt.value}>
+          {tokenOptions.map((opt, i) => (
+            <Select.Option key={i} value={opt.value}>
               {opt.label}{' '}
               <span style={{ fontSize: '.7rem', opacity: 0.5 }}>
                 {opt.value}

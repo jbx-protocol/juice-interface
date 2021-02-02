@@ -4,6 +4,8 @@ import { Contracts } from '../models/contracts'
 import Web3 from 'web3'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Transactor } from '../models/transactor'
+import { Button } from 'antd'
+import { padding } from '../constants/styles/padding'
 
 export default function TicketsBalance({
   ticketsHolderAddress,
@@ -29,14 +31,16 @@ export default function TicketsBalance({
     beneficiarys: BigNumber
     admin: BigNumber
   }>({
-    contract: contracts?.MpStore,
+    contract: contracts?.BudgetStore,
     functionName: 'getReservedTickets',
     args: [issuerAddress],
   })
 
   const hasReserves =
     reserveTickets !== undefined &&
-    (reserveTickets.admin.gt(0) || reserveTickets.beneficiarys.gt(0) || reserveTickets.owners.gt(0))
+    (reserveTickets.admin.gt(0) ||
+      reserveTickets.beneficiarys.gt(0) ||
+      reserveTickets.owners.gt(0))
 
   if (balance && balance !== redeemAmount) setRedeemAmount(balance)
 
@@ -46,17 +50,22 @@ export default function TicketsBalance({
     const eth = new Web3(Web3.givenProvider).eth
     const _amount = eth.abi.encodeParameter('uint256', redeemAmount)
 
-    console.log('🧃 Calling Controller.redeem(issuerAddress, amount)', { issuerAddress, amount: _amount })
+    console.log('🧃 Calling Controller.redeem(issuerAddress, amount)', {
+      issuerAddress,
+      amount: _amount,
+    })
 
-    transactor(contracts?.Controller.redeem(issuerAddress, _amount))
+    transactor(contracts?.Juicer.redeem(issuerAddress, _amount))
   }
 
   function mint() {
     if (!transactor || !contracts || !issuerAddress) return
 
-    console.log('🧃 Calling Controller.mintReservedTickets(owner)', { owner: issuerAddress })
+    console.log('🧃 Calling Controller.mintReservedTickets(owner)', {
+      owner: issuerAddress,
+    })
 
-    transactor(contracts.Controller.mintReservedTickets(issuerAddress))
+    transactor(contracts.Juicer.mintReservedTickets(issuerAddress))
   }
 
   const reserves = (
@@ -64,19 +73,23 @@ export default function TicketsBalance({
       Reserved tickets:
       {hasReserves && reserveTickets ? (
         <div>
-          {reserveTickets.admin.gt(0) ? <div>Admin: {reserveTickets.admin.toString()}</div> : null}
+          {reserveTickets.admin.gt(0) ? (
+            <div>Admin: {reserveTickets.admin.toString()}</div>
+          ) : null}
           {reserveTickets.beneficiarys.gt(0) ? (
             <div>Beneficiaries: {reserveTickets.beneficiarys.toString()}</div>
           ) : null}
-          {reserveTickets.owners.gt(0) ? <div>Owners: {reserveTickets.owners.toString()}</div> : null}
+          {reserveTickets.owners.gt(0) ? (
+            <div>Owners: {reserveTickets.owners.toString()}</div>
+          ) : null}
         </div>
       ) : (
-        ' none'
+        ' --'
       )}
     </div>
   )
 
-  const mintButton = <button onClick={mint}>Mint reserves</button>
+  const mintButton = <Button onClick={mint}>Mint reserves</Button>
 
   return (
     <div
@@ -86,10 +99,12 @@ export default function TicketsBalance({
         alignItems: 'baseline',
         background: '#000',
         color: '#fff',
-        padding: 10,
+        padding: padding.app,
+        paddingTop: 10,
+        paddingBottom: 10,
       }}
     >
-      <div>Ticket balance: {balance !== undefined ? balance.toString() : 'loading...'}</div>
+      <div>Tickets: {balance !== undefined ? balance.toString() : '--'}</div>
 
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
         <div style={{ marginRight: 40 }}>
@@ -98,16 +113,23 @@ export default function TicketsBalance({
         </div>
 
         <input
-          onChange={e => setRedeemAmount(BigNumber.from(parseFloat(e.target.value)))}
+          onChange={e =>
+            setRedeemAmount(BigNumber.from(parseFloat(e.target.value)))
+          }
           style={{ marginRight: 10 }}
           type="number"
           placeholder="0"
           defaultValue="0"
         />
 
-        <button disabled={!balance} type="submit" onClick={redeem}>
+        <Button
+          type="ghost"
+          disabled={!balance}
+          htmlType="submit"
+          onClick={redeem}
+        >
           Redeem
-        </button>
+        </Button>
       </div>
     </div>
   )

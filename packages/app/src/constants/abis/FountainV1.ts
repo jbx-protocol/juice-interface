@@ -1,4 +1,4 @@
-export const JuiceAbi = [
+export const FountainAbi = [
   {
     inputs: [
       {
@@ -175,7 +175,7 @@ export const JuiceAbi = [
         type: 'uint256',
       },
     ],
-    name: 'SustainMp',
+    name: 'getQueuedBudget',
     type: 'event',
   },
   {

@@ -5,15 +5,17 @@ import Web3 from 'web3'
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { padding } from '../constants/styles/padding'
+import { Button } from 'antd'
 
 export default function Gimme({
   transactor,
   contracts,
-  address,
+  providerAddress,
 }: {
   transactor?: Transactor
   contracts?: Contracts
-  address?: string
+  providerAddress?: string
 }) {
   const [gimmeAmount, setGimmeAmount] = useState<number>(0)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(0)
@@ -21,13 +23,13 @@ export default function Gimme({
   const allowance: BigNumber | undefined = useContractReader({
     contract: contracts?.Token,
     functionName: 'allowance',
-    args: [address, contracts?.Controller?.address],
+    args: [providerAddress, contracts?.Juicer?.address],
   })
 
   const balance: BigNumber | undefined = useContractReader({
     contract: contracts?.Token,
     functionName: 'balanceOf',
-    args: [address],
+    args: [providerAddress],
   })
 
   function gimme() {
@@ -35,16 +37,21 @@ export default function Gimme({
 
     const eth = new Web3(Web3.givenProvider).eth
 
-    transactor(contracts.Token.gimme(eth.abi.encodeParameter('uint256', gimmeAmount)))
+    transactor(
+      contracts.Token.gimme(eth.abi.encodeParameter('uint256', gimmeAmount)),
+    )
   }
 
   function approve() {
-    if (!transactor || !contracts?.Controller || !contracts?.Token) return
+    if (!transactor || !contracts?.Juicer || !contracts?.Token) return
 
     const eth = new Web3(Web3.givenProvider).eth
 
     transactor(
-      contracts.Token.approve(contracts.Controller?.address, eth.abi.encodeParameter('uint256', allowanceAmount)),
+      contracts.Token.approve(
+        contracts.Juicer?.address,
+        eth.abi.encodeParameter('uint256', allowanceAmount),
+      ),
     )
   }
 
@@ -54,18 +61,25 @@ export default function Gimme({
         display: 'grid',
         gridAutoFlow: 'row',
         rowGap: 30,
+        padding: padding.app,
       }}
     >
       <div>
         <h4>Current allowance: {allowance?.toNumber() ?? 0}</h4>
-        <input placeholder="0" onChange={e => setAllowanceAmount(parseFloat(e.target.value))} />
-        <button onClick={approve}>Update</button>
+        <input
+          placeholder="0"
+          onChange={e => setAllowanceAmount(parseFloat(e.target.value))}
+        />
+        <Button onClick={approve}>Update</Button>
       </div>
       <div>
         <h2>Current token balance {balance?.toNumber()}</h2>
         <h4>Get Token</h4>
-        <input placeholder="0" onChange={e => setGimmeAmount(parseFloat(e.target.value))} />
-        <button onClick={gimme}>Gimme</button>
+        <input
+          placeholder="0"
+          onChange={e => setGimmeAmount(parseFloat(e.target.value))}
+        />
+        <Button onClick={gimme}>Gimme</Button>
       </div>
     </div>
   )

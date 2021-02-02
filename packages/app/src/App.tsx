@@ -6,20 +6,23 @@ import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Gimme from './components/Gimme'
+import InitTickets from './components/InitTickets'
+import Landing from './components/landing/Landing'
+import BudgetsHistory from './components/BudgetsHistory'
+import Navbar from './components/Navbar'
 import Budgets from './components/Owner'
-import Owner from './components/Navbar'
 import { localProvider } from './constants/local-provider'
 import { web3Modal } from './constants/web3-modal'
 import { createTransactor } from './helpers/Transactor'
 import { useContractLoader } from './hooks/ContractLoader'
+import useContractReader from './hooks/ContractReader'
 import { useGasPrice } from './hooks/GasPrice'
 import { useUserProvider } from './hooks/UserProvider'
-import BudgetsHistory from './components/BudgetsHistory'
-import InitTickets from './components/InitTickets'
+import { Budget } from './models/budget'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
-  const [address, setAddress] = useState<string>()
+  const [providerAddress, setProviderAddress] = useState<string>()
 
   const gasPrice = useGasPrice('fast')
 
@@ -35,41 +38,67 @@ function App() {
     userProvider
       ?.getSigner()
       .getAddress()
-      .then(address => {
-        setAddress(address)
-
-        if (window.location.pathname === '/') window.location.href = address
-      })
-  }, [userProvider, setAddress])
+      .then(address => setProviderAddress(address))
+  }, [userProvider, setProviderAddress])
 
   const transactor = createTransactor({
     provider: userProvider,
-    gasPrice: typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
+    gasPrice:
+      typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
   })
 
   const contracts = useContractLoader(userProvider)
 
   console.log('using provider:', userProvider)
 
+  const hasBudget = useContractReader<boolean>({
+    contract: contracts?.BudgetStore,
+    functionName: 'getCurrentBudget',
+    args: [providerAddress],
+    formatter: (val: Budget) => !!val,
+  })
+
   return (
     <div className="App">
-      <Owner address={address} userProvider={userProvider} onConnectWallet={loadWeb3Modal} />
+      <Navbar
+        hasBudget={hasBudget}
+        providerAddress={providerAddress}
+        userProvider={userProvider}
+        onConnectWallet={loadWeb3Modal}
+      />
 
-      <div style={{ padding: 20 }}>
+      <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/"></Route>
+            <Route exact path="/">
+              <Landing
+                providerAddress={providerAddress}
+                onNeedAddress={loadWeb3Modal}
+              />
+            </Route>
             <Route exact path="/init">
               <InitTickets contracts={contracts} transactor={transactor} />
             </Route>
             <Route exact path="/gimme">
-              <Gimme contracts={contracts} transactor={transactor} address={address}></Gimme>
+              <Gimme
+                contracts={contracts}
+                transactor={transactor}
+                providerAddress={providerAddress}
+              ></Gimme>
             </Route>
             <Route exact path="/:owner">
-              <Budgets contracts={contracts} transactor={transactor} address={address} />
+              <Budgets
+                contracts={contracts}
+                transactor={transactor}
+                providerAddress={providerAddress}
+              />
             </Route>
             <Route exact path="/history/:number">
-              <BudgetsHistory contracts={contracts} transactor={transactor} address={address} />
+              <BudgetsHistory
+                contracts={contracts}
+                transactor={transactor}
+                providerAddress={providerAddress}
+              />
             </Route>
           </Switch>
         </BrowserRouter>

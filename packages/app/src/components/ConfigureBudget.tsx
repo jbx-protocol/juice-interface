@@ -83,7 +83,7 @@ export default function ConfigureBudget({
       'uint256',
       fields.duration * SECONDS_IN_DAY,
     )
-    const _want = ticketsForm.getFieldsValue().rewardToken
+    const _want = ticketsForm.getFieldsValue(true).rewardToken
     const _link = fields.link
     const _brief = fields.brief
     const _bias = eth.abi.encodeParameter('uint256', fields.bias)

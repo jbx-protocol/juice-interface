@@ -50,7 +50,7 @@ export default function TicketsBalance({
     const eth = new Web3(Web3.givenProvider).eth
     const _amount = eth.abi.encodeParameter('uint256', redeemAmount)
 
-    console.log('🧃 Calling Controller.redeem(issuerAddress, amount)', {
+    console.log('🧃 Calling Juicer.redeem(issuerAddress, amount)', {
       issuerAddress,
       amount: _amount,
     })
@@ -61,7 +61,7 @@ export default function TicketsBalance({
   function mint() {
     if (!transactor || !contracts || !issuerAddress) return
 
-    console.log('🧃 Calling Controller.mintReservedTickets(owner)', {
+    console.log('🧃 Calling Juicer.mintReservedTickets(owner)', {
       owner: issuerAddress,
     })
 

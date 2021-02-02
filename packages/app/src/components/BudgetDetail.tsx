@@ -87,7 +87,7 @@ export default function BudgetDetail({
     const _expectedAmount = _swappable
 
     console.log(
-      '🧃 Calling Controller.swap(owner, want, swappable, target, expectedAmount)',
+      '🧃 Calling Juicer.swap(owner, want, swappable, target, expectedAmount)',
       {
         owner: budget.owner,
         want: budget.want,
@@ -116,7 +116,7 @@ export default function BudgetDetail({
     const id = eth.abi.encodeParameter('uint256', budget.id)
     const amount = eth.abi.encodeParameter('uint256', tapAmount)
 
-    console.log('🧃 Calling Controller.tapBudget(number, amount, address)', {
+    console.log('🧃 Calling Juicer.tapBudget(number, amount, address)', {
       id,
       amount,
       providerAddress,

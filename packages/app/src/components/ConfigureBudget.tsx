@@ -1,12 +1,14 @@
 import { Contract } from '@ethersproject/contracts'
-import { Button, Form, Input, Select, Steps } from 'antd'
-import TextArea from 'antd/lib/input/TextArea'
+import { Button, Form, Input, Steps } from 'antd'
+import { useState } from 'react'
 import Web3 from 'web3'
 
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { Transactor } from '../models/transactor'
-import { useState } from 'react'
+import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
+import BudgetForm from './forms/BudgetForm'
+import TicketsForm from './forms/TicketsForm'
 
 export default function ConfigureBudget({
   transactor,
@@ -15,13 +17,18 @@ export default function ConfigureBudget({
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
 }) {
-  const [form] = Form.useForm<{
-    target: number
+  const [ticketsForm] = Form.useForm<{
+    name: string
+    symbol: string
+    rewardToken: string
+  }>()
+  const [budgetForm] = Form.useForm<{
     duration: number
-    title: string
-    want: string
-    description: string
+    target: number
+    brief: string
     link: string
+  }>()
+  const [budgetAdvancedForm] = Form.useForm<{
     bias: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
@@ -29,20 +36,45 @@ export default function ConfigureBudget({
   }>()
   const [formStage, setFormStage] = useState<number>(0)
 
-  const fields = form.getFieldsValue()
-
   const eth = new Web3(Web3.givenProvider).eth
 
-  function onSubmit() {
+  function initTickets() {
+    if (!transactor || !contracts) return
+
+    const fields = ticketsForm.getFieldsValue()
+
+    const _name = Web3.utils.utf8ToHex(fields.name)
+    const _symbol = Web3.utils.utf8ToHex(fields.name)
+    const _rewardToken = contracts.Token.address
+
+    console.log('🧃 Calling Juicer.issueTickets(name, symbol, rewardToken)', {
+      _name,
+      _symbol,
+      _rewardToken,
+    })
+
+    return transactor(
+      contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),
+      () => (window.location.href = '/'),
+    )
+  }
+
+  async function onSubmit() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
+
+    await initTickets()
+
+    const fields = {
+      ...budgetForm.getFieldsValue(),
+      ...budgetAdvancedForm.getFieldsValue(),
+    }
 
     const _target = eth.abi.encodeParameter('uint256', fields.target)
     const _duration = eth.abi.encodeParameter(
       'uint256',
       fields.duration * SECONDS_IN_DAY,
     )
-    const _want = fields.want
-    const _title = fields.title && Web3.utils.utf8ToHex(fields.title)
+    const _want = ticketsForm.getFieldsValue().rewardToken
     const _link = fields.link && Web3.utils.utf8ToHex(fields.link)
     const _bias = eth.abi.encodeParameter('uint256', fields.bias)
     const _ownerAllocation = eth.abi.encodeParameter(
@@ -55,11 +87,10 @@ export default function ConfigureBudget({
     )
     const _beneficiaryAddress = fields.beneficiaryAddress ?? '0'
 
-    console.log('🧃 Calling Controller.configureBudget(...)', {
+    console.log('🧃 Calling Juicer.configureBudget(...)', {
       _target,
       _duration,
       _want,
-      _title,
       _link,
       _bias,
       _ownerAllocation,
@@ -72,7 +103,6 @@ export default function ConfigureBudget({
         _target,
         _duration,
         _want,
-        _title,
         _link,
         _bias,
         _ownerAllocation,
@@ -95,118 +125,19 @@ export default function ConfigureBudget({
 
   return (
     <div>
-      <Form layout="vertical" form={form} onFinish={onSubmit}>
-        <Form.Item hidden={formStage !== 0}>
-          <h2>Create your ticket tokens</h2>
+      <TicketsForm
+        tokenOptions={[
+          {
+            label: 'TOKEN',
+            value: contracts.Token.address,
+          },
+        ]}
+        form={ticketsForm}
+      ></TicketsForm>
 
-          <Form.Item
-            extra="The name of your ticket token is used across web3."
-            name="project-name"
-            label="Project Name"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Ticket" />
-          </Form.Item>
-          <Form.Item
-            extra="The ticker of your ticket token is used across web3."
-            name="name"
-            label="Name"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="tMYPROJ" />
-          </Form.Item>
-          <Form.Item
-            extra="The ERC-20 token that your ticket tokens are redeemable for."
-            name="want"
-            label="Reward token"
-            rules={[{ required: true }]}
-          >
-            <Select defaultValue={contracts.Token.address}>
-              <Select.Option value={contracts.Token.address}>
-                TOKEN
-              </Select.Option>
-            </Select>
-          </Form.Item>
-        </Form.Item>
+      <BudgetForm form={budgetForm}></BudgetForm>
 
-        <Form.Item hidden={formStage !== 1}>
-          <h2>Configure your budgets</h2>
-          <Form.Item
-            extra="The duration of your budgets."
-            name="duration"
-            label="Duration"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="30" dir="rtl" suffix="days" />
-          </Form.Item>
-          <Form.Item
-            extra="The amout your project needs for each Budget period."
-            name="target"
-            label="Amount"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="0" dir="rtl" suffix="DAI" />
-          </Form.Item>
-          <Form.Item
-            extra="A brief description of what your Budgets are used for."
-            name="description"
-            label="Description"
-          >
-            <TextArea placeholder="Getting juice with friends..." />
-          </Form.Item>
-          <Form.Item
-            extra="A link to more in depth information about your Budget."
-            name="link"
-            label="Link"
-          >
-            <Input placeholder="https://docs.google.com/my-budget-info" />
-          </Form.Item>
-        </Form.Item>
-
-        <Form.Item hidden={formStage !== 2}>
-          <h2>Advanced tuning</h2>
-          <Form.Item
-            extra="The percentage of overflow that you’ll keep for yourself instead of returning to your contributors."
-            name="ownerAllocation"
-            label="Owner surplus"
-          >
-            <Input defaultValue={0} dir="rtl" suffix="%" placeholder="5" />
-          </Form.Item>
-          <Form.Item
-            extra="A contract that you wish to give part of your overflow to."
-            name="beneficiaryAddress"
-            label="Beneficiary contract"
-          >
-            <Input placeholder="0x01a2b3c..." />
-          </Form.Item>
-          <Form.Item
-            extra="The percentage of overflow that you’ll pre-allocate tothe beneficiary contract instead of returning to your contributors."
-            name="beneficiaryAllocation"
-            label="Beneficiary allocation"
-          >
-            <Input defaultValue={0} dir="rtl" suffix="%" placeholder="5" />
-          </Form.Item>
-          <Form.Item
-            extra="The rate at which contributions to future budgets are valued compared to contributions to this budget."
-            name="bias"
-            label="Bias"
-          >
-            <div style={{ display: 'flex', alignItems: 'baseline' }}>
-              <Input
-                defaultValue={100}
-                dir="rtl"
-                suffix="%"
-                min={95}
-                max={100}
-                placeholder="100"
-              />
-              <span style={{ width: 240, marginLeft: 10 }}>
-                (Between 95%-100%)
-              </span>
-            </div>
-          </Form.Item>
-        </Form.Item>
-      </Form>
+      <BudgetAdvancedForm form={budgetAdvancedForm}></BudgetAdvancedForm>
 
       <Steps size="small" current={formStage}>
         <Steps.Step onClick={() => setFormStage(0)} title="Tickets" />
@@ -217,7 +148,12 @@ export default function ConfigureBudget({
         {formStage < 2 ? (
           <Button onClick={() => setFormStage(formStage + 1)}>Next</Button>
         ) : (
-          <Button style={{ marginTop: 20 }} htmlType="submit" type="primary">
+          <Button
+            style={{ marginTop: 20 }}
+            htmlType="submit"
+            type="primary"
+            onClick={onSubmit}
+          >
             Submit
           </Button>
         )}

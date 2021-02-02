@@ -1,11 +1,10 @@
-import React from 'react'
 import { Button } from 'antd'
+import React from 'react'
 
 import { colors } from '../../constants/styles/colors'
+import Footer from '../Footer'
 import ExampleCard from './ExampleCard'
 import ImgTextSection from './ImgTextSection'
-import { padding } from '../../constants/styles/padding'
-import Footer from '../Footer'
 
 export default function Landing({
   providerAddress,

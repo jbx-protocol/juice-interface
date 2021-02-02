@@ -1,7 +1,5 @@
-import { spawn } from 'child_process'
 import React from 'react'
 import { colors } from '../../constants/styles/colors'
-import { padding } from '../../constants/styles/padding'
 
 export default function ExampleCard({
   title,
@@ -26,12 +24,21 @@ export default function ExampleCard({
 
   const padding = 20
 
-  const info = (label: string, value: string, suffix?: string, highlight?: boolean) => (
+  const info = (
+    label: string,
+    value: string,
+    suffix?: string,
+    highlight?: boolean,
+  ) => (
     <div>
       <div style={{ fontWeight: 600 }}>{label}</div>
       <div style={highlight ? { fontWeight: 600, color: 'orange' } : {}}>
         {value}
-        {suffix ? <span style={{ color: colors.secondary, marginLeft: 5 }}>({suffix})</span> : null}{' '}
+        {suffix ? (
+          <span style={{ color: colors.secondary, marginLeft: 5 }}>
+            ({suffix})
+          </span>
+        ) : null}{' '}
       </div>
     </div>
   )
@@ -49,14 +56,31 @@ export default function ExampleCard({
       }}
     >
       <div style={{ padding, fontWeight: 600, fontSize: 20 }}>{title}</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding, rowGap: 10 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          padding,
+          rowGap: 10,
+        }}
+      >
         {info('Duration', duration + ' days')}
-        {info('Time left', timeLeft + (timeLeft > 1 ? ' days' : ' day'), undefined, timeLeft <= 1)}
+        {info(
+          'Time left',
+          timeLeft + (timeLeft > 1 ? ' days' : ' day'),
+          undefined,
+          timeLeft <= 1,
+        )}
         {info('Target', target + ' ' + want)}
-        {info('Total earned', earned + ' ' + want, surplus ? '+' + surplus : undefined)}
+        {info(
+          'Total earned',
+          earned + ' ' + want,
+          surplus ? '+' + surplus : undefined,
+        )}
       </div>
       <div style={{ padding, color: colors.secondary }}>
-        {surplus} {want} will be swapped for {tokenName} and redistributed to t{ticketName ?? tokenName} holders.
+        {surplus} {want} will be swapped for {tokenName} and redistributed to t
+        {ticketName ?? tokenName} holders.
       </div>
     </div>
   )

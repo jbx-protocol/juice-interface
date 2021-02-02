@@ -172,7 +172,11 @@ export default function ConfigureBudget({
     <div>
       <Steps size="small" current={currentStep}>
         {steps.map((step, i) => (
-          <Steps.Step onClick={() => setCurrentStep(i)} title={step.title} />
+          <Steps.Step
+            key={i}
+            onClick={() => setCurrentStep(i)}
+            title={step.title}
+          />
         ))}
       </Steps>
 

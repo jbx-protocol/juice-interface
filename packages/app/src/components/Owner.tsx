@@ -212,24 +212,21 @@ export default function Owner({
       <div style={{ padding: padding.app }}>
         <h3>{owner}</h3>
 
-        <div
-          style={{
-            display: 'grid',
-            columnGap: spacing,
-            marginTop: 20,
-            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-          }}
-        >
+        <div style={{ marginTop: 20 }}>
           <div>
-            {section(
-              current ?? (
-                <div>
-                  <h1 style={{ marginTop: 0 }}>Create money pool</h1>
-                  {configureBudget}
-                </div>
-              ),
+            {current ?? (
+              <div
+                style={{
+                  maxWidth: 960,
+                  margin: 'auto',
+                  paddingTop: 20,
+                  paddingBottom: 40,
+                }}
+              >
+                <h1 style={{ marginTop: 0 }}>Create Budget</h1>
+                {configureBudget}
+              </div>
             )}
-
             {section(
               currentBudget ? (
                 <div
@@ -250,7 +247,6 @@ export default function Owner({
                 undefined
               ),
             )}
-
             {section(
               currentBudget && isOwner ? (
                 <div>

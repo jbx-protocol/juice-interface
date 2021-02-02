@@ -200,7 +200,7 @@ export default function Landing({
         />
       </section>
 
-      <section style={{ padding: 80, background: '#FFECBB' }}>
+      <section style={{ padding: 80, background: colors.light }}>
         <div
           style={{
             display: 'grid',

@@ -8,9 +8,16 @@ export default function TicketsForm({
   tokenOptions: { label: string; value: string }[]
   props: FormProps<{ name: string; symbol: string; rewardToken: string }>
 }) {
+  const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 12 },
+  }
+
   return (
-    <Form {...props}>
-      <h2>Create your ticket tokens</h2>
+    <Form {...props} {...layout}>
+      <Form.Item wrapperCol={{ offset: 6 }}>
+        <h2>Create your ticket tokens</h2>
+      </Form.Item>
 
       <Form.Item
         extra="The name of your ticket token is used across web3."
@@ -37,10 +44,7 @@ export default function TicketsForm({
         <Select>
           {tokenOptions.map((opt, i) => (
             <Select.Option key={i} value={opt.value}>
-              {opt.label}{' '}
-              <span style={{ fontSize: '.7rem', opacity: 0.5 }}>
-                {opt.value}
-              </span>{' '}
+              {opt.label}
             </Select.Option>
           ))}
         </Select>

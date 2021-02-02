@@ -1,10 +1,12 @@
 import { Contract } from '@ethersproject/contracts'
-import { Button, Form, Steps } from 'antd'
+import { Button, Col, Form, Row, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
+import { colors } from '../constants/styles/colors'
+import { shadowCard } from '../constants/styles/shadow-card'
 import { Transactor } from '../models/transactor'
 import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
 import BudgetForm from './forms/BudgetForm'
@@ -135,42 +137,43 @@ export default function ConfigureBudget({
               value: contracts.Token.address,
             },
           ]}
-          props={{
-            form: ticketsForm,
-            layout: 'vertical',
-          }}
+          props={{ form: ticketsForm }}
         ></TicketsForm>
       ),
+      info: [
+        'First, create your own token. The Juice protocol will use these like tickets, handing them out to people in exchange for payments towards your Budgets. ',
+        'They are redeemable for a share of your Budgets’ surplus over time.',
+        "You'll provide a ticker symbol for your Tickets, and the reward token that these Tickets can be redeemed for.",
+      ],
     },
     {
       title: 'Budget',
       validate: () => budgetForm.validateFields(),
-      content: (
-        <BudgetForm
-          props={{
-            form: budgetForm,
-            layout: 'vertical',
-          }}
-        ></BudgetForm>
-      ),
+      content: <BudgetForm props={{ form: budgetForm }}></BudgetForm>,
+      info: [
+        'Your Budget will begin accepting payments once it’s made. It’ll accept funds up until its duration runs out.',
+        'A new Budget will be created automatically once the current one expires to continue collecting funds. It’ll use the same configuration as the previous one if you haven’t since reconfigured it.',
+      ],
     },
     {
       title: 'Advanced',
       validate: () => budgetAdvancedForm.validateFields(),
       content: (
         <BudgetAdvancedForm
-          props={{
-            form: budgetAdvancedForm,
-            layout: 'vertical',
-          }}
+          props={{ form: budgetAdvancedForm }}
         ></BudgetAdvancedForm>
       ),
+      info: [
+        'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
+        'These reserved tokens can only be minted by budgets that overflow.',
+        "Lastly, the bias variable affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time. For example, if your Bias is set to 97%, then someone who pays $100 towards next month's Budget witll only receive 97% the amount of tickets that someone received when paying $100 towards this months budget. Effectively this gives folks who believe you will be able to increase your overflow an incentive to pay you today, HODL their tickets, and redeem them at a future date.",
+      ],
     },
   ]
 
   return (
     <div>
-      <Steps size="small" current={currentStep}>
+      <Steps size="small" current={currentStep} style={{ marginBottom: 60 }}>
         {steps.map((step, i) => (
           <Steps.Step
             key={i}
@@ -180,38 +183,52 @@ export default function ConfigureBudget({
         ))}
       </Steps>
 
-      <div
-        style={{
-          marginTop: 40,
-          marginBottom: 40,
-        }}
-      >
-        {steps[currentStep].content}
-      </div>
+      <Row gutter={80} align="top">
+        <Col flex="50%">
+          {steps[currentStep].content}
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-        }}
-      >
-        {currentStep === 0 ? (
-          <div></div>
-        ) : (
-          <Button onClick={() => setCurrentStep(currentStep - 1)}>
-            Previous
-          </Button>
-        )}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              marginTop: 80,
+            }}
+          >
+            {currentStep === 0 ? (
+              <div></div>
+            ) : (
+              <Button onClick={() => setCurrentStep(currentStep - 1)}>
+                Previous
+              </Button>
+            )}
 
-        {currentStep === steps.length - 1 ? (
-          <Button htmlType="submit" type="primary" onClick={onSubmit}>
-            Submit
-          </Button>
-        ) : (
-          <Button onClick={() => tryNextStep()}>Next</Button>
-        )}
-      </div>
+            {currentStep === steps.length - 1 ? (
+              <Button htmlType="submit" type="primary" onClick={onSubmit}>
+                Submit
+              </Button>
+            ) : (
+              <Button onClick={() => tryNextStep()}>Next</Button>
+            )}
+          </div>
+        </Col>
+
+        <Col flex="50%" style={{ maxWidth: 360 }}>
+          <div
+            style={{
+              ...shadowCard,
+              padding: 20,
+              background: colors.hint,
+              border: '1px solid black',
+            }}
+          >
+            <h3>WTF</h3>
+            {steps[currentStep].info.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+        </Col>
+      </Row>
     </div>
   )
 }

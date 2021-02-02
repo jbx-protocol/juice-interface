@@ -1,10 +1,11 @@
-import { Form, FormInstance, Input } from 'antd'
+import { Form, Input } from 'antd'
+import { FormProps } from 'antd/lib/form/Form'
 import React from 'react'
 
 export default function BudgetForm({
-  form,
+  props,
 }: {
-  form: FormInstance<{
+  props: FormProps<{
     duration: number
     target: number
     brief: string
@@ -12,8 +13,9 @@ export default function BudgetForm({
   }>
 }) {
   return (
-    <Form>
+    <Form {...props}>
       <h2>Configure your budgets</h2>
+
       <Form.Item
         extra="The duration of your budgets."
         name="duration"

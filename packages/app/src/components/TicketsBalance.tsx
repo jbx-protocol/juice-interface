@@ -27,20 +27,20 @@ export default function TicketsBalance({
   })
 
   const reserveTickets = useContractReader<{
-    owners: BigNumber
-    beneficiarys: BigNumber
+    issuers: BigNumber
+    beneficiaries: BigNumber
     admin: BigNumber
   }>({
-    contract: contracts?.BudgetStore,
+    contract: contracts?.Juicer,
     functionName: 'getReservedTickets',
     args: [issuerAddress],
   })
 
   const hasReserves =
     reserveTickets !== undefined &&
-    (reserveTickets.admin.gt(0) ||
-      reserveTickets.beneficiarys.gt(0) ||
-      reserveTickets.owners.gt(0))
+    (reserveTickets.admin?.gt(0) ||
+      reserveTickets.beneficiaries?.gt(0) ||
+      reserveTickets.issuers?.gt(0))
 
   if (balance && balance !== redeemAmount) setRedeemAmount(balance)
 
@@ -73,14 +73,14 @@ export default function TicketsBalance({
       Reserved tickets:
       {hasReserves && reserveTickets ? (
         <div>
-          {reserveTickets.admin.gt(0) ? (
+          {reserveTickets.admin?.gt(0) ? (
             <div>Admin: {reserveTickets.admin.toString()}</div>
           ) : null}
-          {reserveTickets.beneficiarys.gt(0) ? (
-            <div>Beneficiaries: {reserveTickets.beneficiarys.toString()}</div>
+          {reserveTickets.beneficiaries?.gt(0) ? (
+            <div>Beneficiaries: {reserveTickets.beneficiaries.toString()}</div>
           ) : null}
-          {reserveTickets.owners.gt(0) ? (
-            <div>Owners: {reserveTickets.owners.toString()}</div>
+          {reserveTickets.issuers?.gt(0) ? (
+            <div>Owners: {reserveTickets.issuers.toString()}</div>
           ) : null}
         </div>
       ) : (

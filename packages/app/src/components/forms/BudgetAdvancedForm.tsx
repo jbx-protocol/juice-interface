@@ -1,10 +1,11 @@
-import { FormInstance, Form, Input } from 'antd'
+import { Form, FormInstance, Input } from 'antd'
+import { FormLayout, FormProps } from 'antd/lib/form/Form'
 import React from 'react'
 
 export default function BudgetAdvancedForm({
-  form,
+  props,
 }: {
-  form: FormInstance<{
+  props: FormProps<{
     ownerAllocation: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
@@ -12,14 +13,16 @@ export default function BudgetAdvancedForm({
   }>
 }) {
   return (
-    <Form>
+    <Form {...props}>
       <h2>Advanced tuning</h2>
+
       <Form.Item
         extra="The percentage of overflow that you’ll keep for yourself instead of returning to your contributors."
         name="ownerAllocation"
         label="Owner surplus"
+        initialValue={0}
       >
-        <Input defaultValue={0} dir="rtl" suffix="%" placeholder="5" />
+        <Input dir="rtl" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="A contract that you wish to give part of your overflow to."
@@ -32,13 +35,15 @@ export default function BudgetAdvancedForm({
         extra="The percentage of overflow that you’ll pre-allocate tothe beneficiary contract instead of returning to your contributors."
         name="beneficiaryAllocation"
         label="Beneficiary allocation"
+        initialValue={0}
       >
-        <Input defaultValue={0} dir="rtl" suffix="%" placeholder="5" />
+        <Input dir="rtl" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="The rate at which contributions to future budgets are valued compared to contributions to this budget."
         name="bias"
         label="Bias"
+        initialValue={100}
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input

@@ -221,29 +221,6 @@ export default function Owner({
           }}
         >
           <div>
-            {!currentBudget ? (
-              <a
-                style={{
-                  fontWeight: 600,
-                  color: '#fff',
-                  textDecoration: 'none',
-                }}
-                href="/init"
-              >
-                {section(
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    Initialize tickets if you haven't yet!<span>&gt;</span>
-                  </div>,
-                  '#2255ff',
-                )}
-              </a>
-            ) : null}
-
             {section(
               current ?? (
                 <div>

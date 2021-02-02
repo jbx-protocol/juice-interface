@@ -1,31 +1,29 @@
-import { Form, FormInstance, Input, Select } from 'antd'
+import { Form, FormProps, Input, Select } from 'antd'
 import React from 'react'
-
-import { Contracts } from '../../models/contracts'
 
 export default function TicketsForm({
   tokenOptions,
-  form,
+  props,
 }: {
   tokenOptions: { label: string; value: string }[]
-  form: FormInstance<{ name: string; symbol: string; rewardToken: string }>
+  props: FormProps<{ name: string; symbol: string; rewardToken: string }>
 }) {
   return (
-    <Form layout="vertical">
+    <Form {...props}>
       <h2>Create your ticket tokens</h2>
 
       <Form.Item
         extra="The name of your ticket token is used across web3."
-        name="project-name"
-        label="Project Name"
+        name="name"
+        label="Name"
         rules={[{ required: true }]}
       >
         <Input placeholder="Ticket" />
       </Form.Item>
       <Form.Item
         extra="The ticker of your ticket token is used across web3."
-        name="name"
-        label="Name"
+        name="symbol"
+        label="Ticker"
         rules={[{ required: true }]}
       >
         <Input placeholder="tMYPROJ" />
@@ -34,11 +32,16 @@ export default function TicketsForm({
         extra="The ERC-20 token that your ticket tokens are redeemable for."
         name="rewardToken"
         label="Reward token"
-        rules={[{ required: true }]}
+        initialValue={tokenOptions[0].value}
       >
-        <Select defaultValue={tokenOptions}>
-          {tokenOptions?.map(opt => (
-            <Select.Option value={opt.value}>{opt.label}</Select.Option>
+        <Select>
+          {tokenOptions.map(opt => (
+            <Select.Option value={opt.value}>
+              {opt.label}{' '}
+              <span style={{ fontSize: '.7rem', opacity: 0.5 }}>
+                {opt.value}
+              </span>{' '}
+            </Select.Option>
           ))}
         </Select>
       </Form.Item>

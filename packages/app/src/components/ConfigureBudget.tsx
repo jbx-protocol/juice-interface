@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { Button, Form, Input, Steps } from 'antd'
+import { Button, Form, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 

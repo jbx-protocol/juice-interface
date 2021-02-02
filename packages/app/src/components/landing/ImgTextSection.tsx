@@ -1,16 +1,17 @@
 import React from 'react'
-import { padding } from '../../constants/styles/padding'
 
 export default function ImgTextSection({
   img,
   imgPosition,
   text,
   title,
+  alt,
 }: {
   img: string
   imgPosition: 'left' | 'right'
   text?: string[]
   title?: string
+  alt?: string
 }) {
   const padding = 40
 
@@ -32,6 +33,7 @@ export default function ImgTextSection({
           gridColumnStart: imgPosition === 'right' ? 2 : 1,
         }}
         src={img}
+        alt={alt}
       ></img>
       <div>
         {title ? <h3>{title}</h3> : null}

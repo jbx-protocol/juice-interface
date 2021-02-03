@@ -100,7 +100,7 @@ export default function Owner({
     )
 
     transactor(
-      contracts.Juicer.sustainOwner(
+      contracts.Juicer.payOwner(
         currentBudget.owner,
         amount,
         currentBudget.want,
@@ -211,6 +211,7 @@ export default function Owner({
             {section(
               <Rewards
                 contracts={contracts}
+                transactor={transactor}
                 budget={currentBudget}
                 providerAddress={providerAddress}
               />,

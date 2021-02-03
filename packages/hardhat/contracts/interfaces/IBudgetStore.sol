@@ -8,11 +8,17 @@ import "../libraries/Budget.sol";
 interface IBudgetStore is IStore {
     function latestBudgetId(address _owner) external returns (uint256);
 
-    function votes(uint256 _budgetId, bool _yay) external returns (uint256);
+    function votes(
+        uint256 _budgetId,
+        uint256 _configured,
+        bool _yay
+    ) external returns (uint256);
 
-    function votesByAddress(uint256 _budgetId, address _voter)
-        external
-        returns (uint256);
+    function votesByAddress(
+        uint256 _budgetId,
+        uint256 _configured,
+        address _voter
+    ) external returns (uint256);
 
     function budgetCount() external returns (uint256);
 
@@ -66,10 +72,9 @@ interface IBudgetStore is IStore {
 
     function addVotes(
         uint256 _budgetId,
+        uint256 _configured,
         bool _yay,
         address _voter,
         uint256 _amount
     ) external;
-
-    function clearVotes(uint256 _budgetId) external;
 }

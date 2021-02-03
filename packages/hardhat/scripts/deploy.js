@@ -12,18 +12,23 @@ const main = async () => {
 
   const token = await deploy("Token");
 
+  const staking = await deploy("TimelockStaking");
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
-    3,
+    staking.address,
+    5,
     [token.address],
     uniswapV2Router
   ]);
+  const minter = await deploy("Minter", [controller.address]);
+  const maintainer = await deploy("Maintainer", [controller.address]);
 
   const admin = await deploy("Admin", [
     juicer.address,
+     minter.address, maintainer.address,
     "Juice Tickets",
     "tJUICE",
     token.address,

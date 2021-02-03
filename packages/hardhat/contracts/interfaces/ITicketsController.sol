@@ -20,8 +20,6 @@ interface ITicketsController {
 
     event Migrate(address indexed to);
 
-    event MintReservedTickets(address minter, address issuer);
-
     event Swap(
         address issuer,
         IERC20 from,
@@ -59,8 +57,6 @@ interface ITicketsController {
         IERC20 _to,
         uint256 _minSwappedAmount
     ) external;
-
-    function mintReservedTickets(address _issuer) external;
 
     function addToMigrationAllowList(address _contract) external;
 

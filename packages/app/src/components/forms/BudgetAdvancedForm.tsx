@@ -43,7 +43,7 @@ export default function BudgetAdvancedForm({
         name="ownerAllocation"
         label="Owner surplus"
       >
-        <Input dir="rtl" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="A contract that you wish to give part of your overflow to."
@@ -58,7 +58,7 @@ export default function BudgetAdvancedForm({
         name="beneficiaryAllocation"
         label="Beneficiary allocation"
       >
-        <Input dir="rtl" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="The rate (95-100) at which contributions to future budgets are valued compared to contributions to this budget."
@@ -69,7 +69,7 @@ export default function BudgetAdvancedForm({
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
             defaultValue={props.initialValues?.bias ?? initialBias}
-            dir="rtl"
+            className="align-end"
             suffix="%"
             min={95}
             max={100}

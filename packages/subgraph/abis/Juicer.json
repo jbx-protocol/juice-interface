@@ -12,11 +12,6 @@
         "type": "address"
       },
       {
-        "internalType": "contract ITimelockStaking",
-        "name": "_staking",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_fee",
         "type": "uint256"
@@ -549,19 +544,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "staking",
-    "outputs": [
-      {
-        "internalType": "contract ITimelockStaking",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -628,30 +610,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_budgetId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "_yay",
-        "type": "bool"
-      }
-    ],
-    "name": "vote",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

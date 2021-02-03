@@ -17,6 +17,11 @@
         "type": "address"
       },
       {
+        "internalType": "contract IBudgetBallot",
+        "name": "_budgetBallot",
+        "type": "address"
+      },
+      {
         "internalType": "contract UniswapV2Router02",
         "name": "_router",
         "type": "address"

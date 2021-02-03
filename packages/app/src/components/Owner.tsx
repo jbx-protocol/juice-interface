@@ -12,6 +12,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
+import BudgetsHistory from './BudgetsHistory'
 import KeyValRow from './KeyValRow'
 import ReconfigureBudget from './ReconfigureBudget'
 import Rewards from './Rewards'
@@ -220,23 +221,6 @@ export default function Owner({
 
         <Row gutter={spacing}>
           <Col span={12}>
-            {section(
-              <a
-                href={
-                  '/history/' +
-                  (currentBudget?.total?.toNumber()
-                    ? currentBudget?.id?.toNumber()
-                    : currentBudget?.previous?.toNumber())
-                }
-              >
-                View history (not working yet)
-              </a>,
-            )}
-          </Col>
-        </Row>
-
-        <Row gutter={spacing}>
-          <Col span={12}>
             {queuedBudget ? (
               section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
             ) : (
@@ -261,6 +245,20 @@ export default function Owner({
                 />
               </div>
             ) : null}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {section(
+              <BudgetsHistory
+                startId={currentBudget.id}
+                contracts={contracts}
+                transactor={transactor}
+                providerAddress={providerAddress}
+              />,
+              'Budget History',
+            )}
           </Col>
         </Row>
       </Space>

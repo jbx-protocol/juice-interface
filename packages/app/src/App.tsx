@@ -77,9 +77,6 @@ function App() {
                 onNeedAddress={loadWeb3Modal}
               />
             </Route>
-            <Route exact path="/init">
-              <InitTickets contracts={contracts} transactor={transactor} />
-            </Route>
             <Route exact path="/gimme">
               <Gimme
                 contracts={contracts}
@@ -92,13 +89,6 @@ function App() {
             </Route>
             <Route exact path="/:owner">
               <Budgets
-                contracts={contracts}
-                transactor={transactor}
-                providerAddress={providerAddress}
-              />
-            </Route>
-            <Route exact path="/history/:number">
-              <BudgetsHistory
                 contracts={contracts}
                 transactor={transactor}
                 providerAddress={providerAddress}

@@ -1,22 +1,21 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { Button, Col, Divider, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Web3 from 'web3'
 
-import { ContractName } from '../constants/contract-name'
-import { localProvider } from '../constants/local-provider'
-import useContractReader from '../hooks/ContractReader'
-import useEventListener from '../hooks/EventListener'
-import { Contracts } from '../models/contracts'
-import { SustainEvent } from '../models/events/sustain-event'
-import { Budget } from '../models/budget'
-import { Transactor } from '../models/transactor'
-import ConfigureBudget from './ConfigureBudget'
-import KeyValRow from './KeyValRow'
-import BudgetDetail from './BudgetDetail'
-import TicketsBalance from './TicketsBalance'
+import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
-import { Button } from 'antd'
+import { shadowCard } from '../constants/styles/shadow-card'
+import { erc20Contract } from '../helpers/erc20Contract'
+import useContractReader from '../hooks/ContractReader'
+import { Budget } from '../models/budget'
+import { Contracts } from '../models/contracts'
+import { Transactor } from '../models/transactor'
+import BudgetDetail from './BudgetDetail'
+import BudgetsHistory from './BudgetsHistory'
+import KeyValRow from './KeyValRow'
+import ReconfigureBudget from './ReconfigureBudget'
+import Rewards from './Rewards'
 
 export default function Owner({
   providerAddress,
@@ -28,6 +27,7 @@ export default function Owner({
   contracts?: Contracts
 }) {
   const [sustainAmount, setSustainAmount] = useState<number>(0)
+  const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
 
   const { owner }: { owner?: string } = useParams()
 
@@ -39,6 +39,26 @@ export default function Owner({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
+    callback: budget => {
+      if (owner && !budget) window.location.href = '/create/' + owner
+    },
+  })
+
+  const ticketAddress = useContractReader<string>({
+    contract: contracts?.TicketStore,
+    functionName: 'tickets',
+    args: [owner],
+  })
+
+  const ticketName = useContractReader<string>({
+    contract: erc20Contract(ticketAddress),
+    functionName: 'name',
+    formatter: (value: string) => Web3.utils.hexToString(value),
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(currentBudget?.want),
+    functionName: 'name',
   })
 
   const queuedBudget = useContractReader<Budget>({
@@ -47,17 +67,17 @@ export default function Owner({
     args: [owner],
   })
 
-  const currentSustainEvents = (useEventListener({
-    contracts,
-    contractName: ContractName.Juicer,
-    eventName: 'SustainBudget',
-    provider: localProvider,
-    startBlock: 1,
-    getInitial: true,
-    topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],
-  }) as SustainEvent[])
-    .filter(e => e.owner === owner)
-    .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
+  // const currentSustainEvents = (useEventListener({
+  //   contracts,
+  //   contractName: ContractName.Juicer,
+  //   eventName: 'SustainBudget',
+  //   provider: localProvider,
+  //   startBlock: 1,
+  //   getInitial: true,
+  //   topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],
+  // }) as SustainEvent[])
+  //   .filter(e => e.owner === owner)
+  //   .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
 
   function sustain() {
     if (!transactor || !contracts?.Juicer || !currentBudget?.owner) return
@@ -80,7 +100,7 @@ export default function Owner({
     )
 
     transactor(
-      contracts.Juicer.sustainOwner(
+      contracts.Juicer.payOwner(
         currentBudget.owner,
         amount,
         currentBudget.want,
@@ -90,178 +110,159 @@ export default function Owner({
     )
   }
 
-  const configureBudget = (
-    <ConfigureBudget transactor={transactor} contracts={contracts} />
-  )
-
   function header(text: string) {
     return (
-      <h4
+      <h2
         style={{
           margin: 0,
-          textTransform: 'uppercase',
-          color: '#777',
+          color: 'black',
+          fontWeight: 600,
         }}
       >
         {text}
-      </h4>
+      </h2>
     )
   }
 
-  function section(content?: JSX.Element, background = '#f2f2f2') {
+  function section(content?: JSX.Element, headerText?: string) {
     if (!content) return null
 
     return (
-      <div
-        style={{
-          padding: spacing,
-          marginBottom: spacing,
-          background,
-          borderRadius: 10,
-        }}
-      >
-        {content}
+      <div>
+        {headerText ? header(headerText) : null}
+        <div
+          style={{
+            ...shadowCard,
+            padding: 20,
+          }}
+        >
+          {content}
+        </div>
       </div>
     )
   }
 
-  const sustainments = (
-    <div>
-      <h3>Thanks to...</h3>
-      {currentSustainEvents.length ? (
-        currentSustainEvents.map((e, i) => (
-          <div
-            style={{
-              marginBottom: 20,
-              lineHeight: 1.2,
-            }}
-            key={i}
-          >
-            <div>Amount: {e.amount?.toNumber()}</div>
-            <div>Sustainer: {e.sustainer}</div>
-            <div>Beneficiary: {e.beneficiary}</div>
-          </div>
-        ))
-      ) : (
-        <div>No sustainments yet</div>
-      )}
-    </div>
-  )
+  // const sustainments = (
+  //   <div>
+  //     <h3>Thanks to...</h3>
+  //     {currentSustainEvents.length ? (
+  //       currentSustainEvents.map((e, i) => (
+  //         <div
+  //           style={{
+  //             marginBottom: 20,
+  //             lineHeight: 1.2,
+  //           }}
+  //           key={i}
+  //         >
+  //           <div>Amount: {e.amount?.toNumber()}</div>
+  //           <div>Sustainer: {e.sustainer}</div>
+  //           <div>Beneficiary: {e.beneficiary}</div>
+  //         </div>
+  //       ))
+  //     ) : (
+  //       <div>No sustainments yet</div>
+  //     )}
+  //   </div>
+  // )
 
-  const current = !currentBudget ? null : (
-    <div
-      style={{
-        display: 'grid',
-        gridAutoFlow: 'row',
-        rowGap: spacing,
-      }}
-    >
-      <div>
-        {header('Current money pool')}
-
-        {currentBudget ? (
-          <BudgetDetail
-            providerAddress={providerAddress}
-            budget={currentBudget}
-            showSustained={true}
-            showTimeLeft={true}
-            contracts={contracts}
-            transactor={transactor}
-          />
-        ) : (
-          <div>Getting money pool...</div>
-        )}
-      </div>
-
-      {currentBudget
-        ? KeyValRow(
-            'Sustain money pool',
-            <span>
-              <input
-                style={{ marginRight: 10 }}
-                name="sustain"
-                placeholder="0"
-                onChange={e => setSustainAmount(parseFloat(e.target.value))}
-              ></input>
-              <Button onClick={sustain}>Sustain</Button>
-            </span>,
-          )
-        : null}
-
-      <a
-        href={
-          '/history/' +
-          (currentBudget?.total?.toNumber()
-            ? currentBudget?.id?.toNumber()
-            : currentBudget?.previous?.toNumber())
-        }
-      >
-        Pool history
-      </a>
-    </div>
-  )
+  if (!currentBudget) return null
 
   return (
-    <div>
-      <TicketsBalance
-        contracts={contracts}
-        issuerAddress={owner}
-        ticketsHolderAddress={providerAddress}
-        transactor={transactor}
-      />
-      <div style={{ padding: padding.app }}>
-        <h3>{owner}</h3>
+    <div style={{ background: colors.light, padding: padding.app }}>
+      <h1>{ticketName}</h1>
+      <h3>{owner}</h3>
 
-        <div style={{ marginTop: 20 }}>
-          <div>
-            {current ?? (
-              <div
-                style={{
-                  maxWidth: 960,
-                  margin: 'auto',
-                  paddingTop: 20,
-                  paddingBottom: 40,
-                }}
-              >
-                <h1 style={{ marginTop: 0 }}>Create Budget</h1>
-                {configureBudget}
+      <Divider orientation="center"></Divider>
+
+      <Space size={spacing} direction="vertical">
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {section(
+              <div>
+                <BudgetDetail
+                  providerAddress={providerAddress}
+                  budget={currentBudget}
+                  showSustained={true}
+                  showTimeLeft={true}
+                  contracts={contracts}
+                  transactor={transactor}
+                />
+                {KeyValRow(
+                  'Sustain budget',
+                  <Input
+                    style={{ marginRight: 10 }}
+                    name="sustain"
+                    placeholder="0"
+                    suffix={wantTokenName}
+                    onChange={e => setSustainAmount(parseFloat(e.target.value))}
+                    addonAfter={
+                      <Button type="text" onClick={sustain}>
+                        Sustain
+                      </Button>
+                    }
+                  />,
+                )}
+              </div>,
+              'Active Budget',
+            )}
+          </Col>
+
+          <Col span={12}>
+            {section(
+              <Rewards
+                contracts={contracts}
+                transactor={transactor}
+                budget={currentBudget}
+                providerAddress={providerAddress}
+              />,
+              'Rewards',
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {queuedBudget ? (
+              section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
+            ) : (
+              <div>No upcoming budgets</div>
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {isOwner ? (
+              <div>
+                <Button onClick={() => setShowReconfigureModal(true)}>
+                  Reconfigure budget
+                </Button>
+                <ReconfigureBudget
+                  transactor={transactor}
+                  contracts={contracts}
+                  currentValue={currentBudget}
+                  visible={showReconfigureModal}
+                  onCancel={() => setShowReconfigureModal(false)}
+                />
               </div>
-            )}
-            {section(
-              currentBudget ? (
-                <div
-                  style={{
-                    display: 'grid',
-                    gridAutoFlow: 'row',
-                    rowGap: spacing,
-                  }}
-                >
-                  {header('Queued Budget')}
-                  {queuedBudget ? (
-                    <BudgetDetail budget={queuedBudget} />
-                  ) : (
-                    <div>Nada</div>
-                  )}
-                </div>
-              ) : (
-                undefined
-              ),
-            )}
-            {section(
-              currentBudget && isOwner ? (
-                <div>
-                  {header('Reconfigure')}
-                  {configureBudget}
-                </div>
-              ) : (
-                undefined
-              ),
-            )}
-          </div>
+            ) : null}
+          </Col>
+        </Row>
 
-          {currentBudget ? sustainments : null}
-        </div>
-      </div>
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {section(
+              <BudgetsHistory
+                startId={currentBudget.id}
+                contracts={contracts}
+                transactor={transactor}
+                providerAddress={providerAddress}
+              />,
+              'Budget History',
+            )}
+          </Col>
+        </Row>
+      </Space>
     </div>
   )
 }

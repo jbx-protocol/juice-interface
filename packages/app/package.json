@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bnc-notify": "^1.5.1",
     "burner-provider": "^1.0.38",
+    "erc-20-abi": "^1.0.0",
     "node-sass": "4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

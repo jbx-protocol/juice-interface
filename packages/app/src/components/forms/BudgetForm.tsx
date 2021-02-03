@@ -4,6 +4,7 @@ import React from 'react'
 
 export default function BudgetForm({
   props,
+  header,
 }: {
   props: FormProps<{
     duration: number
@@ -11,6 +12,7 @@ export default function BudgetForm({
     brief: string
     link: string
   }>
+  header?: string
 }) {
   const layout = {
     labelCol: { span: 6 },
@@ -18,10 +20,12 @@ export default function BudgetForm({
   }
 
   return (
-    <Form {...props} {...layout}>
-      <Form.Item wrapperCol={{ offset: 6 }}>
-        <h2>Configure your budgets</h2>
-      </Form.Item>
+    <Form {...layout} {...props}>
+      {header ? (
+        <Form.Item wrapperCol={{ offset: 6 }}>
+          <h2>{header}</h2>
+        </Form.Item>
+      ) : null}
 
       <Form.Item
         extra="The duration of your budgets."

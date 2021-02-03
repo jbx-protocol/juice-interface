@@ -7,11 +7,6 @@
         "type": "address"
       },
       {
-        "internalType": "contract IMinter",
-        "name": "_minter",
-        "type": "address"
-      },
-      {
         "internalType": "contract IMaintainer",
         "name": "_maintainer",
         "type": "address"

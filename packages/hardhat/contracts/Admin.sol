@@ -5,7 +5,6 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IMinter.sol";
 import "./interfaces/IMaintainer.sol";
 import "./interfaces/IBudgetBallot.sol";
 import "./abstract/JuiceAdmin.sol";
@@ -17,7 +16,6 @@ contract Admin is JuiceAdmin {
 
     /** 
       @param _juicer The juicer that is being administered.
-      @param _minter The minter that is being administered.
       @param _maintainer The maintainer that is being administered.
       @param _budgetBallot The budget ballet that is being administered.
       @param _router The router used to execute swaps.
@@ -25,7 +23,6 @@ contract Admin is JuiceAdmin {
     */
     constructor(
         IJuicer _juicer,
-        IMinter _minter,
         IMaintainer _maintainer,
         IBudgetBallot _budgetBallot,
         UniswapV2Router02 _router,
@@ -37,10 +34,6 @@ contract Admin is JuiceAdmin {
         appointJuicer(juicer);
         juicer.issueTickets("Juice", "JUICE", _rewardToken);
 
-        _budgetStore.grantRole_(
-            _budgetStore.DEFAULT_ADMIN_ROLE_(),
-            address(_minter)
-        );
         _budgetStore.grantRole_(
             _budgetStore.DEFAULT_ADMIN_ROLE_(),
             address(_maintainer)

@@ -145,6 +145,25 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "issuer",
+        "type": "address"
+      }
+    ],
+    "name": "MintReservedTickets",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "holder",
@@ -416,6 +435,35 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      }
+    ],
+    "name": "getReservedTickets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_issuers",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_beneficiaries",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_admin",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "_name",
         "type": "string"
@@ -445,6 +493,19 @@
       }
     ],
     "name": "migrate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      }
+    ],
+    "name": "mintReservedTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

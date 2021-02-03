@@ -14,13 +14,13 @@ const main = async () => {
   const ticketStore = await deploy("TicketStore");
 
   const juicer = await deploy("Juicer", [budgetStore.address, ticketStore.address, 5, [token.address], "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]); 
-  const minter = await deploy("Minter", [juicer.address]);
+  // const minter = await deploy("Minter", [juicer.address]);
   const maintainer = await deploy("Maintainer", [juicer.address]);
 
   const staker = await deploy("TimelockStaker");
   const budgetBallot = await deploy("BudgetBallot", [juicer.address, staker.address]);
   
-  const admin =  await deploy("Admin", [juicer.address, minter.address, maintainer.address, budgetBallot.address, token.address, "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]);
+  const admin =  await deploy("Admin", [juicer.address, maintainer.address, budgetBallot.address, token.address, "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]);
 
   // const exampleToken = await deploy("ExampleToken")
   // const examplePriceOracle = await deploy("ExamplePriceOracle")

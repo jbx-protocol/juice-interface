@@ -32,3 +32,7 @@ label {
 .ant-form-item-label > label {
   white-space: pre-line;
 }
+
+.ant-input-affix-wrapper.align-end > input {
+  text-align: end;
+}

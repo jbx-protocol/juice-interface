@@ -164,6 +164,8 @@ export default function Owner({
   //   </div>
   // )
 
+  if (!currentBudget) return null
+
   return (
     <div style={{ background: colors.light, padding: padding.app }}>
       <h1>{ticketName}</h1>

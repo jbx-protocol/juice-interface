@@ -29,6 +29,7 @@ export default function ReconfigureBudget({
     target: number
     brief: string
     link: string
+    want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
     bias: number

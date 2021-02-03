@@ -9,6 +9,7 @@ export default function BudgetForm({
   props: FormProps<{
     duration: number
     target: number
+    want: string
     brief: string
     link: string
   }>
@@ -33,7 +34,7 @@ export default function BudgetForm({
         label="Duration"
         rules={[{ required: true }]}
       >
-        <Input placeholder="30" dir="rtl" suffix="days" />
+        <Input className="align-end" placeholder="30" suffix="days" />
       </Form.Item>
       <Form.Item
         extra="The amout your project needs for each Budget period."
@@ -41,7 +42,14 @@ export default function BudgetForm({
         label="Amount"
         rules={[{ required: true }]}
       >
-        <Input placeholder="0" dir="rtl" suffix="DAI" />
+        <Input className="align-end" placeholder="0" suffix="DAI" />
+      </Form.Item>
+      <Form.Item
+        extra="The ERC-20 token that your budget will receive payments in."
+        name="want"
+        label="Payment token"
+      >
+        <Input placeholder="0x6b175474e89094c44da98b954eedeac495271d0f" />
       </Form.Item>
       <Form.Item
         extra="A brief description of what your Budgets are used for."

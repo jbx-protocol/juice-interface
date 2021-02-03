@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
@@ -33,6 +34,7 @@ export default function ConfigureBudget({
     target: number
     brief: string
     link: string
+    want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
     bias: number
@@ -57,15 +59,13 @@ export default function ConfigureBudget({
 
   if (!transactor || !contracts) return null
 
-  const eth = new Web3(Web3.givenProvider).eth
-
   function initTickets() {
     if (!transactor || !contracts) return
 
     const fields = ticketsForm.getFieldsValue(true)
 
     const _name = Web3.utils.utf8ToHex(fields.name)
-    const _symbol = Web3.utils.utf8ToHex(fields.symbol)
+    const _symbol = Web3.utils.utf8ToHex('t' + fields.symbol)
     const _rewardToken = contracts.Token.address
 
     console.log('🧃 Calling Juicer.issueTickets(name, symbol, rewardToken)', {
@@ -93,24 +93,21 @@ export default function ConfigureBudget({
       ...budgetAdvancedForm.getFieldsValue(true),
     }
 
-    const _target = eth.abi.encodeParameter('uint256', fields.target)
-    const _duration = eth.abi.encodeParameter(
-      'uint256',
+    const _target = BigNumber.from(fields.target).toHexString()
+    const _duration = BigNumber.from(
       fields.duration * SECONDS_IN_DAY,
-    )
-    const _want = ticketsForm.getFieldsValue(true).rewardToken
+    ).toHexString()
+    const _want = budgetForm.getFieldValue('want')
     const _link = fields.link
     const _brief = fields.brief
-    const _bias = eth.abi.encodeParameter('uint256', fields.bias)
-    const _ownerAllocation = eth.abi.encodeParameter(
-      'uint256',
-      fields.ownerAllocation,
-    )
-    const _beneficiaryAllocation = eth.abi.encodeParameter(
-      'uint256',
-      fields.beneficiaryAllocation,
-    )
-    const _beneficiaryAddress = fields.beneficiaryAddress ?? '0'
+    const _bias = BigNumber.from(fields.bias).toHexString()
+    const _ownerAllocation = fields.ownerAllocation
+      ? BigNumber.from(fields.ownerAllocation).toHexString()
+      : 0
+    const _beneficiaryAllocation = fields.beneficiaryAllocation
+      ? BigNumber.from(fields.beneficiaryAllocation).toHexString()
+      : 0
+    const _beneficiaryAddress = fields.beneficiaryAddress
 
     console.log('🧃 Calling Juicer.configureBudget(...)', {
       _target,
@@ -138,13 +135,6 @@ export default function ConfigureBudget({
     )
   }
 
-  const tokenOptions = [
-    {
-      label: 'TOKEN',
-      value: contracts.Token.address,
-    },
-  ]
-
   const steps = [
     {
       title: 'Tickets',
@@ -153,8 +143,15 @@ export default function ConfigureBudget({
         'Tickets already initialized'
       ) : (
         <TicketsForm
-          tokenOptions={tokenOptions}
-          props={{ form: ticketsForm }}
+          props={{
+            form: ticketsForm,
+            initialValues: {
+              rewardToken:
+                process.env.NODE_ENV === 'development'
+                  ? contracts.Token.address
+                  : undefined,
+            },
+          }}
           header="Create your ticket tokens"
         />
       ),
@@ -169,7 +166,15 @@ export default function ConfigureBudget({
       validate: () => budgetForm.validateFields(),
       content: (
         <BudgetForm
-          props={{ form: budgetForm }}
+          props={{
+            form: budgetForm,
+            initialValues: {
+              want:
+                process.env.NODE_ENV === 'development'
+                  ? contracts.Token.address
+                  : undefined,
+            },
+          }}
           header="Configure your budgets"
         />
       ),
@@ -204,20 +209,15 @@ export default function ConfigureBudget({
               <Space size="large">
                 <Statistic
                   title="Name"
-                  value={ticketsForm.getFieldValue('name')}
+                  value={'t' + ticketsForm.getFieldValue('name')}
                 />
                 <Statistic
                   title="Symbol"
                   value={ticketsForm.getFieldValue('symbol')}
                 />
                 <Statistic
-                  title="Token"
-                  value={
-                    tokenOptions.find(
-                      opt =>
-                        opt.value === ticketsForm.getFieldValue('rewardToken'),
-                    )?.label
-                  }
+                  title="Reward token"
+                  value={ticketsForm.getFieldValue('rewardToken')}
                 />
               </Space>
             </div>
@@ -233,65 +233,75 @@ export default function ConfigureBudget({
 
           <Divider orientation="center" />
 
-          <div>
-            <Space size="large" direction="vertical">
-              <h1>Budget</h1>
-              <div>
-                <Space size="large">
-                  <Statistic
-                    title="Duration"
-                    value={budgetForm.getFieldValue('duration')}
-                    suffix="days"
-                  />
-                  <Statistic
-                    title="Amount"
-                    value={budgetForm.getFieldValue('target')}
-                    suffix="DAI"
-                  />
-                  <Statistic
-                    title="Link"
-                    value={budgetForm.getFieldValue('link')}
-                  />
-                </Space>
-              </div>
-              <div>
+          <Space size="large" direction="vertical">
+            <h1>Budget</h1>
+            <div>
+              <Space size="large">
                 <Statistic
-                  title="Description"
-                  value={budgetForm.getFieldValue('brief')}
-                />
-              </div>
-              <Space size="large" align="end">
-                <Statistic
-                  style={{ minWidth: 100 }}
-                  title="Bias"
-                  value={budgetForm.getFieldValue('bias')}
-                  suffix="%"
+                  title="Duration"
+                  value={budgetForm.getFieldValue('duration')}
+                  suffix="days"
                 />
                 <Statistic
-                  title="Beneficiary address"
-                  value={budgetForm.getFieldValue('beneficiaryAddress')}
+                  title="Amount"
+                  value={budgetForm.getFieldValue('target')}
+                  suffix="DAI"
                 />
                 <Statistic
-                  title="Beneficiary surplus"
-                  value={budgetForm.getFieldValue('beneficiaryAllocation')}
-                  suffix="%"
-                />
-                <Statistic
-                  title="Beneficiary owner"
-                  value={budgetForm.getFieldValue('ownerAllocation')}
-                  suffix="%"
+                  title="Link"
+                  value={budgetForm.getFieldValue('link')}
                 />
               </Space>
-              <Button
-                disabled={!initializedTickets}
-                htmlType="submit"
-                type="primary"
-                onClick={submitBudget}
-              >
-                Create budget
-              </Button>
+            </div>
+            <div>
+              <Statistic
+                title="Payment token"
+                value={budgetForm.getFieldValue('want')}
+              />
+            </div>
+            <div>
+              <Statistic
+                title="Description"
+                value={budgetForm.getFieldValue('brief')}
+              />
+            </div>
+            <Space size="large" align="end">
+              <Statistic
+                style={{ minWidth: 100 }}
+                title="Bias"
+                value={budgetAdvancedForm.getFieldValue('bias')}
+                suffix="%"
+              />
+              <Statistic
+                title="Owner surplus"
+                value={budgetAdvancedForm.getFieldValue('ownerAllocation') ?? 0}
+                suffix="%"
+              />
+              <Statistic
+                title="Beneficiary surplus"
+                value={
+                  budgetAdvancedForm.getFieldValue('beneficiaryAllocation') ?? 0
+                }
+                suffix="%"
+              />
             </Space>
-          </div>
+            <Space size="large" align="end">
+              <Statistic
+                title="Beneficiary address"
+                value={
+                  budgetAdvancedForm.getFieldValue('beneficiaryAddress') ?? '--'
+                }
+              />
+            </Space>
+            <Button
+              disabled={!initializedTickets}
+              htmlType="submit"
+              type="primary"
+              onClick={submitBudget}
+            >
+              Create budget
+            </Button>
+          </Space>
         </div>
       ),
     },

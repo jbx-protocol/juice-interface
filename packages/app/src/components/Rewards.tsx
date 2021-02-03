@@ -23,7 +23,7 @@ export default function Rewards({
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
 
-  const claimableProportion = BigNumber.from(0.382 * 1000).toHexString()
+  const claimableProportion = BigNumber.from(382).toHexString()
 
   const ticketAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
@@ -145,9 +145,8 @@ export default function Rewards({
       )}
       {KeyValRow('Your share', (share ?? '--') + '%')}
       {KeyValRow('Reward token', rewardTokenName)}
-      {KeyValRow('Overflow needing swap', rewardTokenName)}
       {KeyValRow(
-        'Swappable',
+        'Overflow needing swap',
         <span>
           {swappableAmount?.toString() ?? '--'} {wantTokenName}
           {swappableAmount?.gt(0) ? (

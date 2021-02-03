@@ -1,12 +1,10 @@
-import { Form, FormProps, Input, Select } from 'antd'
+import { Form, FormProps, Input } from 'antd'
 import React from 'react'
 
 export default function TicketsForm({
-  tokenOptions,
   props,
   header,
 }: {
-  tokenOptions: { label: string; value: string }[]
   props: FormProps<{ name: string; symbol: string; rewardToken: string }>
   header?: string
 }) {
@@ -37,21 +35,14 @@ export default function TicketsForm({
         label="Ticker"
         rules={[{ required: true }]}
       >
-        <Input placeholder="tMYPROJ" />
+        <Input prefix="t" placeholder="MYPROJ" />
       </Form.Item>
       <Form.Item
         extra="The ERC-20 token that your ticket tokens are redeemable for."
         name="rewardToken"
         label="Reward token"
-        initialValue={tokenOptions[0].value}
       >
-        <Select>
-          {tokenOptions.map((opt, i) => (
-            <Select.Option key={i} value={opt.value}>
-              {opt.label}
-            </Select.Option>
-          ))}
-        </Select>
+        <Input placeholder="0x6b175474e89094c44da98b954eedeac495271d0f" />
       </Form.Item>
     </Form>
   )

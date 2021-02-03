@@ -49,6 +49,7 @@ export default function BudgetAdvancedForm({
         extra="A contract that you wish to give part of your overflow to."
         name="beneficiaryAddress"
         label="Beneficiary contract"
+        rules={[{ required: true }]}
       >
         <Input placeholder="0x01a2b3c..." />
       </Form.Item>
@@ -63,6 +64,7 @@ export default function BudgetAdvancedForm({
         extra="The rate (95-100) at which contributions to future budgets are valued compared to contributions to this budget."
         name="bias"
         label="Bias"
+        rules={[{ required: true }]}
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input

@@ -39,7 +39,7 @@ contract BudgetStore is Store, IBudgetStore {
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
-    uint256 public override budgetCount;
+    uint256 public override budgetCount = 0;
 
     // --- external views --- //
 

@@ -124,6 +124,7 @@ export default function TicketsBalance({
 
         <Button
           type="ghost"
+          style={{ color: 'white' }}
           disabled={!balance}
           htmlType="submit"
           onClick={redeem}

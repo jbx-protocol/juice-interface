@@ -37,8 +37,8 @@ export default function ImgTextSection({
       ></img>
       <div>
         {title ? <h3>{title}</h3> : null}
-        {text?.map(t => (
-          <p>{t}</p>
+        {text?.map((t, i) => (
+          <p key={i}>{t}</p>
         ))}
       </div>
     </div>

@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import Web3 from 'web3'
 
 import { ContractName } from '../constants/contract-name'
@@ -20,9 +19,11 @@ import TicketsForm from './forms/TicketsForm'
 export default function ConfigureBudget({
   transactor,
   contracts,
+  owner,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
+  owner?: string
 }) {
   const [ticketsForm] = Form.useForm<{
     name: string
@@ -44,8 +45,6 @@ export default function ConfigureBudget({
   }>()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [initializedTickets, setInitializedTickets] = useState<boolean>(false)
-
-  const { owner }: { owner?: string } = useParams()
 
   // Check for existing budget for owner
   useContractReader<Budget>({
@@ -95,7 +94,8 @@ export default function ConfigureBudget({
 
     const _target = BigNumber.from(fields.target).toHexString()
     const _duration = BigNumber.from(
-      fields.duration * SECONDS_IN_DAY,
+      fields.duration *
+        (process.env.NODE_ENV === 'development' ? 1 : SECONDS_IN_DAY),
     ).toHexString()
     const _want = budgetForm.getFieldValue('want')
     const _link = fields.link

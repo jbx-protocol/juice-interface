@@ -40,7 +40,7 @@ export default function Owner({
     functionName: 'getCurrentBudget',
     args: [owner],
     callback: budget => {
-      if (owner && !budget) window.location.href = '/create/' + owner
+      if (owner && !budget) window.location.href = '/create'
     },
   })
 

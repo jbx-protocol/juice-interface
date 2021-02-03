@@ -51,6 +51,8 @@ library Budget {
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
         uint256 bias;
+        // The time when this Budget was last configured.
+        uint256 configured;
     }
 
     // --- internal transactions --- //
@@ -72,6 +74,7 @@ library Budget {
         self.o = _baseBudget.o;
         self.b = _baseBudget.b;
         self.bAddress = _baseBudget.bAddress;
+        self.configured = _baseBudget.configured;
     }
 
     // --- internal views --- //
@@ -128,7 +131,8 @@ library Budget {
                 self.bAddress,
                 false,
                 self.weight,
-                self.bias
+                self.bias,
+                self.configured
             );
     }
 

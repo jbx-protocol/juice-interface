@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
+import "./interfaces/IStaking.sol";
 
 import "./TicketStore.sol";
 
@@ -67,6 +68,10 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
+    /// @notice The amount of time a Budget must be in standby before it can become active.
+    /// @dev This allows for a voting period of 3 days.
+    uint256 public constant STANDBY_PERIOD = 269200;
+
     /// @notice The admin of the contract who makes admin fees.
     address public admin;
 
@@ -75,6 +80,9 @@ contract Juicer is IJuicer {
 
     /// @notice The contract that manages the Tickets.
     ITicketStore public immutable override ticketStore;
+
+    /// @notice The contract that manages staking Tickets.
+    IStaking public immutable override staking;
 
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable fee;
@@ -154,6 +162,7 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
+      @param _staking The Staking contract to use.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
       @param _wantTokenAllowList The tokens that are allowed as `want` tokens in Budgets.
       @param _router The router to use to swap tokens.
@@ -161,12 +170,14 @@ contract Juicer is IJuicer {
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
+        IStaking _staking,
         uint256 _fee,
         IERC20[] memory _wantTokenAllowList,
         UniswapV2Router02 _router
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
+        staking = _staking;
         fee = _fee;
         router = _router;
 
@@ -283,6 +294,7 @@ contract Juicer is IJuicer {
         _budget.o = _o;
         _budget.b = _b;
         _budget.bAddress = _bAddress;
+        _budget.configured = block.timestamp;
 
         // Save the Budget in the store.
         budgetStore.saveBudget(_budget);
@@ -290,6 +302,12 @@ contract Juicer is IJuicer {
         // Track this new `want` token in the store.
         // This is necessary for proper accounting when managing overflow.
         budgetStore.trackWantedToken(msg.sender, _tickets.rewardToken(), _want);
+
+        // Clear all votes for this Budget ID.
+        budgetStore.clearVotes(_budget.id);
+
+        // // Clear all staking time locks.
+        // delete _stakingTimelocks[_tickets];
 
         emit ConfigureBudget(
             _budget.id,
@@ -328,7 +346,8 @@ contract Juicer is IJuicer {
 
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data memory _budget = budgetStore.ensureActiveBudget(_owner);
+        Budget.Data memory _budget =
+            budgetStore.ensureActiveBudget(_owner, STANDBY_PERIOD);
 
         // Make sure the token being contributed matches the Budget's `want` token.
         require(
@@ -623,6 +642,45 @@ contract Juicer is IJuicer {
             _budget = budgetStore.getBudget(_budget.previous);
         }
         emit MintReservedTickets(msg.sender, _issuer);
+    }
+
+    function vote(uint256 _budgetId, bool _yay)
+        external
+        override
+        lock
+        returns (uint256)
+    {
+        // Get a reference to the Budget being tapped.
+        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
+
+        // Get the Tickets used for the Budget.
+        ITickets _tickets = ticketStore.tickets(_budget.owner);
+
+        // Find how many tickets the message sender has staked.
+        uint256 _stakedAmount = staking.staked[_tickets][msg.sender];
+
+        // Find how many votes the message sender has already cast.
+        uint256 _votedAmount =
+            budgetStore.votesByAddress(
+                _budgetId,
+                _budget.configured,
+                msg.sender
+            );
+
+        require(_stakedAmount > _votedAmount, "Juicer::vote: ALREADY_VOTED");
+
+        uint256 _votesToAdd = _stakedAmount.sub(_votedAmount);
+
+        // Add the votes.
+        budgetStore.addVotes(_budgetId, _yay, msg.sender, _votesToAdd);
+
+        // Lock the tickets until the budget's standby period is over.
+        staking.setTimelock(
+            _tickets,
+            _budget.configured,
+            msg.sender,
+            STANDBY_PERIOD
+        );
     }
 
     /**

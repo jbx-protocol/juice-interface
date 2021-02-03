@@ -6,6 +6,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IMaintainer.sol";
 
+/** 
+  @notice A contract that can clean up irrelevant data from a Juicer's stores.
+  @dev These transactions should hardly ever be needed. 
+*/
 contract Maintainer is IMaintainer {
     using Budget for Budget.Data;
 

@@ -7,6 +7,10 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/ITimelockStaker.sol";
 
+/** 
+  @notice A contract that can stake tokens, and unstake them if they aren't bound by a timelock.
+  @dev Anyone can stake any ERC-20 token, although only some specific tokens are used by the Juice ecosystem.
+*/
 contract TimelockStaker is ITimelockStaker {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
@@ -24,12 +28,12 @@ contract TimelockStaker is ITimelockStaker {
 
     constructor() public {}
 
-    /// @notice The amount of all tokens currently locked .
-    function stake(
-        IERC20 _token,
-        address _issuer,
-        uint256 _amount
-    ) external override {
+    /**
+      @notice Stakes tokens in this contract.
+      @param _token The token to stake.
+      @param _amount The amount of tokens to stake.
+    */
+    function stake(IERC20 _token, uint256 _amount) external override {
         // The message sender should have more than the amount being staked.
         require(
             _token.balanceOf(msg.sender) >= _amount,
@@ -43,11 +47,12 @@ contract TimelockStaker is ITimelockStaker {
         staked[_token][msg.sender] = staked[_token][msg.sender].add(_amount);
     }
 
-    function unstake(
-        IERC20 _token,
-        address _issuer,
-        uint256 _amount
-    ) external override {
+    /**
+      @notice Unstakes tokens if they're not timelocked.
+      @param _token The token to unstake.
+      @param _amount The amount of tokens to unstake.
+    */
+    function unstake(IERC20 _token, uint256 _amount) external override {
         // Tokens cannot be unstaked if they are locked.
         require(
             staked[_token][msg.sender] < block.timestamp,
@@ -67,16 +72,28 @@ contract TimelockStaker is ITimelockStaker {
         IERC20(_token).safeTransfer(msg.sender, _amount);
     }
 
+    /**
+      @notice Sets a timelock for certain staked tokens within which they can't be unstaked.
+      @param _token The token to timelock.
+      @param _lockId The ID of the timelock.
+      @param _staker The staker of the tokens.
+      @param _expiry The time when the lock expires.
+    */
     function setTimelock(
         IERC20 _token,
         uint256 _lockId,
-        address _voter,
+        address _staker,
         uint256 _expiry
     ) external override {
         require(msg.sender == controller, "Staking::setTimelock: UNAUTHORIZED");
-        timelocks[_token][_lockId][_voter] = _expiry;
+        timelocks[_token][_lockId][_staker] = _expiry;
     }
 
+    /**
+      @notice Sets the timelock controller.
+      @dev This can only be set once.
+      @param _controller The address that can set the timelock.
+    */
     function setController(address _controller) external override {
         require(
             controller == address(0),

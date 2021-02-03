@@ -63,24 +63,28 @@ contract Admin is JuiceAdmin {
         _juicer.setAdmin(address(this));
     }
 
-    function grantRole(IAccessControlWrapper _accessControl, address _newAdmin)
+    /** 
+      @notice Grants the admin role for a contract that this Admin contract controls.
+      @param _contract The contract that is being given access to.
+      @param _newAdmin The address that is being given the admin role.
+    */
+    function grantRole(IAccessControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {
-        _accessControl.grantRole_(
-            _accessControl.DEFAULT_ADMIN_ROLE_(),
-            _newAdmin
-        );
+        _contract.grantRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
     }
 
-    function revokeRole(IAccessControlWrapper _accessControl, address _newAdmin)
+    /** 
+      @notice Revokes the admin role for a contract that this Admin contract controls.
+      @param _contract The contract that is having access to revoked.
+      @param _newAdmin The address that is having the admin role revoked.
+    */
+    function revokeRole(IAccessControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {
-        _accessControl.revokeRole_(
-            _accessControl.DEFAULT_ADMIN_ROLE_(),
-            _newAdmin
-        );
+        _contract.revokeRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
     }
 
     /** 

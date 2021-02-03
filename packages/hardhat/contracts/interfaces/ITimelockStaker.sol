@@ -17,17 +17,9 @@ interface ITimelockStaker {
         address _staker
     ) external returns (uint256 _expiry);
 
-    function stake(
-        IERC20 _token,
-        address _issuer,
-        uint256 _amount
-    ) external;
+    function stake(IERC20 _token, uint256 _amount) external;
 
-    function unstake(
-        IERC20 _token,
-        address _issuer,
-        uint256 _amount
-    ) external;
+    function unstake(IERC20 _token, uint256 _amount) external;
 
     function setTimelock(
         IERC20 _token,

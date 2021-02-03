@@ -1,13 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button } from 'antd'
+import { Button, Input, Space } from 'antd'
 import { useState } from 'react'
-import Web3 from 'web3'
 
-import { daiAddress } from '../constants/dai-address'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
+import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
-import { Contracts } from '../models/contracts'
 import { Budget } from '../models/budget'
+import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import KeyValRow from './KeyValRow'
 
@@ -26,7 +25,18 @@ export default function BudgetDetail({
   showTimeLeft?: boolean
   providerAddress?: string
 }) {
-  const [tapAmount, setTapAmount] = useState<number>(0)
+  const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(budget?.want),
+    functionName: 'name',
+  })
+
+  const tappableAmount = useContractReader<BigNumber>({
+    contract: contracts?.BudgetStore,
+    functionName: 'getTappableAmount',
+    args: [budget?.id],
+  })
 
   const secondsLeft =
     budget &&
@@ -55,64 +65,11 @@ export default function BudgetDetail({
 
   const isOwner = budget?.owner === providerAddress
 
-  const rewardToken = useContractReader({
-    contract: contracts?.TicketStore,
-    functionName: 'getTicketRewardToken',
-    args: [budget?.owner],
-  })
-
-  const swappable: number | undefined = useContractReader({
-    contract: contracts?.TicketStore,
-    functionName: 'swappable',
-    args: [budget?.owner, rewardToken, daiAddress],
-    formatter: (num: BigNumber | undefined) => num?.toNumber(),
-  })
-
-  const tappableAmount: number | undefined = useContractReader<number>({
-    contract: contracts?.BudgetStore,
-    functionName: 'getTappableAmount',
-    args: [budget?.id],
-    formatter: (result: BigNumber) => result?.toNumber(),
-  })
-
-  function swap() {
-    if (!transactor || !contracts || !budget || swappable === undefined) return
-
-    const eth = new Web3(Web3.givenProvider).eth
-
-    const _swappable = eth.abi.encodeParameter('uint256', swappable)
-    // TODO handle conversion. Use 1:1 for now
-    const _expectedAmount = _swappable
-
-    console.log(
-      '🧃 Calling Juicer.swap(owner, want, swappable, target, expectedAmount)',
-      {
-        owner: budget.owner,
-        want: budget.want,
-        swappable: _swappable,
-        target: daiAddress,
-        expectedAmount: _expectedAmount,
-      },
-    )
-
-    transactor(
-      contracts.Juicer.swap(
-        budget.owner,
-        budget.want,
-        _swappable,
-        daiAddress,
-        _expectedAmount,
-      ),
-    )
-  }
-
   function tap() {
     if (!transactor || !contracts?.Juicer || !budget) return
 
-    const eth = new Web3(Web3.givenProvider).eth
-
-    const id = eth.abi.encodeParameter('uint256', budget.id)
-    const amount = eth.abi.encodeParameter('uint256', tapAmount)
+    const id = budget.id.toHexString()
+    const amount = tapAmount.toHexString()
 
     console.log('🧃 Calling Juicer.tapBudget(number, amount, address)', {
       id,
@@ -123,17 +80,18 @@ export default function BudgetDetail({
     transactor(contracts.Juicer?.tapBudget(id, amount, providerAddress))
   }
 
-  return budget ? (
+  if (!budget) return null
+
+  return (
     <div>
-      <div>
-        <a href={link} target="_blank" rel="noopener noreferrer">
-          {link}
-        </a>
-      </div>
-      <br />
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        {link}
+      </a>
       {KeyValRow('ID', budget.id.toString())}
-      {KeyValRow('Target', budget.target.toString())}
-      {showSustained ? KeyValRow('Sustained', budget.total.toString()) : null}
+      {KeyValRow('Target', budget.target.toString() + ' ' + wantTokenName)}
+      {showSustained
+        ? KeyValRow('Sustained', budget.total.toString() + ' ' + wantTokenName)
+        : null}
       {KeyValRow(
         'Start',
         new Date(budget.start.toNumber() * 1000).toISOString(),
@@ -170,47 +128,29 @@ export default function BudgetDetail({
         : null}
       {KeyValRow('Bias', <span>{budget.bias?.toString()}%</span>)}
       {KeyValRow('Weight', <span>{budget.weight?.toString()}</span>)}
-      {KeyValRow(
-        'Reserves',
-        budget.hasMintedReserves ? 'Minted' : 'Not minted',
-      )}
-      {KeyValRow(
-        'Swappable',
-        <span>
-          {swappable}
-          {swappable ? (
-            <Button htmlType="submit" onClick={swap}>
-              Swap
-            </Button>
-          ) : (
-            undefined
-          )}
-        </span>,
-      )}
-      {tappableAmount !== undefined && isOwner
+      {isOwner
         ? KeyValRow(
             'Withdrawable',
-            <span>
-              {tappableAmount}
-              {tappableAmount ? (
-                <span>
-                  <input
-                    style={{
-                      marginRight: 10,
-                      marginLeft: 20,
-                    }}
-                    name="withdrawable"
-                    placeholder="0"
-                    onChange={e => setTapAmount(parseFloat(e.target.value))}
-                  ></input>
-                  <Button disabled={tapAmount > tappableAmount} onClick={tap}>
+            <Space align="center">
+              <span style={{ whiteSpace: 'pre' }}>
+                {tappableAmount?.toString()} {wantTokenName}
+              </span>
+              <Input
+                name="withdrawable"
+                placeholder="0"
+                suffix={wantTokenName}
+                value={tapAmount.toString()}
+                max={tappableAmount?.toString()}
+                onChange={e => setTapAmount(BigNumber.from(e.target.value))}
+                addonAfter={
+                  <Button type="text" onClick={tap}>
                     Withdraw
                   </Button>
-                </span>
-              ) : null}
-            </span>,
+                }
+              />
+            </Space>,
           )
         : null}
     </div>
-  ) : null
+  )
 }

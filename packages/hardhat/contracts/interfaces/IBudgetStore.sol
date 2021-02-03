@@ -8,6 +8,12 @@ import "../libraries/Budget.sol";
 interface IBudgetStore is IStore {
     function latestBudgetId(address _owner) external returns (uint256);
 
+    function votes(uint256 _budgetId, bool _yay) external returns (uint256);
+
+    function votesByAddress(uint256 _budgetId, address _voter)
+        external
+        returns (uint256);
+
     function budgetCount() external returns (uint256);
 
     function getBudget(uint256 _budgetId)
@@ -48,7 +54,7 @@ interface IBudgetStore is IStore {
 
     function clearWantedTokens(address _owner, IERC20 _token) external;
 
-    function ensureActiveBudget(address _owner)
+    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
         external
         returns (Budget.Data memory);
 
@@ -57,4 +63,13 @@ interface IBudgetStore is IStore {
         returns (Budget.Data memory);
 
     function saveBudget(Budget.Data calldata _budget) external;
+
+    function addVotes(
+        uint256 _budgetId,
+        bool _yay,
+        address _voter,
+        uint256 _amount
+    ) external;
+
+    function clearVotes(uint256 _budgetId) external;
 }

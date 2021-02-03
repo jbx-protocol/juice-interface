@@ -13,4 +13,12 @@ interface IJuicer is IBudgetController, ITicketsController {
     function ticketStore() external returns (ITicketStore);
 
     function setAdmin(address _admin) external;
+
+    function stake(address _issuer, uint256 _amount) external returns (uint256);
+
+    function unstake(address _issuer, uint256 _amount)
+        external
+        returns (uint256);
+
+    function vote(uint256 _budgetId, bool _yay) external returns (uint256);
 }

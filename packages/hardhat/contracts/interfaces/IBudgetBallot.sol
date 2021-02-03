@@ -22,5 +22,5 @@ interface IBudgetBallot {
         uint256 _budgetId,
         bool _yay,
         uint256 _amount
-    ) external returns (uint256);
+    ) external;
 }

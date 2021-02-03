@@ -30,7 +30,7 @@ contract BudgetBallot is IBudgetBallot {
         uint256 _budgetId,
         bool _yay,
         uint256 _amount
-    ) external override returns (uint256) {
+    ) external override {
         IBudgetStore _budgetStore = juicer.budgetStore();
         ITicketStore _ticketStore = juicer.ticketStore();
 

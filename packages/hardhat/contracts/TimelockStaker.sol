@@ -12,7 +12,7 @@ contract TimelockStaker is ITimelockStaker {
     using SafeMath for uint256;
 
     /// @notice The address that can set staking timelocks.
-    address controller;
+    address public override controller;
 
     /// @notice The amount of all tokens currently staked by each address.
     mapping(IERC20 => mapping(address => uint256)) public override staked;
@@ -29,7 +29,7 @@ contract TimelockStaker is ITimelockStaker {
         IERC20 _token,
         address _issuer,
         uint256 _amount
-    ) external override returns (uint256) {
+    ) external override {
         // The message sender should have more than the amount being staked.
         require(
             _token.balanceOf(msg.sender) >= _amount,

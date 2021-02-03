@@ -541,6 +541,8 @@ contract Juicer is IJuicer {
         // Get a reference to the Budget being tapped.
         Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
 
+        require(_budget.id > 0, "Juicer::tapBudget: NOT_FOUND");
+
         // Only a Budget owner can tap its funds.
         require(_budget.owner == msg.sender, "Juicer::tapBudget: UNAUTHORIZED");
 

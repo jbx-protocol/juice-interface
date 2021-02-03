@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
+import "./interfaces/IAccessControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IMaintainer.sol";
 import "./interfaces/IBudgetBallot.sol";
@@ -60,6 +61,26 @@ contract Admin is JuiceAdmin {
             address(_juicer)
         );
         _juicer.setAdmin(address(this));
+    }
+
+    function grantRole(IAccessControlWrapper _accessControl, address _newAdmin)
+        external
+        onlyOwner
+    {
+        _accessControl.grantRole_(
+            _accessControl.DEFAULT_ADMIN_ROLE_(),
+            _newAdmin
+        );
+    }
+
+    function revokeRole(IAccessControlWrapper _accessControl, address _newAdmin)
+        external
+        onlyOwner
+    {
+        _accessControl.revokeRole_(
+            _accessControl.DEFAULT_ADMIN_ROLE_(),
+            _newAdmin
+        );
     }
 
     /** 

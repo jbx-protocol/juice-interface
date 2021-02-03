@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
-import "./interfaces/ITimelockStaking.sol";
 
 import "./TicketStore.sol";
 
@@ -73,7 +72,7 @@ contract Juicer is IJuicer {
 
     /// @notice The amount of time a Budget must be in standby before it can become active.
     /// @dev This allows for a voting period of 3 days.
-    uint256 public constant STANDBY_PERIOD = 269200;
+    uint256 public constant override STANDBY_PERIOD = 269200;
 
     /// @notice The admin of the contract who makes admin fees.
     address public override admin;
@@ -83,9 +82,6 @@ contract Juicer is IJuicer {
 
     /// @notice The contract that manages the Tickets.
     ITicketStore public immutable override ticketStore;
-
-    /// @notice The contract that manages staking Tickets.
-    ITimelockStaking public immutable override staking;
 
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
@@ -176,7 +172,6 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
-      @param _staking The Staking contract to use.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
       @param _wantTokenAllowList The tokens that are allowed as `want` tokens in Budgets.
       @param _router The router to use to swap tokens.
@@ -184,17 +179,12 @@ contract Juicer is IJuicer {
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
-        ITimelockStaking _staking,
         uint256 _fee,
         IERC20[] memory _wantTokenAllowList,
         UniswapV2Router02 _router
     ) public {
-        // Make this Juicer the timelock controller of the staking contract.
-        _staking.setController(address(this));
-
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
-        staking = _staking;
         fee = _fee;
         router = _router;
         wantTokenAllowList = _wantTokenAllowList;
@@ -609,6 +599,7 @@ contract Juicer is IJuicer {
         );
     }
 
+<<<<<<< HEAD
     /**
         @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
@@ -706,6 +697,8 @@ contract Juicer is IJuicer {
         );
     }
 
+=======
+>>>>>>> Added budget ballot
     /**
         @notice Allows an owner to migrate their Tickets' control to another contract.
         @dev This makes each owner's Ticket's portable.

@@ -37,6 +37,8 @@ interface IBudgetController {
 
     function getWantTokenAllowList() external view returns (IERC20[] memory);
 
+    function STANDBY_PERIOD() external view returns (uint256);
+
     function configureBudget(
         uint256 _target,
         uint256 _duration,
@@ -60,11 +62,6 @@ interface IBudgetController {
         uint256 _amount,
         address _beneficiary
     ) external;
-<<<<<<< HEAD
-
-    function cleanTrackedWantedTokens(address _owner, IERC20 _token) external;
 
     function setWantTokenAllowList(IERC20[] calldata _list) external;
-=======
->>>>>>> Staking contract is finished, added a minter, and a maintainer
 }

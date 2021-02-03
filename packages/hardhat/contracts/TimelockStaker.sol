@@ -5,9 +5,9 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
-import "./interfaces/ITimelockStaking.sol";
+import "./interfaces/ITimelockStaker.sol";
 
-contract TimelockStaking is ITimelockStaking {
+contract TimelockStaker is ITimelockStaker {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 

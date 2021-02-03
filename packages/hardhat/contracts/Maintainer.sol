@@ -10,7 +10,7 @@ contract Maintainer is IMaintainer {
     using Budget for Budget.Data;
 
     /// @notice The Juicer that is being maintained.
-    IJuicer public immutable juicer;
+    IJuicer public immutable override juicer;
 
     constructor(IJuicer _juicer) public {
         juicer = _juicer;

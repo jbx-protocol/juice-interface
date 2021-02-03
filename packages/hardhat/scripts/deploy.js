@@ -12,7 +12,6 @@ const main = async () => {
 
   const token = await deploy("Token");
 
-  const staking = await deploy("TimelockStaking");
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
   const juicer = await deploy("Juicer", [
@@ -26,9 +25,13 @@ const main = async () => {
   const minter = await deploy("Minter", [controller.address]);
   const maintainer = await deploy("Maintainer", [controller.address]);
 
+  const staker = await deploy("TimelockStaker");
+  const budgetBallot = await deploy("BudgetBallot", [juicer.address, staker.address]);
+
   const admin = await deploy("Admin", [
     juicer.address,
      minter.address, maintainer.address,
+     budgetBallot.address,
     "Juice Tickets",
     "tJUICE",
     token.address,

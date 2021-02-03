@@ -7,6 +7,7 @@
         "type": "address"
       },
       {
+<<<<<<< HEAD
         "internalType": "string",
         "name": "_ticketName",
         "type": "string"
@@ -15,6 +16,21 @@
         "internalType": "string",
         "name": "_ticketSymbol",
         "type": "string"
+=======
+        "internalType": "contract IMinter",
+        "name": "_minter",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IMaintainer",
+        "name": "_maintainer",
+        "type": "address"
+      },
+      {
+        "internalType": "contract UniswapV2Router02",
+        "name": "_router",
+        "type": "address"
+>>>>>>> Staking contract is finished, added a minter, and a maintainer
       },
       {
         "internalType": "contract IERC20",

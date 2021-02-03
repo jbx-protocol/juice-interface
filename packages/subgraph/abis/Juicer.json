@@ -12,6 +12,11 @@
         "type": "address"
       },
       {
+        "internalType": "contract ITimelockStaking",
+        "name": "_staking",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "_fee",
         "type": "uint256"
@@ -29,25 +34,6 @@
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "CleanedTrackedWantedTokens",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -158,25 +144,6 @@
       }
     ],
     "name": "Migrate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      }
-    ],
-    "name": "MintReservedTickets",
     "type": "event"
   },
   {
@@ -328,6 +295,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "STANDBY_PERIOD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -364,24 +344,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "cleanTrackedWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -452,6 +414,7 @@
     "type": "function"
   },
   {
+<<<<<<< HEAD
     "inputs": [],
     "name": "getWantTokenAllowList",
     "outputs": [
@@ -465,6 +428,8 @@
     "type": "function"
   },
   {
+=======
+>>>>>>> Staking contract is finished, added a minter, and a maintainer
     "inputs": [
       {
         "internalType": "string",
@@ -496,19 +461,6 @@
       }
     ],
     "name": "migrate",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "mintReservedTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -608,6 +560,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "staking",
+    "outputs": [
+      {
+        "internalType": "contract ITimelockStaking",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "contract IERC20[]",
@@ -687,6 +652,30 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_budgetId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_yay",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

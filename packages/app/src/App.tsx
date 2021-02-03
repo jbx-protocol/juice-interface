@@ -5,10 +5,9 @@ import { Web3Provider } from '@ethersproject/providers'
 import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
+import ConfigureBudget from './components/ConfigureBudget'
 import Gimme from './components/Gimme'
-import InitTickets from './components/InitTickets'
 import Landing from './components/landing/Landing'
-import BudgetsHistory from './components/BudgetsHistory'
 import Navbar from './components/Navbar'
 import Budgets from './components/Owner'
 import { localProvider } from './constants/local-provider'
@@ -19,7 +18,6 @@ import useContractReader from './hooks/ContractReader'
 import { useGasPrice } from './hooks/GasPrice'
 import { useUserProvider } from './hooks/UserProvider'
 import { Budget } from './models/budget'
-import ConfigureBudget from './components/ConfigureBudget'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -84,8 +82,12 @@ function App() {
                 providerAddress={providerAddress}
               ></Gimme>
             </Route>
-            <Route exact path="/create/:owner">
-              <ConfigureBudget contracts={contracts} transactor={transactor} />
+            <Route exact path="/create">
+              <ConfigureBudget
+                owner={providerAddress}
+                contracts={contracts}
+                transactor={transactor}
+              />
             </Route>
             <Route exact path="/:owner">
               <Budgets

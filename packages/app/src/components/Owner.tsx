@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Space } from 'antd'
+import { Button, Col, Divider, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Web3 from 'web3'
@@ -6,6 +6,7 @@ import Web3 from 'web3'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
+import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
@@ -13,7 +14,7 @@ import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
 import KeyValRow from './KeyValRow'
 import ReconfigureBudget from './ReconfigureBudget'
-import TicketsBalance from './TicketsBalance'
+import Rewards from './Rewards'
 
 export default function Owner({
   providerAddress,
@@ -42,13 +43,22 @@ export default function Owner({
     },
   })
 
-  // const tix = useContractReader<Budget>({
-  //   contract: contracts?.TicketStore,
-  //   functionName: 'tickets',
-  //   args: [owner],
-  // })
+  const ticketAddress = useContractReader<string>({
+    contract: contracts?.TicketStore,
+    functionName: 'tickets',
+    args: [owner],
+  })
 
-  // console.log('tixx', tix)
+  const ticketName = useContractReader<string>({
+    contract: erc20Contract(ticketAddress),
+    functionName: 'name',
+    formatter: (value: string) => Web3.utils.hexToString(value),
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(currentBudget?.want),
+    functionName: 'name',
+  })
 
   const queuedBudget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
@@ -155,78 +165,86 @@ export default function Owner({
   // )
 
   return (
-    <div style={{ background: colors.light }}>
-      <TicketsBalance
-        contracts={contracts}
-        issuerAddress={owner}
-        ticketsHolderAddress={providerAddress}
-        transactor={transactor}
-      />
+    <div style={{ background: colors.light, padding: padding.app }}>
+      <h1>{ticketName}</h1>
+      <h3>{owner}</h3>
 
-      <div style={{ padding: padding.app }}>
-        <h1>PROJ NAME</h1>
-        <h3>{owner}</h3>
+      <Divider orientation="center"></Divider>
 
-        <Divider orientation="center"></Divider>
-
-        <div>
-          <Space size={spacing} direction="vertical">
-            <Row gutter={spacing}>
-              <Col>
-                {section(
-                  <div>
-                    <BudgetDetail
-                      providerAddress={providerAddress}
-                      budget={currentBudget}
-                      showSustained={true}
-                      showTimeLeft={true}
-                      contracts={contracts}
-                      transactor={transactor}
-                    />
-                    {KeyValRow(
-                      'Sustain money pool',
-                      <span>
-                        <input
-                          style={{ marginRight: 10 }}
-                          name="sustain"
-                          placeholder="0"
-                          onChange={e =>
-                            setSustainAmount(parseFloat(e.target.value))
-                          }
-                        ></input>
-                        <Button onClick={sustain}>Sustain</Button>
-                      </span>,
-                    )}
-                  </div>,
-                  'Active Budget',
-                )}
-              </Col>
-              <Col>{section(<div></div>, 'Rewards')}</Col>
-            </Row>
-
-            <Row>
-              <Col>
-                {section(
-                  <a
-                    href={
-                      '/history/' +
-                      (currentBudget?.total?.toNumber()
-                        ? currentBudget?.id?.toNumber()
-                        : currentBudget?.previous?.toNumber())
+      <Space size={spacing} direction="vertical">
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {section(
+              <div>
+                <BudgetDetail
+                  providerAddress={providerAddress}
+                  budget={currentBudget}
+                  showSustained={true}
+                  showTimeLeft={true}
+                  contracts={contracts}
+                  transactor={transactor}
+                />
+                {KeyValRow(
+                  'Sustain budget',
+                  <Input
+                    style={{ marginRight: 10 }}
+                    name="sustain"
+                    placeholder="0"
+                    suffix={wantTokenName}
+                    onChange={e => setSustainAmount(parseFloat(e.target.value))}
+                    addonAfter={
+                      <Button type="text" onClick={sustain}>
+                        Sustain
+                      </Button>
                     }
-                  >
-                    View history (not working yet)
-                  </a>,
+                  />,
                 )}
-              </Col>
-            </Row>
+              </div>,
+              'Active Budget',
+            )}
+          </Col>
 
+          <Col span={12}>
+            {section(
+              <Rewards
+                contracts={contracts}
+                budget={currentBudget}
+                providerAddress={providerAddress}
+              />,
+              'Rewards',
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
+            {section(
+              <a
+                href={
+                  '/history/' +
+                  (currentBudget?.total?.toNumber()
+                    ? currentBudget?.id?.toNumber()
+                    : currentBudget?.previous?.toNumber())
+                }
+              >
+                View history (not working yet)
+              </a>,
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
             {queuedBudget ? (
               section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
             ) : (
               <div>No upcoming budgets</div>
             )}
+          </Col>
+        </Row>
 
+        <Row gutter={spacing}>
+          <Col span={12}>
             {isOwner ? (
               <div>
                 <Button onClick={() => setShowReconfigureModal(true)}>
@@ -241,9 +259,9 @@ export default function Owner({
                 />
               </div>
             ) : null}
-          </Space>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Space>
     </div>
   )
 }

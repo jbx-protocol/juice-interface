@@ -28,3 +28,7 @@ label {
 .ant-statistic-content {
   font-family: 'DM Mono', monospace;
 }
+
+.ant-form-item-label > label {
+  white-space: pre-line;
+}

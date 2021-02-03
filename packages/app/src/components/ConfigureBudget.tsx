@@ -1,12 +1,16 @@
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Web3 from 'web3'
 
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
+import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
+import useContractReader from '../hooks/ContractReader'
+import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
 import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
 import BudgetForm from './forms/BudgetForm'
@@ -38,6 +42,18 @@ export default function ConfigureBudget({
   }>()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [initializedTickets, setInitializedTickets] = useState<boolean>(false)
+
+  const { owner }: { owner?: string } = useParams()
+
+  // Check for existing budget for owner
+  useContractReader<Budget>({
+    contract: contracts?.BudgetStore,
+    functionName: 'getCurrentBudget',
+    args: [owner],
+    callback: budget => {
+      if (owner && budget) window.location.href = '/' + owner
+    },
+  })
 
   if (!transactor || !contracts) return null
 
@@ -76,8 +92,6 @@ export default function ConfigureBudget({
       ...budgetForm.getFieldsValue(true),
       ...budgetAdvancedForm.getFieldsValue(true),
     }
-
-    console.log('fields', fields)
 
     const _target = eth.abi.encodeParameter('uint256', fields.target)
     const _duration = eth.abi.encodeParameter(
@@ -141,7 +155,8 @@ export default function ConfigureBudget({
         <TicketsForm
           tokenOptions={tokenOptions}
           props={{ form: ticketsForm }}
-        ></TicketsForm>
+          header="Create your ticket tokens"
+        />
       ),
       info: [
         'First, create your own token. The Juice protocol will use these like tickets, handing them out to people in exchange for payments towards your Budgets. ',
@@ -152,7 +167,12 @@ export default function ConfigureBudget({
     {
       title: 'Budget',
       validate: () => budgetForm.validateFields(),
-      content: <BudgetForm props={{ form: budgetForm }}></BudgetForm>,
+      content: (
+        <BudgetForm
+          props={{ form: budgetForm }}
+          header="Configure your budgets"
+        />
+      ),
       info: [
         'Your Budget will begin accepting payments once it’s made. It’ll accept funds up until its duration runs out.',
         'A new Budget will be created automatically once the current one expires to continue collecting funds. It’ll use the same configuration as the previous one if you haven’t since reconfigured it.',
@@ -164,7 +184,8 @@ export default function ConfigureBudget({
       content: (
         <BudgetAdvancedForm
           props={{ form: budgetAdvancedForm }}
-        ></BudgetAdvancedForm>
+          header="Advanced tuning"
+        />
       ),
       info: [
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
@@ -184,11 +205,11 @@ export default function ConfigureBudget({
                 <Statistic
                   title="Name"
                   value={ticketsForm.getFieldValue('name')}
-                ></Statistic>
+                />
                 <Statistic
                   title="Symbol"
                   value={ticketsForm.getFieldValue('symbol')}
-                ></Statistic>
+                />
                 <Statistic
                   title="Token"
                   value={
@@ -197,7 +218,7 @@ export default function ConfigureBudget({
                         opt.value === ticketsForm.getFieldValue('rewardToken'),
                     )?.label
                   }
-                ></Statistic>
+                />
               </Space>
             </div>
             <Button
@@ -210,7 +231,7 @@ export default function ConfigureBudget({
             </Button>
           </div>
 
-          <Divider orientation="center"></Divider>
+          <Divider orientation="center" />
 
           <div>
             <Space size="large" direction="vertical">
@@ -221,23 +242,23 @@ export default function ConfigureBudget({
                     title="Duration"
                     value={budgetForm.getFieldValue('duration')}
                     suffix="days"
-                  ></Statistic>
+                  />
                   <Statistic
                     title="Amount"
                     value={budgetForm.getFieldValue('target')}
                     suffix="DAI"
-                  ></Statistic>
+                  />
                   <Statistic
                     title="Link"
                     value={budgetForm.getFieldValue('link')}
-                  ></Statistic>
+                  />
                 </Space>
               </div>
               <div>
                 <Statistic
                   title="Description"
                   value={budgetForm.getFieldValue('brief')}
-                ></Statistic>
+                />
               </div>
               <Space size="large" align="end">
                 <Statistic
@@ -245,21 +266,21 @@ export default function ConfigureBudget({
                   title="Bias"
                   value={budgetForm.getFieldValue('bias')}
                   suffix="%"
-                ></Statistic>
+                />
                 <Statistic
                   title="Beneficiary address"
                   value={budgetForm.getFieldValue('beneficiaryAddress')}
-                ></Statistic>
+                />
                 <Statistic
                   title="Beneficiary surplus"
                   value={budgetForm.getFieldValue('beneficiaryAllocation')}
                   suffix="%"
-                ></Statistic>
+                />
                 <Statistic
                   title="Beneficiary owner"
                   value={budgetForm.getFieldValue('ownerAllocation')}
                   suffix="%"
-                ></Statistic>
+                />
               </Space>
               <Button
                 disabled={!initializedTickets}
@@ -277,7 +298,7 @@ export default function ConfigureBudget({
   ]
 
   return (
-    <div>
+    <div style={{ padding: padding.app, maxWidth: 1080, margin: 'auto' }}>
       <Steps size="small" current={currentStep} style={{ marginBottom: 60 }}>
         {steps.map((step, i) => (
           <Steps.Step

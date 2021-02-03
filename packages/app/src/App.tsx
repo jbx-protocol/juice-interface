@@ -19,6 +19,7 @@ import useContractReader from './hooks/ContractReader'
 import { useGasPrice } from './hooks/GasPrice'
 import { useUserProvider } from './hooks/UserProvider'
 import { Budget } from './models/budget'
+import ConfigureBudget from './components/ConfigureBudget'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -85,6 +86,9 @@ function App() {
                 transactor={transactor}
                 providerAddress={providerAddress}
               ></Gimme>
+            </Route>
+            <Route exact path="/create/:owner">
+              <ConfigureBudget contracts={contracts} transactor={transactor} />
             </Route>
             <Route exact path="/:owner">
               <Budgets

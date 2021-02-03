@@ -4,9 +4,11 @@ import React from 'react'
 export default function TicketsForm({
   tokenOptions,
   props,
+  header,
 }: {
   tokenOptions: { label: string; value: string }[]
   props: FormProps<{ name: string; symbol: string; rewardToken: string }>
+  header?: string
 }) {
   const layout = {
     labelCol: { span: 6 },
@@ -15,9 +17,11 @@ export default function TicketsForm({
 
   return (
     <Form {...props} {...layout}>
-      <Form.Item wrapperCol={{ offset: 6 }}>
-        <h2>Create your ticket tokens</h2>
-      </Form.Item>
+      {header ? (
+        <Form.Item wrapperCol={{ offset: 6 }}>
+          <h2>{header}</h2>
+        </Form.Item>
+      ) : null}
 
       <Form.Item
         extra="The name of your ticket token is used across web3."

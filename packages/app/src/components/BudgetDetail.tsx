@@ -51,8 +51,6 @@ export default function BudgetDetail({
         ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
   }
 
-  const title = budget?.title && Web3.utils.hexToString(budget.title)
-
   const link = budget?.link
 
   const isOwner = budget?.owner === providerAddress
@@ -128,7 +126,6 @@ export default function BudgetDetail({
   return budget ? (
     <div>
       <div>
-        <h2 style={{ margin: 0 }}>{title}</h2>
         <a href={link} target="_blank" rel="noopener noreferrer">
           {link}
         </a>

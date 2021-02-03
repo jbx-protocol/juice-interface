@@ -104,6 +104,8 @@ contract Juicer is IJuicer {
         return wantTokenAllowList;
     }
 
+    // --- external views --- //
+
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
@@ -599,7 +601,6 @@ contract Juicer is IJuicer {
         );
     }
 
-<<<<<<< HEAD
     /**
         @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
@@ -652,53 +653,63 @@ contract Juicer is IJuicer {
         emit MintReservedTickets(msg.sender, _issuer);
     }
 
-    function vote(uint256 _budgetId, bool _yay)
-        external
-        override
-        lock
-        returns (uint256)
-    {
-        // Get a reference to the Budget being tapped.
-        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
+    /**
+        @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
+        @dev Reserved tickets are only mintable once a Budget expires.
+        @dev This logic should be the same as mintReservedTickets.
+        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
+    */
+    function mintReservedTickets(address _issuer) external override {
+        // Get a reference to the owner's tickets.
+        ITickets _tickets = ticketStore.tickets(_issuer);
 
-        // Get the Tickets used for the Budget.
-        ITickets _tickets = ticketStore.tickets(_budget.owner);
+        // If the owner doesn't have tickets, throw.
+        require(_tickets != ITickets(0), "Juicer::claim: NOT_FOUND");
 
-        // Find how many tickets the message sender has staked.
-        uint256 _stakedAmount = staking.staked(_tickets, msg.sender);
+        // Get a reference to the owner's latest Budget.
+        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
 
-        // Find how many votes the message sender has already cast.
-        uint256 _votedAmount =
-            budgetStore.votesByAddress(
-                _budgetId,
-                _budget.configured,
-                msg.sender
-            );
+        // Iterate sequentially through the owner's Budgets, starting with the latest one.
+        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
+        while (_budget.id > 0 && !_budget.hasMintedReserves) {
+            // If the budget has overflow and is redistributing, it has unminted reserved tickets.
+            if (
+                _budget.total > _budget.target &&
+                _budget._state() == Budget.State.Redistributing
+            ) {
+                // Unminted reserved tickets are all relavative to the amount of overflow available.
+                uint256 _overflow = _budget.total.sub(_budget.target);
 
-        require(_stakedAmount > _votedAmount, "Juicer::vote: ALREADY_VOTED");
+                // The admin gets the admin fee percentage.
+                _tickets.mint(admin, _budget._weighted(_overflow, fee));
 
-        uint256 _votesToAdd = _stakedAmount.sub(_votedAmount);
+                // The owner gets the budget's owner percentage, if one is specified.
+                if (_budget.o > 0)
+                    _tickets.mint(
+                        _budget.owner,
+                        _budget._weighted(_overflow, _budget.o)
+                    );
 
-        // Add the votes.
-        budgetStore.addVotes(
-            _budgetId,
-            _budget.configured,
-            _yay,
-            msg.sender,
-            _votesToAdd
-        );
+                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
+                if (_budget.b > 0)
+                    _tickets.mint(
+                        _budget.bAddress,
+                        _budget._weighted(_overflow, _budget.b)
+                    );
 
-        // Lock the tickets until the budget's standby period is over.
-        staking.setTimelock(
-            _tickets,
-            _budget.configured,
-            msg.sender,
-            _budget.configured.add(STANDBY_PERIOD)
-        );
+                // Mark the budget as having minted reserves.
+                _budget.hasMintedReserves = true;
+
+                // Save the budget to the store;
+                budgetStore.saveBudget(_budget);
+            }
+
+            // Continue the loop with the previous Budget.
+            _budget = budgetStore.getBudget(_budget.previous);
+        }
+        emit MintReservedTickets(msg.sender, _issuer);
     }
 
-=======
->>>>>>> Added budget ballot
     /**
         @notice Allows an owner to migrate their Tickets' control to another contract.
         @dev This makes each owner's Ticket's portable.

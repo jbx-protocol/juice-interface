@@ -37,9 +37,37 @@ contract BudgetStore is Store, IBudgetStore {
     /// @notice The latest Budget ID for each owner address.
     mapping(address => uint256) public override latestBudgetId;
 
+    /// @notice The number of yay and nay votes cast for each configuration of each Budget ID.
+    mapping(uint256 => mapping(uint256 => mapping(bool => uint256)))
+        public
+        override votes;
+
+    /// @notice The number of votes cast by each address for each configuration of each Budget ID.
+    mapping(uint256 => mapping(uint256 => mapping(address => uint256)))
+        public
+        override votesByAddress;
+
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
+
+    /// TODO
+    function addVotes(
+        uint256 _budgetId,
+        uint256 _configured,
+        bool _yay,
+        address _voter,
+        uint256 _amount
+    ) external override onlyAdmin {
+        votes[_budgetId][_configured][_yay] = votes[_budgetId][_configured][
+            _yay
+        ]
+            .add(_amount);
+        votesByAddress[_budgetId][_configured][_voter] = votesByAddress[
+            _budgetId
+        ][_configured][_voter]
+            .add(_amount);
+    }
 
     // --- external views --- //
 
@@ -185,9 +213,10 @@ contract BudgetStore is Store, IBudgetStore {
     /**
         @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
         @param _owner The address who owns the Budget to look for.
+        @param _standbyPeriod The time between a Budget being configured and when it can become active.
         @return _budget The resulting Budget.
     */
-    function ensureActiveBudget(address _owner)
+    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
         external
         override
         onlyAdmin
@@ -198,9 +227,18 @@ contract BudgetStore is Store, IBudgetStore {
         if (_budget.id > 0) return _budget;
         // No active Budget found, check if there is a standby Budget
         _budget = _standbyBudget(_owner);
-        if (_budget.id > 0) return _budget;
-        // No upcoming Budget found, clone the latest Budget
-        _budget = budgets[latestBudgetId[_owner]];
+        // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
+        if (
+            _budget.id > 0 &&
+            _budget.configured.add(_standbyPeriod) < block.timestamp &&
+            votes[_budget.id][_budget.configured][true] >
+            votes[_budget.id][_budget.configured][false]
+        ) return _budget;
+        // No upcoming Budget found with a successful vote, clone the latest active Budget.
+        // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
+        _budget = budgets[
+            _budget.id > 0 ? _budget.previous : latestBudgetId[_owner]
+        ];
         require(_budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.

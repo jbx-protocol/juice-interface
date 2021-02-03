@@ -14,15 +14,14 @@ const main = async () => {
 
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
+
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
-    staking.address,
     5,
     [token.address],
     uniswapV2Router
   ]);
-  const minter = await deploy("Minter", [controller.address]);
   const maintainer = await deploy("Maintainer", [controller.address]);
 
   const staker = await deploy("TimelockStaker");
@@ -30,7 +29,7 @@ const main = async () => {
 
   const admin = await deploy("Admin", [
     juicer.address,
-     minter.address, maintainer.address,
+     maintainer.address,
      budgetBallot.address,
     "Juice Tickets",
     "tJUICE",

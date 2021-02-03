@@ -12,7 +12,7 @@ contract Minter is IMinter {
     using Budget for Budget.Data;
 
     /// @notice The Juicer that minting data is sourced from.
-    IJuicer public immutable juicer;
+    IJuicer public immutable override juicer;
 
     constructor(IJuicer _juicer) public {
         juicer = _juicer;

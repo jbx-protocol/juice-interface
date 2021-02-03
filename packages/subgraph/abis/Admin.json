@@ -176,7 +176,7 @@
     "inputs": [
       {
         "internalType": "contract IAccessControlWrapper",
-        "name": "_accessControl",
+        "name": "_contract",
         "type": "address"
       },
       {
@@ -273,7 +273,7 @@
     "inputs": [
       {
         "internalType": "contract IAccessControlWrapper",
-        "name": "_accessControl",
+        "name": "_contract",
         "type": "address"
       },
       {

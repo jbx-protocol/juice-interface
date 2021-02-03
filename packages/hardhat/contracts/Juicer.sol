@@ -18,9 +18,6 @@ import "./TicketStore.sol";
   @notice This contract exposes all external interactions with the Juice ecosystem.
   @dev  1. A project owner issues their Tickets.
         2. A project owner configures their first Budget.
-           You can reconfigure your Budget at any time, but if your current Budget has already
-           received contribution, the new configuration will only affect your Budget that automatically 
-           goes into effect once the current one expires.
         3. Any address (end user or smart contract) can contribute funds to your Budget.
            You can configure your Budget to `want` any of the tokens on the allow list (DAI, sUSD, ...).
            In return, your contributors receive some of your project's Tickets minted by this contract. 
@@ -34,6 +31,9 @@ import "./TicketStore.sol";
            Any overflow will be accounted for seperately. 
            At any point, anyone can execute a transaction to swap any accumulated overflow of `want` tokens into your Ticket's reward Token.
         5. Your project's Ticket holders can redeem their Tickets for a share of reward tokens that have been swapped for.
+        6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
+           but if your current Budget has already received contribution, the new configuration 
+           will only affect your Budget that automatically goes into effect once the current one expires.
 
   @dev This contract manages all funds, including:
         - contributions made to Budgets.

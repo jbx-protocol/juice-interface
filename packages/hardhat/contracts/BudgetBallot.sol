@@ -8,6 +8,11 @@ import "./interfaces/IJuicer.sol";
 import "./interfaces/ITimelockStaker.sol";
 import "./interfaces/IBudgetBallot.sol";
 
+/** 
+   @notice Manages votes towards approving Budget reconfigurations.
+   @dev Once a Budget owner's Ticket holder has staked their tickets in the TimelockStaker, 
+        they can vote on reconfigurations to the Budget made by the owner.
+ */
 contract BudgetBallot is IBudgetBallot {
     using SafeMath for uint256;
     using Budget for Budget.Data;
@@ -18,6 +23,10 @@ contract BudgetBallot is IBudgetBallot {
     /// @notice The contract that manages staking.
     ITimelockStaker public immutable override staker;
 
+    /** 
+      @param _juicer The Juicer contract that manages to Budgets being voted on.
+      @param _staker The Staking contract that Ticket holders must lock Ticket into before voting.
+    */
     constructor(IJuicer _juicer, ITimelockStaker _staker) public {
         // Make this Ballot the timelock controller of the staker contract.
         _staker.setController(address(this));
@@ -26,6 +35,12 @@ contract BudgetBallot is IBudgetBallot {
         staker = _staker;
     }
 
+    /** 
+      @notice Vote for yay or nay on a budget reconfiguration proposal.
+      @param _budgetId The ID for a Budget with a proposed reconfiguration.
+      @param _yay True if voting for the proposal, false if voting against.
+      @param _amount The amount of staked tickets to allocate to this vote.
+    */
     function vote(
         uint256 _budgetId,
         bool _yay,
@@ -34,8 +49,14 @@ contract BudgetBallot is IBudgetBallot {
         IBudgetStore _budgetStore = juicer.budgetStore();
         ITicketStore _ticketStore = juicer.ticketStore();
 
-        // Get a reference to the Budget being tapped.
+        // Get a reference to the Budget being voted on.
         Budget.Data memory _budget = _budgetStore.getBudget(_budgetId);
+
+        uint256 _standbyExpiry =
+            _budget.configured.add(juicer.STANDBY_PERIOD());
+
+        // The vote must be cast before the standy period expires.
+        require(now < _standbyExpiry, "BudgetBallot::vote: EXPIRED");
 
         // Get the Tickets used for the Budget.
         ITickets _tickets = _ticketStore.tickets(_budget.owner);
@@ -74,7 +95,7 @@ contract BudgetBallot is IBudgetBallot {
             _tickets,
             _budget.configured,
             msg.sender,
-            _budget.configured.add(juicer.STANDBY_PERIOD())
+            _standbyExpiry
         );
 
         emit Vote(

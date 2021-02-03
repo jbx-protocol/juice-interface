@@ -5,6 +5,8 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/IJuicer.sol";
+import "./interfaces/IMinter.sol";
+import "./interfaces/IMaintainer.sol";
 import "./abstract/JuiceAdmin.sol";
 
 /// All functions in here should be governable with FLOW.
@@ -14,18 +16,32 @@ contract Admin is JuiceAdmin {
 
     /** 
       @param _juicer The juicer that is being administered.
+      @param _minter The minter that is being administered.
+      @param _maintainer The maintainer that is being administered.
       @param _router The router used to execute swaps.
       @param _rewardToken The token that this project's Tickets can be redeemed for.
     */
     constructor(
         IJuicer _juicer,
+        IMinter _minter,
+        IMaintainer _maintainer,
         UniswapV2Router02 _router,
         IERC20 _rewardToken
     ) public JuiceAdmin(_juicer, _router) {
-        juicer.budgetStore().claimOwnership();
+        IBudgetStore _budgetStore = juicer.budgetStore();
+        _budgetStore.claimOwnership();
         juicer.ticketStore().claimOwnership();
         appointJuicer(juicer);
         juicer.issueTickets("Juice", "JUICE", _rewardToken);
+
+        _budgetStore.grantRole_(
+            _budgetStore.DEFAULT_ADMIN_ROLE_(),
+            address(_minter)
+        );
+        _budgetStore.grantRole_(
+            _budgetStore.DEFAULT_ADMIN_ROLE_(),
+            address(_maintainer)
+        );
     }
 
     /** 

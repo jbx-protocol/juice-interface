@@ -35,8 +35,6 @@ interface IBudgetController {
         IERC20 want
     );
 
-    event CleanedTrackedWantedTokens(address indexed owner, IERC20 token);
-
     function configureBudget(
         uint256 _target,
         uint256 _duration,
@@ -61,6 +59,4 @@ interface IBudgetController {
         uint256 _amount,
         address _beneficiary
     ) external;
-
-    function cleanTrackedWantedTokens(address _owner, IERC20 _token) external;
 }

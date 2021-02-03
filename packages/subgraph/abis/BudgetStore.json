@@ -214,6 +214,11 @@
             "internalType": "uint256",
             "name": "bias",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -222,6 +227,39 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_budgetId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_configured",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_yay",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "_voter",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "addVotes",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -268,6 +306,11 @@
         "internalType": "address",
         "name": "_owner",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_standbyPeriod",
+        "type": "uint256"
       }
     ],
     "name": "ensureActiveBudget",
@@ -357,6 +400,11 @@
           {
             "internalType": "uint256",
             "name": "bias",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -464,6 +512,11 @@
             "internalType": "uint256",
             "name": "bias",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -569,6 +622,11 @@
           {
             "internalType": "uint256",
             "name": "bias",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -676,6 +734,11 @@
             "internalType": "uint256",
             "name": "bias",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -782,6 +845,11 @@
             "internalType": "uint256",
             "name": "bias",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -887,6 +955,11 @@
           {
             "internalType": "uint256",
             "name": "bias",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -1237,6 +1310,11 @@
             "internalType": "uint256",
             "name": "bias",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -1270,6 +1348,64 @@
     "name": "trackWantedToken",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "name": "votes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "votesByAddress",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

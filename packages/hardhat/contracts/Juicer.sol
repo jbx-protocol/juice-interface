@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
-import "./interfaces/IStaking.sol";
+import "./interfaces/ITimelockStaking.sol";
 
 import "./TicketStore.sol";
 
@@ -73,7 +73,7 @@ contract Juicer is IJuicer {
     uint256 public constant STANDBY_PERIOD = 269200;
 
     /// @notice The admin of the contract who makes admin fees.
-    address public admin;
+    address public override admin;
 
     /// @notice The contract storing all Budget state variables.
     IBudgetStore public immutable override budgetStore;
@@ -82,80 +82,13 @@ contract Juicer is IJuicer {
     ITicketStore public immutable override ticketStore;
 
     /// @notice The contract that manages staking Tickets.
-    IStaking public immutable override staking;
+    ITimelockStaking public immutable override staking;
 
     /// @notice The percent fee the contract owner takes from overflow.
-    uint256 public immutable fee;
+    uint256 public immutable override fee;
 
     /// @notice The router that does the swaps.
     UniswapV2Router02 public immutable router;
-
-    // --- public views --- //
-
-    /**
-        @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
-        @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-        @return _issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
-        @return _beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
-        @return _admin The amount of unminted reserved tickets belonging to the admin.
-    */
-    function getReservedTickets(address _issuer)
-        public
-        view
-        override
-        returns (
-            uint256 _issuers,
-            uint256 _beneficiaries,
-            uint256 _admin
-        )
-    {
-        // Get a reference to the owner's tickets.
-        ITickets _tickets = ticketStore.tickets(_issuer);
-
-        // If the owner doesn't have tickets, throw.
-        require(
-            _tickets != ITickets(0),
-            "Juicer::getReservedTickets: NOT_FOUND"
-        );
-
-        // Get a reference to the owner's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
-
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasMintedReserves) {
-            // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (
-                _budget.total > _budget.target &&
-                _budget._state() == Budget.State.Redistributing
-            ) {
-                // Unminted reserved tickets are all relavative to the amount of overflow available.
-                uint256 _overflow = _budget.total.sub(_budget.target);
-
-                // The admin gets the admin fee percentage.
-                _admin = _admin.add(_budget._weighted(_overflow, fee));
-
-                // The owner gets the budget's owner percentage, if one is specified.
-                if (_budget.o > 0) {
-                    _issuers = _issuers.add(
-                        _budget._weighted(_overflow, _budget.o)
-                    );
-                }
-
-                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                if (_budget.b > 0) {
-                    _beneficiaries = _beneficiaries.add(
-                        _budget._weighted(_overflow, _budget.b)
-                    );
-                }
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
-        }
-    }
 
     // --- external transactions --- //
 
@@ -170,11 +103,14 @@ contract Juicer is IJuicer {
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
-        IStaking _staking,
+        ITimelockStaking _staking,
         uint256 _fee,
         IERC20[] memory _wantTokenAllowList,
         UniswapV2Router02 _router
     ) public {
+        // Make this Juicer the timelock controller of the staking contract.
+        _staking.setController(address(this));
+
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
         staking = _staking;
@@ -302,12 +238,6 @@ contract Juicer is IJuicer {
         // Track this new `want` token in the store.
         // This is necessary for proper accounting when managing overflow.
         budgetStore.trackWantedToken(msg.sender, _tickets.rewardToken(), _want);
-
-        // Clear all votes for this Budget ID.
-        budgetStore.clearVotes(_budget.id);
-
-        // // Clear all staking time locks.
-        // delete _stakingTimelocks[_tickets];
 
         emit ConfigureBudget(
             _budget.id,
@@ -587,63 +517,6 @@ contract Juicer is IJuicer {
         );
     }
 
-    /**
-        @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
-        @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-    */
-    function mintReservedTickets(address _issuer) external override {
-        // Get a reference to the owner's tickets.
-        ITickets _tickets = ticketStore.tickets(_issuer);
-
-        // If the owner doesn't have tickets, throw.
-        require(_tickets != ITickets(0), "Juicer::claim: NOT_FOUND");
-
-        // Get a reference to the owner's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
-
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasMintedReserves) {
-            // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (
-                _budget.total > _budget.target &&
-                _budget._state() == Budget.State.Redistributing
-            ) {
-                // Unminted reserved tickets are all relavative to the amount of overflow available.
-                uint256 _overflow = _budget.total.sub(_budget.target);
-
-                // The admin gets the admin fee percentage.
-                _tickets.mint(admin, _budget._weighted(_overflow, fee));
-
-                // The owner gets the budget's owner percentage, if one is specified.
-                if (_budget.o > 0)
-                    _tickets.mint(
-                        _budget.owner,
-                        _budget._weighted(_overflow, _budget.o)
-                    );
-
-                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                if (_budget.b > 0)
-                    _tickets.mint(
-                        _budget.bAddress,
-                        _budget._weighted(_overflow, _budget.b)
-                    );
-
-                // Mark the budget as having minted reserves.
-                _budget.hasMintedReserves = true;
-
-                // Save the budget to the store;
-                budgetStore.saveBudget(_budget);
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
-        }
-        emit MintReservedTickets(msg.sender, _issuer);
-    }
-
     function vote(uint256 _budgetId, bool _yay)
         external
         override
@@ -657,7 +530,7 @@ contract Juicer is IJuicer {
         ITickets _tickets = ticketStore.tickets(_budget.owner);
 
         // Find how many tickets the message sender has staked.
-        uint256 _stakedAmount = staking.staked[_tickets][msg.sender];
+        uint256 _stakedAmount = staking.staked(_tickets, msg.sender);
 
         // Find how many votes the message sender has already cast.
         uint256 _votedAmount =
@@ -672,51 +545,21 @@ contract Juicer is IJuicer {
         uint256 _votesToAdd = _stakedAmount.sub(_votedAmount);
 
         // Add the votes.
-        budgetStore.addVotes(_budgetId, _yay, msg.sender, _votesToAdd);
+        budgetStore.addVotes(
+            _budgetId,
+            _budget.configured,
+            _yay,
+            msg.sender,
+            _votesToAdd
+        );
 
         // Lock the tickets until the budget's standby period is over.
         staking.setTimelock(
             _tickets,
             _budget.configured,
             msg.sender,
-            STANDBY_PERIOD
+            _budget.configured.add(STANDBY_PERIOD)
         );
-    }
-
-    /**
-        @notice Cleans the `want` token tracking array for an owner and a redeemable token.
-        @dev This rarely needs to get called, if ever.
-        @dev It's only useful if an owner has iterated through many `want` tokens that are just taking up space.
-        @param _owner The owner of the Budgets that have specified `want` tokens.
-        @param _token The reward token to clean accepted tokens for.
-    */
-    function cleanTrackedWantedTokens(address _owner, IERC20 _token)
-        external
-        override
-    {
-        // Get a reference to all of the token's the owner has wanted since this transaction was last called.
-        IERC20[] memory _currentWantedTokens =
-            budgetStore.getWantedTokens(_owner, _token);
-
-        // Clear the array entirely in the store so that it can be repopulated.
-        budgetStore.clearWantedTokens(_owner, _token);
-
-        // Get a reference to the current Budget for the owner. The `want` token for this Budget shouldn't be cleared.
-        Budget.Data memory _cBudget = budgetStore.getCurrentBudget(_owner);
-
-        // For each token currently tracked, check to see if there are swappable funds from the token.
-        for (uint256 i = 0; i < _currentWantedTokens.length; i++) {
-            IERC20 _wantedToken = _currentWantedTokens[i];
-            // Only retrack tokens in used.
-            if (
-                _cBudget.want == _wantedToken ||
-                ticketStore.swappable(_owner, _wantedToken, _token) > 0
-            ) {
-                // Add the token back to the store.
-                budgetStore.trackWantedToken(msg.sender, _token, _wantedToken);
-            }
-        }
-        emit CleanedTrackedWantedTokens(_owner, _token);
     }
 
     /**

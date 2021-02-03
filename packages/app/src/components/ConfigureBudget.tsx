@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { Button, Col, Form, Row, Steps } from 'antd'
+import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 
@@ -37,6 +37,7 @@ export default function ConfigureBudget({
     ownerAllocation: number
   }>()
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const [initializedTickets, setInitializedTickets] = useState<boolean>(false)
 
   if (!transactor || !contracts) return null
 
@@ -60,7 +61,7 @@ export default function ConfigureBudget({
     return transactor(
       contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),
       () => (window.location.href = '/'),
-    )
+    ).then(() => setInitializedTickets(true))
   }
 
   async function tryNextStep() {
@@ -68,10 +69,8 @@ export default function ConfigureBudget({
     if (valid) setCurrentStep(currentStep + 1)
   }
 
-  async function onSubmit() {
+  function submitBudget() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
-
-    await initTickets()
 
     const fields = {
       ...budgetForm.getFieldsValue(true),
@@ -114,8 +113,8 @@ export default function ConfigureBudget({
       contracts.Juicer.configureBudget(
         _target,
         _duration,
-        _brief,
         _want,
+        _brief,
         _link,
         _bias,
         _ownerAllocation,
@@ -125,18 +124,22 @@ export default function ConfigureBudget({
     )
   }
 
+  const tokenOptions = [
+    {
+      label: 'TOKEN',
+      value: contracts.Token.address,
+    },
+  ]
+
   const steps = [
     {
       title: 'Tickets',
       validate: () => ticketsForm.validateFields(),
-      content: (
+      content: initializedTickets ? (
+        'Tickets already initialized'
+      ) : (
         <TicketsForm
-          tokenOptions={[
-            {
-              label: 'TOKEN',
-              value: contracts.Token.address,
-            },
-          ]}
+          tokenOptions={tokenOptions}
           props={{ form: ticketsForm }}
         ></TicketsForm>
       ),
@@ -169,6 +172,108 @@ export default function ConfigureBudget({
         "Lastly, the bias variable affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time. For example, if your Bias is set to 97%, then someone who pays $100 towards next month's Budget witll only receive 97% the amount of tickets that someone received when paying $100 towards this months budget. Effectively this gives folks who believe you will be able to increase your overflow an incentive to pay you today, HODL their tickets, and redeem them at a future date.",
       ],
     },
+    {
+      title: 'Review',
+      validate: () => budgetAdvancedForm.validateFields(),
+      content: (
+        <div>
+          <div>
+            <h1>Tickets</h1>
+            <div style={{ marginTop: 20, marginBottom: 20 }}>
+              <Space size="large">
+                <Statistic
+                  title="Name"
+                  value={ticketsForm.getFieldValue('name')}
+                ></Statistic>
+                <Statistic
+                  title="Symbol"
+                  value={ticketsForm.getFieldValue('symbol')}
+                ></Statistic>
+                <Statistic
+                  title="Token"
+                  value={
+                    tokenOptions.find(
+                      opt =>
+                        opt.value === ticketsForm.getFieldValue('rewardToken'),
+                    )?.label
+                  }
+                ></Statistic>
+              </Space>
+            </div>
+            <Button
+              disabled={initializedTickets}
+              htmlType="submit"
+              type="primary"
+              onClick={initTickets}
+            >
+              Init tickets
+            </Button>
+          </div>
+
+          <Divider orientation="center"></Divider>
+
+          <div>
+            <Space size="large" direction="vertical">
+              <h1>Budget</h1>
+              <div>
+                <Space size="large">
+                  <Statistic
+                    title="Duration"
+                    value={budgetForm.getFieldValue('duration')}
+                    suffix="days"
+                  ></Statistic>
+                  <Statistic
+                    title="Amount"
+                    value={budgetForm.getFieldValue('target')}
+                    suffix="DAI"
+                  ></Statistic>
+                  <Statistic
+                    title="Link"
+                    value={budgetForm.getFieldValue('link')}
+                  ></Statistic>
+                </Space>
+              </div>
+              <div>
+                <Statistic
+                  title="Description"
+                  value={budgetForm.getFieldValue('brief')}
+                ></Statistic>
+              </div>
+              <Space size="large" align="end">
+                <Statistic
+                  style={{ minWidth: 100 }}
+                  title="Bias"
+                  value={budgetForm.getFieldValue('bias')}
+                  suffix="%"
+                ></Statistic>
+                <Statistic
+                  title="Beneficiary address"
+                  value={budgetForm.getFieldValue('beneficiaryAddress')}
+                ></Statistic>
+                <Statistic
+                  title="Beneficiary surplus"
+                  value={budgetForm.getFieldValue('beneficiaryAllocation')}
+                  suffix="%"
+                ></Statistic>
+                <Statistic
+                  title="Beneficiary owner"
+                  value={budgetForm.getFieldValue('ownerAllocation')}
+                  suffix="%"
+                ></Statistic>
+              </Space>
+              <Button
+                disabled={!initializedTickets}
+                htmlType="submit"
+                type="primary"
+                onClick={submitBudget}
+              >
+                Create budget
+              </Button>
+            </Space>
+          </div>
+        </div>
+      ),
+    },
   ]
 
   return (
@@ -199,35 +304,35 @@ export default function ConfigureBudget({
               <div></div>
             ) : (
               <Button onClick={() => setCurrentStep(currentStep - 1)}>
-                Previous
+                Back
               </Button>
             )}
 
             {currentStep === steps.length - 1 ? (
-              <Button htmlType="submit" type="primary" onClick={onSubmit}>
-                Submit
-              </Button>
+              <div></div>
             ) : (
               <Button onClick={() => tryNextStep()}>Next</Button>
             )}
           </div>
         </Col>
 
-        <Col flex="50%" style={{ maxWidth: 360 }}>
-          <div
-            style={{
-              ...shadowCard,
-              padding: 20,
-              background: colors.hint,
-              border: '1px solid black',
-            }}
-          >
-            <h3>WTF</h3>
-            {steps[currentStep].info.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </Col>
+        {steps[currentStep].info ? (
+          <Col flex="50%" style={{ maxWidth: 360 }}>
+            <div
+              style={{
+                ...shadowCard,
+                padding: 20,
+                background: colors.hint,
+                border: '1px solid black',
+              }}
+            >
+              <h3>WTF</h3>
+              {steps[currentStep].info?.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </Col>
+        ) : null}
       </Row>
     </div>
   )

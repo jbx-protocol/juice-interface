@@ -24,3 +24,15 @@ a {
 label {
   font-weight: 500;
 }
+
+.ant-statistic-content {
+  font-family: 'DM Mono', monospace;
+}
+
+.ant-form-item-label > label {
+  white-space: pre-line;
+}
+
+.ant-input-affix-wrapper.align-end > input {
+  text-align: end;
+}

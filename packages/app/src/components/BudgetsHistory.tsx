@@ -1,31 +1,28 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Space } from 'antd'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import Web3 from 'web3'
 
 import useContractReader from '../hooks/ContractReader'
-import { Contracts } from '../models/contracts'
 import { Budget } from '../models/budget'
+import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
-import { padding } from '../constants/styles/padding'
 
 export default function BudgetsHistory({
   contracts,
   transactor,
   providerAddress,
+  startId,
 }: {
   contracts?: Contracts
   transactor?: Transactor
   providerAddress?: string
+  startId?: BigNumber
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
 
-  const { number }: { number?: string } = useParams()
-
-  if (number !== undefined && !poolNumbers.length)
-    setPoolNumbers([BigNumber.from(number)])
+  if (startId !== undefined && !poolNumbers.length) setPoolNumbers([startId])
 
   const allPoolsLoaded = budgets.length >= poolNumbers.length
   const poolNumber = allPoolsLoaded
@@ -35,7 +32,7 @@ export default function BudgetsHistory({
 
   useContractReader<Budget>({
     contract: contracts?.BudgetStore,
-    functionName: 'getBudge',
+    functionName: 'getBudget',
     args: [poolNumber],
     pollTime,
     callback: budget => {
@@ -49,26 +46,28 @@ export default function BudgetsHistory({
     },
   })
 
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridAutoFlow: 'row',
-        rowGap: 40,
-        padding: padding.app,
-      }}
-    >
-      {budgets.map((budget, index) => (
-        <div key={index}>
+  const budgetElems = (
+    <Space direction="vertical">
+      {budgets.map((budget, index) =>
+        index > 0 ? (
           <BudgetDetail
+            key={index}
             providerAddress={providerAddress}
             budget={budget}
             showSustained={true}
             transactor={transactor}
             contracts={contracts}
           />
-        </div>
-      ))}
+        ) : budgets.length > 1 ? null : (
+          'No history'
+        ),
+      )}
+    </Space>
+  )
+
+  return (
+    <div>
+      {budgetElems}
 
       {allPoolsLoaded ? null : <div>Loading...</div>}
     </div>

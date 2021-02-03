@@ -4,6 +4,7 @@ import React from 'react'
 
 export default function BudgetAdvancedForm({
   props,
+  header,
 }: {
   props: FormProps<{
     ownerAllocation: number
@@ -11,30 +12,44 @@ export default function BudgetAdvancedForm({
     beneficiaryAllocation: number
     bias: number
   }>
+  header?: string
 }) {
   const layout = {
     labelCol: { span: 10 },
     wrapperCol: { span: 12 },
   }
 
+  const initialBias = 100
+
   return (
-    <Form {...props} {...layout}>
-      <Form.Item wrapperCol={{ offset: 10 }}>
-        <h2>Advanced tuning</h2>
-      </Form.Item>
+    <Form
+      {...layout}
+      {...props}
+      initialValues={{
+        ownerAllocation: 0,
+        beneficiaryAllocation: 0,
+        bias: initialBias,
+        ...props.initialValues,
+      }}
+    >
+      {header ? (
+        <Form.Item wrapperCol={{ offset: 10 }}>
+          <h2>{header}</h2>
+        </Form.Item>
+      ) : null}
 
       <Form.Item
         extra="The percentage of overflow that you’ll keep for yourself instead of returning to your contributors."
         name="ownerAllocation"
         label="Owner surplus"
-        initialValue={0}
       >
-        <Input dir="rtl" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="A contract that you wish to give part of your overflow to."
         name="beneficiaryAddress"
         label="Beneficiary contract"
+        rules={[{ required: true }]}
       >
         <Input placeholder="0x01a2b3c..." />
       </Form.Item>
@@ -42,20 +57,19 @@ export default function BudgetAdvancedForm({
         extra="The percentage of overflow that you’ll pre-allocate to the beneficiary contract instead of returning to your contributors."
         name="beneficiaryAllocation"
         label="Beneficiary allocation"
-        initialValue={0}
       >
-        <Input dir="rtl" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="The rate (95-100) at which contributions to future budgets are valued compared to contributions to this budget."
         name="bias"
         label="Bias"
-        initialValue={100}
+        rules={[{ required: true }]}
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
-            defaultValue={100}
-            dir="rtl"
+            defaultValue={props.initialValues?.bias ?? initialBias}
+            className="align-end"
             suffix="%"
             min={95}
             max={100}

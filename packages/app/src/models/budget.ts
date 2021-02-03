@@ -4,8 +4,8 @@ export interface Budget {
   id: BigNumber
   owner: string
   previous: BigNumber
-  title: string
   link: string
+  brief: string
   want: string
   target: BigNumber
   total: BigNumber

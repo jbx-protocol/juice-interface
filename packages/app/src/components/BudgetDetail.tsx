@@ -53,7 +53,7 @@ export default function BudgetDetail({
 
   const title = budget?.title && Web3.utils.hexToString(budget.title)
 
-  const link = budget?.link && Web3.utils.hexToString(budget.link)
+  const link = budget?.link
 
   const isOwner = budget?.owner === providerAddress
 

@@ -36,7 +36,7 @@ interface ITicketsController {
         returns (
             uint256 _issuers,
             uint256 _beneficiaries,
-            uint256 _admin
+            uint256 _admins
         );
 
     function issueTickets(

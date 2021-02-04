@@ -35,15 +35,14 @@ export default function Rewards({
     formatter: (value: string) => Web3.utils.hexToString(value),
   })
   const ticketsBalance = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
-    functionName: 'getTicketBalance',
-    args: [budget?.owner, providerAddress],
+    contract: erc20Contract(ticketAddress),
+    functionName: 'balanceOf',
+    args: [providerAddress],
     callback: balance => setRedeemAmount(balance),
   })
   const ticketSupply = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
-    functionName: 'getTicketSupply',
-    args: [budget?.owner],
+    contract: erc20Contract(ticketAddress),
+    functionName: 'totalSupply',
   })
   const rewardTokenAddress = useContractReader<string>({
     contract: contracts?.TicketStore,

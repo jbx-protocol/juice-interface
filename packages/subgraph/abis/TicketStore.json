@@ -289,30 +289,6 @@
         "internalType": "address",
         "name": "_issuer",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_holder",
-        "type": "address"
-      }
-    ],
-    "name": "getTicketBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
       }
     ],
     "name": "getTicketRewardToken",
@@ -321,25 +297,6 @@
         "internalType": "contract IERC20",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "getTicketSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -78,6 +78,17 @@ export default function Rewards({
       claimableProportion,
     ],
   })
+  const reserveAmounts = useContractReader<{
+    _admins: BigNumber
+    _beneficiaries: BigNumber
+    _issuers: BigNumber
+  }>({
+    contract: contracts?.Juicer,
+    functionName: 'getReservedTickets',
+    args: [budget?.owner],
+  })
+
+  console.log('reserves', reserveAmounts)
 
   const share = ticketSupply?.gt(0)
     ? ticketsBalance?.div(ticketSupply).toString()
@@ -170,31 +181,33 @@ export default function Rewards({
             )}
           </div>
         </Descriptions.Item>
-        <Descriptions.Item label="Reserves">
-          {budget?.hasMintedReserves ? (
-            'Minted'
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>Not minted</span>
-              <Button onClick={mint}>Mint reserves</Button>
-            </div>
-          )}
-        </Descriptions.Item>
         <Descriptions.Item label="Unclaimed">
           {totalClaimableAmount?.toString() ?? '--'} {rewardTokenName}
         </Descriptions.Item>
         <Descriptions.Item label="Claimable by you">
           {yourClaimableAmount?.toString() ?? '--'} {rewardTokenName}
         </Descriptions.Item>
+        <Descriptions.Item label="Admin reserves">
+          {reserveAmounts?._admins?.toString()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Beneficiaries reserves">
+          {reserveAmounts?._beneficiaries?.toString()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Issuers reserves">
+          {reserveAmounts?._issuers?.toString()}
+        </Descriptions.Item>
       </Descriptions>
 
-      <div style={{ padding: 25, textAlign: 'right', width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: 25,
+          textAlign: 'right',
+          width: '100%',
+        }}
+      >
+        <Button onClick={mint}>Mint reserves</Button>
         <Space align="baseline">
           <Input
             defaultValue={ticketsBalance?.toString()}

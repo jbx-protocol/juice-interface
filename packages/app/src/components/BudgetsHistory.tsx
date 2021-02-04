@@ -55,6 +55,7 @@ export default function BudgetsHistory({
               providerAddress={providerAddress}
               budget={budget}
               showSustained={true}
+              showMinted={true}
               transactor={transactor}
               contracts={contracts}
             />

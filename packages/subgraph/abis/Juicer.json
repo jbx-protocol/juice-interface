@@ -478,7 +478,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_admin",
+        "name": "_admins",
         "type": "uint256"
       }
     ],

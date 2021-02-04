@@ -61,7 +61,7 @@ export default function ReconfigureBudget({
       'uint256',
       fields.duration * SECONDS_IN_DAY,
     )
-    const _want = rewardToken
+    const _want = fields.want
     const _link = fields.link
     const _brief = fields.brief
     const _bias = eth.abi.encodeParameter('uint256', fields.bias)
@@ -116,6 +116,7 @@ export default function ReconfigureBudget({
           initialValues: {
             duration: currentValue?.duration.toString(),
             target: currentValue?.target.toString(),
+            want: currentValue?.want,
             brief: currentValue?.brief,
             link: currentValue?.brief,
           },

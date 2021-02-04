@@ -182,7 +182,6 @@ export default function Owner({
                   providerAddress={providerAddress}
                   budget={currentBudget}
                   showSustained={true}
-                  showTimeLeft={true}
                   contracts={contracts}
                   transactor={transactor}
                 />

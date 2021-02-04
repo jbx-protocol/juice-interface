@@ -15,14 +15,14 @@ export default function BudgetDetail({
   contracts,
   transactor,
   showSustained,
-  showTimeLeft,
+  showMinted,
   providerAddress,
 }: {
   budget?: Budget
   contracts?: Contracts
   transactor?: Transactor
   showSustained?: boolean
-  showTimeLeft?: boolean
+  showMinted?: boolean
   providerAddress?: string
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
@@ -88,6 +88,8 @@ export default function BudgetDetail({
     labelStyle: { fontWeight: 600 },
   }
 
+  const gutter = 25
+
   return (
     <div>
       {budget.id.gt(0) ? (
@@ -96,7 +98,7 @@ export default function BudgetDetail({
             paddingTop: 15,
             marginBottom: 0,
             paddingBottom: 15,
-            paddingLeft: 25,
+            paddingLeft: gutter,
             fontWeight: 600,
             borderBottom: '1px solid black',
           }}
@@ -135,11 +137,9 @@ export default function BudgetDetail({
           </Descriptions.Item>
         ) : null}
 
-        {showTimeLeft ? (
-          <Descriptions.Item label="Time left">
-            {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || 'Ended'}
-          </Descriptions.Item>
-        ) : null}
+        <Descriptions.Item label="Time left">
+          {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || 'Ended'}
+        </Descriptions.Item>
 
         {showSustained ? (
           <Descriptions.Item label="Tapped">
@@ -148,19 +148,27 @@ export default function BudgetDetail({
         ) : null}
       </Descriptions>
 
-      <a
+      <div
         style={{
           display: 'block',
-          margin: 25,
+          margin: gutter,
         }}
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
       >
-        {link}
-      </a>
+        {budget.brief}
+      </div>
 
-      <div style={{ margin: 25 }}>
+      <div
+        style={{
+          display: 'block',
+          margin: gutter,
+        }}
+      >
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          {link}
+        </a>
+      </div>
+
+      <div style={{ margin: gutter }}>
         <Descriptions {...descriptionsStyle} size="small" column={2}>
           <Descriptions.Item label="Weight">
             {budget.weight.toString()}
@@ -181,8 +189,26 @@ export default function BudgetDetail({
               {budget.bAddress.toString()}%
             </Descriptions.Item>
           ) : null}
+          {showMinted && surplus.gt(0) ? (
+            <Descriptions.Item label="Reserves">
+              {budget?.hasMintedReserves ? (
+                'Minted'
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    whiteSpace: 'pre',
+                  }}
+                >
+                  <span>Not minted</span>
+                </div>
+              )}
+            </Descriptions.Item>
+          ) : null}
           {showSustained ? (
-            <Descriptions.Item label="Withdrawable" span={2}>
+            <Descriptions.Item label="Withdrawable">
               <div
                 style={{
                   display: 'flex',
@@ -194,7 +220,7 @@ export default function BudgetDetail({
                 <span style={{ flex: 1 }}>
                   {tappableAmount?.toString() ?? '--'} {wantTokenName}
                 </span>
-                {isOwner ? (
+                {isOwner && tappableAmount?.gt(0) ? (
                   <div style={{ width: '100%', textAlign: 'end' }}>
                     <Space>
                       <Input

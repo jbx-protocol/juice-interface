@@ -98,6 +98,7 @@ contract Juicer is IJuicer {
         view
         override
         returns (
+            //TODO remove underscores
             uint256 _issuers,
             uint256 _beneficiaries,
             uint256 _admins
@@ -119,10 +120,7 @@ contract Juicer is IJuicer {
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
         while (_budget.id > 0 && !_budget.hasMintedReserves) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (
-                _budget.total > _budget.target &&
-                _budget._state() == Budget.State.Redistributing
-            ) {
+            if (_budget._state() == Budget.State.Redistributing) {
                 // Unminted reserved tickets are all relavative to the amount of overflow available.
                 uint256 _overflow = _budget.total.sub(_budget.target);
 
@@ -591,27 +589,23 @@ contract Juicer is IJuicer {
         while (_budget.id > 0 && !_budget.hasMintedReserves) {
             // If the budget is redistributing, it has unminted reserved tickets.
             if (_budget._state() == Budget.State.Redistributing) {
-                if (_budget.total > _budget.target) {
-                    // Unminted reserved tickets are all relavative to the amount of overflow available.
-                    uint256 _overflow = _budget.total.sub(_budget.target);
+                // The admin gets the admin fee percentage.
+                // Unminted reserved tickets are all relavative to the amount of total tickets given out.
+                _tickets.mint(admin, _budget._weighted(_budget.total, fee));
 
-                    // The admin gets the admin fee percentage.
-                    _tickets.mint(admin, _budget._weighted(_overflow, fee));
+                // The owner gets the budget's owner percentage, if one is specified.
+                if (_budget.o > 0)
+                    _tickets.mint(
+                        _budget.owner,
+                        _budget._weighted(_budget.total, _budget.o)
+                    );
 
-                    // The owner gets the budget's owner percentage, if one is specified.
-                    if (_budget.o > 0)
-                        _tickets.mint(
-                            _budget.owner,
-                            _budget._weighted(_overflow, _budget.o)
-                        );
-
-                    // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                    if (_budget.b > 0)
-                        _tickets.mint(
-                            _budget.bAddress,
-                            _budget._weighted(_overflow, _budget.b)
-                        );
-                }
+                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
+                if (_budget.b > 0)
+                    _tickets.mint(
+                        _budget.bAddress,
+                        _budget._weighted(_budget.total, _budget.b)
+                    );
 
                 // Mark the budget as having minted reserves.
                 _budget.hasMintedReserves = true;

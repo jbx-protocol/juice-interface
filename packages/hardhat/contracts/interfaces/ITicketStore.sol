@@ -30,13 +30,6 @@ interface ITicketStore is IStore {
 
     function getTicketValue(address _issuer) external view returns (uint256);
 
-    function getTicketBalance(address _issuer, address _holder)
-        external
-        view
-        returns (uint256);
-
-    function getTicketSupply(address _issuer) external view returns (uint256);
-
     function getTicketRewardToken(address _issuer)
         external
         view

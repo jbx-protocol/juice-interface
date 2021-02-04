@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input, Space } from 'antd'
+import { Button, Descriptions, Input, Space } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
@@ -8,7 +8,6 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
-import KeyValRow from './KeyValRow'
 
 export default function Rewards({
   transactor,
@@ -137,62 +136,75 @@ export default function Rewards({
     transactor(contracts.Juicer.mintReservedTickets(budget.owner))
   }
 
+  const descriptionsStyle = {
+    labelStyle: { fontWeight: 600 },
+  }
+
   return (
     <div>
-      {KeyValRow(
-        'Your ' + ticketSymbol + ' balance',
-        ticketsBalance?.toString() ?? '--',
-      )}
-      {KeyValRow('Your share', (share ?? '--') + '%')}
-      {KeyValRow('Reward token', rewardTokenName)}
-      {KeyValRow(
-        'Overflow needing swap',
-        <span>
-          {swappableAmount?.toString() ?? '--'} {wantTokenName}
-          {swappableAmount?.gt(0) ? (
-            <Button htmlType="submit" onClick={swap}>
-              Swap
-            </Button>
+      <Descriptions {...descriptionsStyle} column={1} bordered>
+        <Descriptions.Item label={'Your ' + ticketSymbol + ' balance'}>
+          {ticketsBalance?.toString() ?? '--'}
+        </Descriptions.Item>
+        <Descriptions.Item label="Your share">
+          {(share ?? '--') + '%'}
+        </Descriptions.Item>
+        <Descriptions.Item label="Reward token">
+          {rewardTokenName}
+        </Descriptions.Item>
+        <Descriptions.Item label="Overflow needing swap">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            {swappableAmount?.toString() ?? '--'} {wantTokenName}
+            {swappableAmount?.gt(0) ? (
+              <Button htmlType="submit" onClick={swap}>
+                Swap
+              </Button>
+            ) : (
+              undefined
+            )}
+          </div>
+        </Descriptions.Item>
+        <Descriptions.Item label="Reserves">
+          {budget?.hasMintedReserves ? (
+            'Minted'
           ) : (
-            undefined
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span>Not minted</span>
+              <Button onClick={mint}>Mint reserves</Button>
+            </div>
           )}
-        </span>,
-      )}
-      {KeyValRow(
-        'Reserves',
-        budget?.hasMintedReserves ? (
-          'Minted'
-        ) : (
-          <Space>
-            <span>Not minted</span>
-            <Button onClick={mint}>Mint reserves</Button>
-          </Space>
-        ),
-      )}
-      {KeyValRow(
-        'Unclaimed',
-        <span>
+        </Descriptions.Item>
+        <Descriptions.Item label="Unclaimed">
           {totalClaimableAmount?.toString() ?? '--'} {rewardTokenName}
-        </span>,
-      )}
-      {KeyValRow(
-        'Claimable by you',
-        <span>
+        </Descriptions.Item>
+        <Descriptions.Item label="Claimable by you">
           {yourClaimableAmount?.toString() ?? '--'} {rewardTokenName}
-        </span>,
-      )}
-      <Input
-        style={{ marginTop: 20 }}
-        defaultValue={ticketsBalance?.toString()}
-        suffix={rewardTokenName ?? '--'}
-        value={redeemAmount?.toString()}
-        onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
-        addonAfter={
-          <Button type="text" onClick={redeem}>
-            Redeem
-          </Button>
-        }
-      />
+        </Descriptions.Item>
+      </Descriptions>
+
+      <div style={{ padding: 25, textAlign: 'right', width: '100%' }}>
+        <Space align="baseline">
+          <Input
+            defaultValue={ticketsBalance?.toString()}
+            suffix={rewardTokenName ?? '--'}
+            value={redeemAmount?.toString()}
+            onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
+          />
+          <Button onClick={redeem}>Redeem</Button>
+        </Space>
+      </div>
     </div>
   )
 }

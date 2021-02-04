@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
+import { Divider, Space } from 'antd'
 import React, { useState } from 'react'
 
 import useContractReader from '../hooks/ContractReader'
@@ -47,21 +47,19 @@ export default function BudgetsHistory({
   })
 
   const budgetElems = (
-    <Space direction="vertical">
-      {budgets.map((budget, index) =>
-        index > 0 ? (
-          <BudgetDetail
-            key={index}
-            providerAddress={providerAddress}
-            budget={budget}
-            showSustained={true}
-            transactor={transactor}
-            contracts={contracts}
-          />
-        ) : budgets.length > 1 ? null : (
-          'No history'
-        ),
-      )}
+    <Space direction="vertical" split={<Divider />}>
+      {budgets.length
+        ? budgets.map((budget, index) => (
+            <BudgetDetail
+              key={index}
+              providerAddress={providerAddress}
+              budget={budget}
+              showSustained={true}
+              transactor={transactor}
+              contracts={contracts}
+            />
+          ))
+        : 'No history'}
     </Space>
   )
 

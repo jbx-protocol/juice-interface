@@ -13,7 +13,6 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
 import BudgetsHistory from './BudgetsHistory'
-import KeyValRow from './KeyValRow'
 import ReconfigureBudget from './ReconfigureBudget'
 import Rewards from './Rewards'
 
@@ -79,7 +78,7 @@ export default function Owner({
   //   .filter(e => e.owner === owner)
   //   .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
 
-  function sustain() {
+  function payOwner() {
     if (!transactor || !contracts?.Juicer || !currentBudget?.owner) return
 
     const eth = new Web3(Web3.givenProvider).eth
@@ -133,7 +132,7 @@ export default function Owner({
         <div
           style={{
             ...shadowCard,
-            padding: 20,
+            overflow: 'hidden',
           }}
         >
           {content}
@@ -172,7 +171,7 @@ export default function Owner({
       <h1>{ticketName}</h1>
       <h3>{owner}</h3>
 
-      <Divider orientation="center"></Divider>
+      <Divider orientation="center" />
 
       <Space size={spacing} direction="vertical">
         <Row gutter={spacing}>
@@ -187,21 +186,24 @@ export default function Owner({
                   contracts={contracts}
                   transactor={transactor}
                 />
-                {KeyValRow(
-                  'Sustain budget',
+                <Divider style={{ margin: 0 }} />
+                <Space
+                  style={{
+                    width: '100%',
+                    justifyContent: 'flex-end',
+                    padding: 25,
+                  }}
+                >
                   <Input
-                    style={{ marginRight: 10 }}
                     name="sustain"
                     placeholder="0"
                     suffix={wantTokenName}
                     onChange={e => setSustainAmount(parseFloat(e.target.value))}
-                    addonAfter={
-                      <Button type="text" onClick={sustain}>
-                        Sustain
-                      </Button>
-                    }
-                  />,
-                )}
+                  />
+                  <Button type="primary" onClick={payOwner}>
+                    Pay owner
+                  </Button>
+                </Space>
               </div>,
               'Active Budget',
             )}
@@ -216,16 +218,6 @@ export default function Owner({
                 providerAddress={providerAddress}
               />,
               'Rewards',
-            )}
-          </Col>
-        </Row>
-
-        <Row gutter={spacing}>
-          <Col span={12}>
-            {queuedBudget ? (
-              section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
-            ) : (
-              <div>No upcoming budgets</div>
             )}
           </Col>
         </Row>
@@ -251,9 +243,19 @@ export default function Owner({
 
         <Row gutter={spacing}>
           <Col span={12}>
+            {queuedBudget ? (
+              section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
+            ) : (
+              <div>No upcoming budgets</div>
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={spacing}>
+          <Col span={12}>
             {section(
               <BudgetsHistory
-                startId={currentBudget.id}
+                startId={currentBudget.previous}
                 contracts={contracts}
                 transactor={transactor}
                 providerAddress={providerAddress}

@@ -17,8 +17,8 @@ export default function Gimme({
   contracts?: Contracts
   providerAddress?: string
 }) {
-  const [gimmeAmount, setGimmeAmount] = useState<number>(0)
-  const [allowanceAmount, setAllowanceAmount] = useState<number>(0)
+  const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
+  const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
 
   const allowance: BigNumber | undefined = useContractReader({
     contract: contracts?.Token,
@@ -67,6 +67,7 @@ export default function Gimme({
       <div>
         <h4>Current allowance: {allowance?.toNumber() ?? 0}</h4>
         <input
+          defaultValue={allowanceAmount}
           placeholder="0"
           onChange={e => setAllowanceAmount(parseFloat(e.target.value))}
         />
@@ -76,6 +77,7 @@ export default function Gimme({
         <h2>Current token balance {balance?.toNumber()}</h2>
         <h4>Get Token</h4>
         <input
+          defaultValue={gimmeAmount}
           placeholder="0"
           onChange={e => setGimmeAmount(parseFloat(e.target.value))}
         />

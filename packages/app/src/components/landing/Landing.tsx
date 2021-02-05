@@ -77,9 +77,11 @@ export default function Landing({
                 )}
               </div>
               <p>
-                Unlike a Patreon or pricing/donations page, your Budgets are
-                pre-programmed to return overflow back to addresses that helped
-                sustain you once it has received the funds you asked for.
+                
+                Unlike Patreon or a pricing/donations page, you pre-program how much cashflow you want to make recurringly or over a set time, and your users can claim the funds that overflow. 
+              </p>
+              <p>
+                Also blendable into your Solidity contracts to get a business-model-as-a-service.
               </p>
               <div
                 style={{
@@ -164,9 +166,9 @@ export default function Landing({
           <ImgTextSection
             img=""
             imgPosition="right"
-            title="Organic, consistent cashflow is key"
+            title="Contributors still gotta get paid"
             text={[
-              'Until now, there hasn’t been an organic way to provide consistent cashflow to these core teams and casual contributors, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with  legacy ideas like golden handcuffs, unreliable ideas like grants, and controversial ideas like whimsically minting token supply for dev treasuries.',
+              'Until now, there hasn’t been an organic way to provide consistent cashflow to these core teams and casual contributors, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with legacy ideas like golden handcuffs, philanthropic ideas like grants, and controversial ideas like minting token supply for dev treasuries.',
               'The internet of work, DeWork, needs a juicier solution – one that extends the best parts of DeFi, one that promotes cooperation, flexibility, and immediacy.',
               'Juice is that solution.',
             ]}
@@ -229,6 +231,9 @@ export default function Landing({
               and an open source code base that runs reliably. All built by
               motivated folks getting paid what they ask for, and with a price
               tag that tends toward zero as the juice flow grows.
+            </p>
+            <p>
+              Plus you can compose your contract with Juice and use it like a business-model-as-a-service.
             </p>
             {providerAddress ? (
               <a href={providerAddress}>

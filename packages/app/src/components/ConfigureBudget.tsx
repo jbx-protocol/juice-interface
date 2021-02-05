@@ -195,7 +195,7 @@ export default function ConfigureBudget({
       info: [
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
         'These reserved tokens can only be minted by budgets that overflow.',
-        "Lastly, the bias variable affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time. For example, if your Bias is set to 97%, then someone who pays $100 towards next month's Budget witll only receive 97% the amount of tickets that someone received when paying $100 towards this months budget. Effectively this gives folks who believe you will be able to increase your overflow an incentive to pay you today, HODL their tickets, and redeem them at a future date.",
+        "Lastly, the bias variable affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time. For example, if your Bias is set to 97%, then someone who pays $100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid $100 towards this months budget. Effectively this gives folks who believe you will be able to increase your overflow an incentive to pay you today, HODL their tickets, and redeem them at a future date.",
       ],
     },
     {

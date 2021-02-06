@@ -78,7 +78,7 @@ export default function Landing({
               </div>
               <p>
                 
-                Unlike Patreon or a pricing/donations page, you pre-program how much cashflow you want to make recurringly or over a set time, and your users can claim the funds that overflow. 
+                Unlike Patreon or a pricing/donations page, you pre-program how much cashflow you want to make recurringly or over a set time, and your users claim the funds that overflow. 
               </p>
               <p>
                 Also blendable into your Solidity contracts to get a business-model-as-a-service. #DeWork

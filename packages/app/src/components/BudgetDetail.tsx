@@ -166,8 +166,8 @@ export default function BudgetDetail({
           <Descriptions.Item label="Weight">
             {budget.weight.toString()}
           </Descriptions.Item>
-          <Descriptions.Item label="Discount">
-            {budget.discount.toString()}
+          <Descriptions.Item label="Discount rate">
+            {budget.discountRate.toString()}
           </Descriptions.Item>
           <Descriptions.Item label="Reserved for owner">
             {budget.o.toString()}%

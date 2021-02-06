@@ -16,5 +16,5 @@ export interface Budget {
   bAddress: string
   hasMintedReserves: boolean
   weight: BigNumber
-  discount: BigNumber
+  discountRate: BigNumber
 }

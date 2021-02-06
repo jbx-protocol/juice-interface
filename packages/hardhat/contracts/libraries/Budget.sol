@@ -48,7 +48,7 @@ library Budget {
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
-        uint256 discount;
+        uint256 discountRate;
     }
 
     // --- internal transactions --- //
@@ -64,7 +64,7 @@ library Budget {
         self.target = _baseBudget.target;
         self.duration = _baseBudget.duration;
         self.want = _baseBudget.want;
-        self.discount = _baseBudget.discount;
+        self.discountRate = _baseBudget.discountRate;
         self.weight = _derivedWeight(_baseBudget);
         self.o = _baseBudget.o;
         self.b = _baseBudget.b;
@@ -124,7 +124,7 @@ library Budget {
                 self.bAddress,
                 false,
                 self.weight,
-                self.discount
+                self.discountRate
             );
     }
 
@@ -142,11 +142,11 @@ library Budget {
     }
 
     /** 
-        @notice The weight derived from the current weight and the discount.
+        @notice The weight derived from the current weight and the discountRate.
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory self) internal pure returns (uint256) {
-        return self.weight.mul(self.discount).div(100);
+        return self.weight.mul(self.discountRate).div(100);
     }
 
     /** 
@@ -155,6 +155,10 @@ library Budget {
         @return The resulting amount.
     */
     function _tappableAmount(Data memory self) internal pure returns (uint256) {
+        // uint256 _allowed =
+        //     self.stream
+        //         ? block.timestamp.sub(self.start).mul(100).div(self.target)
+        //         : self.target;
         return Math.min(self.target, self.total).sub(self.tapped);
     }
 

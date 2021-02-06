@@ -32,7 +32,7 @@ contract BudgetStore is Store, IBudgetStore {
     // --- public properties --- //
 
     /// @notice A big number to base ticket issuance off of.
-    uint256 public constant BUDGET_BASE_WEIGHT = 1E18;
+    uint256 public constant BUDGET_BASE_WEIGHT = 1E12;
 
     /// @notice The latest Budget ID for each owner address.
     mapping(address => uint256) public override latestBudgetId;

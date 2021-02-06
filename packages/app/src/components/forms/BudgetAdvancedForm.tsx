@@ -10,7 +10,7 @@ export default function BudgetAdvancedForm({
     ownerAllocation: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
-    discount: number
+    discountRate: number
   }>
   header?: string
 }) {
@@ -19,7 +19,7 @@ export default function BudgetAdvancedForm({
     wrapperCol: { span: 12 },
   }
 
-  const initialDiscount = 97
+  const initialDiscountRate = 97
 
   return (
     <Form
@@ -28,7 +28,7 @@ export default function BudgetAdvancedForm({
       initialValues={{
         ownerAllocation: 0,
         beneficiaryAllocation: 0,
-        discount: initialDiscount,
+        discountRate: initialDiscountRate,
         ...props.initialValues,
       }}
     >
@@ -62,13 +62,13 @@ export default function BudgetAdvancedForm({
       </Form.Item>
       <Form.Item
         extra="The rate (95%-100%) at which contributions to future budgets are valued compared to contributions to this budget."
-        name="discount"
-        label="Discount"
+        name="discountRate"
+        label="Discount rate"
         rules={[{ required: true }]}
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
-            defaultValue={props.initialValues?.discount ?? initialDiscount}
+            defaultValue={props.initialValues?.discountRate ?? initialDiscountRate}
             className="align-end"
             suffix="%"
             min={95}

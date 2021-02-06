@@ -27,8 +27,8 @@ import "./TicketStore.sol";
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
               - The contributed amount. The more someone contributes, the more Tickets they'll receive.
               - The target amount of your Budget. The bigger your Budget's target amount, the fewer tickets that'll be minted for each `want` token contributed.
-              - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discount` rate. 
-                This rate is called a `discount` because it allows you to give out more Tickets to contributors to your 
+              - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate` rate. 
+                This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
                 current Budget than to future budgets.
         4. As the project owner, you can collect any funds made to your Budget within your configured target.
            Any overflow will be accounted for seperately. 
@@ -209,11 +209,11 @@ contract Juicer is IJuicer {
         @param _want The token that the Budget wants.
         @param _duration The duration to set, measured in seconds.
         @param _link A link to information about the Budget.
-        @param _discount A number from 95-100 indicating how valuable a contribution to the current Budget is 
+        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
         compared to the owners previous Budget.
         If it's 100, each Budget will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        This is `discount` is realized through the amount of Ticket distributed per unit of contribution made.
+        This is `discountRate` is realized through the amount of Ticket distributed per unit of contribution made.
         @param _o The percentage of this Budget's overflow to reserve for the owner.
         @param _b The percentage of this Budget's overflow to reserve for a beneficiary address. 
         This can be another contract, or an end user address.
@@ -226,7 +226,7 @@ contract Juicer is IJuicer {
         uint256 _duration,
         IERC20 _want,
         string calldata _link,
-        uint256 _discount,
+        uint256 _discountRate,
         uint256 _o,
         uint256 _b,
         address _bAddress
@@ -236,9 +236,9 @@ contract Juicer is IJuicer {
             wantTokenIsAllowed[_want],
             "Juicer::configureBudget: UNSUPPORTED_WANT"
         );
-        // The `discount` token must be between 95 and 100.
+        // The `discountRate` token must be between 95 and 100.
         require(
-            _discount >= 95 && _discount <= 100,
+            _discountRate >= 95 && _discountRate <= 100,
             "Juicer:configureBudget: BAD_BIAS"
         );
         // If the beneficiary reserve percentage is greater than 0, an address must be provided.
@@ -274,7 +274,7 @@ contract Juicer is IJuicer {
         _budget.start = budgetStore.getCurrentBudget(msg.sender).total == 0
             ? block.timestamp
             : _budget.start;
-        _budget.discount = _discount;
+        _budget.discountRate = _discountRate;
         _budget.o = _o;
         _budget.b = _b;
         _budget.bAddress = _bAddress;
@@ -293,7 +293,7 @@ contract Juicer is IJuicer {
             _budget.duration,
             _budget.want,
             _budget.link,
-            _budget.discount,
+            _budget.discountRate,
             _o,
             _b,
             _bAddress

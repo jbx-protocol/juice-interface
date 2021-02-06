@@ -215,6 +215,7 @@ export default function Owner({
                 transactor={transactor}
                 budget={currentBudget}
                 providerAddress={providerAddress}
+                ticketAddress={ticketAddress}
               />,
               'Rewards',
             )}

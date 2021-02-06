@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
+import { bigNumbersEq } from '../helpers/bigNumbersEq'
 import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
@@ -36,6 +37,7 @@ export default function BudgetDetail({
     contract: contracts?.BudgetStore,
     functionName: 'getTappableAmount',
     args: [budget?.id],
+    shouldUpdate: bigNumbersEq,
   })
 
   const secondsLeft =

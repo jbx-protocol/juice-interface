@@ -8,41 +8,42 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { bigNumbersEq } from '../helpers/bigNumbersEq'
 
 export default function Rewards({
   transactor,
   contracts,
   budget,
   providerAddress,
+  ticketAddress,
 }: {
   transactor?: Transactor
   contracts?: Contracts
   budget?: Budget
   providerAddress?: string
+  ticketAddress?: string
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
 
   const claimableProportion = BigNumber.from(618).toHexString()
 
-  const ticketAddress = useContractReader<string>({
-    contract: contracts?.TicketStore,
-    functionName: 'tickets',
-    args: [budget?.owner],
-  })
+  const ticketContract = erc20Contract(ticketAddress)
+
   const ticketSymbol = useContractReader<string>({
-    contract: erc20Contract(ticketAddress),
+    contract: ticketContract,
     functionName: 'symbol',
     formatter: (value: string) => Web3.utils.hexToString(value),
   })
   const ticketsBalance = useContractReader<BigNumber>({
-    contract: erc20Contract(ticketAddress),
+    contract: ticketContract,
     functionName: 'balanceOf',
     args: [providerAddress],
-    callback: balance => setRedeemAmount(balance),
+    shouldUpdate: bigNumbersEq,
   })
   const ticketSupply = useContractReader<BigNumber>({
-    contract: erc20Contract(ticketAddress),
+    contract: ticketContract,
     functionName: 'totalSupply',
+    shouldUpdate: bigNumbersEq,
   })
   const rewardTokenAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
@@ -61,11 +62,13 @@ export default function Rewards({
     contract: contracts?.TicketStore,
     functionName: 'swappable',
     args: [budget?.owner, budget?.want, rewardTokenAddress],
+    shouldUpdate: bigNumbersEq,
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
     functionName: 'claimable',
     args: [budget?.owner, rewardTokenAddress],
+    shouldUpdate: bigNumbersEq,
   })
   const yourClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
@@ -85,9 +88,15 @@ export default function Rewards({
     contract: contracts?.Juicer,
     functionName: 'getReservedTickets',
     args: [budget?.owner],
+    shouldUpdate: (val, old) => {
+      if (!val || (!val && !old)) return false
+      return (
+        val._admins.eq(old?._admins ?? 0) &&
+        val._beneficiaries.eq(old?._beneficiaries ?? 0) &&
+        val._issuers.eq(old?._issuers ?? 0)
+      )
+    },
   })
-
-  console.log('reserves', reserveAmounts)
 
   const share = ticketSupply?.gt(0)
     ? ticketsBalance?.div(ticketSupply).toString()
@@ -149,6 +158,8 @@ export default function Rewards({
   const descriptionsStyle = {
     labelStyle: { fontWeight: 600 },
   }
+
+  if (!budget) return null
 
   return (
     <div>

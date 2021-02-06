@@ -10,6 +10,7 @@ export default function useContractReader<V>({
   pollTime,
   formatter,
   callback,
+  shouldUpdate,
 }: {
   contract?: Contract
   functionName: string
@@ -17,6 +18,7 @@ export default function useContractReader<V>({
   pollTime?: number
   formatter?: (val: any) => V
   callback?: (val?: V) => void
+  shouldUpdate?: (a?: V, b?: V) => boolean
 }) {
   const adjustPollTime = pollTime ?? 3000
 
@@ -29,15 +31,17 @@ export default function useContractReader<V>({
       try {
         const newValue: unknown = await contract[functionName](...(args ?? []))
 
-        if (!newValue) return
+        if (newValue === undefined) return
 
         const result = formatter ? formatter(newValue) : (newValue as V)
 
-        if (result !== value) setValue(result)
+        if (shouldUpdate ? !shouldUpdate(result, value) : result !== value) {
+          setValue(result)
+        }
 
         if (callback) callback(result)
       } catch (e) {
-        console.log('Poller >>>', functionName, e)
+        // console.log('Poller >>>', functionName, e)
         if (callback) callback(undefined)
       }
     },

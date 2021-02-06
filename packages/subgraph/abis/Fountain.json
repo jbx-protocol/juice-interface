@@ -68,7 +68,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "bias",
+        "name": "discount",
         "type": "uint256"
       },
       {
@@ -353,7 +353,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_bias",
+        "name": "_discount",
         "type": "uint256"
       },
       {

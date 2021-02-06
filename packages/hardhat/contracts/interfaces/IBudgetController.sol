@@ -12,7 +12,7 @@ interface IBudgetController {
         uint256 duration,
         IERC20 want,
         string link,
-        uint256 bias,
+        uint256 discount,
         uint256 o,
         uint256 b,
         address bAddress
@@ -41,9 +41,8 @@ interface IBudgetController {
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
-        string calldata _brief,
         string calldata _link,
-        uint256 bias,
+        uint256 discount,
         uint256 _o,
         uint256 _b,
         address _bAddress

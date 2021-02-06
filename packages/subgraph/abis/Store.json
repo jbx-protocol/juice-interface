@@ -106,7 +106,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -212,7 +212,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -372,7 +372,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -502,7 +502,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -608,7 +608,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -810,7 +810,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -918,7 +918,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],

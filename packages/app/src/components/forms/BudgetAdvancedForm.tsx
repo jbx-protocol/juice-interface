@@ -10,7 +10,7 @@ export default function BudgetAdvancedForm({
     ownerAllocation: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
-    bias: number
+    discount: number
   }>
   header?: string
 }) {
@@ -19,7 +19,7 @@ export default function BudgetAdvancedForm({
     wrapperCol: { span: 12 },
   }
 
-  const initialBias = 100
+  const initialDiscount = 97
 
   return (
     <Form
@@ -28,7 +28,7 @@ export default function BudgetAdvancedForm({
       initialValues={{
         ownerAllocation: 0,
         beneficiaryAllocation: 0,
-        bias: initialBias,
+        discount: initialDiscount,
         ...props.initialValues,
       }}
     >
@@ -39,14 +39,14 @@ export default function BudgetAdvancedForm({
       ) : null}
 
       <Form.Item
-        extra="The percentage of overflow that you’ll keep for yourself instead of returning to your contributors."
+        extra="The percentage of the tickets distributed to your contributors that will become mintable for yourself once the Budget expires."
         name="ownerAllocation"
-        label="Owner surplus"
+        label="Your owner tickets"
       >
         <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
-        extra="A contract that you wish to give part of your overflow to."
+        extra="A contract that you wish to have tickets minted for in the same way as owner tickets."
         name="beneficiaryAddress"
         label="Beneficiary contract"
         rules={[{ required: true }]}
@@ -54,21 +54,21 @@ export default function BudgetAdvancedForm({
         <Input placeholder="0x01a2b3c..." />
       </Form.Item>
       <Form.Item
-        extra="The percentage of overflow that you’ll pre-allocate to the beneficiary contract instead of returning to your contributors."
+        extra="The percentage of the tickets distributed to your contributors that will become mintable for the beneficiary contract once the Budget expires."
         name="beneficiaryAllocation"
         label="Beneficiary allocation"
       >
         <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
-        extra="The rate (95-100) at which contributions to future budgets are valued compared to contributions to this budget."
-        name="bias"
-        label="Bias"
+        extra="The rate (95%-100%) at which contributions to future budgets are valued compared to contributions to this budget."
+        name="discount"
+        label="Discount"
         rules={[{ required: true }]}
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
-            defaultValue={props.initialValues?.bias ?? initialBias}
+            defaultValue={props.initialValues?.discount ?? initialDiscount}
             className="align-end"
             suffix="%"
             min={95}

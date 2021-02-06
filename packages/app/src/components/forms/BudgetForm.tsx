@@ -10,7 +10,6 @@ export default function BudgetForm({
     duration: number
     target: number
     want: string
-    brief: string
     link: string
   }>
   header?: string
@@ -50,13 +49,6 @@ export default function BudgetForm({
         label="Payment token"
       >
         <Input placeholder="0x6b175474e89094c44da98b954eedeac495271d0f" />
-      </Form.Item>
-      <Form.Item
-        extra="A brief description of what your Budgets are used for."
-        name="brief"
-        label="Description"
-      >
-        <Input.TextArea placeholder="Getting juice with friends..." />
       </Form.Item>
       <Form.Item
         extra="A link to more in depth information about your Budget."

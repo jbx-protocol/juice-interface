@@ -21,9 +21,8 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         uint256 target;
         uint256 duration;
         IERC20 want;
-        string brief;
         string link;
-        uint256 bias;
+        uint256 discount;
         uint256 o;
         uint256 b;
         address bAddress;
@@ -47,10 +46,9 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
         @param _want The new token that your Budget wants.
-        @param _brief A brief description about your Budget.
         @param _link A link to information about the Budget.
-        @param _bias A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
-        effectively creating a recency bias.
+        @param _discount A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
+        effectively creating a recency discount.
         If it's 100, each Budget will have equal weight.
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
@@ -64,9 +62,8 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
-        string calldata _brief,
         string calldata _link,
-        uint256 _bias,
+        uint256 _discount,
         uint256 _o,
         uint256 _b,
         address _bAddress
@@ -76,9 +73,8 @@ abstract contract JuiceAdmin is Ownable, JuiceBeneficiary {
                 _target,
                 _duration,
                 _want,
-                _brief,
                 _link,
-                _bias,
+                _discount,
                 _o,
                 _b,
                 _bAddress

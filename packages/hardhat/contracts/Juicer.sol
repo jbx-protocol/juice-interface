@@ -489,7 +489,7 @@ contract Juicer is IJuicer {
                 msg.sender,
                 _amount,
                 _issuer,
-                382
+                618
             );
 
         // The amount being claimed must be less than the amount claimable.

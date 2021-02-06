@@ -37,7 +37,7 @@ export default function ConfigureBudget({
     want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
-    discount: number
+    discountRate: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
     ownerAllocation: number
@@ -98,7 +98,7 @@ export default function ConfigureBudget({
     ).toHexString()
     const _want = budgetForm.getFieldValue('want')
     const _link = fields.link
-    const _discount = BigNumber.from(fields.discount).toHexString()
+    const _discountRate = BigNumber.from(fields.discountRate).toHexString()
     const _ownerAllocation = fields.ownerAllocation
       ? BigNumber.from(fields.ownerAllocation).toHexString()
       : 0
@@ -112,7 +112,7 @@ export default function ConfigureBudget({
       _duration,
       _want,
       _link,
-      _discount,
+      _discountRate,
       _ownerAllocation,
       _beneficiaryAllocation,
       _beneficiaryAddress,
@@ -124,7 +124,7 @@ export default function ConfigureBudget({
         _duration,
         _want,
         _link,
-        _discount,
+        _discountRate,
         _ownerAllocation,
         _beneficiaryAllocation,
         _beneficiaryAddress,
@@ -195,8 +195,8 @@ export default function ConfigureBudget({
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
         "Beneficiary contract's can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.",
         " ",
-        "Lastly, the discount variable affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
-        "For example, if your Discount is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",
+        "Lastly, the discountRate rate affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
+        "For example, if your discountRate rate is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",
         "Effectively this gives humans who believe your cumulative overflow will increase over time an incentive to pay you today, HODL their tickets, and redeem them at a future date for a better return.",
       ],
     },
@@ -264,8 +264,8 @@ export default function ConfigureBudget({
             <Space size="large" align="end">
               <Statistic
                 style={{ minWidth: 100 }}
-                title="Discount"
-                value={budgetAdvancedForm.getFieldValue('discount')}
+                title="Discount rate"
+                value={budgetAdvancedForm.getFieldValue('discountRate')}
                 suffix="%"
               />
               <Statistic

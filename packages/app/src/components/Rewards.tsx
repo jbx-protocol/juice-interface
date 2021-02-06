@@ -99,7 +99,7 @@ export default function Rewards({
   })
 
   const share = ticketSupply?.gt(0)
-    ? ticketsBalance?.div(ticketSupply).toString()
+    ? ticketsBalance?.mul(100).div(ticketSupply).toString()
     : '0'
 
   function swap() {

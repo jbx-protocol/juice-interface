@@ -31,7 +31,7 @@ export default function ReconfigureBudget({
     want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
-    discount: number
+    discountRate: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
     ownerAllocation: number
@@ -62,7 +62,7 @@ export default function ReconfigureBudget({
     )
     const _want = fields.want
     const _link = fields.link
-    const _discount = eth.abi.encodeParameter('uint256', fields.discount)
+    const _discountRate = eth.abi.encodeParameter('uint256', fields.discountRate)
     const _ownerAllocation = eth.abi.encodeParameter(
       'uint256',
       fields.ownerAllocation,
@@ -78,7 +78,7 @@ export default function ReconfigureBudget({
       _duration,
       _want,
       _link,
-      _discount,
+      _discountRate,
       _ownerAllocation,
       _beneficiaryAllocation,
       _beneficiaryAddress,
@@ -90,7 +90,7 @@ export default function ReconfigureBudget({
         _duration,
         _want,
         _link,
-        _discount,
+        _discountRate,
         _ownerAllocation,
         _beneficiaryAllocation,
         _beneficiaryAddress,
@@ -126,7 +126,7 @@ export default function ReconfigureBudget({
             ownerAllocation: currentValue?.o.toString(),
             beneficiaryAddress: currentValue?.bAddress,
             beneficiaryAllocation: currentValue?.b.toString(),
-            discount: currentValue?.discount.toString(),
+            discountRate: currentValue?.discountRate.toString(),
           },
         }}
       />

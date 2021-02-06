@@ -91,7 +91,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "bias",
+        "name": "discount",
         "type": "uint256"
       },
       {
@@ -403,17 +403,12 @@
       },
       {
         "internalType": "string",
-        "name": "_brief",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
         "name": "_link",
         "type": "string"
       },
       {
         "internalType": "uint256",
-        "name": "_bias",
+        "name": "_discount",
         "type": "uint256"
       },
       {

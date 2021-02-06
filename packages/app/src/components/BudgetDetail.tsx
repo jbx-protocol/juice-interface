@@ -154,15 +154,6 @@ export default function BudgetDetail({
           margin: gutter,
         }}
       >
-        {budget.brief}
-      </div>
-
-      <div
-        style={{
-          display: 'block',
-          margin: gutter,
-        }}
-      >
         <a href={link} target="_blank" rel="noopener noreferrer">
           {link}
         </a>
@@ -173,8 +164,8 @@ export default function BudgetDetail({
           <Descriptions.Item label="Weight">
             {budget.weight.toString()}
           </Descriptions.Item>
-          <Descriptions.Item label="Bias">
-            {budget.bias.toString()}
+          <Descriptions.Item label="Discount">
+            {budget.discount.toString()}
           </Descriptions.Item>
           <Descriptions.Item label="Reserved for owner">
             {budget.o.toString()}%

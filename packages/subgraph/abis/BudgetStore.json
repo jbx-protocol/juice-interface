@@ -147,11 +147,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -212,7 +207,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -291,11 +286,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -356,7 +346,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -397,11 +387,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -462,7 +447,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -503,11 +488,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -568,7 +548,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -609,11 +589,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -674,7 +649,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -715,11 +690,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -780,7 +750,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -821,11 +791,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -886,7 +851,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],
@@ -1170,11 +1135,6 @@
           },
           {
             "internalType": "string",
-            "name": "brief",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -1235,7 +1195,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "bias",
+            "name": "discount",
             "type": "uint256"
           }
         ],

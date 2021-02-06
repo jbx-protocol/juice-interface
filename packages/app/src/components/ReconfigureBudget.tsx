@@ -27,12 +27,11 @@ export default function ReconfigureBudget({
   const [budgetForm] = Form.useForm<{
     duration: number
     target: number
-    brief: string
     link: string
     want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
-    bias: number
+    discount: number
     beneficiaryAddress: string
     beneficiaryAllocation: number
     ownerAllocation: number
@@ -63,8 +62,7 @@ export default function ReconfigureBudget({
     )
     const _want = fields.want
     const _link = fields.link
-    const _brief = fields.brief
-    const _bias = eth.abi.encodeParameter('uint256', fields.bias)
+    const _discount = eth.abi.encodeParameter('uint256', fields.discount)
     const _ownerAllocation = eth.abi.encodeParameter(
       'uint256',
       fields.ownerAllocation,
@@ -80,7 +78,7 @@ export default function ReconfigureBudget({
       _duration,
       _want,
       _link,
-      _bias,
+      _discount,
       _ownerAllocation,
       _beneficiaryAllocation,
       _beneficiaryAddress,
@@ -91,9 +89,8 @@ export default function ReconfigureBudget({
         _target,
         _duration,
         _want,
-        _brief,
         _link,
-        _bias,
+        _discount,
         _ownerAllocation,
         _beneficiaryAllocation,
         _beneficiaryAddress,
@@ -117,8 +114,7 @@ export default function ReconfigureBudget({
             duration: currentValue?.duration.toString(),
             target: currentValue?.target.toString(),
             want: currentValue?.want,
-            brief: currentValue?.brief,
-            link: currentValue?.brief,
+            link: currentValue?.link,
           },
         }}
       />
@@ -130,7 +126,7 @@ export default function ReconfigureBudget({
             ownerAllocation: currentValue?.o.toString(),
             beneficiaryAddress: currentValue?.bAddress,
             beneficiaryAllocation: currentValue?.b.toString(),
-            bias: currentValue?.bias.toString(),
+            discount: currentValue?.discount.toString(),
           },
         }}
       />

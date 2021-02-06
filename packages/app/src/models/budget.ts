@@ -5,7 +5,6 @@ export interface Budget {
   owner: string
   previous: BigNumber
   link: string
-  brief: string
   want: string
   target: BigNumber
   total: BigNumber
@@ -17,5 +16,5 @@ export interface Budget {
   bAddress: string
   hasMintedReserves: boolean
   weight: BigNumber
-  bias: BigNumber
+  discount: BigNumber
 }

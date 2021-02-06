@@ -23,8 +23,6 @@ library Budget {
         address owner;
         // The ID of the owner's Budget that came before this one.
         uint256 previous;
-        // A brief description of the Budget.
-        string brief;
         // A link that points to a justification for these parameters.
         string link;
         // The token that this Budget can be funded with.
@@ -50,7 +48,7 @@ library Budget {
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
-        uint256 bias;
+        uint256 discount;
     }
 
     // --- internal transactions --- //
@@ -62,12 +60,11 @@ library Budget {
         @param _baseBudget The Budget to clone from.
     */
     function _basedOn(Data storage self, Data memory _baseBudget) internal {
-        self.brief = _baseBudget.brief;
         self.link = _baseBudget.link;
         self.target = _baseBudget.target;
         self.duration = _baseBudget.duration;
         self.want = _baseBudget.want;
-        self.bias = _baseBudget.bias;
+        self.discount = _baseBudget.discount;
         self.weight = _derivedWeight(_baseBudget);
         self.o = _baseBudget.o;
         self.b = _baseBudget.b;
@@ -115,7 +112,6 @@ library Budget {
                 0,
                 self.owner,
                 self.id,
-                self.brief,
                 self.link,
                 self.want,
                 self.target,
@@ -128,7 +124,7 @@ library Budget {
                 self.bAddress,
                 false,
                 self.weight,
-                self.bias
+                self.discount
             );
     }
 
@@ -146,11 +142,11 @@ library Budget {
     }
 
     /** 
-        @notice The weight derived from the current weight and the bias.
+        @notice The weight derived from the current weight and the discount.
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory self) internal pure returns (uint256) {
-        return self.weight.mul(self.bias).div(100);
+        return self.weight.mul(self.discount).div(100);
     }
 
     /** 

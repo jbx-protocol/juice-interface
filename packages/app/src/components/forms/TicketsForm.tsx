@@ -27,7 +27,7 @@ export default function TicketsForm({
         label="Name"
         rules={[{ required: true }]}
       >
-        <Input placeholder="Ticket" />
+        <Input placeholder="Peach's Fruit Stand" />
       </Form.Item>
       <Form.Item
         extra="The ticker of your ticket token is used across web3."
@@ -35,7 +35,7 @@ export default function TicketsForm({
         label="Ticker"
         rules={[{ required: true }]}
       >
-        <Input prefix="t" placeholder="MYPROJ" />
+        <Input prefix="t" placeholder="PEACH" />
       </Form.Item>
       <Form.Item
         extra="The ERC-20 token that your ticket tokens are redeemable for."

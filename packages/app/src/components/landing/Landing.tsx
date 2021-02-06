@@ -73,7 +73,7 @@ export default function Landing({
                 {bullet('Indy projects')}
                 {bullet('Public goods')}
                 {bullet(
-                  'Any initiative with recurring and predictable expenses',
+                  'Any project with predictable expenses',
                 )}
               </div>
               <p>
@@ -81,7 +81,7 @@ export default function Landing({
                 Unlike Patreon or a pricing/donations page, you pre-program how much cashflow you want to make recurringly or over a set time, and your users can claim the funds that overflow. 
               </p>
               <p>
-                Also blendable into your Solidity contracts to get a business-model-as-a-service.
+                Also blendable into your Solidity contracts to get a business-model-as-a-service. #DeWork
               </p>
               <div
                 style={{
@@ -115,7 +115,7 @@ export default function Landing({
         </div>
       </section>
 
-      <section
+      {/* <section
         style={{
           padding: 80,
           background: colors.juiceOrange,
@@ -150,7 +150,7 @@ export default function Landing({
           tokenName="WETH"
           ticketName="GITCOIN"
         />
-      </section>
+      </section> */}
 
       <section>
         <div style={{ padding: 80, maxWidth: totalMaxWidth, margin: '0 auto' }}>
@@ -159,14 +159,14 @@ export default function Landing({
             imgPosition="left"
             title="Old business models don’t work on the open internet"
             text={[
-              'Users are now in charge, and they expect transparency, algorithmic assurances, and public governance out of the protocols they depend on.',
-              'Though the power and the risk are shifting away from institutions and into the hands of individuals, the integrity of this regenerative economy still depends on buidlers, workers, creators, innovators, and maintainers. They’re out here self-organizing to make sure your bags stay SAFU and have a chance to grow.',
+              'Users are now in charge, and they expect transparency, algorithmic assurances, public governance, and excellent memes out of the protocols and communities they depend on.',
+              'Though the power and the risk are shifting away from institutions and into the hands of individuals, the integrity of this regenerative economy still depends on buidlers, workers, creators, innovators, and maintainers. We’re out here self-organizing to make sure your bags stay SAFU and have a chance to grow, and so we want to take a bite out of the fruits of our labor alongside you.',
             ]}
           />
           <ImgTextSection
             img=""
             imgPosition="right"
-            title="Contributors still gotta get paid"
+            title="Ethereum and DeFi give us something fresh"
             text={[
               'Until now, there hasn’t been an organic way to provide consistent cashflow to these core teams and casual contributors, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with legacy ideas like golden handcuffs, philanthropic ideas like grants, and controversial ideas like minting token supply for dev treasuries.',
               'The internet of work, DeWork, needs a juicier solution – one that extends the best parts of DeFi, one that promotes cooperation, flexibility, and immediacy.',
@@ -176,7 +176,7 @@ export default function Landing({
         </div>
       </section>
 
-      <section style={{ textAlign: 'center', padding: 80 }}>
+      {/* <section style={{ textAlign: 'center', padding: 80 }}>
         <div
           style={{
             maxWidth: 720,
@@ -200,7 +200,7 @@ export default function Landing({
           src="/assets/glass_overflow.png"
           alt="Overflowing glass"
         />
-      </section>
+      </section> */}
 
       <section style={{ padding: 80, background: colors.light }}>
         <div
@@ -223,25 +223,25 @@ export default function Landing({
             <p>
               Juice incentivizes a project owner to be measured and open with
               their intent, and provides those who get value out of the project
-              an honest and automated mechanism to help sustain it.
+              an honest and automated mechanism to help pay for it.
             </p>
             <p>
-              As a result, people get community-driven products with no ads,
-              guaranteed data integrity, full business operation accountability,
-              and an open source code base that runs reliably. All built by
+              As a result, people get community-driven products and services with no ads,
+              data integrity, full business operation accountability,
+              and an open source code base. All built by
               motivated folks getting paid what they ask for, and with a price
-              tag that tends toward zero as the juice flow grows.
+              tag that effectively tends toward zero as the juice flow grows.
             </p>
             <p>
-              Plus you can compose your contract with Juice and use it like a business-model-as-a-service.
+              Use Juice as your business-model-as-a-service by composing your contract with it. Just inherit from JuiceAdmin and you're good to go.
             </p>
             {providerAddress ? (
               <a href={providerAddress}>
-                <Button type="primary">Build on Juice</Button>
+                <Button type="primary">Build with Juice</Button>
               </a>
             ) : (
               <Button onClick={onNeedAddress} type="primary">
-                Build on Juice
+                Build with Juice
               </Button>
             )}
           </div>
@@ -257,7 +257,7 @@ export default function Landing({
         }}
       >
         <h3 style={{ color: colors.juiceOrange, margin: 0 }}>
-          Big ups to the Ethereum community for crafting the infrastructure and
+          Big ups to the Ethereum and DeFi community for crafting the infrastructure and
           economy to make Juice possible.
         </h3>
       </div>

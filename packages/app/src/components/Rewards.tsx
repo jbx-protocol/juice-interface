@@ -22,7 +22,7 @@ export default function Rewards({
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
 
-  const claimableProportion = BigNumber.from(382).toHexString()
+  const claimableProportion = BigNumber.from(618).toHexString()
 
   const ticketAddress = useContractReader<string>({
     contract: contracts?.TicketStore,

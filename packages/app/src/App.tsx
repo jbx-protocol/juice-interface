@@ -3,7 +3,7 @@ import './App.scss'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
 import { useCallback, useEffect, useState } from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import ConfigureBudget from './components/ConfigureBudget'
 import Gimme from './components/Gimme'
@@ -67,7 +67,7 @@ function App() {
       />
 
       <div>
-        <HashRouter>
+        <BrowserRouter>
           <Switch>
             <Route exact path="/">
               <Landing
@@ -97,7 +97,7 @@ function App() {
               />
             </Route>
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     </div>
   )

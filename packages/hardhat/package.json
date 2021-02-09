@@ -33,6 +33,7 @@
     "hardhat-publish": "hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",
     "accounts": "hardhat accounts",
+    "account": "hardhat account",
     "balance": "hardhat balance",
     "send": "hardhat send"
   }

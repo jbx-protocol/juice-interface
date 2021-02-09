@@ -5,16 +5,28 @@ const { config, ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
 
+const uniswapV2Router = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+
 const main = async () => {
   console.log("\n\n 📡 Deploying...\n");
 
   const token = await deploy("Token");
-  
+
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
-  const controller = await deploy("Juicer", [budgetStore.address, ticketStore.address, 3, [token.address], "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]); 
-  
-  const admin =  await deploy("Admin", [controller.address, token.address, "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"]);
+  const controller = await deploy("Juicer", [
+    budgetStore.address,
+    ticketStore.address,
+    3,
+    [token.address],
+    uniswapV2Router
+  ]);
+
+  const admin = await deploy("Admin", [
+    controller.address,
+    token.address,
+    uniswapV2Router
+  ]);
 
   // const exampleToken = await deploy("ExampleToken")
   // const examplePriceOracle = await deploy("ExamplePriceOracle")
@@ -71,10 +83,10 @@ const abiEncodeArgs = (deployed, contractArgs) => {
 };
 
 // checks if it is a Solidity file
-const isSolidity = (fileName) =>
+const isSolidity = fileName =>
   fileName.indexOf(".sol") >= 0 && fileName.indexOf(".swp") < 0;
 
-const readArgsFile = (contractName) => {
+const readArgsFile = contractName => {
   let args = [];
   try {
     const argsFile = `./contracts/${contractName}.args`;
@@ -88,7 +100,7 @@ const readArgsFile = (contractName) => {
 
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error);
     process.exit(1);
   });

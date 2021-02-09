@@ -5,5 +5,5 @@ pragma experimental ABIEncoderV2;
 import "./IAccessControlWrapper.sol";
 
 interface IStore is IAccessControlWrapper {
-    function claimOwnership() external;
+    function claimOwnership(address _owner) external;
 }

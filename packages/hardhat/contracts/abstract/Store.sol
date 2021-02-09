@@ -29,10 +29,12 @@ abstract contract Store is IStore, AccessControl {
 
     /**
         @notice Allows an address to claim ownership over this contract if it hasn't yet been claimed.
+        @dev This can only be done once.
+        @param _owner The address to set as the owner.
     */
-    function claimOwnership() external override {
+    function claimOwnership(address _owner) external override {
         require(owner == address(0), "MpStore::setAdmin: ALREADY_SET");
-        owner = msg.sender;
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        owner = _owner;
+        _setupRole(DEFAULT_ADMIN_ROLE, _owner);
     }
 }

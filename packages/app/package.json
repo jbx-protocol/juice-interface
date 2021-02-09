@@ -2,7 +2,6 @@
   "name": "@juice.work/app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -29,7 +28,6 @@
     "start": "yarn compile-less && react-scripts start",
     "build": "yarn compile-less && react-scripts build",
     "test": "yarn compile-less && react-scripts test",
-    "ipfs": "yarn build && ipfs add -r build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

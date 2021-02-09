@@ -51,7 +51,6 @@ module.exports = {
     },
     ropsten: {
       url: "https://ropsten.infura.io/v3/" + process.env.INFURA_ID,
-      gas: 1000000000000000,
       accounts: {
         mnemonic: mnemonic()
       }

@@ -9,9 +9,18 @@ contract YourContract is JuiceAdmin {
     constructor(
         IJuicer _controller,
         IERC20 _want,
-        IERC20 _rewardToken,
+        string memory _ticketName,
+        string memory _ticketSymbol,
+        IERC20 _ticketReward,
         UniswapV2Router02 _router
-    ) public JuiceAdmin(_controller, _router) {
-        juicer.issueTickets("Your Contract", "SYMBOL", _rewardToken);
-    }
+    )
+        public
+        JuiceAdmin(
+            _controller,
+            _ticketName,
+            _ticketSymbol,
+            _ticketReward,
+            _router
+        )
+    {}
 }

@@ -12,27 +12,22 @@ import "./abstract/JuiceAdmin.sol";
 contract Admin is JuiceAdmin {
     using SafeERC20 for IERC20;
 
-    /** 
-      @param _juicer The juicer that is being administered.
-      @param _router The router used to execute swaps.
-      @param _rewardToken The token that this project's Tickets can be redeemed for.
-    */
     constructor(
         IJuicer _juicer,
-        UniswapV2Router02 _router,
-        IERC20 _rewardToken
-    ) public JuiceAdmin(_juicer, _router) {
-        juicer.budgetStore().claimOwnership();
-        juicer.ticketStore().claimOwnership();
-        appointJuicer(juicer);
-        juicer.issueTickets("Juice", "JUICE", _rewardToken);
-    }
+        string memory _ticketName,
+        string memory _ticketSymbol,
+        IERC20 _ticketReward,
+        UniswapV2Router02 _router
+    )
+        public
+        JuiceAdmin(_juicer, _ticketName, _ticketSymbol, _ticketReward, _router)
+    {}
 
     /** 
       @notice Grants a Juicer access to its Ticket store and Budget stores
       @param _juicer The juicer that is being appointed.
     */
-    function appointJuicer(IJuicer _juicer) public onlyOwner {
+    function appointJuicer(IJuicer _juicer) external onlyOwner {
         ITicketStore _ticketStore = _juicer.ticketStore();
         IBudgetStore _budgetStore = _juicer.budgetStore();
         _ticketStore.grantRole_(

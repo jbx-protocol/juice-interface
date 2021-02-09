@@ -14,7 +14,7 @@ const main = async () => {
 
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
-  const controller = await deploy("Juicer", [
+  const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
     3,
@@ -23,14 +23,30 @@ const main = async () => {
   ]);
 
   const admin = await deploy("Admin", [
-    controller.address,
+    juicer.address,
+    "Juice Tickets",
+    "tJUICE",
     token.address,
     uniswapV2Router
   ]);
 
-  // const exampleToken = await deploy("ExampleToken")
-  // const examplePriceOracle = await deploy("ExamplePriceOracle")
-  // const smartContractWallet = await deploy("SmartContractWallet",[exampleToken.address,examplePriceOracle.address])
+  try {
+    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
+    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
+    const AdminFactory = await ethers.getContractFactory("Admin");
+
+    const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
+    const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
+    const attachedAdmin = await AdminFactory.attach(admin.address);
+
+    attachedBudgetStore.claimOwnership(admin.address);
+    attachedTicketStore.claimOwnership(admin.address);
+    attachedAdmin.appointJuicer(juicer.address);
+    attachedAdmin.issueTickets();
+
+  } catch (e) {
+    console.log("EE: ", e);
+  }
 
   console.log(
     " 💾  Artifacts (address, abi, and args) saved to: ",

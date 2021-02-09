@@ -375,13 +375,24 @@ contract Juicer is IJuicer {
         // to the amount swappable for the Tickets' reward token.
         // Ideally the swap would happen here. In order to save gas, the swappable amounts are being stored to be bulk swapped in another transaction.
         if (_overflow > 0) {
-            ticketStore.addSwappable(
-                _budget.owner,
-                _budget.want,
-                // The amount of this contribution that is going towards overflow.
-                _amount > _overflow ? _overflow : _amount,
-                _tickets.rewardToken()
-            );
+            IERC20 _rewardToken = _tickets.rewardToken();
+            uint256 _addedOverflow = _amount > _overflow ? _overflow : _amount;
+            if (_rewardToken == _token) {
+                // No need to swap if the reward token is the same as the want token.
+                ticketStore.addClaimableRewards(
+                    _budget.owner,
+                    _rewardToken,
+                    _addedOverflow
+                );
+            } else {
+                ticketStore.addSwappable(
+                    _budget.owner,
+                    _budget.want,
+                    // The amount of this contribution that is going towards overflow.
+                    _addedOverflow,
+                    _tickets.rewardToken()
+                );
+            }
         }
 
         // Mint the appropriate amount of tickets for the contributor.

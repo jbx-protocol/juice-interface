@@ -17,14 +17,14 @@ export default function BudgetDetail({
   transactor,
   showSustained,
   showMinted,
-  providerAddress,
+  userAddress,
 }: {
   budget?: Budget
   contracts?: Contracts
   transactor?: Transactor
   showSustained?: boolean
   showMinted?: boolean
-  providerAddress?: string
+  userAddress?: string
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
 
@@ -65,7 +65,7 @@ export default function BudgetDetail({
 
   const link = budget?.link
 
-  const isOwner = budget?.owner === providerAddress
+  const isOwner = budget?.owner === userAddress
 
   function tap() {
     if (!transactor || !contracts?.Juicer || !budget) return
@@ -76,10 +76,10 @@ export default function BudgetDetail({
     console.log('🧃 Calling Juicer.tapBudget(number, amount, address)', {
       id,
       amount,
-      providerAddress,
+      userAddress,
     })
 
-    transactor(contracts.Juicer?.tapBudget(id, amount, providerAddress))
+    transactor(contracts.Juicer?.tapBudget(id, amount, userAddress))
   }
 
   if (!budget) return null

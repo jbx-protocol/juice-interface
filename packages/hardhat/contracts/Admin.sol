@@ -63,7 +63,19 @@ contract Admin is JuiceAdmin {
       @param _from The juicer to allow a new migration from.
       @param _to The juicer to allow migration to.
     */
-    function allowMigration(IJuicer _from, IJuicer _to) external onlyOwner {
+    function allowMigration(IJuicer _from, address _to) external onlyOwner {
         _from.addToMigrationAllowList(address(_to));
+    }
+
+    /** 
+      @notice Sets the token that Budgets are allowed to want in a specified Juicer.
+      @param _juicer The juicer having its allow list changed changed.
+      @param _list The new list of allowed tokens.
+    */
+    function setWantTokenAllowList(IJuicer _juicer, IERC20[] calldata _list)
+        external
+        onlyOwner
+    {
+        _juicer.setWantTokenAllowList(_list);
     }
 }

@@ -62,6 +62,9 @@ contract Juicer is IJuicer {
     // If a particular token is allowed as a `want` token of a Money pool.
     mapping(IERC20 => bool) private wantTokenIsAllowed;
 
+    // The tokens that a Budget is allowed to want.
+    IERC20[] private wantTokenAllowList;
+
     // If a particulate contract is available for project owners to migrate their Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
@@ -83,6 +86,19 @@ contract Juicer is IJuicer {
     UniswapV2Router02 public immutable router;
 
     // --- public views --- //
+
+    /**
+      @notice Getter for the wantTokenAllowList;
+      @return _list The list.
+     */
+    function getWantTokenAllowList()
+        external
+        view
+        override
+        returns (IERC20[] memory)
+    {
+        return wantTokenAllowList;
+    }
 
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
@@ -167,6 +183,7 @@ contract Juicer is IJuicer {
         ticketStore = _ticketStore;
         fee = _fee;
         router = _router;
+        wantTokenAllowList = _wantTokenAllowList;
 
         // Populate the mapping that will be used to validate Budget `want` token configuration.
         for (uint256 i = 0; i < _wantTokenAllowList.length; i++)
@@ -452,7 +469,8 @@ contract Juicer is IJuicer {
         address[] memory path = new address[](2);
         path[0] = address(_from);
         path[1] = router.WETH();
-        path[2] = address(_to);
+        // Add the destination of the route if it isn't WETH.
+        if (address(_to) != router.WETH()) path[2] = address(_to);
 
         // Conduct the swap and returns the amount of `to` tokens received.
         uint256[] memory _amounts =
@@ -464,8 +482,7 @@ contract Juicer is IJuicer {
                 block.timestamp
             );
 
-        // TODO verify its the 1st element.
-        uint256 _swappedAmount = _amounts[1];
+        uint256 _swappedAmount = _amounts[_amounts.length - 1];
 
         // The swapped tokens can now be claimed by the issuer's Ticket holders as rewards. Track this in the store.
         ticketStore.addClaimableRewards(_issuer, _to, _swappedAmount);
@@ -731,5 +748,24 @@ contract Juicer is IJuicer {
             "Juicer::setMigrationAllowList: UNAUTHORIZED"
         );
         migrationContractIsAllowed[_contract] = true;
+    }
+
+    /**
+        @notice Changes the tokens that a Budget is allowed to want.
+        @param _list The new allowed tokens for a Budget to want.
+    */
+    function setWantTokenAllowList(IERC20[] calldata _list) external override {
+        require(
+            msg.sender == admin,
+            "Juicer::setWantTokenAllowList: UNAUTHORIZED"
+        );
+        for (uint256 i; i < wantTokenAllowList.length; i++)
+            wantTokenIsAllowed[wantTokenAllowList[i]] = false;
+
+        // Populate the mapping that will be used to validate Budget `want` token configuration.
+        for (uint256 i = 0; i < _list.length; i++)
+            wantTokenIsAllowed[_list[i]] = true;
+
+        wantTokenAllowList = _list;
     }
 }

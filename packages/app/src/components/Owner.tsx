@@ -17,11 +17,11 @@ import ReconfigureBudget from './ReconfigureBudget'
 import Rewards from './Rewards'
 
 export default function Owner({
-  providerAddress,
+  userAddress,
   transactor,
   contracts,
 }: {
-  providerAddress?: string
+  userAddress?: string
   transactor?: Transactor
   contracts?: Contracts
 }) {
@@ -32,7 +32,7 @@ export default function Owner({
 
   const spacing = 30
 
-  const isOwner = owner === providerAddress
+  const isOwner = owner === userAddress
 
   const currentBudget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
@@ -88,22 +88,19 @@ export default function Owner({
         ? eth.abi.encodeParameter('uint256', sustainAmount)
         : undefined
 
-    console.log(
-      '🧃 Calling Juicer.sustain(owner, amount, want, providerAddress)',
-      {
-        owner: currentBudget.owner,
-        amount,
-        want: currentBudget.want,
-        providerAddress,
-      },
-    )
+    console.log('🧃 Calling Juicer.sustain(owner, amount, want, userAddress)', {
+      owner: currentBudget.owner,
+      amount,
+      want: currentBudget.want,
+      userAddress,
+    })
 
     transactor(
       contracts.Juicer.payOwner(
         currentBudget.owner,
         amount,
         currentBudget.want,
-        providerAddress,
+        userAddress,
       ),
       () => setSustainAmount(0),
     )
@@ -179,7 +176,7 @@ export default function Owner({
             {section(
               <div>
                 <BudgetDetail
-                  providerAddress={providerAddress}
+                  userAddress={userAddress}
                   budget={currentBudget}
                   showSustained={true}
                   contracts={contracts}
@@ -214,7 +211,7 @@ export default function Owner({
                 contracts={contracts}
                 transactor={transactor}
                 budget={currentBudget}
-                providerAddress={providerAddress}
+                userAddress={userAddress}
                 ticketAddress={ticketAddress}
               />,
               'Rewards',
@@ -258,7 +255,7 @@ export default function Owner({
                 startId={currentBudget.previous}
                 contracts={contracts}
                 transactor={transactor}
-                providerAddress={providerAddress}
+                userAddress={userAddress}
               />,
               'Budget History',
             )}

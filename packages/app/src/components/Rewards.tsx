@@ -14,13 +14,13 @@ export default function Rewards({
   transactor,
   contracts,
   budget,
-  providerAddress,
+  userAddress,
   ticketAddress,
 }: {
   transactor?: Transactor
   contracts?: Contracts
   budget?: Budget
-  providerAddress?: string
+  userAddress?: string
   ticketAddress?: string
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
@@ -37,7 +37,7 @@ export default function Rewards({
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
-    args: [providerAddress],
+    args: [userAddress],
     shouldUpdate: bigNumbersEq,
   })
   const ticketSupply = useContractReader<BigNumber>({
@@ -74,7 +74,7 @@ export default function Rewards({
     contract: contracts?.TicketStore,
     functionName: 'getClaimableRewardsAmount',
     args: [
-      providerAddress,
+      userAddress,
       ticketsBalance?.toHexString(),
       budget?.owner,
       claimableProportion,
@@ -99,7 +99,10 @@ export default function Rewards({
   })
 
   const share = ticketSupply?.gt(0)
-    ? ticketsBalance?.mul(100).div(ticketSupply).toString()
+    ? ticketsBalance
+        ?.mul(100)
+        .div(ticketSupply)
+        .toString()
     : '0'
 
   function swap() {

@@ -11,12 +11,12 @@ import BudgetDetail from './BudgetDetail'
 export default function BudgetsHistory({
   contracts,
   transactor,
-  providerAddress,
+  userAddress,
   startId,
 }: {
   contracts?: Contracts
   transactor?: Transactor
-  providerAddress?: string
+  userAddress?: string
   startId?: BigNumber
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
@@ -52,7 +52,7 @@ export default function BudgetsHistory({
         ? budgets.map((budget, index) => (
             <BudgetDetail
               key={index}
-              providerAddress={providerAddress}
+              userAddress={userAddress}
               budget={budget}
               showSustained={true}
               showMinted={true}

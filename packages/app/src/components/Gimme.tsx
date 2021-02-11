@@ -11,11 +11,11 @@ import { Button } from 'antd'
 export default function Gimme({
   transactor,
   contracts,
-  providerAddress,
+  userAddress,
 }: {
   transactor?: Transactor
   contracts?: Contracts
-  providerAddress?: string
+  userAddress?: string
 }) {
   const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
@@ -23,13 +23,13 @@ export default function Gimme({
   const allowance: BigNumber | undefined = useContractReader({
     contract: contracts?.Token,
     functionName: 'allowance',
-    args: [providerAddress, contracts?.Juicer?.address],
+    args: [userAddress, contracts?.Juicer?.address],
   })
 
   const balance: BigNumber | undefined = useContractReader({
     contract: contracts?.Token,
     functionName: 'balanceOf',
-    args: [providerAddress],
+    args: [userAddress],
   })
 
   function gimme() {

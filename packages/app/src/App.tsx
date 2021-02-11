@@ -21,7 +21,7 @@ import { Budget } from './models/budget'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
-  const [providerAddress, setProviderAddress] = useState<string>()
+  const [userAddress, setUserAddress] = useState<string>()
 
   const gasPrice = useGasPrice('fast')
 
@@ -37,8 +37,8 @@ function App() {
     userProvider
       ?.getSigner()
       .getAddress()
-      .then(address => setProviderAddress(address))
-  }, [userProvider, setProviderAddress])
+      .then(address => setUserAddress(address))
+  }, [userProvider, setUserAddress])
 
   const transactor = createTransactor({
     provider: userProvider,
@@ -53,7 +53,7 @@ function App() {
   const hasBudget = useContractReader<boolean>({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
-    args: [providerAddress],
+    args: [userAddress],
     formatter: (val: Budget) => !!val,
   })
 
@@ -61,7 +61,7 @@ function App() {
     <div className="App">
       <Navbar
         hasBudget={hasBudget}
-        providerAddress={providerAddress}
+        userAddress={userAddress}
         userProvider={userProvider}
         onConnectWallet={loadWeb3Modal}
       />
@@ -71,7 +71,7 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Landing
-                providerAddress={providerAddress}
+                userAddress={userAddress}
                 onNeedAddress={loadWeb3Modal}
               />
             </Route>
@@ -79,12 +79,12 @@ function App() {
               <Gimme
                 contracts={contracts}
                 transactor={transactor}
-                providerAddress={providerAddress}
+                userAddress={userAddress}
               ></Gimme>
             </Route>
             <Route exact path="/create">
               <ConfigureBudget
-                owner={providerAddress}
+                owner={userAddress}
                 contracts={contracts}
                 transactor={transactor}
               />
@@ -93,7 +93,7 @@ function App() {
               <Budgets
                 contracts={contracts}
                 transactor={transactor}
-                providerAddress={providerAddress}
+                userAddress={userAddress}
               />
             </Route>
           </Switch>

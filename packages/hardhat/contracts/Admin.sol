@@ -27,24 +27,6 @@ contract Admin is JuiceAdmin {
     {}
 
     /** 
-      @notice Grants a Juicer access to its Ticket store and Budget stores
-      @param _juicer The juicer that is being appointed.
-    */
-    function appointJuicer(IJuicer _juicer) external onlyOwner {
-        ITicketStore _ticketStore = _juicer.ticketStore();
-        IBudgetStore _budgetStore = _juicer.budgetStore();
-        _ticketStore.grantRole_(
-            _ticketStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _budgetStore.grantRole_(
-            _budgetStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _juicer.setAdmin(address(this));
-    }
-
-    /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
       @param _contract The contract that is being given access to.
       @param _newAdmin The address that is being given the admin role.

@@ -7,10 +7,10 @@ import ExampleCard from './ExampleCard'
 import ImgTextSection from './ImgTextSection'
 
 export default function Landing({
-  providerAddress,
+  userAddress,
   onNeedAddress,
 }: {
-  providerAddress?: string
+  userAddress?: string
   onNeedAddress: VoidFunction
 }) {
   const bulletSize = 8
@@ -72,16 +72,16 @@ export default function Landing({
                 {bullet('Open source projects')}
                 {bullet('Indy projects')}
                 {bullet('Public goods')}
-                {bullet(
-                  'Any project with predictable expenses',
-                )}
+                {bullet('Any project with predictable expenses')}
               </div>
               <p>
-                
-                Unlike Patreon or a pricing/donations page, you pre-program how much cashflow you want to make recurringly or over a set time, and your users claim the funds that overflow. 
+                Unlike Patreon or a pricing/donations page, you pre-program how
+                much cashflow you want to make recurringly or over a set time,
+                and your users claim the funds that overflow.
               </p>
               <p>
-                Also blendable into your Solidity contracts to get a business-model-as-a-service. #DeWork
+                Also blendable into your Solidity contracts to get a
+                business-model-as-a-service. #DeWork
               </p>
               <div
                 style={{
@@ -90,8 +90,8 @@ export default function Landing({
                   columnGap: 10,
                 }}
               >
-                {providerAddress ? (
-                  <a href={providerAddress}>
+                {userAddress ? (
+                  <a href={userAddress}>
                     <Button type="primary">Create a project</Button>
                   </a>
                 ) : (
@@ -226,17 +226,19 @@ export default function Landing({
               an honest and automated mechanism to help pay for it.
             </p>
             <p>
-              As a result, people get community-driven products and services with no ads,
-              data integrity, full business operation accountability,
-              and an open source code base. All built by
+              As a result, people get community-driven products and services
+              with no ads, data integrity, full business operation
+              accountability, and an open source code base. All built by
               motivated folks getting paid what they ask for, and with a price
               tag that effectively tends toward zero as the juice flow grows.
             </p>
             <p>
-              Use Juice as your business-model-as-a-service by composing your contract with it. Just inherit from JuiceAdmin and you're good to go.
+              Use Juice as your business-model-as-a-service by composing your
+              contract with it. Just inherit from JuiceAdmin and you're good to
+              go.
             </p>
-            {providerAddress ? (
-              <a href={providerAddress}>
+            {userAddress ? (
+              <a href={userAddress}>
                 <Button type="primary">Build with Juice</Button>
               </a>
             ) : (
@@ -257,8 +259,8 @@ export default function Landing({
         }}
       >
         <h3 style={{ color: colors.juiceOrange, margin: 0 }}>
-          Big ups to the Ethereum and DeFi community for crafting the infrastructure and
-          economy to make Juice possible.
+          Big ups to the Ethereum and DeFi community for crafting the
+          infrastructure and economy to make Juice possible.
         </h3>
       </div>
       <Footer />

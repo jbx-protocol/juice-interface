@@ -1,17 +1,13 @@
 import { Tooltip } from 'antd'
 import React from 'react'
 
-export default function Wallet({
-  providerAddress,
-}: {
-  providerAddress?: string
-}) {
+export default function Wallet({ userAddress }: { userAddress?: string }) {
   const shortened =
-    providerAddress?.substring(0, 6) +
+    userAddress?.substring(0, 6) +
     '...' +
-    providerAddress?.substr(providerAddress.length - 6, 6)
+    userAddress?.substr(userAddress.length - 6, 6)
 
-  return providerAddress ? (
+  return userAddress ? (
     <span
       style={{
         height: 30,
@@ -24,7 +20,7 @@ export default function Wallet({
         userSelect: 'all',
       }}
     >
-      <Tooltip title={providerAddress}>{shortened}</Tooltip>
+      <Tooltip title={userAddress}>{shortened}</Tooltip>
     </span>
   ) : null
 }

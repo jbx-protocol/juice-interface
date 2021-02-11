@@ -9,11 +9,11 @@ import Balance from './Balance'
 import Wallet from './Wallet'
 
 export default function Account({
-  providerAddress,
+  userAddress,
   userProvider,
   loadWeb3Modal,
 }: {
-  providerAddress?: string
+  userAddress?: string
   userProvider?: JsonRpcProvider
   loadWeb3Modal: VoidFunction
 }) {
@@ -40,11 +40,11 @@ export default function Account({
       }}
     >
       <Balance
-        providerAddress={providerAddress}
+        userAddress={userAddress}
         provider={userProvider}
         dollarMultiplier={price}
       />
-      <Wallet providerAddress={providerAddress}></Wallet>
+      <Wallet userAddress={userAddress}></Wallet>
       {web3Modal?.cachedProvider ? (
         <Button onClick={logoutOfWeb3Modal}>Logout</Button>
       ) : (

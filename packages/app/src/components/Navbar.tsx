@@ -3,12 +3,12 @@ import { JsonRpcProvider } from '@ethersproject/providers'
 import Account from './Account'
 
 export default function Navbar({
-  providerAddress,
+  userAddress,
   hasBudget,
   userProvider,
   onConnectWallet,
 }: {
-  providerAddress?: string
+  userAddress?: string
   hasBudget?: boolean
   userProvider?: JsonRpcProvider
   onConnectWallet: VoidFunction
@@ -47,17 +47,17 @@ export default function Navbar({
             alt="Juice logo"
           />
         </a>
-        {providerAddress
+        {userAddress
           ? menuItem(
               hasBudget ? 'Your project' : 'Start a project',
-              providerAddress,
+              userAddress,
             )
           : null}
       </span>
       <Account
         userProvider={userProvider}
         loadWeb3Modal={onConnectWallet}
-        providerAddress={providerAddress}
+        userAddress={userAddress}
       />
     </div>
   )

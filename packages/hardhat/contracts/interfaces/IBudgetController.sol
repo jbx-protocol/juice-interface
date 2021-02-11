@@ -48,14 +48,14 @@ interface IBudgetController {
         uint256 _o,
         uint256 _b,
         address _bAddress
-    ) external returns (uint256 _mpBudget);
+    ) external returns (uint256 mpBudget);
 
     function payOwner(
         address _owner,
         uint256 _amount,
         IERC20 _token,
         address _beneficiary
-    ) external returns (uint256 _budgetId);
+    ) external returns (uint256 budgetId);
 
     function tapBudget(
         uint256 _budgetId,

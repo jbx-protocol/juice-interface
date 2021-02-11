@@ -22,15 +22,12 @@ const main = async () => {
     [token.address],
     uniswapV2Router
   ]);
-  const maintainer = await deploy("Maintainer", [controller.address]);
-
+  const maintainer = await deploy("Maintainer", [juicer.address]);
   const staker = await deploy("TimelockStaker");
   const budgetBallot = await deploy("BudgetBallot", [juicer.address, staker.address]);
 
   const admin = await deploy("Admin", [
     juicer.address,
-     maintainer.address,
-     budgetBallot.address,
     "Juice Tickets",
     "tJUICE",
     token.address,
@@ -50,6 +47,8 @@ const main = async () => {
     attachedTicketStore.claimOwnership(admin.address);
     attachedAdmin.appointJuicer(juicer.address);
     attachedAdmin.issueTickets();
+    attachedAdmin.grantRole(budgetStore.address, maintainer.address);
+    attachedAdmin.grantRole(budgetStore.address, budgetBallot.address);
 
   } catch (e) {
     console.log("EE: ", e);

@@ -107,24 +107,24 @@ contract BudgetStore is Store, IBudgetStore {
     /**
         @notice The Budget that would be currently accepting sustainments.
         @param _owner The owner of the Budget being looked for.
-        @return _budget The Budget.
+        @return budget The Budget.
     */
     function getCurrentBudget(address _owner)
         external
         view
         override
-        returns (Budget.Data memory _budget)
+        returns (Budget.Data memory budget)
     {
         require(
             latestBudgetId[_owner] > 0,
             "BudgetStore::getCurrentBudget: NOT_FOUND"
         );
-        _budget = _activeBudget(_owner);
-        if (_budget.id > 0) return _budget;
-        _budget = _standbyBudget(_owner);
-        if (_budget.id > 0) return _budget;
-        _budget = budgets[latestBudgetId[_owner]];
-        return _budget._nextUp();
+        budget = _activeBudget(_owner);
+        if (budget.id > 0) return budget;
+        budget = _standbyBudget(_owner);
+        if (budget.id > 0) return budget;
+        budget = budgets[latestBudgetId[_owner]];
+        return budget._nextUp();
     }
 
     /**
@@ -214,59 +214,59 @@ contract BudgetStore is Store, IBudgetStore {
         @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
         @param _owner The address who owns the Budget to look for.
         @param _standbyPeriod The time between a Budget being configured and when it can become active.
-        @return _budget The resulting Budget.
+        @return budget The resulting Budget.
     */
     function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
         external
         override
         onlyAdmin
-        returns (Budget.Data memory _budget)
+        returns (Budget.Data memory budget)
     {
         // Check if there is an active Budget
-        _budget = _activeBudget(_owner);
-        if (_budget.id > 0) return _budget;
+        budget = _activeBudget(_owner);
+        if (budget.id > 0) return budget;
         // No active Budget found, check if there is a standby Budget
-        _budget = _standbyBudget(_owner);
+        budget = _standbyBudget(_owner);
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
         if (
-            _budget.id > 0 &&
-            _budget.configured.add(_standbyPeriod) < block.timestamp &&
-            votes[_budget.id][_budget.configured][true] >
-            votes[_budget.id][_budget.configured][false]
-        ) return _budget;
+            budget.id > 0 &&
+            budget.configured.add(_standbyPeriod) < block.timestamp &&
+            votes[budget.id][budget.configured][true] >
+            votes[budget.id][budget.configured][false]
+        ) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
-        _budget = budgets[
-            _budget.id > 0 ? _budget.previous : latestBudgetId[_owner]
+        budget = budgets[
+            budget.id > 0 ? budget.previous : latestBudgetId[_owner]
         ];
-        require(_budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
+        require(budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
         Budget.Data storage _newBudget =
             _initBudget(
-                _budget.owner,
-                _budget._determineNextStart(),
-                _budget._derivedWeight()
+                budget.owner,
+                budget._determineNextStart(),
+                budget._derivedWeight()
             );
-        _newBudget._basedOn(_budget);
+        _newBudget._basedOn(budget);
         return _newBudget;
     }
 
     /**
         @notice Returns the standby Budget for this owner if it exists, otherwise putting one in standby appropriately.
         @param _owner The address who owns the Budget to look for.
-        @return _budget The resulting Budget.
+        @return budget The resulting Budget.
     */
     function ensureStandbyBudget(address _owner)
         external
         override
         onlyAdmin
-        returns (Budget.Data memory _budget)
+        returns (Budget.Data memory budget)
     {
         // Cannot update active budget, check if there is a standby budget
-        _budget = _standbyBudget(_owner);
-        if (_budget.id > 0) return _budget;
-        _budget = budgets[latestBudgetId[_owner]];
+        budget = _standbyBudget(_owner);
+        if (budget.id > 0) return budget;
+        budget = budgets[latestBudgetId[_owner]];
         // If there's an active Budget, its end time should correspond to the start time of the new Budget.
         Budget.Data memory _aBudget = _activeBudget(_owner);
         Budget.Data storage _newBudget =
@@ -277,7 +277,7 @@ contract BudgetStore is Store, IBudgetStore {
                     _aBudget._derivedWeight()
                 )
                 : _initBudget(_owner, block.timestamp, BUDGET_BASE_WEIGHT);
-        if (_budget.id > 0) _newBudget._basedOn(_budget);
+        if (budget.id > 0) _newBudget._basedOn(budget);
         return _newBudget;
     }
 
@@ -298,59 +298,59 @@ contract BudgetStore is Store, IBudgetStore {
         @param _owner The owner of the Budget being initialized.
         @param _start The start time for the new Budget.
         @param _weight The weight for the new Budget.
-        @return _newBudget The initialized Budget.
+        @return newBudget The initialized Budget.
     */
     function _initBudget(
         address _owner,
         uint256 _start,
         uint256 _weight
-    ) private returns (Budget.Data storage _newBudget) {
+    ) private returns (Budget.Data storage newBudget) {
         budgetCount++;
-        _newBudget = budgets[budgetCount];
-        _newBudget.id = budgetCount;
-        _newBudget.owner = _owner;
-        _newBudget.start = _start;
-        _newBudget.previous = latestBudgetId[_owner];
-        _newBudget.weight = _weight;
-        _newBudget.total = 0;
-        _newBudget.tapped = 0;
-        _newBudget.hasMintedReserves = false;
+        newBudget = budgets[budgetCount];
+        newBudget.id = budgetCount;
+        newBudget.owner = _owner;
+        newBudget.start = _start;
+        newBudget.previous = latestBudgetId[_owner];
+        newBudget.weight = _weight;
+        newBudget.total = 0;
+        newBudget.tapped = 0;
+        newBudget.hasMintedReserves = false;
         latestBudgetId[_owner] = budgetCount;
     }
 
     /**
         @notice An owner's edittable Budget.
         @param _owner The owner of the Budget being looked for.
-        @return _budget The standby Budget.
+        @return budget The standby Budget.
     */
     function _standbyBudget(address _owner)
         private
         view
-        returns (Budget.Data memory _budget)
+        returns (Budget.Data memory budget)
     {
-        _budget = budgets[latestBudgetId[_owner]];
-        if (_budget.id == 0) return budgets[0];
+        budget = budgets[latestBudgetId[_owner]];
+        if (budget.id == 0) return budgets[0];
         // There is no upcoming Budget if the latest Budget is not upcoming
-        if (_budget._state() != Budget.State.Standby) return budgets[0];
+        if (budget._state() != Budget.State.Standby) return budgets[0];
     }
 
     /**
         @notice The currently active Budget for an owner.
         @param _owner The owner of the Budget being looked for.
-        @return _budget The active Budget.
+        @return budget The active Budget.
     */
     function _activeBudget(address _owner)
         public
         view
-        returns (Budget.Data memory _budget)
+        returns (Budget.Data memory budget)
     {
-        _budget = budgets[latestBudgetId[_owner]];
-        if (_budget.id == 0) return budgets[0];
+        budget = budgets[latestBudgetId[_owner]];
+        if (budget.id == 0) return budgets[0];
         // An Active Budget must be either the latest Budget or the
         // one immediately before it.
-        if (_budget._state() == Budget.State.Active) return _budget;
-        _budget = budgets[_budget.previous];
-        if (_budget.id == 0 || _budget._state() != Budget.State.Active)
+        if (budget._state() == Budget.State.Active) return budget;
+        budget = budgets[budget.previous];
+        if (budget.id == 0 || budget._state() != Budget.State.Active)
             return budgets[0];
     }
 }

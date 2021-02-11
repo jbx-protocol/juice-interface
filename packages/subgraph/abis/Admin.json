@@ -7,19 +7,14 @@
         "type": "address"
       },
       {
-        "internalType": "contract IMaintainer",
-        "name": "_maintainer",
-        "type": "address"
+        "internalType": "string",
+        "name": "_ticketName",
+        "type": "string"
       },
       {
-        "internalType": "contract IBudgetBallot",
-        "name": "_budgetBallot",
-        "type": "address"
-      },
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "_router",
-        "type": "address"
+        "internalType": "string",
+        "name": "_ticketSymbol",
+        "type": "string"
       },
       {
         "internalType": "contract IERC20",
@@ -166,13 +161,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "issueTickets",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "contract IAccessControlWrapper",
@@ -186,6 +174,13 @@
       }
     ],
     "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "issueTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

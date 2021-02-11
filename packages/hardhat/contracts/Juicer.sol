@@ -89,7 +89,7 @@ contract Juicer is IJuicer {
     /// @notice The router that does the swaps.
     UniswapV2Router02 public immutable router;
 
-    // --- public views --- //
+    // --- external views --- //
 
     /**
       @notice Getter for the wantTokenAllowList;
@@ -104,26 +104,23 @@ contract Juicer is IJuicer {
         return wantTokenAllowList;
     }
 
-    // --- external views --- //
-
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
         @dev This logic should be the same as mintReservedTickets.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-        @return _issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
-        @return _beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
-        @return _admins The amount of unminted reserved tickets belonging to the admin.
+        @return issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
+        @return beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
+        @return admins The amount of unminted reserved tickets belonging to the admin.
     */
     function getReservedTickets(address _issuer)
         public
         view
         override
         returns (
-            //TODO remove underscores
-            uint256 _issuers,
-            uint256 _beneficiaries,
-            uint256 _admins
+            uint256 issuers,
+            uint256 beneficiaries,
+            uint256 admins
         )
     {
         // Get a reference to the owner's tickets.
@@ -147,18 +144,18 @@ contract Juicer is IJuicer {
                 uint256 _overflow = _budget.total.sub(_budget.target);
 
                 // The admin gets the admin fee percentage.
-                _admins = _admins.add(_budget._weighted(_overflow, fee));
+                admins = admins.add(_budget._weighted(_overflow, fee));
 
                 // The owner gets the budget's owner percentage, if one is specified.
                 if (_budget.o > 0) {
-                    _issuers = _issuers.add(
+                    issuers = issuers.add(
                         _budget._weighted(_overflow, _budget.o)
                     );
                 }
 
                 // The beneficiary gets the budget's beneficiary percentage, if one is specified.
                 if (_budget.b > 0) {
-                    _beneficiaries = _beneficiaries.add(
+                    beneficiaries = beneficiaries.add(
                         _budget._weighted(_overflow, _budget.b)
                     );
                 }
@@ -504,19 +501,19 @@ contract Juicer is IJuicer {
         @param _amount The amount of Tickets to redeem.
         @param _minRewardAmount The minimum amount of rewards tokens expected in return.
         @param _beneficiary The address to send the reward to.
-        @return _rewardToken The token that was redeemed for.
+        @return rewardToken The token that was redeemed for.
     */
     function redeem(
         address _issuer,
         uint256 _amount,
         uint256 _minRewardAmount,
         address _beneficiary
-    ) external override lock returns (IERC20 _rewardToken) {
+    ) external override lock returns (IERC20 rewardToken) {
         // Get a reference to the Tickets being redeemed.
         ITickets _tickets = ticketStore.tickets(_issuer);
 
         // Set the returned value.
-        _rewardToken = _tickets.rewardToken();
+        rewardToken = _tickets.rewardToken();
 
         // The amount of reward tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         // Multiply by the active proportion of the golden ratio. This incentizes HODLing tickets.
@@ -540,15 +537,12 @@ contract Juicer is IJuicer {
         // Subtract the claimed rewards from the total amount claimable.
         ticketStore.subtractClaimableRewards(
             _issuer,
-            _rewardToken,
+            rewardToken,
             _adjustedClaimableRewardsAmount
         );
 
         // Transfer funds to the specified address.
-        _rewardToken.safeTransfer(
-            _beneficiary,
-            _adjustedClaimableRewardsAmount
-        );
+        rewardToken.safeTransfer(_beneficiary, _adjustedClaimableRewardsAmount);
 
         emit Redeem(
             msg.sender,
@@ -638,63 +632,6 @@ contract Juicer is IJuicer {
                     _tickets.mint(
                         _budget.bAddress,
                         _budget._weighted(_budget.total, _budget.b)
-                    );
-
-                // Mark the budget as having minted reserves.
-                _budget.hasMintedReserves = true;
-
-                // Save the budget to the store;
-                budgetStore.saveBudget(_budget);
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
-        }
-        emit MintReservedTickets(msg.sender, _issuer);
-    }
-
-    /**
-        @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
-        @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-    */
-    function mintReservedTickets(address _issuer) external override {
-        // Get a reference to the owner's tickets.
-        ITickets _tickets = ticketStore.tickets(_issuer);
-
-        // If the owner doesn't have tickets, throw.
-        require(_tickets != ITickets(0), "Juicer::claim: NOT_FOUND");
-
-        // Get a reference to the owner's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
-
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasMintedReserves) {
-            // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (
-                _budget.total > _budget.target &&
-                _budget._state() == Budget.State.Redistributing
-            ) {
-                // Unminted reserved tickets are all relavative to the amount of overflow available.
-                uint256 _overflow = _budget.total.sub(_budget.target);
-
-                // The admin gets the admin fee percentage.
-                _tickets.mint(admin, _budget._weighted(_overflow, fee));
-
-                // The owner gets the budget's owner percentage, if one is specified.
-                if (_budget.o > 0)
-                    _tickets.mint(
-                        _budget.owner,
-                        _budget._weighted(_overflow, _budget.o)
-                    );
-
-                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                if (_budget.b > 0)
-                    _tickets.mint(
-                        _budget.bAddress,
-                        _budget._weighted(_overflow, _budget.b)
                     );
 
                 // Mark the budget as having minted reserves.

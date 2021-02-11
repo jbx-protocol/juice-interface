@@ -428,22 +428,6 @@
     "type": "function"
   },
   {
-<<<<<<< HEAD
-    "inputs": [],
-    "name": "getWantTokenAllowList",
-    "outputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-=======
->>>>>>> Staking contract is finished, added a minter, and a maintainer
     "inputs": [
       {
         "internalType": "address",
@@ -465,8 +449,21 @@
       },
       {
         "internalType": "uint256",
-        "name": "_admin",
+        "name": "_admins",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWantTokenAllowList",
+    "outputs": [
+      {
+        "internalType": "contract IERC20[]",
+        "name": "",
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",

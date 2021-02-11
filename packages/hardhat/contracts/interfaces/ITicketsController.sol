@@ -32,9 +32,9 @@ interface ITicketsController {
         external
         view
         returns (
-            uint256 _issuers,
-            uint256 _beneficiaries,
-            uint256 _admins
+            uint256 issuers,
+            uint256 beneficiaries,
+            uint256 admins
         );
 
     function issueTickets(
@@ -48,7 +48,7 @@ interface ITicketsController {
         uint256 _amount,
         uint256 _minRewardAmount,
         address _beneficiary
-    ) external returns (IERC20 _rewardToken);
+    ) external returns (IERC20 rewardToken);
 
     function swap(
         address _issuer,

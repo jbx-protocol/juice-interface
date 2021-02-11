@@ -9,13 +9,13 @@ interface ITimelockStaker {
 
     function staked(IERC20 _token, address _staker)
         external
-        returns (uint256 _amount);
+        returns (uint256 amount);
 
     function timelocks(
         IERC20 _token,
         uint256 _lockId,
         address _staker
-    ) external returns (uint256 _expiry);
+    ) external returns (uint256 expiry);
 
     function stake(IERC20 _token, uint256 _amount) external;
 

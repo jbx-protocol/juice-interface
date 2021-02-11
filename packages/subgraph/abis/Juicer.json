@@ -452,29 +452,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "getReservedTickets",
+    "inputs": [],
+    "name": "getWantTokenAllowList",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "_issuers",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_beneficiaries",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_admins",
-        "type": "uint256"
+        "internalType": "contract IERC20[]",
+        "name": "",
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -619,6 +603,19 @@
       }
     ],
     "name": "setAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20[]",
+        "name": "_list",
+        "type": "address[]"
+      }
+    ],
+    "name": "setWantTokenAllowList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

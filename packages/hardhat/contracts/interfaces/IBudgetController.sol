@@ -37,6 +37,8 @@ interface IBudgetController {
 
     event CleanedTrackedWantedTokens(address indexed owner, IERC20 token);
 
+    function getWantTokenAllowList() external view returns (IERC20[] memory);
+
     function configureBudget(
         uint256 _target,
         uint256 _duration,
@@ -62,4 +64,6 @@ interface IBudgetController {
     ) external;
 
     function cleanTrackedWantedTokens(address _owner, IERC20 _token) external;
+
+    function setWantTokenAllowList(IERC20[] calldata _list) external;
 }

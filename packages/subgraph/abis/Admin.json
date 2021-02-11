@@ -57,7 +57,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract IJuicer",
+        "internalType": "address",
         "name": "_to",
         "type": "address"
       }
@@ -268,6 +268,24 @@
       }
     ],
     "name": "setBudgetOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20[]",
+        "name": "_list",
+        "type": "address[]"
+      }
+    ],
+    "name": "setWantTokenAllowList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

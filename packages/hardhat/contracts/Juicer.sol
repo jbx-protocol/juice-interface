@@ -107,7 +107,7 @@ contract Juicer is IJuicer {
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
+        @dev This logic should be the same as mintReservedTickets in Juicer.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
         @return issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
         @return beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
@@ -129,7 +129,7 @@ contract Juicer is IJuicer {
         // If the owner doesn't have tickets, throw.
         require(
             _tickets != ITickets(0),
-            "Juicer::getReservedTickets: NOT_FOUND"
+            "ReservedTicketsView::getReservedTickets: NOT_FOUND"
         );
 
         // Get a reference to the owner's latest Budget.

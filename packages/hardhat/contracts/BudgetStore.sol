@@ -51,24 +51,6 @@ contract BudgetStore is Store, IBudgetStore {
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
 
-    /// TODO
-    function addVotes(
-        uint256 _budgetId,
-        uint256 _configured,
-        bool _yay,
-        address _voter,
-        uint256 _amount
-    ) external override onlyAdmin {
-        votes[_budgetId][_configured][_yay] = votes[_budgetId][_configured][
-            _yay
-        ]
-            .add(_amount);
-        votesByAddress[_budgetId][_configured][_voter] = votesByAddress[
-            _budgetId
-        ][_configured][_voter]
-            .add(_amount);
-    }
-
     // --- external views --- //
 
     /**
@@ -291,6 +273,32 @@ contract BudgetStore is Store, IBudgetStore {
         budgets[_budget.id] = _budget;
     }
 
+    /// TODO
+    /**
+      @notice Add votes to the a particular reconfiguration proposal.
+      @param _budgetId The ID of the budget whos reconfiguration is being voted on.
+      @param _configured The time when the reconfiguration was proposed.
+      @param _yay True if the vote is is support, false if not.
+      @param _voter The address voting.
+      @param _amount The amount of votes being cast.
+     */
+    function addVotes(
+        uint256 _budgetId,
+        uint256 _configured,
+        bool _yay,
+        address _voter,
+        uint256 _amount
+    ) external override onlyAdmin {
+        votes[_budgetId][_configured][_yay] = votes[_budgetId][_configured][
+            _yay
+        ]
+            .add(_amount);
+        votesByAddress[_budgetId][_configured][_voter] = votesByAddress[
+            _budgetId
+        ][_configured][_voter]
+            .add(_amount);
+    }
+
     // --- private transactions --- //
 
     /**
@@ -340,7 +348,7 @@ contract BudgetStore is Store, IBudgetStore {
         @return budget The active Budget.
     */
     function _activeBudget(address _owner)
-        public
+        private
         view
         returns (Budget.Data memory budget)
     {

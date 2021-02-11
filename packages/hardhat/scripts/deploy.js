@@ -39,10 +39,12 @@ const main = async () => {
     const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
     const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const AdminFactory = await ethers.getContractFactory("Admin");
+    const StakerFactory = await ethers.getContractFactory("TimelockStaker");
 
     const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
     const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
+    const attachedStaker = await StakerFactory.attach(staker.address);
 
     attachedBudgetStore.claimOwnership(admin.address);
     attachedTicketStore.claimOwnership(admin.address);
@@ -50,7 +52,8 @@ const main = async () => {
     attachedAdmin.issueTickets();
     attachedAdmin.grantRole(budgetStore.address, maintainer.address);
     attachedAdmin.grantRole(budgetStore.address, budgetBallot.address);
-
+    // Make this Ballot the timelock controller of the staker contract.
+    attachedStaker.setController(budgetBallot.address);
   } catch (e) {
     console.log("EE: ", e);
   }

@@ -28,9 +28,6 @@ contract BudgetBallot is IBudgetBallot {
       @param _staker The Staking contract that Ticket holders must lock Ticket into before voting.
     */
     constructor(IJuicer _juicer, ITimelockStaker _staker) public {
-        // Make this Ballot the timelock controller of the staker contract.
-        _staker.setController(address(this));
-
         juicer = _juicer;
         staker = _staker;
     }

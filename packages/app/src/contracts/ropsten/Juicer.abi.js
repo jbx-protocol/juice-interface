@@ -35,25 +35,6 @@ module.exports = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "CleanedTrackedWantedTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
         "internalType": "uint256",
         "name": "budgetId",
         "type": "uint256"
@@ -328,6 +309,19 @@ module.exports = [
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "STANDBY_PERIOD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -364,24 +358,6 @@ module.exports = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "cleanTrackedWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -463,18 +439,31 @@ module.exports = [
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "_issuers",
+        "name": "issuers",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_beneficiaries",
+        "name": "beneficiaries",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_admins",
+        "name": "admins",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWantTokenAllowList",
+    "outputs": [
+      {
+        "internalType": "contract IERC20[]",
+        "name": "",
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -590,7 +579,7 @@ module.exports = [
     "outputs": [
       {
         "internalType": "contract IERC20",
-        "name": "_rewardToken",
+        "name": "rewardToken",
         "type": "address"
       }
     ],
@@ -619,6 +608,19 @@ module.exports = [
       }
     ],
     "name": "setAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20[]",
+        "name": "_list",
+        "type": "address[]"
+      }
+    ],
+    "name": "setWantTokenAllowList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

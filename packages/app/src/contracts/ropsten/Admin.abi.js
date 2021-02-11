@@ -57,7 +57,7 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract IJuicer",
+        "internalType": "address",
         "name": "_to",
         "type": "address"
       }
@@ -161,6 +161,24 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract IAccessControlWrapper",
+        "name": "_contract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "issueTickets",
     "outputs": [],
@@ -247,6 +265,24 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract IAccessControlWrapper",
+        "name": "_contract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "router",
     "outputs": [
@@ -268,6 +304,24 @@ module.exports = [
       }
     ],
     "name": "setBudgetOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20[]",
+        "name": "_list",
+        "type": "address[]"
+      }
+    ],
+    "name": "setWantTokenAllowList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

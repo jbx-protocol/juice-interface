@@ -121,102 +121,34 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "_activeBudget",
-    "outputs": [
+        "internalType": "uint256",
+        "name": "_budgetId",
+        "type": "uint256"
+      },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          },
-          {
-            "internalType": "contract IERC20",
-            "name": "want",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "total",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tapped",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "o",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "bAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "hasMintedReserves",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Budget.Data",
-        "name": "_budget",
-        "type": "tuple"
+        "internalType": "uint256",
+        "name": "_configured",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_yay",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "_voter",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "addVotes",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -269,6 +201,11 @@ module.exports = [
         "internalType": "address",
         "name": "_owner",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_standbyPeriod",
+        "type": "uint256"
       }
     ],
     "name": "ensureActiveBudget",
@@ -354,10 +291,15 @@ module.exports = [
             "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -455,10 +397,15 @@ module.exports = [
             "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -555,6 +502,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -657,10 +609,15 @@ module.exports = [
             "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -757,6 +714,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -858,6 +820,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
             "type": "uint256"
           }
         ],
@@ -1203,6 +1170,11 @@ module.exports = [
             "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -1236,6 +1208,64 @@ module.exports = [
     "name": "trackWantedToken",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "name": "votes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "votesByAddress",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ];

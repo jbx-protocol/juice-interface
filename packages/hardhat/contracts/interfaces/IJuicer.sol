@@ -8,9 +8,17 @@ import "./IBudgetController.sol";
 import "./ITicketsController.sol";
 
 interface IJuicer is IBudgetController, ITicketsController {
-    function budgetStore() external returns (IBudgetStore);
+    event MintReservedTickets(address minter, address issuer);
 
-    function ticketStore() external returns (ITicketStore);
+    function admin() external view returns (address);
+
+    function budgetStore() external view returns (IBudgetStore);
+
+    function ticketStore() external view returns (ITicketStore);
+
+    function fee() external view returns (uint256);
 
     function setAdmin(address _admin) external;
+
+    function mintReservedTickets(address _issuer) external;
 }

@@ -18,9 +18,6 @@ import "./TicketStore.sol";
   @notice This contract exposes all external interactions with the Juice ecosystem.
   @dev  1. A project owner issues their Tickets.
         2. A project owner configures their first Budget.
-           You can reconfigure your Budget at any time, but if your current Budget has already
-           received contribution, the new configuration will only affect your Budget that automatically 
-           goes into effect once the current one expires.
         3. Any address (end user or smart contract) can contribute funds to your Budget.
            You can configure your Budget to `want` any of the tokens on the allow list (DAI, sUSD, ...).
            In return, your contributors receive some of your project's Tickets minted by this contract. 
@@ -34,6 +31,9 @@ import "./TicketStore.sol";
            Any overflow will be accounted for seperately. 
            At any point, anyone can execute a transaction to swap any accumulated overflow of `want` tokens into your Ticket's reward Token.
         5. Your project's Ticket holders can redeem their Tickets for a share of reward tokens that have been swapped for.
+        6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
+           but if your current Budget has already received contribution, the new configuration 
+           will only affect your Budget that automatically goes into effect once the current one expires.
 
   @dev This contract manages all funds, including:
         - contributions made to Budgets.
@@ -70,8 +70,12 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
+    /// @notice The amount of time a Budget must be in standby before it can become active.
+    /// @dev This allows for a voting period of 3 days.
+    uint256 public constant override STANDBY_PERIOD = 269200;
+
     /// @notice The admin of the contract who makes admin fees.
-    address public admin;
+    address public override admin;
 
     /// @notice The contract storing all Budget state variables.
     IBudgetStore public immutable override budgetStore;
@@ -80,12 +84,12 @@ contract Juicer is IJuicer {
     ITicketStore public immutable override ticketStore;
 
     /// @notice The percent fee the contract owner takes from overflow.
-    uint256 public immutable fee;
+    uint256 public immutable override fee;
 
     /// @notice The router that does the swaps.
     UniswapV2Router02 public immutable router;
 
-    // --- public views --- //
+    // --- external views --- //
 
     /**
       @notice Getter for the wantTokenAllowList;
@@ -103,21 +107,20 @@ contract Juicer is IJuicer {
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
         @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
+        @dev This logic should be the same as mintReservedTickets in Juicer.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-        @return _issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
-        @return _beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
-        @return _admins The amount of unminted reserved tickets belonging to the admin.
+        @return issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
+        @return beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
+        @return admins The amount of unminted reserved tickets belonging to the admin.
     */
     function getReservedTickets(address _issuer)
         public
         view
         override
         returns (
-            //TODO remove underscores
-            uint256 _issuers,
-            uint256 _beneficiaries,
-            uint256 _admins
+            uint256 issuers,
+            uint256 beneficiaries,
+            uint256 admins
         )
     {
         // Get a reference to the owner's tickets.
@@ -126,7 +129,7 @@ contract Juicer is IJuicer {
         // If the owner doesn't have tickets, throw.
         require(
             _tickets != ITickets(0),
-            "Juicer::getReservedTickets: NOT_FOUND"
+            "ReservedTicketsView::getReservedTickets: NOT_FOUND"
         );
 
         // Get a reference to the owner's latest Budget.
@@ -141,18 +144,18 @@ contract Juicer is IJuicer {
                 uint256 _overflow = _budget.total.sub(_budget.target);
 
                 // The admin gets the admin fee percentage.
-                _admins = _admins.add(_budget._weighted(_overflow, fee));
+                admins = admins.add(_budget._weighted(_overflow, fee));
 
                 // The owner gets the budget's owner percentage, if one is specified.
                 if (_budget.o > 0) {
-                    _issuers = _issuers.add(
+                    issuers = issuers.add(
                         _budget._weighted(_overflow, _budget.o)
                     );
                 }
 
                 // The beneficiary gets the budget's beneficiary percentage, if one is specified.
                 if (_budget.b > 0) {
-                    _beneficiaries = _beneficiaries.add(
+                    beneficiaries = beneficiaries.add(
                         _budget._weighted(_overflow, _budget.b)
                     );
                 }
@@ -295,6 +298,7 @@ contract Juicer is IJuicer {
         _budget.o = _o;
         _budget.b = _b;
         _budget.bAddress = _bAddress;
+        _budget.configured = block.timestamp;
 
         // Save the Budget in the store.
         budgetStore.saveBudget(_budget);
@@ -340,7 +344,8 @@ contract Juicer is IJuicer {
 
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data memory _budget = budgetStore.ensureActiveBudget(_owner);
+        Budget.Data memory _budget =
+            budgetStore.ensureActiveBudget(_owner, STANDBY_PERIOD);
 
         // Make sure the token being contributed matches the Budget's `want` token.
         require(
@@ -496,19 +501,19 @@ contract Juicer is IJuicer {
         @param _amount The amount of Tickets to redeem.
         @param _minRewardAmount The minimum amount of rewards tokens expected in return.
         @param _beneficiary The address to send the reward to.
-        @return _rewardToken The token that was redeemed for.
+        @return rewardToken The token that was redeemed for.
     */
     function redeem(
         address _issuer,
         uint256 _amount,
         uint256 _minRewardAmount,
         address _beneficiary
-    ) external override lock returns (IERC20 _rewardToken) {
+    ) external override lock returns (IERC20 rewardToken) {
         // Get a reference to the Tickets being redeemed.
         ITickets _tickets = ticketStore.tickets(_issuer);
 
         // Set the returned value.
-        _rewardToken = _tickets.rewardToken();
+        rewardToken = _tickets.rewardToken();
 
         // The amount of reward tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         // Multiply by the active proportion of the golden ratio. This incentizes HODLing tickets.
@@ -532,15 +537,12 @@ contract Juicer is IJuicer {
         // Subtract the claimed rewards from the total amount claimable.
         ticketStore.subtractClaimableRewards(
             _issuer,
-            _rewardToken,
+            rewardToken,
             _adjustedClaimableRewardsAmount
         );
 
         // Transfer funds to the specified address.
-        _rewardToken.safeTransfer(
-            _beneficiary,
-            _adjustedClaimableRewardsAmount
-        );
+        rewardToken.safeTransfer(_beneficiary, _adjustedClaimableRewardsAmount);
 
         emit Redeem(
             msg.sender,
@@ -643,42 +645,6 @@ contract Juicer is IJuicer {
             _budget = budgetStore.getBudget(_budget.previous);
         }
         emit MintReservedTickets(msg.sender, _issuer);
-    }
-
-    /**
-        @notice Cleans the `want` token tracking array for an owner and a redeemable token.
-        @dev This rarely needs to get called, if ever.
-        @dev It's only useful if an owner has iterated through many `want` tokens that are just taking up space.
-        @param _owner The owner of the Budgets that have specified `want` tokens.
-        @param _token The reward token to clean accepted tokens for.
-    */
-    function cleanTrackedWantedTokens(address _owner, IERC20 _token)
-        external
-        override
-    {
-        // Get a reference to all of the token's the owner has wanted since this transaction was last called.
-        IERC20[] memory _currentWantedTokens =
-            budgetStore.getWantedTokens(_owner, _token);
-
-        // Clear the array entirely in the store so that it can be repopulated.
-        budgetStore.clearWantedTokens(_owner, _token);
-
-        // Get a reference to the current Budget for the owner. The `want` token for this Budget shouldn't be cleared.
-        Budget.Data memory _cBudget = budgetStore.getCurrentBudget(_owner);
-
-        // For each token currently tracked, check to see if there are swappable funds from the token.
-        for (uint256 i = 0; i < _currentWantedTokens.length; i++) {
-            IERC20 _wantedToken = _currentWantedTokens[i];
-            // Only retrack tokens in used.
-            if (
-                _cBudget.want == _wantedToken ||
-                ticketStore.swappable(_owner, _wantedToken, _token) > 0
-            ) {
-                // Add the token back to the store.
-                budgetStore.trackWantedToken(msg.sender, _token, _wantedToken);
-            }
-        }
-        emit CleanedTrackedWantedTokens(_owner, _token);
     }
 
     /**

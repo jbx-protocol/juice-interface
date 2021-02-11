@@ -35,25 +35,6 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "CleanedTrackedWantedTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
         "internalType": "uint256",
         "name": "budgetId",
         "type": "uint256"
@@ -328,6 +309,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "STANDBY_PERIOD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -364,24 +358,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "cleanTrackedWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -445,6 +421,35 @@
       {
         "internalType": "uint256",
         "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      }
+    ],
+    "name": "getReservedTickets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "issuers",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "beneficiaries",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "admins",
         "type": "uint256"
       }
     ],
@@ -574,7 +579,7 @@
     "outputs": [
       {
         "internalType": "contract IERC20",
-        "name": "_rewardToken",
+        "name": "rewardToken",
         "type": "address"
       }
     ],

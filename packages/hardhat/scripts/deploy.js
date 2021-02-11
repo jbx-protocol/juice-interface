@@ -22,6 +22,7 @@ const main = async () => {
     [token.address],
     uniswapV2Router
   ]);
+
   const maintainer = await deploy("Maintainer", [juicer.address]);
   const staker = await deploy("TimelockStaker");
   const budgetBallot = await deploy("BudgetBallot", [juicer.address, staker.address]);

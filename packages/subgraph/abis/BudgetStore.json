@@ -217,7 +217,7 @@
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -405,7 +405,7 @@
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -511,7 +511,7 @@
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],
@@ -723,7 +723,7 @@
           }
         ],
         "internalType": "struct Budget.Data",
-        "name": "_budget",
+        "name": "budget",
         "type": "tuple"
       }
     ],

@@ -439,17 +439,17 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "_issuers",
+        "name": "issuers",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_beneficiaries",
+        "name": "beneficiaries",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_admins",
+        "name": "admins",
         "type": "uint256"
       }
     ],
@@ -579,7 +579,7 @@
     "outputs": [
       {
         "internalType": "contract IERC20",
-        "name": "_rewardToken",
+        "name": "rewardToken",
         "type": "address"
       }
     ],

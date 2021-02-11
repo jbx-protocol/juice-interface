@@ -35,9 +35,9 @@ interface IBudgetController {
         IERC20 want
     );
 
-    event CleanedTrackedWantedTokens(address indexed owner, IERC20 token);
-
     function getWantTokenAllowList() external view returns (IERC20[] memory);
+
+    function STANDBY_PERIOD() external view returns (uint256);
 
     function configureBudget(
         uint256 _target,
@@ -48,22 +48,20 @@ interface IBudgetController {
         uint256 _o,
         uint256 _b,
         address _bAddress
-    ) external returns (uint256 _mpBudget);
+    ) external returns (uint256 mpBudget);
 
     function payOwner(
         address _owner,
         uint256 _amount,
         IERC20 _token,
         address _beneficiary
-    ) external returns (uint256 _budgetId);
+    ) external returns (uint256 budgetId);
 
     function tapBudget(
         uint256 _budgetId,
         uint256 _amount,
         address _beneficiary
     ) external;
-
-    function cleanTrackedWantedTokens(address _owner, IERC20 _token) external;
 
     function setWantTokenAllowList(IERC20[] calldata _list) external;
 }

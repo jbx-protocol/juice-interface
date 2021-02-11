@@ -20,8 +20,6 @@ interface ITicketsController {
 
     event Migrate(address indexed to);
 
-    event MintReservedTickets(address minter, address issuer);
-
     event Swap(
         address issuer,
         IERC20 from,
@@ -34,9 +32,9 @@ interface ITicketsController {
         external
         view
         returns (
-            uint256 _issuers,
-            uint256 _beneficiaries,
-            uint256 _admins
+            uint256 issuers,
+            uint256 beneficiaries,
+            uint256 admins
         );
 
     function issueTickets(
@@ -50,7 +48,7 @@ interface ITicketsController {
         uint256 _amount,
         uint256 _minRewardAmount,
         address _beneficiary
-    ) external returns (IERC20 _rewardToken);
+    ) external returns (IERC20 rewardToken);
 
     function swap(
         address _issuer,
@@ -59,8 +57,6 @@ interface ITicketsController {
         IERC20 _to,
         uint256 _minSwappedAmount
     ) external;
-
-    function mintReservedTickets(address _issuer) external;
 
     function addToMigrationAllowList(address _contract) external;
 

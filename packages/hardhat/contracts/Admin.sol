@@ -4,7 +4,10 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
+import "./interfaces/IAccessControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
+import "./interfaces/IMaintainer.sol";
+import "./interfaces/IBudgetBallot.sol";
 import "./abstract/JuiceAdmin.sol";
 
 /// All functions in here should be governable with FLOW.
@@ -39,6 +42,30 @@ contract Admin is JuiceAdmin {
             address(_juicer)
         );
         _juicer.setAdmin(address(this));
+    }
+
+    /** 
+      @notice Grants the admin role for a contract that this Admin contract controls.
+      @param _contract The contract that is being given access to.
+      @param _newAdmin The address that is being given the admin role.
+    */
+    function grantRole(IAccessControlWrapper _contract, address _newAdmin)
+        external
+        onlyOwner
+    {
+        _contract.grantRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
+    }
+
+    /** 
+      @notice Revokes the admin role for a contract that this Admin contract controls.
+      @param _contract The contract that is having access to revoked.
+      @param _newAdmin The address that is having the admin role revoked.
+    */
+    function revokeRole(IAccessControlWrapper _contract, address _newAdmin)
+        external
+        onlyOwner
+    {
+        _contract.revokeRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
     }
 
     /** 

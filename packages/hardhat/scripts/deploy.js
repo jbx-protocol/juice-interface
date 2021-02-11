@@ -46,7 +46,7 @@ const main = async () => {
     const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
-    const attachedJuicer = await JuicerFactory.attach(jucier.address);
+    const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     attachedBudgetStore.claimOwnership(admin.address);
     attachedTicketStore.claimOwnership(admin.address);

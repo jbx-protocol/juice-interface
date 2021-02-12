@@ -50,6 +50,7 @@ function App() {
     formatter: (val: Budget) => !!val,
   })
 
+  console.log("h:", { hasBudget });
   const budgetGuard: GuardFunction = (to, from, next) => {
     if (to.meta.budget === true) {
       hasBudget ? next() : next.redirect('create')

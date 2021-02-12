@@ -213,7 +213,7 @@ contract BudgetStore is Store, IBudgetStore {
         if (
             budget.id > 0 &&
             budget.configured.add(_standbyPeriod) < block.timestamp &&
-            votes[budget.id][budget.configured][true] >
+            votes[budget.id][budget.configured][true] >=
             votes[budget.id][budget.configured][false]
         ) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.

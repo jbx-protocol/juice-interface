@@ -66,13 +66,13 @@ export default function ConfigureBudget({
   const ticketsSymbol = useContractReader<string>({
     contract: erc20Contract(ticketsAddress, provider),
     functionName: 'symbol',
-    formatter: (value: string) => Web3.utils.hexToString(value),
+    formatter: (value?: string) => (value ? Web3.utils.hexToString(value) : ''),
   })
 
   const ticketsName = useContractReader<string>({
     contract: erc20Contract(ticketsAddress, provider),
     functionName: 'name',
-    formatter: (value: string) => Web3.utils.hexToString(value),
+    formatter: (value?: string) => (value ? Web3.utils.hexToString(value) : ''),
   })
 
   if (!transactor || !contracts || initializedTickets === undefined) return null

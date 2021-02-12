@@ -40,12 +40,13 @@ export default function Owner({
 
   const isOwner = owner === userAddress
 
-  console.log("owner:", owner);
-
   const currentBudget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
+    callback: budget => {
+      if (isOwner && !budget) window.location.hash = 'create'
+    },
   })
 
   const ticketAddress = useContractReader<string>({
@@ -57,7 +58,7 @@ export default function Owner({
   const ticketName = useContractReader<string>({
     contract: erc20Contract(ticketAddress, provider),
     functionName: 'name',
-    formatter: (value: string) => Web3.utils.hexToString(value),
+    formatter: (value?: string) => (value ? Web3.utils.hexToString(value) : ''),
   })
 
   const wantTokenName = useContractReader<string>({

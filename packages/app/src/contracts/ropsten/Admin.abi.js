@@ -166,29 +166,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_budgetStoreAdmins",
-        "type": "address[]"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_ticketStoreAdmins",
-        "type": "address[]"
-      }
-    ],
-    "name": "init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "issueTickets",
     "outputs": [],

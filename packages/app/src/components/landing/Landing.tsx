@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { colors } from '../../constants/styles/colors'
 import Footer from '../Footer'
-import ExampleCard from './ExampleCard'
 import ImgTextSection from './ImgTextSection'
 
 export default function Landing({
@@ -91,9 +91,9 @@ export default function Landing({
                 }}
               >
                 {userAddress ? (
-                  <a href={userAddress}>
+                  <Link to={userAddress}>
                     <Button type="primary">Create a project</Button>
-                  </a>
+                  </Link>
                 ) : (
                   <Button onClick={onNeedAddress} type="primary">
                     Create a project
@@ -238,9 +238,9 @@ export default function Landing({
               go.
             </p>
             {userAddress ? (
-              <a href={userAddress}>
+              <Link to={userAddress}>
                 <Button type="primary">Build with Juice</Button>
-              </a>
+              </Link>
             ) : (
               <Button onClick={onNeedAddress} type="primary">
                 Build with Juice

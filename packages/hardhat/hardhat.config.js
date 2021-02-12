@@ -27,6 +27,8 @@ function mnemonic() {
   return "";
 }
 
+const infuraId = "65df8a2728b84c87923a340d1b591fd0";
+
 module.exports = {
   defaultNetwork,
   networks: {
@@ -38,25 +40,25 @@ module.exports = {
       */
     },
     rinkeby: {
-      url: "https://rinkeby.infura.io/v3/" + process.env.INFURA_ID,
+      url: "https://rinkeby.infura.io/v3/" + infuraId,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     mainnet: {
-      url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID,
+      url: "https://mainnet.infura.io/v3/" + infuraId,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     ropsten: {
-      url: "https://ropsten.infura.io/v3/" + process.env.INFURA_ID,
+      url: "https://ropsten.infura.io/v3/" + infuraId,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     goerli: {
-      url: "https://goerli.infura.io/v3/" + process.env.INFURA_ID,
+      url: "https://goerli.infura.io/v3/" + infuraId,
       accounts: {
         mnemonic: mnemonic()
       }
@@ -133,7 +135,8 @@ task("fundedwallet", "Create a wallet (pk) link and fund it with deployer?")
           amount +
           " ETH to " +
           randomWallet.address +
-          " using deployer account"
+          " using deployer account: " +
+          deployerWallet.address
       );
       const sendresult = await deployerWallet.sendTransaction(tx);
       console.log("\n" + url + "/pk#" + privateKey + "\n");
@@ -305,7 +308,7 @@ async function addr(ethers, addr) {
   if (accounts[addr] !== undefined) {
     return accounts[addr];
   }
-  throw `Could not normalize address: ${addr}`;
+  throw Error(`Could not normalize address: ${addr}`);
 }
 
 task("accounts", "Prints the list of accounts", async (_, { ethers }) => {

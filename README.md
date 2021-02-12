@@ -44,15 +44,9 @@ yarn start
 
 ## Deploying contracts
 
-Contracts are located in `packages/hardhat/contracts`
+Contracts are located in `packages/hardhat/contracts`. Each time contracts are deployed, artifacts are copied to `packages/app/src/contracts` where they're used by the frontend. 
 
-Each time contracts are deployed, artifacts are copied to `packages/app/src/contracts` where they're used by the frontend.
-
-By default, the frontend reads from a local blockchain. To use a public blockchain:
-
-- deploy contracts to that chain
-- edit `packages/app/.env` variable `REACT_APP_DEV_NETWORK` (i.e. `REACT_APP_DEV_NETWORK=ropsten`)
-- `yarn start` to start frontend using artifacts from latest deployment
+The frontend connects to whichever chain its provider (i.e. Metamask) is using to, and reads the corresponding contract artifacts for that chain. Connecting to a chain that Juice contracts have not been deployed to will cause the app to fail.
 
 ### deploy to local chain
 
@@ -80,12 +74,9 @@ Create new `packages/app/.env`, reference `packages/app/.example.env`
 
 ```bash
 REACT_APP_INFURA_ID=
-REACT_APP_DEV_NETWORK=
 ```
 
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
-
-`REACT_APP_DEV_NETWORK`: (options: `local`, `ropsten`, `mainnet`) network used by frontend during development. Requires contract artifacts to be present in `packages/app/src/contracts/<network-name>` which are generated after a deployment to that network.
 
 ---
 

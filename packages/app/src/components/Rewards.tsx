@@ -1,14 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Descriptions, Input, Space } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
+import { bigNumbersEq } from '../helpers/bigNumbersEq'
 import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
-import { bigNumbersEq } from '../helpers/bigNumbersEq'
 
 export default function Rewards({
   transactor,
@@ -16,12 +17,14 @@ export default function Rewards({
   budget,
   userAddress,
   ticketAddress,
+  provider,
 }: {
   transactor?: Transactor
   contracts?: Contracts
   budget?: Budget
   userAddress?: string
   ticketAddress?: string
+  provider?: JsonRpcProvider
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
 
@@ -51,11 +54,11 @@ export default function Rewards({
     args: [budget?.owner],
   })
   const rewardTokenName = useContractReader<string>({
-    contract: erc20Contract(rewardTokenAddress),
+    contract: erc20Contract(rewardTokenAddress, provider),
     functionName: 'name',
   })
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(budget?.want),
+    contract: erc20Contract(budget?.want, provider),
     functionName: 'name',
   })
   const swappableAmount = useContractReader<BigNumber>({
@@ -81,9 +84,9 @@ export default function Rewards({
     ],
   })
   const reserveAmounts = useContractReader<{
-    _admins: BigNumber
-    _beneficiaries: BigNumber
-    _issuers: BigNumber
+    admins: BigNumber
+    beneficiaries: BigNumber
+    issuers: BigNumber
   }>({
     contract: contracts?.Juicer,
     functionName: 'getReservedTickets',
@@ -91,9 +94,9 @@ export default function Rewards({
     shouldUpdate: (val, old) => {
       if (!val || (!val && !old)) return false
       return (
-        val._admins.eq(old?._admins ?? 0) &&
-        val._beneficiaries.eq(old?._beneficiaries ?? 0) &&
-        val._issuers.eq(old?._issuers ?? 0)
+        val.admins.eq(old?.admins ?? 0) &&
+        val.beneficiaries.eq(old?.beneficiaries ?? 0) &&
+        val.issuers.eq(old?.issuers ?? 0)
       )
     },
   })
@@ -201,13 +204,13 @@ export default function Rewards({
           {yourClaimableAmount?.toString() ?? '--'} {rewardTokenName}
         </Descriptions.Item>
         <Descriptions.Item label="Admin reserves">
-          {reserveAmounts?._admins?.toString()}
+          {reserveAmounts?.admins?.toString()}
         </Descriptions.Item>
         <Descriptions.Item label="Beneficiaries reserves">
-          {reserveAmounts?._beneficiaries?.toString()}
+          {reserveAmounts?.beneficiaries?.toString()}
         </Descriptions.Item>
         <Descriptions.Item label="Issuers reserves">
-          {reserveAmounts?._issuers?.toString()}
+          {reserveAmounts?.issuers?.toString()}
         </Descriptions.Item>
       </Descriptions>
 

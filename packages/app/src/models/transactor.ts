@@ -5,4 +5,4 @@ import { TransactionEvent } from 'bnc-notify'
 export type Transactor = (
   tx: Deferrable<TransactionRequest>,
   callback?: (e: TransactionEvent, signer: JsonRpcSigner) => void,
-) => Promise<unknown>
+) => Promise<boolean>

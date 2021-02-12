@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { mainnetProvider } from '../constants/mainnet-provider'
 import { web3Modal } from '../constants/web3-modal'
 import { useExchangePrice } from '../hooks/ExchangePrice'
+import { NetworkName } from '../models/network-name'
 import Balance from './Balance'
 import Wallet from './Wallet'
 
@@ -39,6 +40,11 @@ export default function Account({
         alignItems: 'baseline',
       }}
     >
+      {userProvider?.network?.name === NetworkName.mainnet ? null : (
+        <span style={{ fontSize: '.8rem', fontWeight: 500 }}>
+          Network: {userProvider?.network?.name}
+        </span>
+      )}
       <Balance
         userAddress={userAddress}
         provider={userProvider}

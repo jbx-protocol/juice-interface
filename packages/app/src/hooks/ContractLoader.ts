@@ -6,62 +6,57 @@ import { ContractName } from '../constants/contract-name'
 import { Contracts } from '../models/contracts'
 import { NetworkName } from '../models/network-name'
 
-const network: NetworkName =
-  process.env.NODE_ENV === 'production'
-    ? NetworkName.ropsten
-    : (process.env.REACT_APP_DEV_NETWORK as NetworkName) ?? NetworkName.local
-
-export function useContractLoader(signerOrProvider?: JsonRpcProvider | JsonRpcSigner) {
+export function useContractLoader(provider?: JsonRpcProvider) {
   const [contracts, setContracts] = useState<Contracts>()
 
   useEffect(() => {
     async function loadContracts() {
-      if (signerOrProvider === undefined) return
+      if (!provider) return
+
+      await provider.ready
+
+      const network = provider.network?.name as NetworkName
+
+      if (!network) return
 
       try {
-        const signer =
-          (await isProviderWithAccounts(signerOrProvider))?.getSigner() ?? (signerOrProvider as JsonRpcSigner)
+        const signer = provider.getSigner()
 
-        const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
+        const contractList: ContractName[] = network
+          ? require(`../contracts/${network}/contracts.js`)
+          : undefined
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
             ...accumulator,
-            [contractName]: loadContract(contractName, signer),
+            [contractName]: loadContract(contractName, signer, network),
           }),
           {} as Contracts,
         )
 
         setContracts(newContracts)
       } catch (e) {
-        console.log('ERROR LOADING CONTRACTS!!', e)
+        console.log('CONTRACT LOADER ERROR:', e)
       }
     }
 
     loadContracts()
-  }, [signerOrProvider])
+  }, [provider])
 
   return contracts
 }
 
-async function isProviderWithAccounts(signerOrProvider: JsonRpcSigner | JsonRpcProvider) {
-  if (
-    (signerOrProvider as JsonRpcProvider).listAccounts !== undefined &&
-    (await (signerOrProvider as JsonRpcProvider).listAccounts()).length > 0
-  ) {
-    return signerOrProvider as JsonRpcProvider
-  }
-}
-
-const loadContract = (contractName: ContractName, signerOrProvider: JsonRpcSigner | JsonRpcProvider): Contract => {
+const loadContract = (
+  contractName: ContractName,
+  signer: JsonRpcSigner,
+  network: NetworkName,
+): Contract | undefined => {
   // TODO why does path not parse correctly when `../contracts/${network}` is stored as variable?
   const contract = new Contract(
     require(`../contracts/${network}/${contractName}.address.js`),
     require(`../contracts/${network}/${contractName}.abi.js`),
-    signerOrProvider,
+    signer,
   )
-
-  // const bytecode: string = require(`../contracts/${network}/${contractName}.bytecode.js`)
 
   return contract
 }

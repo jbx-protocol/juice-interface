@@ -30,7 +30,7 @@ export default function Rewards({
 
   const claimableProportion = BigNumber.from(618).toHexString()
 
-  const ticketContract = erc20Contract(ticketAddress)
+  const ticketContract = erc20Contract(ticketAddress, provider)
 
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,

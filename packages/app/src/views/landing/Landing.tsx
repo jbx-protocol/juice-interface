@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { colors } from '../../constants/styles/colors'
-import Footer from '../Footer'
+import Footer from '../../components/Footer'
 import ImgTextSection from './ImgTextSection'
 
 export default function Landing({

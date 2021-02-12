@@ -8,8 +8,8 @@ import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { useAllowedTokens } from '../hooks/AllowedTokens'
 import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
-import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
-import BudgetForm from './forms/BudgetForm'
+import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
+import BudgetForm from '../components/forms/BudgetForm'
 
 export default function ReconfigureBudget({
   transactor,

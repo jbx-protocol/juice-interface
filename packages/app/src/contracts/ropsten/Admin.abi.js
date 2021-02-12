@@ -160,7 +160,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "grantRole",
+    "name": "grantAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -264,7 +264,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "revokeRole",
+    "name": "revokeAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

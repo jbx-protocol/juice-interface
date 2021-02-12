@@ -27,11 +27,51 @@ contract Admin is JuiceAdmin {
     {}
 
     /** 
+      @notice Grants a Juicer access to its Ticket store and Budget stores
+      @param _juicer The juicer that is being appointed.
+      @param _budgetStoreAdmins Addresses that should be allowed to administer the jucier's budget store.
+      @param _ticketStoreAdmins Addresses that should be allowed to administer the jucier's ticket store.
+    */
+    function init(
+        IJuicer _juicer,
+        address[] calldata _budgetStoreAdmins,
+        address[] calldata _ticketStoreAdmins
+    ) external onlyOwner {
+        ITicketStore _ticketStore = _juicer.ticketStore();
+        IBudgetStore _budgetStore = _juicer.budgetStore();
+
+        _ticketStore.claimOwnership(address(this));
+        _budgetStore.claimOwnership(address(this));
+
+        _ticketStore.grantRole_(
+            _ticketStore.DEFAULT_ADMIN_ROLE_(),
+            address(juicer)
+        );
+        _budgetStore.grantRole_(
+            _budgetStore.DEFAULT_ADMIN_ROLE_(),
+            address(juicer)
+        );
+
+        for (uint256 i = 0; i < _ticketStoreAdmins.length; i++)
+            _ticketStore.grantRole_(
+                _ticketStore.DEFAULT_ADMIN_ROLE_(),
+                _ticketStoreAdmins[i]
+            );
+        for (uint256 i = 0; i < _budgetStoreAdmins.length; i++)
+            _budgetStore.grantRole_(
+                _budgetStore.DEFAULT_ADMIN_ROLE_(),
+                _budgetStoreAdmins[i]
+            );
+
+        _juicer.setAdmin(address(this));
+    }
+
+    /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
       @param _contract The contract that is being given access to.
       @param _newAdmin The address that is being given the admin role.
     */
-    function grantRole(IAccessControlWrapper _contract, address _newAdmin)
+    function grantAdmin(IAccessControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {
@@ -43,7 +83,7 @@ contract Admin is JuiceAdmin {
       @param _contract The contract that is having access to revoked.
       @param _newAdmin The address that is having the admin role revoked.
     */
-    function revokeRole(IAccessControlWrapper _contract, address _newAdmin)
+    function revokeAdmin(IAccessControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {

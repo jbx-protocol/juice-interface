@@ -36,30 +36,17 @@ const main = async () => {
   ]);
 
   try {
-    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
-    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const AdminFactory = await ethers.getContractFactory("Admin");
     const StakerFactory = await ethers.getContractFactory("TimelockStaker");
-    const JuicerFactory = await ethers.getContractFactory("Juicer");
 
-    const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
-    const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
-    const attachedJuicer = await JuicerFactory.attach(juicer.address);
-
-    attachedBudgetStore.claimOwnership(admin.address);
-    attachedTicketStore.claimOwnership(admin.address);
-    attachedAdmin.appointJuicer(juicer.address);
-    attachedAdmin.issueTickets();
-    attachedAdmin.grantRole(budgetStore.address, maintainer.address);
-    attachedAdmin.grantRole(budgetStore.address, budgetBallot.address);
-    attachedAdmin.grantRole(budgetStore.address, juicer.address);
-    attachedAdmin.grantRole(ticketStore.address, juicer.address);
-    attachedJuicer.setAdmin(admin.address);
-
+    
+    await attachedAdmin.init(juicer.address, [budgetBallot.address, maintainer.address], []);
+    await attachedAdmin.issueTickets();
     // Make this Ballot the timelock controller of the staker contract.
-    attachedStaker.setController(budgetBallot.address);
+    await attachedStaker.setController(budgetBallot.address);
+
   } catch (e) {
     console.log("EE: ", e);
   }

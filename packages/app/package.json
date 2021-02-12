@@ -13,6 +13,7 @@
     "bnc-notify": "^1.5.1",
     "burner-provider": "^1.0.38",
     "erc-20-abi": "^1.0.0",
+    "ipfs-deploy": "^8.0.1",
     "node-sass": "4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -28,7 +29,8 @@
     "start": "yarn compile-less && react-scripts start",
     "build": "yarn compile-less && react-scripts build",
     "test": "yarn compile-less && react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ipfs": "yarn build && ipfs-deploy ./build"
   },
   "eslintConfig": {
     "extends": [

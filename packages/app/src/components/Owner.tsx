@@ -1,3 +1,4 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Col, Divider, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -10,6 +11,7 @@ import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
+import { LabelVal } from '../models/label-val'
 import { Transactor } from '../models/transactor'
 import BudgetDetail from './BudgetDetail'
 import BudgetsHistory from './BudgetsHistory'
@@ -20,10 +22,14 @@ export default function Owner({
   userAddress,
   transactor,
   contracts,
+  provider,
+  allowedTokens,
 }: {
   userAddress?: string
   transactor?: Transactor
   contracts?: Contracts
+  provider?: JsonRpcProvider
+  allowedTokens?: LabelVal<string>[]
 }) {
   const [sustainAmount, setSustainAmount] = useState<number>(0)
   const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
@@ -38,9 +44,6 @@ export default function Owner({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
-    callback: budget => {
-      if (owner && !budget) window.location.href = '/create'
-    },
   })
 
   const ticketAddress = useContractReader<string>({
@@ -50,13 +53,13 @@ export default function Owner({
   })
 
   const ticketName = useContractReader<string>({
-    contract: erc20Contract(ticketAddress),
+    contract: erc20Contract(ticketAddress, provider),
     functionName: 'name',
     formatter: (value: string) => Web3.utils.hexToString(value),
   })
 
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(currentBudget?.want),
+    contract: erc20Contract(currentBudget?.want, provider),
     functionName: 'name',
   })
 
@@ -213,6 +216,7 @@ export default function Owner({
                 budget={currentBudget}
                 userAddress={userAddress}
                 ticketAddress={ticketAddress}
+                provider={provider}
               />,
               'Rewards',
             )}

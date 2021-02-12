@@ -1,19 +1,23 @@
-import { Form, FormProps, Input } from 'antd'
+import { Form, FormProps, Input, Select } from 'antd'
 import React from 'react'
+
+import { LabelVal } from '../../models/label-val'
 
 export default function TicketsForm({
   props,
   header,
+  tokenOptions,
 }: {
   props: FormProps<{ name: string; symbol: string; rewardToken: string }>
   header?: string
+  tokenOptions?: LabelVal<string>[]
 }) {
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 12 },
   }
 
-  return (
+  return tokenOptions?.length ? (
     <Form {...props} {...layout}>
       {header ? (
         <Form.Item wrapperCol={{ offset: 6 }}>
@@ -42,8 +46,22 @@ export default function TicketsForm({
         name="rewardToken"
         label="Reward token"
       >
-        <Input placeholder="0x6b175474e89094c44da98b954eedeac495271d0f" />
+        <Select>
+          {tokenOptions?.map((opt, i) => (
+            <Select.Option key={i} value={opt.value}>
+              {opt.label}
+              <span
+                style={{
+                  fontSize: '.7rem',
+                  marginLeft: 6,
+                }}
+              >
+                {opt.value}
+              </span>
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
     </Form>
-  )
+  ) : null
 }

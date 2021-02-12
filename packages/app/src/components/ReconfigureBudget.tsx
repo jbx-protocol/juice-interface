@@ -1,9 +1,11 @@
 import { Contract } from '@ethersproject/contracts'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Form, Modal } from 'antd'
 import Web3 from 'web3'
 
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
+import { useAllowedTokens } from '../hooks/AllowedTokens'
 import { Budget } from '../models/budget'
 import { Transactor } from '../models/transactor'
 import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
@@ -12,17 +14,17 @@ import BudgetForm from './forms/BudgetForm'
 export default function ReconfigureBudget({
   transactor,
   contracts,
-  rewardToken,
   currentValue,
   visible,
   onCancel,
+  provider,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
-  rewardToken?: string
   currentValue?: Budget
   visible?: boolean
   onCancel?: VoidFunction
+  provider?: JsonRpcProvider
 }) {
   const [budgetForm] = Form.useForm<{
     duration: number
@@ -36,6 +38,8 @@ export default function ReconfigureBudget({
     beneficiaryAllocation: number
     ownerAllocation: number
   }>()
+
+  const tokenOptions = useAllowedTokens(contracts, provider)
 
   if (!transactor || !contracts) return null
 
@@ -60,9 +64,12 @@ export default function ReconfigureBudget({
       'uint256',
       fields.duration * SECONDS_IN_DAY,
     )
-    const _want = fields.want
+    const _want = currentValue?.want
     const _link = fields.link
-    const _discountRate = eth.abi.encodeParameter('uint256', fields.discountRate)
+    const _discountRate = eth.abi.encodeParameter(
+      'uint256',
+      fields.discountRate,
+    )
     const _ownerAllocation = eth.abi.encodeParameter(
       'uint256',
       fields.ownerAllocation,
@@ -113,10 +120,10 @@ export default function ReconfigureBudget({
           initialValues: {
             duration: currentValue?.duration.toString(),
             target: currentValue?.target.toString(),
-            want: currentValue?.want,
             link: currentValue?.link,
           },
         }}
+        tokenOptions={tokenOptions}
       />
       <BudgetAdvancedForm
         props={{

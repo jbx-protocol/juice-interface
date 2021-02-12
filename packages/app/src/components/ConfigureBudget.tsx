@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
@@ -9,21 +10,24 @@ import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import useContractReader from '../hooks/ContractReader'
-import { Budget } from '../models/budget'
+import { useAllowedTokens } from '../hooks/AllowedTokens'
 import { Transactor } from '../models/transactor'
 import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
 import BudgetForm from './forms/BudgetForm'
 import TicketsForm from './forms/TicketsForm'
+import useContractReader from '../hooks/ContractReader'
+import { erc20Contract } from '../helpers/erc20Contract'
 
 export default function ConfigureBudget({
   transactor,
   contracts,
   owner,
+  provider,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
   owner?: string
+  provider?: JsonRpcProvider
 }) {
   const [ticketsForm] = Form.useForm<{
     name: string
@@ -42,23 +46,53 @@ export default function ConfigureBudget({
     beneficiaryAllocation: number
     ownerAllocation: number
   }>()
+  const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>(false)
+  const [loadingCreateBudget, setLoadingCreateBudget] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [initializedTickets, setInitializedTickets] = useState<boolean>(false)
+  const [initializedTickets, setInitializedTickets] = useState<boolean>()
 
-  // Check for existing budget for owner
-  useContractReader<Budget>({
-    contract: contracts?.BudgetStore,
-    functionName: 'getCurrentBudget',
+  const tokenOptions = useAllowedTokens(contracts, provider)
+
+  const ticketsAddress = useContractReader<string>({
+    contract: contracts?.TicketStore,
+    functionName: 'tickets',
     args: [owner],
-    callback: budget => {
-      if (owner && budget) window.location.href = '/' + owner
+    callback: address => {
+      if (!owner || initializedTickets !== undefined) return
+      setInitializedTickets(
+        address !== '0x0000000000000000000000000000000000000000',
+      )
     },
   })
 
-  if (!transactor || !contracts) return null
+  const ticketsSymbol = useContractReader<string>({
+    contract: erc20Contract(ticketsAddress, provider),
+    functionName: 'symbol',
+    formatter: (value: string) => Web3.utils.hexToString(value),
+  })
+
+  const ticketsName = useContractReader<string>({
+    contract: erc20Contract(ticketsAddress, provider),
+    functionName: 'name',
+    formatter: (value: string) => Web3.utils.hexToString(value),
+  })
+
+  const myadd = useContractReader<string>({
+    contract: contracts?.TicketStore,
+    functionName: '_myaddress',
+  })
+
+  if (!transactor || !contracts || initializedTickets === undefined) return null
+
+  async function tryNextStep() {
+    const valid = await steps[currentStep].validate()
+    if (valid) setCurrentStep(currentStep + 1)
+  }
 
   function initTickets() {
     if (!transactor || !contracts) return
+
+    setLoadingInitTickets(true)
 
     const fields = ticketsForm.getFieldsValue(true)
 
@@ -74,17 +108,16 @@ export default function ConfigureBudget({
 
     return transactor(
       contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),
-      () => (window.location.href = '/'),
-    ).then(() => setInitializedTickets(true))
-  }
-
-  async function tryNextStep() {
-    const valid = await steps[currentStep].validate()
-    if (valid) setCurrentStep(currentStep + 1)
+    ).then(success => {
+      setLoadingInitTickets(false)
+      setInitializedTickets(success)
+    })
   }
 
   function submitBudget() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
+
+    setLoadingCreateBudget(true)
 
     const fields = {
       ...budgetForm.getFieldsValue(true),
@@ -129,7 +162,10 @@ export default function ConfigureBudget({
         _beneficiaryAllocation,
         _beneficiaryAddress,
       ),
-    )
+    ).then(success => {
+      setLoadingCreateBudget(false)
+      if (success && owner) window.location.hash = owner
+    })
   }
 
   const steps = [
@@ -137,26 +173,26 @@ export default function ConfigureBudget({
       title: 'Tickets',
       validate: () => ticketsForm.validateFields(),
       content: initializedTickets ? (
-        'Tickets already initialized'
+        'Tickets already initialized.'
       ) : (
         <TicketsForm
           props={{
             form: ticketsForm,
             initialValues: {
-              rewardToken:
-                process.env.NODE_ENV === 'development'
-                  ? contracts.Token.address
-                  : undefined,
+              rewardToken: tokenOptions.length
+                ? tokenOptions[0].value
+                : undefined,
             },
           }}
           header="Create your ERC-20 ticket tokens"
+          tokenOptions={tokenOptions}
         />
       ),
       info: [
         'The Juice protocol will use these ERC-20 tokens of yours like tickets, handing them out to people in exchange for payments towards your Budgets. ',
         'They are redeemable for a share of your Budgets’ surplus over time.',
         "You'll provide a ticker symbol for your Tickets, and the reward token that these Tickets can be redeemed for.",
-        "A ticket is redeemable for 38.2% of its proportional rewards. Meaning, if there are 100 reward tokens available, 10% of the total ticket supply could be redeemed for 3.82 reward tokens. The rest is left to share between the remaining ticket hodlers."
+        'A ticket is redeemable for 38.2% of its proportional rewards. Meaning, if there are 100 reward tokens available, 10% of the total ticket supply could be redeemed for 3.82 reward tokens. The rest is left to share between the remaining ticket hodlers.',
       ],
     },
     {
@@ -167,19 +203,17 @@ export default function ConfigureBudget({
           props={{
             form: budgetForm,
             initialValues: {
-              want:
-                process.env.NODE_ENV === 'development'
-                  ? contracts.Token.address
-                  : undefined,
+              want: tokenOptions.length ? tokenOptions[0].value : undefined,
             },
           }}
           header="Configure your budgets"
+          tokenOptions={tokenOptions}
         />
       ),
       info: [
         'Your Budget will begin accepting payments once it’s made. It’ll accept funds up until its duration runs out.',
         'A new Budget will be created automatically once the current one expires to continue collecting funds. It’ll use the same configuration as the previous one if you haven’t since passed a vote to reconfigured it.',
-        "You can propose reconfigurations to your Budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yay's than nay's, the new budget will be used once the active one expires."
+        "You can propose reconfigurations to your Budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yay's than nay's, the new budget will be used once the active one expires.",
       ],
     },
     {
@@ -194,10 +228,10 @@ export default function ConfigureBudget({
       info: [
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
         "Beneficiary contract's can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.",
-        " ",
+        ' ',
         "Lastly, the discountRate rate affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
         "For example, if your discountRate rate is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",
-        "Effectively this gives humans who believe your cumulative overflow will increase over time an incentive to pay you today, HODL their tickets, and redeem them at a future date for a better return.",
+        'Effectively this gives humans who believe your cumulative overflow will increase over time an incentive to pay you today, HODL their tickets, and redeem them at a future date for a better return.',
       ],
     },
     {
@@ -211,15 +245,27 @@ export default function ConfigureBudget({
               <Space size="large">
                 <Statistic
                   title="Name"
-                  value={ticketsForm.getFieldValue('name')}
+                  value={
+                    initializedTickets
+                      ? ticketsName
+                      : ticketsForm.getFieldValue('name')
+                  }
                 />
                 <Statistic
                   title="Symbol"
-                  value={'t' + ticketsForm.getFieldValue('symbol')}
+                  value={
+                    initializedTickets
+                      ? ticketsSymbol
+                      : 't' + ticketsForm.getFieldValue('symbol')
+                  }
                 />
                 <Statistic
                   title="Reward token"
-                  value={ticketsForm.getFieldValue('rewardToken')}
+                  value={
+                    initializedTickets
+                      ? ticketsAddress
+                      : ticketsForm.getFieldValue('rewardToken')
+                  }
                 />
               </Space>
             </div>
@@ -228,6 +274,7 @@ export default function ConfigureBudget({
               htmlType="submit"
               type="primary"
               onClick={initTickets}
+              loading={loadingInitTickets}
             >
               Init tickets
             </Button>
@@ -294,6 +341,7 @@ export default function ConfigureBudget({
               htmlType="submit"
               type="primary"
               onClick={submitBudget}
+              loading={loadingCreateBudget}
             >
               Create budget
             </Button>

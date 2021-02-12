@@ -1,17 +1,19 @@
 /* eslint no-use-before-define: "warn" */
 const fs = require("fs");
 const chalk = require("chalk");
-const { config, ethers } = require("hardhat");
+const { ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
+const { DAI } = require("../constants/dai");
 
 const uniswapV2Router = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const main = async () => {
-  console.log("\n\n 📡 Deploying...\n");
+  console.log("\n\n 📡 Deploying to " + process.env.HARDHAT_NETWORK + " ...\n");
 
-  const token = await deploy("Token");
+  const isMainnet = process.env.HARDHAT_NETWORK === "mainnet";
 
+  const token = isMainnet ? undefined : await deploy("Token");
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
 
@@ -19,19 +21,22 @@ const main = async () => {
     budgetStore.address,
     ticketStore.address,
     5,
-    [token.address],
+    isMainnet ? [DAI] : [token.address],
     uniswapV2Router
   ]);
 
   const maintainer = await deploy("Maintainer", [juicer.address]);
   const staker = await deploy("TimelockStaker");
-  const budgetBallot = await deploy("BudgetBallot", [juicer.address, staker.address]);
+  const budgetBallot = await deploy("BudgetBallot", [
+    juicer.address,
+    staker.address
+  ]);
 
   const admin = await deploy("Admin", [
     juicer.address,
     "Juice Tickets",
     "tJUICE",
-    token.address,
+    isMainnet ? DAI : token.address,
     uniswapV2Router
   ]);
 
@@ -42,26 +47,29 @@ const main = async () => {
     const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
-    const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
-    const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
+    const attachedBudgetStore = await BudgetStoreFactory.attach(
+      budgetStore.address
+    );
+    const attachedTicketStore = await TicketStoreFactory.attach(
+      ticketStore.address
+    );
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
-    attachedBudgetStore.claimOwnership(admin.address);
-    attachedTicketStore.claimOwnership(admin.address);
-    attachedAdmin.appointJuicer(juicer.address);
-    attachedAdmin.issueTickets();
-    attachedAdmin.grantRole(budgetStore.address, maintainer.address);
-    attachedAdmin.grantRole(budgetStore.address, budgetBallot.address);
-    attachedAdmin.grantRole(budgetStore.address, juicer.address);
-    attachedAdmin.grantRole(ticketStore.address, juicer.address);
-    attachedJuicer.setAdmin(admin.address);
+    await attachedBudgetStore.claimOwnership(admin.address);
+    await attachedTicketStore.claimOwnership(admin.address);
+    await attachedAdmin.issueTickets();
+    await attachedAdmin.grantRole(budgetStore.address, maintainer.address);
+    await attachedAdmin.grantRole(budgetStore.address, budgetBallot.address);
+    await attachedAdmin.grantRole(budgetStore.address, juicer.address);
+    await attachedAdmin.grantRole(ticketStore.address, juicer.address);
+    await attachedJuicer.setAdmin(admin.address);
 
     // Make this Ballot the timelock controller of the staker contract.
     attachedStaker.setController(budgetBallot.address);
   } catch (e) {
-    console.log("EE: ", e);
+    console.log("Failed to establish admin contract ownership: ", e);
   }
 
   console.log(

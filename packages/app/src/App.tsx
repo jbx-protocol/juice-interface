@@ -69,41 +69,43 @@ function App() {
         onConnectWallet={loadWeb3Modal}
       />
 
-      <HashRouter>
-        <GuardProvider guards={[budgetGuard]}>
-          <Switch>
-            <GuardedRoute exact path="/">
-              <Landing
-                userAddress={userAddress}
-                onNeedAddress={loadWeb3Modal}
-              />
-            </GuardedRoute>
-            <GuardedRoute path="/gimme">
-              <Gimme
-                contracts={contracts}
-                transactor={transactor}
-                userAddress={userAddress}
-              ></Gimme>
-            </GuardedRoute>
-            <GuardedRoute path="/create" meta={{ budget: false }}>
-              <ConfigureBudget
-                owner={userAddress}
-                contracts={contracts}
-                transactor={transactor}
-                provider={userProvider}
-              />
-            </GuardedRoute>
-            <GuardedRoute path="/:owner" meta={{ budget: true }}>
-              <Owner
-                contracts={contracts}
-                transactor={transactor}
-                userAddress={userAddress}
-                provider={userProvider}
-              />
-            </GuardedRoute>
-          </Switch>
-        </GuardProvider>
-      </HashRouter>
+      {hasBudget === undefined ? null : (
+        <HashRouter>
+          <GuardProvider guards={[budgetGuard]}>
+            <Switch>
+              <GuardedRoute exact path="/">
+                <Landing
+                  userAddress={userAddress}
+                  onNeedAddress={loadWeb3Modal}
+                />
+              </GuardedRoute>
+              <GuardedRoute path="/gimme">
+                <Gimme
+                  contracts={contracts}
+                  transactor={transactor}
+                  userAddress={userAddress}
+                ></Gimme>
+              </GuardedRoute>
+              <GuardedRoute path="/create" meta={{ budget: false }}>
+                <ConfigureBudget
+                  owner={userAddress}
+                  contracts={contracts}
+                  transactor={transactor}
+                  provider={userProvider}
+                />
+              </GuardedRoute>
+              <GuardedRoute path="/:owner" meta={{ budget: true }}>
+                <Owner
+                  contracts={contracts}
+                  transactor={transactor}
+                  userAddress={userAddress}
+                  provider={userProvider}
+                />
+              </GuardedRoute>
+            </Switch>
+          </GuardProvider>
+        </HashRouter>
+      )}
     </div>
   )
 }

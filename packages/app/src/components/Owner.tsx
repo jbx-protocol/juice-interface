@@ -40,6 +40,8 @@ export default function Owner({
 
   const isOwner = owner === userAddress
 
+  console.log("owner:", owner);
+
   const currentBudget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',

@@ -54,33 +54,33 @@ const main = async () => {
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     await attachedTicketStore.setOwnership(admin.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedBudgetStore.setOwnership(admin.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(budgetStore.address, maintainer.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
     await attachedJuicer.setAdmin(admin.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     })
     await attachedAdmin.issueTickets({
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
 
     // Make this Ballot the timelock controller of the staker contract.
     await attachedStaker.setController(budgetBallot.address, {
-      gasLimit: 1000000
+      gasLimit: 3000000
     });
 
   } catch (e) {

@@ -2,43 +2,38 @@ import './App.scss'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
-import { useCallback, useEffect, useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { HashRouter, Switch } from 'react-router-dom'
+import { GuardedRoute, GuardFunction, GuardProvider } from 'react-router-guards'
 
 import ConfigureBudget from './components/ConfigureBudget'
 import Gimme from './components/Gimme'
 import Landing from './components/landing/Landing'
 import Navbar from './components/Navbar'
-import Budgets from './components/Owner'
-import { localProvider } from './constants/local-provider'
+import Owner from './components/Owner'
 import { web3Modal } from './constants/web3-modal'
 import { createTransactor } from './helpers/Transactor'
 import { useContractLoader } from './hooks/ContractLoader'
 import useContractReader from './hooks/ContractReader'
 import { useGasPrice } from './hooks/GasPrice'
+import { useUserAddress } from './hooks/UserAddress'
 import { useUserProvider } from './hooks/UserProvider'
 import { Budget } from './models/budget'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
-  const [userAddress, setUserAddress] = useState<string>()
 
   const gasPrice = useGasPrice('fast')
-
-  const userProvider = useUserProvider(injectedProvider, localProvider)
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect()
     setInjectedProvider(new Web3Provider(provider))
   }, [setInjectedProvider])
 
-  // https://github.com/austintgriffith/eth-hooks/blob/master/src/UserAddress.ts
-  useEffect(() => {
-    userProvider
-      ?.getSigner()
-      .getAddress()
-      .then(address => setUserAddress(address))
-  }, [userProvider, setUserAddress])
+  const userProvider = useUserProvider(injectedProvider)
+  const userAddress = useUserAddress(userProvider)
+
+  console.log('using provider:', userAddress, userProvider)
 
   const transactor = createTransactor({
     provider: userProvider,
@@ -48,14 +43,22 @@ function App() {
 
   const contracts = useContractLoader(userProvider)
 
-  console.log('using provider:', userProvider)
-
   const hasBudget = useContractReader<boolean>({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [userAddress],
     formatter: (val: Budget) => !!val,
   })
+
+  const budgetGuard: GuardFunction = (to, from, next) => {
+    if (to.meta.budget === true) {
+      hasBudget ? next() : next.redirect('create')
+    }
+    if (to.meta.budget === false) {
+      hasBudget && userAddress ? next.redirect(userAddress) : next()
+    }
+    next()
+  }
 
   return (
     <div className="App">
@@ -66,39 +69,41 @@ function App() {
         onConnectWallet={loadWeb3Modal}
       />
 
-      <div>
-        <BrowserRouter>
+      <HashRouter>
+        <GuardProvider guards={[budgetGuard]}>
           <Switch>
-            <Route exact path="/">
+            <GuardedRoute exact path="/">
               <Landing
                 userAddress={userAddress}
                 onNeedAddress={loadWeb3Modal}
               />
-            </Route>
-            <Route exact path="/gimme">
+            </GuardedRoute>
+            <GuardedRoute path="/gimme">
               <Gimme
                 contracts={contracts}
                 transactor={transactor}
                 userAddress={userAddress}
               ></Gimme>
-            </Route>
-            <Route exact path="/create">
+            </GuardedRoute>
+            <GuardedRoute path="/create" meta={{ budget: false }}>
               <ConfigureBudget
                 owner={userAddress}
                 contracts={contracts}
                 transactor={transactor}
+                provider={userProvider}
               />
-            </Route>
-            <Route exact path="/:owner">
-              <Budgets
+            </GuardedRoute>
+            <GuardedRoute path="/:owner" meta={{ budget: true }}>
+              <Owner
                 contracts={contracts}
                 transactor={transactor}
                 userAddress={userAddress}
+                provider={userProvider}
               />
-            </Route>
+            </GuardedRoute>
           </Switch>
-        </BrowserRouter>
-      </div>
+        </GuardProvider>
+      </HashRouter>
     </div>
   )
 }

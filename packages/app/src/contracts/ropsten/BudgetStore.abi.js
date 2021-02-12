@@ -962,6 +962,11 @@ module.exports = [
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
         "internalType": "address",
         "name": "account",
         "type": "address"

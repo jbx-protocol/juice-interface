@@ -16,7 +16,7 @@ export default function useContractReader<V>({
   functionName: string
   args?: unknown[]
   pollTime?: number
-  formatter?: (val: any) => V
+  formatter?: (val?: any) => V
   callback?: (val?: V) => void
   shouldUpdate?: (a?: V, b?: V) => boolean
 }) {
@@ -29,9 +29,7 @@ export default function useContractReader<V>({
       if (!contract) return
 
       try {
-        const newValue: unknown = await contract[functionName](...(args ?? []))
-
-        if (newValue === undefined) return
+        const newValue = await contract[functionName](...(args ?? []))
 
         const result = formatter ? formatter(newValue) : (newValue as V)
 

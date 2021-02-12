@@ -170,19 +170,6 @@ module.exports = [
         "internalType": "address",
         "name": "_owner",
         "type": "address"
-      }
-    ],
-    "name": "claimOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
       },
       {
         "internalType": "contract IERC20",
@@ -1183,6 +1170,19 @@ module.exports = [
       }
     ],
     "name": "saveBudget",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "setOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

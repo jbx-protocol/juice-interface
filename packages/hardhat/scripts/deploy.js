@@ -41,16 +41,47 @@ const main = async () => {
   ]);
 
   try {
+    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
+    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
     const AdminFactory = await ethers.getContractFactory("Admin");
     const StakerFactory = await ethers.getContractFactory("TimelockStaker");
+    const JuicerFactory = await ethers.getContractFactory("Juicer");
 
+    const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
+    const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
-    
-    await attachedAdmin.init(juicer.address, [budgetBallot.address, maintainer.address], []);
-    await attachedAdmin.issueTickets();
+    const attachedJuicer = await JuicerFactory.attach(juicer.address);
+
+    attachedTicketStore.setOwnership(admin.address, {
+      gasLimit: 100000
+    });
+    attachedBudgetStore.setOwnership(admin.address, {
+      gasLimit: 100000
+    });
+    attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
+      gasLimit: 100000
+    });
+    attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
+      gasLimit: 100000
+    });
+    attachedAdmin.grantAdmin(budgetStore, budgetBallot.address, {
+      gasLimit: 100000
+    });
+    attachedAdmin.grantAdmin(budgetStore, maintainer.address, {
+      gasLimit: 100000
+    });
+    attachedJuicer.setAdmin(admin.address, {
+      gasLimit: 100000
+    })
+    attachedAdmin.issueTickets({
+      gasLimit: 100000
+    });
+
     // Make this Ballot the timelock controller of the staker contract.
-    await attachedStaker.setController(budgetBallot.address);
+    attachedStaker.setController(budgetBallot.address, {
+      gasLimit: 100000
+    });
 
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);

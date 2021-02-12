@@ -58,10 +58,8 @@ export default function ConfigureBudget({
     functionName: 'tickets',
     args: [owner],
     callback: address => {
-      if (!owner || initializedTickets !== undefined) return
-      setInitializedTickets(
-        address !== '0x0000000000000000000000000000000000000000',
-      )
+      if (!owner || !address || initializedTickets !== undefined) return
+      setInitializedTickets(Web3.utils.hexToNumber(address) !== 0)
     },
   })
 
@@ -75,11 +73,6 @@ export default function ConfigureBudget({
     contract: erc20Contract(ticketsAddress, provider),
     functionName: 'name',
     formatter: (value: string) => Web3.utils.hexToString(value),
-  })
-
-  const myadd = useContractReader<string>({
-    contract: contracts?.TicketStore,
-    functionName: '_myaddress',
   })
 
   if (!transactor || !contracts || initializedTickets === undefined) return null

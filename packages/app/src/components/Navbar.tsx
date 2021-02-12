@@ -50,7 +50,7 @@ export default function Navbar({
         {userAddress
           ? menuItem(
               hasBudget ? 'Your project' : 'Start a project',
-              userAddress,
+              '/#/' + userAddress,
             )
           : null}
       </span>

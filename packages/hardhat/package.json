@@ -22,7 +22,8 @@
     "hardhat": "^2.0.2",
     "node-watch": "^0.7.0",
     "qrcode-terminal": "^0.12.0",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.1",
+    "react-router-guards": "^1.0.2"
   },
   "scripts": {
     "chain": "hardhat node",
@@ -35,6 +36,7 @@
     "accounts": "hardhat accounts",
     "account": "hardhat account",
     "balance": "hardhat balance",
-    "send": "hardhat send"
+    "send": "hardhat send",
+    "generate": "hardhat generate"
   }
 }

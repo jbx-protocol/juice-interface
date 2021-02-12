@@ -1,7 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Deferrable } from '@ethersproject/properties'
-import { JsonRpcProvider, JsonRpcSigner, TransactionRequest, Web3Provider } from '@ethersproject/providers'
+import {
+  JsonRpcProvider,
+  JsonRpcSigner,
+  TransactionRequest,
+  Web3Provider,
+} from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
 
@@ -33,7 +38,8 @@ export function createTransactor({
       // darkMode: Boolean, // (default: false)
       transactionHandler: txInformation => {
         console.log('HANDLE TX', txInformation)
-        if (onConfirmed && txInformation.transaction.status === 'confirmed') onConfirmed(txInformation, signer)
+        if (onConfirmed && txInformation.transaction.status === 'confirmed')
+          onConfirmed(txInformation, signer)
       },
     }
     const notify = Notify(options)
@@ -65,7 +71,8 @@ export function createTransactor({
       // console.log("Notify", notify);
 
       // if it is a valid Notify.js network, use that, if not, just send a default notification
-      const isNotifyNetwork = [1, 3, 4, 5, 42, 100].indexOf(network.chainId) >= 0
+      const isNotifyNetwork =
+        [1, 3, 4, 5, 42, 100].indexOf(network.chainId) >= 0
 
       if (isNotifyNetwork) {
         const { emitter } = notify.hash(result.hash)
@@ -76,10 +83,10 @@ export function createTransactor({
         console.log('LOCAL TX SENT', result.hash)
       }
 
-      return result
+      return true
     } catch (e) {
-      console.log(e)
       console.log('Transaction Error:', e.message)
+      return false
     }
   }
 }

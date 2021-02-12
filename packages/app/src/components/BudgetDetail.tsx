@@ -1,6 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Descriptions, Input, Space } from 'antd'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
@@ -18,6 +20,7 @@ export default function BudgetDetail({
   showSustained,
   showMinted,
   userAddress,
+  provider,
 }: {
   budget?: Budget
   contracts?: Contracts
@@ -25,11 +28,12 @@ export default function BudgetDetail({
   showSustained?: boolean
   showMinted?: boolean
   userAddress?: string
+  provider?: JsonRpcProvider
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
 
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(budget?.want),
+    contract: erc20Contract(budget?.want, provider),
     functionName: 'name',
   })
 
@@ -62,8 +66,6 @@ export default function BudgetDetail({
         ${minutes && minutes >= 1 ? Math.floor(minutes) + 'm ' : ''}
         ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
   }
-
-  const link = budget?.link
 
   const isOwner = budget?.owner === userAddress
 
@@ -150,16 +152,16 @@ export default function BudgetDetail({
         ) : null}
       </Descriptions>
 
-      <div
-        style={{
-          display: 'block',
-          margin: gutter,
-        }}
-      >
-        <a href={link} target="_blank" rel="noopener noreferrer">
-          {link}
-        </a>
-      </div>
+      {budget?.link ? (
+        <div
+          style={{
+            display: 'block',
+            margin: gutter,
+          }}
+        >
+          <Link to={budget.link}>{budget.link}</Link>
+        </div>
+      ) : null}
 
       <div style={{ margin: gutter }}>
         <Descriptions {...descriptionsStyle} size="small" column={2}>

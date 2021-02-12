@@ -5,18 +5,19 @@ import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 
+import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
+import BudgetForm from '../components/forms/BudgetForm'
+import TicketsForm from '../components/forms/TicketsForm'
+import Loading from '../components/Loading'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import { useAllowedTokens } from '../hooks/AllowedTokens'
-import { Transactor } from '../models/transactor'
-import BudgetAdvancedForm from './forms/BudgetAdvancedForm'
-import BudgetForm from './forms/BudgetForm'
-import TicketsForm from './forms/TicketsForm'
-import useContractReader from '../hooks/ContractReader'
 import { erc20Contract } from '../helpers/erc20Contract'
+import { useAllowedTokens } from '../hooks/AllowedTokens'
+import useContractReader from '../hooks/ContractReader'
+import { Transactor } from '../models/transactor'
 
 export default function ConfigureBudget({
   transactor,
@@ -59,23 +60,26 @@ export default function ConfigureBudget({
     args: [owner],
     callback: address => {
       if (!owner || !address || initializedTickets !== undefined) return
-      setInitializedTickets(Web3.utils.hexToNumber(address) !== 0)
+      setInitializedTickets(address.substr(0, 4) !== '0x00')
     },
   })
 
   const ticketsSymbol = useContractReader<string>({
     contract: erc20Contract(ticketsAddress, provider),
     functionName: 'symbol',
-    formatter: (value?: string) => (value ? Web3.utils.hexToString(value) : ''),
+    formatter: (value?: string) =>
+      value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsName = useContractReader<string>({
     contract: erc20Contract(ticketsAddress, provider),
     functionName: 'name',
-    formatter: (value?: string) => (value ? Web3.utils.hexToString(value) : ''),
+    formatter: (value?: string) =>
+      value ? Web3.utils.hexToString(value) : undefined,
   })
 
-  if (!transactor || !contracts || initializedTickets === undefined) return null
+  if (!transactor || !contracts || initializedTickets === undefined)
+    return <Loading />
 
   async function tryNextStep() {
     const valid = await steps[currentStep].validate()
@@ -101,10 +105,11 @@ export default function ConfigureBudget({
 
     return transactor(
       contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),
-    ).then(success => {
-      setLoadingInitTickets(false)
-      setInitializedTickets(success)
-    })
+      () => {
+        setLoadingInitTickets(false)
+        setInitializedTickets(true)
+      },
+    )
   }
 
   function submitBudget() {
@@ -155,10 +160,11 @@ export default function ConfigureBudget({
         _beneficiaryAllocation,
         _beneficiaryAddress,
       ),
-    ).then(success => {
-      setLoadingCreateBudget(false)
-      if (success && owner) window.location.hash = owner
-    })
+      () => {
+        setLoadingCreateBudget(false)
+        if (owner) window.location.hash = owner
+      },
+    )
   }
 
   const steps = [
@@ -166,7 +172,36 @@ export default function ConfigureBudget({
       title: 'Tickets',
       validate: () => ticketsForm.validateFields(),
       content: initializedTickets ? (
-        'Tickets already initialized.'
+        <div>
+          <h2>Tickets already initialized.</h2>
+          <Space direction="vertical" size="large">
+            <Statistic
+              title="Name"
+              value={
+                initializedTickets
+                  ? ticketsName
+                  : ticketsForm.getFieldValue('name')
+              }
+            />
+            <Statistic
+              title="Symbol"
+              value={
+                initializedTickets
+                  ? ticketsSymbol
+                  : 't' + ticketsForm.getFieldValue('symbol')
+              }
+            />
+            <Statistic
+              title="Reward token"
+              valueStyle={{ overflowWrap: 'anywhere' }}
+              value={
+                initializedTickets
+                  ? ticketsAddress
+                  : ticketsForm.getFieldValue('rewardToken')
+              }
+            />
+          </Space>
+        </div>
       ) : (
         <TicketsForm
           props={{
@@ -234,7 +269,12 @@ export default function ConfigureBudget({
         <div>
           <div>
             <h1>Tickets</h1>
-            <div style={{ marginTop: 20, marginBottom: 20 }}>
+            <div
+              style={{
+                marginTop: 20,
+                marginBottom: 20,
+              }}
+            >
               <Space size="large">
                 <Statistic
                   title="Name"
@@ -345,7 +385,7 @@ export default function ConfigureBudget({
   ]
 
   return (
-    <div style={{ padding: padding.app, maxWidth: 1080, margin: 'auto' }}>
+    <div style={{ padding: padding.app, maxWidth: '90vw', margin: 'auto' }}>
       <Steps size="small" current={currentStep} style={{ marginBottom: 60 }}>
         {steps.map((step, i) => (
           <Steps.Step
@@ -357,7 +397,7 @@ export default function ConfigureBudget({
       </Steps>
 
       <Row gutter={80} align="top">
-        <Col flex="50%">
+        <Col span={15}>
           {steps[currentStep].content}
 
           <div
@@ -384,8 +424,8 @@ export default function ConfigureBudget({
           </div>
         </Col>
 
-        {steps[currentStep].info ? (
-          <Col flex="50%" style={{ maxWidth: 360 }}>
+        <Col span={9}>
+          {steps[currentStep].info?.length ? (
             <div
               style={{
                 ...shadowCard,
@@ -399,8 +439,8 @@ export default function ConfigureBudget({
                 <p key={i}>{p}</p>
               ))}
             </div>
-          </Col>
-        ) : null}
+          ) : null}
+        </Col>
       </Row>
     </div>
   )

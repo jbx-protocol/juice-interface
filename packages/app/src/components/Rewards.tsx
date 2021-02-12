@@ -35,7 +35,8 @@ export default function Rewards({
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
-    formatter: (value: string) => Web3.utils.hexToString(value),
+    formatter: (value: string) =>
+      value ? Web3.utils.hexToString(value) : undefined,
   })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,

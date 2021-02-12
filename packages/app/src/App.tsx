@@ -6,11 +6,9 @@ import { useCallback, useState } from 'react'
 import { HashRouter, Switch } from 'react-router-dom'
 import { GuardedRoute, GuardFunction, GuardProvider } from 'react-router-guards'
 
-import ConfigureBudget from './components/ConfigureBudget'
 import Gimme from './components/Gimme'
-import Landing from './components/landing/Landing'
+import Loading from './components/Loading'
 import Navbar from './components/Navbar'
-import Owner from './components/Owner'
 import { web3Modal } from './constants/web3-modal'
 import { createTransactor } from './helpers/Transactor'
 import { useContractLoader } from './hooks/ContractLoader'
@@ -19,6 +17,9 @@ import { useGasPrice } from './hooks/GasPrice'
 import { useUserAddress } from './hooks/UserAddress'
 import { useUserProvider } from './hooks/UserProvider'
 import { Budget } from './models/budget'
+import ConfigureBudget from './views/ConfigureBudget'
+import Landing from './views/landing/Landing'
+import Owner from './views/Owner'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -50,7 +51,6 @@ function App() {
     formatter: (val: Budget) => !!val,
   })
 
-  console.log("h:", { hasBudget });
   const budgetGuard: GuardFunction = (to, from, next) => {
     if (to.meta.budget === false) {
       hasBudget && userAddress ? next.redirect(userAddress) : next()
@@ -59,7 +59,14 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
+    >
       <Navbar
         hasBudget={hasBudget}
         userAddress={userAddress}
@@ -67,7 +74,11 @@ function App() {
         onConnectWallet={loadWeb3Modal}
       />
 
-      {hasBudget === undefined ? null : (
+      {hasBudget === undefined ? (
+        <div style={{ flex: 1 }}>
+          <Loading />
+        </div>
+      ) : (
         <HashRouter>
           <GuardProvider guards={[budgetGuard]}>
             <Switch>
@@ -92,7 +103,7 @@ function App() {
                   provider={userProvider}
                 />
               </GuardedRoute>
-              <GuardedRoute path="/:owner" meta={{ budget: true }}>
+              <GuardedRoute path="/:owner">
                 <Owner
                   contracts={contracts}
                   transactor={transactor}

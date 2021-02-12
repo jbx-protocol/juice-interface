@@ -8,6 +8,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+div#root {
+  height: 100%;
+}
+
 code {
   /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace; */
@@ -39,4 +43,11 @@ label {
 
 th.ant-descriptions-item-label {
   font-weight: 600;
+}
+
+.ant-spin {
+  color: #fe9e1d !important;
+}
+.ant-spin-dot > .ant-spin-dot-item {
+  background: #fe9e1d;
 }

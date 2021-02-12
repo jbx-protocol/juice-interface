@@ -16,7 +16,7 @@ export default function useContractReader<V>({
   functionName: string
   args?: unknown[]
   pollTime?: number
-  formatter?: (val?: any) => V
+  formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
   shouldUpdate?: (a?: V, b?: V) => boolean
 }) {

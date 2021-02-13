@@ -43,14 +43,14 @@ export default function BudgetAdvancedForm({
         name="ownerAllocation"
         label="Reserve for owner"
       >
-        <Input className="align-end" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" type="number" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra=""
         name="beneficiaryAllocation"
         label="Reserve for beneficiary"
       >
-        <Input className="align-end" suffix="%" placeholder="5" />
+        <Input className="align-end" suffix="%" type="number" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="A contract that you wish to have tickets reserved for in the same way as owner tickets."
@@ -68,9 +68,12 @@ export default function BudgetAdvancedForm({
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
-            defaultValue={props.initialValues?.discountRate ?? initialDiscountRate}
+            defaultValue={
+              props.initialValues?.discountRate ?? initialDiscountRate
+            }
             className="align-end"
             suffix="%"
+            type="number"
             min={95}
             max={100}
             placeholder="100"

@@ -61,7 +61,12 @@ export default function BudgetForm({
         label="Amount"
         rules={[{ required: true }]}
       >
-        <Input className="align-end" placeholder="0" suffix={tokenSymbol} />
+        <Input
+          className="align-end"
+          placeholder="0"
+          type="number"
+          suffix={tokenSymbol}
+        />
       </Form.Item>
       <Form.Item
         extra="The length of this budgeting period."
@@ -69,7 +74,12 @@ export default function BudgetForm({
         label="Time frame"
         rules={[{ required: true }]}
       >
-        <Input className="align-end" placeholder="30" suffix="days" />
+        <Input
+          className="align-end"
+          placeholder="30"
+          type="number"
+          suffix="days"
+        />
       </Form.Item>
       <Form.Item
         extra="A link to your mission statement and Budget specs."

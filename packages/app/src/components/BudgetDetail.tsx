@@ -1,17 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Button, Descriptions, Input, Space } from 'antd'
+import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
-import { bigNumbersEq } from '../utils/bigNumbersEq'
-import { erc20Contract } from '../utils/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { bigNumbersEq } from '../utils/bigNumbersEq'
+import { erc20Contract } from '../utils/erc20Contract'
 
 export default function BudgetDetail({
   budget,
@@ -88,8 +88,9 @@ export default function BudgetDetail({
 
   const surplus = budget.total.sub(budget.target)
 
-  const descriptionsStyle = {
+  const descriptionsStyle: DescriptionsProps = {
     labelStyle: { fontWeight: 600 },
+    size: 'middle',
   }
 
   const gutter = 25
@@ -107,7 +108,7 @@ export default function BudgetDetail({
             borderBottom: '1px solid black',
           }}
         >
-          ID: {budget.id.toString()}
+          # {budget.id.toString()}
         </h3>
       ) : null}
 
@@ -213,7 +214,7 @@ export default function BudgetDetail({
                 }}
               >
                 <span style={{ flex: 1 }}>
-                  {tappableAmount?.toString() ?? '--'} {wantTokenName}
+                  {tappableAmount?.toString() ?? '0'} {wantTokenName}
                 </span>
                 {isOwner && tappableAmount?.gt(0) ? (
                   <div style={{ width: '100%', textAlign: 'end' }}>

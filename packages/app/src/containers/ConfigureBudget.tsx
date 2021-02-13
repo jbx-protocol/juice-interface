@@ -14,10 +14,11 @@ import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import { erc20Contract } from '../utils/erc20Contract'
 import { useAllowedTokens } from '../hooks/AllowedTokens'
 import useContractReader from '../hooks/ContractReader'
 import { Transactor } from '../models/transactor'
+import { erc20Contract } from '../utils/erc20Contract'
+import { orEmpty } from '../utils/orEmpty'
 
 export default function ConfigureBudget({
   transactor,
@@ -171,18 +172,18 @@ export default function ConfigureBudget({
     {
       title: 'Budget',
       validate: () => budgetForm.validateFields(),
-      content: (
+      content: tokenOptions?.length ? (
         <BudgetForm
           props={{
             form: budgetForm,
             initialValues: {
-              want: tokenOptions.length ? tokenOptions[0].value : undefined,
+              want: tokenOptions[0].value,
             },
           }}
           header="Configure your budgets"
           tokenOptions={tokenOptions}
         />
-      ),
+      ) : null,
       info: [
         'Your budget begins accepting payments right away. It’ll accept funds up until its time frame runs out.',
         'A new budget will be created automatically once the current one expires to continue collecting money. It’ll use the same configuration as the previous one if you haven’t since passed a vote to reconfigured it – more on this later.',
@@ -364,9 +365,9 @@ export default function ConfigureBudget({
             <Space size="large" align="end">
               <Statistic
                 title="Beneficiary address"
-                value={
-                  budgetAdvancedForm.getFieldValue('beneficiaryAddress') ?? '--'
-                }
+                value={orEmpty(
+                  budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
+                )}
               />
             </Space>
             <Button

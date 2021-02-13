@@ -35,6 +35,7 @@ export default function Owner({
   const [budgetState, setBudgetState] = useState<
     'found' | 'missing' | 'canCreate'
   >()
+  const [loadingPayOwner, setLoadingPayOwner] = useState<boolean>()
 
   const { owner }: { owner?: string } = useParams()
 
@@ -90,6 +91,8 @@ export default function Owner({
   function payOwner() {
     if (!transactor || !contracts?.Juicer || !currentBudget?.owner) return
 
+    setLoadingPayOwner(true)
+
     const eth = new Web3(Web3.givenProvider).eth
 
     const amount =
@@ -111,7 +114,10 @@ export default function Owner({
         currentBudget.want,
         userAddress,
       ),
-      () => setSustainAmount(0),
+      () => {
+        setSustainAmount(0)
+        setLoadingPayOwner(false)
+      },
     )
   }
 
@@ -236,11 +242,16 @@ export default function Owner({
                         name="sustain"
                         placeholder="0"
                         suffix={wantTokenName}
+                        type="number"
                         onChange={e =>
                           setSustainAmount(parseFloat(e.target.value))
                         }
                       />
-                      <Button type="primary" onClick={payOwner}>
+                      <Button
+                        type="primary"
+                        onClick={payOwner}
+                        loading={loadingPayOwner}
+                      >
                         Pay owner
                       </Button>
                     </Space>
@@ -276,6 +287,7 @@ export default function Owner({
                       contracts={contracts}
                       currentValue={currentBudget}
                       visible={showReconfigureModal}
+                      provider={provider}
                       onCancel={() => setShowReconfigureModal(false)}
                     />
                   </div>

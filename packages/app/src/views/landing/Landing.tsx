@@ -98,7 +98,7 @@ export default function Landing({
                 &#8595;
               </p>
               <p style={{ margin: 0 }}>
-                Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
+                Your budgets can be recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
               </p>
               <p>
                 ---

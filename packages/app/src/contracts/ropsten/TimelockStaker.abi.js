@@ -38,11 +38,6 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "_lockId",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "_staker",
         "type": "address"
@@ -106,11 +101,6 @@ module.exports = [
         "internalType": "contract IERC20",
         "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       },
       {
         "internalType": "address",

@@ -88,12 +88,7 @@ contract BudgetBallot is IBudgetBallot {
         );
 
         // Lock the tickets until the budget's standby period is over.
-        staker.setTimelock(
-            _tickets,
-            _budget.configured,
-            msg.sender,
-            _standbyExpiry
-        );
+        staker.setTimelock(_tickets, msg.sender, _standbyExpiry);
 
         emit Vote(
             msg.sender,

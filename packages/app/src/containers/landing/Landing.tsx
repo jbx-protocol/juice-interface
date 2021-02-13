@@ -2,9 +2,8 @@ import { Button } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { colors } from '../../constants/styles/colors'
 import Footer from '../../components/Footer'
-import ImgTextSection from './ImgTextSection'
+import { colors } from '../../constants/styles/colors'
 
 export default function Landing({
   userAddress,
@@ -68,44 +67,38 @@ export default function Landing({
           >
             <div style={{ display: 'grid', rowGap: 10 }}>
               {bigHeader('Taste the fruits of your labor')}
-              <p>
-                Juice is a regenerative business model for:
-              </p>
+              <p>Juice is a regenerative business model for:</p>
               <div>
                 {bullet('Ethereum protocols, DAOs, and public goods')}
                 {bullet('Open source stuff')}
                 {bullet('Indy projects')}
                 {bullet('Any mission with predictable expenses')}
               </div>
-              <p style={{ marginBottom: 0}}>
-                Make a budget saying how much money you want/need 
-                in order to absolutely crush your mission statement.
+              <p style={{ marginBottom: 0 }}>
+                Make a budget saying how much money you want/need in order to
+                absolutely crush your mission statement.
               </p>
-              <p  style={{ margin: 0, fontSize: 20 }}>
-                &#8595;
-              </p>
-              <p style={{ margin: 0}}>
-                People pay you just like they would on Patreon, 
-                or transparently from within your Solidity smart contracts. #BusinessModelAsAService #DeWork
-              </p>
-              <p  style={{ margin: 0, fontSize: 20 }}>
-                &#8595;
-              </p>
+              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
               <p style={{ margin: 0 }}>
-                If your budget overflows, your paying customers can claim the surplus, effectively pushing prices down as you grow. #RegenFinance
+                People pay you just like they would on Patreon, or transparently
+                from within your Solidity smart contracts.
+                #BusinessModelAsAService #DeWork
               </p>
-              <p  style={{ margin: 0, fontSize: 20 }}>
-                &#8595;
-              </p>
+              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
               <p style={{ margin: 0 }}>
-                Your budgets can be recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
+                If your budget overflows, your paying customers can claim the
+                surplus, effectively pushing prices down as you grow.
+                #RegenFinance
               </p>
-              <p>
-                ---
+              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
+              <p style={{ margin: 0 }}>
+                Your budgets can be recurring. You can make changes as your
+                project evolves, with the approval of those paying customers
+                that have not yet claimed their fair share of your overflowed
+                surplus.
               </p>
-              <p>
-                The collective goal is to optimize for overflow over time.
-              </p>
+              <p>---</p>
+              <p>The collective goal is to optimize for overflow over time.</p>
               <div
                 style={{
                   display: 'grid',
@@ -243,20 +236,18 @@ export default function Landing({
           />
           <div>
             {bigHeader('Should I Juice?')}
+            <p>There's a good chance.</p>
             <p>
-              There's a good chance.
+              Juice gives projects a reason to be measured and open with their
+              intent, and gives those who get value out of the project a
+              cultured way to pay for it.
             </p>
             <p>
-              Juice gives projects a reason to be measured and open with
-              their intent, and gives those who get value out of the project
-              a cultured way to pay for it.
-            </p>
-            <p>
-              People end up getting community-driven goods and services 
-              with no ads, data integrity, full business operation
-              accountability, and an open source code base. All built by
-              motivated punks getting paid what they ask for, and with a price
-              tag that effectively tends toward zero as the juice flow grows.
+              People end up getting community-driven goods and services with no
+              ads, data integrity, full business operation accountability, and
+              an open source code base. All built by motivated punks getting
+              paid what they ask for, and with a price tag that effectively
+              tends toward zero as the juice flow grows.
             </p>
             {userAddress ? (
               <Link to={userAddress}>
@@ -280,8 +271,8 @@ export default function Landing({
         }}
       >
         <h3 style={{ color: colors.juiceOrange, margin: 0 }}>
-          Big ups to the Ethereum community for crafting the
-          infrastructure and economy to make Juice possible.
+          Big ups to the Ethereum community for crafting the infrastructure and
+          economy to make Juice possible.
         </h3>
       </div>
       <Footer />

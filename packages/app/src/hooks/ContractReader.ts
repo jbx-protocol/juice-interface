@@ -39,7 +39,7 @@ export default function useContractReader<V>({
 
         if (callback) callback(result)
       } catch (e) {
-        // console.log('Poller >>>', functionName, e)
+        console.log('Read contract >>>', functionName, e)
         setValue(formatter ? formatter(undefined) : undefined)
         if (callback) callback(undefined)
       }

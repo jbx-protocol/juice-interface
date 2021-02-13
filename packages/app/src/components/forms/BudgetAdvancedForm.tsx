@@ -39,26 +39,26 @@ export default function BudgetAdvancedForm({
       ) : null}
 
       <Form.Item
-        extra="The percentage of the tickets distributed to your contributors that will become mintable for yourself once the Budget expires."
+        extra="The percentage of distributed tickets that will become mintable for you once the the budget expires."
         name="ownerAllocation"
-        label="Your owner tickets"
+        label="Reserve for owner"
       >
         <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
-        extra="A contract that you wish to have tickets minted for in the same way as owner tickets."
+        extra=""
+        name="beneficiaryAllocation"
+        label="Reserve for beneficiary"
+      >
+        <Input className="align-end" suffix="%" placeholder="5" />
+      </Form.Item>
+      <Form.Item
+        extra="A contract that you wish to have tickets reserved for in the same way as owner tickets."
         name="beneficiaryAddress"
-        label="Beneficiary contract"
+        label="Beneficiary address"
         rules={[{ required: true }]}
       >
         <Input placeholder="0x01a2b3c..." />
-      </Form.Item>
-      <Form.Item
-        extra="The percentage of the tickets distributed to your contributors that will become mintable for the beneficiary contract once the Budget expires."
-        name="beneficiaryAllocation"
-        label="Beneficiary allocation"
-      >
-        <Input className="align-end" suffix="%" placeholder="5" />
       </Form.Item>
       <Form.Item
         extra="The rate (95%-100%) at which contributions to future budgets are valued compared to contributions to this budget."

@@ -35,14 +35,6 @@ export default function BudgetForm({
       ) : null}
 
       <Form.Item
-        extra="The duration of your budgets."
-        name="duration"
-        label="Duration"
-        rules={[{ required: true }]}
-      >
-        <Input className="align-end" placeholder="30" suffix="days" />
-      </Form.Item>
-      <Form.Item
         extra="The ERC-20 token that your budget will receive payments in."
         name="want"
         label="Payment token"
@@ -64,7 +56,7 @@ export default function BudgetForm({
         </Select>
       </Form.Item>
       <Form.Item
-        extra="The amout your project needs for each Budget period."
+        extra="The amount of money you want/need in order to absolutely crush your mission statement."
         name="target"
         label="Amount"
         rules={[{ required: true }]}
@@ -72,7 +64,15 @@ export default function BudgetForm({
         <Input className="align-end" placeholder="0" suffix={tokenSymbol} />
       </Form.Item>
       <Form.Item
-        extra="A link to more in depth information about your Budget."
+        extra="The length of this budgeting period."
+        name="duration"
+        label="Time frame"
+        rules={[{ required: true }]}
+      >
+        <Input className="align-end" placeholder="30" suffix="days" />
+      </Form.Item>
+      <Form.Item
+        extra="A link to your mission statement and Budget specs."
         name="link"
         label="Link"
       >

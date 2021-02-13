@@ -86,10 +86,10 @@ export default function Landing({
                 or transparently from within your Solidity smart contracts. #BusinessModelAsAService #DeWork
               </p>
               <p>
-                3. If your budget overflows, your paying customers can claim their fair share of the glorious surplus, effectively pushing prices down as you grow. #RegenFinance
+                3. If your budget overflows, your paying customers can claim the surplus, effectively pushing prices down as you grow. #RegenFinance
               </p>
               <p>
-                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed overflowed surplus.
+                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
               </p>
               <p>
                 The collective goal is to optimize for overflow over time.
@@ -268,7 +268,7 @@ export default function Landing({
         }}
       >
         <h3 style={{ color: colors.juiceOrange, margin: 0 }}>
-          Big ups to the Ethereum and DeFi community for crafting the
+          Big ups to the Ethereum community for crafting the
           infrastructure and economy to make Juice possible.
         </h3>
       </div>

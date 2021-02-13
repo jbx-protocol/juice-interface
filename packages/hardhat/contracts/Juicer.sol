@@ -140,23 +140,21 @@ contract Juicer is IJuicer {
         while (_budget.id > 0 && !_budget.hasMintedReserves) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
             if (_budget._state() == Budget.State.Redistributing) {
-                // Unminted reserved tickets are all relavative to the amount of overflow available.
-                uint256 _overflow = _budget.total.sub(_budget.target);
-
                 // The admin gets the admin fee percentage.
-                admins = admins.add(_budget._weighted(_overflow, fee));
+                // Unminted reserved tickets are all relavative to the amount of total tickets given out.
+                admins = admins.add(_budget._weighted(_budget.total, fee));
 
                 // The owner gets the budget's owner percentage, if one is specified.
                 if (_budget.o > 0) {
                     issuers = issuers.add(
-                        _budget._weighted(_overflow, _budget.o)
+                        _budget._weighted(_budget.total, _budget.o)
                     );
                 }
 
                 // The beneficiary gets the budget's beneficiary percentage, if one is specified.
                 if (_budget.b > 0) {
                     beneficiaries = beneficiaries.add(
-                        _budget._weighted(_overflow, _budget.b)
+                        _budget._weighted(_budget.total, _budget.b)
                     );
                 }
             }

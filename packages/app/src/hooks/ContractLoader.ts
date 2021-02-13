@@ -22,9 +22,7 @@ export function useContractLoader(provider?: JsonRpcProvider) {
       try {
         const signer = provider.getSigner()
 
-        const contractList: ContractName[] = network
-          ? require(`../contracts/${network}/contracts.js`)
-          : undefined
+        const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
@@ -50,13 +48,9 @@ const loadContract = (
   contractName: ContractName,
   signer: JsonRpcSigner,
   network: NetworkName,
-): Contract | undefined => {
-  // TODO why does path not parse correctly when `../contracts/${network}` is stored as variable?
-  const contract = new Contract(
+): Contract =>
+  new Contract(
     require(`../contracts/${network}/${contractName}.address.js`),
     require(`../contracts/${network}/${contractName}.abi.js`),
     signer,
   )
-
-  return contract
-}

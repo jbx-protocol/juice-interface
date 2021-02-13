@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { usePoller } from '../hooks/Poller'
 

@@ -12,12 +12,11 @@ import { colors } from '../constants/styles/colors'
 import { layouts } from '../constants/styles/layouts'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import { erc20Contract } from '../helpers/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
-import { LabelVal } from '../models/label-val'
 import { Transactor } from '../models/transactor'
+import { erc20Contract } from '../utils/erc20Contract'
 import ReconfigureBudget from './ReconfigureBudget'
 
 export default function Owner({
@@ -25,13 +24,11 @@ export default function Owner({
   transactor,
   contracts,
   provider,
-  allowedTokens,
 }: {
   userAddress?: string
   transactor?: Transactor
   contracts?: Contracts
   provider?: JsonRpcProvider
-  allowedTokens?: LabelVal<string>[]
 }) {
   const [sustainAmount, setSustainAmount] = useState<number>(0)
   const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
@@ -67,7 +64,6 @@ export default function Owner({
     formatter: (value?: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
-
   const wantTokenName = useContractReader<string>({
     contract: erc20Contract(currentBudget?.want, provider),
     functionName: 'name',

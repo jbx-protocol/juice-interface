@@ -1,8 +1,10 @@
+import './styles/antd.css'
+import './styles/index.scss'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './styles/index.scss'
-import './styles/antd.css'
-import App from './App'
+
+import App from './containers/App'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(

@@ -14,7 +14,7 @@ import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import { erc20Contract } from '../helpers/erc20Contract'
+import { erc20Contract } from '../utils/erc20Contract'
 import { useAllowedTokens } from '../hooks/AllowedTokens'
 import useContractReader from '../hooks/ContractReader'
 import { Transactor } from '../models/transactor'
@@ -240,8 +240,8 @@ export default function ConfigureBudget({
         'The Juice protocol will use these ERC-20 tokens of yours like tickets, handing them out to people in exchange for payments towards your budgets. ',
         "You'll provide a ticker symbol for your Tickets, and the reward token that your budgets' overflow will be swapped in to for these Tickets to claim.",
         'A ticket is redeemable for 61.8% of its proportional rewards. Meaning, if there are 100 reward tokens available, 10% of the total ticket supply could be redeemed for 6.18 reward tokens. The rest is left to share between the remaining ticket hodlers.',
-        "---",
-        "You can propose reconfigurations to your budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new budget will be used once the active one expires."
+        '---',
+        'You can propose reconfigurations to your budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new budget will be used once the active one expires.',
       ],
     },
     {
@@ -255,7 +255,7 @@ export default function ConfigureBudget({
       ),
       info: [
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
-        "Beneficiary contracts can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.",
+        'Beneficiary contracts can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.',
         '---',
         "Lastly, the discount rate rate affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
         "For example, if your discount rate is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",

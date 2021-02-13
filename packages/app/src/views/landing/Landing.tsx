@@ -69,7 +69,7 @@ export default function Landing({
             <div style={{ display: 'grid', rowGap: 10 }}>
               {bigHeader('Taste the fruits of your labor')}
               <p>
-                Juice is a business model for:
+                Juice is a regenerative business model for:
               </p>
               <div>
                 {bullet('Ethereum protocols, DAOs, and public goods')}

@@ -77,19 +77,31 @@ export default function Landing({
                 {bullet('Indy projects')}
                 {bullet('Any mission with predictable expenses')}
               </div>
-              <p>
-                1. Make a budget saying how much money you want/need 
+              <p style={{ marginBottom: 0}}>
+                Make a budget saying how much money you want/need 
                 in order to absolutely crush your mission statement.
               </p>
-              <p>
-                2. People pay you just like they would on Patreon, 
+              <p  style={{ margin: 0, fontSize: 20 }}>
+                &#8595;
+              </p>
+              <p style={{ margin: 0}}>
+                People pay you just like they would on Patreon, 
                 or transparently from within your Solidity smart contracts. #BusinessModelAsAService #DeWork
               </p>
-              <p>
-                3. If your budget overflows, your paying customers can claim the surplus, effectively pushing prices down as you grow. #RegenFinance
+              <p  style={{ margin: 0, fontSize: 20 }}>
+                &#8595;
+              </p>
+              <p style={{ margin: 0 }}>
+                If your budget overflows, your paying customers can claim the surplus, effectively pushing prices down as you grow. #RegenFinance
+              </p>
+              <p  style={{ margin: 0, fontSize: 20 }}>
+                &#8595;
+              </p>
+              <p style={{ margin: 0 }}>
+                Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
               </p>
               <p>
-                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your overflowed surplus.
+                ---
               </p>
               <p>
                 The collective goal is to optimize for overflow over time.

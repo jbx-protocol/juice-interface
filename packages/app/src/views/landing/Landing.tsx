@@ -67,21 +67,30 @@ export default function Landing({
             }}
           >
             <div style={{ display: 'grid', rowGap: 10 }}>
-              {bigHeader('A composable ethereum business model for:')}
+              {bigHeader('Taste the fruits of your labor')}
+              <p>
+                An Ethereum business model and stakeholder structure for:
+              </p>
               <div>
-                {bullet('Open source projects')}
+                {bullet('Open source stuff')}
                 {bullet('Indy projects')}
                 {bullet('Public goods')}
+                {bullet('DAOs')}
                 {bullet('Any project with predictable expenses')}
               </div>
               <p>
-                Unlike Patreon or a pricing/donations page, you pre-program how
-                much cashflow you want to make recurringly or over a set time,
-                and your users claim the funds that overflow.
+                1. Make a budget saying how much money you want/need 
+                in order to absolutely crush it.
               </p>
               <p>
-                Also blendable into your Solidity contracts to get a
-                business-model-as-a-service. #DeWork
+                2. People pay you just like they would on Patreon, 
+                or transparently from within your Solidity smart contracts. #BusinessModelAsAService #DeWork
+              </p>
+              <p>
+                3. If your budget overflows, your paying customers can claim the glorious surplus, effectively pushing prices down as you grow. #RegenFinance
+              </p>
+              <p>
+                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your project's overflowed surplus.
               </p>
               <div
                 style={{
@@ -168,7 +177,7 @@ export default function Landing({
             imgPosition="right"
             title="Ethereum and DeFi give us something fresh"
             text={[
-              'Until now, there hasn’t been an organic way to provide consistent cashflow to these core teams and casual contributors, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with legacy ideas like golden handcuffs, philanthropic ideas like grants, and controversial ideas like minting token supply for dev treasuries.',
+              'Until now, there hasn’t been an organic way to provide consistent cashflow to core teams and casual contributors of protocols, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with legacy ideas like golden handcuffs, philanthropic ideas like grants, and controversial ideas like minting token supply for dev treasuries.',
               'The internet of work, DeWork, needs a juicier solution – one that extends the best parts of DeFi, one that promotes cooperation, flexibility, and immediacy.',
               'Juice is that solution.',
             ]}
@@ -221,21 +230,20 @@ export default function Landing({
           <div>
             {bigHeader('Why choose Juice?')}
             <p>
-              Juice incentivizes a project owner to be measured and open with
-              their intent, and provides those who get value out of the project
-              an honest and automated mechanism to help pay for it.
+              Juice gives projects a reason to be measured and open with
+              their intent, and gives those who get value out of the project
+              a cultured way to pay for it.
             </p>
             <p>
-              As a result, people get community-driven products and services
+              People end up getting community-driven goods and services 
               with no ads, data integrity, full business operation
               accountability, and an open source code base. All built by
-              motivated folks getting paid what they ask for, and with a price
+              motivated punks getting paid what they ask for, and with a price
               tag that effectively tends toward zero as the juice flow grows.
             </p>
             <p>
               Use Juice as your business-model-as-a-service by composing your
-              contract with it. Just inherit from JuiceAdmin and you're good to
-              go.
+              contract with it. Just inherit from JuiceAdmin and route your app's transaction fees through it, or something.
             </p>
             {userAddress ? (
               <Link to={userAddress}>

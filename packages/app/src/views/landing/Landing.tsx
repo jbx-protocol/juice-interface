@@ -87,10 +87,10 @@ export default function Landing({
                 or transparently from within your Solidity smart contracts. #BusinessModelAsAService #DeWork
               </p>
               <p>
-                3. If your budget overflows, your paying customers can claim the glorious surplus, effectively pushing prices down as you grow. #RegenFinance
+                3. If your budget overflows, your paying customers can claim their fair share of the glorious surplus, effectively pushing prices down as you grow. #RegenFinance
               </p>
               <p>
-                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of the overflowed surplus.
+                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed overflowed surplus.
               </p>
               <div
                 style={{
@@ -161,7 +161,7 @@ export default function Landing({
         />
       </section> */}
 
-      <section>
+      {/* <section>
         <div style={{ padding: 80, maxWidth: totalMaxWidth, margin: '0 auto' }}>
           <ImgTextSection
             img=""
@@ -183,7 +183,7 @@ export default function Landing({
             ]}
           />
         </div>
-      </section>
+      </section> */}
 
       {/* <section style={{ textAlign: 'center', padding: 80 }}>
         <div

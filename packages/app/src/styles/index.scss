@@ -51,3 +51,15 @@ th.ant-descriptions-item-label {
 .ant-spin-dot > .ant-spin-dot-item {
   background: #fe9e1d;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input.ant-input::-webkit-outer-spin-button,
+input.ant-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.ant-input[type='number'] {
+  -moz-appearance: textfield;
+}

@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { useState } from 'react'
+import { useState, ErrorInfo } from 'react'
 
 import { usePoller } from './Poller'
 
@@ -39,7 +39,7 @@ export default function useContractReader<V>({
 
         if (callback) callback(result)
       } catch (e) {
-        console.log('Read contract >>>', functionName, e)
+        console.log('Read contract >>>', functionName, e.error?.message)
         setValue(formatter ? formatter(undefined) : undefined)
         if (callback) callback(undefined)
       }

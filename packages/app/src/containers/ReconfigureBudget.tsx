@@ -118,6 +118,7 @@ export default function ReconfigureBudget({
           form: budgetForm,
           labelCol: { span: 8 },
           initialValues: {
+            want: currentValue?.want,
             duration: currentValue?.duration.toString(),
             target: currentValue?.target.toString(),
             link: currentValue?.link,

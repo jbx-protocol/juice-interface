@@ -1,15 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Button, Descriptions, Input, Space } from 'antd'
+import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
-import { bigNumbersEq } from '../utils/bigNumbersEq'
-import { erc20Contract } from '../utils/erc20Contract'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { bigNumbersEq } from '../utils/bigNumbersEq'
+import { erc20Contract } from '../utils/erc20Contract'
+import { orEmpty } from '../utils/orEmpty'
 
 export default function Rewards({
   transactor,
@@ -27,6 +28,8 @@ export default function Rewards({
   provider?: JsonRpcProvider
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
+  const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
+  const [loadingMint, setLoadingMint] = useState<boolean>()
 
   const claimableProportion = BigNumber.from(618).toHexString()
 
@@ -142,6 +145,8 @@ export default function Rewards({
   function redeem() {
     if (!transactor || !contracts) return
 
+    setLoadingRedeem(true)
+
     const _amount = redeemAmount?.toHexString()
 
     console.log('🧃 Calling Juicer.redeem(issuerAddress, amount)', {
@@ -149,21 +154,28 @@ export default function Rewards({
       amount: _amount,
     })
 
-    transactor(contracts?.Juicer.redeem(budget?.owner, _amount))
+    transactor(contracts?.Juicer.redeem(budget?.owner, _amount), () =>
+      setLoadingRedeem(false),
+    )
   }
 
   function mint() {
     if (!transactor || !contracts || !budget) return
 
+    setLoadingMint(true)
+
     console.log('🧃 Calling Juicer.mintReservedTickets(owner)', {
       owner: budget.owner,
     })
 
-    transactor(contracts.Juicer.mintReservedTickets(budget.owner))
+    transactor(contracts.Juicer.mintReservedTickets(budget.owner), () =>
+      setLoadingMint(false),
+    )
   }
 
-  const descriptionsStyle = {
+  const descriptionsStyle: DescriptionsProps = {
     labelStyle: { fontWeight: 600 },
+    size: 'middle',
   }
 
   if (!budget) return null
@@ -171,14 +183,14 @@ export default function Rewards({
   return (
     <div>
       <Descriptions {...descriptionsStyle} column={1} bordered>
-        <Descriptions.Item label={'Your ' + ticketSymbol + ' balance'}>
-          {ticketsBalance?.toString() ?? '--'}
+        <Descriptions.Item label={'Your ticket balance'}>
+          {orEmpty(ticketsBalance?.toString())} {ticketSymbol}
         </Descriptions.Item>
-        <Descriptions.Item label="Your share">
-          {(share ?? '--') + '%'}
+        <Descriptions.Item label="Your ticket share">
+          {orEmpty(share) + '%'}
         </Descriptions.Item>
         <Descriptions.Item label="Reward token">
-          {rewardTokenName}
+          {orEmpty(rewardTokenName)}
         </Descriptions.Item>
         <Descriptions.Item label="Overflow needing swap">
           <div
@@ -188,30 +200,28 @@ export default function Rewards({
               alignItems: 'baseline',
             }}
           >
-            {swappableAmount?.toString() ?? '--'} {wantTokenName}
+            {orEmpty(swappableAmount?.toString())} {wantTokenName}
             {swappableAmount?.gt(0) ? (
               <Button htmlType="submit" onClick={swap}>
                 Swap
               </Button>
-            ) : (
-              undefined
-            )}
+            ) : null}
           </div>
         </Descriptions.Item>
         <Descriptions.Item label="Unclaimed">
-          {totalClaimableAmount?.toString() ?? '--'} {rewardTokenName}
+          {orEmpty(totalClaimableAmount?.toString())} {rewardTokenName}
         </Descriptions.Item>
         <Descriptions.Item label="Claimable by you">
-          {yourClaimableAmount?.toString() ?? '--'} {rewardTokenName}
+          {orEmpty(yourClaimableAmount?.toString())} {rewardTokenName}
         </Descriptions.Item>
         <Descriptions.Item label="Admin reserves">
-          {reserveAmounts?.admins?.toString()}
+          {orEmpty(reserveAmounts?.admins?.toString())}
         </Descriptions.Item>
         <Descriptions.Item label="Beneficiaries reserves">
-          {reserveAmounts?.beneficiaries?.toString()}
+          {orEmpty(reserveAmounts?.beneficiaries?.toString())}
         </Descriptions.Item>
         <Descriptions.Item label="Issuers reserves">
-          {reserveAmounts?.issuers?.toString()}
+          {orEmpty(reserveAmounts?.issuers?.toString())}
         </Descriptions.Item>
       </Descriptions>
 
@@ -224,15 +234,19 @@ export default function Rewards({
           width: '100%',
         }}
       >
-        <Button onClick={mint}>Mint reserves</Button>
+        <Button onClick={mint} loading={loadingMint}>
+          Mint reserves
+        </Button>
         <Space align="baseline">
           <Input
             defaultValue={ticketsBalance?.toString()}
-            suffix={rewardTokenName ?? '--'}
+            suffix={orEmpty(rewardTokenName)}
             value={redeemAmount?.toString()}
             onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
           />
-          <Button onClick={redeem}>Redeem</Button>
+          <Button type="primary" onClick={redeem} loading={loadingRedeem}>
+            Redeem
+          </Button>
         </Space>
       </div>
     </div>

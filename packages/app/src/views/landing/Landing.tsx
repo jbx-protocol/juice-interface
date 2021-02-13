@@ -80,7 +80,7 @@ export default function Landing({
               </div>
               <p>
                 1. Make a budget saying how much money you want/need 
-                in order to absolutely crush it.
+                in order to absolutely crush your mission statement.
               </p>
               <p>
                 2. People pay you just like they would on Patreon, 
@@ -90,7 +90,7 @@ export default function Landing({
                 3. If your budget overflows, your paying customers can claim the glorious surplus, effectively pushing prices down as you grow. #RegenFinance
               </p>
               <p>
-                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of your project's overflowed surplus.
+                4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed their fair share of the overflowed surplus.
               </p>
               <div
                 style={{

@@ -69,14 +69,13 @@ export default function Landing({
             <div style={{ display: 'grid', rowGap: 10 }}>
               {bigHeader('Taste the fruits of your labor')}
               <p>
-                An Ethereum business model and stakeholder structure for:
+                Juice is a business model for:
               </p>
               <div>
+                {bullet('Ethereum protocols, DAOs, and public goods')}
                 {bullet('Open source stuff')}
                 {bullet('Indy projects')}
-                {bullet('Public goods')}
-                {bullet('DAOs')}
-                {bullet('Any project with predictable expenses')}
+                {bullet('Any mission with predictable expenses')}
               </div>
               <p>
                 1. Make a budget saying how much money you want/need 
@@ -91,6 +90,9 @@ export default function Landing({
               </p>
               <p>
                 4. Your budgets are recurring. You can make changes as your project evolves, with the approval of those paying customers that have not yet claimed overflowed surplus.
+              </p>
+              <p>
+                The collective goal is to optimize for overflow over time.
               </p>
               <div
                 style={{
@@ -228,7 +230,10 @@ export default function Landing({
             alt="Banana chilling and saying 'DO WORK GET JUICED'"
           />
           <div>
-            {bigHeader('Why choose Juice?')}
+            {bigHeader('Should I Juice?')}
+            <p>
+              There's a good chance.
+            </p>
             <p>
               Juice gives projects a reason to be measured and open with
               their intent, and gives those who get value out of the project
@@ -240,10 +245,6 @@ export default function Landing({
               accountability, and an open source code base. All built by
               motivated punks getting paid what they ask for, and with a price
               tag that effectively tends toward zero as the juice flow grows.
-            </p>
-            <p>
-              Use Juice as your business-model-as-a-service by composing your
-              contract with it. Just inherit from JuiceAdmin and route your app's transaction fees through it, or something.
             </p>
             {userAddress ? (
               <Link to={userAddress}>

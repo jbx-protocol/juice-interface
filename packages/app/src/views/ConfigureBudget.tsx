@@ -169,6 +169,26 @@ export default function ConfigureBudget({
 
   const steps = [
     {
+      title: 'Budget',
+      validate: () => budgetForm.validateFields(),
+      content: (
+        <BudgetForm
+          props={{
+            form: budgetForm,
+            initialValues: {
+              want: tokenOptions.length ? tokenOptions[0].value : undefined,
+            },
+          }}
+          header="Configure your budgets"
+          tokenOptions={tokenOptions}
+        />
+      ),
+      info: [
+        'Your budget begins accepting payments right away. It’ll accept funds up until its time frame runs out.',
+        'A new budget will be created automatically once the current one expires to continue collecting money. It’ll use the same configuration as the previous one if you haven’t since passed a vote to reconfigured it – more on this later.',
+      ],
+    },
+    {
       title: 'Tickets',
       validate: () => ticketsForm.validateFields(),
       content: initializedTickets ? (
@@ -217,31 +237,11 @@ export default function ConfigureBudget({
         />
       ),
       info: [
-        'The Juice protocol will use these ERC-20 tokens of yours like tickets, handing them out to people in exchange for payments towards your Budgets. ',
-        'They are redeemable for a share of your Budgets’ surplus over time.',
-        "You'll provide a ticker symbol for your Tickets, and the reward token that these Tickets can be redeemed for.",
-        'A ticket is redeemable for 38.2% of its proportional rewards. Meaning, if there are 100 reward tokens available, 10% of the total ticket supply could be redeemed for 3.82 reward tokens. The rest is left to share between the remaining ticket hodlers.',
-      ],
-    },
-    {
-      title: 'Budget',
-      validate: () => budgetForm.validateFields(),
-      content: (
-        <BudgetForm
-          props={{
-            form: budgetForm,
-            initialValues: {
-              want: tokenOptions.length ? tokenOptions[0].value : undefined,
-            },
-          }}
-          header="Configure your budgets"
-          tokenOptions={tokenOptions}
-        />
-      ),
-      info: [
-        'Your Budget will begin accepting payments once it’s made. It’ll accept funds up until its duration runs out.',
-        'A new Budget will be created automatically once the current one expires to continue collecting funds. It’ll use the same configuration as the previous one if you haven’t since passed a vote to reconfigured it.',
-        "You can propose reconfigurations to your Budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yay's than nay's, the new budget will be used once the active one expires.",
+        'The Juice protocol will use these ERC-20 tokens of yours like tickets, handing them out to people in exchange for payments towards your budgets. ',
+        "You'll provide a ticker symbol for your Tickets, and the reward token that your budgets' overflow will be swapped in to for these Tickets to claim.",
+        'A ticket is redeemable for 61.8% of its proportional rewards. Meaning, if there are 100 reward tokens available, 10% of the total ticket supply could be redeemed for 6.18 reward tokens. The rest is left to share between the remaining ticket hodlers.',
+        "---",
+        "You can propose reconfigurations to your budget at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new budget will be used once the active one expires."
       ],
     },
     {
@@ -255,11 +255,11 @@ export default function ConfigureBudget({
       ),
       info: [
         'Your budget’s overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who contributes funds to your projects, but it’s also possible to mint some tokens for yourself and for a beneficiary contract as an incentive to push for more overflow.',
-        "Beneficiary contract's can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.",
-        ' ',
-        "Lastly, the discountRate rate affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
-        "For example, if your discountRate rate is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",
-        'Effectively this gives humans who believe your cumulative overflow will increase over time an incentive to pay you today, HODL their tickets, and redeem them at a future date for a better return.',
+        "Beneficiary contracts can be used for pre-programming a philanthropic contribution, such as Gitcoin grant matching.",
+        '---',
+        "Lastly, the discount rate rate affects your Budget's monetary policy. It adjusts how you value your Budget contributions over time.",
+        "For example, if your discount rate is set to 97%, then someone who pays 100 towards your next month's Budget will only receive 97% the amount of tickets received by someone who paid 100 towards this months budget.",
+        'Effectively this gives humans who believe your cumulative overflow will increase over time an incentive to pay you today, HODL their tickets, and redeem them at a future date for more.',
       ],
     },
     {

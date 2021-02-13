@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/ITimelockStaker.sol";
+import "./libraries/Math.sol";
 
 /** 
   @notice A contract that can stake tokens, and unstake them if they aren't bound by a timelock.
@@ -21,10 +22,8 @@ contract TimelockStaker is ITimelockStaker {
     /// @notice The amount of all tokens currently staked by each address.
     mapping(IERC20 => mapping(address => uint256)) public override staked;
 
-    /// @notice The amount of all tokens currently locked .
-    mapping(IERC20 => mapping(uint256 => mapping(address => uint256)))
-        public
-        override timelocks;
+    /// @notice The amount of all tokens currently locked for each address.
+    mapping(IERC20 => mapping(address => uint256)) public override timelocks;
 
     constructor() public {}
 
@@ -55,7 +54,7 @@ contract TimelockStaker is ITimelockStaker {
     function unstake(IERC20 _token, uint256 _amount) external override {
         // Tokens cannot be unstaked if they are locked.
         require(
-            staked[_token][msg.sender] < block.timestamp,
+            timelocks[_token][msg.sender] < block.timestamp,
             "Staking::unstake: TIME_LOCKED"
         );
 
@@ -75,18 +74,20 @@ contract TimelockStaker is ITimelockStaker {
     /**
       @notice Sets a timelock for certain staked tokens within which they can't be unstaked.
       @param _token The token to timelock.
-      @param _lockId The ID of the timelock.
       @param _staker The staker of the tokens.
       @param _expiry The time when the lock expires.
     */
     function setTimelock(
         IERC20 _token,
-        uint256 _lockId,
         address _staker,
         uint256 _expiry
     ) external override {
         require(msg.sender == controller, "Staking::setTimelock: UNAUTHORIZED");
-        timelocks[_token][_lockId][_staker] = _expiry;
+        //Replace the current timelock if it is after the currently set one.
+        timelocks[_token][_staker] = Math.max(
+            timelocks[_token][_staker],
+            _expiry
+        );
     }
 
     /**

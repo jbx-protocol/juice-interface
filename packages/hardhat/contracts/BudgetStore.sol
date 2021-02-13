@@ -273,7 +273,6 @@ contract BudgetStore is Store, IBudgetStore {
         budgets[_budget.id] = _budget;
     }
 
-    /// TODO
     /**
       @notice Add votes to the a particular reconfiguration proposal.
       @param _budgetId The ID of the budget whos reconfiguration is being voted on.

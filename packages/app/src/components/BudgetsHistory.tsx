@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Space } from 'antd'
 import React, { useState } from 'react'
 
@@ -14,13 +13,11 @@ export default function BudgetsHistory({
   transactor,
   userAddress,
   startId,
-  provider,
 }: {
   contracts?: Contracts
   transactor?: Transactor
   userAddress?: string
   startId?: BigNumber
-  provider?: JsonRpcProvider
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
@@ -39,7 +36,12 @@ export default function BudgetsHistory({
     args: [poolNumber],
     pollTime,
     callback: budget => {
-      if (!budget || !poolNumber || poolNumbers.includes(budget.previous))
+      if (
+        !budget ||
+        !poolNumber ||
+        poolNumbers.includes(budget.previous) ||
+        budget.id.eq(0)
+      )
         return
       setBudgets([...budgets, budget])
       setPoolNumbers([
@@ -59,7 +61,6 @@ export default function BudgetsHistory({
               budget={budget}
               transactor={transactor}
               contracts={contracts}
-              provider={provider}
             />
           ))
         : 'No history'}

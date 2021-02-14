@@ -9,7 +9,6 @@ export default function ExampleCard({
   timeLeft,
   target,
   earned,
-  want,
   tokenName,
   ticketName,
 }: {
@@ -18,13 +17,14 @@ export default function ExampleCard({
   timeLeft: number
   target: number
   earned: number
-  want: string
   tokenName: string
   ticketName?: string
 }) {
   const surplus = earned - target
 
   const padding = 20
+
+  const want = 'DAI'
 
   const info = (
     label: string,

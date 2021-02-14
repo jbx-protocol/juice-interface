@@ -14,11 +14,11 @@ import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
-import { useAllowedTokens } from '../hooks/AllowedTokens'
 import useContractReader from '../hooks/ContractReader'
 import { Transactor } from '../models/transactor'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
+import { isEmptyAddress } from '../utils/isEmptyAddress'
 
 export default function ConfigureBudget({
   transactor,
@@ -34,13 +34,11 @@ export default function ConfigureBudget({
   const [ticketsForm] = Form.useForm<{
     name: string
     symbol: string
-    rewardToken: string
   }>()
   const [budgetForm] = Form.useForm<{
     duration: number
     target: number
     link: string
-    want: string
   }>()
   const [budgetAdvancedForm] = Form.useForm<{
     discountRate: number
@@ -53,15 +51,13 @@ export default function ConfigureBudget({
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [initializedTickets, setInitializedTickets] = useState<boolean>()
 
-  const tokenOptions = useAllowedTokens(contracts, provider)
-
   const ticketsAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
     functionName: 'tickets',
     args: [owner],
     callback: address => {
       if (!owner || !address || initializedTickets !== undefined) return
-      setInitializedTickets(address.substr(0, 4) !== '0x00')
+      setInitializedTickets(!isEmptyAddress(address))
     },
   })
 
@@ -96,21 +92,16 @@ export default function ConfigureBudget({
 
     const _name = Web3.utils.utf8ToHex(fields.name)
     const _symbol = Web3.utils.utf8ToHex('t' + fields.symbol)
-    const _rewardToken = contracts.Token.address
 
-    console.log('🧃 Calling Juicer.issueTickets(name, symbol, rewardToken)', {
+    console.log('🧃 Calling Juicer.issueTickets(name, symbol)', {
       _name,
       _symbol,
-      _rewardToken,
     })
 
-    return transactor(
-      contracts.Juicer.issueTickets(_name, _symbol, _rewardToken),
-      () => {
-        setLoadingInitTickets(false)
-        setInitializedTickets(true)
-      },
-    )
+    return transactor(contracts.Juicer.issueTickets(_name, _symbol), () => {
+      setLoadingInitTickets(false)
+      setInitializedTickets(true)
+    })
   }
 
   function submitBudget() {
@@ -128,7 +119,6 @@ export default function ConfigureBudget({
       fields.duration *
         (process.env.NODE_ENV === 'development' ? 1 : SECONDS_IN_DAY),
     ).toHexString()
-    const _want = budgetForm.getFieldValue('want')
     const _link = fields.link
     const _discountRate = BigNumber.from(fields.discountRate).toHexString()
     const _ownerAllocation = fields.ownerAllocation
@@ -137,12 +127,13 @@ export default function ConfigureBudget({
     const _beneficiaryAllocation = fields.beneficiaryAllocation
       ? BigNumber.from(fields.beneficiaryAllocation).toHexString()
       : 0
-    const _beneficiaryAddress = fields.beneficiaryAddress
+    const _beneficiaryAddress =
+      fields.beneficiaryAddress?.trim().length ??
+      '0x0000000000000000000000000000000000000000'
 
     console.log('🧃 Calling Juicer.configureBudget(...)', {
       _target,
       _duration,
-      _want,
       _link,
       _discountRate,
       _ownerAllocation,
@@ -154,7 +145,6 @@ export default function ConfigureBudget({
       contracts.Juicer.configureBudget(
         _target,
         _duration,
-        _want,
         _link,
         _discountRate,
         _ownerAllocation,
@@ -172,18 +162,12 @@ export default function ConfigureBudget({
     {
       title: 'Budget',
       validate: () => budgetForm.validateFields(),
-      content: tokenOptions?.length ? (
+      content: (
         <BudgetForm
-          props={{
-            form: budgetForm,
-            initialValues: {
-              want: tokenOptions[0].value,
-            },
-          }}
+          props={{ form: budgetForm }}
           header="Configure your budget"
-          tokenOptions={tokenOptions}
         />
-      ) : null,
+      ),
       info: [
         'Your budget begins accepting payments right away. It’ll accept funds up until its time frame runs out.',
         'A new budget will be created automatically once the current one expires to continue collecting money. It’ll use the same configuration as the previous one if you haven’t since passed a vote to reconfigured it – more on this later.',
@@ -212,29 +196,12 @@ export default function ConfigureBudget({
                   : 't' + ticketsForm.getFieldValue('symbol')
               }
             />
-            <Statistic
-              title="Reward token"
-              valueStyle={{ overflowWrap: 'anywhere' }}
-              value={
-                initializedTickets
-                  ? ticketsAddress
-                  : ticketsForm.getFieldValue('rewardToken')
-              }
-            />
           </Space>
         </div>
       ) : (
         <TicketsForm
-          props={{
-            form: ticketsForm,
-            initialValues: {
-              rewardToken: tokenOptions.length
-                ? tokenOptions[0].value
-                : undefined,
-            },
-          }}
+          props={{ form: ticketsForm }}
           header="Create your ERC-20 ticket token"
-          tokenOptions={tokenOptions}
         />
       ),
       info: [
@@ -293,14 +260,6 @@ export default function ConfigureBudget({
                       : 't' + ticketsForm.getFieldValue('symbol')
                   }
                 />
-                <Statistic
-                  title="Reward token"
-                  value={
-                    initializedTickets
-                      ? ticketsAddress
-                      : ticketsForm.getFieldValue('rewardToken')
-                  }
-                />
               </Space>
             </div>
             <Button
@@ -336,12 +295,6 @@ export default function ConfigureBudget({
                 />
               </Space>
             </div>
-            <div>
-              <Statistic
-                title="Payment token"
-                value={budgetForm.getFieldValue('want')}
-              />
-            </div>
             <Space size="large" align="end">
               <Statistic
                 style={{ minWidth: 100 }}
@@ -365,6 +318,10 @@ export default function ConfigureBudget({
             <Space size="large" align="end">
               <Statistic
                 title="Beneficiary address"
+                valueStyle={{
+                  fontSize: '1rem',
+                  lineBreak: 'anywhere',
+                }}
                 value={orEmpty(
                   budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
                 )}
@@ -382,23 +339,31 @@ export default function ConfigureBudget({
           </Space>
         </div>
       ),
+      info: ['asdf'],
     },
   ]
 
   return (
-    <div style={{ padding: padding.app, maxWidth: '90vw', margin: 'auto' }}>
+    <div
+      style={{
+        padding: padding.app,
+        maxWidth: '90vw',
+        width: 1080,
+        margin: 'auto',
+      }}
+    >
       <Steps size="small" current={currentStep} style={{ marginBottom: 60 }}>
         {steps.map((step, i) => (
           <Steps.Step
             key={i}
-            onClick={() => setCurrentStep(i)}
+            onClick={() => (i === steps.length - 1 ? null : setCurrentStep(i))}
             title={step.title}
           />
         ))}
       </Steps>
 
       <Row gutter={80} align="top">
-        <Col span={15}>
+        <Col span={10}>
           {steps[currentStep].content}
 
           <div
@@ -425,7 +390,7 @@ export default function ConfigureBudget({
           </div>
         </Col>
 
-        <Col span={9}>
+        <Col span={14}>
           {steps[currentStep].info?.length ? (
             <div
               style={{

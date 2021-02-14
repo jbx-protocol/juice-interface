@@ -50,7 +50,6 @@ function App() {
         hasBudget={hasBudget}
         userAddress={userAddress}
         contracts={contracts}
-        loadWeb3Modal={loadWeb3Modal}
         userProvider={userProvider}
       />
     </div>

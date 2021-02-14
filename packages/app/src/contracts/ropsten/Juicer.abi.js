@@ -17,13 +17,8 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20[]",
-        "name": "_wantTokenAllowList",
-        "type": "address[]"
-      },
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "_router",
+        "internalType": "contract IERC20",
+        "name": "_dai",
         "type": "address"
       }
     ],
@@ -103,6 +98,25 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "issuer",
+        "type": "address"
+      }
+    ],
+    "name": "DistributeReserves",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "issuer",
         "type": "address"
       },
@@ -117,12 +131,6 @@ module.exports = [
         "internalType": "string",
         "name": "symbol",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "rewardToken",
-        "type": "address"
       }
     ],
     "name": "IssueTickets",
@@ -145,28 +153,15 @@ module.exports = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      }
-    ],
-    "name": "MintReservedTickets",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "holder",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "tickets",
         "type": "address"
       },
       {
@@ -178,14 +173,20 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "redeemedAmount",
+        "name": "amount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "rewardAmount",
+        "name": "returnAmount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IERC20",
+        "name": "returnToken",
+        "type": "address"
       }
     ],
     "name": "Redeem",
@@ -227,7 +228,7 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "contract IERC20",
-        "name": "want",
+        "name": "token",
         "type": "address"
       }
     ],
@@ -361,6 +362,38 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "claim",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "claimable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -371,11 +404,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_duration",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_want",
-        "type": "address"
       },
       {
         "internalType": "string",
@@ -416,6 +444,32 @@ module.exports = [
   },
   {
     "inputs": [],
+    "name": "dai",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      }
+    ],
+    "name": "distributeReserves",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "fee",
     "outputs": [
       {
@@ -435,35 +489,22 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "getReservedTickets",
+    "name": "getDistributableReserves",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "issuers",
+        "name": "issuerTickets",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "beneficiaries",
+        "name": "adminFees",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "admins",
+        "name": "beneficiaryDonations",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getWantTokenAllowList",
-    "outputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -480,11 +521,6 @@ module.exports = [
         "internalType": "string",
         "name": "_symbol",
         "type": "string"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
       }
     ],
     "name": "issueTickets",
@@ -509,19 +545,6 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "mintReservedTickets",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_owner",
         "type": "address"
       },
@@ -529,11 +552,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
       },
       {
         "internalType": "address",
@@ -566,7 +584,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_minRewardAmount",
+        "name": "_minReturn",
         "type": "uint256"
       },
       {
@@ -578,25 +596,12 @@ module.exports = [
     "name": "redeem",
     "outputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "rewardToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "returnAmount",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -608,52 +613,6 @@ module.exports = [
       }
     ],
     "name": "setAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "_list",
-        "type": "address[]"
-      }
-    ],
-    "name": "setWantTokenAllowList",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minSwappedAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "swap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

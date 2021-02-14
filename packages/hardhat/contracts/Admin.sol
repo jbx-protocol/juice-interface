@@ -18,13 +18,8 @@ contract Admin is JuiceAdmin {
     constructor(
         IJuicer _juicer,
         string memory _ticketName,
-        string memory _ticketSymbol,
-        IERC20 _ticketReward,
-        UniswapV2Router02 _router
-    )
-        public
-        JuiceAdmin(_juicer, _ticketName, _ticketSymbol, _ticketReward, _router)
-    {}
+        string memory _ticketSymbol
+    ) public JuiceAdmin(_juicer, _ticketName, _ticketSymbol) {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
@@ -74,17 +69,5 @@ contract Admin is JuiceAdmin {
     */
     function allowMigration(IJuicer _from, address _to) external onlyOwner {
         _from.addToMigrationAllowList(address(_to));
-    }
-
-    /** 
-      @notice Sets the token that Budgets are allowed to want in a specified Juicer.
-      @param _juicer The juicer having its allow list changed changed.
-      @param _list The new list of allowed tokens.
-    */
-    function setWantTokenAllowList(IJuicer _juicer, IERC20[] calldata _list)
-        external
-        onlyOwner
-    {
-        _juicer.setWantTokenAllowList(_list);
     }
 }

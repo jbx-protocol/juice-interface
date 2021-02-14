@@ -98,10 +98,16 @@ export default function ConfigureBudget({
       _symbol,
     })
 
-    return transactor(contracts.Juicer.issueTickets(_name, _symbol), () => {
-      setLoadingInitTickets(false)
-      setInitializedTickets(true)
-    })
+    return transactor(
+      contracts.Juicer.issueTickets(_name, _symbol),
+      () => {
+        setLoadingInitTickets(false)
+        setInitializedTickets(true)
+      },
+      () => {
+        setLoadingInitTickets(false)
+      },
+    )
   }
 
   function submitBudget() {

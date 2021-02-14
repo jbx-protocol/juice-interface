@@ -89,8 +89,10 @@ export default function Rewards({
       amount: _amount,
     })
 
-    transactor(contracts?.Juicer.redeem(budget?.owner, _amount), () =>
-      setLoadingRedeem(false),
+    transactor(
+      contracts?.Juicer.redeem(budget?.owner, _amount),
+      () => setLoadingRedeem(false),
+      true,
     )
   }
 

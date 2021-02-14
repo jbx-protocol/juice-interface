@@ -120,6 +120,9 @@ export default function Owner({
         setSustainAmount(0)
         setLoadingPayOwner(false)
       },
+      () => {
+        setLoadingPayOwner(false)
+      },
     )
   }
 

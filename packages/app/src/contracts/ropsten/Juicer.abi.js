@@ -487,9 +487,14 @@ module.exports = [
         "internalType": "address",
         "name": "_issuer",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_onlyDistributable",
+        "type": "bool"
       }
     ],
-    "name": "getDistributableReserves",
+    "name": "getReserves",
     "outputs": [
       {
         "internalType": "uint256",

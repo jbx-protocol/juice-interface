@@ -10,7 +10,6 @@ import {
 } from 'antd'
 import moment from 'moment'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
@@ -95,8 +94,6 @@ export default function BudgetDetail({
 
   const gutter = 25
 
-  const pending = budget.id.eq(0)
-
   const formatDate = (date: number) => moment(date).format('M-DD-YYYY h:mma')
 
   const ended: string | undefined =
@@ -135,11 +132,9 @@ export default function BudgetDetail({
           whiteSpace: 'pre',
         }}
       >
-        {budget.id.gt(0) ? (
-          <h3 style={{ fontWeight: 600, marginRight: gutter, marginBottom: 0 }}>
-            # {budget.id.toString()}
-          </h3>
-        ) : null}
+        <h3 style={{ fontWeight: 600, marginRight: gutter, marginBottom: 0 }}>
+          # {budget.number.toString()}
+        </h3>
         <Progress
           percent={budget.total
             .mul(100)

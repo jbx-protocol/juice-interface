@@ -112,17 +112,7 @@ export default function BudgetDetail({
 
   const toolTipLabel = (labelText: string, tip: string) => (
     <span>
-      {labelText}
-      <Tooltip title={tip}>
-        <span
-          style={{
-            marginLeft: 4,
-            cursor: 'help',
-          }}
-        >
-          💡
-        </span>
-      </Tooltip>
+      <Tooltip title={tip}>{labelText}</Tooltip>
     </span>
   )
 
@@ -182,6 +172,51 @@ export default function BudgetDetail({
         <Descriptions.Item label="Tapped">
           {budget.tapped.toString()} {wantTokenName}
         </Descriptions.Item>
+
+        <Descriptions.Item label="Withdrawable" span={2}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            {tappableAmount?.toString() ?? '0'} {wantTokenName}
+            {isOwner && tappableAmount?.gt(0) ? (
+              <div>
+                <Button
+                  loading={loadingWithdraw}
+                  onClick={() => setWithdrawModalVisible(true)}
+                >
+                  Withdraw
+                </Button>
+                <Modal
+                  title="Withdraw funds"
+                  visible={withdrawModalVisible}
+                  onOk={() => {
+                    tap()
+                    setWithdrawModalVisible(false)
+                  }}
+                  onCancel={() => {
+                    setTapAmount(BigNumber.from(0))
+                    setWithdrawModalVisible(false)
+                  }}
+                  okText="Withdraw"
+                  width={540}
+                >
+                  <Input
+                    name="withdrawable"
+                    placeholder="0"
+                    suffix={wantTokenName}
+                    value={tapAmount.toString()}
+                    max={tappableAmount?.toString()}
+                    onChange={e => setTapAmount(BigNumber.from(e.target.value))}
+                  />
+                </Modal>
+              </div>
+            ) : null}
+          </div>
+        </Descriptions.Item>
       </Descriptions>
 
       {budget?.link ? (
@@ -202,6 +237,7 @@ export default function BudgetDetail({
           <Descriptions.Item label="Weight">
             {budget.weight.toString()}
           </Descriptions.Item>
+
           <Descriptions.Item
             label={toolTipLabel(
               'Discount Rate',
@@ -210,84 +246,26 @@ export default function BudgetDetail({
           >
             {budget.discountRate.toString()} %
           </Descriptions.Item>
+
           <Descriptions.Item label="Reserved for owner">
             {budget.o.toString()}%
           </Descriptions.Item>
+
           {isEmptyAddress(budget.bAddress) ? null : (
             <Descriptions.Item label="Reserved for beneficiary">
               {budget.b.toString()}%
             </Descriptions.Item>
           )}
+
           {isEmptyAddress(budget.bAddress) ? null : (
             <Descriptions.Item label="Beneficiary address" span={2}>
               {budget.bAddress.toString()}
             </Descriptions.Item>
           )}
-          <Descriptions.Item label="Withdrawable">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                width: '100%',
-                whiteSpace: 'pre',
-              }}
-            >
-              {tappableAmount?.toString() ?? '0'} {wantTokenName}
-              {isOwner && tappableAmount?.gt(0) ? (
-                <div>
-                  <Button
-                    loading={loadingWithdraw}
-                    onClick={() => setWithdrawModalVisible(true)}
-                  >
-                    Withdraw
-                  </Button>
-                  <Modal
-                    title="Withdraw funds"
-                    visible={withdrawModalVisible}
-                    onOk={() => {
-                      tap()
-                      setWithdrawModalVisible(false)
-                    }}
-                    onCancel={() => {
-                      setTapAmount(BigNumber.from(0))
-                      setWithdrawModalVisible(false)
-                    }}
-                    okText="Withdraw"
-                    width={540}
-                  >
-                    <Input
-                      name="withdrawable"
-                      placeholder="0"
-                      suffix={wantTokenName}
-                      value={tapAmount.toString()}
-                      max={tappableAmount?.toString()}
-                      onChange={e =>
-                        setTapAmount(BigNumber.from(e.target.value))
-                      }
-                    />
-                  </Modal>
-                </div>
-              ) : null}
-            </div>
-          </Descriptions.Item>
+
           {ended && surplus.gt(0) ? (
             <Descriptions.Item label="Reserves">
-              {budget?.hasMintedReserves ? (
-                'Minted'
-              ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    whiteSpace: 'pre',
-                  }}
-                >
-                  <span>Not minted</span>
-                </div>
-              )}
+              {budget?.hasMintedReserves ? 'Minted' : 'Not minted'}
             </Descriptions.Item>
           ) : null}
         </Descriptions>

@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd'
 import { FormProps } from 'antd/lib/form/Form'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function BudgetAdvancedForm({
   props,
@@ -14,17 +14,16 @@ export default function BudgetAdvancedForm({
   }>
   header?: string
 }) {
-  const layout = {
-    labelCol: { span: 10 },
-    wrapperCol: { span: 12 },
-  }
+  const [beneficiaryAddressRequired, setBeneficiaryAddressRequired] = useState<
+    boolean
+  >(false)
 
   const initialDiscountRate = 97
 
   return (
     <Form
-      {...layout}
       {...props}
+      layout="vertical"
       initialValues={{
         ownerAllocation: 0,
         beneficiaryAllocation: 0,
@@ -33,7 +32,7 @@ export default function BudgetAdvancedForm({
       }}
     >
       {header ? (
-        <Form.Item wrapperCol={{ offset: 10 }}>
+        <Form.Item>
           <h2>{header}</h2>
         </Form.Item>
       ) : null}
@@ -50,13 +49,21 @@ export default function BudgetAdvancedForm({
         name="beneficiaryAllocation"
         label="Reserve for beneficiary"
       >
-        <Input className="align-end" suffix="%" type="number" placeholder="5" />
+        <Input
+          className="align-end"
+          suffix="%"
+          type="number"
+          placeholder="5"
+          onChange={e =>
+            setBeneficiaryAddressRequired(parseFloat(e.target.value) > 0)
+          }
+        />
       </Form.Item>
       <Form.Item
         extra="A contract that you wish to have tickets reserved for in the same way as owner tickets."
         name="beneficiaryAddress"
         label="Beneficiary address"
-        rules={[{ required: true }]}
+        rules={[{ required: beneficiaryAddressRequired }]}
       >
         <Input placeholder="0x01a2b3c..." />
       </Form.Item>

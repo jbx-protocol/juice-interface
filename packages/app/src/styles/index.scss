@@ -33,9 +33,13 @@ label {
   font-family: 'DM Mono', monospace;
 }
 
-.ant-form-item-label > label {
-  white-space: pre-line;
-}
+// .ant-form-item-label {
+//   overflow: visible;
+
+//   label {
+//     white-space: pre-line;
+//   }
+// }
 
 .ant-input-affix-wrapper.align-end > input {
   text-align: end;

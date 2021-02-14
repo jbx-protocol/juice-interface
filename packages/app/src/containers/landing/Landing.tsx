@@ -1,16 +1,25 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Col, Row, Space, Timeline, TimelineItemProps } from 'antd'
 import React, { CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
 
 import Footer from '../../components/Footer'
 import { colors } from '../../constants/styles/colors'
+import { Contracts } from '../../models/contracts'
+import { Transactor } from '../../models/transactor'
+import ConfigureBudget from '../ConfigureBudget'
 
 export default function Landing({
   userAddress,
-  onNeedAddress,
+  hasBudget,
+  contracts,
+  transactor,
+  userProvider,
 }: {
   userAddress?: string
-  onNeedAddress: VoidFunction
+  hasBudget?: boolean
+  contracts?: Contracts
+  transactor?: Transactor
+  userProvider?: JsonRpcProvider
 }) {
   const totalMaxWidth = 1080
 
@@ -34,6 +43,10 @@ export default function Landing({
   const wrapper: CSSProperties = {
     maxWidth: totalMaxWidth,
     margin: '0 auto',
+  }
+
+  function scrollToCreate() {
+    document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -83,15 +96,11 @@ export default function Landing({
                   </div>
                 </div>
 
-                {userAddress ? (
-                  <Link to={userAddress}>
-                    <Button type="primary">Create a project</Button>
-                  </Link>
-                ) : (
-                  <Button onClick={onNeedAddress} type="primary">
+                <div>
+                  <Button type="primary" onClick={scrollToCreate}>
                     Create a project
                   </Button>
-                )}
+                </div>
               </div>
             </Col>
             <Col span={10}>
@@ -110,148 +119,87 @@ export default function Landing({
       </section>
 
       <section>
-        <Row style={wrapper}>
-          <Col span={10}>
-            <img
-              style={{
-                height: '75vh',
-                maxHeight: 800,
-                maxWidth: 400,
-                minHeight: 440,
-                objectFit: 'contain',
-              }}
-              src="/assets/blueberry.png"
-              alt="blueberry"
-            />
-          </Col>
-
-          <Col
-            span={14}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Space direction="vertical" size="large">
-              <Timeline style={{ paddingLeft: 10 }}>
-                <Timeline.Item {...timelineItemStyle}>
-                  Make a budget saying how much money you want/need in order to
-                  absolutely crush your mission statement.
-                </Timeline.Item>
-                <Timeline.Item {...timelineItemStyle}>
-                  People pay you just like they would on Patreon, or
-                  transparently from within your Solidity smart contracts.{' '}
-                  <a
-                    href="https://twitter.com/hashtag/BusinessModelAsAService"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    #BusinessModelAsAService
-                  </a>{' '}
-                  <a
-                    href="https://twitter.com/hashtag/dework"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    #DeWork
-                  </a>
-                </Timeline.Item>
-                <Timeline.Item {...timelineItemStyle}>
-                  If your budget overflows, your paying customers get to claim
-                  the surplus, effectively pushing prices down as you grow.{' '}
-                  <a
-                    href="https://twitter.com/hashtag/RegenFinance"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    #RegenFinance
-                  </a>
-                </Timeline.Item>
-                <Timeline.Item {...timelineItemStyle}>
-                  Your budgets can be recurring. You can make changes as your
-                  project evolves, with the approval of those paying customers
-                  that have not yet claimed their fair share of your overflowed
-                  surplus.
-                </Timeline.Item>
-              </Timeline>
-
-              <div>
-                <p>
-                  The collective goal is to optimize for overflow over time.
-                </p>
-
-                {userAddress ? (
-                  <Link to={userAddress}>
-                    <Button type="primary">Create a project</Button>
-                  </Link>
-                ) : (
-                  <Button onClick={onNeedAddress} type="primary">
-                    Create a project
-                  </Button>
-                )}
-              </div>
-            </Space>
-          </Col>
-        </Row>
-      </section>
-
-      <section>
-        <Row
-          gutter={80}
+        <div
           style={{
-            ...wrapper,
-            padding: 80,
+            maxWidth: 540,
+            margin: '100px auto',
           }}
         >
-          <Col span={12}>
-            <h2 style={{ fontWeight: 600 }}>
-              Old business models don’t work on the open internet.
-            </h2>
-            <p>
-              Users are now in charge, and they expect transparency, algorithmic
-              assurances, and public governance out of the protocols they depend
-              on.
-            </p>
-            <p>
-              Though the power and the risk are shifting away from institutions
-              and into the hands of individuals, the integrity of this
-              regenerative economy still depends on buidlers, workers, creators,
-              innovators, and maintainers. They’re out here self-organizing to
-              make sure your bags stay SAFU and have a chance to grow.
-            </p>
-          </Col>
+          <Space direction="vertical" size="large">
+            <h2>How it works</h2>
+            <Timeline style={{ paddingLeft: 10 }}>
+              <Timeline.Item {...timelineItemStyle}>
+                Make a budget saying how much money you want/need in order to
+                absolutely crush your mission statement.
+              </Timeline.Item>
+              <Timeline.Item {...timelineItemStyle}>
+                People pay you just like they would on Patreon, or transparently
+                from within your Solidity smart contracts.{' '}
+                <a
+                  href="https://twitter.com/hashtag/BusinessModelAsAService"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #BusinessModelAsAService
+                </a>{' '}
+                <a
+                  href="https://twitter.com/hashtag/dework"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #DeWork
+                </a>
+              </Timeline.Item>
+              <Timeline.Item {...timelineItemStyle}>
+                If your budget overflows, your paying customers get to claim the
+                surplus, effectively pushing prices down as you grow.{' '}
+                <a
+                  href="https://twitter.com/hashtag/RegenFinance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #RegenFinance
+                </a>
+              </Timeline.Item>
+              <Timeline.Item {...timelineItemStyle}>
+                Your budgets can be recurring. You can make changes as your
+                project evolves, with the approval of those paying customers
+                that have not yet claimed their fair share of your overflowed
+                surplus.
+              </Timeline.Item>
+            </Timeline>
 
-          <Col span={12}>
-            <h2 style={{ fontWeight: 600 }}>
-              Organic, consistent cashflow is key
-            </h2>
-            <p>
-              Until now, there hasn’t been an organic way to provide consistent
-              cashflow to these core teams and casual contributors, many of whom
-              start out young and broke and unable to buy bags. We’ve been
-              patching this need with legacy ideas like golden handcuffs,
-              unreliable ideas like grants, and controversial ideas like
-              whimsically minting token supply for dev treasuries.{' '}
-            </p>
-            <p>
-              The internet of work, DeWork, needs a juicier solution – one that
-              extends the best parts of DeFi, one that promotes cooperation,
-              flexibility, and immediacy.
-            </p>
-            <p>Juice is that solution.</p>
-          </Col>
-        </Row>
-
-        <div>
-          <img
-            src="/assets/fountain_of_juice.png"
-            alt="Fountain of Juice"
-            style={{ width: '100vw' }}
-          />
+            <p>The collective goal is to optimize for overflow over time.</p>
+          </Space>
         </div>
       </section>
 
-      <section style={{ background: '#EBAF4D' }}>
+      {hasBudget ? null : (
+        <section>
+          <div
+            id="create"
+            style={{
+              ...wrapper,
+              marginBottom: 80,
+            }}
+          >
+            {bigHeader('Create a project')}
+            <ConfigureBudget
+              owner={userAddress}
+              contracts={contracts}
+              transactor={transactor}
+              provider={userProvider}
+            />
+          </div>
+        </section>
+      )}
+
+      <section
+        style={{
+          padding: 80,
+          background: colors.light,
+        }}
+      >
         <div
           style={{
             ...wrapper,
@@ -259,7 +207,6 @@ export default function Landing({
             gridAutoFlow: 'column',
             alignItems: 'center',
             columnGap: 60,
-            padding: 80,
           }}
         >
           <div>
@@ -277,15 +224,6 @@ export default function Landing({
               paid what they ask for, and with a price tag that effectively
               tends toward zero as the juice flow grows.
             </p>
-            {userAddress ? (
-              <Link to={userAddress}>
-                <Button type="primary">Build with Juice</Button>
-              </Link>
-            ) : (
-              <Button onClick={onNeedAddress} type="primary">
-                Build with Juice
-              </Button>
-            )}
           </div>
 
           <img
@@ -304,7 +242,7 @@ export default function Landing({
           textAlign: 'center',
         }}
       >
-        <h3 style={{ color: colors.juiceOrange, margin: 0 }}>
+        <h3 style={{ color: 'white', margin: 0 }}>
           Big ups to the Ethereum community for crafting the infrastructure and
           economy to make Juice possible.
         </h3>

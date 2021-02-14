@@ -1,12 +1,20 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Button, Col, Divider, Input, Row, Space } from 'antd'
+import {
+  Button,
+  Col,
+  DescriptionsProps,
+  Divider,
+  Input,
+  Row,
+  Space,
+} from 'antd'
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Web3 from 'web3'
-
 import BudgetDetail from '../components/BudgetDetail'
 import BudgetsHistory from '../components/BudgetsHistory'
 import Loading from '../components/Loading'
+import Reserves from '../components/Reserves'
 import Rewards from '../components/Rewards'
 import { colors } from '../constants/styles/colors'
 import { layouts } from '../constants/styles/layouts'
@@ -100,20 +108,14 @@ export default function Owner({
         ? eth.abi.encodeParameter('uint256', sustainAmount)
         : undefined
 
-    console.log('🧃 Calling Juicer.sustain(owner, amount, want, userAddress)', {
+    console.log('🧃 Calling Juicer.sustain(owner, amount, userAddress)', {
       owner: currentBudget.owner,
       amount,
-      want: currentBudget.want,
       userAddress,
     })
 
     transactor(
-      contracts.Juicer.payOwner(
-        currentBudget.owner,
-        amount,
-        currentBudget.want,
-        userAddress,
-      ),
+      contracts.Juicer.payOwner(currentBudget.owner, amount, userAddress),
       () => {
         setSustainAmount(0)
         setLoadingPayOwner(false)
@@ -176,6 +178,12 @@ export default function Owner({
   //   </div>
   // )
 
+  const descriptionsStyle: DescriptionsProps = {
+    labelStyle: { fontWeight: 600 },
+    size: 'middle',
+    bordered: true,
+  }
+
   switch (budgetState) {
     case 'missing':
       return (
@@ -213,8 +221,32 @@ export default function Owner({
             padding: padding.app,
           }}
         >
-          <h1>{ticketName}</h1>
-          <h3>{owner}</h3>
+          <div style={{ display: 'flex' }}>
+            <div style={{ flex: 1 }}>
+              <h1>{ticketName}</h1>
+              <h3>{owner}</h3>
+            </div>
+
+            <Space size="large" align="start">
+              <Rewards
+                contracts={contracts}
+                transactor={transactor}
+                budget={currentBudget}
+                userAddress={userAddress}
+                ticketAddress={ticketAddress}
+                provider={provider}
+                descriptionsStyle={descriptionsStyle}
+              />
+              <Reserves
+                contracts={contracts}
+                transactor={transactor}
+                budget={currentBudget}
+                descriptionsStyle={descriptionsStyle}
+                ticketAddress={ticketAddress}
+                provider={provider}
+              ></Reserves>
+            </Space>
+          </div>
 
           <Divider orientation="center" />
 
@@ -228,7 +260,6 @@ export default function Owner({
                       budget={currentBudget}
                       contracts={contracts}
                       transactor={transactor}
-                      provider={provider}
                     />
                     <Divider style={{ margin: 0 }} />
                     <Space
@@ -262,23 +293,20 @@ export default function Owner({
 
               <Col span={12}>
                 {section(
-                  <Rewards
-                    contracts={contracts}
-                    transactor={transactor}
-                    budget={currentBudget}
-                    userAddress={userAddress}
-                    ticketAddress={ticketAddress}
-                    provider={provider}
-                  />,
-                  'Rewards',
+                  queuedBudget ? (
+                    <BudgetDetail
+                      userAddress={userAddress}
+                      budget={currentBudget}
+                      contracts={contracts}
+                      transactor={transactor}
+                    />
+                  ) : (
+                    <div style={{ padding: 25 }}>No upcoming budgets</div>
+                  ),
+                  'Next Budget',
                 )}
-              </Col>
-            </Row>
-
-            <Row gutter={spacing}>
-              <Col span={12}>
                 {isOwner ? (
-                  <div>
+                  <div style={{ marginTop: 40, textAlign: 'right' }}>
                     <Button onClick={() => setShowReconfigureModal(true)}>
                       Reconfigure budget
                     </Button>
@@ -287,30 +315,10 @@ export default function Owner({
                       contracts={contracts}
                       currentValue={currentBudget}
                       visible={showReconfigureModal}
-                      provider={provider}
                       onCancel={() => setShowReconfigureModal(false)}
                     />
                   </div>
                 ) : null}
-              </Col>
-            </Row>
-
-            <Row gutter={spacing}>
-              <Col span={12}>
-                {queuedBudget ? (
-                  section(
-                    <BudgetDetail
-                      userAddress={userAddress}
-                      budget={currentBudget}
-                      contracts={contracts}
-                      transactor={transactor}
-                      provider={provider}
-                    />,
-                    'Next Budget',
-                  )
-                ) : (
-                  <div>No upcoming budgets</div>
-                )}
               </Col>
             </Row>
 
@@ -322,7 +330,6 @@ export default function Owner({
                     contracts={contracts}
                     transactor={transactor}
                     userAddress={userAddress}
-                    provider={provider}
                   />,
                   'Budget History',
                 )}

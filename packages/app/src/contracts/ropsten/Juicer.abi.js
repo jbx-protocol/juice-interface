@@ -311,7 +311,7 @@ module.exports = [
   },
   {
     "inputs": [],
-    "name": "STANDBY_PERIOD",
+    "name": "RECONFIGURATION_VOTING_PERIOD",
     "outputs": [
       {
         "internalType": "uint256",

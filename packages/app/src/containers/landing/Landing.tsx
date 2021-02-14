@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Space, Timeline, TimelineItemProps } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -12,40 +12,24 @@ export default function Landing({
   userAddress?: string
   onNeedAddress: VoidFunction
 }) {
-  const bulletSize = 8
-
-  const totalMaxWidth = 1080
-
-  const bullet = (text: string) => (
-    <li
-      style={{
-        display: 'flex',
-        alignItems: 'baseline',
-        lineHeight: 1.2,
-        marginBottom: 10,
-        fontWeight: 500,
-      }}
-    >
-      <span
-        style={{
-          display: 'inline-block',
-          minWidth: bulletSize,
-          width: bulletSize,
-          height: bulletSize,
-          borderRadius: '50%',
-          background: colors.juiceOrange,
-          marginRight: 12,
-        }}
-      ></span>
-      {text}
-    </li>
-  )
+  const totalMaxWidth = 1200
 
   const bigHeader = (text: string) => (
-    <h1 style={{ fontSize: '2.8rem', fontWeight: 600, lineHeight: 1.1 }}>
+    <h1 style={{ fontSize: '3rem', fontWeight: 600, lineHeight: 1.2 }}>
       {text}
     </h1>
   )
+
+  const timelineItemStyle: TimelineItemProps = {
+    color: colors.dark,
+  }
+
+  const listData = [
+    'Ethereum protocols, DAOs, and public goods',
+    'Open source stuff',
+    'Indy projects',
+    'Any mission with predictable expenses',
+  ]
 
   return (
     <div>
@@ -61,51 +45,92 @@ export default function Landing({
             style={{
               display: 'grid',
               gridTemplateColumns: '2fr 1fr',
-              alignItems: 'center',
               columnGap: 60,
             }}
           >
-            <div style={{ display: 'grid', rowGap: 10 }}>
+            <div
+              style={{
+                display: 'grid',
+                rowGap: 50,
+                paddingTop: 40,
+              }}
+            >
               {bigHeader('Taste the fruits of your labor')}
-              <p>Juice is a regenerative business model for:</p>
-              <div>
-                {bullet('Ethereum protocols, DAOs, and public goods')}
-                {bullet('Open source stuff')}
-                {bullet('Indy projects')}
-                {bullet('Any mission with predictable expenses')}
-              </div>
-              <p style={{ marginBottom: 0 }}>
-                Make a budget saying how much money you want/need in order to
-                absolutely crush your mission statement.
-              </p>
-              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
-              <p style={{ margin: 0 }}>
-                People pay you just like they would on Patreon, or transparently
-                from within your Solidity smart contracts.
-                #BusinessModelAsAService #DeWork
-              </p>
-              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
-              <p style={{ margin: 0 }}>
-                If your budget overflows, your paying customers get to claim the
-                surplus, effectively pushing prices down as you grow.
-                #RegenFinance
-              </p>
-              <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
-              <p style={{ margin: 0 }}>
-                Your budgets can be recurring. You can make changes as your
-                project evolves, with the approval of those paying customers
-                that have not yet claimed their fair share of your overflowed
-                surplus.
-              </p>
-              <p>---</p>
-              <p>The collective goal is to optimize for overflow over time.</p>
+
               <div
                 style={{
-                  display: 'grid',
-                  gridAutoFlow: 'column',
-                  columnGap: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  fontStyle: 'italic',
                 }}
               >
+                <p
+                  style={{
+                    fontWeight: 500,
+                  }}
+                >
+                  Juice is a regenerative business model for:
+                </p>
+                {listData.map(data => (
+                  <Space
+                    style={{
+                      marginBottom: 8,
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    <img src="/assets/bolt.png" style={{ height: 24 }} /> {data}
+                  </Space>
+                ))}
+              </div>
+
+              <Timeline>
+                <Timeline.Item {...timelineItemStyle}>
+                  Make a budget saying how much money you want/need in order to
+                  absolutely crush your mission statement.
+                </Timeline.Item>
+                <Timeline.Item {...timelineItemStyle}>
+                  People pay you just like they would on Patreon, or
+                  transparently from within your Solidity smart contracts.{' '}
+                  <a
+                    href="https://twitter.com/hashtag/BusinessModelAsAService"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    #BusinessModelAsAService
+                  </a>{' '}
+                  <a
+                    href="https://twitter.com/hashtag/dework"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    #DeWork
+                  </a>
+                </Timeline.Item>
+                <Timeline.Item {...timelineItemStyle}>
+                  If your budget overflows, your paying customers get to claim
+                  the surplus, effectively pushing prices down as you grow.{' '}
+                  <a
+                    href="https://twitter.com/hashtag/RegenFinance"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    #RegenFinance
+                  </a>
+                </Timeline.Item>
+                <Timeline.Item {...timelineItemStyle}>
+                  Your budgets can be recurring. You can make changes as your
+                  project evolves, with the approval of those paying customers
+                  that have not yet claimed their fair share of your overflowed
+                  surplus.
+                </Timeline.Item>
+              </Timeline>
+
+              <div>
+                <p>
+                  The collective goal is to optimize for overflow over time.
+                </p>
+
                 {userAddress ? (
                   <Link to={userAddress}>
                     <Button type="primary">Create a project</Button>
@@ -119,7 +144,6 @@ export default function Landing({
             </div>
             <img
               style={{
-                maxWidth: totalMaxWidth / 2,
                 height: '75vh',
                 maxHeight: 800,
                 minHeight: 440,

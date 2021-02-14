@@ -3,11 +3,18 @@ const chalk = require("chalk");
 const bre = require("hardhat");
 
 const publishDir = "../app/src/contracts/temp";
-const graphDir = "../subgraph";
+// const graphDir = "../subgraph";
+
+const blacklist = require("../constants/publish-blacklist");
 
 function publishContract(contractName) {
+  if (blacklist.includes(contractName)) {
+    console.log(" ⏭  Not publishing blacklisted contract:", contractName);
+    return;
+  }
+
   console.log(
-    "Publishing",
+    " 📝  Publishing",
     chalk.cyan(contractName),
     "to",
     chalk.yellow(publishDir)
@@ -23,20 +30,20 @@ function publishContract(contractName) {
       .readFileSync(`${bre.config.paths.artifacts}/${contractName}.address`)
       .toString();
     contract = JSON.parse(contract);
-    let graphConfigPath = `${graphDir}/config/config.json`;
-    let graphConfig;
-    try {
-      if (fs.existsSync(graphConfigPath)) {
-        graphConfig = fs.readFileSync(graphConfigPath).toString();
-      } else {
-        graphConfig = "{}";
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    // const graphConfigPath = `${graphDir}/config/config.json`;
+    // let graphConfig;
+    // try {
+    //   if (fs.existsSync(graphConfigPath)) {
+    //     graphConfig = fs.readFileSync(graphConfigPath).toString();
+    //   } else {
+    //     graphConfig = "{}";
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
 
-    graphConfig = JSON.parse(graphConfig);
-    graphConfig[contractName + "Address"] = address;
+    // graphConfig = JSON.parse(graphConfig);
+    // graphConfig[contractName + "Address"] = address;
     fs.writeFileSync(
       `${publishDir}/${contractName}.address.js`,
       `module.exports = "${address}";`
@@ -50,15 +57,15 @@ function publishContract(contractName) {
       `module.exports = "${contract.bytecode}";`
     );
 
-    const folderPath = graphConfigPath.replace("/config.json", "");
-    if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath);
-    }
-    fs.writeFileSync(graphConfigPath, JSON.stringify(graphConfig, null, 2));
-    fs.writeFileSync(
-      `${graphDir}/abis/${contractName}.json`,
-      JSON.stringify(contract.abi, null, 2)
-    );
+    // const folderPath = graphConfigPath.replace("/config.json", "");
+    // if (!fs.existsSync(folderPath)) {
+    //   fs.mkdirSync(folderPath);
+    // }
+    // fs.writeFileSync(graphConfigPath, JSON.stringify(graphConfig, null, 2));
+    // fs.writeFileSync(
+    //   `${graphDir}/abis/${contractName}.json`,
+    //   JSON.stringify(contract.abi, null, 2)
+    // );
 
     return true;
   } catch (e) {
@@ -72,7 +79,7 @@ async function main() {
     fs.mkdirSync(publishDir);
   }
   const finalContractList = [];
-  fs.readdirSync(bre.config.paths.sources).forEach((file) => {
+  fs.readdirSync(bre.config.paths.sources).forEach(file => {
     if (file.indexOf(".sol") >= 0) {
       const contractName = file.replace(".sol", "");
       // Add contract to list if publishing is successful
@@ -88,7 +95,7 @@ async function main() {
 }
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error);
     process.exit(1);
   });

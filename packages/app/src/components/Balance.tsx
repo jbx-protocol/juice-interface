@@ -26,7 +26,7 @@ export default function Balance({
     try {
       provider.getBalance(userAddress).then(setBalance)
     } catch (e) {
-      console.log(e)
+      console.log('Error getting balance', e)
     }
   })
 

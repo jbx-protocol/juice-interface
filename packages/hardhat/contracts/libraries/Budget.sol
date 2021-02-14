@@ -37,14 +37,14 @@ library Budget {
         uint256 duration;
         // The amount of available funds that have been tapped by the owner.
         uint256 tapped;
-        // The percentage of overflow to reserve for the owner once the Budget has expired.
+        // The percentage of tickets to reserve for the owner once the Budget has expired.
         uint256 o;
         // The percentage of overflow to reserve for a specified beneficiary once the Budget has expired.
         uint256 b;
         // The specified beneficiary.
         address bAddress;
         // If the reserved tickets have been minted.
-        bool hasMintedReserves;
+        bool hasDistributedReserves;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
@@ -133,19 +133,6 @@ library Budget {
     }
 
     /** 
-        @notice Returns the percentage of overflow that is unreserved.
-        @param _withholding An additional percentage to withhold.
-        @return _percentage The percentage.
-    */
-    function _unreserved(Data memory self, uint256 _withholding)
-        internal
-        pure
-        returns (uint256)
-    {
-        return uint256(100).sub(self.o).sub(self.b).sub(_withholding);
-    }
-
-    /** 
         @notice The weight derived from the current weight and the discountRate.
         @return _weight The new weight.
     */
@@ -159,10 +146,6 @@ library Budget {
         @return The resulting amount.
     */
     function _tappableAmount(Data memory self) internal pure returns (uint256) {
-        // uint256 _allowed =
-        //     self.stream
-        //         ? block.timestamp.sub(self.start).mul(100).div(self.target)
-        //         : self.target;
         return Math.min(self.target, self.total).sub(self.tapped);
     }
 

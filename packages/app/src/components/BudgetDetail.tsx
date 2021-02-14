@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import {
   Button,
   Descriptions,
@@ -7,6 +6,7 @@ import {
   Input,
   Progress,
   Space,
+  Tooltip,
 } from 'antd'
 import moment from 'moment'
 import { useState } from 'react'
@@ -19,28 +19,23 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
-import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
+import { isEmptyAddress } from '../utils/isEmptyAddress'
 
 export default function BudgetDetail({
   budget,
   contracts,
   transactor,
   userAddress,
-  provider,
 }: {
   budget?: Budget
   contracts?: Contracts
   transactor?: Transactor
   userAddress?: string
-  provider?: JsonRpcProvider
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
 
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(budget?.want, provider),
-    functionName: 'name',
-  })
+  const wantTokenName = 'DAI'
 
   const tappableAmount = useContractReader<BigNumber>({
     contract: contracts?.BudgetStore,
@@ -109,6 +104,22 @@ export default function BudgetDetail({
       ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
       : undefined
 
+  const toolTipLabel = (labelText: string, tip: string) => (
+    <span>
+      {labelText}
+      <Tooltip title={tip}>
+        <span
+          style={{
+            marginLeft: 4,
+            cursor: 'help',
+          }}
+        >
+          💡
+        </span>
+      </Tooltip>
+    </span>
+  )
+
   return (
     <div>
       <div
@@ -152,31 +163,21 @@ export default function BudgetDetail({
       </div>
 
       <Descriptions {...descriptionsStyle} column={2} bordered>
-        <Descriptions.Item label={pending ? null : 'Started'}>
-          {pending ? (
-            <span style={{ fontWeight: 500, fontStyle: 'italic' }}>
-              Awaiting first payment...
-            </span>
-          ) : (
-            formatDate(budget.start.toNumber() * 1000)
-          )}
+        <Descriptions.Item label="Started">
+          {formatDate(budget.start.toNumber() * 1000)}
         </Descriptions.Item>
 
         <Descriptions.Item label="Duration">
           {expandedTimeString(budget && budget.duration.toNumber() * 1000)}
         </Descriptions.Item>
 
-        {pending ? null : (
-          <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
-            {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
+          {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
+        </Descriptions.Item>
 
-        {pending ? null : (
-          <Descriptions.Item label="Tapped">
-            {budget.tapped.toString()} {wantTokenName}
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item label="Tapped">
+          {budget.tapped.toString()} {wantTokenName}
+        </Descriptions.Item>
       </Descriptions>
 
       {budget?.link ? (
@@ -186,7 +187,9 @@ export default function BudgetDetail({
             margin: gutter,
           }}
         >
-          <Link to={budget.link}>{budget.link}</Link>
+          <a href={budget.link} target="_blank" rel="noopener noreferrer">
+            {budget.link}
+          </a>
         </div>
       ) : null}
 
@@ -195,22 +198,27 @@ export default function BudgetDetail({
           <Descriptions.Item label="Weight">
             {budget.weight.toString()}
           </Descriptions.Item>
-          <Descriptions.Item label="Discount rate">
-            {budget.discountRate.toString()}
+          <Descriptions.Item
+            label={toolTipLabel(
+              'Discount Rate',
+              'Long as ss string Long as ss string Long as ss ',
+            )}
+          >
+            {budget.discountRate.toString()} %
           </Descriptions.Item>
           <Descriptions.Item label="Reserved for owner">
             {budget.o.toString()}%
           </Descriptions.Item>
-          {budget.bAddress ? (
+          {isEmptyAddress(budget.bAddress) ? null : (
             <Descriptions.Item label="Reserved for beneficiary">
               {budget.b.toString()}%
             </Descriptions.Item>
-          ) : null}
-          {budget.bAddress ? (
+          )}
+          {isEmptyAddress(budget.bAddress) ? null : (
             <Descriptions.Item label="Beneficiary address" span={2}>
-              {budget.bAddress.toString()}%
+              {budget.bAddress.toString()}
             </Descriptions.Item>
-          ) : null}
+          )}
           <Descriptions.Item label="Withdrawable">
             <div
               style={{

@@ -6,9 +6,9 @@ import { GuardedRoute, GuardFunction, GuardProvider } from 'react-router-guards'
 
 import Gimme from '../components/Gimme'
 import Loading from '../components/Loading'
-import { createTransactor } from '../utils/Transactor'
 import { useGasPrice } from '../hooks/GasPrice'
 import { Contracts } from '../models/contracts'
+import { createTransactor } from '../utils/Transactor'
 import ConfigureBudget from './ConfigureBudget'
 import Landing from './landing/Landing'
 import Owner from './Owner'
@@ -18,13 +18,11 @@ export default function Router({
   contracts,
   userProvider,
   userAddress,
-  loadWeb3Modal,
 }: {
   hasBudget?: boolean
   contracts?: Contracts
   userProvider?: JsonRpcProvider
   userAddress?: string
-  loadWeb3Modal: VoidFunction
 }) {
   const gasPrice = useGasPrice('fast')
 
@@ -50,7 +48,13 @@ export default function Router({
       <GuardProvider guards={[budgetGuard]}>
         <Switch>
           <GuardedRoute exact path="/">
-            <Landing userAddress={userAddress} onNeedAddress={loadWeb3Modal} />
+            <Landing
+              userAddress={userAddress}
+              hasBudget={hasBudget}
+              contracts={contracts}
+              transactor={transactor}
+              userProvider={userProvider}
+            />
           </GuardedRoute>
           <GuardedRoute path="/gimme">
             <Gimme

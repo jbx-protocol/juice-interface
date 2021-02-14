@@ -172,24 +172,6 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "clearWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_standbyPeriod",
         "type": "uint256"
@@ -266,7 +248,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -372,7 +354,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -478,7 +460,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -584,7 +566,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -690,7 +672,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -796,7 +778,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -899,30 +881,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
-      }
-    ],
-    "name": "getWantedTokens",
-    "outputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -1145,7 +1103,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -1183,29 +1141,6 @@
       }
     ],
     "name": "setOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "trackWantedToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

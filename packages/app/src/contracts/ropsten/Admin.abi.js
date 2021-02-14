@@ -15,16 +15,6 @@ module.exports = [
         "internalType": "string",
         "name": "_ticketSymbol",
         "type": "string"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_ticketReward",
-        "type": "address"
-      },
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "_router",
-        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -91,11 +81,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_duration",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_want",
-        "type": "address"
       },
       {
         "internalType": "string",
@@ -225,12 +210,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_minRewardAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minSwappedAmount",
+        "name": "_minReturn",
         "type": "uint256"
       },
       {
@@ -270,19 +250,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -291,24 +258,6 @@ module.exports = [
       }
     ],
     "name": "setBudgetOwner",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20[]",
-        "name": "_list",
-        "type": "address[]"
-      }
-    ],
-    "name": "setWantTokenAllowList",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -344,19 +293,6 @@ module.exports = [
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ticketReward",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",

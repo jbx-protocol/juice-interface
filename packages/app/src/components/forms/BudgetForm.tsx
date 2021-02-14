@@ -1,60 +1,25 @@
-import { Form, FormProps, Input, Select } from 'antd'
+import { Form, FormProps, Input } from 'antd'
 import React from 'react'
-
-import { LabelVal } from '../../models/label-val'
 
 export default function BudgetForm({
   props,
   header,
-  tokenOptions,
 }: {
   props: FormProps<{
     duration: number
     target: number
-    want: string
     link: string
   }>
   header?: string
-  tokenOptions?: LabelVal<string>[]
 }) {
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 12 },
-  }
-
-  const tokenSymbol = tokenOptions?.find(
-    opt => opt.value === props.form?.getFieldValue('want'),
-  )?.label
-
   return (
-    <Form {...layout} {...props}>
+    <Form layout="vertical" {...props}>
       {header ? (
-        <Form.Item wrapperCol={{ offset: 6 }}>
+        <Form.Item>
           <h2>{header}</h2>
         </Form.Item>
       ) : null}
 
-      <Form.Item
-        extra="The ERC-20 token that your budget will receive payments in."
-        name="want"
-        label="Payment token"
-      >
-        <Select>
-          {tokenOptions?.map((opt, i) => (
-            <Select.Option key={i} value={opt.value}>
-              {opt.label}
-              <span
-                style={{
-                  fontSize: '.7rem',
-                  marginLeft: 6,
-                }}
-              >
-                {opt.value}
-              </span>
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
       <Form.Item
         extra="The amount of money you want/need in order to absolutely crush your mission statement."
         name="target"
@@ -65,7 +30,7 @@ export default function BudgetForm({
           className="align-end"
           placeholder="0"
           type="number"
-          suffix={tokenSymbol}
+          suffix="DAI"
         />
       </Form.Item>
       <Form.Item

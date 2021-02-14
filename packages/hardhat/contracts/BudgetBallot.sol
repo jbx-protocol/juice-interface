@@ -50,7 +50,7 @@ contract BudgetBallot is IBudgetBallot {
         Budget.Data memory _budget = _budgetStore.getBudget(_budgetId);
 
         uint256 _standbyExpiry =
-            _budget.configured.add(juicer.STANDBY_PERIOD());
+            _budget.configured.add(juicer.RECONFIGURATION_VOTING_PERIOD());
 
         // The vote must be cast before the standy period expires.
         require(now < _standbyExpiry, "BudgetBallot::vote: EXPIRED");

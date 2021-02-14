@@ -39,7 +39,7 @@ export default function Router({
     next()
   }
 
-  return hasBudget === undefined ? (
+  return userProvider && hasBudget === undefined ? (
     <div style={{ flex: 1 }}>
       <Loading />
     </div>

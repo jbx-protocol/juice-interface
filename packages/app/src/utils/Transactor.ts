@@ -26,6 +26,9 @@ export function createTransactor({
   return async (
     tx: Deferrable<TransactionRequest>,
     onConfirmed?: (e: TransactionEvent, signer: JsonRpcSigner) => void,
+    onCancelled?:
+      | ((e: TransactionEvent, signer: JsonRpcSigner) => void)
+      | boolean,
   ) => {
     const signer = provider.getSigner()
 
@@ -40,6 +43,13 @@ export function createTransactor({
         console.log('HANDLE TX', txInformation)
         if (onConfirmed && txInformation.transaction.status === 'confirmed')
           onConfirmed(txInformation, signer)
+        if (onCancelled && txInformation.transaction.status === 'cancelled') {
+          if (onCancelled === true) {
+            if (onConfirmed) onConfirmed(txInformation, signer)
+          } else {
+            onCancelled(txInformation, signer)
+          }
+        }
       },
     }
     const notify = Notify(options)

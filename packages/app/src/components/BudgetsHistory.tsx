@@ -43,6 +43,7 @@ export default function BudgetsHistory({
         budget.id.eq(0)
       )
         return
+
       setBudgets([...budgets, budget])
       setPoolNumbers([
         ...poolNumbers,
@@ -53,17 +54,19 @@ export default function BudgetsHistory({
 
   const budgetElems = (
     <Space direction="vertical" size="large">
-      {budgets.length
-        ? budgets.map((budget, index) => (
-            <BudgetDetail
-              key={index}
-              userAddress={userAddress}
-              budget={budget}
-              transactor={transactor}
-              contracts={contracts}
-            />
-          ))
-        : 'No history'}
+      {budgets.length ? (
+        budgets.map((budget, index) => (
+          <BudgetDetail
+            key={index}
+            userAddress={userAddress}
+            budget={budget}
+            transactor={transactor}
+            contracts={contracts}
+          />
+        ))
+      ) : (
+        <div style={{ padding: 25 }}>No history</div>
+      )}
     </Space>
   )
 
@@ -71,7 +74,7 @@ export default function BudgetsHistory({
     <div>
       {budgetElems}
 
-      {allPoolsLoaded ? null : <div>Loading...</div>}
+      {allPoolsLoaded ? null : <div style={{ padding: 25 }}>Loading...</div>}
     </div>
   )
 }

@@ -62,8 +62,10 @@ export default function Reserves({
       owner: budget.owner,
     })
 
-    transactor(contracts.Juicer.mintReservedTickets(budget.owner), () =>
-      setLoadingMint(false),
+    transactor(
+      contracts.Juicer.mintReservedTickets(budget.owner),
+      () => setLoadingMint(false),
+      true,
     )
   }
 

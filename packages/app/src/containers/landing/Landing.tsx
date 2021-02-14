@@ -1,5 +1,5 @@
 import { Button, Col, Row, Space, Timeline, TimelineItemProps } from 'antd'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 
 import Footer from '../../components/Footer'
@@ -31,15 +31,15 @@ export default function Landing({
     'Any mission with predictable expenses',
   ]
 
+  const wrapper: CSSProperties = {
+    maxWidth: totalMaxWidth,
+    margin: '0 auto',
+  }
+
   return (
     <div>
       <section style={{ padding: 40 }}>
-        <div
-          style={{
-            maxWidth: totalMaxWidth,
-            margin: '0 auto',
-          }}
-        >
+        <div style={wrapper}>
           <Row gutter={40}>
             <Col span={14} style={{ display: 'flex', alignItems: 'center' }}>
               <div
@@ -74,8 +74,8 @@ export default function Landing({
                       fontSize: '1rem',
                     }}
                   >
-                    {listData.map(data => (
-                      <Space>
+                    {listData.map((data, i) => (
+                      <Space key={i}>
                         <img src="/assets/bolt.png" style={{ height: 24 }} />{' '}
                         {data}
                       </Space>
@@ -110,12 +110,7 @@ export default function Landing({
       </section>
 
       <section>
-        <Row
-          style={{
-            maxWidth: totalMaxWidth,
-            margin: '0 auto',
-          }}
-        >
+        <Row style={wrapper}>
           <Col span={10}>
             <img
               style={{
@@ -179,6 +174,7 @@ export default function Landing({
                   surplus.
                 </Timeline.Item>
               </Timeline>
+
               <div>
                 <p>
                   The collective goal is to optimize for overflow over time.
@@ -203,9 +199,8 @@ export default function Landing({
         <Row
           gutter={80}
           style={{
+            ...wrapper,
             padding: 80,
-            maxWidth: totalMaxWidth,
-            margin: '0 auto',
           }}
         >
           <Col span={12}>
@@ -225,6 +220,7 @@ export default function Landing({
               make sure your bags stay SAFU and have a chance to grow.
             </p>
           </Col>
+
           <Col span={12}>
             <h2 style={{ fontWeight: 600 }}>
               Organic, consistent cashflow is key
@@ -245,6 +241,7 @@ export default function Landing({
             <p>Juice is that solution.</p>
           </Col>
         </Row>
+
         <div>
           <img
             src="/assets/fountain_of_juice.png"
@@ -254,20 +251,15 @@ export default function Landing({
         </div>
       </section>
 
-      <section
-        style={{
-          padding: 80,
-          background: '#EBAF4D',
-        }}
-      >
+      <section style={{ background: '#EBAF4D' }}>
         <div
           style={{
+            ...wrapper,
             display: 'grid',
             gridAutoFlow: 'column',
-            maxWidth: totalMaxWidth,
-            columnGap: 60,
-            margin: '0 auto',
             alignItems: 'center',
+            columnGap: 60,
+            padding: 80,
           }}
         >
           <div>
@@ -295,6 +287,7 @@ export default function Landing({
               </Button>
             )}
           </div>
+
           <img
             style={{ maxWidth: 440 }}
             src="/assets/banana_dwgj.png"
@@ -316,6 +309,7 @@ export default function Landing({
           economy to make Juice possible.
         </h3>
       </div>
+
       <Footer />
     </div>
   )

@@ -98,7 +98,7 @@ export default function Landing({
                 surplus.
               </p>
               <p>---</p>
-              <p>The collective goal is to optimize for overflow over time.</p>
+              <p>The goal is to optimize for overflow over time.</p>
               <div
                 style={{
                   display: 'grid',

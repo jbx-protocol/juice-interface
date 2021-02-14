@@ -20,7 +20,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function claim() external returns (uint256 amount);
 
-    function getDistributableReserves(address _issuer)
+    function getReserves(address _issuer, bool _onlyDistributable)
         external
         view
         returns (

@@ -86,11 +86,12 @@ contract Juicer is IJuicer {
         @dev Reserved tickets are only mintable once a Budget expires.
         @dev This logic should be the same as `distributeReserves` in Juicer.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
+        @param _onlyDistributable Only return reserves that are distributable.
         @return issuerTickets The amount of unminted reserved tickets belonging to issuer of the tickets.
         @return adminFees The amount of fees belonging to the admin.
         @return beneficiaryDonations The amount of donations belonging to the beneficiaries.
     */
-    function getDistributableReserves(address _issuer)
+    function getReserves(address _issuer, bool _onlyDistributable)
         public
         view
         override
@@ -116,7 +117,10 @@ contract Juicer is IJuicer {
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
         while (_budget.id > 0 && !_budget.hasDistributedReserves) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (_budget._state() == Budget.State.Redistributing) {
+            if (
+                !_onlyDistributable ||
+                _budget._state() == Budget.State.Redistributing
+            ) {
                 adminFees = adminFees.add(_budget.total.mul(fee).div(100));
 
                 if (_budget.o > 0) {

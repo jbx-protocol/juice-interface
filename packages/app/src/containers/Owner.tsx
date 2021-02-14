@@ -299,7 +299,7 @@ export default function Owner({
                   queuedBudget ? (
                     <BudgetDetail
                       userAddress={userAddress}
-                      budget={currentBudget}
+                      budget={queuedBudget}
                       contracts={contracts}
                       transactor={transactor}
                     />

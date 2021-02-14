@@ -18,11 +18,13 @@ export default function Router({
   contracts,
   userProvider,
   userAddress,
+  onNeedProvider,
 }: {
   hasBudget?: boolean
   contracts?: Contracts
   userProvider?: JsonRpcProvider
   userAddress?: string
+  onNeedProvider?: VoidFunction
 }) {
   const gasPrice = useGasPrice('fast')
 
@@ -54,6 +56,7 @@ export default function Router({
               contracts={contracts}
               transactor={transactor}
               userProvider={userProvider}
+              onNeedProvider={onNeedProvider}
             />
           </GuardedRoute>
           <GuardedRoute path="/gimme">

@@ -1,4 +1,4 @@
-import { Button, Space, Timeline, TimelineItemProps } from 'antd'
+import { Button, Col, Row, Space, Timeline, TimelineItemProps } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -51,8 +51,8 @@ export default function Landing({
             <div
               style={{
                 display: 'grid',
-                rowGap: 50,
-                paddingTop: 40,
+                rowGap: 40,
+                paddingTop: 20,
               }}
             >
               {bigHeader('Taste the fruits of your labor')}
@@ -242,7 +242,12 @@ export default function Landing({
         />
       </section> */}
 
-      <section style={{ padding: 80, background: colors.light }}>
+      <section
+        style={{
+          padding: 80,
+          background: colors.light,
+        }}
+      >
         <div
           style={{
             display: 'grid',
@@ -283,6 +288,56 @@ export default function Landing({
               </Button>
             )}
           </div>
+        </div>
+      </section>
+
+      <section>
+        <Row
+          gutter={80}
+          style={{
+            padding: 80,
+            paddingBottom: 20,
+          }}
+        >
+          <Col span={12}>
+            <h2>Old business models don’t work on the open internet.</h2>
+            <p>
+              Users are now in charge, and they expect transparency, algorithmic
+              assurances, and public governance out of the protocols they depend
+              on.
+            </p>
+            <p>
+              Though the power and the risk are shifting away from institutions
+              and into the hands of individuals, the integrity of this
+              regenerative economy still depends on buidlers, workers, creators,
+              innovators, and maintainers. They’re out here self-organizing to
+              make sure your bags stay SAFU and have a chance to grow.
+            </p>
+          </Col>
+          <Col span={12}>
+            <h2>Organic, consistent cashflow is key</h2>
+            <p>
+              Until now, there hasn’t been an organic way to provide consistent
+              cashflow to these core teams and casual contributors, many of whom
+              start out young and broke and unable to buy bags. We’ve been
+              patching this need with legacy ideas like golden handcuffs,
+              unreliable ideas like grants, and controversial ideas like
+              whimsically minting token supply for dev treasuries.{' '}
+            </p>
+            <p>
+              The internet of work, DeWork, needs a juicier solution – one that
+              extends the best parts of DeFi, one that promotes cooperation,
+              flexibility, and immediacy.
+            </p>
+            <p>Juice is that solution.</p>
+          </Col>
+        </Row>
+        <div>
+          <img
+            src="/assets/fountain_of_juice.png"
+            alt="Fountain of Juice"
+            style={{ width: '100vw' }}
+          />
         </div>
       </section>
 

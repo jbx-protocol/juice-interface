@@ -25,15 +25,6 @@ interface ITicketsController {
         uint256 swappedAmount
     );
 
-    function getReservedTickets(address _issuer)
-        external
-        view
-        returns (
-            uint256 issuers,
-            uint256 beneficiaries,
-            uint256 admins
-        );
-
     function issueTickets(string calldata _name, string calldata _symbol)
         external;
 

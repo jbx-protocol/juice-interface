@@ -31,7 +31,7 @@ export default function Rewards({
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingMint, setLoadingMint] = useState<boolean>()
 
-  const claimableProportion = BigNumber.from(618).toHexString()
+  const claimableProportion = BigNumber.from(382).toHexString()
 
   const ticketContract = erc20Contract(ticketAddress, provider)
 

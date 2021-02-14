@@ -2,9 +2,6 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import {
-    UniswapV2Router02
-} from "@uniswap/v2-periphery/contracts/UniswapV2Router02.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -30,9 +27,6 @@ abstract contract JuiceAdmin is Ownable {
 
     /// @notice The Juicer contract that is being used.
     IJuicer public juicer;
-
-    /// @dev The router to use to execute swaps.
-    UniswapV2Router02 public router;
 
     /// @dev The name of this Budget owner's tickets.
     string public ticketName;

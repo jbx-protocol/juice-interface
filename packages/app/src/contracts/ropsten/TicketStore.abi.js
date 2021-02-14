@@ -113,17 +113,12 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
       }
     ],
-    "name": "addClaimableRewards",
+    "name": "addClaimable",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -132,39 +127,6 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_to",
-        "type": "address"
-      }
-    ],
-    "name": "addSwappable",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -203,7 +165,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "getClaimableRewardsAmount",
+    "name": "getClaimableAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -271,25 +233,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "getTicketRewardToken",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -449,7 +392,7 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract ITickets",
+        "internalType": "contract Tickets",
         "name": "_tickets",
         "type": "address"
       }
@@ -480,76 +423,14 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
       }
     ],
-    "name": "subtractClaimableRewards",
+    "name": "subtractClaimable",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_to",
-        "type": "address"
-      }
-    ],
-    "name": "subtractSwappable",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "swappable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -563,7 +444,7 @@ module.exports = [
     "name": "tickets",
     "outputs": [
       {
-        "internalType": "contract ITickets",
+        "internalType": "contract Tickets",
         "name": "",
         "type": "address"
       }

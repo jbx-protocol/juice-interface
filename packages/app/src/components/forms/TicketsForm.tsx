@@ -1,30 +1,24 @@
-import { Form, FormProps, Input, Select } from 'antd'
+import { Form, FormProps, Input } from 'antd'
 import React from 'react'
-
-import { LabelVal } from '../../models/label-val'
 
 export default function TicketsForm({
   props,
   header,
-  tokenOptions,
 }: {
-  props: FormProps<{ name: string; symbol: string; rewardToken: string }>
+  props: FormProps<{ name: string; symbol: string }>
   header?: string
-  tokenOptions?: LabelVal<string>[]
 }) {
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 12 },
+  function capitalizeTicker(value: string) {
+    props.form?.setFieldsValue({ symbol: value.toUpperCase() })
   }
 
-  return tokenOptions?.length ? (
-    <Form {...props} {...layout}>
+  return (
+    <Form layout="vertical" {...props}>
       {header ? (
-        <Form.Item wrapperCol={{ offset: 6 }}>
+        <Form.Item>
           <h2>{header}</h2>
         </Form.Item>
       ) : null}
-
       <Form.Item
         extra="The name of your ticket token is used across web3."
         name="name"
@@ -39,29 +33,12 @@ export default function TicketsForm({
         label="Ticker"
         rules={[{ required: true }]}
       >
-        <Input prefix="t" placeholder="PEACH" />
-      </Form.Item>
-      <Form.Item
-        extra="The ERC-20 token that your ticket tokens are redeemable for."
-        name="rewardToken"
-        label="Reward token"
-      >
-        <Select>
-          {tokenOptions?.map((opt, i) => (
-            <Select.Option key={i} value={opt.value}>
-              {opt.label}
-              <span
-                style={{
-                  fontSize: '.7rem',
-                  marginLeft: 6,
-                }}
-              >
-                {opt.value}
-              </span>
-            </Select.Option>
-          ))}
-        </Select>
+        <Input
+          prefix="t"
+          placeholder="PEACH"
+          onChange={e => capitalizeTicker(e.target.value)}
+        />
       </Form.Item>
     </Form>
-  ) : null
+  )
 }

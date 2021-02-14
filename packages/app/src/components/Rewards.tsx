@@ -19,6 +19,7 @@ export default function Rewards({
   userAddress,
   ticketAddress,
   provider,
+  descriptionsStyle,
 }: {
   transactor?: Transactor
   contracts?: Contracts
@@ -26,10 +27,10 @@ export default function Rewards({
   userAddress?: string
   ticketAddress?: string
   provider?: JsonRpcProvider
+  descriptionsStyle?: DescriptionsProps
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
-  const [loadingMint, setLoadingMint] = useState<boolean>()
 
   const claimableProportion = BigNumber.from(382).toHexString()
 
@@ -52,57 +53,21 @@ export default function Rewards({
     functionName: 'totalSupply',
     shouldUpdate: bigNumbersEq,
   })
-  const rewardTokenAddress = useContractReader<string>({
-    contract: contracts?.TicketStore,
-    functionName: 'getTicketRewardToken',
-    args: [budget?.owner],
-  })
-  const rewardTokenName = useContractReader<string>({
-    contract: erc20Contract(rewardTokenAddress, provider),
-    functionName: 'name',
-  })
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(budget?.want, provider),
-    functionName: 'name',
-  })
-  const swappableAmount = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
-    functionName: 'swappable',
-    args: [budget?.owner, budget?.want, rewardTokenAddress],
-    shouldUpdate: bigNumbersEq,
-  })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
     functionName: 'claimable',
-    args: [budget?.owner, rewardTokenAddress],
+    args: [budget?.owner],
     shouldUpdate: bigNumbersEq,
   })
   const yourClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
-    functionName: 'getClaimableRewardsAmount',
+    functionName: 'getClaimableAmount',
     args: [
       userAddress,
       ticketsBalance?.toHexString(),
       budget?.owner,
       claimableProportion,
     ],
-  })
-  const reserveAmounts = useContractReader<{
-    admins: BigNumber
-    beneficiaries: BigNumber
-    issuers: BigNumber
-  }>({
-    contract: contracts?.Juicer,
-    functionName: 'getReservedTickets',
-    args: [budget?.owner],
-    shouldUpdate: (val, old) => {
-      if (!val || (!val && !old)) return false
-      return (
-        val.admins.eq(old?.admins ?? 0) &&
-        val.beneficiaries.eq(old?.beneficiaries ?? 0) &&
-        val.issuers.eq(old?.issuers ?? 0)
-      )
-    },
   })
 
   const share = ticketSupply?.gt(0)
@@ -111,36 +76,6 @@ export default function Rewards({
         .div(ticketSupply)
         .toString()
     : '0'
-
-  function swap() {
-    if (!transactor || !contracts || !budget || swappableAmount === undefined)
-      return
-
-    const _swappable = swappableAmount.toHexString()
-    // TODO handle conversion. Use 1:1 for now
-    const _expectedAmount = _swappable
-
-    console.log(
-      '🧃 Calling Juicer.swap(owner, want, swappable, target, expectedAmount)',
-      {
-        owner: budget.owner,
-        want: budget.want,
-        swappable: _swappable,
-        target: rewardTokenAddress,
-        expectedAmount: _expectedAmount,
-      },
-    )
-
-    transactor(
-      contracts.Juicer.swap(
-        budget.owner,
-        budget.want,
-        _swappable,
-        rewardTokenAddress,
-        _expectedAmount,
-      ),
-    )
-  }
 
   function redeem() {
     if (!transactor || !contracts) return
@@ -159,54 +94,18 @@ export default function Rewards({
     )
   }
 
-  function mint() {
-    if (!transactor || !contracts || !budget) return
-
-    setLoadingMint(true)
-
-    console.log('🧃 Calling Juicer.mintReservedTickets(owner)', {
-      owner: budget.owner,
-    })
-
-    transactor(contracts.Juicer.mintReservedTickets(budget.owner), () =>
-      setLoadingMint(false),
-    )
-  }
-
-  const descriptionsStyle: DescriptionsProps = {
-    labelStyle: { fontWeight: 600 },
-    size: 'middle',
-  }
-
   if (!budget) return null
+
+  const rewardTokenName = 'DAI'
 
   return (
     <div>
-      <Descriptions {...descriptionsStyle} column={1} bordered>
+      <Descriptions {...descriptionsStyle} column={1}>
         <Descriptions.Item label={'Your ticket balance'}>
           {orEmpty(ticketsBalance?.toString())} {ticketSymbol}
         </Descriptions.Item>
         <Descriptions.Item label="Your ticket share">
           {orEmpty(share) + '%'}
-        </Descriptions.Item>
-        <Descriptions.Item label="Reward token">
-          {orEmpty(rewardTokenName)}
-        </Descriptions.Item>
-        <Descriptions.Item label="Overflow needing swap">
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            {orEmpty(swappableAmount?.toString())} {wantTokenName}
-            {swappableAmount?.gt(0) ? (
-              <Button htmlType="submit" onClick={swap}>
-                Swap
-              </Button>
-            ) : null}
-          </div>
         </Descriptions.Item>
         <Descriptions.Item label="Unclaimed">
           {orEmpty(totalClaimableAmount?.toString())} {rewardTokenName}
@@ -214,33 +113,18 @@ export default function Rewards({
         <Descriptions.Item label="Claimable by you">
           {orEmpty(yourClaimableAmount?.toString())} {rewardTokenName}
         </Descriptions.Item>
-        <Descriptions.Item label="Admin reserves">
-          {orEmpty(reserveAmounts?.admins?.toString())}
-        </Descriptions.Item>
-        <Descriptions.Item label="Beneficiaries reserves">
-          {orEmpty(reserveAmounts?.beneficiaries?.toString())}
-        </Descriptions.Item>
-        <Descriptions.Item label="Issuers reserves">
-          {orEmpty(reserveAmounts?.issuers?.toString())}
-        </Descriptions.Item>
       </Descriptions>
-
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
-          padding: 25,
-          textAlign: 'right',
-          width: '100%',
+          justifyContent: 'flex-end',
+          marginTop: 10,
         }}
       >
-        <Button onClick={mint} loading={loadingMint}>
-          Mint reserves
-        </Button>
         <Space align="baseline">
           <Input
             defaultValue={ticketsBalance?.toString()}
-            suffix={orEmpty(rewardTokenName)}
+            suffix={rewardTokenName}
             value={redeemAmount?.toString()}
             onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
           />

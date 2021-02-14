@@ -10,17 +10,6 @@ contract YourContract is JuiceAdmin {
         IJuicer _controller,
         IERC20 _want,
         string memory _ticketName,
-        string memory _ticketSymbol,
-        IERC20 _ticketReward,
-        UniswapV2Router02 _router
-    )
-        public
-        JuiceAdmin(
-            _controller,
-            _ticketName,
-            _ticketSymbol,
-            _ticketReward,
-            _router
-        )
-    {}
+        string memory _ticketSymbol
+    ) public JuiceAdmin(_controller, _ticketName, _ticketSymbol) {}
 }

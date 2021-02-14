@@ -172,24 +172,6 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "clearWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_standbyPeriod",
         "type": "uint256"
@@ -907,30 +889,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
-      }
-    ],
-    "name": "getWantedTokens",
-    "outputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -1183,29 +1141,6 @@
       }
     ],
     "name": "setOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "trackWantedToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

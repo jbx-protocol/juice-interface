@@ -22,13 +22,6 @@ contract BudgetStore is Store, IBudgetStore {
     // The official record of all Budgets ever created.
     mapping(uint256 => Budget.Data) private budgets;
 
-    // Tracks the kinds of tokens an owner has `want`ed relative to their Budget's reward token.
-    mapping(address => mapping(IERC20 => mapping(IERC20 => bool)))
-        private wantedTokenTracker;
-
-    // The kinds of tokens an owner has `want`ed relative to their Budget's token.
-    mapping(address => mapping(IERC20 => IERC20[])) private wantedTokens;
-
     // --- public properties --- //
 
     /// @notice A big number to base ticket issuance off of.
@@ -142,55 +135,9 @@ contract BudgetStore is Store, IBudgetStore {
         return budgets[_budgetId]._tappableAmount();
     }
 
-    /**
-        @notice All tokens that this owner has `want`ed.
-        @param _owner The owner to get wanted tokens for.
-        @param _rewardToken The token rewarded for the wanted tokens.
-        @return _tokens An array of tokens.
-    */
-    function getWantedTokens(address _owner, IERC20 _rewardToken)
-        external
-        view
-        override
-        returns (IERC20[] memory)
-    {
-        return wantedTokens[_owner][_rewardToken];
-    }
-
     // --- external transactions --- //
 
     constructor() public {}
-
-    /**
-        @notice Tracks the kinds of tokens the specified owner has accepted historically.
-        @param _owner The owner associate the token with.
-        @param _rewardToken The token that the `want`ed token can be rewarded with.
-        @param _token The token to track.
-    */
-    function trackWantedToken(
-        address _owner,
-        IERC20 _rewardToken,
-        IERC20 _token
-    ) external override onlyAdmin {
-        if (wantedTokenTracker[_owner][_rewardToken][_token]) return;
-
-        wantedTokens[_owner][_rewardToken].push(_token);
-        wantedTokenTracker[_owner][_rewardToken][_token] = true;
-    }
-
-    /**
-        @notice Cleans the tracking array for an owner and a reward token.
-        @dev This is never routinely called, it's here precautionarily in case an owner cycles through several `want` tokens.
-        @param _owner The owner of the Tickets responsible for the funds.
-        @param _token The tokens to clean accepted tokens for.
-    */
-    function clearWantedTokens(address _owner, IERC20 _token)
-        external
-        override
-        onlyAdmin
-    {
-        delete wantedTokens[_owner][_token];
-    }
 
     /**
         @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
@@ -213,7 +160,7 @@ contract BudgetStore is Store, IBudgetStore {
         if (
             budget.id > 0 &&
             budget.configured.add(_standbyPeriod) < block.timestamp &&
-            votes[budget.id][budget.configured][true] >=
+            votes[budget.id][budget.configured][true] >
             votes[budget.id][budget.configured][false]
         ) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.

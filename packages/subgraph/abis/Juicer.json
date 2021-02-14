@@ -17,13 +17,8 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20[]",
-        "name": "_wantTokenAllowList",
-        "type": "address[]"
-      },
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "_router",
+        "internalType": "contract IERC20",
+        "name": "_dai",
         "type": "address"
       }
     ],
@@ -117,12 +112,6 @@
         "internalType": "string",
         "name": "symbol",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "rewardToken",
-        "type": "address"
       }
     ],
     "name": "IssueTickets",
@@ -170,6 +159,12 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "tickets",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "address",
         "name": "beneficiary",
@@ -178,14 +173,20 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "redeemedAmount",
+        "name": "amount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "rewardAmount",
+        "name": "returnAmount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IERC20",
+        "name": "returnToken",
+        "type": "address"
       }
     ],
     "name": "Redeem",
@@ -227,7 +228,7 @@
       {
         "indexed": false,
         "internalType": "contract IERC20",
-        "name": "want",
+        "name": "token",
         "type": "address"
       }
     ],
@@ -373,11 +374,6 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_want",
-        "type": "address"
-      },
-      {
         "internalType": "string",
         "name": "_link",
         "type": "string"
@@ -412,6 +408,19 @@
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dai",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -457,19 +466,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getWantTokenAllowList",
-    "outputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "string",
@@ -480,11 +476,6 @@
         "internalType": "string",
         "name": "_symbol",
         "type": "string"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_rewardToken",
-        "type": "address"
       }
     ],
     "name": "issueTickets",
@@ -531,11 +522,6 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      },
-      {
         "internalType": "address",
         "name": "_beneficiary",
         "type": "address"
@@ -566,7 +552,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_minRewardAmount",
+        "name": "_minReturn",
         "type": "uint256"
       },
       {
@@ -578,25 +564,12 @@
     "name": "redeem",
     "outputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "rewardToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "returnAmount",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "contract UniswapV2Router02",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -608,52 +581,6 @@
       }
     ],
     "name": "setAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20[]",
-        "name": "_list",
-        "type": "address[]"
-      }
-    ],
-    "name": "setWantTokenAllowList",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minSwappedAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "swap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

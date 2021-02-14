@@ -142,10 +142,10 @@ contract BudgetStore is Store, IBudgetStore {
     /**
         @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
         @param _owner The address who owns the Budget to look for.
-        @param _standbyPeriod The time between a Budget being configured and when it can become active.
+        @param _votingPeriod The time between a Budget being configured and when it can become active.
         @return budget The resulting Budget.
     */
-    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
+    function ensureActiveBudget(address _owner, uint256 _votingPeriod)
         external
         override
         onlyAdmin
@@ -159,9 +159,11 @@ contract BudgetStore is Store, IBudgetStore {
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
         if (
             budget.id > 0 &&
-            budget.configured.add(_standbyPeriod) < block.timestamp &&
-            votes[budget.id][budget.configured][true] >=
-            votes[budget.id][budget.configured][false]
+            ((budget.configured.add(_votingPeriod) < block.timestamp &&
+                votes[budget.id][budget.configured][true] >
+                votes[budget.id][budget.configured][false]) ||
+                // allow if this is the first budget and it hasn't received payments.
+                (budget.number == 1 && budget.total == 0))
         ) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
@@ -172,12 +174,7 @@ contract BudgetStore is Store, IBudgetStore {
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
         Budget.Data storage _newBudget =
-            _initBudget(
-                budget.owner,
-                budget._determineNextStart(),
-                budget._derivedWeight()
-            );
-        _newBudget._basedOn(budget);
+            _initBudget(budget.owner, budget._determineNextStart(), budget);
         return _newBudget;
     }
 
@@ -198,15 +195,15 @@ contract BudgetStore is Store, IBudgetStore {
         budget = budgets[latestBudgetId[_owner]];
         // If there's an active Budget, its end time should correspond to the start time of the new Budget.
         Budget.Data memory _aBudget = _activeBudget(_owner);
+        //Base a new budget on the latest budget if one exists.
         Budget.Data storage _newBudget =
             _aBudget.id > 0
                 ? _initBudget(
                     _owner,
                     _aBudget.start.add(_aBudget.duration),
-                    _aBudget._derivedWeight()
+                    budget
                 )
-                : _initBudget(_owner, block.timestamp, BUDGET_BASE_WEIGHT);
-        if (budget.id > 0) _newBudget._basedOn(budget);
+                : _initBudget(_owner, block.timestamp, budget);
         return _newBudget;
     }
 
@@ -251,25 +248,31 @@ contract BudgetStore is Store, IBudgetStore {
         @notice Initializes a Budget to be sustained for the sending address.
         @param _owner The owner of the Budget being initialized.
         @param _start The start time for the new Budget.
-        @param _weight The weight for the new Budget.
+        @param _latestBudget The latest budget for the owner.
         @return newBudget The initialized Budget.
     */
     function _initBudget(
         address _owner,
         uint256 _start,
-        uint256 _weight
+        Budget.Data memory _latestBudget
     ) private returns (Budget.Data storage newBudget) {
         budgetCount++;
         newBudget = budgets[budgetCount];
         newBudget.id = budgetCount;
-        newBudget.owner = _owner;
         newBudget.start = _start;
-        newBudget.previous = latestBudgetId[_owner];
-        newBudget.weight = _weight;
         newBudget.total = 0;
         newBudget.tapped = 0;
         newBudget.hasDistributedReserves = false;
         latestBudgetId[_owner] = budgetCount;
+
+        if (_latestBudget.id > 0) {
+            newBudget._basedOn(_latestBudget);
+        } else {
+            newBudget.owner = _owner;
+            newBudget.weight = BUDGET_BASE_WEIGHT;
+            newBudget.number = 1;
+            newBudget.previous = 0;
+        }
     }
 
     /**

@@ -35,7 +35,7 @@ interface IBudgetController {
         IERC20 want
     );
 
-    function STANDBY_PERIOD() external view returns (uint256);
+    function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
 
     function configureBudget(
         uint256 _target,

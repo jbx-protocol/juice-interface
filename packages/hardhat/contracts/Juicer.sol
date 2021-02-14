@@ -59,7 +59,7 @@ contract Juicer is IJuicer {
 
     /// @notice The amount of time a Budget must be in standby before it can become active.
     /// @dev This allows for a voting period of 3 days.
-    uint256 public constant override STANDBY_PERIOD = 269200;
+    uint256 public constant override RECONFIGURATION_VOTING_PERIOD = 269200;
 
     /// @notice The admin of the contract who makes admin fees.
     address public override admin;
@@ -294,7 +294,10 @@ contract Juicer is IJuicer {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data memory _budget =
-            budgetStore.ensureActiveBudget(_owner, STANDBY_PERIOD);
+            budgetStore.ensureActiveBudget(
+                _owner,
+                RECONFIGURATION_VOTING_PERIOD
+            );
 
         // Add the amount to the Budget. Takes into account the admin fee.
         _budget.total = _budget.total.add(_amount).sub(

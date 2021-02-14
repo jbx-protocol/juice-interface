@@ -21,6 +21,8 @@ library Budget {
         uint256 id;
         // The address who defined this Budget and who has access to its funds.
         address owner;
+        // The number of this budget for the owner.
+        uint256 number;
         // The ID of the owner's Budget that came before this one.
         uint256 previous;
         // A link that points to a justification for these parameters.
@@ -65,6 +67,7 @@ library Budget {
         self.link = _baseBudget.link;
         self.target = _baseBudget.target;
         self.duration = _baseBudget.duration;
+        self.owner = _baseBudget.owner;
         self.want = _baseBudget.want;
         self.discountRate = _baseBudget.discountRate;
         self.weight = _derivedWeight(_baseBudget);
@@ -72,6 +75,8 @@ library Budget {
         self.b = _baseBudget.b;
         self.bAddress = _baseBudget.bAddress;
         self.configured = _baseBudget.configured;
+        self.number = _baseBudget.number.add(1);
+        self.previous = _baseBudget.id;
     }
 
     // --- internal views --- //
@@ -114,6 +119,7 @@ library Budget {
             Data(
                 0,
                 self.owner,
+                self.number.add(1),
                 self.id,
                 self.link,
                 self.want,

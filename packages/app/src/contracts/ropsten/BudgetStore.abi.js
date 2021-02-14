@@ -173,7 +173,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_standbyPeriod",
+        "name": "_votingPeriod",
         "type": "uint256"
       }
     ],
@@ -190,6 +190,11 @@ module.exports = [
             "internalType": "address",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -299,6 +304,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
           },
@@ -402,6 +412,11 @@ module.exports = [
             "internalType": "address",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -511,6 +526,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
           },
@@ -617,6 +637,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
           },
@@ -720,6 +745,11 @@ module.exports = [
             "internalType": "address",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -1045,6 +1075,11 @@ module.exports = [
             "internalType": "address",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",

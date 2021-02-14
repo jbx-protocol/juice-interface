@@ -12,7 +12,7 @@ export default function Landing({
   userAddress?: string
   onNeedAddress: VoidFunction
 }) {
-  const totalMaxWidth = 1200
+  const totalMaxWidth = 1080
 
   const bigHeader = (text: string) => (
     <h1 style={{ fontSize: '3rem', fontWeight: 600, lineHeight: 1.2 }}>
@@ -21,7 +21,7 @@ export default function Landing({
   )
 
   const timelineItemStyle: TimelineItemProps = {
-    color: colors.dark,
+    color: colors.juiceOrange,
   }
 
   const listData = [
@@ -33,58 +33,112 @@ export default function Landing({
 
   return (
     <div>
-      <section>
+      <section style={{ padding: 40 }}>
         <div
           style={{
             maxWidth: totalMaxWidth,
-            padding: 40,
             margin: '0 auto',
           }}
         >
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '2fr 1fr',
-              columnGap: 60,
-            }}
-          >
-            <div
-              style={{
-                display: 'grid',
-                rowGap: 40,
-                paddingTop: 20,
-              }}
-            >
-              {bigHeader('Taste the fruits of your labor')}
-
+          <Row gutter={40}>
+            <Col span={14} style={{ display: 'flex', alignItems: 'center' }}>
               <div
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  fontStyle: 'italic',
+                  display: 'grid',
+                  rowGap: 40,
                 }}
               >
-                <p
+                {bigHeader('Taste the fruits of your labor')}
+
+                <div
                   style={{
-                    fontWeight: 500,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    fontStyle: 'italic',
                   }}
                 >
-                  Juice is a regenerative business model for:
-                </p>
-                {listData.map(data => (
-                  <Space
+                  <p
                     style={{
-                      marginBottom: 8,
+                      fontWeight: 500,
+                    }}
+                  >
+                    Juice is a regenerative business model for:
+                  </p>
+                  <div
+                    style={{
+                      paddingLeft: 8,
+                      display: 'grid',
+                      gridAutoFlow: 'row',
+                      rowGap: 8,
                       fontWeight: 600,
                       fontSize: '1rem',
                     }}
                   >
-                    <img src="/assets/bolt.png" style={{ height: 24 }} /> {data}
-                  </Space>
-                ))}
-              </div>
+                    {listData.map(data => (
+                      <Space>
+                        <img src="/assets/bolt.png" style={{ height: 24 }} />{' '}
+                        {data}
+                      </Space>
+                    ))}
+                  </div>
+                </div>
 
-              <Timeline>
+                {userAddress ? (
+                  <Link to={userAddress}>
+                    <Button type="primary">Create a project</Button>
+                  </Link>
+                ) : (
+                  <Button onClick={onNeedAddress} type="primary">
+                    Create a project
+                  </Button>
+                )}
+              </div>
+            </Col>
+            <Col span={10}>
+              <img
+                style={{
+                  height: '75vh',
+                  maxHeight: 800,
+                  minHeight: 440,
+                }}
+                src="/assets/orange_lady.png"
+                alt="GET JUICED"
+              />
+            </Col>
+          </Row>
+        </div>
+      </section>
+
+      <section>
+        <Row
+          style={{
+            maxWidth: totalMaxWidth,
+            margin: '0 auto',
+          }}
+        >
+          <Col span={10}>
+            <img
+              style={{
+                height: '75vh',
+                maxHeight: 800,
+                maxWidth: 400,
+                minHeight: 440,
+                objectFit: 'contain',
+              }}
+              src="/assets/blueberry.png"
+              alt="blueberry"
+            />
+          </Col>
+
+          <Col
+            span={14}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Space direction="vertical" size="large">
+              <Timeline style={{ paddingLeft: 10 }}>
                 <Timeline.Item {...timelineItemStyle}>
                   Make a budget saying how much money you want/need in order to
                   absolutely crush your mission statement.
@@ -125,7 +179,6 @@ export default function Landing({
                   surplus.
                 </Timeline.Item>
               </Timeline>
-
               <div>
                 <p>
                   The collective goal is to optimize for overflow over time.
@@ -141,111 +194,70 @@ export default function Landing({
                   </Button>
                 )}
               </div>
-            </div>
-            <img
-              style={{
-                height: '75vh',
-                maxHeight: 800,
-                minHeight: 440,
-              }}
-              src="/assets/orange_lady.png"
-              alt="GET JUICED"
-            />
-          </div>
-        </div>
+            </Space>
+          </Col>
+        </Row>
       </section>
 
-      {/* <section
-        style={{
-          padding: 80,
-          background: colors.juiceOrange,
-          overflow: 'hidden',
-        }}
-      >
-        <ExampleCard
-          title="Yearn Finance"
-          duration={30}
-          timeLeft={6}
-          target={30000}
-          earned={36666}
-          want="DAI"
-          tokenName="YFI"
-        />
-        <ExampleCard
-          title="Juice"
-          duration={30}
-          timeLeft={7}
-          target={12000}
-          earned={12888}
-          want="DAI"
-          tokenName="JUICE"
-        />
-        <ExampleCard
-          title="Gitcoin"
-          duration={30}
-          timeLeft={1}
-          target={18000}
-          earned={19337}
-          want="DAI"
-          tokenName="WETH"
-          ticketName="GITCOIN"
-        />
-      </section> */}
-
-      {/* <section>
-        <div style={{ padding: 80, maxWidth: totalMaxWidth, margin: '0 auto' }}>
-          <ImgTextSection
-            img=""
-            imgPosition="left"
-            title="Old business models don’t work on the open internet"
-            text={[
-              'Users are now in charge, and they expect transparency, algorithmic assurances, public governance, and excellent memes out of the protocols and communities they depend on.',
-              'Though the power and the risk are shifting away from institutions and into the hands of individuals, the integrity of this regenerative economy still depends on buidlers, workers, creators, innovators, and maintainers. We’re out here self-organizing to make sure your bags stay SAFU and have a chance to grow.'
-            ]}
-          />
-          <ImgTextSection
-            img=""
-            imgPosition="right"
-            title="Ethereum and DeFi give us something fresh"
-            text={[
-              'Until now, there hasn’t been an organic way to provide consistent cashflow to core teams and casual contributors of protocols, many of whom start out young and broke and unable to buy bags. We’ve been patching this need with legacy ideas like golden handcuffs, philanthropic ideas like grants, and controversial ideas like minting token supply for dev treasuries.',
-              'The internet of work, DeWork, needs a juicier solution – one that extends the best parts of DeFi, one that promotes cooperation, flexibility, and immediacy.',
-              'Juice is that solution.',
-            ]}
-          />
-        </div>
-      </section> */}
-
-      {/* <section style={{ textAlign: 'center', padding: 80 }}>
-        <div
+      <section>
+        <Row
+          gutter={80}
           style={{
-            maxWidth: 720,
+            padding: 80,
+            maxWidth: totalMaxWidth,
             margin: '0 auto',
           }}
         >
-          {bigHeader('The goal is to overflow')}
-          <p>
-            Each end user or smart contract that sends you funds will recieve
-            your project’s Tickets (ERC-20) in return. These Tickets can be
-            redeemed for a proportional amount of the overflow you’ve built up
-            over time from each Budget.
-          </p>
-          <p>
-            With each Budget, fewer Tickets are distributed per unit of funds
-            contributed.
-          </p>
+          <Col span={12}>
+            <h2 style={{ fontWeight: 600 }}>
+              Old business models don’t work on the open internet.
+            </h2>
+            <p>
+              Users are now in charge, and they expect transparency, algorithmic
+              assurances, and public governance out of the protocols they depend
+              on.
+            </p>
+            <p>
+              Though the power and the risk are shifting away from institutions
+              and into the hands of individuals, the integrity of this
+              regenerative economy still depends on buidlers, workers, creators,
+              innovators, and maintainers. They’re out here self-organizing to
+              make sure your bags stay SAFU and have a chance to grow.
+            </p>
+          </Col>
+          <Col span={12}>
+            <h2 style={{ fontWeight: 600 }}>
+              Organic, consistent cashflow is key
+            </h2>
+            <p>
+              Until now, there hasn’t been an organic way to provide consistent
+              cashflow to these core teams and casual contributors, many of whom
+              start out young and broke and unable to buy bags. We’ve been
+              patching this need with legacy ideas like golden handcuffs,
+              unreliable ideas like grants, and controversial ideas like
+              whimsically minting token supply for dev treasuries.{' '}
+            </p>
+            <p>
+              The internet of work, DeWork, needs a juicier solution – one that
+              extends the best parts of DeFi, one that promotes cooperation,
+              flexibility, and immediacy.
+            </p>
+            <p>Juice is that solution.</p>
+          </Col>
+        </Row>
+        <div>
+          <img
+            src="/assets/fountain_of_juice.png"
+            alt="Fountain of Juice"
+            style={{ width: '100vw' }}
+          />
         </div>
-        <img
-          style={{ maxHeight: 540 }}
-          src="/assets/glass_overflow.png"
-          alt="Overflowing glass"
-        />
-      </section> */}
+      </section>
 
       <section
         style={{
           padding: 80,
-          background: colors.light,
+          background: '#EBAF4D',
         }}
       >
         <div
@@ -258,11 +270,6 @@ export default function Landing({
             alignItems: 'center',
           }}
         >
-          <img
-            style={{ maxWidth: 440 }}
-            src="/assets/banana_dwgj.png"
-            alt="Banana chilling and saying 'DO WORK GET JUICED'"
-          />
           <div>
             {bigHeader('Should I Juice?')}
             <p>There's a good chance.</p>
@@ -288,55 +295,10 @@ export default function Landing({
               </Button>
             )}
           </div>
-        </div>
-      </section>
-
-      <section>
-        <Row
-          gutter={80}
-          style={{
-            padding: 80,
-            paddingBottom: 20,
-          }}
-        >
-          <Col span={12}>
-            <h2>Old business models don’t work on the open internet.</h2>
-            <p>
-              Users are now in charge, and they expect transparency, algorithmic
-              assurances, and public governance out of the protocols they depend
-              on.
-            </p>
-            <p>
-              Though the power and the risk are shifting away from institutions
-              and into the hands of individuals, the integrity of this
-              regenerative economy still depends on buidlers, workers, creators,
-              innovators, and maintainers. They’re out here self-organizing to
-              make sure your bags stay SAFU and have a chance to grow.
-            </p>
-          </Col>
-          <Col span={12}>
-            <h2>Organic, consistent cashflow is key</h2>
-            <p>
-              Until now, there hasn’t been an organic way to provide consistent
-              cashflow to these core teams and casual contributors, many of whom
-              start out young and broke and unable to buy bags. We’ve been
-              patching this need with legacy ideas like golden handcuffs,
-              unreliable ideas like grants, and controversial ideas like
-              whimsically minting token supply for dev treasuries.{' '}
-            </p>
-            <p>
-              The internet of work, DeWork, needs a juicier solution – one that
-              extends the best parts of DeFi, one that promotes cooperation,
-              flexibility, and immediacy.
-            </p>
-            <p>Juice is that solution.</p>
-          </Col>
-        </Row>
-        <div>
           <img
-            src="/assets/fountain_of_juice.png"
-            alt="Fountain of Juice"
-            style={{ width: '100vw' }}
+            style={{ maxWidth: 440 }}
+            src="/assets/banana_dwgj.png"
+            alt="Banana chilling and saying 'DO WORK GET JUICED'"
           />
         </div>
       </section>

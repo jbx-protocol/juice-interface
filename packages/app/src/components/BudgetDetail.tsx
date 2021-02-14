@@ -5,9 +5,9 @@ import {
   DescriptionsProps,
   Input,
   Progress,
-  Space,
   Tooltip,
 } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
 import { useState } from 'react'
 
@@ -18,9 +18,8 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
-import { orEmpty } from '../utils/orEmpty'
 import { isEmptyAddress } from '../utils/isEmptyAddress'
-import Modal from 'antd/lib/modal/Modal'
+import { orEmpty } from '../utils/orEmpty'
 
 export default function BudgetDetail({
   budget,

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Button, Descriptions, DescriptionsProps } from 'antd'
+import { Button, Descriptions, DescriptionsProps, Switch } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
@@ -10,6 +10,12 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
+
+type ReserveAmounts = {
+  adminFees: BigNumber
+  beneficiaryDonations: BigNumber
+  issuerTickets: BigNumber
+}
 
 export default function Reserves({
   contracts,
@@ -27,15 +33,19 @@ export default function Reserves({
   provider?: JsonRpcProvider
 }) {
   const [loadingMint, setLoadingMint] = useState<boolean>()
+  const [onlyDistributable, setOnlyDistributable] = useState<boolean>(false)
 
-  const reserveAmounts = useContractReader<{
-    adminFees: BigNumber
-    beneficiaryDonations: BigNumber
-    issuerTickets: BigNumber
-  }>({
+  const emptyReserves: ReserveAmounts = {
+    adminFees: BigNumber.from(0),
+    beneficiaryDonations: BigNumber.from(0),
+    issuerTickets: BigNumber.from(0),
+  }
+
+  const distributableReserves = useContractReader<ReserveAmounts>({
     contract: contracts?.Juicer,
-    functionName: 'getDistributableReserves',
-    args: [budget?.owner],
+    functionName: 'getReserves',
+    args: [budget?.owner, true],
+    formatter: val => val ?? emptyReserves,
     shouldUpdate: (val, old) => {
       if (!val || (!val && !old)) return false
       return (
@@ -45,6 +55,23 @@ export default function Reserves({
       )
     },
   })
+
+  const reserves = useContractReader<ReserveAmounts>({
+    contract: contracts?.Juicer,
+    functionName: 'getReserves',
+    args: [budget?.owner, false],
+    formatter: val => val ?? emptyReserves,
+    shouldUpdate: (val, old) => {
+      if (!val || (!val && !old)) return false
+      return (
+        val.adminFees.eq(old?.adminFees ?? 0) &&
+        val.beneficiaryDonations.eq(old?.beneficiaryDonations ?? 0) &&
+        val.issuerTickets.eq(old?.issuerTickets ?? 0)
+      )
+    },
+  })
+
+  const displayReserves = onlyDistributable ? distributableReserves : reserves
 
   const ticketSymbol = useContractReader<string>({
     contract: erc20Contract(ticketAddress, provider),
@@ -72,14 +99,20 @@ export default function Reserves({
   return (
     <div>
       <Descriptions {...descriptionsStyle} column={1}>
+        <Descriptions.Item label="Only distributable">
+          <Switch
+            defaultChecked={onlyDistributable}
+            onChange={value => setOnlyDistributable(value)}
+          ></Switch>
+        </Descriptions.Item>
         <Descriptions.Item label="Admin reserves">
-          {orEmpty(reserveAmounts?.adminFees?.toString())} DAI
+          {orEmpty(displayReserves?.adminFees?.toString())} DAI
         </Descriptions.Item>
         <Descriptions.Item label="Beneficiaries reserves">
-          {orEmpty(reserveAmounts?.beneficiaryDonations?.toString())} DAI
+          {orEmpty(displayReserves?.beneficiaryDonations?.toString())} DAI
         </Descriptions.Item>
         <Descriptions.Item label="Issuers reserves">
-          {orEmpty(reserveAmounts?.issuerTickets?.toString())} {ticketSymbol}
+          {orEmpty(displayReserves?.issuerTickets?.toString())} {ticketSymbol}
         </Descriptions.Item>
       </Descriptions>
       <div

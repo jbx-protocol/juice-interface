@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { useState, ErrorInfo } from 'react'
+import { useState } from 'react'
 
 import { usePoller } from './Poller'
 

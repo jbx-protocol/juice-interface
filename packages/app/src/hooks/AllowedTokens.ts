@@ -40,7 +40,7 @@ export function useAllowedTokens(
     }
 
     getTokens()
-  }, [tokenAddresses])
+  }, [tokenAddresses, provider, setTokens])
 
   return tokens
 }

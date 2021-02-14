@@ -1,6 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
+import {
+  Button,
+  Descriptions,
+  DescriptionsProps,
+  Input,
+  Progress,
+  Space,
+} from 'antd'
+import moment from 'moment'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -12,21 +20,18 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { erc20Contract } from '../utils/erc20Contract'
+import { orEmpty } from '../utils/orEmpty'
 
 export default function BudgetDetail({
   budget,
   contracts,
   transactor,
-  showSustained,
-  showMinted,
   userAddress,
   provider,
 }: {
   budget?: Budget
   contracts?: Contracts
   transactor?: Transactor
-  showSustained?: boolean
-  showMinted?: boolean
   userAddress?: string
   provider?: JsonRpcProvider
 }) {
@@ -95,62 +100,83 @@ export default function BudgetDetail({
 
   const gutter = 25
 
+  const pending = budget.id.eq(0)
+
+  const formatDate = (date: number) => moment(date).format('M-DD-YYYY h:mma')
+
+  const ended: string | undefined =
+    budget.start.add(budget.duration).toNumber() * 1000 < new Date().valueOf()
+      ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
+      : undefined
+
   return (
     <div>
-      {budget.id.gt(0) ? (
-        <h3
-          style={{
-            paddingTop: 15,
-            marginBottom: 0,
-            paddingBottom: 15,
-            paddingLeft: gutter,
-            fontWeight: 600,
-            borderBottom: '1px solid black',
-          }}
-        >
-          # {budget.id.toString()}
-        </h3>
-      ) : null}
-
-      <Descriptions
-        {...descriptionsStyle}
-        column={showSustained ? 2 : 1}
-        bordered
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: 15,
+          marginBottom: 0,
+          paddingBottom: 15,
+          paddingLeft: gutter,
+          paddingRight: gutter,
+          borderBottom: '1px solid black',
+          whiteSpace: 'pre',
+        }}
       >
-        <Descriptions.Item label="Start">
-          {new Date(budget.start.toNumber() * 1000).toISOString()}
-        </Descriptions.Item>
-
-        {showSustained ? (
-          <Descriptions.Item label="Target">
-            {budget.target.toString()} {wantTokenName}
-          </Descriptions.Item>
+        {budget.id.gt(0) ? (
+          <h3 style={{ fontWeight: 600, marginRight: gutter, marginBottom: 0 }}>
+            # {budget.id.toString()}
+          </h3>
         ) : null}
+        <Progress
+          percent={budget.total
+            .mul(100)
+            .div(budget.target)
+            .toNumber()}
+          showInfo={false}
+          strokeColor={colors.juiceOrange}
+        ></Progress>
+        <span style={{ marginLeft: gutter }}>
+          <span style={{ fontWeight: 600 }}>
+            {orEmpty(budget.total.toString())}
+          </span>
+          /{budget.target.toString()}{' '}
+          {surplus.gt(0) ? (
+            <span style={{ color: colors.secondary, fontWeight: 600 }}>
+              +{surplus.toString()}
+            </span>
+          ) : null}{' '}
+          {wantTokenName}
+        </span>
+      </div>
+
+      <Descriptions {...descriptionsStyle} column={2} bordered>
+        <Descriptions.Item label={pending ? null : 'Started'}>
+          {pending ? (
+            <span style={{ fontWeight: 500, fontStyle: 'italic' }}>
+              Awaiting first payment...
+            </span>
+          ) : (
+            formatDate(budget.start.toNumber() * 1000)
+          )}
+        </Descriptions.Item>
 
         <Descriptions.Item label="Duration">
           {expandedTimeString(budget && budget.duration.toNumber() * 1000)}
         </Descriptions.Item>
 
-        {showSustained ? (
-          <Descriptions.Item label="Sustained">
-            {budget.total.toString()} {wantTokenName}{' '}
-            {surplus.gt(0) ? (
-              <span style={{ color: colors.secondary, fontWeight: 600 }}>
-                +{surplus.toString()}
-              </span>
-            ) : null}
+        {pending ? null : (
+          <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
+            {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
           </Descriptions.Item>
-        ) : null}
+        )}
 
-        <Descriptions.Item label="Time left">
-          {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || 'Ended'}
-        </Descriptions.Item>
-
-        {showSustained ? (
+        {pending ? null : (
           <Descriptions.Item label="Tapped">
             {budget.tapped.toString()} {wantTokenName}
           </Descriptions.Item>
-        ) : null}
+        )}
       </Descriptions>
 
       {budget?.link ? (
@@ -185,7 +211,38 @@ export default function BudgetDetail({
               {budget.bAddress.toString()}%
             </Descriptions.Item>
           ) : null}
-          {showMinted && surplus.gt(0) ? (
+          <Descriptions.Item label="Withdrawable">
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                whiteSpace: 'pre',
+              }}
+            >
+              <span style={{ flex: 1 }}>
+                {tappableAmount?.toString() ?? '0'} {wantTokenName}
+              </span>
+              {isOwner && tappableAmount?.gt(0) ? (
+                <div style={{ width: '100%', textAlign: 'end' }}>
+                  <Space>
+                    <Input
+                      name="withdrawable"
+                      placeholder="0"
+                      suffix={wantTokenName}
+                      value={tapAmount.toString()}
+                      max={tappableAmount?.toString()}
+                      onChange={e =>
+                        setTapAmount(BigNumber.from(e.target.value))
+                      }
+                    />
+                    <Button onClick={tap}>Withdraw</Button>
+                  </Space>
+                </div>
+              ) : null}
+            </div>
+          </Descriptions.Item>
+          {ended && surplus.gt(0) ? (
             <Descriptions.Item label="Reserves">
               {budget?.hasMintedReserves ? (
                 'Minted'
@@ -194,6 +251,7 @@ export default function BudgetDetail({
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                     width: '100%',
                     whiteSpace: 'pre',
                   }}
@@ -201,39 +259,6 @@ export default function BudgetDetail({
                   <span>Not minted</span>
                 </div>
               )}
-            </Descriptions.Item>
-          ) : null}
-          {showSustained ? (
-            <Descriptions.Item label="Withdrawable">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  whiteSpace: 'pre',
-                }}
-              >
-                <span style={{ flex: 1 }}>
-                  {tappableAmount?.toString() ?? '0'} {wantTokenName}
-                </span>
-                {isOwner && tappableAmount?.gt(0) ? (
-                  <div style={{ width: '100%', textAlign: 'end' }}>
-                    <Space>
-                      <Input
-                        name="withdrawable"
-                        placeholder="0"
-                        suffix={wantTokenName}
-                        value={tapAmount.toString()}
-                        max={tappableAmount?.toString()}
-                        onChange={e =>
-                          setTapAmount(BigNumber.from(e.target.value))
-                        }
-                      />
-                      <Button onClick={tap}>Withdraw</Button>
-                    </Space>
-                  </div>
-                ) : null}
-              </div>
             </Descriptions.Item>
           ) : null}
         </Descriptions>

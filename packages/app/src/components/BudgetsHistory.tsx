@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { Divider, Space } from 'antd'
+import { Space } from 'antd'
 import React, { useState } from 'react'
 
 import useContractReader from '../hooks/ContractReader'
@@ -50,15 +50,13 @@ export default function BudgetsHistory({
   })
 
   const budgetElems = (
-    <Space direction="vertical" split={<Divider />}>
+    <Space direction="vertical" size="large">
       {budgets.length
         ? budgets.map((budget, index) => (
             <BudgetDetail
               key={index}
               userAddress={userAddress}
               budget={budget}
-              showSustained={true}
-              showMinted={true}
               transactor={transactor}
               contracts={contracts}
               provider={provider}

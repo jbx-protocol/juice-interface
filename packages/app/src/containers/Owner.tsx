@@ -226,9 +226,9 @@ export default function Owner({
                     <BudgetDetail
                       userAddress={userAddress}
                       budget={currentBudget}
-                      showSustained={true}
                       contracts={contracts}
                       transactor={transactor}
+                      provider={provider}
                     />
                     <Divider style={{ margin: 0 }} />
                     <Space
@@ -298,7 +298,16 @@ export default function Owner({
             <Row gutter={spacing}>
               <Col span={12}>
                 {queuedBudget ? (
-                  section(<BudgetDetail budget={queuedBudget} />, 'Next Budget')
+                  section(
+                    <BudgetDetail
+                      userAddress={userAddress}
+                      budget={currentBudget}
+                      contracts={contracts}
+                      transactor={transactor}
+                      provider={provider}
+                    />,
+                    'Next Budget',
+                  )
                 ) : (
                   <div>No upcoming budgets</div>
                 )}
@@ -313,6 +322,7 @@ export default function Owner({
                     contracts={contracts}
                     transactor={transactor}
                     userAddress={userAddress}
+                    provider={provider}
                   />,
                   'Budget History',
                 )}

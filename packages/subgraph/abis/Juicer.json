@@ -165,6 +165,12 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "tickets",
+        "type": "address"
+      },
+      {
         "indexed": false,
         "internalType": "address",
         "name": "beneficiary",

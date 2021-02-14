@@ -14,12 +14,14 @@ export default function Landing({
   contracts,
   transactor,
   userProvider,
+  onNeedProvider,
 }: {
   userAddress?: string
   hasBudget?: boolean
   contracts?: Contracts
   transactor?: Transactor
   userProvider?: JsonRpcProvider
+  onNeedProvider?: VoidFunction
 }) {
   const totalMaxWidth = 1080
 
@@ -184,12 +186,18 @@ export default function Landing({
             }}
           >
             {bigHeader('Create a project')}
-            <ConfigureBudget
-              owner={userAddress}
-              contracts={contracts}
-              transactor={transactor}
-              provider={userProvider}
-            />
+            {userProvider ? (
+              <ConfigureBudget
+                owner={userAddress}
+                contracts={contracts}
+                transactor={transactor}
+                provider={userProvider}
+              />
+            ) : (
+              <Button onClick={onNeedProvider} type="primary">
+                Connect a wallet
+              </Button>
+            )}
           </div>
         </section>
       )}

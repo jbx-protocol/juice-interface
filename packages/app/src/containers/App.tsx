@@ -51,6 +51,7 @@ function App() {
         userAddress={userAddress}
         contracts={contracts}
         userProvider={userProvider}
+        onNeedProvider={loadWeb3Modal}
       />
     </div>
   )

@@ -20,6 +20,7 @@ import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { orEmpty } from '../utils/orEmpty'
 import { isEmptyAddress } from '../utils/isEmptyAddress'
+import Modal from 'antd/lib/modal/Modal'
 
 export default function BudgetDetail({
   budget,
@@ -33,6 +34,8 @@ export default function BudgetDetail({
   userAddress?: string
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
+  const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
+  const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
   const wantTokenName = 'DAI'
 
@@ -71,6 +74,8 @@ export default function BudgetDetail({
   function tap() {
     if (!transactor || !contracts?.Juicer || !budget) return
 
+    setLoadingWithdraw(true)
+
     const id = budget.id.toHexString()
     const amount = tapAmount.toHexString()
 
@@ -80,7 +85,11 @@ export default function BudgetDetail({
       userAddress,
     })
 
-    transactor(contracts.Juicer?.tapBudget(id, amount, userAddress))
+    transactor(
+      contracts.Juicer?.tapBudget(id, amount, userAddress),
+      () => setLoadingWithdraw(false),
+      true,
+    )
   }
 
   if (!budget) return null
@@ -218,17 +227,35 @@ export default function BudgetDetail({
             <div
               style={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'space-between',
                 width: '100%',
                 whiteSpace: 'pre',
               }}
             >
-              <span style={{ flex: 1 }}>
-                {tappableAmount?.toString() ?? '0'} {wantTokenName}
-              </span>
+              {tappableAmount?.toString() ?? '0'} {wantTokenName}
               {isOwner && tappableAmount?.gt(0) ? (
-                <div style={{ width: '100%', textAlign: 'end' }}>
-                  <Space>
+                <div>
+                  <Button
+                    loading={loadingWithdraw}
+                    onClick={() => setWithdrawModalVisible(true)}
+                  >
+                    Withdraw
+                  </Button>
+                  <Modal
+                    title="Withdraw funds"
+                    visible={withdrawModalVisible}
+                    onOk={() => {
+                      tap()
+                      setWithdrawModalVisible(false)
+                    }}
+                    onCancel={() => {
+                      setTapAmount(BigNumber.from(0))
+                      setWithdrawModalVisible(false)
+                    }}
+                    okText="Withdraw"
+                    width={540}
+                  >
                     <Input
                       name="withdrawable"
                       placeholder="0"
@@ -239,8 +266,7 @@ export default function BudgetDetail({
                         setTapAmount(BigNumber.from(e.target.value))
                       }
                     />
-                    <Button onClick={tap}>Withdraw</Button>
-                  </Space>
+                  </Modal>
                 </div>
               ) : null}
             </div>

@@ -24,7 +24,7 @@ interface IBudgetController {
         address indexed beneficiary,
         address sustainer,
         uint256 amount,
-        IERC20 want
+        IERC20 token
     );
 
     event TapBudget(
@@ -35,14 +35,11 @@ interface IBudgetController {
         IERC20 want
     );
 
-    function getWantTokenAllowList() external view returns (IERC20[] memory);
-
     function STANDBY_PERIOD() external view returns (uint256);
 
     function configureBudget(
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _link,
         uint256 discountRate,
         uint256 _o,
@@ -53,7 +50,6 @@ interface IBudgetController {
     function payOwner(
         address _owner,
         uint256 _amount,
-        IERC20 _token,
         address _beneficiary
     ) external returns (uint256 budgetId);
 
@@ -62,6 +58,4 @@ interface IBudgetController {
         uint256 _amount,
         address _beneficiary
     ) external;
-
-    function setWantTokenAllowList(IERC20[] calldata _list) external;
 }

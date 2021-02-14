@@ -6,8 +6,6 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const { DAI } = require("../constants/dai");
 
-const uniswapV2Router = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-
 const main = async () => {
   console.log("\n\n 📡 Deploying to " + process.env.HARDHAT_NETWORK + " ...\n");
 
@@ -21,11 +19,9 @@ const main = async () => {
     budgetStore.address,
     ticketStore.address,
     5,
-    isMainnet ? [DAI] : [token.address],
-    uniswapV2Router
+    isMainnet ? DAI : token.address
   ]);
 
-  const maintainer = await deploy("Maintainer", [juicer.address]);
   const staker = await deploy("TimelockStaker");
   const budgetBallot = await deploy("BudgetBallot", [
     juicer.address,
@@ -35,9 +31,7 @@ const main = async () => {
   const admin = await deploy("Admin", [
     juicer.address,
     "Juice Tickets",
-    "tJUICE",
-    isMainnet ? DAI : token.address,
-    uniswapV2Router
+    "tJUICE"
   ]);
 
   try {
@@ -66,9 +60,6 @@ const main = async () => {
       gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
-      gasLimit: 3000000
-    });
-    await attachedAdmin.grantAdmin(budgetStore.address, maintainer.address, {
       gasLimit: 3000000
     });
     await attachedJuicer.setAdmin(admin.address, {

@@ -47,19 +47,6 @@ interface IBudgetStore is IStore {
         view
         returns (uint256);
 
-    function getWantedTokens(address _owner, IERC20 _rewardToken)
-        external
-        view
-        returns (IERC20[] memory);
-
-    function trackWantedToken(
-        address _owner,
-        IERC20 _rewardToken,
-        IERC20 _token
-    ) external;
-
-    function clearWantedTokens(address _owner, IERC20 _token) external;
-
     function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
         external
         returns (Budget.Data memory);

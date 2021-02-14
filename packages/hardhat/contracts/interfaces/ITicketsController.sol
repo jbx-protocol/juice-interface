@@ -4,18 +4,15 @@ pragma solidity >=0.6.0 <0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface ITicketsController {
-    event IssueTickets(
-        address issuer,
-        string name,
-        string symbol,
-        IERC20 rewardToken
-    );
+    event IssueTickets(address issuer, string name, string symbol);
 
     event Redeem(
         address indexed holder,
+        IERC20 indexed tickets,
         address beneficiary,
-        uint256 redeemedAmount,
-        uint256 rewardAmount
+        uint256 amount,
+        uint256 returnAmount,
+        IERC20 returnToken
     );
 
     event Migrate(address indexed to);
@@ -37,26 +34,15 @@ interface ITicketsController {
             uint256 admins
         );
 
-    function issueTickets(
-        string calldata _name,
-        string calldata _symbol,
-        IERC20 _rewardToken
-    ) external;
+    function issueTickets(string calldata _name, string calldata _symbol)
+        external;
 
     function redeem(
         address _issuer,
         uint256 _amount,
-        uint256 _minRewardAmount,
+        uint256 _minReturn,
         address _beneficiary
-    ) external returns (IERC20 rewardToken);
-
-    function swap(
-        address _issuer,
-        IERC20 _from,
-        uint256 _amount,
-        IERC20 _to,
-        uint256 _minSwappedAmount
-    ) external;
+    ) external returns (uint256 returnAmount);
 
     function addToMigrationAllowList(address _contract) external;
 

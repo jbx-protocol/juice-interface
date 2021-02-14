@@ -29,18 +29,14 @@ import "./TicketStore.sol";
                 current Budget than to future budgets.
         4. As the project owner, you can collect any funds made to your Budget within your configured target.
            Any overflow will be accounted for seperately. 
-           At any point, anyone can execute a transaction to swap any accumulated overflow of `want` tokens into your Ticket's reward Token.
-        5. Your project's Ticket holders can redeem their Tickets for a share of reward tokens that have been swapped for.
+        5. Your project's Ticket holders can redeem their Tickets for a share of your project's accumulated overflow.
         6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
            but if your current Budget has already received contribution, the new configuration 
            will only affect your Budget that automatically goes into effect once the current one expires.
 
-  @dev This contract manages all funds, including:
-        - contributions made to Budgets.
-        - rewards for contributing to Budgets.
-
+  @dev This contract manages all funds.
   
-  @dev A project owner can transfer their funds and reward, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
+  @dev A project owner can transfer their funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
 contract Juicer is IJuicer {
@@ -58,12 +54,6 @@ contract Juicer is IJuicer {
     }
 
     // --- private properties --- //
-
-    // If a particular token is allowed as a `want` token of a Money pool.
-    mapping(IERC20 => bool) private wantTokenIsAllowed;
-
-    // The tokens that a Budget is allowed to want.
-    IERC20[] private wantTokenAllowList;
 
     // If a particulate contract is available for project owners to migrate their Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
@@ -86,23 +76,10 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
 
-    /// @notice The router that does the swaps.
-    UniswapV2Router02 public immutable router;
+    /// @notice The address of the DAI ERC-20 token.
+    IERC20 public dai;
 
     // --- external views --- //
-
-    /**
-      @notice Getter for the wantTokenAllowList;
-      @return _list The list.
-     */
-    function getWantTokenAllowList()
-        external
-        view
-        override
-        returns (IERC20[] memory)
-    {
-        return wantTokenAllowList;
-    }
 
     /**
         @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
@@ -124,11 +101,11 @@ contract Juicer is IJuicer {
         )
     {
         // Get a reference to the owner's tickets.
-        ITickets _tickets = ticketStore.tickets(_issuer);
+        Tickets _tickets = ticketStore.tickets(_issuer);
 
         // If the owner doesn't have tickets, throw.
         require(
-            _tickets != ITickets(0),
+            _tickets != Tickets(0),
             "ReservedTicketsView::getReservedTickets: NOT_FOUND"
         );
 
@@ -170,42 +147,33 @@ contract Juicer is IJuicer {
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
-      @param _wantTokenAllowList The tokens that are allowed as `want` tokens in Budgets.
-      @param _router The router to use to swap tokens.
+      @param _dai The DAI contract.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
         uint256 _fee,
-        IERC20[] memory _wantTokenAllowList,
-        UniswapV2Router02 _router
+        IERC20 _dai
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
         fee = _fee;
-        router = _router;
-        wantTokenAllowList = _wantTokenAllowList;
-
-        // Populate the mapping that will be used to validate Budget `want` token configuration.
-        for (uint256 i = 0; i < _wantTokenAllowList.length; i++)
-            wantTokenIsAllowed[_wantTokenAllowList[i]] = true;
+        dai = _dai;
     }
 
     /**
-        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for sustainments.
+        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Deploys an owner's Ticket ERC-20 token contract.
         @param _name The ERC-20's name.
         @param _symbol The ERC-20's symbol.
-        @param _rewardToken The token that the Tickets are redeemable for.
     */
-    function issueTickets(
-        string calldata _name,
-        string calldata _symbol,
-        IERC20 _rewardToken
-    ) external override {
+    function issueTickets(string calldata _name, string calldata _symbol)
+        external
+        override
+    {
         // An owner only needs to issue their Tickets once before they can be used.
         require(
-            ticketStore.tickets(msg.sender) == ITickets(0),
+            ticketStore.tickets(msg.sender) == Tickets(0),
             "Juicer::issueTickets: ALREADY_ISSUED"
         );
 
@@ -213,10 +181,10 @@ contract Juicer is IJuicer {
         ticketStore.saveTickets(
             msg.sender,
             // Create the contract in this Juicer contract in order to have mint and burn privileges.
-            new Tickets(_name, _symbol, _rewardToken)
+            new Tickets(_name, _symbol)
         );
 
-        emit IssueTickets(msg.sender, _name, _symbol, _rewardToken);
+        emit IssueTickets(msg.sender, _name, _symbol);
     }
 
     /**
@@ -224,7 +192,6 @@ contract Juicer is IJuicer {
         sets the properties of the Budget that will take effect once the current one expires.
         @dev The msg.sender is the owner of the budget.
         @param _target The cashflow target to set.
-        @param _want The token that the Budget wants.
         @param _duration The duration to set, measured in seconds.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
@@ -242,18 +209,12 @@ contract Juicer is IJuicer {
     function configureBudget(
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _link,
         uint256 _discountRate,
         uint256 _o,
         uint256 _b,
         address _bAddress
     ) external override returns (uint256) {
-        // The `want` token must be supported.
-        require(
-            wantTokenIsAllowed[_want],
-            "Juicer::configureBudget: UNSUPPORTED_WANT"
-        );
         // The `discountRate` token must be between 95 and 100.
         require(
             _discountRate >= 95 && _discountRate <= 100,
@@ -267,15 +228,15 @@ contract Juicer is IJuicer {
         // The reserved percentages must add up to less than or equal to 100.
         require(
             _o.add(_b).add(fee) <= 100,
-            "Juicer::configureBudget: BAD_PERCENTAGES"
+            "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES"
         );
 
         // Get a reference to the owner's Tickets.
-        ITickets _tickets = ticketStore.tickets(msg.sender);
+        Tickets _tickets = ticketStore.tickets(msg.sender);
 
         // Make sure the owner has already issued Tickets.
         require(
-            _tickets != ITickets(0),
+            _tickets != Tickets(0),
             "Juicer::configureBudget: NEEDS_INITIALIZATION"
         );
 
@@ -287,7 +248,7 @@ contract Juicer is IJuicer {
         _budget.link = _link;
         _budget.target = _target;
         _budget.duration = _duration;
-        _budget.want = _want;
+        _budget.want = dai;
         // Reset the start time to now if the owner's current Budget doesn't yet have sustainments.
         _budget.start = budgetStore.getCurrentBudget(msg.sender).total == 0
             ? block.timestamp
@@ -301,16 +262,12 @@ contract Juicer is IJuicer {
         // Save the Budget in the store.
         budgetStore.saveBudget(_budget);
 
-        // Track this new `want` token in the store.
-        // This is necessary for proper accounting when managing overflow.
-        budgetStore.trackWantedToken(msg.sender, _tickets.rewardToken(), _want);
-
         emit ConfigureBudget(
             _budget.id,
             _budget.owner,
             _budget.target,
             _budget.duration,
-            _budget.want,
+            dai,
             _budget.link,
             _budget.discountRate,
             _o,
@@ -327,14 +284,12 @@ contract Juicer is IJuicer {
         @dev The sender must approve this contract to transfer the specified amount of tokens.
         @param _owner The owner of the budget to contribute funds to.
         @param _amount Amount of the contribution.
-        @param _token The token used for the contribution. Must match the `want` token for the Budget being sustained.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function payOwner(
         address _owner,
         uint256 _amount,
-        IERC20 _token,
         address _beneficiary
     ) external override lock returns (uint256) {
         // Positive payments only.
@@ -344,12 +299,6 @@ contract Juicer is IJuicer {
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data memory _budget =
             budgetStore.ensureActiveBudget(_owner, STANDBY_PERIOD);
-
-        // Make sure the token being contributed matches the Budget's `want` token.
-        require(
-            _token == _budget.want,
-            "Juicer::sustainOwner: UNEXPECTED_WANT"
-        );
 
         // Add the amount to the Budget.
         _budget.total = _budget.total.add(_amount);
@@ -367,56 +316,28 @@ contract Juicer is IJuicer {
             _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
             // Transfer the overflow only, since the rest has been marked as tapped.
             if (_overflow > 0) {
-                _budget.want.safeTransferFrom(
-                    msg.sender,
-                    address(this),
-                    _overflow
-                );
+                dai.safeTransferFrom(msg.sender, address(this), _overflow);
             }
-            emit TapBudget(
-                _budget.id,
-                msg.sender,
-                msg.sender,
-                _overflow,
-                _budget.want
-            );
+            emit TapBudget(_budget.id, msg.sender, msg.sender, _overflow, dai);
         } else {
             // Transfer the amount from the contributor to this contract.
-            _budget.want.safeTransferFrom(msg.sender, address(this), _amount);
+            dai.safeTransferFrom(msg.sender, address(this), _amount);
         }
 
         // Save the budget to the store.
         budgetStore.saveBudget(_budget);
 
-        // Get a reference to the Budget owner's Tickets.
-        ITickets _tickets = ticketStore.tickets(_budget.owner);
-
-        // If the Budget has overflow, add the amount of contributed funds that went to overflow
-        // to the amount swappable for the Tickets' reward token.
-        // Ideally the swap would happen here. In order to save gas, the swappable amounts are being stored to be bulk swapped in another transaction.
+        // If the Budget has overflow, add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) {
-            IERC20 _rewardToken = _tickets.rewardToken();
-            // The amount of this contribution that is going towards overflow.
-            uint256 _addedOverflow = _amount > _overflow ? _overflow : _amount;
-            if (_rewardToken == _token) {
-                // No need to swap if the reward token is the same as the want token.
-                ticketStore.addClaimableRewards(
-                    _budget.owner,
-                    _rewardToken,
-                    _addedOverflow
-                );
-            } else {
-                ticketStore.addSwappable(
-                    _budget.owner,
-                    _budget.want,
-                    _addedOverflow,
-                    _tickets.rewardToken()
-                );
-            }
+            ticketStore.addClaimable(
+                _budget.owner,
+                // The amount of this contribution that is going towards overflow.
+                _amount > _overflow ? _overflow : _amount
+            );
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        _tickets.mint(
+        ticketStore.tickets(_budget.owner).mint(
             _beneficiary,
             _budget._weighted(_amount, _budget._unreserved(fee))
         );
@@ -427,126 +348,60 @@ contract Juicer is IJuicer {
             _beneficiary,
             msg.sender,
             _amount,
-            _budget.want
+            dai
         );
 
         return _budget.id;
     }
 
     /**
-        @notice Swaps any funds available to be swapped for the specified pair.
-        @dev The swap is being made from the token used to contribute to a Budget,
-        into the token used to reward contributors with once their Tickets are redeemed.
-        @param _issuer The issuer of the Tickets to swap funds for.
-        @param _from The token to swap from.
-        @param _amount Amount to swap.
-        @param _to The token to swap to.
-        @param _minSwappedAmount The minumum amount of tokens to swap to.
-    */
-    function swap(
-        address _issuer,
-        IERC20 _from,
-        uint256 _amount,
-        IERC20 _to,
-        uint256 _minSwappedAmount
-    ) external override lock {
-        // Must swap a positive amount.
-        require(_amount > 0, "Juicer::swap: BAD_AMOUNT");
-
-        // Get the amount of funds available to be swapped for the specified issuer and token pair.
-        uint256 _swappable = ticketStore.swappable(_issuer, _from, _to);
-
-        // The amount being swapped must be less than the amount swappable.
-        require(_amount < _swappable, "Juicer::swap: INSUFFICIENT_FUNDS");
-
-        // Subtract the amount of available funds to swap.
-        ticketStore.subtractSwappable(_issuer, _from, _amount, _to);
-
-        // Approve the router to manage this contract's funds.
-        require(
-            _from.approve(address(router), _amount),
-            "Juicer::swap: APPROVE_FAILED."
-        );
-
-        // Create the routing path.
-        address[] memory path = new address[](2);
-        path[0] = address(_from);
-        path[1] = router.WETH();
-        // Add the destination of the route if it isn't WETH.
-        if (address(_to) != router.WETH()) path[2] = address(_to);
-
-        // Conduct the swap and returns the amount of `to` tokens received.
-        uint256[] memory _amounts =
-            router.swapExactTokensForTokens(
-                _amount,
-                _minSwappedAmount,
-                path,
-                address(this),
-                block.timestamp
-            );
-
-        uint256 _swappedAmount = _amounts[_amounts.length - 1];
-
-        // The swapped tokens can now be claimed by the issuer's Ticket holders as rewards. Track this in the store.
-        ticketStore.addClaimableRewards(_issuer, _to, _swappedAmount);
-
-        emit Swap(_issuer, _from, _amount, _to, _swappedAmount);
-    }
-
-    /**
-        @notice Addresses can redeem their Tickets to claim reward tokens.
+        @notice Addresses can redeem their Tickets to claim overflowed tokens.
         @param _issuer The issuer of the Tickets being redeemed.
         @param _amount The amount of Tickets to redeem.
-        @param _minRewardAmount The minimum amount of rewards tokens expected in return.
-        @param _beneficiary The address to send the reward to.
-        @return rewardToken The token that was redeemed for.
+        @param _minReturn The minimum amount of tokens expected in return.
+        @param _beneficiary The address to send the tokens to.
+        @return returnAmount The amount that the tickets were redeemed for.
     */
     function redeem(
         address _issuer,
         uint256 _amount,
-        uint256 _minRewardAmount,
+        uint256 _minReturn,
         address _beneficiary
-    ) external override lock returns (IERC20 rewardToken) {
-        // Get a reference to the Tickets being redeemed.
-        ITickets _tickets = ticketStore.tickets(_issuer);
-
-        // Set the returned value.
-        rewardToken = _tickets.rewardToken();
-
-        // The amount of reward tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
+    ) external override lock returns (uint256 returnAmount) {
+        // The amount of overflowed tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         // Multiply by the active proportion of the golden ratio. This incentizes HODLing tickets.
-        uint256 _adjustedClaimableRewardsAmount =
-            ticketStore.getClaimableRewardsAmount(
-                msg.sender,
-                _amount,
-                _issuer,
-                618
-            );
+        returnAmount = ticketStore.getClaimableAmount(
+            msg.sender,
+            _amount,
+            _issuer,
+            618
+        );
 
         // The amount being claimed must be less than the amount claimable.
         require(
-            _minRewardAmount >= _adjustedClaimableRewardsAmount,
+            returnAmount >= _minReturn,
             "Juicer::redeem: INSUFFICIENT_FUNDS"
         );
+
+        // Get a reference to the issuer's tickets.
+        Tickets _tickets = ticketStore.tickets(_issuer);
 
         // Burn the redeemed tickets.
         _tickets.burn(msg.sender, _amount);
 
-        // Subtract the claimed rewards from the total amount claimable.
-        ticketStore.subtractClaimableRewards(
-            _issuer,
-            rewardToken,
-            _adjustedClaimableRewardsAmount
-        );
+        // Subtract the claimed tokens from the total amount claimable.
+        ticketStore.subtractClaimable(_issuer, returnAmount);
 
         // Transfer funds to the specified address.
-        rewardToken.safeTransfer(_beneficiary, _adjustedClaimableRewardsAmount);
+        dai.safeTransfer(_beneficiary, returnAmount);
 
         emit Redeem(
             msg.sender,
+            _tickets,
             _beneficiary,
             _amount,
-            _adjustedClaimableRewardsAmount
+            returnAmount,
+            dai
         );
     }
 
@@ -582,15 +437,9 @@ contract Juicer is IJuicer {
         budgetStore.saveBudget(_budget);
 
         // Transfer the funds to the specified address.
-        _budget.want.safeTransfer(_beneficiary, _amount);
+        dai.safeTransfer(_beneficiary, _amount);
 
-        emit TapBudget(
-            _budgetId,
-            msg.sender,
-            _beneficiary,
-            _amount,
-            _budget.want
-        );
+        emit TapBudget(_budgetId, msg.sender, _beneficiary, _amount, dai);
     }
 
     /**
@@ -601,10 +450,10 @@ contract Juicer is IJuicer {
     */
     function mintReservedTickets(address _issuer) external override {
         // Get a reference to the owner's tickets.
-        ITickets _tickets = ticketStore.tickets(_issuer);
+        Tickets _tickets = ticketStore.tickets(_issuer);
 
         // If the owner doesn't have tickets, throw.
-        require(_tickets != ITickets(0), "Juicer::claim: NOT_FOUND");
+        require(_tickets != Tickets(0), "Juicer::claim: NOT_FOUND");
 
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
@@ -658,36 +507,19 @@ contract Juicer is IJuicer {
         );
 
         // Get a reference to the owner's Tickets.
-        ITickets _tickets = ticketStore.tickets(msg.sender);
+        Tickets _tickets = ticketStore.tickets(msg.sender);
 
         // The owner must have issued Tickets.
-        require(_tickets != ITickets(0), "Juicer::migrateTickets: NOT_FOUND");
+        require(_tickets != Tickets(0), "Juicer::migrateTickets: NOT_FOUND");
 
         // Give the new owner admin privileges.
-        _tickets.grantRole_(_tickets.DEFAULT_ADMIN_ROLE_(), _to);
+        _tickets.transferOwnership(_to);
 
-        // Remove privileges from this contract.
-        _tickets.revokeRole_(_tickets.DEFAULT_ADMIN_ROLE_(), address(this));
+        // Move all claimable tokens for this issuer.
+        uint256 _claimable = ticketStore.claimable(msg.sender);
 
-        IERC20 _rewardToken = _tickets.rewardToken();
-
-        // Move all claimable rewards for this issuer.
-        uint256 _claimable = ticketStore.claimable(msg.sender, _rewardToken);
-        _rewardToken.safeTransfer(_to, _claimable);
-
-        // Move all swappable funds for this issuer.
-        IERC20[] memory _wantedTokens =
-            budgetStore.getWantedTokens(msg.sender, _rewardToken);
-
-        for (uint256 i = 0; i < _wantedTokens.length; i++) {
-            uint256 _swappable =
-                ticketStore.swappable(
-                    msg.sender,
-                    _wantedTokens[i],
-                    _rewardToken
-                );
-            _wantedTokens[i].safeTransfer(_to, _swappable);
-        }
+        //TODO set allow limit.
+        dai.safeTransfer(_to, _claimable);
 
         emit Migrate(_to);
     }
@@ -712,24 +544,5 @@ contract Juicer is IJuicer {
             "Juicer::setMigrationAllowList: UNAUTHORIZED"
         );
         migrationContractIsAllowed[_contract] = true;
-    }
-
-    /**
-        @notice Changes the tokens that a Budget is allowed to want.
-        @param _list The new allowed tokens for a Budget to want.
-    */
-    function setWantTokenAllowList(IERC20[] calldata _list) external override {
-        require(
-            msg.sender == admin,
-            "Juicer::setWantTokenAllowList: UNAUTHORIZED"
-        );
-        for (uint256 i; i < wantTokenAllowList.length; i++)
-            wantTokenIsAllowed[wantTokenAllowList[i]] = false;
-
-        // Populate the mapping that will be used to validate Budget `want` token configuration.
-        for (uint256 i = 0; i < _list.length; i++)
-            wantTokenIsAllowed[_list[i]] = true;
-
-        wantTokenAllowList = _list;
     }
 }

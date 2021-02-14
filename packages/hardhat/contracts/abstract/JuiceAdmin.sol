@@ -10,7 +10,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./../interfaces/IJuicer.sol";
-import "./../interfaces/ITickets.sol";
+
+import "./../TicketStore.sol";
 
 /** 
   @notice A contract that inherits from JuiceAdmin can use Juice as a business-model-as-a-service.
@@ -39,9 +40,6 @@ abstract contract JuiceAdmin is Ownable {
     /// @dev The symbol of this Budget owner's tickets.
     string public ticketSymbol;
 
-    /// @dev The reward of this Budget owner's tickets.
-    IERC20 public ticketReward;
-
     /// @dev The address that can tap the Budget.
     address public budgetOwner;
 
@@ -49,21 +47,15 @@ abstract contract JuiceAdmin is Ownable {
       @param _juicer The juicer that is being administered.
       @param _ticketName The name for this project's ERC-20 Tickets.
       @param _ticketSymbol The symbol for this project's ERC-20 Tickets.
-      @param _ticketReward The token that this project's Tickets can be redeemed for.
-      @param _router The router used to execute swaps.
     */
     constructor(
         IJuicer _juicer,
         string memory _ticketName,
-        string memory _ticketSymbol,
-        IERC20 _ticketReward,
-        UniswapV2Router02 _router
+        string memory _ticketSymbol
     ) internal {
         juicer = _juicer;
         ticketName = _ticketName;
         ticketSymbol = _ticketSymbol;
-        ticketReward = _ticketReward;
-        router = _router;
 
         budgetOwner = msg.sender;
     }
@@ -73,14 +65,13 @@ abstract contract JuiceAdmin is Ownable {
         @dev This must be called before a Budget is configured.
     */
     function issueTickets() external onlyOwner {
-        juicer.issueTickets(ticketName, ticketSymbol, ticketReward);
+        juicer.issueTickets(ticketName, ticketSymbol);
     }
 
     /**
         @notice This is how the Budget is configured, and reconfiguration over time.
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
-        @param _want The new token that your Budget wants.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
         effectively creating a recency discountRate.
@@ -96,7 +87,6 @@ abstract contract JuiceAdmin is Ownable {
     function configureBudget(
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _link,
         uint256 _discountRate,
         uint256 _o,
@@ -107,7 +97,6 @@ abstract contract JuiceAdmin is Ownable {
             juicer.configureBudget(
                 _target,
                 _duration,
-                _want,
                 _link,
                 _discountRate,
                 _o,
@@ -117,54 +106,23 @@ abstract contract JuiceAdmin is Ownable {
     }
 
     /** 
-      @notice Redeem tickets that have been transfered to this contract and use the rewards to fund this contract's Budget.
+      @notice Redeem tickets that have been transfered to this contract and use the returned amount to fund this contract's Budget.
       @param _issuer The issuer who's tickets are being redeemed.
-      @param _amount The amount being redeemed.
-      @param _minRewardAmount The minimum amount of rewards tokens expected in return.
-      @param _minSwappedAmount The minimum amount of this contract's latest `want` token that should be
-             swapped to from the redeemed reward.
+      @param _amount The amount of tickets being redeemed.
+      @param _minReturn The minimum amount of tokens expected in return.
       @param _juicer The Juicer to redeem from.
     */
     function redeemTicketsAndFund(
         address _issuer,
         uint256 _amount,
-        uint256 _minRewardAmount,
-        uint256 _minSwappedAmount,
+        uint256 _minReturn,
         IJuicer _juicer
     ) external onlyBudgetOwner {
-        IERC20 _rewardToken =
-            _juicer.redeem(_issuer, _amount, _minRewardAmount, address(this));
-
-        Budget.Data memory _budget =
-            _juicer.budgetStore().getCurrentBudget(address(this));
-
-        require(
-            _rewardToken.approve(address(router), _amount),
-            "BudgetAdmin::redeemTickets: APPROVE_FAILED."
-        );
-
-        address[] memory path = new address[](2);
-        path[0] = address(_rewardToken);
-        path[1] = router.WETH();
-        // Add the destination of the route if it isn't WETH.
-        if (address(_budget.want) != router.WETH())
-            path[2] = address(_budget.want);
-        uint256[] memory _amounts =
-            router.swapExactTokensForTokens(
-                _amount,
-                _minSwappedAmount,
-                path,
-                address(this),
-                block.timestamp
-            );
+        uint256 _returnAmount =
+            _juicer.redeem(_issuer, _amount, _minReturn, address(this));
 
         // Surplus goes back to the issuer.
-        _juicer.payOwner(
-            address(this),
-            _amounts[_amounts.length - 1],
-            _budget.want,
-            _issuer
-        );
+        _juicer.payOwner(address(this), _returnAmount, _issuer);
     }
 
     /** 

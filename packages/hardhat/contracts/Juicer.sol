@@ -214,10 +214,11 @@ contract Juicer is IJuicer {
         uint256 _b,
         address _bAddress
     ) external override returns (uint256) {
+        require(_target > 0, "Juicer::configureBudget: BAD_TARGET");
         // The `discountRate` token must be between 95 and 100.
         require(
             _discountRate >= 95 && _discountRate <= 100,
-            "Juicer:configureBudget: BAD_BIAS"
+            "Juicer::configureBudget: BAD_BIAS"
         );
         // If the beneficiary reserve percentage is greater than 0, an address must be provided.
         require(
@@ -528,7 +529,10 @@ contract Juicer is IJuicer {
         Tickets _tickets = ticketStore.tickets(_issuer);
 
         // If the owner doesn't have tickets, throw.
-        require(_tickets != Tickets(0), "Juicer::claim: NOT_FOUND");
+        require(
+            _tickets != Tickets(0),
+            "Juicer::distributeReserves: NOT_FOUND"
+        );
 
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);

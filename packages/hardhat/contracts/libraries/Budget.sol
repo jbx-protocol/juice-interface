@@ -152,7 +152,9 @@ library Budget {
         @return The resulting amount.
     */
     function _tappableAmount(Data memory self) internal pure returns (uint256) {
-        return Math.min(self.target, self.total).sub(self.tapped);
+        uint256 _available = Math.min(self.target, self.total);
+        if (_available == 0) return 0;
+        return _available.sub(self.tapped);
     }
 
     /** 

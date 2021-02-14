@@ -132,7 +132,7 @@ library Budget {
                 self.b,
                 self.bAddress,
                 false,
-                self.weight,
+                _derivedWeight(self),
                 self.discountRate,
                 self.configured
             );

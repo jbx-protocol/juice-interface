@@ -248,7 +248,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -354,7 +354,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -460,7 +460,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -566,7 +566,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -672,7 +672,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -778,7 +778,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {
@@ -1103,7 +1103,7 @@
           },
           {
             "internalType": "bool",
-            "name": "hasMintedReserves",
+            "name": "hasDistributedReserves",
             "type": "bool"
           },
           {

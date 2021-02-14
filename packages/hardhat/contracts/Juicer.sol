@@ -2,9 +2,6 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import {
-    UniswapV2Router02
-} from "@uniswap/v2-periphery/contracts/UniswapV2Router02.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -76,28 +73,31 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
 
+    /// @notice The amount claimable for each address, including all beneficiaries and the admin.
+    mapping(address => uint256) public claimable;
+
     /// @notice The address of the DAI ERC-20 token.
     IERC20 public dai;
 
     // --- external views --- //
 
     /**
-        @notice The amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
+        @notice The amount of pending admin fees, donatations to beneficiaries, and mintable tickets for budget owners.
         @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets in Juicer.
+        @dev This logic should be the same as `distributeReserves` in Juicer.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-        @return issuers The amount of unminted reserved tickets belonging to issuer of the tickets.
-        @return beneficiaries The amount of unminted reserved tickets belonging to beneficiaries.
-        @return admins The amount of unminted reserved tickets belonging to the admin.
+        @return issuerTickets The amount of unminted reserved tickets belonging to issuer of the tickets.
+        @return adminFees The amount of fees belonging to the admin.
+        @return beneficiaryDonations The amount of donations belonging to the beneficiaries.
     */
-    function getReservedTickets(address _issuer)
+    function getDistributableReserves(address _issuer)
         public
         view
         override
         returns (
-            uint256 issuers,
-            uint256 beneficiaries,
-            uint256 admins
+            uint256 issuerTickets,
+            uint256 adminFees,
+            uint256 beneficiaryDonations
         )
     {
         // Get a reference to the owner's tickets.
@@ -114,26 +114,25 @@ contract Juicer is IJuicer {
 
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasMintedReserves) {
+        while (_budget.id > 0 && !_budget.hasDistributedReserves) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
             if (_budget._state() == Budget.State.Redistributing) {
-                // The admin gets the admin fee percentage.
-                // Unminted reserved tickets are all relavative to the amount of total tickets given out.
-                admins = admins.add(_budget._weighted(_budget.total, fee));
+                adminFees = adminFees.add(_budget.total.mul(fee).div(100));
 
-                // The owner gets the budget's owner percentage, if one is specified.
                 if (_budget.o > 0) {
-                    issuers = issuers.add(
+                    // The owner gets the budget's owner percentage, if one is specified.
+                    issuerTickets = issuerTickets.add(
                         _budget._weighted(_budget.total, _budget.o)
                     );
                 }
 
-                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                if (_budget.b > 0) {
-                    beneficiaries = beneficiaries.add(
-                        _budget._weighted(_budget.total, _budget.b)
+                // Give to beneficiary if there is overflow.
+                if (_budget.b < 0 && _budget.total > _budget.target)
+                    beneficiaryDonations = beneficiaryDonations.add(
+                        _budget.total.sub(_budget.target).mul(_budget.b).div(
+                            100
+                        )
                     );
-                }
             }
 
             // Continue the loop with the previous Budget.
@@ -200,7 +199,7 @@ contract Juicer is IJuicer {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         This is `discountRate` is realized through the amount of Ticket distributed per unit of contribution made.
         @param _o The percentage of this Budget's overflow to reserve for the owner.
-        @param _b The percentage of this Budget's overflow to reserve for a beneficiary address. 
+        @param _b The amount of this Budget's overflow to give to a beneficiary address. 
         This can be another contract, or an end user address.
         An example would be a contract that reserves for Gitcoin grant matching.
         @param _bAddress The address of the beneficiary contract that can mint the reserved beneficiary percentage.
@@ -225,11 +224,8 @@ contract Juicer is IJuicer {
             _b == 0 || _bAddress != address(0),
             "Juicer::configureBudget: BAD_ADDRESS"
         );
-        // The reserved percentages must add up to less than or equal to 100.
-        require(
-            _o.add(_b).add(fee) <= 100,
-            "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES"
-        );
+        // The reserved ticket percentage must add up to less than or equal to 100.
+        require(_o <= 100, "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES");
 
         // Get a reference to the owner's Tickets.
         Tickets _tickets = ticketStore.tickets(msg.sender);
@@ -300,8 +296,10 @@ contract Juicer is IJuicer {
         Budget.Data memory _budget =
             budgetStore.ensureActiveBudget(_owner, STANDBY_PERIOD);
 
-        // Add the amount to the Budget.
-        _budget.total = _budget.total.add(_amount);
+        // Add the amount to the Budget. Takes into account the admin fee.
+        _budget.total = _budget.total.add(_amount).sub(
+            _amount.mul(fee).div(100)
+        );
 
         // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
         uint256 _overflow =
@@ -315,9 +313,9 @@ contract Juicer is IJuicer {
             // Mark the amount of the contribution that didn't go towards overflow as tapped.
             _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
             // Transfer the overflow only, since the rest has been marked as tapped.
-            if (_overflow > 0) {
+            if (_overflow > 0)
                 dai.safeTransferFrom(msg.sender, address(this), _overflow);
-            }
+
             emit TapBudget(_budget.id, msg.sender, msg.sender, _overflow, dai);
         } else {
             // Transfer the amount from the contributor to this contract.
@@ -327,19 +325,22 @@ contract Juicer is IJuicer {
         // Save the budget to the store.
         budgetStore.saveBudget(_budget);
 
-        // If the Budget has overflow, add the amount of contributed funds that went to overflow to the claimable amount.
+        // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) {
+            uint256 _contributedOverflow =
+                _amount > _overflow ? _overflow : _amount;
             ticketStore.addClaimable(
                 _budget.owner,
-                // The amount of this contribution that is going towards overflow.
-                _amount > _overflow ? _overflow : _amount
+                _contributedOverflow.sub(
+                    _contributedOverflow.mul(_budget.b).div(100)
+                )
             );
         }
 
         // Mint the appropriate amount of tickets for the contributor.
         ticketStore.tickets(_budget.owner).mint(
             _beneficiary,
-            _budget._weighted(_amount, _budget._unreserved(fee))
+            _budget._weighted(_amount, uint256(100).sub(_budget.o).sub(fee))
         );
 
         emit SustainBudget(
@@ -374,7 +375,7 @@ contract Juicer is IJuicer {
             msg.sender,
             _amount,
             _issuer,
-            618
+            382
         );
 
         // The amount being claimed must be less than the amount claimable.
@@ -439,59 +440,25 @@ contract Juicer is IJuicer {
         // Transfer the funds to the specified address.
         dai.safeTransfer(_beneficiary, _amount);
 
+        // Distribute reserves if needed.
+        if (!_budget.hasDistributedReserves) distributeReserves(msg.sender);
+
         emit TapBudget(_budgetId, msg.sender, _beneficiary, _amount, dai);
     }
 
     /**
-        @notice Mints the amount of unminted tickets that are reserved for owners, beneficieries, and the admin.
-        @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as mintReservedTickets.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-    */
-    function mintReservedTickets(address _issuer) external override {
-        // Get a reference to the owner's tickets.
-        Tickets _tickets = ticketStore.tickets(_issuer);
+      @notice Claim any funds belonging to you.
+      @return amount The amount claimed.
+     */
+    function claim() external override lock returns (uint256 amount) {
+        amount = claimable[msg.sender];
 
-        // If the owner doesn't have tickets, throw.
-        require(_tickets != Tickets(0), "Juicer::claim: NOT_FOUND");
+        require(amount > 0, "Juicer::claim: INSUFFICIENT_FUNDS");
 
-        // Get a reference to the owner's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
+        claimable[msg.sender] = claimable[msg.sender] = 0;
 
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasMintedReserves) {
-            // If the budget is redistributing, it has unminted reserved tickets.
-            if (_budget._state() == Budget.State.Redistributing) {
-                // The admin gets the admin fee percentage.
-                // Unminted reserved tickets are all relavative to the amount of total tickets given out.
-                _tickets.mint(admin, _budget._weighted(_budget.total, fee));
-
-                // The owner gets the budget's owner percentage, if one is specified.
-                if (_budget.o > 0)
-                    _tickets.mint(
-                        _budget.owner,
-                        _budget._weighted(_budget.total, _budget.o)
-                    );
-
-                // The beneficiary gets the budget's beneficiary percentage, if one is specified.
-                if (_budget.b > 0)
-                    _tickets.mint(
-                        _budget.bAddress,
-                        _budget._weighted(_budget.total, _budget.b)
-                    );
-
-                // Mark the budget as having minted reserves.
-                _budget.hasMintedReserves = true;
-
-                // Save the budget to the store;
-                budgetStore.saveBudget(_budget);
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
-        }
-        emit MintReservedTickets(msg.sender, _issuer);
+        // Transfer the funds to the specified address.
+        dai.safeTransfer(msg.sender, amount);
     }
 
     /**
@@ -500,7 +467,7 @@ contract Juicer is IJuicer {
         @dev Make sure you know what you're doing. This is a one way migration
         @param _to The contract that will gain minting and burning privileges over the Tickets.
     */
-    function migrate(address _to) external override {
+    function migrate(address _to) external override lock {
         require(
             migrationContractIsAllowed[_to],
             "Juicer:migrateTickets: BAD_DESTINATION"
@@ -544,5 +511,61 @@ contract Juicer is IJuicer {
             "Juicer::setMigrationAllowList: UNAUTHORIZED"
         );
         migrationContractIsAllowed[_contract] = true;
+    }
+
+    // --- public transactions --- //
+
+    /**
+        @notice Pays admin fees, donates to beneficiaries, and mints the amount of unminted tickets that are reserved for owners.
+        @dev Reserves are only distributable once a Budget expires.
+        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
+    */
+    function distributeReserves(address _issuer) public override {
+        // Get a reference to the owner's tickets.
+        Tickets _tickets = ticketStore.tickets(_issuer);
+
+        // If the owner doesn't have tickets, throw.
+        require(_tickets != Tickets(0), "Juicer::claim: NOT_FOUND");
+
+        // Get a reference to the owner's latest Budget.
+        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
+
+        // Iterate sequentially through the owner's Budgets, starting with the latest one.
+        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
+        while (_budget.id > 0 && !_budget.hasDistributedReserves) {
+            // If the budget is redistributing, it has unminted reserved tickets.
+            if (_budget._state() == Budget.State.Redistributing) {
+                // Take fee
+                uint256 _feeAmount = _budget.total.mul(fee).div(100);
+                claimable[admin] = claimable[admin].add(_feeAmount);
+
+                if (_budget.o > 0) {
+                    // The owner gets the budget's owner percentage, if one is specified.
+                    _tickets.mint(
+                        _budget.owner,
+                        _budget._weighted(_budget.total, _budget.o)
+                    );
+                }
+                if (_budget.b < 0 && _budget.total > _budget.target) {
+                    // Give to beneficiary
+                    uint256 _bAmount =
+                        _budget.total.sub(_budget.target).mul(_budget.b).div(
+                            100
+                        );
+                    claimable[_budget.bAddress] = claimable[_budget.bAddress]
+                        .add(_bAmount);
+                }
+
+                // Mark the budget as having distributed reserves.
+                _budget.hasDistributedReserves = true;
+
+                // Save the budget to the store;
+                budgetStore.saveBudget(_budget);
+            }
+
+            // Continue the loop with the previous Budget.
+            _budget = budgetStore.getBudget(_budget.previous);
+        }
+        emit DistributeReserves(msg.sender, _issuer);
     }
 }

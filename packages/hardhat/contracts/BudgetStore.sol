@@ -268,7 +268,7 @@ contract BudgetStore is Store, IBudgetStore {
         newBudget.weight = _weight;
         newBudget.total = 0;
         newBudget.tapped = 0;
-        newBudget.hasMintedReserves = false;
+        newBudget.hasDistributedReserves = false;
         latestBudgetId[_owner] = budgetCount;
     }
 

@@ -8,7 +8,7 @@ import "./IBudgetController.sol";
 import "./ITicketsController.sol";
 
 interface IJuicer is IBudgetController, ITicketsController {
-    event MintReservedTickets(address minter, address issuer);
+    event DistributeReserves(address minter, address issuer);
 
     function admin() external view returns (address);
 
@@ -18,7 +18,18 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function fee() external view returns (uint256);
 
+    function claim() external returns (uint256 amount);
+
+    function getDistributableReserves(address _issuer)
+        external
+        view
+        returns (
+            uint256 issuerTickets,
+            uint256 adminFees,
+            uint256 beneficiaryDonations
+        );
+
     function setAdmin(address _admin) external;
 
-    function mintReservedTickets(address _issuer) external;
+    function distributeReserves(address _issuer) external;
 }

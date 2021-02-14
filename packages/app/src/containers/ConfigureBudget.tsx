@@ -180,7 +180,7 @@ export default function ConfigureBudget({
               want: tokenOptions[0].value,
             },
           }}
-          header="Configure your budgets"
+          header="Configure your budget"
           tokenOptions={tokenOptions}
         />
       ) : null,
@@ -233,7 +233,7 @@ export default function ConfigureBudget({
                 : undefined,
             },
           }}
-          header="Create your ERC-20 ticket tokens"
+          header="Create your ERC-20 ticket token"
           tokenOptions={tokenOptions}
         />
       ),

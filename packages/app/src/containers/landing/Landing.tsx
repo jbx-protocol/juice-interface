@@ -86,7 +86,7 @@ export default function Landing({
               </p>
               <p style={{ margin: 0, fontSize: 20 }}>&#8595;</p>
               <p style={{ margin: 0 }}>
-                If your budget overflows, your paying customers can claim the
+                If your budget overflows, your paying customers get to claim the
                 surplus, effectively pushing prices down as you grow.
                 #RegenFinance
               </p>

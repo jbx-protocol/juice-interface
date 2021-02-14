@@ -82,7 +82,7 @@ export default function BudgetForm({
         />
       </Form.Item>
       <Form.Item
-        extra="A link to your mission statement and Budget specs."
+        extra="A link to your mission statement and budget specs."
         name="link"
         label="Link"
       >

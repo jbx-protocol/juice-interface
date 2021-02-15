@@ -1,4 +1,3 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
 import {
   Button,
   Col,
@@ -11,6 +10,7 @@ import {
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Web3 from 'web3'
+
 import BudgetDetail from '../components/BudgetDetail'
 import BudgetsHistory from '../components/BudgetsHistory'
 import Loading from '../components/Loading'
@@ -31,12 +31,12 @@ export default function Owner({
   userAddress,
   transactor,
   contracts,
-  provider,
+  onNeedProvider,
 }: {
   userAddress?: string
   transactor?: Transactor
   contracts?: Contracts
-  provider?: JsonRpcProvider
+  onNeedProvider: () => Promise<void>
 }) {
   const [sustainAmount, setSustainAmount] = useState<number>(0)
   const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
@@ -68,13 +68,13 @@ export default function Owner({
   })
 
   const ticketName = useContractReader<string>({
-    contract: erc20Contract(ticketAddress, provider),
+    contract: erc20Contract(ticketAddress),
     functionName: 'name',
     formatter: (value?: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(currentBudget?.want, provider),
+    contract: erc20Contract(currentBudget?.want),
     functionName: 'name',
   })
 
@@ -97,7 +97,7 @@ export default function Owner({
   //   .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
 
   function payOwner() {
-    if (!transactor || !contracts?.Juicer || !currentBudget?.owner) return
+    if (!transactor || !contracts || !currentBudget) return onNeedProvider()
 
     setLoadingPayOwner(true)
 
@@ -237,8 +237,8 @@ export default function Owner({
                 budget={currentBudget}
                 userAddress={userAddress}
                 ticketAddress={ticketAddress}
-                provider={provider}
                 descriptionsStyle={descriptionsStyle}
+                onNeedProvider={onNeedProvider}
               />
               <Reserves
                 contracts={contracts}
@@ -246,7 +246,7 @@ export default function Owner({
                 budget={currentBudget}
                 descriptionsStyle={descriptionsStyle}
                 ticketAddress={ticketAddress}
-                provider={provider}
+                onNeedProvider={onNeedProvider}
               ></Reserves>
             </Space>
           </div>
@@ -258,12 +258,15 @@ export default function Owner({
               <Col span={12}>
                 {section(
                   <div>
-                    <BudgetDetail
-                      userAddress={userAddress}
-                      budget={currentBudget}
-                      contracts={contracts}
-                      transactor={transactor}
-                    />
+                    {currentBudget ? (
+                      <BudgetDetail
+                        budget={currentBudget}
+                        userAddress={userAddress}
+                        contracts={contracts}
+                        transactor={transactor}
+                        onNeedProvider={onNeedProvider}
+                      />
+                    ) : null}
                     <Divider style={{ margin: 0 }} />
                     <Space
                       style={{
@@ -302,6 +305,7 @@ export default function Owner({
                       budget={queuedBudget}
                       contracts={contracts}
                       transactor={transactor}
+                      onNeedProvider={onNeedProvider}
                     />
                   ) : (
                     <div style={{ padding: 25 }}>No upcoming budgets</div>
@@ -333,6 +337,7 @@ export default function Owner({
                     contracts={contracts}
                     transactor={transactor}
                     userAddress={userAddress}
+                    onNeedProvider={onNeedProvider}
                   />,
                   'Budget History',
                 )}

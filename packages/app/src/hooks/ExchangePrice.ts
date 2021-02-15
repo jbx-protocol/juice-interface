@@ -1,14 +1,11 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Fetcher, Route, Token, WETH } from '@uniswap/sdk'
 import { useState } from 'react'
 
+import { mainnetProvider } from '../constants/mainnet-provider'
 import { DAI } from '../constants/tokens/dai'
 import { usePoller } from './Poller'
 
-export function useExchangePrice(
-  mainnetProvider: JsonRpcProvider,
-  pollTime = 10000,
-) {
+export function useExchangePrice(pollTime = 10000) {
   const [price, setPrice] = useState(0)
 
   /* 💵 get the price of ETH from 🦄 Uniswap: */
@@ -18,7 +15,7 @@ export function useExchangePrice(
       const pair = await Fetcher.fetchPairData(
         token,
         WETH[token.chainId],
-        mainnetProvider,
+        mainnetProvider(),
       )
       const route = new Route([pair], WETH[token.chainId])
       setPrice(parseFloat(route.midPrice.toSignificant(6)))

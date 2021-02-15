@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Descriptions, DescriptionsProps, Switch } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
@@ -23,17 +22,18 @@ export default function Reserves({
   budget,
   ticketAddress,
   descriptionsStyle,
-  provider,
+  onNeedProvider,
 }: {
   contracts?: Contracts
   transactor?: Transactor
   budget?: Budget
   ticketAddress?: string
   descriptionsStyle?: DescriptionsProps
-  provider?: JsonRpcProvider
+  onNeedProvider: () => Promise<void>
 }) {
   const [loadingMint, setLoadingMint] = useState<boolean>()
   const [onlyDistributable, setOnlyDistributable] = useState<boolean>(false)
+  console.log('RESSS')
 
   const emptyReserves: ReserveAmounts = {
     adminFees: BigNumber.from(0),
@@ -74,14 +74,16 @@ export default function Reserves({
   const displayReserves = onlyDistributable ? distributableReserves : reserves
 
   const ticketSymbol = useContractReader<string>({
-    contract: erc20Contract(ticketAddress, provider),
+    contract: erc20Contract(ticketAddress),
     functionName: 'symbol',
     formatter: (value: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
 
   function mint() {
-    if (!transactor || !contracts || !budget) return
+    if (!budget) return
+
+    if (!transactor || !contracts) return onNeedProvider()
 
     setLoadingMint(true)
 

@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
@@ -18,23 +17,23 @@ export default function Rewards({
   budget,
   userAddress,
   ticketAddress,
-  provider,
   descriptionsStyle,
+  onNeedProvider,
 }: {
   transactor?: Transactor
   contracts?: Contracts
   budget?: Budget
   userAddress?: string
   ticketAddress?: string
-  provider?: JsonRpcProvider
   descriptionsStyle?: DescriptionsProps
+  onNeedProvider: () => Promise<void>
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
 
   const claimableProportion = BigNumber.from(382).toHexString()
 
-  const ticketContract = erc20Contract(ticketAddress, provider)
+  const ticketContract = erc20Contract(ticketAddress)
 
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
@@ -78,7 +77,7 @@ export default function Rewards({
     : '0'
 
   function redeem() {
-    if (!transactor || !contracts) return
+    if (!transactor || !contracts) return onNeedProvider()
 
     setLoadingRedeem(true)
 

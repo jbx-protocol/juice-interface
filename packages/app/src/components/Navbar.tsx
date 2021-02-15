@@ -1,6 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
+import { Menu } from 'antd'
+import { Header } from 'antd/lib/layout/layout'
 
-import { colors } from '../constants/styles/colors'
 import Account from './Account'
 
 export default function Navbar({
@@ -19,11 +20,7 @@ export default function Navbar({
 
     return (
       <a
-        style={{
-          textDecoration: 'none',
-          fontWeight: 600,
-          color: colors.dark,
-        }}
+        style={{ fontWeight: 600 }}
         href={route}
         target={external ? '_blank' : ''}
         rel={external ? 'noopener noreferrer' : ''}
@@ -34,42 +31,49 @@ export default function Navbar({
   }
 
   return (
-    <div
+    <Header
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '6px 20px',
+        backgroundColor: 'white',
       }}
     >
-      <div
-        style={{
-          display: 'inline-grid',
-          gridAutoFlow: 'column',
-          columnGap: 40,
-          alignItems: 'center',
-        }}
+      <Menu
+        mode="horizontal"
+        theme="light"
+        style={{ display: 'inline-block', border: 'none' }}
       >
-        <a href="/">
-          <img
-            style={{ height: 40 }}
-            src="/assets/juice_logo-ol.png"
-            alt="Juice logo"
-          />
-        </a>
-        {hasBudget && userAddress
-          ? menuItem('Your budget', '/#/' + userAddress)
-          : menuItem('Get to work', '/#/create')}
-        {menuItem(
-          'Fluid dynamics',
-          'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Juicy-Funstuff?node-id=0%3A1',
+        <Menu.Item key="logo" style={{ marginLeft: 0 }}>
+          <a href="/" style={{ display: 'inline-block' }}>
+            <img
+              style={{ height: 40 }}
+              src="/assets/juice_logo-ol.png"
+              alt="Juice logo"
+            />
+          </a>
+        </Menu.Item>
+        {hasBudget && userAddress ? (
+          <Menu.Item key="budget">
+            {menuItem('Your budget', '/#/' + userAddress)}
+          </Menu.Item>
+        ) : (
+          <Menu.Item key="create">
+            {menuItem('Get to work', '/#/create')}
+          </Menu.Item>
         )}
-      </div>
+        <Menu.Item key="fluid-dynamics">
+          {menuItem(
+            'Fluid dynamics',
+            'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Juicy-Funstuff?node-id=0%3A1',
+          )}
+        </Menu.Item>
+      </Menu>
       <Account
         userProvider={userProvider}
         loadWeb3Modal={onConnectWallet}
         userAddress={userAddress}
       />
-    </div>
+    </Header>
   )
 }

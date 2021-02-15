@@ -39,7 +39,8 @@ export default function Account({
         alignItems: 'baseline',
       }}
     >
-      {userProvider?.network?.name === NetworkName.mainnet ? null : (
+      {!userProvider ||
+      userProvider?.network?.name === NetworkName.mainnet ? null : (
         <span style={{ fontSize: '.8rem', fontWeight: 500 }}>
           Network: {userProvider?.network?.name}
         </span>

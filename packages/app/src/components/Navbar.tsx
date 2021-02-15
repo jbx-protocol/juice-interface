@@ -57,11 +57,9 @@ export default function Navbar({
             alt="Juice logo"
           />
         </a>
-        {userAddress
-          ? hasBudget
-            ? menuItem('Your budget', '/#/' + userAddress)
-            : menuItem('Get to work', '/#/create')
-          : null}
+        {hasBudget && userAddress
+          ? menuItem('Your budget', '/#/' + userAddress)
+          : menuItem('Get to work', '/#/create')}
         {menuItem(
           'Fluid dynamics',
           'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Juicy-Funstuff?node-id=0%3A1',

@@ -26,11 +26,13 @@ export default function BudgetDetail({
   contracts,
   transactor,
   userAddress,
+  onNeedProvider,
 }: {
-  budget?: Budget
+  budget: Budget
   contracts?: Contracts
   transactor?: Transactor
   userAddress?: string
+  onNeedProvider: () => Promise<void>
 }) {
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -71,7 +73,7 @@ export default function BudgetDetail({
   const isOwner = budget?.owner === userAddress
 
   function tap() {
-    if (!transactor || !contracts?.Juicer || !budget) return
+    if (!transactor || !contracts?.Juicer) return onNeedProvider()
 
     setLoadingWithdraw(true)
 

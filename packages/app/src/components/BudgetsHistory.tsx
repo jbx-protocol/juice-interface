@@ -13,11 +13,13 @@ export default function BudgetsHistory({
   transactor,
   userAddress,
   startId,
+  onNeedProvider,
 }: {
   contracts?: Contracts
   transactor?: Transactor
   userAddress?: string
   startId?: BigNumber
+  onNeedProvider: () => Promise<void>
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
@@ -62,6 +64,7 @@ export default function BudgetsHistory({
             budget={budget}
             transactor={transactor}
             contracts={contracts}
+            onNeedProvider={onNeedProvider}
           />
         ))
       ) : (

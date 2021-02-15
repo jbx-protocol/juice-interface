@@ -24,7 +24,7 @@ export default function Router({
   contracts?: Contracts
   userProvider?: JsonRpcProvider
   userAddress?: string
-  onNeedProvider?: VoidFunction
+  onNeedProvider: () => Promise<void>
 }) {
   const gasPrice = useGasPrice('fast')
 
@@ -41,7 +41,7 @@ export default function Router({
     next()
   }
 
-  return userProvider && hasBudget === undefined ? (
+  return userAddress && hasBudget === undefined ? (
     <div style={{ flex: 1 }}>
       <Loading />
     </div>
@@ -55,7 +55,6 @@ export default function Router({
               hasBudget={hasBudget}
               contracts={contracts}
               transactor={transactor}
-              userProvider={userProvider}
               onNeedProvider={onNeedProvider}
             />
           </GuardedRoute>
@@ -68,10 +67,10 @@ export default function Router({
           </GuardedRoute>
           <GuardedRoute path="/create" meta={{ budget: false }}>
             <ConfigureBudget
-              owner={userAddress}
+              userAddress={userAddress}
               contracts={contracts}
               transactor={transactor}
-              provider={userProvider}
+              onNeedProvider={onNeedProvider}
             />
           </GuardedRoute>
           <GuardedRoute path="/:owner">
@@ -79,7 +78,7 @@ export default function Router({
               contracts={contracts}
               transactor={transactor}
               userAddress={userAddress}
-              provider={userProvider}
+              onNeedProvider={onNeedProvider}
             />
           </GuardedRoute>
         </Switch>

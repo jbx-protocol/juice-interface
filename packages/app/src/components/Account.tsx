@@ -2,7 +2,6 @@ import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button } from 'antd'
 import { useEffect } from 'react'
 
-import { mainnetProvider } from '../constants/mainnet-provider'
 import { web3Modal } from '../constants/web3-modal'
 import { useExchangePrice } from '../hooks/ExchangePrice'
 import { NetworkName } from '../models/network-name'
@@ -29,7 +28,7 @@ export default function Account({
     }, 1)
   }
 
-  const price = useExchangePrice(mainnetProvider)
+  const price = useExchangePrice()
 
   return (
     <div
@@ -40,7 +39,8 @@ export default function Account({
         alignItems: 'baseline',
       }}
     >
-      {userProvider?.network?.name === NetworkName.mainnet ? null : (
+      {!userProvider ||
+      userProvider?.network?.name === NetworkName.mainnet ? null : (
         <span style={{ fontSize: '.8rem', fontWeight: 500 }}>
           Network: {userProvider?.network?.name}
         </span>

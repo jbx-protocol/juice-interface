@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
@@ -8,7 +7,6 @@ import Web3 from 'web3'
 import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
 import BudgetForm from '../components/forms/BudgetForm'
 import TicketsForm from '../components/forms/TicketsForm'
-import Loading from '../components/Loading'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
@@ -17,19 +15,19 @@ import { shadowCard } from '../constants/styles/shadow-card'
 import useContractReader from '../hooks/ContractReader'
 import { Transactor } from '../models/transactor'
 import { erc20Contract } from '../utils/erc20Contract'
-import { orEmpty } from '../utils/orEmpty'
 import { isEmptyAddress } from '../utils/isEmptyAddress'
+import { orEmpty } from '../utils/orEmpty'
 
 export default function ConfigureBudget({
   transactor,
   contracts,
-  owner,
-  provider,
+  userAddress,
+  onNeedProvider,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
-  owner?: string
-  provider?: JsonRpcProvider
+  userAddress?: string
+  onNeedProvider: () => Promise<void>
 }) {
   const [ticketsForm] = Form.useForm<{
     name: string
@@ -54,29 +52,29 @@ export default function ConfigureBudget({
   const ticketsAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
     functionName: 'tickets',
-    args: [owner],
-    callback: address => {
-      if (!owner || !address || initializedTickets !== undefined) return
-      setInitializedTickets(!isEmptyAddress(address))
+    args: [userAddress],
+    callback: ticketsAddress => {
+      if (!userAddress || !ticketsAddress || initializedTickets !== undefined)
+        return
+      setInitializedTickets(!isEmptyAddress(ticketsAddress))
     },
   })
 
+  const ticketsContract = erc20Contract(ticketsAddress)
+
   const ticketsSymbol = useContractReader<string>({
-    contract: erc20Contract(ticketsAddress, provider),
+    contract: ticketsContract,
     functionName: 'symbol',
     formatter: (value?: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsName = useContractReader<string>({
-    contract: erc20Contract(ticketsAddress, provider),
+    contract: ticketsContract,
     functionName: 'name',
     formatter: (value?: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
-
-  if (!transactor || !contracts || initializedTickets === undefined)
-    return <Loading />
 
   async function tryNextStep() {
     const valid = await steps[currentStep].validate()
@@ -84,7 +82,7 @@ export default function ConfigureBudget({
   }
 
   function initTickets() {
-    if (!transactor || !contracts) return
+    if (!transactor || !contracts) return onNeedProvider()
 
     setLoadingInitTickets(true)
 
@@ -111,7 +109,7 @@ export default function ConfigureBudget({
   }
 
   function submitBudget() {
-    if (!transactor || !contracts?.Juicer || !contracts?.Token) return
+    if (!transactor || !contracts) return onNeedProvider()
 
     setLoadingCreateBudget(true)
 
@@ -159,7 +157,7 @@ export default function ConfigureBudget({
       ),
       () => {
         setLoadingCreateBudget(false)
-        if (owner) window.location.hash = owner
+        if (userAddress) window.location.hash = userAddress
       },
     )
   }
@@ -176,7 +174,7 @@ export default function ConfigureBudget({
       ),
       info: [
         "Your contract will create a budgeting period that'll begin accepting payments right away, and up until the time frame runs out.",
-        "A new budgeting period will be created automatically once the current one expires so that you can continue collecting money.",
+        'A new budgeting period will be created automatically once the current one expires so that you can continue collecting money.',
         "You can make changes to your contract's specs for future budgeting periods under a certain condition – more on this in step 2.",
       ],
     },
@@ -234,7 +232,7 @@ export default function ConfigureBudget({
         'You can also pre-program a donation from your overflow, like for Gitcoin grant matching.',
         '---',
         "Lastly, the discount rate can give earlier adopters a better rate when claiming overflow. It's how you value your contributions over time.",
-        "For example, if your discount rate is set to 97%, then someone who pays 100 towards your next budgeting period will only receive 97% the amount of tickets received by someone who paid 100 towards the current one.",
+        'For example, if your discount rate is set to 97%, then someone who pays 100 towards your next budgeting period will only receive 97% the amount of tickets received by someone who paid 100 towards the current one.',
         'Effectively this gives people who believe your cumulative overflow will increase over time an added incentive to pay you today, HODL their tickets, and redeem them at a future date.',
       ],
     },
@@ -347,7 +345,9 @@ export default function ConfigureBudget({
           </Space>
         </div>
       ),
-      info: ["You'll be sending two transactions: The first one to issue your tickets, and then the second to kick off your contract so you can start getting paid."],
+      info: [
+        "You'll be sending two transactions: The first one to issue your tickets, and then the second to kick off your contract so you can start getting paid.",
+      ],
     },
   ]
 
@@ -370,7 +370,7 @@ export default function ConfigureBudget({
         ))}
       </Steps>
 
-      <Row gutter={80} align="top">
+      <Row align="top">
         <Col span={10}>
           {steps[currentStep].content}
 
@@ -390,15 +390,20 @@ export default function ConfigureBudget({
               </Button>
             )}
 
-            {currentStep === steps.length - 1 ? (
-              <div></div>
-            ) : (
-              <Button onClick={() => tryNextStep()}>Next</Button>
-            )}
+            <Space>
+              {currentStep === steps.length - 1 ? null : (
+                <Button onClick={() => tryNextStep()}>Next</Button>
+              )}
+              {userAddress ? null : (
+                <Button onClick={onNeedProvider} type="primary">
+                  Connect a wallet
+                </Button>
+              )}
+            </Space>
           </div>
         </Col>
 
-        <Col span={14}>
+        <Col style={{ paddingLeft: 80 }} span={14}>
           {steps[currentStep].info?.length ? (
             <div
               style={{

@@ -39,7 +39,7 @@ export default function Landing({
     'Ethereum protocols, DAOs, and public goods',
     'Open source stuff',
     'Indy projects',
-    'Any mission with predictable expenses',
+    'Any internet deliverable with predictable costs',
   ]
 
   const wrapper: CSSProperties = {
@@ -77,7 +77,7 @@ export default function Landing({
                       fontWeight: 500,
                     }}
                   >
-                    Juice is a regenerative business model for:
+                    Juice is a cashflow machine for:
                   </p>
                   <div
                     style={{
@@ -100,7 +100,7 @@ export default function Landing({
 
                 <div>
                   <Button type="primary" onClick={scrollToCreate}>
-                    Create a project
+                    Get to work
                   </Button>
                 </div>
               </div>
@@ -124,18 +124,18 @@ export default function Landing({
         <div
           style={{
             maxWidth: 540,
-            margin: '100px auto',
+            margin: '-20px auto',
           }}
         >
           <Space direction="vertical" size="large">
-            <h2>How it works</h2>
+            <h2>How it's done</h2>
             <Timeline style={{ paddingLeft: 10 }}>
               <Timeline.Item {...timelineItemStyle}>
-                Make a budget saying how much money you want/need in order to
-                absolutely crush your mission statement.
+                Make a Juice contract that says how much cashflow you and your team want/need in order
+                to absolutely crush your project's mission statement.
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                People pay you just like they would on Patreon, or transparently
+                People pay you kinda like they would on Patreon, or transparently
                 from within your Solidity smart contracts.{' '}
                 <a
                   href="https://twitter.com/hashtag/BusinessModelAsAService"
@@ -144,17 +144,10 @@ export default function Landing({
                 >
                   #BusinessModelAsAService
                 </a>{' '}
-                <a
-                  href="https://twitter.com/hashtag/dework"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #DeWork
-                </a>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                If your budget overflows, your paying customers get to claim the
-                surplus, effectively pushing prices down as you grow.{' '}
+                If money overflows, your paying customers get to claim the
+                surplus, effectively pushing prices down as your community grows. Early adopters get a discounted rate, and those HODLers who wait longest to claim get a juicier return. {' '}
                 <a
                   href="https://twitter.com/hashtag/RegenFinance"
                   target="_blank"
@@ -164,14 +157,29 @@ export default function Landing({
                 </a>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                Your budgets can be recurring. You can make changes as your
-                project evolves, with the approval of those paying customers
+                Your accounting periods can be however long you want, and can be recurring. You can make them bigger as your project evolves, with the approval of those paying customers
                 that have not yet claimed their fair share of your overflowed
                 surplus.
               </Timeline.Item>
             </Timeline>
 
-            <p>The collective goal is to optimize for overflow over time.</p>
+            <p>Don't forget, we're all out here investing in each other for the contributions each of us make either to the open internet, or using it. Make your money, crush your craft, and be generous. {' '}
+                <a
+                  href="https://twitter.com/hashtag/DeFi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                 #DeFi
+                </a>
+                {' '}
+                <a
+                  href="https://twitter.com/hashtag/dework"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #DeWork
+                </a>
+                </p>
           </Space>
         </div>
       </section>
@@ -182,10 +190,11 @@ export default function Landing({
             id="create"
             style={{
               ...wrapper,
+              marginTop: 100,
               marginBottom: 80,
             }}
           >
-            {bigHeader('Create a project')}
+            {bigHeader('Get to work')}
             {userProvider ? (
               <ConfigureBudget
                 owner={userAddress}
@@ -218,19 +227,13 @@ export default function Landing({
           }}
         >
           <div>
-            {bigHeader('Should I Juice?')}
+            {bigHeader('Should you Juice?')}
             <p>There's a good chance.</p>
             <p>
-              Juice gives projects a reason to be measured and open with their
-              intent, and gives those who get value out of the project a
-              cultured way to pay for it.
-            </p>
-            <p>
-              People end up getting community-driven goods and services with no
-              ads, data integrity, full business operation accountability, and
-              an open source code base. All built by motivated punks getting
-              paid what they ask for, and with a price tag that effectively
-              tends toward zero as the juice flow grows.
+              With Juice, people end up getting online community-driven goods and services with no
+              ads, data integrity, and business operation accountability. All built by motivated punks getting
+              transparently paid exactly what they ask for, and with a price tag that effectively
+              tends toward zero as the overflow grows.
             </p>
           </div>
 
@@ -246,10 +249,11 @@ export default function Landing({
         style={{
           background: 'black',
           padding: 40,
-          paddingTop: 60,
+          paddingTop: 40,
           textAlign: 'center',
         }}
       >
+      <div style={{fontSize: 20, marginBottom: 20}}>🧃⚡️</div>
         <h3 style={{ color: 'white', margin: 0 }}>
           Big ups to the Ethereum community for crafting the infrastructure and
           economy to make Juice possible.

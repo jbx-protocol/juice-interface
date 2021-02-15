@@ -26,12 +26,8 @@ export default function Footer() {
         {link('Discord', 'https://discord.gg/H8zcWNcM')}
         {link('Github', 'https://github.com/juice-work/juicehouse')}
         {link('Twitter', 'https://twitter.com/doworkgetjuice')}
-        {link(
-          'Medium',
-          'https://joaoritter.medium.com/%EF%B8%8F-fountain-finance-1f2b5a33cb10',
-        )}
       </div>
-      <div style={{ color: 'white' }}>© 2021 Juice</div>
+      <div style={{ color: 'white' }}>Sure, copy it.</div>
     </div>
   )
 }

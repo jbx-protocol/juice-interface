@@ -78,6 +78,7 @@ REACT_APP_INFURA_NETWORK=
 ```
 
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
+
 `REACT_APP_INFURA_NETWORK`: [Infura network](https://infura.io/docs/ethereum#section/Choose-a-Network). Optional, defaults to 'mainnet'.
 
 ---

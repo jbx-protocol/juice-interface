@@ -163,7 +163,7 @@ export default function Landing({
               </Timeline.Item>
             </Timeline>
 
-            <p>Don't forget, we're all out here investing in each other for the contributions each of us make either to the open internet, or using it. Make your money, crush your craft, and be generous. {' '}
+            <p>Remember, we're all out here investing in each other for the contributions we're making either to the open internet, or using it. Make your money, crush your craft, and lift up your people. {' '}
                 <a
                   href="https://twitter.com/hashtag/DeFi"
                   target="_blank"

@@ -47,7 +47,7 @@ export default function BudgetForm({
         />
       </Form.Item>
       <Form.Item
-        extra="A link to your mission statement and budget specs."
+        extra="If you want, a link to your mission statement and your budgeting specs."
         name="link"
         label="Link"
       >

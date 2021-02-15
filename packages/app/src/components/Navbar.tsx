@@ -60,7 +60,7 @@ export default function Navbar({
         {userAddress
           ? hasBudget
             ? menuItem('Your budget', '/#/' + userAddress)
-            : menuItem('Create a budget', '/#/create')
+            : menuItem('Get to work', '/#/create')
           : null}
         {menuItem(
           'Fluid dynamics',

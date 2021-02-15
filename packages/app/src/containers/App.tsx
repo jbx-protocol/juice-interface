@@ -1,4 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { Layout } from 'antd'
+import { Content } from 'antd/lib/layout/layout'
 import { useCallback, useState } from 'react'
 
 import Navbar from '../components/Navbar'
@@ -31,12 +33,13 @@ function App() {
   console.log('User:', userAddress, userProvider)
 
   return (
-    <div
+    <Layout
       className="App"
       style={{
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        backgroundColor: 'white',
       }}
     >
       <Navbar
@@ -46,14 +49,16 @@ function App() {
         onConnectWallet={loadWeb3Modal}
       />
 
-      <Router
-        hasBudget={hasBudget}
-        userAddress={userAddress}
-        contracts={contracts}
-        userProvider={userProvider}
-        onNeedProvider={loadWeb3Modal}
-      />
-    </div>
+      <Content>
+        <Router
+          hasBudget={hasBudget}
+          userAddress={userAddress}
+          contracts={contracts}
+          userProvider={userProvider}
+          onNeedProvider={loadWeb3Modal}
+        />
+      </Content>
+    </Layout>
   )
 }
 

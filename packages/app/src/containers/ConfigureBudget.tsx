@@ -370,7 +370,7 @@ export default function ConfigureBudget({
         ))}
       </Steps>
 
-      <Row gutter={80} align="top">
+      <Row align="top">
         <Col span={10}>
           {steps[currentStep].content}
 
@@ -403,7 +403,7 @@ export default function ConfigureBudget({
           </div>
         </Col>
 
-        <Col span={14}>
+        <Col style={{ paddingLeft: 80 }} span={14}>
           {steps[currentStep].info?.length ? (
             <div
               style={{

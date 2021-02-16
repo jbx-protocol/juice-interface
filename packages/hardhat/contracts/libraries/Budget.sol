@@ -60,136 +60,149 @@ library Budget {
     /**
         @notice Clones the properties from the base Budget.
         @dev The base must be the Budget directly preceeding self.
-        @param self The Budget to clone onto.
+        @param _self The Budget to clone onto.
         @param _baseBudget The Budget to clone from.
     */
-    function _basedOn(Data storage self, Data memory _baseBudget) internal {
-        self.link = _baseBudget.link;
-        self.target = _baseBudget.target;
-        self.duration = _baseBudget.duration;
-        self.owner = _baseBudget.owner;
-        self.want = _baseBudget.want;
-        self.discountRate = _baseBudget.discountRate;
-        self.weight = _derivedWeight(_baseBudget);
-        self.o = _baseBudget.o;
-        self.b = _baseBudget.b;
-        self.bAddress = _baseBudget.bAddress;
-        self.configured = _baseBudget.configured;
-        self.number = _baseBudget.number.add(1);
-        self.previous = _baseBudget.id;
+    function _basedOn(Data storage _self, Data memory _baseBudget) internal {
+        _self.link = _baseBudget.link;
+        _self.target = _baseBudget.target;
+        _self.duration = _baseBudget.duration;
+        _self.owner = _baseBudget.owner;
+        _self.want = _baseBudget.want;
+        _self.discountRate = _baseBudget.discountRate;
+        _self.weight = _derivedWeight(_baseBudget);
+        _self.o = _baseBudget.o;
+        _self.b = _baseBudget.b;
+        _self.bAddress = _baseBudget.bAddress;
+        _self.configured = _baseBudget.configured;
+        _self.number = _baseBudget.number.add(1);
+        _self.previous = _baseBudget.id;
     }
 
     // --- internal views --- //
 
     /** 
         @notice The state the Budget is in.
-        @param self The Budget to get the state of.
+        @param _self The Budget to get the state of.
         @return state The state.
     */
-    function _state(Data memory self) internal view returns (State) {
-        if (_hasExpired(self)) return State.Redistributing;
-        if (_hasStarted(self) && self.total > 0) return State.Active;
+    function _state(Data memory _self) internal view returns (State) {
+        if (_hasExpired(_self)) return State.Redistributing;
+        if (_hasStarted(_self) && _self.total > 0) return State.Active;
         return State.Standby;
     }
 
     /** 
         @notice The date that is the nearest multiple of duration from oldEnd.
+        @param _self The Budget to make the calculation for.
         @return start The date.
     */
-    function _determineNextStart(Data memory self)
+    function _determineNextStart(Data memory _self)
         internal
         view
         returns (uint256)
     {
-        uint256 _end = self.start.add(self.duration);
+        uint256 _end = _self.start.add(_self.duration);
         // Use the old end if the current time is still within the duration.
-        if (_end.add(self.duration) > block.timestamp) return _end;
+        if (_end.add(_self.duration) > block.timestamp) return _end;
         // Otherwise, use the closest multiple of the duration from the old end.
         uint256 _distanceToStart =
-            (block.timestamp.sub(_end)).mod(self.duration);
+            (block.timestamp.sub(_end)).mod(_self.duration);
         return block.timestamp.sub(_distanceToStart);
     }
 
     /** 
         @notice A view of the Budget that would be created after this one if the owner doesn't make a reconfiguration.
+        @param _self The Budget to make the calculation for.
         @return _budget The next Budget, with an ID set to 0.
     */
-    function _nextUp(Data memory self) internal view returns (Data memory) {
+    function _nextUp(Data memory _self) internal view returns (Data memory) {
         return
             Data(
                 0,
-                self.owner,
-                self.number.add(1),
-                self.id,
-                self.link,
-                self.want,
-                self.target,
+                _self.owner,
+                _self.number.add(1),
+                _self.id,
+                _self.link,
+                _self.want,
+                _self.target,
                 0,
-                _determineNextStart(self),
-                self.duration,
+                _determineNextStart(_self),
+                _self.duration,
                 0,
-                self.o,
-                self.b,
-                self.bAddress,
+                _self.o,
+                _self.b,
+                _self.bAddress,
                 false,
-                _derivedWeight(self),
-                self.discountRate,
-                self.configured
+                _derivedWeight(_self),
+                _self.discountRate,
+                _self.configured
             );
     }
 
     /** 
         @notice The weight derived from the current weight and the discountRate.
+        @param _self The Budget to make the calculation for.
         @return _weight The new weight.
     */
-    function _derivedWeight(Data memory self) internal pure returns (uint256) {
-        return self.weight.mul(self.discountRate).div(100);
+    function _derivedWeight(Data memory _self) internal pure returns (uint256) {
+        return _self.weight.mul(_self.discountRate).div(100);
     }
 
     /** 
         @notice Returns the amount available for the given Budget's owner to tap in to.
-        @param self The Budget to make the calculation for.
+        @param _self The Budget to make the calculation for.
+        @param _withhold The percent of the total to withhold from the total.
         @return The resulting amount.
     */
-    function _tappableAmount(Data memory self) internal pure returns (uint256) {
-        uint256 _available = Math.min(self.target, self.total);
+    function _tappableAmount(Data memory _self, uint256 _withhold)
+        internal
+        pure
+        returns (uint256)
+    {
+        uint256 _available = Math.min(_self.target, _self.total);
         if (_available == 0) return 0;
-        return _available.sub(self.tapped);
+        return
+            _available.mul(uint256(100).sub(_withhold)).div(100).sub(
+                _self.tapped
+            );
     }
 
     /** 
         @notice The weight that a certain amount carries in this Budget.
-        @param self The Budget to get the weight from.
+        @param _self The Budget to get the weight from.
         @param _amount The amount to get the weight of.
         @param _percentage The percentage to account for.
         @return state The weighted amount.
     */
     function _weighted(
-        Data memory self,
+        Data memory _self,
         uint256 _amount,
         uint256 _percentage
     ) internal pure returns (uint256) {
         return
-            self.weight.mul(_amount).mul(_percentage).div(self.target).div(100);
+            _self.weight.mul(_amount).mul(_percentage).div(_self.target).div(
+                100
+            );
     }
 
     // --- private views --- //
 
     /** 
         @notice Check to see if the given Budget has started.
-        @param self The Budget to check.
+        @param _self The Budget to check.
         @return hasStarted The boolean result.
     */
-    function _hasStarted(Data memory self) private view returns (bool) {
-        return block.timestamp >= self.start;
+    function _hasStarted(Data memory _self) private view returns (bool) {
+        return block.timestamp >= _self.start;
     }
 
     /** 
         @notice Check to see if the given Budget has expired.
-        @param self The Budget to check.
+        @param _self The Budget to check.
         @return hasExpired The boolean result.
     */
-    function _hasExpired(Data memory self) private view returns (bool) {
-        return block.timestamp > self.start.add(self.duration);
+    function _hasExpired(Data memory _self) private view returns (bool) {
+        return block.timestamp > _self.start.add(_self.duration);
     }
 }

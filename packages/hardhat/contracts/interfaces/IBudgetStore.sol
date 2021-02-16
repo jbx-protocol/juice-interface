@@ -42,7 +42,7 @@ interface IBudgetStore is IStore {
         view
         returns (Budget.Data memory);
 
-    function getTappableAmount(uint256 _budgetId)
+    function getTappableAmount(uint256 _budgetId, uint256 _withhold)
         external
         view
         returns (uint256);

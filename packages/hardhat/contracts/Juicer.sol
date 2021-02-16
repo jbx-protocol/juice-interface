@@ -101,15 +101,6 @@ contract Juicer is IJuicer {
             uint256 beneficiaryDonations
         )
     {
-        // Get a reference to the owner's tickets.
-        Tickets _tickets = ticketStore.tickets(_issuer);
-
-        // If the owner doesn't have tickets, throw.
-        require(
-            _tickets != Tickets(0),
-            "ReservedTicketsView::getReservedTickets: NOT_FOUND"
-        );
-
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
 
@@ -398,17 +389,11 @@ contract Juicer is IJuicer {
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
     */
     function distributeReserves(address _issuer) public override {
-        // Get a reference to the owner's tickets.
-        Tickets _tickets = ticketStore.tickets(_issuer);
-
-        // If the owner doesn't have tickets, throw.
-        require(
-            _tickets != Tickets(0),
-            "Juicer::distributeReserves: NOT_FOUND"
-        );
-
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
+
+        // The number of  tickets to mint for the issuer.
+        uint256 _mintForIssuer = 0;
 
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
@@ -421,8 +406,7 @@ contract Juicer is IJuicer {
 
                 if (_budget.o > 0) {
                     // The owner gets the budget's owner percentage, if one is specified.
-                    _tickets.mint(
-                        _budget.owner,
+                    _mintForIssuer = _mintForIssuer.add(
                         _budget._weighted(_budget.total, _budget.o)
                     );
                 }
@@ -446,6 +430,10 @@ contract Juicer is IJuicer {
             // Continue the loop with the previous Budget.
             _budget = budgetStore.getBudget(_budget.previous);
         }
+
+        if (_mintForIssuer > 0)
+            ticketStore.mint(_issuer, _issuer, _mintForIssuer);
+
         emit DistributeReserves(msg.sender, _issuer);
     }
 }

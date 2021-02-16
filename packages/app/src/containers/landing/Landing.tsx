@@ -34,7 +34,7 @@ export default function Landing({
 
   const listData = [
     'Ethereum protocols, DAOs, and public goods',
-    'Open source stuff',
+    "Open source devs who'd rather be building",
     'Indy projects',
     'Any internet deliverable with predictable costs',
   ]

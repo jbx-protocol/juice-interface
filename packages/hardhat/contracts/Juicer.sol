@@ -165,121 +165,6 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
-        @dev Deploys an owner's Ticket ERC-20 token contract.
-        @param _name The ERC-20's name.
-        @param _symbol The ERC-20's symbol.
-    */
-    function issueTickets(string calldata _name, string calldata _symbol)
-        external
-        override
-    {
-        // An owner only needs to issue their Tickets once before they can be used.
-        require(
-            ticketStore.tickets(msg.sender) == Tickets(0),
-            "Juicer::issueTickets: ALREADY_ISSUED"
-        );
-
-        // Save the created Tickets contract in the store.
-        ticketStore.saveTickets(
-            msg.sender,
-            // Create the contract in this Juicer contract in order to have mint and burn privileges.
-            new Tickets(_name, _symbol)
-        );
-
-        emit IssueTickets(msg.sender, _name, _symbol);
-    }
-
-    /**
-        @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
-        sets the properties of the Budget that will take effect once the current one expires.
-        @dev The msg.sender is the owner of the budget.
-        @param _target The cashflow target to set.
-        @param _duration The duration to set, measured in seconds.
-        @param _link A link to information about the Budget.
-        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
-        compared to the owners previous Budget.
-        If it's 100, each Budget will have equal weight.
-        If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        This is `discountRate` is realized through the amount of Ticket distributed per unit of contribution made.
-        @param _o The percentage of this Budget's overflow to reserve for the owner.
-        @param _b The amount of this Budget's overflow to give to a beneficiary address. 
-        This can be another contract, or an end user address.
-        An example would be a contract that reserves for Gitcoin grant matching.
-        @param _bAddress The address of the beneficiary contract that can mint the reserved beneficiary percentage.
-        @return _budgetId The ID of the Budget that was successfully configured.
-    */
-    function configureBudget(
-        uint256 _target,
-        uint256 _duration,
-        string calldata _link,
-        uint256 _discountRate,
-        uint256 _o,
-        uint256 _b,
-        address _bAddress
-    ) external override returns (uint256) {
-        require(_target > 0, "Juicer::configureBudget: BAD_TARGET");
-        // The `discountRate` token must be between 95 and 100.
-        require(
-            _discountRate >= 95 && _discountRate <= 100,
-            "Juicer::configureBudget: BAD_BIAS"
-        );
-        // If the beneficiary reserve percentage is greater than 0, an address must be provided.
-        require(
-            _b == 0 || _bAddress != address(0),
-            "Juicer::configureBudget: BAD_ADDRESS"
-        );
-        // The reserved ticket percentage must add up to less than or equal to 100.
-        require(_o <= 100, "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES");
-
-        // Get a reference to the owner's Tickets.
-        Tickets _tickets = ticketStore.tickets(msg.sender);
-
-        // Make sure the owner has already issued Tickets.
-        require(
-            _tickets != Tickets(0),
-            "Juicer::configureBudget: NEEDS_INITIALIZATION"
-        );
-
-        // Return's the owner's editable budget. Creates one if one doesn't already exists.
-        Budget.Data memory _budget =
-            budgetStore.ensureStandbyBudget(msg.sender);
-
-        // Set the properties of the budget.
-        _budget.link = _link;
-        _budget.target = _target;
-        _budget.duration = _duration;
-        _budget.want = dai;
-        // Reset the start time to now if the owner's current Budget doesn't yet have sustainments.
-        _budget.start = budgetStore.getCurrentBudget(msg.sender).total == 0
-            ? block.timestamp
-            : _budget.start;
-        _budget.discountRate = _discountRate;
-        _budget.o = _o;
-        _budget.b = _b;
-        _budget.bAddress = _bAddress;
-        _budget.configured = block.timestamp;
-
-        // Save the Budget in the store.
-        budgetStore.saveBudget(_budget);
-
-        emit ConfigureBudget(
-            _budget.id,
-            _budget.owner,
-            _budget.target,
-            _budget.duration,
-            dai,
-            _budget.link,
-            _budget.discountRate,
-            _o,
-            _b,
-            _bAddress
-        );
-
-        return _budget.id;
-    }
-
-    /**
         @notice Contribute funds to an owner's active Budget.
         @dev Mints the owner's Tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
@@ -344,8 +229,9 @@ contract Juicer is IJuicer {
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        ticketStore.tickets(_budget.owner).mint(
+        ticketStore.mint(
             _beneficiary,
+            _budget.owner,
             _budget._weighted(_amount, uint256(100).sub(_budget.o).sub(fee))
         );
 
@@ -375,36 +261,21 @@ contract Juicer is IJuicer {
         uint256 _minReturn,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
-        // The amount of overflowed tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
-        // Multiply by the active proportion of the golden ratio. This incentizes HODLing tickets.
-        returnAmount = ticketStore.getClaimableAmount(
+        // Burn the redeemed tickets.
+        returnAmount = ticketStore.redeem(
+            _issuer,
             msg.sender,
             _amount,
-            _issuer,
+            _minReturn,
             382
         );
-
-        // The amount being claimed must be less than the amount claimable.
-        require(
-            returnAmount >= _minReturn,
-            "Juicer::redeem: INSUFFICIENT_FUNDS"
-        );
-
-        // Get a reference to the issuer's tickets.
-        Tickets _tickets = ticketStore.tickets(_issuer);
-
-        // Burn the redeemed tickets.
-        _tickets.burn(msg.sender, _amount);
-
-        // Subtract the claimed tokens from the total amount claimable.
-        ticketStore.subtractClaimable(_issuer, returnAmount);
 
         // Transfer funds to the specified address.
         dai.safeTransfer(_beneficiary, returnAmount);
 
         emit Redeem(
             msg.sender,
-            _tickets,
+            _issuer,
             _beneficiary,
             _amount,
             returnAmount,

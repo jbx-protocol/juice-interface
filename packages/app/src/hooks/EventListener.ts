@@ -34,7 +34,10 @@ export default function useEventListener({
   }
 
   const eventTopic =
-    contracts && contractName && eventName && contracts[contractName].interface.getEventTopic(eventName)
+    contracts &&
+    contractName &&
+    eventName &&
+    contracts[contractName].interface.getEventTopic(eventName)
 
   const filter = contract &&
     eventName && {
@@ -45,7 +48,11 @@ export default function useEventListener({
   if (needsInitialGet && filter) {
     contract?.queryFilter(filter).then(initialEvents => {
       // Slice last (most recent) event, will be retrieved by listener
-      setEvents(initialEvents.slice(0, initialEvents.length - 1).map(e => formatEvent(e)))
+      setEvents(
+        initialEvents
+          .slice(0, initialEvents.length - 1)
+          .map(e => formatEvent(e)),
+      )
       setNeedsInitialGet(false)
     })
   }

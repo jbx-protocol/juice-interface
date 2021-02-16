@@ -113,7 +113,7 @@ export default function Landing({
 
                 <div>
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Get to work
+                    Start
                   </Button>
                 </div>
               </div>
@@ -152,8 +152,8 @@ export default function Landing({
                 mission statement.
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                People pay you kinda like they would on Patreon, or
-                transparently from within your Solidity smart contracts.{' '}
+                People can either pay you like they would on Patreon, or
+                transparently from within Solidity smart contracts.{' '}
                 <a
                   href="https://twitter.com/hashtag/BusinessModelAsAService"
                   target="_blank"
@@ -184,9 +184,7 @@ export default function Landing({
             </Timeline>
 
             <p>
-              Remember, we're all out here investing in each other for the
-              contributions we're making either to the open internet, or using
-              it. Make your money, crush your craft, and lift up your people.{' '}
+              Work towards something people value, crush your craft, make your money, and lift up your people.{' '}
               <a
                 href="https://twitter.com/hashtag/DeFi"
                 target="_blank"
@@ -216,7 +214,7 @@ export default function Landing({
               marginBottom: 80,
             }}
           >
-            {bigHeader('Get to work')}
+            {bigHeader('Start')}
             <ConfigureBudget
               userAddress={userAddress}
               contracts={contracts}

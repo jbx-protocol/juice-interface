@@ -1,1 +1,9 @@
-module.exports = ["Admin","BudgetBallot","BudgetStore","Juicer","TicketStore","TimelockStaker","Token"];
+module.exports = [
+  'Admin',
+  'BudgetBallot',
+  'BudgetStore',
+  'Juicer',
+  'TicketStore',
+  'TimelockStaker',
+  'Token',
+]

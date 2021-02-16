@@ -10,7 +10,7 @@ const {
   assertBalance,
   assertSustainmentAmount,
   assertRedistributionTrackerAmount,
-  assertSustainabilityPoolAmount,
+  assertSustainabilityPoolAmount
 } = require("../test-helpers/assertions.js");
 
 // TODO: document owner, creator, sustainer
@@ -58,7 +58,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         duration,
         erc20Mock.address,
         {
-          from: creator,
+          from: creator
         }
       );
       await assertSustainabilityTarget(
@@ -68,17 +68,13 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         "Invalid sustainability target"
       );
       await assertDuration(juice, creator, duration, "Invalid duration");
-      await assertBudgetCount(
-        juice,
-        1,
-        "Only one Money pool should exist"
-      );
+      await assertBudgetCount(juice, 1, "Only one Money pool should exist");
       await assertConfigureBudgetEvent(
-        result, 
-        juice, 
-        creator, 
-        target, 
-        duration, 
+        result,
+        juice,
+        creator,
+        target,
+        duration,
         erc20Mock.address,
         "Invalid ConfigureMp event"
       );
@@ -100,7 +96,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         initialDuration,
         erc20Mock.address,
         {
-          from: creator,
+          from: creator
         }
       );
     });
@@ -114,15 +110,15 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         erc20Mock.address,
         {
           // Using address that has already created a Budget
-          from: creator,
+          from: creator
         }
       );
       await assertConfigureBudgetEvent(
-        result, 
-        juice, 
-        creator, 
-        target, 
-        duration, 
+        result,
+        juice,
+        creator,
+        target,
+        duration,
         erc20Mock.address,
         "Invalid ConfigureMp event"
       );
@@ -133,11 +129,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         "Invalid sustainability target"
       );
       await assertDuration(juice, creator, duration, "Invalid duration");
-      await assertBudgetCount(
-        juice,
-        1,
-        "Only one Money pool should exist"
-      );
+      await assertBudgetCount(juice, 1, "Only one Money pool should exist");
     });
   });
 
@@ -156,7 +148,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         initialDuration,
         erc20Mock.address,
         {
-          from: creator,
+          from: creator
         }
       );
     });
@@ -174,7 +166,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         expectedSustainmentAmount: 10,
         expectedRedistributionTrackerAmount: 0,
         expectedSustainabilityPoolAmount: 10,
-        expectedRedistributionPoolAmount: 0,
+        expectedRedistributionPoolAmount: 0
       },
       {
         description: "sustainment equal to target",
@@ -184,7 +176,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         expectedSustainmentAmount: 100,
         expectedRedistributionTrackerAmount: 0,
         expectedSustainabilityPoolAmount: 100,
-        expectedRedistributionPoolAmount: 0,
+        expectedRedistributionPoolAmount: 0
       },
       {
         description: "sustainment greater than target",
@@ -194,7 +186,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         expectedSustainmentAmount: 150,
         expectedRedistributionTrackerAmount: 50,
         expectedSustainabilityPoolAmount: 100,
-        expectedRedistributionPoolAmount: 0, // Redistribution hasn't triggered yet
+        expectedRedistributionPoolAmount: 0 // Redistribution hasn't triggered yet
       },
       {
         description: "beneficiary different from message sender",
@@ -204,22 +196,27 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         expectedSustainmentAmount: 150,
         expectedRedistributionTrackerAmount: 50,
         expectedSustainabilityPoolAmount: 100,
-        expectedRedistributionPoolAmount: 0, // Redistribution hasn't triggered yet
-      },
+        expectedRedistributionPoolAmount: 0 // Redistribution hasn't triggered yet
+      }
     ];
 
-    scenarios.forEach((scenario) => {
+    scenarios.forEach(scenario => {
       it(`sustains existing money pool when ${scenario.description}`, async () => {
-        const result = await juice.sustain(creator, scenario.amount, scenario.beneficiary, {
-          // Using address that did not create the Budget
-          from: sustainer,
-        });
+        const result = await juice.sustain(
+          creator,
+          scenario.amount,
+          scenario.beneficiary,
+          {
+            // Using address that did not create the Budget
+            from: sustainer
+          }
+        );
         await assertSustainBudgetEvent(
-          result, 
-          juice, 
+          result,
+          juice,
           creator,
           scenario.beneficiary,
-          sustainer, 
+          sustainer,
           scenario.amount,
           "Invalid SustainMp event"
         );
@@ -258,7 +255,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         // Using "creator" address which has a budget
         juice.sustain(creator, amount, sustainer, {
           // Using address that did not create the Budget
-          from: sustainer,
+          from: sustainer
         }),
         truffleAssert.ErrorType.REVERT
       );
@@ -270,7 +267,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         // Using "owner" address which does not have a budget
         juice.sustain(owner, amount, sustainer, {
           // Using address that did not create the Budget
-          from: sustainer,
+          from: sustainer
         }),
         truffleAssert.ErrorType.REVERT
       );
@@ -329,7 +326,7 @@ contract("Juice", ([owner, creator, sustainer, beneficiary]) => {
         initialDuration,
         erc20Mock.address,
         {
-          from: creator,
+          from: creator
         }
       );
     });

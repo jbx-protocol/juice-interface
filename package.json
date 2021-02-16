@@ -19,6 +19,8 @@
     "chain": "yarn workspace @juice.work/hardhat chain",
     "test": "yarn workspace @juice.work/hardhat test",
     "compile": "yarn workspace @juice.work/hardhat compile",
+    "format": "prettier --write './packages/{app,hardhat}/!(build|node_modules|artifacts|cache)/**/*.*(js|jsx|ts|tsx)'",
+    "pretty-quick": "pretty-quick --staged --pattern './packages/{app,hardhat}/!(build|node_modules|artifacts|cache)/**/*.*(js|jsx|ts|tsx)'",
     "deploy": "yarn workspace @juice.work/hardhat deploy && yarn cp-contracts-local",
     "deploy-ropsten": "yarn workspace @juice.work/hardhat deploy-ropsten && yarn cp-contracts-ropsten",
     "deploy-mainnet": "yarn workspace @juice.work/hardhat deploy-mainnet && yarn cp-contracts-mainnet",
@@ -52,7 +54,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run compile"
+      "pre-commit": "yarn pretty-quick && yarn compile"
     }
   },
   "workspaces": {

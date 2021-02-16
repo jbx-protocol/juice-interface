@@ -24,7 +24,28 @@ contract TicketStore is Store, ITicketStore {
     /// @notice The current cumulative amount of tokens redeemable by each issuer's Tickets.
     mapping(address => uint256) public override claimable;
 
+    mapping(address => mapping(address => uint256)) public override iOweYous;
+
+    mapping(address => uint256) public override totalIOweYous;
+
     // --- external views --- //
+
+    /**
+        @notice The amount of tokens that a Ticket can be redeemed for.
+        @param _issuer The issuer of the Ticket to get a value for.
+        @return _value The value.
+    */
+    function getTicketValue(address _issuer)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        Tickets _tickets = tickets[_issuer];
+        return claimable[_issuer].div(_tickets.totalSupply());
+    }
+
+    // --- public views --- //
 
     /**
         @notice The amount of tokens that can be claimed by the given address.
@@ -42,18 +63,26 @@ contract TicketStore is Store, ITicketStore {
         uint256 _amount,
         address _issuer,
         uint256 _proportion
-    ) external view override returns (uint256) {
-        Tickets _tickets = tickets[_issuer];
-        uint256 _totalSupply = _tickets.totalSupply();
+    ) public view override returns (uint256) {
+        Tickets _tickets =
+            iOweYous[_issuer][_holder] == 0 ? tickets[_issuer] : Tickets(0);
+
+        uint256 _totalSupply =
+            _tickets != Tickets(0)
+                ? _tickets.totalSupply()
+                : totalIOweYous[_issuer];
+
         if (_totalSupply == 0) return 0;
-        uint256 _currentBalance = _tickets.balanceOf(_holder);
+
+        uint256 _currentBalance =
+            _tickets != Tickets(0)
+                ? _tickets.balanceOf(_holder)
+                : iOweYous[_issuer][_holder];
 
         require(
             _amount <= _currentBalance,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
-
-        // Bonding curve depending on how much is left. This would give holders a slight advantage.
 
         return
             claimable[_issuer]
@@ -63,36 +92,96 @@ contract TicketStore is Store, ITicketStore {
                 .div(1000);
     }
 
-    /**
-        @notice The amount of tokens that a Ticket can be redeemed for.
-        @param _issuer The issuer of the Ticket to get a value for.
-        @return _value The value.
-    */
-    function getTicketValue(address _issuer)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        Tickets _tickets = tickets[_issuer];
-        return claimable[_issuer].div(_tickets.totalSupply());
-    }
-
     // --- external transactions --- //
 
     constructor() public {}
 
     /**
-        @notice Saves Tickets to storage for the provided issuer.
-        @param _issuer The issuer of the Tickets.
-        @param _tickets The Tickets to assign to the issuer.
+        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
+        @dev Deploys an owner's Ticket ERC-20 token contract.
+        @param _name The ERC-20's name.
+        @param _symbol The ERC-20's symbol.
     */
-    function saveTickets(address _issuer, Tickets _tickets)
+    function issue(string calldata _name, string calldata _symbol)
         external
         override
-        onlyAdmin
     {
-        tickets[_issuer] = _tickets;
+        // An owner only needs to issue their Tickets once before they can be used.
+        require(
+            tickets[msg.sender] == Tickets(0),
+            "TicketStore::issue: ALREADY_ISSUED"
+        );
+
+        // Create the contract in this Juicer contract in order to have mint and burn privileges.
+        tickets[msg.sender] = new Tickets(_name, _symbol);
+
+        emit Issue(msg.sender, _name, _symbol);
+    }
+
+    function claimIOweYou(address _issuer) external {
+        Tickets _tickets = tickets[_issuer];
+        require(
+            _tickets != Tickets(0),
+            "TicketStore::claimIOweYou: NOT_CLAIMABLE"
+        );
+
+        uint256 _amount = iOweYous[_issuer][msg.sender];
+
+        if (_amount == 0) return;
+
+        iOweYous[_issuer][msg.sender] = 0;
+        totalIOweYous[_issuer] = totalIOweYous[_issuer].sub(_amount);
+        _tickets.mint(msg.sender, _amount);
+    }
+
+    function mint(
+        address _issuer,
+        address _for,
+        uint256 _amount
+    ) external override onlyAdmin {
+        Tickets _tickets = tickets[_issuer];
+        uint256 _iOweYou = iOweYous[_issuer][_for];
+        if (_iOweYou == 0 && _tickets != Tickets(0)) {
+            _tickets.mint(_for, _amount);
+        } else {
+            iOweYous[_issuer][_for] = _iOweYou.add(_amount);
+            totalIOweYous[_issuer] = totalIOweYous[_issuer].add(_amount);
+        }
+    }
+
+    function redeem(
+        address _issuer,
+        address _holder,
+        uint256 _amount,
+        uint256 _minReturn,
+        uint256 _proportion
+    ) external override onlyAdmin returns (uint256 returnAmount) {
+        // The amount of overflowed tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
+        returnAmount = getClaimableAmount(
+            _holder,
+            _amount,
+            _issuer,
+            _proportion
+        );
+
+        // The amount being claimed must be less than the amount claimable.
+        require(
+            returnAmount >= _minReturn,
+            "TicketStore::redeem: INSUFFICIENT_FUNDS"
+        );
+
+        Tickets _tickets = tickets[_issuer];
+        uint256 _iOweYou = iOweYous[_issuer][_holder];
+
+        if (_iOweYou == 0 && _tickets != Tickets(0)) {
+            tickets[_issuer].burn(_holder, _amount);
+        } else {
+            iOweYous[_issuer][_holder] = _iOweYou.sub(_amount);
+            totalIOweYous[_issuer] = totalIOweYous[_issuer].sub(_amount);
+        }
+
+        // Subtract the claimed tokens from the total amount claimable.
+        claimable[_issuer] = claimable[_issuer].sub(returnAmount);
     }
 
     /**
@@ -106,18 +195,5 @@ contract TicketStore is Store, ITicketStore {
         onlyAdmin
     {
         claimable[_issuer] = claimable[_issuer].add(_amount);
-    }
-
-    /**
-        @notice Subtracts an amount to the total that can be claimed by redeeeming the given issuer's Tickets.
-        @param _issuer The issuer of the Ticket.
-        @param _amount The amount to decrement.
-    */
-    function subtractClaimable(address _issuer, uint256 _amount)
-        external
-        override
-        onlyAdmin
-    {
-        claimable[_issuer] = claimable[_issuer].sub(_amount);
     }
 }

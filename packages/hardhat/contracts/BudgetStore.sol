@@ -141,6 +141,83 @@ contract BudgetStore is Store, IBudgetStore {
     constructor() public {}
 
     /**
+        @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
+        sets the properties of the Budget that will take effect once the current one expires.
+        @dev The msg.sender is the owner of the budget.
+        @param _target The cashflow target to set.
+        @param _duration The duration to set, measured in seconds.
+        @param _want The token that this budget wants.
+        @param _link A link to information about the Budget.
+        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
+        compared to the owners previous Budget.
+        If it's 100, each Budget will have equal weight.
+        If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
+        This is `discountRate` is realized through the amount of Ticket distributed per unit of contribution made.
+        @param _o The percentage of this Budget's overflow to reserve for the owner.
+        @param _b The amount of this Budget's overflow to give to a beneficiary address. 
+        This can be another contract, or an end user address.
+        An example would be a contract that reserves for Gitcoin grant matching.
+        @param _bAddress The address of the beneficiary contract that can mint the reserved beneficiary percentage.
+        @return _budgetId The ID of the Budget that was successfully configured.
+    */
+    function configure(
+        uint256 _target,
+        uint256 _duration,
+        IERC20 _want,
+        string calldata _link,
+        uint256 _discountRate,
+        uint256 _o,
+        uint256 _b,
+        address _bAddress
+    ) external override returns (uint256) {
+        require(_target > 0, "Juicer::configureBudget: BAD_TARGET");
+        // The `discountRate` token must be between 95 and 100.
+        require(
+            _discountRate >= 95 && _discountRate <= 100,
+            "Juicer::configureBudget: BAD_BIAS"
+        );
+        // If the beneficiary reserve percentage is greater than 0, an address must be provided.
+        require(
+            _b == 0 || _bAddress != address(0),
+            "Juicer::configureBudget: BAD_ADDRESS"
+        );
+        // The reserved ticket percentage must add up to less than or equal to 100.
+        require(_o <= 100, "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES");
+
+        // Return's the owner's editable budget. Creates one if one doesn't already exists.
+        Budget.Data storage _budget = _ensureStandbyBudget(msg.sender);
+
+        // Set the properties of the budget.
+        _budget.link = _link;
+        _budget.target = _target;
+        _budget.duration = _duration;
+        _budget.want = _want;
+        _budget.discountRate = _discountRate;
+        _budget.o = _o;
+        _budget.b = _b;
+        _budget.bAddress = _bAddress;
+        _budget.configured = block.timestamp;
+
+        // Save the Budget in the store.
+        budgets[_budget.id] = _budget;
+
+        emit ConfigureBudget(
+            _budget.id,
+            _budget.owner,
+            _budget.target,
+            _budget.duration,
+            _budget.want,
+            _budget.link,
+            _budget.discountRate,
+            _o,
+            _b,
+            _bAddress
+        );
+
+        return _budget.id;
+    }
+
+    /**
         @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
         @param _owner The address who owns the Budget to look for.
         @param _votingPeriod The time between a Budget being configured and when it can become active.
@@ -176,35 +253,6 @@ contract BudgetStore is Store, IBudgetStore {
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
         Budget.Data storage _newBudget =
             _initBudget(budget.owner, budget._determineNextStart(), budget);
-        return _newBudget;
-    }
-
-    /**
-        @notice Returns the standby Budget for this owner if it exists, otherwise putting one in standby appropriately.
-        @param _owner The address who owns the Budget to look for.
-        @return budget The resulting Budget.
-    */
-    function ensureStandbyBudget(address _owner)
-        external
-        override
-        onlyAdmin
-        returns (Budget.Data memory budget)
-    {
-        // Cannot update active budget, check if there is a standby budget
-        budget = _standbyBudget(_owner);
-        if (budget.id > 0) return budget;
-        budget = budgets[latestBudgetId[_owner]];
-        // If there's an active Budget, its end time should correspond to the start time of the new Budget.
-        Budget.Data memory _aBudget = _activeBudget(_owner);
-        //Base a new budget on the latest budget if one exists.
-        Budget.Data storage _newBudget =
-            _aBudget.id > 0
-                ? _initBudget(
-                    _owner,
-                    _aBudget.start.add(_aBudget.duration),
-                    budget
-                )
-                : _initBudget(_owner, block.timestamp, budget);
         return _newBudget;
     }
 
@@ -246,6 +294,33 @@ contract BudgetStore is Store, IBudgetStore {
     // --- private transactions --- //
 
     /**
+        @notice Returns the standby Budget for this owner if it exists, otherwise putting one in standby appropriately.
+        @param _owner The address who owns the Budget to look for.
+        @return budget The resulting Budget.
+    */
+    function _ensureStandbyBudget(address _owner)
+        private
+        returns (Budget.Data storage budget)
+    {
+        // Cannot update active budget, check if there is a standby budget
+        budget = _standbyBudget(_owner);
+        if (budget.id > 0) return budget;
+        budget = budgets[latestBudgetId[_owner]];
+        // If there's an active Budget, its end time should correspond to the start time of the new Budget.
+        Budget.Data memory _aBudget = _activeBudget(_owner);
+        //Base a new budget on the latest budget if one exists.
+        Budget.Data storage _newBudget =
+            _aBudget.id > 0
+                ? _initBudget(
+                    _owner,
+                    _aBudget.start.add(_aBudget.duration),
+                    budget
+                )
+                : _initBudget(_owner, block.timestamp, budget);
+        return _newBudget;
+    }
+
+    /**
         @notice Initializes a Budget to be sustained for the sending address.
         @param _owner The owner of the Budget being initialized.
         @param _start The start time for the new Budget.
@@ -284,7 +359,7 @@ contract BudgetStore is Store, IBudgetStore {
     function _standbyBudget(address _owner)
         private
         view
-        returns (Budget.Data memory budget)
+        returns (Budget.Data storage budget)
     {
         budget = budgets[latestBudgetId[_owner]];
         if (budget.id == 0) return budgets[0];

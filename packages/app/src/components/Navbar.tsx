@@ -22,8 +22,12 @@ export default function Navbar({
       <a
         style={{ fontWeight: 600 }}
         href={route}
-        target={external ? '_blank' : ''}
-        rel={external ? 'noopener noreferrer' : ''}
+        {...(external
+          ? {
+              target: '_blank',
+              rel: 'noreferrer',
+            }
+          : {})}
       >
         {text}
       </a>

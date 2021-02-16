@@ -99,8 +99,12 @@ export default function Landing({
                     }}
                   >
                     {listData.map((data, i) => (
-                      <Space key={i}>
-                        <img src="/assets/bolt.png" style={{ height: 24 }} />{' '}
+                      <Space key={i} size="middle">
+                        <img
+                          src="/assets/bolt.png"
+                          style={{ height: 24 }}
+                          alt="⚡️"
+                        />
                         {data}
                       </Space>
                     ))}

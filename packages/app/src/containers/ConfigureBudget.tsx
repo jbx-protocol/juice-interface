@@ -123,7 +123,7 @@ export default function ConfigureBudget({
       fields.duration *
         (process.env.NODE_ENV === 'development' ? 1 : SECONDS_IN_DAY),
     ).toHexString()
-    const _link = fields.link
+    const _link = fields.link ?? ''
     const _discountRate = BigNumber.from(fields.discountRate).toHexString()
     const _ownerAllocation = fields.ownerAllocation
       ? BigNumber.from(fields.ownerAllocation).toHexString()

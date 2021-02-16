@@ -42,13 +42,14 @@ export default function BudgetAdvancedForm({
         name="ownerAllocation"
         label="Reserved tickets"
       >
-        <Input className="align-end" suffix="%" type="number" defaultValue="5" />
+        <Input
+          className="align-end"
+          suffix="%"
+          type="number"
+          defaultValue="5"
+        />
       </Form.Item>
-      <Form.Item
-        extra=""
-        name="beneficiaryAllocation"
-        label="Donate"
-      >
+      <Form.Item extra="" name="beneficiaryAllocation" label="Donate">
         <Input
           className="align-end"
           suffix="%"

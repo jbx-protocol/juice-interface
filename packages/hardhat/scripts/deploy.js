@@ -41,8 +41,12 @@ const main = async () => {
     const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
-    const attachedTicketStore = await TicketStoreFactory.attach(ticketStore.address);
-    const attachedBudgetStore = await BudgetStoreFactory.attach(budgetStore.address);
+    const attachedTicketStore = await TicketStoreFactory.attach(
+      ticketStore.address
+    );
+    const attachedBudgetStore = await BudgetStoreFactory.attach(
+      budgetStore.address
+    );
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
@@ -64,7 +68,7 @@ const main = async () => {
     });
     await attachedJuicer.setAdmin(admin.address, {
       gasLimit: 3000000
-    })
+    });
     await attachedAdmin.issueTickets({
       gasLimit: 3000000
     });
@@ -73,7 +77,6 @@ const main = async () => {
     await attachedStaker.setController(budgetBallot.address, {
       gasLimit: 3000000
     });
-
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }

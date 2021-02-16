@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-export function usePoller(fn: VoidFunction, delay = 2000, extraWatch?: unknown) {
+export function usePoller(
+  fn: VoidFunction,
+  delay = 2000,
+  extraWatch?: unknown,
+) {
   let savedCallback = useRef<VoidFunction>()
 
   // run at start too

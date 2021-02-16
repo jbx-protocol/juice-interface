@@ -1,63 +1,63 @@
 module.exports = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      }
+        internalType: 'contract IJuicer',
+        name: '_juicer',
+        type: 'address',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: 'contract IERC20',
+        name: 'token',
+        type: 'address',
+      },
     ],
-    "name": "CleanTrackedWantToken",
-    "type": "event"
+    name: 'CleanTrackedWantToken',
+    type: 'event',
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
-        "type": "address"
-      }
+        internalType: 'contract IERC20',
+        name: '_token',
+        type: 'address',
+      },
     ],
-    "name": "cleanTrackedWantedTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: 'cleanTrackedWantedTokens',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    "inputs": [],
-    "name": "juicer",
-    "outputs": [
+    inputs: [],
+    name: 'juicer',
+    outputs: [
       {
-        "internalType": "contract IJuicer",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'contract IJuicer',
+        name: '',
+        type: 'address',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-];
+    stateMutability: 'view',
+    type: 'function',
+  },
+]

@@ -120,9 +120,10 @@ contract BudgetStore is Store, IBudgetStore {
     /**
         @notice The amount left to be withdrawn by the Budget's owner.
         @param _budgetId The ID of the Budget to get the available sustainment from.
+        @param _withhold The percent of the total to withhold from the total.
         @return amount The amount.
     */
-    function getTappableAmount(uint256 _budgetId)
+    function getTappableAmount(uint256 _budgetId, uint256 _withhold)
         external
         view
         override
@@ -132,7 +133,7 @@ contract BudgetStore is Store, IBudgetStore {
             _budgetId > 0 && _budgetId <= budgetCount,
             "BudgetStore::getTappableAmount:: NOT_FOUND"
         );
-        return budgets[_budgetId]._tappableAmount();
+        return budgets[_budgetId]._tappableAmount(_withhold);
     }
 
     // --- external transactions --- //

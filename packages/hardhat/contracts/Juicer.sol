@@ -304,10 +304,8 @@ contract Juicer is IJuicer {
                 RECONFIGURATION_VOTING_PERIOD
             );
 
-        // Add the amount to the Budget. Takes into account the admin fee.
-        _budget.total = _budget.total.add(_amount).sub(
-            _amount.mul(fee).div(100)
-        );
+        // Add the amount to the Budget.
+        _budget.total = _budget.total.add(_amount);
 
         // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
         uint256 _overflow =
@@ -340,7 +338,7 @@ contract Juicer is IJuicer {
             ticketStore.addClaimable(
                 _budget.owner,
                 _contributedOverflow.sub(
-                    _contributedOverflow.mul(_budget.b).div(100)
+                    _contributedOverflow.mul(_budget.b).mul(fee).div(1000)
                 )
             );
         }
@@ -435,7 +433,7 @@ contract Juicer is IJuicer {
 
         // The amount being tapped must be less than the tappable amount.
         require(
-            _amount <= _budget._tappableAmount(),
+            _amount <= _budget._tappableAmount(fee),
             "Juicer::tapBudget: INSUFFICIENT_FUNDS"
         );
 

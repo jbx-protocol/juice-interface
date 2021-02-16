@@ -152,4 +152,13 @@ abstract contract JuiceAdmin is Ownable {
         // Sets the Juicer that this contract uses.
         juicer = _to;
     }
+
+    /** 
+      @notice Take a fee for yourself.
+      @param _amount The amount of the fee.
+      @param _from The address having the fee taken from.
+    */
+    function takeFee(uint256 _amount, address _from) internal {
+        juicer.payOwner(address(this), _amount, _from);
+    }
 }

@@ -59,19 +59,19 @@ export default function Navbar({
         </Menu.Item>
         {hasBudget && userAddress ? (
           <Menu.Item key="budget">
-            {menuItem('Your budget', '/#/' + userAddress)}
+            {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>
         ) : (
           <Menu.Item key="create">
-            {menuItem('Get to work', '/#/create')}
+            {menuItem('Start', '/#/create')}
           </Menu.Item>
         )}
-        <Menu.Item key="fluid-dynamics">
+        {/* <Menu.Item key="fluid-dynamics">
           {menuItem(
             'Fluid dynamics',
             'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Juicy-Funstuff?node-id=0%3A1',
           )}
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       <Account
         userProvider={userProvider}

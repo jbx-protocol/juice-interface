@@ -42,7 +42,7 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        backgroundColor: 'white',
+        background: 'transparent'
       }}
     >
       <Navbar

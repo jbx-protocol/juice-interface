@@ -6,6 +6,19 @@ import "./IStore.sol";
 import "../libraries/Budget.sol";
 
 interface IBudgetStore is IStore {
+    event ConfigureBudget(
+        uint256 indexed budgetId,
+        address indexed owner,
+        uint256 indexed target,
+        uint256 duration,
+        IERC20 want,
+        string link,
+        uint256 discountRate,
+        uint256 o,
+        uint256 b,
+        address bAddress
+    );
+
     function latestBudgetId(address _owner) external returns (uint256);
 
     function votes(
@@ -47,11 +60,18 @@ interface IBudgetStore is IStore {
         view
         returns (uint256);
 
-    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
-        external
-        returns (Budget.Data memory);
+    function configure(
+        uint256 _target,
+        uint256 _duration,
+        IERC20 _want,
+        string calldata _link,
+        uint256 discountRate,
+        uint256 _o,
+        uint256 _b,
+        address _bAddress
+    ) external returns (uint256 id);
 
-    function ensureStandbyBudget(address _owner)
+    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
         external
         returns (Budget.Data memory);
 

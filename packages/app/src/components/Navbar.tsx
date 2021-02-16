@@ -1,6 +1,7 @@
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 
+import { colors } from '../constants/styles/colors'
 import Account from './Account'
 
 export default function Navbar({
@@ -19,7 +20,7 @@ export default function Navbar({
 
     return (
       <a
-        style={{ fontWeight: 600 }}
+        style={{ fontWeight: 600, color: colors.textPrimary }}
         href={route}
         {...(external
           ? {
@@ -38,19 +39,24 @@ export default function Navbar({
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        backgroundColor: 'white',
+        background: colors.background,
       }}
     >
       <Menu
         mode="horizontal"
-        theme="light"
-        style={{ display: 'inline-block', border: 'none' }}
+        theme="dark"
+        style={{
+          display: 'inline-block',
+          border: 'none',
+          background: colors.background,
+        }}
+        selectable={false}
       >
         <Menu.Item key="logo" style={{ marginLeft: 0 }}>
           <a href="/" style={{ display: 'inline-block' }}>
             <img
               style={{ height: 40 }}
-              src="/assets/juice_logo-ol.png"
+              src="/assets/juice_logo-od.png"
               alt="Juice logo"
             />
           </a>

@@ -142,7 +142,7 @@ export default function Landing({
                   maxWidth: '100%',
                   objectFit: 'contain',
                 }}
-                src="/assets/orange_lady.png"
+                src="/assets/orange_lady-od.png"
                 alt="GET JUICED"
               />
             </Col>

@@ -1,5 +1,6 @@
 import { Tooltip } from 'antd'
 import React from 'react'
+import { colors } from '../constants/styles/colors';
 
 export default function Wallet({ userAddress }: { userAddress?: string }) {
   const shortened =
@@ -15,7 +16,7 @@ export default function Wallet({ userAddress }: { userAddress?: string }) {
         padding: '0px 10px',
         display: 'flex',
         alignItems: 'center',
-        background: '#5AC3D166',
+        background: colors.backgroundSecondary,
         cursor: 'default',
         userSelect: 'all',
       }}

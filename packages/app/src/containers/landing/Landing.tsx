@@ -36,7 +36,7 @@ export default function Landing({
     'Ethereum protocols, DAOs, and public goods',
     "Open source devs who'd rather be building",
     'Indy projects',
-    'Any internet deliverable with predictable costs',
+    'Any internet-enabled service with predictable costs',
   ]
 
   const section: CSSProperties = {

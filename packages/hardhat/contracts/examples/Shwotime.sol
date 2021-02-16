@@ -126,6 +126,7 @@ contract Shwotime is JuiceAdmin {
         _tickets.committed[msg.sender] = true;
     }
 
+    //Allow a ticket owner to collect funds once the tickets expire.
     function collect(uint256 id) external {
         require(id > 0 && id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
 
@@ -136,9 +137,14 @@ contract Shwotime is JuiceAdmin {
             "Shwotime::collect: UNAUTHORIZED"
         );
 
+        require(
+            _tickets.expiry <= block.timestamp,
+            "Shwotime::collect: TOO_SOON"
+        );
+
         uint256 _total = _tickets.price.mul(_tickets.sold);
         uint256 _collectable = _total.mul(uint256(100).sub(fee)).div(100);
-        dai.transferFrom(msg.sender, address(this), _collectable);
+        dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
         takeFee(_total.sub(_collectable), msg.sender);
     }

@@ -24,8 +24,10 @@ contract TicketStore is Store, ITicketStore {
     /// @notice The current cumulative amount of tokens redeemable by each issuer's Tickets.
     mapping(address => uint256) public override claimable;
 
+    /// @notice The amount of Tickets owed to each address from each token issuer.
     mapping(address => mapping(address => uint256)) public override iOweYous;
 
+    /// @notice The total amount of Tickets owed for each token issuer.
     mapping(address => uint256) public override totalIOweYous;
 
     // --- external views --- //
@@ -64,9 +66,11 @@ contract TicketStore is Store, ITicketStore {
         address _issuer,
         uint256 _proportion
     ) public view override returns (uint256) {
+        // If there isnt any iOweYou for the specified holder, get issued tickets for the issuer.
         Tickets _tickets =
             iOweYous[_issuer][_holder] == 0 ? tickets[_issuer] : Tickets(0);
 
+        // Get the total supply either from the ticket or from the iOweYou.
         uint256 _totalSupply =
             _tickets != Tickets(0)
                 ? _tickets.totalSupply()
@@ -74,13 +78,15 @@ contract TicketStore is Store, ITicketStore {
 
         if (_totalSupply == 0) return 0;
 
+        // Get the amount of tickets the specified holder has access to, or is owed.
         uint256 _currentBalance =
             _tickets != Tickets(0)
                 ? _tickets.balanceOf(_holder)
                 : iOweYous[_issuer][_holder];
 
+        // Make sure the specified amount is available.
         require(
-            _amount <= _currentBalance,
+            _currentBalance > _amount,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -118,6 +124,10 @@ contract TicketStore is Store, ITicketStore {
         emit Issue(msg.sender, _name, _symbol);
     }
 
+    /**
+      @notice Convert I-owe-you's to tickets
+      @param _issuer The issuer of the tickets.
+     */
     function claimIOweYou(address _issuer) external {
         Tickets _tickets = tickets[_issuer];
         require(
@@ -125,35 +135,56 @@ contract TicketStore is Store, ITicketStore {
             "TicketStore::claimIOweYou: NOT_CLAIMABLE"
         );
 
+        // The amount of I-owe-yous.
         uint256 _amount = iOweYous[_issuer][msg.sender];
 
         if (_amount == 0) return;
 
+        // Remove any I-owe-yous
         iOweYous[_issuer][msg.sender] = 0;
         totalIOweYous[_issuer] = totalIOweYous[_issuer].sub(_amount);
+
+        // Mint the tickets owed.
         _tickets.mint(msg.sender, _amount);
     }
 
+    /** 
+      @notice Mints new tickets.
+      @param _issuer The issuer of the tickets being minted.
+      @param _holder The address receiving the minted tickets.
+      @param _amount The amount of tickets being minted.
+    */
     function mint(
         address _issuer,
-        address _for,
+        address _holder,
         uint256 _amount
     ) external override onlyAdmin {
         Tickets _tickets = tickets[_issuer];
-        uint256 _iOweYou = iOweYous[_issuer][_for];
+        uint256 _iOweYou = iOweYous[_issuer][_holder];
+        // Mint tickets if there are no I-owe-yous and if tickets have been issued.
         if (_iOweYou == 0 && _tickets != Tickets(0)) {
-            _tickets.mint(_for, _amount);
-        } else {
-            iOweYous[_issuer][_for] = _iOweYou.add(_amount);
+            _tickets.mint(_holder, _amount);
+        }
+        // Otherwise add to I-owe-you.
+        else {
+            iOweYous[_issuer][_holder] = _iOweYou.add(_amount);
             totalIOweYous[_issuer] = totalIOweYous[_issuer].add(_amount);
         }
     }
 
+    /** 
+      @notice Redeems tickets.
+      @param _issuer The issuer of the tickets being redeemed.
+      @param _holder The address redeeming tickets.
+      @param _amount The amount of tickets being redeemed.
+      @param _minClaimed The minimun amount of claimed tokens to receive in return.
+      @param _proportion The proportion of claimable tokens to redeem for the specified amount of tickets.
+    */
     function redeem(
         address _issuer,
         address _holder,
         uint256 _amount,
-        uint256 _minReturn,
+        uint256 _minClaimed,
         uint256 _proportion
     ) external override onlyAdmin returns (uint256 returnAmount) {
         // The amount of overflowed tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
@@ -166,7 +197,7 @@ contract TicketStore is Store, ITicketStore {
 
         // The amount being claimed must be less than the amount claimable.
         require(
-            returnAmount >= _minReturn,
+            returnAmount >= _minClaimed,
             "TicketStore::redeem: INSUFFICIENT_FUNDS"
         );
 

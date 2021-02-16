@@ -152,7 +152,6 @@ contract BudgetStore is Store, IBudgetStore {
         compared to the owners previous Budget.
         If it's 100, each Budget will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        This is `discountRate` is realized through the amount of Ticket distributed per unit of contribution made.
         @param _o The percentage of this Budget's overflow to reserve for the owner.
         @param _b The amount of this Budget's overflow to give to a beneficiary address. 
         This can be another contract, or an end user address.

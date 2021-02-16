@@ -8,7 +8,6 @@ import "../abstract/JuiceAdmin.sol";
 contract YourContract is JuiceAdmin {
     constructor(
         IJuicer _controller,
-        IERC20 _want,
         string memory _ticketName,
         string memory _ticketSymbol
     ) public JuiceAdmin(_controller, _ticketName, _ticketSymbol) {}

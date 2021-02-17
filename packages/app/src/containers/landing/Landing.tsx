@@ -30,12 +30,15 @@ export default function Landing({
 
   const timelineItemStyle: TimelineItemProps = {
     color: colors.juiceOrange,
+    style: {
+      paddingBottom: "80px"
+    },
   }
 
   const listData = [
-    'Ethereum protocols, DAOs, and public goods',
-    "Open source devs who'd rather be building",
-    'Indy projects',
+    'Ethereum smart contract devs',
+    "Open source projects",
+    'Indy artists',
     'Any internet-enabled service with predictable costs',
   ]
 
@@ -113,7 +116,7 @@ export default function Landing({
 
                 <div>
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Start
+                    Do it
                   </Button>
                 </div>
               </div>
@@ -150,6 +153,7 @@ export default function Landing({
                 Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
                 mission statement.
+                <br></br><span style={{fontSize: "30px" }}>💰💅💪</span>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
                 People can either pay you like they would on Patreon, or
@@ -160,31 +164,26 @@ export default function Landing({
                   rel="noopener noreferrer"
                 >
                   #BusinessModelAsAService
-                </a>{' '}
+               </a>{' '}
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                If money overflows, your paying customers get to claim the
+                If money overflows, your paying customers claim the
                 surplus, effectively pushing prices down as your community
                 grows. Early adopters get a discounted rate, and those HODLers
-                who wait longest to claim get a juicier return.{' '}
-                <a
-                  href="https://twitter.com/hashtag/RegenFinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #RegenFinance
-                </a>
+                who wait longest to claim get a juicier return.
+                <br></br><span style={{fontSize: "30px" }}>⛲️</span>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
                 Your accounting periods can be however long you want, and can be
-                recurring. You can make them bigger as your project evolves,
+                recurring. You can make them bigger as your project grows,
                 with the approval of those paying customers that have not yet
                 claimed their fair share of your overflowed surplus.
+                <br></br><span style={{fontSize: "30px" }}>📈</span>
               </Timeline.Item>
             </Timeline>
 
             <p>
-              Work towards something people value, crush your craft, make your money, and lift up your people.{' '}
+              Create value for your community, crush your craft, make your money, and lift up your people.{' '}
               <a
                 href="https://twitter.com/hashtag/DeFi"
                 target="_blank"
@@ -199,6 +198,15 @@ export default function Landing({
               >
                 #DeWork
               </a>
+                {' '}
+                <a
+                  href="https://twitter.com/hashtag/RegenFinance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #RegenFinance
+                </a>
+                <br></br><span style={{fontSize: "30px" }}>🧃⚡️</span>
             </p>
           </Space>
         </div>
@@ -214,7 +222,7 @@ export default function Landing({
               marginBottom: 80,
             }}
           >
-            {bigHeader('Start')}
+            {bigHeader('Do it')}
             <ConfigureBudget
               userAddress={userAddress}
               contracts={contracts}
@@ -235,13 +243,22 @@ export default function Landing({
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               {bigHeader('Should you Juice?')}
-              <p>There's a good chance.</p>
+              <p>Almost definately.</p>
               <p>
-                With Juice, people end up getting online community-driven goods
+                With Juice, we end up getting online community-driven goods
                 and services with no ads, data integrity, and business operation
                 accountability. All built by motivated punks getting
                 transparently paid exactly what they ask for, and with a price
                 tag that effectively tends toward zero as the overflow grows.
+              </p>
+              <h2>
+                What's it cost?
+              </h2>
+              <p>
+                Juice is an open protocol that makes money using Juice itself. You can check out the contractualized budget specs <a href="https://juice.work/0x00000000" target="new">here</a>.
+              </p>
+              <p>
+                5% of all money made using Juice is sent to help fill this budget. In exchange, you get the opportunity to claim a chunk of the overflow that the ecosystem accumulates over time, and voting power on how the project's cashflow should evolve.
               </p>
             </Col>
 

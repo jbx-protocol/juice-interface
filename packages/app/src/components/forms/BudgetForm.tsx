@@ -21,6 +21,18 @@ export default function BudgetForm({
       ) : null}
 
       <Form.Item
+        extra="How your project is identified on-chain"
+        name="name"
+        label="Name"
+        rules={[{ required: true }]}
+      >
+        <Input
+          className="align-end"
+          placeholder="Peach's Juice Stand"
+          type="string"
+        />
+      </Form.Item>
+      <Form.Item
         extra="The amount of money you want/need in order to absolutely crush your mission statement."
         name="target"
         label="Amount"
@@ -34,7 +46,7 @@ export default function BudgetForm({
         />
       </Form.Item>
       <Form.Item
-        extra="The length of this budgeting period."
+        extra="The duration of this budgeting period."
         name="duration"
         label="Time frame"
         rules={[{ required: true }]}

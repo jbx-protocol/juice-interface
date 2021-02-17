@@ -180,6 +180,9 @@ contract Juicer is IJuicer {
                 RECONFIGURATION_VOTING_PERIOD
             );
 
+        // Dai is the only supported token at the moment.
+        require(_budget.want == dai, "Juicer::payOwner: TOKEN_NOT_SUPPORTED");
+
         // Add the amount to the Budget.
         _budget.total = _budget.total.add(_amount);
 
@@ -196,12 +199,16 @@ contract Juicer is IJuicer {
             _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
             // Transfer the overflow only, since the rest has been marked as tapped.
             if (_overflow > 0)
-                dai.safeTransferFrom(msg.sender, address(this), _overflow);
+                _budget.want.safeTransferFrom(
+                    msg.sender,
+                    address(this),
+                    _overflow
+                );
 
             emit TapBudget(_budget.id, msg.sender, msg.sender, _overflow, dai);
         } else {
             // Transfer the amount from the contributor to this contract.
-            dai.safeTransferFrom(msg.sender, address(this), _amount);
+            _budget.want.safeTransferFrom(msg.sender, address(this), _amount);
         }
 
         // Save the budget to the store.
@@ -232,7 +239,7 @@ contract Juicer is IJuicer {
             _beneficiary,
             msg.sender,
             _amount,
-            dai
+            _budget.want
         );
 
         return _budget.id;

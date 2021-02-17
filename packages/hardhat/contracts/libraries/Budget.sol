@@ -25,6 +25,8 @@ library Budget {
         uint256 number;
         // The ID of the owner's Budget that came before this one.
         uint256 previous;
+        // The name of the budget.
+        string name;
         // A link that points to a justification for these parameters.
         string link;
         // The token that this Budget can be funded with.
@@ -68,6 +70,7 @@ library Budget {
         _self.target = _baseBudget.target;
         _self.duration = _baseBudget.duration;
         _self.owner = _baseBudget.owner;
+        _self.name = _baseBudget.name;
         _self.want = _baseBudget.want;
         _self.discountRate = _baseBudget.discountRate;
         _self.weight = _derivedWeight(_baseBudget);
@@ -123,6 +126,7 @@ library Budget {
                 _self.owner,
                 _self.number.add(1),
                 _self.id,
+                _self.name,
                 _self.link,
                 _self.want,
                 _self.target,

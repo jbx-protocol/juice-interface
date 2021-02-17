@@ -179,7 +179,7 @@ export default function ConfigureBudget({
       ],
     },
     {
-      title: 'Tickets',
+      title: 'Tickets (optional)',
       validate: () => ticketsForm.validateFields(),
       content: initializedTickets ? (
         <div>

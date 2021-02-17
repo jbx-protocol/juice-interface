@@ -250,6 +250,7 @@ export default function Landing({
                 transparently paid exactly what they ask for, and with a price
                 tag that effectively tends toward zero as the overflow grows.
               </p>
+              <br></br>
               <h2>
                 What's it cost?
               </h2>

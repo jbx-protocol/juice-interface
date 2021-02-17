@@ -6,12 +6,13 @@ import "./IStore.sol";
 import "../libraries/Budget.sol";
 
 interface IBudgetStore is IStore {
-    event ConfigureBudget(
+    event Configure(
         uint256 indexed budgetId,
         address indexed owner,
         uint256 indexed target,
         uint256 duration,
         IERC20 want,
+        string name,
         string link,
         uint256 discountRate,
         uint256 o,
@@ -64,6 +65,7 @@ interface IBudgetStore is IStore {
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
+        string calldata _name,
         string calldata _link,
         uint256 discountRate,
         uint256 _o,

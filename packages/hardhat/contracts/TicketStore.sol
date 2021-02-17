@@ -119,9 +119,16 @@ contract TicketStore is Store, ITicketStore {
         );
 
         // Create the contract in this Juicer contract in order to have mint and burn privileges.
-        tickets[msg.sender] = new Tickets(_name, _symbol);
+        // Prepend the strings with standards.
+        Tickets _tickets =
+            new Tickets(
+                string(abi.encodePacked(_name, "Juice ticket")),
+                string(abi.encodePacked("t", _symbol))
+            );
 
-        emit Issue(msg.sender, _name, _symbol);
+        tickets[msg.sender] = _tickets;
+
+        emit Issue(msg.sender, _tickets.name(), _tickets.symbol());
     }
 
     /**

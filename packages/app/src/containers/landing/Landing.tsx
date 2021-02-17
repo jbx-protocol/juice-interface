@@ -258,7 +258,7 @@ export default function Landing({
                 Juice is an open protocol that makes money using Juice itself. You can check out the contractualized budget specs <a href="https://juice.work/0x00000000" target="new">here</a>.
               </p>
               <p>
-                5% of all money made using Juice is sent to help fill this budget. In exchange, you get the opportunity to claim a chunk of the overflow that the ecosystem accumulates over time, and voting power on how the project's cashflow should evolve.
+                5% of all money made using Juice is sent to help pay for this budget. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.
               </p>
             </Col>
 

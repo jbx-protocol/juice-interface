@@ -1,43 +1,32 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
 import { useState } from 'react'
 
+import { localProvider } from '../constants/local-provider'
 import { usePoller } from '../hooks/Poller'
 
 export default function Balance({
   userAddress,
-  provider,
-  balance,
   dollarMultiplier,
 }: {
   userAddress?: string
-  provider?: JsonRpcProvider
-  balance?: BigNumber
   dollarMultiplier: number
 }) {
   const [dollarMode, setDollarMode] = useState(false)
-  const [_balance, setBalance] = useState<BigNumber>()
+  const [balance, setBalance] = useState<BigNumber>()
 
   // get updated balance
   usePoller(() => {
-    if (!userAddress || !provider) return
+    if (!userAddress) return
 
     try {
-      provider.getBalance(userAddress).then(setBalance)
+      localProvider.getBalance(userAddress).then(setBalance)
     } catch (e) {
       console.log('Error getting balance', e)
     }
   })
 
-  let floatBalance = parseFloat('0.00')
-
-  const usingBalance = balance ?? _balance
-
-  if (usingBalance !== undefined) {
-    const etherBalance = formatEther(usingBalance)
-    floatBalance = parseFloat(etherBalance)
-  }
+  let floatBalance = parseFloat(balance ? formatEther(balance) : '0.00')
 
   const displayBalance =
     dollarMultiplier && dollarMode

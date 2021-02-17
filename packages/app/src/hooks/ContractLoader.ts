@@ -15,7 +15,17 @@ export function useContractLoader(provider?: JsonRpcProvider) {
 
       await provider.ready
 
-      const network = provider.network?.name as NetworkName
+      let network: NetworkName
+      switch (provider.network.chainId) {
+        case 1:
+          network = NetworkName.mainnet
+          break
+        case 3:
+          network = NetworkName.ropsten
+          break
+        default:
+          network = NetworkName.localhost
+      }
 
       if (!network) return
 

@@ -4,20 +4,24 @@ import { Content } from 'antd/lib/layout/layout'
 import { useCallback, useState } from 'react'
 
 import Navbar from '../components/Navbar'
+import { localProvider } from '../constants/local-provider'
 import { web3Modal } from '../constants/web3-modal'
 import Router from '../containers/Router'
 import { useContractLoader } from '../hooks/ContractLoader'
 import useContractReader from '../hooks/ContractReader'
 import { useUserAddress } from '../hooks/UserAddress'
+import { useUserProvider } from '../hooks/UserProvider'
 import { Budget } from '../models/budget'
 
 function App() {
-  const [userProvider, setUserProvider] = useState<Web3Provider>()
+  const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect()
-    setUserProvider(new Web3Provider(provider))
-  }, [setUserProvider])
+    setInjectedProvider(new Web3Provider(provider))
+  }, [setInjectedProvider])
+
+  const userProvider = useUserProvider(injectedProvider, localProvider)
 
   const userAddress = useUserAddress(userProvider)
 
@@ -45,7 +49,6 @@ function App() {
       <Navbar
         hasBudget={hasBudget}
         userAddress={userAddress}
-        userProvider={userProvider}
         onConnectWallet={loadWeb3Modal}
       />
 

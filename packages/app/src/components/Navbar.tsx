@@ -1,4 +1,3 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 
@@ -7,12 +6,10 @@ import Account from './Account'
 export default function Navbar({
   userAddress,
   hasBudget,
-  userProvider,
   onConnectWallet,
 }: {
   userAddress?: string
   hasBudget?: boolean
-  userProvider?: JsonRpcProvider
   onConnectWallet: VoidFunction
 }) {
   const menuItem = (text: string, route: string) => {
@@ -69,11 +66,7 @@ export default function Navbar({
           )}
         </Menu.Item> */}
       </Menu>
-      <Account
-        userProvider={userProvider}
-        loadWeb3Modal={onConnectWallet}
-        userAddress={userAddress}
-      />
+      <Account loadWeb3Modal={onConnectWallet} userAddress={userAddress} />
     </Header>
   )
 }

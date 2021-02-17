@@ -147,6 +147,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _target The cashflow target to set.
         @param _duration The duration to set, measured in seconds.
         @param _want The token that this budget wants.
+        @param _name The name of the budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
         compared to the owners previous Budget.
@@ -163,6 +164,7 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
+        string calldata _name,
         string calldata _link,
         uint256 _discountRate,
         uint256 _o,
@@ -188,6 +190,7 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Set the properties of the budget.
         _budget.link = _link;
+        _budget.name = _name;
         _budget.target = _target;
         _budget.duration = _duration;
         _budget.want = _want;
@@ -197,15 +200,13 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.bAddress = _bAddress;
         _budget.configured = block.timestamp;
 
-        // Save the Budget in the store.
-        budgets[_budget.id] = _budget;
-
-        emit ConfigureBudget(
+        emit Configure(
             _budget.id,
             _budget.owner,
             _budget.target,
             _budget.duration,
             _budget.want,
+            _budget.name,
             _budget.link,
             _budget.discountRate,
             _o,

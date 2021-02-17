@@ -17,21 +17,22 @@ export default function TicketsForm({
       {header ? (
         <Form.Item>
           <h2>{header}</h2>
+          <p>You can always do this later. Your contract will use I-Owe-You tickets in the meantime.</p>
         </Form.Item>
       ) : null}
       <Form.Item
         extra="The name of your ticket token is used across web3."
         name="name"
         label="Name"
-        rules={[{ required: true }]}
+        rules={[{}]}
       >
-        <Input placeholder="Peach's Fruit Stand" />
+        <Input suffix="Juice ticket" placeholder="Peach's" />
       </Form.Item>
       <Form.Item
         extra="The ticker of your ticket token is used across web3."
         name="symbol"
         label="Ticker"
-        rules={[{ required: true }]}
+        rules={[{}]}
       >
         <Input
           prefix="t"

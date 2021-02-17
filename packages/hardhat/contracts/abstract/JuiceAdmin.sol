@@ -67,6 +67,7 @@ abstract contract JuiceAdmin is Ownable {
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
         @param _want The token that the budget wants.
+        @param _name A name for the Budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
         effectively creating a recency discountRate.
@@ -83,6 +84,7 @@ abstract contract JuiceAdmin is Ownable {
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
+        string calldata _name,
         string calldata _link,
         uint256 _discountRate,
         uint256 _o,
@@ -94,6 +96,7 @@ abstract contract JuiceAdmin is Ownable {
                 _target,
                 _duration,
                 _want,
+                _name,
                 _link,
                 _discountRate,
                 _o,

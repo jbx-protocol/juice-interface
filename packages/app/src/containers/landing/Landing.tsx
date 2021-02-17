@@ -36,7 +36,7 @@ export default function Landing({
   }
 
   const listData = [
-    'Ethereum smart contract devs',
+    'Ethereum developers and contributors',
     "Open source projects",
     'Indy artists',
     'Any internet-enabled service with predictable costs',

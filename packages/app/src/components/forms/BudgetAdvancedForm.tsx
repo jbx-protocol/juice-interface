@@ -38,7 +38,7 @@ export default function BudgetAdvancedForm({
       ) : null}
 
       <Form.Item
-        extra="The percentage of distributed tickets that will become mintable for you once the budgeting period ends."
+        extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."
         name="ownerAllocation"
         label="Reserved tickets"
       >
@@ -61,7 +61,7 @@ export default function BudgetAdvancedForm({
         />
       </Form.Item>
       <Form.Item
-        extra="A contract that you wish to give a percentage of your overflow to."
+        extra="An address that you wish to give a percentage of your overflow to."
         name="beneficiaryAddress"
         label="Donation address"
         rules={[{ required: beneficiaryAddressRequired }]}

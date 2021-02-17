@@ -40,6 +40,8 @@ yarn start
 
 > ✨ The [HardHat network](https://hardhat.org/hardhat-network/) provides _stack traces_ and _console.log_ debugging for our contracts ✨
 
+Run `yarn account` to create a local deployer wallet private key. To send ETH to generated wallet on a local chain, run  `# yarn send --from <address or account index> --to <receiver address> --amount <ETH amount>`
+
 ---
 
 ## Deploying contracts

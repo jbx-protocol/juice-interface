@@ -1,12 +1,18 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
 
 import { NetworkName } from '../models/network-name'
+import { NETWORKS } from './networks'
 
-// 🏠 Your local provider is usually pointed at your local blockchain
-const localProviderUrl = 'http://localhost:8545'
+const targetNetwork =
+  NETWORKS[
+    (process.env.REACT_APP_INFURA_NETWORK as NetworkName) ||
+      NetworkName.localhost
+  ]
 
-export const localProvider = new JsonRpcProvider(
-  process.env.NODE_ENV !== 'production'
-    ? `https://${NetworkName.mainnet}.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`
-    : localProviderUrl,
-)
+const localProviderUrl = targetNetwork.rpcUrl
+
+const localProviderUrlFromEnv = process.env.REACT_APP_PROVIDER
+  ? process.env.REACT_APP_PROVIDER
+  : localProviderUrl
+
+export const localProvider = new JsonRpcProvider(localProviderUrlFromEnv)

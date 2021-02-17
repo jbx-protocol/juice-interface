@@ -24,7 +24,7 @@
     "deploy": "yarn workspace @juice.work/hardhat deploy && yarn cp-contracts-local",
     "deploy-ropsten": "yarn workspace @juice.work/hardhat deploy-ropsten && yarn cp-contracts-ropsten",
     "deploy-mainnet": "yarn workspace @juice.work/hardhat deploy-mainnet && yarn cp-contracts-mainnet",
-    "cp-contracts-local": "cd packages/app/src/contracts && cp -R temp/ local/ && rm -rf temp",
+    "cp-contracts-local": "cd packages/app/src/contracts && cp -R temp/ localhost/ && rm -rf temp",
     "cp-contracts-ropsten": "cd packages/app/src/contracts && cp -R temp/ ropsten/ && rm -rf temp",
     "cp-contracts-mainnet": "cd packages/app/src/contracts && cp -R temp/ mainnet/ && rm -rf temp",
     "watch": "yarn workspace @juice.work/hardhat watch",

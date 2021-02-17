@@ -174,14 +174,13 @@ export default function Landing({
                 <br></br><span style={{fontSize: "30px" }}>⛲️</span>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                Your accounting periods can be however long you want, and can be
+                Your budgeting periods can be however long you want, and can be
                 recurring. You can make them bigger as your project grows,
                 with the approval of those paying customers that have not yet
                 claimed their fair share of your overflowed surplus.
                 <br></br><span style={{fontSize: "30px" }}>📈</span>
               </Timeline.Item>
             </Timeline>
-
             <p>
               Create value for your community, crush your craft, make your money, and lift up your people.{' '}
               <a

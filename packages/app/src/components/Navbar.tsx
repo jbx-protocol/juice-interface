@@ -57,13 +57,9 @@ export default function Navbar({
             />
           </a>
         </Menu.Item>
-        {hasBudget && userAddress ? (
+        {hasBudget && userAddress && (
           <Menu.Item key="budget">
             {menuItem('Dashboard', '/#/' + userAddress)}
-          </Menu.Item>
-        ) : (
-          <Menu.Item key="create">
-            {menuItem('Start', '/#/create')}
           </Menu.Item>
         )}
         {/* <Menu.Item key="fluid-dynamics">

@@ -1,10 +1,20 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import {
+    ILendingPool
+} from "@aave/protocol-v2/contracts/interfaces/ILendingPool.sol";
+import {
+    ILendingPoolAddressesProvider
+} from "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
+import {IAToken} from "@aave/protocol-v2/contracts/interfaces/IAToken.sol";
+import {
+    DataTypes
+} from "@aave/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
@@ -49,6 +59,10 @@ contract Juicer is IJuicer {
         _;
         unlocked = 1;
     }
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Juicer: UNAUTHORIZED");
+        _;
+    }
 
     // --- private properties --- //
 
@@ -56,6 +70,9 @@ contract Juicer is IJuicer {
     mapping(address => bool) private migrationContractIsAllowed;
 
     // --- public properties --- //
+
+    /// @notice The amount of overflow necessary to begin depositing for yield.
+    uint256 public constant override DEPOSIT_THRESHOLD = 100000;
 
     /// @notice The amount of time a Budget must be in standby before it can become active.
     /// @dev This allows for a voting period of 3 days.
@@ -73,11 +90,20 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
 
-    /// @notice The amount claimable for each address, including all beneficiaries and the admin.
-    mapping(address => uint256) public claimable;
+    /// @notice The amount claimable by each address, including the admin.
+    mapping(address => uint256) public override claimable;
 
-    /// @notice The address of the DAI ERC-20 token.
-    IERC20 public dai;
+    /// @notice The amount of principal deposited.
+    uint256 public override deposited = 0;
+
+    /// @notice The target percent of overflow that should be yielding.
+    uint256 public depositRecalibrationTarget = 682;
+
+    /// @notice The address of a stablecoin ERC-20 token.
+    IERC20 public stablecoin;
+
+    /// @notice Used for fetching the current address of LendingPool.
+    ILendingPoolAddressesProvider public provider;
 
     // --- external views --- //
 
@@ -140,19 +166,97 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
+      @param _provider The Lending pool address provider.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
-      @param _dai The DAI contract.
+      @param _stablecoin A stablecoin contract.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
+        ILendingPoolAddressesProvider _provider,
         uint256 _fee,
-        IERC20 _dai
+        IERC20 _stablecoin
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
+        provider = _provider;
         fee = _fee;
-        dai = _dai;
+        stablecoin = _stablecoin;
+    }
+
+    function getDepositedAmount() external view returns (uint256) {
+        ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
+
+        DataTypes.ReserveData memory _reserveData =
+            lendingPool.getReserveData(address(stablecoin));
+
+        IAToken aToken = IAToken(_reserveData.aTokenAddress);
+
+        return aToken.balanceOf(address(this));
+    }
+
+    function getTotalOverflow() external view returns (uint256) {
+        DataTypes.ReserveData memory _reserveData =
+            ILendingPool(provider.getLendingPool()).getReserveData(
+                address(stablecoin)
+            );
+
+        uint256 _amountEarning =
+            IAToken(_reserveData.aTokenAddress).balanceOf(address(this));
+
+        uint256 _stablecoinBalance = stablecoin.balanceOf(address(this));
+        return
+            _amountEarning
+                .add(_stablecoinBalance)
+                .mul(ticketStore.totalClaimable())
+                .div(deposited.add(_stablecoinBalance));
+    }
+
+    /**
+     */
+    function recalibrateDeposit(address _pool) external lock {
+        uint256 _totalClaimable = ticketStore.totalClaimable();
+
+        DataTypes.ReserveData memory _reserveData =
+            ILendingPool(provider.getLendingPool()).getReserveData(
+                address(stablecoin)
+            );
+
+        uint256 _amountEarning =
+            IAToken(_reserveData.aTokenAddress).balanceOf(address(this));
+
+        if (
+            _amountEarning.mul(100).div(_totalClaimable) >
+            depositRecalibrationTarget
+        ) {
+            uint256 _amount =
+                _amountEarning.sub(
+                    _totalClaimable.mul(depositRecalibrationTarget).div(1000)
+                );
+            ILendingPool(_pool).withdraw(
+                address(stablecoin),
+                _amount,
+                address(this)
+            );
+
+            deposited = deposited.sub(
+                _amount.mul(deposited).div(_amountEarning)
+            );
+        } else {
+            uint256 _amount =
+                _totalClaimable.mul(depositRecalibrationTarget).div(1000).sub(
+                    _amountEarning
+                );
+
+            deposited = deposited.add(_amount);
+
+            ILendingPool(_pool).deposit(
+                address(stablecoin),
+                _amount,
+                address(this),
+                0
+            );
+        }
     }
 
     /**
@@ -174,45 +278,30 @@ contract Juicer is IJuicer {
 
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data memory _budget =
-            budgetStore.ensureActiveBudget(
+        (
+            Budget.Data memory _budget,
+            uint256 _transferAmount,
+            uint256 _overflow
+        ) =
+            budgetStore.payOwner(
                 _owner,
+                msg.sender,
+                _amount,
                 RECONFIGURATION_VOTING_PERIOD
             );
 
-        // Dai is the only supported token at the moment.
-        require(_budget.want == dai, "Juicer::payOwner: TOKEN_NOT_SUPPORTED");
+        if (_transferAmount > 0)
+            _budget.want.safeTransferFrom(
+                msg.sender,
+                address(this),
+                _transferAmount
+            );
 
-        // Add the amount to the Budget.
-        _budget.total = _budget.total.add(_amount);
-
-        // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
-        uint256 _overflow =
-            _budget.total > _budget.target
-                ? _budget.total.sub(_budget.target)
-                : 0;
-
-        // If the owner is paying to their own budget and not all of the payment amount went to the Budget's overflow,
-        // auto tap so the owner doesn't have to send a second transaction to tap the funds.
-        if (_budget.owner == msg.sender && _amount > _overflow) {
-            // Mark the amount of the contribution that didn't go towards overflow as tapped.
-            _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
-            // Transfer the overflow only, since the rest has been marked as tapped.
-            if (_overflow > 0)
-                _budget.want.safeTransferFrom(
-                    msg.sender,
-                    address(this),
-                    _overflow
-                );
-
-            emit TapBudget(_budget.id, msg.sender, msg.sender, _overflow, dai);
-        } else {
-            // Transfer the amount from the contributor to this contract.
-            _budget.want.safeTransferFrom(msg.sender, address(this), _amount);
-        }
-
-        // Save the budget to the store.
-        budgetStore.saveBudget(_budget);
+        // Stablecoin is the only supported token at the moment.
+        require(
+            _budget.want == stablecoin,
+            "Juicer::payOwner: TOKEN_NOT_SUPPORTED"
+        );
 
         // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) {
@@ -269,7 +358,7 @@ contract Juicer is IJuicer {
         );
 
         // Transfer funds to the specified address.
-        dai.safeTransfer(_beneficiary, returnAmount);
+        stablecoin.safeTransfer(_beneficiary, returnAmount);
 
         emit Redeem(
             msg.sender,
@@ -277,7 +366,7 @@ contract Juicer is IJuicer {
             _beneficiary,
             _amount,
             returnAmount,
-            dai
+            stablecoin
         );
     }
 
@@ -293,32 +382,22 @@ contract Juicer is IJuicer {
         address _beneficiary
     ) external override lock {
         // Get a reference to the Budget being tapped.
-        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-
-        require(_budget.id > 0, "Juicer::tapBudget: NOT_FOUND");
-
-        // Only a Budget owner can tap its funds.
-        require(_budget.owner == msg.sender, "Juicer::tapBudget: UNAUTHORIZED");
-
-        // The amount being tapped must be less than the tappable amount.
-        require(
-            _amount <= _budget._tappableAmount(fee),
-            "Juicer::tapBudget: INSUFFICIENT_FUNDS"
-        );
-
-        // Add the amount to the Budget's tapped amount.
-        _budget.tapped = _budget.tapped.add(_amount);
-
-        // Save the budget to the store.
-        budgetStore.saveBudget(_budget);
+        Budget.Data memory _budget =
+            budgetStore.tap(_budgetId, msg.sender, _amount, fee);
 
         // Transfer the funds to the specified address.
-        dai.safeTransfer(_beneficiary, _amount);
+        _budget.want.safeTransfer(_beneficiary, _amount);
 
         // Distribute reserves if needed.
         if (!_budget.hasDistributedReserves) distributeReserves(msg.sender);
 
-        emit TapBudget(_budgetId, msg.sender, _beneficiary, _amount, dai);
+        emit TapBudget(
+            _budgetId,
+            msg.sender,
+            _beneficiary,
+            _amount,
+            stablecoin
+        );
     }
 
     /**
@@ -333,7 +412,7 @@ contract Juicer is IJuicer {
         claimable[msg.sender] = claimable[msg.sender] = 0;
 
         // Transfer the funds to the specified address.
-        dai.safeTransfer(msg.sender, amount);
+        stablecoin.safeTransfer(msg.sender, amount);
     }
 
     /**
@@ -361,7 +440,7 @@ contract Juicer is IJuicer {
         uint256 _claimable = ticketStore.claimable(msg.sender);
 
         //TODO set allow limit.
-        dai.safeTransfer(_to, _claimable);
+        stablecoin.safeTransfer(_to, _claimable);
 
         emit Migrate(_to);
     }
@@ -380,12 +459,24 @@ contract Juicer is IJuicer {
         @notice Adds to the contract addresses that project owners can migrate their Tickets to.
         @param _contract The contract to allow.
     */
-    function addToMigrationAllowList(address _contract) external override {
-        require(
-            msg.sender == admin,
-            "Juicer::setMigrationAllowList: UNAUTHORIZED"
-        );
+    function addToMigrationAllowList(address _contract)
+        external
+        override
+        onlyAdmin
+    {
         migrationContractIsAllowed[_contract] = true;
+    }
+
+    /** 
+      @notice Allow the admin to change the recallibration target.
+      @param _newTarget The new target.
+    */
+    function setDepositRecalibrationTarget(uint256 _newTarget)
+        external
+        override
+        onlyAdmin
+    {
+        depositRecalibrationTarget = _newTarget;
     }
 
     // --- public transactions --- //

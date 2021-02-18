@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "./ITicketStore.sol";
@@ -15,6 +15,10 @@ interface IJuicer is IBudgetController, ITicketsController {
     function budgetStore() external view returns (IBudgetStore);
 
     function ticketStore() external view returns (ITicketStore);
+
+    function claimable(address _by) external view returns (uint256);
+
+    function deposited() external view returns (uint256);
 
     function fee() external view returns (uint256);
 
@@ -32,4 +36,6 @@ interface IJuicer is IBudgetController, ITicketsController {
     function setAdmin(address _admin) external;
 
     function distributeReserves(address _issuer) external;
+
+    function setDepositRecalibrationTarget(uint256 _newTarget) external;
 }

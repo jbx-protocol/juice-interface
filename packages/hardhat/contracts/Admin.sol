@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -15,11 +15,10 @@ import "./abstract/JuiceAdmin.sol";
 contract Admin is JuiceAdmin {
     using SafeERC20 for IERC20;
 
-    constructor(
-        IJuicer _juicer,
-        string memory _ticketName,
-        string memory _ticketSymbol
-    ) public JuiceAdmin(_juicer, _ticketName, _ticketSymbol) {}
+    constructor(string memory _ticketName, string memory _ticketSymbol)
+        public
+        JuiceAdmin(_ticketName, _ticketSymbol)
+    {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
@@ -69,5 +68,17 @@ contract Admin is JuiceAdmin {
     */
     function allowMigration(IJuicer _from, address _to) external onlyOwner {
         _from.addToMigrationAllowList(address(_to));
+    }
+
+    /** 
+      @notice Sets a new recalibration target.
+      @param _juicer The juicer to change the recalibration target of.
+      @param _newTarget The new recalibration target.
+    */
+    function setDepositRecalibrationTarget(IJuicer _juicer, uint256 _newTarget)
+        external
+        onlyOwner
+    {
+        _juicer.setDepositRecalibrationTarget(_newTarget);
     }
 }

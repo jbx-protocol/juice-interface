@@ -10,6 +10,7 @@ const main = async () => {
   console.log("\n\n 📡 Deploying to " + process.env.HARDHAT_NETWORK + " ...\n");
 
   const isMainnet = process.env.HARDHAT_NETWORK === "mainnet";
+  const lendingPoolAddressProvider = "0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5";
 
   const token = isMainnet ? undefined : await deploy("Token");
   const budgetStore = await deploy("BudgetStore");
@@ -18,6 +19,7 @@ const main = async () => {
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
+    lendingPoolAddressProvider,
     5,
     isMainnet ? DAI : token.address
   ]);
@@ -29,7 +31,6 @@ const main = async () => {
   ]);
 
   const admin = await deploy("Admin", [
-    juicer.address,
     "Juice Tickets",
     "tJUICE"
   ]);
@@ -69,7 +70,7 @@ const main = async () => {
     await attachedJuicer.setAdmin(admin.address, {
       gasLimit: 3000000
     });
-    await attachedAdmin.issueTickets({
+    await attachedAdmin.issueTickets(ticketStore.address, {
       gasLimit: 3000000
     });
 

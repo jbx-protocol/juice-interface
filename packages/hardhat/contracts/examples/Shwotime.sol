@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "../abstract/JuiceAdmin.sol";
@@ -38,12 +38,11 @@ contract Shwotime is JuiceAdmin {
     uint256 public fee;
 
     constructor(
-        IJuicer _controller,
         string memory _ticketName,
         string memory _ticketSymbol,
         IERC20 _dai,
         uint256 _fee
-    ) public JuiceAdmin(_controller, _ticketName, _ticketSymbol) {
+    ) public JuiceAdmin(_ticketName, _ticketSymbol) {
         dai = _dai;
         fee = _fee;
     }
@@ -127,7 +126,7 @@ contract Shwotime is JuiceAdmin {
     }
 
     //Allow a ticket owner to collect funds once the tickets expire.
-    function collect(uint256 id) external {
+    function collect(IJuicer _juicer, uint256 id) external {
         require(id > 0 && id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
 
         Tickets storage _tickets = tickets[id];
@@ -146,6 +145,6 @@ contract Shwotime is JuiceAdmin {
         uint256 _collectable = _total.mul(uint256(100).sub(fee)).div(100);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
-        takeFee(_total.sub(_collectable), msg.sender);
+        takeFee(_juicer, _total.sub(_collectable), msg.sender);
     }
 }

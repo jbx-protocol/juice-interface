@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -25,9 +25,6 @@ abstract contract JuiceAdmin is Ownable {
         _;
     }
 
-    /// @notice The Juicer contract that is being used.
-    IJuicer public juicer;
-
     /// @dev The name of this Budget owner's tickets.
     string public ticketName;
 
@@ -38,16 +35,12 @@ abstract contract JuiceAdmin is Ownable {
     address public budgetOwner;
 
     /** 
-      @param _juicer The juicer that is being administered.
       @param _ticketName The name for this project's ERC-20 Tickets.
       @param _ticketSymbol The symbol for this project's ERC-20 Tickets.
     */
-    constructor(
-        IJuicer _juicer,
-        string memory _ticketName,
-        string memory _ticketSymbol
-    ) internal {
-        juicer = _juicer;
+    constructor(string memory _ticketName, string memory _ticketSymbol)
+        internal
+    {
         ticketName = _ticketName;
         ticketSymbol = _ticketSymbol;
 
@@ -56,14 +49,16 @@ abstract contract JuiceAdmin is Ownable {
 
     /** 
         @notice Issues this project's Tickets. 
+        @param _store The ticket store to issue in.
         @dev This must be called before a Budget is configured.
     */
-    function issueTickets() external onlyOwner {
-        juicer.ticketStore().issue(ticketName, ticketSymbol);
+    function issueTickets(ITicketStore _store) external onlyOwner {
+        _store.issue(ticketName, ticketSymbol);
     }
 
     /**
         @notice This is how the Budget is configured, and reconfiguration over time.
+        @param _store The budget store to configure in.
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
         @param _want The token that the budget wants.
@@ -81,6 +76,7 @@ abstract contract JuiceAdmin is Ownable {
         @return _budgetId The ID of the Budget that was reconfigured.
     */
     function configureBudget(
+        IBudgetStore _store,
         uint256 _target,
         uint256 _duration,
         IERC20 _want,
@@ -92,7 +88,7 @@ abstract contract JuiceAdmin is Ownable {
         address _bAddress
     ) external onlyBudgetOwner returns (uint256) {
         return
-            juicer.budgetStore().configure(
+            _store.configure(
                 _target,
                 _duration,
                 _want,
@@ -107,16 +103,16 @@ abstract contract JuiceAdmin is Ownable {
 
     /** 
       @notice Redeem tickets that have been transfered to this contract and use the returned amount to fund this contract's Budget.
+      @param _juicer The Juicer to redeem from.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _minReturn The minimum amount of tokens expected in return.
-      @param _juicer The Juicer to redeem from.
     */
     function redeemTicketsAndFund(
+        IJuicer _juicer,
         address _issuer,
         uint256 _amount,
-        uint256 _minReturn,
-        IJuicer _juicer
+        uint256 _minReturn
     ) external onlyBudgetOwner {
         uint256 _returnAmount =
             _juicer.redeem(_issuer, _amount, _minReturn, address(this));
@@ -132,11 +128,12 @@ abstract contract JuiceAdmin is Ownable {
       @param _beneficiary The address to transfer the funds to.
     */
     function tapBudget(
+        IJuicer _juicer,
         uint256 _budgetId,
         uint256 _amount,
         address _beneficiary
     ) external onlyBudgetOwner {
-        juicer.tapBudget(_budgetId, _amount, _beneficiary);
+        _juicer.tapBudget(_budgetId, _amount, _beneficiary);
     }
 
     /** 
@@ -150,21 +147,25 @@ abstract contract JuiceAdmin is Ownable {
     /** 
       @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
       @dev The destination must be in the current Juicer's allow list.
+      @param _from The contract that currently manages your Tickets and it's funds.
       @param _to The new contract that will manage your Tickets and it's funds.
     */
-    function migrate(IJuicer _to) public onlyOwner {
+    function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
         require(_to != IJuicer(0), "JuiceAdmin::setJuicer: ZERO_ADDRESS");
-        juicer.migrate(address(_to));
-        // Sets the Juicer that this contract uses.
-        juicer = _to;
+        _from.migrate(address(_to));
     }
 
     /** 
       @notice Take a fee for yourself.
+      @param _juicer The juicer that's having a fee taken from.
       @param _amount The amount of the fee.
       @param _from The address having the fee taken from.
     */
-    function takeFee(uint256 _amount, address _from) internal {
-        juicer.payOwner(address(this), _amount, _from);
+    function takeFee(
+        IJuicer _juicer,
+        uint256 _amount,
+        address _from
+    ) internal {
+        _juicer.payOwner(address(this), _amount, _from);
     }
 }

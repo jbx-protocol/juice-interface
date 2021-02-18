@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -23,6 +23,9 @@ contract TicketStore is Store, ITicketStore {
 
     /// @notice The current cumulative amount of tokens redeemable by each issuer's Tickets.
     mapping(address => uint256) public override claimable;
+
+    /// @notice The current cumulative amount of tokens redeemable in the system.
+    uint256 public override totalClaimable = 0;
 
     /// @notice The amount of Tickets owed to each address from each token issuer.
     mapping(address => mapping(address => uint256)) public override iOweYous;
@@ -220,6 +223,7 @@ contract TicketStore is Store, ITicketStore {
 
         // Subtract the claimed tokens from the total amount claimable.
         claimable[_issuer] = claimable[_issuer].sub(returnAmount);
+        totalClaimable = totalClaimable.sub(returnAmount);
     }
 
     /**
@@ -233,5 +237,6 @@ contract TicketStore is Store, ITicketStore {
         onlyAdmin
     {
         claimable[_issuer] = claimable[_issuer].add(_amount);
+        totalClaimable = totalClaimable.add(_amount);
     }
 }

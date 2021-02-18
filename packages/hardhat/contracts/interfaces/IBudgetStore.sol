@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "./IStore.sol";
@@ -21,6 +21,13 @@ interface IBudgetStore is IStore {
     );
 
     function latestBudgetId(address _owner) external returns (uint256);
+
+    function tap(
+        uint256 _budgetId,
+        address _tapper,
+        uint256 _amount,
+        uint256 _fee
+    ) external returns (Budget.Data memory);
 
     function votes(
         uint256 _budgetId,
@@ -73,9 +80,18 @@ interface IBudgetStore is IStore {
         address _bAddress
     ) external returns (uint256 id);
 
-    function ensureActiveBudget(address _owner, uint256 _standbyPeriod)
+    function payOwner(
+        address _owner,
+        address _payer,
+        uint256 _amount,
+        uint256 _votingPeriod
+    )
         external
-        returns (Budget.Data memory);
+        returns (
+            Budget.Data memory budget,
+            uint256 transferAmount,
+            uint256 overflow
+        );
 
     function saveBudget(Budget.Data calldata _budget) external;
 

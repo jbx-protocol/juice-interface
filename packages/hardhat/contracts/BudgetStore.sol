@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -217,43 +217,69 @@ contract BudgetStore is Store, IBudgetStore {
         return _budget.id;
     }
 
-    /**
-        @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
-        @param _owner The address who owns the Budget to look for.
-        @param _votingPeriod The time between a Budget being configured and when it can become active.
-        @return budget The resulting Budget.
-    */
-    function ensureActiveBudget(address _owner, uint256 _votingPeriod)
+    function payOwner(
+        address _owner,
+        address _payer,
+        uint256 _amount,
+        uint256 _votingPeriod
+    )
         external
         override
-        onlyAdmin
-        returns (Budget.Data memory budget)
+        returns (
+            Budget.Data memory budget,
+            uint256 transfer,
+            uint256 overflow
+        )
     {
-        // Check if there is an active Budget
-        budget = _activeBudget(_owner);
-        if (budget.id > 0) return budget;
-        // No active Budget found, check if there is a standby Budget
-        budget = _standbyBudget(_owner);
-        // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
-        if (
-            budget.id > 0 &&
-            ((budget.configured.add(_votingPeriod) < block.timestamp &&
-                votes[budget.id][budget.configured][true] >
-                votes[budget.id][budget.configured][false]) ||
-                // allow if this is the first budget and it hasn't received payments.
-                (budget.number == 1 && budget.total == 0))
-        ) return budget;
-        // No upcoming Budget found with a successful vote, clone the latest active Budget.
-        // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
-        budget = budgets[
-            budget.id > 0 ? budget.previous : latestBudgetId[_owner]
-        ];
-        require(budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
-        // Use a start date that's a multiple of the duration.
-        // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
-        Budget.Data storage _newBudget =
-            _initBudget(budget.owner, budget._determineNextStart(), budget);
-        return _newBudget;
+        // Find the Budget that this contribution should go towards.
+        // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
+        Budget.Data storage _budget =
+            _ensureActiveBudget(_owner, _votingPeriod);
+
+        // Add the amount to the Budget.
+        _budget.total = _budget.total.add(_amount);
+
+        // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
+        overflow = _budget.total > _budget.target
+            ? _budget.total.sub(_budget.target)
+            : 0;
+
+        if (_budget.owner == _payer && _amount > overflow) {
+            // Mark the amount of the contribution that didn't go towards overflow as tapped.
+            _budget.tapped = _budget.tapped.add(_amount.sub(overflow));
+            // Transfer the overflow only, since the rest has been marked as tapped.
+            if (overflow > 0) transfer = overflow;
+        } else {
+            transfer = _amount;
+        }
+
+        budget = _budget;
+    }
+
+    function tap(
+        uint256 _budgetId,
+        address _tapper,
+        uint256 _amount,
+        uint256 _fee
+    ) external override returns (Budget.Data memory) {
+        // Get a reference to the Budget being tapped.
+        Budget.Data storage _budget = budgets[_budgetId];
+
+        require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
+
+        // Only a Budget owner can tap its funds.
+        require(_budget.owner == _tapper, "BudgetStore::tap: UNAUTHORIZED");
+
+        // The amount being tapped must be less than the tappable amount.
+        require(
+            _amount <= _budget._tappableAmount(_fee),
+            "BudgetStore::tap: INSUFFICIENT_FUNDS"
+        );
+
+        // Add the amount to the Budget's tapped amount.
+        _budget.tapped = _budget.tapped.add(_amount);
+
+        return _budget;
     }
 
     // --- public transactions --- //
@@ -321,6 +347,43 @@ contract BudgetStore is Store, IBudgetStore {
     }
 
     /**
+        @notice Returns the active Budget for this owner if it exists, otherwise activating one appropriately.
+        @param _owner The address who owns the Budget to look for.
+        @param _votingPeriod The time between a Budget being configured and when it can become active.
+        @return budget The resulting Budget.
+    */
+    function _ensureActiveBudget(address _owner, uint256 _votingPeriod)
+        private
+        returns (Budget.Data storage budget)
+    {
+        // Check if there is an active Budget
+        budget = _activeBudget(_owner);
+        if (budget.id > 0) return budget;
+        // No active Budget found, check if there is a standby Budget
+        budget = _standbyBudget(_owner);
+        // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
+        if (
+            budget.id > 0 &&
+            ((budget.configured.add(_votingPeriod) < block.timestamp &&
+                votes[budget.id][budget.configured][true] >
+                votes[budget.id][budget.configured][false]) ||
+                // allow if this is the first budget and it hasn't received payments.
+                (budget.number == 1 && budget.total == 0))
+        ) return budget;
+        // No upcoming Budget found with a successful vote, clone the latest active Budget.
+        // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
+        budget = budgets[
+            budget.id > 0 ? budget.previous : latestBudgetId[_owner]
+        ];
+        require(budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
+        // Use a start date that's a multiple of the duration.
+        // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
+        Budget.Data storage _newBudget =
+            _initBudget(budget.owner, budget._determineNextStart(), budget);
+        return _newBudget;
+    }
+
+    /**
         @notice Initializes a Budget to be sustained for the sending address.
         @param _owner The owner of the Budget being initialized.
         @param _start The start time for the new Budget.
@@ -375,7 +438,7 @@ contract BudgetStore is Store, IBudgetStore {
     function _activeBudget(address _owner)
         private
         view
-        returns (Budget.Data memory budget)
+        returns (Budget.Data storage budget)
     {
         budget = budgets[latestBudgetId[_owner]];
         if (budget.id == 0) return budgets[0];

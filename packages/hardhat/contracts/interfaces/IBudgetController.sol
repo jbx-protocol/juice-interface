@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -21,6 +21,8 @@ interface IBudgetController {
         uint256 amount,
         IERC20 want
     );
+
+    function DEPOSIT_THRESHOLD() external view returns (uint256);
 
     function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
 

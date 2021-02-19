@@ -1,15 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import React from 'react'
-import { HashRouter, Switch } from 'react-router-dom'
-import { GuardedRoute, GuardFunction, GuardProvider } from 'react-router-guards'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import Gimme from '../components/Gimme'
-import Loading from '../components/Loading'
 import { useGasPrice } from '../hooks/GasPrice'
 import { Contracts } from '../models/contracts'
 import { createTransactor } from '../utils/Transactor'
-import ConfigureBudget from './ConfigureBudget'
 import Landing from './landing/Landing'
 import Owner from './Owner'
 
@@ -34,55 +31,34 @@ export default function Router({
       typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const budgetGuard: GuardFunction = (to, from, next) => {
-    if (to.meta.budget === false) {
-      hasBudget && userAddress ? next.redirect(userAddress) : next()
-    }
-    next()
-  }
-
-  return userAddress && hasBudget === undefined ? (
-    <div style={{ flex: 1 }}>
-      <Loading />
-    </div>
-  ) : (
+  return (
     <HashRouter>
-      <GuardProvider guards={[budgetGuard]}>
-        <Switch>
-          <GuardedRoute exact path="/">
-            <Landing
-              userAddress={userAddress}
-              hasBudget={hasBudget}
-              contracts={contracts}
-              transactor={transactor}
-              onNeedProvider={onNeedProvider}
-            />
-          </GuardedRoute>
-          <GuardedRoute path="/gimme">
-            <Gimme
-              contracts={contracts}
-              transactor={transactor}
-              userAddress={userAddress}
-            ></Gimme>
-          </GuardedRoute>
-          <GuardedRoute path="/create" meta={{ budget: false }}>
-            <ConfigureBudget
-              userAddress={userAddress}
-              contracts={contracts}
-              transactor={transactor}
-              onNeedProvider={onNeedProvider}
-            />
-          </GuardedRoute>
-          <GuardedRoute path="/:owner">
-            <Owner
-              contracts={contracts}
-              transactor={transactor}
-              userAddress={userAddress}
-              onNeedProvider={onNeedProvider}
-            />
-          </GuardedRoute>
-        </Switch>
-      </GuardProvider>
+      <Switch>
+        <Route exact path="/">
+          <Landing
+            userAddress={userAddress}
+            hasBudget={hasBudget}
+            contracts={contracts}
+            transactor={transactor}
+            onNeedProvider={onNeedProvider}
+          />
+        </Route>
+        <Route path="/gimme">
+          <Gimme
+            contracts={contracts}
+            transactor={transactor}
+            userAddress={userAddress}
+          ></Gimme>
+        </Route>
+        <Route path="/:owner">
+          <Owner
+            contracts={contracts}
+            transactor={transactor}
+            userAddress={userAddress}
+            onNeedProvider={onNeedProvider}
+          />
+        </Route>
+      </Switch>
     </HashRouter>
   )
 }

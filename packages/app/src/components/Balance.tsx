@@ -39,7 +39,6 @@ export default function Balance({
     <span
       style={{
         verticalAlign: 'middle',
-        padding: 8,
         cursor: 'pointer',
       }}
       onClick={() => setDollarMode(!dollarMode)}

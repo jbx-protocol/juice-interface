@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Tag } from 'antd'
 import { useEffect } from 'react'
 
 import { web3Modal } from '../constants/web3-modal'
@@ -9,9 +9,11 @@ import Wallet from './Wallet'
 export default function Account({
   userAddress,
   loadWeb3Modal,
+  shouldUseNetwork,
 }: {
   userAddress?: string
   loadWeb3Modal: VoidFunction
+  shouldUseNetwork?: string
 }) {
   useEffect(() => {
     if (web3Modal.cachedProvider) loadWeb3Modal()
@@ -37,6 +39,9 @@ export default function Account({
     >
       <Balance userAddress={userAddress} dollarMultiplier={price} />
       <Wallet userAddress={userAddress}></Wallet>
+      {shouldUseNetwork ? (
+        <Tag color="red">Switch to {shouldUseNetwork} to use Juice!</Tag>
+      ) : null}
       {web3Modal?.cachedProvider ? (
         <Button onClick={logoutOfWeb3Modal}>Logout</Button>
       ) : (

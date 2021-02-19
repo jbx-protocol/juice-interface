@@ -6,10 +6,12 @@ import Account from './Account'
 export default function Navbar({
   userAddress,
   hasBudget,
+  shouldUseNetwork,
   onConnectWallet,
 }: {
   userAddress?: string
   hasBudget?: boolean
+  shouldUseNetwork?: string
   onConnectWallet: VoidFunction
 }) {
   const menuItem = (text: string, route: string) => {
@@ -66,7 +68,11 @@ export default function Navbar({
           )}
         </Menu.Item> */}
       </Menu>
-      <Account loadWeb3Modal={onConnectWallet} userAddress={userAddress} />
+      <Account
+        loadWeb3Modal={onConnectWallet}
+        userAddress={userAddress}
+        shouldUseNetwork={shouldUseNetwork}
+      />
     </Header>
   )
 }

@@ -51,8 +51,9 @@ function App() {
         userAddress={userAddress}
         onConnectWallet={loadWeb3Modal}
         shouldUseNetwork={
-          process.env.NODE_ENV === 'production' &&
-          userProvider?.network?.chainId !== 3
+          userProvider &&
+          userProvider.network?.chainId !== 3 &&
+          process.env.NODE_ENV === 'production'
             ? 'Ropsten'
             : undefined
         }

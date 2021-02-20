@@ -19,12 +19,14 @@ export default function Rewards({
   userAddress,
   ticketAddress,
   onNeedProvider,
+  isOwner,
 }: {
   transactor?: Transactor
   contracts?: Contracts
   budget?: Budget
   userAddress?: string
   ticketAddress?: string
+  isOwner?: boolean
   onNeedProvider: () => Promise<void>
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
@@ -100,6 +102,10 @@ export default function Rewards({
     </div>
   )
 
+  const awaitingIssueTicketsTag = (
+    <Tag color="geekblue">ERC-20 tickets not minted yet</Tag>
+  )
+
   return (
     <div
       style={{
@@ -128,12 +134,18 @@ export default function Rewards({
                 `${share ?? 0}% of ${ticketSupply?.toString() ??
                   0} ${ticketSymbol} in circulation`,
               )}
-              <Tooltip
-                title="Issue tickets in the back office"
-                placement="right"
-              >
-                <Tag color="geekblue">ERC-20 tickets not minted yet</Tag>
-              </Tooltip>
+              {isEmptyAddress(ticketAddress) ? (
+                isOwner ? (
+                  <Tooltip
+                    title="Issue tickets in the back office"
+                    placement="right"
+                  >
+                    {awaitingIssueTicketsTag}
+                  </Tooltip>
+                ) : (
+                  awaitingIssueTicketsTag
+                )
+              ) : null}
             </div>
           )}
         />

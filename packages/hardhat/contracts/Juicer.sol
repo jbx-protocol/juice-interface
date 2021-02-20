@@ -5,19 +5,10 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import {
-    ILendingPool
-} from "@aave/protocol-v2/contracts/interfaces/ILendingPool.sol";
-import {
-    ILendingPoolAddressesProvider
-} from "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
-import {IAToken} from "@aave/protocol-v2/contracts/interfaces/IAToken.sol";
-import {
-    DataTypes
-} from "@aave/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
+import "./interfaces/IOverflowLender.sol";
 
 import "./TicketStore.sol";
 
@@ -87,23 +78,20 @@ contract Juicer is IJuicer {
     /// @notice The contract that manages the Tickets.
     ITicketStore public immutable override ticketStore;
 
+    /// @notice The contract that puts overflow to work.
+    IOverflowLender public override overflowLender;
+
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
 
     /// @notice The amount claimable by each address, including the admin.
     mapping(address => uint256) public override claimable;
 
-    /// @notice The amount of principal deposited.
-    uint256 public override deposited = 0;
-
     /// @notice The target percent of overflow that should be yielding.
     uint256 public depositRecalibrationTarget = 682;
 
     /// @notice The address of a stablecoin ERC-20 token.
     IERC20 public stablecoin;
-
-    /// @notice Used for fetching the current address of LendingPool.
-    ILendingPoolAddressesProvider public provider;
 
     // --- external views --- //
 
@@ -166,97 +154,22 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
-      @param _provider The Lending pool address provider.
+      @param _overflowLender The Lending pool address provider.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
       @param _stablecoin A stablecoin contract.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
-        ILendingPoolAddressesProvider _provider,
+        IOverflowLender _overflowLender,
         uint256 _fee,
         IERC20 _stablecoin
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
-        provider = _provider;
+        overflowLender = _overflowLender;
         fee = _fee;
         stablecoin = _stablecoin;
-    }
-
-    function getDepositedAmount() external view returns (uint256) {
-        ILendingPool lendingPool = ILendingPool(provider.getLendingPool());
-
-        DataTypes.ReserveData memory _reserveData =
-            lendingPool.getReserveData(address(stablecoin));
-
-        IAToken aToken = IAToken(_reserveData.aTokenAddress);
-
-        return aToken.balanceOf(address(this));
-    }
-
-    function getTotalOverflow() external view returns (uint256) {
-        DataTypes.ReserveData memory _reserveData =
-            ILendingPool(provider.getLendingPool()).getReserveData(
-                address(stablecoin)
-            );
-
-        uint256 _amountEarning =
-            IAToken(_reserveData.aTokenAddress).balanceOf(address(this));
-
-        uint256 _stablecoinBalance = stablecoin.balanceOf(address(this));
-        return
-            _amountEarning
-                .add(_stablecoinBalance)
-                .mul(ticketStore.totalClaimable())
-                .div(deposited.add(_stablecoinBalance));
-    }
-
-    /**
-     */
-    function recalibrateDeposit(address _pool) external lock {
-        uint256 _totalClaimable = ticketStore.totalClaimable();
-
-        DataTypes.ReserveData memory _reserveData =
-            ILendingPool(provider.getLendingPool()).getReserveData(
-                address(stablecoin)
-            );
-
-        uint256 _amountEarning =
-            IAToken(_reserveData.aTokenAddress).balanceOf(address(this));
-
-        if (
-            _amountEarning.mul(100).div(_totalClaimable) >
-            depositRecalibrationTarget
-        ) {
-            uint256 _amount =
-                _amountEarning.sub(
-                    _totalClaimable.mul(depositRecalibrationTarget).div(1000)
-                );
-            ILendingPool(_pool).withdraw(
-                address(stablecoin),
-                _amount,
-                address(this)
-            );
-
-            deposited = deposited.sub(
-                _amount.mul(deposited).div(_amountEarning)
-            );
-        } else {
-            uint256 _amount =
-                _totalClaimable.mul(depositRecalibrationTarget).div(1000).sub(
-                    _amountEarning
-                );
-
-            deposited = deposited.add(_amount);
-
-            ILendingPool(_pool).deposit(
-                address(stablecoin),
-                _amount,
-                address(this),
-                0
-            );
-        }
     }
 
     /**

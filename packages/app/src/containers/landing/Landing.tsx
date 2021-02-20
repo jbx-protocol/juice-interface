@@ -31,13 +31,13 @@ export default function Landing({
   const timelineItemStyle: TimelineItemProps = {
     color: colors.juiceOrange,
     style: {
-      paddingBottom: "80px"
+      paddingBottom: '80px',
     },
   }
 
   const listData = [
     'Ethereum developers and contributors',
-    "Open source projects",
+    'Open source projects',
     'Indy artists, journalists, and researchers',
     'Any internet-enabled service with predictable costs',
   ]
@@ -153,7 +153,8 @@ export default function Landing({
                 Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
                 mission statement.
-                <br></br><span style={{fontSize: "30px" }}>💰💅💪</span>
+                <br></br>
+                <span style={{ fontSize: '30px' }}>💰💅💪</span>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
                 People can either pay you like they would on Patreon, or
@@ -164,25 +165,28 @@ export default function Landing({
                   rel="noopener noreferrer"
                 >
                   #BusinessModelAsAService
-               </a>{' '}
+                </a>{' '}
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
-                If money overflows, your paying customers claim the
-                surplus, effectively pushing prices down as your community
-                grows. Early adopters get a discounted rate, and those HODLers
-                who wait longest to claim get a juicier return.
-                <br></br><span style={{fontSize: "30px" }}>⛲️</span>
+                If money overflows, your paying customers claim the surplus,
+                effectively pushing prices down as your community grows. Early
+                adopters get a discounted rate, and those HODLers who wait
+                longest to claim get a juicier return.
+                <br></br>
+                <span style={{ fontSize: '30px' }}>⛲️</span>
               </Timeline.Item>
               <Timeline.Item {...timelineItemStyle}>
                 Your budgeting periods can be however long you want, and can be
-                recurring. You can make them bigger as your project grows,
-                with the approval of those paying customers that have not yet
-                claimed their fair share of your overflowed surplus.
-                <br></br><span style={{fontSize: "30px" }}>📈</span>
+                recurring. You can make them bigger as your project grows, with
+                the approval of those paying customers that have not yet claimed
+                their fair share of your overflowed surplus.
+                <br></br>
+                <span style={{ fontSize: '30px' }}>📈</span>
               </Timeline.Item>
             </Timeline>
             <p>
-              Create value for your community, crush your craft, make your money, and lift up your people.{' '}
+              Create value for your community, crush your craft, make your
+              money, and lift up your people.{' '}
               <a
                 href="https://twitter.com/hashtag/DeFi"
                 target="_blank"
@@ -196,41 +200,39 @@ export default function Landing({
                 rel="noopener noreferrer"
               >
                 #DeWork
+              </a>{' '}
+              <a
+                href="https://twitter.com/hashtag/RegenFinance"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #RegenFinance
               </a>
-                {' '}
-                <a
-                  href="https://twitter.com/hashtag/RegenFinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #RegenFinance
-                </a>
-                <br></br><span style={{fontSize: "30px" }}>🧃⚡️</span>
+              <br></br>
+              <span style={{ fontSize: '30px' }}>🧃⚡️</span>
             </p>
           </Space>
         </div>
       </section>
 
-      {hasBudget ? null : (
-        <section style={section} className="hide-mobile">
-          <div
-            id="create"
-            style={{
-              ...wrapper,
-              marginTop: 100,
-              marginBottom: 80,
-            }}
-          >
-            {bigHeader('Do it')}
-            <ConfigureBudget
-              userAddress={userAddress}
-              contracts={contracts}
-              transactor={transactor}
-              onNeedProvider={onNeedProvider}
-            />
-          </div>
-        </section>
-      )}
+      <section style={section} className="hide-mobile">
+        <div
+          id="create"
+          style={{
+            ...wrapper,
+            marginTop: 100,
+            marginBottom: 80,
+          }}
+        >
+          {bigHeader('Do it')}
+          <ConfigureBudget
+            userAddress={userAddress}
+            contracts={contracts}
+            transactor={transactor}
+            onNeedProvider={onNeedProvider}
+          />
+        </div>
+      </section>
 
       <section
         style={{
@@ -244,21 +246,27 @@ export default function Landing({
               {bigHeader('Should you Juice?')}
               <p>Almost definately.</p>
               <p>
-                With Juice, we end up getting online community-driven goods
-                and services with no ads, data integrity, and business operation
+                With Juice, we end up getting online community-driven goods and
+                services with no ads, data integrity, and business operation
                 accountability. All built by motivated punks getting
                 transparently paid exactly what they ask for, and with a price
                 tag that effectively tends toward zero as the overflow grows.
               </p>
               <br></br>
-              <h2>
-                What's it cost?
-              </h2>
+              <h2>What's it cost?</h2>
               <p>
-                Juice is an open protocol that makes money using Juice itself. You can check out the contractualized budget specs <a href="https://juice.work/0x00000000" target="new">here</a>.
+                Juice is an open protocol that makes money using Juice itself.
+                You can check out the contractualized budget specs{' '}
+                <a href="https://juice.work/0x00000000" target="new">
+                  here
+                </a>
+                .
               </p>
               <p>
-                5% of all money made using Juice is sent to help pay for this budget. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.
+                5% of all money made using Juice is sent to help pay for this
+                budget. In exchange, you get the opportunity to benefit from the
+                overflow that the ecosystem accumulates over time, and voting
+                power on how Juice's cashflow needs should evolve.
               </p>
             </Col>
 

@@ -9,6 +9,79 @@ module.exports = [
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "budgetId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IERC20",
+        "name": "want",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "link",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "o",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "b",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "bAddress",
+        "type": "address"
+      }
+    ],
+    "name": "Configure",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -167,225 +240,57 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_target",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_votingPeriod",
+        "name": "_duration",
         "type": "uint256"
-      }
-    ],
-    "name": "ensureActiveBudget",
-    "outputs": [
+      },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "number",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          },
-          {
-            "internalType": "contract IERC20",
-            "name": "want",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "total",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tapped",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "o",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "bAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "hasDistributedReserves",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Budget.Data",
-        "name": "budget",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "internalType": "contract IERC20",
+        "name": "_want",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_link",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_discountRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_o",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_b",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
-        "name": "_owner",
+        "name": "_bAddress",
         "type": "address"
       }
     ],
-    "name": "ensureStandbyBudget",
+    "name": "configure",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "number",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          },
-          {
-            "internalType": "contract IERC20",
-            "name": "want",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "total",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tapped",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "o",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "bAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "hasDistributedReserves",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Budget.Data",
-        "name": "budget",
-        "type": "tuple"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -422,6 +327,11 @@ module.exports = [
             "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
           },
           {
             "internalType": "string",
@@ -536,6 +446,11 @@ module.exports = [
           },
           {
             "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -647,6 +562,11 @@ module.exports = [
           },
           {
             "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
             "name": "link",
             "type": "string"
           },
@@ -755,6 +675,11 @@ module.exports = [
             "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
           },
           {
             "internalType": "string",
@@ -1016,6 +941,147 @@ module.exports = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_payer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_votingPeriod",
+        "type": "uint256"
+      }
+    ],
+    "name": "payOwner",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previous",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "link",
+            "type": "string"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "want",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "o",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "b",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "bAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasDistributedReserves",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Budget.Data",
+        "name": "budget",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "transfer",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "overflow",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -1090,6 +1156,11 @@ module.exports = [
             "internalType": "uint256",
             "name": "previous",
             "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
           },
           {
             "internalType": "string",
@@ -1182,6 +1253,137 @@ module.exports = [
     ],
     "name": "setOwnership",
     "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_budgetId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_tapper",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "tap",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previous",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "link",
+            "type": "string"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "want",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "o",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "b",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "bAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasDistributedReserves",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Budget.Data",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },

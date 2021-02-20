@@ -138,11 +138,11 @@ contract TicketStore is Store, ITicketStore {
       @notice Convert I-owe-you's to tickets
       @param _issuer The issuer of the tickets.
      */
-    function claimIOweYou(address _issuer) external {
+    function convertIOweYou(address _issuer) external override {
         Tickets _tickets = tickets[_issuer];
         require(
             _tickets != Tickets(0),
-            "TicketStore::claimIOweYou: NOT_CLAIMABLE"
+            "TicketStore::convertIOweYou: NOT_CLAIMABLE"
         );
 
         // The amount of I-owe-yous.

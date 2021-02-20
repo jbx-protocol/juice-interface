@@ -8,6 +8,7 @@ packages/hardhat/*.txt
 packages/hardhat/artifacts
 packages/app/src/contracts/temp
 packages/app/src/contracts/local
+packages/app/src/contracts/localhost
 packages/app/src/styles/antd.css
 packages/hardhat/cache
 

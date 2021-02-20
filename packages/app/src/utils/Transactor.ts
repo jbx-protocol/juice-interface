@@ -25,9 +25,9 @@ export function createTransactor({
 
   return async (
     tx: Deferrable<TransactionRequest>,
-    onConfirmed?: (e: TransactionEvent, signer: JsonRpcSigner) => void,
+    onConfirmed?: (e?: TransactionEvent, signer?: JsonRpcSigner) => void,
     onCancelled?:
-      | ((e: TransactionEvent, signer: JsonRpcSigner) => void)
+      | ((e?: TransactionEvent, signer?: JsonRpcSigner) => void)
       | boolean,
   ) => {
     const signer = provider.getSigner()
@@ -91,6 +91,15 @@ export function createTransactor({
         }))
       } else {
         console.log('LOCAL TX SENT', result.hash)
+        if (result.confirmations) {
+          if (onConfirmed) onConfirmed(result, undefined)
+        } else {
+          if (onCancelled === true) {
+            if (onConfirmed) onConfirmed(result, undefined)
+          } else if (onCancelled) {
+            onCancelled(result, undefined)
+          }
+        }
       }
 
       return true

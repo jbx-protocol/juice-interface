@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
+import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
@@ -9,7 +9,8 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { erc20Contract } from '../utils/erc20Contract'
-import { orEmpty } from '../utils/orEmpty'
+import { isEmptyAddress } from '../utils/isEmptyAddress'
+import WtfCard from './WtfCard'
 
 export default function Rewards({
   transactor,
@@ -17,7 +18,6 @@ export default function Rewards({
   budget,
   userAddress,
   ticketAddress,
-  descriptionsStyle,
   onNeedProvider,
 }: {
   transactor?: Transactor
@@ -25,13 +25,10 @@ export default function Rewards({
   budget?: Budget
   userAddress?: string
   ticketAddress?: string
-  descriptionsStyle?: DescriptionsProps
   onNeedProvider: () => Promise<void>
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
-
-  const claimableProportion = BigNumber.from(382).toHexString()
 
   const ticketContract = erc20Contract(ticketAddress)
 
@@ -39,7 +36,7 @@ export default function Rewards({
     contract: ticketContract,
     functionName: 'symbol',
     formatter: (value: string) =>
-      value ? Web3.utils.hexToString(value) : undefined,
+      value ? Web3.utils.hexToString(value) : 'tickets',
   })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -57,16 +54,6 @@ export default function Rewards({
     functionName: 'claimable',
     args: [budget?.owner],
     shouldUpdate: bigNumbersEq,
-  })
-  const yourClaimableAmount = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
-    functionName: 'getClaimableAmount',
-    args: [
-      userAddress,
-      ticketsBalance?.toHexString(),
-      budget?.owner,
-      claimableProportion,
-    ],
   })
 
   const share = ticketSupply?.gt(0)
@@ -90,7 +77,10 @@ export default function Rewards({
 
     transactor(
       contracts?.Juicer.redeem(budget?.owner, _amount),
-      () => setLoadingRedeem(false),
+      () => {
+        setLoadingRedeem(false)
+        setRedeemAmount(BigNumber.from(0))
+      },
       true,
     )
   }
@@ -99,41 +89,85 @@ export default function Rewards({
 
   const rewardTokenName = 'DAI'
 
+  const subText = (text: string) => (
+    <div
+      style={{
+        fontSize: '.75rem',
+        fontWeight: 500,
+      }}
+    >
+      {text}
+    </div>
+  )
+
   return (
-    <div>
-      <Descriptions {...descriptionsStyle} column={1}>
-        <Descriptions.Item label={'Your ticket balance'}>
-          {orEmpty(ticketsBalance?.toString())} {ticketSymbol}
-        </Descriptions.Item>
-        <Descriptions.Item label="Your ticket share">
-          {orEmpty(share) + '%'}
-        </Descriptions.Item>
-        <Descriptions.Item label="Unclaimed">
-          {orEmpty(totalClaimableAmount?.toString())} {rewardTokenName}
-        </Descriptions.Item>
-        <Descriptions.Item label="Claimable by you">
-          {orEmpty(yourClaimableAmount?.toString())} {rewardTokenName}
-        </Descriptions.Item>
-      </Descriptions>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginTop: 10,
-        }}
-      >
-        <Space align="baseline">
-          <Input
-            defaultValue={ticketsBalance?.toString()}
-            suffix={rewardTokenName}
-            value={redeemAmount?.toString()}
-            onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Space direction="horizontal" size="large" align="start">
+        <Statistic
+          title="Unclaimed overflow"
+          valueRender={() => (
+            <div>
+              {totalClaimableAmount?.toString() ?? 0} {rewardTokenName}
+            </div>
+          )}
+        />
+
+        <Statistic
+          title="Your wallet"
+          valueRender={() => (
+            <div>
+              <div>
+                {ticketsBalance?.toString() ?? 0} {ticketSymbol}
+              </div>
+              {subText(
+                `${share ?? 0}% of ${ticketSupply?.toString() ??
+                  0} ${ticketSymbol} in circulation`,
+              )}
+              <Tooltip
+                title="Issue tickets in the back office"
+                placement="right"
+              >
+                <Tag color="geekblue">ERC-20 tickets not minted yet</Tag>
+              </Tooltip>
+            </div>
+          )}
+        />
+
+        {isEmptyAddress(ticketAddress) ? null : (
+          <Statistic
+            title="Redeem tickets"
+            valueRender={() => (
+              <Space>
+                <Input
+                  type="number"
+                  placeholder="0"
+                  max={ticketsBalance?.toString()}
+                  value={redeem.toString()}
+                  onChange={e =>
+                    setRedeemAmount(BigNumber.from(e.target.value))
+                  }
+                />
+                <Button type="primary" onClick={redeem} loading={loadingRedeem}>
+                  Redeem
+                </Button>
+              </Space>
+            )}
           />
-          <Button type="primary" onClick={redeem} loading={loadingRedeem}>
-            Redeem
-          </Button>
-        </Space>
-      </div>
+        )}
+      </Space>
+
+      <WtfCard style={{ maxWidth: 400 }}>
+        <p>
+          {isEmptyAddress(ticketAddress)
+            ? 'Tickets do not exist'
+            : 'Tickets exist'}
+        </p>
+      </WtfCard>
     </div>
   )
 }

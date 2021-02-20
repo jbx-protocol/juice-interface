@@ -6,6 +6,7 @@ import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
 import BudgetForm from '../components/forms/BudgetForm'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
+import { DAI } from '../constants/tokens/dai'
 import { Budget } from '../models/budget'
 import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
 import { BudgetFormFields } from '../models/forms-fields/budget-form'
@@ -50,6 +51,7 @@ export default function ReconfigureBudget({
       'uint256',
       fields.duration * SECONDS_IN_DAY,
     )
+    const _name = fields.name
     const _link = fields.link
     const _discountRate = eth.abi.encodeParameter(
       'uint256',
@@ -64,10 +66,13 @@ export default function ReconfigureBudget({
       fields.beneficiaryAllocation,
     )
     const _beneficiaryAddress = fields.beneficiaryAddress ?? '0'
+    const _want = DAI
 
-    console.log('🧃 Calling Juicer.configureBudget(...)', {
+    console.log('🧃 Calling BudgetStore.configure(...)', {
       _target,
       _duration,
+      _want,
+      _name,
       _link,
       _discountRate,
       _ownerAllocation,
@@ -76,9 +81,11 @@ export default function ReconfigureBudget({
     })
 
     transactor(
-      contracts.Juicer.configureBudget(
+      contracts.BudgetStore.configure(
         _target,
         _duration,
+        _want,
+        _name,
         _link,
         _discountRate,
         _ownerAllocation,

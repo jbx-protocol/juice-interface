@@ -8,11 +8,10 @@ import { advancedContractStep } from '../components/configure-budget-steps/advan
 import { contractStep } from '../components/configure-budget-steps/contractStep'
 import { reviewStep } from '../components/configure-budget-steps/reviewStep'
 import { ticketsStep } from '../components/configure-budget-steps/ticketsStep'
+import WtfCard from '../components/WtfCard'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
-import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
-import { shadowCard } from '../constants/styles/shadow-card'
 import { DAI } from '../constants/tokens/dai'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
@@ -111,7 +110,7 @@ export default function ConfigureBudget({
     })
 
     return transactor(
-      contracts.Juicer.issueTickets(_name, _symbol),
+      contracts.TicketStore.issue(_name, _symbol),
       () => {
         setLoadingInitTickets(false)
         setInitializedTickets(true)
@@ -155,7 +154,7 @@ export default function ConfigureBudget({
       ? BigNumber.from(fields.beneficiaryAllocation).toHexString()
       : 0
     const _beneficiaryAddress =
-      fields.beneficiaryAddress?.trim().length ??
+      fields.beneficiaryAddress?.trim() ??
       '0x0000000000000000000000000000000000000000'
 
     const _want = DAI
@@ -281,19 +280,11 @@ export default function ConfigureBudget({
           span={14}
         >
           {steps[currentStep].info?.length ? (
-            <div
-              style={{
-                ...shadowCard,
-                padding: 20,
-                background: colors.hint,
-                border: '1px solid black',
-              }}
-            >
-              <h3>WTF</h3>
+            <WtfCard>
               {steps[currentStep].info?.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
-            </div>
+            </WtfCard>
           ) : null}
         </Col>
       </Row>

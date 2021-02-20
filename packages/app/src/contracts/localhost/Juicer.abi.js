@@ -12,85 +12,23 @@ module.exports = [
         "type": "address"
       },
       {
+        "internalType": "contract ILendingPoolAddressesProvider",
+        "name": "_provider",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "_fee",
         "type": "uint256"
       },
       {
         "internalType": "contract IERC20",
-        "name": "_dai",
+        "name": "_stablecoin",
         "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "budgetId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "want",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "link",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "o",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "b",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "bAddress",
-        "type": "address"
-      }
-    ],
-    "name": "ConfigureBudget",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -109,31 +47,6 @@ module.exports = [
       }
     ],
     "name": "DistributeReserves",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "symbol",
-        "type": "string"
-      }
-    ],
-    "name": "IssueTickets",
     "type": "event"
   },
   {
@@ -160,8 +73,8 @@ module.exports = [
       },
       {
         "indexed": true,
-        "internalType": "contract IERC20",
-        "name": "tickets",
+        "internalType": "address",
+        "name": "issuer",
         "type": "address"
       },
       {
@@ -311,6 +224,19 @@ module.exports = [
   },
   {
     "inputs": [],
+    "name": "DEPOSIT_THRESHOLD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "RECONFIGURATION_VOTING_PERIOD",
     "outputs": [
       {
@@ -394,44 +320,8 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_link",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_o",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_b",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_bAddress",
-        "type": "address"
-      }
-    ],
-    "name": "configureBudget",
+    "inputs": [],
+    "name": "depositRecalibrationTarget",
     "outputs": [
       {
         "internalType": "uint256",
@@ -439,17 +329,17 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "dai",
+    "name": "deposited",
     "outputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -471,6 +361,19 @@ module.exports = [
   {
     "inputs": [],
     "name": "fee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getDepositedAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -516,21 +419,16 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "getTotalOverflow",
+    "outputs": [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "issueTickets",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -572,6 +470,32 @@ module.exports = [
         "type": "uint256"
       }
     ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "provider",
+    "outputs": [
+      {
+        "internalType": "contract ILendingPoolAddressesProvider",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_pool",
+        "type": "address"
+      }
+    ],
+    "name": "recalibrateDeposit",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -620,6 +544,32 @@ module.exports = [
     "name": "setAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_newTarget",
+        "type": "uint256"
+      }
+    ],
+    "name": "setDepositRecalibrationTarget",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stablecoin",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

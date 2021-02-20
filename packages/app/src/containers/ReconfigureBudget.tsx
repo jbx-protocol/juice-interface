@@ -7,6 +7,8 @@ import BudgetForm from '../components/forms/BudgetForm'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { Budget } from '../models/budget'
+import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
+import { BudgetFormFields } from '../models/forms-fields/budget-form'
 import { Transactor } from '../models/transactor'
 
 export default function ReconfigureBudget({
@@ -22,17 +24,8 @@ export default function ReconfigureBudget({
   visible?: boolean
   onCancel?: VoidFunction
 }) {
-  const [budgetForm] = Form.useForm<{
-    duration: number
-    target: number
-    link: string
-  }>()
-  const [budgetAdvancedForm] = Form.useForm<{
-    discountRate: number
-    beneficiaryAddress: string
-    beneficiaryAllocation: number
-    ownerAllocation: number
-  }>()
+  const [budgetForm] = Form.useForm<BudgetFormFields>()
+  const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
 
   if (!transactor || !contracts) return null
 

@@ -2,11 +2,6 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
         "internalType": "string",
         "name": "_ticketName",
         "type": "string"
@@ -73,6 +68,11 @@ module.exports = [
   {
     "inputs": [
       {
+        "internalType": "contract IBudgetStore",
+        "name": "_store",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "_target",
         "type": "uint256"
@@ -81,6 +81,16 @@ module.exports = [
         "internalType": "uint256",
         "name": "_duration",
         "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_want",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
       },
       {
         "internalType": "string",
@@ -151,27 +161,25 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract ITicketStore",
+        "name": "_store",
+        "type": "address"
+      }
+    ],
     "name": "issueTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "juicer",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "contract IJuicer",
-        "name": "",
+        "name": "_from",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
         "internalType": "contract IJuicer",
         "name": "_to",
@@ -199,6 +207,11 @@ module.exports = [
   {
     "inputs": [
       {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
+      {
         "internalType": "address",
         "name": "_issuer",
         "type": "address"
@@ -212,11 +225,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_minReturn",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
       }
     ],
     "name": "redeemTicketsAndFund",
@@ -264,6 +272,29 @@ module.exports = [
   },
   {
     "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_newTarget",
+        "type": "uint256"
+      }
+    ],
+    "name": "setDepositRecalibrationTarget",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "_budgetId",

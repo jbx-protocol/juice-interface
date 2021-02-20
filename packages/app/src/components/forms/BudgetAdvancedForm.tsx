@@ -2,16 +2,13 @@ import { Form, Input } from 'antd'
 import { FormProps } from 'antd/lib/form/Form'
 import React, { useState } from 'react'
 
+import { AdvancedBudgetFormFields } from '../../models/forms-fields/advanced-budget-form'
+
 export default function BudgetAdvancedForm({
   props,
   header,
 }: {
-  props: FormProps<{
-    ownerAllocation: number
-    beneficiaryAddress: string
-    beneficiaryAllocation: number
-    discountRate: number
-  }>
+  props: FormProps<AdvancedBudgetFormFields>
   header?: string
 }) {
   const [beneficiaryAddressRequired, setBeneficiaryAddressRequired] = useState<

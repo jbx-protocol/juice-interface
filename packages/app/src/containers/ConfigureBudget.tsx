@@ -1,49 +1,45 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { Button, Col, Divider, Form, Row, Space, Statistic, Steps } from 'antd'
+import { Button, Col, Form, Row, Space, Steps } from 'antd'
 import { useState } from 'react'
 import Web3 from 'web3'
 
-import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
-import BudgetForm from '../components/forms/BudgetForm'
-import TicketsForm from '../components/forms/TicketsForm'
+import { advancedContractStep } from '../components/configure-budget-steps/advancedContractStep'
+import { contractStep } from '../components/configure-budget-steps/contractStep'
+import { reviewStep } from '../components/configure-budget-steps/reviewStep'
+import { ticketsStep } from '../components/configure-budget-steps/ticketsStep'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import { padding } from '../constants/styles/padding'
 import { shadowCard } from '../constants/styles/shadow-card'
+import { DAI } from '../constants/tokens/dai'
 import useContractReader from '../hooks/ContractReader'
+import { Budget } from '../models/budget'
+import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
+import { BudgetFormFields } from '../models/forms-fields/budget-form'
+import { TicketsFormFields } from '../models/forms-fields/tickets-form'
+import { Step } from '../models/step'
 import { Transactor } from '../models/transactor'
 import { erc20Contract } from '../utils/erc20Contract'
 import { isEmptyAddress } from '../utils/isEmptyAddress'
-import { orEmpty } from '../utils/orEmpty'
 
 export default function ConfigureBudget({
   transactor,
   contracts,
   userAddress,
   onNeedProvider,
+  initializedBudget,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
   userAddress?: string
   onNeedProvider: () => Promise<void>
+  initializedBudget?: Budget
 }) {
-  const [ticketsForm] = Form.useForm<{
-    name: string
-    symbol: string
-  }>()
-  const [budgetForm] = Form.useForm<{
-    duration: number
-    target: number
-    link: string
-  }>()
-  const [budgetAdvancedForm] = Form.useForm<{
-    discountRate: number
-    beneficiaryAddress: string
-    beneficiaryAllocation: number
-    ownerAllocation: number
-  }>()
+  const [ticketsForm] = Form.useForm<TicketsFormFields>()
+  const [budgetForm] = Form.useForm<BudgetFormFields>()
+  const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
   const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>(false)
   const [loadingCreateBudget, setLoadingCreateBudget] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(0)
@@ -77,16 +73,34 @@ export default function ConfigureBudget({
   })
 
   async function tryNextStep() {
-    const valid = await steps[currentStep].validate()
-    if (valid) setCurrentStep(currentStep + 1)
+    const step = steps[currentStep]
+
+    if (step.validate) {
+      try {
+        await step.validate()
+      } catch (e) {
+        console.log('e', e)
+        return
+      }
+    }
+
+    setCurrentStep(currentStep + 1)
   }
 
-  function initTickets() {
+  async function initTickets() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    setLoadingInitTickets(true)
-
     const fields = ticketsForm.getFieldsValue(true)
+
+    if (!fields.name || !fields.symbol) {
+      setCurrentStep(1)
+      setTimeout(async () => {
+        await ticketsForm.validateFields()
+      }, 0)
+      return
+    }
+
+    setLoadingInitTickets(true)
 
     const _name = Web3.utils.utf8ToHex(fields.name)
     const _symbol = Web3.utils.utf8ToHex('t' + fields.symbol)
@@ -108,15 +122,23 @@ export default function ConfigureBudget({
     )
   }
 
-  function submitBudget() {
+  function activateContract() {
     if (!transactor || !contracts) return onNeedProvider()
-
-    setLoadingCreateBudget(true)
 
     const fields = {
       ...budgetForm.getFieldsValue(true),
       ...budgetAdvancedForm.getFieldsValue(true),
     }
+
+    if (!fields.target || !fields.duration || !fields.name) {
+      setCurrentStep(0)
+      setTimeout(async () => {
+        await budgetForm.validateFields()
+      }, 0)
+      return
+    }
+
+    setLoadingCreateBudget(true)
 
     const _target = BigNumber.from(fields.target).toHexString()
     const _duration = BigNumber.from(
@@ -124,6 +146,7 @@ export default function ConfigureBudget({
         (process.env.NODE_ENV === 'development' ? 1 : SECONDS_IN_DAY),
     ).toHexString()
     const _link = fields.link ?? ''
+    const _name = fields.name
     const _discountRate = BigNumber.from(fields.discountRate).toHexString()
     const _ownerAllocation = fields.ownerAllocation
       ? BigNumber.from(fields.ownerAllocation).toHexString()
@@ -135,9 +158,13 @@ export default function ConfigureBudget({
       fields.beneficiaryAddress?.trim().length ??
       '0x0000000000000000000000000000000000000000'
 
-    console.log('🧃 Calling Juicer.configureBudget(...)', {
+    const _want = DAI
+
+    console.log('🧃 Calling BudgetStore.configure(...)', {
       _target,
       _duration,
+      _want,
+      _name,
       _link,
       _discountRate,
       _ownerAllocation,
@@ -146,9 +173,11 @@ export default function ConfigureBudget({
     })
 
     transactor(
-      contracts.Juicer.configureBudget(
+      contracts.BudgetStore.configure(
         _target,
         _duration,
+        _want,
+        _name,
         _link,
         _discountRate,
         _ownerAllocation,
@@ -162,193 +191,29 @@ export default function ConfigureBudget({
     )
   }
 
-  const steps = [
-    {
-      title: 'Contract',
-      validate: () => budgetForm.validateFields(),
-      content: (
-        <BudgetForm
-          props={{ form: budgetForm }}
-          header="Your contract's terms"
-        />
-      ),
-      info: [
-        "Your contract will create a budgeting period that'll begin accepting payments right away, and up until the time frame runs out.",
-        'A new budgeting period will be created automatically once the current one expires so that you can continue collecting money.',
-        "You can make changes to your contract's specs for future budgeting periods under a certain condition – more on this in step 2.",
-      ],
-    },
-    {
-      title: 'Tickets (optional)',
-      validate: () => ticketsForm.validateFields(),
-      content: initializedTickets ? (
-        <div>
-          <h2>Tickets already initialized.</h2>
-          <Space direction="vertical" size="large">
-            <Statistic
-              title="Name"
-              value={
-                initializedTickets
-                  ? ticketsName
-                  : ticketsForm.getFieldValue('name')
-              }
-            />
-            <Statistic
-              title="Symbol"
-              value={
-                initializedTickets
-                  ? ticketsSymbol
-                  : 't' + ticketsForm.getFieldValue('symbol')
-              }
-            />
-          </Space>
-        </div>
-      ) : (
-        <TicketsForm
-          props={{ form: ticketsForm }}
-          header="Create your ERC-20 ticket token"
-        />
-      ),
-      info: [
-        'Your contract will use these ERC-20 tokens like tickets, handing them out to people as a receipt for payments received.',
-        "Tickets can be redeemed for your contract's overflow on a bonding curve – a ticket is redeemable for 38.2% of its proportional overflowed tokens. Meaning, if there are 100 overflow tokens available and 100 of your tickets in circulation, 10 tickets could be redeemed for 3.82 of the overflow tokens. The rest is left to share between the remaining ticket hodlers.",
-        '---',
-        "You can propose reconfigurations to your contract's specs at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new specs will be used once the active budgeting period expires.",
-      ],
-    },
-    {
-      title: 'Advanced',
-      validate: () => budgetAdvancedForm.validateFields(),
-      content: (
-        <BudgetAdvancedForm
-          props={{ form: budgetAdvancedForm }}
-          header="Advanced tuning"
-        />
-      ),
-      info: [
-        "Your contract's overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who makes payments, but you should also reserve some tokens for yourself so that you benefit from your own surplus.",
-        "You can mint a budgeting period's reserved tickets once it expires.",
-        '---',
-        'You can also pre-program a donation from your overflow, like for Gitcoin grant matching.',
-        '---',
-        "Lastly, the discount rate can give earlier adopters a better rate when claiming overflow.",
-        'For example, if your discount rate is set to 97%, then someone who pays 100 towards your next budgeting period will only receive 97% the amount of tickets received by someone who paid 100 towards the current budgeting period.',
-        'Effectively this gives people who believe your cumulative overflow will increase over time an added incentive to pay you today, HODL their tickets, and redeem them at a future date.',
-      ],
-    },
-    {
-      title: 'Review',
-      validate: () => budgetAdvancedForm.validateFields(),
-      content: (
-        <div>
-          <div>
-            <h1>Tickets</h1>
-            <div
-              style={{
-                marginTop: 20,
-                marginBottom: 20,
-              }}
-            >
-              <Space size="large">
-                <Statistic
-                  title="Name"
-                  value={
-                    initializedTickets
-                      ? ticketsName
-                      : ticketsForm.getFieldValue('name')
-                  }
-                />
-                <Statistic
-                  title="Symbol"
-                  value={
-                    initializedTickets
-                      ? ticketsSymbol
-                      : 't' + ticketsForm.getFieldValue('symbol')
-                  }
-                />
-              </Space>
-            </div>
-            <Button
-              disabled={initializedTickets}
-              htmlType="submit"
-              type="primary"
-              onClick={initTickets}
-              loading={loadingInitTickets}
-            >
-              Issue tickets
-            </Button>
-          </div>
-
-          <Divider orientation="center" />
-
-          <Space size="large" direction="vertical">
-            <h1>Budget</h1>
-            <div>
-              <Space size="large">
-                <Statistic
-                  title="Duration"
-                  value={budgetForm.getFieldValue('duration')}
-                  suffix="days"
-                />
-                <Statistic
-                  title="Amount"
-                  value={budgetForm.getFieldValue('target')}
-                  suffix="DAI"
-                />
-                <Statistic
-                  title="Link"
-                  value={budgetForm.getFieldValue('link')}
-                />
-              </Space>
-            </div>
-            <Space size="large" align="end">
-              <Statistic
-                style={{ minWidth: 100 }}
-                title="Discount rate"
-                value={budgetAdvancedForm.getFieldValue('discountRate')}
-                suffix="%"
-              />
-              <Statistic
-                title="Owner surplus"
-                value={budgetAdvancedForm.getFieldValue('ownerAllocation') ?? 0}
-                suffix="%"
-              />
-              <Statistic
-                title="Beneficiary surplus"
-                value={
-                  budgetAdvancedForm.getFieldValue('beneficiaryAllocation') ?? 0
-                }
-                suffix="%"
-              />
-            </Space>
-            <Space size="large" align="end">
-              <Statistic
-                title="Beneficiary address"
-                valueStyle={{
-                  fontSize: '1rem',
-                  lineBreak: 'anywhere',
-                }}
-                value={orEmpty(
-                  budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
-                )}
-              />
-            </Space>
-            <Button
-              disabled={!initializedTickets}
-              htmlType="submit"
-              type="primary"
-              onClick={submitBudget}
-              loading={loadingCreateBudget}
-            >
-              Activate contract
-            </Button>
-          </Space>
-        </div>
-      ),
-      info: [
-        "You'll be sending two transactions: The first one to issue your tickets, and then the second to kick off your contract so you can start getting paid.",
-      ],
-    },
+  const steps: Step[] = [
+    contractStep({ form: budgetForm }),
+    ticketsStep({
+      form: ticketsForm,
+      ticketsName,
+      ticketsSymbol,
+      initializedTickets,
+    }),
+    advancedContractStep({ form: budgetAdvancedForm }),
+    reviewStep({
+      ticketsForm,
+      budgetForm,
+      budgetAdvancedForm,
+      initializedTickets,
+      initializedBudget,
+      ticketsName,
+      ticketsSymbol,
+      initTickets,
+      activateContract,
+      loadingInitTickets,
+      loadingCreateBudget,
+      userAddress,
+    }),
   ]
 
   return (
@@ -360,11 +225,17 @@ export default function ConfigureBudget({
         margin: 'auto',
       }}
     >
-      <Steps size="small" current={currentStep} style={{ marginBottom: 60 }}>
+      <Steps
+        size="small"
+        current={currentStep}
+        style={{
+          marginBottom: 60,
+        }}
+      >
         {steps.map((step, i) => (
           <Steps.Step
             key={i}
-            onClick={() => (i === steps.length - 1 ? null : setCurrentStep(i))}
+            onClick={() => setCurrentStep(i)}
             title={step.title}
           />
         ))}
@@ -403,7 +274,12 @@ export default function ConfigureBudget({
           </div>
         </Col>
 
-        <Col style={{ paddingLeft: 80 }} span={14}>
+        <Col
+          style={{
+            paddingLeft: 80,
+          }}
+          span={14}
+        >
           {steps[currentStep].info?.length ? (
             <div
               style={{

@@ -37,7 +37,6 @@ export default function Navbar({
     <Header
       style={{
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: 'white',
       }}
@@ -56,23 +55,25 @@ export default function Navbar({
             />
           </a>
         </Menu.Item>
-        {hasBudget && userAddress && (
+        {hasBudget && userAddress ? (
           <Menu.Item key="budget">
             {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>
-        )}
+        ) : null}
         {/* <Menu.Item key="fluid-dynamics">
           {menuItem(
             'Fluid dynamics',
             'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Juicy-Funstuff?node-id=0%3A1',
-          )}
-        </Menu.Item> */}
+            )}
+          </Menu.Item> */}
       </Menu>
-      <Account
-        loadWeb3Modal={onConnectWallet}
-        userAddress={userAddress}
-        shouldUseNetwork={shouldUseNetwork}
-      />
+      <div className="hide-mobile">
+        <Account
+          loadWeb3Modal={onConnectWallet}
+          userAddress={userAddress}
+          shouldUseNetwork={shouldUseNetwork}
+        />
+      </div>
     </Header>
   )
 }

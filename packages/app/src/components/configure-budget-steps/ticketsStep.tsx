@@ -39,7 +39,18 @@ export function ticketsStep({
         </Space>
       </div>
     ) : (
-      <TicketsForm props={{ form }} header="Create your ERC-20 ticket token" />
+      <TicketsForm
+        props={{ form }}
+        header={
+          <div>
+            <h2>Create your ERC-20 ticket token</h2>
+            <p>
+              You can always do this later. Your contract will use I-Owe-You
+              tickets in the meantime.
+            </p>
+          </div>
+        }
+      />
     ),
     info: [
       'Your contract will use these ERC-20 tokens like tickets, handing them out to people as a receipt for payments received.',

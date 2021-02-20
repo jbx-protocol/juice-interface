@@ -8,7 +8,7 @@ export default function TicketsForm({
   header,
 }: {
   props: FormProps<TicketsFormFields>
-  header?: string
+  header?: JSX.Element
 }) {
   function capitalizeTicker(value: string) {
     props.form?.setFieldsValue({ symbol: value.toUpperCase() })
@@ -16,13 +16,7 @@ export default function TicketsForm({
 
   return (
     <Form layout="vertical" {...props}>
-      <Form.Item>
-        {header ? <h2>{header}</h2> : null}
-        <p>
-          You can always do this later. Your contract will use I-Owe-You tickets
-          in the meantime.
-        </p>
-      </Form.Item>
+      {header ? <Form.Item>{header}</Form.Item> : null}
       <Form.Item
         extra="The name of your ticket token is used across web3."
         name="name"

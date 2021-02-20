@@ -9,7 +9,7 @@ export default function BudgetAdvancedForm({
   header,
 }: {
   props: FormProps<AdvancedBudgetFormFields>
-  header?: string
+  header?: JSX.Element
 }) {
   const [beneficiaryAddressRequired, setBeneficiaryAddressRequired] = useState<
     boolean
@@ -28,11 +28,7 @@ export default function BudgetAdvancedForm({
         ...props.initialValues,
       }}
     >
-      {header ? (
-        <Form.Item>
-          <h2>{header}</h2>
-        </Form.Item>
-      ) : null}
+      {header ? <Form.Item>{header}</Form.Item> : null}
 
       <Form.Item
         extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."

@@ -24,7 +24,7 @@ export default function BudgetsHistory({
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
 
-  if (startId !== undefined && !poolNumbers.length) setPoolNumbers([startId])
+  if (startId?.gt(0) && !poolNumbers.length) setPoolNumbers([startId])
 
   const allPoolsLoaded = budgets.length >= poolNumbers.length
   const poolNumber = allPoolsLoaded

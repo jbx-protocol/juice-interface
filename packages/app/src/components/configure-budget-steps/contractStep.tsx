@@ -12,10 +12,12 @@ export function contractStep({
   return {
     title: 'Contract',
     validate: form.validateFields,
-    content: BudgetForm({
-      props: { form },
-      header: "Your contract's terms",
-    }),
+    content: (
+      <BudgetForm
+        props={{ form }}
+        header={<h2>Your contract's terms</h2>}
+      ></BudgetForm>
+    ),
     info: [
       "Your contract will create a budgeting period that'll begin accepting payments right away, and up until the time frame runs out.",
       'A new budgeting period will be created automatically once the current one expires so that you can continue collecting money.',

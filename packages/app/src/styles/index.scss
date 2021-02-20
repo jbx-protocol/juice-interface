@@ -67,6 +67,17 @@ input.ant-input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.ant-tabs-top > .ant-tabs-nav::before,
+.ant-tabs-bottom > .ant-tabs-nav::before,
+.ant-tabs-top > div > .ant-tabs-nav::before,
+.ant-tabs-bottom > div > .ant-tabs-nav::before {
+  border-bottom: none;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  font-weight: inherit;
+}
+
 /* Firefox */
 input.ant-input[type='number'] {
   -moz-appearance: textfield;

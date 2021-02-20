@@ -8,15 +8,11 @@ export default function BudgetForm({
   header,
 }: {
   props: FormProps<BudgetFormFields>
-  header?: string
+  header?: JSX.Element
 }) {
   return (
     <Form layout="vertical" {...props}>
-      {header ? (
-        <Form.Item>
-          <h2>{header}</h2>
-        </Form.Item>
-      ) : null}
+      {header ? <Form.Item>{header}</Form.Item> : null}
 
       <Form.Item
         extra="How your project is identified on-chain"

@@ -4,8 +4,8 @@ import { TransactionEvent } from 'bnc-notify'
 
 export type Transactor = (
   tx: Deferrable<TransactionRequest>,
-  onConfirmed?: (e: TransactionEvent, signer: JsonRpcSigner) => void,
+  onConfirmed?: (e?: TransactionEvent, signer?: JsonRpcSigner) => void,
   onCancelled?:
-    | ((e: TransactionEvent, signer: JsonRpcSigner) => void)
+    | ((e?: TransactionEvent, signer?: JsonRpcSigner) => void)
     | boolean,
 ) => Promise<boolean>

@@ -12,10 +12,12 @@ export function advancedContractStep({
   return {
     title: 'Advanced',
     validate: form.validateFields,
-    content: BudgetAdvancedForm({
-      props: { form },
-      header: 'Advanced tuning',
-    }),
+    content: (
+      <BudgetAdvancedForm
+        props={{ form }}
+        header={<h2>Advanced tuning</h2>}
+      ></BudgetAdvancedForm>
+    ),
     info: [
       "Your contract's overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who makes payments, but you should also reserve some tokens for yourself so that you benefit from your own surplus.",
       "You can mint a budgeting period's reserved tickets once it expires.",

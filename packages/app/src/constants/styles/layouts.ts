@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react'
+import { padding } from './padding'
 
 export const layouts: Record<string, CSSProperties> = {
   centered: {
@@ -6,5 +7,10 @@ export const layouts: Record<string, CSSProperties> = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  maxWidth: {
+    maxWidth: 1280,
+    margin: '0 auto',
+    padding: padding.app,
   },
 }

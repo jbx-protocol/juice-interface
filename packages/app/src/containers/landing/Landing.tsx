@@ -114,7 +114,7 @@ export default function Landing({
                   </div>
                 </div>
 
-                <div>
+                <div className="hide-mobile">
                   <Button type="primary" onClick={scrollToCreate} size="large">
                     Do it
                   </Button>
@@ -236,7 +236,9 @@ export default function Landing({
 
       <section
         style={{
-          padding: 80,
+          padding: 30,
+          paddingTop: 80,
+          paddingBottom: 80,
           background: colors.light,
         }}
       >

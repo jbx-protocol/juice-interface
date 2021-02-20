@@ -31,6 +31,7 @@ export default function Rewards({
 }) {
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
+  const [loadingClaimIou, setLoadingClaimIou] = useState<boolean>()
 
   const ticketContract = erc20Contract(ticketAddress)
 
@@ -38,7 +39,7 @@ export default function Rewards({
     contract: ticketContract,
     functionName: 'symbol',
     formatter: (value: string) =>
-      value ? Web3.utils.hexToString(value) : 'tickets',
+      value ? Web3.utils.hexToString(value) : undefined,
   })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -50,6 +51,20 @@ export default function Rewards({
     contract: ticketContract,
     functionName: 'totalSupply',
     shouldUpdate: bigNumbersEq,
+  })
+  const iouBalance = useContractReader<BigNumber>({
+    contract: ticketContract,
+    functionName: 'iOweYous',
+    args: [budget?.owner, userAddress],
+    shouldUpdate: bigNumbersEq,
+    formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
+  })
+  const iouSupply = useContractReader<BigNumber>({
+    contract: ticketContract,
+    functionName: 'totalIOweYous',
+    args: [budget?.owner],
+    shouldUpdate: bigNumbersEq,
+    formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
@@ -78,10 +93,24 @@ export default function Rewards({
     })
 
     transactor(
-      contracts?.Juicer.redeem(budget?.owner, _amount),
+      contracts.Juicer.redeem(budget?.owner, _amount),
       () => {
         setLoadingRedeem(false)
         setRedeemAmount(BigNumber.from(0))
+      },
+      true,
+    )
+  }
+
+  function claimIou() {
+    if (!transactor || !contracts) return onNeedProvider()
+
+    setLoadingClaimIou(true)
+
+    transactor(
+      contracts.TicketStore.claimIOweYou(budget?.owner),
+      () => {
+        setLoadingClaimIou(false)
       },
       true,
     )
@@ -106,6 +135,8 @@ export default function Rewards({
     <Tag color="geekblue">ERC-20 tickets not minted yet</Tag>
   )
 
+  const iouSymbol = 'tickets'
+
   return (
     <div
       style={{
@@ -123,32 +154,69 @@ export default function Rewards({
           )}
         />
 
-        <Statistic
-          title="Your wallet"
-          valueRender={() => (
-            <div>
+        {iouBalance?.gt(0) || isEmptyAddress(ticketAddress) ? (
+          <Statistic
+            title="Your IOU wallet"
+            valueRender={() => (
               <div>
-                {ticketsBalance?.toString() ?? 0} {ticketSymbol}
+                <div>
+                  {iouBalance?.toString() ?? 0} {iouSymbol}
+                </div>
+                {subText(
+                  `${share ?? 0}% of ${ticketSupply
+                    ?.add(iouSupply ?? 0)
+                    .toString() ?? 0} ${iouSymbol} in circulation`,
+                )}
+                {isEmptyAddress(ticketAddress) ? (
+                  isOwner ? (
+                    <Tooltip
+                      title="Issue tickets in the back office"
+                      placement="right"
+                    >
+                      {awaitingIssueTicketsTag}
+                    </Tooltip>
+                  ) : (
+                    awaitingIssueTicketsTag
+                  )
+                ) : null}
+                {isEmptyAddress(ticketAddress) ? null : (
+                  <Button loading={loadingClaimIou} onClick={claimIou}>
+                    Convert tickets
+                  </Button>
+                )}
               </div>
-              {subText(
-                `${share ?? 0}% of ${ticketSupply?.toString() ??
-                  0} ${ticketSymbol} in circulation`,
-              )}
-              {isEmptyAddress(ticketAddress) ? (
-                isOwner ? (
-                  <Tooltip
-                    title="Issue tickets in the back office"
-                    placement="right"
-                  >
-                    {awaitingIssueTicketsTag}
-                  </Tooltip>
-                ) : (
-                  awaitingIssueTicketsTag
-                )
-              ) : null}
-            </div>
-          )}
-        />
+            )}
+          ></Statistic>
+        ) : null}
+
+        {!isEmptyAddress(ticketAddress) && iouSupply?.eq(0) ? (
+          <Statistic
+            title="Your wallet"
+            valueRender={() => (
+              <div>
+                <div>
+                  {ticketsBalance?.toString() ?? 0} {ticketSymbol}
+                </div>
+                {subText(
+                  `${share ?? 0}% of ${ticketSupply?.toString() ??
+                    0} ${ticketSymbol} in circulation`,
+                )}
+                {isEmptyAddress(ticketAddress) ? (
+                  isOwner ? (
+                    <Tooltip
+                      title="Issue tickets in the back office"
+                      placement="right"
+                    >
+                      {awaitingIssueTicketsTag}
+                    </Tooltip>
+                  ) : (
+                    awaitingIssueTicketsTag
+                  )
+                ) : null}
+              </div>
+            )}
+          />
+        ) : null}
 
         {isEmptyAddress(ticketAddress) ? null : (
           <Statistic

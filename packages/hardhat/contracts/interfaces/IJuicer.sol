@@ -6,6 +6,7 @@ import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
 import "./IBudgetController.sol";
 import "./ITicketsController.sol";
+import "./IOverflowLender.sol";
 
 interface IJuicer is IBudgetController, ITicketsController {
     event DistributeReserves(address minter, address issuer);
@@ -16,9 +17,9 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function ticketStore() external view returns (ITicketStore);
 
-    function claimable(address _by) external view returns (uint256);
+    function overflowLender() external view returns (IOverflowLender);
 
-    function deposited() external view returns (uint256);
+    function claimable(address _by) external view returns (uint256);
 
     function fee() external view returns (uint256);
 

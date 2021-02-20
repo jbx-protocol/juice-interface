@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "./interfaces/IAccessControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IMaintainer.sol";
 import "./interfaces/IBudgetBallot.sol";
 import "./abstract/JuiceAdmin.sol";
 

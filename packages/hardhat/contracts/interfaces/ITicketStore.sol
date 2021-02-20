@@ -34,6 +34,8 @@ interface ITicketStore is IStore {
 
     function issue(string calldata _name, string calldata _symbol) external;
 
+    function convertIOweYou(address _issuer) external;
+
     function mint(
         address _issuer,
         address _for,

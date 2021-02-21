@@ -27,7 +27,8 @@ function mnemonic() {
   return "";
 }
 
-console.log("INFURA ID:", process.env.INFURA_ID);
+// console.log("INFURA ID:", process.env.INFURA_ID);
+const infuraId = "44bd54e5424e4d8eb5d5d47a41590d63";
 
 module.exports = {
   defaultNetwork,
@@ -40,25 +41,25 @@ module.exports = {
       */
     },
     rinkeby: {
-      url: "https://rinkeby.infura.io/v3/" +  process.env.INFURA_ID,
+      url: "https://rinkeby.infura.io/v3/" +  infuraId, // TODO process.env.INFURA_ID,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     mainnet: {
-      url: "https://mainnet.infura.io/v3/" +  process.env.INFURA_ID,
+      url: "https://mainnet.infura.io/v3/" +  infuraId,// TODO process.env.INFURA_ID,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     ropsten: {
-      url: "https://ropsten.infura.io/v3/" +  process.env.INFURA_ID,
+      url: "https://ropsten.infura.io/v3/" + infuraId, // TODO process.env.INFURA_ID,
       accounts: {
         mnemonic: mnemonic()
       }
     },
     goerli: {
-      url: "https://goerli.infura.io/v3/" +  process.env.INFURA_ID,
+      url: "https://goerli.infura.io/v3/" +  infuraId, // TODO process.env.INFURA_ID,
       accounts: {
         mnemonic: mnemonic()
       }

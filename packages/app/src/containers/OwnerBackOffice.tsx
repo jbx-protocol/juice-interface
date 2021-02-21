@@ -1,4 +1,4 @@
-import { Button, Col, DescriptionsProps, Form, Row, Space } from 'antd'
+import { Button, Col, DescriptionsProps, Form, Row } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
@@ -10,7 +10,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { TicketsFormFields } from '../models/forms-fields/tickets-form'
 import { Transactor } from '../models/transactor'
-import { isEmptyAddress } from '../utils/isEmptyAddress'
+import { addressExists } from '../utils/addressExists'
 
 export default function OwnerBackOffice({
   contracts,
@@ -83,7 +83,7 @@ export default function OwnerBackOffice({
 
   return (
     <div>
-      {isEmptyAddress(ticketAddress) && isOwner ? (
+      {!addressExists(ticketAddress) && isOwner ? (
         <Row style={{ marginBottom: 30 }} gutter={gutter}>
           <Col span={12}>
             <CardSection header="Tickets">

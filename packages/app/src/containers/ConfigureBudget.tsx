@@ -20,8 +20,8 @@ import { BudgetFormFields } from '../models/forms-fields/budget-form'
 import { TicketsFormFields } from '../models/forms-fields/tickets-form'
 import { Step } from '../models/step'
 import { Transactor } from '../models/transactor'
+import { addressExists } from '../utils/addressExists'
 import { erc20Contract } from '../utils/erc20Contract'
-import { isEmptyAddress } from '../utils/isEmptyAddress'
 
 export default function ConfigureBudget({
   transactor,
@@ -51,7 +51,7 @@ export default function ConfigureBudget({
     callback: ticketsAddress => {
       if (!userAddress || !ticketsAddress || initializedTickets !== undefined)
         return
-      setInitializedTickets(!isEmptyAddress(ticketsAddress))
+      setInitializedTickets(addressExists(ticketsAddress))
     },
   })
 

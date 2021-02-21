@@ -7,9 +7,9 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { addressExists } from '../utils/addressExists'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { erc20Contract } from '../utils/erc20Contract'
-import { isEmptyAddress } from '../utils/isEmptyAddress'
 import WtfCard from './WtfCard'
 
 export default function Rewards({
@@ -154,7 +154,7 @@ export default function Rewards({
           )}
         />
 
-        {iouBalance?.gt(0) || isEmptyAddress(ticketAddress) ? (
+        {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
           <Statistic
             title="Your IOU wallet"
             valueRender={() => (
@@ -167,7 +167,7 @@ export default function Rewards({
                     ?.add(iouSupply ?? 0)
                     .toString() ?? 0} ${iouSymbol} in circulation`,
                 )}
-                {isEmptyAddress(ticketAddress) ? (
+                {!addressExists(ticketAddress) ? (
                   isOwner ? (
                     <Tooltip
                       title="Issue tickets in the back office"
@@ -179,7 +179,7 @@ export default function Rewards({
                     awaitingIssueTicketsTag
                   )
                 ) : null}
-                {isEmptyAddress(ticketAddress) ? null : (
+                {!addressExists(ticketAddress) ? null : (
                   <Button loading={loadingClaimIou} onClick={claimIou}>
                     Convert tickets
                   </Button>
@@ -189,7 +189,7 @@ export default function Rewards({
           ></Statistic>
         ) : null}
 
-        {!isEmptyAddress(ticketAddress) && iouSupply?.eq(0) ? (
+        {addressExists(ticketAddress) && iouSupply?.eq(0) ? (
           <Statistic
             title="Your wallet"
             valueRender={() => (
@@ -201,7 +201,7 @@ export default function Rewards({
                   `${share ?? 0}% of ${ticketSupply?.toString() ??
                     0} ${ticketSymbol} in circulation`,
                 )}
-                {isEmptyAddress(ticketAddress) ? (
+                {!addressExists(ticketAddress) ? (
                   isOwner ? (
                     <Tooltip
                       title="Issue tickets in the back office"
@@ -218,7 +218,7 @@ export default function Rewards({
           />
         ) : null}
 
-        {isEmptyAddress(ticketAddress) ? null : (
+        {!addressExists(ticketAddress) ? null : (
           <Statistic
             title="Redeem tickets"
             valueRender={() => (
@@ -243,7 +243,7 @@ export default function Rewards({
 
       <WtfCard style={{ maxWidth: 400 }}>
         <p>
-          {isEmptyAddress(ticketAddress)
+          {!addressExists(ticketAddress)
             ? 'Tickets do not exist'
             : 'Tickets exist'}
         </p>

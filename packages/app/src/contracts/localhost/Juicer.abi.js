@@ -12,8 +12,8 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract ILendingPoolAddressesProvider",
-        "name": "_provider",
+        "internalType": "contract IOverflowLender",
+        "name": "_overflowLender",
         "type": "address"
       },
       {
@@ -333,19 +333,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "deposited",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -361,19 +348,6 @@ module.exports = [
   {
     "inputs": [],
     "name": "fee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getDepositedAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -419,19 +393,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getTotalOverflow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -442,6 +403,19 @@ module.exports = [
     "name": "migrate",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "overflowLender",
+    "outputs": [
+      {
+        "internalType": "contract IOverflowLender",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -470,32 +444,6 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "provider",
-    "outputs": [
-      {
-        "internalType": "contract ILendingPoolAddressesProvider",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      }
-    ],
-    "name": "recalibrateDeposit",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },

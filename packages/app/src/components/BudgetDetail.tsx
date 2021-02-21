@@ -18,7 +18,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
-import { isEmptyAddress } from '../utils/isEmptyAddress'
+import { addressExists } from '../utils/addressExists'
 import { orEmpty } from '../utils/orEmpty'
 
 export default function BudgetDetail({
@@ -252,13 +252,13 @@ export default function BudgetDetail({
             {budget.o.toString()}%
           </Descriptions.Item>
 
-          {isEmptyAddress(budget.bAddress) ? null : (
+          {!addressExists(budget.bAddress) ? null : (
             <Descriptions.Item label="Reserved for beneficiary">
               {budget.b.toString()}%
             </Descriptions.Item>
           )}
 
-          {isEmptyAddress(budget.bAddress) ? null : (
+          {!addressExists(budget.bAddress) ? null : (
             <Descriptions.Item label="Beneficiary address" span={2}>
               {budget.bAddress.toString()}
             </Descriptions.Item>

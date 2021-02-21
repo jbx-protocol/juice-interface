@@ -111,10 +111,9 @@ export default function OwnerBackOffice({
             <WtfCard>
               <div>
                 {[
-                  'Your contract will use these ERC-20 tokens like tickets, handing them out to people as a receipt for payments received.',
-                  "Tickets can be redeemed for your contract's overflow on a bonding curve – a ticket is redeemable for 38.2% of its proportional overflowed tokens. Meaning, if there are 100 overflow tokens available and 100 of your tickets in circulation, 10 tickets could be redeemed for 3.82 of the overflow tokens. The rest is left to share between the remaining ticket hodlers.",
-                  '---',
-                  "You can propose reconfigurations to your contract's specs at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new specs will be used once the active budgeting period expires.",
+                  "Issue your own ERC-20 tickets so that the people who make payments to your project can trade and stake their right to claim your overflow outside of the Juice ecosystem.",
+                  "Until you do so, Juice will keep track of I-owe-you tickets internally.",
+                  "Juice works perfectly fine either way."
                 ].map((text, i) => (
                   <p key={i}>{text}</p>
                 ))}
@@ -151,10 +150,9 @@ export default function OwnerBackOffice({
           <WtfCard>
             <div>
               {[
-                'Your contract will use these ERC-20 tokens like tickets, handing them out to people as a receipt for payments received.',
-                "Tickets can be redeemed for your contract's overflow on a bonding curve – a ticket is redeemable for 38.2% of its proportional overflowed tokens. Meaning, if there are 100 overflow tokens available and 100 of your tickets in circulation, 10 tickets could be redeemed for 3.82 of the overflow tokens. The rest is left to share between the remaining ticket hodlers.",
-                '---',
-                "You can propose reconfigurations to your contract's specs at any time. Your ticket holders will have 3 days to vote yay or nay. If there are more yays than nays, the new specs will be used once the active budgeting period expires.",
+                "Budgets can reserve a subset of tickets for the project owner, and reserve a specified amount of its overflow as a donation to a provided address.",
+                "5% of the amount received by each budget will also be reserved for funding the Juice admin's own budgets, which will give you its tickets in return.",
+                "These reserves are all distributable once a budget expires, and will automatically be distributed when a budget is tapped."
               ].map((text, i) => (
                 <p key={i}>{text}</p>
               ))}

@@ -84,10 +84,10 @@ export default function Reserves({
       <Descriptions.Item label="Admin reserves">
         {orEmpty(displayReserves?.adminFees?.toString())} DAI
       </Descriptions.Item>
-      <Descriptions.Item label="Beneficiaries reserves">
+      <Descriptions.Item label="Donation reserves">
         {orEmpty(displayReserves?.beneficiaryDonations?.toString())} DAI
       </Descriptions.Item>
-      <Descriptions.Item label="Issuers reserves">
+      <Descriptions.Item label="Project owner reserves">
         {orEmpty(displayReserves?.issuerTickets?.toString())} {ticketSymbol}
       </Descriptions.Item>
     </Descriptions>

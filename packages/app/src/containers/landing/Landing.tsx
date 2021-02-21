@@ -36,7 +36,7 @@ export default function Landing({
   }
 
   const listData = [
-    'Ethereum developers and contributors',
+    'Ethereum public goods',
     'Open source projects',
     'Indy artists, journalists, and researchers',
     'Any internet-enabled service with predictable costs',

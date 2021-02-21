@@ -156,7 +156,7 @@ export default function Rewards({
 
         {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
           <Statistic
-            title="Your IOU wallet"
+            title="Your wallet"
             valueRender={() => (
               <div>
                 <div>
@@ -241,11 +241,15 @@ export default function Rewards({
         )}
       </Space>
 
-      <WtfCard style={{ maxWidth: 400 }}>
+      <WtfCard style={{ maxWidth: 800 }}>
         <p>
-          {!addressExists(ticketAddress)
-            ? 'Tickets do not exist'
-            : 'Tickets exist'}
+          You'll receive this project's tickets in return for making payments towards the active budget.
+        </p>
+        <p>
+          Tickets can be redeemed for your contract's overflow on a bonding curve – a ticket is redeemable for 38.2% of its proportional overflowed tokens. Meaning, if there are 100 overflow tokens available and 100 of your tickets in circulation, 10 tickets could be redeemed for 3.82 of the overflow tokens. The rest is left to share between the remaining ticket hodlers.
+        </p>
+        <p>
+          If this project has minted ERC-20 tokens to track tickets, you'll see yours in your wallet once you contribute a payment.
         </p>
       </WtfCard>
     </div>

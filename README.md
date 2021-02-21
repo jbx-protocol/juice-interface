@@ -81,7 +81,9 @@ REACT_APP_INFURA_NETWORK=
 
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
 
-`REACT_APP_INFURA_NETWORK`: [Infura network](https://infura.io/docs/ethereum#section/Choose-a-Network). Optional, defaults to 'mainnet'.
+`REACT_APP_INFURA_NETWORK`: [Infura network](https://infura.io/docs/ethereum#section/Choose-a-Network). Used for interacting with your contracts in production. Optional, defaults to 'mainnet'.
+
+`REACT_APP_INFURA_DEV_NETWORK`: [Infura network](https://infura.io/docs/ethereum#section/Choose-a-Network) or 'localhost'. Used for interacting with your contracts in development. Optional, defaults to 'localhost'.
 
 ---
 

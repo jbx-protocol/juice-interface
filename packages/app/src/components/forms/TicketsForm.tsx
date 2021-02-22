@@ -38,7 +38,6 @@ export default function TicketsForm({
         rules={[{ required: true }]}
       >
         <Input
-          prefix="j"
           placeholder="PEACH"
           onChange={e => capitalizeTicker(e.target.value)}
           disabled={disabled}

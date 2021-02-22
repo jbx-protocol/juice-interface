@@ -152,7 +152,7 @@ export function reviewStep({
                   ticketsInitialized
                     ? ticketsSymbol
                     : ticketsForm.getFieldValue('symbol')
-                    ? 't' + ticketsForm.getFieldValue('symbol')
+                    ? 'j' + ticketsForm.getFieldValue('symbol')
                     : '--'
                 }
               />

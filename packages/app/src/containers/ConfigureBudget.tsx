@@ -54,17 +54,15 @@ export default function ConfigureBudget({
   const ticketsSymbol = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'symbol',
-    // formatter: (value?: string) =>
-    //   value ? Web3.utils.hexToString(value) : undefined,
-    callback: (symb)=> console.log({ symb})
+    formatter: (value?: string) =>
+      value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsName = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'name',
-    // formatter: (value?: string) =>
-    //   value ? Web3.utils.hexToString(value) : undefined,
-    callback: (val)=> console.log({ val})
+    formatter: (value?: string) =>
+      value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol

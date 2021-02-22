@@ -59,6 +59,23 @@ export default function Landing({
     document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const arrowDivider = (
+    <div
+      style={{
+        width: '100%',
+        textAlign: 'center',
+        marginTop: 10,
+        marginBottom: 20,
+      }}
+    >
+      <img
+        style={{ height: 45, objectFit: 'contain' }}
+        src="/assets/arrow.png"
+        alt="arrow"
+      />
+    </div>
+  )
+
   return (
     <div>
       <section style={section}>
@@ -143,48 +160,51 @@ export default function Landing({
       <section style={section}>
         <div
           style={{
-            maxWidth: 540,
+            maxWidth: 480,
             margin: '0 auto',
           }}
         >
-          <Space direction="vertical" size="large">
+          <Space direction="vertical">
             <h2>How it's done</h2>
-            <Timeline style={{ paddingLeft: 10 }}>
-              <Timeline.Item {...timelineItemStyle}>
-                Make a Juice contract that says how much cashflow you and your
-                team want/need in order to absolutely crush your project's
-                mission statement.
-                <br></br>
-                <span style={{ fontSize: '30px' }}>💰💅💪</span>
-              </Timeline.Item>
-              <Timeline.Item {...timelineItemStyle}>
-                People can either pay you like they would on Patreon, or
-                transparently from within Solidity smart contracts.{' '}
-                <a
-                  href="https://twitter.com/hashtag/BusinessModelAsAService"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #BusinessModelAsAService
-                </a>{' '}
-              </Timeline.Item>
-              <Timeline.Item {...timelineItemStyle}>
-                If money overflows, your paying customers claim the surplus,
-                effectively pushing prices down as your community grows. Early
-                adopters get a discounted rate, and those HODLers who wait
-                longest to claim get a juicier return. While unclaimed, overflow earns mad interest on Yearn.
-                <br></br>
-                <span style={{ fontSize: '30px' }}>⛲️</span>
-              </Timeline.Item>
-              <Timeline.Item {...timelineItemStyle}>
-                Your budgeting periods can be however long you want, and can be
-                recurring. You can make them bigger as your project grows, with
-                the approval of those paying customers that have not yet claimed
-                their fair share of your overflowed surplus.
-                <br></br>
-                <span style={{ fontSize: '30px' }}>📈</span>
-              </Timeline.Item>
-            </Timeline>
+            <p>
+              Make a Juice contract that says how much cashflow you and your
+              team want/need in order to absolutely crush your project's mission
+              statement.
+              <br></br>
+              <span style={{ fontSize: '30px' }}>💰💅💪</span>
+            </p>
+            {arrowDivider}
+            <p>
+              People can either pay you like they would on Patreon, or
+              transparently from within Solidity smart contracts.
+              <a
+                href="https://twitter.com/hashtag/BusinessModelAsAService"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #BusinessModelAsAService
+              </a>
+            </p>
+            {arrowDivider}
+            <p>
+              If money overflows, your paying customers claim the surplus,
+              effectively pushing prices down as your community grows. Early
+              adopters get a discounted rate, and those HODLers who wait longest
+              to claim get a juicier return. While unclaimed, overflow earns mad
+              interest on Yearn.
+              <br></br>
+              <span style={{ fontSize: '30px' }}>⛲️</span>
+            </p>
+            {arrowDivider}
+            <p>
+              Your budgeting periods can be however long you want, and can be
+              recurring. You can make them bigger as your project grows, with
+              the approval of those paying customers that have not yet claimed
+              their fair share of your overflowed surplus.
+              <br></br>
+              <span style={{ fontSize: '30px' }}>📈</span>
+            </p>
+            {arrowDivider}
             <p>
               Create value for your community, crush your craft, make your
               money, and lift up your people.{' '}

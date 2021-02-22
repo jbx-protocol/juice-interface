@@ -6,16 +6,20 @@ import BudgetAdvancedForm from '../forms/BudgetAdvancedForm'
 
 export function advancedContractStep({
   form,
+  budgetActivated,
 }: {
   form: FormInstance<AdvancedBudgetFormFields>
+  budgetActivated?: boolean
 }): Step {
   return {
     title: 'Advanced',
-    validate: form.validateFields,
+    validate: () =>
+      budgetActivated ? Promise.resolve(true) : form.validateFields(),
     content: (
       <BudgetAdvancedForm
         props={{ form }}
         header={<h2>Advanced tuning</h2>}
+        disabled={budgetActivated}
       ></BudgetAdvancedForm>
     ),
     info: [

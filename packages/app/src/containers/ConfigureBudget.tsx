@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Form, Row, Space, Steps } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Web3 from 'web3'
 
 import { advancedContractStep } from '../components/configure-budget-steps/advancedContractStep'
@@ -28,13 +28,13 @@ export default function ConfigureBudget({
   contracts,
   userAddress,
   onNeedProvider,
-  initializedBudget,
+  activeBudget,
 }: {
   transactor?: Transactor
   contracts?: Record<ContractName, Contract>
   userAddress?: string
   onNeedProvider: () => Promise<void>
-  initializedBudget?: Budget
+  activeBudget?: Budget
 }) {
   const [ticketsForm] = Form.useForm<TicketsFormFields>()
   const [budgetForm] = Form.useForm<BudgetFormFields>()
@@ -42,17 +42,11 @@ export default function ConfigureBudget({
   const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>(false)
   const [loadingCreateBudget, setLoadingCreateBudget] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [initializedTickets, setInitializedTickets] = useState<boolean>()
 
   const ticketsAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
     functionName: 'tickets',
     args: [userAddress],
-    callback: ticketsAddress => {
-      if (!userAddress || !ticketsAddress || initializedTickets !== undefined)
-        return
-      setInitializedTickets(addressExists(ticketsAddress))
-    },
   })
 
   const ticketsContract = erc20Contract(ticketsAddress)
@@ -70,6 +64,40 @@ export default function ConfigureBudget({
     formatter: (value?: string) =>
       value ? Web3.utils.hexToString(value) : undefined,
   })
+
+  const ticketsInitialized = !!ticketsName && !!ticketsSymbol
+
+  useEffect(() => {
+    if (activeBudget) {
+      budgetForm.setFieldsValue({
+        name: activeBudget.name,
+        duration: activeBudget.duration
+          .div(
+            BigNumber.from(
+              process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1,
+            ),
+          )
+          .toNumber(),
+        link: activeBudget.link,
+        target: activeBudget.target.toNumber(),
+      })
+      budgetAdvancedForm.setFieldsValue({
+        discountRate: activeBudget.discountRate.toNumber(),
+        beneficiaryAddress: addressExists(activeBudget.bAddress)
+          ? activeBudget.bAddress
+          : '--',
+        beneficiaryAllocation: activeBudget.b.toNumber(),
+        ownerAllocation: activeBudget.o.toNumber(),
+      })
+    }
+  })
+
+  if (ticketsName && ticketsSymbol) {
+    ticketsForm.setFieldsValue({
+      name: ticketsName,
+      symbol: ticketsSymbol,
+    })
+  }
 
   async function tryNextStep() {
     const step = steps[currentStep]
@@ -111,13 +139,8 @@ export default function ConfigureBudget({
 
     return transactor(
       contracts.TicketStore.issue(_name, _symbol),
-      () => {
-        setLoadingInitTickets(false)
-        setInitializedTickets(true)
-      },
-      () => {
-        setLoadingInitTickets(false)
-      },
+      () => setLoadingInitTickets(false),
+      true,
     )
   }
 
@@ -183,28 +206,29 @@ export default function ConfigureBudget({
         _beneficiaryAllocation,
         _beneficiaryAddress,
       ),
-      () => {
-        setLoadingCreateBudget(false)
-        if (userAddress) window.location.hash = userAddress
-      },
+      () => setLoadingCreateBudget(false),
     )
   }
 
   const steps: Step[] = [
-    contractStep({ form: budgetForm }),
+    contractStep({
+      form: budgetForm,
+      budgetActivated: !!activeBudget,
+    }),
     ticketsStep({
       form: ticketsForm,
-      ticketsName,
-      ticketsSymbol,
-      initializedTickets,
+      ticketsInitialized,
     }),
-    advancedContractStep({ form: budgetAdvancedForm }),
+    advancedContractStep({
+      form: budgetAdvancedForm,
+      budgetActivated: !!activeBudget,
+    }),
     reviewStep({
       ticketsForm,
       budgetForm,
       budgetAdvancedForm,
-      initializedTickets,
-      initializedBudget,
+      ticketsInitialized,
+      activeBudget,
       ticketsName,
       ticketsSymbol,
       initTickets,

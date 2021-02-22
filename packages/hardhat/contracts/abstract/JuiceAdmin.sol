@@ -53,7 +53,7 @@ abstract contract JuiceAdmin is Ownable {
         @dev This must be called before a Budget is configured.
     */
     function issueTickets(ITicketStore _store) external onlyOwner {
-        _store.issue(ticketName, ticketSymbol);
+        _store.issue(bytes(ticketName), bytes(ticketSymbol));
     }
 
     /**

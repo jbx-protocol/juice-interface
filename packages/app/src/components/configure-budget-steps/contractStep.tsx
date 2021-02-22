@@ -6,15 +6,19 @@ import BudgetForm from '../forms/BudgetForm'
 
 export function contractStep({
   form,
+  budgetActivated,
 }: {
   form: FormInstance<BudgetFormFields>
+  budgetActivated?: boolean
 }): Step {
   return {
     title: 'Contract',
-    validate: form.validateFields,
+    validate: () =>
+      budgetActivated ? Promise.resolve(true) : form.validateFields(),
     content: (
       <BudgetForm
         props={{ form }}
+        disabled={budgetActivated}
         header={<h2>Your contract's terms</h2>}
       ></BudgetForm>
     ),

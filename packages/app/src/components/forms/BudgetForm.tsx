@@ -6,9 +6,11 @@ import { BudgetFormFields } from '../../models/forms-fields/budget-form'
 export default function BudgetForm({
   props,
   header,
+  disabled,
 }: {
   props: FormProps<BudgetFormFields>
   header?: JSX.Element
+  disabled?: boolean
 }) {
   return (
     <Form layout="vertical" {...props}>
@@ -24,6 +26,7 @@ export default function BudgetForm({
           className="align-end"
           placeholder="Peach's Juice Stand"
           type="string"
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -37,6 +40,7 @@ export default function BudgetForm({
           placeholder="0"
           type="number"
           suffix="DAI"
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -50,6 +54,7 @@ export default function BudgetForm({
           placeholder="30"
           type="number"
           suffix="days"
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -57,7 +62,10 @@ export default function BudgetForm({
         name="link"
         label="Link"
       >
-        <Input placeholder="https://docs.google.com/my-budget-info" />
+        <Input
+          placeholder="https://docs.google.com/my-budget-info"
+          disabled={disabled}
+        />
       </Form.Item>
     </Form>
   )

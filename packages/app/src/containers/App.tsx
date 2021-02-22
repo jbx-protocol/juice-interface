@@ -27,11 +27,10 @@ function App() {
 
   const contracts = useContractLoader(userProvider)
 
-  const hasBudget = useContractReader<boolean>({
+  const budget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [userAddress],
-    formatter: (val: Budget) => !!val,
   })
 
   console.log('User:', userAddress, userProvider)
@@ -47,7 +46,7 @@ function App() {
       }}
     >
       <Navbar
-        hasBudget={hasBudget}
+        hasBudget={!!budget}
         userAddress={userAddress}
         onConnectWallet={loadWeb3Modal}
         shouldUseNetwork={
@@ -61,7 +60,7 @@ function App() {
 
       <Content>
         <Router
-          hasBudget={hasBudget}
+          activeBudget={budget}
           userAddress={userAddress}
           contracts={contracts}
           userProvider={userProvider}

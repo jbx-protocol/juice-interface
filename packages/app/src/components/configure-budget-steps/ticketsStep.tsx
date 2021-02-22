@@ -1,4 +1,4 @@
-import { FormInstance, Space, Statistic } from 'antd'
+import { FormInstance } from 'antd'
 import React from 'react'
 
 import { TicketsFormFields } from '../../models/forms-fields/tickets-form'
@@ -7,38 +7,14 @@ import TicketsForm from '../forms/TicketsForm'
 
 export function ticketsStep({
   form,
-  initializedTickets,
-  ticketsName,
-  ticketsSymbol,
+  ticketsInitialized,
 }: {
   form: FormInstance<TicketsFormFields>
-  initializedTickets?: boolean
-  ticketsName?: string
-  ticketsSymbol?: string
+  ticketsInitialized?: boolean
 }): Step {
   return {
     title: 'Tickets (optional)',
-    content: initializedTickets ? (
-      <div>
-        <h2>Tickets already initialized.</h2>
-        <Space direction="vertical" size="large">
-          <Statistic
-            title="Name"
-            value={
-              initializedTickets ? ticketsName : form.getFieldValue('name')
-            }
-          />
-          <Statistic
-            title="Symbol"
-            value={
-              initializedTickets
-                ? ticketsSymbol
-                : 't' + form.getFieldValue('symbol')
-            }
-          />
-        </Space>
-      </div>
-    ) : (
+    content: (
       <TicketsForm
         props={{ form }}
         header={
@@ -50,6 +26,7 @@ export function ticketsStep({
             </p>
           </div>
         }
+        disabled={ticketsInitialized}
       />
     ),
     info: [

@@ -1,113 +1,105 @@
-// // SPDX-License-Identifier: MIT
-// pragma solidity 0.6.12;
-// pragma experimental ABIEncoderV2;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.6.12;
+pragma experimental ABIEncoderV2;
 
-// import {
-//     ILendingPool
-// } from "@aave/protocol-v2/contracts/interfaces/ILendingPool.sol";
-// import {
-//     ILendingPoolAddressesProvider
-// } from "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
-// import {IAToken} from "@aave/protocol-v2/contracts/interfaces/IAToken.sol";
-// import {
-//     DataTypes
-// } from "@aave/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
+import {
+    ILendingPool
+} from "@aave/protocol-v2/contracts/interfaces/ILendingPool.sol";
+import {
+    ILendingPoolAddressesProvider
+} from "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
+import {IAToken} from "@aave/protocol-v2/contracts/interfaces/IAToken.sol";
+import {
+    DataTypes
+} from "@aave/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
-// import "./interfaces/IOverflowYielder.sol";
-// import "./interfaces/IJuicer.sol";
+import "./../interfaces/IOverflowYielder.sol";
+import "./../interfaces/IJuicer.sol";
 
-// contract AaveOverflowLender is IOverflowYielder {
-//     /// @notice The amount of principal deposited.
-//     uint256 public override deposited = 0;
+contract AaveOverflowLender is IOverflowYielder {
+    using SafeERC20 for IERC20;
 
-    //         /// @notice The target percent of overflow that should be yielding.
-    // uint256 public depositRecalibrationTarget = 682;
-//     ILendingPoolAddressesProvider public override provider;
+    IJuicer public override juicer;
 
-//     constructor(ILendingPoolAddressesProvider _provider) public {
-//         provider = _provider;
-//     }
+    ILendingPoolAddressesProvider public provider;
 
-//     function getDepositedAmount(IJuicer _juicer)
-//         external
-//         view
-//         returns (uint256)
-//     {
-//         IERC20 _token = _juicer.stablecoin();
+    modifier onlyJuicer {
+        require(
+            msg.sender == address(juicer),
+            "AaveOverflowLender: UNAUTHORIZED"
+        );
+        _;
+    }
 
-//         DataTypes.ReserveData memory _reserveData =
-//             ILendingPool(provider.getLendingPool()).getReserveData(
-//                 address(_token)
-//             );
+    constructor(IJuicer _juicer, ILendingPoolAddressesProvider _provider)
+        public
+    {
+        juicer = _juicer;
+        provider = _provider;
+    }
 
-//         IAToken aToken = IAToken(_reserveData.aTokenAddress);
+    function getBalance(IERC20 _token)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        DataTypes.ReserveData memory _reserveData =
+            ILendingPool(provider.getLendingPool()).getReserveData(
+                address(_token)
+            );
 
-//         return aToken.balanceOf(_juicer);
-//     }
+        return IAToken(_reserveData.aTokenAddress).balanceOf(address(juicer));
+    }
 
-//     function getTotalOverflow(IJuicer _juicer) external view returns (uint256) {
-//         IERC20 _token = _juicer.stablecoin();
-//         DataTypes.ReserveData memory _reserveData =
-//             ILendingPool(provider.getLendingPool()).getReserveData(
-//                 address(_token)
-//             );
+    function getRate(IERC20 _token) external view override returns (uint128) {
+        ILendingPool(provider.getLendingPool())
+            .getReserveData(address(_token))
+            .currentLiquidityRate;
+    }
 
-//         uint256 _amountEarning =
-//             IAToken(_reserveData.aTokenAddress).balanceOf(address(_juicer));
+    function deposit(uint256 _amount, IERC20 _token)
+        external
+        override
+        onlyJuicer
+    {
+        _token.safeTransferFrom(address(juicer), address(this), _amount);
+        ILendingPool(provider.getLendingPool()).deposit(
+            address(_token),
+            _amount,
+            address(this),
+            0
+        );
+    }
 
-//         uint256 _stablecoinBalance = _token.balanceOf(address(_juicer));
-//         return
-//             _amountEarning
-//                 .add(_stablecoinBalance)
-//                 .mul(_juicer.ticketStore.totalClaimable())
-//                 .div(deposited.add(_stablecoinBalance));
-//     }
+    function withdraw(uint256 _amount, IERC20 _token) external override {
+        ILendingPool(provider.getLendingPool()).withdraw(
+            address(_token),
+            _amount,
+            address(juicer)
+        );
+    }
 
-//     function recalibrateDeposit(IJuicer _juicer) external {
-//         IERC20 _token = _juicer.stablecoin();
+    function withdrawAll(IERC20 _token)
+        external
+        override
+        onlyJuicer
+        returns (uint256 amountEarning)
+    {
+        DataTypes.ReserveData memory _reserveData =
+            ILendingPool(provider.getLendingPool()).getReserveData(
+                address(_token)
+            );
 
-//         uint256 _totalClaimable = _juicer.ticketStore().totalClaimable();
+        amountEarning = IAToken(_reserveData.aTokenAddress).balanceOf(
+            address(this)
+        );
 
-//         DataTypes.ReserveData memory _reserveData =
-//             ILendingPool(provider.getLendingPool()).getReserveData(
-//                 address(_token)
-//             );
-
-//         uint256 _amountEarning =
-//             IAToken(_reserveData.aTokenAddress).balanceOf(this);
-
-//         if (
-//             _amountEarning.mul(100).div(_totalClaimable) >
-//             depositRecalibrationTarget
-//         ) {
-//             uint256 _amount =
-//                 _amountEarning.sub(
-//                     _totalClaimable.mul(depositRecalibrationTarget).div(1000)
-//                 );
-//             ILendingPool(provider.getLendingPool()).withdraw(
-//                 address(_token),
-//                 _amount,
-//                 _juicer
-//             );
-
-//             deposited = deposited.sub(
-//                 _amount.mul(deposited).div(_amountEarning)
-//             );
-//         } else {
-//             uint256 _amount =
-//                 _totalClaimable.mul(depositRecalibrationTarget).div(1000).sub(
-//                     _amountEarning
-//                 );
-
-//             deposited = deposited.add(_amount);
-
-//             // TODO allowance.
-//             ILendingPool(provider.getLendingPool()).deposit(
-//                 address(_token),
-//                 _amount,
-//                 address(this),
-//                 0
-//             );
-//         }
-//     }
-// }
+        ILendingPool(provider.getLendingPool()).withdraw(
+            address(_token),
+            amountEarning,
+            address(juicer)
+        );
+    }
+}

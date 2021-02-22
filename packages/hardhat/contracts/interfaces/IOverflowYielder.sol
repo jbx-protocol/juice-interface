@@ -9,11 +9,15 @@ import "./IJuicer.sol";
 interface IOverflowYielder {
     function juicer() external view returns (IJuicer);
 
-    function deposited() external view returns (uint256);
+    function getBalance(IERC20 _token) external view returns (uint256);
 
-    function getDepositedAmount() external view returns (uint256);
+    function getRate(IERC20 _token) external view returns (uint128);
 
-    function getTotalOverflow() external view returns (uint256);
+    function deposit(uint256 _amount, IERC20 _token) external;
 
-    function recalibrate() external;
+    function withdraw(uint256 _amount, IERC20 _token) external;
+
+    function withdrawAll(IERC20 _token)
+        external
+        returns (uint256 amountEarning);
 }

@@ -33,6 +33,8 @@ contract TicketStore is Store, ITicketStore {
     /// @notice The total amount of Tickets owed for each token issuer.
     mapping(address => uint256) public override totalIOweYous;
 
+    /// @notice The
+
     // --- external views --- //
 
     /**
@@ -111,7 +113,10 @@ contract TicketStore is Store, ITicketStore {
         @param _name The ERC-20's name.
         @param _symbol The ERC-20's symbol.
     */
-    function issue(bytes memory _name, bytes memory _symbol) external override {
+    function issue(string memory _name, string memory _symbol)
+        external
+        override
+    {
         // An owner only needs to issue their Tickets once before they can be used.
         require(
             tickets[msg.sender] == Tickets(0),
@@ -122,8 +127,8 @@ contract TicketStore is Store, ITicketStore {
         // Prepend the strings with standards.
         Tickets _tickets =
             new Tickets(
-                string(abi.encodePacked(_name, " Juice ticket")),
-                string(abi.encodePacked("j", _symbol))
+                string(abi.encodePacked(_name, bytes(" Juice ticket"))),
+                string(abi.encodePacked(bytes("j"), _symbol))
             );
 
         tickets[msg.sender] = _tickets;
@@ -235,5 +240,21 @@ contract TicketStore is Store, ITicketStore {
     {
         claimable[_issuer] = claimable[_issuer].add(_amount);
         totalClaimable = totalClaimable.add(_amount);
+    }
+
+    /**
+        @notice Clears the amount of claimable tokens the specified issuer has.
+        @param _issuer The issuer of the Ticket.
+        @return amount The amount cleared.
+    */
+    function clearClaimable(address _issuer)
+        external
+        override
+        onlyAdmin
+        returns (uint256 amount)
+    {
+        amount = claimable[_issuer];
+        claimable[_issuer] = 0;
+        totalClaimable = totalClaimable.sub(amount);
     }
 }

@@ -11,6 +11,8 @@ import "./IOverflowYielder.sol";
 interface IJuicer is IBudgetController, ITicketsController {
     event DistributeReserves(address minter, address issuer);
 
+    event Migrate(IJuicer indexed to);
+
     function admin() external view returns (address);
 
     function budgetStore() external view returns (IBudgetStore);
@@ -19,9 +21,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function overflowYielder() external view returns (IOverflowYielder);
 
-    function depositRecalibrationTarget() external view returns (uint256);
-
-    function depositThreshold() external view returns (uint256);
+    function depositable() external view returns (uint256);
 
     function claimable(address _by) external view returns (uint256);
 
@@ -44,7 +44,14 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function distributeReserves(address _issuer) external;
 
-    function setDepositRecalibrationTarget(uint256 _newTarget) external;
-
     function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
+
+    function migrate(IJuicer _to) external;
+
+    function transferClaimable(
+        address _issuer,
+        uint256 _claimable,
+        uint256 _amount,
+        IERC20 _token
+    ) external;
 }

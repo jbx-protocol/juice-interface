@@ -70,14 +70,14 @@ contract Admin is JuiceAdmin {
     }
 
     /** 
-      @notice Sets a new recalibration target.
+      @notice Sets a new contract that will yield returns on the juicer's overflow.
       @param _juicer The juicer to change the recalibration target of.
-      @param _newTarget The new recalibration target.
+      @param _overflowYielder The new overflow yielder.
     */
-    function setDepositRecalibrationTarget(IJuicer _juicer, uint256 _newTarget)
-        external
-        onlyOwner
-    {
-        _juicer.setDepositRecalibrationTarget(_newTarget);
+    function setOverflowYielder(
+        IJuicer _juicer,
+        IOverflowYielder _overflowYielder
+    ) external onlyOwner {
+        _juicer.setOverflowYielder(_overflowYielder);
     }
 }

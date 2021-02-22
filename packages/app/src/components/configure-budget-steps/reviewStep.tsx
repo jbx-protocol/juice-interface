@@ -6,14 +6,15 @@ import { AdvancedBudgetFormFields } from '../../models/forms-fields/advanced-bud
 import { BudgetFormFields } from '../../models/forms-fields/budget-form'
 import { TicketsFormFields } from '../../models/forms-fields/tickets-form'
 import { Step } from '../../models/step'
+import { addressExists } from '../../utils/addressExists'
 import { orEmpty } from '../../utils/orEmpty'
 
 export function reviewStep({
   ticketsForm,
   budgetForm,
   budgetAdvancedForm,
-  initializedTickets,
-  initializedBudget,
+  ticketsInitialized,
+  activeBudget,
   ticketsName,
   ticketsSymbol,
   initTickets,
@@ -25,8 +26,8 @@ export function reviewStep({
   ticketsForm: FormInstance<TicketsFormFields>
   budgetForm: FormInstance<BudgetFormFields>
   budgetAdvancedForm: FormInstance<AdvancedBudgetFormFields>
-  initializedTickets?: boolean
-  initializedBudget?: Budget
+  ticketsInitialized?: boolean
+  activeBudget?: Budget
   ticketsName?: string
   ticketsSymbol?: string
   initTickets: VoidFunction
@@ -39,50 +40,6 @@ export function reviewStep({
     title: 'Review',
     content: (
       <div>
-        <div>
-          <h1 style={{ fontSize: '2rem' }}>Tickets</h1>
-          <div
-            style={{
-              marginTop: 20,
-              marginBottom: 20,
-            }}
-          >
-            <Space size="large">
-              <Statistic
-                title="Name"
-                value={
-                  initializedTickets
-                    ? ticketsName
-                    : ticketsForm.getFieldValue('name')
-                    ? ticketsForm.getFieldValue('name') + 'Juice ticket'
-                    : '--'
-                }
-              />
-              <Statistic
-                title="Symbol"
-                value={
-                  initializedTickets
-                    ? ticketsSymbol
-                    : ticketsForm.getFieldValue('symbol')
-                    ? 't' + ticketsForm.getFieldValue('symbol')
-                    : '--'
-                }
-              />
-            </Space>
-          </div>
-          <Button
-            disabled={initializedTickets}
-            htmlType="submit"
-            type="primary"
-            onClick={initTickets}
-            loading={loadingInitTickets}
-          >
-            Issue tickets
-          </Button>
-        </div>
-
-        <Divider orientation="center" />
-
         <Space size="large" direction="vertical">
           <h1 style={{ fontSize: '2rem' }}>Budget</h1>
           <div>
@@ -110,8 +67,8 @@ export function reviewStep({
               }}
               title="Discount rate"
               value={
-                initializedBudget
-                  ? initializedBudget.discountRate.toString()
+                activeBudget
+                  ? activeBudget.discountRate.toString()
                   : budgetAdvancedForm.getFieldValue('discountRate')
               }
               suffix="%"
@@ -119,8 +76,8 @@ export function reviewStep({
             <Statistic
               title="Owner surplus"
               value={
-                initializedBudget
-                  ? initializedBudget.o.toString()
+                activeBudget
+                  ? activeBudget.o.toString()
                   : budgetAdvancedForm.getFieldValue('ownerAllocation') ?? 0
               }
               suffix="%"
@@ -128,8 +85,8 @@ export function reviewStep({
             <Statistic
               title="Beneficiary surplus"
               value={
-                initializedBudget
-                  ? initializedBudget.b
+                activeBudget
+                  ? activeBudget.b
                   : budgetAdvancedForm.getFieldValue('beneficiaryAllocation') ??
                     0
               }
@@ -144,15 +101,17 @@ export function reviewStep({
                 lineBreak: 'anywhere',
               }}
               value={orEmpty(
-                initializedBudget
-                  ? initializedBudget.bAddress
+                activeBudget
+                  ? addressExists(activeBudget.bAddress)
+                    ? activeBudget.bAddress
+                    : '--'
                   : budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
               )}
             />
           </Space>
-          {initializedBudget ? (
+          {activeBudget ? (
             <Link to={{ hash: userAddress }}>
-              <Button type="primary">Go to contract</Button>
+              <Button type="primary">Go to your budget</Button>
             </Link>
           ) : (
             <Button
@@ -165,16 +124,58 @@ export function reviewStep({
             </Button>
           )}
         </Space>
+
+        <Divider orientation="center" />
+
+        <div>
+          <h1 style={{ fontSize: '2rem' }}>Tickets</h1>
+          <div
+            style={{
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          >
+            <Space size="large">
+              <Statistic
+                title="Name"
+                value={
+                  ticketsInitialized
+                    ? ticketsName
+                    : ticketsForm.getFieldValue('name')
+                    ? ticketsForm.getFieldValue('name') + 'Juice ticket'
+                    : '--'
+                }
+              />
+              <Statistic
+                title="Symbol"
+                value={
+                  ticketsInitialized
+                    ? ticketsSymbol
+                    : ticketsForm.getFieldValue('symbol')
+                    ? 't' + ticketsForm.getFieldValue('symbol')
+                    : '--'
+                }
+              />
+            </Space>
+          </div>
+          <Button
+            disabled={ticketsInitialized}
+            htmlType="submit"
+            type="primary"
+            onClick={initTickets}
+            loading={loadingInitTickets}
+          >
+            Issue tickets
+          </Button>
+        </div>
       </div>
     ),
     info: [
       'Kick off your project by submitting a transaction to the blockchain that activates your contract.',
-      "---",
+      '---',
       'By default, Juice will internally keep track of who has sent you payments so that they can claim your overflow.',
       "If you instead want Juice to track payments by distributing ERC-20 tickets of yours instead, you'll first have to submit a transaction issuing your tickets.",
-      "This isn't required, and can be done later. The advantage of using ERC-20 tickets is so people can trade and stake their right to claim your overflow outside of the Juice ecosystem."
+      "This isn't required, and can be done later. The advantage of using ERC-20 tickets is so people can trade and stake their right to claim your overflow outside of the Juice ecosystem.",
     ],
   }
 }
-
-function Content() {}

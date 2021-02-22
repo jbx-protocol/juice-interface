@@ -5,19 +5,20 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import Gimme from '../components/Gimme'
 import { useGasPrice } from '../hooks/GasPrice'
+import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { createTransactor } from '../utils/Transactor'
 import Landing from './landing/Landing'
 import Owner from './Owner'
 
 export default function Router({
-  hasBudget,
+  activeBudget,
   contracts,
   userProvider,
   userAddress,
   onNeedProvider,
 }: {
-  hasBudget?: boolean
+  activeBudget?: Budget
   contracts?: Contracts
   userProvider?: JsonRpcProvider
   userAddress?: string
@@ -37,7 +38,7 @@ export default function Router({
         <Route exact path="/">
           <Landing
             userAddress={userAddress}
-            hasBudget={hasBudget}
+            activeBudget={activeBudget}
             contracts={contracts}
             transactor={transactor}
             onNeedProvider={onNeedProvider}

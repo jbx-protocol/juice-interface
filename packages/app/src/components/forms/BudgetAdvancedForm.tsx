@@ -7,15 +7,15 @@ import { AdvancedBudgetFormFields } from '../../models/forms-fields/advanced-bud
 export default function BudgetAdvancedForm({
   props,
   header,
+  disabled,
 }: {
   props: FormProps<AdvancedBudgetFormFields>
   header?: JSX.Element
+  disabled?: boolean
 }) {
   const [beneficiaryAddressRequired, setBeneficiaryAddressRequired] = useState<
     boolean
   >(false)
-
-  const initialDiscountRate = 97
 
   return (
     <Form
@@ -24,7 +24,7 @@ export default function BudgetAdvancedForm({
       initialValues={{
         ownerAllocation: 0,
         beneficiaryAllocation: 0,
-        discountRate: initialDiscountRate,
+        discountRate: 97,
         ...props.initialValues,
       }}
     >
@@ -39,7 +39,7 @@ export default function BudgetAdvancedForm({
           className="align-end"
           suffix="%"
           type="number"
-          defaultValue="5"
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item extra="" name="beneficiaryAllocation" label="Donate">
@@ -47,10 +47,10 @@ export default function BudgetAdvancedForm({
           className="align-end"
           suffix="%"
           type="number"
-          defaultValue="0"
           onChange={e =>
             setBeneficiaryAddressRequired(parseFloat(e.target.value) > 0)
           }
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -59,7 +59,7 @@ export default function BudgetAdvancedForm({
         label="Donation address"
         rules={[{ required: beneficiaryAddressRequired }]}
       >
-        <Input placeholder="0x01a2b3c..." />
+        <Input placeholder="0x01a2b3c..." disabled={disabled} />
       </Form.Item>
       <Form.Item
         extra="The rate (95%-100%) at which payments to future budgeting periods are valued compared to payments to the current one."
@@ -69,15 +69,13 @@ export default function BudgetAdvancedForm({
       >
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
-            defaultValue={
-              props.initialValues?.discountRate ?? initialDiscountRate
-            }
             className="align-end"
             suffix="%"
             type="number"
             min={95}
             max={100}
             placeholder="100"
+            disabled={disabled}
           />
         </div>
       </Form.Item>

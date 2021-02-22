@@ -3,19 +3,20 @@ import React, { CSSProperties } from 'react'
 
 import Footer from '../../components/Footer'
 import { colors } from '../../constants/styles/colors'
+import { Budget } from '../../models/budget'
 import { Contracts } from '../../models/contracts'
 import { Transactor } from '../../models/transactor'
 import ConfigureBudget from '../ConfigureBudget'
 
 export default function Landing({
   userAddress,
-  hasBudget,
+  activeBudget,
   contracts,
   transactor,
   onNeedProvider,
 }: {
   userAddress?: string
-  hasBudget?: boolean
+  activeBudget?: Budget
   contracts?: Contracts
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
@@ -230,6 +231,7 @@ export default function Landing({
             contracts={contracts}
             transactor={transactor}
             onNeedProvider={onNeedProvider}
+            activeBudget={activeBudget}
           />
         </div>
       </section>

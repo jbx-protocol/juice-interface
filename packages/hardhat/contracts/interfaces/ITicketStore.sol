@@ -32,7 +32,7 @@ interface ITicketStore is IStore {
 
     function getTicketValue(address _issuer) external view returns (uint256);
 
-    function issue(string calldata _name, string calldata _symbol) external;
+    function issue(bytes memory _name, bytes memory _symbol) external;
 
     function convertIOweYou(address _issuer) external;
 

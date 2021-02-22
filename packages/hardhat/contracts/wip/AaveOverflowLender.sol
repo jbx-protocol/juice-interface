@@ -13,13 +13,15 @@
 //     DataTypes
 // } from "@aave/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
 
-// import "./interfaces/IOverflowLender.sol";
+// import "./interfaces/IOverflowYielder.sol";
 // import "./interfaces/IJuicer.sol";
 
-// contract AaveOverflowLender is IOverflowLender {
+// contract AaveOverflowLender is IOverflowYielder {
 //     /// @notice The amount of principal deposited.
 //     uint256 public override deposited = 0;
 
+    //         /// @notice The target percent of overflow that should be yielding.
+    // uint256 public depositRecalibrationTarget = 682;
 //     ILendingPoolAddressesProvider public override provider;
 
 //     constructor(ILendingPoolAddressesProvider _provider) public {

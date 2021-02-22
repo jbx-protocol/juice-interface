@@ -6,7 +6,7 @@ import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
 import "./IBudgetController.sol";
 import "./ITicketsController.sol";
-import "./IOverflowLender.sol";
+import "./IOverflowYielder.sol";
 
 interface IJuicer is IBudgetController, ITicketsController {
     event DistributeReserves(address minter, address issuer);
@@ -17,11 +17,17 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function ticketStore() external view returns (ITicketStore);
 
-    function overflowLender() external view returns (IOverflowLender);
+    function overflowYielder() external view returns (IOverflowYielder);
+
+    function depositRecalibrationTarget() external view returns (uint256);
+
+    function depositThreshold() external view returns (uint256);
 
     function claimable(address _by) external view returns (uint256);
 
     function fee() external view returns (uint256);
+
+    function stablecoin() external view returns (IERC20);
 
     function claim() external returns (uint256 amount);
 
@@ -39,4 +45,6 @@ interface IJuicer is IBudgetController, ITicketsController {
     function distributeReserves(address _issuer) external;
 
     function setDepositRecalibrationTarget(uint256 _newTarget) external;
+
+    function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
 }

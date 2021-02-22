@@ -172,7 +172,7 @@ export default function Landing({
                 If money overflows, your paying customers claim the surplus,
                 effectively pushing prices down as your community grows. Early
                 adopters get a discounted rate, and those HODLers who wait
-                longest to claim get a juicier return.
+                longest to claim get a juicier return. While unclaimed, overflow earns mad interest on Yearn.
                 <br></br>
                 <span style={{ fontSize: '30px' }}>⛲️</span>
               </Timeline.Item>

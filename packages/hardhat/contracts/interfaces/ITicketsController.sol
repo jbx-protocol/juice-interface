@@ -13,8 +13,6 @@ interface ITicketsController {
         IERC20 returnToken
     );
 
-    event Migrate(address indexed to);
-
     event Swap(
         address issuer,
         IERC20 from,
@@ -31,6 +29,4 @@ interface ITicketsController {
     ) external returns (uint256 returnAmount);
 
     function addToMigrationAllowList(address _contract) external;
-
-    function migrate(address _to) external;
 }

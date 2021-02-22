@@ -81,11 +81,8 @@ contract Juicer is IJuicer {
     /// @notice The contract that puts overflow to work.
     IOverflowYielder public override overflowYielder;
 
-    /// @notice The amount of money that the system must have in overflow before seeking yield.
-    uint256 public override depositThreshold = 10000;
-
-    /// @notice The target percent of overflow that should be yielding.
-    uint256 public override depositRecalibrationTarget = 682;
+    /// @notice The amount of tokens that are currently depositable.
+    uint256 public override depositable = 0;
 
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
@@ -97,6 +94,42 @@ contract Juicer is IJuicer {
     IERC20 public override stablecoin;
 
     // --- external views --- //
+
+    /** 
+      @notice Gets the total overflow that this Juicer is responsible for.
+      @return The amount of overflow.
+    */
+    function getTotalOverflow() external view returns (uint256) {
+        if (overflowYielder != IOverflowYielder(0)) {
+            return overflowYielder.getBalance(stablecoin).add(depositable);
+        } else {
+            return depositable;
+        }
+    }
+
+    /** 
+      @notice Gets the overflow for a specified issuer that this Juicer is responsible for.
+      @param _issuer The ticket issuer to get overflow for.
+      @return The amount of overflow.
+    */
+    function getOverflow(address _issuer) external view returns (uint256) {
+        uint256 _claimable = ticketStore.claimable(_issuer);
+
+        if (_claimable == 0) return 0;
+
+        uint256 _totalClaimable = ticketStore.totalClaimable();
+
+        if (overflowYielder != IOverflowYielder(0)) {
+            return
+                overflowYielder
+                    .getBalance(stablecoin)
+                    .add(depositable)
+                    .mul(_claimable)
+                    .div(_totalClaimable);
+        } else {
+            return depositable.mul(_claimable).div(_totalClaimable);
+        }
+    }
 
     /**
         @notice The amount of pending admin fees, donatations to beneficiaries, and mintable tickets for budget owners.
@@ -220,11 +253,16 @@ contract Juicer is IJuicer {
         if (_overflow > 0) {
             uint256 _contributedOverflow =
                 _amount > _overflow ? _overflow : _amount;
+
+            uint256 _redeemablePortion =
+                _contributedOverflow.mul(_budget.b.add(fee)).div(1000);
+
+            // The redeemable portion of the overflow can be deposited to earn yield.
+            depositable = depositable.add(_redeemablePortion);
+
             ticketStore.addClaimable(
                 _budget.owner,
-                _contributedOverflow.sub(
-                    _contributedOverflow.mul(_budget.b).mul(fee).div(1000)
-                )
+                _contributedOverflow.sub(_redeemablePortion)
             );
         }
 
@@ -261,14 +299,26 @@ contract Juicer is IJuicer {
         uint256 _minReturn,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
+        uint256 _totalClaimable = ticketStore.totalClaimable();
+
         // Burn the redeemed tickets.
-        returnAmount = ticketStore.redeem(
-            _issuer,
-            msg.sender,
-            _amount,
-            _minReturn,
-            382
-        );
+        uint256 _claimable =
+            ticketStore.redeem(_issuer, msg.sender, _amount, _minReturn, 382);
+
+        returnAmount = overflowYielder
+            .getBalance(stablecoin)
+            .add(depositable)
+            .mul(_claimable)
+            .div(_totalClaimable);
+
+        if (returnAmount <= depositable) {
+            depositable = depositable.sub(returnAmount);
+        } else if (depositable == 0) {
+            overflowYielder.withdraw(returnAmount, stablecoin);
+        } else {
+            overflowYielder.withdraw(returnAmount.sub(depositable), stablecoin);
+            depositable = 0;
+        }
 
         // Transfer funds to the specified address.
         stablecoin.safeTransfer(_beneficiary, returnAmount);
@@ -322,23 +372,38 @@ contract Juicer is IJuicer {
 
         require(amount > 0, "Juicer::claim: INSUFFICIENT_FUNDS");
 
-        claimable[msg.sender] = claimable[msg.sender] = 0;
+        claimable[msg.sender] = 0;
 
         // Transfer the funds to the specified address.
         stablecoin.safeTransfer(msg.sender, amount);
     }
 
     /**
+      @notice Deposit any overflow funds that are not earning interest into the overflow yielder.
+     */
+    function deposit() external lock {
+        require(
+            overflowYielder != IOverflowYielder(0),
+            "Juicer::deposit: SETUP_NEEDED"
+        );
+        require(depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
+        overflowYielder.deposit(depositable, stablecoin);
+        depositable = 0;
+    }
+
+    /**
         @notice Allows an owner to migrate their Tickets' control to another contract.
         @dev This makes each owner's Ticket's portable.
         @dev Make sure you know what you're doing. This is a one way migration
-        @param _to The contract that will gain minting and burning privileges over the Tickets.
+        @param _to The Juicer contract that will gain minting and burning privileges over the Tickets.
     */
-    function migrate(address _to) external override lock {
+    function migrate(IJuicer _to) external override lock {
         require(
-            migrationContractIsAllowed[_to],
+            migrationContractIsAllowed[address(_to)],
             "Juicer:migrateTickets: BAD_DESTINATION"
         );
+
+        distributeReserves(msg.sender);
 
         // Get a reference to the owner's Tickets.
         Tickets _tickets = ticketStore.tickets(msg.sender);
@@ -347,15 +412,45 @@ contract Juicer is IJuicer {
         require(_tickets != Tickets(0), "Juicer::migrateTickets: NOT_FOUND");
 
         // Give the new owner admin privileges.
-        _tickets.transferOwnership(_to);
+        _tickets.transferOwnership(address(_to));
+
+        uint256 _totalClaimable = ticketStore.totalClaimable();
+        uint256 _claimable = ticketStore.clearClaimable(msg.sender);
 
         // Move all claimable tokens for this issuer.
-        uint256 _claimable = ticketStore.claimable(msg.sender);
+        // Assumes the new contract uses the same ticket store.
+        uint256 _amount =
+            overflowYielder.getBalance(stablecoin).mul(_claimable).div(
+                _totalClaimable
+            );
 
-        //TODO set allow limit.
-        stablecoin.safeTransfer(_to, _claimable);
+        stablecoin.safeApprove(address(_to), _amount);
+
+        _to.transferClaimable(msg.sender, _claimable, _amount, stablecoin);
 
         emit Migrate(_to);
+    }
+
+    /** 
+      @notice Transfer funds from the message sender to this contract that should be designated as overflow for the provided ticket issuer.
+      @param _issuer The issuer of the tickets getting credited with overflow.
+      @param _claimable The amount of claimable tokens being transfered.
+      @param _amount The amount that the claimable tokens are worth.
+      @param _token The token of the specified amount.
+    */
+    function transferClaimable(
+        address _issuer,
+        uint256 _claimable,
+        uint256 _amount,
+        IERC20 _token
+    ) external override {
+        _token.safeTransferFrom(msg.sender, address(this), _amount);
+        if (overflowYielder != IOverflowYielder(0)) {
+            overflowYielder.deposit(_amount, stablecoin);
+        } else {
+            depositable = depositable.add(_amount);
+        }
+        ticketStore.addClaimable(_issuer, _claimable);
     }
 
     /**
@@ -381,18 +476,6 @@ contract Juicer is IJuicer {
     }
 
     /** 
-      @notice Allow the admin to change the recallibration target.
-      @param _newTarget The new target.
-    */
-    function setDepositRecalibrationTarget(uint256 _newTarget)
-        external
-        override
-        onlyAdmin
-    {
-        depositRecalibrationTarget = _newTarget;
-    }
-
-    /** 
       @notice Allow the admin to change the overflow yielder. 
       @dev All funds will be migrated from the old yielder to the new one.
       @param _newOverflowYielder The new overflow yielder.
@@ -402,10 +485,11 @@ contract Juicer is IJuicer {
         override
         onlyAdmin
     {
-        //TODO
-        // withdraw all funds from the overflowYielder.
-        // set the newOverflowYielder.
-        // recalibrate.
+        if (overflowYielder != IOverflowYielder(0)) {
+            uint256 _amount = overflowYielder.withdrawAll(stablecoin);
+            _newOverflowYielder.deposit(_amount, stablecoin);
+        }
+        stablecoin.safeApprove(address(_newOverflowYielder), uint256(-1));
         overflowYielder = _newOverflowYielder;
     }
 
@@ -463,10 +547,5 @@ contract Juicer is IJuicer {
             ticketStore.mint(_issuer, _issuer, _mintForIssuer);
 
         emit DistributeReserves(msg.sender, _issuer);
-    }
-
-    function recalibrate() external {
-        //Send funds to the IOverflowYielder that need to be deposit, or withdraw funds that need to be guarded.
-        // according to the rate.
     }
 }

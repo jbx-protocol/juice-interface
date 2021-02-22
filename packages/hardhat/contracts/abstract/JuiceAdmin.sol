@@ -53,7 +53,7 @@ abstract contract JuiceAdmin is Ownable {
         @dev This must be called before a Budget is configured.
     */
     function issueTickets(ITicketStore _store) external onlyOwner {
-        _store.issue(bytes(ticketName), bytes(ticketSymbol));
+        _store.issue(ticketName, ticketSymbol);
     }
 
     /**
@@ -152,7 +152,7 @@ abstract contract JuiceAdmin is Ownable {
     */
     function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
         require(_to != IJuicer(0), "JuiceAdmin::setJuicer: ZERO_ADDRESS");
-        _from.migrate(address(_to));
+        _from.migrate(_to);
     }
 
     /** 

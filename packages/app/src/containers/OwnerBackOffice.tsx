@@ -63,7 +63,7 @@ export default function OwnerBackOffice({
     setLoadingInitTickets(true)
 
     const _name = Web3.utils.utf8ToHex(fields.name)
-    const _symbol = Web3.utils.utf8ToHex('t' + fields.symbol)
+    const _symbol = Web3.utils.utf8ToHex(fields.symbol)
 
     console.log('🧃 Calling TicketStore.issue(name, symbol)', {
       _name,
@@ -111,9 +111,9 @@ export default function OwnerBackOffice({
             <WtfCard>
               <div>
                 {[
-                  "Issue your own ERC-20 tickets so that the people who make payments to your project can trade and stake their right to claim your overflow outside of the Juice ecosystem.",
-                  "Until you do so, Juice will keep track of I-owe-you tickets internally.",
-                  "Juice works perfectly fine either way."
+                  'Issue your own ERC-20 tickets so that the people who make payments to your project can trade and stake their right to claim your overflow outside of the Juice ecosystem.',
+                  'Until you do so, Juice will keep track of I-owe-you tickets internally.',
+                  'Juice works perfectly fine either way.',
                 ].map((text, i) => (
                   <p key={i}>{text}</p>
                 ))}
@@ -150,9 +150,9 @@ export default function OwnerBackOffice({
           <WtfCard>
             <div>
               {[
-                "Budgets can reserve a subset of tickets for the project owner, and reserve a specified amount of its overflow as a donation to a provided address.",
+                'Budgets can reserve a subset of tickets for the project owner, and reserve a specified amount of its overflow as a donation to a provided address.',
                 "5% of the amount received by each budget will also be reserved for funding the Juice admin's own budgets, which will give you its tickets in return.",
-                "These reserves are all distributable once a budget expires, and will automatically be distributed when a budget is tapped."
+                'These reserves are all distributable once a budget expires, and will automatically be distributed when a budget is tapped.',
               ].map((text, i) => (
                 <p key={i}>{text}</p>
               ))}

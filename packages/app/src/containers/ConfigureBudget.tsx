@@ -46,7 +46,7 @@ export default function ConfigureBudget({
   const ticketsAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
     functionName: 'tickets',
-    args: [userAddress]
+    args: [userAddress],
   })
 
   const ticketsContract = erc20Contract(ticketsAddress)
@@ -54,15 +54,11 @@ export default function ConfigureBudget({
   const ticketsSymbol = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'symbol',
-    // formatter: (value?: string) =>
-    //   value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsName = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'name',
-    // formatter: (value?: string) =>
-    //   value ? Web3.utils.hexToString(value) : undefined,
   })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol
@@ -130,7 +126,7 @@ export default function ConfigureBudget({
     setLoadingInitTickets(true)
 
     const _name = Web3.utils.utf8ToHex(fields.name)
-    const _symbol = Web3.utils.utf8ToHex('t' + fields.symbol)
+    const _symbol = Web3.utils.utf8ToHex(fields.symbol)
 
     console.log('🧃 Calling Juicer.issueTickets(name, symbol)', {
       _name,

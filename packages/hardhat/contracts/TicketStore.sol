@@ -111,10 +111,7 @@ contract TicketStore is Store, ITicketStore {
         @param _name The ERC-20's name.
         @param _symbol The ERC-20's symbol.
     */
-    function issue(string calldata _name, string calldata _symbol)
-        external
-        override
-    {
+    function issue(bytes memory _name, bytes memory _symbol) external override {
         // An owner only needs to issue their Tickets once before they can be used.
         require(
             tickets[msg.sender] == Tickets(0),
@@ -125,8 +122,8 @@ contract TicketStore is Store, ITicketStore {
         // Prepend the strings with standards.
         Tickets _tickets =
             new Tickets(
-                string(abi.encodePacked(_name, "Juice ticket")),
-                string(abi.encodePacked("t", _symbol))
+                string(abi.encodePacked(_name, " Juice ticket")),
+                string(abi.encodePacked("j", _symbol))
             );
 
         tickets[msg.sender] = _tickets;

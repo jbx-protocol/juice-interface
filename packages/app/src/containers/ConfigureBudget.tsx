@@ -46,7 +46,7 @@ export default function ConfigureBudget({
   const ticketsAddress = useContractReader<string>({
     contract: contracts?.TicketStore,
     functionName: 'tickets',
-    args: [userAddress],
+    args: [userAddress]
   })
 
   const ticketsContract = erc20Contract(ticketsAddress)
@@ -54,15 +54,17 @@ export default function ConfigureBudget({
   const ticketsSymbol = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'symbol',
-    formatter: (value?: string) =>
-      value ? Web3.utils.hexToString(value) : undefined,
+    // formatter: (value?: string) =>
+    //   value ? Web3.utils.hexToString(value) : undefined,
+    callback: (symb)=> console.log({ symb})
   })
 
   const ticketsName = useContractReader<string>({
     contract: ticketsContract,
     functionName: 'name',
-    formatter: (value?: string) =>
-      value ? Web3.utils.hexToString(value) : undefined,
+    // formatter: (value?: string) =>
+    //   value ? Web3.utils.hexToString(value) : undefined,
+    callback: (val)=> console.log({ val})
   })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol

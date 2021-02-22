@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
-import "./interfaces/IOverflowLender.sol";
+import "./interfaces/IOverflowYielder.sol";
 
 import "./TicketStore.sol";
 
@@ -79,7 +79,13 @@ contract Juicer is IJuicer {
     ITicketStore public immutable override ticketStore;
 
     /// @notice The contract that puts overflow to work.
-    IOverflowLender public override overflowLender;
+    IOverflowYielder public override overflowYielder;
+
+    /// @notice The amount of money that the system must have in overflow before seeking yield.
+    uint256 public override depositThreshold = 10000;
+
+    /// @notice The target percent of overflow that should be yielding.
+    uint256 public override depositRecalibrationTarget = 682;
 
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
@@ -87,11 +93,8 @@ contract Juicer is IJuicer {
     /// @notice The amount claimable by each address, including the admin.
     mapping(address => uint256) public override claimable;
 
-    /// @notice The target percent of overflow that should be yielding.
-    uint256 public depositRecalibrationTarget = 682;
-
     /// @notice The address of a stablecoin ERC-20 token.
-    IERC20 public stablecoin;
+    IERC20 public override stablecoin;
 
     // --- external views --- //
 
@@ -154,20 +157,17 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
-      @param _overflowLender The Lending pool address provider.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
       @param _stablecoin A stablecoin contract.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
-        IOverflowLender _overflowLender,
         uint256 _fee,
         IERC20 _stablecoin
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
-        overflowLender = _overflowLender;
         fee = _fee;
         stablecoin = _stablecoin;
     }
@@ -392,6 +392,23 @@ contract Juicer is IJuicer {
         depositRecalibrationTarget = _newTarget;
     }
 
+    /** 
+      @notice Allow the admin to change the overflow yielder. 
+      @dev All funds will be migrated from the old yielder to the new one.
+      @param _newOverflowYielder The new overflow yielder.
+    */
+    function setOverflowYielder(IOverflowYielder _newOverflowYielder)
+        external
+        override
+        onlyAdmin
+    {
+        //TODO
+        // withdraw all funds from the overflowYielder.
+        // set the newOverflowYielder.
+        // recalibrate.
+        overflowYielder = _newOverflowYielder;
+    }
+
     // --- public transactions --- //
 
     /**
@@ -446,5 +463,10 @@ contract Juicer is IJuicer {
             ticketStore.mint(_issuer, _issuer, _mintForIssuer);
 
         emit DistributeReserves(msg.sender, _issuer);
+    }
+
+    function recalibrate() external {
+        //Send funds to the IOverflowYielder that need to be deposit, or withdraw funds that need to be guarded.
+        // according to the rate.
     }
 }

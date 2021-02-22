@@ -174,7 +174,7 @@ export function reviewStep({
       'Kick off your project by submitting a transaction to the blockchain that activates your contract.',
       '---',
       'By default, Juice will internally keep track of who has sent you payments so that they can claim your overflow.',
-      "If you instead want Juice to track payments by distributing ERC-20 tickets of yours instead, you'll first have to submit a transaction issuing your tickets.",
+      "If you instead want Juice to track payments by distributing ERC-20 tickets of yours, you'll first have to submit a transaction issuing your tickets.",
       "This isn't required, and can be done later. The advantage of using ERC-20 tickets is so people can trade and stake their right to claim your overflow outside of the Juice ecosystem.",
     ],
   }

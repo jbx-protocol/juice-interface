@@ -13,20 +13,10 @@ interface ITicketsController {
         IERC20 returnToken
     );
 
-    event Swap(
-        address issuer,
-        IERC20 from,
-        uint256 amount,
-        IERC20 to,
-        uint256 swappedAmount
-    );
-
     function redeem(
         address _issuer,
         uint256 _amount,
         uint256 _minReturn,
         address _beneficiary
     ) external returns (uint256 returnAmount);
-
-    function addToMigrationAllowList(address _contract) external;
 }

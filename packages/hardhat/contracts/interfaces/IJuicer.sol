@@ -19,6 +19,14 @@ interface IJuicer is IBudgetController, ITicketsController {
         uint256 amount
     );
 
+    event AddToMigrationAllowList(address indexed allowed);
+
+    event SetOverflowYielder(IOverflowYielder indexed newOverflowYielder);
+
+    event SetBondingCurveRate(uint256 rate);
+
+    event Deposit(uint256 depositable, IERC20 token);
+
     function admin() external view returns (address);
 
     function budgetStore() external view returns (IBudgetStore);
@@ -29,7 +37,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function depositable() external view returns (uint256);
 
-    function stash(address _by) external view returns (uint256);
+    function stashed(address _by) external view returns (uint256);
 
     function fee() external view returns (uint256);
 
@@ -66,5 +74,9 @@ interface IJuicer is IBudgetController, ITicketsController {
         IERC20 _token
     ) external;
 
+    function deposit() external;
+
     function setBondingCurveRate(uint256 _rate) external;
+
+    function addToMigrationAllowList(address _contract) external;
 }

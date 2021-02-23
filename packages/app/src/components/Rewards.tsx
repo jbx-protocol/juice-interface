@@ -68,7 +68,7 @@ export default function Rewards({
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
-    functionName: 'claimable',
+    functionName: 'getOverflow',
     args: [budget?.owner],
     shouldUpdate: bigNumbersEq,
   })
@@ -243,13 +243,20 @@ export default function Rewards({
 
       <WtfCard style={{ maxWidth: 800 }}>
         <p>
-          You'll receive this project's tickets in return for making payments towards the active budget.
+          You'll receive this project's tickets in return for making payments
+          towards the active budget.
         </p>
         <p>
-          Tickets can be redeemed for your contract's overflow on a bonding curve – a ticket is redeemable for 38.2% of its proportional overflowed tokens. Meaning, if there are 100 overflow tokens available and 100 of your tickets in circulation, 10 tickets could be redeemed for 3.82 of the overflow tokens. The rest is left to share between the remaining ticket hodlers.
+          Tickets can be redeemed for your contract's overflow on a bonding
+          curve – a ticket is redeemable for 38.2% of its proportional
+          overflowed tokens. Meaning, if there are 100 overflow tokens available
+          and 100 of your tickets in circulation, 10 tickets could be redeemed
+          for 3.82 of the overflow tokens. The rest is left to share between the
+          remaining ticket hodlers.
         </p>
         <p>
-          If this project has minted ERC-20 tokens to track tickets, you'll see yours in your wallet once you contribute a payment.
+          If this project has minted ERC-20 tokens to track tickets, you'll see
+          yours in your wallet once you contribute a payment.
         </p>
       </WtfCard>
     </div>

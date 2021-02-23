@@ -72,6 +72,15 @@ export default function Rewards({
     args: [budget?.owner],
     shouldUpdate: bigNumbersEq,
   })
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(wantToken),
+    functionName: 'symbol',
+  })
 
   const share = ticketSupply?.gt(0)
     ? ticketsBalance
@@ -118,8 +127,6 @@ export default function Rewards({
 
   if (!budget) return null
 
-  const rewardTokenName = 'DAI'
-
   const subText = (text: string) => (
     <div
       style={{
@@ -149,7 +156,7 @@ export default function Rewards({
           title="Unclaimed overflow"
           valueRender={() => (
             <div>
-              {totalClaimableAmount?.toString() ?? 0} {rewardTokenName}
+              {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
             </div>
           )}
         />

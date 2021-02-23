@@ -28,6 +28,16 @@ export default function Reserves({
 }) {
   const [onlyDistributable, setOnlyDistributable] = useState<boolean>(false)
 
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(wantToken),
+    functionName: 'symbol',
+  })
+
   const emptyReserves: ReserveAmounts = {
     adminFees: BigNumber.from(0),
     beneficiaryDonations: BigNumber.from(0),
@@ -82,10 +92,11 @@ export default function Reserves({
         ></Switch>
       </Descriptions.Item>
       <Descriptions.Item label="Admin reserves">
-        {orEmpty(displayReserves?.adminFees?.toString())} DAI
+        {orEmpty(displayReserves?.adminFees?.toString())} {wantTokenName}
       </Descriptions.Item>
       <Descriptions.Item label="Donation reserves">
-        {orEmpty(displayReserves?.beneficiaryDonations?.toString())} DAI
+        {orEmpty(displayReserves?.beneficiaryDonations?.toString())}{' '}
+        {wantTokenName}
       </Descriptions.Item>
       <Descriptions.Item label="Project owner reserves">
         {orEmpty(displayReserves?.issuerTickets?.toString())} {ticketSymbol}

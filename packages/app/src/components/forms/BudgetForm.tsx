@@ -7,10 +7,12 @@ export default function BudgetForm({
   props,
   header,
   disabled,
+  wantTokenName,
 }: {
   props: FormProps<BudgetFormFields>
   header?: JSX.Element
   disabled?: boolean
+  wantTokenName?: string
 }) {
   return (
     <Form layout="vertical" {...props}>
@@ -39,7 +41,7 @@ export default function BudgetForm({
           className="align-end"
           placeholder="0"
           type="number"
-          suffix="DAI"
+          suffix={wantTokenName}
           disabled={disabled}
         />
       </Form.Item>

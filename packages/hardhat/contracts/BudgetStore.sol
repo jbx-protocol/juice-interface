@@ -222,15 +222,7 @@ contract BudgetStore is Store, IBudgetStore {
         address _payer,
         uint256 _amount,
         uint256 _votingPeriod
-    )
-        external
-        override
-        returns (
-            Budget.Data memory budget,
-            uint256 transfer,
-            uint256 overflow
-        )
-    {
+    ) external override returns (Budget.Data memory budget, uint256 transfer) {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data storage _budget =
@@ -240,15 +232,16 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.total = _budget.total.add(_amount);
 
         // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
-        overflow = _budget.total > _budget.target
-            ? _budget.total.sub(_budget.target)
-            : 0;
+        uint256 _overflow =
+            _budget.total > _budget.target
+                ? _budget.total.sub(_budget.target)
+                : 0;
 
-        if (_budget.owner == _payer && _amount > overflow) {
+        if (_budget.owner == _payer && _amount > _overflow) {
             // Mark the amount of the contribution that didn't go towards overflow as tapped.
-            _budget.tapped = _budget.tapped.add(_amount.sub(overflow));
+            _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
             // Transfer the overflow only, since the rest has been marked as tapped.
-            if (overflow > 0) transfer = overflow;
+            if (_overflow > 0) transfer = _overflow;
         } else {
             transfer = _amount;
         }

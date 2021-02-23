@@ -85,13 +85,7 @@ interface IBudgetStore is IStore {
         address _payer,
         uint256 _amount,
         uint256 _votingPeriod
-    )
-        external
-        returns (
-            Budget.Data memory budget,
-            uint256 transferAmount,
-            uint256 overflow
-        );
+    ) external returns (Budget.Data memory budget, uint256 transferAmount);
 
     function saveBudget(Budget.Data calldata _budget) external;
 

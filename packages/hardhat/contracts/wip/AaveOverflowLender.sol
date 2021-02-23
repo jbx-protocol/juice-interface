@@ -73,7 +73,11 @@ contract AaveOverflowLender is IOverflowYielder {
         );
     }
 
-    function withdraw(uint256 _amount, IERC20 _token) external override {
+    function withdraw(uint256 _amount, IERC20 _token)
+        external
+        override
+        onlyJuicer
+    {
         ILendingPool(provider.getLendingPool()).withdraw(
             address(_token),
             _amount,

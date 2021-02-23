@@ -115,7 +115,7 @@ export default function Owner({
       )
     case 'found':
       const tabPaneStyle: CSSProperties = {
-        background: colors.light,
+        // background: colors.light,
         padding: padding.app,
         paddingBottom: 60,
       }

@@ -16,8 +16,7 @@ export default function WtfCard({
       style={{
         ...shadowCard,
         padding: 20,
-        background: colors.hint,
-        border: '1px solid black',
+        background: colors.backgroundTertiary,
         ...style,
       }}
     >

@@ -74,16 +74,16 @@ export function reviewStep({
                 }
                 suffix={wantTokenName}
               />
-              <Statistic
-                title="Link"
-                value={
-                  activeBudget
-                    ? activeBudget.link
-                    : budgetForm.getFieldValue('link')
-                }
-              />
             </Space>
           </div>
+          <Statistic
+            title="Link"
+            value={
+              activeBudget
+                ? activeBudget.link
+                : budgetForm.getFieldValue('link')
+            }
+          />
           <Space size="large" align="end">
             <Statistic
               style={{
@@ -130,8 +130,8 @@ export function reviewStep({
               )}
             />
           </Space>
-          {activeBudget ? (
-            <Link to={{ hash: userAddress }}>
+          {activeBudget && userAddress ? (
+            <Link to={userAddress}>
               <Button type="primary">Go to your budget</Button>
             </Link>
           ) : (

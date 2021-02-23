@@ -110,8 +110,8 @@ contract TicketStore is Store, ITicketStore {
     /**
         @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Deploys an owner's Ticket ERC-20 token contract.
-        @param _name The ERC-20's name.
-        @param _symbol The ERC-20's symbol.
+        @param _name The ERC-20's name. " Juice ticket" will be appended.
+        @param _symbol The ERC-20's symbol. "j" will be prepended.
     */
     function issue(bytes memory _name, bytes memory _symbol) external override {
         // An owner only needs to issue their Tickets once before they can be used.

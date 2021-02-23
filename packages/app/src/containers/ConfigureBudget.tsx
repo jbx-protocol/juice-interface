@@ -181,12 +181,12 @@ export default function ConfigureBudget({
     const _link = fields.link ?? ''
     const _name = fields.name
     const _discountRate = BigNumber.from(fields.discountRate).toHexString()
-    const _ownerAllocation = fields.ownerAllocation
-      ? BigNumber.from(fields.ownerAllocation).toHexString()
-      : 0
-    const _beneficiaryAllocation = fields.beneficiaryAllocation
-      ? BigNumber.from(fields.beneficiaryAllocation).toHexString()
-      : 0
+    const _ownerAllocation = BigNumber.from(
+      fields.ownerAllocation || 0,
+    ).toHexString()
+    const _beneficiaryAllocation = BigNumber.from(
+      fields.beneficiaryAllocation || 0,
+    ).toHexString()
     const _beneficiaryAddress =
       fields.beneficiaryAddress?.trim() ??
       '0x0000000000000000000000000000000000000000'

@@ -17,8 +17,9 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
-import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { addressExists } from '../utils/addressExists'
+import { bigNumbersEq } from '../utils/bigNumbersEq'
+import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
 
 export default function BudgetDetail({
@@ -38,7 +39,15 @@ export default function BudgetDetail({
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
-  const wantTokenName = 'DAI'
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(wantToken),
+    functionName: 'symbol',
+  })
 
   const tappableAmount = useContractReader<BigNumber>({
     contract: contracts?.BudgetStore,
@@ -170,21 +179,22 @@ export default function BudgetDetail({
           {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
         </Descriptions.Item>
 
-        <Descriptions.Item 
-                    label={toolTipLabel(
-              'Tapped',
-              "The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
-            )}
+        <Descriptions.Item
+          label={toolTipLabel(
+            'Tapped',
+            'The amount that the project owner has tapped from this budget. The owner can tap up to the specified target.',
+          )}
         >
           {budget.tapped.toString()} {wantTokenName}
         </Descriptions.Item>
 
-        <Descriptions.Item 
-                            label={toolTipLabel(
-              'Tappable',
-              "The amount that the project owner can still tap from this budget."
-            )}
-        span={2}>
+        <Descriptions.Item
+          label={toolTipLabel(
+            'Tappable',
+            'The amount that the project owner can still tap from this budget.',
+          )}
+          span={2}
+        >
           <div
             style={{
               display: 'flex',
@@ -248,27 +258,27 @@ export default function BudgetDetail({
           <Descriptions.Item
             label={toolTipLabel(
               'Discount Rate',
-              "The rate at which payments to future budgeting periods are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting period will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting period."
+              'The rate at which payments to future budgeting periods are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting period will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting period.',
             )}
           >
             {budget.discountRate.toString()} %
           </Descriptions.Item>
 
-          <Descriptions.Item 
+          <Descriptions.Item
             label={toolTipLabel(
               'Reserved tickets for owner',
-              "This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires."
+              "This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires.",
             )}
           >
             {budget.o.toString()}%
           </Descriptions.Item>
 
           {!addressExists(budget.bAddress) ? null : (
-            <Descriptions.Item 
-            label={toolTipLabel(
-              'Reserved donation amount',
-              "A percentage of this budget's overflow can be reserved for the specified address. For example, if this is set to 5% and there is 1000 DAI of overflow, the donation address will be able to claim 50 DAI once this budget expires."
-            )}
+            <Descriptions.Item
+              label={toolTipLabel(
+                'Reserved donation amount',
+                "A percentage of this budget's overflow can be reserved for the specified address. For example, if this is set to 5% and there is 1000 DAI of overflow, the donation address will be able to claim 50 DAI once this budget expires.",
+              )}
             >
               {budget.b.toString()}%
             </Descriptions.Item>
@@ -282,7 +292,9 @@ export default function BudgetDetail({
 
           {ended && surplus.gt(0) ? (
             <Descriptions.Item label="Reserves">
-              {budget?.hasMintedReserves ? 'Distributed' : 'Not yet distributed'}
+              {budget?.hasMintedReserves
+                ? 'Distributed'
+                : 'Not yet distributed'}
             </Descriptions.Item>
           ) : null}
         </Descriptions>

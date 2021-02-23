@@ -24,6 +24,7 @@ export function reviewStep({
   loadingCreateBudget,
   userAddress,
   feePercent,
+  wantTokenName,
 }: {
   ticketsForm: FormInstance<TicketsFormFields>
   budgetForm: FormInstance<BudgetFormFields>
@@ -38,6 +39,7 @@ export function reviewStep({
   loadingCreateBudget?: boolean
   userAddress?: string
   feePercent?: BigNumber
+  wantTokenName?: string
 }): Step {
   const targetWithFee = (target: BigNumber) =>
     feePercent
@@ -70,7 +72,7 @@ export function reviewStep({
                         BigNumber.from(budgetForm.getFieldValue('target') || 0),
                       )
                 }
-                suffix="DAI"
+                suffix={wantTokenName}
               />
               <Statistic
                 title="Link"

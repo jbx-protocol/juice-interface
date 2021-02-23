@@ -6,7 +6,7 @@ import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
 import BudgetForm from '../components/forms/BudgetForm'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
-import { DAI } from '../constants/tokens/dai'
+import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
 import { BudgetFormFields } from '../models/forms-fields/budget-form'
@@ -27,6 +27,11 @@ export default function ReconfigureBudget({
 }) {
   const [budgetForm] = Form.useForm<BudgetFormFields>()
   const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
+
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
+  })
 
   if (!transactor || !contracts) return null
 
@@ -66,7 +71,7 @@ export default function ReconfigureBudget({
       fields.beneficiaryAllocation,
     )
     const _beneficiaryAddress = fields.beneficiaryAddress ?? '0'
-    const _want = DAI
+    const _want = wantToken
 
     console.log('🧃 Calling BudgetStore.configure(...)', {
       _target,

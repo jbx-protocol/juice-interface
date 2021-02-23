@@ -1,4 +1,4 @@
-import { Button, Col, Row, Space, Timeline, TimelineItemProps } from 'antd'
+import { Button, Col, Row, Space } from 'antd'
 import React, { CSSProperties } from 'react'
 
 import Footer from '../../components/Footer'
@@ -28,13 +28,6 @@ export default function Landing({
       {text}
     </h1>
   )
-
-  const timelineItemStyle: TimelineItemProps = {
-    color: colors.juiceOrange,
-    style: {
-      paddingBottom: '80px',
-    },
-  }
 
   const listData = [
     'Ethereum public goods',

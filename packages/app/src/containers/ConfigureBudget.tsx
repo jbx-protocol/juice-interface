@@ -12,7 +12,6 @@ import WtfCard from '../components/WtfCard'
 import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { padding } from '../constants/styles/padding'
-import { DAI } from '../constants/tokens/dai'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
@@ -65,6 +64,16 @@ export default function ConfigureBudget({
     contract: contracts?.Juicer,
     functionName: 'fee',
     formatter: (val: BigNumber) => val.div(100),
+  })
+
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
+  })
+
+  const wantTokenName = useContractReader<string>({
+    contract: erc20Contract(wantToken),
+    functionName: 'symbol',
   })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol
@@ -182,7 +191,7 @@ export default function ConfigureBudget({
       fields.beneficiaryAddress?.trim() ??
       '0x0000000000000000000000000000000000000000'
 
-    const _want = DAI
+    const _want = wantToken
 
     console.log('🧃 Calling BudgetStore.configure(...)', {
       _target,
@@ -216,6 +225,7 @@ export default function ConfigureBudget({
     contractStep({
       form: budgetForm,
       budgetActivated: !!activeBudget,
+      wantTokenName,
     }),
     ticketsStep({
       form: ticketsForm,
@@ -239,6 +249,7 @@ export default function ConfigureBudget({
       loadingCreateBudget,
       userAddress,
       feePercent: juicerFeePercent,
+      wantTokenName,
     }),
   ]
 

@@ -41,6 +41,8 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function fee() external view returns (uint256);
 
+    function hasDistributedReserves(uint256 _budgetId) external returns (bool);
+
     function stablecoin() external view returns (IERC20);
 
     function bondingCurveRate() external view returns (uint256);

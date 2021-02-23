@@ -92,6 +92,9 @@ contract Juicer is IJuicer {
     /// @notice The address of a stablecoin ERC-20 token.
     IERC20 public override stablecoin;
 
+    /// @notice Whether or not a budget with the specified ID has distributed reserves.
+    mapping(uint256 => bool) public override hasDistributedReserves;
+
     // --- external views --- //
 
     /** 
@@ -165,7 +168,7 @@ contract Juicer is IJuicer {
 
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasDistributedReserves) {
+        while (_budget.id > 0 && !hasDistributedReserves[_budget.id]) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
             if (
                 !_onlyDistributable ||
@@ -374,7 +377,7 @@ contract Juicer is IJuicer {
         _budget.want.safeTransfer(_beneficiary, _amount);
 
         // Distribute reserves if needed.
-        if (!_budget.hasDistributedReserves) distributeReserves(msg.sender);
+        if (!hasDistributedReserves[_budget.id]) distributeReserves(msg.sender);
 
         emit TapBudget(
             _budgetId,
@@ -598,7 +601,7 @@ contract Juicer is IJuicer {
 
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !_budget.hasDistributedReserves) {
+        while (_budget.id > 0 && !hasDistributedReserves[_budget.id]) {
             // If the budget is redistributing, it has unminted reserved tickets.
             if (_budget._state() == Budget.State.Redistributing) {
                 // Take fee
@@ -623,10 +626,7 @@ contract Juicer is IJuicer {
                 }
 
                 // Mark the budget as having distributed reserves.
-                _budget.hasDistributedReserves = true;
-
-                // Save the budget to the store;
-                budgetStore.saveBudget(_budget);
+                hasDistributedReserves[_budget.id] = true;
             }
 
             // Continue the loop with the previous Budget.

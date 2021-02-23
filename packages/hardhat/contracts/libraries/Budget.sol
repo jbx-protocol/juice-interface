@@ -47,8 +47,6 @@ library Budget {
         uint256 b;
         // The specified beneficiary.
         address bAddress;
-        // If the reserved tickets have been minted.
-        bool hasDistributedReserves;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
@@ -137,7 +135,6 @@ library Budget {
                 _self.o,
                 _self.b,
                 _self.bAddress,
-                false,
                 _derivedWeight(_self),
                 _self.discountRate,
                 _self.configured

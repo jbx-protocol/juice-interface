@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Divider, FormInstance, Space, Statistic } from 'antd'
 import { Link } from 'react-router-dom'
 
@@ -22,6 +23,7 @@ export function reviewStep({
   loadingInitTickets,
   loadingCreateBudget,
   userAddress,
+  feePercent,
 }: {
   ticketsForm: FormInstance<TicketsFormFields>
   budgetForm: FormInstance<BudgetFormFields>
@@ -35,7 +37,13 @@ export function reviewStep({
   loadingInitTickets?: boolean
   loadingCreateBudget?: boolean
   userAddress?: string
+  feePercent?: BigNumber
 }): Step {
+  const targetWithFee = (target: BigNumber) =>
+    feePercent
+      ? `${target.toString()} (+ ${target.mul(feePercent)} admin fee)`
+      : undefined
+
   return {
     title: 'Review',
     content: (
@@ -46,17 +54,31 @@ export function reviewStep({
             <Space size="large">
               <Statistic
                 title="Duration"
-                value={budgetForm.getFieldValue('duration')}
+                value={
+                  activeBudget
+                    ? activeBudget.duration.toString()
+                    : budgetForm.getFieldValue('duration')
+                }
                 suffix="days"
               />
               <Statistic
                 title="Amount"
-                value={budgetForm.getFieldValue('target')}
+                value={
+                  activeBudget
+                    ? targetWithFee(activeBudget.target)
+                    : targetWithFee(
+                        BigNumber.from(budgetForm.getFieldValue('target') || 0),
+                      )
+                }
                 suffix="DAI"
               />
               <Statistic
                 title="Link"
-                value={budgetForm.getFieldValue('link')}
+                value={
+                  activeBudget
+                    ? activeBudget.link
+                    : budgetForm.getFieldValue('link')
+                }
               />
             </Space>
           </div>
@@ -96,10 +118,7 @@ export function reviewStep({
           <Space size="large" align="end">
             <Statistic
               title="Beneficiary address"
-              valueStyle={{
-                fontSize: '1rem',
-                lineBreak: 'anywhere',
-              }}
+              valueStyle={{ lineBreak: 'anywhere' }}
               value={orEmpty(
                 activeBudget
                   ? addressExists(activeBudget.bAddress)

@@ -61,6 +61,12 @@ export default function ConfigureBudget({
     functionName: 'name',
   })
 
+  const juicerFeePercent = useContractReader<BigNumber>({
+    contract: contracts?.Juicer,
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val.div(100),
+  })
+
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol
 
   useEffect(() => {
@@ -232,6 +238,7 @@ export default function ConfigureBudget({
       loadingInitTickets,
       loadingCreateBudget,
       userAddress,
+      feePercent: juicerFeePercent,
     }),
   ]
 

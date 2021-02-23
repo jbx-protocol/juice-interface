@@ -92,8 +92,8 @@ contract Juicer is IJuicer {
     /// @notice The address of a stablecoin ERC-20 token.
     IERC20 public override stablecoin;
 
-    /// @notice Whether or not a budget with the specified ID has distributed reserves.
-    mapping(uint256 => bool) public override hasDistributedReserves;
+    /// @notice The latest budget ID that has distributed reserves for each ticket issuer.
+    mapping(address => uint256) public override latestDistributedBudgetId;
 
     // --- external views --- //
 
@@ -166,9 +166,12 @@ contract Juicer is IJuicer {
         // Get a reference to the owner's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
 
+        // Get the id of the latest distributed budget for this issuer.
+        uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
+
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !hasDistributedReserves[_budget.id]) {
+        while (_budget.id > 0 && _budget.id < _latestDistributedBudgetId) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
             if (
                 !_onlyDistributable ||
@@ -377,7 +380,8 @@ contract Juicer is IJuicer {
         _budget.want.safeTransfer(_beneficiary, _amount);
 
         // Distribute reserves if needed.
-        if (!hasDistributedReserves[_budget.id]) distributeReserves(msg.sender);
+        if (latestDistributedBudgetId[msg.sender] < _budgetId)
+            distributeReserves(msg.sender);
 
         emit TapBudget(
             _budgetId,
@@ -599,9 +603,18 @@ contract Juicer is IJuicer {
         // The number of  tickets to mint for the issuer.
         uint256 _mintForIssuer = 0;
 
+        // Get the id of the latest distributed budget for this issuer.
+        uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
+
+        // Return if the latest budget has been redistributed.
+        if (_latestDistributedBudgetId == _budget.id) return;
+
+        // Set new latest distributed budget.
+        latestDistributedBudgetId[_issuer] = _budget.id;
+
         // Iterate sequentially through the owner's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && !hasDistributedReserves[_budget.id]) {
+        while (_budget.id > 0 && _budget.id > _latestDistributedBudgetId) {
             // If the budget is redistributing, it has unminted reserved tickets.
             if (_budget._state() == Budget.State.Redistributing) {
                 // Take fee
@@ -624,9 +637,6 @@ contract Juicer is IJuicer {
                         _bAmount
                     );
                 }
-
-                // Mark the budget as having distributed reserves.
-                hasDistributedReserves[_budget.id] = true;
             }
 
             // Continue the loop with the previous Budget.

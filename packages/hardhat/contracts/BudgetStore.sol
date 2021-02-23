@@ -291,14 +291,6 @@ contract BudgetStore is Store, IBudgetStore {
 
     // --- public transactions --- //
 
-    /** 
-        @notice Saves a Budget.
-        @param _budget The Budget to save.
-    */
-    function saveBudget(Budget.Data memory _budget) public override onlyAdmin {
-        budgets[_budget.id] = _budget;
-    }
-
     /**
       @notice Add votes to the a particular reconfiguration proposal.
       @param _budgetId The ID of the budget whos reconfiguration is being voted on.
@@ -408,7 +400,6 @@ contract BudgetStore is Store, IBudgetStore {
         newBudget.start = _start;
         newBudget.total = 0;
         newBudget.tapped = 0;
-        newBudget.hasDistributedReserves = false;
         latestBudgetId[_owner] = budgetCount;
 
         if (_latestBudget.id > 0) {

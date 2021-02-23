@@ -255,13 +255,14 @@ export default function Landing({
           paddingTop: 80,
           paddingBottom: 80,
           background: colors.light,
+          color: colors.dark,
         }}
       >
         <div style={wrapper}>
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               {bigHeader('Should you Juice?')}
-              <p>Almost definately.</p>
+              <p>Almost definitely.</p>
               <p>
                 With Juice, we end up getting online community-driven goods and
                 services with no ads, data integrity, and business operation

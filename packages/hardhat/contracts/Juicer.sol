@@ -13,27 +13,26 @@ import "./interfaces/IOverflowYielder.sol";
 import "./TicketStore.sol";
 
 /**
-  @notice This contract exposes all external interactions with the Juice ecosystem.
-  @dev  1. A project owner issues their Tickets.
-        2. A project owner configures their first Budget.
-        3. Any address (end user or smart contract) can contribute funds to your Budget.
-           You can configure your Budget to `want` any of the tokens on the allow list (DAI, sUSD, ...).
-           In return, your contributors receive some of your project's Tickets minted by this contract. 
+  @notice This contract manages all funds in the Juice ecosystem.
+  @dev  1 (optional). A project owner issues their Tickets at the ticket store.
+        2. A project owner configures their first Budget at the budget store.
+        3. Any address (end user or smart contract) can contribute funds to a Budget in this Juicer contract.
+           In return, your contributors receive some of your project's tickets. 
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
               - The contributed amount. The more someone contributes, the more Tickets they'll receive.
-              - The target amount of your Budget. The bigger your Budget's target amount, the fewer tickets that'll be minted for each `want` token contributed.
-              - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate` rate. 
+              - The target amount of your Budget. The bigger your Budget's target amount, the fewer tickets that'll be minted for each token paid.
+              - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate`. 
                 This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
                 current Budget than to future budgets.
         4. As the project owner, you can collect any funds made to your Budget within your configured target.
            Any overflow will be accounted for seperately. 
-        5. Your project's Ticket holders can redeem their Tickets for a share of your project's accumulated overflow.
+        5. Your project's Ticket holders can redeem their Tickets for a share of your project's accumulated overflow along a bonding curve. 
+           The bonding curve starts at 38.2%, meaning each ticket can be redeemed for 38.2% of its proportial overflow.
+           For example, if there were 100 tickets circulating and 100 DAI of unclaimed overflow, 10 tickets could be redeemed for 3.82 DAI.
+           The rest is left to share between the remaining ticket hodlers.
         6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
-           but if your current Budget has already received contribution, the new configuration 
-           will only affect your Budget that automatically goes into effect once the current one expires.
+           The new configuration will go into effect once the current budget one expires.
 
-  @dev This contract manages all funds.
-  
   @dev A project owner can transfer their funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */

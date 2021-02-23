@@ -11,7 +11,7 @@ import "./interfaces/IBudgetStore.sol";
 import "./abstract/Store.sol";
 
 /** 
-  @notice An immutable contract to save Budget states.
+  @notice An immutable contract to manage Budget states.
 */
 contract BudgetStore is Store, IBudgetStore {
     using SafeMath for uint256;
@@ -25,7 +25,7 @@ contract BudgetStore is Store, IBudgetStore {
     // --- public properties --- //
 
     /// @notice A big number to base ticket issuance off of.
-    uint256 public constant BUDGET_BASE_WEIGHT = 1E12;
+    uint256 public constant BUDGET_BASE_WEIGHT = 1E10;
 
     /// @notice The latest Budget ID for each owner address.
     mapping(address => uint256) public override latestBudgetId;

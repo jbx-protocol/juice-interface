@@ -87,7 +87,7 @@ contract Juicer is IJuicer {
     uint256 public override bondingCurveRate = 382;
 
     /// @notice The amounts stashed for each address, including the admin and any donations.
-    mapping(address => uint256) public override stash;
+    mapping(address => uint256) public override stashed;
 
     /// @notice The address of a stablecoin ERC-20 token.
     IERC20 public override stablecoin;
@@ -396,14 +396,14 @@ contract Juicer is IJuicer {
         lock
         returns (uint256 amount)
     {
-        // The amount collectable.
-        amount = stash[msg.sender];
+        // The amount stashed.
+        amount = stashed[msg.sender];
 
         // Must be positive.
         require(amount > 0, "Juicer::claim: INSUFFICIENT_FUNDS");
 
-        // Set the amount claimable to 0.
-        stash[msg.sender] = 0;
+        // Set the amount stashed to 0.
+        stashed[msg.sender] = 0;
 
         // Transfer the funds to the specified address.
         stablecoin.safeTransfer(_beneficiary, amount);
@@ -414,7 +414,7 @@ contract Juicer is IJuicer {
     /**
       @notice Deposit any overflow funds that are not earning interest into the overflow yielder.
      */
-    function deposit() external lock {
+    function deposit() external override lock {
         // Can't deposit if an overflow yielder has not yet been set.
         require(
             overflowYielder != IOverflowYielder(0),
@@ -427,6 +427,8 @@ contract Juicer is IJuicer {
         // Deposit and reset what's depositable.
         overflowYielder.deposit(depositable, stablecoin);
         depositable = 0;
+
+        emit Deposit(depositable, stablecoin);
     }
 
     /**
@@ -537,14 +539,15 @@ contract Juicer is IJuicer {
 
     /**
         @notice Adds to the contract addresses that project owners can migrate their Tickets to.
-        @param _contract The contract to allow.
+        @param _allowed The contract to allow.
     */
-    function addToMigrationAllowList(address _contract)
+    function addToMigrationAllowList(address _allowed)
         external
         override
         onlyAdmin
     {
-        migrationContractIsAllowed[_contract] = true;
+        migrationContractIsAllowed[_allowed] = true;
+        emit AddToMigrationAllowList(_allowed);
     }
 
     /**
@@ -553,6 +556,7 @@ contract Juicer is IJuicer {
     */
     function setBondingCurveRate(uint256 _rate) external override onlyAdmin {
         bondingCurveRate = _rate;
+        emit SetBondingCurveRate(_rate);
     }
 
     /** 
@@ -574,6 +578,8 @@ contract Juicer is IJuicer {
         // Allow the new overflow yielder to move funds from this contract.
         stablecoin.safeApprove(address(_newOverflowYielder), uint256(-1));
         overflowYielder = _newOverflowYielder;
+
+        emit SetOverflowYielder(_newOverflowYielder);
     }
 
     // --- public transactions --- //
@@ -597,7 +603,7 @@ contract Juicer is IJuicer {
             if (_budget._state() == Budget.State.Redistributing) {
                 // Take fee
                 uint256 _feeAmount = _budget.total.mul(fee).div(100);
-                stash[admin] = stash[admin].add(_feeAmount);
+                stashed[admin] = stashed[admin].add(_feeAmount);
 
                 if (_budget.o > 0) {
                     // The owner gets the budget's owner percentage, if one is specified.
@@ -611,7 +617,7 @@ contract Juicer is IJuicer {
                         _budget.total.sub(_budget.target).mul(_budget.b).div(
                             100
                         );
-                    stash[_budget.bAddress] = stash[_budget.bAddress].add(
+                    stashed[_budget.bAddress] = stashed[_budget.bAddress].add(
                         _bAmount
                     );
                 }

@@ -99,7 +99,7 @@ contract Juicer is IJuicer {
       @notice Gets the total overflow that this Juicer is responsible for.
       @return The amount of overflow.
     */
-    function getTotalOverflow() external view returns (uint256) {
+    function getTotalOverflow() external view override returns (uint256) {
         // If there's no overflow yielder, all of the overflow is depositable.
         if (overflowYielder != IOverflowYielder(0)) {
             return overflowYielder.getBalance(stablecoin).add(depositable);
@@ -113,7 +113,12 @@ contract Juicer is IJuicer {
       @param _issuer The ticket issuer to get overflow for.
       @return The amount of overflow.
     */
-    function getOverflow(address _issuer) external view returns (uint256) {
+    function getOverflow(address _issuer)
+        external
+        view
+        override
+        returns (uint256)
+    {
         // The raw amount that the issuer can claim.
         uint256 _claimable = ticketStore.claimable(_issuer);
 

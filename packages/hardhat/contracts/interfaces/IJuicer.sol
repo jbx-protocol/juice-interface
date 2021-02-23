@@ -39,6 +39,10 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function collect(address _beneficiary) external returns (uint256 amount);
 
+    function getOverflow(address _issuer) external view returns (uint256);
+
+    function getTotalOverflow() external view returns (uint256);
+
     function getReserves(address _issuer, bool _onlyDistributable)
         external
         view

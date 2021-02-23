@@ -217,12 +217,26 @@ contract BudgetStore is Store, IBudgetStore {
         return _budget.id;
     }
 
+    /** 
+      @notice Tracks a payments to the appropriate budget for the owner.
+      @param _owner The owner being paid.
+      @param _payer The address that is paying.
+      @param _amount The amount being paid.
+      @param _votingPeriod The amount of time to allow for voting to complete before a reconfigured budget is eligible to receive payments.
+      @return budget The budget that is being paid.
+      @return transferAmount The amount that should be transfered from the payer.
+    */
     function payOwner(
         address _owner,
         address _payer,
         uint256 _amount,
         uint256 _votingPeriod
-    ) external override returns (Budget.Data memory budget, uint256 transfer) {
+    )
+        external
+        override
+        onlyAdmin
+        returns (Budget.Data memory budget, uint256 transferAmount)
+    {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the owner's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data storage _budget =
@@ -241,9 +255,9 @@ contract BudgetStore is Store, IBudgetStore {
             // Mark the amount of the contribution that didn't go towards overflow as tapped.
             _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
             // Transfer the overflow only, since the rest has been marked as tapped.
-            if (_overflow > 0) transfer = _overflow;
+            if (_overflow > 0) transferAmount = _overflow;
         } else {
-            transfer = _amount;
+            transferAmount = _amount;
         }
 
         budget = _budget;
@@ -254,7 +268,7 @@ contract BudgetStore is Store, IBudgetStore {
         address _tapper,
         uint256 _amount,
         uint256 _fee
-    ) external override returns (Budget.Data memory) {
+    ) external override onlyAdmin returns (Budget.Data memory) {
         // Get a reference to the Budget being tapped.
         Budget.Data storage _budget = budgets[_budgetId];
 

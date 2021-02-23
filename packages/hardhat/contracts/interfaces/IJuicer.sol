@@ -13,8 +13,8 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     event Migrate(IJuicer indexed to, uint256 _amount);
 
-    event Claim(
-        address indexed claimer,
+    event Collect(
+        address indexed collecter,
         address indexed beneficiary,
         uint256 amount
     );
@@ -29,13 +29,15 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function depositable() external view returns (uint256);
 
-    function claimable(address _by) external view returns (uint256);
+    function stash(address _by) external view returns (uint256);
 
     function fee() external view returns (uint256);
 
     function stablecoin() external view returns (IERC20);
 
-    function claim(address _beneficiary) external returns (uint256 amount);
+    function bondingCurveRate() external view returns (uint256);
+
+    function collect(address _beneficiary) external returns (uint256 amount);
 
     function getReserves(address _issuer, bool _onlyDistributable)
         external
@@ -56,8 +58,9 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function transferClaimable(
         address _issuer,
-        uint256 _claimable,
         uint256 _amount,
         IERC20 _token
     ) external;
+
+    function setBondingCurveRate(uint256 _rate) external;
 }

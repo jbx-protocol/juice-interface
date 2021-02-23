@@ -11,7 +11,13 @@ import "./IOverflowYielder.sol";
 interface IJuicer is IBudgetController, ITicketsController {
     event DistributeReserves(address minter, address issuer);
 
-    event Migrate(IJuicer indexed to);
+    event Migrate(IJuicer indexed to, uint256 _amount);
+
+    event Claim(
+        address indexed claimer,
+        address indexed beneficiary,
+        uint256 amount
+    );
 
     function admin() external view returns (address);
 
@@ -29,7 +35,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function stablecoin() external view returns (IERC20);
 
-    function claim() external returns (uint256 amount);
+    function claim(address _beneficiary) external returns (uint256 amount);
 
     function getReserves(address _issuer, bool _onlyDistributable)
         external

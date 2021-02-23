@@ -5,11 +5,11 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface IBudgetController {
-    event SustainBudget(
+    event PayOwner(
         uint256 indexed budgetId,
         address indexed owner,
-        address indexed beneficiary,
-        address sustainer,
+        address indexed payer,
+        address beneficiary,
         uint256 amount,
         IERC20 token
     );
@@ -21,8 +21,6 @@ interface IBudgetController {
         uint256 amount,
         IERC20 want
     );
-
-    function DEPOSIT_THRESHOLD() external view returns (uint256);
 
     function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
 

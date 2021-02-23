@@ -11,7 +11,7 @@ import "./interfaces/ITicketStore.sol";
 import "./Tickets.sol";
 
 /** 
-  @notice An immutable contract to save Ticket states.
+  @notice An immutable contract to manage Ticket states.
 */
 contract TicketStore is Store, ITicketStore {
     using SafeMath for uint256;

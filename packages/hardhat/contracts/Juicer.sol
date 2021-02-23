@@ -84,8 +84,11 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the contract owner takes from overflow.
     uint256 public immutable override fee;
 
-    /// @notice The amount claimable by each address, including the admin.
-    mapping(address => uint256) public override claimable;
+    /// @notice The rate that describes the bonding curve at which tickets are redeemable.
+    uint256 public override bondingCurveRate = 382;
+
+    /// @notice The amounts stashed for each address, including the admin and any donations.
+    mapping(address => uint256) public override stash;
 
     /// @notice The address of a stablecoin ERC-20 token.
     IERC20 public override stablecoin;
@@ -310,7 +313,13 @@ contract Juicer is IJuicer {
 
         // Redeem at the ticket store. The raw amount claimable for this issuer is returned.
         uint256 _claimable =
-            ticketStore.redeem(_issuer, msg.sender, _amount, _minReturn, 382);
+            ticketStore.redeem(
+                _issuer,
+                msg.sender,
+                _amount,
+                _minReturn,
+                bondingCurveRate
+            );
 
         // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
         returnAmount = (overflowYielder.getBalance(stablecoin).add(depositable))
@@ -373,29 +382,29 @@ contract Juicer is IJuicer {
     }
 
     /**
-      @notice Claim any funds belonging to you.
+      @notice Collect any funds belonging to you.
       @param _beneficiary The address that will receive the funds.
       @return amount The amount claimed.
      */
-    function claim(address _beneficiary)
+    function collect(address _beneficiary)
         external
         override
         lock
         returns (uint256 amount)
     {
-        // The amount claimable.
-        amount = claimable[msg.sender];
+        // The amount collectable.
+        amount = stash[msg.sender];
 
         // Must be positive.
         require(amount > 0, "Juicer::claim: INSUFFICIENT_FUNDS");
 
         // Set the amount claimable to 0.
-        claimable[msg.sender] = 0;
+        stash[msg.sender] = 0;
 
         // Transfer the funds to the specified address.
         stablecoin.safeTransfer(_beneficiary, amount);
 
-        emit Claim(msg.sender, _beneficiary, amount);
+        emit Collect(msg.sender, _beneficiary, amount);
     }
 
     /**
@@ -465,7 +474,7 @@ contract Juicer is IJuicer {
 
         // Allow the new owner to move funds owned by the issuer from contract.
         stablecoin.safeApprove(address(_to), _amount);
-        _to.transferClaimable(msg.sender, _claimable, _amount, stablecoin);
+        _to.transferClaimable(msg.sender, _amount, stablecoin);
 
         emit Migrate(_to, _amount);
     }
@@ -473,13 +482,11 @@ contract Juicer is IJuicer {
     /** 
       @notice Transfer funds from the message sender to this contract that should be designated as overflow for the provided ticket issuer.
       @param _issuer The issuer of the tickets getting credited with overflow.
-      @param _claimable The amount of claimable tokens being transfered.
       @param _amount The amount that the claimable tokens are worth.
       @param _token The token of the specified amount.
     */
     function transferClaimable(
         address _issuer,
-        uint256 _claimable,
         uint256 _amount,
         IERC20 _token
     ) external override {
@@ -491,19 +498,27 @@ contract Juicer is IJuicer {
 
         // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
         if (overflowYielder != IOverflowYielder(0)) {
-            _overflowBefore = overflowYielder.getBalance(stablecoin);
+            _overflowBefore = _overflowBefore.add(
+                overflowYielder.getBalance(stablecoin)
+            );
             overflowYielder.deposit(_amount, stablecoin);
         } else {
             depositable = depositable.add(_amount);
         }
 
-        // issuerClaimable = x + currentIssuerClaimable
-        //claimable to add = totalClaimable / issuerClaimable = getBalance()
+        uint256 _totalClaimable = ticketStore.totalClaimable();
 
-        //TODO shouldnt allow _claimable to be passed in.
+        // The raw amount to add as claimable to the ticket store.
+        uint256 _claimableToAdd =
+            (
+                _totalClaimable.mul(_overflowBefore.add(_amount)).div(
+                    _overflowBefore
+                )
+            )
+                .sub(_totalClaimable);
 
         // Add the raw claimable amount to the ticket store.
-        ticketStore.addClaimable(_issuer, _claimable);
+        ticketStore.addClaimable(_issuer, _claimableToAdd);
     }
 
     /**
@@ -526,6 +541,14 @@ contract Juicer is IJuicer {
         onlyAdmin
     {
         migrationContractIsAllowed[_contract] = true;
+    }
+
+    /**
+        @notice The admin can set the bonding curve rate.
+        @param _rate The new rate.
+    */
+    function setBondingCurveRate(uint256 _rate) external override onlyAdmin {
+        bondingCurveRate = _rate;
     }
 
     /** 
@@ -570,7 +593,7 @@ contract Juicer is IJuicer {
             if (_budget._state() == Budget.State.Redistributing) {
                 // Take fee
                 uint256 _feeAmount = _budget.total.mul(fee).div(100);
-                claimable[admin] = claimable[admin].add(_feeAmount);
+                stash[admin] = stash[admin].add(_feeAmount);
 
                 if (_budget.o > 0) {
                     // The owner gets the budget's owner percentage, if one is specified.
@@ -584,8 +607,9 @@ contract Juicer is IJuicer {
                         _budget.total.sub(_budget.target).mul(_budget.b).div(
                             100
                         );
-                    claimable[_budget.bAddress] = claimable[_budget.bAddress]
-                        .add(_bAmount);
+                    stash[_budget.bAddress] = stash[_budget.bAddress].add(
+                        _bAmount
+                    );
                 }
 
                 // Mark the budget as having distributed reserves.

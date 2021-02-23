@@ -80,4 +80,16 @@ contract Admin is JuiceAdmin {
     ) external onlyOwner {
         _juicer.setOverflowYielder(_overflowYielder);
     }
+
+    /**
+        @notice Set the bonding curve rate for the juicer.
+        @param _juicer The juicer to change the bonding curve of.
+        @param _rate The new rate.
+    */
+    function setBondingCurveRate(IJuicer _juicer, uint256 _rate)
+        external
+        onlyOwner
+    {
+        _juicer.setBondingCurveRate(_rate);
+    }
 }

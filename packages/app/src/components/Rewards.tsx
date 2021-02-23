@@ -152,48 +152,52 @@ export default function Rewards({
       }}
     >
       <Space direction="horizontal" size="large" align="start">
-        <Statistic
-          title="Unclaimed overflow"
-          valueRender={() => (
-            <div>
-              {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
-            </div>
-          )}
-        />
-
-        {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
+        <Tooltip title="asdf">
           <Statistic
-            title="Your wallet"
+            title="Unclaimed overflow"
             valueRender={() => (
               <div>
-                <div>
-                  {iouBalance?.toString() ?? 0} {iouSymbol}
-                </div>
-                {subText(
-                  `${share ?? 0}% of ${ticketSupply
-                    ?.add(iouSupply ?? 0)
-                    .toString() ?? 0} ${iouSymbol} in circulation`,
-                )}
-                {!addressExists(ticketAddress) ? (
-                  isOwner ? (
-                    <Tooltip
-                      title="Issue tickets in the back office"
-                      placement="right"
-                    >
-                      {awaitingIssueTicketsTag}
-                    </Tooltip>
-                  ) : (
-                    awaitingIssueTicketsTag
-                  )
-                ) : null}
-                {!addressExists(ticketAddress) ? null : (
-                  <Button loading={loadingClaimIou} onClick={claimIou}>
-                    Convert tickets
-                  </Button>
-                )}
+                {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
               </div>
             )}
-          ></Statistic>
+          />
+        </Tooltip>
+
+        {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
+          <Tooltip title="asdf">
+            <Statistic
+              title="Your wallet"
+              valueRender={() => (
+                <div>
+                  <div>
+                    {iouBalance?.toString() ?? 0} {iouSymbol}
+                  </div>
+                  {subText(
+                    `${share ?? 0}% of ${ticketSupply
+                      ?.add(iouSupply ?? 0)
+                      .toString() ?? 0} ${iouSymbol} in circulation`,
+                  )}
+                  {!addressExists(ticketAddress) ? (
+                    isOwner ? (
+                      <Tooltip
+                        title="Issue tickets in the back office"
+                        placement="right"
+                      >
+                        {awaitingIssueTicketsTag}
+                      </Tooltip>
+                    ) : (
+                      awaitingIssueTicketsTag
+                    )
+                  ) : null}
+                  {!addressExists(ticketAddress) ? null : (
+                    <Button loading={loadingClaimIou} onClick={claimIou}>
+                      Convert tickets
+                    </Button>
+                  )}
+                </div>
+              )}
+            ></Statistic>
+          </Tooltip>
         ) : null}
 
         {addressExists(ticketAddress) && iouSupply?.eq(0) ? (

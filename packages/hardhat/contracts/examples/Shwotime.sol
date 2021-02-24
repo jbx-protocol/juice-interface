@@ -2,7 +2,7 @@
 pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
-import "../abstract/JuiceAdmin.sol";
+import "../abstract/JuiceProject.sol";
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
   Not reliable for situations where networks dont entirely overlap.
 */
-contract Shwotime is JuiceAdmin {
+contract Shwotime is JuiceProject {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -42,7 +42,7 @@ contract Shwotime is JuiceAdmin {
         string memory _ticketSymbol,
         IERC20 _dai,
         uint256 _fee
-    ) public JuiceAdmin(_ticketName, _ticketSymbol) {
+    ) public JuiceProject(_ticketName, _ticketSymbol) {
         dai = _dai;
         fee = _fee;
     }

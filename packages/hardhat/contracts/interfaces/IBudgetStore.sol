@@ -80,7 +80,7 @@ interface IBudgetStore is IStore {
         address _bAddress
     ) external returns (uint256 id);
 
-    function payOwner(
+    function payProject(
         address _owner,
         address _payer,
         uint256 _amount,

@@ -82,7 +82,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function migrate(IJuicer _to) external;
 
-    function transferClaimable(
+    function addOverflow(
         address _issuer,
         uint256 _amount,
         IERC20 _token

@@ -34,9 +34,9 @@ interface ITicketStore is IStore {
 
     function issue(bytes memory _name, bytes memory _symbol) external;
 
-    function convertIOweYou(address _issuer) external;
+    function convert(address _issuer) external;
 
-    function mint(
+    function print(
         address _issuer,
         address _for,
         uint256 _amount

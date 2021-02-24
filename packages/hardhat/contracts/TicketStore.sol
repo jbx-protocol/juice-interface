@@ -137,12 +137,9 @@ contract TicketStore is Store, ITicketStore {
       @notice Convert I-owe-you's to tickets
       @param _issuer The issuer of the tickets.
      */
-    function convertIOweYou(address _issuer) external override {
+    function convert(address _issuer) external override {
         Tickets _tickets = tickets[_issuer];
-        require(
-            _tickets != Tickets(0),
-            "TicketStore::convertIOweYou: NOT_CLAIMABLE"
-        );
+        require(_tickets != Tickets(0), "TicketStore::convert: NOT_CLAIMABLE");
 
         // The amount of I-owe-yous.
         uint256 _amount = iOweYous[_issuer][msg.sender];
@@ -158,12 +155,12 @@ contract TicketStore is Store, ITicketStore {
     }
 
     /** 
-      @notice Mints new tickets.
+      @notice Mints new ERC-20 tickets, or increments the IOweYou count.
       @param _issuer The issuer of the tickets being minted.
       @param _holder The address receiving the minted tickets.
       @param _amount The amount of tickets being minted.
     */
-    function mint(
+    function print(
         address _issuer,
         address _holder,
         uint256 _amount

@@ -7,16 +7,16 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "./interfaces/IAccessControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetBallot.sol";
-import "./abstract/JuiceAdmin.sol";
+import "./abstract/JuiceProject.sol";
 
 /// All functions in here should be governable with FLOW.
 /// Owner should eventually change to a governance contract.
-contract Admin is JuiceAdmin {
+contract Admin is JuiceProject {
     using SafeERC20 for IERC20;
 
     constructor(string memory _ticketName, string memory _ticketSymbol)
         public
-        JuiceAdmin(_ticketName, _ticketSymbol)
+        JuiceProject(_ticketName, _ticketSymbol)
     {}
 
     /** 

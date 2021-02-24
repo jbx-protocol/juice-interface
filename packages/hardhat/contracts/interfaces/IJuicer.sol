@@ -64,6 +64,16 @@ interface IJuicer is IBudgetController, ITicketsController {
             uint256 beneficiaryDonations
         );
 
+    function getTicketRate(uint256 _budgetId, uint256 _amount)
+        external
+        view
+        returns (uint256);
+
+    function getReservedTicketRate(uint256 _budgetId, uint256 _amount)
+        external
+        view
+        returns (uint256);
+
     function setAdmin(address _admin) external;
 
     function distributeReserves(address _issuer) external;
@@ -82,5 +92,5 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function setBondingCurveRate(uint256 _rate) external;
 
-    function addToMigrationAllowList(address _contract) external;
+    function allowMigration(address _contract) external;
 }

@@ -66,7 +66,7 @@ contract Admin is JuiceAdmin {
       @param _to The juicer to allow migration to.
     */
     function allowMigration(IJuicer _from, address _to) external onlyOwner {
-        _from.addToMigrationAllowList(address(_to));
+        _from.allowMigration(address(_to));
     }
 
     /** 

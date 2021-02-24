@@ -12,6 +12,7 @@ import useContractReader from '../hooks/ContractReader'
 import { useUserAddress } from '../hooks/UserAddress'
 import { useUserProvider } from '../hooks/UserProvider'
 import { Budget } from '../models/budget'
+import { budgetsEq } from '../utils/budgetsEq'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -31,6 +32,7 @@ function App() {
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [userAddress],
+    shouldUpdate: budgetsEq,
   })
 
   console.log('User:', userAddress, userProvider)
@@ -42,7 +44,7 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        background: 'transparent'
+        background: 'transparent',
       }}
     >
       <Navbar

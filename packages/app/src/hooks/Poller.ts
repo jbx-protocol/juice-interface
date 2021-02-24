@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 
 export function usePoller(
   fn: VoidFunction,
-  delay = 2000,
   extraWatch?: unknown[],
+  delay = 2000,
 ) {
   let savedCallback = useRef<VoidFunction>()
 
@@ -13,7 +13,7 @@ export function usePoller(
       fn()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    extraWatch,
+    extraWatch ?? [],
   )
 
   // Remember the latest fn.

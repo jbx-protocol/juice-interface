@@ -321,7 +321,7 @@ contract Juicer is IJuicer {
         ticketStore.mint(
             _beneficiary,
             _budget.owner,
-            _budget._weighted(_amount, uint256(100).sub(_budget.o).sub(fee))
+            _budget._weighted(_amount, uint256(100).sub(_budget.o))
         );
 
         emit PayOwner(

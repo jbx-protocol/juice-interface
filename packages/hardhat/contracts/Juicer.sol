@@ -233,7 +233,7 @@ contract Juicer is IJuicer {
         returns (uint256)
     {
         Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-        return _budget._weighted(_amount, uint256(100).sub(_budget.o).sub(fee));
+        return _budget._weighted(_amount, uint256(100).sub(_budget.o));
     }
 
     /**

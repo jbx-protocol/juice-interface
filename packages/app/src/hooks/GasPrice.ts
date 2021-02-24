@@ -16,7 +16,7 @@ export function useGasPrice(speed: TxGasOption) {
       .catch(error => console.log('Loading gas price', error))
   }
 
-  usePoller(loadGasPrice, 30000)
+  usePoller(loadGasPrice, [], 30000)
 
   return gasPrice
 }

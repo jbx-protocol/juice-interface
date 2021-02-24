@@ -221,6 +221,38 @@ contract Juicer is IJuicer {
     }
 
     /**
+      @notice The amount of tickets that will be issued as a result of a payment of the specified amount to the specified budget.
+      @param _budgetId The ID of the budget to get the ticket value of.
+      @param _amount The amount to get the ticket value of.
+      @return The amount of tickets.
+    */
+    function getTicketRate(uint256 _budgetId, uint256 _amount)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
+        return _budget._weighted(_amount, uint256(100).sub(_budget.o).sub(fee));
+    }
+
+    /**
+      @notice The amount of tickets that will be reserved for the budget's owner as a result of a payment of the specified amount to the specified budget.
+      @param _budgetId The ID of the budget to get the ticket value of.
+      @param _amount The amount to get the ticket value of.
+      @return The amount of tickets.
+    */
+    function getReservedTicketRate(uint256 _budgetId, uint256 _amount)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
+        return _budget._weighted(_amount, _budget.o);
+    }
+
+    /**
         @notice Contribute funds to an owner's active Budget.
         @dev Mints the owner's Tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
@@ -548,11 +580,7 @@ contract Juicer is IJuicer {
         @notice Adds to the contract addresses that project owners can migrate their Tickets to.
         @param _allowed The contract to allow.
     */
-    function addToMigrationAllowList(address _allowed)
-        external
-        override
-        onlyAdmin
-    {
+    function allowMigration(address _allowed) external override onlyAdmin {
         migrationContractIsAllowed[_allowed] = true;
         emit AddToMigrationAllowList(_allowed);
     }

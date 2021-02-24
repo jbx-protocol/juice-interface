@@ -182,7 +182,8 @@ contract BudgetStore is Store, IBudgetStore {
             _b == 0 || _bAddress != address(0),
             "Juicer::configureBudget: BAD_ADDRESS"
         );
-        // The reserved ticket percentage must add up to less than or equal to 100.
+
+        // The reserved owner ticket percentage must be less than or equal to 100.
         require(_o <= 100, "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES");
 
         // Return's the owner's editable budget. Creates one if one doesn't already exists.

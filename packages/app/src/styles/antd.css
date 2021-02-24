@@ -8162,7 +8162,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   display: inline-flex;
   align-items: center;
   height: 32px;
-  color: #fff;
+  color: #FFB32C;
   font-size: 14px;
 }
 .ant-form-item-label > label > .anticon {
@@ -22849,7 +22849,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   text-align: left;
   text-decoration: none;
   word-wrap: break-word;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.92);
   border-radius: 2px;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
@@ -22872,7 +22872,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   width: 5px;
   height: 5px;
   margin: auto;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.92);
   content: '';
   pointer-events: auto;
 }

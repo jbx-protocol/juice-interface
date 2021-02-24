@@ -19,7 +19,7 @@ export function ticketsStep({
         props={{ form }}
         header={
           <div>
-            <h2>Create your ERC-20 ticket token</h2>
+            <h2>Create your ERC-20 tickets (optional)</h2>
             <p>
               You can always do this later. Your contract will use I-Owe-You
               tickets in the meantime.

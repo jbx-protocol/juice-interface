@@ -24,16 +24,18 @@ export default function Landing({
   const totalMaxWidth = 1080
 
   const bigHeader = (text: string) => (
-    <h1 style={{ fontSize: '3rem', fontWeight: 600, lineHeight: 1.2 }}>
+    <h1
+      style={{ fontSize: '3rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
+    >
       {text}
     </h1>
   )
 
   const listData = [
-    'Ethereum public goods',
+    'Internet public goods',
     'Open source projects',
-    'Indy artists, journalists, and researchers',
-    'Any internet-enabled service with predictable costs',
+    'Indie artists, journalists, and researchers',
+    'Web services with predictable costs',
   ]
 
   const section: CSSProperties = {
@@ -73,7 +75,7 @@ export default function Landing({
     <div>
       <section style={section}>
         <div style={wrapper}>
-          <Row>
+          <Row gutter={30}>
             <Col
               xs={24}
               md={14}
@@ -82,52 +84,53 @@ export default function Landing({
               <div
                 style={{
                   display: 'grid',
-                  rowGap: 40,
-                  marginBottom: 40,
+                  rowGap: 30,
+                  paddingBottom: 60,
                 }}
               >
-                {bigHeader('Taste the fruits of your labor')}
+                {bigHeader('Cashflow for the commons')}
+
+                <div style={{ fontWeight: 500, fontSize: '1rem' }}>
+                  Projects on Juice declare up front how much funding they need
+                  to crush what they do. Once the project is earning more than
+                  that, the overflow is handed back to those who've paid.{' '}
+                  <a
+                    href="https://twitter.com/hashtag/DeWork"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    #DeWork
+                  </a>
+                </div>
 
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    fontStyle: 'italic',
+                    display: 'grid',
+                    gridAutoFlow: 'row',
+                    rowGap: 8,
+                    fontWeight: 600,
                   }}
                 >
-                  <p
-                    style={{
-                      fontWeight: 500,
-                    }}
-                  >
-                    Juice is a cashflow machine for:
-                  </p>
-                  <div
-                    style={{
-                      paddingLeft: 8,
-                      display: 'grid',
-                      gridAutoFlow: 'row',
-                      rowGap: 8,
-                      fontWeight: 600,
-                      fontSize: '1rem',
-                    }}
-                  >
-                    {listData.map((data, i) => (
-                      <Space key={i} size="middle">
-                        <img
-                          src="/assets/bolt.png"
-                          style={{ height: 24 }}
-                          alt="⚡️"
-                        />
-                        {data}
-                      </Space>
-                    ))}
-                  </div>
+                  <p style={{ color: colors.juiceOrange }}>Juice is for:</p>
+                  {listData.map((data, i) => (
+                    <Space
+                      style={{ fontStyle: 'italic', paddingLeft: 8 }}
+                      key={i}
+                      size="middle"
+                    >
+                      <img
+                        src="/assets/bolt.png"
+                        style={{ height: 24 }}
+                        alt="⚡️"
+                      />
+                      {data}
+                    </Space>
+                  ))}
                 </div>
 
                 <div className="hide-mobile">
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Do it
+                    Create your contract
                   </Button>
                 </div>
               </div>
@@ -169,7 +172,7 @@ export default function Landing({
             {arrowDivider}
             <p>
               People can either pay you like they would on Patreon, or
-              transparently from within Solidity smart contracts.
+              transparently from within Solidity smart contracts.{' '}
               <a
                 href="https://twitter.com/hashtag/BusinessModelAsAService"
                 target="_blank"
@@ -261,31 +264,38 @@ export default function Landing({
         <div style={wrapper}>
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
-              {bigHeader('Should you Juice?')}
-              <p>Almost definitely.</p>
-              <p>
-                With Juice, we end up getting online community-driven goods and
-                services with no ads, data integrity, and business operation
-                accountability. All built by motivated punks getting
-                transparently paid exactly what they ask for, and with a price
-                tag that effectively tends toward zero as the overflow grows.
-              </p>
-              <br></br>
-              <h2>What's it cost?</h2>
-              <p>
-                Juice is an open protocol that makes money using Juice itself.
-                You can check out the contractualized budget specs{' '}
-                <a href="https://juice.work/0x00000000" target="new">
-                  here
-                </a>
-                .
-              </p>
-              <p>
-                5% of all money made using Juice is sent to help pay for this
-                budget. In exchange, you get the opportunity to benefit from the
-                overflow that the ecosystem accumulates over time, and voting
-                power on how Juice's cashflow needs should evolve.
-              </p>
+              <div style={{ display: 'grid', rowGap: 20 }}>
+                {bigHeader('Should you Juice?')}
+                <div>
+                  <p>Almost definitely.</p>
+                  <p>
+                    With Juice, we end up getting online community-driven goods
+                    and services with no ads, data integrity, and business
+                    operation accountability. All built by motivated punks
+                    getting transparently paid exactly what they ask for, and
+                    with a price tag that effectively tends toward zero as the
+                    overflow grows.
+                  </p>
+                </div>
+                <div>
+                  <h2>What's it cost?</h2>
+                  <p>
+                    Juice is an open protocol that makes money using Juice
+                    itself. You can check out the contractualized budget specs{' '}
+                    <a href="https://juice.work/0x00000000" target="new">
+                      here
+                    </a>
+                    .
+                  </p>
+                  <p>
+                    5% of all money made using Juice is sent to help pay for
+                    this budget. In exchange, you get the opportunity to benefit
+                    from the overflow that the ecosystem accumulates over time,
+                    and voting power on how Juice's cashflow needs should
+                    evolve.
+                  </p>
+                </div>
+              </div>
             </Col>
 
             <Col xs={24} md={10}>

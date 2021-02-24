@@ -3,6 +3,7 @@ import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
 
+import { colors } from '../constants/styles/colors'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
@@ -10,7 +11,7 @@ import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
 import { bigNumbersEq } from '../utils/bigNumbersEq'
 import { erc20Contract } from '../utils/erc20Contract'
-import WtfCard from './WtfCard'
+import TooltipLabel from './TooltipLabel'
 
 export default function Rewards({
   transactor,
@@ -139,137 +140,138 @@ export default function Rewards({
   )
 
   const awaitingIssueTicketsTag = (
-    <Tag color="geekblue">ERC-20 tickets not minted yet</Tag>
+    <Tag
+      style={{
+        background: 'transparent',
+        borderColor: colors.grape,
+        color: colors.grape,
+      }}
+    >
+      ERC-20 tickets not minted yet
+    </Tag>
   )
 
   const iouSymbol = 'tickets'
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Space direction="horizontal" size="large" align="start">
-        <Tooltip title="asdf">
-          <Statistic
-            title="Unclaimed overflow"
-            valueRender={() => (
-              <div>
-                {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
-              </div>
-            )}
+    <Space direction="horizontal" size="large" align="start">
+      <Statistic
+        title={
+          <TooltipLabel
+            label="Unclaimed overflow"
+            tip="You'll receive this project's tickets in return for making payments
+          towards the active budget."
+            placement="bottom"
           />
-        </Tooltip>
-
-        {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
-          <Tooltip title="asdf">
-            <Statistic
-              title="Your wallet"
-              valueRender={() => (
-                <div>
-                  <div>
-                    {iouBalance?.toString() ?? 0} {iouSymbol}
-                  </div>
-                  {subText(
-                    `${share ?? 0}% of ${ticketSupply
-                      ?.add(iouSupply ?? 0)
-                      .toString() ?? 0} ${iouSymbol} in circulation`,
-                  )}
-                  {!addressExists(ticketAddress) ? (
-                    isOwner ? (
-                      <Tooltip
-                        title="Issue tickets in the back office"
-                        placement="right"
-                      >
-                        {awaitingIssueTicketsTag}
-                      </Tooltip>
-                    ) : (
-                      awaitingIssueTicketsTag
-                    )
-                  ) : null}
-                  {!addressExists(ticketAddress) ? null : (
-                    <Button loading={loadingClaimIou} onClick={claimIou}>
-                      Convert tickets
-                    </Button>
-                  )}
-                </div>
-              )}
-            ></Statistic>
-          </Tooltip>
-        ) : null}
-
-        {addressExists(ticketAddress) && iouSupply?.eq(0) ? (
-          <Statistic
-            title="Your wallet"
-            valueRender={() => (
-              <div>
-                <div>
-                  {ticketsBalance?.toString() ?? 0} {ticketSymbol}
-                </div>
-                {subText(
-                  `${share ?? 0}% of ${ticketSupply?.toString() ??
-                    0} ${ticketSymbol} in circulation`,
-                )}
-                {!addressExists(ticketAddress) ? (
-                  isOwner ? (
-                    <Tooltip
-                      title="Issue tickets in the back office"
-                      placement="right"
-                    >
-                      {awaitingIssueTicketsTag}
-                    </Tooltip>
-                  ) : (
-                    awaitingIssueTicketsTag
-                  )
-                ) : null}
-              </div>
-            )}
-          />
-        ) : null}
-
-        {!addressExists(ticketAddress) ? null : (
-          <Statistic
-            title="Redeem tickets"
-            valueRender={() => (
-              <Space>
-                <Input
-                  type="number"
-                  placeholder="0"
-                  max={ticketsBalance?.toString()}
-                  value={redeem.toString()}
-                  onChange={e =>
-                    setRedeemAmount(BigNumber.from(e.target.value))
-                  }
-                />
-                <Button type="primary" onClick={redeem} loading={loadingRedeem}>
-                  Redeem
-                </Button>
-              </Space>
-            )}
-          />
+        }
+        valueRender={() => (
+          <div>
+            {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
+          </div>
         )}
-      </Space>
+      />
 
-      <WtfCard style={{ maxWidth: 800 }}>
-        <p>
-          You'll receive this project's tickets in return for making payments
-          towards the active budget.
-        </p>
-        <p>
-          Tickets can be redeemed for your contract's overflow on a bonding
-          curve – a ticket is redeemable for 38.2% of its proportional
-          overflowed tokens. Meaning, if there are 100 overflow tokens available
-          and 100 of your tickets in circulation, 10 tickets could be redeemed
-          for 3.82 of the overflow tokens. The rest is left to share between the
-          remaining ticket hodlers.
-        </p>
-        <p>
-          If this project has minted ERC-20 tokens to track tickets, you'll see
-          yours in your wallet once you contribute a payment.
-        </p>
-      </WtfCard>
-    </div>
+      {iouBalance?.gt(0) || !addressExists(ticketAddress) ? (
+        <Statistic
+          title={
+            <TooltipLabel
+              label="Your wallet"
+              tip="Tickets can be redeemed for your contract's overflow on a bonding
+            curve – a ticket is redeemable for 38.2% of its proportional
+            overflowed tokens. Meaning, if there are 100 overflow tokens available
+            and 100 of your tickets in circulation, 10 tickets could be redeemed
+            for 3.82 of the overflow tokens. The rest is left to share between the
+            remaining ticket hodlers."
+              placement="bottom"
+            />
+          }
+          valueRender={() => (
+            <div>
+              <div>
+                {iouBalance?.toString() ?? 0} {iouSymbol}
+              </div>
+              {subText(
+                `${share ?? 0}% of ${ticketSupply
+                  ?.add(iouSupply ?? 0)
+                  .toString() ?? 0} ${iouSymbol} in circulation`,
+              )}
+              {!addressExists(ticketAddress) ? (
+                isOwner ? (
+                  <Tooltip
+                    title="Issue tickets in the back office"
+                    placement="right"
+                  >
+                    {awaitingIssueTicketsTag}
+                  </Tooltip>
+                ) : (
+                  awaitingIssueTicketsTag
+                )
+              ) : null}
+              {!addressExists(ticketAddress) ? null : (
+                <Button loading={loadingClaimIou} onClick={claimIou}>
+                  Convert tickets
+                </Button>
+              )}
+            </div>
+          )}
+        ></Statistic>
+      ) : null}
+
+      {addressExists(ticketAddress) && iouSupply?.eq(0) ? (
+        <Statistic
+          title={
+            <TooltipLabel
+              label="Your wallet"
+              tip="If this project has minted ERC-20 tokens to track tickets, you'll see
+            yours in your wallet once you contribute a payment."
+              placement="bottom"
+            />
+          }
+          valueRender={() => (
+            <div>
+              <div>
+                {ticketsBalance?.toString() ?? 0} {ticketSymbol}
+              </div>
+              {subText(
+                `${share ?? 0}% of ${ticketSupply?.toString() ??
+                  0} ${ticketSymbol} in circulation`,
+              )}
+              {!addressExists(ticketAddress) ? (
+                isOwner ? (
+                  <Tooltip
+                    title="Issue tickets in the back office"
+                    placement="right"
+                  >
+                    {awaitingIssueTicketsTag}
+                  </Tooltip>
+                ) : (
+                  awaitingIssueTicketsTag
+                )
+              ) : null}
+            </div>
+          )}
+        />
+      ) : null}
+
+      {!addressExists(ticketAddress) ? null : (
+        <Statistic
+          title="Redeem tickets"
+          valueRender={() => (
+            <Space>
+              <Input
+                type="number"
+                placeholder="0"
+                max={ticketsBalance?.toString()}
+                value={redeem.toString()}
+                onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
+              />
+              <Button type="primary" onClick={redeem} loading={loadingRedeem}>
+                Redeem
+              </Button>
+            </Space>
+          )}
+        />
+      )}
+    </Space>
   )
 }

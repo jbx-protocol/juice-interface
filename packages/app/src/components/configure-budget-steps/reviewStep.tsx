@@ -51,7 +51,7 @@ export function reviewStep({
     content: (
       <div>
         <Space size="large" direction="vertical">
-          <h1 style={{ fontSize: '2rem' }}>Budget</h1>
+          <h1 style={{ fontSize: '2rem' }}>Review your contract</h1>
           <div>
             <Space size="large">
               <Statistic
@@ -132,7 +132,7 @@ export function reviewStep({
           </Space>
           {activeBudget && userAddress ? (
             <Link to={userAddress}>
-              <Button type="primary">Go to your budget</Button>
+              <Button type="primary">Go to your dashboard</Button>
             </Link>
           ) : (
             <Button
@@ -141,7 +141,7 @@ export function reviewStep({
               onClick={activateContract}
               loading={loadingCreateBudget}
             >
-              Activate contract
+              Create contract
             </Button>
           )}
         </Space>
@@ -149,7 +149,7 @@ export function reviewStep({
         <Divider orientation="center" />
 
         <div>
-          <h1 style={{ fontSize: '2rem' }}>Tickets</h1>
+          <h1 style={{ fontSize: '2rem' }}>Review your tickets</h1>
           <div
             style={{
               marginTop: 20,

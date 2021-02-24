@@ -14,7 +14,6 @@ export function CardSection({
         <h2
           style={{
             margin: 0,
-            color: 'black',
             fontWeight: 600,
           }}
         >

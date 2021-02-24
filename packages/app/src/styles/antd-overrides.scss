@@ -73,3 +73,24 @@ input.ant-input[type='number'] {
 .ant-descriptions-item-label {
   color: #ffffffcc;
 }
+
+.ant-btn-primary {
+  text-shadow: none;
+}
+
+.ant-input-affix-wrapper-disabled,
+.ant-input[disabled] {
+  background: transparent;
+}
+
+.ant-input-affix-wrapper-disabled:hover {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ant-statistic-title {
+  color: $juiceOrange;
+}
+
+.ant-statistic-content {
+  color: $body;
+}

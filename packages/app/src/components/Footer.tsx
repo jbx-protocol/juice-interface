@@ -27,7 +27,6 @@ export default function Footer() {
         {link('Github', 'https://github.com/juice-work/juicehouse')}
         {link('Twitter', 'https://twitter.com/doworkgetjuice')}
       </div>
-      <div style={{ color: 'white' }}>Sure, copy it.</div>
     </div>
   )
 }

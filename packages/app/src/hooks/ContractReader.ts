@@ -33,19 +33,21 @@ export default function useContractReader<V>({
 
         const result = formatter ? formatter(newValue) : (newValue as V)
 
-        if (shouldUpdate ? !shouldUpdate(result, value) : result !== value) {
-          setValue(result)
-        }
+        const _shouldUpdate = shouldUpdate ?? ((a?: V, b?: V) => a != b)
 
-        if (callback) callback(result)
+        if (_shouldUpdate(result, value)) {
+          setValue(result)
+
+          if (callback) callback(result)
+        }
       } catch (e) {
-        console.log('Read contract >>>', functionName, e.error?.message)
+        console.log('Read contract >>>', functionName, args, e.error?.message)
         setValue(formatter ? formatter(undefined) : undefined)
         if (callback) callback(undefined)
       }
     },
     adjustPollTime,
-    contract,
+    [contract, ...(args ? (args as []) : [])],
   )
 
   return value

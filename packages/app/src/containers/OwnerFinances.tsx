@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Divider, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
 import Web3 from 'web3'
@@ -9,6 +10,8 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
+import { addressExists } from '../utils/addressExists'
+import { budgetsEq } from '../utils/budgetsEq'
 import { erc20Contract } from '../utils/erc20Contract'
 import ReconfigureBudget from './ReconfigureBudget'
 
@@ -19,28 +22,58 @@ export default function OwnerFinances({
   transactor,
   owner,
   onNeedProvider,
+  ticketAddress,
 }: {
   currentBudget?: Budget
   userAddress?: string
   contracts?: Contracts
   transactor?: Transactor
   owner?: string
+  ticketAddress?: string
   onNeedProvider: () => Promise<void>
 }) {
+  const [payerTickets, setPayerTickets] = useState<BigNumber>()
+  const [ownerTickets, setOwnerTickets] = useState<BigNumber>()
   const [loadingPayOwner, setLoadingPayOwner] = useState<boolean>()
-  const [sustainAmount, setSustainAmount] = useState<number>(0)
+  const [payOwnerAmount, setPayOwnerAmount] = useState<number>(0)
   const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
 
-  const wantTokenName = useContractReader<string>({
+  const wantTokenSymbol = useContractReader<string>({
     contract: erc20Contract(currentBudget?.want),
-    functionName: 'name',
+    functionName: 'symbol',
+  })
+
+  const ticketSymbol = useContractReader<string>({
+    contract: erc20Contract(ticketAddress),
+    functionName: 'symbol',
   })
 
   const queuedBudget = useContractReader<Budget>({
     contract: contracts?.BudgetStore,
     functionName: 'getQueuedBudget',
     args: [owner],
+    shouldUpdate: budgetsEq,
   })
+
+  const isOwner = owner === userAddress
+
+  function updatePayOwnerAmount(amount: number) {
+    if (!currentBudget) return
+
+    const ticketsRatio = (percentage: BigNumber) =>
+      percentage &&
+      currentBudget.weight
+        .mul(percentage)
+        .div(currentBudget.target)
+        .div(100)
+
+    setPayOwnerAmount(amount ?? 0)
+
+    setOwnerTickets(ticketsRatio(currentBudget.o).mul(amount))
+    setPayerTickets(
+      ticketsRatio(BigNumber.from(100).sub(currentBudget.o ?? 0)).mul(amount),
+    )
+  }
 
   function payOwner() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
@@ -50,8 +83,8 @@ export default function OwnerFinances({
     const eth = new Web3(Web3.givenProvider).eth
 
     const amount =
-      sustainAmount !== undefined
-        ? eth.abi.encodeParameter('uint256', sustainAmount)
+      payOwnerAmount !== undefined
+        ? eth.abi.encodeParameter('uint256', payOwnerAmount)
         : undefined
 
     console.log('🧃 Calling Juicer.sustain(owner, amount, userAddress)', {
@@ -63,7 +96,7 @@ export default function OwnerFinances({
     transactor(
       contracts.Juicer.payOwner(currentBudget.owner, amount, userAddress),
       () => {
-        setSustainAmount(0)
+        setPayOwnerAmount(0)
         setLoadingPayOwner(false)
       },
       () => {
@@ -73,8 +106,6 @@ export default function OwnerFinances({
   }
 
   const spacing = 30
-
-  const isOwner = owner === userAddress
 
   return (
     <Space size={spacing} direction="vertical">
@@ -102,9 +133,11 @@ export default function OwnerFinances({
                 <Input
                   name="sustain"
                   placeholder="0"
-                  suffix={wantTokenName}
+                  suffix={wantTokenSymbol}
                   type="number"
-                  onChange={e => setSustainAmount(parseFloat(e.target.value))}
+                  onChange={e =>
+                    updatePayOwnerAmount(parseFloat(e.target.value))
+                  }
                 />
                 <Button
                   type="primary"
@@ -114,6 +147,16 @@ export default function OwnerFinances({
                   Pay owner
                 </Button>
               </Space>
+              {addressExists(ticketAddress) ? (
+                <div>
+                  <div>
+                    {ownerTickets?.toString()} {ticketSymbol} reserved for owner
+                  </div>
+                  <div>
+                    Receive {payerTickets?.toString()} {ticketSymbol}
+                  </div>
+                </div>
+              ) : null}
             </CardSection>
           }
         </Col>

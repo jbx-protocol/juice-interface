@@ -20,10 +20,10 @@ library Budget {
         // A unique number that's incremented for each new Budget, starting with 1.
         uint256 id;
         // The address who defined this Budget and who has access to its funds.
-        address owner;
-        // The number of this budget for the owner.
+        address project;
+        // The number of this budget for the project.
         uint256 number;
-        // The ID of the owner's Budget that came before this one.
+        // The ID of the project's Budget that came before this one.
         uint256 previous;
         // The name of the budget.
         string name;
@@ -39,10 +39,10 @@ library Budget {
         uint256 start;
         // The number of seconds until this Budget's surplus is redistributed.
         uint256 duration;
-        // The amount of available funds that have been tapped by the owner.
+        // The amount of available funds that have been tapped by the project.
         uint256 tapped;
-        // The percentage of tickets to reserve for the owner once the Budget has expired.
-        uint256 o;
+        // The percentage of tickets to reserve for the project once the Budget has expired.
+        uint256 p;
         // The percentage of overflow to reserve for a specified beneficiary once the Budget has expired.
         uint256 b;
         // The specified beneficiary.
@@ -67,12 +67,12 @@ library Budget {
         _self.link = _baseBudget.link;
         _self.target = _baseBudget.target;
         _self.duration = _baseBudget.duration;
-        _self.owner = _baseBudget.owner;
+        _self.project = _baseBudget.project;
         _self.name = _baseBudget.name;
         _self.want = _baseBudget.want;
         _self.discountRate = _baseBudget.discountRate;
         _self.weight = _derivedWeight(_baseBudget);
-        _self.o = _baseBudget.o;
+        _self.p = _baseBudget.p;
         _self.b = _baseBudget.b;
         _self.bAddress = _baseBudget.bAddress;
         _self.configured = _baseBudget.configured;
@@ -113,7 +113,7 @@ library Budget {
     }
 
     /** 
-        @notice A view of the Budget that would be created after this one if the owner doesn't make a reconfiguration.
+        @notice A view of the Budget that would be created after this one if the project doesn't make a reconfiguration.
         @param _self The Budget to make the calculation for.
         @return _budget The next Budget, with an ID set to 0.
     */
@@ -121,7 +121,7 @@ library Budget {
         return
             Data(
                 0,
-                _self.owner,
+                _self.project,
                 _self.number.add(1),
                 _self.id,
                 _self.name,
@@ -132,7 +132,7 @@ library Budget {
                 _determineNextStart(_self),
                 _self.duration,
                 0,
-                _self.o,
+                _self.p,
                 _self.b,
                 _self.bAddress,
                 _derivedWeight(_self),
@@ -151,7 +151,7 @@ library Budget {
     }
 
     /** 
-        @notice Returns the amount available for the given Budget's owner to tap in to.
+        @notice Returns the amount available for the given Budget's project to tap in to.
         @param _self The Budget to make the calculation for.
         @param _withhold The percent of the total to withhold from the total.
         @return The resulting amount.

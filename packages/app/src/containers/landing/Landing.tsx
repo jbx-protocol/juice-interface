@@ -91,9 +91,9 @@ export default function Landing({
                 {bigHeader('Cashflow for the commons')}
 
                 <div style={{ fontWeight: 500, fontSize: '1rem' }}>
-                  Projects on Juice declare up front how much funding they need
+                  Projects on Juice say up-front how much cashflow they need
                   to crush what they do. Once the project is earning more than
-                  that, the overflow is handed back to those who've paid.{' '}
+                  that, the overflow is passed back to those who've paid.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"

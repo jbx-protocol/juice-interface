@@ -11,17 +11,17 @@ import "./../interfaces/IJuicer.sol";
 import "./../TicketStore.sol";
 
 /** 
-  @notice A contract that inherits from JuiceAdmin can use Juice as a business-model-as-a-service.
+  @notice A contract that inherits from JuiceProject can use Juice as a business-model-as-a-service.
   @dev The owner of the contract makes admin decisions such as:
     - Which address is the Budget owner, which can tap funds from the Budget.
     - Should this project's Tickets be migrated to a new Juicer. 
 */
-abstract contract JuiceAdmin is Ownable {
+abstract contract JuiceProject is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     modifier onlyBudgetOwner {
-        require(msg.sender == budgetOwner, "JuiceAdmin: UNAUTHORIZED");
+        require(msg.sender == budgetOwner, "JuiceProject: UNAUTHORIZED");
         _;
     }
 
@@ -118,7 +118,7 @@ abstract contract JuiceAdmin is Ownable {
             _juicer.redeem(_issuer, _amount, _minReturn, address(this));
 
         // Surplus goes back to the issuer.
-        _juicer.payOwner(address(this), _returnAmount, _issuer);
+        _juicer.pay(address(this), _returnAmount, _issuer);
     }
 
     /** 
@@ -127,13 +127,13 @@ abstract contract JuiceAdmin is Ownable {
       @param _amount The amount to tap.
       @param _beneficiary The address to transfer the funds to.
     */
-    function tapBudget(
+    function tap(
         IJuicer _juicer,
         uint256 _budgetId,
         uint256 _amount,
         address _beneficiary
     ) external onlyBudgetOwner {
-        _juicer.tapBudget(_budgetId, _amount, _beneficiary);
+        _juicer.tap(_budgetId, _amount, _beneficiary);
     }
 
     /** 
@@ -151,7 +151,7 @@ abstract contract JuiceAdmin is Ownable {
       @param _to The new contract that will manage your Tickets and it's funds.
     */
     function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
-        require(_to != IJuicer(0), "JuiceAdmin::setJuicer: ZERO_ADDRESS");
+        require(_to != IJuicer(0), "JuiceProject::setJuicer: ZERO_ADDRESS");
         _from.migrate(_to);
     }
 
@@ -166,6 +166,6 @@ abstract contract JuiceAdmin is Ownable {
         uint256 _amount,
         address _from
     ) internal {
-        _juicer.payOwner(address(this), _amount, _from);
+        _juicer.pay(address(this), _amount, _from);
     }
 }

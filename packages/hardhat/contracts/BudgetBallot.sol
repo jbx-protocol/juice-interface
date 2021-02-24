@@ -56,7 +56,7 @@ contract BudgetBallot is IBudgetBallot {
         require(now < _standbyExpiry, "BudgetBallot::vote: EXPIRED");
 
         // Get the Tickets used for the Budget.
-        Tickets _tickets = _ticketStore.tickets(_budget.owner);
+        Tickets _tickets = _ticketStore.tickets(_budget.project);
 
         // Find how many tickets the message sender has staked.
         uint256 _stakedAmount = staker.staked(_tickets, msg.sender);

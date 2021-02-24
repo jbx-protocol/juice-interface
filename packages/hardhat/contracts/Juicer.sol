@@ -14,8 +14,8 @@ import "./TicketStore.sol";
 
 /**
   @notice This contract manages all funds in the Juice ecosystem.
-  @dev  1 (optional). A project owner issues their Tickets at the ticket store.
-        2. A project owner configures their first Budget at the budget store.
+  @dev  1 (optional). A project project issues their Tickets at the ticket store.
+        2. A project configures their first Budget at the budget store.
         3. Any address (end user or smart contract) can contribute funds to a Budget in this Juicer contract.
            In return, your contributors receive some of your project's tickets. 
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
@@ -24,7 +24,7 @@ import "./TicketStore.sol";
               - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate`. 
                 This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
                 current Budget than to future budgets.
-        4. As the project owner, you can collect any funds made to your Budget within your configured target.
+        4. You can collect any funds made to your project's Budget within its configured target.
            Any overflow will be accounted for seperately. 
         5. Your project's Ticket holders can redeem their Tickets for a share of your project's accumulated overflow along a bonding curve. 
            The bonding curve starts at 38.2%, meaning each ticket can be redeemed for 38.2% of its proportial overflow.
@@ -33,7 +33,7 @@ import "./TicketStore.sol";
         6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
            The new configuration will go into effect once the current budget one expires.
 
-  @dev A project owner can transfer their funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
+  @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
 contract Juicer is IJuicer {
@@ -56,14 +56,14 @@ contract Juicer is IJuicer {
 
     // --- private properties --- //
 
-    // If a particulate contract is available for project owners to migrate their Tickets to.
+    // If a particulate contract is available for projects to migrate their Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
     // --- public properties --- //
 
     /// @notice The amount of time a Budget must be in standby before it can become active.
     /// @dev This allows for a voting period of 3 days.
-    uint256 public constant override RECONFIGURATION_VOTING_PERIOD = 269200;
+    uint256 public constant override RECONFIGURATION_VOTING_PERIOD = 604800;
 
     /// @notice The admin of the contract who makes admin fees and can take fateful decisions over this contract's mechanics.
     address public override admin;
@@ -80,7 +80,7 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable.
     uint256 public override depositable = 0;
 
-    /// @notice The percent fee the contract owner takes from overflow.
+    /// @notice The percent fee the Juice project takes from overflow.
     uint256 public immutable override fee;
 
     /// @notice The rate that describes the bonding curve at which tickets are redeemable.
@@ -144,7 +144,7 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice The amount of pending admin fees, donatations to beneficiaries, and mintable tickets for budget owners.
+        @notice The amount of pending admin fees, donatations to beneficiaries, and mintable tickets for projects.
         @dev Reserved tickets are only mintable once a Budget expires.
         @dev This logic should be the same as `distributeReserves` in Juicer.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
@@ -163,13 +163,13 @@ contract Juicer is IJuicer {
             uint256 beneficiaryDonations
         )
     {
-        // Get a reference to the owner's latest Budget.
+        // Get a reference to the project's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
 
         // Get the id of the latest distributed budget for this issuer.
         uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
 
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
+        // Iterate sequentially through the project's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
         while (_budget.id > 0 && _budget.id < _latestDistributedBudgetId) {
             // If the budget has overflow and is redistributing, it has unminted reserved tickets.
@@ -179,10 +179,10 @@ contract Juicer is IJuicer {
             ) {
                 adminFees = adminFees.add(_budget.total.mul(fee).div(100));
 
-                if (_budget.o > 0) {
-                    // The owner gets the budget's owner percentage, if one is specified.
+                if (_budget.p > 0) {
+                    // The project gets its percentage, if one is specified.
                     issuerTickets = issuerTickets.add(
-                        _budget._weighted(_budget.total, _budget.o)
+                        _budget._weighted(_budget.total, _budget.p)
                     );
                 }
 
@@ -233,11 +233,11 @@ contract Juicer is IJuicer {
         returns (uint256)
     {
         Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-        return _budget._weighted(_amount, uint256(100).sub(_budget.o));
+        return _budget._weighted(_amount, uint256(100).sub(_budget.p));
     }
 
     /**
-      @notice The amount of tickets that will be reserved for the budget's owner as a result of a payment of the specified amount to the specified budget.
+      @notice The amount of tickets that will be reserved for the project as a result of a payment of the specified amount to the specified budget.
       @param _budgetId The ID of the budget to get the ticket value of.
       @param _amount The amount to get the ticket value of.
       @return The amount of tickets.
@@ -249,30 +249,30 @@ contract Juicer is IJuicer {
         returns (uint256)
     {
         Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-        return _budget._weighted(_amount, _budget.o);
+        return _budget._weighted(_amount, _budget.p);
     }
 
     /**
-        @notice Contribute funds to an owner's active Budget.
-        @dev Mints the owner's Tickets proportional to the amount of the contribution.
+        @notice Contribute funds to a project's active Budget.
+        @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
-        @param _owner The owner of the budget to contribute funds to.
-        @param _amount Amount of the contribution.
+        @param _project The project of the budget to contribute funds to.
+        @param _amount Amount of the contribution. Sent as 10E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
-    function payOwner(
-        address _owner,
+    function pay(
+        address _project,
         uint256 _amount,
         address _beneficiary
     ) external override lock returns (uint256) {
         // Positive payments only.
-        require(_amount > 0, "Juicer::sustainOwner: BAD_AMOUNT");
+        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (Budget.Data memory _budget, uint256 _transferAmount) =
-            budgetStore.payOwner(
-                _owner,
+            budgetStore.payProject(
+                _project,
                 msg.sender,
                 _amount,
                 RECONFIGURATION_VOTING_PERIOD
@@ -293,10 +293,7 @@ contract Juicer is IJuicer {
             );
 
         // Stablecoin is the only supported token at the moment.
-        require(
-            _budget.want == stablecoin,
-            "Juicer::payOwner: TOKEN_NOT_SUPPORTED"
-        );
+        require(_budget.want == stablecoin, "Juicer::pay: TOKEN_NOT_SUPPORTED");
 
         // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) {
@@ -312,21 +309,21 @@ contract Juicer is IJuicer {
 
             // Add to the raw amount claimable.
             ticketStore.addClaimable(
-                _budget.owner,
+                _budget.project,
                 _contributedOverflow.sub(_redeemablePortion)
             );
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        ticketStore.mint(
+        ticketStore.print(
             _beneficiary,
-            _budget.owner,
-            _budget._weighted(_amount, uint256(100).sub(_budget.o))
+            _budget.project,
+            _budget._weighted(_amount, uint256(100).sub(_budget.p))
         );
 
-        emit PayOwner(
+        emit Pay(
             _budget.id,
-            _budget.owner,
+            _budget.project,
             msg.sender,
             _beneficiary,
             _amount,
@@ -399,7 +396,7 @@ contract Juicer is IJuicer {
         @param _amount The amount to tap.
         @param _beneficiary The address to transfer the funds to.
     */
-    function tapBudget(
+    function tap(
         uint256 _budgetId,
         uint256 _amount,
         address _beneficiary
@@ -415,13 +412,7 @@ contract Juicer is IJuicer {
         if (latestDistributedBudgetId[msg.sender] < _budgetId)
             distributeReserves(msg.sender);
 
-        emit TapBudget(
-            _budgetId,
-            msg.sender,
-            _beneficiary,
-            _amount,
-            stablecoin
-        );
+        emit Tap(_budgetId, msg.sender, _beneficiary, _amount, stablecoin);
     }
 
     /**
@@ -471,8 +462,8 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Allows an owner to migrate their Tickets' control to another contract.
-        @dev This makes each owner's Ticket's portable.
+        @notice Allows an project to migrate their Tickets' control to another contract.
+        @dev This makes each project's Ticket's portable.
         @dev Make sure you know what you're doing. This is a one way migration
         @param _to The Juicer contract that will gain minting and burning privileges over the Tickets.
     */
@@ -485,13 +476,13 @@ contract Juicer is IJuicer {
         // Make sure all reserved tickets and funds have been distributed for this issuer.
         distributeReserves(msg.sender);
 
-        // Get a reference to the owner's Tickets.
+        // Get a reference to the project's Tickets.
         Tickets _tickets = ticketStore.tickets(msg.sender);
 
-        // The owner must have issued Tickets.
+        // The project must have issued Tickets.
         require(_tickets != Tickets(0), "Juicer::migrateTickets: NOT_FOUND");
 
-        // Give the new owner admin privileges.
+        // Give the new project admin privileges.
         _tickets.transferOwnership(address(_to));
 
         // In order to move funds over, determine the proportion of funds belonging to the message sender.
@@ -517,9 +508,9 @@ contract Juicer is IJuicer {
             depositable = 0;
         }
 
-        // Allow the new owner to move funds owned by the issuer from contract.
+        // Allow the new project to move funds owned by the issuer from contract.
         stablecoin.safeApprove(address(_to), _amount);
-        _to.transferClaimable(msg.sender, _amount, stablecoin);
+        _to.addOverflow(msg.sender, _amount, stablecoin);
 
         emit Migrate(_to, _amount);
     }
@@ -530,7 +521,7 @@ contract Juicer is IJuicer {
       @param _amount The amount that the claimable tokens are worth.
       @param _token The token of the specified amount.
     */
-    function transferClaimable(
+    function addOverflow(
         address _issuer,
         uint256 _amount,
         IERC20 _token
@@ -577,7 +568,7 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Adds to the contract addresses that project owners can migrate their Tickets to.
+        @notice Adds to the contract addresses that projects can migrate their Tickets to.
         @param _allowed The contract to allow.
     */
     function allowMigration(address _allowed) external override onlyAdmin {
@@ -620,16 +611,16 @@ contract Juicer is IJuicer {
     // --- public transactions --- //
 
     /**
-        @notice Pays admin fees, donates to beneficiaries, and mints the amount of unminted tickets that are reserved for owners.
+        @notice Pays admin fees, donates to beneficiaries, and mints the amount of unminted tickets that are reserved for projects.
         @dev Reserves are only distributable once a Budget expires.
         @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
     */
     function distributeReserves(address _issuer) public override {
-        // Get a reference to the owner's latest Budget.
+        // Get a reference to the project's latest Budget.
         Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
 
-        // The number of  tickets to mint for the issuer.
-        uint256 _mintForIssuer = 0;
+        // The number of  tickets to print for the issuer.
+        uint256 _printForIssuer = 0;
 
         // Get the id of the latest distributed budget for this issuer.
         uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
@@ -640,7 +631,7 @@ contract Juicer is IJuicer {
         // Set new latest distributed budget.
         latestDistributedBudgetId[_issuer] = _budget.id;
 
-        // Iterate sequentially through the owner's Budgets, starting with the latest one.
+        // Iterate sequentially through the project's Budgets, starting with the latest one.
         // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
         while (_budget.id > 0 && _budget.id > _latestDistributedBudgetId) {
             // If the budget is redistributing, it has unminted reserved tickets.
@@ -649,10 +640,10 @@ contract Juicer is IJuicer {
                 uint256 _feeAmount = _budget.total.mul(fee).div(100);
                 stashed[admin] = stashed[admin].add(_feeAmount);
 
-                if (_budget.o > 0) {
-                    // The owner gets the budget's owner percentage, if one is specified.
-                    _mintForIssuer = _mintForIssuer.add(
-                        _budget._weighted(_budget.total, _budget.o)
+                if (_budget.p > 0) {
+                    // The project gets the budget's project percentage, if one is specified.
+                    _printForIssuer = _printForIssuer.add(
+                        _budget._weighted(_budget.total, _budget.p)
                     );
                 }
                 if (_budget.b < 0 && _budget.total > _budget.target) {
@@ -671,8 +662,8 @@ contract Juicer is IJuicer {
             _budget = budgetStore.getBudget(_budget.previous);
         }
 
-        if (_mintForIssuer > 0)
-            ticketStore.mint(_issuer, _issuer, _mintForIssuer);
+        if (_printForIssuer > 0)
+            ticketStore.print(_issuer, _issuer, _printForIssuer);
 
         emit DistributeReserves(msg.sender, _issuer);
     }

@@ -101,8 +101,8 @@ export function reviewStep({
               title="Owner surplus"
               value={
                 activeBudget
-                  ? activeBudget.o.toString()
-                  : budgetAdvancedForm.getFieldValue('ownerAllocation') ?? 0
+                  ? activeBudget.p.toString()
+                  : budgetAdvancedForm.getFieldValue('projectAllocation') ?? 0
               }
               suffix="%"
             />

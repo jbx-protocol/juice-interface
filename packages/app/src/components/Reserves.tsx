@@ -47,7 +47,7 @@ export default function Reserves({
   const distributableReserves = useContractReader<ReserveAmounts>({
     contract: contracts?.Juicer,
     functionName: 'getReserves',
-    args: [budget?.owner, true],
+    args: [budget?.project, true],
     formatter: val => val ?? emptyReserves,
     shouldUpdate: (val, old) => {
       if (!val || (!val && !old)) return false
@@ -62,7 +62,7 @@ export default function Reserves({
   const reserves = useContractReader<ReserveAmounts>({
     contract: contracts?.Juicer,
     functionName: 'getReserves',
-    args: [budget?.owner, false],
+    args: [budget?.project, false],
     formatter: val => val ?? emptyReserves,
     shouldUpdate: (val, old) => {
       if (!val || (!val && !old)) return false

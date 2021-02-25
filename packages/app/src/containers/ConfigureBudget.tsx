@@ -98,7 +98,7 @@ export default function ConfigureBudget({
           ? activeBudget.bAddress
           : '--',
         beneficiaryAllocation: activeBudget.b.toNumber(),
-        ownerAllocation: activeBudget.o.toNumber(),
+        projectAllocation: activeBudget.p.toNumber(),
       })
     }
   })
@@ -181,8 +181,8 @@ export default function ConfigureBudget({
     const _link = fields.link ?? ''
     const _name = fields.name
     const _discountRate = BigNumber.from(fields.discountRate).toHexString()
-    const _ownerAllocation = BigNumber.from(
-      fields.ownerAllocation || 0,
+    const _projectAllocation = BigNumber.from(
+      fields.projectAllocation || 0,
     ).toHexString()
     const _beneficiaryAllocation = BigNumber.from(
       fields.beneficiaryAllocation || 0,
@@ -200,7 +200,7 @@ export default function ConfigureBudget({
       _name,
       _link,
       _discountRate,
-      _ownerAllocation,
+      _projectAllocation,
       _beneficiaryAllocation,
       _beneficiaryAddress,
     })
@@ -213,7 +213,7 @@ export default function ConfigureBudget({
         _name,
         _link,
         _discountRate,
-        _ownerAllocation,
+        _projectAllocation,
         _beneficiaryAllocation,
         _beneficiaryAddress,
       ),

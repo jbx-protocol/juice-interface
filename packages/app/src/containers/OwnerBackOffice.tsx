@@ -45,11 +45,11 @@ export default function OwnerBackOffice({
     setLoadingMint(true)
 
     console.log('🧃 Calling Juicer.mintReservedTickets(owner)', {
-      owner: currentBudget.owner,
+      owner: currentBudget.project,
     })
 
     transactor(
-      contracts.Juicer.mintReservedTickets(currentBudget.owner),
+      contracts.Juicer.mintReservedTickets(currentBudget.project),
       () => setLoadingMint(false),
       true,
     )

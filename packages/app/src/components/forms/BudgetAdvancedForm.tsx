@@ -22,7 +22,7 @@ export default function BudgetAdvancedForm({
       {...props}
       layout="vertical"
       initialValues={{
-        ownerAllocation: 0,
+        projectAllocation: 0,
         beneficiaryAllocation: 0,
         discountRate: 97,
         ...props.initialValues,
@@ -32,7 +32,7 @@ export default function BudgetAdvancedForm({
 
       <Form.Item
         extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."
-        name="ownerAllocation"
+        name="projectAllocation"
         label="Reserved tickets"
       >
         <Input

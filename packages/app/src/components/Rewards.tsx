@@ -56,21 +56,21 @@ export default function Rewards({
   const iouBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'iOweYous',
-    args: [budget?.owner, userAddress],
+    args: [budget?.project, userAddress],
     shouldUpdate: bigNumbersEq,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
   })
   const iouSupply = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'totalIOweYous',
-    args: [budget?.owner],
+    args: [budget?.project],
     shouldUpdate: bigNumbersEq,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
     functionName: 'getOverflow',
-    args: [budget?.owner],
+    args: [budget?.project],
     shouldUpdate: bigNumbersEq,
   })
   const wantToken = useContractReader<string>({
@@ -98,12 +98,12 @@ export default function Rewards({
     const _amount = redeemAmount?.toHexString()
 
     console.log('🧃 Calling Juicer.redeem(issuerAddress, amount)', {
-      issuerAddress: budget?.owner,
+      issuerAddress: budget?.project,
       amount: _amount,
     })
 
     transactor(
-      contracts.Juicer.redeem(budget?.owner, _amount),
+      contracts.Juicer.redeem(budget?.project, _amount),
       () => {
         setLoadingRedeem(false)
         setRedeemAmount(BigNumber.from(0))
@@ -118,7 +118,7 @@ export default function Rewards({
     setLoadingClaimIou(true)
 
     transactor(
-      contracts.TicketStore.claimIOweYou(budget?.owner),
+      contracts.TicketStore.convert(budget?.project),
       () => {
         setLoadingClaimIou(false)
       },

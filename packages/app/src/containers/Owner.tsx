@@ -59,7 +59,7 @@ export default function Owner({
   //   getInitial: true,
   //   topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],
   // }) as SustainEvent[])
-  //   .filter(e => e.owner === owner)
+  //   .filter(e => e.project === owner)
   //   .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
 
   // const sustainments = (

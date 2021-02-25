@@ -4,7 +4,7 @@ export interface Budget {
   name: string
   id: BigNumber
   number: BigNumber
-  owner: string
+  project: string
   previous: BigNumber
   link: string
   want: string
@@ -13,7 +13,7 @@ export interface Budget {
   start: BigNumber
   duration: BigNumber
   tapped: BigNumber
-  o: BigNumber
+  p: BigNumber
   b: BigNumber
   bAddress: string
   hasMintedReserves: boolean

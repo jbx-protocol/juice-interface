@@ -73,7 +73,7 @@ export default function BudgetDetail({
         ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
   }
 
-  const isOwner = budget?.owner === userAddress
+  const isOwner = budget?.project === userAddress
 
   function tap() {
     if (!transactor || !contracts?.Juicer) return onNeedProvider()
@@ -83,14 +83,14 @@ export default function BudgetDetail({
     const id = budget.id.toHexString()
     const amount = tapAmount.toHexString()
 
-    console.log('🧃 Calling Juicer.tapBudget(number, amount, address)', {
+    console.log('🧃 Calling Juicer.tap(number, amount, address)', {
       id,
       amount,
       userAddress,
     })
 
     transactor(
-      contracts.Juicer?.tapBudget(id, amount, userAddress),
+      contracts.Juicer?.tap(id, amount, userAddress),
       () => setLoadingWithdraw(false),
       true,
     )
@@ -267,7 +267,7 @@ export default function BudgetDetail({
               />
             }
           >
-            {budget.o.toString()}%
+            {budget.p.toString()}%
           </Descriptions.Item>
 
           {!addressExists(budget.bAddress) ? null : (

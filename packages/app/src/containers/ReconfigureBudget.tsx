@@ -62,9 +62,9 @@ export default function ReconfigureBudget({
       'uint256',
       fields.discountRate,
     )
-    const _ownerAllocation = eth.abi.encodeParameter(
+    const _projectAllocation = eth.abi.encodeParameter(
       'uint256',
-      fields.ownerAllocation,
+      fields.projectAllocation,
     )
     const _beneficiaryAllocation = eth.abi.encodeParameter(
       'uint256',
@@ -80,7 +80,7 @@ export default function ReconfigureBudget({
       _name,
       _link,
       _discountRate,
-      _ownerAllocation,
+      _projectAllocation,
       _beneficiaryAllocation,
       _beneficiaryAddress,
     })
@@ -93,7 +93,7 @@ export default function ReconfigureBudget({
         _name,
         _link,
         _discountRate,
-        _ownerAllocation,
+        _projectAllocation,
         _beneficiaryAllocation,
         _beneficiaryAddress,
       ),
@@ -124,7 +124,7 @@ export default function ReconfigureBudget({
           form: budgetAdvancedForm,
           labelCol: { span: 8 },
           initialValues: {
-            ownerAllocation: currentValue?.o.toString(),
+            projectAllocation: currentValue?.p.toString(),
             beneficiaryAddress: currentValue?.bAddress,
             beneficiaryAllocation: currentValue?.b.toString(),
             discountRate: currentValue?.discountRate.toString(),

@@ -34,8 +34,8 @@ export default function OwnerFinances({
 }) {
   const [payerTickets, setPayerTickets] = useState<BigNumber>()
   const [ownerTickets, setOwnerTickets] = useState<BigNumber>()
-  const [loadingPayOwner, setLoadingPayOwner] = useState<boolean>()
-  const [payOwnerAmount, setPayOwnerAmount] = useState<number>(0)
+  const [loadingPay, setLoadingPay] = useState<boolean>()
+  const [payAmount, setPayAmount] = useState<number>(0)
   const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
 
   const wantTokenSymbol = useContractReader<string>({
@@ -57,7 +57,7 @@ export default function OwnerFinances({
 
   const isOwner = owner === userAddress
 
-  function updatePayOwnerAmount(amount: number) {
+  function updatePayAmount(amount: number) {
     if (!currentBudget) return
 
     const ticketsRatio = (percentage: BigNumber) =>
@@ -67,40 +67,40 @@ export default function OwnerFinances({
         .div(currentBudget.target)
         .div(100)
 
-    setPayOwnerAmount(amount ?? 0)
+    setPayAmount(amount ?? 0)
 
-    setOwnerTickets(ticketsRatio(currentBudget.o).mul(amount))
+    setOwnerTickets(ticketsRatio(currentBudget.p).mul(amount))
     setPayerTickets(
-      ticketsRatio(BigNumber.from(100).sub(currentBudget.o ?? 0)).mul(amount),
+      ticketsRatio(BigNumber.from(100).sub(currentBudget.p ?? 0)).mul(amount),
     )
   }
 
-  function payOwner() {
+  function pay() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
 
-    setLoadingPayOwner(true)
+    setLoadingPay(true)
 
     const eth = new Web3(Web3.givenProvider).eth
 
     const amount =
-      payOwnerAmount !== undefined
-        ? eth.abi.encodeParameter('uint256', payOwnerAmount)
+      payAmount !== undefined
+        ? eth.abi.encodeParameter('uint256', payAmount)
         : undefined
 
     console.log('🧃 Calling Juicer.sustain(owner, amount, userAddress)', {
-      owner: currentBudget.owner,
+      owner: currentBudget.project,
       amount,
       userAddress,
     })
 
     transactor(
-      contracts.Juicer.payOwner(currentBudget.owner, amount, userAddress),
+      contracts.Juicer.pay(currentBudget.project, amount, userAddress),
       () => {
-        setPayOwnerAmount(0)
-        setLoadingPayOwner(false)
+        setPayAmount(0)
+        setLoadingPay(false)
       },
       () => {
-        setLoadingPayOwner(false)
+        setLoadingPay(false)
       },
     )
   }
@@ -135,15 +135,9 @@ export default function OwnerFinances({
                   placeholder="0"
                   suffix={wantTokenSymbol}
                   type="number"
-                  onChange={e =>
-                    updatePayOwnerAmount(parseFloat(e.target.value))
-                  }
+                  onChange={e => updatePayAmount(parseFloat(e.target.value))}
                 />
-                <Button
-                  type="primary"
-                  onClick={payOwner}
-                  loading={loadingPayOwner}
-                >
+                <Button type="primary" onClick={pay} loading={loadingPay}>
                   Pay owner
                 </Button>
               </Space>

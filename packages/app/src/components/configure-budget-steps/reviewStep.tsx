@@ -98,7 +98,7 @@ export function reviewStep({
               suffix="%"
             />
             <Statistic
-              title="Owner surplus"
+              title="Reserved tickets"
               value={
                 activeBudget
                   ? activeBudget.p.toString()
@@ -107,7 +107,7 @@ export function reviewStep({
               suffix="%"
             />
             <Statistic
-              title="Beneficiary surplus"
+              title="Overflow donation"
               value={
                 activeBudget
                   ? activeBudget.b
@@ -119,7 +119,7 @@ export function reviewStep({
           </Space>
           <Space size="large" align="end">
             <Statistic
-              title="Beneficiary address"
+              title="Donation address"
               valueStyle={{ lineBreak: 'anywhere' }}
               value={orEmpty(
                 activeBudget

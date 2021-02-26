@@ -124,6 +124,8 @@ export default function BudgetDetail({
       ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
       : undefined
 
+  const isUpcoming = budget.start.gt(Math.round(new Date().valueOf() / 1000))
+
   return (
     <div>
       <div
@@ -135,7 +137,6 @@ export default function BudgetDetail({
           paddingBottom: 15,
           paddingLeft: gutter,
           paddingRight: gutter,
-          borderBottom: '1px solid black',
           whiteSpace: 'pre',
         }}
       >
@@ -165,7 +166,7 @@ export default function BudgetDetail({
       </div>
 
       <Descriptions {...descriptionsStyle} column={2} bordered>
-        <Descriptions.Item label="Started">
+        <Descriptions.Item label="Start">
           {formatDate(budget.start.toNumber() * 1000)}
         </Descriptions.Item>
 
@@ -173,73 +174,81 @@ export default function BudgetDetail({
           {expandedTimeString(budget && budget.duration.toNumber() * 1000)}
         </Descriptions.Item>
 
-        <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
-          {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
-        </Descriptions.Item>
+        {isUpcoming ? null : (
+          <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
+            {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
+          </Descriptions.Item>
+        )}
 
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label="Tapped"
-              tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
-            />
-          }
-        >
-          {budget.tapped.toString()} {wantTokenName}
-        </Descriptions.Item>
-
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label="Tappable"
-              tip="The amount that the project owner can still tap from this budget."
-            />
-          }
-          span={2}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
+        {isUpcoming ? null : (
+          <Descriptions.Item
+            label={
+              <TooltipLabel
+                label="Tapped"
+                tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
+              />
+            }
           >
-            {tappableAmount?.toString() ?? '0'} {wantTokenName}
-            {isOwner && tappableAmount?.gt(0) ? (
-              <div>
-                <Button
-                  loading={loadingWithdraw}
-                  onClick={() => setWithdrawModalVisible(true)}
-                >
-                  Withdraw
-                </Button>
-                <Modal
-                  title="Withdraw funds"
-                  visible={withdrawModalVisible}
-                  onOk={() => {
-                    tap()
-                    setWithdrawModalVisible(false)
-                  }}
-                  onCancel={() => {
-                    setTapAmount(BigNumber.from(0))
-                    setWithdrawModalVisible(false)
-                  }}
-                  okText="Withdraw"
-                  width={540}
-                >
-                  <Input
-                    name="withdrawable"
-                    placeholder="0"
-                    suffix={wantTokenName}
-                    value={tapAmount.toString()}
-                    max={tappableAmount?.toString()}
-                    onChange={e => setTapAmount(BigNumber.from(e.target.value))}
-                  />
-                </Modal>
-              </div>
-            ) : null}
-          </div>
-        </Descriptions.Item>
+            {budget.tapped.toString()} {wantTokenName}
+          </Descriptions.Item>
+        )}
+
+        {isUpcoming ? null : (
+          <Descriptions.Item
+            label={
+              <TooltipLabel
+                label="Tappable"
+                tip="The amount that the project owner can still tap from this budget."
+              />
+            }
+            span={2}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              {tappableAmount?.toString() ?? '0'} {wantTokenName}
+              {isOwner && tappableAmount?.gt(0) ? (
+                <div>
+                  <Button
+                    loading={loadingWithdraw}
+                    onClick={() => setWithdrawModalVisible(true)}
+                  >
+                    Withdraw
+                  </Button>
+                  <Modal
+                    title="Withdraw funds"
+                    visible={withdrawModalVisible}
+                    onOk={() => {
+                      tap()
+                      setWithdrawModalVisible(false)
+                    }}
+                    onCancel={() => {
+                      setTapAmount(BigNumber.from(0))
+                      setWithdrawModalVisible(false)
+                    }}
+                    okText="Withdraw"
+                    width={540}
+                  >
+                    <Input
+                      name="withdrawable"
+                      placeholder="0"
+                      suffix={wantTokenName}
+                      value={tapAmount.toString()}
+                      max={tappableAmount?.toString()}
+                      onChange={e =>
+                        setTapAmount(BigNumber.from(e.target.value))
+                      }
+                    />
+                  </Modal>
+                </div>
+              ) : null}
+            </div>
+          </Descriptions.Item>
+        )}
       </Descriptions>
 
       {budget?.link ? (

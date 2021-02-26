@@ -12,6 +12,7 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
 import { erc20Contract } from '../utils/erc20Contract'
+import { orEmpty } from '../utils/orEmpty'
 import ReconfigureBudget from './ReconfigureBudget'
 
 export default function OwnerFinances({
@@ -64,6 +65,8 @@ export default function OwnerFinances({
   function updatePayAmount(amount: number) {
     if (!currentBudget) return
 
+    const _amount = amount || 0
+
     const ticketsRatio = (percentage: BigNumber) =>
       percentage &&
       currentBudget.weight
@@ -71,11 +74,19 @@ export default function OwnerFinances({
         .div(currentBudget.target)
         .div(100)
 
-    setPayAmount(amount ?? 0)
+    setPayAmount(_amount)
 
-    setOwnerTickets(ticketsRatio(currentBudget.p).mul(amount))
+    setOwnerTickets(
+      _amount ? ticketsRatio(currentBudget.p).mul(_amount) : undefined,
+    )
     setPayerTickets(
-      ticketsRatio(BigNumber.from(100).sub(currentBudget.p ?? 0)).mul(amount),
+      _amount
+        ? ticketsRatio(
+            BigNumber.from(100)
+              .sub(currentBudget.p ?? 0)
+              .mul(_amount),
+          )
+        : undefined,
     )
   }
 
@@ -126,7 +137,6 @@ export default function OwnerFinances({
                   onNeedProvider={onNeedProvider}
                 />
               ) : null}
-              <Divider style={{ margin: 0 }} />
               <Space
                 style={{
                   width: '100%',
@@ -146,12 +156,18 @@ export default function OwnerFinances({
                 </Button>
               </Space>
               {addressExists(ticketAddress) ? (
-                <div>
+                <div
+                  style={{
+                    padding: 25,
+                    paddingTop: 0,
+                    textAlign: 'right',
+                  }}
+                >
                   <div>
-                    {ownerTickets?.toString()} {ticketSymbol} reserved for owner
+                    {orEmpty(ownerTickets?.toString())} {ticketSymbol} for owner
                   </div>
                   <div>
-                    Receive {payerTickets?.toString()} {ticketSymbol}
+                    {orEmpty(payerTickets?.toString())} {ticketSymbol} for you
                   </div>
                 </div>
               ) : null}

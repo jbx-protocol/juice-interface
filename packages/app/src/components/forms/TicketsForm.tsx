@@ -26,7 +26,7 @@ export default function TicketsForm({
         rules={[{ required: true }]}
       >
         <Input
-          suffix="Juice ticket"
+          suffix="Juice tickets"
           placeholder="Peach's"
           disabled={disabled}
         />

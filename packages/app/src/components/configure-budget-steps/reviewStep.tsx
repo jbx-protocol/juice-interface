@@ -163,7 +163,7 @@ export function reviewStep({
                   ticketsInitialized
                     ? ticketsName
                     : ticketsForm.getFieldValue('name')
-                    ? ticketsForm.getFieldValue('name') + 'Juice ticket'
+                    ? ticketsForm.getFieldValue('name') + 'Juice tickets'
                     : '--'
                 }
               />

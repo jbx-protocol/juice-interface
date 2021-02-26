@@ -14,10 +14,11 @@ import "./abstract/JuiceProject.sol";
 contract Admin is JuiceProject {
     using SafeERC20 for IERC20;
 
-    constructor(string memory _ticketName, string memory _ticketSymbol)
-        public
-        JuiceProject(_ticketName, _ticketSymbol)
-    {}
+    constructor(
+        string memory _ticketName,
+        string memory _ticketSymbol,
+        address _pm
+    ) public JuiceProject(_ticketName, _ticketSymbol, _pm) {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.

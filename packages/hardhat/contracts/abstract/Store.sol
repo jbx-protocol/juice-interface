@@ -33,7 +33,7 @@ abstract contract Store is IStore, AccessControl {
         @param _owner The address to set as the owner.
     */
     function setOwnership(address _owner) external override {
-        require(owner == address(0), "MpStore::setAdmin: ALREADY_SET");
+        require(owner == address(0), "Store::setAdmin: ALREADY_SET");
         owner = _owner;
         _setupRole(DEFAULT_ADMIN_ROLE, _owner);
     }

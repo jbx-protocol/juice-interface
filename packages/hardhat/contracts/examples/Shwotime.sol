@@ -41,8 +41,9 @@ contract Shwotime is JuiceProject {
         string memory _ticketName,
         string memory _ticketSymbol,
         IERC20 _dai,
-        uint256 _fee
-    ) public JuiceProject(_ticketName, _ticketSymbol) {
+        uint256 _fee,
+        address _pm
+    ) public JuiceProject(_ticketName, _ticketSymbol, _pm) {
         dai = _dai;
         fee = _fee;
     }

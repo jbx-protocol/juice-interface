@@ -44,6 +44,21 @@ export default function Reserves({
     issuerTickets: BigNumber.from(0),
   }
 
+  const reservesUpdateOn = [
+    {
+      contract: contracts?.Juicer,
+      event: 'Pay',
+    },
+    {
+      contract: contracts?.Juicer,
+      event: 'Collect',
+    },
+    {
+      contract: contracts?.Juicer,
+      event: 'Redeem',
+    },
+  ]
+
   const distributableReserves = useContractReader<ReserveAmounts>({
     contract: contracts?.Juicer,
     functionName: 'getReserves',
@@ -57,7 +72,7 @@ export default function Reserves({
         val.issuerTickets.eq(old?.issuerTickets ?? 0)
       )
     },
-    // TODO updateOn: []
+    updateOn: reservesUpdateOn,
   })
 
   const reserves = useContractReader<ReserveAmounts>({
@@ -73,7 +88,7 @@ export default function Reserves({
         val.issuerTickets.eq(old?.issuerTickets ?? 0)
       )
     },
-    // TODO updateOn: []
+    updateOn: reservesUpdateOn,
   })
 
   const ticketSymbol = useContractReader<string>({

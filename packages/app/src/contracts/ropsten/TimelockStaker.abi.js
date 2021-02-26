@@ -1,140 +1,140 @@
 module.exports = [
   {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    inputs: [],
-    name: 'controller',
-    outputs: [
+    "inputs": [],
+    "name": "controller",
+    "outputs": [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: '_controller',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      }
     ],
-    name: 'setController',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'contract IERC20',
-        name: '_token',
-        type: 'address',
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: '_staker',
-        type: 'address',
+        "internalType": "address",
+        "name": "_staker",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: '_expiry',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_expiry",
+        "type": "uint256"
+      }
     ],
-    name: 'setTimelock',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "setTimelock",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'contract IERC20',
-        name: '_token',
-        type: 'address',
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
     ],
-    name: 'stake',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "stake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'contract IERC20',
-        name: '',
-        type: 'address',
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: 'staked',
-    outputs: [
+    "name": "staked",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'contract IERC20',
-        name: '',
-        type: 'address',
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: 'timelocks',
-    outputs: [
+    "name": "timelocks",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'contract IERC20',
-        name: '_token',
-        type: 'address',
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
     ],
-    name: 'unstake',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-]
+    "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];

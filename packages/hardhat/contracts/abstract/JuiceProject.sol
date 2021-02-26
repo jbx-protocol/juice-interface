@@ -20,8 +20,8 @@ abstract contract JuiceProject is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    modifier onlyBudgetOwner {
-        require(msg.sender == budgetOwner, "JuiceProject: UNAUTHORIZED");
+    modifier onlyPm {
+        require(msg.sender == pm, "JuiceProject: UNAUTHORIZED");
         _;
     }
 
@@ -31,26 +31,27 @@ abstract contract JuiceProject is Ownable {
     /// @dev The symbol of this Budget owner's tickets.
     string public ticketSymbol;
 
-    /// @dev The address that can tap the Budget.
-    address public budgetOwner;
+    /// @dev The address that can tap funds from the project and propose reconfigurations.
+    address public pm;
 
     /** 
       @param _ticketName The name for this project's ERC-20 Tickets.
       @param _ticketSymbol The symbol for this project's ERC-20 Tickets.
+      @param _pm The project manager address that can tap funds and propose reconfigurations.
     */
-    constructor(string memory _ticketName, string memory _ticketSymbol)
-        internal
-    {
+    constructor(
+        string memory _ticketName,
+        string memory _ticketSymbol,
+        address _pm
+    ) internal {
         ticketName = _ticketName;
         ticketSymbol = _ticketSymbol;
-
-        budgetOwner = msg.sender;
+        pm = _pm;
     }
 
     /** 
         @notice Issues this project's Tickets. 
         @param _store The ticket store to issue in.
-        @dev This must be called before a Budget is configured.
     */
     function issueTickets(ITicketStore _store) external onlyOwner {
         _store.issue(bytes(ticketName), bytes(ticketSymbol));
@@ -69,13 +70,13 @@ abstract contract JuiceProject is Ownable {
         If it's 100, each Budget will have equal weight.
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
-        @param _o The percentage of this Budget's surplus to allocate to the owner.
+        @param _p The percentage of this Budget's surplus to allocate to the owner.
         @param _b The percentage of this Budget's surplus to allocate towards a beneficiary address. This can be another contract, or an end user address.
         An example would be a contract that allocates towards a specific purpose, such as Gitcoin grant matching.
         @param _bAddress The address of the beneficiary contract where a specified percentage is allocated.
         @return _budgetId The ID of the Budget that was reconfigured.
     */
-    function configureBudget(
+    function configure(
         IBudgetStore _store,
         uint256 _target,
         uint256 _duration,
@@ -83,10 +84,15 @@ abstract contract JuiceProject is Ownable {
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
-        uint256 _o,
+        uint256 _p,
         uint256 _b,
         address _bAddress
-    ) external onlyBudgetOwner returns (uint256) {
+    ) external returns (uint256) {
+        // The pm or the owner can propose configurations.
+        require(
+            msg.sender == pm || msg.sender == owner(),
+            "JuiceProject: UNAUTHORIZED"
+        );
         return
             _store.configure(
                 _target,
@@ -95,14 +101,14 @@ abstract contract JuiceProject is Ownable {
                 _name,
                 _link,
                 _discountRate,
-                _o,
+                _p,
                 _b,
                 _bAddress
             );
     }
 
     /** 
-      @notice Redeem tickets that have been transfered to this contract and use the returned amount to fund this contract's Budget.
+      @notice Redeem tickets that have been transfered to this contract and use the claimed amount to fund this project.
       @param _juicer The Juicer to redeem from.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
@@ -113,7 +119,7 @@ abstract contract JuiceProject is Ownable {
         address _issuer,
         uint256 _amount,
         uint256 _minReturn
-    ) external onlyBudgetOwner {
+    ) external onlyPm {
         uint256 _returnAmount =
             _juicer.redeem(_issuer, _amount, _minReturn, address(this));
 
@@ -122,7 +128,7 @@ abstract contract JuiceProject is Ownable {
     }
 
     /** 
-      @notice Taps the funds available in the Budget.
+      @notice Taps the funds available.
       @param _budgetId The ID of the Budget to tap.
       @param _amount The amount to tap.
       @param _beneficiary The address to transfer the funds to.
@@ -132,16 +138,16 @@ abstract contract JuiceProject is Ownable {
         uint256 _budgetId,
         uint256 _amount,
         address _beneficiary
-    ) external onlyBudgetOwner {
+    ) external onlyPm {
         _juicer.tap(_budgetId, _amount, _beneficiary);
     }
 
     /** 
         @notice Sets the address that can tap the Budget. 
-        @param _budgetOwner The new Budget owner.
+        @param _pm The new project manager.
     */
-    function setBudgetOwner(address _budgetOwner) external onlyOwner {
-        budgetOwner = _budgetOwner;
+    function setPm(address _pm) external onlyOwner {
+        pm = _pm;
     }
 
     /** 
@@ -156,10 +162,10 @@ abstract contract JuiceProject is Ownable {
     }
 
     /** 
-      @notice Take a fee for yourself.
-      @param _juicer The juicer that's having a fee taken from.
+      @notice Take a fee for this project.
+      @param _juicer The juicer used to process the fee.
       @param _amount The amount of the fee.
-      @param _from The address having the fee taken from.
+      @param _from The address who will receive tickets from this fee.
     */
     function takeFee(
         IJuicer _juicer,

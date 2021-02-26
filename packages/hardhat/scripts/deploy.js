@@ -29,8 +29,8 @@ const main = async () => {
   ]);
 
   const admin = await deploy("Admin", [
-    "Juice Tickets",
-    "tJUICE"
+    "",
+    "JUICE"
   ]);
 
   try {
@@ -71,6 +71,11 @@ const main = async () => {
     await attachedAdmin.issueTickets(ticketStore.address, {
       gasLimit: 3000000
     });
+
+    //TODO set the owner of the admin contract.
+    // await attachedJuicer.transferOwnership(admin.address, {
+    //   gasLimit: 3000000
+    // });
 
     // Make this Ballot the timelock controller of the staker contract.
     await attachedStaker.setController(budgetBallot.address, {

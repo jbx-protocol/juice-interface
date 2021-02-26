@@ -124,7 +124,7 @@ contract TicketStore is Store, ITicketStore {
         // Prepend the strings with standards.
         Tickets _tickets =
             new Tickets(
-                string(abi.encodePacked(_name, bytes(" Juice ticket"))),
+                string(abi.encodePacked(_name, bytes(" Juice tickets"))),
                 string(abi.encodePacked(bytes("j"), _symbol))
             );
 

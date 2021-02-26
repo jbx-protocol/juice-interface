@@ -94,7 +94,7 @@ export default function Landing({
                 <div style={{ fontWeight: 500, fontSize: '1rem' }}>
                   Projects on Juice say up-front how much cashflow they need
                   to crush what they do. Once the project is earning more than
-                  that, the overflow pool can be claimed by users and investors.{' '}
+                  that, the overflow can be claimed by users and investors.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"
@@ -272,12 +272,11 @@ export default function Landing({
                 <div>
                   <p>Almost definitely.</p>
                   <p>
-                    With Juice, we end up getting online community-driven goods
+                    With Juice, we end up getting community-driven online goods
                     and services with no ads, data integrity, and business
                     operation accountability. All built by motivated punks
-                    getting transparently paid exactly what they ask for, and
-                    with a price tag that effectively tends toward zero as the
-                    overflow grows.
+                    getting transparently paid what they ask for, while rewarding
+                    everyone who helped create the overflow an opportunity to capitalize on it.
                   </p>
                 </div>
                 <div>
@@ -286,13 +285,13 @@ export default function Landing({
                     Juice is an open protocol that makes money using Juice
                     itself. You can check out the contractualized budget specs{' '}
                     <a href="https://juice.work/0x00000000" target="new">
-                      here
+                      here (soon)
                     </a>
                     .
                   </p>
                   <p>
                     5% of all money made using Juice is sent to help pay for
-                    this budget. In exchange, you get the opportunity to benefit
+                    it. In exchange, you get the opportunity to benefit
                     from the overflow that the ecosystem accumulates over time,
                     and voting power on how Juice's cashflow needs should
                     evolve.

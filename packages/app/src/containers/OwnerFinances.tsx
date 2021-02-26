@@ -11,7 +11,6 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
-import { budgetsEq } from '../utils/budgetsEq'
 import { erc20Contract } from '../utils/erc20Contract'
 import ReconfigureBudget from './ReconfigureBudget'
 
@@ -52,7 +51,12 @@ export default function OwnerFinances({
     contract: contracts?.BudgetStore,
     functionName: 'getQueuedBudget',
     args: [owner],
-    shouldUpdate: budgetsEq,
+    updateOn: [
+      {
+        contract: contracts?.BudgetStore,
+        event: 'Configure',
+      },
+    ],
   })
 
   const isOwner = owner === userAddress

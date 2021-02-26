@@ -1,91 +1,85 @@
-import { Contract } from '@ethersproject/contracts'
-import { useState } from 'react'
+import { Contract, EventFilter } from '@ethersproject/contracts'
+import { useEffect, useState } from 'react'
 
-import { usePoller } from './Poller'
+export type ContractUpdateOn = {
+  contract?: Contract
+  event?: string
+}
 
 export default function useContractReader<V>({
   contract,
   functionName,
   args,
-  pollTime,
-  updateEvent,
   formatter,
   callback,
-  shouldUpdate,
+  updateOn,
+  valueDidChange,
 }: {
   contract?: Contract
   functionName: string
   args?: unknown[]
-  pollTime?: number
-  updateEvent?: string
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
-  shouldUpdate?: (a?: V, b?: V) => boolean
+  updateOn?: ContractUpdateOn[]
+  valueDidChange?: (a?: V, b?: V) => boolean
 }) {
-  const adjustPollTime = pollTime ?? 3000
-
   const [value, setValue] = useState<V>()
 
-  usePoller(
-    async () => {
-      if (!contract) return
+  const listener = (x: any) => getValue()
 
-      try {
-        const newValue = await contract[functionName](...(args ?? []))
+  useEffect(() => {
+    getValue()
 
-        const result = formatter ? formatter(newValue) : (newValue as V)
+    let subscriptions: { contract: Contract; filter: EventFilter }[] = []
 
-        const _shouldUpdate = shouldUpdate ?? ((a?: V, b?: V) => a != b)
+    try {
+      if (updateOn) {
+        // Subscribe listener to updateOn events
 
-        if (_shouldUpdate(result, value)) {
-          setValue(result)
+        updateOn.forEach(u => {
+          if (!u.event || !u.contract) return
 
-          if (callback) callback(result)
-        }
-      } catch (e) {
-        console.log('Read contract >>>', functionName, args, e.error?.message)
-        setValue(formatter ? formatter(undefined) : undefined)
-        if (callback) callback(undefined)
+          const filter = u.contract.filters[u.event]()
+          u.contract?.on(filter, listener)
+          subscriptions.push({ contract: u.contract, filter })
+        })
+      } else {
+        // Subscribe listener to all events
+
+        if (!contract) return
+
+        const allEvents: EventFilter = { topics: [] }
+        contract.on(allEvents, listener)
+        subscriptions = [{ contract, filter: allEvents }]
       }
-    },
-    [contract?.address, ...(args ? (args as []) : [])],
-    adjustPollTime,
-  )
+    } catch (error) {
+      console.log('Read contract ', { functionName, error })
+    }
 
-  // useEffect(() => {
-  //   getValue()
+    return () => subscriptions.forEach(s => s.contract.off(s.filter, listener))
+  }, [contract?.address, functionName, ...(args ? (args as []) : [])])
 
-  //   if (updateEvent && contract) {
-  //     contract.on(updateEvent, blockNumber => getValue())
-  //   }
-  // }, [
-  //   contract?.address,
-  //   functionName,
-  //   updateEvent,
-  //   ...(args ? (args as []) : []),
-  // ])
+  async function getValue() {
+    if (!contract) return
 
-  // async function getValue() {
-  //   if (!contract) return
+    try {
+      const newValue = await contract[functionName](...(args ?? []))
 
-  //   try {
-  //     const newValue = await contract[functionName](...(args ?? []))
+      const result = formatter ? formatter(newValue) : (newValue as V)
 
-  //     const result = formatter ? formatter(newValue) : (newValue as V)
+      const _valueDidChange = valueDidChange ?? ((a?: V, b?: V) => a != b)
 
-  //     const _shouldUpdate = shouldUpdate ?? ((a?: V, b?: V) => a != b)
+      if (_valueDidChange(result, value)) {
+        setValue(result)
 
-  //     if (_shouldUpdate(result, value)) {
-  //       setValue(result)
-
-  //       if (callback) callback(result)
-  //     }
-  //   } catch (e) {
-  //     console.log('Read contract >>>', functionName, args, e.error?.message)
-  //     setValue(formatter ? formatter(undefined) : undefined)
-  //     if (callback) callback(undefined)
-  //   }
-  // }
+        if (callback) callback(result)
+      }
+    } catch (err) {
+      console.log('Read contract >', functionName, { args }, { err })
+      setValue(formatter ? formatter(undefined) : undefined)
+      if (callback) callback(undefined)
+    }
+  }
 
   return value
 }

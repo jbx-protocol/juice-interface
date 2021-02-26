@@ -11,7 +11,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
-import { bigNumbersEq } from '../utils/bigNumbersEq'
+import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
 import TooltipLabel from './TooltipLabel'
@@ -47,7 +47,17 @@ export default function BudgetDetail({
     contract: contracts?.BudgetStore,
     functionName: 'getTappableAmount',
     args: [budget?.id],
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
+    updateOn: [
+      {
+        contract: contracts?.Juicer,
+        event: 'Pay',
+      },
+      {
+        contract: contracts?.Juicer,
+        event: 'Tap',
+      },
+    ],
   })
 
   const secondsLeft =

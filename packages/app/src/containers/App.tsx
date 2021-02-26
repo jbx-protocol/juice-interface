@@ -1,7 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import Navbar from '../components/Navbar'
 import { localProvider } from '../constants/local-provider'
@@ -12,7 +12,6 @@ import useContractReader from '../hooks/ContractReader'
 import { useUserAddress } from '../hooks/UserAddress'
 import { useUserProvider } from '../hooks/UserProvider'
 import { Budget } from '../models/budget'
-import { budgetsEq } from '../utils/budgetsEq'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -32,7 +31,12 @@ function App() {
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [userAddress],
-    shouldUpdate: budgetsEq,
+    updateOn: [
+      {
+        contract: contracts?.BudgetStore,
+        event: 'Configure',
+      },
+    ],
   })
 
   console.log('User:', userAddress, userProvider)

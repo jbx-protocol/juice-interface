@@ -10,7 +10,6 @@ import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
-import { budgetsEq } from '../utils/budgetsEq'
 import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
 
@@ -37,7 +36,16 @@ export default function Owner({
     contract: contracts?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
-    shouldUpdate: budgetsEq,
+    updateOn: [
+      {
+        contract: contracts?.Juicer,
+        event: 'Pay',
+      },
+      {
+        contract: contracts?.Juicer,
+        event: 'Tap',
+      },
+    ],
     callback: budget => {
       if (budget) setBudgetState('found')
       else setBudgetState(isOwner ? 'canCreate' : 'missing')

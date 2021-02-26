@@ -9,7 +9,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
-import { bigNumbersEq } from '../utils/bigNumbersEq'
+import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
 import TooltipLabel from './TooltipLabel'
 
@@ -39,39 +39,42 @@ export default function Rewards({
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
-    formatter: (value: string) =>
-      value ? Web3.utils.hexToString(value) : undefined,
   })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
     args: [userAddress],
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
+    // TODO updateOn: []
   })
   const ticketSupply = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'totalSupply',
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
+    // TODO updateOn: []
   })
   const iouBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'iOweYous',
     args: [budget?.project, userAddress],
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
+    // TODO updateOn: []
   })
   const iouSupply = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'totalIOweYous',
     args: [budget?.project],
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
+    // TODO updateOn: []
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
     functionName: 'getOverflow',
     args: [budget?.project],
-    shouldUpdate: bigNumbersEq,
+    valueDidChange: bigNumbersDiff,
+    // TODO updateOn: []
   })
   const wantToken = useContractReader<string>({
     contract: contracts?.Juicer,

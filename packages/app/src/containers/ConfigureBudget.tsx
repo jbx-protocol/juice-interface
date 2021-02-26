@@ -83,11 +83,7 @@ export default function ConfigureBudget({
       budgetForm.setFieldsValue({
         name: activeBudget.name,
         duration: activeBudget.duration
-          .div(
-            BigNumber.from(
-              process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1,
-            ),
-          )
+          .div(BigNumber.from(SECONDS_IN_DAY))
           .toNumber(),
         link: activeBudget.link,
         target: activeBudget.target.toNumber(),

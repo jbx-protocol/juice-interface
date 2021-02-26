@@ -23,7 +23,7 @@ export function advancedContractStep({
       ></BudgetAdvancedForm>
     ),
     info: [
-      "Your contract's overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who makes payments, but you should also reserve some tokens for yourself so that you benefit from your own surplus.",
+      "Your contract's overflow is claimable by anyone who redeems your Tickets. Tickets are handed out to everyone who makes payments, but you should also reserve some tickets for yourself so you can taste the fruits of your own labor.",
       "You can mint a budgeting period's reserved tickets once it expires.",
       '---',
       'You can also pre-program a donation from your overflow, like for Gitcoin grant matching.',

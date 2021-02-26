@@ -22,7 +22,7 @@ export default function BudgetAdvancedForm({
       {...props}
       layout="vertical"
       initialValues={{
-        projectAllocation: 0,
+        projectAllocation: 5,
         beneficiaryAllocation: 0,
         discountRate: 97,
         ...props.initialValues,
@@ -31,7 +31,8 @@ export default function BudgetAdvancedForm({
       {header ? <Form.Item>{header}</Form.Item> : null}
 
       <Form.Item
-        extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."
+        // extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."
+        extra="For every ticket given to someone who pays you, this percentage of tickets will be reserved for yourself."
         name="projectAllocation"
         label="Reserved tickets"
       >
@@ -67,17 +68,15 @@ export default function BudgetAdvancedForm({
         label="Discount rate"
         rules={[{ required: true }]}
       >
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <Input
             className="align-end"
             suffix="%"
             type="number"
             min={95}
             max={100}
-            placeholder="100"
+            placeholder="97"
             disabled={disabled}
           />
-        </div>
       </Form.Item>
     </Form>
   )

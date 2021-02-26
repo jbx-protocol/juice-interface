@@ -34,8 +34,9 @@ export default function Landing({
   const listData = [
     'Internet public goods',
     'Open source projects',
+    'Smart contracts',
     'Indie artists, journalists, and researchers',
-    'Web services with predictable costs',
+    'Any web service with predictable costs',
   ]
 
   const section: CSSProperties = {
@@ -88,12 +89,12 @@ export default function Landing({
                   paddingBottom: 60,
                 }}
               >
-                {bigHeader('Cashflow for the commons')}
+                {bigHeader('A business model for the open internet')}
 
                 <div style={{ fontWeight: 500, fontSize: '1rem' }}>
                   Projects on Juice say up-front how much cashflow they need
                   to crush what they do. Once the project is earning more than
-                  that, the overflow is passed back to those who've paid.{' '}
+                  that, the overflow pool can be claimed by users and investors.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"

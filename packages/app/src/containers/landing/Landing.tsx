@@ -34,8 +34,8 @@ export default function Landing({
   const listData = [
     'Internet public goods',
     'Open source projects',
-    'Smart contracts',
-    'Indie artists, journalists, and researchers',
+    'Smart contracts & DAOs',
+    'Indie artists, journalists, & researchers',
     'Any web service with predictable costs',
   ]
 

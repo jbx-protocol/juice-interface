@@ -36,6 +36,17 @@ export default function Rewards({
 
   const ticketContract = erc20Contract(ticketAddress)
 
+  const ticketsUpdateOn = [
+    {
+      contract: contracts?.Juicer,
+      event: 'Pay',
+    },
+    {
+      contract: contracts?.Juicer,
+      event: 'Redeem',
+    },
+  ]
+
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
@@ -45,13 +56,13 @@ export default function Rewards({
     functionName: 'balanceOf',
     args: [userAddress],
     valueDidChange: bigNumbersDiff,
-    // TODO updateOn: []
+    updateOn: ticketsUpdateOn,
   })
   const ticketSupply = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'totalSupply',
     valueDidChange: bigNumbersDiff,
-    // TODO updateOn: []
+    updateOn: ticketsUpdateOn,
   })
   const iouBalance = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -59,7 +70,13 @@ export default function Rewards({
     args: [budget?.project, userAddress],
     valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
-    // TODO updateOn: []
+    updateOn: [
+      ...ticketsUpdateOn,
+      // {
+      //   contract: contracts?.Juicer,
+      //   event: TODO add convert event,
+      // },
+    ],
   })
   const iouSupply = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -67,20 +84,24 @@ export default function Rewards({
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
-    // TODO updateOn: []
+    updateOn: ticketsUpdateOn,
   })
   const totalClaimableAmount = useContractReader<BigNumber>({
     contract: contracts?.TicketStore,
     functionName: 'getOverflow',
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
-    // TODO updateOn: []
+    updateOn: [
+      {
+        contract: contracts?.Juicer,
+        event: 'Pay',
+      },
+    ],
   })
   const wantToken = useContractReader<string>({
     contract: contracts?.Juicer,
     functionName: 'stablecoin',
   })
-
   const wantTokenName = useContractReader<string>({
     contract: erc20Contract(wantToken),
     functionName: 'symbol',

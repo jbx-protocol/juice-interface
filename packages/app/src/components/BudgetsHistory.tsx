@@ -30,13 +30,11 @@ export default function BudgetsHistory({
   const poolNumber = allPoolsLoaded
     ? undefined
     : poolNumbers[poolNumbers.length - 1]
-  const pollTime = allPoolsLoaded ? undefined : 100
 
   useContractReader<Budget>({
     contract: contracts?.BudgetStore,
     functionName: 'getBudget',
     args: [poolNumber],
-    pollTime,
     callback: budget => {
       if (
         !budget ||

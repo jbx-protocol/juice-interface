@@ -49,7 +49,7 @@ export default function Reserves({
     functionName: 'getReserves',
     args: [budget?.project, true],
     formatter: val => val ?? emptyReserves,
-    shouldUpdate: (val, old) => {
+    valueDidChange: (val, old) => {
       if (!val || (!val && !old)) return false
       return (
         val.adminFees.eq(old?.adminFees ?? 0) &&
@@ -57,6 +57,7 @@ export default function Reserves({
         val.issuerTickets.eq(old?.issuerTickets ?? 0)
       )
     },
+    // TODO updateOn: []
   })
 
   const reserves = useContractReader<ReserveAmounts>({
@@ -64,7 +65,7 @@ export default function Reserves({
     functionName: 'getReserves',
     args: [budget?.project, false],
     formatter: val => val ?? emptyReserves,
-    shouldUpdate: (val, old) => {
+    valueDidChange: (val, old) => {
       if (!val || (!val && !old)) return false
       return (
         val.adminFees.eq(old?.adminFees ?? 0) &&
@@ -72,16 +73,15 @@ export default function Reserves({
         val.issuerTickets.eq(old?.issuerTickets ?? 0)
       )
     },
+    // TODO updateOn: []
   })
-
-  const displayReserves = onlyDistributable ? distributableReserves : reserves
 
   const ticketSymbol = useContractReader<string>({
     contract: erc20Contract(ticketAddress),
     functionName: 'symbol',
-    formatter: (value: string) =>
-      value ? Web3.utils.hexToString(value) : undefined,
   })
+
+  const displayReserves = onlyDistributable ? distributableReserves : reserves
 
   return (
     <Descriptions {...descriptionsStyle} column={1}>

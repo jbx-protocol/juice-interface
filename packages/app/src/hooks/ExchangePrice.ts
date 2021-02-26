@@ -22,7 +22,7 @@ export function useExchangePrice() {
     }
     getPrice()
   }
-  usePoller(pollPrice, [], 1800000)
+  usePoller(pollPrice, [], 30000)
 
   return price
 }

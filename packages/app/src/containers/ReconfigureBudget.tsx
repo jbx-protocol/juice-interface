@@ -11,6 +11,7 @@ import { Budget } from '../models/budget'
 import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
 import { BudgetFormFields } from '../models/forms-fields/budget-form'
 import { Transactor } from '../models/transactor'
+import { addressExists } from '../utils/addressExists'
 
 export default function ReconfigureBudget({
   transactor,
@@ -34,6 +35,23 @@ export default function ReconfigureBudget({
   })
 
   if (!transactor || !contracts) return null
+
+  if (currentValue) {
+    budgetForm.setFieldsValue({
+      name: currentValue.name,
+      duration: currentValue.duration.toNumber(),
+      target: currentValue.target.toNumber(),
+      link: currentValue.link,
+    })
+    budgetAdvancedForm.setFieldsValue({
+      discountRate: currentValue.discountRate.toNumber(),
+      beneficiaryAddress: addressExists(currentValue.bAddress)
+        ? currentValue.bAddress
+        : '',
+      beneficiaryAllocation: currentValue.b.toNumber(),
+      projectAllocation: currentValue.p.toNumber(),
+    })
+  }
 
   const eth = new Web3(Web3.givenProvider).eth
 
@@ -70,7 +88,9 @@ export default function ReconfigureBudget({
       'uint256',
       fields.beneficiaryAllocation,
     )
-    const _beneficiaryAddress = fields.beneficiaryAddress ?? '0'
+    const _beneficiaryAddress = fields.beneficiaryAddress.length
+      ? fields.beneficiaryAddress
+      : '0x0000000000000000000000000000000000000000'
     const _want = wantToken
 
     console.log('🧃 Calling BudgetStore.configure(...)', {
@@ -112,23 +132,12 @@ export default function ReconfigureBudget({
         props={{
           form: budgetForm,
           labelCol: { span: 8 },
-          initialValues: {
-            duration: currentValue?.duration.toString(),
-            target: currentValue?.target.toString(),
-            link: currentValue?.link,
-          },
         }}
       />
       <BudgetAdvancedForm
         props={{
           form: budgetAdvancedForm,
           labelCol: { span: 8 },
-          initialValues: {
-            projectAllocation: currentValue?.p.toString(),
-            beneficiaryAddress: currentValue?.bAddress,
-            beneficiaryAllocation: currentValue?.b.toString(),
-            discountRate: currentValue?.discountRate.toString(),
-          },
         }}
       />
     </Modal>

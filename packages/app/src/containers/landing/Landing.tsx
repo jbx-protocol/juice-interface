@@ -173,7 +173,8 @@ export default function Landing({
             {arrowDivider}
             <p>
               People can either pay you like they would on Patreon, or
-              transparently from within Solidity smart contracts.{' '}
+              transparently from within Solidity smart contracts.
+              For example, if your contract skims off a fee, just route it through Juice so your community benefits alongside you.{' '}
               <a
                 href="https://twitter.com/hashtag/BusinessModelAsAService"
                 target="_blank"
@@ -187,8 +188,23 @@ export default function Landing({
               If money overflows, your paying customers claim the surplus,
               effectively pushing prices down as your community grows. Early
               adopters get a discounted rate, and those HODLers who wait longest
-              to claim get a juicier return. While unclaimed, overflow earns mad
-              interest on Yearn.
+              to claim get a juicier return. While unclaimed, overflow earns interest.{' '}
+              <br></br>
+              <a
+                href="https://twitter.com/hashtag/DeFi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+               #DeFi
+              </a>
+              {' '}
+              <a
+                href="https://twitter.com/hashtag/RegenFinance"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #RegenFinance
+              </a>
               <br></br>
               <span style={{ fontSize: '30px' }}>⛲️</span>
             </p>
@@ -206,26 +222,12 @@ export default function Landing({
               Create value for your community, crush your craft, make your
               money, and lift up your people.{' '}
               <a
-                href="https://twitter.com/hashtag/DeFi"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #DeFi
-              </a>{' '}
-              <a
                 href="https://twitter.com/hashtag/dework"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 #DeWork
               </a>{' '}
-              <a
-                href="https://twitter.com/hashtag/RegenFinance"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #RegenFinance
-              </a>
               <br></br>
               <span style={{ fontSize: '30px' }}>🧃⚡️</span>
             </p>

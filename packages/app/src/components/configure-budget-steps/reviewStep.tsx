@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { Button, Divider, FormInstance, Space, Statistic } from 'antd'
 import { Link } from 'react-router-dom'
 
@@ -41,10 +41,17 @@ export function reviewStep({
   feePercent?: BigNumber
   wantTokenName?: string
 }): Step {
-  const targetWithFee = (target: BigNumber) =>
-    feePercent
-      ? `${target.toString()} (+ ${target.mul(feePercent)} admin fee)`
+  const targetWithFee = (target: BigNumberish) => {
+    if (!target) return '--'
+
+    const _target = BigNumber.isBigNumber(target)
+      ? target
+      : BigNumber.from(target)
+
+    return feePercent
+      ? `${_target.toString()} (+ ${_target.mul(feePercent)} admin fee)`
       : undefined
+  }
 
   return {
     title: 'Review',
@@ -52,15 +59,23 @@ export function reviewStep({
       <div>
         <Space size="large" direction="vertical">
           <h1 style={{ fontSize: '2rem' }}>Review your contract</h1>
+          <Statistic
+            title="Name"
+            value={orEmpty(
+              activeBudget
+                ? activeBudget.name
+                : budgetForm.getFieldValue('name'),
+            )}
+          />
           <div>
             <Space size="large">
               <Statistic
                 title="Duration"
-                value={
+                value={orEmpty(
                   activeBudget
                     ? activeBudget.duration.toString()
-                    : budgetForm.getFieldValue('duration')
-                }
+                    : budgetForm.getFieldValue('duration'),
+                )}
                 suffix="days"
               />
               <Statistic
@@ -68,9 +83,7 @@ export function reviewStep({
                 value={
                   activeBudget
                     ? targetWithFee(activeBudget.target)
-                    : targetWithFee(
-                        BigNumber.from(budgetForm.getFieldValue('target') || 0),
-                      )
+                    : targetWithFee(budgetForm.getFieldValue('target'))
                 }
                 suffix={wantTokenName}
               />
@@ -78,11 +91,11 @@ export function reviewStep({
           </div>
           <Statistic
             title="Link"
-            value={
+            value={orEmpty(
               activeBudget
                 ? activeBudget.link
-                : budgetForm.getFieldValue('link')
-            }
+                : budgetForm.getFieldValue('link'),
+            )}
           />
           <Space size="large" align="end">
             <Statistic
@@ -140,6 +153,7 @@ export function reviewStep({
               type="primary"
               onClick={activateContract}
               loading={loadingCreateBudget}
+              disabled={!budgetForm.getFieldValue('duration')}
             >
               Create contract
             </Button>
@@ -180,7 +194,11 @@ export function reviewStep({
             </Space>
           </div>
           <Button
-            disabled={ticketsInitialized}
+            disabled={
+              ticketsInitialized ||
+              !ticketsForm.getFieldValue('name') ||
+              !ticketsForm.getFieldValue('symbol')
+            }
             htmlType="submit"
             type="primary"
             onClick={initTickets}

@@ -4,9 +4,58 @@ pragma experimental ABIEncoderV2;
 
 import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
-import "./IBudgetController.sol";
-import "./ITicketsController.sol";
 import "./IOverflowYielder.sol";
+
+interface IBudgetController {
+    event Pay(
+        uint256 indexed budgetId,
+        address indexed owner,
+        address indexed payer,
+        address beneficiary,
+        uint256 amount,
+        IERC20 token
+    );
+
+    event Tap(
+        uint256 indexed budgetId,
+        address indexed owner,
+        address indexed beneficiary,
+        uint256 amount,
+        IERC20 want
+    );
+
+    function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
+
+    function pay(
+        address _owner,
+        uint256 _amount,
+        address _beneficiary
+    ) external returns (uint256 budgetId);
+
+    function tap(
+        uint256 _budgetId,
+        uint256 _amount,
+        address _beneficiary
+    ) external;
+}
+
+interface ITicketsController {
+    event Redeem(
+        address indexed holder,
+        address indexed issuer,
+        address beneficiary,
+        uint256 amount,
+        uint256 returnAmount,
+        IERC20 returnToken
+    );
+
+    function redeem(
+        address _issuer,
+        uint256 _amount,
+        uint256 _minReturn,
+        address _beneficiary
+    ) external returns (uint256 returnAmount);
+}
 
 interface IJuicer is IBudgetController, ITicketsController {
     event DistributeReserves(address minter, address issuer);

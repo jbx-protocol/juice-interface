@@ -167,7 +167,7 @@ export default function Landing({
         >
           <Space direction="vertical">
             <div>
-              {smallHeader('Build')}
+              {smallHeader('Get to work')}
               <p>
                 Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
@@ -178,12 +178,12 @@ export default function Landing({
             </div>
             {arrowDivider}
             <div>
-              {smallHeader('Earn')}
+              {smallHeader('Get paid')}
               <p>
-                People can fund your project through the Juice dashboard as an
+                People can fund your project through the Juice dashboard as a patron or an
                 investor, or through your app or service as a paying user. For
                 example, if your users pay a transaction fee or monthly cost,
-                just route it through Juice.{' '}
+                just route it through Juice's smart contracts.{' '}
                 <a
                   href="https://twitter.com/hashtag/BusinessModelAsAService"
                   target="_blank"
@@ -195,7 +195,7 @@ export default function Landing({
             </div>
             {arrowDivider}
             <div>
-              {smallHeader('Overflow')}
+              {smallHeader('Maximize overflow')}
               <p>
                 If money overflows, your paying customers claim the surplus,
                 effectively pushing prices down as your community grows. Early
@@ -222,7 +222,7 @@ export default function Landing({
             </div>
             {arrowDivider}
             <div>
-              {smallHeader('Repeat')}
+              {smallHeader('Rinse, repeat')}
               <p>
                 Your budgeting periods can be however long you want, and can be
                 recurring. You can make them bigger as your project grows, with

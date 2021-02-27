@@ -34,7 +34,8 @@ function App() {
     updateOn: [
       {
         contract: contracts?.BudgetStore,
-        event: 'Configure',
+        eventName: 'Configure',
+        topics: [[], userAddress],
       },
     ],
   })

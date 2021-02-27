@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, DescriptionsProps, Switch } from 'antd'
 import React, { useState } from 'react'
 
-import useContractReader from '../hooks/ContractReader'
+import useContractReader, { ContractUpdateOn } from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { erc20Contract } from '../utils/erc20Contract'
@@ -43,19 +43,22 @@ export default function Reserves({
     issuerTickets: BigNumber.from(0),
   }
 
-  const reservesUpdateOn = [
+  const reservesUpdateOn: ContractUpdateOn = [
     {
       contract: contracts?.Juicer,
-      event: 'Pay',
+      eventName: 'Pay',
+      topics: budget ? [budget.id.toString()] : undefined,
     },
     {
       contract: contracts?.Juicer,
-      event: 'Collect',
+      eventName: 'Redeem',
+      topics: budget ? [[], budget.project] : undefined,
     },
-    {
-      contract: contracts?.Juicer,
-      event: 'Redeem',
-    },
+    // TODO index property in Collect event for filtering against specific budget?
+    // {
+    //   contract: contracts?.Juicer,
+    //   eventName: 'Collect',
+    // },
   ]
 
   const distributableReserves = useContractReader<ReserveAmounts>({

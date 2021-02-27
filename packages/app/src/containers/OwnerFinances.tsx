@@ -54,7 +54,8 @@ export default function OwnerFinances({
     updateOn: [
       {
         contract: contracts?.BudgetStore,
-        event: 'Configure',
+        eventName: 'Configure',
+        topics: owner ? [[], owner] : undefined,
       },
     ],
   })

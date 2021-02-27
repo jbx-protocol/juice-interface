@@ -3,7 +3,7 @@ import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
 
 import { colors } from '../constants/styles/colors'
-import useContractReader from '../hooks/ContractReader'
+import useContractReader, { ContractUpdateOn } from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
@@ -35,17 +35,24 @@ export default function Rewards({
 
   const ticketContract = erc20Contract(ticketAddress)
 
-  const ticketsUpdateOn = [
+  const ticketsUpdateOn: ContractUpdateOn = [
     {
       contract: contracts?.Juicer,
-      event: 'Pay',
+      eventName: 'Pay',
+      topics: budget ? [budget.id.toHexString()] : undefined,
     },
     {
       contract: contracts?.Juicer,
-      event: 'Redeem',
+      eventName: 'Redeem',
+      topics: budget ? [[], budget.project] : undefined,
     },
   ]
 
+  const bondingCurveRate = useContractReader<BigNumber>({
+    contract: contracts?.Juicer,
+    functionName: 'bondingCurveRate',
+    valueDidChange: bigNumbersDiff,
+  })
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
@@ -64,7 +71,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const iouBalance = useContractReader<BigNumber>({
-    contract: ticketContract,
+    contract: contracts?.TicketStore,
     functionName: 'iOweYous',
     args: [budget?.project, userAddress],
     valueDidChange: bigNumbersDiff,
@@ -78,22 +85,23 @@ export default function Rewards({
     ],
   })
   const iouSupply = useContractReader<BigNumber>({
-    contract: ticketContract,
+    contract: contracts?.TicketStore,
     functionName: 'totalIOweYous',
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
     updateOn: ticketsUpdateOn,
   })
-  const totalClaimableAmount = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
+  const totalOverflow = useContractReader<BigNumber>({
+    contract: contracts?.Juicer,
     functionName: 'getOverflow',
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
         contract: contracts?.Juicer,
-        event: 'Pay',
+        eventName: 'Pay',
+        topics: budget ? [budget.id.toHexString()] : undefined,
       },
     ],
   })
@@ -106,24 +114,43 @@ export default function Rewards({
     functionName: 'symbol',
   })
 
-  const share = ticketSupply?.gt(0)
-    ? ticketsBalance
+  const totalBalance = ticketsBalance?.add(iouBalance || 0) || BigNumber.from(0)
+  const totalSupply = ticketSupply?.add(iouSupply || 0) || BigNumber.from(0)
+
+  const share = totalSupply?.gt(0)
+    ? totalBalance
         ?.mul(100)
-        .div(ticketSupply)
+        .div(totalSupply)
         .toString()
     : '0'
 
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
+    if (
+      !ticketsBalance ||
+      !bondingCurveRate ||
+      !totalOverflow ||
+      totalSupply.eq(0)
+    )
+      return
+
     setLoadingRedeem(true)
 
-    const _amount = redeemAmount?.toHexString()
+    const minReturn = ticketsBalance
+      .mul(totalOverflow)
+      .mul(bondingCurveRate)
+      .div(totalSupply)
 
-    transactor(contracts.Juicer, 'redeem', [budget?.project, _amount], {
-      onDone: () => setLoadingRedeem(false),
-      onConfirmed: () => setRedeemAmount(BigNumber.from(0)),
-    })
+    transactor(
+      contracts.Juicer,
+      'redeem',
+      [budget?.project, redeemAmount?.toHexString(), minReturn, userAddress],
+      {
+        onDone: () => setLoadingRedeem(false),
+        onConfirmed: () => setRedeemAmount(BigNumber.from(0)),
+      },
+    )
   }
 
   function claimIou() {
@@ -176,7 +203,7 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            {totalClaimableAmount?.toString() ?? 0} {wantTokenName}
+            {totalOverflow?.toString() ?? 0} {wantTokenName}
           </div>
         )}
       />
@@ -272,7 +299,6 @@ export default function Rewards({
                 type="number"
                 placeholder="0"
                 max={ticketsBalance?.toString()}
-                value={redeem.toString()}
                 onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
               />
               <Button type="primary" onClick={redeem} loading={loadingRedeem}>

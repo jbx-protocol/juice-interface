@@ -291,7 +291,7 @@ export default function Landing({
                   </p>
                   <p>
                     5% of all money made using Juice is sent to help pay for
-                    it. In exchange, you get the opportunity to benefit
+                    Juice itself. In exchange, you get the opportunity to benefit
                     from the overflow that the ecosystem accumulates over time,
                     and voting power on how Juice's cashflow needs should
                     evolve.

@@ -49,7 +49,7 @@ export function reviewStep({
       : BigNumber.from(target)
 
     return feePercent
-      ? `${_target.toString()} (+ ${_target.mul(feePercent)} admin fee)`
+      ? `${_target.toString()} (+${_target.mul(feePercent).div(100)})`
       : undefined
   }
 
@@ -79,7 +79,7 @@ export function reviewStep({
                 suffix="days"
               />
               <Statistic
-                title="Amount"
+                title="Amount (+5% fee)"
                 value={
                   activeBudget
                     ? targetWithFee(activeBudget.target)
@@ -211,6 +211,7 @@ export function reviewStep({
     ),
     info: [
       'Kick off your project by submitting a transaction to the blockchain that activates your contract.',
+      "5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.",
       '---',
       'By default, Juice will internally keep track of who has sent you payments so that they can claim your overflow.',
       "If you instead want Juice to track payments by distributing ERC-20 tickets of yours, you'll first have to submit a transaction issuing your tickets.",

@@ -62,8 +62,7 @@ export default function ConfigureBudget({
 
   const juicerFeePercent = useContractReader<BigNumber>({
     contract: contracts?.Juicer,
-    functionName: 'fee',
-    formatter: (val: BigNumber) => val.div(100),
+    functionName: 'fee'
   })
 
   const wantToken = useContractReader<string>({

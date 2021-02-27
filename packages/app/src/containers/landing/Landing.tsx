@@ -31,6 +31,10 @@ export default function Landing({
     </h1>
   )
 
+  const smallHeader = (text: string) => (
+    <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>
+  )
+
   const listData = [
     'Internet public goods',
     'Open source businesses',
@@ -92,9 +96,9 @@ export default function Landing({
                 {bigHeader('A business model for the open internet')}
 
                 <div style={{ fontWeight: 500, fontSize: '1rem' }}>
-                  Projects on Juice say up-front how much cashflow they need
-                  to crush what they do. Once they're earning more than
-                  that, the overflow can be claimed by its users, patrons, & investors.{' '}
+                  Projects on Juice say up-front how much cashflow they need to
+                  crush what they do. Once they're earning more than that, the
+                  overflow can be claimed by its users, patrons, & investors.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"
@@ -162,63 +166,79 @@ export default function Landing({
           }}
         >
           <Space direction="vertical">
-            <h2>How it's done</h2>
-            <p>
-              Make a Juice contract that says how much cashflow you and your
-              team want/need in order to absolutely crush your project's mission
-              statement.
-              <br></br>
-              <span style={{ fontSize: '30px' }}>💰💅💪</span>
-            </p>
+            <div>
+              {smallHeader('Build')}
+              <p>
+                Make a Juice contract that says how much cashflow you and your
+                team want/need in order to absolutely crush your project's
+                mission statement.
+                <br></br>
+                <span style={{ fontSize: '30px' }}>💰💅💪</span>
+              </p>
+            </div>
             {arrowDivider}
-            <p>
-              People can either pay you like they would on Patreon, or
-              transparently from within Solidity smart contracts.
-              For example, if your contract skims off a fee, just route it through Juice.{' '}
-              <a
-                href="https://twitter.com/hashtag/BusinessModelAsAService"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #BusinessModelAsAService
-              </a>
-            </p>
+            <div>
+              {smallHeader('Earn')}
+              <p>
+                People can fund your project through the Juice dashboard as an
+                investor, or through your app or service as a paying user. For
+                example, if your users pay a transaction fee or monthly cost,
+                just route it through Juice.{' '}
+                <a
+                  href="https://twitter.com/hashtag/BusinessModelAsAService"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #BusinessModelAsAService
+                </a>
+              </p>
+            </div>
             {arrowDivider}
-            <p>
-              If money overflows, your paying customers claim the surplus,
-              effectively pushing prices down as your community grows. Early
-              adopters get a discounted rate, and those HODLers who wait longest
-              to claim get a juicier return. While unclaimed, overflow earns interest.{' '}
-              <br></br>
-              <a
-                href="https://twitter.com/hashtag/DeFi"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-               #DeFi
-              </a>
-              {' '}
-              <a
-                href="https://twitter.com/hashtag/RegenFinance"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #RegenFinance
-              </a>
-              <br></br>
-              <span style={{ fontSize: '30px' }}>⛲️</span>
-            </p>
+            <div>
+              {smallHeader('Overflow')}
+              <p>
+                If money overflows, your paying customers claim the surplus,
+                effectively pushing prices down as your community grows. Early
+                adopters get a discounted rate, and those HODLers who wait
+                longest to claim get a juicier return. While unclaimed, overflow
+                earns interest. <br></br>
+                <a
+                  href="https://twitter.com/hashtag/DeFi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #DeFi
+                </a>{' '}
+                <a
+                  href="https://twitter.com/hashtag/RegenFinance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #RegenFinance
+                </a>
+                <br></br>
+                <span style={{ fontSize: '30px' }}>⛲️</span>
+              </p>
+            </div>
             {arrowDivider}
-            <p>
-              Your budgeting periods can be however long you want, and can be
-              recurring. You can make them bigger as your project grows, with
-              the approval of those paying customers that have not yet claimed
-              their fair share of your overflowed surplus.
-              <br></br>
-              <span style={{ fontSize: '30px' }}>📈</span>
-            </p>
-            {arrowDivider}
-            <p>
+            <div>
+              {smallHeader('Repeat')}
+              <p>
+                Your budgeting periods can be however long you want, and can be
+                recurring. You can make them bigger as your project grows, with
+                the approval of those paying customers that have not yet claimed
+                their fair share of your overflowed surplus.
+                <br></br>
+                <span style={{ fontSize: '30px' }}>📈</span>
+              </p>
+            </div>
+            <p
+              style={{
+                fontWeight: 600,
+                marginTop: 40,
+                textAlign: 'center',
+              }}
+            >
               Create value for your community, crush your craft, make your
               money, and lift up your people.{' '}
               <a
@@ -275,8 +295,9 @@ export default function Landing({
                     With Juice, we end up getting community-driven online goods
                     and services with no ads, data integrity, and business
                     operation accountability. All built by motivated punks
-                    getting transparently paid what they ask for, while rewarding
-                    everyone who helped create the overflow an opportunity to capitalize on it.
+                    getting transparently paid what they ask for, while
+                    rewarding everyone who helped create the overflow an
+                    opportunity to capitalize on it.
                   </p>
                 </div>
                 <div>
@@ -291,10 +312,10 @@ export default function Landing({
                   </p>
                   <p>
                     5% of all money made using Juice is sent to help pay for
-                    Juice itself. In exchange, you get the opportunity to benefit
-                    from the overflow that the ecosystem accumulates over time,
-                    and voting power on how Juice's cashflow needs should
-                    evolve.
+                    Juice itself. In exchange, you get the opportunity to
+                    benefit from the overflow that the ecosystem accumulates
+                    over time, and voting power on how Juice's cashflow needs
+                    should evolve.
                   </p>
                 </div>
               </div>

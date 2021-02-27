@@ -66,12 +66,15 @@ export default function Navbar({
             {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>
         ) : null}
-        {<Menu.Item key="fluid-dynamics">
-          {menuItem(
-            'Visual documentation',
-            'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1',
+        {<Menu.Item key="faq">{menuItem('FAQ', '/#/faq')}</Menu.Item>}
+        {
+          <Menu.Item key="fluid-dynamics">
+            {menuItem(
+              'Fluid dynamics',
+              'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1',
             )}
-          </Menu.Item> }
+          </Menu.Item>
+        }
       </Menu>
       <div className="hide-mobile">
         <Account

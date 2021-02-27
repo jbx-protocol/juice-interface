@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
+import Faq from '../components/Faq'
 
 import Gimme from '../components/Gimme'
 import { useGasPrice } from '../hooks/GasPrice'
@@ -50,6 +51,9 @@ export default function Router({
             transactor={transactor}
             userAddress={userAddress}
           ></Gimme>
+        </Route>
+        <Route path="/faq">
+          <Faq />
         </Route>
         <Route path="/:owner">
           <Owner

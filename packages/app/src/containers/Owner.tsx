@@ -1,11 +1,13 @@
 import { Button, Space, Tabs } from 'antd'
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import Loading from '../components/Loading'
 import Rewards from '../components/Rewards'
+import { localProvider } from '../constants/local-provider'
 import { layouts } from '../constants/styles/layouts'
 import { padding } from '../constants/styles/padding'
+import { useContractLoader } from '../hooks/ContractLoader'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
@@ -33,7 +35,7 @@ export default function Owner({
   const isOwner = owner === userAddress
 
   const currentBudget = useContractReader<Budget>({
-    contract: contracts?.BudgetStore,
+    contract: useContractLoader(localProvider, true)?.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
     updateOn: [

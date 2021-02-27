@@ -6,7 +6,10 @@ import { ContractName } from '../constants/contract-name'
 import { Contracts } from '../models/contracts'
 import { NetworkName } from '../models/network-name'
 
-export function useContractLoader(provider?: JsonRpcProvider) {
+export function useContractLoader(
+  provider?: JsonRpcProvider,
+  readOnly?: boolean,
+) {
   const [contracts, setContracts] = useState<Contracts>()
 
   useEffect(() => {
@@ -30,14 +33,19 @@ export function useContractLoader(provider?: JsonRpcProvider) {
       if (!network) return
 
       try {
-        const signer = provider.getSigner()
-
         const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
+
+        // TODO how to automatically use signer if not using burner?
+        const signerOrProvider = readOnly ? provider : provider.getSigner()
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
             ...accumulator,
-            [contractName]: loadContract(contractName, signer, network),
+            [contractName]: loadContract(
+              contractName,
+              network,
+              signerOrProvider,
+            ),
           }),
           {} as Contracts,
         )
@@ -56,8 +64,8 @@ export function useContractLoader(provider?: JsonRpcProvider) {
 
 const loadContract = (
   contractName: ContractName,
-  signer: JsonRpcSigner,
   network: NetworkName,
+  signer: JsonRpcSigner | JsonRpcProvider,
 ): Contract =>
   new Contract(
     require(`../contracts/${network}/${contractName}.address.js`),

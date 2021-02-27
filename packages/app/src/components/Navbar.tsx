@@ -68,7 +68,7 @@ export default function Navbar({
         ) : null}
         {<Menu.Item key="fluid-dynamics">
           {menuItem(
-            'Fluid dynamics',
+            'Visual documentation',
             'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1',
             )}
           </Menu.Item> }

@@ -33,10 +33,10 @@ export default function Landing({
 
   const listData = [
     'Internet public goods',
-    'Open source projects',
-    'Smart contracts & DAOs',
+    'Open source businesses',
+    'Solidity apps & protocols',
     'Indie artists, journalists, & researchers',
-    'Any web service with predictable costs',
+    'Any web project with predictable costs',
   ]
 
   const section: CSSProperties = {
@@ -93,8 +93,8 @@ export default function Landing({
 
                 <div style={{ fontWeight: 500, fontSize: '1rem' }}>
                   Projects on Juice say up-front how much cashflow they need
-                  to crush what they do. Once the project is earning more than
-                  that, the overflow can be claimed by users and investors.{' '}
+                  to crush what they do. Once they're earning more than
+                  that, the overflow can be claimed by its users, patrons, & investors.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"
@@ -174,7 +174,7 @@ export default function Landing({
             <p>
               People can either pay you like they would on Patreon, or
               transparently from within Solidity smart contracts.
-              For example, if your contract skims off a fee, just route it through Juice so your community benefits alongside you.{' '}
+              For example, if your contract skims off a fee, just route it through Juice.{' '}
               <a
                 href="https://twitter.com/hashtag/BusinessModelAsAService"
                 target="_blank"

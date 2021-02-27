@@ -182,8 +182,15 @@ export default function Landing({
               <p>
                 People can fund your project through the Juice dashboard as a patron or an
                 investor, or through your app as a paying user. For
-                example, if your users pay a transaction fee or monthly cost,
+                example, if your users pay you a transaction fee or monthly cost,
                 just route it through Juice's smart contracts.{' '}
+                <a
+                  href="https://twitter.com/hashtag/composability"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  #composability
+                </a>
                 <a
                   href="https://twitter.com/hashtag/BusinessModelAsAService"
                   target="_blank"

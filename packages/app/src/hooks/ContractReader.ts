@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react'
 
 export type ContractUpdateOn = {
   contract?: Contract
-  event?: string
-}
+  eventName?: string
+  topics?: EventFilter['topics']
+}[]
 
 export default function useContractReader<V>({
   contract,
@@ -20,7 +21,7 @@ export default function useContractReader<V>({
   args?: unknown[]
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
-  updateOn?: ContractUpdateOn[]
+  updateOn?: ContractUpdateOn
   valueDidChange?: (a?: V, b?: V) => boolean
 }) {
   const [value, setValue] = useState<V>()
@@ -37,9 +38,9 @@ export default function useContractReader<V>({
         // Subscribe listener to updateOn events
 
         updateOn.forEach(u => {
-          if (!u.event || !u.contract) return
+          if (!u.eventName || !u.contract) return
 
-          const filter = u.contract.filters[u.event]()
+          const filter = u.contract.filters[u.eventName](...(u.topics ?? []))
           u.contract?.on(filter, listener)
           subscriptions.push({ contract: u.contract, filter })
         })

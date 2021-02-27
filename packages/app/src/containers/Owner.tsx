@@ -14,6 +14,7 @@ import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export default function Owner({
   userAddress,
@@ -26,6 +27,7 @@ export default function Owner({
   contracts?: Contracts
   onNeedProvider: () => Promise<void>
 }) {
+  const [budgetId, setBudgetId] = useState<BigNumber>()
   const [budgetState, setBudgetState] = useState<
     'found' | 'missing' | 'canCreate'
   >()
@@ -41,16 +43,20 @@ export default function Owner({
     updateOn: [
       {
         contract: contracts?.Juicer,
-        event: 'Pay',
+        eventName: 'Pay',
+        topics: owner ? [[], owner] : undefined,
       },
       {
         contract: contracts?.Juicer,
-        event: 'Tap',
+        eventName: 'Tap',
+        topics: budgetId ? [budgetId.toHexString()] : undefined,
       },
     ],
     callback: budget => {
-      if (budget) setBudgetState('found')
-      else setBudgetState(isOwner ? 'canCreate' : 'missing')
+      if (budget) {
+        setBudgetState('found')
+        setBudgetId(budget.id)
+      } else setBudgetState(isOwner ? 'canCreate' : 'missing')
     },
   })
 

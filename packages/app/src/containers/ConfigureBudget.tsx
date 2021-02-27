@@ -21,6 +21,8 @@ import { Step } from '../models/step'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
 import { erc20Contract } from '../utils/erc20Contract'
+import { defaultAbiCoder } from '@ethersproject/abi'
+import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 
 export default function ConfigureBudget({
   transactor,
@@ -62,7 +64,8 @@ export default function ConfigureBudget({
 
   const juicerFeePercent = useContractReader<BigNumber>({
     contract: contracts?.Juicer,
-    functionName: 'fee'
+    functionName: 'fee',
+    valueDidChange: bigNumbersDiff,
   })
 
   const wantToken = useContractReader<string>({
@@ -135,9 +138,17 @@ export default function ConfigureBudget({
 
     setLoadingInitTickets(true)
 
-    transactor(contracts.TicketStore, 'issue', [fields.name, fields.symbol], {
-      onDone: () => setLoadingInitTickets(false),
-    })
+    transactor(
+      contracts.TicketStore,
+      'issue',
+      [
+        defaultAbiCoder.encode(['string'], [fields.name]),
+        defaultAbiCoder.encode(['string'], [fields.symbol]),
+      ],
+      {
+        onDone: () => setLoadingInitTickets(false),
+      },
+    )
   }
 
   function activateContract() {

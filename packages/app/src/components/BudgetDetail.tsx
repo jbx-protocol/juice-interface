@@ -43,19 +43,27 @@ export default function BudgetDetail({
     functionName: 'symbol',
   })
 
+  const juicerFeePercent = useContractReader<BigNumber>({
+    contract: contracts?.Juicer,
+    functionName: 'fee',
+    valueDidChange: bigNumbersDiff,
+  })
+
   const tappableAmount = useContractReader<BigNumber>({
     contract: contracts?.BudgetStore,
     functionName: 'getTappableAmount',
-    args: [budget?.id],
+    args: [budget.id.toHexString(), juicerFeePercent?.toHexString()],
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
         contract: contracts?.Juicer,
-        event: 'Pay',
+        eventName: 'Pay',
+        topics: [budget.id.toHexString()],
       },
       {
         contract: contracts?.Juicer,
-        event: 'Tap',
+        eventName: 'Tap',
+        topics: [budget.id.toHexString()],
       },
     ],
   })

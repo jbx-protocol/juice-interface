@@ -10,6 +10,7 @@ import { Contracts } from '../models/contracts'
 import { TicketsFormFields } from '../models/forms-fields/tickets-form'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
+import { defaultAbiCoder } from '@ethersproject/abi'
 
 export default function OwnerBackOffice({
   contracts,
@@ -60,9 +61,17 @@ export default function OwnerBackOffice({
 
     setLoadingInitTickets(true)
 
-    transactor(contracts.TicketStore, 'issue', [fields.name, fields.symbol], {
-      onDone: () => setLoadingInitTickets(false),
-    })
+    transactor(
+      contracts.TicketStore,
+      'issue',
+      [
+        defaultAbiCoder.encode(['string'], [fields.name]),
+        defaultAbiCoder.encode(['string'], [fields.symbol]),
+      ],
+      {
+        onDone: () => setLoadingInitTickets(false),
+      },
+    )
   }
 
   const gutter = 30

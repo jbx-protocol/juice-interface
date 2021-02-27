@@ -181,7 +181,7 @@ export default function Landing({
               {smallHeader('Get paid')}
               <p>
                 People can fund your project through the Juice dashboard as a patron or an
-                investor, or through your app or service as a paying user. For
+                investor, or through your app as a paying user. For
                 example, if your users pay a transaction fee or monthly cost,
                 just route it through Juice's smart contracts.{' '}
                 <a

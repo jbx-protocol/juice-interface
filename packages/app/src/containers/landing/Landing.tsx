@@ -310,7 +310,7 @@ export default function Landing({
                 <div>
                   <h2>What's it cost?</h2>
                   <p>
-                    Juice is an open protocol that makes money using Juice
+                    Juice is an open protocol on Ethereum's Optimism L2 that makes money using Juice
                     itself. You can check out the contractualized budget specs{' '}
                     <a href="https://juice.work/0x00000000" target="new">
                       here (soon)

@@ -34,7 +34,7 @@ const QAs: {
     a: [
       'Juice projects are created with an optional discount rate that determines how many tickets are distributed when payments are made to the project.',
       'For example, with a discount rate of 97%, 100 DAI paid to a project today might give you 100 tickets, but 100 DAI during the next budgeting period would only give you 97 tickets.', 
-      'This incentivize people to fund projects earlier.',
+      'This incentivizes people to fund projects earlier.',
     ],
   },
   {

@@ -303,16 +303,15 @@ contract Juicer is IJuicer {
 
             // The portion of the contributed overflow that is redeemable. This is the total minus the percent donated and used as a fee.
             uint256 _redeemablePortion =
-                _contributedOverflow.mul(_budget.b.add(fee)).div(1000);
+                _contributedOverflow
+                    .mul(uint256(100).sub(_budget.b).sub(fee))
+                    .div(100);
 
             // The redeemable portion of the overflow can be deposited to earn yield.
             depositable = depositable.add(_redeemablePortion);
 
             // Add to the raw amount claimable.
-            ticketStore.addClaimable(
-                _budget.project,
-                _contributedOverflow.sub(_redeemablePortion)
-            );
+            ticketStore.addClaimable(_budget.project, _redeemablePortion);
         }
 
         // Mint the appropriate amount of tickets for the contributor.

@@ -360,10 +360,13 @@ contract Juicer is IJuicer {
                 bondingCurveRate
             );
 
+        uint256 _baseReturnAmount = depositable;
+
+        if (overflowYielder != IOverflowYielder(0))
+            _baseReturnAmount.add(overflowYielder.getBalance(stablecoin));
+
         // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
-        returnAmount = (overflowYielder.getBalance(stablecoin).add(depositable))
-            .mul(_claimable)
-            .div(_totalClaimable);
+        returnAmount = _baseReturnAmount.mul(_claimable).div(_totalClaimable);
 
         // Subtract the depositable amount if needed.
         if (returnAmount <= depositable) {

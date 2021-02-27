@@ -36,9 +36,9 @@ export default function Landing({
   )
 
   const listData = [
+    "Apps on Ethereum's Optimism L2",
     'Internet public goods',
     'Open source businesses',
-    'Solidity apps & protocols',
     'Indie artists, journalists, & researchers',
     'Any web project with predictable costs',
   ]

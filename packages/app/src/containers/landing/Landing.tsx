@@ -116,7 +116,7 @@ export default function Landing({
                     fontWeight: 600,
                   }}
                 >
-                  <p style={{ color: colors.juiceOrange }}>Juice is for:</p>
+                  <p style={{ color: colors.juiceOrange }}>Juice is ideal for:</p>
                   {listData.map((data, i) => (
                     <Space
                       style={{ fontStyle: 'italic', paddingLeft: 8 }}

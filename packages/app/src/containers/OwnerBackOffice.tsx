@@ -1,6 +1,5 @@
 import { Button, Col, DescriptionsProps, Form, Row } from 'antd'
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
 import { CardSection } from '../components/CardSection'
 import TicketsForm from '../components/forms/TicketsForm'
@@ -44,14 +43,13 @@ export default function OwnerBackOffice({
 
     setLoadingMint(true)
 
-    console.log('🧃 Calling Juicer.mintReservedTickets(owner)', {
-      owner: currentBudget.project,
-    })
-
     transactor(
-      contracts.Juicer.mintReservedTickets(currentBudget.project),
-      () => setLoadingMint(false),
-      true,
+      contracts.Juicer,
+      'mintReservedTickets',
+      [currentBudget.project],
+      {
+        onDone: () => setLoadingMint(false),
+      },
     )
   }
 
@@ -62,21 +60,9 @@ export default function OwnerBackOffice({
 
     setLoadingInitTickets(true)
 
-    const _name = Web3.utils.utf8ToHex(fields.name)
-    const _symbol = Web3.utils.utf8ToHex(fields.symbol)
-
-    console.log('🧃 Calling TicketStore.issue(name, symbol)', {
-      _name,
-      _symbol,
+    transactor(contracts.TicketStore, 'issue', [fields.name, fields.symbol], {
+      onDone: () => setLoadingInitTickets(false),
     })
-
-    return transactor(
-      contracts.TicketStore.issue(_name, _symbol),
-      () => {
-        setLoadingInitTickets(false)
-      },
-      true,
-    )
   }
 
   const gutter = 30

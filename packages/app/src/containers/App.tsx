@@ -1,7 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import Navbar from '../components/Navbar'
 import { localProvider } from '../constants/local-provider'

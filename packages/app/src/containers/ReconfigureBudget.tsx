@@ -1,11 +1,11 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Form, Modal } from 'antd'
-import Web3 from 'web3'
 
 import BudgetAdvancedForm from '../components/forms/BudgetAdvancedForm'
 import BudgetForm from '../components/forms/BudgetForm'
 import { ContractName } from '../constants/contract-name'
-import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
+import { emptyAddress } from '../constants/empty-address'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { AdvancedBudgetFormFields } from '../models/forms-fields/advanced-budget-form'
@@ -53,8 +53,6 @@ export default function ReconfigureBudget({
     })
   }
 
-  const eth = new Web3(Web3.givenProvider).eth
-
   async function submitBudget() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
 
@@ -69,55 +67,17 @@ export default function ReconfigureBudget({
       ...budgetAdvancedForm.getFieldsValue(true),
     }
 
-    const _target = eth.abi.encodeParameter('uint256', fields.target)
-    const _duration = eth.abi.encodeParameter(
-      'uint256',
-      fields.duration * SECONDS_IN_DAY,
-    )
-    const _name = fields.name
-    const _link = fields.link
-    const _discountRate = eth.abi.encodeParameter(
-      'uint256',
-      fields.discountRate,
-    )
-    const _projectAllocation = eth.abi.encodeParameter(
-      'uint256',
-      fields.projectAllocation,
-    )
-    const _beneficiaryAllocation = eth.abi.encodeParameter(
-      'uint256',
-      fields.beneficiaryAllocation,
-    )
-    const _beneficiaryAddress = fields.beneficiaryAddress.length
-      ? fields.beneficiaryAddress
-      : '0x0000000000000000000000000000000000000000'
-    const _want = wantToken
-
-    console.log('🧃 Calling BudgetStore.configure(...)', {
-      _target,
-      _duration,
-      _want,
-      _name,
-      _link,
-      _discountRate,
-      _projectAllocation,
-      _beneficiaryAllocation,
-      _beneficiaryAddress,
-    })
-
-    transactor(
-      contracts.BudgetStore.configure(
-        _target,
-        _duration,
-        _want,
-        _name,
-        _link,
-        _discountRate,
-        _projectAllocation,
-        _beneficiaryAllocation,
-        _beneficiaryAddress,
-      ),
-    )
+    transactor(contracts.BudgetStore, 'configure', [
+      BigNumber.from(fields.target).toHexString(),
+      BigNumber.from(fields.duration).toHexString(),
+      wantToken,
+      fields.name,
+      fields.link,
+      BigNumber.from(fields.discountRate).toHexString(),
+      BigNumber.from(fields.projectAllocation).toHexString(),
+      BigNumber.from(fields.beneficiaryAllocation).toHexString(),
+      fields.beneficiaryAddress ?? emptyAddress,
+    ])
   }
 
   return (

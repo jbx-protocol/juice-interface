@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Button } from 'antd'
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
+import { padding } from '../constants/styles/padding'
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
-import { padding } from '../constants/styles/padding'
-import { Button } from 'antd'
+import { erc20Contract } from '../utils/erc20Contract'
 
 export default function Gimme({
   transactor,
@@ -20,39 +20,40 @@ export default function Gimme({
   const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
 
-  const allowance: BigNumber | undefined = useContractReader({
-    contract: contracts?.Token,
-    functionName: 'allowance',
-    args: [userAddress, contracts?.Juicer?.address],
+  const wantToken = useContractReader<string>({
+    contract: contracts?.Juicer,
+    functionName: 'stablecoin',
   })
 
+  const wantTokenContract = erc20Contract(wantToken)
+
   const balance: BigNumber | undefined = useContractReader({
-    contract: contracts?.Token,
+    contract: wantTokenContract,
     functionName: 'balanceOf',
     args: [userAddress],
+  })
+
+  const allowance: BigNumber | undefined = useContractReader({
+    contract: wantTokenContract,
+    functionName: 'allowance',
+    args: [userAddress, contracts?.Juicer?.address],
   })
 
   function gimme() {
     if (!transactor || !contracts?.Token) return
 
-    const eth = new Web3(Web3.givenProvider).eth
-
-    transactor(
-      contracts.Token.gimme(eth.abi.encodeParameter('uint256', gimmeAmount)),
-    )
+    transactor(contracts.Token, 'gimme', [
+      BigNumber.from(gimmeAmount).toHexString(),
+    ])
   }
 
   function approve() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
 
-    const eth = new Web3(Web3.givenProvider).eth
-
-    transactor(
-      contracts.Token.approve(
-        contracts.Juicer?.address,
-        eth.abi.encodeParameter('uint256', allowanceAmount),
-      ),
-    )
+    transactor(contracts.Token, 'approve', [
+      contracts.Juicer?.address,
+      BigNumber.from(allowanceAmount).toHexString(),
+    ])
   }
 
   return (

@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
 import { colors } from '../constants/styles/colors'
 import useContractReader from '../hooks/ContractReader'
@@ -121,19 +120,10 @@ export default function Rewards({
 
     const _amount = redeemAmount?.toHexString()
 
-    console.log('🧃 Calling Juicer.redeem(issuerAddress, amount)', {
-      issuerAddress: budget?.project,
-      amount: _amount,
+    transactor(contracts.Juicer, 'redeem', [budget?.project, _amount], {
+      onDone: () => setLoadingRedeem(false),
+      onConfirmed: () => setRedeemAmount(BigNumber.from(0)),
     })
-
-    transactor(
-      contracts.Juicer.redeem(budget?.project, _amount),
-      () => {
-        setLoadingRedeem(false)
-        setRedeemAmount(BigNumber.from(0))
-      },
-      true,
-    )
   }
 
   function claimIou() {
@@ -141,13 +131,9 @@ export default function Rewards({
 
     setLoadingClaimIou(true)
 
-    transactor(
-      contracts.TicketStore.convert(budget?.project),
-      () => {
-        setLoadingClaimIou(false)
-      },
-      true,
-    )
+    transactor(contracts.TicketStore, 'convert', [budget?.project], {
+      onDone: () => setLoadingClaimIou(false),
+    })
   }
 
   if (!budget) return null

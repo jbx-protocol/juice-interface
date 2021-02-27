@@ -197,7 +197,7 @@ export default function Landing({
             <div>
               {smallHeader('Optimize for overflow')}
               <p>
-                If money overflows, your paying customers claim the surplus,
+                If money overflows, your paying customers claim the surplus alongside you,
                 effectively pushing prices down as your community grows. Early
                 adopters get a discounted rate, and those HODLers who wait
                 longest to claim get a juicier return. While unclaimed, overflow

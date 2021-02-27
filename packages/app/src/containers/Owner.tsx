@@ -125,7 +125,7 @@ export default function Owner({
           }}
         >
           <h2>You haven't created a budget yet!</h2>
-          <Link to="create">
+          <Link to="/">
             <Button type="primary">Create one now</Button>
           </Link>
         </div>

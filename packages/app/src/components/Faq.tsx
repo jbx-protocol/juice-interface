@@ -56,7 +56,13 @@ const QAs: {
     a: [`Right now, no.`],
   },
   {
-    q: `Does eliminating profits remove incentive for project creators to innovate?`,
+    q: "Can a project get some of its own overflow?",
+    a: ["Yes. Although tickets are normally distributed when payments are made, a project can also be configured to reserve tickets for iteself as a percent of tickets distributed to users, patrons, and investors.",
+    "For example, if a project's reserved tickets rate is 5% and 95 tickets have been distributed to supporters, 5 tickets will be mintable for the project itself.",
+    'This gives projects skin-in-the-game of their own overflow alongside their community.'],
+  },
+  {
+    q: `Does Juice remove incentive for project creators to innovate?`,
     a: [
       `If a maintainer team neglects a project or moves it in a direction that doesn’t work for the market, it could be forked by the community or simply given up by its users. Either of these would compromise paychecks for the project.`,
       "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone later."

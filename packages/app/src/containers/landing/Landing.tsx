@@ -195,7 +195,7 @@ export default function Landing({
             </div>
             {arrowDivider}
             <div>
-              {smallHeader('Maximize overflow')}
+              {smallHeader('Optimize for overflow')}
               <p>
                 If money overflows, your paying customers claim the surplus,
                 effectively pushing prices down as your community grows. Early

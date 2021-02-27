@@ -224,6 +224,7 @@ contract BudgetStore is Store, IBudgetStore {
       @param _payer The address that is paying.
       @param _amount The amount being paid.
       @param _votingPeriod The amount of time to allow for voting to complete before a reconfigured budget is eligible to receive payments.
+      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
       @return budget The budget that is being paid.
       @return transferAmount The amount that should be transfered from the payer.
     */
@@ -231,7 +232,8 @@ contract BudgetStore is Store, IBudgetStore {
         address _project,
         address _payer,
         uint256 _amount,
-        uint256 _votingPeriod
+        uint256 _votingPeriod,
+        uint256 _withhold
     )
         external
         override
@@ -254,7 +256,9 @@ contract BudgetStore is Store, IBudgetStore {
 
         if (_budget.project == _payer && _amount > _overflow) {
             // Mark the amount of the contribution that didn't go towards overflow as tapped.
-            _budget.tapped = _budget.tapped.add(_amount.sub(_overflow));
+            _budget.tapped = _budget.tapped.add(
+                _amount.sub(_overflow).mul(uint256(100).sub(_withhold)).div(100)
+            );
             // Transfer the overflow only, since the rest has been marked as tapped.
             if (_overflow > 0) transferAmount = _overflow;
         } else {

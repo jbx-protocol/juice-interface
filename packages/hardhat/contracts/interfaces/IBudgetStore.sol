@@ -84,7 +84,8 @@ interface IBudgetStore is IStore {
         address _owner,
         address _payer,
         uint256 _amount,
-        uint256 _votingPeriod
+        uint256 _votingPeriod,
+        uint256 _withhold
     ) external returns (Budget.Data memory budget, uint256 transferAmount);
 
     function addVotes(

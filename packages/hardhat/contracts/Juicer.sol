@@ -275,7 +275,8 @@ contract Juicer is IJuicer {
                 _project,
                 msg.sender,
                 _amount,
-                RECONFIGURATION_VOTING_PERIOD
+                RECONFIGURATION_VOTING_PERIOD,
+                fee
             );
 
         // The amount that is overflowing from the Budget.

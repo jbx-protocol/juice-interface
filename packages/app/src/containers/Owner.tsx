@@ -1,5 +1,5 @@
 import { Button, Space, Tabs } from 'antd'
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import Loading from '../components/Loading'

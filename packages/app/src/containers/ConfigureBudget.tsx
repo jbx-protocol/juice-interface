@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Form, Row, Space, Steps } from 'antd'
 import { useEffect, useState } from 'react'
-import Web3 from 'web3'
 
 import { advancedContractStep } from '../components/configure-budget-steps/advancedContractStep'
 import { contractStep } from '../components/configure-budget-steps/contractStep'
@@ -10,6 +9,7 @@ import { reviewStep } from '../components/configure-budget-steps/reviewStep'
 import { ticketsStep } from '../components/configure-budget-steps/ticketsStep'
 import WtfCard from '../components/WtfCard'
 import { ContractName } from '../constants/contract-name'
+import { emptyAddress } from '../constants/empty-address'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { padding } from '../constants/styles/padding'
 import useContractReader from '../hooks/ContractReader'
@@ -136,19 +136,9 @@ export default function ConfigureBudget({
 
     setLoadingInitTickets(true)
 
-    const _name = Web3.utils.utf8ToHex(fields.name)
-    const _symbol = Web3.utils.utf8ToHex(fields.symbol)
-
-    console.log('🧃 Calling Juicer.issueTickets(name, symbol)', {
-      _name,
-      _symbol,
+    transactor(contracts.TicketStore, 'issue', [fields.name, fields.symbol], {
+      onDone: () => setLoadingInitTickets(false),
     })
-
-    return transactor(
-      contracts.TicketStore.issue(_name, _symbol),
-      () => setLoadingInitTickets(false),
-      true,
-    )
   }
 
   function activateContract() {
@@ -169,51 +159,24 @@ export default function ConfigureBudget({
 
     setLoadingCreateBudget(true)
 
-    const _target = BigNumber.from(fields.target).toHexString()
-    const _duration = BigNumber.from(
-      fields.duration *
-        (process.env.NODE_ENV === 'development' ? 1 : SECONDS_IN_DAY),
-    ).toHexString()
-    const _link = fields.link ?? ''
-    const _name = fields.name
-    const _discountRate = BigNumber.from(fields.discountRate).toHexString()
-    const _projectAllocation = BigNumber.from(
-      fields.projectAllocation || 0,
-    ).toHexString()
-    const _beneficiaryAllocation = BigNumber.from(
-      fields.beneficiaryAllocation || 0,
-    ).toHexString()
-    const _beneficiaryAddress =
-      fields.beneficiaryAddress?.trim() ??
-      '0x0000000000000000000000000000000000000000'
-
-    const _want = wantToken
-
-    console.log('🧃 Calling BudgetStore.configure(...)', {
-      _target,
-      _duration,
-      _want,
-      _name,
-      _link,
-      _discountRate,
-      _projectAllocation,
-      _beneficiaryAllocation,
-      _beneficiaryAddress,
-    })
-
     transactor(
-      contracts.BudgetStore.configure(
-        _target,
-        _duration,
-        _want,
-        _name,
-        _link,
-        _discountRate,
-        _projectAllocation,
-        _beneficiaryAllocation,
-        _beneficiaryAddress,
-      ),
-      () => setLoadingCreateBudget(false),
+      contracts.BudgetStore,
+      'configure',
+      [
+        BigNumber.from(fields.target).toHexString(),
+        BigNumber.from(
+          fields.duration *
+            (process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1),
+        ).toHexString(),
+        wantToken,
+        fields.name,
+        fields.link ?? '',
+        BigNumber.from(fields.discountRate).toHexString(),
+        BigNumber.from(fields.projectAllocation || 0).toHexString(),
+        BigNumber.from(fields.beneficiaryAllocation || 0).toHexString(),
+        fields.beneficiaryAddress?.trim() ?? emptyAddress,
+      ],
+      { onDone: () => setLoadingCreateBudget(false) },
     )
   }
 

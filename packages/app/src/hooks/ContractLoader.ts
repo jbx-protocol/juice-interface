@@ -57,7 +57,7 @@ export function useContractLoader(
     }
 
     loadContracts()
-  }, [provider])
+  }, [provider, readOnly])
 
   return contracts
 }

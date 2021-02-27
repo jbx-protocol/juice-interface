@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, DescriptionsProps, Switch } from 'antd'
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'

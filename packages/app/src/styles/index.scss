@@ -43,6 +43,11 @@ a {
   }
 }
 
+input {
+  background: #131115;
+  color: white;
+}
+
 @media screen and (min-width: 0px) and (max-width: 600px) {
   .hide-mobile {
     display: none;

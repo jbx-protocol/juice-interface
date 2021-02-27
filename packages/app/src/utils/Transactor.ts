@@ -1,16 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
+import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
 import {
   JsonRpcProvider,
-  JsonRpcSigner,
   TransactionRequest,
   Web3Provider,
 } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
-import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
+import Notify, { InitOptions } from 'bnc-notify'
 
-import { Transactor } from '../models/transactor'
+import { Transactor, TransactorOptions } from '../models/transactor'
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
@@ -24,35 +24,39 @@ export function createTransactor({
   if (!provider) return
 
   return async (
-    tx: Deferrable<TransactionRequest>,
-    onConfirmed?: (e?: TransactionEvent, signer?: JsonRpcSigner) => void,
-    onCancelled?:
-      | ((e?: TransactionEvent, signer?: JsonRpcSigner) => void)
-      | boolean,
+    contract: Contract,
+    functionName: string,
+    args: any[],
+    options?: TransactorOptions,
   ) => {
     const signer = provider.getSigner()
 
     const network = await provider.getNetwork()
 
-    const options: InitOptions = {
+    const initOptions: InitOptions = {
       dappId: '2f161484-1dae-4684-b0db-6ff7c4470e2e', // https://account.blocknative.com
       system: 'ethereum',
       networkId: network.chainId,
-      // darkMode: Boolean, // (default: false)
+      darkMode: true,
       transactionHandler: txInformation => {
         console.log('HANDLE TX', txInformation)
-        if (onConfirmed && txInformation.transaction.status === 'confirmed')
-          onConfirmed(txInformation, signer)
-        if (onCancelled && txInformation.transaction.status === 'cancelled') {
-          if (onCancelled === true) {
-            if (onConfirmed) onConfirmed(txInformation, signer)
-          } else {
-            onCancelled(txInformation, signer)
-          }
+        if (
+          options?.onConfirmed &&
+          txInformation.transaction.status === 'confirmed'
+        ) {
+          options.onConfirmed(txInformation, signer)
+          options.onDone && options.onDone()
+        }
+        if (
+          options?.onCancelled &&
+          txInformation.transaction.status === 'cancelled'
+        ) {
+          options.onCancelled(txInformation, signer)
+          options.onDone && options.onDone()
         }
       },
     }
-    const notify = Notify(options)
+    const notify = Notify(initOptions)
 
     let etherscanNetwork = ''
     if (network.name && network.chainId > 1) {
@@ -63,6 +67,20 @@ export function createTransactor({
     if (network.chainId === 100) {
       etherscanTxUrl = 'https://blockscout.com/poa/xdai/tx/'
     }
+
+    const tx: Deferrable<TransactionRequest> = contract[functionName](...args)
+
+    const reportArgs = Object.values(contract.interface.functions)
+      .find(f => f.name === functionName)
+      ?.inputs.reduce(
+        (acc, input, i) => ({
+          ...acc,
+          [input.name]: args[i],
+        }),
+        {},
+      )
+
+    console.log('🧃 Calling ' + functionName + '() with args:', reportArgs)
 
     try {
       let result
@@ -91,20 +109,19 @@ export function createTransactor({
         }))
       } else {
         console.log('LOCAL TX SENT', result.hash)
-        if (result.confirmations) {
-          if (onConfirmed) onConfirmed(result, undefined)
-        } else {
-          if (onCancelled === true) {
-            if (onConfirmed) onConfirmed(result, undefined)
-          } else if (onCancelled) {
-            onCancelled(result, undefined)
-          }
+        if (result.confirmations && options?.onConfirmed) {
+          options.onConfirmed(result, signer)
+          options.onDone && options.onDone()
+        } else if (options?.onCancelled) {
+          options.onCancelled(result, signer)
+          options.onDone && options.onDone()
         }
       }
 
       return true
     } catch (e) {
       console.log('Transaction Error:', e.message)
+      options?.onDone && options.onDone()
       return false
     }
   }

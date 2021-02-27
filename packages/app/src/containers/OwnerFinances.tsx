@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Col, Divider, Input, Row, Space } from 'antd'
+import { Button, Col, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
-import Web3 from 'web3'
 
 import BudgetDetail from '../components/BudgetDetail'
 import BudgetsHistory from '../components/BudgetsHistory'
@@ -95,27 +94,13 @@ export default function OwnerFinances({
 
     setLoadingPay(true)
 
-    const eth = new Web3(Web3.givenProvider).eth
-
-    const amount =
-      payAmount !== undefined
-        ? eth.abi.encodeParameter('uint256', payAmount)
-        : undefined
-
-    console.log('🧃 Calling Juicer.sustain(owner, amount, userAddress)', {
-      owner: currentBudget.project,
-      amount,
-      userAddress,
-    })
-
     transactor(
-      contracts.Juicer.pay(currentBudget.project, amount, userAddress),
-      () => {
-        setPayAmount(0)
-        setLoadingPay(false)
-      },
-      () => {
-        setLoadingPay(false)
+      contracts.Juicer,
+      'pay',
+      [currentBudget.project, BigNumber.from(payAmount ?? 0), userAddress],
+      {
+        onDone: () => setLoadingPay(false),
+        onConfirmed: () => setPayAmount(0),
       },
     )
   }
@@ -151,7 +136,12 @@ export default function OwnerFinances({
                   type="number"
                   onChange={e => updatePayAmount(parseFloat(e.target.value))}
                 />
-                <Button type="primary" onClick={pay} loading={loadingPay}>
+                <Button
+                  type="primary"
+                  onClick={pay}
+                  loading={loadingPay}
+                  disabled={!payAmount}
+                >
                   Pay owner
                 </Button>
               </Space>

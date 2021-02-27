@@ -67,7 +67,7 @@ export default function useContractReader<V>({
 
       const result = formatter ? formatter(newValue) : (newValue as V)
 
-      const _valueDidChange = valueDidChange ?? ((a?: V, b?: V) => a != b)
+      const _valueDidChange = valueDidChange ?? ((a?: V, b?: V) => a !== b)
 
       if (_valueDidChange(result, value)) {
         setValue(result)

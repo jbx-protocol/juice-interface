@@ -93,17 +93,9 @@ export default function BudgetDetail({
     const id = budget.id.toHexString()
     const amount = tapAmount.toHexString()
 
-    console.log('🧃 Calling Juicer.tap(number, amount, address)', {
-      id,
-      amount,
-      userAddress,
+    transactor(contracts.Juicer, 'tap', [id, amount, userAddress], {
+      onDone: () => setLoadingWithdraw(false),
     })
-
-    transactor(
-      contracts.Juicer?.tap(id, amount, userAddress),
-      () => setLoadingWithdraw(false),
-      true,
-    )
   }
 
   if (!budget) return null

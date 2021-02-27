@@ -167,7 +167,7 @@ export default function Landing({
         >
           <Space direction="vertical">
             <div>
-              {smallHeader('Get to work')}
+              {smallHeader('Do work')}
               <p>
                 Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's

@@ -45,6 +45,12 @@ const QAs: {
     ],
   },
   {
+    q: "Does a project benefit from its own overflow?",
+    a: ["It can. Although tickets are normally distributed when payments are made, a project can also be configured to reserve tickets for iteself as a percent of tickets distributed to users, patrons, and investors.",
+    "For example, if a project sets its reserved tickets rate to 5% and 95 tickets have been distributed to supporters, 5 tickets will be reserved for the project itself.",
+    'This gives projects skin-in-the-game alongside their community.'],
+  },
+  {
     q: "Can I change my project's contract after it's been created?",
     a: [
       `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budget has ended. All proposed changes must be voted on by the project's ticket holders before they are accepted.`,
@@ -54,12 +60,6 @@ const QAs: {
   {
     q: "Can I rename my project's tickets?",
     a: [`Right now, no.`],
-  },
-  {
-    q: "Can a project get some of its own overflow?",
-    a: ["Yes. Although tickets are normally distributed when payments are made, a project can also be configured to reserve tickets for iteself as a percent of tickets distributed to users, patrons, and investors.",
-    "For example, if a project's reserved tickets rate is 5% and 95 tickets have been distributed to supporters, 5 tickets will be mintable for the project itself.",
-    'This gives projects skin-in-the-game of their own overflow alongside their community.'],
   },
   {
     q: `Does Juice remove incentive for project creators to innovate?`,

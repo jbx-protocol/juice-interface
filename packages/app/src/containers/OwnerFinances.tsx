@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import BudgetDetail from '../components/BudgetDetail'
 import BudgetsHistory from '../components/BudgetsHistory'
 import { CardSection } from '../components/CardSection'
+import { ContractName } from '../constants/contract-name'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
@@ -48,7 +49,7 @@ export default function OwnerFinances({
   })
 
   const queuedBudget = useContractReader<Budget>({
-    contract: contracts?.BudgetStore,
+    contract: ContractName.BudgetStore,
     functionName: 'getQueuedBudget',
     args: [owner],
     updateOn: [

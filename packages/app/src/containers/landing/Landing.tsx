@@ -65,8 +65,8 @@ export default function Landing({
     <Col xs={24} md={12} lg={6} style={{ marginBottom: 60 }}>
       {smallHeader(header)}
       <p style={{ marginBottom: 0 }}>
-        {body.map(b => (
-          <span>{b} </span>
+        {body.map((b, i) => (
+          <span key={i}>{b} </span>
         ))}
       </p>
     </Col>

@@ -40,18 +40,12 @@ export function createTransactor({
       darkMode: true,
       transactionHandler: txInformation => {
         console.log('HANDLE TX', txInformation)
-        if (
-          options?.onConfirmed &&
-          txInformation.transaction.status === 'confirmed'
-        ) {
-          options.onConfirmed(txInformation, signer)
+        if (options && txInformation.transaction.status === 'confirmed') {
+          options.onConfirmed && options.onConfirmed(txInformation, signer)
           options.onDone && options.onDone()
         }
-        if (
-          options?.onCancelled &&
-          txInformation.transaction.status === 'cancelled'
-        ) {
-          options.onCancelled(txInformation, signer)
+        if (options && txInformation.transaction.status === 'cancelled') {
+          options.onCancelled && options.onCancelled(txInformation, signer)
           options.onDone && options.onDone()
         }
       },

@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
 import React, { useState } from 'react'
 
+import { ContractName } from '../constants/contract-name'
 import { padding } from '../constants/styles/padding'
 import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
@@ -20,20 +21,20 @@ export default function Gimme({
   const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
 
-  const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+  const wantTokenAddress = useContractReader<string>({
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
 
-  const wantTokenContract = erc20Contract(wantToken)
+  const wantTokenContract = erc20Contract(wantTokenAddress)
 
-  const balance: BigNumber | undefined = useContractReader({
+  const balance = useContractReader<BigNumber>({
     contract: wantTokenContract,
     functionName: 'balanceOf',
     args: [userAddress],
   })
 
-  const allowance: BigNumber | undefined = useContractReader({
+  const allowance = useContractReader<BigNumber>({
     contract: wantTokenContract,
     functionName: 'allowance',
     args: [userAddress, contracts?.Juicer?.address],

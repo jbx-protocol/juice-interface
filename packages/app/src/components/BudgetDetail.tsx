@@ -4,6 +4,7 @@ import Modal from 'antd/lib/modal/Modal'
 import moment from 'moment'
 import { useState } from 'react'
 
+import { ContractName } from '../constants/contract-name'
 import { SECONDS_IN_DAY } from '../constants/seconds-in-day'
 import { colors } from '../constants/styles/colors'
 import useContractReader from '../hooks/ContractReader'
@@ -33,35 +34,35 @@ export default function BudgetDetail({
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
-  const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+  const wantTokenAddress = useContractReader<string>({
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
 
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantToken),
+    contract: erc20Contract(wantTokenAddress),
     functionName: 'symbol',
   })
 
   const juicerFeePercent = useContractReader<BigNumber>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'fee',
     valueDidChange: bigNumbersDiff,
   })
 
   const tappableAmount = useContractReader<BigNumber>({
-    contract: contracts?.BudgetStore,
+    contract: ContractName.BudgetStore,
     functionName: 'getTappableAmount',
     args: [budget.id.toHexString(), juicerFeePercent?.toHexString()],
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
-        contract: contracts?.Juicer,
+        contract: ContractName.Juicer,
         eventName: 'Pay',
         topics: [budget.id.toHexString()],
       },
       {
-        contract: contracts?.Juicer,
+        contract: ContractName.Juicer,
         eventName: 'Tap',
         topics: [budget.id.toHexString()],
       },

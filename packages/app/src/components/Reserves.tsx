@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, DescriptionsProps, Switch } from 'antd'
 import React, { useState } from 'react'
+import { ContractName } from '../constants/contract-name'
 
 import useContractReader, { ContractUpdateOn } from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
@@ -27,13 +28,13 @@ export default function Reserves({
 }) {
   const [onlyDistributable, setOnlyDistributable] = useState<boolean>(false)
 
-  const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+  const wantTokenAddress = useContractReader<string>({
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
 
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantToken),
+    contract: erc20Contract(wantTokenAddress),
     functionName: 'symbol',
   })
 
@@ -62,7 +63,7 @@ export default function Reserves({
   ]
 
   const distributableReserves = useContractReader<ReserveAmounts>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'getReserves',
     args: [budget?.project, true],
     formatter: val => val ?? emptyReserves,
@@ -78,7 +79,7 @@ export default function Reserves({
   })
 
   const reserves = useContractReader<ReserveAmounts>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'getReserves',
     args: [budget?.project, false],
     formatter: val => val ?? emptyReserves,

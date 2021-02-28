@@ -1,11 +1,18 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
+import { ContractName } from '../constants/contract-name'
+import { localProvider } from '../constants/local-provider'
+import { Contracts } from '../models/contracts'
+import { useContractLoader } from './ContractLoader'
+
 export type ContractUpdateOn = {
-  contract?: Contract
+  contract?: ContractConfig
   eventName?: string
   topics?: EventFilter['topics']
 }[]
+
+export type ContractConfig = ContractName | Contract | undefined
 
 export default function useContractReader<V>({
   contract,
@@ -16,7 +23,7 @@ export default function useContractReader<V>({
   updateOn,
   valueDidChange,
 }: {
-  contract?: Contract
+  contract: ContractConfig
   functionName: string
   args?: unknown[]
   formatter?: (val?: any) => V | undefined
@@ -28,43 +35,40 @@ export default function useContractReader<V>({
 
   const listener = (x: any) => getValue()
 
+  const contracts = useContractLoader(localProvider, true)
+
   useEffect(() => {
     getValue()
+
+    if (!updateOn) return
 
     let subscriptions: { contract: Contract; filter: EventFilter }[] = []
 
     try {
-      if (updateOn) {
-        // Subscribe listener to updateOn events
+      // Subscribe listener to updateOn events
+      updateOn.forEach(u => {
+        const _contract = contractToRead(u.contract, contracts)
 
-        updateOn.forEach(u => {
-          if (!u.eventName || !u.contract) return
+        if (!u.eventName || !_contract) return
 
-          const filter = u.contract.filters[u.eventName](...(u.topics ?? []))
-          u.contract?.on(filter, listener)
-          subscriptions.push({ contract: u.contract, filter })
-        })
-      } else {
-        // Subscribe listener to all events
-
-        if (!contract) return
-
-        const allEvents: EventFilter = { topics: [] }
-        contract.on(allEvents, listener)
-        subscriptions = [{ contract, filter: allEvents }]
-      }
+        const filter = _contract.filters[u.eventName](...(u.topics ?? []))
+        _contract?.on(filter, listener)
+        subscriptions.push({ contract: _contract, filter })
+      })
     } catch (error) {
-      console.log('Read contract ', { functionName, error })
+      console.log('Read contract >', { functionName, error })
     }
 
     return () => subscriptions.forEach(s => s.contract.off(s.filter, listener))
-  }, [contract?.address, functionName, ...(args ? (args as []) : [])])
+  }, [contract, contracts, functionName, ...(args ? (args as []) : [])])
 
   async function getValue() {
-    if (!contract) return
+    const readContract = contractToRead(contract, contracts)
+
+    if (!readContract) return
 
     try {
-      const newValue = await contract[functionName](...(args ?? []))
+      const newValue = await readContract[functionName](...(args ?? []))
 
       const result = formatter ? formatter(newValue) : (newValue as V)
 
@@ -83,4 +87,15 @@ export default function useContractReader<V>({
   }
 
   return value
+}
+
+function contractToRead(
+  contractConfig?: ContractConfig,
+  contracts?: Contracts,
+): Contract | undefined {
+  if (!contractConfig) return
+
+  if (typeof contractConfig === 'string') {
+    return contracts ? contracts[contractConfig] : undefined
+  } else return contractConfig
 }

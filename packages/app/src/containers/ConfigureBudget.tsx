@@ -1,3 +1,4 @@
+import { defaultAbiCoder } from '@ethersproject/abi'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Button, Col, Form, Row, Space, Steps } from 'antd'
@@ -20,11 +21,8 @@ import { TicketsFormFields } from '../models/forms-fields/tickets-form'
 import { Step } from '../models/step'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
-import { erc20Contract } from '../utils/erc20Contract'
-import { defaultAbiCoder } from '@ethersproject/abi'
 import { bigNumbersDiff } from '../utils/bigNumbersDiff'
-import { useContractLoader } from '../hooks/ContractLoader'
-import { localProvider } from '../constants/local-provider'
+import { erc20Contract } from '../utils/erc20Contract'
 
 export default function ConfigureBudget({
   transactor,
@@ -47,36 +45,30 @@ export default function ConfigureBudget({
   const [currentStep, setCurrentStep] = useState<number>(0)
 
   const ticketsAddress = useContractReader<string>({
-    contract: contracts?.TicketStore,
+    contract: ContractName.TicketStore,
     functionName: 'tickets',
     args: [userAddress],
   })
-
-  const ticketsContract = erc20Contract(ticketsAddress)
-
+  const ticketContract = erc20Contract(ticketsAddress)
   const ticketsSymbol = useContractReader<string>({
-    contract: ticketsContract,
+    contract: ticketContract,
     functionName: 'symbol',
   })
-
   const ticketsName = useContractReader<string>({
-    contract: ticketsContract,
+    contract: ticketContract,
     functionName: 'name',
   })
-
   const juicerFeePercent = useContractReader<BigNumber>({
-    contract: contracts?.Juicer,
+    contract: ticketContract,
     functionName: 'fee',
     valueDidChange: bigNumbersDiff,
   })
-
-  const wantToken = useContractReader<string>({
-    contract: useContractLoader(localProvider, true)?.Juicer,
+  const wantTokenAddress = useContractReader<string>({
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
-
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantToken),
+    contract: erc20Contract(wantTokenAddress),
     functionName: 'symbol',
   })
 
@@ -113,14 +105,7 @@ export default function ConfigureBudget({
   async function tryNextStep() {
     const step = steps[currentStep]
 
-    if (step.validate) {
-      try {
-        await step.validate()
-      } catch (e) {
-        console.log('e', e)
-        return
-      }
-    }
+    if (step.validate) await step.validate()
 
     setCurrentStep(currentStep + 1)
   }
@@ -180,7 +165,7 @@ export default function ConfigureBudget({
           fields.duration *
             (process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1),
         ).toHexString(),
-        wantToken,
+        wantTokenAddress,
         fields.name,
         fields.link ?? '',
         BigNumber.from(fields.discountRate).toHexString(),

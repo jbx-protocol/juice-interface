@@ -4,6 +4,7 @@ import { Content } from 'antd/lib/layout/layout'
 import { useCallback, useState } from 'react'
 
 import Navbar from '../components/Navbar'
+import { ContractName } from '../constants/contract-name'
 import { localProvider } from '../constants/local-provider'
 import { web3Modal } from '../constants/web3-modal'
 import Router from '../containers/Router'
@@ -28,7 +29,7 @@ function App() {
   const contracts = useContractLoader(userProvider)
 
   const budget = useContractReader<Budget>({
-    contract: contracts?.BudgetStore,
+    contract: ContractName.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [userAddress],
     updateOn: [

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
+import { ContractName } from '../constants/contract-name'
 
 import { colors } from '../constants/styles/colors'
 import useContractReader, { ContractUpdateOn } from '../hooks/ContractReader'
@@ -33,8 +34,6 @@ export default function Rewards({
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingClaimIou, setLoadingClaimIou] = useState<boolean>()
 
-  const ticketContract = erc20Contract(ticketAddress)
-
   const ticketsUpdateOn: ContractUpdateOn = [
     {
       contract: contracts?.Juicer,
@@ -49,10 +48,11 @@ export default function Rewards({
   ]
 
   const bondingCurveRate = useContractReader<BigNumber>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'bondingCurveRate',
     valueDidChange: bigNumbersDiff,
   })
+  const ticketContract = erc20Contract(ticketAddress)
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
@@ -71,7 +71,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const iouBalance = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
+    contract: ContractName.TicketStore,
     functionName: 'iOweYous',
     args: [budget?.project, userAddress],
     valueDidChange: bigNumbersDiff,
@@ -85,7 +85,7 @@ export default function Rewards({
     ],
   })
   const iouSupply = useContractReader<BigNumber>({
-    contract: contracts?.TicketStore,
+    contract: ContractName.TicketStore,
     functionName: 'totalIOweYous',
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
@@ -93,7 +93,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const totalOverflow = useContractReader<BigNumber>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'getOverflow',
     args: [budget?.project],
     valueDidChange: bigNumbersDiff,
@@ -105,12 +105,12 @@ export default function Rewards({
       },
     ],
   })
-  const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+  const wantTokenAddress = useContractReader<string>({
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
   const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantToken),
+    contract: erc20Contract(wantTokenAddress),
     functionName: 'symbol',
   })
 

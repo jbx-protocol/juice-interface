@@ -23,6 +23,8 @@ import { addressExists } from '../utils/addressExists'
 import { erc20Contract } from '../utils/erc20Contract'
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { bigNumbersDiff } from '../utils/bigNumbersDiff'
+import { useContractLoader } from '../hooks/ContractLoader'
+import { localProvider } from '../constants/local-provider'
 
 export default function ConfigureBudget({
   transactor,
@@ -69,7 +71,7 @@ export default function ConfigureBudget({
   })
 
   const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+    contract: useContractLoader(localProvider, true)?.Juicer,
     functionName: 'stablecoin',
   })
 

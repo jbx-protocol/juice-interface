@@ -1,3 +1,5 @@
+import { Collapse } from 'antd'
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import React, { CSSProperties } from 'react'
 
 import { colors } from '../constants/styles/colors'
@@ -11,6 +13,11 @@ export default function WtfCard({
   children?: ChildElems
   style?: CSSProperties
 }) {
+  const collapseStyle: CSSProperties = {
+    background: shadowCard.background,
+    border: 'none',
+  }
+
   return (
     <div
       style={{
@@ -20,8 +27,11 @@ export default function WtfCard({
         ...style,
       }}
     >
-      <h3>WTF</h3>
-      {children}
+      <Collapse style={collapseStyle}>
+        <CollapsePanel header="WTF?" key={1} style={{ ...collapseStyle }}>
+          <div style={{ background: shadowCard.background }}>{children}</div>
+        </CollapsePanel>
+      </Collapse>
     </div>
   )
 }

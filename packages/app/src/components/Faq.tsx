@@ -10,11 +10,34 @@ const QAs: {
     alt: string
   }
 }[] = [
+  // {
+  //   q: `What's wrong with existing business models?`,
+  //   a: [
+  //     `Old school businesses need to increase their revenue margins as much as possible to keep shareholders smiling. This leads to making backwards product decisions like running ads, growth hacking, gaming pricing tiers or taking advantage of employees. Let's leave this stuff in the web2 age.`,
+  //     `The open internet will work better for everyone as a home for businesses functioning like common goods: providing value while being publicly funded, and earning no more than what they need. As old world profit machines are deprecated by web3 tools offering better value with true transparency and security, Juice will make sure they are funded sustainably.`,
+  //   ],
+  // },
+  {
+    q: `Should you use Juice?`,
+    a: [
+      `Almost definitely.`,
+      `With Juice, we end up getting community-driven online goods and services with no ads, data integrity, and business operation accountability. All built by motivated punks getting transparently paid what they ask for, while rewarding everyone who helped create the overflow an opportunity to capitalize on it.
+
+    `,
+    ],
+  },
   {
     q: 'Who funds Juice projects?',
     a: [
       `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on juice.work).`,
       `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive tickets in return. *Link: Using Juice composibly.*`,
+    ],
+  },
+  {
+    q: `What does Juice cost?`,
+    a: [
+      `Juice is an open protocol on Ethereum's Optimism L2 (soon) that makes money using Juice itself. You can check out the contractualized budget specs here (soon), and the under-the-hood specs and docs here.`,
+      `5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.`,
     ],
   },
   {
@@ -42,7 +65,7 @@ const QAs: {
     q: `What's a bonding curve?`,
     a: [
       `A bonding curve keeps tickets from being redeemable exploitatively.`,
-      `Those who commit to waiting longer than others to redeem tickets will benefit the most from a project's overflow`,
+      `Those who commit to waiting longer than others to redeem tickets will benefit the most from a project's overflow.`,
     ],
   },
   {

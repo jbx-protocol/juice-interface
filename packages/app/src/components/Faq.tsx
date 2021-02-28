@@ -10,22 +10,6 @@ const QAs: {
     alt: string
   }
 }[] = [
-  // {
-  //   q: `What's wrong with existing business models?`,
-  //   a: [
-  //     `Old school businesses need to increase their revenue margins as much as possible to keep shareholders smiling. This leads to making backwards product decisions like running ads, growth hacking, gaming pricing tiers or taking advantage of employees. Let's leave this stuff in the web2 age.`,
-  //     `The open internet will work better for everyone as a home for businesses functioning like common goods: providing value while being publicly funded, and earning no more than what they need. As old world profit machines are deprecated by web3 tools offering better value with true transparency and security, Juice will make sure they are funded sustainably.`,
-  //   ],
-  // },
-  {
-    q: `Should you use Juice?`,
-    a: [
-      `Almost definitely.`,
-      `With Juice, we end up getting community-driven online goods and services with no ads, data integrity, and business operation accountability. All built by motivated punks getting transparently paid what they ask for, while rewarding everyone who helped create the overflow an opportunity to capitalize on it.
-
-    `,
-    ],
-  },
   {
     q: 'Who funds Juice projects?',
     a: [

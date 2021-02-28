@@ -267,33 +267,26 @@ export default function Landing({
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader('Funding for the commons')}
+                {bigHeader('Should you Juice?')}
                 <div>
+                  <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    Old school businesses need to increase their revenue margins
-                    as much as possible to keep shareholders smiling. This leads
-                    to dumb product decisions like running ads, growth hacking,
-                    gaming pricing tiers, or stepping on employees. This stuff
-                    should be left in web2.
+                    With Juice, we end up getting community-driven online goods
+                    and services with no ads, data integrity, and business
+                    operation accountability. All built by motivated punks
+                    getting transparently paid what they ask for, while
+                    rewarding everyone who helped create the overflow an
+                    opportunity to capitalize on it.
                   </p>
-                  <p className="ol">
-                    The open internet will work better for everyone if it isn't
-                    built on businesses, but on common goods that are publicly
-                    funded, are truly secure, provide the most efficient value,
-                    and earn only what they can justify to keep on crushing it.
-                    As web3 tools deprecate old-world profit models, Juice will
-                    make sure they're funded sustainably.
-                    <br />
-                    <a
-                      className="ol"
-                      href="https://twitter.com/hashtag/dework"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: colors.secondaryDark }}
-                    >
-                      #DeWork
-                    </a>
-                  </p>
+                  <a
+                    className="ol"
+                    href="https://twitter.com/hashtag/dework"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: colors.secondaryDark }}
+                  >
+                    #DeWork
+                  </a>
                 </div>
               </div>
             </Col>

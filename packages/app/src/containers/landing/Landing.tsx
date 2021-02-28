@@ -1,6 +1,7 @@
 import { Button, Col, Row, Space } from 'antd'
 import React, { CSSProperties } from 'react'
 
+import Faq from '../../components/Faq'
 import Footer from '../../components/Footer'
 import { colors } from '../../constants/styles/colors'
 import { Budget } from '../../models/budget'
@@ -59,21 +60,20 @@ export default function Landing({
     document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const arrowDivider = (
-    <div
-      style={{
-        width: '100%',
-        textAlign: 'center',
-        marginTop: 10,
-        marginBottom: 20,
-      }}
-    >
-      <img
-        style={{ height: 45, objectFit: 'contain' }}
-        src="/assets/arrow.png"
-        alt="arrow"
-      />
-    </div>
+  const fourthCol = (
+    header: string,
+    body: (JSX.Element | string)[],
+    tail?: string,
+  ) => (
+    <Col xs={24} md={12} lg={6} style={{ marginBottom: 60 }}>
+      {smallHeader(header)}
+      <p style={{ marginBottom: 0 }}>
+        {body.map(b => (
+          <span>{b} </span>
+        ))}
+      </p>
+      {tail ? <div style={{ fontSize: '30px' }}>{tail}</div> : null}
+    </Col>
   )
 
   return (
@@ -95,7 +95,7 @@ export default function Landing({
               >
                 {bigHeader('A business model for the open internet')}
 
-                <div style={{ fontWeight: 500, fontSize: '1rem' }}>
+                <p style={{ fontWeight: 500, fontSize: '1rem' }}>
                   Projects on Juice say up-front how much cashflow they need to
                   crush what they do. Once they're earning more than that, the
                   overflow can be claimed by its users, patrons, & investors.{' '}
@@ -106,7 +106,7 @@ export default function Landing({
                   >
                     #DeWork
                   </a>
-                </div>
+                </p>
 
                 <div
                   style={{
@@ -116,7 +116,9 @@ export default function Landing({
                     fontWeight: 600,
                   }}
                 >
-                  <p style={{ color: colors.juiceOrange }}>Juice is ideal for:</p>
+                  <p style={{ color: colors.juiceOrange, opacity: 1 }}>
+                    Juice is ideal for:
+                  </p>
                   {listData.map((data, i) => (
                     <Space
                       style={{ fontStyle: 'italic', paddingLeft: 8 }}
@@ -161,104 +163,77 @@ export default function Landing({
       <section style={section}>
         <div
           style={{
-            maxWidth: 480,
-            margin: '0 auto',
+            ...wrapper,
+            marginTop: 100,
           }}
         >
-          <Space direction="vertical">
-            <div>
-              {smallHeader('Do work')}
-              <p>
-                Make a Juice contract that says how much cashflow you and your
+          <Row gutter={60}>
+            {fourthCol(
+              'Do work',
+              [
+                `Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
-                mission statement.
-                <br></br>
-                <span style={{ fontSize: '30px' }}>💰💅💪</span>
-              </p>
-            </div>
-            {arrowDivider}
-            <div>
-              {smallHeader('Get paid')}
-              <p>
-                People can fund your project through the Juice dashboard as a patron or an
-                investor, or through your app as a paying user. For
-                example, if your users pay you a transaction fee or monthly cost,
-                just route it through Juice's smart contracts.{' '}
-                <a
-                  href="https://twitter.com/hashtag/composability"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #composability
-                </a>
-                <a
-                  href="https://twitter.com/hashtag/BusinessModelAsAService"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #BusinessModelAsAService
-                </a>
-              </p>
-            </div>
-            {arrowDivider}
-            <div>
-              {smallHeader('Optimize for overflow')}
-              <p>
-                If money overflows, your paying customers claim the surplus alongside you,
-                effectively pushing prices down as your community grows. Early
-                adopters get a discounted rate, and those HODLers who wait
-                longest to claim get a juicier return. While unclaimed, overflow
-                earns interest. <br></br>
+                mission statement.`,
+              ],
+              `💰💅💪`,
+            )}
+            {fourthCol('Get paid', [
+              `People can fund your project through the Juice dashboard as a
+                patron or an investor, or through your app as a paying user. For
+                example, if your users pay you a transaction fee or monthly
+                cost, just route it through Juice's smart contracts.`,
+              <a
+                href="https://twitter.com/hashtag/composability"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #composability
+              </a>,
+              <br />,
+              <a
+                href="https://twitter.com/hashtag/BusinessModelAsAService"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #BusinessModelAsAService
+              </a>,
+            ])}
+            {fourthCol(
+              'Overflow',
+              [
+                `If money overflows, your paying customers claim the surplus
+                alongside you, effectively pushing prices down as your community
+                grows. Early adopters get a discounted rate, and those HODLers
+                who wait longest to claim get a juicier return. While unclaimed,
+                overflow earns interest.`,
                 <a
                   href="https://twitter.com/hashtag/DeFi"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   #DeFi
-                </a>{' '}
+                </a>,
                 <a
                   href="https://twitter.com/hashtag/RegenFinance"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   #RegenFinance
-                </a>
-                <br></br>
-                <span style={{ fontSize: '30px' }}>⛲️</span>
-              </p>
-            </div>
-            {arrowDivider}
-            <div>
-              {smallHeader('Rinse, repeat')}
-              <p>
-                Your budgeting periods can be however long you want, and can be
+                </a>,
+              ],
+              '⛲️',
+            )}
+            {fourthCol(
+              'Repeat',
+              [
+                `Your budgeting periods can be however long you want, and can be
                 recurring. You can make them bigger as your project grows, with
                 the approval of those paying customers that have not yet claimed
-                their fair share of your overflowed surplus.
-                <br></br>
-                <span style={{ fontSize: '30px' }}>📈</span>
-              </p>
-            </div>
-            <p
-              style={{
-                fontWeight: 600,
-                marginTop: 40,
-                textAlign: 'center',
-              }}
-            >
-              Create value for your community, crush your craft, make your
-              money, and lift up your people.{' '}
-              <a
-                href="https://twitter.com/hashtag/dework"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #DeWork
-              </a>{' '}
-              <br></br>
-              <span style={{ fontSize: '30px' }}>🧃⚡️</span>
-            </p>
-          </Space>
+                their fair share of your overflowed surplus.`,
+              ],
+              '📈',
+            )}
+          </Row>
         </div>
       </section>
 
@@ -267,7 +242,6 @@ export default function Landing({
           id="create"
           style={{
             ...wrapper,
-            marginTop: 100,
             marginBottom: 80,
           }}
         >
@@ -279,6 +253,28 @@ export default function Landing({
             onNeedProvider={onNeedProvider}
             activeBudget={activeBudget}
           />
+        </div>
+      </section>
+
+      <section style={wrapper}>
+        <div
+          style={{
+            marginBottom: 60,
+            fontWeight: 600,
+            textAlign: 'center',
+          }}
+        >
+          Create value for your community, crush your craft, make your money,
+          and lift up your people.{' '}
+          <a
+            href="https://twitter.com/hashtag/dework"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            #DeWork
+          </a>{' '}
+          <br></br>
+          <span style={{ fontSize: '30px' }}>🧃⚡️</span>
         </div>
       </section>
 
@@ -297,8 +293,8 @@ export default function Landing({
               <div style={{ display: 'grid', rowGap: 20 }}>
                 {bigHeader('Should you Juice?')}
                 <div>
-                  <p>Almost definitely.</p>
-                  <p>
+                  <p className="ol">Almost definitely.</p>
+                  <p className="ol">
                     With Juice, we end up getting community-driven online goods
                     and services with no ads, data integrity, and business
                     operation accountability. All built by motivated punks
@@ -309,15 +305,16 @@ export default function Landing({
                 </div>
                 <div>
                   <h2>What's it cost?</h2>
-                  <p>
-                    Juice is an open protocol on Ethereum's Optimism L2 (soon) that makes money using Juice
-                    itself. You can check out the contractualized budget specs{' '}
+                  <p className="ol">
+                    Juice is an open protocol on Ethereum's Optimism L2 (soon)
+                    that makes money using Juice itself. You can check out the
+                    contractualized budget specs{' '}
                     <a href="https://juice.work/0x00000000" target="new">
                       here (soon)
                     </a>
                     .
                   </p>
-                  <p>
+                  <p className="ol">
                     5% of all money made using Juice is sent to help pay for
                     Juice itself. In exchange, you get the opportunity to
                     benefit from the overflow that the ecosystem accumulates
@@ -336,6 +333,20 @@ export default function Landing({
               />
             </Col>
           </Row>
+        </div>
+      </section>
+
+      <section>
+        <div
+          id="faq"
+          style={{
+            ...wrapper,
+            paddingTop: 80,
+            paddingBottom: 80,
+            maxWidth: 800,
+          }}
+        >
+          <Faq />
         </div>
       </section>
 

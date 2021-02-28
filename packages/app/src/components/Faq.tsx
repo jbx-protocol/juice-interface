@@ -1,54 +1,56 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import React from 'react'
-import { layouts } from '../constants/styles/layouts'
-import { padding } from '../constants/styles/padding'
 
 const QAs: {
   q: string
-  a: string[]
+  a?: string[]
+  img?: {
+    src: string
+    alt: string
+  }
 }[] = [
   {
     q: 'Who funds Juice projects?',
     a: [
-      `Users fund your project by paying to use your app or service, or as an investor by making a payment directly to your project's smart contract (like on juice.work).`,
-      `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive tickets in exchange. *Link: Using Juice composibly.*`,
+      `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on juice.work).`,
+      `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive tickets in return. *Link: Using Juice composibly.*`,
     ],
   },
   {
     q: 'What are tickets?',
     a: [
-      `Tickets are ERC-20 tokens prefixed with a "j" that are unique to each project. Everyone who funds a project receives tickets in exchange. Once a project is earning more than its target, tickets can be exchanged for a portion of overflow. *Link: Calculating Ticket rewards*. Tickets can also be staked to allow voting on changes to a project contract.`,
+      `Tickets are ERC-20 tokens prefixed with a "j" that are minted every time a Juice project is funded. Each project has its own tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be exchanged for a portion of the overflow. *Link: Calculating Ticket rewards*. Tickets can also be staked to allow voting on changes to a project contract.`,
       `Creating tickets for your project is optional. Until tickets are created, Juice will use nameless IOU tickets to keep track.`,
     ],
   },
   {
-    q: `Why should I want a project's tickets?`,
+    q: `Why should I want to own a project's tickets?`,
     a: [
-      "Tickets can be redeemed for a portion of a project's overflow.",
-      "If you earned a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases",
+      `Tickets can be redeemed for a portion of a project's overflow.`,
+      `If you earned a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases.`,
     ],
   },
   {
-    q: 'What is a discount rate?',
+    q: `What's a discount rate?`,
     a: [
-      'Juice projects are created with an optional discount rate that determines how many tickets are distributed when payments are made to the project.',
-      'For example, with a discount rate of 97%, 100 DAI paid to a project today might give you 100 tickets, but 100 DAI during the next budgeting period would only give you 97 tickets.', 
-      'This incentivizes people to fund projects earlier.',
+      `Juice projects can be created with an optional discount rate to incentive funding the project earlier than later. With each new budget period, the discount rate decreases the number of tickets that are minted per payment.`,
+      `For example: with a discount rate of 97%, 100 DAI paid to a project today might mint 100 tickets, but the same amount paid during the next budgeting period would only mint 97.`,
     ],
   },
   {
-    q: 'What is a bonding curve?',
+    q: `What's a bonding curve?`,
     a: [
-      "A bonding curve keeps tickets from being redeemable exploitatively.",
-      "Those who wait longer to redeem tickets compared to others will benefit the most from a project's overflow"
+      `A bonding curve keeps tickets from being redeemable exploitatively.`,
+      `Those who commit to waiting longer than others to redeem tickets will benefit the most from a project's overflow`,
     ],
   },
   {
-    q: "Does a project benefit from its own overflow?",
-    a: ["It can. Although tickets are normally distributed when payments are made, a project can also be configured to reserve tickets for iteself as a percent of tickets distributed to users, patrons, and investors.",
-    "For example, if a project sets its reserved tickets rate to 5% and 95 tickets have been distributed to supporters, 5 tickets will be reserved for the project itself.",
-    'This gives projects skin-in-the-game alongside their community.'],
+    q: 'Does a project benefit from its own overflow?',
+    a: [
+      `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of minted tickets is instead transferred back to the project.`,
+      `Holding these tickets entitles a project to a portion of its own overflow, which can create incentive for the maintainer team to continue growing a project past its target.`,
+    ],
   },
   {
     q: "Can I change my project's contract after it's been created?",
@@ -62,10 +64,10 @@ const QAs: {
     a: [`Right now, no.`],
   },
   {
-    q: `Does Juice remove incentive for project creators to innovate?`,
+    q: `Does putting a cap on profit remove incentive for project creators to innovate?`,
     a: [
       `If a maintainer team neglects a project or moves it in a direction that doesn’t work for the market, it could be forked by the community or simply given up by its users. Either of these would compromise paychecks for the project.`,
-      "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone later."
+      "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone later.",
     ],
   },
   {
@@ -74,26 +76,24 @@ const QAs: {
       `Sure, although open source projects can always be forked. Or if the market prefers to support projects with more realistic budgets, yours might get outcompeted.`,
     ],
   },
+  {
+    q: `Do I have to make my Juice project open source?`,
+    img: {
+      src: '/assets/cooler_if_you_did.png',
+      alt: "It'd be a lot cooler if you did",
+    },
+  },
 ]
 
 export default function Faq() {
   return (
-    <div
-      style={{
-        ...layouts.maxWidth,
-        maxWidth: 800,
-        padding: padding.app,
-      }}
-    >
-      <Collapse defaultActiveKey={QAs.length ? 0 : undefined} accordion>
-        {QAs.map((qa, i) => (
-          <CollapsePanel header={qa.q} key={i}>
-            {qa.a.map(p => (
-              <p>{p}</p>
-            ))}
-          </CollapsePanel>
-        ))}
-      </Collapse>
-    </div>
+    <Collapse defaultActiveKey={QAs.length ? 0 : undefined} accordion>
+      {QAs.map((qa, i) => (
+        <CollapsePanel header={qa.q} key={i}>
+          {qa.a ? qa.a.map((p, j) => <p key={j}>{p}</p>) : null}
+          {qa.img ? <img src={qa.img.src} alt={qa.img.alt} /> : null}
+        </CollapsePanel>
+      ))}
+    </Collapse>
   )
 }

@@ -40,7 +40,7 @@ const QAs: {
   {
     q: `What's a discount rate?`,
     a: [
-      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new budget period, the discount rate decreases the number of tickets that are minted per payment.`,
+      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new budgeting time frame, the discount rate decreases the number of tickets that are minted per payment.`,
       `For example: with a discount rate of 97%, 100 DAI paid to a project today might mint 100 tickets, but the same amount paid during the next budgeting time frame would only mint 97.`,
     ],
   },
@@ -55,13 +55,13 @@ const QAs: {
     q: 'Does a project benefit from its own overflow?',
     a: [
       `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of minted tickets is instead transferred back to the project.`,
-      `Holding these tickets entitles a project to a portion of its own overflow, which can create incentive for the maintainer team to continue growing a project past its target.`,
+      `Holding these tickets entitles a project to a portion of its own overflow, which can create an incentive for the maintainer team to continue growing a project past its target.`,
     ],
   },
   {
     q: "Can I change my project's contract after it's been created?",
     a: [
-      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budget has ended. All proposed changes must be voted on by the project's ticket holders before they are accepted.`,
+      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended. All proposed changes must be voted on by the project's ticket holders before they are accepted.`,
       `The voting period for contract changes takes place over 7 days, and is decided by a supermajority. Voters must stake tickets to participate, which are then locked until the voting period has ended.`,
     ],
   },
@@ -72,8 +72,8 @@ const QAs: {
   {
     q: `Does putting a cap on profit remove incentive for project creators to innovate?`,
     a: [
-      `If a maintainer team neglects a project or moves it in a direction that doesn’t work for the market, it could be forked by the community or simply given up by its users. Either of these would compromise paychecks for the project.`,
-      "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone later.",
+      `If a maintainer team neglects a project or moves it in a direction that doesn’t work for the market, it could be forked by the community or simply given up by its users.`,
+      "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone over time.",
     ],
   },
   {

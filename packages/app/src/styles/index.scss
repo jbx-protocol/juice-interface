@@ -39,7 +39,15 @@ a {
   font-weight: 600;
 
   &:hover {
-    color: #009baf;
+    color: #61edff;
+  }
+
+  &.ol {
+    color: #00b0c7;
+
+    &:hover {
+      color: #32c8db;
+    }
   }
 }
 

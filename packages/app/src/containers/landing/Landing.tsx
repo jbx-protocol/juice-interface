@@ -3,6 +3,7 @@ import React, { CSSProperties } from 'react'
 
 import Faq from '../../components/Faq'
 import Footer from '../../components/Footer'
+import Tweets from '../../components/Tweets'
 import { colors } from '../../constants/styles/colors'
 import { Budget } from '../../models/budget'
 import { Contracts } from '../../models/contracts'
@@ -60,11 +61,7 @@ export default function Landing({
     document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const fourthCol = (
-    header: string,
-    body: (JSX.Element | string)[],
-    tail?: string,
-  ) => (
+  const fourthCol = (header: string, body: (JSX.Element | string)[]) => (
     <Col xs={24} md={12} lg={6} style={{ marginBottom: 60 }}>
       {smallHeader(header)}
       <p style={{ marginBottom: 0 }}>
@@ -72,7 +69,6 @@ export default function Landing({
           <span>{b} </span>
         ))}
       </p>
-      {tail ? <div style={{ fontSize: '30px' }}>{tail}</div> : null}
     </Col>
   )
 
@@ -168,15 +164,11 @@ export default function Landing({
           }}
         >
           <Row gutter={60}>
-            {fourthCol(
-              'Do work',
-              [
-                `Make a Juice contract that says how much cashflow you and your
+            {fourthCol('Do work 💰💅💪', [
+              `Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
                 mission statement.`,
-              ],
-              `💰💅💪`,
-            )}
+            ])}
             {fourthCol('Get paid', [
               `People can fund your project through the Juice dashboard as a
                 patron or an investor, or through your app as a paying user. For
@@ -198,41 +190,33 @@ export default function Landing({
                 #BusinessModelAsAService
               </a>,
             ])}
-            {fourthCol(
-              'Overflow',
-              [
-                `If money overflows, your paying customers claim the surplus
+            {fourthCol('Overflow ⛲️', [
+              `If money overflows, your paying customers claim the surplus
                 alongside you, effectively pushing prices down as your community
                 grows. Early adopters get a discounted rate, and those HODLers
                 who wait longest to claim get a juicier return. While unclaimed,
                 overflow earns interest.`,
-                <a
-                  href="https://twitter.com/hashtag/DeFi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #DeFi
-                </a>,
-                <a
-                  href="https://twitter.com/hashtag/RegenFinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  #RegenFinance
-                </a>,
-              ],
-              '⛲️',
-            )}
-            {fourthCol(
-              'Repeat',
-              [
-                `Your budgeting periods can be however long you want, and can be
+              <a
+                href="https://twitter.com/hashtag/DeFi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #DeFi
+              </a>,
+              <a
+                href="https://twitter.com/hashtag/RegenFinance"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                #RegenFinance
+              </a>,
+            ])}
+            {fourthCol('Repeat 📈', [
+              `Your budgeting periods can be however long you want, and can be
                 recurring. You can make them bigger as your project grows, with
                 the approval of those paying customers that have not yet claimed
                 their fair share of your overflowed surplus.`,
-              ],
-              '📈',
-            )}
+            ])}
           </Row>
         </div>
       </section>
@@ -265,15 +249,7 @@ export default function Landing({
           }}
         >
           Create value for your community, crush your craft, make your money,
-          and lift up your people.{' '}
-          <a
-            href="https://twitter.com/hashtag/dework"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            #DeWork
-          </a>{' '}
-          <br></br>
+          and lift up your people.<br></br>
           <span style={{ fontSize: '30px' }}>🧃⚡️</span>
         </div>
       </section>
@@ -291,35 +267,32 @@ export default function Landing({
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader('Should you Juice?')}
+                {bigHeader('Funding for the commons')}
                 <div>
-                  <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting community-driven online goods
-                    and services with no ads, data integrity, and business
-                    operation accountability. All built by motivated punks
-                    getting transparently paid what they ask for, while
-                    rewarding everyone who helped create the overflow an
-                    opportunity to capitalize on it.
-                  </p>
-                </div>
-                <div>
-                  <h2>What's it cost?</h2>
-                  <p className="ol">
-                    Juice is an open protocol on Ethereum's Optimism L2 (soon)
-                    that makes money using Juice itself. You can check out the
-                    contractualized budget specs{' '}
-                    <a href="https://juice.work/0x00000000" target="new">
-                      here (soon)
-                    </a>, and the under-the-hood specs and docs <a href="https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1" target="new">here</a>
-                    .
+                    Old school businesses need to increase their revenue margins
+                    as much as possible to keep shareholders smiling. This leads
+                    to dumb product decisions like running ads, growth hacking,
+                    gaming pricing tiers, or stepping on employees. This stuff
+                    should be left in web2.
                   </p>
                   <p className="ol">
-                    5% of all money made using Juice is sent to help pay for
-                    Juice itself. In exchange, you get the opportunity to
-                    benefit from the overflow that the ecosystem accumulates
-                    over time, and voting power on how Juice's cashflow needs
-                    should evolve.
+                    The open internet will work better for everyone if it isn't
+                    built on businesses, but on common goods that are publicly
+                    funded, are truly secure, provide the most efficient value,
+                    and earn only what they can justify to keep on crushing it.
+                    As web3 tools deprecate old-world profit models, Juice will
+                    make sure they're funded sustainably.
+                    <br />
+                    <a
+                      className="ol"
+                      href="https://twitter.com/hashtag/dework"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: colors.secondaryDark }}
+                    >
+                      #DeWork
+                    </a>
                   </p>
                 </div>
               </div>
@@ -347,6 +320,12 @@ export default function Landing({
           }}
         >
           <Faq />
+        </div>
+      </section>
+
+      <section>
+        <div style={{ ...wrapper, padding: 30 }}>
+          <Tweets />
         </div>
       </section>
 

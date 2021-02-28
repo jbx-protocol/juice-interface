@@ -41,7 +41,7 @@ export default function Landing({
     'Internet public goods',
     'Open source businesses',
     'Indie artists, journalists, & researchers',
-    'Any web project with predictable costs',
+    'Just about any web project with predictable costs',
   ]
 
   const section: CSSProperties = {
@@ -137,7 +137,7 @@ export default function Landing({
 
                 <div className="hide-mobile">
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Create your contract
+                    Play with it
                   </Button>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export default function Landing({
               `People can fund your project through the Juice dashboard as a
                 patron or an investor, or through your app as a paying user. For
                 example, if your users pay you a transaction fee or monthly
-                cost, just route it through Juice's smart contracts.`,
+                cost, just route it through Juice's contracts.`,
               <a
                 href="https://twitter.com/hashtag/composability"
                 target="_blank"
@@ -245,7 +245,7 @@ export default function Landing({
             marginBottom: 80,
           }}
         >
-          {bigHeader('Do it')}
+          {bigHeader('Play with it')}
           <ConfigureBudget
             userAddress={userAddress}
             contracts={contracts}
@@ -311,7 +311,7 @@ export default function Landing({
                     contractualized budget specs{' '}
                     <a href="https://juice.work/0x00000000" target="new">
                       here (soon)
-                    </a>
+                    </a>, and the under-the-hood specs and docs <a href="https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1" target="new">here</a>
                     .
                   </p>
                   <p className="ol">

@@ -77,7 +77,7 @@ const QAs: {
     ],
   },
   {
-    q: `Do I have to make my Juice project open source?`,
+    q: `Do I have to make my project open source in order to use Juice as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',
       alt: "It'd be a lot cooler if you did",

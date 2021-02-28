@@ -167,7 +167,7 @@ export default function Landing({
             {fourthCol('Do work 💅', [
               `Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
-                mission statement.`,
+                mission statement over a set time frame.`,
             ])}
             {fourthCol('Get paid 💰', [
               `People can fund your project through the Juice dashboard as a

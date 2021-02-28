@@ -41,7 +41,7 @@ const QAs: {
   {
     q: `What's a discount rate?`,
     a: [
-      `Juice projects can be created with an optional discount rate to incentive funding the project earlier than later. With each new budget period, the discount rate decreases the number of tickets that are minted per payment.`,
+      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new budget period, the discount rate decreases the number of tickets that are minted per payment.`,
       `For example: with a discount rate of 97%, 100 DAI paid to a project today might mint 100 tickets, but the same amount paid during the next budgeting time frame would only mint 97.`,
     ],
   },

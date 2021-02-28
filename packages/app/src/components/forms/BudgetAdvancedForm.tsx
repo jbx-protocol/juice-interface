@@ -31,7 +31,6 @@ export default function BudgetAdvancedForm({
       {header ? <Form.Item>{header}</Form.Item> : null}
 
       <Form.Item
-        // extra="The percentage of distributed tickets that will become mintable for yourself once the budgeting period ends."
         extra="For every ticket given to someone who pays you, this percentage of tickets will be reserved for yourself."
         name="projectAllocation"
         label="Reserved tickets"
@@ -63,7 +62,7 @@ export default function BudgetAdvancedForm({
         <Input placeholder="0x01a2b3c..." disabled={disabled} />
       </Form.Item>
       <Form.Item
-        extra="The rate (95%-100%) at which payments to future budgeting periods are valued compared to payments to the current one."
+        extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
         name="discountRate"
         label="Discount rate"
         rules={[{ required: true }]}

@@ -212,7 +212,7 @@ export default function Landing({
               </a>,
             ])}
             {fourthCol('Repeat 📈', [
-              `Your budgeting periods can be however long you want, and can be
+              `Your budgeting time frames can be however long you want, and can be
                 recurring. You can make them bigger as your project grows, with
                 the approval of those paying customers that have not yet claimed
                 their fair share of your overflowed surplus.`,

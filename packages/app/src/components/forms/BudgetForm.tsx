@@ -46,7 +46,7 @@ export default function BudgetForm({
         />
       </Form.Item>
       <Form.Item
-        extra="The duration of this budgeting period."
+        extra="The duration of this budgeting scope."
         name="duration"
         label="Time frame"
         rules={[{ required: true }]}

@@ -164,12 +164,12 @@ export default function Landing({
           }}
         >
           <Row gutter={60}>
-            {fourthCol('Do work 💰💅💪', [
+            {fourthCol('Do work 💅', [
               `Make a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush your project's
                 mission statement.`,
             ])}
-            {fourthCol('Get paid', [
+            {fourthCol('Get paid 💰', [
               `People can fund your project through the Juice dashboard as a
                 patron or an investor, or through your app as a paying user. For
                 example, if your users pay you a transaction fee or monthly

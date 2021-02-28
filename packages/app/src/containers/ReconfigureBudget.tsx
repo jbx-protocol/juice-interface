@@ -30,7 +30,7 @@ export default function ReconfigureBudget({
   const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
 
   const wantToken = useContractReader<string>({
-    contract: contracts?.Juicer,
+    contract: ContractName.Juicer,
     functionName: 'stablecoin',
   })
 

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import React, { useState } from 'react'
+import { ContractName } from '../constants/contract-name'
 
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
@@ -32,7 +33,7 @@ export default function BudgetsHistory({
     : poolNumbers[poolNumbers.length - 1]
 
   useContractReader<Budget>({
-    contract: contracts?.BudgetStore,
+    contract: ContractName.BudgetStore,
     functionName: 'getBudget',
     args: [poolNumber],
     callback: budget => {

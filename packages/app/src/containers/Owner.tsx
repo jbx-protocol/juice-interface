@@ -1,20 +1,19 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space, Tabs } from 'antd'
 import React, { CSSProperties, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import Loading from '../components/Loading'
 import Rewards from '../components/Rewards'
-import { localProvider } from '../constants/local-provider'
+import { ContractName } from '../constants/contract-name'
 import { layouts } from '../constants/styles/layouts'
 import { padding } from '../constants/styles/padding'
-import { useContractLoader } from '../hooks/ContractLoader'
 import useContractReader from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export default function Owner({
   userAddress,
@@ -37,7 +36,7 @@ export default function Owner({
   const isOwner = owner === userAddress
 
   const currentBudget = useContractReader<Budget>({
-    contract: useContractLoader(localProvider, true)?.BudgetStore,
+    contract: ContractName.BudgetStore,
     functionName: 'getCurrentBudget',
     args: [owner],
     updateOn: [
@@ -61,7 +60,7 @@ export default function Owner({
   })
 
   const ticketAddress = useContractReader<string>({
-    contract: contracts?.TicketStore,
+    contract: ContractName.TicketStore,
     functionName: 'tickets',
     args: [owner],
   })

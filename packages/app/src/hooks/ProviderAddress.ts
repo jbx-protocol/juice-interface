@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { useEffect, useState } from 'react'
 
-export function useUserAddress(provider?: JsonRpcProvider): string {
+export function useProviderAddress(provider?: JsonRpcProvider): string {
   const [userAddress, setUserAddress] = useState<string>('')
 
   useEffect(() => {

@@ -16813,7 +16813,7 @@ textarea.ant-mentions {
 }
 .ant-modal-content {
   position: relative;
-  background-color: #131115;
+  background-color: #241c2b;
   background-clip: padding-box;
   border: 0;
   border-radius: 2px;
@@ -16855,7 +16855,7 @@ textarea.ant-mentions {
 .ant-modal-header {
   padding: 16px 24px;
   color: rgba(255, 255, 255, 0.85);
-  background: #131115;
+  background: #241c2b;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 2px 2px 0 0;
 }

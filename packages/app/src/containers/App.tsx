@@ -10,7 +10,7 @@ import { web3Modal } from '../constants/web3-modal'
 import Router from '../containers/Router'
 import { useContractLoader } from '../hooks/ContractLoader'
 import useContractReader from '../hooks/ContractReader'
-import { useUserAddress } from '../hooks/UserAddress'
+import { useProviderAddress } from '../hooks/ProviderAddress'
 import { useUserProvider } from '../hooks/UserProvider'
 import { Budget } from '../models/budget'
 
@@ -24,7 +24,7 @@ function App() {
 
   const userProvider = useUserProvider(injectedProvider, localProvider)
 
-  const userAddress = useUserAddress(userProvider)
+  const userAddress = useProviderAddress(userProvider)
 
   const contracts = useContractLoader(userProvider)
 
@@ -40,6 +40,8 @@ function App() {
       },
     ],
   })
+
+  console.log({ userAddress, budget })
 
   console.log('User:', userAddress, userProvider)
 

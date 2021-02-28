@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-import Faq from '../components/Faq'
 
+import Faq from '../components/Faq'
 import Gimme from '../components/Gimme'
 import { useGasPrice } from '../hooks/GasPrice'
 import { Budget } from '../models/budget'
@@ -59,8 +59,8 @@ export default function Router({
           <Owner
             contracts={contracts}
             transactor={transactor}
-            userAddress={userAddress}
             onNeedProvider={onNeedProvider}
+            userProvider={userProvider}
           />
         </Route>
       </Switch>

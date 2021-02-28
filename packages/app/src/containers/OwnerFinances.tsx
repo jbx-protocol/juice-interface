@@ -1,45 +1,56 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Col, Input, Row, Space } from 'antd'
 import React, { useState } from 'react'
 
 import BudgetDetail from '../components/BudgetDetail'
 import BudgetsHistory from '../components/BudgetsHistory'
 import { CardSection } from '../components/CardSection'
+import ApproveSpend from '../components/modals/ApproveSpendModal'
+import ConfirmPayOwnerModal from '../components/modals/ConfirmPayOwnerModal'
 import { ContractName } from '../constants/contract-name'
 import useContractReader from '../hooks/ContractReader'
+import { useProviderAddress } from '../hooks/ProviderAddress'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
+import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
 import ReconfigureBudget from './ReconfigureBudget'
 
 export default function OwnerFinances({
   currentBudget,
-  userAddress,
   contracts,
   transactor,
   owner,
   onNeedProvider,
+  userProvider,
   ticketAddress,
 }: {
   currentBudget?: Budget
-  userAddress?: string
   contracts?: Contracts
   transactor?: Transactor
   owner?: string
   ticketAddress?: string
+  userProvider?: JsonRpcProvider
   onNeedProvider: () => Promise<void>
 }) {
   const [payerTickets, setPayerTickets] = useState<BigNumber>()
   const [ownerTickets, setOwnerTickets] = useState<BigNumber>()
-  const [loadingPay, setLoadingPay] = useState<boolean>()
   const [payAmount, setPayAmount] = useState<number>(0)
-  const [showReconfigureModal, setShowReconfigureModal] = useState<boolean>()
+  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
+    boolean
+  >(false)
+  const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
+  const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
+
+  const wantTokenContract = erc20Contract(currentBudget?.want)
+  const userAddress = useProviderAddress(userProvider)
 
   const wantTokenSymbol = useContractReader<string>({
-    contract: erc20Contract(currentBudget?.want),
+    contract: wantTokenContract,
     functionName: 'symbol',
   })
 
@@ -60,6 +71,15 @@ export default function OwnerFinances({
       },
     ],
   })
+
+  const allowance = useContractReader<BigNumber>({
+    contract: wantTokenContract,
+    functionName: 'allowance',
+    args: [userAddress, contracts?.Juicer?.address],
+    valueDidChange: bigNumbersDiff,
+  })
+
+  console.log({ allowance: allowance?.toString() })
 
   const isOwner = owner === userAddress
 
@@ -93,18 +113,14 @@ export default function OwnerFinances({
 
   function pay() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
+    if (!allowance || !payAmount) return
 
-    setLoadingPay(true)
+    if (allowance.lt(payAmount)) {
+      setApproveModalVisible(true)
+      return
+    }
 
-    transactor(
-      contracts.Juicer,
-      'pay',
-      [currentBudget.project, BigNumber.from(payAmount ?? 0), userAddress],
-      {
-        onDone: () => setLoadingPay(false),
-        onConfirmed: () => setPayAmount(0),
-      },
-    )
+    setPayModalVisible(true)
   }
 
   const spacing = 30
@@ -138,12 +154,7 @@ export default function OwnerFinances({
                   type="number"
                   onChange={e => updatePayAmount(parseFloat(e.target.value))}
                 />
-                <Button
-                  type="primary"
-                  onClick={pay}
-                  loading={loadingPay}
-                  disabled={!payAmount}
-                >
+                <Button type="primary" onClick={pay} disabled={!payAmount}>
                   Pay owner
                 </Button>
               </Space>
@@ -183,15 +194,14 @@ export default function OwnerFinances({
           </CardSection>
           {isOwner ? (
             <div style={{ marginTop: 40, textAlign: 'right' }}>
-              <Button onClick={() => setShowReconfigureModal(true)}>
+              <Button onClick={() => setReconfigureModalVisible(true)}>
                 Reconfigure budget
               </Button>
               <ReconfigureBudget
                 transactor={transactor}
                 contracts={contracts}
                 currentValue={currentBudget}
-                visible={showReconfigureModal}
-                onCancel={() => setShowReconfigureModal(false)}
+                visible={reconfigureModalVisible}
               />
             </div>
           ) : null}
@@ -211,6 +221,33 @@ export default function OwnerFinances({
           </CardSection>
         </Col>
       </Row>
+
+      <ApproveSpend
+        visible={approveModalVisible}
+        contracts={contracts}
+        transactor={transactor}
+        userProvider={userProvider}
+        wantTokenAddress={currentBudget?.want}
+        wantTokenSymbol={wantTokenSymbol}
+        initialAmount={BigNumber.from(payAmount)}
+        allowance={allowance}
+        onOk={() => setApproveModalVisible(false)}
+        onCancel={() => setApproveModalVisible(false)}
+      />
+      <ConfirmPayOwnerModal
+        visible={payModalVisible}
+        contracts={contracts}
+        transactor={transactor}
+        budget={currentBudget}
+        userAddress={userAddress}
+        onOk={() => setPayModalVisible(false)}
+        onCancel={() => setPayModalVisible(false)}
+        ticketSymbol={ticketSymbol}
+        wantTokenSymbol={wantTokenSymbol}
+        amount={BigNumber.from(payAmount)}
+        receivedTickets={payerTickets}
+        ownerTickets={ownerTickets}
+      />
     </Space>
   )
 }

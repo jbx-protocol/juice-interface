@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Button, Space, Tabs } from 'antd'
 import React, { CSSProperties, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -9,6 +10,7 @@ import { ContractName } from '../constants/contract-name'
 import { layouts } from '../constants/styles/layouts'
 import { padding } from '../constants/styles/padding'
 import useContractReader from '../hooks/ContractReader'
+import { useProviderAddress } from '../hooks/ProviderAddress'
 import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
@@ -16,14 +18,14 @@ import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
 
 export default function Owner({
-  userAddress,
   transactor,
   contracts,
   onNeedProvider,
+  userProvider,
 }: {
-  userAddress?: string
   transactor?: Transactor
   contracts?: Contracts
+  userProvider?: JsonRpcProvider
   onNeedProvider: () => Promise<void>
 }) {
   const [budgetId, setBudgetId] = useState<BigNumber>()
@@ -32,6 +34,8 @@ export default function Owner({
   >()
 
   const { owner }: { owner?: string } = useParams()
+
+  const userAddress = useProviderAddress(userProvider)
 
   const isOwner = owner === userAddress
 
@@ -52,7 +56,8 @@ export default function Owner({
       },
     ],
     callback: budget => {
-      if (budget) {
+      if (budgetState) return
+      else if (budget) {
         setBudgetState('found')
         setBudgetId(budget.id)
       } else setBudgetState(isOwner ? 'canCreate' : 'missing')
@@ -182,9 +187,9 @@ export default function Owner({
                     contracts={contracts}
                     transactor={transactor}
                     currentBudget={currentBudget}
-                    userAddress={userAddress}
                     owner={owner}
                     onNeedProvider={onNeedProvider}
+                    userProvider={userProvider}
                     ticketAddress={ticketAddress}
                   />
                 </div>

@@ -8,6 +8,7 @@ import useContractReader from '../hooks/ContractReader'
 import { Contracts } from '../models/contracts'
 import { Transactor } from '../models/transactor'
 import { erc20Contract } from '../utils/erc20Contract'
+import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 
 export default function Gimme({
   transactor,
@@ -32,12 +33,14 @@ export default function Gimme({
     contract: wantTokenContract,
     functionName: 'balanceOf',
     args: [userAddress],
+    valueDidChange: bigNumbersDiff,
   })
 
   const allowance = useContractReader<BigNumber>({
     contract: wantTokenContract,
     functionName: 'allowance',
     args: [userAddress, contracts?.Juicer?.address],
+    valueDidChange: bigNumbersDiff,
   })
 
   function gimme() {

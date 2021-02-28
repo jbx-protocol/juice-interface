@@ -15,13 +15,14 @@ export default function Navbar({
   shouldUseNetwork?: string
   onConnectWallet: VoidFunction
 }) {
-  const menuItem = (text: string, route: string) => {
-    const external = route.startsWith('http')
+  const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
+    const external = route?.startsWith('http')
 
     return (
       <a
         style={{ fontWeight: 600, color: colors.textPrimary }}
         href={route}
+        onClick={onClick}
         {...(external
           ? {
               target: '_blank',
@@ -66,7 +67,15 @@ export default function Navbar({
             {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>
         ) : null}
-        {<Menu.Item key="faq">{menuItem('FAQ', '/#/faq')}</Menu.Item>}
+        {
+          <Menu.Item key="faq">
+            {menuItem('FAQ', undefined, () =>
+              document
+                .getElementById('faq')
+                ?.scrollIntoView({ behavior: 'smooth' }),
+            )}
+          </Menu.Item>
+        }
         {
           <Menu.Item key="fluid-dynamics">
             {menuItem(

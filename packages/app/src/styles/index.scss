@@ -43,6 +43,14 @@ a {
   }
 }
 
+p {
+  color: #ffffffaa;
+
+  &.ol {
+    color: #000000bb;
+  }
+}
+
 input {
   background: #131115;
   color: white;

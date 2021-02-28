@@ -94,7 +94,7 @@ export default function Landing({
                 <p style={{ fontWeight: 500, fontSize: '1rem' }}>
                   Projects on Juice say up-front how much cashflow they need to
                   crush what they do. Once they're earning more than that, the
-                  overflow can be claimed by its users, patrons, & investors.{' '}
+                  overflow can be claimed by their users, patrons, & investors.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"
@@ -171,7 +171,7 @@ export default function Landing({
             ])}
             {fourthCol('Get paid 💰', [
               `People can fund your project through the Juice dashboard as a
-                patron or an investor, or through your app as a paying user. For
+                patron or investor, or through your app as a paying user. For
                 example, if your users pay you a transaction fee or monthly
                 cost, just route it through Juice's contracts.`,
               <a

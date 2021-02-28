@@ -70,4 +70,8 @@ input {
   }
 }
 
+.twitter-tweet {
+  display: inline-flex !important;
+}
+
 @import 'antd-overrides.scss';

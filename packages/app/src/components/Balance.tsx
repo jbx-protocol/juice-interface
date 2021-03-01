@@ -16,15 +16,19 @@ export default function Balance({
   const [balance, setBalance] = useState<BigNumber>()
 
   // get updated balance
-  usePoller(() => {
-    if (!userAddress) return
+  usePoller(
+    () => {
+      if (!userAddress) return
 
-    try {
-      localProvider.getBalance(userAddress).then(setBalance)
-    } catch (e) {
-      console.log('Error getting balance', e)
-    }
-  })
+      try {
+        localProvider.getBalance(userAddress).then(setBalance)
+      } catch (e) {
+        console.log('Error getting balance', e)
+      }
+    },
+    [],
+    30000,
+  )
 
   let floatBalance = parseFloat(balance ? formatEther(balance) : '0.00')
 

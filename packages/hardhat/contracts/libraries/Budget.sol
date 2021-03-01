@@ -29,8 +29,6 @@ library Budget {
         string name;
         // A link that points to a justification for these parameters.
         string link;
-        // The token that this Budget can be funded with.
-        IERC20 want;
         // The amount that this Budget is targeting.
         uint256 target;
         // The running amount that's been contributed to sustaining this Budget.
@@ -69,7 +67,6 @@ library Budget {
         _self.duration = _baseBudget.duration;
         _self.project = _baseBudget.project;
         _self.name = _baseBudget.name;
-        _self.want = _baseBudget.want;
         _self.discountRate = _baseBudget.discountRate;
         _self.weight = _derivedWeight(_baseBudget);
         _self.p = _baseBudget.p;
@@ -126,7 +123,6 @@ library Budget {
                 _self.id,
                 _self.name,
                 _self.link,
-                _self.want,
                 _self.target,
                 0,
                 _determineNextStart(_self),

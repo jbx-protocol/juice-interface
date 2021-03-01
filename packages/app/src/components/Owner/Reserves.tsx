@@ -55,11 +55,6 @@ export default function Reserves({
       eventName: 'Redeem',
       topics: budget ? [[], budget.project] : undefined,
     },
-    // TODO index property in Collect event for filtering against specific budget?
-    // {
-    //   contract: contracts?.Juicer,
-    //   eventName: 'Collect',
-    // },
   ]
 
   const distributableReserves = useContractReader<ReserveAmounts>({

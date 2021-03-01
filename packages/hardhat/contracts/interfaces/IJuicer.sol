@@ -20,8 +20,7 @@ interface IBudgetController {
         uint256 indexed budgetId,
         address indexed owner,
         address indexed beneficiary,
-        uint256 amount,
-        IERC20 want
+        uint256 amount
     );
 
     function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
@@ -58,8 +57,6 @@ interface ITicketsController {
 }
 
 interface IJuicer is IBudgetController, ITicketsController {
-    event DistributeReserves(address minter, address issuer);
-
     event Migrate(IJuicer indexed to, uint256 _amount);
 
     event Collect(
@@ -86,32 +83,15 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function depositable() external view returns (uint256);
 
-    function stashed(address _by) external view returns (uint256);
-
     function fee() external view returns (uint256);
 
-    function latestDistributedBudgetId(address _issuer)
-        external
-        returns (uint256);
-
-    function stablecoin() external view returns (IERC20);
+    function weth() external view returns (IERC20);
 
     function bondingCurveRate() external view returns (uint256);
-
-    function collect(address _beneficiary) external returns (uint256 amount);
 
     function getOverflow(address _issuer) external view returns (uint256);
 
     function getTotalOverflow() external view returns (uint256);
-
-    function getReserves(address _issuer, bool _onlyDistributable)
-        external
-        view
-        returns (
-            uint256 issuerTickets,
-            uint256 adminFees,
-            uint256 beneficiaryDonations
-        );
 
     function getTicketRate(uint256 _budgetId, uint256 _amount)
         external
@@ -124,8 +104,6 @@ interface IJuicer is IBudgetController, ITicketsController {
         returns (uint256);
 
     function setAdmin(address _admin) external;
-
-    function distributeReserves(address _issuer) external;
 
     function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
 

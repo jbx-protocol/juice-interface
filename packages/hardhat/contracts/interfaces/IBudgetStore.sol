@@ -11,7 +11,6 @@ interface IBudgetStore is IStore {
         address indexed owner,
         uint256 indexed target,
         uint256 duration,
-        IERC20 want,
         string name,
         string link,
         uint256 discountRate,
@@ -26,8 +25,8 @@ interface IBudgetStore is IStore {
         uint256 _budgetId,
         address _tapper,
         uint256 _amount,
-        uint256 _fee
-    ) external returns (Budget.Data memory);
+        uint256 _withhold
+    ) external returns (uint256);
 
     function votes(
         uint256 _budgetId,
@@ -71,7 +70,6 @@ interface IBudgetStore is IStore {
     function configure(
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _name,
         string calldata _link,
         uint256 discountRate,

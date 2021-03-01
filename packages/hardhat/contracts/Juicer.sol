@@ -86,14 +86,8 @@ contract Juicer is IJuicer {
     /// @notice The rate that describes the bonding curve at which tickets are redeemable.
     uint256 public override bondingCurveRate = 382;
 
-    /// @notice The amounts stashed for each address, including the admin and any donations.
-    mapping(address => uint256) public override stashed;
-
-    /// @notice The address of a stablecoin ERC-20 token.
-    IERC20 public override stablecoin;
-
-    /// @notice The latest budget ID that has distributed reserves for each ticket issuer.
-    mapping(address => uint256) public override latestDistributedBudgetId;
+    /// @notice The address of a the WETH ERC-20 token.
+    IERC20 public immutable override weth;
 
     // --- external views --- //
 
@@ -104,7 +98,7 @@ contract Juicer is IJuicer {
     function getTotalOverflow() external view override returns (uint256) {
         // If there's no overflow yielder, all of the overflow is depositable.
         if (overflowYielder != IOverflowYielder(0)) {
-            return overflowYielder.getBalance(stablecoin).add(depositable);
+            return overflowYielder.getBalance(weth).add(depositable);
         } else {
             return depositable;
         }
@@ -135,68 +129,11 @@ contract Juicer is IJuicer {
             // The overflow is either in the overflow yielder or still depositable.
             // The proportion belonging to this issuer is the same proportion as the raw values in the Ticket store.
             return
-                (overflowYielder.getBalance(stablecoin).add(depositable))
+                (overflowYielder.getBalance(weth).add(depositable))
                     .mul(_claimable)
                     .div(_totalClaimable);
         } else {
             return depositable.mul(_claimable).div(_totalClaimable);
-        }
-    }
-
-    /**
-        @notice The amount of pending admin fees, donatations to beneficiaries, and mintable tickets for projects.
-        @dev Reserved tickets are only mintable once a Budget expires.
-        @dev This logic should be the same as `distributeReserves` in Juicer.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
-        @param _onlyDistributable Only return reserves that are distributable.
-        @return issuerTickets The amount of unminted reserved tickets belonging to issuer of the tickets.
-        @return adminFees The amount of fees belonging to the admin.
-        @return beneficiaryDonations The amount of donations belonging to the beneficiaries.
-    */
-    function getReserves(address _issuer, bool _onlyDistributable)
-        public
-        view
-        override
-        returns (
-            uint256 issuerTickets,
-            uint256 adminFees,
-            uint256 beneficiaryDonations
-        )
-    {
-        // Get a reference to the project's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
-
-        // Get the id of the latest distributed budget for this issuer.
-        uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
-
-        // Iterate sequentially through the project's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && _budget.id < _latestDistributedBudgetId) {
-            // If the budget has overflow and is redistributing, it has unminted reserved tickets.
-            if (
-                !_onlyDistributable ||
-                _budget._state() == Budget.State.Redistributing
-            ) {
-                adminFees = adminFees.add(_budget.total.mul(fee).div(100));
-
-                if (_budget.p > 0) {
-                    // The project gets its percentage, if one is specified.
-                    issuerTickets = issuerTickets.add(
-                        _budget._weighted(_budget.total, _budget.p)
-                    );
-                }
-
-                // Give to beneficiary if there is overflow.
-                if (_budget.b < 0 && _budget.total > _budget.target)
-                    beneficiaryDonations = beneficiaryDonations.add(
-                        _budget.total.sub(_budget.target).mul(_budget.b).div(
-                            100
-                        )
-                    );
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
         }
     }
 
@@ -206,18 +143,18 @@ contract Juicer is IJuicer {
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
       @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
-      @param _stablecoin A stablecoin contract.
+      @param _weth The address for weth.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
         uint256 _fee,
-        IERC20 _stablecoin
+        IERC20 _weth
     ) public {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
         fee = _fee;
-        stablecoin = _stablecoin;
+        weth = _weth;
     }
 
     /**
@@ -253,88 +190,6 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Contribute funds to a project's active Budget.
-        @dev Mints the project's tickets proportional to the amount of the contribution.
-        @dev The sender must approve this contract to transfer the specified amount of tokens.
-        @param _project The project of the budget to contribute funds to.
-        @param _amount Amount of the contribution. Sent as 10E18.
-        @param _beneficiary The address to transfer the newly minted Tickets to. 
-        @return _budgetId The ID of the Budget that successfully received the contribution.
-    */
-    function pay(
-        address _project,
-        uint256 _amount,
-        address _beneficiary
-    ) external override lock returns (uint256) {
-        // Positive payments only.
-        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
-
-        // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
-        (Budget.Data memory _budget, uint256 _transferAmount) =
-            budgetStore.payProject(
-                _project,
-                msg.sender,
-                _amount,
-                RECONFIGURATION_VOTING_PERIOD,
-                fee
-            );
-
-        // The amount that is overflowing from the Budget.
-        uint256 _overflow =
-            _budget.total > _budget.target
-                ? _budget.total.sub(_budget.target)
-                : 0;
-
-        // Transfer if needed.
-        if (_transferAmount > 0)
-            _budget.want.safeTransferFrom(
-                msg.sender,
-                address(this),
-                _transferAmount
-            );
-
-        // Stablecoin is the only supported token at the moment.
-        require(_budget.want == stablecoin, "Juicer::pay: TOKEN_NOT_SUPPORTED");
-
-        // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
-        if (_overflow > 0) {
-            uint256 _contributedOverflow =
-                _amount > _overflow ? _overflow : _amount;
-
-            // The portion of the contributed overflow that is claimable by redeeming tickets.
-            // This is the total minus the percent donated and used as a fee.
-            uint256 _claimablePortion =
-                _contributedOverflow
-                    .mul(uint256(100).sub(_budget.b).sub(fee))
-                    .div(100);
-
-            // The redeemable portion of the overflow can be deposited to earn yield.
-            depositable = depositable.add(_claimablePortion);
-
-            // Add to the raw amount claimable.
-            ticketStore.addClaimable(_budget.project, _claimablePortion);
-        }
-
-        // Mint the appropriate amount of tickets for the contributor.
-        ticketStore.print(
-            _beneficiary,
-            _budget.project,
-            _budget._weighted(_amount, uint256(100).sub(_budget.p))
-        );
-
-        emit Pay(
-            _budget.id,
-            _budget.project,
-            msg.sender,
-            _beneficiary,
-            _amount,
-            _budget.want
-        );
-
-        return _budget.id;
-    }
-
-    /**
         @notice Addresses can redeem their Tickets to claim overflowed tokens.
         @param _issuer The issuer of the Tickets being redeemed.
         @param _amount The amount of Tickets to redeem.
@@ -364,7 +219,7 @@ contract Juicer is IJuicer {
         uint256 _baseReturnAmount = depositable;
 
         if (overflowYielder != IOverflowYielder(0))
-            _baseReturnAmount.add(overflowYielder.getBalance(stablecoin));
+            _baseReturnAmount.add(overflowYielder.getBalance(weth));
 
         // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
         returnAmount = _baseReturnAmount.mul(_claimable).div(_totalClaimable);
@@ -374,15 +229,15 @@ contract Juicer is IJuicer {
             depositable = depositable.sub(returnAmount);
             // Simply withdraw from the overflow yielder if there's nothing depositable.
         } else if (depositable == 0) {
-            overflowYielder.withdraw(returnAmount, stablecoin);
+            overflowYielder.withdraw(returnAmount, weth);
             // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
         } else {
-            overflowYielder.withdraw(returnAmount.sub(depositable), stablecoin);
+            overflowYielder.withdraw(returnAmount.sub(depositable), weth);
             depositable = 0;
         }
 
         // Transfer funds to the specified address.
-        stablecoin.safeTransfer(_beneficiary, returnAmount);
+        weth.safeTransfer(_beneficiary, returnAmount);
 
         emit Redeem(
             msg.sender,
@@ -390,7 +245,7 @@ contract Juicer is IJuicer {
             _beneficiary,
             _amount,
             returnAmount,
-            stablecoin
+            weth
         );
     }
 
@@ -406,43 +261,19 @@ contract Juicer is IJuicer {
         address _beneficiary
     ) external override lock {
         // Get a reference to the Budget being tapped.
-        Budget.Data memory _budget =
+        uint256 _tappedAmount =
             budgetStore.tap(_budgetId, msg.sender, _amount, fee);
 
         // Transfer the funds to the specified address.
-        _budget.want.safeTransfer(_beneficiary, _amount);
+        weth.safeTransfer(_beneficiary, _tappedAmount);
 
-        // Distribute reserves if needed.
-        if (latestDistributedBudgetId[msg.sender] < _budgetId)
-            distributeReserves(msg.sender);
-
-        emit Tap(_budgetId, msg.sender, _beneficiary, _amount, stablecoin);
-    }
-
-    /**
-      @notice Collect any funds belonging to you.
-      @param _beneficiary The address that will receive the funds.
-      @return amount The amount claimed.
-     */
-    function collect(address _beneficiary)
-        external
-        override
-        lock
-        returns (uint256 amount)
-    {
-        // The amount stashed.
-        amount = stashed[msg.sender];
-
-        // Must be positive.
-        require(amount > 0, "Juicer::claim: INSUFFICIENT_FUNDS");
-
-        // Set the amount stashed to 0.
-        stashed[msg.sender] = 0;
-
-        // Transfer the funds to the specified address.
-        stablecoin.safeTransfer(_beneficiary, amount);
-
-        emit Collect(msg.sender, _beneficiary, amount);
+        emit Tap(
+            _budgetId,
+            msg.sender,
+            _beneficiary,
+            //TODO dollar amount and eth amount
+            _tappedAmount
+        );
     }
 
     /**
@@ -459,10 +290,10 @@ contract Juicer is IJuicer {
         require(depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
 
         // Deposit and reset what's depositable.
-        overflowYielder.deposit(depositable, stablecoin);
+        overflowYielder.deposit(depositable, weth);
         depositable = 0;
 
-        emit Deposit(depositable, stablecoin);
+        emit Deposit(depositable, weth);
     }
 
     /**
@@ -476,9 +307,6 @@ contract Juicer is IJuicer {
             migrationContractIsAllowed[address(_to)],
             "Juicer:migrateTickets: BAD_DESTINATION"
         );
-
-        // Make sure all reserved tickets and funds have been distributed for this issuer.
-        distributeReserves(msg.sender);
 
         // Get a reference to the project's Tickets.
         Tickets _tickets = ticketStore.tickets(msg.sender);
@@ -496,7 +324,7 @@ contract Juicer is IJuicer {
         // Move all claimable tokens for this issuer.
         // Assumes the new contract uses the same ticket store.
         uint256 _amount =
-            (overflowYielder.getBalance(stablecoin).add(depositable))
+            (overflowYielder.getBalance(weth).add(depositable))
                 .mul(_claimable)
                 .div(_totalClaimable);
 
@@ -505,16 +333,16 @@ contract Juicer is IJuicer {
             depositable = depositable.sub(_amount);
             // Withdraw from the overflow yielder if there's nothing depositable.
         } else if (depositable == 0) {
-            overflowYielder.withdraw(_amount, stablecoin);
+            overflowYielder.withdraw(_amount, weth);
             // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
         } else {
-            overflowYielder.withdraw(_amount.sub(depositable), stablecoin);
+            overflowYielder.withdraw(_amount.sub(depositable), weth);
             depositable = 0;
         }
 
         // Allow the new project to move funds owned by the issuer from contract.
-        stablecoin.safeApprove(address(_to), _amount);
-        _to.addOverflow(msg.sender, _amount, stablecoin);
+        weth.safeApprove(address(_to), _amount);
+        _to.addOverflow(msg.sender, _amount, weth);
 
         emit Migrate(_to, _amount);
     }
@@ -539,9 +367,9 @@ contract Juicer is IJuicer {
         // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
         if (overflowYielder != IOverflowYielder(0)) {
             _overflowBefore = _overflowBefore.add(
-                overflowYielder.getBalance(stablecoin)
+                overflowYielder.getBalance(weth)
             );
-            overflowYielder.deposit(_amount, stablecoin);
+            overflowYielder.deposit(_amount, weth);
         } else {
             depositable = depositable.add(_amount);
         }
@@ -601,12 +429,12 @@ contract Juicer is IJuicer {
     {
         // If there is already an overflow yielder, withdraw all funds and move them to the new overflow yielder.
         if (overflowYielder != IOverflowYielder(0)) {
-            uint256 _amount = overflowYielder.withdrawAll(stablecoin);
-            _newOverflowYielder.deposit(_amount, stablecoin);
+            uint256 _amount = overflowYielder.withdrawAll(weth);
+            _newOverflowYielder.deposit(_amount, weth);
         }
 
         // Allow the new overflow yielder to move funds from this contract.
-        stablecoin.safeApprove(address(_newOverflowYielder), uint256(-1));
+        weth.safeApprove(address(_newOverflowYielder), uint256(-1));
         overflowYielder = _newOverflowYielder;
 
         emit SetOverflowYielder(_newOverflowYielder);
@@ -615,60 +443,96 @@ contract Juicer is IJuicer {
     // --- public transactions --- //
 
     /**
-        @notice Pays admin fees, donates to beneficiaries, and mints the amount of unminted tickets that are reserved for projects.
-        @dev Reserves are only distributable once a Budget expires.
-        @param _issuer The Tickets issuer whos Budgets are being searched for unminted reserved tickets.
+        @notice Contribute funds to a project's active Budget.
+        @dev Mints the project's tickets proportional to the amount of the contribution.
+        @dev The sender must approve this contract to transfer the specified amount of tokens.
+        @param _project The project of the budget to contribute funds to.
+        @param _amount Amount of the contribution. Sent as 10E18.
+        @param _beneficiary The address to transfer the newly minted Tickets to. 
+        @return _budgetId The ID of the Budget that successfully received the contribution.
     */
-    function distributeReserves(address _issuer) public override {
-        // Get a reference to the project's latest Budget.
-        Budget.Data memory _budget = budgetStore.getLatestBudget(_issuer);
+    function pay(
+        address _project,
+        uint256 _amount,
+        address _beneficiary
+    ) public override lock returns (uint256) {
+        // Positive payments only.
+        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
-        // The number of  tickets to print for the issuer.
-        uint256 _printForIssuer = 0;
+        // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
+        (Budget.Data memory _budget, uint256 _transferAmount) =
+            budgetStore.payProject(
+                _project,
+                msg.sender,
+                _amount,
+                RECONFIGURATION_VOTING_PERIOD,
+                fee
+            );
 
-        // Get the id of the latest distributed budget for this issuer.
-        uint256 _latestDistributedBudgetId = latestDistributedBudgetId[_issuer];
+        // The amount that is overflowing from the Budget.
+        uint256 _overflow =
+            _budget.total > _budget.target
+                ? _budget.total.sub(_budget.target)
+                : 0;
 
-        // Return if the latest budget has been redistributed.
-        if (_latestDistributedBudgetId == _budget.id) return;
+        // Transfer.
+        weth.safeTransferFrom(msg.sender, address(this), _transferAmount);
 
-        // Set new latest distributed budget.
-        latestDistributedBudgetId[_issuer] = _budget.id;
+        // Take fee through the admin's own budget, minting tickets for the project paying the fee.
+        pay(admin, _amount.mul(fee).div(100), _project);
 
-        // Iterate sequentially through the project's Budgets, starting with the latest one.
-        // If the budget has already minted reserves, each previous budget is guarenteed to have also minted reserves.
-        while (_budget.id > 0 && _budget.id > _latestDistributedBudgetId) {
-            // If the budget is redistributing, it has unminted reserved tickets.
-            if (_budget._state() == Budget.State.Redistributing) {
-                // Take fee
-                uint256 _feeAmount = _budget.total.mul(fee).div(100);
-                stashed[admin] = stashed[admin].add(_feeAmount);
-
-                if (_budget.p > 0) {
-                    // The project gets the budget's project percentage, if one is specified.
-                    _printForIssuer = _printForIssuer.add(
-                        _budget._weighted(_budget.total, _budget.p)
-                    );
-                }
-                if (_budget.b < 0 && _budget.total > _budget.target) {
-                    // Give to beneficiary
-                    uint256 _bAmount =
-                        _budget.total.sub(_budget.target).mul(_budget.b).div(
-                            100
-                        );
-                    stashed[_budget.bAddress] = stashed[_budget.bAddress].add(
-                        _bAmount
-                    );
-                }
-            }
-
-            // Continue the loop with the previous Budget.
-            _budget = budgetStore.getBudget(_budget.previous);
+        if (_budget.p > 0) {
+            // The project gets the budget's project percentage, if one is specified.
+            ticketStore.print(
+                _project,
+                _project,
+                _budget._weighted(_amount, _budget.p)
+            );
         }
 
-        if (_printForIssuer > 0)
-            ticketStore.print(_issuer, _issuer, _printForIssuer);
+        // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) {
+            uint256 _contributedOverflow =
+                _amount > _overflow ? _overflow : _amount;
 
-        emit DistributeReserves(msg.sender, _issuer);
+            if (_budget.b > 0) {
+                // Give to beneficiary
+                weth.safeTransfer(
+                    _budget.bAddress,
+                    _contributedOverflow.mul(_budget.b).div(100)
+                );
+            }
+
+            // The portion of the contributed overflow that is claimable by redeeming tickets.
+            // This is the total minus the percent donated and used as a fee.
+            uint256 _claimablePortion =
+                _contributedOverflow
+                    .mul(uint256(100).sub(_budget.b).sub(fee))
+                    .div(100);
+
+            // The redeemable portion of the overflow can be deposited to earn yield.
+            depositable = depositable.add(_claimablePortion);
+
+            // Add to the raw amount claimable.
+            ticketStore.addClaimable(_budget.project, _claimablePortion);
+        }
+
+        // Mint the appropriate amount of tickets for the contributor.
+        ticketStore.print(
+            _beneficiary,
+            _budget.project,
+            _budget._weighted(_amount, uint256(100).sub(_budget.p))
+        );
+
+        emit Pay(
+            _budget.id,
+            _budget.project,
+            msg.sender,
+            _beneficiary,
+            _amount,
+            weth
+        );
+
+        return _budget.id;
     }
 }

@@ -146,7 +146,6 @@ contract BudgetStore is Store, IBudgetStore {
         @dev The msg.sender is the project of the budget.
         @param _target The cashflow target to set.
         @param _duration The duration to set, measured in seconds.
-        @param _want The token that this budget wants.
         @param _name The name of the budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
@@ -163,7 +162,6 @@ contract BudgetStore is Store, IBudgetStore {
     function configure(
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
@@ -194,7 +192,6 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.name = _name;
         _budget.target = _target;
         _budget.duration = _duration;
-        _budget.want = _want;
         _budget.discountRate = _discountRate;
         _budget.p = _p;
         _budget.b = _b;
@@ -206,7 +203,6 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.project,
             _budget.target,
             _budget.duration,
-            _budget.want,
             _budget.name,
             _budget.link,
             _budget.discountRate,
@@ -255,12 +251,17 @@ contract BudgetStore is Store, IBudgetStore {
                 : 0;
 
         if (_budget.project == _payer && _amount > _overflow) {
-            // Mark the amount of the contribution that didn't go towards overflow as tapped.
-            _budget.tapped = _budget.tapped.add(
-                _amount.sub(_overflow).mul(uint256(100).sub(_withhold)).div(100)
-            );
-            // Transfer the overflow only, since the rest has been marked as tapped.
-            if (_overflow > 0) transferAmount = _overflow;
+            // Tap the amount of the contribution that didn't go towards overflow.
+            uint256 _tappedAmount =
+                _amount.sub(_overflow).mul(uint256(100).sub(_withhold)).div(
+                    100
+                );
+
+            _budget.tapped = _budget.tapped.add(_tappedAmount);
+
+            // Transfer at least the withheld funds of the tappable amount, add all of the overflow.
+            transferAmount = _amount.sub(_tappedAmount);
+            if (_overflow > 0) transferAmount.add(_overflow);
         } else {
             transferAmount = _amount;
         }
@@ -268,12 +269,20 @@ contract BudgetStore is Store, IBudgetStore {
         budget = _budget;
     }
 
+    /** 
+      @notice Tracks a project tapping its funds.
+      @param _budgetId The budget being tapped.
+      @param _tapper Who is tapping.
+      @param _amount The amount being tapped.
+      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
+      @return amount The amount tapped.
+    */
     function tap(
         uint256 _budgetId,
         address _tapper,
         uint256 _amount,
-        uint256 _fee
-    ) external override onlyAdmin returns (Budget.Data memory) {
+        uint256 _withhold
+    ) external override onlyAdmin returns (uint256) {
         // Get a reference to the Budget being tapped.
         Budget.Data storage _budget = budgets[_budgetId];
 
@@ -284,14 +293,14 @@ contract BudgetStore is Store, IBudgetStore {
 
         // The amount being tapped must be less than the tappable amount.
         require(
-            _amount <= _budget._tappableAmount(_fee),
+            _amount <= _budget._tappableAmount(_withhold),
             "BudgetStore::tap: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the Budget's tapped amount.
         _budget.tapped = _budget.tapped.add(_amount);
 
-        return _budget;
+        return _amount;
     }
 
     // --- public transactions --- //
@@ -369,8 +378,9 @@ contract BudgetStore is Store, IBudgetStore {
         if (
             budget.id > 0 &&
             ((budget.configured.add(_votingPeriod) < block.timestamp &&
-                votes[budget.id][budget.configured][true] >
-                votes[budget.id][budget.configured][false]) ||
+                //supermajority. must have greater than 66% yays.
+                votes[budget.id][budget.configured][true].mul(3).div(4) >
+                votes[budget.id][budget.configured][false].mul(3).div(2)) ||
                 // allow if this is the first budget and it hasn't received payments.
                 (budget.number == 1 && budget.total == 0))
         ) return budget;

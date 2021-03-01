@@ -62,7 +62,6 @@ abstract contract JuiceProject is Ownable {
         @param _store The budget store to configure in.
         @param _target The new Budget target amount.
         @param _duration The new duration of your Budget.
-        @param _want The token that the budget wants.
         @param _name A name for the Budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
@@ -80,7 +79,6 @@ abstract contract JuiceProject is Ownable {
         IBudgetStore _store,
         uint256 _target,
         uint256 _duration,
-        IERC20 _want,
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
@@ -97,7 +95,6 @@ abstract contract JuiceProject is Ownable {
             _store.configure(
                 _target,
                 _duration,
-                _want,
                 _name,
                 _link,
                 _discountRate,

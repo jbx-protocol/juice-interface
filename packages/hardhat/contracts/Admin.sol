@@ -93,6 +93,4 @@ contract Admin is JuiceProject {
     {
         _juicer.setBondingCurveRate(_rate);
     }
-
-    //TODO write function to pull from Juicer.claimable
 }

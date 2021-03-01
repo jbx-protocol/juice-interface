@@ -8,6 +8,7 @@ import { Budget } from '../models/budget'
 import { Contracts } from '../models/contracts'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
+import { formatBigNum } from '../utils/formatBigNum'
 
 type ReserveAmounts = {
   adminFees: BigNumber
@@ -110,14 +111,14 @@ export default function Reserves({
         ></Switch>
       </Descriptions.Item>
       <Descriptions.Item label="Admin reserves">
-        {orEmpty(displayReserves?.adminFees?.toString())} {wantTokenName}
+        {orEmpty(formatBigNum(displayReserves?.adminFees))} {wantTokenName}
       </Descriptions.Item>
       <Descriptions.Item label="Donation reserves">
-        {orEmpty(displayReserves?.beneficiaryDonations?.toString())}{' '}
+        {orEmpty(formatBigNum(displayReserves?.beneficiaryDonations))}{' '}
         {wantTokenName}
       </Descriptions.Item>
       <Descriptions.Item label="Project owner reserves">
-        {orEmpty(displayReserves?.issuerTickets?.toString())} {ticketSymbol}
+        {orEmpty(formatBigNum(displayReserves?.issuerTickets))} {ticketSymbol}
       </Descriptions.Item>
     </Descriptions>
   )

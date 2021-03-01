@@ -69,11 +69,15 @@ export default function Navbar({
         ) : null}
         {
           <Menu.Item key="faq">
-            {menuItem('FAQ', undefined, () =>
-              document
-                .getElementById('faq')
-                ?.scrollIntoView({ behavior: 'smooth' }),
-            )}
+            {menuItem('FAQ', undefined, () => {
+              window.location.hash = '/'
+
+              setTimeout(() => {
+                document
+                  .getElementById('faq')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }, 0)
+            })}
           </Menu.Item>
         }
         {

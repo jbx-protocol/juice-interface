@@ -19,6 +19,7 @@ import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
 import { orEmpty } from '../utils/orEmpty'
 import ReconfigureBudget from './ReconfigureBudget'
+import { formatBigNum } from '../utils/formatBigNum'
 
 export default function OwnerFinances({
   currentBudget,
@@ -78,8 +79,6 @@ export default function OwnerFinances({
     args: [userAddress, contracts?.Juicer?.address],
     valueDidChange: bigNumbersDiff,
   })
-
-  console.log({ allowance: allowance?.toString() })
 
   const isOwner = owner === userAddress
 
@@ -155,7 +154,7 @@ export default function OwnerFinances({
                   onChange={e => updatePayAmount(parseFloat(e.target.value))}
                 />
                 <Button type="primary" onClick={pay} disabled={!payAmount}>
-                  Pay owner
+                  Pay project
                 </Button>
               </Space>
               {addressExists(ticketAddress) ? (
@@ -167,10 +166,11 @@ export default function OwnerFinances({
                   }}
                 >
                   <div>
-                    {orEmpty(ownerTickets?.toString())} {ticketSymbol} for owner
+                    {orEmpty(formatBigNum(ownerTickets))} {ticketSymbol} for
+                    owner
                   </div>
                   <div>
-                    {orEmpty(payerTickets?.toString())} {ticketSymbol} for you
+                    {orEmpty(formatBigNum(payerTickets))} {ticketSymbol} for you
                   </div>
                 </div>
               ) : null}

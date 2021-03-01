@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import React, { useState } from 'react'
-import { ContractName } from '../constants/contract-name'
 
+import { ContractName } from '../constants/contract-name'
 import { colors } from '../constants/styles/colors'
 import useContractReader, { ContractUpdateOn } from '../hooks/ContractReader'
 import { Budget } from '../models/budget'
@@ -11,6 +11,7 @@ import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
 import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
+import { formatBigNum } from '../utils/formatBigNum'
 import TooltipLabel from './TooltipLabel'
 
 export default function Rewards({
@@ -203,7 +204,7 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            {totalOverflow?.toString() ?? 0} {wantTokenName}
+            {formatBigNum(totalOverflow) ?? 0} {wantTokenName}
           </div>
         )}
       />
@@ -225,12 +226,11 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {iouBalance?.toString() ?? 0} {iouSymbol}
+                {formatBigNum(iouBalance) ?? 0} {iouSymbol}
               </div>
               {subText(
-                `${share ?? 0}% of ${ticketSupply
-                  ?.add(iouSupply ?? 0)
-                  .toString() ?? 0} ${iouSymbol} in circulation`,
+                `${share ?? 0}% of ${formatBigNum(totalSupply) ??
+                  0} ${iouSymbol} in circulation`,
               )}
               {!addressExists(ticketAddress) ? (
                 isOwner ? (
@@ -267,10 +267,10 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {ticketsBalance?.toString() ?? 0} {ticketSymbol}
+                {formatBigNum(ticketsBalance) ?? 0} {ticketSymbol}
               </div>
               {subText(
-                `${share ?? 0}% of ${ticketSupply?.toString() ??
+                `${share ?? 0}% of ${formatBigNum(ticketSupply) ??
                   0} ${ticketSymbol} in circulation`,
               )}
               {!addressExists(ticketAddress) ? (
@@ -298,7 +298,7 @@ export default function Rewards({
               <Input
                 type="number"
                 placeholder="0"
-                max={ticketsBalance?.toString()}
+                max={formatBigNum(ticketsBalance)}
                 onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
               />
               <Button type="primary" onClick={redeem} loading={loadingRedeem}>

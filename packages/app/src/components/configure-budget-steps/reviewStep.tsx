@@ -9,6 +9,7 @@ import { TicketsFormFields } from '../../models/forms-fields/tickets-form'
 import { Step } from '../../models/step'
 import { addressExists } from '../../utils/addressExists'
 import { orEmpty } from '../../utils/orEmpty'
+import { formatBigNum } from '../../utils/formatBigNum'
 
 export function reviewStep({
   ticketsForm,
@@ -49,7 +50,9 @@ export function reviewStep({
       : BigNumber.from(target)
 
     return feePercent
-      ? `${_target.toString()} (+${_target.mul(feePercent).div(100)})`
+      ? `${formatBigNum(_target)} (+${formatBigNum(
+          _target.mul(feePercent).div(100),
+        )})`
       : undefined
   }
 
@@ -216,7 +219,7 @@ export function reviewStep({
       'By default, Juice will internally keep track of who has sent you payments so that they can claim your overflow.',
       "If you instead want Juice to track payments by distributing ERC-20 tickets of yours, you'll first have to submit a transaction issuing your tickets.",
       "This isn't required, and can be done later. The advantage of using ERC-20 tickets is that people can trade and stake their right to claim your overflow outside of the Juice ecosystem.",
-      "Choose your ticket name and ticker symbol somewhat wisely, it'll be tricky to get it changed later."
+      "Choose your ticket name and ticker symbol somewhat wisely, it'll be tricky to get it changed later.",
     ],
   }
 }

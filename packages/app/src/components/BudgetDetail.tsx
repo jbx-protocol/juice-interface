@@ -14,6 +14,7 @@ import { Transactor } from '../models/transactor'
 import { addressExists } from '../utils/addressExists'
 import { bigNumbersDiff } from '../utils/bigNumbersDiff'
 import { erc20Contract } from '../utils/erc20Contract'
+import { formatBigNum } from '../utils/formatBigNum'
 import { orEmpty } from '../utils/orEmpty'
 import TooltipLabel from './TooltipLabel'
 
@@ -154,12 +155,12 @@ export default function BudgetDetail({
         ></Progress>
         <span style={{ marginLeft: gutter }}>
           <span style={{ fontWeight: 600 }}>
-            {orEmpty(budget.total.toString())}
+            {orEmpty(formatBigNum(budget.total))}
           </span>
-          /{budget.target.toString()}{' '}
+          /{formatBigNum(budget.target)}{' '}
           {surplus.gt(0) ? (
             <span style={{ color: colors.secondary, fontWeight: 600 }}>
-              +{surplus.toString()}
+              +{formatBigNum(surplus)}
             </span>
           ) : null}{' '}
           {wantTokenName}
@@ -190,7 +191,7 @@ export default function BudgetDetail({
               />
             }
           >
-            {budget.tapped.toString()} {wantTokenName}
+            {formatBigNum(budget.tapped)} {wantTokenName}
           </Descriptions.Item>
         )}
 
@@ -211,7 +212,7 @@ export default function BudgetDetail({
                 alignItems: 'center',
               }}
             >
-              {tappableAmount?.toString() ?? '0'} {wantTokenName}
+              {formatBigNum(tappableAmount) ?? '0'} {wantTokenName}
               {isOwner && tappableAmount?.gt(0) ? (
                 <div>
                   <Button
@@ -305,7 +306,7 @@ export default function BudgetDetail({
 
           {!addressExists(budget.bAddress) ? null : (
             <Descriptions.Item label="Beneficiary address" span={2}>
-              {budget.bAddress.toString()}
+              {budget.bAddress}
             </Descriptions.Item>
           )}
 

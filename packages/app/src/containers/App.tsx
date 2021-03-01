@@ -41,8 +41,6 @@ function App() {
     ],
   })
 
-  console.log({ userAddress, budget })
-
   console.log('User:', userAddress, userProvider)
 
   return (

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Contracts } from '../../models/contracts'
 import { Transactor } from '../../models/transactor'
 import { erc20Contract } from '../../utils/erc20Contract'
+import { formatBigNum } from '../../utils/formatBigNum'
 
 export default function ApproveSpend({
   wantTokenAddress,
@@ -41,8 +42,6 @@ export default function ApproveSpend({
   function approve() {
     if (!transactor || !contracts || !contract) return
 
-    console.log({ asdf: approveAmount?.toString() })
-
     transactor(contract, 'approve', [
       contracts.Juicer?.address,
       approveAmount?.toHexString(),
@@ -62,7 +61,7 @@ export default function ApproveSpend({
     >
       <Descriptions>
         <Descriptions.Item label="Current allowance">
-          {allowance?.toString()} {wantTokenSymbol}
+          {formatBigNum(allowance)} {wantTokenSymbol}
         </Descriptions.Item>
       </Descriptions>
       <Input

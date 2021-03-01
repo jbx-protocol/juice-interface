@@ -5,6 +5,7 @@ import React from 'react'
 import { Budget } from '../../models/budget'
 import { Contracts } from '../../models/contracts'
 import { Transactor } from '../../models/transactor'
+import { formatBigNum } from '../../utils/formatBigNum'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -53,13 +54,13 @@ export default function ConfirmPayOwnerModal({
       <Descriptions column={1} bordered>
         <Descriptions.Item label="Project">{budget?.project}</Descriptions.Item>
         <Descriptions.Item label="Pay amount">
-          {amount?.toString()} {wantTokenSymbol}
+          {formatBigNum(amount)} {wantTokenSymbol}
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for you">
-          {receivedTickets?.toString()} {ticketSymbol}
+          {formatBigNum(receivedTickets)} {ticketSymbol}
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for owner">
-          {ownerTickets?.toString()} {ticketSymbol}
+          {formatBigNum(ownerTickets)} {ticketSymbol}
         </Descriptions.Item>
       </Descriptions>
     </Modal>

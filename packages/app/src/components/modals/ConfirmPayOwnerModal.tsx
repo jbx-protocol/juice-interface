@@ -1,31 +1,23 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Modal } from 'antd'
-import React from 'react'
-
-import { Budget } from '../../models/budget'
-import { Contracts } from '../../models/contracts'
-import { Transactor } from '../../models/transactor'
-import { formatBigNum } from '../../utils/formatBigNum'
+import { UserContext } from 'contexts/userContext'
+import { Budget } from 'models/budget'
+import { useContext } from 'react'
+import { formatBigNum } from 'utils/formatBigNum'
 
 export default function ConfirmPayOwnerModal({
   visible,
   budget,
-  transactor,
-  contracts,
   amount,
   receivedTickets,
   ownerTickets,
   wantTokenSymbol,
   ticketSymbol,
-  userAddress,
   onOk,
   onCancel,
 }: {
   visible?: boolean
   budget?: Budget
-  transactor?: Transactor
-  contracts?: Contracts
-  userAddress?: string
   wantTokenSymbol?: string
   ticketSymbol?: string
   amount?: BigNumber
@@ -34,6 +26,8 @@ export default function ConfirmPayOwnerModal({
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const { contracts, transactor, userAddress } = useContext(UserContext)
+
   function pay() {
     if (!contracts || !budget || !transactor) return
 

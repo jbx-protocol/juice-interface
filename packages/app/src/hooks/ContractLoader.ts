@@ -1,10 +1,9 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { ContractName } from 'constants/contract-name'
+import { Contracts } from 'models/contracts'
+import { NetworkName } from 'models/network-name'
 import { useEffect, useState } from 'react'
-
-import { ContractName } from '../constants/contract-name'
-import { Contracts } from '../models/contracts'
-import { NetworkName } from '../models/network-name'
 
 export function useContractLoader(
   provider?: JsonRpcProvider,

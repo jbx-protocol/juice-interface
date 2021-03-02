@@ -1,4 +1,4 @@
-import { NetworkName } from '../models/network-name'
+import { NetworkName } from 'models/network-name'
 
 const infuraId = process.env.REACT_APP_INFURA_ID
 

@@ -1,21 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Descriptions, Input, Modal } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { UserContext } from 'contexts/userContext'
+import { useContext, useEffect, useState } from 'react'
+import { erc20Contract } from 'utils/erc20Contract'
+import { formatBigNum } from 'utils/formatBigNum'
 
-import { Contracts } from '../../models/contracts'
-import { Transactor } from '../../models/transactor'
-import { erc20Contract } from '../../utils/erc20Contract'
-import { formatBigNum } from '../../utils/formatBigNum'
-
-export default function ApproveSpend({
+export default function ApproveSpendModal({
   wantTokenAddress,
   wantTokenSymbol,
   visible,
-  transactor,
-  contracts,
   initialAmount,
-  userProvider,
   allowance,
   onOk,
   onCancel,
@@ -23,14 +17,13 @@ export default function ApproveSpend({
   wantTokenAddress?: string
   wantTokenSymbol?: string
   visible?: boolean
-  transactor?: Transactor
-  contracts?: Contracts
   initialAmount?: BigNumber
-  userProvider?: JsonRpcProvider
   allowance?: BigNumber
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const { userProvider, transactor, contracts } = useContext(UserContext)
+
   const [approveAmount, setApproveAmount] = useState<BigNumber>()
 
   const contract = erc20Contract(wantTokenAddress, userProvider?.getSigner())
@@ -65,7 +58,7 @@ export default function ApproveSpend({
         </Descriptions.Item>
       </Descriptions>
       <Input
-        value={initialAmount?.toString()}
+        defaultValue={initialAmount?.toString()}
         onChange={e => setApproveAmount(BigNumber.from(e.target.value || 0))}
       />
     </Modal>

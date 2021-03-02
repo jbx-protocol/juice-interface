@@ -9,8 +9,7 @@ import {
 } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import Notify, { InitOptions } from 'bnc-notify'
-
-import { Transactor, TransactorOptions } from '../models/transactor'
+import { Transactor, TransactorOptions } from 'models/transactor'
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify

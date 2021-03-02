@@ -1,7 +1,5 @@
 import { Form, FormProps, Input } from 'antd'
-import React from 'react'
-
-import { BudgetFormFields } from '../../models/forms-fields/budget-form'
+import { BudgetFormFields } from 'models/forms-fields/budget-form'
 
 export default function BudgetForm({
   props,

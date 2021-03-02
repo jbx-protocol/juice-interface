@@ -1,7 +1,5 @@
 import { Form, FormProps, Input } from 'antd'
-import React from 'react'
-
-import { TicketsFormFields } from '../../models/forms-fields/tickets-form'
+import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 
 export default function TicketsForm({
   props,

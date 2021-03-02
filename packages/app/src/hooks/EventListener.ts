@@ -1,8 +1,7 @@
 import { JsonRpcProvider, Listener } from '@ethersproject/providers'
+import { ContractName } from 'constants/contract-name'
+import { Contracts } from 'models/contracts'
 import { useEffect, useState } from 'react'
-
-import { ContractName } from '../constants/contract-name'
-import { Contracts } from '../models/contracts'
 
 export default function useEventListener({
   contracts,

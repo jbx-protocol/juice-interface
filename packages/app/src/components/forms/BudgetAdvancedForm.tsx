@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd'
 import { FormProps } from 'antd/lib/form/Form'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { AdvancedBudgetFormFields } from '../../models/forms-fields/advanced-budget-form'
 
@@ -67,15 +67,15 @@ export default function BudgetAdvancedForm({
         label="Discount rate"
         rules={[{ required: true }]}
       >
-          <Input
-            className="align-end"
-            suffix="%"
-            type="number"
-            min={95}
-            max={100}
-            placeholder="97"
-            disabled={disabled}
-          />
+        <Input
+          className="align-end"
+          suffix="%"
+          type="number"
+          min={95}
+          max={100}
+          placeholder="97"
+          disabled={disabled}
+        />
       </Form.Item>
     </Form>
   )

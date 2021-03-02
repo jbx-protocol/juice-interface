@@ -1,24 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
-import React, { useState } from 'react'
+import { ContractName } from 'constants/contract-name'
+import { padding } from 'constants/styles/padding'
+import { UserContext } from 'contexts/userContext'
+import useContractReader from 'hooks/ContractReader'
+import { useContext, useState } from 'react'
+import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { erc20Contract } from 'utils/erc20Contract'
 
-import { ContractName } from '../constants/contract-name'
-import { padding } from '../constants/styles/padding'
-import useContractReader from '../hooks/ContractReader'
-import { Contracts } from '../models/contracts'
-import { Transactor } from '../models/transactor'
-import { erc20Contract } from '../utils/erc20Contract'
-import { bigNumbersDiff } from '../utils/bigNumbersDiff'
+export default function Gimme() {
+  const { userAddress, contracts, transactor } = useContext(UserContext)
 
-export default function Gimme({
-  transactor,
-  contracts,
-  userAddress,
-}: {
-  transactor?: Transactor
-  contracts?: Contracts
-  userAddress?: string
-}) {
   const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
 

@@ -4,7 +4,7 @@ import { Budget } from 'models/budget'
 import { CSSProperties } from 'react'
 
 import ConfigureBudget from '../ConfigureBudget'
-import Tweets from '../Tweets'
+import Tweets from './Tweets'
 import Faq from './Faq'
 import Footer from './Footer'
 

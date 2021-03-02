@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { TxGasOption } from 'models/tx-gas-option'
 import { useState } from 'react'
-import { TxGasOption } from './../models/tx-gas-option'
+
 import { usePoller } from './Poller'
 
 export function useGasPrice(speed: TxGasOption) {
@@ -16,7 +17,7 @@ export function useGasPrice(speed: TxGasOption) {
       .catch(error => console.log('Loading gas price', error))
   }
 
-  usePoller(loadGasPrice, [], 30000)
+  usePoller(loadGasPrice, [speed], 30000)
 
   return gasPrice
 }

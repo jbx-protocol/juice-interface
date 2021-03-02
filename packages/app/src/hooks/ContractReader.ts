@@ -1,9 +1,9 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
-import { useEffect, useState } from 'react'
+import { ContractName } from 'constants/contract-name'
+import { localProvider } from 'constants/local-provider'
+import { Contracts } from 'models/contracts'
+import { useCallback, useEffect, useState } from 'react'
 
-import { ContractName } from '../constants/contract-name'
-import { localProvider } from '../constants/local-provider'
-import { Contracts } from '../models/contracts'
 import { useContractLoader } from './ContractLoader'
 
 export type ContractUpdateOn = {
@@ -23,68 +23,90 @@ export default function useContractReader<V>({
   updateOn,
   valueDidChange,
 }: {
-  contract: ContractConfig
-  functionName: string
+  contract?: ContractConfig
+  functionName?: string
   args?: unknown[]
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
   updateOn?: ContractUpdateOn
   valueDidChange?: (a?: V, b?: V) => boolean
 }) {
-  const [value, setValue] = useState<V>()
-
-  const listener = (x: any) => getValue()
+  const [value, setValue] = useState<V | undefined>()
 
   const contracts = useContractLoader(localProvider, true)
 
+  // Allow properly storing array members in dependencies array
+  const updateOnRef: string | undefined = updateOn?.reduce((acc, curr) => {
+    if (!curr) return acc
+    return acc + typeof curr.contract === 'string'
+      ? JSON.stringify(curr)
+      : JSON.stringify(curr.eventName) + JSON.stringify(curr.topics)
+  }, '')
+  const argsRef: string | undefined = JSON.stringify(args)
+
+  const _valueDidChange = useCallback(
+    valueDidChange ?? ((a?: V, b?: V) => a !== b),
+    [valueDidChange],
+  )
+
   useEffect(() => {
+    async function getValue() {
+      const readContract = contractToRead(contract, contracts)
+
+      if (!readContract || !functionName) return
+
+      try {
+        const result = await readContract[functionName](...(args ?? []))
+
+        const newValue = formatter ? formatter(result) : result
+
+        if (_valueDidChange(newValue, value)) {
+          setValue(newValue)
+
+          if (callback) callback(newValue)
+        }
+      } catch (err) {
+        console.log('Read contract >', functionName, { args }, { err })
+        setValue(formatter ? formatter(undefined) : undefined)
+        if (callback) callback(undefined)
+      }
+    }
+
     getValue()
 
-    if (!updateOn) return
+    const listener = (x: any) => getValue()
 
     let subscriptions: { contract: Contract; filter: EventFilter }[] = []
 
-    try {
-      // Subscribe listener to updateOn events
-      updateOn.forEach(u => {
-        const _contract = contractToRead(u.contract, contracts)
+    if (updateOn) {
+      try {
+        // Subscribe listener to updateOn events
+        updateOn.forEach(u => {
+          const _contract = contractToRead(u.contract, contracts)
 
-        if (!u.eventName || !_contract) return
+          if (!u.eventName || !_contract) return
 
-        const filter = _contract.filters[u.eventName](...(u.topics ?? []))
-        _contract?.on(filter, listener)
-        subscriptions.push({ contract: _contract, filter })
-      })
-    } catch (error) {
-      console.log('Read contract >', { functionName, error })
+          const filter = _contract.filters[u.eventName](...(u.topics ?? []))
+          _contract?.on(filter, listener)
+          subscriptions.push({ contract: _contract, filter })
+        })
+      } catch (error) {
+        console.log('Read contract >', { functionName, error })
+      }
     }
 
     return () => subscriptions.forEach(s => s.contract.off(s.filter, listener))
-  }, [contract, contracts, functionName, ...(args ? (args as []) : [])])
-
-  async function getValue() {
-    const readContract = contractToRead(contract, contracts)
-
-    if (!readContract) return
-
-    try {
-      const newValue = await readContract[functionName](...(args ?? []))
-
-      const result = formatter ? formatter(newValue) : (newValue as V)
-
-      const _valueDidChange = valueDidChange ?? ((a?: V, b?: V) => a !== b)
-
-      if (_valueDidChange(result, value)) {
-        setValue(result)
-
-        if (callback) callback(result)
-      }
-    } catch (err) {
-      console.log('Read contract >', functionName, { args }, { err })
-      setValue(formatter ? formatter(undefined) : undefined)
-      if (callback) callback(undefined)
-    }
-  }
+  }, [
+    contract,
+    contracts,
+    functionName,
+    updateOnRef,
+    _valueDidChange,
+    value,
+    argsRef,
+    callback,
+    formatter,
+  ])
 
   return value
 }

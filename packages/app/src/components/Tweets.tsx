@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd'
-import React, { CSSProperties, useEffect } from 'react'
+import { CSSProperties, useEffect } from 'react'
 
 export default function Tweets() {
   const embedClassName = 'twitter-embed'

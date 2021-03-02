@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
 
-import { NetworkName } from '../models/network-name'
+import { NetworkName } from 'models/network-name'
 import { NETWORKS } from './networks'
 
 const networkName: NetworkName =

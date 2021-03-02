@@ -1,7 +1,7 @@
 import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers'
 import BurnerProvider from 'burner-provider'
 import { useMemo } from 'react'
-import { NetworkName } from '../models/network-name'
+import { NetworkName } from 'models/network-name'
 
 export function useUserProvider(
   injectedProvider?: Web3Provider,

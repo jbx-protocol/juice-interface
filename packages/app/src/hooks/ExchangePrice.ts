@@ -1,8 +1,8 @@
 import { Fetcher, Route, Token, WETH } from '@uniswap/sdk'
+import { mainnetProvider } from 'constants/mainnet-provider'
+import { DAI } from 'constants/tokens/dai'
 import { useState } from 'react'
 
-import { mainnetProvider } from '../constants/mainnet-provider'
-import { DAI } from '../constants/tokens/dai'
 import { usePoller } from './Poller'
 
 export function useExchangePrice() {

@@ -23,22 +23,28 @@ library Budget {
         address project;
         // The number of this budget for the project.
         uint256 number;
-        // The ID of the project's Budget that came before this one.
+        // The ID of the project's Budget that came before this one. 0 if none.
         uint256 previous;
+        // The ID of the project's Budget that came after this one. 0 if none.
+        uint256 next;
         // The name of the budget.
         string name;
         // A link that points to a justification for these parameters.
         string link;
         // The amount that this Budget is targeting.
         uint256 target;
+        // The currency that the target is measured in.
+        uint256 currency;
         // The running amount that's been contributed to sustaining this Budget.
         uint256 total;
         // The time when this Budget will become active.
         uint256 start;
         // The number of seconds until this Budget's surplus is redistributed.
         uint256 duration;
-        // The amount of available funds that have been tapped by the project.
-        uint256 tapped;
+        // The amount of available funds that have been tapped by the project in terms of the currency.
+        uint256 tappedTarget;
+        // The amount of available funds that have been tapped by the project in terms of the currency.
+        uint256 tappedTotal;
         // The percentage of tickets to reserve for the project once the Budget has expired.
         uint256 p;
         // The percentage of overflow to reserve for a specified beneficiary once the Budget has expired.
@@ -64,6 +70,7 @@ library Budget {
     function _basedOn(Data storage _self, Data memory _baseBudget) internal {
         _self.link = _baseBudget.link;
         _self.target = _baseBudget.target;
+        _self.currency = _baseBudget.currency;
         _self.duration = _baseBudget.duration;
         _self.project = _baseBudget.project;
         _self.name = _baseBudget.name;
@@ -121,12 +128,15 @@ library Budget {
                 _self.project,
                 _self.number.add(1),
                 _self.id,
+                0,
                 _self.name,
                 _self.link,
                 _self.target,
+                _self.currency,
                 0,
                 _determineNextStart(_self),
                 _self.duration,
+                0,
                 0,
                 _self.p,
                 _self.b,
@@ -147,28 +157,9 @@ library Budget {
     }
 
     /** 
-        @notice Returns the amount available for the given Budget's project to tap in to.
-        @param _self The Budget to make the calculation for.
-        @param _withhold The percent of the total to withhold from the total.
-        @return The resulting amount.
-    */
-    function _tappableAmount(Data memory _self, uint256 _withhold)
-        internal
-        pure
-        returns (uint256)
-    {
-        uint256 _available = Math.min(_self.target, _self.total);
-        if (_available == 0) return 0;
-        return
-            _available.mul(uint256(100).sub(_withhold)).div(100).sub(
-                _self.tapped
-            );
-    }
-
-    /** 
         @notice The weight that a certain amount carries in this Budget.
         @param _self The Budget to get the weight from.
-        @param _amount The amount to get the weight of.
+        @param _amount The amount to get the weight of in the same currency as the budget's currency.
         @param _percentage The percentage to account for.
         @return state The weighted amount.
     */

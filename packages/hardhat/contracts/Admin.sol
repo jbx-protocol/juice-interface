@@ -3,6 +3,7 @@ pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 import "./interfaces/IAccessControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
@@ -92,5 +93,19 @@ contract Admin is JuiceProject {
         onlyOwner
     {
         _juicer.setBondingCurveRate(_rate);
+    }
+
+    /**
+        @notice Adds a price feed to a budget store.
+        @param _budgetStore The budget store to add a price feed to.
+        @param _priceFeed The price feed to add.
+        @param _currency The currency the price feed is for.
+    */
+    function addPriceFeed(
+        IBudgetStore _budgetStore,
+        AggregatorV3Interface _priceFeed,
+        uint256 _currency
+    ) external onlyOwner {
+        _budgetStore.addPriceFeed(_priceFeed, _currency);
     }
 }

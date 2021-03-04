@@ -9,18 +9,21 @@ import "./IOverflowYielder.sol";
 interface IBudgetController {
     event Pay(
         uint256 indexed budgetId,
-        address indexed owner,
+        address indexed project,
         address indexed payer,
         address beneficiary,
         uint256 amount,
-        IERC20 token
+        uint256 currencyConvertedAmount,
+        uint256 currency
     );
 
     event Tap(
         uint256 indexed budgetId,
-        address indexed owner,
+        address indexed project,
         address indexed beneficiary,
-        uint256 amount
+        uint256 amount,
+        uint256 currency,
+        uint256 tappedAmount
     );
 
     function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
@@ -34,7 +37,9 @@ interface IBudgetController {
     function tap(
         uint256 _budgetId,
         uint256 _amount,
-        address _beneficiary
+        uint256 _currency,
+        address _beneficiary,
+        uint256 _minReturnedEth
     ) external;
 }
 

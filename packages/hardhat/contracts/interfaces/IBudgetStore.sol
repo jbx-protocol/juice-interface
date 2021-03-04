@@ -2,6 +2,8 @@
 pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
+import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+
 import "./IStore.sol";
 import "../libraries/Budget.sol";
 
@@ -10,6 +12,7 @@ interface IBudgetStore is IStore {
         uint256 indexed budgetId,
         address indexed owner,
         uint256 indexed target,
+        uint256 currency,
         uint256 duration,
         string name,
         string link,
@@ -20,13 +23,6 @@ interface IBudgetStore is IStore {
     );
 
     function latestBudgetId(address _owner) external returns (uint256);
-
-    function tap(
-        uint256 _budgetId,
-        address _tapper,
-        uint256 _amount,
-        uint256 _withhold
-    ) external returns (uint256);
 
     function votes(
         uint256 _budgetId,
@@ -39,6 +35,10 @@ interface IBudgetStore is IStore {
         uint256 _configured,
         address _voter
     ) external returns (uint256);
+
+    function priceFeeds(uint256 _currency)
+        external
+        returns (AggregatorV3Interface);
 
     function budgetCount() external returns (uint256);
 
@@ -69,6 +69,7 @@ interface IBudgetStore is IStore {
 
     function configure(
         uint256 _target,
+        uint256 _currency,
         uint256 _duration,
         string calldata _name,
         string calldata _link,
@@ -79,12 +80,30 @@ interface IBudgetStore is IStore {
     ) external returns (uint256 id);
 
     function payProject(
-        address _owner,
-        address _payer,
+        address _project,
         uint256 _amount,
-        uint256 _votingPeriod,
+        uint256 _votingPeriod
+    )
+        external
+        returns (
+            Budget.Data memory budget,
+            uint256 transferAmount,
+            uint256 overflow
+        );
+
+    function tap(
+        uint256 _budgetId,
+        address _tapper,
+        uint256 _amount,
+        uint256 _currency,
         uint256 _withhold
-    ) external returns (Budget.Data memory budget, uint256 transferAmount);
+    )
+        external
+        returns (
+            Budget.Data memory budget,
+            uint256 ethAmount,
+            uint256 overflow
+        );
 
     function addVotes(
         uint256 _budgetId,
@@ -93,4 +112,7 @@ interface IBudgetStore is IStore {
         address _voter,
         uint256 _amount
     ) external;
+
+    function addPriceFeed(AggregatorV3Interface _priceFeed, uint256 _currency)
+        external;
 }

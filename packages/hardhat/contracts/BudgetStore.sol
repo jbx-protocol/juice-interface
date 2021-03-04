@@ -145,6 +145,22 @@ contract BudgetStore is Store, IBudgetStore {
             );
     }
 
+    /**
+      @notice The amount of tickets that will be issued as a result of a payment of the specified amount to the specified budget.
+      @param _budgetId The ID of the budget to get the ticket value of.
+      @param _amount The amount to get the ticket value of in the currency of the budget.
+      @param _percent The percent of the total weight to get a rate for.
+      @return The amount of tickets.
+    */
+    function getWeightedRate(
+        uint256 _budgetId,
+        uint256 _amount,
+        uint256 _percent
+    ) external view override returns (uint256) {
+        Budget.Data memory _budget = budgets[_budgetId];
+        return _budget._weighted(_amount, _percent);
+    }
+
     // --- external transactions --- //
 
     constructor() public {}

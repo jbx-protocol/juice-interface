@@ -67,6 +67,12 @@ interface IBudgetStore is IStore {
         view
         returns (uint256);
 
+    function getWeightedRate(
+        uint256 _budgetId,
+        uint256 _amount,
+        uint256 _percent
+    ) external view returns (uint256);
+
     function configure(
         uint256 _target,
         uint256 _currency,

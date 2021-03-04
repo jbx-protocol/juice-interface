@@ -124,14 +124,19 @@ abstract contract JuiceProject is Ownable {
             _juicer.redeem(_issuer, _amount, _minReturn, address(this));
 
         // Surplus goes back to the issuer.
-        _juicer.pay(address(this), _returnAmount, _issuer);
+        _juicer.pay(
+            address(this),
+            _returnAmount,
+            _issuer,
+            "JuiceProject::redeemTicketsAndFund: REGENERATE"
+        );
     }
 
     /** 
       @notice Taps the funds available.
       @param _budgetId The ID of the Budget to tap.
       @param _amount The amount to tap.
-        @param _currency The currency to tap.
+      @param _currency The currency to tap.
       @param _beneficiary The address to transfer the funds to.
       @param _minReturnedETH The minimum number of Eth that the amount should be valued at.
     */
@@ -182,6 +187,11 @@ abstract contract JuiceProject is Ownable {
         uint256 _amount,
         address _from
     ) internal {
-        _juicer.pay(address(this), _amount, _from);
+        _juicer.pay(
+            address(this),
+            _amount,
+            _from,
+            "JuiceProject::takeFee: FEE"
+        );
     }
 }

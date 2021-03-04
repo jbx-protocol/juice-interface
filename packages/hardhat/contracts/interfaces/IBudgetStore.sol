@@ -88,7 +88,8 @@ interface IBudgetStore is IStore {
     function payProject(
         address _project,
         uint256 _amount,
-        uint256 _votingPeriod
+        uint256 _votingPeriod,
+        uint256 _withhold
     )
         external
         returns (

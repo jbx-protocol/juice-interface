@@ -49,6 +49,7 @@ contract Juicer is IJuicer {
         _;
         unlocked = 1;
     }
+
     modifier onlyAdmin() {
         require(msg.sender == admin, "Juicer: UNAUTHORIZED");
         _;
@@ -77,7 +78,7 @@ contract Juicer is IJuicer {
     /// @notice The contract that puts overflow to work.
     IOverflowYielder public override overflowYielder;
 
-    /// @notice The amount of tokens that are currently depositable.
+    /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
     /// @notice The percent fee the Juice project takes from overflow.
@@ -155,40 +156,6 @@ contract Juicer is IJuicer {
         ticketStore = _ticketStore;
         fee = _fee;
         weth = _weth;
-    }
-
-    /**
-      @notice The amount of tickets that will be issued as a result of a payment of the specified amount to the specified budget.
-      @param _budgetId The ID of the budget to get the ticket value of.
-      @param _amount The amount to get the ticket value of.
-      @return The amount of tickets.
-    */
-    // TODO move to budget store and use chainlink.
-    function getTicketRate(uint256 _budgetId, uint256 _amount)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-        return _budget._weighted(_amount, uint256(100).sub(_budget.p));
-    }
-
-    /**
-      @notice The amount of tickets that will be reserved for the project as a result of a payment of the specified amount to the specified budget.
-      @param _budgetId The ID of the budget to get the ticket value of.
-      @param _amount The amount to get the ticket value of.
-      @return The amount of tickets.
-    */
-    // TODO move to budget store and use chainlink.
-    function getReservedTicketRate(uint256 _budgetId, uint256 _amount)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-        return _budget._weighted(_amount, _budget.p);
     }
 
     /**
@@ -465,12 +432,14 @@ contract Juicer is IJuicer {
         @param _project The project of the budget to contribute funds to.
         @param _amount Amount of the contribution in ETH. Sent as 10E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
+        @param _note A note that will be included in the published event.
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function pay(
         address _project,
         uint256 _amount,
-        address _beneficiary
+        address _beneficiary,
+        string memory _note
     ) public override lock returns (uint256) {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
@@ -491,7 +460,8 @@ contract Juicer is IJuicer {
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        if (_project != admin) pay(admin, _amount.mul(fee).div(100), _project);
+        if (_project != admin)
+            pay(admin, _amount.mul(fee).div(100), _project, "Juicer::pay: FEE");
 
         if (_budget.p > 0) {
             // The project gets the budget's project percentage, if one is specified.
@@ -512,6 +482,9 @@ contract Juicer is IJuicer {
             )
         );
 
+        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
+
         emit Pay(
             _budget.id,
             _budget.project,
@@ -519,11 +492,9 @@ contract Juicer is IJuicer {
             _beneficiary,
             _amount,
             _covertedCurrencyAmount,
-            _budget.currency
+            _budget.currency,
+            _note
         );
-
-        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
-        if (_overflow > 0) _addOverflow(_budget, _overflow);
 
         return _budget.id;
     }

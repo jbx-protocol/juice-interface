@@ -14,7 +14,8 @@ interface IBudgetController {
         address beneficiary,
         uint256 amount,
         uint256 currencyConvertedAmount,
-        uint256 currency
+        uint256 currency,
+        string note
     );
 
     event Tap(
@@ -31,7 +32,8 @@ interface IBudgetController {
     function pay(
         address _owner,
         uint256 _amount,
-        address _beneficiary
+        address _beneficiary,
+        string memory _note
     ) external returns (uint256 budgetId);
 
     function tap(
@@ -97,16 +99,6 @@ interface IJuicer is IBudgetController, ITicketsController {
     function getOverflow(address _issuer) external view returns (uint256);
 
     function getTotalOverflow() external view returns (uint256);
-
-    function getTicketRate(uint256 _budgetId, uint256 _amount)
-        external
-        view
-        returns (uint256);
-
-    function getReservedTicketRate(uint256 _budgetId, uint256 _amount)
-        external
-        view
-        returns (uint256);
 
     function setAdmin(address _admin) external;
 

@@ -35,7 +35,7 @@ library Budget {
         uint256 target;
         // The currency that the target is measured in.
         uint256 currency;
-        // The running amount that's been contributed to sustaining this Budget.
+        // The running amount that's been paid to this Budget.
         uint256 total;
         // The time when this Budget will become active.
         uint256 start;

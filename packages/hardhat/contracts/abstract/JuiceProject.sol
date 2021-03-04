@@ -61,6 +61,7 @@ abstract contract JuiceProject is Ownable {
         @notice This is how the Budget is configured, and reconfiguration over time.
         @param _store The budget store to configure in.
         @param _target The new Budget target amount.
+        @param _currency The currency of the target.
         @param _duration The new duration of your Budget.
         @param _name A name for the Budget.
         @param _link A link to information about the Budget.
@@ -78,6 +79,7 @@ abstract contract JuiceProject is Ownable {
     function configure(
         IBudgetStore _store,
         uint256 _target,
+        uint256 _currency,
         uint256 _duration,
         string calldata _name,
         string calldata _link,
@@ -94,6 +96,7 @@ abstract contract JuiceProject is Ownable {
         return
             _store.configure(
                 _target,
+                _currency,
                 _duration,
                 _name,
                 _link,
@@ -128,15 +131,25 @@ abstract contract JuiceProject is Ownable {
       @notice Taps the funds available.
       @param _budgetId The ID of the Budget to tap.
       @param _amount The amount to tap.
+        @param _currency The currency to tap.
       @param _beneficiary The address to transfer the funds to.
+      @param _minReturnedETH The minimum number of Eth that the amount should be valued at.
     */
     function tap(
         IJuicer _juicer,
         uint256 _budgetId,
         uint256 _amount,
-        address _beneficiary
+        uint256 _currency,
+        address _beneficiary,
+        uint256 _minReturnedETH
     ) external onlyPm {
-        _juicer.tap(_budgetId, _amount, _beneficiary);
+        _juicer.tap(
+            _budgetId,
+            _amount,
+            _currency,
+            _beneficiary,
+            _minReturnedETH
+        );
     }
 
     /** 

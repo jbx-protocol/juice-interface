@@ -163,6 +163,7 @@ contract Juicer is IJuicer {
       @param _amount The amount to get the ticket value of.
       @return The amount of tickets.
     */
+    // TODO move to budget store and use chainlink.
     function getTicketRate(uint256 _budgetId, uint256 _amount)
         external
         view
@@ -179,6 +180,7 @@ contract Juicer is IJuicer {
       @param _amount The amount to get the ticket value of.
       @return The amount of tickets.
     */
+    // TODO move to budget store and use chainlink.
     function getReservedTicketRate(uint256 _budgetId, uint256 _amount)
         external
         view
@@ -251,27 +253,41 @@ contract Juicer is IJuicer {
 
     /**
         @notice Tap into funds that have been contrubuted to your Budgets.
-        @param _budgetId The ID of the Budget to tap.
         @param _amount The amount to tap.
+        @param _currency The currency to tap.
         @param _beneficiary The address to transfer the funds to.
+        @param _minReturnedETH The minimum number of Eth that the amount should be valued at.
     */
     function tap(
         uint256 _budgetId,
         uint256 _amount,
-        address _beneficiary
+        uint256 _currency,
+        address _beneficiary,
+        uint256 _minReturnedETH
     ) external override lock {
         // Get a reference to the Budget being tapped.
-        uint256 _tappedAmount =
-            budgetStore.tap(_budgetId, msg.sender, _amount, fee);
+        // TODO maybe here get any new amounts to add to claimable.
+        (Budget.Data memory _budget, uint256 _tappedAmount, uint256 _overflow) =
+            budgetStore.tap(_budgetId, msg.sender, _amount, _currency, fee);
+
+        // Make sure this amount is acceptable.
+        require(
+            _tappedAmount >= _minReturnedETH,
+            "Juicer::tap: INSUFFICIENT_CONVERTED_AMOUNT"
+        );
 
         // Transfer the funds to the specified address.
         weth.safeTransfer(_beneficiary, _tappedAmount);
+
+        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
 
         emit Tap(
             _budgetId,
             msg.sender,
             _beneficiary,
-            //TODO dollar amount and eth amount
+            _amount,
+            _currency,
             _tappedAmount
         );
     }
@@ -447,7 +463,7 @@ contract Juicer is IJuicer {
         @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
         @param _project The project of the budget to contribute funds to.
-        @param _amount Amount of the contribution. Sent as 10E18.
+        @param _amount Amount of the contribution in ETH. Sent as 10E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
@@ -460,68 +476,40 @@ contract Juicer is IJuicer {
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
-        (Budget.Data memory _budget, uint256 _transferAmount) =
+        (
+            Budget.Data memory _budget,
+            uint256 _covertedCurrencyAmount,
+            uint256 _overflow
+        ) =
             budgetStore.payProject(
                 _project,
-                msg.sender,
                 _amount,
-                RECONFIGURATION_VOTING_PERIOD,
-                fee
+                RECONFIGURATION_VOTING_PERIOD
             );
 
-        // The amount that is overflowing from the Budget.
-        uint256 _overflow =
-            _budget.total > _budget.target
-                ? _budget.total.sub(_budget.target)
-                : 0;
-
         // Transfer.
-        weth.safeTransferFrom(msg.sender, address(this), _transferAmount);
+        weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        pay(admin, _amount.mul(fee).div(100), _project);
+        if (_project != admin) pay(admin, _amount.mul(fee).div(100), _project);
 
         if (_budget.p > 0) {
             // The project gets the budget's project percentage, if one is specified.
             ticketStore.print(
                 _project,
                 _project,
-                _budget._weighted(_amount, _budget.p)
+                _budget._weighted(_covertedCurrencyAmount, _budget.p)
             );
-        }
-
-        // If the Budget has overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
-        if (_overflow > 0) {
-            uint256 _contributedOverflow =
-                _amount > _overflow ? _overflow : _amount;
-
-            if (_budget.b > 0) {
-                // Give to beneficiary
-                weth.safeTransfer(
-                    _budget.bAddress,
-                    _contributedOverflow.mul(_budget.b).div(100)
-                );
-            }
-
-            // The portion of the contributed overflow that is claimable by redeeming tickets.
-            // This is the total minus the percent donated and used as a fee.
-            uint256 _claimablePortion =
-                _contributedOverflow
-                    .mul(uint256(100).sub(_budget.b).sub(fee))
-                    .div(100);
-
-            // The redeemable portion of the overflow can be deposited to earn yield.
-            depositable = depositable.add(_claimablePortion);
-
-            // Add to the raw amount claimable.
-            ticketStore.addClaimable(_budget.project, _claimablePortion);
         }
 
         // Mint the appropriate amount of tickets for the contributor.
         ticketStore.print(
             _beneficiary,
             _budget.project,
-            _budget._weighted(_amount, uint256(100).sub(_budget.p))
+            _budget._weighted(
+                _covertedCurrencyAmount,
+                uint256(100).sub(_budget.p)
+            )
         );
 
         emit Pay(
@@ -530,9 +518,42 @@ contract Juicer is IJuicer {
             msg.sender,
             _beneficiary,
             _amount,
-            weth
+            _covertedCurrencyAmount,
+            _budget.currency
         );
 
+        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
+
         return _budget.id;
+    }
+
+    // --- private transactions --- //
+
+    /** 
+      @notice Add overflow correctly by giving the pre-allocated amount to the budget's beneficiary 
+      and adding the amount to the claimable amount.
+      @param _budget The budget that the overflow came from.
+      @param _amount The amount of overflow.
+    */
+    function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
+        if (_budget.b > 0) {
+            // Give to beneficiary
+            weth.safeTransfer(
+                _budget.bAddress,
+                _amount.mul(_budget.b).div(100)
+            );
+        }
+
+        // The portion of the overflow that is claimable by redeeming tickets.
+        // This is the total minus the percent donated and used as a fee.
+        uint256 _claimablePortion =
+            _amount.mul(uint256(100).sub(_budget.b).sub(fee)).div(100);
+
+        // The redeemable portion of the overflow can be deposited to earn yield.
+        depositable = depositable.add(_claimablePortion);
+
+        // Add to the raw amount claimable.
+        ticketStore.addClaimable(_budget.project, _claimablePortion);
     }
 }

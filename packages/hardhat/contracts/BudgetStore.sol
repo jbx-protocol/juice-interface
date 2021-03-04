@@ -25,7 +25,7 @@ contract BudgetStore is Store, IBudgetStore {
     // --- public properties --- //
 
     /// @notice A big number to base ticket issuance off of.
-    uint256 public constant BUDGET_BASE_WEIGHT = 1E10;
+    uint256 public constant BUDGET_BASE_WEIGHT = 1E4;
 
     /// @notice The latest Budget ID for each project address.
     mapping(address => uint256) public override latestBudgetId;
@@ -43,6 +43,9 @@ contract BudgetStore is Store, IBudgetStore {
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
+
+    /// @notice The available price feeds that can be used to get the price of ETH.
+    mapping(uint256 => AggregatorV3Interface) public override priceFeeds;
 
     // --- external views --- //
 
@@ -119,7 +122,7 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice The amount left to be withdrawn by the Budget's project.
-        @param _budgetId The ID of the Budget to get the available sustainment from.
+        @param _budgetId The ID of the Budget to get the tappable amount from.
         @param _withhold The percent of the total to withhold from the total.
         @return amount The amount.
     */
@@ -133,7 +136,13 @@ contract BudgetStore is Store, IBudgetStore {
             _budgetId > 0 && _budgetId <= budgetCount,
             "BudgetStore::getTappableAmount:: NOT_FOUND"
         );
-        return budgets[_budgetId]._tappableAmount(_withhold);
+        Budget.Data memory _budget = budgets[_budgetId];
+        return
+            _getTappableAmount(
+                _budget,
+                _withhold,
+                _getETHPrice(_budget.currency)
+            );
     }
 
     // --- external transactions --- //
@@ -145,6 +154,7 @@ contract BudgetStore is Store, IBudgetStore {
         sets the properties of the Budget that will take effect once the current one expires.
         @dev The msg.sender is the project of the budget.
         @param _target The cashflow target to set.
+        @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
         @param _name The name of the budget.
         @param _link A link to information about the Budget.
@@ -161,6 +171,7 @@ contract BudgetStore is Store, IBudgetStore {
     */
     function configure(
         uint256 _target,
+        uint256 _currency,
         uint256 _duration,
         string calldata _name,
         string calldata _link,
@@ -192,6 +203,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.name = _name;
         _budget.target = _target;
         _budget.duration = _duration;
+        _budget.currency = _currency;
         _budget.discountRate = _discountRate;
         _budget.p = _p;
         _budget.b = _b;
@@ -202,6 +214,7 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.id,
             _budget.project,
             _budget.target,
+            _budget.currency,
             _budget.duration,
             _budget.name,
             _budget.link,
@@ -217,90 +230,108 @@ contract BudgetStore is Store, IBudgetStore {
     /** 
       @notice Tracks a payments to the appropriate budget for the project.
       @param _project The project being paid.
-      @param _payer The address that is paying.
       @param _amount The amount being paid.
       @param _votingPeriod The amount of time to allow for voting to complete before a reconfigured budget is eligible to receive payments.
-      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
       @return budget The budget that is being paid.
-      @return transferAmount The amount that should be transfered from the payer.
+      @return convertedCurrencyAmount The amount of the target currency that was paid.
+      @return overflow The overflow that has now become available as a result of paying.
     */
     function payProject(
         address _project,
-        address _payer,
         uint256 _amount,
-        uint256 _votingPeriod,
-        uint256 _withhold
+        uint256 _votingPeriod
     )
         external
         override
         onlyAdmin
-        returns (Budget.Data memory budget, uint256 transferAmount)
+        returns (
+            Budget.Data memory budget,
+            uint256 convertedCurrencyAmount,
+            uint256 overflow
+        )
     {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the project's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data storage _budget =
             _ensureActiveBudget(_project, _votingPeriod);
 
+        // The amount being paid in the currency of the budget.
+        convertedCurrencyAmount = _amount.mul(_getETHPrice(_budget.currency));
+
         // Add the amount to the Budget.
         _budget.total = _budget.total.add(_amount);
 
-        // Get the amount of overflow funds that have been contributed to the Budget after this contribution is made.
-        uint256 _overflow =
-            _budget.total > _budget.target
-                ? _budget.total.sub(_budget.target)
-                : 0;
+        // If this budget is fully tapped, record the overflow.
+        overflow = _budget.target == _budget.tappedTarget ? _amount : 0;
 
-        if (_budget.project == _payer && _amount > _overflow) {
-            // Tap the amount of the contribution that didn't go towards overflow.
-            uint256 _tappedAmount =
-                _amount.sub(_overflow).mul(uint256(100).sub(_withhold)).div(
-                    100
-                );
-
-            _budget.tapped = _budget.tapped.add(_tappedAmount);
-
-            // Transfer at least the withheld funds of the tappable amount, add all of the overflow.
-            transferAmount = _amount.sub(_tappedAmount);
-            if (_overflow > 0) transferAmount.add(_overflow);
-        } else {
-            transferAmount = _amount;
-        }
-
+        // Return the budget.
         budget = _budget;
     }
 
     /** 
       @notice Tracks a project tapping its funds.
-      @param _budgetId The budget being tapped.
-      @param _tapper Who is tapping.
-      @param _amount The amount being tapped.
+      @param _budgetId The ID of the budget being tapped.
+      @param _tapper The address that is tapping.
+      @param _amount The amount of being tapped.
+      @param _currency The currency of the amount being tapped.
       @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
-      @return amount The amount tapped.
+      @return budget The budget that is being tapped.
+      @return ethAmount The amount of eth tapped.
+      @return overflow The overflow that has now become available as a result of tapping.
     */
     function tap(
         uint256 _budgetId,
         address _tapper,
         uint256 _amount,
+        uint256 _currency,
         uint256 _withhold
-    ) external override onlyAdmin returns (uint256) {
+    )
+        external
+        override
+        onlyAdmin
+        returns (
+            Budget.Data memory budget,
+            uint256 ethAmount,
+            uint256 overflow
+        )
+    {
         // Get a reference to the Budget being tapped.
         Budget.Data storage _budget = budgets[_budgetId];
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
 
         // Only a Budget project can tap its funds.
-        require(_budget.project == _tapper, "BudgetStore::tap: UNAUTHORIZED");
+        require(_tapper == _budget.project, "BudgetStore::tap: UNAUTHORIZED");
+
+        // Don't tap budgets with a different currency.
+        require(
+            _currency == _budget.currency,
+            "BudgetStore::tap: BAD_CURRENCY"
+        );
+
+        uint256 _ethPrice = _getETHPrice(_budget.currency);
 
         // The amount being tapped must be less than the tappable amount.
         require(
-            _amount <= _budget._tappableAmount(_withhold),
+            _amount <= _getTappableAmount(_budget, _withhold, _ethPrice),
             "BudgetStore::tap: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the Budget's tapped amount.
-        _budget.tapped = _budget.tapped.add(_amount);
+        _budget.tappedTarget = _budget.tappedTarget.add(_amount);
 
-        return _amount;
+        ethAmount = _amount.div(_ethPrice);
+
+        // Add the converted currency amount to the Budget's total amount.
+        _budget.tappedTotal = _budget.tappedTotal.add(ethAmount);
+
+        // If this budget is now fully tapped, record the overflow.
+        overflow = _budget.target == _budget.tappedTarget
+            ? _budget.total.sub(_budget.tappedTotal)
+            : 0;
+
+        // Return the budget.
+        budget = _budget;
     }
 
     // --- public transactions --- //
@@ -328,6 +359,19 @@ contract BudgetStore is Store, IBudgetStore {
             _budgetId
         ][_configured][_voter]
             .add(_amount);
+    }
+
+    /** 
+      @notice Add a price feed for the price of ETH.
+      @param _priceFeed The price feed being added.
+      @param _currency The currency that the price feed is for.
+    */
+    function addPriceFeed(AggregatorV3Interface _priceFeed, uint256 _currency)
+        external
+        override
+        onlyAdmin
+    {
+        priceFeeds[_currency] = _priceFeed;
     }
 
     // --- private transactions --- //
@@ -407,15 +451,18 @@ contract BudgetStore is Store, IBudgetStore {
     function _initBudget(
         address _project,
         uint256 _start,
-        Budget.Data memory _latestBudget
+        Budget.Data storage _latestBudget
     ) private returns (Budget.Data storage newBudget) {
         budgetCount++;
         newBudget = budgets[budgetCount];
         newBudget.id = budgetCount;
         newBudget.start = _start;
         newBudget.total = 0;
-        newBudget.tapped = 0;
+        newBudget.tappedTotal = 0;
+        newBudget.tappedTarget = 0;
         latestBudgetId[_project] = budgetCount;
+
+        _latestBudget.next = budgetCount;
 
         if (_latestBudget.id > 0) {
             newBudget._basedOn(_latestBudget);
@@ -461,5 +508,41 @@ contract BudgetStore is Store, IBudgetStore {
         budget = budgets[budget.previous];
         if (budget.id == 0 || budget._state() != Budget.State.Active)
             return budgets[0];
+    }
+
+    /** 
+        @notice Returns the amount available for the given Budget's project to tap in to.
+        @param _budget The Budget to make the calculation for.
+        @param _withhold The percent of the total to withhold from the total.
+        @param _ethPrice The current price of ETH for the given budget.
+        @return The resulting amount.
+    */
+    function _getTappableAmount(
+        Budget.Data memory _budget,
+        uint256 _withhold,
+        uint256 _ethPrice
+    ) private pure returns (uint256) {
+        uint256 _available =
+            Math.min(_budget.target, _budget.total.mul(_ethPrice));
+        if (_available == 0) return 0;
+        return
+            _available.mul(uint256(100).sub(_withhold)).div(100).sub(
+                _budget.tappedTarget
+            );
+    }
+
+    /** 
+      @notice Gets the current price of ETH for the provided currency.
+      @param _currency The currency to get a price for.
+      @return price The price of ETH.
+    */
+    function _getETHPrice(uint256 _currency) private view returns (uint256) {
+        AggregatorV3Interface _priceFeed = priceFeeds[_currency];
+        require(
+            _priceFeed != AggregatorV3Interface(0),
+            "BudgetStore::getETHPrice NOT_FOUND"
+        );
+        (, int256 _price, , , ) = _priceFeed.latestRoundData();
+        return uint256(_price);
     }
 }

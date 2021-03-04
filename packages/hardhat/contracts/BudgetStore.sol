@@ -248,6 +248,7 @@ contract BudgetStore is Store, IBudgetStore {
       @param _project The project being paid.
       @param _amount The amount being paid.
       @param _votingPeriod The amount of time to allow for voting to complete before a reconfigured budget is eligible to receive payments.
+      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
       @return budget The budget that is being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
@@ -255,7 +256,8 @@ contract BudgetStore is Store, IBudgetStore {
     function payProject(
         address _project,
         uint256 _amount,
-        uint256 _votingPeriod
+        uint256 _votingPeriod,
+        uint256 _withhold
     )
         external
         override
@@ -271,14 +273,18 @@ contract BudgetStore is Store, IBudgetStore {
         Budget.Data storage _budget =
             _ensureActiveBudget(_project, _votingPeriod);
 
+        uint256 _ethPrice = _getETHPrice(_budget.currency);
+
         // The amount being paid in the currency of the budget.
-        convertedCurrencyAmount = _amount.mul(_getETHPrice(_budget.currency));
+        convertedCurrencyAmount = _amount.mul(_ethPrice);
 
         // Add the amount to the Budget.
         _budget.total = _budget.total.add(_amount);
 
         // If this budget is fully tapped, record the overflow.
-        overflow = _budget.target == _budget.tappedTarget ? _amount : 0;
+        overflow = _getTappableAmount(_budget, _withhold, _ethPrice) == 0
+            ? _amount
+            : 0;
 
         // Return the budget.
         budget = _budget;
@@ -342,7 +348,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.tappedTotal = _budget.tappedTotal.add(ethAmount);
 
         // If this budget is now fully tapped, record the overflow.
-        overflow = _budget.target == _budget.tappedTarget
+        overflow = _getTappableAmount(_budget, _withhold, _ethPrice) == 0
             ? _budget.total.sub(_budget.tappedTotal)
             : 0;
 

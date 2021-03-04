@@ -232,15 +232,14 @@ contract Juicer is IJuicer {
         address _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
-        // Get a reference to the Budget being tapped.
-        // TODO maybe here get any new amounts to add to claimable.
+        // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
         (Budget.Data memory _budget, uint256 _tappedAmount, uint256 _overflow) =
             budgetStore.tap(_budgetId, msg.sender, _amount, _currency, fee);
 
         // Make sure this amount is acceptable.
         require(
             _tappedAmount >= _minReturnedETH,
-            "Juicer::tap: INSUFFICIENT_CONVERTED_AMOUNT"
+            "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 
         // Transfer the funds to the specified address.
@@ -453,7 +452,8 @@ contract Juicer is IJuicer {
             budgetStore.payProject(
                 _project,
                 _amount,
-                RECONFIGURATION_VOTING_PERIOD
+                RECONFIGURATION_VOTING_PERIOD,
+                fee
             );
 
         // Transfer.

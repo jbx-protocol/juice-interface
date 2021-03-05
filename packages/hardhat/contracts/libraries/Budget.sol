@@ -43,7 +43,7 @@ library Budget {
         uint256 duration;
         // The amount of available funds that have been tapped by the project in terms of the currency.
         uint256 tappedTarget;
-        // The amount of available funds that have been tapped by the project in terms of the currency.
+        // The amount of available funds that have been tapped by the project in terms of eth.
         uint256 tappedTotal;
         // The percentage of tickets to reserve for the project once the Budget has expired.
         uint256 p;

@@ -564,10 +564,12 @@ contract BudgetStore is Store, IBudgetStore {
         // The 0 currency is ETH itself.
         if (_currency == 0) return 1;
         AggregatorV3Interface _priceFeed = priceFeeds[_currency];
-        require(
-            _priceFeed != AggregatorV3Interface(0),
-            "BudgetStore::getETHPrice NOT_FOUND"
-        );
+        //TODO temp
+        if (_priceFeed == AggregatorV3Interface(0)) return 1600E18;
+        // require(
+        //     _priceFeed != AggregatorV3Interface(0),
+        //     "BudgetStore::getETHPrice NOT_FOUND"
+        // );
         (, int256 _price, , , ) = _priceFeed.latestRoundData();
         return uint256(_price);
     }

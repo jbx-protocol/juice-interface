@@ -4,12 +4,11 @@ const chalk = require("chalk");
 const { ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
-const { DAI } = require("../constants/dai");
+const weth = require("../constants/weth");
+const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 
 const main = async () => {
   console.log("\n\n 📡 Deploying to " + process.env.HARDHAT_NETWORK + " ...\n");
-
-  const isMainnet = process.env.HARDHAT_NETWORK === "mainnet";
 
   const token = isMainnet ? undefined : await deploy("Token");
   const budgetStore = await deploy("BudgetStore");
@@ -19,7 +18,7 @@ const main = async () => {
     budgetStore.address,
     ticketStore.address,
     5,
-    isMainnet ? DAI : token.address
+    weth(process.env.HARDHAT_NETWORK) || token.address
   ]);
 
   const staker = await deploy("TimelockStaker");
@@ -64,6 +63,9 @@ const main = async () => {
       gasLimit: 3000000
     });
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
+      gasLimit: 3000000
+    });
+    await attachedAdmin.addPriceFeed(budgetStore.address, ethUsdPriceFeed(process.env.HARDHAT_NETWORK), 1, {
       gasLimit: 3000000
     });
     await attachedJuicer.setAdmin(admin.address, {

@@ -10,7 +10,7 @@ const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 const main = async () => {
   console.log("\n\n 📡 Deploying to " + process.env.HARDHAT_NETWORK + " ...\n");
 
-  const token = isMainnet ? undefined : await deploy("Token");
+  const token = !process.env.HARDHAT_NETWORK && await deploy("Token");
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
 
@@ -65,9 +65,11 @@ const main = async () => {
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
       gasLimit: 3000000
     });
-    await attachedAdmin.addPriceFeed(budgetStore.address, ethUsdPriceFeed(process.env.HARDHAT_NETWORK), 1, {
-      gasLimit: 3000000
-    });
+    if (process.env.HARDHAT_NETWORK) {
+      await attachedAdmin.addPriceFeed(budgetStore.address, ethUsdPriceFeed(process.env.HARDHAT_NETWORK), 1, {
+        gasLimit: 3000000
+      });
+    }
     await attachedJuicer.setAdmin(admin.address, {
       gasLimit: 3000000
     });

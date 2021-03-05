@@ -32,7 +32,7 @@ export default function BudgetForm({
       <Form.Item
         extra="The amount of money you want/need in order to absolutely crush your mission statement."
         name="target"
-        label="Amount"
+        label="Operating cost"
         rules={[{ required: true }]}
       >
         <Input

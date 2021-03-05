@@ -331,6 +331,7 @@ contract BudgetStore is Store, IBudgetStore {
             "BudgetStore::tap: BAD_CURRENCY"
         );
 
+        // The current price of ETH in terms of the budget's currency.
         uint256 _ethPrice = _getETHPrice(_budget.currency);
 
         // The amount being tapped must be less than the tappable amount.
@@ -342,6 +343,7 @@ contract BudgetStore is Store, IBudgetStore {
         // Add the amount to the Budget's tapped amount.
         _budget.tappedTarget = _budget.tappedTarget.add(_amount);
 
+        // The amount of ETH that is being tapped.
         ethAmount = _amount.div(_ethPrice);
 
         // Add the converted currency amount to the Budget's total amount.
@@ -544,9 +546,9 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _withhold,
         uint256 _ethPrice
     ) private pure returns (uint256) {
+        if (_budget.total == 0) return 0;
         uint256 _available =
             Math.min(_budget.target, _budget.total.mul(_ethPrice));
-        if (_available == 0) return 0;
         return
             _available.mul(uint256(100).sub(_withhold)).div(100).sub(
                 _budget.tappedTarget
@@ -559,6 +561,8 @@ contract BudgetStore is Store, IBudgetStore {
       @return price The price of ETH.
     */
     function _getETHPrice(uint256 _currency) private view returns (uint256) {
+        // The 0 currency is ETH itself.
+        if (_currency == 0) return 1;
         AggregatorV3Interface _priceFeed = priceFeeds[_currency];
         require(
             _priceFeed != AggregatorV3Interface(0),

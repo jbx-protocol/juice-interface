@@ -339,7 +339,7 @@ contract Juicer is IJuicer {
         address _issuer,
         uint256 _amount,
         IERC20 _token
-    ) external override {
+    ) external override lock {
         // Transfer the specified amount from the msg sender to this contract.
         // The msg sender should have already approved this transfer.
         _token.safeTransferFrom(msg.sender, address(this), _amount);

@@ -2,7 +2,8 @@ import { Button, Col, Row, Tag } from 'antd'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useExchangePrice } from 'hooks/ExchangePrice'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 
 import Balance from './Balance'
 import Wallet from './Wallet'
@@ -14,7 +15,7 @@ export default function Account({
 }) {
   const { onNeedProvider, userAddress } = useContext(UserContext)
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (web3Modal.cachedProvider && onNeedProvider) {
       onNeedProvider()
     }

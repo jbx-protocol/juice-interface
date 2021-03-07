@@ -1,71 +1,39 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space, Tabs } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
 import { CSSProperties, useContext, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { budgetsDiff } from 'utils/budgetsDiff'
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import Loading from '../shared/Loading'
 import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
-import Rewards from './Rewards'
 
 export default function Owner() {
-  const [budgetId, setBudgetId] = useState<BigNumber>()
   const [budgetState, setBudgetState] = useState<
     'found' | 'missing' | 'canCreate'
   >()
 
-  const { userAddress, contracts } = useContext(UserContext)
+  const { userAddress, currentBudget } = useContext(UserContext)
 
   const { owner }: { owner?: string } = useParams()
 
   const isOwner = owner === userAddress
 
-  const currentBudget = useContractReader<Budget>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getCurrentBudget',
-    args: [owner],
-    valueDidChange: budgetsDiff,
-    updateOn: [
-      ...(owner
-        ? [
-            {
-              contract: ContractName.Juicer,
-              eventName: 'Pay',
-              topics: [[], owner],
-            },
-          ]
-        : []),
-      ...(budgetId
-        ? [
-            {
-              contract: ContractName.Juicer,
-              eventName: 'Tap',
-              topics: [budgetId.toHexString()],
-            },
-          ]
-        : []),
-    ],
-    callback: budget => {
-      if (budgetState) return
-      else if (budget) {
-        setBudgetState('found')
-        setBudgetId(budget.id)
-      } else setBudgetState(isOwner ? 'canCreate' : 'missing')
-    },
-  })
-
   const ticketAddress = useContractReader<string>({
     contract: ContractName.TicketStore,
     functionName: 'tickets',
-    args: [owner],
+    args: owner ? [owner] : null,
   })
+
+  useDeepCompareEffectNoCheck(() => {
+    if (currentBudget) setBudgetState('found')
+    if (currentBudget === null)
+      setBudgetState(isOwner ? 'canCreate' : 'missing')
+  }, [isOwner, currentBudget])
 
   // const currentSustainEvents = (useEventListener({
   //   contracts,
@@ -152,7 +120,7 @@ export default function Owner() {
                 </h1>
                 <h3>{owner}</h3>
               </div>
-              <Rewards budget={currentBudget} ticketAddress={ticketAddress} />
+              {/* <Rewards budget={currentBudget} ticketAddress={ticketAddress} /> */}
             </div>
 
             <Tabs
@@ -173,11 +141,7 @@ export default function Owner() {
             >
               <Tabs.TabPane tab="Finances" key="1" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
-                  <OwnerFinances
-                    owner={owner}
-                    ticketAddress={ticketAddress}
-                    currentBudget={currentBudget}
-                  />
+                  <OwnerFinances owner={owner} ticketAddress={ticketAddress} />
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane
@@ -187,7 +151,6 @@ export default function Owner() {
               >
                 <div style={{ ...layouts.maxWidth }}>
                   <OwnerBackOffice
-                    currentBudget={currentBudget}
                     ticketAddress={ticketAddress}
                     isOwner={isOwner}
                   />

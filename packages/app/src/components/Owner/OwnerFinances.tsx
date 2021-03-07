@@ -3,11 +3,11 @@ import { Button, Col, Input, Row, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { erc20Contract } from 'utils/erc20Contract'
 import { formatBigNum } from 'utils/formatBigNum'
 import { orEmpty } from 'utils/orEmpty'
 
@@ -19,17 +19,20 @@ import BudgetDetail from './BudgetDetail'
 import BudgetsHistory from './BudgetsHistory'
 
 export default function OwnerFinances({
-  currentBudget,
   owner,
   ticketAddress,
 }: {
-  currentBudget?: Budget
   owner?: string
   ticketAddress?: string
 }) {
-  const { contracts, transactor, onNeedProvider, userAddress } = useContext(
-    UserContext,
-  )
+  const {
+    weth,
+    contracts,
+    transactor,
+    onNeedProvider,
+    userAddress,
+    currentBudget,
+  } = useContext(UserContext)
 
   const [payerTickets, setPayerTickets] = useState<BigNumber>()
   const [ownerTickets, setOwnerTickets] = useState<BigNumber>()
@@ -40,22 +43,17 @@ export default function OwnerFinances({
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const wantTokenContract = erc20Contract(currentBudget?.want)
-
-  const wantTokenSymbol = useContractReader<string>({
-    contract: wantTokenContract,
-    functionName: 'symbol',
-  })
+  const ticketContract = useErc20Contract(ticketAddress)
 
   const ticketSymbol = useContractReader<string>({
-    contract: erc20Contract(ticketAddress),
+    contract: ticketContract,
     functionName: 'symbol',
   })
 
   const queuedBudget = useContractReader<Budget>({
     contract: ContractName.BudgetStore,
     functionName: 'getQueuedBudget',
-    args: [owner],
+    args: owner ? [owner] : null,
     updateOn: owner
       ? [
           {
@@ -68,9 +66,12 @@ export default function OwnerFinances({
   })
 
   const allowance = useContractReader<BigNumber>({
-    contract: wantTokenContract,
+    contract: weth?.contract,
     functionName: 'allowance',
-    args: [userAddress, contracts?.Juicer?.address],
+    args:
+      userAddress && contracts?.Juicer
+        ? [userAddress, contracts?.Juicer?.address]
+        : null,
     valueDidChange: bigNumbersDiff,
   })
 
@@ -135,7 +136,7 @@ export default function OwnerFinances({
                 <Input
                   name="sustain"
                   placeholder="0"
-                  suffix={wantTokenSymbol}
+                  suffix={weth?.symbol}
                   type="number"
                   onChange={e => updatePayAmount(parseFloat(e.target.value))}
                 />
@@ -177,10 +178,7 @@ export default function OwnerFinances({
               <Button onClick={() => setReconfigureModalVisible(true)}>
                 Reconfigure budget
               </Button>
-              <ReconfigureBudgetModal
-                currentValue={currentBudget}
-                visible={reconfigureModalVisible}
-              />
+              <ReconfigureBudgetModal visible={reconfigureModalVisible} />
             </div>
           ) : null}
         </Col>
@@ -196,8 +194,6 @@ export default function OwnerFinances({
 
       <ApproveSpendModal
         visible={approveModalVisible}
-        wantTokenAddress={currentBudget?.want}
-        wantTokenSymbol={wantTokenSymbol}
         initialAmount={BigNumber.from(payAmount)}
         allowance={allowance}
         onOk={() => setApproveModalVisible(false)}
@@ -205,11 +201,9 @@ export default function OwnerFinances({
       />
       <ConfirmPayOwnerModal
         visible={payModalVisible}
-        budget={currentBudget}
         onOk={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
-        wantTokenSymbol={wantTokenSymbol}
         amount={BigNumber.from(payAmount)}
         receivedTickets={payerTickets}
         ownerTickets={ownerTickets}

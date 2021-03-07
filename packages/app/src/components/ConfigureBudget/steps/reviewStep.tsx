@@ -1,4 +1,3 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { Button, Divider, FormInstance, Space, Statistic } from 'antd'
 import { Budget } from 'models/budget'
 import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
@@ -7,7 +6,7 @@ import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { Step } from 'models/step'
 import { Link } from 'react-router-dom'
 import { addressExists } from 'utils/addressExists'
-import { formatBigNum } from 'utils/formatBigNum'
+import { formattedBudgetCurrency } from 'utils/budgetCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
 export function reviewStep({
@@ -15,7 +14,7 @@ export function reviewStep({
   budgetForm,
   budgetAdvancedForm,
   ticketsInitialized,
-  activeBudget,
+  currentBudget,
   ticketsName,
   ticketsSymbol,
   initTickets,
@@ -23,14 +22,12 @@ export function reviewStep({
   loadingInitTickets,
   loadingCreateBudget,
   userAddress,
-  feePercent,
-  wantTokenName,
 }: {
   ticketsForm: FormInstance<TicketsFormFields>
   budgetForm: FormInstance<BudgetFormFields>
   budgetAdvancedForm: FormInstance<AdvancedBudgetFormFields>
   ticketsInitialized?: boolean
-  activeBudget?: Budget
+  currentBudget?: Budget | null
   ticketsName?: string
   ticketsSymbol?: string
   initTickets: VoidFunction
@@ -38,23 +35,7 @@ export function reviewStep({
   loadingInitTickets?: boolean
   loadingCreateBudget?: boolean
   userAddress?: string
-  feePercent?: BigNumber
-  wantTokenName?: string
 }): Step {
-  const targetWithFee = (target: BigNumberish) => {
-    if (!target) return '--'
-
-    const _target = BigNumber.isBigNumber(target)
-      ? target
-      : BigNumber.from(target)
-
-    return feePercent
-      ? `${formatBigNum(_target)} (+${formatBigNum(
-          _target.mul(feePercent).div(100),
-        )})`
-      : undefined
-  }
-
   return {
     title: 'Review',
     content: (
@@ -64,8 +45,8 @@ export function reviewStep({
           <Statistic
             title="Name"
             value={orEmpty(
-              activeBudget
-                ? activeBudget.name
+              currentBudget
+                ? currentBudget.name
                 : budgetForm.getFieldValue('name'),
             )}
           />
@@ -74,8 +55,8 @@ export function reviewStep({
               <Statistic
                 title="Duration"
                 value={orEmpty(
-                  activeBudget
-                    ? activeBudget.duration.toString()
+                  currentBudget
+                    ? currentBudget.duration.toString()
                     : budgetForm.getFieldValue('duration'),
                 )}
                 suffix="days"
@@ -83,19 +64,21 @@ export function reviewStep({
               <Statistic
                 title="Amount (+5% fee)"
                 value={
-                  activeBudget
-                    ? targetWithFee(activeBudget.target)
-                    : targetWithFee(budgetForm.getFieldValue('target'))
+                  currentBudget
+                    ? currentBudget.target
+                    : budgetForm.getFieldValue('target')
                 }
-                suffix={wantTokenName}
+                suffix={formattedBudgetCurrency(
+                  budgetForm.getFieldValue('currency'),
+                )}
               />
             </Space>
           </div>
           <Statistic
             title="Link"
             value={orEmpty(
-              activeBudget
-                ? activeBudget.link
+              currentBudget
+                ? currentBudget.link
                 : budgetForm.getFieldValue('link'),
             )}
           />
@@ -106,8 +89,8 @@ export function reviewStep({
               }}
               title="Discount rate"
               value={
-                activeBudget
-                  ? activeBudget.discountRate.toString()
+                currentBudget
+                  ? currentBudget.discountRate.toString()
                   : budgetAdvancedForm.getFieldValue('discountRate')
               }
               suffix="%"
@@ -115,8 +98,8 @@ export function reviewStep({
             <Statistic
               title="Reserved tickets"
               value={
-                activeBudget
-                  ? activeBudget.p.toString()
+                currentBudget
+                  ? currentBudget.p.toString()
                   : budgetAdvancedForm.getFieldValue('projectAllocation') ?? 0
               }
               suffix="%"
@@ -124,8 +107,8 @@ export function reviewStep({
             <Statistic
               title="Overflow donation"
               value={
-                activeBudget
-                  ? activeBudget.b
+                currentBudget
+                  ? currentBudget.b
                   : budgetAdvancedForm.getFieldValue('beneficiaryAllocation') ??
                     0
               }
@@ -137,15 +120,15 @@ export function reviewStep({
               title="Donation address"
               valueStyle={{ lineBreak: 'anywhere' }}
               value={orEmpty(
-                activeBudget
-                  ? addressExists(activeBudget.bAddress)
-                    ? activeBudget.bAddress
+                currentBudget
+                  ? addressExists(currentBudget.bAddress)
+                    ? currentBudget.bAddress
                     : '--'
                   : budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
               )}
             />
           </Space>
-          {activeBudget && userAddress ? (
+          {currentBudget && userAddress ? (
             <Link to={userAddress}>
               <Button type="primary">Go to your dashboard</Button>
             </Link>

@@ -9,6 +9,7 @@ export const colors: Record<string, CSSProperties['color']> = {
   textPrimary: '#fff',
   juiceOrange: '#FFB32C',
   secondary: '#5AC3D1',
+  secondaryHint: '#5AC3D122',
   light: '#FFECBB',
   hint: '#FFFAF0',
 }

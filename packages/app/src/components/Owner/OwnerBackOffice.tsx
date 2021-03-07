@@ -1,7 +1,6 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { Button, Col, DescriptionsProps, Form, Row } from 'antd'
 import { UserContext } from 'contexts/userContext'
-import { Budget } from 'models/budget'
 import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
@@ -12,15 +11,15 @@ import WtfCard from '../shared/WtfCard'
 import Reserves from './Reserves'
 
 export default function OwnerBackOffice({
-  currentBudget,
   ticketAddress,
   isOwner,
 }: {
-  currentBudget?: Budget
   ticketAddress?: string
   isOwner?: boolean
 }) {
-  const { transactor, contracts, onNeedProvider } = useContext(UserContext)
+  const { transactor, contracts, onNeedProvider, currentBudget } = useContext(
+    UserContext,
+  )
 
   const [ticketsForm] = Form.useForm<TicketsFormFields>()
   const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>()
@@ -117,8 +116,6 @@ export default function OwnerBackOffice({
         <Col span={12}>
           <CardSection header="Reserves">
             <Reserves
-              contracts={contracts}
-              budget={currentBudget}
               descriptionsStyle={descriptionsStyle}
               ticketAddress={ticketAddress}
             />

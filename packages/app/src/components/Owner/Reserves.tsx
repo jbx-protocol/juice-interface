@@ -1,11 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, DescriptionsProps, Switch } from 'antd'
 import { ContractName } from 'constants/contract-name'
+import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
-import { Contracts } from 'models/contracts'
-import { useState } from 'react'
-import { erc20Contract } from 'utils/erc20Contract'
+import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useContext, useState } from 'react'
 import { formatBigNum } from 'utils/formatBigNum'
 import { orEmpty } from 'utils/orEmpty'
 
@@ -16,27 +15,14 @@ type ReserveAmounts = {
 }
 
 export default function Reserves({
-  contracts,
-  budget,
   ticketAddress,
   descriptionsStyle,
 }: {
-  contracts?: Contracts
-  budget?: Budget
   ticketAddress?: string
   descriptionsStyle?: DescriptionsProps
 }) {
+  const { weth, currentBudget } = useContext(UserContext)
   const [onlyDistributable, setOnlyDistributable] = useState<boolean>(false)
-
-  const wantTokenAddress = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantTokenAddress),
-    functionName: 'symbol',
-  })
 
   const emptyReserves: ReserveAmounts = {
     adminFees: BigNumber.from(0),
@@ -48,19 +34,19 @@ export default function Reserves({
     {
       contract: ContractName.Juicer,
       eventName: 'Pay',
-      topics: budget ? [budget.id.toString()] : undefined,
+      topics: currentBudget ? [currentBudget.id.toString()] : undefined,
     },
     {
       contract: ContractName.Juicer,
       eventName: 'Redeem',
-      topics: budget ? [[], budget.project] : undefined,
+      topics: currentBudget ? [[], currentBudget.project] : undefined,
     },
   ]
 
   const distributableReserves = useContractReader<ReserveAmounts>({
     contract: ContractName.Juicer,
     functionName: 'getReserves',
-    args: [budget?.project, true],
+    args: currentBudget ? [currentBudget?.project, true] : null,
     formatter: val => val ?? emptyReserves,
     valueDidChange: (val, old) => {
       if (!val || (!val && !old)) return false
@@ -76,7 +62,7 @@ export default function Reserves({
   const reserves = useContractReader<ReserveAmounts>({
     contract: ContractName.Juicer,
     functionName: 'getReserves',
-    args: [budget?.project, false],
+    args: currentBudget ? [currentBudget?.project, false] : null,
     formatter: val => val ?? emptyReserves,
     valueDidChange: (val, old) => {
       if (!val || (!val && !old)) return false
@@ -89,8 +75,10 @@ export default function Reserves({
     updateOn: reservesUpdateOn,
   })
 
+  const ticketContract = useErc20Contract(ticketAddress)
+
   const ticketSymbol = useContractReader<string>({
-    contract: erc20Contract(ticketAddress),
+    contract: ticketContract,
     functionName: 'symbol',
   })
 
@@ -105,11 +93,11 @@ export default function Reserves({
         ></Switch>
       </Descriptions.Item>
       <Descriptions.Item label="Admin reserves">
-        {orEmpty(formatBigNum(displayReserves?.adminFees))} {wantTokenName}
+        {orEmpty(formatBigNum(displayReserves?.adminFees))} {weth?.symbol}
       </Descriptions.Item>
       <Descriptions.Item label="Donation reserves">
         {orEmpty(formatBigNum(displayReserves?.beneficiaryDonations))}{' '}
-        {wantTokenName}
+        {weth?.symbol}
       </Descriptions.Item>
       <Descriptions.Item label="Project owner reserves">
         {orEmpty(formatBigNum(displayReserves?.issuerTickets))} {ticketSymbol}

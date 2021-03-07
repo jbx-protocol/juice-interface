@@ -1,14 +1,13 @@
 import { Button, Col, Row, Space } from 'antd'
 import { colors } from 'constants/styles/colors'
-import { Budget } from 'models/budget'
 import { CSSProperties } from 'react'
 
 import ConfigureBudget from '../ConfigureBudget'
-import Tweets from './Tweets'
 import Faq from './Faq'
 import Footer from './Footer'
+import Tweets from './Tweets'
 
-export default function Landing({ activeBudget }: { activeBudget?: Budget }) {
+export default function Landing() {
   const totalMaxWidth = 1080
 
   const bigHeader = (text: string) => (
@@ -215,7 +214,7 @@ export default function Landing({ activeBudget }: { activeBudget?: Budget }) {
           }}
         >
           {bigHeader('Play with it')}
-          <ConfigureBudget activeBudget={activeBudget} />
+          <ConfigureBudget />
         </div>
       </section>
 

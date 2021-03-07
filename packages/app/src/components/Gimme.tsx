@@ -1,12 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
-import { ContractName } from 'constants/contract-name'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useWeth } from 'hooks/Weth'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { erc20Contract } from 'utils/erc20Contract'
 
 export default function Gimme() {
   const { userAddress, contracts, transactor } = useContext(UserContext)
@@ -14,24 +13,22 @@ export default function Gimme() {
   const [gimmeAmount, setGimmeAmount] = useState<number>(10000)
   const [allowanceAmount, setAllowanceAmount] = useState<number>(10000)
 
-  const wantTokenAddress = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-
-  const wantTokenContract = erc20Contract(wantTokenAddress)
+  const weth = useWeth()
 
   const balance = useContractReader<BigNumber>({
-    contract: wantTokenContract,
+    contract: weth?.contract,
     functionName: 'balanceOf',
-    args: [userAddress],
+    args: userAddress ? [userAddress] : null,
     valueDidChange: bigNumbersDiff,
   })
 
   const allowance = useContractReader<BigNumber>({
-    contract: wantTokenContract,
+    contract: weth?.contract,
     functionName: 'allowance',
-    args: [userAddress, contracts?.Juicer?.address],
+    args:
+      userAddress && contracts?.Juicer
+        ? [userAddress, contracts?.Juicer?.address]
+        : null,
     valueDidChange: bigNumbersDiff,
   })
 

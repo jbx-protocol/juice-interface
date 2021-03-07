@@ -1,19 +1,17 @@
-import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
 import BurnerProvider from 'burner-provider'
-import { useMemo } from 'react'
+import { localProvider } from 'constants/local-provider'
 import { NetworkName } from 'models/network-name'
+import { useMemo } from 'react'
 
-export function useUserProvider(
-  injectedProvider?: Web3Provider,
-  localProvider?: JsonRpcProvider,
-) {
+export function useUserProvider(injectedProvider?: Web3Provider) {
   return useMemo(() => {
+    console.log('useuserprovider')
     if (injectedProvider) {
       console.log('🦊 Using injected provider')
       return injectedProvider
     }
     if (
-      !localProvider ||
       process.env.NODE_ENV === 'production' ||
       (process.env.REACT_APP_INFURA_DEV_NETWORK &&
         process.env.REACT_APP_INFURA_DEV_NETWORK !== NetworkName.localhost)
@@ -63,5 +61,5 @@ export function useUserProvider(
       }`
       return new Web3Provider(new BurnerProvider(burnerConfig))
     }
-  }, [injectedProvider, localProvider])
+  }, [injectedProvider])
 }

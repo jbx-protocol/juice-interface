@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther } from '@ethersproject/units'
-import { localProvider } from 'constants/local-provider'
+import { UserContext } from 'contexts/userContext'
 import { usePoller } from 'hooks/Poller'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 export default function Balance({
   userAddress,
@@ -11,16 +11,17 @@ export default function Balance({
   userAddress?: string
   dollarMultiplier: number
 }) {
+  const { userProvider } = useContext(UserContext)
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
 
   // get updated balance
   usePoller(
     () => {
-      if (!userAddress) return
+      if (!userAddress || !userProvider) return
 
       try {
-        localProvider.getBalance(userAddress).then(setBalance)
+        userProvider.getBalance(userAddress).then(setBalance)
       } catch (e) {
         console.log('Error getting balance', e)
       }

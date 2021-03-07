@@ -1,17 +1,32 @@
 import { Form, FormProps, Input } from 'antd'
+import BudgetTargetInput from 'components/shared/BudgetTargetInput'
+import { BudgetCurrency } from 'models/budget-currency'
 import { BudgetFormFields } from 'models/forms-fields/budget-form'
+import { useEffect, useState } from 'react'
 
 export default function BudgetForm({
   props,
   header,
   disabled,
-  wantTokenName,
 }: {
   props: FormProps<BudgetFormFields>
   header?: JSX.Element
   disabled?: boolean
-  wantTokenName?: string
 }) {
+  const [currency, setCurrency] = useState<BudgetCurrency>()
+
+  const formCurrency = props.form?.getFieldValue('currency')
+
+  useEffect(() => setCurrency(formCurrency), [setCurrency, formCurrency])
+
+  function toggleCurrency() {
+    const newCurrency =
+      props.form?.getFieldValue('currency') === '1' ? '0' : '1'
+
+    props.form?.setFieldsValue({ currency: newCurrency })
+    setCurrency(newCurrency)
+  }
+
   return (
     <Form layout="vertical" {...props}>
       {header ? <Form.Item>{header}</Form.Item> : null}
@@ -35,11 +50,11 @@ export default function BudgetForm({
         label="Operating cost"
         rules={[{ required: true }]}
       >
-        <Input
-          className="align-end"
-          placeholder="0"
-          type="number"
-          suffix={wantTokenName}
+        <BudgetTargetInput
+          target={props.form?.getFieldValue('target')}
+          currency={currency}
+          onCurrencyChange={toggleCurrency}
+          onValueChange={val => props.form?.setFieldsValue({ target: val })}
           disabled={disabled}
         />
       </Form.Item>

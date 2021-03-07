@@ -7,15 +7,15 @@ import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
+import { useErc20Contract } from 'hooks/Erc20Contract'
+import { BudgetCurrency } from 'models/budget-currency'
 import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
 import { BudgetFormFields } from 'models/forms-fields/budget-form'
 import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { Step } from 'models/step'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { addressExists } from 'utils/addressExists'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { erc20Contract } from 'utils/erc20Contract'
 
 import WtfCard from '../shared/WtfCard'
 import { advancedContractStep } from './steps/advancedContractStep'
@@ -23,14 +23,14 @@ import { contractStep } from './steps/contractStep'
 import { reviewStep } from './steps/reviewStep'
 import { ticketsStep } from './steps/ticketsStep'
 
-export default function ConfigureBudget({
-  activeBudget,
-}: {
-  activeBudget?: Budget
-}) {
-  const { contracts, transactor, onNeedProvider, userAddress } = useContext(
-    UserContext,
-  )
+export default function ConfigureBudget() {
+  const {
+    contracts,
+    transactor,
+    onNeedProvider,
+    userAddress,
+    currentBudget,
+  } = useContext(UserContext)
 
   const [ticketsForm] = Form.useForm<TicketsFormFields>()
   const [budgetForm] = Form.useForm<BudgetFormFields>()
@@ -42,9 +42,9 @@ export default function ConfigureBudget({
   const ticketsAddress = useContractReader<string>({
     contract: ContractName.TicketStore,
     functionName: 'tickets',
-    args: [userAddress],
+    args: userAddress ? [userAddress] : null,
   })
-  const ticketContract = erc20Contract(ticketsAddress)
+  const ticketContract = useErc20Contract(ticketsAddress)
   const ticketsSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
@@ -53,42 +53,32 @@ export default function ConfigureBudget({
     contract: ticketContract,
     functionName: 'name',
   })
-  const juicerFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
-    functionName: 'fee',
-    valueDidChange: bigNumbersDiff,
-  })
-  const wantTokenAddress = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantTokenAddress),
-    functionName: 'symbol',
-  })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol
 
-  useEffect(() => {
-    if (activeBudget) {
+  useDeepCompareEffectNoCheck(() => {
+    if (currentBudget) {
       budgetForm.setFieldsValue({
-        name: activeBudget.name,
-        duration: activeBudget.duration
+        name: currentBudget.name,
+        duration: currentBudget.duration
           .div(BigNumber.from(SECONDS_IN_DAY))
           .toNumber(),
-        link: activeBudget.link,
-        target: activeBudget.target.toNumber(),
+        link: currentBudget.link,
+        currency: currentBudget.currency.toString() as BudgetCurrency,
+        target: currentBudget.target.toNumber(),
       })
       budgetAdvancedForm.setFieldsValue({
-        discountRate: activeBudget.discountRate.toNumber(),
-        beneficiaryAddress: addressExists(activeBudget.bAddress)
-          ? activeBudget.bAddress
+        discountRate: currentBudget.discountRate.toNumber(),
+        beneficiaryAddress: addressExists(currentBudget.bAddress)
+          ? currentBudget.bAddress
           : '--',
-        beneficiaryAllocation: activeBudget.b.toNumber(),
-        projectAllocation: activeBudget.p.toNumber(),
+        beneficiaryAllocation: currentBudget.b.toNumber(),
+        projectAllocation: currentBudget.p.toNumber(),
       })
+    } else {
+      budgetForm.setFieldsValue({ currency: '1' })
     }
-  }, [activeBudget, budgetForm, budgetAdvancedForm])
+  }, [currentBudget, budgetForm, budgetAdvancedForm])
 
   if (ticketsName && ticketsSymbol) {
     ticketsForm.setFieldsValue({
@@ -156,11 +146,11 @@ export default function ConfigureBudget({
       'configure',
       [
         BigNumber.from(fields.target).toHexString(),
+        BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(
           fields.duration *
             (process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1),
         ).toHexString(),
-        wantTokenAddress,
         fields.name,
         fields.link ?? '',
         BigNumber.from(fields.discountRate).toHexString(),
@@ -175,8 +165,7 @@ export default function ConfigureBudget({
   const steps: Step[] = [
     contractStep({
       form: budgetForm,
-      budgetActivated: !!activeBudget,
-      wantTokenName,
+      budgetActivated: !!currentBudget,
     }),
     ticketsStep({
       form: ticketsForm,
@@ -184,14 +173,14 @@ export default function ConfigureBudget({
     }),
     advancedContractStep({
       form: budgetAdvancedForm,
-      budgetActivated: !!activeBudget,
+      budgetActivated: !!currentBudget,
     }),
     reviewStep({
       ticketsForm,
       budgetForm,
       budgetAdvancedForm,
       ticketsInitialized,
-      activeBudget,
+      currentBudget,
       ticketsName,
       ticketsSymbol,
       initTickets,
@@ -199,8 +188,6 @@ export default function ConfigureBudget({
       loadingInitTickets,
       loadingCreateBudget,
       userAddress,
-      feePercent: juicerFeePercent,
-      wantTokenName,
     }),
   ]
 

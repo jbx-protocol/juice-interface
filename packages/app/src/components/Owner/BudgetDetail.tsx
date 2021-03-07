@@ -7,34 +7,29 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
+import { BudgetCurrency } from 'models/budget-currency'
 import moment from 'moment'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { erc20Contract } from 'utils/erc20Contract'
 import { formatBigNum } from 'utils/formatBigNum'
 import { orEmpty } from 'utils/orEmpty'
 
+import { formattedBudgetCurrency } from '../../utils/budgetCurrency'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function BudgetDetail({ budget }: { budget: Budget }) {
-  const { contracts, transactor, userAddress, onNeedProvider } = useContext(
-    UserContext,
-  )
+  const {
+    weth,
+    contracts,
+    transactor,
+    userAddress,
+    onNeedProvider,
+  } = useContext(UserContext)
 
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
-
-  const wantTokenAddress = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantTokenAddress),
-    functionName: 'symbol',
-  })
 
   const juicerFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -45,7 +40,9 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const tappableAmount = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'getTappableAmount',
-    args: [budget.id.toHexString(), juicerFeePercent?.toHexString()],
+    args: juicerFeePercent
+      ? [budget.id.toHexString(), juicerFeePercent?.toHexString()]
+      : null,
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
@@ -154,7 +151,9 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               +{formatBigNum(surplus)}
             </span>
           ) : null}{' '}
-          {wantTokenName}
+          {formattedBudgetCurrency(
+            budget?.currency.toString() as BudgetCurrency,
+          )}
         </span>
       </div>
 
@@ -182,7 +181,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               />
             }
           >
-            {formatBigNum(budget.tapped)} {wantTokenName}
+            {formatBigNum(budget.tappedTotal)}{' '}
+            {formattedBudgetCurrency(
+              budget.currency.toString() as BudgetCurrency,
+            )}
           </Descriptions.Item>
         )}
 
@@ -203,7 +205,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                 alignItems: 'center',
               }}
             >
-              {formatBigNum(tappableAmount) ?? '0'} {wantTokenName}
+              {formatBigNum(tappableAmount) ?? '0'} {weth?.symbol}
               {isOwner && tappableAmount?.gt(0) ? (
                 <div>
                   <Button
@@ -229,7 +231,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                     <Input
                       name="withdrawable"
                       placeholder="0"
-                      suffix={wantTokenName}
+                      suffix={weth?.symbol}
                       value={tapAmount.toString()}
                       max={tappableAmount?.toString()}
                       onChange={e =>
@@ -300,14 +302,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               {budget.bAddress}
             </Descriptions.Item>
           )}
-
-          {ended && surplus.gt(0) ? (
-            <Descriptions.Item label="Reserves">
-              {budget?.hasMintedReserves
-                ? 'Distributed'
-                : 'Not yet distributed'}
-            </Descriptions.Item>
-          ) : null}
         </Descriptions>
       </div>
     </div>

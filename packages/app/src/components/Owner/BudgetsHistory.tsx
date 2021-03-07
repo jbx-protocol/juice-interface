@@ -22,7 +22,7 @@ export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
   useContractReader<Budget>({
     contract: ContractName.BudgetStore,
     functionName: 'getBudget',
-    args: [poolNumber],
+    args: poolNumber ? [poolNumber] : null,
     valueDidChange: budgetsDiff,
     callback: budget => {
       if (

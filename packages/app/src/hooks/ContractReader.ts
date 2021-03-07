@@ -2,7 +2,8 @@ import { Contract, EventFilter } from '@ethersproject/contracts'
 import { ContractName } from 'constants/contract-name'
 import { localProvider } from 'constants/local-provider'
 import { Contracts } from 'models/contracts'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import { useContractLoader } from './ContractLoader'
 
@@ -18,57 +19,52 @@ export default function useContractReader<V>({
   contract,
   functionName,
   args,
+  updateOn,
   formatter,
   callback,
-  updateOn,
   valueDidChange,
 }: {
   contract?: ContractConfig
   functionName?: string
-  args?: unknown[]
+  args?: unknown[] | null
+  updateOn?: ContractUpdateOn
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
-  updateOn?: ContractUpdateOn
   valueDidChange?: (a?: V, b?: V) => boolean
 }) {
   const [value, setValue] = useState<V | undefined>()
+  const _contract = useRef<Contract>()
 
-  const contracts = useContractLoader(localProvider, true)
-
-  // Allow properly storing array members in dependencies array
-  const updateOnRef: string | undefined = updateOn?.reduce((acc, curr) => {
-    if (!curr) return acc
-    return acc + typeof curr.contract === 'string'
-      ? JSON.stringify(curr)
-      : JSON.stringify(curr.eventName) + JSON.stringify(curr.topics)
-  }, '')
-  const argsRef: string | undefined = JSON.stringify(args)
-
+  const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
+  const _callback = useCallback(callback ?? ((val: any) => null), [callback])
   const _valueDidChange = useCallback(
-    valueDidChange ?? ((a?: V, b?: V) => a !== b),
+    valueDidChange ?? ((a?: any, b?: any) => a !== b),
     [valueDidChange],
   )
 
-  useEffect(() => {
+  const contracts = useContractLoader(localProvider, true)
+
+  useDeepCompareEffectNoCheck(() => {
     async function getValue() {
       const readContract = contractToRead(contract, contracts)
 
-      if (!readContract || !functionName) return
+      if (!readContract || !functionName || args === null) return
 
       try {
+        console.log('📚 Read >', functionName)
+
         const result = await readContract[functionName](...(args ?? []))
 
-        const newValue = formatter ? formatter(result) : result
+        const newValue = _formatter(result)
 
         if (_valueDidChange(newValue, value)) {
           setValue(newValue)
-
-          if (callback) callback(newValue)
+          _callback(newValue)
         }
       } catch (err) {
-        console.log('Read contract >', functionName, { args }, { err })
-        setValue(formatter ? formatter(undefined) : undefined)
-        if (callback) callback(undefined)
+        console.log('📕 Read error >', functionName, { args }, { err })
+        setValue(_formatter(undefined))
+        _callback(undefined)
       }
     }
 
@@ -78,7 +74,7 @@ export default function useContractReader<V>({
 
     let subscriptions: { contract: Contract; filter: EventFilter }[] = []
 
-    if (updateOn) {
+    if (updateOn?.length) {
       try {
         // Subscribe listener to updateOn events
         updateOn.forEach(u => {
@@ -100,12 +96,11 @@ export default function useContractReader<V>({
     contract,
     contracts,
     functionName,
-    updateOnRef,
+    updateOn,
+    args,
+    _formatter,
+    _callback,
     _valueDidChange,
-    value,
-    argsRef,
-    callback,
-    formatter,
   ])
 
   return value

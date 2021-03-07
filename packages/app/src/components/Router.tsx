@@ -2,15 +2,14 @@ import Gimme from 'components/Gimme'
 import Landing from 'components/Landing'
 import Faq from 'components/Landing/Faq'
 import Owner from 'components/Owner'
-import { Budget } from 'models/budget'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
-export default function Router({ activeBudget }: { activeBudget?: Budget }) {
+export default function Router() {
   return (
     <HashRouter>
       <Switch>
         <Route exact path="/">
-          <Landing activeBudget={activeBudget} />
+          <Landing />
         </Route>
         <Route path="/gimme">
           <Gimme />

@@ -1,22 +1,24 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 export interface Budget {
-  name: string
   id: BigNumber
-  number: BigNumber
   project: string
+  number: BigNumber
   previous: BigNumber
+  next: BigNumber
+  name: string
   link: string
-  want: string
   target: BigNumber
+  currency: BigNumber
   total: BigNumber
   start: BigNumber
   duration: BigNumber
-  tapped: BigNumber
+  tappedTarget: BigNumber
+  tappedTotal: BigNumber
   p: BigNumber
   b: BigNumber
   bAddress: string
-  hasMintedReserves: boolean
   weight: BigNumber
   discountRate: BigNumber
+  configured: BigNumber
 }

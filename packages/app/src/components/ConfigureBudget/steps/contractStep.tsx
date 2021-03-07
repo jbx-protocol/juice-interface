@@ -7,11 +7,9 @@ import BudgetForm from '../../forms/BudgetForm'
 export function contractStep({
   form,
   budgetActivated,
-  wantTokenName,
 }: {
   form: FormInstance<BudgetFormFields>
   budgetActivated?: boolean
-  wantTokenName?: string
 }): Step {
   return {
     title: 'Contract',
@@ -22,7 +20,6 @@ export function contractStep({
         props={{ form }}
         disabled={budgetActivated}
         header={<h2>Your contract's terms</h2>}
-        wantTokenName={wantTokenName}
       ></BudgetForm>
     ),
     info: [

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { colors } from 'constants/styles/colors'
@@ -7,13 +8,11 @@ import { useContext } from 'react'
 import Account from './Account'
 
 export default function Navbar({
-  hasBudget,
   shouldUseNetwork,
 }: {
-  hasBudget?: boolean
   shouldUseNetwork?: string
 }) {
-  const context = useContext(UserContext)
+  const { userAddress, currentBudget } = useContext(UserContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -62,9 +61,9 @@ export default function Navbar({
             />
           </a>
         </Menu.Item>
-        {hasBudget && context.userAddress ? (
+        {currentBudget && userAddress ? (
           <Menu.Item key="budget">
-            {menuItem('Dashboard', '/#/' + context.userAddress)}
+            {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>
         ) : null}
         {

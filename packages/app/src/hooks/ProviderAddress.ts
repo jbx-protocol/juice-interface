@@ -11,12 +11,12 @@ export function useProviderAddress(
       const signer = injectedProvider.getSigner()
       if (signer) {
         const newAddress = await signer.getAddress()
-        setUserAddress(newAddress)
+        if (newAddress !== userAddress) setUserAddress(newAddress)
       }
     }
 
     if (provider) getUserAddress(provider)
-  }, [provider])
+  }, [provider, userAddress])
 
   return userAddress
 }

@@ -1,11 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
 import { Form, Modal } from 'antd'
-import { ContractName } from 'constants/contract-name'
 import { emptyAddress } from 'constants/empty-address'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
+import { BudgetCurrency } from 'models/budget-currency'
 import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
 import { BudgetFormFields } from 'models/forms-fields/budget-form'
 import { useContext } from 'react'
@@ -15,41 +12,34 @@ import BudgetAdvancedForm from '../forms/BudgetAdvancedForm'
 import BudgetForm from '../forms/BudgetForm'
 
 export default function ReconfigureBudgetModal({
-  currentValue,
   visible,
   onCancel,
 }: {
-  contracts?: Record<ContractName, Contract>
-  currentValue?: Budget
   visible?: boolean
   onCancel?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, currentBudget } = useContext(UserContext)
 
   const [budgetForm] = Form.useForm<BudgetFormFields>()
   const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
 
-  const wantToken = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-
   if (!transactor || !contracts) return null
 
-  if (currentValue) {
+  if (currentBudget) {
     budgetForm.setFieldsValue({
-      name: currentValue.name,
-      duration: currentValue.duration.toNumber(),
-      target: currentValue.target.toNumber(),
-      link: currentValue.link,
+      name: currentBudget.name,
+      duration: currentBudget.duration.toNumber(),
+      target: currentBudget.target.toNumber(),
+      currency: currentBudget.currency.toString() as BudgetCurrency,
+      link: currentBudget.link,
     })
     budgetAdvancedForm.setFieldsValue({
-      discountRate: currentValue.discountRate.toNumber(),
-      beneficiaryAddress: addressExists(currentValue.bAddress)
-        ? currentValue.bAddress
+      discountRate: currentBudget.discountRate.toNumber(),
+      beneficiaryAddress: addressExists(currentBudget.bAddress)
+        ? currentBudget.bAddress
         : '',
-      beneficiaryAllocation: currentValue.b.toNumber(),
-      projectAllocation: currentValue.p.toNumber(),
+      beneficiaryAllocation: currentBudget.b.toNumber(),
+      projectAllocation: currentBudget.p.toNumber(),
     })
   }
 
@@ -70,7 +60,7 @@ export default function ReconfigureBudgetModal({
     transactor(contracts.BudgetStore, 'configure', [
       BigNumber.from(fields.target).toHexString(),
       BigNumber.from(fields.duration).toHexString(),
-      wantToken,
+      BigNumber.from(fields.currency).toHexString(),
       fields.name,
       fields.link,
       BigNumber.from(fields.discountRate).toHexString(),

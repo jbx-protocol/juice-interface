@@ -4,11 +4,11 @@ import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { erc20Contract } from 'utils/erc20Contract'
 import { formatBigNum } from 'utils/formatBigNum'
 
 import TooltipLabel from '../shared/TooltipLabel'
@@ -22,9 +22,13 @@ export default function Rewards({
   ticketAddress?: string
   isOwner?: boolean
 }) {
-  const { contracts, transactor, userAddress, onNeedProvider } = useContext(
-    UserContext,
-  )
+  const {
+    weth,
+    contracts,
+    transactor,
+    userAddress,
+    onNeedProvider,
+  } = useContext(UserContext)
 
   const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
@@ -48,7 +52,7 @@ export default function Rewards({
     functionName: 'bondingCurveRate',
     valueDidChange: bigNumbersDiff,
   })
-  const ticketContract = erc20Contract(ticketAddress)
+  const ticketContract = useErc20Contract(ticketAddress)
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
@@ -56,7 +60,7 @@ export default function Rewards({
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
-    args: [userAddress],
+    args: userAddress ? [userAddress] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
@@ -69,7 +73,7 @@ export default function Rewards({
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'iOweYous',
-    args: [budget?.project, userAddress],
+    args: userAddress && budget ? [budget?.project, userAddress] : null,
     valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
     updateOn: [
@@ -83,7 +87,7 @@ export default function Rewards({
   const iouSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'totalIOweYous',
-    args: [budget?.project],
+    args: budget ? [budget?.project] : null,
     valueDidChange: bigNumbersDiff,
     formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
     updateOn: ticketsUpdateOn,
@@ -91,7 +95,7 @@ export default function Rewards({
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'getOverflow',
-    args: [budget?.project],
+    args: budget ? [budget?.project] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
@@ -100,14 +104,6 @@ export default function Rewards({
         topics: budget ? [budget.id.toHexString()] : undefined,
       },
     ],
-  })
-  const wantTokenAddress = useContractReader<string>({
-    contract: ContractName.Juicer,
-    functionName: 'stablecoin',
-  })
-  const wantTokenName = useContractReader<string>({
-    contract: erc20Contract(wantTokenAddress),
-    functionName: 'symbol',
   })
 
   const totalBalance = ticketsBalance?.add(iouBalance || 0) || BigNumber.from(0)
@@ -199,7 +195,7 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            {formatBigNum(totalOverflow) ?? 0} {wantTokenName}
+            {formatBigNum(totalOverflow) ?? 0} {weth?.symbol}
           </div>
         )}
       />

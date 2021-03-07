@@ -3,7 +3,8 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 
 export function useContractLoader(
   provider?: JsonRpcProvider,
@@ -11,10 +12,11 @@ export function useContractLoader(
 ) {
   const [contracts, setContracts] = useState<Contracts>()
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     async function loadContracts() {
       if (!provider) return
 
+      console.log('ready')
       await provider.ready
 
       let network: NetworkName
@@ -56,7 +58,7 @@ export function useContractLoader(
     }
 
     loadContracts()
-  }, [provider, readOnly])
+  }, [provider, readOnly, setContracts])
 
   return contracts
 }

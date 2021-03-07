@@ -2,21 +2,19 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import Navbar from 'components/Navbar'
-import { ContractName } from 'constants/contract-name'
-import { localProvider } from 'constants/local-provider'
+import { NETWORKS } from 'constants/networks'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
-import useContractReader from 'hooks/ContractReader'
+import { useCurrentBudget } from 'hooks/CurrentBudget'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
+import { useTransactor } from 'hooks/Transactor'
 import { useUserProvider } from 'hooks/UserProvider'
-import { Budget } from 'models/budget'
+import { useWeth } from 'hooks/Weth'
 import { useCallback, useState } from 'react'
-import { budgetsDiff } from 'utils/budgetsDiff'
-import { createTransactor } from 'utils/Transactor'
 
+import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {
@@ -27,7 +25,7 @@ function App() {
     setInjectedProvider(new Web3Provider(provider))
   }, [setInjectedProvider])
 
-  const userProvider = useUserProvider(injectedProvider, localProvider)
+  const userProvider = useUserProvider(injectedProvider)
 
   const userAddress = useProviderAddress(userProvider)
 
@@ -35,29 +33,17 @@ function App() {
 
   const gasPrice = useGasPrice('average')
 
-  const transactor = createTransactor({
+  const weth = useWeth()
+
+  const transactor = useTransactor({
     provider: userProvider,
     gasPrice:
       typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const currentBudget = useContractReader<Budget>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getCurrentBudget',
-    args: [userAddress],
-    valueDidChange: budgetsDiff,
-    updateOn: userAddress
-      ? [
-          {
-            contract: ContractName.BudgetStore,
-            eventName: 'Configure',
-            topics: [[], userAddress],
-          },
-        ]
-      : undefined,
-  })
+  const currentBudget = useCurrentBudget(userAddress)
 
-  console.log('User:', userAddress, userProvider)
+  console.log('User:', userAddress)
 
   return (
     <UserContext.Provider
@@ -67,6 +53,8 @@ function App() {
         transactor,
         contracts,
         onNeedProvider: loadWeb3Modal,
+        currentBudget,
+        weth,
       }}
     >
       <Layout
@@ -79,18 +67,17 @@ function App() {
         }}
       >
         <Navbar
-          hasBudget={!!currentBudget}
           shouldUseNetwork={
             userProvider &&
-            userProvider.network?.chainId !== 3 &&
+            userProvider.network?.chainId !== NETWORKS.kovan.chainId &&
             process.env.NODE_ENV === 'production'
-              ? 'Ropsten'
+              ? NETWORKS.kovan.name
               : undefined
           }
         />
 
         <Content>
-          <Router activeBudget={currentBudget} />
+          <Router />
         </Content>
       </Layout>
     </UserContext.Provider>

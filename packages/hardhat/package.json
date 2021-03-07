@@ -33,6 +33,7 @@
     "compile": "hardhat compile",
     "deploy": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js && yarn hardhat-publish",
     "deploy-ropsten": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network ropsten && yarn hardhat-publish",
+    "deploy-kovan": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network kovan && yarn hardhat-publish",
     "hardhat-publish": "hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",
     "accounts": "hardhat accounts",

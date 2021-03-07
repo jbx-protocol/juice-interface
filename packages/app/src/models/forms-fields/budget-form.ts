@@ -3,4 +3,5 @@ export type BudgetFormFields = {
   duration: number
   target: number
   link: string
+  currency: '0' | '1'
 }

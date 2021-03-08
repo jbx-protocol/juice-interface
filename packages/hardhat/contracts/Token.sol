@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Token is ERC20 {
     uint256 INITIAL_SUPPLY = 100000;
 
-    constructor() public ERC20("Eth", "ETH") {
+    constructor() public ERC20("wEth", "WETH") {
         _mint(msg.sender, INITIAL_SUPPLY);
     }
 

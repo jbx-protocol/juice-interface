@@ -1,4 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
+import { JsonRpcSigner } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import { localProvider } from 'constants/local-provider'
 import useContractReader from 'hooks/ContractReader'
@@ -8,7 +9,9 @@ import { useMemo, useState } from 'react'
 
 import { mainnetProvider } from '../constants/mainnet-provider'
 
-export function useWeth():
+export function useWeth(
+  signer?: JsonRpcSigner,
+):
   | Partial<{
       contract: Contract
       symbol: string
@@ -32,7 +35,7 @@ export function useWeth():
     functionName: 'weth',
   })
 
-  const contract = useErc20Contract(address, provider)
+  const contract = useErc20Contract(address, signer ?? provider)
 
   useContractReader<string>({
     contract,

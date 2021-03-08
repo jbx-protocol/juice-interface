@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 
 export function useUserProvider(injectedProvider?: Web3Provider) {
   return useMemo(() => {
-    console.log('useuserprovider')
     if (injectedProvider) {
       console.log('🦊 Using injected provider')
       return injectedProvider

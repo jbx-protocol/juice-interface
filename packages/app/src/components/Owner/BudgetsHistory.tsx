@@ -3,7 +3,7 @@ import { Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { budgetsDiff } from 'utils/budgetsDiff'
 
 import BudgetDetail from './BudgetDetail'
@@ -24,21 +24,24 @@ export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
     functionName: 'getBudget',
     args: poolNumber ? [poolNumber] : null,
     valueDidChange: budgetsDiff,
-    callback: budget => {
-      if (
-        !budget ||
-        !poolNumber ||
-        poolNumbers.includes(budget.previous) ||
-        budget.id.eq(0)
-      )
-        return
+    callback: useCallback(
+      budget => {
+        if (
+          !budget ||
+          !poolNumber ||
+          poolNumbers.includes(budget.previous) ||
+          budget.id.eq(0)
+        )
+          return
 
-      setBudgets([...budgets, budget])
-      setPoolNumbers([
-        ...poolNumbers,
-        ...(budget.previous.toNumber() > 0 ? [budget.previous] : []),
-      ])
-    },
+        setBudgets([...budgets, budget])
+        setPoolNumbers([
+          ...poolNumbers,
+          ...(budget.previous.toNumber() > 0 ? [budget.previous] : []),
+        ])
+      },
+      [poolNumber, poolNumbers, budgets],
+    ),
   })
 
   const budgetElems = (

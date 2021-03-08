@@ -9,7 +9,7 @@ export interface Budget {
   name: string
   link: string
   target: BigNumber
-  currency: BigNumber
+  currency: BigNumber // 0 ETH, 1 USD
   total: BigNumber
   start: BigNumber
   duration: BigNumber

@@ -3,6 +3,7 @@ import { Descriptions, Input, Modal } from 'antd'
 import { UserContext } from 'contexts/userContext'
 import { useContext, useEffect, useState } from 'react'
 import { formatBigNum } from 'utils/formatBigNum'
+import { formatEther, parseEther } from '@ethersproject/units'
 
 export default function ApproveSpendModal({
   visible,
@@ -47,12 +48,13 @@ export default function ApproveSpendModal({
     >
       <Descriptions>
         <Descriptions.Item label="Current allowance">
-          {formatBigNum(allowance)} ETH
+          {allowance ? formatEther(allowance) : undefined} {weth?.symbol}
         </Descriptions.Item>
       </Descriptions>
       <Input
-        defaultValue={initialAmount?.toString()}
+        defaultValue={initialAmount ? formatEther(initialAmount) : '0'}
         onChange={e => setApproveAmount(BigNumber.from(e.target.value || 0))}
+        suffix={weth?.symbol}
       />
     </Modal>
   )

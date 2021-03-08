@@ -1,29 +1,34 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Modal } from 'antd'
 import { UserContext } from 'contexts/userContext'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { formatBigNum } from 'utils/formatBigNum'
+import { formatEther } from '@ethersproject/units'
+import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'constants/contract-name'
 
 export default function ConfirmPayOwnerModal({
   visible,
-  amount,
-  receivedTickets,
-  ownerTickets,
+  weiAmount,
+  currencyAmount,
   ticketSymbol,
   onOk,
   onCancel,
 }: {
   visible?: boolean
   ticketSymbol?: string
-  amount?: BigNumber
-  receivedTickets?: BigNumber
-  ownerTickets?: BigNumber
+  weiAmount?: BigNumber
+  currencyAmount?: BigNumber
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { contracts, transactor, userAddress, currentBudget } = useContext(
-    UserContext,
-  )
+  const {
+    contracts,
+    transactor,
+    userAddress,
+    currentBudget,
+    weth,
+  } = useContext(UserContext)
 
   function pay() {
     if (!contracts || !currentBudget || !transactor) return
@@ -32,12 +37,39 @@ export default function ConfirmPayOwnerModal({
 
     transactor(contracts.Juicer, 'pay', [
       currentBudget.project,
-      amount,
+      weiAmount?.toHexString(),
       userAddress,
+      '',
     ])
 
     if (onOk) onOk()
   }
+
+  const payerPercentage = currentBudget
+    ? BigNumber.from(100)
+        .sub(currentBudget.p)
+        .toHexString()
+    : undefined
+
+  const budgetId = currentBudget?.id.gt(0)
+    ? currentBudget.id.toHexString()
+    : currentBudget?.previous.toHexString()
+
+  const receivedTickets = useContractReader<BigNumber>({
+    contract: ContractName.BudgetStore,
+    functionName: 'getWeightedRate',
+    args: [budgetId, currencyAmount?.toHexString(), payerPercentage],
+  })
+
+  const ownerTickets = useContractReader<BigNumber>({
+    contract: ContractName.BudgetStore,
+    functionName: 'getWeightedRate',
+    args: [
+      budgetId,
+      currencyAmount?.toHexString(),
+      currentBudget?.p.toHexString(),
+    ],
+  })
 
   return (
     <Modal
@@ -53,7 +85,7 @@ export default function ConfirmPayOwnerModal({
           {currentBudget?.project}
         </Descriptions.Item>
         <Descriptions.Item label="Pay amount">
-          {formatBigNum(amount)} ETH
+          {formatEther(weiAmount ?? 0)} {weth?.symbol}
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for you">
           {formatBigNum(receivedTickets)} {ticketSymbol}

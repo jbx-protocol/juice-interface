@@ -1,15 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther, parseEther } from '@ethersproject/units'
 import { Button, Col, Input, Row, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
-import { useContext, useState } from 'react'
-import { addressExists } from 'utils/addressExists'
+import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatBigNum } from 'utils/formatBigNum'
-import { orEmpty } from 'utils/orEmpty'
+import { formattedBudgetCurrency } from 'utils/budgetCurrency'
 
 import ApproveSpendModal from '../modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from '../modals/ConfirmPayOwnerModal'
@@ -32,11 +31,11 @@ export default function OwnerFinances({
     onNeedProvider,
     userAddress,
     currentBudget,
+    ethInCents,
   } = useContext(UserContext)
 
-  const [payerTickets, setPayerTickets] = useState<BigNumber>()
-  const [ownerTickets, setOwnerTickets] = useState<BigNumber>()
-  const [payAmount, setPayAmount] = useState<number>(0)
+  const [currencyAmount, setCurrencyAmount] = useState<BigNumber>()
+  const [weiPayAmount, setWeiPayAmount] = useState<BigNumber>(BigNumber.from(0))
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
     boolean
   >(false)
@@ -77,39 +76,40 @@ export default function OwnerFinances({
 
   const isOwner = owner === userAddress
 
-  function updatePayAmount(amount: number) {
-    if (!currentBudget) return
+  function updatePayAmount(inputAmount?: string) {
+    if (!currentBudget || !ethInCents) return
 
-    const _amount = amount || 0
+    if (currentBudget.currency.eq(0)) {
+      const wei = parseEther(inputAmount || '0')
+      setWeiPayAmount(wei)
+      setCurrencyAmount(wei)
+      return
+    }
 
-    const ticketsRatio = (percentage: BigNumber) =>
-      percentage &&
-      currentBudget.weight
-        .mul(percentage)
-        .div(currentBudget.target)
-        .div(100)
-
-    setPayAmount(_amount)
-
-    setOwnerTickets(
-      _amount ? ticketsRatio(currentBudget.p).mul(_amount) : undefined,
+    setCurrencyAmount(
+      BigNumber.from(Math.round(parseFloat(inputAmount || '0') * 100)),
     )
-    setPayerTickets(
-      _amount
-        ? ticketsRatio(
-            BigNumber.from(100)
-              .sub(currentBudget.p ?? 0)
-              .mul(_amount),
-          )
-        : undefined,
-    )
+
+    if (!inputAmount) {
+      setWeiPayAmount(BigNumber.from(0))
+      return
+    }
+
+    const ethAmount = (
+      ((parseFloat(inputAmount) ?? 0) / ethInCents.toNumber()) *
+      100
+    ).toPrecision(12)
+
+    const weiAmount = parseEther(ethAmount?.toString() ?? 0)
+
+    setWeiPayAmount(weiAmount)
   }
 
   function pay() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
-    if (!allowance || !payAmount) return
+    if (!allowance || !weiPayAmount) return
 
-    if (allowance.lt(payAmount)) {
+    if (allowance.lt(weiPayAmount)) {
       setApproveModalVisible(true)
       return
     }
@@ -118,6 +118,19 @@ export default function OwnerFinances({
   }
 
   const spacing = 30
+
+  const payAmountInUSD = useMemo((): string => {
+    if (!ethInCents) return '--'
+
+    try {
+      const amt = formatEther(weiPayAmount.toString()).split('.')
+      if (amt[1]) amt[1] = amt[1].substr(0, 4)
+      return amt.join('.')
+    } catch (e) {
+      console.log(e)
+      return '--'
+    }
+  }, [weiPayAmount, ethInCents])
 
   return (
     <Space size={spacing} direction="vertical">
@@ -128,39 +141,33 @@ export default function OwnerFinances({
               {currentBudget ? <BudgetDetail budget={currentBudget} /> : null}
               <Space
                 style={{
+                  flex: 1,
                   width: '100%',
+                  alignItems: 'flex-start',
                   justifyContent: 'flex-end',
                   padding: 25,
                 }}
               >
-                <Input
-                  name="sustain"
-                  placeholder="0"
-                  suffix={weth?.symbol}
-                  type="number"
-                  onChange={e => updatePayAmount(parseFloat(e.target.value))}
-                />
-                <Button type="primary" onClick={pay} disabled={!payAmount}>
+                <div style={{ textAlign: 'right', width: 300 }}>
+                  <Input
+                    name="sustain"
+                    placeholder="0"
+                    suffix={formattedBudgetCurrency(currentBudget?.currency)}
+                    type="number"
+                    onChange={e => updatePayAmount(e.target.value)}
+                  />
+
+                  {currentBudget?.currency.eq(1) ? (
+                    <div>
+                      Paid in {payAmountInUSD} {weth?.symbol}
+                    </div>
+                  ) : null}
+                </div>
+
+                <Button type="primary" onClick={pay} disabled={!weiPayAmount}>
                   Pay project
                 </Button>
               </Space>
-              {addressExists(ticketAddress) ? (
-                <div
-                  style={{
-                    padding: 25,
-                    paddingTop: 0,
-                    textAlign: 'right',
-                  }}
-                >
-                  <div>
-                    {orEmpty(formatBigNum(ownerTickets))} {ticketSymbol} for
-                    owner
-                  </div>
-                  <div>
-                    {orEmpty(formatBigNum(payerTickets))} {ticketSymbol} for you
-                  </div>
-                </div>
-              ) : null}
             </CardSection>
           }
         </Col>
@@ -194,7 +201,7 @@ export default function OwnerFinances({
 
       <ApproveSpendModal
         visible={approveModalVisible}
-        initialAmount={BigNumber.from(payAmount)}
+        initialAmount={weiPayAmount}
         allowance={allowance}
         onOk={() => setApproveModalVisible(false)}
         onCancel={() => setApproveModalVisible(false)}
@@ -204,9 +211,8 @@ export default function OwnerFinances({
         onOk={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
-        amount={BigNumber.from(payAmount)}
-        receivedTickets={payerTickets}
-        ownerTickets={ownerTickets}
+        currencyAmount={currencyAmount}
+        weiAmount={weiPayAmount}
       />
     </Space>
   )

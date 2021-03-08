@@ -5,8 +5,7 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { Budget } from 'models/budget'
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatBigNum } from 'utils/formatBigNum'
@@ -14,15 +13,14 @@ import { formatBigNum } from 'utils/formatBigNum'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
-  budget,
   ticketAddress,
   isOwner,
 }: {
-  budget?: Budget
   ticketAddress?: string
   isOwner?: boolean
 }) {
   const {
+    currentBudget,
     weth,
     contracts,
     transactor,
@@ -38,12 +36,12 @@ export default function Rewards({
     {
       contract: ContractName.Juicer,
       eventName: 'Pay',
-      topics: budget ? [budget.id.toHexString()] : undefined,
+      topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
     },
     {
       contract: ContractName.Juicer,
       eventName: 'Redeem',
-      topics: budget ? [[], budget.project] : undefined,
+      topics: currentBudget ? [[], currentBudget.project] : undefined,
     },
   ]
 
@@ -73,9 +71,15 @@ export default function Rewards({
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'iOweYous',
-    args: userAddress && budget ? [budget?.project, userAddress] : null,
+    args:
+      userAddress && currentBudget
+        ? [currentBudget?.project, userAddress]
+        : null,
     valueDidChange: bigNumbersDiff,
-    formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
+    formatter: useCallback(
+      (value?: BigNumber) => value ?? BigNumber.from(0),
+      [],
+    ),
     updateOn: [
       ...ticketsUpdateOn,
       // {
@@ -87,24 +91,29 @@ export default function Rewards({
   const iouSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'totalIOweYous',
-    args: budget ? [budget?.project] : null,
+    args: currentBudget ? [currentBudget?.project] : null,
     valueDidChange: bigNumbersDiff,
-    formatter: (value?: BigNumber) => value ?? BigNumber.from(0),
+    formatter: useCallback(
+      (value?: BigNumber) => value ?? BigNumber.from(0),
+      [],
+    ),
     updateOn: ticketsUpdateOn,
   })
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'getOverflow',
-    args: budget ? [budget?.project] : null,
+    args: currentBudget ? [currentBudget?.project] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: [
       {
         contract: ContractName.Juicer,
         eventName: 'Pay',
-        topics: budget ? [budget.id.toHexString()] : undefined,
+        topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
       },
     ],
   })
+
+  if (!currentBudget) return null
 
   const totalBalance = ticketsBalance?.add(iouBalance || 0) || BigNumber.from(0)
   const totalSupply = ticketSupply?.add(iouSupply || 0) || BigNumber.from(0)
@@ -137,7 +146,12 @@ export default function Rewards({
     transactor(
       contracts.Juicer,
       'redeem',
-      [budget?.project, redeemAmount?.toHexString(), minReturn, userAddress],
+      [
+        currentBudget?.project,
+        redeemAmount?.toHexString(),
+        minReturn,
+        userAddress,
+      ],
       {
         onDone: () => setLoadingRedeem(false),
         onConfirmed: () => setRedeemAmount(BigNumber.from(0)),
@@ -150,12 +164,10 @@ export default function Rewards({
 
     setLoadingClaimIou(true)
 
-    transactor(contracts.TicketStore, 'convert', [budget?.project], {
+    transactor(contracts.TicketStore, 'convert', [currentBudget?.project], {
       onDone: () => setLoadingClaimIou(false),
     })
   }
-
-  if (!budget) return null
 
   const subText = (text: string) => (
     <div

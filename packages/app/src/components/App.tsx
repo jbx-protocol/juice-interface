@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Web3Provider } from '@ethersproject/providers'
+import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import { NETWORKS } from 'constants/networks'
@@ -7,18 +7,20 @@ import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { useCurrentBudget } from 'hooks/CurrentBudget'
+import { useExchangePrice } from 'hooks/ExchangePrice'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useTransactor } from 'hooks/Transactor'
 import { useUserProvider } from 'hooks/UserProvider'
 import { useWeth } from 'hooks/Weth'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
+  const [signer, setSigner] = useState<JsonRpcSigner>()
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect()
@@ -33,7 +35,17 @@ function App() {
 
   const gasPrice = useGasPrice('average')
 
-  const weth = useWeth()
+  useEffect(() => {
+    async function getSigner() {
+      setSigner(await userProvider?.getSigner())
+    }
+
+    getSigner()
+  }, [userProvider])
+
+  const weth = useWeth(signer)
+
+  const ethUsdPrice = useExchangePrice()
 
   const transactor = useTransactor({
     provider: userProvider,
@@ -55,6 +67,9 @@ function App() {
         onNeedProvider: loadWeb3Modal,
         currentBudget,
         weth,
+        ethInCents: ethUsdPrice
+          ? BigNumber.from(Math.round(ethUsdPrice * 100))
+          : undefined,
       }}
     >
       <Layout

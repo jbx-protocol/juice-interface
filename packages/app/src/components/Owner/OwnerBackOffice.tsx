@@ -1,5 +1,5 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
-import { Button, Col, DescriptionsProps, Form, Row } from 'antd'
+import { Button, Col, Form, Row } from 'antd'
 import { UserContext } from 'contexts/userContext'
 import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { useContext, useState } from 'react'
@@ -8,7 +8,6 @@ import { addressExists } from 'utils/addressExists'
 import TicketsForm from '../forms/TicketsForm'
 import { CardSection } from '../shared/CardSection'
 import WtfCard from '../shared/WtfCard'
-import Reserves from './Reserves'
 
 export default function OwnerBackOffice({
   ticketAddress,
@@ -17,36 +16,10 @@ export default function OwnerBackOffice({
   ticketAddress?: string
   isOwner?: boolean
 }) {
-  const { transactor, contracts, onNeedProvider, currentBudget } = useContext(
-    UserContext,
-  )
+  const { transactor, contracts, onNeedProvider } = useContext(UserContext)
 
   const [ticketsForm] = Form.useForm<TicketsFormFields>()
   const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>()
-  const [loadingMint, setLoadingMint] = useState<boolean>()
-
-  const descriptionsStyle: DescriptionsProps = {
-    labelStyle: { fontWeight: 600 },
-    size: 'middle',
-    bordered: true,
-  }
-
-  function mint() {
-    if (!currentBudget) return
-
-    if (!transactor || !contracts) return onNeedProvider()
-
-    setLoadingMint(true)
-
-    transactor(
-      contracts.Juicer,
-      'mintReservedTickets',
-      [currentBudget.project],
-      {
-        onDone: () => setLoadingMint(false),
-      },
-    )
-  }
 
   async function initTickets() {
     if (!transactor || !contracts) return onNeedProvider()
@@ -111,42 +84,6 @@ export default function OwnerBackOffice({
           </Col>
         </Row>
       ) : null}
-
-      <Row gutter={gutter}>
-        <Col span={12}>
-          <CardSection header="Reserves">
-            <Reserves
-              descriptionsStyle={descriptionsStyle}
-              ticketAddress={ticketAddress}
-            />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                padding: 20,
-              }}
-            >
-              <Button onClick={mint} loading={loadingMint}>
-                Mint reserves
-              </Button>
-            </div>
-          </CardSection>
-        </Col>
-
-        <Col span={12}>
-          <WtfCard>
-            <div>
-              {[
-                'Budgets can reserve a subset of tickets for the project owner, and reserve a specified amount of its overflow as a donation to a provided address.',
-                "5% of the amount received by each budget will also be reserved for funding the Juice admin's own budgets, which will give you its tickets in return.",
-                'These reserves are all distributable once a budget expires, and will automatically be distributed when a budget is tapped.',
-              ].map((text, i) => (
-                <p key={i}>{text}</p>
-              ))}
-            </div>
-          </WtfCard>
-        </Col>
-      </Row>
     </div>
   )
 }

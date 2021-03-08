@@ -108,12 +108,11 @@ export function useTransactor({
           console.log('LOCAL TX SENT', result.hash)
           if (result.confirmations && options?.onConfirmed) {
             options.onConfirmed(result, signer)
-            options.onDone && options.onDone()
           } else if (options?.onCancelled) {
             options.onCancelled(result, signer)
-            options.onDone && options.onDone()
           }
         }
+        options?.onDone && options.onDone()
 
         return true
       } catch (e) {

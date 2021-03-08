@@ -28,7 +28,18 @@ export default function Owner() {
     contract: ContractName.TicketStore,
     functionName: 'tickets',
     args: owner ? [owner] : null,
+    updateOn: userAddress
+      ? [
+          {
+            contract: ContractName.TicketStore,
+            eventName: 'Issue',
+            topics: [userAddress],
+          },
+        ]
+      : undefined,
   })
+
+  console.log({ ticketAddress })
 
   useDeepCompareEffectNoCheck(() => {
     if (currentBudget) setBudgetState('found')

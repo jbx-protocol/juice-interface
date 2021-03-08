@@ -15,7 +15,8 @@ interface IBudgetController {
         uint256 amount,
         uint256 currencyConvertedAmount,
         uint256 currency,
-        string note
+        string note,
+        bool adminFee
     );
 
     event Tap(

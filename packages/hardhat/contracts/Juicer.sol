@@ -159,6 +159,28 @@ contract Juicer is IJuicer {
     }
 
     /**
+        @notice Contribute funds to a project's active Budget.
+        @dev Mints the project's tickets proportional to the amount of the contribution.
+        @dev The sender must approve this contract to transfer the specified amount of tokens.
+        @param _project The project of the budget to contribute funds to.
+        @param _amount Amount of the contribution in ETH. Sent as 10E18.
+        @param _beneficiary The address to transfer the newly minted Tickets to. 
+        @param _note A note that will be included in the published event.
+        @return _budgetId The ID of the Budget that successfully received the contribution.
+    */
+    function pay(
+        address _project,
+        uint256 _amount,
+        address _beneficiary,
+        string memory _note
+    ) external override lock returns (uint256) {
+        // Positive payments only.
+        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
+
+        _pay(_project, _amount, _beneficiary, _note, false);
+    }
+
+    /**
         @notice Addresses can redeem their Tickets to claim overflowed tokens.
         @param _issuer The issuer of the Tickets being redeemed.
         @param _amount The amount of Tickets to redeem.
@@ -422,7 +444,7 @@ contract Juicer is IJuicer {
         emit SetOverflowYielder(_newOverflowYielder);
     }
 
-    // --- public transactions --- //
+    // --- private transactions --- //
 
     /**
         @notice Contribute funds to a project's active Budget.
@@ -432,17 +454,16 @@ contract Juicer is IJuicer {
         @param _amount Amount of the contribution in ETH. Sent as 10E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
+        @param _adminFee Wether or not this payment is for an admin fee.
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
-    function pay(
+    function _pay(
         address _project,
         uint256 _amount,
         address _beneficiary,
-        string memory _note
-    ) public override lock returns (uint256) {
-        // Positive payments only.
-        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
-
+        string memory _note,
+        bool _adminFee
+    ) private returns (uint256) {
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (
             Budget.Data memory _budget,
@@ -456,15 +477,18 @@ contract Juicer is IJuicer {
                 fee
             );
 
-        // Transfer.
-        weth.safeTransferFrom(msg.sender, address(this), _amount);
-
-        // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        if (_project != admin) {
-            // Allow reentrency to recurse.
-            unlocked = 1;
-            pay(admin, _amount.mul(fee).div(100), _project, "Juicer::pay: FEE");
-            unlocked = 0;
+        // If this payment is not from the admin fee.
+        if (!_adminFee) {
+            // Transfer.
+            weth.safeTransferFrom(msg.sender, address(this), _amount);
+            // Take fee through the admin's own budget, minting tickets for the project paying the fee.
+            _pay(
+                admin,
+                _amount.mul(fee).div(100),
+                _project,
+                "Juicer::pay: FEE",
+                true
+            );
         }
 
         if (_budget.p > 0) {
@@ -497,7 +521,8 @@ contract Juicer is IJuicer {
             _amount,
             _covertedCurrencyAmount,
             _budget.currency,
-            _note
+            _note,
+            _adminFee
         );
 
         return _budget.id;

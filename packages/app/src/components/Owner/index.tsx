@@ -11,6 +11,7 @@ import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import Loading from '../shared/Loading'
 import OwnerBackOffice from './OwnerBackOffice'
 import OwnerFinances from './OwnerFinances'
+import Rewards from './Rewards'
 
 export default function Owner() {
   const [budgetState, setBudgetState] = useState<
@@ -120,7 +121,7 @@ export default function Owner() {
                 </h1>
                 <h3>{owner}</h3>
               </div>
-              {/* <Rewards budget={currentBudget} ticketAddress={ticketAddress} /> */}
+              <Rewards ticketAddress={ticketAddress} />
             </div>
 
             <Tabs

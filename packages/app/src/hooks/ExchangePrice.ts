@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { usePoller } from './Poller'
 
 export function useExchangePrice() {
-  const [price, setPrice] = useState(0)
+  const [price, setPrice] = useState<number>()
 
   /* 💵 get the price of ETH from 🦄 Uniswap: */
   const pollPrice = () => {

@@ -1,4 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { formatEther } from '@ethersproject/units'
 import { Button, Descriptions, DescriptionsProps, Input, Progress } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { ContractName } from 'constants/contract-name'
@@ -7,7 +8,6 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
 import moment from 'moment'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
@@ -25,11 +25,23 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     transactor,
     userAddress,
     onNeedProvider,
+    ethInCents,
   } = useContext(UserContext)
 
   const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
+
+  const currency = formattedBudgetCurrency(budget.currency)
+
+  const dollarsFromWei = (wei: BigNumberish) =>
+    parseFloat(
+      formatEther(
+        BigNumber.from(wei)
+          .mul(ethInCents ?? 1)
+          .div(100),
+      ),
+    ).toFixed(2)
 
   const juicerFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -100,6 +112,9 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const surplus = budget.total.sub(budget.target)
 
+  const formattedSurplus =
+    currency === 'ETH' ? formatEther(surplus) : dollarsFromWei(surplus)
+
   const descriptionsStyle: DescriptionsProps = {
     labelStyle: { fontWeight: 600 },
     size: 'middle',
@@ -134,26 +149,30 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           # {budget.number.toString()}
         </h3>
         <Progress
-          percent={budget.total
-            .mul(100)
-            .div(budget.target)
-            .toNumber()}
+          percent={
+            (currency === 'ETH'
+              ? parseFloat(formatEther(budget.total.div(budget.target)))
+              : parseFloat(dollarsFromWei(budget.total)) /
+                budget.target.toNumber()) * 100
+          }
           showInfo={false}
           strokeColor={colors.juiceOrange}
         ></Progress>
         <span style={{ marginLeft: gutter }}>
           <span style={{ fontWeight: 600 }}>
-            {orEmpty(formatBigNum(budget.total))}
+            {orEmpty(
+              currency === 'ETH'
+                ? formatEther(budget.total)
+                : dollarsFromWei(budget.total),
+            )}
           </span>
           /{formatBigNum(budget.target)}{' '}
           {surplus.gt(0) ? (
             <span style={{ color: colors.secondary, fontWeight: 600 }}>
-              +{formatBigNum(surplus)}
+              +{formattedSurplus}
             </span>
           ) : null}{' '}
-          {formattedBudgetCurrency(
-            budget?.currency.toString() as BudgetCurrency,
-          )}
+          {currency}
         </span>
       </div>
 
@@ -181,10 +200,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               />
             }
           >
-            {formatBigNum(budget.tappedTotal)}{' '}
-            {formattedBudgetCurrency(
-              budget.currency.toString() as BudgetCurrency,
-            )}
+            {formatBigNum(budget.tappedTotal)} {currency}
           </Descriptions.Item>
         )}
 
@@ -205,7 +221,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                 alignItems: 'center',
               }}
             >
-              {formatBigNum(tappableAmount) ?? '0'} {weth?.symbol}
+              {currency === 'ETH'
+                ? formatEther(tappableAmount ?? 0)
+                : formatBigNum(tappableAmount)}{' '}
+              {currency}
               {isOwner && tappableAmount?.gt(0) ? (
                 <div>
                   <Button

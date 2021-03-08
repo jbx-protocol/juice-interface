@@ -16,7 +16,6 @@ export function useContractLoader(
     async function loadContracts() {
       if (!provider) return
 
-      console.log('ready')
       await provider.ready
 
       let network: NetworkName

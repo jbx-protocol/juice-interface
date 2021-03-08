@@ -1,7 +1,6 @@
 import { Button, Col, Row, Tag } from 'antd'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
-import { useExchangePrice } from 'hooks/ExchangePrice'
 import { useContext } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 
@@ -28,13 +27,11 @@ export default function Account({
     }, 1)
   }
 
-  const price = useExchangePrice()
-
   return (
     <div>
       <Row gutter={10} align="middle" style={{ justifyContent: 'flex-end' }}>
         <Col>
-          <Balance userAddress={userAddress} dollarMultiplier={price} />
+          <Balance userAddress={userAddress} />
         </Col>
         <Col>
           <Wallet userAddress={userAddress}></Wallet>

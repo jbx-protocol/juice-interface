@@ -3,6 +3,7 @@ import { colors } from 'constants/styles/colors'
 import { BudgetCurrency } from 'models/budget-currency'
 import React from 'react'
 import { formattedBudgetCurrency } from 'utils/budgetCurrency'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export default function BudgetTargetInput({
   currency,
@@ -32,7 +33,7 @@ export default function BudgetTargetInput({
       }}
       onClick={onCurrencyChange}
     >
-      {formattedBudgetCurrency(currency)}
+      {formattedBudgetCurrency(BigNumber.from(currency))}
     </div>
   )
 

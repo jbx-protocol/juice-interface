@@ -2,7 +2,7 @@ import { Contract, EventFilter } from '@ethersproject/contracts'
 import { ContractName } from 'constants/contract-name'
 import { localProvider } from 'constants/local-provider'
 import { Contracts } from 'models/contracts'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import { useContractLoader } from './ContractLoader'
@@ -33,7 +33,6 @@ export default function useContractReader<V>({
   valueDidChange?: (a?: V, b?: V) => boolean
 }) {
   const [value, setValue] = useState<V | undefined>()
-  const _contract = useRef<Contract>()
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
   const _callback = useCallback(callback ?? ((val: any) => null), [callback])

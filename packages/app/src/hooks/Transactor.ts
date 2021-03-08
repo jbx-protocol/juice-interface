@@ -75,6 +75,8 @@ export function useTransactor({
           {},
         )
 
+      console.log({ signer })
+
       console.log('🧃 Calling ' + functionName + '() with args:', reportArgs)
 
       try {

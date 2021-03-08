@@ -547,6 +547,7 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _ethPrice
     ) private pure returns (uint256) {
         if (_budget.total == 0) return 0;
+
         uint256 _available =
             Math.min(_budget.target, _budget.total.mul(_ethPrice));
         return

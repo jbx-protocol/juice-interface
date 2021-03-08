@@ -460,8 +460,12 @@ contract Juicer is IJuicer {
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        if (_project != admin)
+        if (_project != admin) {
+            // Allow reentrency to recurse.
+            unlocked = 1;
             pay(admin, _amount.mul(fee).div(100), _project, "Juicer::pay: FEE");
+            unlocked = 0;
+        }
 
         if (_budget.p > 0) {
             // The project gets the budget's project percentage, if one is specified.

@@ -86,6 +86,11 @@ const main = async () => {
     await attachedStaker.setController(budgetBallot.address, {
       gasLimit: 3000000
     });
+
+    // Create the admin's budget.
+    await attachedBudgetStore.configure(1, 1, 2592000, "Juice", "https://asdf.com", 97, 5, 0, "0x0000000000000000000000000000000000000000", {
+      gasLimit: 3000000
+    });
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }

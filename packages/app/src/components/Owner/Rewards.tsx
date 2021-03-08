@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther } from '@ethersproject/units'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
@@ -229,7 +230,7 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {formatBigNum(iouBalance) ?? 0} {iouSymbol}
+                {formatEther(iouBalance?.toString() ?? '0')} {iouSymbol}
               </div>
               {subText(
                 `${share ?? 0}% of ${formatBigNum(totalSupply) ??
@@ -270,11 +271,12 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {formatBigNum(ticketsBalance) ?? 0} {ticketSymbol}
+                {formatEther(ticketsBalance?.toString() ?? '0')} {ticketSymbol}
               </div>
               {subText(
-                `${share ?? 0}% of ${formatBigNum(ticketSupply) ??
-                  0} ${ticketSymbol} in circulation`,
+                `${share ?? 0}% of ${formatEther(
+                  ticketSupply?.toString() ?? '0',
+                )} ${ticketSymbol} in circulation`,
               )}
               {!addressExists(ticketAddress) ? (
                 isOwner ? (

@@ -159,7 +159,7 @@ export default function OwnerFinances({
 
                   {currentBudget?.currency.eq(1) ? (
                     <div>
-                      Paid in {payAmountInUSD} {weth?.symbol}
+                      Paid as {payAmountInUSD} {weth?.symbol}
                     </div>
                   ) : null}
                 </div>

@@ -8,6 +8,7 @@ import { BudgetFormFields } from 'models/forms-fields/budget-form'
 import { useContext } from 'react'
 import { addressExists } from 'utils/addressExists'
 
+import { formatWad, parseWad } from '../../utils/formatCurrency'
 import BudgetAdvancedForm from '../forms/BudgetAdvancedForm'
 import BudgetForm from '../forms/BudgetForm'
 
@@ -29,7 +30,7 @@ export default function ReconfigureBudgetModal({
     budgetForm.setFieldsValue({
       name: currentBudget.name,
       duration: currentBudget.duration.toNumber(),
-      target: currentBudget.target.toNumber(),
+      target: formatWad(currentBudget.target),
       currency: currentBudget.currency.toString() as BudgetCurrency,
       link: currentBudget.link,
     })
@@ -58,7 +59,7 @@ export default function ReconfigureBudgetModal({
     }
 
     transactor(contracts.BudgetStore, 'configure', [
-      BigNumber.from(fields.target).toHexString(),
+      parseWad(fields.target)?.toHexString(),
       BigNumber.from(fields.duration).toHexString(),
       BigNumber.from(fields.currency).toHexString(),
       fields.name,

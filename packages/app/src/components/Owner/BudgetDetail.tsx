@@ -1,47 +1,37 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { formatEther } from '@ethersproject/units'
-import { Button, Descriptions, DescriptionsProps, Input, Progress } from 'antd'
+import { BigNumber } from '@ethersproject/bignumber'
+import { Button, Descriptions, DescriptionsProps, Input } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import { ContractName } from 'constants/contract-name'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
-import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
 import moment from 'moment'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatBigNum } from 'utils/formatBigNum'
-import { orEmpty } from 'utils/orEmpty'
+import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { CurrencyUtils, formatWad, parseWad } from 'utils/formatCurrency'
 
-import { formattedBudgetCurrency } from '../../utils/budgetCurrency'
 import TooltipLabel from '../shared/TooltipLabel'
+import BudgetHeader from './BudgetHeader'
 
 export default function BudgetDetail({ budget }: { budget: Budget }) {
   const {
-    weth,
-    contracts,
     transactor,
-    userAddress,
     onNeedProvider,
-    ethInCents,
+    contracts,
+    userAddress,
+    usdPerEth,
   } = useContext(UserContext)
 
-  const [tapAmount, setTapAmount] = useState<BigNumber>(BigNumber.from(0))
+  const currencyUtils = new CurrencyUtils(usdPerEth)
+
+  const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
-  const currency = formattedBudgetCurrency(budget.currency)
-
-  const dollarsFromWei = (wei: BigNumberish) =>
-    parseFloat(
-      formatEther(
-        BigNumber.from(wei)
-          .mul(ethInCents ?? 1)
-          .div(100),
-      ),
-    ).toFixed(2)
+  const currency = formatBudgetCurrency(budget.currency)
 
   const juicerFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -56,20 +46,43 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
       ? [budget.id.toHexString(), juicerFeePercent?.toHexString()]
       : null,
     valueDidChange: bigNumbersDiff,
-    updateOn: [
-      {
-        contract: ContractName.Juicer,
-        eventName: 'Pay',
-        topics: [budget.id.toHexString()],
-      },
-      {
-        contract: ContractName.Juicer,
-        eventName: 'Tap',
-        topics: [budget.id.toHexString()],
-      },
-    ],
+    updateOn: useMemo(
+      () =>
+        budget.id
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [budget.id.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [budget.id.toHexString()],
+              },
+            ]
+          : undefined,
+      [budget.id],
+    ),
   })
 
+  const formattedTappedTotal = useMemo(
+    () =>
+      currency === 'USD'
+        ? currencyUtils.weiToUsd(budget.tappedTotal)?.toString()
+        : formatWad(budget.tappedTotal),
+    [budget.tappedTotal],
+  )
+
+  const formattedTappable = useMemo(
+    () =>
+      currency === 'USD'
+        ? currencyUtils.weiToUsd(tappableAmount)?.toString()
+        : formatWad(tappableAmount),
+    [],
+  )
+
+  // TODO recalculate every second
   const secondsLeft =
     budget &&
     Math.floor(
@@ -78,7 +91,9 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
         new Date().valueOf() / 1000,
     )
 
-  function expandedTimeString(millis: number) {
+  const isOwner = budget?.project === userAddress
+
+  function detailedTimeString(millis: number) {
     if (!millis || millis <= 0) return 0
 
     const days = millis && millis / 1000 / SECONDS_IN_DAY
@@ -93,27 +108,31 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
         ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
   }
 
-  const isOwner = budget?.project === userAddress
-
   function tap() {
     if (!transactor || !contracts?.Juicer) return onNeedProvider()
 
     setLoadingWithdraw(true)
 
     const id = budget.id.toHexString()
-    const amount = tapAmount.toHexString()
 
-    transactor(contracts.Juicer, 'tap', [id, amount, userAddress], {
-      onDone: () => setLoadingWithdraw(false),
-    })
+    if (!tapAmount) {
+      setLoadingWithdraw(false)
+      return
+    }
+
+    const amount = parseWad(tapAmount)
+
+    if (!amount) return
+
+    transactor(
+      contracts.Juicer,
+      'tap',
+      [id, amount.toHexString(), userAddress],
+      {
+        onDone: () => setLoadingWithdraw(false),
+      },
+    )
   }
-
-  if (!budget) return null
-
-  const surplus = budget.total.sub(budget.target)
-
-  const formattedSurplus =
-    currency === 'ETH' ? formatEther(surplus) : dollarsFromWei(surplus)
 
   const descriptionsStyle: DescriptionsProps = {
     labelStyle: { fontWeight: 600 },
@@ -124,57 +143,24 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const formatDate = (date: number) => moment(date).format('M-DD-YYYY h:mma')
 
-  const ended: string | undefined =
-    budget.start.add(budget.duration).toNumber() * 1000 < new Date().valueOf()
-      ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
-      : undefined
+  const isEnded: string | undefined = useMemo(
+    () =>
+      budget.start.add(budget.duration).toNumber() * 1000 < new Date().valueOf()
+        ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
+        : undefined,
+    [budget.start, budget.duration],
+  )
 
-  const isUpcoming = budget.start.gt(Math.round(new Date().valueOf() / 1000))
+  const isUpcoming = useMemo(
+    () => budget.start.gt(Math.round(new Date().valueOf() / 1000)),
+    [budget.start],
+  )
+
+  if (!budget) return null
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: 15,
-          marginBottom: 0,
-          paddingBottom: 15,
-          paddingLeft: gutter,
-          paddingRight: gutter,
-          whiteSpace: 'pre',
-        }}
-      >
-        <h3 style={{ fontWeight: 600, marginRight: gutter, marginBottom: 0 }}>
-          # {budget.number.toString()}
-        </h3>
-        <Progress
-          percent={
-            (currency === 'ETH'
-              ? parseFloat(formatEther(budget.total.div(budget.target)))
-              : parseFloat(dollarsFromWei(budget.total)) /
-                budget.target.toNumber()) * 100
-          }
-          showInfo={false}
-          strokeColor={colors.juiceOrange}
-        ></Progress>
-        <span style={{ marginLeft: gutter }}>
-          <span style={{ fontWeight: 600 }}>
-            {orEmpty(
-              currency === 'ETH'
-                ? formatEther(budget.total)
-                : dollarsFromWei(budget.total),
-            )}
-          </span>
-          /{formatBigNum(budget.target)}{' '}
-          {surplus.gt(0) ? (
-            <span style={{ color: colors.secondary, fontWeight: 600 }}>
-              +{formattedSurplus}
-            </span>
-          ) : null}{' '}
-          {currency}
-        </span>
-      </div>
+      <BudgetHeader budget={budget} gutter={gutter} />
 
       <Descriptions {...descriptionsStyle} column={2} bordered>
         <Descriptions.Item label="Start">
@@ -182,12 +168,12 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
         </Descriptions.Item>
 
         <Descriptions.Item label="Duration">
-          {expandedTimeString(budget && budget.duration.toNumber() * 1000)}
+          {detailedTimeString(budget && budget.duration.toNumber() * 1000)}
         </Descriptions.Item>
 
         {isUpcoming ? null : (
-          <Descriptions.Item label={ended ? 'Ended' : 'Time left'}>
-            {(secondsLeft && expandedTimeString(secondsLeft * 1000)) || ended}
+          <Descriptions.Item label={isEnded ? 'Ended' : 'Time left'}>
+            {(secondsLeft && detailedTimeString(secondsLeft * 1000)) || isEnded}
           </Descriptions.Item>
         )}
 
@@ -200,7 +186,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               />
             }
           >
-            {formatBigNum(budget.tappedTotal)} {currency}
+            {formattedTappedTotal?.toString()} {currency}
           </Descriptions.Item>
         )}
 
@@ -221,10 +207,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                 alignItems: 'center',
               }}
             >
-              {currency === 'ETH'
-                ? formatEther(tappableAmount ?? 0)
-                : formatBigNum(tappableAmount)}{' '}
-              {currency}
+              {formattedTappable} {currency}
               {isOwner && tappableAmount?.gt(0) ? (
                 <div>
                   <Button
@@ -241,7 +224,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                       setWithdrawModalVisible(false)
                     }}
                     onCancel={() => {
-                      setTapAmount(BigNumber.from(0))
+                      setTapAmount(undefined)
                       setWithdrawModalVisible(false)
                     }}
                     okText="Withdraw"
@@ -250,12 +233,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                     <Input
                       name="withdrawable"
                       placeholder="0"
-                      suffix={weth?.symbol}
-                      value={tapAmount.toString()}
-                      max={tappableAmount?.toString()}
-                      onChange={e =>
-                        setTapAmount(BigNumber.from(e.target.value))
-                      }
+                      suffix={currency}
+                      value={tapAmount}
+                      max={formattedTappable}
+                      onChange={e => setTapAmount(e.target.value)}
                     />
                   </Modal>
                 </div>

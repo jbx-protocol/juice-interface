@@ -5,7 +5,7 @@ import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 
 export default function Balance({ userAddress }: { userAddress?: string }) {
-  const { userProvider, ethInCents } = useContext(UserContext)
+  const { userProvider, usdPerEth } = useContext(UserContext)
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
 
@@ -25,17 +25,8 @@ export default function Balance({ userAddress }: { userAddress?: string }) {
   )
 
   const displayBalance =
-    ethInCents && dollarMode
-      ? `$${
-          balance
-            ? formatEther(
-                balance
-                  .mul(ethInCents)
-                  .div(100)
-                  .toString(),
-              )
-            : '--'
-        }`
+    usdPerEth && dollarMode
+      ? `$${balance ? formatEther(balance.mul(usdPerEth).toString()) : '--'}`
       : `${parseFloat(balance ? formatEther(balance) : '0.00').toFixed(4)}ETH`
 
   if (!userAddress) return null

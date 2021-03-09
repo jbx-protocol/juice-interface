@@ -2,7 +2,7 @@ import { Input } from 'antd'
 import { colors } from 'constants/styles/colors'
 import { BudgetCurrency } from 'models/budget-currency'
 import React from 'react'
-import { formattedBudgetCurrency } from 'utils/budgetCurrency'
+import { formatBudgetCurrency } from 'utils/budgetCurrency'
 import { BigNumber } from '@ethersproject/bignumber'
 
 export default function BudgetTargetInput({
@@ -13,8 +13,8 @@ export default function BudgetTargetInput({
   disabled,
 }: {
   currency?: BudgetCurrency
-  target?: number | string
-  onValueChange: (value: number) => void
+  target?: string
+  onValueChange: (value: string) => void
   onCurrencyChange?: VoidFunction
   disabled?: boolean
 }) {
@@ -33,7 +33,7 @@ export default function BudgetTargetInput({
       }}
       onClick={onCurrencyChange}
     >
-      {formattedBudgetCurrency(BigNumber.from(currency))}
+      {formatBudgetCurrency(BigNumber.from(currency))}
     </div>
   )
 
@@ -45,7 +45,7 @@ export default function BudgetTargetInput({
       type="number"
       disabled={disabled}
       suffix={budgetCurrencySelector}
-      onChange={e => onValueChange(parseFloat(e.target.value))}
+      onChange={e => onValueChange(e.target.value)}
     />
   )
 }

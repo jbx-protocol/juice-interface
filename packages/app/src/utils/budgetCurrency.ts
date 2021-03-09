@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-export const formattedBudgetCurrency = (
+export const formatBudgetCurrency = (
   curr?: BigNumber | string,
 ): 'ETH' | 'USD' | undefined => {
   if (!curr) return

@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 import { Budget } from 'models/budget'
@@ -13,7 +12,7 @@ export const UserContext: React.Context<{
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
   currentBudget?: Budget | null
-  ethInCents?: BigNumber
+  usdPerEth?: number
   weth?: Partial<{
     contract: Contract
     symbol: string

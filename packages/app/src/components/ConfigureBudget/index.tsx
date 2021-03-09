@@ -17,6 +17,7 @@ import { useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { addressExists } from 'utils/addressExists'
 
+import { formatWad, parseWad } from '../../utils/formatCurrency'
 import WtfCard from '../shared/WtfCard'
 import { advancedContractStep } from './steps/advancedContractStep'
 import { contractStep } from './steps/contractStep'
@@ -65,7 +66,7 @@ export default function ConfigureBudget() {
           .toNumber(),
         link: currentBudget.link,
         currency: currentBudget.currency.toString() as BudgetCurrency,
-        target: currentBudget.target.toNumber(),
+        target: formatWad(currentBudget.target),
       })
       budgetAdvancedForm.setFieldsValue({
         discountRate: currentBudget.discountRate.toNumber(),
@@ -145,7 +146,7 @@ export default function ConfigureBudget() {
       contracts.BudgetStore,
       'configure',
       [
-        BigNumber.from(fields.target).toHexString(),
+        parseWad(fields.target)?.toHexString(),
         BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(
           fields.duration *

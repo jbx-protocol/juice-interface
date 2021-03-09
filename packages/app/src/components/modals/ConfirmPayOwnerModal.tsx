@@ -1,24 +1,22 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Descriptions, Modal } from 'antd'
-import { UserContext } from 'contexts/userContext'
-import { useContext, useEffect } from 'react'
-import { formatBigNum } from 'utils/formatBigNum'
 import { formatEther } from '@ethersproject/units'
-import useContractReader from 'hooks/ContractReader'
+import { Descriptions, Modal } from 'antd'
 import { ContractName } from 'constants/contract-name'
+import { UserContext } from 'contexts/userContext'
+import useContractReader from 'hooks/ContractReader'
+import { useContext, useMemo } from 'react'
+import { formatBigNum } from 'utils/formatBigNum'
 
 export default function ConfirmPayOwnerModal({
   visible,
   weiAmount,
-  currencyAmount,
   ticketSymbol,
   onOk,
   onCancel,
 }: {
   visible?: boolean
-  ticketSymbol?: string
   weiAmount?: BigNumber
-  currencyAmount?: BigNumber
+  ticketSymbol?: string
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
@@ -58,17 +56,23 @@ export default function ConfirmPayOwnerModal({
   const receivedTickets = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'getWeightedRate',
-    args: [budgetId, currencyAmount?.toHexString(), payerPercentage],
+    args: useMemo(() => [budgetId, weiAmount?.toHexString(), payerPercentage], [
+      weiAmount,
+      payerPercentage,
+    ]),
   })
 
   const ownerTickets = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'getWeightedRate',
-    args: [
-      budgetId,
-      currencyAmount?.toHexString(),
-      currentBudget?.p.toHexString(),
-    ],
+    args: useMemo(
+      () => [
+        budgetId,
+        weiAmount?.toHexString(),
+        currentBudget?.p.toHexString(),
+      ],
+      [weiAmount, currentBudget?.p],
+    ),
   })
 
   return (

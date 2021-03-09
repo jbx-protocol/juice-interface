@@ -45,7 +45,7 @@ function App() {
 
   const weth = useWeth(signer)
 
-  const ethUsdPrice = useExchangePrice()
+  const usdPerEth = useExchangePrice()
 
   const transactor = useTransactor({
     provider: userProvider,
@@ -67,9 +67,7 @@ function App() {
         onNeedProvider: loadWeb3Modal,
         currentBudget,
         weth,
-        ethInCents: ethUsdPrice
-          ? BigNumber.from(Math.round(ethUsdPrice * 100))
-          : undefined,
+        usdPerEth,
       }}
     >
       <Layout

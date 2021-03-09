@@ -6,7 +6,7 @@ import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { Step } from 'models/step'
 import { Link } from 'react-router-dom'
 import { addressExists } from 'utils/addressExists'
-import { formattedBudgetCurrency } from 'utils/budgetCurrency'
+import { formatBudgetCurrency } from 'utils/budgetCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
 export function reviewStep({
@@ -68,7 +68,7 @@ export function reviewStep({
                     ? currentBudget.target
                     : budgetForm.getFieldValue('target')
                 }
-                suffix={formattedBudgetCurrency(
+                suffix={formatBudgetCurrency(
                   budgetForm.getFieldValue('currency'),
                 )}
               />

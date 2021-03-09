@@ -6,13 +6,13 @@ import { useContext, useEffect, useState } from 'react'
 
 export default function ApproveSpendModal({
   visible,
-  initialAmount,
+  initialWeiAmt,
   allowance,
   onOk,
   onCancel,
 }: {
   visible?: boolean
-  initialAmount?: BigNumber
+  initialWeiAmt?: BigNumber
   allowance?: BigNumber
   onOk?: VoidFunction
   onCancel?: VoidFunction
@@ -21,8 +21,8 @@ export default function ApproveSpendModal({
 
   const [approveAmount, setApproveAmount] = useState<BigNumber>()
 
-  useEffect(() => setApproveAmount(initialAmount ?? BigNumber.from(0)), [
-    initialAmount,
+  useEffect(() => setApproveAmount(initialWeiAmt ?? BigNumber.from(0)), [
+    initialWeiAmt,
   ])
 
   function approve() {
@@ -51,7 +51,7 @@ export default function ApproveSpendModal({
         </Descriptions.Item>
       </Descriptions>
       <Input
-        defaultValue={initialAmount ? formatEther(initialAmount) : '0'}
+        defaultValue={initialWeiAmt ? formatEther(initialWeiAmt) : '0'}
         onChange={e => setApproveAmount(parseEther(e.target.value || '0'))}
         suffix={weth?.symbol}
       />

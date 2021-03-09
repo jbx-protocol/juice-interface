@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, parseEther } from '@ethersproject/units'
 import { Button, Col, Input, Row, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
@@ -8,7 +7,7 @@ import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formattedBudgetCurrency } from 'utils/budgetCurrency'
+import { CurrencyUtils, formatWad } from 'utils/formatCurrency'
 
 import ApproveSpendModal from '../modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from '../modals/ConfirmPayOwnerModal'
@@ -31,11 +30,12 @@ export default function OwnerFinances({
     onNeedProvider,
     userAddress,
     currentBudget,
-    ethInCents,
+    usdPerEth,
   } = useContext(UserContext)
 
-  const [currencyAmount, setCurrencyAmount] = useState<BigNumber>()
-  const [weiPayAmount, setWeiPayAmount] = useState<BigNumber>(BigNumber.from(0))
+  const currencyUtils = new CurrencyUtils(usdPerEth)
+
+  const [payAmount, setPayAmount] = useState<string>()
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
     boolean
   >(false)
@@ -76,40 +76,13 @@ export default function OwnerFinances({
 
   const isOwner = owner === userAddress
 
-  function updatePayAmount(inputAmount?: string) {
-    if (!currentBudget || !ethInCents) return
-
-    if (currentBudget.currency.eq(0)) {
-      const wei = parseEther(inputAmount || '0')
-      setWeiPayAmount(wei)
-      setCurrencyAmount(wei)
-      return
-    }
-
-    setCurrencyAmount(
-      BigNumber.from(Math.round(parseFloat(inputAmount || '0') * 100)),
-    )
-
-    if (!inputAmount) {
-      setWeiPayAmount(BigNumber.from(0))
-      return
-    }
-
-    const ethAmount = (
-      ((parseFloat(inputAmount) ?? 0) / ethInCents.toNumber()) *
-      100
-    ).toPrecision(12)
-
-    const weiAmount = parseEther(ethAmount?.toString() ?? 0)
-
-    setWeiPayAmount(weiAmount)
-  }
+  const weiPayAmt = currencyUtils.usdToWei(payAmount)
 
   function pay() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
-    if (!allowance || !weiPayAmount) return
+    if (!allowance || !weiPayAmt) return
 
-    if (allowance.lt(weiPayAmount)) {
+    if (allowance.lt(weiPayAmt)) {
       setApproveModalVisible(true)
       return
     }
@@ -117,20 +90,24 @@ export default function OwnerFinances({
     setPayModalVisible(true)
   }
 
-  const spacing = 30
-
-  const payAmountInUSD = useMemo((): string => {
-    if (!ethInCents) return '--'
+  const payAmountInWeth = useMemo((): string => {
+    const empty = '--'
 
     try {
-      const amt = formatEther(weiPayAmount.toString()).split('.')
-      if (amt[1]) amt[1] = amt[1].substr(0, 4)
-      return amt.join('.')
+      const amt = formatWad(weiPayAmt)?.split('.')
+      if (amt && amt[1]) {
+        // Always 4 decimal places
+        amt[1] = amt[1].substr(0, 4)
+        return amt.join('.')
+      }
     } catch (e) {
       console.log(e)
-      return '--'
     }
-  }, [weiPayAmount, ethInCents])
+
+    return empty
+  }, [payAmount])
+
+  const spacing = 30
 
   return (
     <Space size={spacing} direction="vertical">
@@ -152,19 +129,17 @@ export default function OwnerFinances({
                   <Input
                     name="sustain"
                     placeholder="0"
-                    suffix={formattedBudgetCurrency(currentBudget?.currency)}
+                    suffix="USD"
                     type="number"
-                    onChange={e => updatePayAmount(e.target.value)}
+                    onChange={e => setPayAmount(e.target.value)}
                   />
 
-                  {currentBudget?.currency.eq(1) ? (
-                    <div>
-                      Paid as {payAmountInUSD} {weth?.symbol}
-                    </div>
-                  ) : null}
+                  <div>
+                    Paid as {payAmountInWeth} {weth?.symbol}
+                  </div>
                 </div>
 
-                <Button type="primary" onClick={pay} disabled={!weiPayAmount}>
+                <Button type="primary" onClick={pay} disabled={!weiPayAmt}>
                   Pay project
                 </Button>
               </Space>
@@ -201,7 +176,7 @@ export default function OwnerFinances({
 
       <ApproveSpendModal
         visible={approveModalVisible}
-        initialAmount={weiPayAmount}
+        initialWeiAmt={weiPayAmt}
         allowance={allowance}
         onOk={() => setApproveModalVisible(false)}
         onCancel={() => setApproveModalVisible(false)}
@@ -211,8 +186,7 @@ export default function OwnerFinances({
         onOk={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
-        currencyAmount={currencyAmount}
-        weiAmount={weiPayAmount}
+        weiAmount={weiPayAmt}
       />
     </Space>
   )

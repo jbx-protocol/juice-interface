@@ -12,6 +12,8 @@ import "./interfaces/IOverflowYielder.sol";
 
 import "./TicketStore.sol";
 
+import "./libraries/Math.sol";
+
 /**
   @notice This contract manages all funds in the Juice ecosystem.
   @dev  1 (optional). A project project issues their Tickets at the ticket store.
@@ -130,11 +132,16 @@ contract Juicer is IJuicer {
             // The overflow is either in the overflow yielder or still depositable.
             // The proportion belonging to this issuer is the same proportion as the raw values in the Ticket store.
             return
-                (overflowYielder.getBalance(weth).add(depositable))
-                    .mul(_claimable)
-                    .div(_totalClaimable);
+                Math.wdiv(
+                    Math.wmul(
+                        overflowYielder.getBalance(weth).add(depositable),
+                        _claimable
+                    ),
+                    _totalClaimable
+                );
         } else {
-            return depositable.mul(_claimable).div(_totalClaimable);
+            return
+                Math.wdiv(Math.wmul(depositable, _claimable), _totalClaimable);
         }
     }
 

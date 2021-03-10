@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./abstract/Store.sol";
 import "./interfaces/ITicketStore.sol";
 import "./Tickets.sol";
+import "./libraries/Math.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
@@ -71,9 +72,12 @@ contract TicketStore is Store, ITicketStore {
         address _issuer,
         uint256 _proportion
     ) public view override returns (uint256) {
+        // the issuer's tickets, if they've been issued.
+        Tickets _tickets = tickets[_issuer];
+
         // If there isnt any iOweYou for the specified holder, get issued tickets for the issuer.
-        Tickets _tickets =
-            iOweYous[_issuer][_holder] == 0 ? tickets[_issuer] : Tickets(0);
+        Tickets _holderTickets =
+            iOweYous[_issuer][_holder] == 0 ? _tickets : Tickets(0);
 
         // Get the total supply either from the ticket or from the iOweYou.
         uint256 _totalSupply = totalIOweYous[_issuer];
@@ -81,22 +85,20 @@ contract TicketStore is Store, ITicketStore {
 
         if (_totalSupply == 0) return 0;
 
-        // Get the amount of tickets the specified holder has access to, or is owed.
-        uint256 _currentBalance =
-            _tickets != Tickets(0)
-                ? _tickets.balanceOf(_holder)
-                : iOweYous[_issuer][_holder];
-
         // Make sure the specified amount is available.
         require(
-            _currentBalance > _amount,
+            // Get the amount of tickets the specified holder has access to, or is owed.
+            (
+                _holderTickets != Tickets(0)
+                    ? _holderTickets.balanceOf(_holder)
+                    : iOweYous[_issuer][_holder]
+            ) > _amount,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
         return
-            claimable[_issuer]
-                .div(_totalSupply)
-                .mul(_amount)
+            Math
+                .wdiv(Math.wmul(claimable[_issuer], _amount), _totalSupply)
                 .mul(_amount < _totalSupply ? _proportion : 1000)
                 .div(1000);
     }

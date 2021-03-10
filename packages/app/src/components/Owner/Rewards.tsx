@@ -7,7 +7,7 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
@@ -136,10 +136,16 @@ export default function Rewards({
     ],
   })
 
-  if (!currentBudget) return null
-
   const totalBalance = BigNumber.from(ticketsBalance ?? 0).add(iouBalance || 0)
   const combinedSupply = BigNumber.from(ticketSupply ?? 0).add(iouSupply || 0)
+
+  useEffect(() => {
+    if (totalBalance?.gt(0) && !redeemAmount) {
+      setRedeemAmount(fromWad(totalBalance))
+    }
+  }, [totalBalance])
+
+  if (!currentBudget) return null
 
   const share = combinedSupply?.gt(0)
     ? totalBalance
@@ -222,8 +228,10 @@ export default function Rewards({
 
   const iouSymbol = 'tickets'
 
+  const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
+
   return (
-    <Space direction="horizontal" size="large" align="start">
+    <Space direction="vertical" size="large" align="start">
       <Statistic
         title={
           <TooltipLabel
@@ -234,7 +242,7 @@ export default function Rewards({
           />
         }
         valueRender={() => (
-          <div style={{ textAlign: 'right' }}>
+          <div>
             {formatWad(totalOverflow ?? 0)} {weth?.symbol}
             <div>{formattedNum(converter.weiToUsd(totalOverflow))} USD</div>
           </div>
@@ -323,31 +331,46 @@ export default function Rewards({
         />
       ) : null}
 
-      {!addressExists(ticketAddress) ? null : (
-        <Statistic
-          title="Redeem tickets"
-          valueRender={() => (
-            <Space>
-              <Input
-                type="number"
-                placeholder="0"
-                value={redeemAmount}
-                suffix={
+      <Statistic
+        title={
+          redeemDisabled ? (
+            <TooltipLabel
+              label="Redeem tickets"
+              tip="Tickets can be redeemed once this project has overflow."
+            />
+          ) : (
+            'Redeem tickets'
+          )
+        }
+        valueRender={() => (
+          <Space>
+            <Input
+              type="number"
+              disabled={redeemDisabled}
+              placeholder="0"
+              value={redeemAmount}
+              suffix={
+                redeemDisabled ? null : (
                   <InputAccessoryButton
                     text="MAX"
                     onClick={() => setRedeemAmount(fromWad(totalBalance))}
                   />
-                }
-                max={fromWad(totalBalance)}
-                onChange={e => setRedeemAmount(e.target.value)}
-              />
-              <Button type="primary" onClick={redeem} loading={loadingRedeem}>
-                Redeem
-              </Button>
-            </Space>
-          )}
-        />
-      )}
+                )
+              }
+              max={fromWad(totalBalance)}
+              onChange={e => setRedeemAmount(e.target.value)}
+            />
+            <Button
+              type="primary"
+              onClick={redeem}
+              loading={loadingRedeem}
+              disabled={redeemDisabled}
+            >
+              Redeem
+            </Button>
+          </Space>
+        )}
+      />
     </Space>
   )
 }

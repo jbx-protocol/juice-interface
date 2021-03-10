@@ -76,6 +76,7 @@ export default function ReconfigureBudgetModal({
     <Modal
       title="Reconfigure budget"
       visible={visible}
+      okText="Save changes"
       onOk={submitBudget}
       onCancel={onCancel}
       width={800}

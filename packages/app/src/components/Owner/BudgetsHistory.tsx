@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 import { budgetsDiff } from 'utils/budgetsDiff'
 
 import BudgetDetail from './BudgetDetail'
+import { CardSection } from '../shared/CardSection'
 
 export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
@@ -57,10 +58,10 @@ export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
   )
 
   return (
-    <div>
+    <CardSection header="Past budgets">
       {budgetElems}
 
       {allPoolsLoaded ? null : <div style={{ padding: 25 }}>Loading...</div>}
-    </div>
+    </CardSection>
   )
 }

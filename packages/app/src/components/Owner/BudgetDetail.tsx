@@ -9,7 +9,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import moment from 'moment'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
@@ -69,6 +69,8 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     ),
   })
 
+  useEffect(() => setTapAmount(fromWad(tappableAmount)), [tappableAmount])
+
   const formattedTappedTotal = useMemo(
     () =>
       currency === 'USD'
@@ -120,7 +122,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     if (!amount) return
 
     // Arbitrary discrete value (wei) subtracted
-    const minAmount = converter.usdToWei(tapAmount)?.sub(1e10)
+    const minAmount = (currency === 'USD'
+      ? converter.usdToWei(tapAmount)
+      : parseWad(tapAmount)
+    )?.sub(1e8)
 
     transactor(
       contracts.Juicer,

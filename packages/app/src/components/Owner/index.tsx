@@ -8,14 +8,15 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
+import { colors } from '../../constants/styles/colors'
+import { addressExists } from '../../utils/addressExists'
 import { CardSection } from '../shared/CardSection'
 import Loading from '../shared/Loading'
+import BudgetsHistory from './BudgetsHistory'
 import CurrentBudget from './CurrentBudget'
 import OwnerBackOffice from './OwnerBackOffice'
-import UpcomingBudget from './UpcomingBudget'
 import Rewards from './Rewards'
-import BudgetsHistory from './BudgetsHistory'
-import { addressExists } from '../../utils/addressExists'
+import UpcomingBudget from './UpcomingBudget'
 
 export default function Owner() {
   const [budgetState, setBudgetState] = useState<
@@ -136,7 +137,9 @@ export default function Owner() {
                 >
                   {currentBudget?.name}
                 </h1>
-                <h3>{owner}</h3>
+                <h3 style={{ color: colors.grape }}>
+                  {currentBudget?.project}
+                </h3>
               </div>
               <Row gutter={60}>
                 <Col xs={24} lg={12}>

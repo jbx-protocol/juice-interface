@@ -276,7 +276,10 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _ethPrice = _getETHPrice(_budget.currency);
 
         // The amount being paid in the currency of the budget.
-        convertedCurrencyAmount = _amount.mul(_ethPrice);
+        convertedCurrencyAmount = _amount
+            .mul(_ethPrice)
+            .add(uint256(1E18).div(2))
+            .div(1E18);
 
         // Add the amount to the Budget.
         _budget.total = _budget.total.add(_amount);
@@ -344,7 +347,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.tappedTarget = _budget.tappedTarget.add(_amount);
 
         // The amount of ETH that is being tapped.
-        ethAmount = _amount.div(_ethPrice);
+        ethAmount = _amount.mul(1E18).add(_ethPrice.div(2)).div(_ethPrice);
 
         // Add the converted currency amount to the Budget's total amount.
         _budget.tappedTotal = _budget.tappedTotal.add(ethAmount);

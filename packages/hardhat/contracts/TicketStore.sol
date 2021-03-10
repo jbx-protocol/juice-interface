@@ -6,10 +6,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "./libraries/DSMath.sol";
+
 import "./abstract/Store.sol";
 import "./interfaces/ITicketStore.sol";
 import "./Tickets.sol";
-import "./libraries/Math.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
@@ -97,8 +98,8 @@ contract TicketStore is Store, ITicketStore {
         );
 
         return
-            Math
-                .wdiv(Math.wmul(claimable[_issuer], _amount), _totalSupply)
+            DSMath
+                .wdiv(DSMath.wmul(claimable[_issuer], _amount), _totalSupply)
                 .mul(_amount < _totalSupply ? _proportion : 1000)
                 .div(1000);
     }

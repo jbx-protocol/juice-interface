@@ -105,7 +105,10 @@ input.ant-input[type='number'] {
   border: none;
 }
 
-input.ant-input:-internal-autofill-selected {
-  background: transparent;
+input:-internal-autofill-selected,
+input:-webkit-autofill,
+input:-webkit-hover,
+input:-webkit-focus {
+  background: transparent !important;
   background-color: transparent !important;
 }

@@ -141,7 +141,10 @@ contract Juicer is IJuicer {
                 );
         } else {
             return
-                Math.wdiv(Math.wmul(depositable, _claimable), _totalClaimable);
+                DSMath.wdiv(
+                    DSMath.wmul(depositable, _claimable),
+                    _totalClaimable
+                );
         }
     }
 

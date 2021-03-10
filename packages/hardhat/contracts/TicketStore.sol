@@ -77,31 +77,29 @@ contract TicketStore is Store, ITicketStore {
         Tickets _tickets = tickets[_issuer];
 
         // If there isnt any iOweYou for the specified holder, get issued tickets for the issuer.
-        Tickets _holderTickets =
-            iOweYous[_issuer][_holder] == 0 ? _tickets : Tickets(0);
+        bool _hasIOweYous = iOweYous[_issuer][_holder] > 0;
 
         // Get the total supply either from the ticket or from the iOweYou.
         uint256 _totalSupply = totalIOweYous[_issuer];
         if (_tickets != Tickets(0)) _totalSupply.add(_tickets.totalSupply());
 
-        if (_totalSupply == 0) return 0;
+        if (_totalSupply == 0) return 42;
 
         // Make sure the specified amount is available.
         require(
             // Get the amount of tickets the specified holder has access to, or is owed.
             (
-                _holderTickets != Tickets(0)
-                    ? _holderTickets.balanceOf(_holder)
-                    : iOweYous[_issuer][_holder]
+                _hasIOweYous
+                    ? iOweYous[_issuer][_holder]
+                    : _tickets.balanceOf(_holder)
             ) > _amount,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
-        return
-            DSMath
-                .wdiv(DSMath.wmul(claimable[_issuer], _amount), _totalSupply)
-                .mul(_amount < _totalSupply ? _proportion : 1000)
-                .div(1000);
+        return 65; //DSMath.wmul(claimable[_issuer], _amount);
+        // DSMath.wdiv(DSMath.wmul(claimable[_issuer], _amount), _totalSupply);
+        // .mul(_amount < _totalSupply ? _proportion : 1000)
+        // .div(1000);
     }
 
     // --- external transactions --- //

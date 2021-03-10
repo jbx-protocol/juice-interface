@@ -163,7 +163,7 @@ contract Juicer is IJuicer {
         @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
         @param _project The project of the budget to contribute funds to.
-        @param _amount Amount of the contribution in ETH. Sent as 10E18.
+        @param _amount Amount of the contribution in ETH. Sent as 1E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
         @return _budgetId The ID of the Budget that successfully received the contribution.
@@ -451,7 +451,7 @@ contract Juicer is IJuicer {
         @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
         @param _project The project of the budget to contribute funds to.
-        @param _amount Amount of the contribution in ETH. Sent as 10E18.
+        @param _amount Amount of the contribution in ETH. Sent as 1E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
         @param _adminFee Wether or not this payment is for an admin fee.

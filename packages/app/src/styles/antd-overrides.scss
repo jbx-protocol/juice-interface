@@ -114,5 +114,6 @@ input:-webkit-hover,
 input:-webkit-focus {
   background: transparent !important;
   background-color: transparent !important;
-  -webkit-box-shadow: none;
+  -webkit-box-shadow: none !important;
+  background-image: none !important;
 }

@@ -549,13 +549,12 @@ contract BudgetStore is Store, IBudgetStore {
         if (_budget.total == 0) return 0;
 
         uint256 _available =
-            Math
-                .min(
-                _budget
-                    .target,
-                uint256(10E18).div(2).add(_budget.total.mul(_ethPrice))
-            )
-                .div(10E18);
+            Math.min(
+                _budget.target,
+                _budget.total.mul(_ethPrice).add(uint256(10E18).div(2)).div(
+                    10E18
+                )
+            );
         return
             _available.mul(uint256(100).sub(_withhold)).div(100).sub(
                 _budget.tappedTarget

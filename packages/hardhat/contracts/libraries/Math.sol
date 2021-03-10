@@ -13,6 +13,18 @@ library Math {
         z = x > y ? x : y;
     }
 
+    // From DS Math.
+
+    //rounds to zero if x*y < WAD / 2
+    function wmul(uint256 x, uint256 y) internal pure returns (uint256 z) {
+        z = add(mul(x, y), 1E18 / 2) / 1E18;
+    }
+
+    //rounds to zero if x*y < WAD / 2
+    function wdiv(uint256 x, uint256 y) internal pure returns (uint256 z) {
+        z = add(mul(x, 1E18), y / 2) / y;
+    }
+
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint256 y) internal pure returns (uint256 z) {
         if (y > 3) {
@@ -25,5 +37,13 @@ library Math {
         } else if (y != 0) {
             z = 1;
         }
+    }
+
+    function add(uint256 x, uint256 y) private pure returns (uint256 z) {
+        require((z = x + y) >= x, "ds-math-add-overflow");
+    }
+
+    function mul(uint256 x, uint256 y) private pure returns (uint256 z) {
+        require(y == 0 || (z = x * y) / y == x, "ds-math-mul-overflow");
     }
 }

@@ -154,6 +154,7 @@ export default function Rewards({
   })
 
   console.log("ASDFASDFASDFASFAS: ", {totalClaimable, bondingCurveRate, userAddress, redeem: parseWad(redeemAmount)?.toHexString(), proj: currentBudget?.project });
+  //END TEMP
   const totalBalance = BigNumber.from(ticketsBalance ?? 0).add(iouBalance || 0)
   const combinedSupply = BigNumber.from(ticketSupply ?? 0).add(iouSupply || 0)
 
@@ -175,7 +176,13 @@ export default function Rewards({
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (!bondingCurveRate || !totalOverflow || combinedSupply.eq(0)) return
+    if (
+      !ticketsBalance ||
+      !bondingCurveRate ||
+      !totalOverflow ||
+      combinedSupply.eq(0)
+    )
+      return
 
     setLoadingRedeem(true)
 

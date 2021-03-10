@@ -3,12 +3,13 @@ import { Button, Col, Input, Row, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { CurrencyUtils, formatWad } from 'utils/formatCurrency'
+import { formatWad } from 'utils/formatCurrency'
 
 import ApproveSpendModal from '../modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from '../modals/ConfirmPayOwnerModal'
@@ -31,10 +32,9 @@ export default function OwnerFinances({
     onNeedProvider,
     userAddress,
     currentBudget,
-    usdPerEth,
   } = useContext(UserContext)
 
-  const currencyUtils = new CurrencyUtils(usdPerEth)
+  const converter = useCurrencyConverter()
 
   const [payAmount, setPayAmount] = useState<string>()
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
@@ -77,7 +77,7 @@ export default function OwnerFinances({
 
   const isOwner = owner === userAddress
 
-  const weiPayAmt = currencyUtils.usdToWei(payAmount)
+  const weiPayAmt = converter.usdToWei(payAmount)
 
   function pay() {
     if (!transactor || !contracts || !currentBudget) return onNeedProvider()
@@ -106,7 +106,7 @@ export default function OwnerFinances({
     }
 
     return empty
-  }, [payAmount])
+  }, [weiPayAmt])
 
   const spacing = 30
 
@@ -188,7 +188,7 @@ export default function OwnerFinances({
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
         currency={currentBudget?.currency.toString() as BudgetCurrency}
-        weiAmount={weiPayAmt}
+        usdAmount={parseFloat(payAmount ?? '0')}
       />
     </Space>
   )

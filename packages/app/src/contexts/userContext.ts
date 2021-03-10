@@ -12,7 +12,6 @@ export const UserContext: React.Context<{
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
   currentBudget?: Budget | null
-  usdPerEth?: number
   weth?: Partial<{
     contract: Contract
     symbol: string

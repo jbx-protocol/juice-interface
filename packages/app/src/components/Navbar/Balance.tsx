@@ -1,13 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, parseEther } from '@ethersproject/units'
+import { formatEther } from '@ethersproject/units'
 import { UserContext } from 'contexts/userContext'
+import { useExchangePrice } from 'hooks/ExchangePrice'
 import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 
 export default function Balance({ userAddress }: { userAddress?: string }) {
-  const { userProvider, usdPerEth } = useContext(UserContext)
+  const { userProvider } = useContext(UserContext)
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
+
+  const usdPerEth = useExchangePrice()
 
   // get updated balance
   usePoller(

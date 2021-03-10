@@ -7,7 +7,6 @@ import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { useCurrentBudget } from 'hooks/CurrentBudget'
-import { useExchangePrice } from 'hooks/ExchangePrice'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useTransactor } from 'hooks/Transactor'
@@ -45,8 +44,6 @@ function App() {
 
   const weth = useWeth(signer)
 
-  const usdPerEth = useExchangePrice()
-
   const transactor = useTransactor({
     provider: userProvider,
     gasPrice:
@@ -67,7 +64,6 @@ function App() {
         onNeedProvider: loadWeb3Modal,
         currentBudget,
         weth,
-        usdPerEth,
       }}
     >
       <Layout

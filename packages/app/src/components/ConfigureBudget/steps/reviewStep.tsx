@@ -7,6 +7,7 @@ import { Step } from 'models/step'
 import { Link } from 'react-router-dom'
 import { addressExists } from 'utils/addressExists'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { formatWad } from 'utils/formatCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
 export function reviewStep({
@@ -14,7 +15,6 @@ export function reviewStep({
   budgetForm,
   budgetAdvancedForm,
   ticketsInitialized,
-  currentBudget,
   ticketsName,
   ticketsSymbol,
   initTickets,
@@ -22,20 +22,42 @@ export function reviewStep({
   loadingInitTickets,
   loadingCreateBudget,
   userAddress,
+  adminFeePercent,
+  currentBudget,
 }: {
   ticketsForm: FormInstance<TicketsFormFields>
   budgetForm: FormInstance<BudgetFormFields>
   budgetAdvancedForm: FormInstance<AdvancedBudgetFormFields>
-  ticketsInitialized?: boolean
-  currentBudget?: Budget | null
-  ticketsName?: string
-  ticketsSymbol?: string
+  ticketsInitialized: boolean | undefined
+  ticketsName: string | undefined
+  ticketsSymbol: string | undefined
   initTickets: VoidFunction
   activateContract: VoidFunction
-  loadingInitTickets?: boolean
-  loadingCreateBudget?: boolean
-  userAddress?: string
+  loadingInitTickets: boolean | undefined
+  loadingCreateBudget: boolean | undefined
+  userAddress: string | undefined
+  adminFeePercent: number | undefined
+  currentBudget: Budget | undefined | null
 }): Step {
+  const currency = formatBudgetCurrency(
+    currentBudget?.currency ?? budgetForm.getFieldValue('currency'),
+  )
+
+  const targetWithFee = () => {
+    if (adminFeePercent === undefined) return
+
+    const targetAmount = currentBudget
+      ? formatWad(currentBudget.target)
+      : budgetForm.getFieldValue('target')
+
+    if (targetAmount === undefined) return
+
+    return currentBudget
+      ? `${targetAmount} ${currency} (includes fee)`
+      : `${targetAmount} (+${parseFloat(targetAmount) *
+          (adminFeePercent / 100)} ${currency})`
+  }
+
   return {
     title: 'Review',
     content: (
@@ -62,15 +84,8 @@ export function reviewStep({
                 suffix="days"
               />
               <Statistic
-                title="Amount (+5% fee)"
-                value={
-                  currentBudget
-                    ? currentBudget.target
-                    : budgetForm.getFieldValue('target')
-                }
-                suffix={formatBudgetCurrency(
-                  budgetForm.getFieldValue('currency'),
-                )}
+                title="Amount (+5% admin fee)"
+                value={targetWithFee()}
               />
             </Space>
           </div>

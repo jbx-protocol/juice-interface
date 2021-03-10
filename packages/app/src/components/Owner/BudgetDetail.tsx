@@ -5,27 +5,25 @@ import { ContractName } from 'constants/contract-name'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import moment from 'moment'
 import { useContext, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { CurrencyUtils, formatWad, parseWad } from 'utils/formatCurrency'
+import { formatWad, parseWad } from 'utils/formatCurrency'
+import { orEmpty } from 'utils/orEmpty'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import BudgetHeader from './BudgetHeader'
 
 export default function BudgetDetail({ budget }: { budget: Budget }) {
-  const {
-    transactor,
-    onNeedProvider,
-    contracts,
-    userAddress,
-    usdPerEth,
-  } = useContext(UserContext)
+  const { transactor, onNeedProvider, contracts, userAddress } = useContext(
+    UserContext,
+  )
 
-  const currencyUtils = new CurrencyUtils(usdPerEth)
+  const converter = useCurrencyConverter()
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -69,17 +67,9 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const formattedTappedTotal = useMemo(
     () =>
       currency === 'USD'
-        ? currencyUtils.weiToUsd(budget.tappedTotal)?.toString()
+        ? converter.weiToUsd(budget.tappedTotal)?.toString()
         : formatWad(budget.tappedTotal),
-    [budget.tappedTotal],
-  )
-
-  const formattedTappable = useMemo(
-    () =>
-      currency === 'USD'
-        ? currencyUtils.weiToUsd(tappableAmount)?.toString()
-        : formatWad(tappableAmount),
-    [],
+    [budget.tappedTotal, converter, currency],
   )
 
   // TODO recalculate every second
@@ -124,10 +114,13 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
     if (!amount) return
 
+    // Arbitrary discrete value (wei) subtracted
+    const minAmount = converter.usdToWei(tapAmount)?.sub(1e10)
+
     transactor(
       contracts.Juicer,
       'tap',
-      [id, amount.toHexString(), userAddress],
+      [id, amount.toHexString(), budget.currency, userAddress, minAmount],
       {
         onDone: () => setLoadingWithdraw(false),
       },
@@ -207,7 +200,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                 alignItems: 'center',
               }}
             >
-              {formattedTappable} {currency}
+              {formatWad(tappableAmount)} {currency}
               {isOwner && tappableAmount?.gt(0) ? (
                 <div>
                   <Button
@@ -235,9 +228,12 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                       placeholder="0"
                       suffix={currency}
                       value={tapAmount}
-                      max={formattedTappable}
+                      max={formatWad(tappableAmount)}
                       onChange={e => setTapAmount(e.target.value)}
                     />
+                    <div style={{ textAlign: 'right', marginTop: 10 }}>
+                      {orEmpty(formatWad(converter.usdToWei(tapAmount)))} ETH
+                    </div>
                   </Modal>
                 </div>
               ) : null}
@@ -245,7 +241,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           </Descriptions.Item>
         )}
       </Descriptions>
-
       {budget?.link ? (
         <div
           style={{
@@ -258,7 +253,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           </a>
         </div>
       ) : null}
-
       <div style={{ margin: gutter }}>
         <Descriptions {...descriptionsStyle} size="small" column={2}>
           <Descriptions.Item

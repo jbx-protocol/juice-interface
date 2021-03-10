@@ -4,7 +4,7 @@ import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
@@ -27,16 +27,20 @@ export default function Owner() {
   const ticketAddress = useContractReader<string>({
     contract: ContractName.TicketStore,
     functionName: 'tickets',
-    args: owner ? [owner] : null,
-    updateOn: userAddress
-      ? [
-          {
-            contract: ContractName.TicketStore,
-            eventName: 'Issue',
-            topics: [userAddress],
-          },
-        ]
-      : undefined,
+    args: useMemo(() => (owner ? [owner] : null), [owner]),
+    updateOn: useMemo(
+      () =>
+        owner
+          ? [
+              {
+                contract: ContractName.TicketStore,
+                eventName: 'Issue',
+                topics: [owner],
+              },
+            ]
+          : undefined,
+      [owner],
+    ),
   })
 
   useDeepCompareEffectNoCheck(() => {

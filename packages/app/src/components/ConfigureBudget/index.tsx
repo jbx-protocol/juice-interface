@@ -1,5 +1,5 @@
-import { defaultAbiCoder } from '@ethersproject/abi'
 import { BigNumber } from '@ethersproject/bignumber'
+import { formatBytes32String } from '@ethersproject/strings'
 import { Button, Col, Form, Row, Space, Steps } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { emptyAddress } from 'constants/empty-address'
@@ -16,8 +16,8 @@ import { Step } from 'models/step'
 import { useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { addressExists } from 'utils/addressExists'
+import { fromWad, parseWad } from 'utils/formatCurrency'
 
-import { formatWad, parseWad } from '../../utils/formatCurrency'
 import WtfCard from '../shared/WtfCard'
 import { advancedContractStep } from './steps/advancedContractStep'
 import { contractStep } from './steps/contractStep'
@@ -67,11 +67,15 @@ export default function ConfigureBudget() {
       budgetForm.setFieldsValue({
         name: currentBudget.name,
         duration: currentBudget.duration
-          .div(BigNumber.from(SECONDS_IN_DAY))
+          .div(
+            process.env.NODE_ENV === 'production'
+              ? BigNumber.from(SECONDS_IN_DAY)
+              : 1,
+          )
           .toNumber(),
         link: currentBudget.link,
         currency: currentBudget.currency.toString() as BudgetCurrency,
-        target: formatWad(currentBudget.target),
+        target: fromWad(currentBudget.target),
       })
       budgetAdvancedForm.setFieldsValue({
         discountRate: currentBudget.discountRate.toNumber(),
@@ -119,10 +123,7 @@ export default function ConfigureBudget() {
     transactor(
       contracts.TicketStore,
       'issue',
-      [
-        defaultAbiCoder.encode(['string'], [fields.name]),
-        defaultAbiCoder.encode(['string'], [fields.symbol]),
-      ],
+      [formatBytes32String(fields.name), formatBytes32String(fields.symbol)],
       {
         onDone: () => setLoadingInitTickets(false),
       },

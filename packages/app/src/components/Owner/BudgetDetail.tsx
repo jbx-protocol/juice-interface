@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, DescriptionsProps, Input } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
@@ -12,8 +13,12 @@ import { useContext, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formatWad, parseWad } from 'utils/formatCurrency'
-import { orEmpty } from 'utils/orEmpty'
+import {
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/formatCurrency'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import BudgetHeader from './BudgetHeader'
@@ -67,7 +72,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const formattedTappedTotal = useMemo(
     () =>
       currency === 'USD'
-        ? converter.weiToUsd(budget.tappedTotal)?.toString()
+        ? formattedNum(converter.weiToUsd(budget.tappedTotal))
         : formatWad(budget.tappedTotal),
     [budget.tappedTotal, converter, currency],
   )
@@ -226,13 +231,23 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                     <Input
                       name="withdrawable"
                       placeholder="0"
-                      suffix={currency}
+                      suffix={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          {currency}
+                          <InputAccessoryButton
+                            text="MAX"
+                            onClick={() =>
+                              setTapAmount(fromWad(tappableAmount))
+                            }
+                          />
+                        </div>
+                      }
                       value={tapAmount}
-                      max={formatWad(tappableAmount)}
+                      max={fromWad(tappableAmount)}
                       onChange={e => setTapAmount(e.target.value)}
                     />
                     <div style={{ textAlign: 'right', marginTop: 10 }}>
-                      {orEmpty(formatWad(converter.usdToWei(tapAmount)))} ETH
+                      {formatWad(converter.usdToWei(tapAmount))} ETH
                     </div>
                   </Modal>
                 </div>

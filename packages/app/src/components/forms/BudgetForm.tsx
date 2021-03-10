@@ -50,9 +50,10 @@ export default function BudgetForm({
         name="target"
         label="Operating cost"
         rules={[{ required: true }]}
+        initialValue={props.form?.getFieldValue('target')}
       >
         <BudgetTargetInput
-          target={props.form?.getFieldValue('target')}
+          value={disabled ? props.form?.getFieldValue('target') : undefined}
           currency={currency}
           onCurrencyChange={toggleCurrency}
           onValueChange={val => props.form?.setFieldsValue({ target: val })}
@@ -64,6 +65,7 @@ export default function BudgetForm({
         name="duration"
         label="Time frame"
         rules={[{ required: true }]}
+        initialValue={props.form?.getFieldValue('duration')}
       >
         <Input
           className="align-end"

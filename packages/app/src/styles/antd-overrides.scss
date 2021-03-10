@@ -105,10 +105,14 @@ input.ant-input[type='number'] {
   border: none;
 }
 
+input:-internal-autofill,
+input:-internal-autofill-hover,
+input:-internal-autofill-focus,
 input:-internal-autofill-selected,
 input:-webkit-autofill,
 input:-webkit-hover,
 input:-webkit-focus {
   background: transparent !important;
   background-color: transparent !important;
+  -webkit-box-shadow: none;
 }

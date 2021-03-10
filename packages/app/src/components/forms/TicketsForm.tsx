@@ -27,6 +27,7 @@ export default function TicketsForm({
           suffix="Juice tickets"
           placeholder="Peach's"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
       <Form.Item
@@ -40,6 +41,7 @@ export default function TicketsForm({
           prefix="j"
           onChange={e => capitalizeTicker(e.target.value)}
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
     </Form>

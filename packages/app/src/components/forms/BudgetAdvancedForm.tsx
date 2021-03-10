@@ -40,6 +40,7 @@ export default function BudgetAdvancedForm({
           suffix="%"
           type="number"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
       <Form.Item extra="" name="beneficiaryAllocation" label="Donate">
@@ -51,6 +52,7 @@ export default function BudgetAdvancedForm({
             setBeneficiaryAddressRequired(parseFloat(e.target.value) > 0)
           }
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
       <Form.Item
@@ -59,7 +61,11 @@ export default function BudgetAdvancedForm({
         label="Donation address"
         rules={[{ required: beneficiaryAddressRequired }]}
       >
-        <Input placeholder="0x01a2b3c..." disabled={disabled} />
+        <Input
+          placeholder="0x01a2b3c..."
+          disabled={disabled}
+          autoComplete="off"
+        />
       </Form.Item>
       <Form.Item
         extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
@@ -75,6 +81,7 @@ export default function BudgetAdvancedForm({
           max={100}
           placeholder="97"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
     </Form>

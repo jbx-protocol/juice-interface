@@ -42,6 +42,7 @@ export default function BudgetForm({
           placeholder="Peach's Juice Stand"
           type="string"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
       <Form.Item
@@ -70,6 +71,7 @@ export default function BudgetForm({
           type="number"
           suffix="days"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
       <Form.Item
@@ -80,6 +82,7 @@ export default function BudgetForm({
         <Input
           placeholder="https://docs.google.com/my-budget-info"
           disabled={disabled}
+          autoComplete="off"
         />
       </Form.Item>
     </Form>

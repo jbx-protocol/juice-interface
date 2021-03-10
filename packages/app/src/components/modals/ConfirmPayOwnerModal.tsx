@@ -4,17 +4,22 @@ import { Descriptions, Modal } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo } from 'react'
+import { formatBudgetCurrency } from 'utils/budgetCurrency'
 import { formatBigNum } from 'utils/formatBigNum'
+import { CurrencyUtils, parseWad } from 'utils/formatCurrency'
 
 export default function ConfirmPayOwnerModal({
   visible,
+  currency,
   weiAmount,
   ticketSymbol,
   onOk,
   onCancel,
 }: {
   visible?: boolean
+  currency?: BudgetCurrency
   weiAmount?: BigNumber
   ticketSymbol?: string
   onOk?: VoidFunction
@@ -26,7 +31,10 @@ export default function ConfirmPayOwnerModal({
     userAddress,
     currentBudget,
     weth,
+    usdPerEth,
   } = useContext(UserContext)
+
+  const currencyUtils = new CurrencyUtils(usdPerEth)
 
   function pay() {
     if (!contracts || !currentBudget || !transactor) return
@@ -53,13 +61,18 @@ export default function ConfirmPayOwnerModal({
     ? currentBudget.id.toHexString()
     : currentBudget?.previous.toHexString()
 
+  const currencyAmount =
+    formatBudgetCurrency(currency) === 'USD'
+      ? parseWad(currencyUtils.weiToUsd(weiAmount)?.toString())
+      : weiAmount
+
   const receivedTickets = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'getWeightedRate',
-    args: useMemo(() => [budgetId, weiAmount?.toHexString(), payerPercentage], [
-      weiAmount,
-      payerPercentage,
-    ]),
+    args: useMemo(
+      () => [budgetId, currencyAmount?.toHexString(), payerPercentage],
+      [weiAmount, payerPercentage],
+    ),
   })
 
   const ownerTickets = useContractReader<BigNumber>({
@@ -68,7 +81,7 @@ export default function ConfirmPayOwnerModal({
     args: useMemo(
       () => [
         budgetId,
-        weiAmount?.toHexString(),
+        currencyAmount?.toHexString(),
         currentBudget?.p.toHexString(),
       ],
       [weiAmount, currentBudget?.p],

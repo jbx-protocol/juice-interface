@@ -5,6 +5,7 @@ import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
+import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { CurrencyUtils, formatWad } from 'utils/formatCurrency'
@@ -186,6 +187,7 @@ export default function OwnerFinances({
         onOk={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
+        currency={currentBudget?.currency.toString() as BudgetCurrency}
         weiAmount={weiPayAmt}
       />
     </Space>

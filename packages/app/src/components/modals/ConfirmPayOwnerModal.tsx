@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther } from '@ethersproject/units'
 import { Descriptions, Modal } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
@@ -7,21 +6,22 @@ import useContractReader from 'hooks/ContractReader'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo } from 'react'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formatBigNum } from 'utils/formatBigNum'
-import { CurrencyUtils, parseWad } from 'utils/formatCurrency'
+import { formatWad, parseWad } from 'utils/formatCurrency'
+
+import { useCurrencyConverter } from '../../hooks/CurrencyConverter'
 
 export default function ConfirmPayOwnerModal({
   visible,
   currency,
-  weiAmount,
+  usdAmount,
   ticketSymbol,
   onOk,
   onCancel,
 }: {
   visible?: boolean
-  currency?: BudgetCurrency
-  weiAmount?: BigNumber
-  ticketSymbol?: string
+  currency: BudgetCurrency | undefined
+  usdAmount: number | undefined
+  ticketSymbol: string | undefined
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
@@ -31,10 +31,11 @@ export default function ConfirmPayOwnerModal({
     userAddress,
     currentBudget,
     weth,
-    usdPerEth,
   } = useContext(UserContext)
 
-  const currencyUtils = new CurrencyUtils(usdPerEth)
+  const converter = useCurrencyConverter()
+
+  const weiAmount = converter.usdToWei(usdAmount)
 
   function pay() {
     if (!contracts || !currentBudget || !transactor) return
@@ -63,7 +64,7 @@ export default function ConfirmPayOwnerModal({
 
   const currencyAmount =
     formatBudgetCurrency(currency) === 'USD'
-      ? parseWad(currencyUtils.weiToUsd(weiAmount)?.toString())
+      ? parseWad(converter.weiToUsd(weiAmount)?.toString())
       : weiAmount
 
   const receivedTickets = useContractReader<BigNumber>({
@@ -71,7 +72,7 @@ export default function ConfirmPayOwnerModal({
     functionName: 'getWeightedRate',
     args: useMemo(
       () => [budgetId, currencyAmount?.toHexString(), payerPercentage],
-      [weiAmount, payerPercentage],
+      [payerPercentage, budgetId, currencyAmount],
     ),
   })
 
@@ -84,7 +85,7 @@ export default function ConfirmPayOwnerModal({
         currencyAmount?.toHexString(),
         currentBudget?.p.toHexString(),
       ],
-      [weiAmount, currentBudget?.p],
+      [budgetId, currencyAmount, currentBudget?.p],
     ),
   })
 
@@ -102,13 +103,13 @@ export default function ConfirmPayOwnerModal({
           {currentBudget?.project}
         </Descriptions.Item>
         <Descriptions.Item label="Pay amount">
-          {formatEther(weiAmount ?? 0)} {weth?.symbol}
+          {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for you">
-          {formatBigNum(receivedTickets)} {ticketSymbol}
+          {formatWad(receivedTickets)} {ticketSymbol}
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for owner">
-          {formatBigNum(ownerTickets)} {ticketSymbol}
+          {formatWad(ownerTickets)} {ticketSymbol}
         </Descriptions.Item>
       </Descriptions>
     </Modal>

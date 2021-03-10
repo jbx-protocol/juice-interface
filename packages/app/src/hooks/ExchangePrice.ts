@@ -11,6 +11,12 @@ export function useExchangePrice() {
   /* 💵 get the price of ETH from 🦄 Uniswap: */
   const pollPrice = () => {
     async function getPrice() {
+      if (process.env.NODE_ENV === 'development') {
+        // TODO remove once contract deployment can link with mainnet
+        setPrice(1600)
+        return
+      }
+
       const token = new Token(1, DAI, 18, 'DAI')
       const pair = await Fetcher.fetchPairData(
         token,

@@ -54,6 +54,11 @@ export default function ConfigureBudget() {
     contract: ticketContract,
     functionName: 'name',
   })
+  const adminFeePercent = useContractReader<number>({
+    contract: ContractName.Juicer,
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val.toNumber(),
+  })
 
   const ticketsInitialized = !!ticketsName && !!ticketsSymbol
 
@@ -132,21 +137,29 @@ export default function ConfigureBudget() {
       ...budgetAdvancedForm.getFieldsValue(true),
     }
 
-    if (!fields.target || !fields.duration || !fields.name) {
+    if (
+      !fields.target ||
+      !fields.duration ||
+      !fields.name ||
+      !adminFeePercent
+    ) {
       setCurrentStep(0)
-      setTimeout(async () => {
-        await budgetForm.validateFields()
-      }, 0)
+      setTimeout(async () => await budgetForm.validateFields(), 0)
       return
     }
 
     setLoadingCreateBudget(true)
 
+    const target = parseWad(fields.target)
+    const targetWithFee = target
+      ?.add(target.mul(adminFeePercent).div(100))
+      .toHexString()
+
     transactor(
       contracts.BudgetStore,
       'configure',
       [
-        parseWad(fields.target)?.toHexString(),
+        targetWithFee,
         BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(
           fields.duration *
@@ -189,6 +202,7 @@ export default function ConfigureBudget() {
       loadingInitTickets,
       loadingCreateBudget,
       userAddress,
+      adminFeePercent,
     }),
   ]
 

@@ -104,3 +104,7 @@ input.ant-input[type='number'] {
   background-color: transparent;
   border: none;
 }
+
+input.ant-input:-internal-autofill-selected {
+  background: transparent;
+}

@@ -1,15 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress } from 'antd'
-import { UserContext } from 'contexts/userContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import {
-  CurrencyUtils,
-  formatWad,
-  fracDiv,
-  parseWad,
-} from 'utils/formatCurrency'
+import { formatWad, fracDiv, parseWad } from 'utils/formatCurrency'
 
 import { colors } from '../../constants/styles/colors'
 
@@ -20,17 +15,15 @@ export default function BudgetHeader({
   budget?: Budget
   gutter: number
 }) {
-  const { usdPerEth } = useContext(UserContext)
-
-  const currencyUtils = new CurrencyUtils(usdPerEth)
+  const converter = useCurrencyConverter()
   const currency = formatBudgetCurrency(budget?.currency)
 
   const weiSurplus = useMemo(() => {
-    if (!budget) return
+    if (!budget?.total || !budget?.target) return
 
     const weiTarget =
       currency === 'USD'
-        ? currencyUtils.usdToWei(formatWad(budget.target))
+        ? converter.usdToWei(formatWad(budget.target))
         : budget.target
 
     if (!weiTarget) return
@@ -38,41 +31,41 @@ export default function BudgetHeader({
     return budget.total.gt(weiTarget)
       ? budget.total.sub(weiTarget)
       : BigNumber.from(0)
-  }, [budget?.target, budget?.total, usdPerEth, currency])
+  }, [budget?.target, budget?.total, currency, converter])
 
   const formattedSurplus = useMemo(
     () =>
       weiSurplus
         ? currency === 'USD'
-          ? currencyUtils.weiToUsd(weiSurplus)?.toString()
+          ? converter.weiToUsd(weiSurplus)?.toString()
           : formatWad(weiSurplus)
         : undefined,
-    [weiSurplus, currency],
+    [weiSurplus, currency, converter],
   )
 
   const percentPaid = useMemo(() => {
-    if (!budget) return
+    if (!budget?.total || !budget?.target) return
 
     const total =
       currency === 'USD'
-        ? parseWad(currencyUtils.weiToUsd(budget.total)?.toString())
+        ? parseWad(converter.weiToUsd(budget.total)?.toString())
         : budget.total
 
     if (!total) return
 
     return fracDiv(total.toString(), budget.target.toString()) * 100
-  }, [budget?.target, budget?.total, currency])
+  }, [budget?.target, budget?.total, currency, converter])
 
   const formattedPaid = useMemo(() => {
-    if (!budget) return
+    if (!budget?.total) return
 
     const wadAmount =
       currency === 'USD'
-        ? currencyUtils.weiToUsd(budget.total)?.toString()
+        ? converter.weiToUsd(budget.total)?.toString()
         : formatWad(budget.total)
 
     return wadAmount ?? '0'
-  }, [currency, budget?.total])
+  }, [currency, budget?.total, converter])
 
   if (!budget) return null
 

@@ -39,8 +39,6 @@ export default function Owner() {
       : undefined,
   })
 
-  console.log({ ticketAddress })
-
   useDeepCompareEffectNoCheck(() => {
     if (currentBudget) setBudgetState('found')
     if (currentBudget === null)

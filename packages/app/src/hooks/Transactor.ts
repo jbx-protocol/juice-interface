@@ -67,13 +67,17 @@ export function useTransactor({
 
       const reportArgs = Object.values(contract.interface.functions)
         .find(f => f.name === functionName)
-        ?.inputs.reduce(
-          (acc, input, i) => ({
+        ?.inputs.reduce((acc, input, i) => {
+          let value = args[i]
+          let bn = BigNumber.from(value)
+          if (bn) {
+            value = `${bn.toHexString()} (BN=${bn.toString()})`
+          }
+          return {
             ...acc,
-            [input.name]: args[i],
-          }),
-          {},
-        )
+            [input.name]: value,
+          }
+        }, {})
 
       console.log({ signer })
 

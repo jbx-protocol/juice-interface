@@ -6,11 +6,12 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatBigNum } from 'utils/formatBigNum'
 
+import { formatWad, parseWad } from '../../utils/formatCurrency'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
@@ -29,22 +30,29 @@ export default function Rewards({
     onNeedProvider,
   } = useContext(UserContext)
 
-  const [redeemAmount, setRedeemAmount] = useState<BigNumber>()
+  const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingClaimIou, setLoadingClaimIou] = useState<boolean>()
 
-  const ticketsUpdateOn: ContractUpdateOn = [
-    {
-      contract: ContractName.Juicer,
-      eventName: 'Pay',
-      topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
-    },
-    {
-      contract: ContractName.Juicer,
-      eventName: 'Redeem',
-      topics: currentBudget ? [[], currentBudget.project] : undefined,
-    },
-  ]
+  const ticketsUpdateOn: ContractUpdateOn = useMemo(
+    () => [
+      {
+        contract: ContractName.Juicer,
+        eventName: 'Pay',
+        topics: currentBudget?.id
+          ? [currentBudget.id.toHexString()]
+          : undefined,
+      },
+      {
+        contract: ContractName.Juicer,
+        eventName: 'Redeem',
+        topics: currentBudget?.project
+          ? [[], currentBudget.project]
+          : undefined,
+      },
+    ],
+    [currentBudget?.id, currentBudget?.project],
+  )
 
   const bondingCurveRate = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -83,10 +91,11 @@ export default function Rewards({
     ),
     updateOn: [
       ...ticketsUpdateOn,
-      // {
-      //   contract: contracts?.Juicer,
-      //   event: TODO add convert event,
-      // },
+      {
+        contract: contracts?.TicketStore,
+        eventName: 'Issue',
+        topics: currentBudget ? [currentBudget.project] : undefined,
+      },
     ],
   })
   const iouSupply = useContractReader<BigNumber>({
@@ -111,18 +120,23 @@ export default function Rewards({
         eventName: 'Pay',
         topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
       },
+      {
+        contract: ContractName.Juicer,
+        eventName: 'Tap',
+        topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
+      },
     ],
   })
 
   if (!currentBudget) return null
 
-  const totalBalance = ticketsBalance?.add(iouBalance || 0) || BigNumber.from(0)
-  const totalSupply = ticketSupply?.add(iouSupply || 0) || BigNumber.from(0)
+  const totalBalance = BigNumber.from(ticketsBalance ?? 0).add(iouBalance || 0)
+  const combinedSupply = BigNumber.from(ticketSupply ?? 0).add(iouSupply || 0)
 
-  const share = totalSupply?.gt(0)
+  const share = combinedSupply?.gt(0)
     ? totalBalance
         ?.mul(100)
-        .div(totalSupply)
+        .div(combinedSupply)
         .toString()
     : '0'
 
@@ -133,29 +147,34 @@ export default function Rewards({
       !ticketsBalance ||
       !bondingCurveRate ||
       !totalOverflow ||
-      totalSupply.eq(0)
+      combinedSupply.eq(0)
     )
       return
 
     setLoadingRedeem(true)
 
-    const minReturn = ticketsBalance
+    const redeemWad = parseWad(redeemAmount)
+
+    if (!redeemWad) return
+
+    const minReturn = redeemWad
       .mul(totalOverflow)
       .mul(bondingCurveRate)
-      .div(totalSupply)
+      .div(1000)
+      .div(combinedSupply)
 
     transactor(
       contracts.Juicer,
       'redeem',
       [
         currentBudget?.project,
-        redeemAmount?.toHexString(),
-        minReturn,
+        redeemWad?.toHexString(),
+        minReturn.toHexString(),
         userAddress,
       ],
       {
         onDone: () => setLoadingRedeem(false),
-        onConfirmed: () => setRedeemAmount(BigNumber.from(0)),
+        onConfirmed: () => setRedeemAmount('0'),
       },
     )
   }
@@ -208,7 +227,7 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            {formatBigNum(totalOverflow) ?? 0} {weth?.symbol}
+            {formatEther(totalOverflow ?? 0)} {weth?.symbol}
           </div>
         )}
       />
@@ -230,10 +249,10 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {formatEther(iouBalance?.toString() ?? '0')} {iouSymbol}
+                {formatWad(iouBalance ?? 0)} {iouSymbol}
               </div>
               {subText(
-                `${share ?? 0}% of ${formatBigNum(totalSupply) ??
+                `${share ?? 0}% of ${formatWad(combinedSupply) ??
                   0} ${iouSymbol} in circulation`,
               )}
               {!addressExists(ticketAddress) ? (
@@ -271,11 +290,11 @@ export default function Rewards({
           valueRender={() => (
             <div>
               <div>
-                {formatEther(ticketsBalance?.toString() ?? '0')} {ticketSymbol}
+                {formatWad(ticketsBalance)} {ticketSymbol}
               </div>
               {subText(
-                `${share ?? 0}% of ${formatEther(
-                  ticketSupply?.toString() ?? '0',
+                `${share ?? 0}% of ${formatWad(
+                  ticketSupply?.toString(),
                 )} ${ticketSymbol} in circulation`,
               )}
               {!addressExists(ticketAddress) ? (
@@ -304,7 +323,7 @@ export default function Rewards({
                 type="number"
                 placeholder="0"
                 max={formatBigNum(ticketsBalance)}
-                onChange={e => setRedeemAmount(BigNumber.from(e.target.value))}
+                onChange={e => setRedeemAmount(e.target.value)}
               />
               <Button type="primary" onClick={redeem} loading={loadingRedeem}>
                 Redeem

@@ -141,17 +141,144 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const formatDate = (date: number) => moment(date).format('M-DD-YYYY h:mma')
 
-  const isEnded: string | undefined = useMemo(
+  const formattedStartTime = formatDate(budget.start.toNumber() * 1000)
+
+  const formattedEndTime = formatDate(
+    budget.start.add(budget.duration).toNumber() * 1000,
+  )
+
+  const formattedDuration = detailedTimeString(
+    budget && budget.duration.toNumber() * 1000,
+  )
+
+  const isEnded = useMemo(
     () =>
-      budget.start.add(budget.duration).toNumber() * 1000 < new Date().valueOf()
-        ? formatDate(budget.start.add(budget.duration).toNumber() * 1000)
-        : undefined,
+      budget.start.add(budget.duration).toNumber() * 1000 <
+      new Date().valueOf(),
     [budget.start, budget.duration],
   )
 
   const isUpcoming = useMemo(
-    () => budget.start.gt(Math.round(new Date().valueOf() / 1000)),
+    () => budget.start.toNumber() > new Date().valueOf() / 1000,
     [budget.start],
+  )
+
+  const tappedDescriptionItem = (
+    <Descriptions.Item
+      label={
+        <TooltipLabel
+          label="Tapped"
+          tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
+        />
+      }
+    >
+      {formattedTappedTotal} {currency}
+    </Descriptions.Item>
+  )
+
+  const tappableDescriptionItem = (
+    <Descriptions.Item
+      label={
+        <TooltipLabel
+          label="Tappable"
+          tip="The amount that the project owner can still tap from this budget."
+        />
+      }
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        {formatWad(tappableAmount)} {currency}
+        {isOwner && tappableAmount?.gt(0) ? (
+          <div>
+            <Button
+              loading={loadingWithdraw}
+              onClick={() => setWithdrawModalVisible(true)}
+            >
+              Withdraw
+            </Button>
+            <Modal
+              title="Withdraw funds"
+              visible={withdrawModalVisible}
+              onOk={() => {
+                tap()
+                setWithdrawModalVisible(false)
+              }}
+              onCancel={() => {
+                setTapAmount(undefined)
+                setWithdrawModalVisible(false)
+              }}
+              okText="Withdraw"
+              width={540}
+            >
+              <Input
+                name="withdrawable"
+                placeholder="0"
+                suffix={
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {currency}
+                    <InputAccessoryButton
+                      text="MAX"
+                      onClick={() => setTapAmount(fromWad(tappableAmount))}
+                    />
+                  </div>
+                }
+                value={tapAmount}
+                max={fromWad(tappableAmount)}
+                onChange={e => setTapAmount(e.target.value)}
+              />
+              <div style={{ textAlign: 'right', marginTop: 10 }}>
+                {formatWad(converter.usdToWei(tapAmount))} ETH
+              </div>
+            </Modal>
+          </div>
+        ) : null}
+      </div>
+    </Descriptions.Item>
+  )
+
+  const upcomingDescriptions = (
+    <Descriptions {...descriptionsStyle} column={2} bordered>
+      <Descriptions.Item label="Starts">
+        {formatDate(budget.start.toNumber() * 1000)}
+      </Descriptions.Item>
+
+      <Descriptions.Item label="Duration">
+        {formattedDuration}
+      </Descriptions.Item>
+    </Descriptions>
+  )
+
+  const activeDescriptions = (
+    <Descriptions {...descriptionsStyle} column={1} bordered>
+      <Descriptions.Item label="Started">
+        {formatDate(budget.start.toNumber() * 1000)}
+      </Descriptions.Item>
+
+      <Descriptions.Item label="Time left">
+        {detailedTimeString(secondsLeft * 1000)}
+      </Descriptions.Item>
+
+      {tappedDescriptionItem}
+
+      {tappableDescriptionItem}
+    </Descriptions>
+  )
+
+  const endedDescriptions = (
+    <Descriptions {...descriptionsStyle} column={1} bordered>
+      <Descriptions.Item span={1} label="Period">
+        {formattedStartTime} - {formattedEndTime}
+      </Descriptions.Item>
+
+      {tappedDescriptionItem}
+
+      {tappableDescriptionItem}
+    </Descriptions>
   )
 
   if (!budget) return null
@@ -160,102 +287,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     <div>
       <BudgetHeader budget={budget} gutter={gutter} />
 
-      <Descriptions {...descriptionsStyle} column={2} bordered>
-        <Descriptions.Item label="Start">
-          {formatDate(budget.start.toNumber() * 1000)}
-        </Descriptions.Item>
+      {isUpcoming ? upcomingDescriptions : null}
+      {isEnded ? endedDescriptions : null}
+      {!isUpcoming && !isEnded ? activeDescriptions : null}
 
-        <Descriptions.Item label="Duration">
-          {detailedTimeString(budget && budget.duration.toNumber() * 1000)}
-        </Descriptions.Item>
-
-        {isUpcoming ? null : (
-          <Descriptions.Item label={isEnded ? 'Ended' : 'Time left'}>
-            {(secondsLeft && detailedTimeString(secondsLeft * 1000)) || isEnded}
-          </Descriptions.Item>
-        )}
-
-        {isUpcoming ? null : (
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label="Tapped"
-                tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
-              />
-            }
-          >
-            {formattedTappedTotal?.toString()} {currency}
-          </Descriptions.Item>
-        )}
-
-        {isUpcoming ? null : (
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label="Tappable"
-                tip="The amount that the project owner can still tap from this budget."
-              />
-            }
-            span={2}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              {formatWad(tappableAmount)} {currency}
-              {isOwner && tappableAmount?.gt(0) ? (
-                <div>
-                  <Button
-                    loading={loadingWithdraw}
-                    onClick={() => setWithdrawModalVisible(true)}
-                  >
-                    Withdraw
-                  </Button>
-                  <Modal
-                    title="Withdraw funds"
-                    visible={withdrawModalVisible}
-                    onOk={() => {
-                      tap()
-                      setWithdrawModalVisible(false)
-                    }}
-                    onCancel={() => {
-                      setTapAmount(undefined)
-                      setWithdrawModalVisible(false)
-                    }}
-                    okText="Withdraw"
-                    width={540}
-                  >
-                    <Input
-                      name="withdrawable"
-                      placeholder="0"
-                      suffix={
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          {currency}
-                          <InputAccessoryButton
-                            text="MAX"
-                            onClick={() =>
-                              setTapAmount(fromWad(tappableAmount))
-                            }
-                          />
-                        </div>
-                      }
-                      value={tapAmount}
-                      max={fromWad(tappableAmount)}
-                      onChange={e => setTapAmount(e.target.value)}
-                    />
-                    <div style={{ textAlign: 'right', marginTop: 10 }}>
-                      {formatWad(converter.usdToWei(tapAmount))} ETH
-                    </div>
-                  </Modal>
-                </div>
-              ) : null}
-            </div>
-          </Descriptions.Item>
-        )}
-      </Descriptions>
       {budget?.link ? (
         <div
           style={{
@@ -268,6 +303,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           </a>
         </div>
       ) : null}
+
       <div style={{ margin: gutter }}>
         <Descriptions {...descriptionsStyle} size="small" column={2}>
           <Descriptions.Item

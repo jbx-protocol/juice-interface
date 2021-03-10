@@ -1,4 +1,4 @@
-import { Button, Space, Tabs } from 'antd'
+import { Button, Col, Row, Space, Tabs } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
@@ -8,10 +8,14 @@ import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
+import { CardSection } from '../shared/CardSection'
 import Loading from '../shared/Loading'
+import CurrentBudget from './CurrentBudget'
 import OwnerBackOffice from './OwnerBackOffice'
-import OwnerFinances from './OwnerFinances'
+import UpcomingBudget from './UpcomingBudget'
 import Rewards from './Rewards'
+import BudgetsHistory from './BudgetsHistory'
+import { addressExists } from '../../utils/addressExists'
 
 export default function Owner() {
   const [budgetState, setBudgetState] = useState<
@@ -134,7 +138,16 @@ export default function Owner() {
                 </h1>
                 <h3>{owner}</h3>
               </div>
-              <Rewards ticketAddress={ticketAddress} />
+              <Row gutter={60}>
+                <Col xs={24} lg={12}>
+                  <CardSection>
+                    <CurrentBudget ticketAddress={ticketAddress} />
+                  </CardSection>
+                </Col>
+                <Col xs={24} lg={12}>
+                  <Rewards ticketAddress={ticketAddress} />
+                </Col>
+              </Row>
             </div>
 
             <Tabs
@@ -153,23 +166,34 @@ export default function Owner() {
                 paddingBottom: 0,
               }}
             >
-              <Tabs.TabPane tab="Finances" key="1" style={tabPaneStyle}>
+              <Tabs.TabPane tab="Future" key="future" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
-                  <OwnerFinances owner={owner} ticketAddress={ticketAddress} />
+                  <div style={{ maxWidth: 600 }}>
+                    <UpcomingBudget owner={owner} />
+                  </div>
                 </div>
               </Tabs.TabPane>
-              <Tabs.TabPane
-                tab="Back office stuff"
-                key="2"
-                style={tabPaneStyle}
-              >
+              <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
-                  <OwnerBackOffice
-                    ticketAddress={ticketAddress}
-                    isOwner={isOwner}
-                  />
+                  <div style={{ maxWidth: 600 }}>
+                    <BudgetsHistory startId={currentBudget?.previous} />
+                  </div>
                 </div>
               </Tabs.TabPane>
+              {addressExists(ticketAddress) ? null : (
+                <Tabs.TabPane
+                  tab="Back office stuff"
+                  key="backOffice"
+                  style={tabPaneStyle}
+                >
+                  <div style={{ ...layouts.maxWidth }}>
+                    <OwnerBackOffice
+                      ticketAddress={ticketAddress}
+                      isOwner={isOwner}
+                    />
+                  </div>
+                </Tabs.TabPane>
+              )}
             </Tabs>
           </Space>
         </div>

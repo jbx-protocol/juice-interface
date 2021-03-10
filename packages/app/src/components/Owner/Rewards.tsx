@@ -157,13 +157,7 @@ export default function Rewards({
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (
-      !ticketsBalance ||
-      !bondingCurveRate ||
-      !totalOverflow ||
-      combinedSupply.eq(0)
-    )
-      return
+    if (!bondingCurveRate || !totalOverflow || combinedSupply.eq(0)) return
 
     setLoadingRedeem(true)
 

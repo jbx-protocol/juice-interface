@@ -169,7 +169,7 @@ library Budget {
         uint256 _percentage
     ) internal pure returns (uint256) {
         return
-            _self.weight.mul(_amount).mul(_percentage).div(_self.target).div(
+            _self.weight.div(_self.target).mul(_amount).mul(_percentage).div(
                 100
             );
     }

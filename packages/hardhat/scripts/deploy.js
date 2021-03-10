@@ -88,7 +88,7 @@ const main = async () => {
     });
 
     // Create the admin's budget.
-    await attachedAdmin.configure(budgetStore.address, 1, 1, 2592000, "Juice", "https://asdf.com", 97, 5, 0, "0x0000000000000000000000000000000000000000", {
+    await attachedAdmin.configure(budgetStore.address, 1000E18, 1, 2592000, "Juice", "https://asdf.com", 97, 5, 0, "0x0000000000000000000000000000000000000000", {
       gasLimit: 3000000
     });
   } catch (e) {

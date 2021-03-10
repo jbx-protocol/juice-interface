@@ -502,8 +502,8 @@ contract Juicer is IJuicer {
 
         // Mint the appropriate amount of tickets for the contributor.
         ticketStore.print(
+            _project,
             _beneficiary,
-            _budget.project,
             _budget._weighted(
                 _covertedCurrencyAmount,
                 uint256(100).sub(_budget.p)

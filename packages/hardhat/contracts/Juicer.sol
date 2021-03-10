@@ -213,7 +213,7 @@ contract Juicer is IJuicer {
             _baseReturnAmount.add(overflowYielder.getBalance(weth));
 
         // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
-        returnAmount = _baseReturnAmount.mul(_claimable).div(_totalClaimable);
+        returnAmount = _baseReturnAmount.div(_totalClaimable).mul(_claimable);
 
         // Subtract the depositable amount if needed.
         if (returnAmount <= depositable) {

@@ -76,10 +76,8 @@ contract TicketStore is Store, ITicketStore {
             iOweYous[_issuer][_holder] == 0 ? tickets[_issuer] : Tickets(0);
 
         // Get the total supply either from the ticket or from the iOweYou.
-        uint256 _totalSupply =
-            _tickets != Tickets(0)
-                ? _tickets.totalSupply()
-                : totalIOweYous[_issuer];
+        uint256 _totalSupply = totalIOweYous[_issuer];
+        if (_tickets != Tickets(0)) _totalSupply.add(_tickets.totalSupply());
 
         if (_totalSupply == 0) return 0;
 
@@ -97,8 +95,8 @@ contract TicketStore is Store, ITicketStore {
 
         return
             claimable[_issuer]
-                .mul(_amount)
                 .div(_totalSupply)
+                .mul(_amount)
                 .mul(_amount < _totalSupply ? _proportion : 1000)
                 .div(1000);
     }
@@ -193,7 +191,7 @@ contract TicketStore is Store, ITicketStore {
         uint256 _minClaimed,
         uint256 _proportion
     ) external override onlyAdmin returns (uint256 returnAmount) {
-        // The amount of overflowed tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
+        // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         returnAmount = getClaimableAmount(
             _holder,
             _amount,

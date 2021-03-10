@@ -551,9 +551,7 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _available =
             Math.min(
                 _budget.target,
-                _budget.total.mul(_ethPrice).add(uint256(10E18).div(2)).div(
-                    10E18
-                )
+                _budget.total.mul(_ethPrice).add(uint256(1E18).div(2)).div(1E18)
             );
         return
             _available.mul(uint256(100).sub(_withhold)).div(100).sub(

@@ -39,7 +39,7 @@ export default function BudgetTargetInput({
 
   return (
     <Input
-      value={target}
+      defaultValue={target}
       className="align-end"
       placeholder="0"
       type="number"

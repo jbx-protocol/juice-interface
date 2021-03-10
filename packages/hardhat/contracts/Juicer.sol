@@ -12,7 +12,7 @@ import "./interfaces/IOverflowYielder.sol";
 
 import "./TicketStore.sol";
 
-import "./libraries/Math.sol";
+import "./libraries/DSMath.sol";
 
 /**
   @notice This contract manages all funds in the Juice ecosystem.
@@ -132,8 +132,8 @@ contract Juicer is IJuicer {
             // The overflow is either in the overflow yielder or still depositable.
             // The proportion belonging to this issuer is the same proportion as the raw values in the Ticket store.
             return
-                Math.wdiv(
-                    Math.wmul(
+                DSMath.wdiv(
+                    DSMath.wmul(
                         overflowYielder.getBalance(weth).add(depositable),
                         _claimable
                     ),

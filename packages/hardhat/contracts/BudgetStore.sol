@@ -560,7 +560,7 @@ contract BudgetStore is Store, IBudgetStore {
                 _budget.total.mul(_ethPrice).add(uint256(1E18).div(2)).div(1E18)
             );
         return
-            _available.mul(uint256(100).sub(_withhold)).div(100).sub(
+            _available.div(uint256(100).add(_withhold)).mul(100).sub(
                 _budget.tappedTarget
             );
     }

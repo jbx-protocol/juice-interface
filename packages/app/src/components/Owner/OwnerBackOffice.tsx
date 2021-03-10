@@ -1,4 +1,4 @@
-import { defaultAbiCoder } from '@ethersproject/abi'
+import { formatBytes32String } from '@ethersproject/strings'
 import { Button, Col, Form, Row } from 'antd'
 import { UserContext } from 'contexts/userContext'
 import { TicketsFormFields } from 'models/forms-fields/tickets-form'
@@ -31,10 +31,7 @@ export default function OwnerBackOffice({
     transactor(
       contracts.TicketStore,
       'issue',
-      [
-        defaultAbiCoder.encode(['string'], [fields.name]),
-        defaultAbiCoder.encode(['string'], [fields.symbol]),
-      ],
+      [formatBytes32String(fields.name), formatBytes32String(fields.symbol)],
       {
         onDone: () => setLoadingInitTickets(false),
       },

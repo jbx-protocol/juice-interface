@@ -4,7 +4,13 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import React, { useMemo } from 'react'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formatWad, fracDiv, parseWad } from 'utils/formatCurrency'
+import {
+  formattedNum,
+  formatWad,
+  fracDiv,
+  fromWad,
+  parseWad,
+} from 'utils/formatCurrency'
 
 import { colors } from '../../constants/styles/colors'
 
@@ -23,7 +29,7 @@ export default function BudgetHeader({
 
     const weiTarget =
       currency === 'USD'
-        ? converter.usdToWei(formatWad(budget.target))
+        ? converter.usdToWei(fromWad(budget.target))
         : budget.target
 
     if (!weiTarget) return
@@ -37,7 +43,7 @@ export default function BudgetHeader({
     () =>
       weiSurplus
         ? currency === 'USD'
-          ? converter.weiToUsd(weiSurplus)?.toString()
+          ? formattedNum(converter.weiToUsd(weiSurplus))
           : formatWad(weiSurplus)
         : undefined,
     [weiSurplus, currency, converter],
@@ -62,7 +68,7 @@ export default function BudgetHeader({
     const wadAmount =
       currency === 'USD'
         ? converter.weiToUsd(budget.total)?.toString()
-        : formatWad(budget.total)
+        : fromWad(budget.total)
 
     return wadAmount ?? '0'
   }, [currency, budget?.total, converter])

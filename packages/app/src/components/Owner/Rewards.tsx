@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther } from '@ethersproject/units'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
@@ -9,10 +10,15 @@ import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatBigNum } from 'utils/formatBigNum'
 
-import { formatWad, parseWad } from '../../utils/formatCurrency'
+import {
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from '../../utils/formatCurrency'
 import TooltipLabel from '../shared/TooltipLabel'
+import { useCurrencyConverter } from '../../hooks/CurrencyConverter'
 
 export default function Rewards({
   ticketAddress,
@@ -33,6 +39,8 @@ export default function Rewards({
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingClaimIou, setLoadingClaimIou] = useState<boolean>()
+
+  const converter = useCurrencyConverter()
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -226,8 +234,9 @@ export default function Rewards({
           />
         }
         valueRender={() => (
-          <div>
-            {formatEther(totalOverflow ?? 0)} {weth?.symbol}
+          <div style={{ textAlign: 'right' }}>
+            {formatWad(totalOverflow ?? 0)} {weth?.symbol}
+            <div>{formattedNum(converter.weiToUsd(totalOverflow))} USD</div>
           </div>
         )}
       />
@@ -322,7 +331,14 @@ export default function Rewards({
               <Input
                 type="number"
                 placeholder="0"
-                max={formatBigNum(ticketsBalance)}
+                value={redeemAmount}
+                suffix={
+                  <InputAccessoryButton
+                    text="MAX"
+                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                  />
+                }
+                max={fromWad(totalBalance)}
                 onChange={e => setRedeemAmount(e.target.value)}
               />
               <Button type="primary" onClick={redeem} loading={loadingRedeem}>

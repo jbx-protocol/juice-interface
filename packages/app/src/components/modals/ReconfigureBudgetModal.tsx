@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { formatBytes32String } from '@ethersproject/strings'
 import { Form, Modal } from 'antd'
 import { emptyAddress } from 'constants/empty-address'
 import { UserContext } from 'contexts/userContext'
@@ -8,7 +9,7 @@ import { BudgetFormFields } from 'models/forms-fields/budget-form'
 import { useContext } from 'react'
 import { addressExists } from 'utils/addressExists'
 
-import { formatWad, parseWad } from '../../utils/formatCurrency'
+import { fromWad, parseWad } from '../../utils/formatCurrency'
 import BudgetAdvancedForm from '../forms/BudgetAdvancedForm'
 import BudgetForm from '../forms/BudgetForm'
 
@@ -30,7 +31,7 @@ export default function ReconfigureBudgetModal({
     budgetForm.setFieldsValue({
       name: currentBudget.name,
       duration: currentBudget.duration.toNumber(),
-      target: formatWad(currentBudget.target),
+      target: fromWad(currentBudget.target),
       currency: currentBudget.currency.toString() as BudgetCurrency,
       link: currentBudget.link,
     })
@@ -62,8 +63,8 @@ export default function ReconfigureBudgetModal({
       parseWad(fields.target)?.toHexString(),
       BigNumber.from(fields.duration).toHexString(),
       BigNumber.from(fields.currency).toHexString(),
-      fields.name,
-      fields.link,
+      formatBytes32String(fields.name),
+      formatBytes32String(fields.link),
       BigNumber.from(fields.discountRate).toHexString(),
       BigNumber.from(fields.projectAllocation).toHexString(),
       BigNumber.from(fields.beneficiaryAllocation).toHexString(),

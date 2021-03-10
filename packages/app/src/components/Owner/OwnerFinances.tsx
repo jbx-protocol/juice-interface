@@ -9,7 +9,7 @@ import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad } from 'utils/formatCurrency'
+import { fromWad } from 'utils/formatCurrency'
 
 import ApproveSpendModal from '../modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from '../modals/ConfirmPayOwnerModal'
@@ -95,7 +95,7 @@ export default function OwnerFinances({
     const empty = '--'
 
     try {
-      const amt = formatWad(weiPayAmt)?.split('.')
+      const amt = fromWad(weiPayAmt)?.split('.')
       if (amt && amt[1]) {
         // Always 4 decimal places
         amt[1] = amt[1].substr(0, 4)

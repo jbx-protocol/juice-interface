@@ -3,45 +3,48 @@ import { formatEther, parseEther } from '@ethersproject/units'
 
 // "wad" ==> 1/1e18
 
-// const decimalSeparator = '.'
+const decimalSeparator = '.'
 
-// const separateThousands = (str?: string, separator = ',') => {
-//   if (!str?.trim().length) return
+const separateThousands = (str?: string, separator = ',') => {
+  if (!str?.trim().length) return
 
-//   let output = ''
-//   let charPosition = 0
+  let output = ''
+  let charPosition = 0
 
-//   for (let i = str.length - 1; i >= 0; i--) {
-//     output =
-//       charPosition > 0 && charPosition % 3 === 0
-//         ? str[i] + separator + output
-//         : str[i] + output
-//     charPosition++
-//   }
+  for (let i = str.length - 1; i >= 0; i--) {
+    output =
+      charPosition > 0 && charPosition % 3 === 0
+        ? str[i] + separator + output
+        : str[i] + output
+    charPosition++
+  }
 
-//   return output
-// }
+  return output
+}
 
-// const formattedNum = (num?: number | string) => {
-//   if (num === undefined) return
+export const formattedNum = (num: BigNumberish | undefined, empty = '0') => {
+  if (num === undefined) return
 
-//   const str = num?.toString()
+  const str = num.toString()
 
-//   if (!str.length) return
+  if (!str.length) return empty
 
-//   let output = ''
-//   let charPosition = 0
+  if (str.includes(decimalSeparator)) {
+    const [integer, decimal] = str.split(decimalSeparator)
+    return decimal === '0'
+      ? separateThousands(integer)
+      : [separateThousands(integer), decimal.substr(0, 6).padEnd(2, '0')].join(
+          decimalSeparator,
+        )
+  }
 
-//   if (str.includes(decimalSeparator)) {
-//     const segments = str.split(decimalSeparator)
-//     return [separateThousands(segments[0]), segments[1]].join(decimalSeparator)
-//   }
+  return separateThousands(str)
+}
 
-//   return separateThousands(str)
-// }
-
-export const formatWad = (amt?: BigNumberish) =>
+export const fromWad = (amt?: BigNumberish) =>
   amt !== undefined && amt !== null ? formatEther(amt) : undefined
+export const formatWad = (amt?: BigNumberish) =>
+  amt !== undefined && amt !== null ? formattedNum(formatEther(amt)) : undefined
 export const parseWad = (amt?: string) => (amt ? parseEther(amt) : undefined)
 
 export class CurrencyUtils {

@@ -7,7 +7,7 @@ import { Step } from 'models/step'
 import { Link } from 'react-router-dom'
 import { addressExists } from 'utils/addressExists'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formatWad } from 'utils/formatCurrency'
+import { formattedNum, fromWad } from 'utils/formatCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
 export function reviewStep({
@@ -47,15 +47,16 @@ export function reviewStep({
     if (adminFeePercent === undefined) return
 
     const targetAmount = currentBudget
-      ? formatWad(currentBudget.target)
+      ? fromWad(currentBudget.target)
       : budgetForm.getFieldValue('target')
 
     if (targetAmount === undefined) return
 
     return currentBudget
-      ? `${targetAmount} ${currency} (includes fee)`
-      : `${targetAmount} (+${parseFloat(targetAmount) *
-          (adminFeePercent / 100)} ${currency})`
+      ? `${formattedNum(targetAmount)} ${currency} (includes fee)`
+      : `${formattedNum(targetAmount)} (+${formattedNum(
+          parseFloat(targetAmount) * (adminFeePercent / 100),
+        )} ${currency})`
   }
 
   return {

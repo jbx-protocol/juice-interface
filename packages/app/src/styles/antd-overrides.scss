@@ -106,12 +106,12 @@ input.ant-input[type='number'] {
 }
 
 input:-internal-autofill,
-input:-internal-autofill-hover,
-input:-internal-autofill-focus,
-input:-internal-autofill-selected,
+input:-internal-autofill:hover,
+input:-internal-autofill:focus,
 input:-webkit-autofill,
-input:-webkit-hover,
-input:-webkit-focus {
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill-selected {
   background: transparent !important;
   background-color: transparent !important;
   -webkit-box-shadow: none !important;

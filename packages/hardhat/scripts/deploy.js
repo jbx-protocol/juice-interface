@@ -8,7 +8,7 @@ const weth = require("../constants/weth");
 const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 
 const main = async () => {
-  const token = !process.env.HARDHAT_NETWORK && await deploy("Token");
+  const token = !process.env.HARDHAT_NETWORK && (await deploy("Token"));
   const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
 
@@ -31,6 +31,8 @@ const main = async () => {
     "0x766621e1e1274496ab3d65badc5866024f1ab7b8"
   ]);
 
+  const blockGasLimit = 9500000;
+
   try {
     const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
@@ -47,58 +49,83 @@ const main = async () => {
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
-      
+
     console.log("⚡️ Setting the ticket store owner");
     await attachedTicketStore.setOwnership(admin.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Setting the budget store owner");
     await attachedBudgetStore.setOwnership(admin.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
-    console.log("⚡️ Granting the juicer admin privileges over the budget store");
+    console.log(
+      "⚡️ Granting the juicer admin privileges over the budget store"
+    );
     await attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
-    console.log("⚡️ Granting the juicer admin privileges over the ticket store");
+    console.log(
+      "⚡️ Granting the juicer admin privileges over the ticket store"
+    );
     await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
-    console.log("⚡️ Granting budget ballot admin privileges over the budget store");
+    console.log(
+      "⚡️ Granting budget ballot admin privileges over the budget store"
+    );
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
     if (process.env.HARDHAT_NETWORK) {
       console.log("⚡️ Adding ETH/USD price feed to the budget store");
-      await attachedAdmin.addPriceFeed(budgetStore.address, ethUsdPriceFeed(process.env.HARDHAT_NETWORK), 1, {
-        gasLimit: 10000000
-      });
+      await attachedAdmin.addPriceFeed(
+        budgetStore.address,
+        ethUsdPriceFeed(process.env.HARDHAT_NETWORK),
+        1,
+        {
+          gasLimit: blockGasLimit
+        }
+      );
     }
-      console.log("⚡️ Setting the admin of the juicer");
+    console.log("⚡️ Setting the admin of the juicer");
     await attachedJuicer.setAdmin(admin.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Issuing the admin's tickets");
     await attachedAdmin.issueTickets(ticketStore.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
 
-    //TODO set the owner of the admin contract.
+    // TODO set the owner of the admin contract.
     // await attachedJuicer.transferOwnership(admin.address, {
-    //   gasLimit: 10000000
+    //   gasLimit: blockGasLimit
     // });
 
-    console.log("⚡️ Setting the budget ballot as the controller of the staker");
+    console.log(
+      "⚡️ Setting the budget ballot as the controller of the staker"
+    );
     // Make this Ballot the timelock controller of the staker contract.
     await attachedStaker.setController(budgetBallot.address, {
-      gasLimit: 10000000
+      gasLimit: blockGasLimit
     });
 
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
-    await attachedAdmin.configure(budgetStore.address, "0x3635C9ADC5DEA00000", 1, 2592000, "Juice", "https://asdf.com", 97, 5, 0, "0x0000000000000000000000000000000000000000", {
-      gasLimit: 10000000
-    });
+    await attachedAdmin.configure(
+      budgetStore.address,
+      "0x3635C9ADC5DEA00000",
+      1,
+      2592000,
+      "Juice",
+      "https://asdf.com",
+      97,
+      5,
+      0,
+      "0x0000000000000000000000000000000000000000",
+      {
+        gasLimit: blockGasLimit
+      }
+    );
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }

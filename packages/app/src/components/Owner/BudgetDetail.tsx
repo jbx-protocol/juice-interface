@@ -159,17 +159,16 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     budget && budget.duration.toNumber() * 1000,
   )
 
+  const now = new Date().valueOf() / 1000
+
   const isEnded = useMemo(
-    () =>
-      budget.start.add(budget.duration).toNumber() * 1000 <
-      new Date().valueOf(),
+    () => budget.start.add(budget.duration).toNumber() < now,
     [budget.start, budget.duration],
   )
 
-  const isUpcoming = useMemo(
-    () => budget.start.toNumber() > new Date().valueOf() / 1000,
-    [budget.start],
-  )
+  const isUpcoming = useMemo(() => budget.start.toNumber() > now, [
+    budget.start,
+  ])
 
   const tappedDescriptionItem = (
     <Descriptions.Item

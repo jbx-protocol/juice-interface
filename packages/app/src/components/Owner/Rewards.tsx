@@ -121,26 +121,28 @@ export default function Rewards({
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'getOverflow',
-    args: currentBudget ? [currentBudget?.project] : null,
+    args: useMemo(
+      () => (currentBudget?.project ? [currentBudget?.project] : null),
+      [currentBudget?.project],
+    ),
     valueDidChange: bigNumbersDiff,
-    // TODO use project instead of budget.id for updateOn, event needs to be updated first
     updateOn: useMemo(
       () =>
-        currentBudget?.id
+        currentBudget?.project
           ? [
               {
                 contract: ContractName.Juicer,
                 eventName: 'Pay',
-                topics: [currentBudget.id.toHexString()],
+                topics: [[], currentBudget.project],
               },
               {
                 contract: ContractName.Juicer,
                 eventName: 'Tap',
-                topics: [currentBudget.id.toHexString()],
+                topics: [[], currentBudget.project],
               },
             ]
           : undefined,
-      [currentBudget?.id],
+      [currentBudget?.project],
     ),
   })
 

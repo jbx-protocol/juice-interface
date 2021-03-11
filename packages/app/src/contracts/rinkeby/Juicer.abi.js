@@ -501,7 +501,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_minReturn",
+        "name": "_minReturnedETH",
         "type": "uint256"
       },
       {

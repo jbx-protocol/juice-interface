@@ -1,24 +1,24 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther } from '@ethersproject/units'
 import { Button, Input, Space, Statistic, Tag, Tooltip } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-
 import {
   formattedNum,
   formatWad,
   fromWad,
   parseWad,
-} from '../../utils/formatCurrency'
+} from 'utils/formatCurrency'
+
 import TooltipLabel from '../shared/TooltipLabel'
-import { useCurrencyConverter } from '../../hooks/CurrencyConverter'
 
 export default function Rewards({
   ticketAddress,
@@ -36,8 +36,9 @@ export default function Rewards({
     onNeedProvider,
   } = useContext(UserContext)
 
+  const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
-  const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
+  const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
   const [loadingClaimIou, setLoadingClaimIou] = useState<boolean>()
 
   const converter = useCurrencyConverter()
@@ -122,30 +123,42 @@ export default function Rewards({
     functionName: 'getOverflow',
     args: currentBudget ? [currentBudget?.project] : null,
     valueDidChange: bigNumbersDiff,
-    updateOn: [
-      {
-        contract: ContractName.Juicer,
-        eventName: 'Pay',
-        topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.Juicer,
-        eventName: 'Tap',
-        topics: currentBudget ? [currentBudget.id.toHexString()] : undefined,
-      },
-    ],
+    // TODO use project instead of budget.id for updateOn, event needs to be updated first
+    updateOn: useMemo(
+      () =>
+        currentBudget?.id
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [currentBudget.id.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [currentBudget.id.toHexString()],
+              },
+            ]
+          : undefined,
+      [currentBudget?.id],
+    ),
   })
 
-  const totalBalance = BigNumber.from(ticketsBalance ?? 0).add(iouBalance || 0)
-  const combinedSupply = BigNumber.from(ticketSupply ?? 0).add(iouSupply || 0)
+  const totalBalance = useMemo(
+    () => BigNumber.from(ticketsBalance ?? 0).add(iouBalance ?? 0),
+    [ticketsBalance, iouBalance],
+  )
+  const combinedSupply = useMemo(
+    () => BigNumber.from(ticketSupply ?? 0).add(iouSupply ?? 0),
+    [ticketSupply, iouSupply],
+  )
 
-  useEffect(() => {
-    if (totalBalance?.gt(0) && !redeemAmount) {
-      setRedeemAmount(fromWad(totalBalance))
-    }
-  }, [totalBalance])
-
-  if (!currentBudget) return null
+  useEffect(() => onChangeRedeemAmount(fromWad(totalBalance)), [
+    totalBalance,
+    totalOverflow,
+    combinedSupply,
+    bondingCurveRate,
+  ])
 
   const share = combinedSupply?.gt(0)
     ? totalBalance
@@ -154,28 +167,37 @@ export default function Rewards({
         .toString()
     : '0'
 
+  function onChangeRedeemAmount(amount: string | undefined) {
+    console.log('change', amount)
+    setRedeemAmount(amount)
+
+    if (
+      amount === undefined ||
+      !totalOverflow ||
+      !bondingCurveRate ||
+      !combinedSupply ||
+      combinedSupply.eq(0)
+    ) {
+      setMinRedeemAmount(undefined)
+    } else {
+      setMinRedeemAmount(
+        parseWad(amount)
+          ?.mul(totalOverflow)
+          .mul(bondingCurveRate)
+          .div(1000)
+          .div(combinedSupply),
+      )
+    }
+  }
+
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (
-      !ticketsBalance ||
-      !bondingCurveRate ||
-      !totalOverflow ||
-      combinedSupply.eq(0)
-    )
-      return
-
-    setLoadingRedeem(true)
+    if (!minRedeemAmount) return
 
     const redeemWad = parseWad(redeemAmount)
 
     if (!redeemWad) return
-
-    const minReturn = redeemWad
-      .mul(totalOverflow)
-      .mul(bondingCurveRate)
-      .div(1000)
-      .div(combinedSupply)
 
     transactor(
       contracts.Juicer,
@@ -183,12 +205,11 @@ export default function Rewards({
       [
         currentBudget?.project,
         redeemWad?.toHexString(),
-        minReturn.toHexString(),
+        minRedeemAmount?.toHexString(),
         userAddress,
       ],
       {
-        onDone: () => setLoadingRedeem(false),
-        onConfirmed: () => setRedeemAmount('0'),
+        onConfirmed: () => onChangeRedeemAmount(undefined),
       },
     )
   }
@@ -229,6 +250,8 @@ export default function Rewards({
   const iouSymbol = 'tickets'
 
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
+
+  if (!currentBudget) return null
 
   return (
     <Space direction="vertical" size="large" align="start">
@@ -353,21 +376,45 @@ export default function Rewards({
                 redeemDisabled ? null : (
                   <InputAccessoryButton
                     text="MAX"
-                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                    onClick={() => onChangeRedeemAmount(fromWad(totalBalance))}
                   />
                 )
               }
               max={fromWad(totalBalance)}
-              onChange={e => setRedeemAmount(e.target.value)}
+              onChange={e => onChangeRedeemAmount(e.target.value)}
             />
             <Button
               type="primary"
-              onClick={redeem}
-              loading={loadingRedeem}
+              onClick={() => setRedeemModalVisible(true)}
               disabled={redeemDisabled}
             >
               Redeem
             </Button>
+
+            <Modal
+              title="Redeem tickets"
+              visible={redeemModalVisible}
+              onOk={() => {
+                redeem()
+                setRedeemModalVisible(false)
+              }}
+              onCancel={() => {
+                onChangeRedeemAmount(undefined)
+                setRedeemModalVisible(false)
+              }}
+              okText="Confirm"
+              width={540}
+            >
+              <Space direction="vertical">
+                <div>
+                  Redeem {redeemAmount} {ticketSymbol ?? iouSymbol}
+                </div>
+                <div>
+                  You will receive minimum {formatWad(minRedeemAmount)}{' '}
+                  {weth?.symbol}
+                </div>
+              </Space>
+            </Modal>
           </Space>
         )}
       />

@@ -135,26 +135,7 @@ export default function Rewards({
       },
     ],
   })
-  //TEMP
-  const totalClaimable = useContractReader<BigNumber>({
-    contract: ContractName.TicketStore,
-    functionName: 'getClaimableAmount',
-    args: useMemo(() => 
-    currentBudget?.project && redeemAmount && bondingCurveRate && addressExists(userAddress) ? [
-      userAddress,
-      parseWad(redeemAmount)?.toHexString(),
-      currentBudget.project,
-      bondingCurveRate.toHexString()
-    ] : null
-  , [currentBudget?.project, redeemAmount, bondingCurveRate, userAddress]),
-    valueDidChange: bigNumbersDiff,
-    formatter: useCallback(
-      (value?: BigNumber) => value ?? BigNumber.from(0),
-      [])
-  })
 
-  console.log("ASDFASDFASDFASFAS: ", {totalClaimable, bondingCurveRate, userAddress, redeem: parseWad(redeemAmount)?.toHexString(), proj: currentBudget?.project });
-  //END TEMP
   const totalBalance = BigNumber.from(ticketsBalance ?? 0).add(iouBalance || 0)
   const combinedSupply = BigNumber.from(ticketSupply ?? 0).add(iouSupply || 0)
 

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, DescriptionsProps, Input } from 'antd'
+import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
@@ -19,14 +19,17 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
-
 import TooltipLabel from '../shared/TooltipLabel'
 import BudgetHeader from './BudgetHeader'
 
 export default function BudgetDetail({ budget }: { budget: Budget }) {
-  const { transactor, onNeedProvider, contracts, userAddress } = useContext(
-    UserContext,
-  )
+  const {
+    transactor,
+    onNeedProvider,
+    contracts,
+    userAddress,
+    weth,
+  } = useContext(UserContext)
 
   const converter = useCurrencyConverter()
 
@@ -125,7 +128,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     const minAmount = (currency === 'USD'
       ? converter.usdToWei(tapAmount)
       : parseWad(tapAmount)
-    )?.sub(1e8)
+    )?.sub(1e12)
 
     transactor(
       contracts.Juicer,
@@ -220,25 +223,32 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               okText="Withdraw"
               width={540}
             >
-              <Input
-                name="withdrawable"
-                placeholder="0"
-                suffix={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {currency}
-                    <InputAccessoryButton
-                      text="MAX"
-                      onClick={() => setTapAmount(fromWad(tappableAmount))}
-                    />
-                  </div>
-                }
-                value={tapAmount}
-                max={fromWad(tappableAmount)}
-                onChange={e => setTapAmount(e.target.value)}
-              />
-              <div style={{ textAlign: 'right', marginTop: 10 }}>
-                {formatWad(converter.usdToWei(tapAmount))} ETH
-              </div>
+              <Space direction="vertical" style={{ width: '100%' }}>
+                <Input
+                  name="withdrawable"
+                  placeholder="0"
+                  suffix={
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {currency}
+                      <InputAccessoryButton
+                        text="MAX"
+                        onClick={() => setTapAmount(fromWad(tappableAmount))}
+                      />
+                    </div>
+                  }
+                  value={tapAmount}
+                  max={fromWad(tappableAmount)}
+                  onChange={e => setTapAmount(e.target.value)}
+                />
+                <div style={{ textAlign: 'right' }}>
+                  {formatWad(converter.usdToWei(tapAmount))} {weth?.symbol}
+                </div>
+              </Space>
             </Modal>
           </div>
         ) : null}

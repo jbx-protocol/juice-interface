@@ -194,14 +194,14 @@ contract Juicer is IJuicer {
         @notice Addresses can redeem their Tickets to claim overflowed tokens.
         @param _issuer The issuer of the Tickets being redeemed.
         @param _amount The amount of Tickets to redeem.
-        @param _minReturn The minimum amount of tokens expected in return.
+        @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the tokens to.
         @return returnAmount The amount that the tickets were redeemed for.
     */
     function redeem(
         address _issuer,
         uint256 _amount,
-        uint256 _minReturn,
+        uint256 _minReturnedETH,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
         // The total raw amount claimable in the ticket store.
@@ -213,7 +213,7 @@ contract Juicer is IJuicer {
                 _issuer,
                 msg.sender,
                 _amount,
-                _minReturn,
+                _minReturnedETH,
                 bondingCurveRate
             );
 

@@ -59,7 +59,7 @@ interface ITicketsController {
     function redeem(
         address _issuer,
         uint256 _amount,
-        uint256 _minReturn,
+        uint256 _minReturnedETH,
         address _beneficiary
     ) external returns (uint256 returnAmount);
 }

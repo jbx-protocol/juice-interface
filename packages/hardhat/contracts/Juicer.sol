@@ -94,6 +94,11 @@ contract Juicer is IJuicer {
 
     // --- external views --- //
 
+    // TODO
+    function getBlockTimestamp() external view returns (uint256) {
+        return block.timestamp;
+    }
+
     /** 
       @notice Gets the total overflow that this Juicer is responsible for.
       @return The amount of overflow.

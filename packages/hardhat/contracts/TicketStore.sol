@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -34,8 +34,6 @@ contract TicketStore is Store, ITicketStore {
 
     /// @notice The total amount of Tickets owed for each token issuer.
     mapping(address => uint256) public override totalIOweYous;
-
-    /// @notice The
 
     // --- external views --- //
 
@@ -107,7 +105,7 @@ contract TicketStore is Store, ITicketStore {
 
     // --- external transactions --- //
 
-    constructor() public {}
+    constructor() {}
 
     /**
         @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.

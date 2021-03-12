@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -43,7 +43,7 @@ abstract contract JuiceProject is Ownable {
         string memory _ticketName,
         string memory _ticketSymbol,
         address _pm
-    ) internal {
+    ) {
         ticketName = _ticketName;
         ticketSymbol = _ticketSymbol;
         pm = _pm;

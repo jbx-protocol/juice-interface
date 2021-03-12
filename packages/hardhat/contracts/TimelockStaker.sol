@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -25,7 +25,7 @@ contract TimelockStaker is ITimelockStaker {
     /// @notice The amount of all tokens currently locked for each address.
     mapping(IERC20 => mapping(address => uint256)) public override timelocks;
 
-    constructor() public {}
+    constructor() {}
 
     /**
       @notice Stakes tokens in this contract.

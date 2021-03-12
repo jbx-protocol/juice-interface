@@ -91,6 +91,7 @@ export function useTransactor({
 
           console.log('RUNNING TX', tx)
           result = await signer.sendTransaction(tx)
+          await result.wait()
         }
         console.log('RESULT:', result)
         // console.log("Notify", notify);

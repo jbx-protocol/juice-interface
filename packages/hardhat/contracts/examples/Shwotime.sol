@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "../abstract/JuiceProject.sol";
@@ -43,7 +43,7 @@ contract Shwotime is JuiceProject {
         IERC20 _dai,
         uint256 _fee,
         address _pm
-    ) public JuiceProject(_ticketName, _ticketSymbol, _pm) {
+    ) JuiceProject(_ticketName, _ticketSymbol, _pm) {
         dai = _dai;
         fee = _fee;
     }

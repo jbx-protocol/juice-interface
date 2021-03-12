@@ -14,6 +14,7 @@
   "dependencies": {
     "@aave/protocol-v2": "^1.0.1",
     "@chainlink/contracts": "^0.1.6",
+    "@eth-optimism/plugins": "^0.0.16",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "@openzeppelin/contracts": "^3.2.0",
@@ -30,10 +31,13 @@
   "scripts": {
     "chain": "hardhat node",
     "test": "hardhat test --network hardhatevm",
-    "compile": "hardhat compile",
-    "deploy": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js && yarn hardhat-publish",
+    "clean": "rimraf ./cache && rimraf ./artifacts",
+    "compile": "yarn clean && __DANGEROUS_OVM_IGNORE_ERRORS__=true hardhat compile",
+    "deploy-local": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network localhost  && yarn hardhat-publish",
+    "deploy-OElocal": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network OElocalhost && yarn hardhat-publish",
     "deploy-ropsten": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network ropsten && yarn hardhat-publish",
     "deploy-kovan": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network kovan && yarn hardhat-publish",
+    "deploy-OEkovan": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network OEkovan && yarn hardhat-publish",
     "deploy-rinkeby": "export $(grep -v '^#' .env | xargs) && hardhat run scripts/deploy.js --network rinkeby && yarn hardhat-publish",
     "hardhat-publish": "hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",

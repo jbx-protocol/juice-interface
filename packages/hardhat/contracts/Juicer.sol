@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -161,7 +161,7 @@ contract Juicer is IJuicer {
         ITicketStore _ticketStore,
         uint256 _fee,
         IERC20 _weth
-    ) public {
+    ) {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
         fee = _fee;
@@ -187,7 +187,7 @@ contract Juicer is IJuicer {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
-        _pay(_project, _amount, _beneficiary, _note, false);
+        return _pay(_project, _amount, _beneficiary, _note, false);
     }
 
     /**

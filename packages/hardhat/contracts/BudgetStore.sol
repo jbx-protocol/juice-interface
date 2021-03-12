@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -164,7 +164,7 @@ contract BudgetStore is Store, IBudgetStore {
 
     // --- external transactions --- //
 
-    constructor() public {}
+    constructor() {}
 
     /**
         @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or

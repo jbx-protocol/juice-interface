@@ -1,7 +1,7 @@
 /* eslint no-use-before-define: "warn" */
 const fs = require("fs");
 const chalk = require("chalk");
-const { ethers } = require("hardhat");
+const { l2ethers, ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
 const weth = require("../constants/weth");
@@ -16,29 +16,29 @@ const main = async () => {
     budgetStore.address,
     ticketStore.address,
     5,
-    weth(process.env.HARDHAT_NETWORK) || token.address
+    weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 
   const staker = await deploy("TimelockStaker");
   const budgetBallot = await deploy("BudgetBallot", [
     juicer.address,
-    staker.address
+    staker.address,
   ]);
 
   const admin = await deploy("Admin", [
     "",
     "JUICE",
-    "0x766621e1e1274496ab3d65badc5866024f1ab7b8"
+    "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
   ]);
 
-  const blockGasLimit = 9500000;
+  const blockGasLimit = 9000000;
 
   try {
-    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
-    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
-    const AdminFactory = await ethers.getContractFactory("Admin");
-    const StakerFactory = await ethers.getContractFactory("TimelockStaker");
-    const JuicerFactory = await ethers.getContractFactory("Juicer");
+    const TicketStoreFactory = await l2ethers.getContractFactory("TicketStore");
+    const BudgetStoreFactory = await l2ethers.getContractFactory("BudgetStore");
+    const AdminFactory = await l2ethers.getContractFactory("Admin");
+    const StakerFactory = await l2ethers.getContractFactory("TimelockStaker");
+    const JuicerFactory = await l2ethers.getContractFactory("Juicer");
 
     const attachedTicketStore = await TicketStoreFactory.attach(
       ticketStore.address
@@ -52,29 +52,29 @@ const main = async () => {
 
     console.log("⚡️ Setting the ticket store owner");
     await attachedTicketStore.setOwnership(admin.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the budget store owner");
     await attachedBudgetStore.setOwnership(admin.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log(
       "⚡️ Granting the juicer admin privileges over the budget store"
     );
     await attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log(
       "⚡️ Granting the juicer admin privileges over the ticket store"
     );
     await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log(
       "⚡️ Granting budget ballot admin privileges over the budget store"
     );
     await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     if (process.env.HARDHAT_NETWORK) {
       console.log("⚡️ Adding ETH/USD price feed to the budget store");
@@ -83,17 +83,17 @@ const main = async () => {
         ethUsdPriceFeed(process.env.HARDHAT_NETWORK),
         1,
         {
-          gasLimit: blockGasLimit
+          gasLimit: blockGasLimit,
         }
       );
     }
     console.log("⚡️ Setting the admin of the juicer");
     await attachedJuicer.setAdmin(admin.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log("⚡️ Issuing the admin's tickets");
     await attachedAdmin.issueTickets(ticketStore.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
 
     // TODO set the owner of the admin contract.
@@ -106,7 +106,7 @@ const main = async () => {
     );
     // Make this Ballot the timelock controller of the staker contract.
     await attachedStaker.setController(budgetBallot.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
 
     console.log("⚡️ Configuring the admins budget");
@@ -123,7 +123,7 @@ const main = async () => {
       0,
       "0x0000000000000000000000000000000000000000",
       {
-        gasLimit: blockGasLimit
+        gasLimit: blockGasLimit,
       }
     );
   } catch (e) {
@@ -141,8 +141,10 @@ const deploy = async (contractName, _args) => {
   console.log(` 🛰  Deploying: ${contractName}`);
 
   const contractArgs = _args || [];
-  const contractArtifacts = await ethers.getContractFactory(contractName);
+  const contractArtifacts = await l2ethers.getContractFactory(contractName);
   const deployed = await contractArtifacts.deploy(...contractArgs);
+  await deployed.deployTransaction.wait();
+
   const encoded = abiEncodeArgs(deployed, contractArgs);
   fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
 
@@ -181,10 +183,10 @@ const abiEncodeArgs = (deployed, contractArgs) => {
 };
 
 // checks if it is a Solidity file
-const isSolidity = fileName =>
+const isSolidity = (fileName) =>
   fileName.indexOf(".sol") >= 0 && fileName.indexOf(".swp") < 0;
 
-const readArgsFile = contractName => {
+const readArgsFile = (contractName) => {
   let args = [];
   try {
     const argsFile = `./contracts/${contractName}.args`;
@@ -198,7 +200,7 @@ const readArgsFile = contractName => {
 
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });

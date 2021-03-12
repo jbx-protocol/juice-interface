@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.6.12;
+pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -27,7 +27,7 @@ contract BudgetBallot is IBudgetBallot {
       @param _juicer The Juicer contract that manages to Budgets being voted on.
       @param _staker The Staking contract that Ticket holders must lock Ticket into before voting.
     */
-    constructor(IJuicer _juicer, ITimelockStaker _staker) public {
+    constructor(IJuicer _juicer, ITimelockStaker _staker) {
         juicer = _juicer;
         staker = _staker;
     }
@@ -53,7 +53,10 @@ contract BudgetBallot is IBudgetBallot {
             _budget.configured.add(juicer.RECONFIGURATION_VOTING_PERIOD());
 
         // The vote must be cast before the standy period expires.
-        require(now < _standbyExpiry, "BudgetBallot::vote: EXPIRED");
+        require(
+            block.timestamp < _standbyExpiry,
+            "BudgetBallot::vote: EXPIRED"
+        );
 
         // Get the Tickets used for the Budget.
         Tickets _tickets = _ticketStore.tickets(_budget.project);

@@ -64,10 +64,6 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
-    /// @notice The amount of time a Budget must be in standby before it can become active.
-    /// @dev This allows for a voting period of 3 days.
-    uint256 public constant override RECONFIGURATION_VOTING_PERIOD = 604800;
-
     /// @notice The admin of the contract who makes admin fees and can take fateful decisions over this contract's mechanics.
     address public override admin;
 
@@ -82,9 +78,6 @@ contract Juicer is IJuicer {
 
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
-
-    /// @notice The percent fee the Juice project takes from overflow.
-    uint256 public immutable override fee;
 
     /// @notice The rate that describes the bonding curve at which tickets are redeemable.
     uint256 public override bondingCurveRate = 382;
@@ -153,18 +146,15 @@ contract Juicer is IJuicer {
     /** 
       @param _budgetStore The BudgetStore to use.
       @param _ticketStore The TicketStore to use.
-      @param _fee The percentage of overflow from all ecosystem Budgets to run through the admin's Budget.
       @param _weth The address for weth.
     */
     constructor(
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
-        uint256 _fee,
         IERC20 _weth
     ) {
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
-        fee = _fee;
         weth = _weth;
     }
 
@@ -187,7 +177,7 @@ contract Juicer is IJuicer {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
-        return _pay(_project, _amount, _beneficiary, _note, false);
+        return _pay(_project, _amount, _beneficiary, _note);
     }
 
     /**
@@ -266,7 +256,7 @@ contract Juicer is IJuicer {
     ) external override lock {
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
         (Budget.Data memory _budget, uint256 _tappedAmount, uint256 _overflow) =
-            budgetStore.tap(_budgetId, msg.sender, _amount, _currency, fee);
+            budgetStore.tap(_budgetId, msg.sender, _amount, _currency);
 
         // Make sure this amount is acceptable.
         require(
@@ -462,51 +452,35 @@ contract Juicer is IJuicer {
         @dev The sender must approve this contract to transfer the specified amount of tokens.
         @param _project The project of the budget to contribute funds to.
         @param _amount Amount of the contribution in ETH. Sent as 1E18.
-        @param _beneficiary The address to transfer the newly minted Tickets to. 
+        @param _beneficiary The addresses to give the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
-        @param _adminFee Wether or not this payment is for an admin fee.
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function _pay(
         address _project,
         uint256 _amount,
         address _beneficiary,
-        string memory _note,
-        bool _adminFee
+        string memory _note
     ) private returns (uint256) {
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (
             Budget.Data memory _budget,
             uint256 _covertedCurrencyAmount,
             uint256 _overflow
-        ) =
-            budgetStore.payProject(
-                _project,
-                _amount,
-                RECONFIGURATION_VOTING_PERIOD,
-                fee
-            );
+        ) = budgetStore.payProject(_project, _amount);
 
-        // If this payment is not from the admin fee.
-        if (!_adminFee) {
-            // Transfer.
-            weth.safeTransferFrom(msg.sender, address(this), _amount);
-            // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-            _pay(
-                admin,
-                _amount.mul(fee).div(100),
-                _project,
-                "Juicer::pay: FEE",
-                true
-            );
-        }
+        // Transfer.
+        weth.safeTransferFrom(msg.sender, address(this), _amount);
 
-        if (_budget.p > 0) {
+        // Take fee through the admin's own budget, minting tickets for the project paying the fee.
+        _takeFee(_project, _amount.mul(_budget.fee).div(100), _beneficiary);
+
+        if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
             ticketStore.print(
                 _project,
                 _project,
-                _budget._weighted(_covertedCurrencyAmount, _budget.p)
+                _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
 
@@ -516,7 +490,7 @@ contract Juicer is IJuicer {
             _beneficiary,
             _budget._weighted(
                 _covertedCurrencyAmount,
-                uint256(100).sub(_budget.p)
+                uint256(100).sub(_budget.reserved)
             )
         );
 
@@ -532,10 +506,66 @@ contract Juicer is IJuicer {
             _covertedCurrencyAmount,
             _budget.currency,
             _note,
-            _adminFee
+            _budget.fee
         );
 
         return _budget.id;
+    }
+
+    /**
+        @notice Takes a fee for the admin's active budget.
+        @param _project The project that the fee is being taken from.
+        @param _amount Amount of the fee in ETH. Sent as 1E18.
+        @param _beneficiary The address to split the newly minted Tickets with. 
+    */
+    function _takeFee(
+        address _project,
+        uint256 _amount,
+        address _beneficiary
+    ) private {
+        // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
+        (
+            Budget.Data memory _budget,
+            uint256 _covertedCurrencyAmount,
+            uint256 _overflow
+        ) = budgetStore.payProject(admin, _amount);
+
+        if (_budget.reserved > 0) {
+            // The project gets the budget's project percentage, if one is specified.
+            ticketStore.print(
+                admin,
+                admin,
+                _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
+            );
+        }
+
+        // Split the weighted amount in two.
+        uint256 _printAmount =
+            _budget
+                ._weighted(
+                _covertedCurrencyAmount,
+                uint256(100).sub(_budget.reserved)
+            )
+                .div(2);
+
+        // Mint the appropriate amount of tickets for the beneficiary.
+        ticketStore.print(admin, _beneficiary, _printAmount);
+
+        // Mint the appropriate amount of tickets for the project.
+        ticketStore.print(admin, _project, _printAmount);
+
+        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
+
+        emit TakeFee(
+            _budget.id,
+            admin,
+            _project,
+            _beneficiary,
+            _amount,
+            _covertedCurrencyAmount,
+            _budget.currency
+        );
     }
 
     // --- private transactions --- //
@@ -547,18 +577,17 @@ contract Juicer is IJuicer {
       @param _amount The amount of overflow.
     */
     function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        if (_budget.b > 0) {
-            // Give to beneficiary
+        if (_budget.donationAmount > 0) {
             weth.safeTransfer(
-                _budget.bAddress,
-                _amount.mul(_budget.b).div(100)
+                _budget.donationRecipient,
+                _amount.mul(_budget.donationAmount).div(100)
             );
         }
 
         // The portion of the overflow that is claimable by redeeming tickets.
         // This is the total minus the percent donated and used as a fee.
         uint256 _claimablePortion =
-            _amount.mul(uint256(100).sub(_budget.b).sub(fee)).div(100);
+            _amount.mul(uint256(100).sub(_budget.fee)).div(100);
 
         // The redeemable portion of the overflow can be deposited to earn yield.
         depositable = depositable.add(_claimablePortion);

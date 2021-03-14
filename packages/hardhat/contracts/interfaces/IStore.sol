@@ -2,8 +2,8 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "./IAccessControlWrapper.sol";
+import "./IAdminControlWrapper.sol";
 
-interface IStore is IAccessControlWrapper {
+interface IStore is IAdminControlWrapper {
     function setOwnership(address _owner) external;
 }

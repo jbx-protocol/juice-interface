@@ -5,8 +5,9 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
-import "./interfaces/IAccessControlWrapper.sol";
+import "./interfaces/IAdminControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
+import "./interfaces/IPrices.sol";
 import "./interfaces/IBudgetBallot.sol";
 import "./abstract/JuiceProject.sol";
 
@@ -26,11 +27,11 @@ contract Admin is JuiceProject {
       @param _contract The contract that is being given access to.
       @param _newAdmin The address that is being given the admin role.
     */
-    function grantAdmin(IAccessControlWrapper _contract, address _newAdmin)
+    function grantAdmin(IAdminControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {
-        _contract.grantRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
+        _contract.appointAdmin(_newAdmin);
     }
 
     /** 
@@ -38,11 +39,11 @@ contract Admin is JuiceProject {
       @param _contract The contract that is having access to revoked.
       @param _newAdmin The address that is having the admin role revoked.
     */
-    function revokeAdmin(IAccessControlWrapper _contract, address _newAdmin)
+    function revokeAdmin(IAdminControlWrapper _contract, address _newAdmin)
         external
         onlyOwner
     {
-        _contract.revokeRole_(_contract.DEFAULT_ADMIN_ROLE_(), _newAdmin);
+        _contract.revokeAdmin(_newAdmin);
     }
 
     /** 
@@ -50,16 +51,8 @@ contract Admin is JuiceProject {
       @param _juicer The juicer that is being depcrecated.
     */
     function deprecateJuicer(IJuicer _juicer) external onlyOwner {
-        IBudgetStore _budgetStore = _juicer.budgetStore();
-        ITicketStore _ticketStore = _juicer.ticketStore();
-        _ticketStore.revokeRole_(
-            _ticketStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
-        _budgetStore.revokeRole_(
-            _budgetStore.DEFAULT_ADMIN_ROLE_(),
-            address(_juicer)
-        );
+        _juicer.ticketStore().revokeAdmin(address(_juicer));
+        _juicer.budgetStore().revokeAdmin(address(_juicer));
     }
 
     /** 
@@ -97,15 +90,39 @@ contract Admin is JuiceProject {
 
     /**
         @notice Adds a price feed to a budget store.
-        @param _budgetStore The budget store to add a price feed to.
-        @param _priceFeed The price feed to add.
+        @param _prices The prices contract to add a feed to.
+        @param _feed The price feed to add.
         @param _currency The currency the price feed is for.
     */
     function addPriceFeed(
-        IBudgetStore _budgetStore,
-        AggregatorV3Interface _priceFeed,
+        IPrices _prices,
+        AggregatorV3Interface _feed,
         uint256 _currency
     ) external onlyOwner {
-        _budgetStore.addPriceFeed(_priceFeed, _currency);
+        _prices.addFeed(_feed, _currency);
+    }
+
+    /**
+        @notice Sets the minimum fee that a budget can have.
+        @param _budgetStore The budget store to set the mininum fee of.
+        @param _fee The new minimum fee.
+    */
+    function setFee(IBudgetStore _budgetStore, uint256 _fee)
+        external
+        onlyOwner
+    {
+        _budgetStore.setFee(_fee);
+    }
+
+    /** 
+      @notice Sets the budget ballot contract that will be used for forthcoming budget reconfigurations.
+      @param _budgetStore The budget store to set the budget ballot of.
+      @param _budgetBallot The new budget ballot.
+    */
+    function setBudgetBallot(
+        IBudgetStore _budgetStore,
+        IBudgetBallot _budgetBallot
+    ) external onlyOwner {
+        _budgetStore.setBudgetBallot(_budgetBallot);
     }
 }

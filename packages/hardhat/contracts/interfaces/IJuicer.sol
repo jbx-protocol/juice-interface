@@ -16,7 +16,7 @@ interface IBudgetController {
         uint256 currencyConvertedAmount,
         uint256 currency,
         string note,
-        bool adminFee
+        uint256 fee
     );
 
     event Tap(
@@ -28,7 +28,15 @@ interface IBudgetController {
         uint256 tappedAmount
     );
 
-    function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
+    event TakeFee(
+        uint256 indexed budgetId,
+        address indexed admin,
+        address indexed project,
+        address beneficiary,
+        uint256 amount,
+        uint256 currencyConvertedAmount,
+        uint256 currency
+    );
 
     function pay(
         address _owner,
@@ -90,8 +98,6 @@ interface IJuicer is IBudgetController, ITicketsController {
     function overflowYielder() external view returns (IOverflowYielder);
 
     function depositable() external view returns (uint256);
-
-    function fee() external view returns (uint256);
 
     function weth() external view returns (IERC20);
 

@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./Math.sol";
+import "./DSMath.sol";
+import "./../interfaces/IBudgetBallot.sol";
 
 /// @notice Budget data and logic.
 library Budget {
@@ -25,8 +27,6 @@ library Budget {
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.
         uint256 previous;
-        // The ID of the project's Budget that came after this one. 0 if none.
-        uint256 next;
         // The name of the budget.
         string name;
         // A link that points to a justification for these parameters.
@@ -46,17 +46,21 @@ library Budget {
         // The amount of available funds that have been tapped by the project in terms of eth.
         uint256 tappedTotal;
         // The percentage of tickets to reserve for the project once the Budget has expired.
-        uint256 p;
-        // The percentage of overflow to reserve for a specified beneficiary once the Budget has expired.
-        uint256 b;
-        // The specified beneficiary.
-        address bAddress;
+        uint256 reserved;
+        // An address to send a percent of overflow to.
+        address donationRecipient;
+        // The percentage of overflow to donate to the asdf.
+        uint256 donationAmount;
+        // The percentage of each payment to send as a fee to the Juice admin.
+        uint256 fee;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
         // A number indicating how much more weight to give a Budget compared to its predecessor.
         uint256 discountRate;
         // The time when this Budget was last configured.
         uint256 configured;
+        // The ballot contract to use to determine this budget's reconfiguration status.
+        IBudgetBallot ballot;
     }
 
     // --- internal transactions --- //
@@ -76,12 +80,13 @@ library Budget {
         _self.name = _baseBudget.name;
         _self.discountRate = _baseBudget.discountRate;
         _self.weight = _derivedWeight(_baseBudget);
-        _self.p = _baseBudget.p;
-        _self.b = _baseBudget.b;
-        _self.bAddress = _baseBudget.bAddress;
+        _self.reserved = _baseBudget.reserved;
         _self.configured = _baseBudget.configured;
         _self.number = _baseBudget.number.add(1);
         _self.previous = _baseBudget.id;
+        _self.fee = _baseBudget.fee;
+        _self.donationRecipient = _baseBudget.donationRecipient;
+        _self.donationAmount = _baseBudget.donationAmount;
     }
 
     // --- internal views --- //
@@ -128,7 +133,6 @@ library Budget {
                 _self.project,
                 _self.number.add(1),
                 _self.id,
-                0,
                 _self.name,
                 _self.link,
                 _self.target,
@@ -138,12 +142,14 @@ library Budget {
                 _self.duration,
                 0,
                 0,
-                _self.p,
-                _self.b,
-                _self.bAddress,
+                _self.reserved,
+                _self.donationRecipient,
+                _self.donationAmount,
+                _self.fee,
                 _derivedWeight(_self),
                 _self.discountRate,
-                _self.configured
+                _self.configured,
+                IBudgetBallot(0)
             );
     }
 
@@ -172,6 +178,40 @@ library Budget {
             _self.weight.div(_self.target).mul(_amount).mul(_percentage).div(
                 100
             );
+    }
+
+    /** 
+        @notice Returns the amount available for the given Budget's project to tap in to.
+        @param _self The Budget to make the calculation for.
+        @param _ethPrice The current price of ETH for the given budget.
+        @return The resulting amount.
+    */
+    function _tappableAmount(Data memory _self, uint256 _ethPrice)
+        internal
+        pure
+        returns (uint256)
+    {
+        if (_self.total == 0) return 0;
+
+        uint256 _available =
+            Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice));
+        return
+            _available.div(uint256(100).add(_self.fee)).mul(100).sub(
+                _self.tappedTarget
+            );
+    }
+
+    /** 
+        @notice Whether the budgets configuration is currently approved.
+        @param _self The Budget to check the configuration approval of.
+        @return Whether the budget's configuration is approved.
+    */
+    function _isConfigurationApproved(Data memory _self)
+        internal
+        view
+        returns (bool)
+    {
+        return _self.ballot.isApproved(_self.id, _self.configured);
     }
 
     // --- private views --- //

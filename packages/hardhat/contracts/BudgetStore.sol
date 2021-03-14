@@ -31,22 +31,18 @@ contract BudgetStore is Store, IBudgetStore {
     /// @notice The latest Budget ID for each project address.
     mapping(address => uint256) public override latestBudgetId;
 
-    /// @notice The number of yay and nay votes cast for each configuration of each Budget ID.
-    mapping(uint256 => mapping(uint256 => mapping(bool => uint256)))
-        public
-        override votes;
-
-    /// @notice The number of votes cast by each address for each configuration of each Budget ID.
-    mapping(uint256 => mapping(uint256 => mapping(address => uint256)))
-        public
-        override votesByAddress;
-
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
 
-    /// @notice The available price feeds that can be used to get the price of ETH.
-    mapping(uint256 => AggregatorV3Interface) public override priceFeeds;
+    /// @notice The prices feeds.
+    IPrices public override prices;
+
+    /// @notice The ballot where reconfigure votes are kept.
+    IBudgetBallot public override budgetBallot;
+
+    /// @notice The percent fee the Juice project takes from payments.
+    uint256 public override fee = 2;
 
     // --- external views --- //
 
@@ -77,6 +73,7 @@ contract BudgetStore is Store, IBudgetStore {
     {
         Budget.Data memory _sBudget = _standbyBudget(_project);
         Budget.Data memory _aBudget = _activeBudget(_project);
+
         // If there are both active and standby budgets, the standby budget must be queued.
         if (_sBudget.id > 0 && _aBudget.id > 0) return _sBudget;
         require(_aBudget.id > 0, "BudgetStore::getQueuedBudget: NOT_FOUND");
@@ -107,27 +104,11 @@ contract BudgetStore is Store, IBudgetStore {
     }
 
     /**
-        @notice The Budget that was created most recently for the specified project.
-        @dev Should not throw.
-        @param _project The project of the Budget being looked for.
-        @return _budget The Budget.
-    */
-    function getLatestBudget(address _project)
-        external
-        view
-        override
-        returns (Budget.Data memory)
-    {
-        return budgets[latestBudgetId[_project]];
-    }
-
-    /**
         @notice The amount left to be withdrawn by the Budget's project.
         @param _budgetId The ID of the Budget to get the tappable amount from.
-        @param _withhold The percent of the total to withhold from the total.
         @return amount The amount.
     */
-    function getTappableAmount(uint256 _budgetId, uint256 _withhold)
+    function getTappableAmount(uint256 _budgetId)
         external
         view
         override
@@ -137,34 +118,17 @@ contract BudgetStore is Store, IBudgetStore {
             _budgetId > 0 && _budgetId <= budgetCount,
             "BudgetStore::getTappableAmount:: NOT_FOUND"
         );
-        Budget.Data memory _budget = budgets[_budgetId];
         return
-            _getTappableAmount(
-                _budget,
-                _withhold,
-                _getETHPrice(_budget.currency)
+            budgets[_budgetId]._tappableAmount(
+                prices.getETHPrice(budgets[_budgetId].currency)
             );
-    }
-
-    /**
-      @notice The amount of tickets that will be issued as a result of a payment of the specified amount to the specified budget.
-      @param _budgetId The ID of the budget to get the ticket value of.
-      @param _amount The amount to get the ticket value of in the currency of the budget.
-      @param _percent The percent of the total weight to get a rate for.
-      @return The amount of tickets.
-    */
-    function getWeightedRate(
-        uint256 _budgetId,
-        uint256 _amount,
-        uint256 _percent
-    ) external view override returns (uint256) {
-        Budget.Data memory _budget = budgets[_budgetId];
-        return _budget._weighted(_amount, _percent);
     }
 
     // --- external transactions --- //
 
-    constructor() {}
+    constructor(IPrices _prices) {
+        prices = _prices;
+    }
 
     /**
         @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
@@ -179,11 +143,9 @@ contract BudgetStore is Store, IBudgetStore {
         compared to the project's previous Budget.
         If it's 100, each Budget will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        @param _p The percentage of this Budget's overflow to reserve for the project.
-        @param _b The amount of this Budget's overflow to give to a beneficiary address. 
-        This can be another contract, or an end user address.
-        An example would be a contract that reserves for Gitcoin grant matching.
-        @param _bAddress The address of the beneficiary contract that can mint the reserved beneficiary percentage.
+        @param _reserved The percentage of this Budget's overflow to reserve for the project.
+        @param _donationRecipient An address to send a percent of overflow to.
+        @param _donationAmount The percent of overflow to send to the recipient.
         @return _budgetId The ID of the Budget that was successfully configured.
     */
     function configure(
@@ -193,24 +155,22 @@ contract BudgetStore is Store, IBudgetStore {
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
-        uint256 _p,
-        uint256 _b,
-        address _bAddress
+        uint256 _reserved,
+        address _donationRecipient,
+        uint256 _donationAmount
     ) external override returns (uint256) {
-        require(_target > 0, "Juicer::configureBudget: BAD_TARGET");
+        require(_target > 0, "BudgetStore::configure: BAD_TARGET");
         // The `discountRate` token must be between 95 and 100.
         require(
             _discountRate >= 95 && _discountRate <= 100,
-            "Juicer::configureBudget: BAD_BIAS"
-        );
-        // If the beneficiary reserve percentage is greater than 0, an address must be provided.
-        require(
-            _b == 0 || _bAddress != address(0),
-            "Juicer::configureBudget: BAD_ADDRESS"
+            "BudgetStore::configure: BAD_BIAS"
         );
 
         // The reserved project ticket percentage must be less than or equal to 100.
-        require(_p <= 100, "Juicer::configureBudget: BAD_RESERVE_PERCENTAGES");
+        require(
+            _reserved <= 100,
+            "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
+        );
 
         // Return's the project's editable budget. Creates one if one doesn't already exists.
         Budget.Data storage _budget = _ensureStandbyBudget(msg.sender);
@@ -222,10 +182,12 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.duration = _duration;
         _budget.currency = _currency;
         _budget.discountRate = _discountRate;
-        _budget.p = _p;
-        _budget.b = _b;
-        _budget.bAddress = _bAddress;
+        _budget.reserved = _reserved;
+        _budget.fee = fee;
+        _budget.donationRecipient = _donationRecipient;
+        _budget.donationAmount = _donationAmount;
         _budget.configured = block.timestamp;
+        _budget.ballot = budgetBallot;
 
         emit Configure(
             _budget.id,
@@ -236,9 +198,9 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.name,
             _budget.link,
             _budget.discountRate,
-            _p,
-            _b,
-            _bAddress
+            _budget.reserved,
+            _budget.donationRecipient,
+            _budget.donationAmount
         );
 
         return _budget.id;
@@ -248,18 +210,11 @@ contract BudgetStore is Store, IBudgetStore {
       @notice Tracks a payments to the appropriate budget for the project.
       @param _project The project being paid.
       @param _amount The amount being paid.
-      @param _votingPeriod The amount of time to allow for voting to complete before a reconfigured budget is eligible to receive payments.
-      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
       @return budget The budget that is being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
     */
-    function payProject(
-        address _project,
-        uint256 _amount,
-        uint256 _votingPeriod,
-        uint256 _withhold
-    )
+    function payProject(address _project, uint256 _amount)
         external
         override
         onlyAdmin
@@ -271,10 +226,10 @@ contract BudgetStore is Store, IBudgetStore {
     {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the project's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data storage _budget =
-            _ensureActiveBudget(_project, _votingPeriod);
+        Budget.Data storage _budget = _ensureActiveBudget(_project);
 
-        uint256 _ethPrice = _getETHPrice(_budget.currency);
+        // Get the current price of ETH.
+        uint256 _ethPrice = prices.getETHPrice(_budget.currency);
 
         // The amount being paid in the currency of the budget.
         convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
@@ -283,9 +238,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.total = _budget.total.add(_amount);
 
         // If this budget is fully tapped, record the overflow.
-        overflow = _getTappableAmount(_budget, _withhold, _ethPrice) == 0
-            ? _amount
-            : 0;
+        overflow = _budget._tappableAmount(_ethPrice) == 0 ? _amount : 0;
 
         // Return the budget.
         budget = _budget;
@@ -297,7 +250,6 @@ contract BudgetStore is Store, IBudgetStore {
       @param _tapper The address that is tapping.
       @param _amount The amount of being tapped.
       @param _currency The currency of the amount being tapped.
-      @param _withhold The percentage of a budgets target that should be withheld from the tappable target.
       @return budget The budget that is being tapped.
       @return ethAmount The amount of eth tapped.
       @return overflow The overflow that has now become available as a result of tapping.
@@ -306,8 +258,7 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _budgetId,
         address _tapper,
         uint256 _amount,
-        uint256 _currency,
-        uint256 _withhold
+        uint256 _currency
     )
         external
         override
@@ -333,11 +284,11 @@ contract BudgetStore is Store, IBudgetStore {
         );
 
         // The current price of ETH in terms of the budget's currency.
-        uint256 _ethPrice = _getETHPrice(_budget.currency);
+        uint256 _ethPrice = prices.getETHPrice(_budget.currency);
 
         // The amount being tapped must be less than the tappable amount.
         require(
-            _amount <= _getTappableAmount(_budget, _withhold, _ethPrice),
+            _amount <= _budget._tappableAmount(_ethPrice),
             "BudgetStore::tap: INSUFFICIENT_FUNDS"
         );
 
@@ -351,7 +302,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.tappedTotal = _budget.tappedTotal.add(ethAmount);
 
         // If this budget is now fully tapped, record the overflow.
-        overflow = _getTappableAmount(_budget, _withhold, _ethPrice) == 0
+        overflow = _budget._tappableAmount(_ethPrice) == 0
             ? _budget.total.sub(_budget.tappedTotal)
             : 0;
 
@@ -359,44 +310,24 @@ contract BudgetStore is Store, IBudgetStore {
         budget = _budget;
     }
 
-    // --- public transactions --- //
-
-    /**
-      @notice Add votes to the a particular reconfiguration proposal.
-      @param _budgetId The ID of the budget whos reconfiguration is being voted on.
-      @param _configured The time when the reconfiguration was proposed.
-      @param _yay True if the vote is is support, false if not.
-      @param _voter The address voting.
-      @param _amount The amount of votes being cast.
-     */
-    function addVotes(
-        uint256 _budgetId,
-        uint256 _configured,
-        bool _yay,
-        address _voter,
-        uint256 _amount
-    ) external override onlyAdmin {
-        votes[_budgetId][_configured][_yay] = votes[_budgetId][_configured][
-            _yay
-        ]
-            .add(_amount);
-        votesByAddress[_budgetId][_configured][_voter] = votesByAddress[
-            _budgetId
-        ][_configured][_voter]
-            .add(_amount);
+    /** 
+      @notice Sets the minimum percent fee that a budget can have.
+      @param _fee The new percent fee.
+    */
+    function setFee(uint256 _fee) external override onlyAdmin {
+        fee = _fee;
     }
 
     /** 
-      @notice Add a price feed for the price of ETH.
-      @param _priceFeed The price feed being added.
-      @param _currency The currency that the price feed is for.
+      @notice Sets the budget ballot contract that will be used for forthcoming budget reconfigurations.
+      @param _budgetBallot The new budget ballot.
     */
-    function addPriceFeed(AggregatorV3Interface _priceFeed, uint256 _currency)
+    function setBudgetBallot(IBudgetBallot _budgetBallot)
         external
         override
         onlyAdmin
     {
-        priceFeeds[_currency] = _priceFeed;
+        budgetBallot = _budgetBallot;
     }
 
     // --- private transactions --- //
@@ -417,24 +348,21 @@ contract BudgetStore is Store, IBudgetStore {
         // If there's an active Budget, its end time should correspond to the start time of the new Budget.
         Budget.Data memory _aBudget = _activeBudget(_project);
         //Base a new budget on the latest budget if one exists.
-        Budget.Data storage _newBudget =
-            _aBudget.id > 0
-                ? _initBudget(
-                    _project,
-                    _aBudget.start.add(_aBudget.duration),
-                    budget
-                )
-                : _initBudget(_project, block.timestamp, budget);
-        return _newBudget;
+        budget = _aBudget.id > 0
+            ? _initBudget(
+                _project,
+                _aBudget.start.add(_aBudget.duration),
+                budget
+            )
+            : _initBudget(_project, block.timestamp, budget);
     }
 
     /**
         @notice Returns the active Budget for this project if it exists, otherwise activating one appropriately.
         @param _project The address who owns the Budget to look for.
-        @param _votingPeriod The time between a Budget being configured and when it can become active.
         @return budget The resulting Budget.
     */
-    function _ensureActiveBudget(address _project, uint256 _votingPeriod)
+    function _ensureActiveBudget(address _project)
         private
         returns (Budget.Data storage budget)
     {
@@ -446,10 +374,7 @@ contract BudgetStore is Store, IBudgetStore {
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
         if (
             budget.id > 0 &&
-            ((budget.configured.add(_votingPeriod) < block.timestamp &&
-                //supermajority. must have greater than 66% yays.
-                votes[budget.id][budget.configured][true].mul(3).div(4) >
-                votes[budget.id][budget.configured][false].mul(3).div(2)) ||
+            (budget._isConfigurationApproved() ||
                 // allow if this is the first budget and it hasn't received payments.
                 (budget.number == 1 && budget.total == 0))
         ) return budget;
@@ -461,9 +386,11 @@ contract BudgetStore is Store, IBudgetStore {
         require(budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
-        Budget.Data storage _newBudget =
-            _initBudget(budget.project, budget._determineNextStart(), budget);
-        return _newBudget;
+        budget = _initBudget(
+            budget.project,
+            budget._determineNextStart(),
+            budget
+        );
     }
 
     /**
@@ -486,8 +413,6 @@ contract BudgetStore is Store, IBudgetStore {
         newBudget.tappedTotal = 0;
         newBudget.tappedTarget = 0;
         latestBudgetId[_project] = budgetCount;
-
-        _latestBudget.next = budgetCount;
 
         if (_latestBudget.id > 0) {
             newBudget._basedOn(_latestBudget);
@@ -533,46 +458,5 @@ contract BudgetStore is Store, IBudgetStore {
         budget = budgets[budget.previous];
         if (budget.id == 0 || budget._state() != Budget.State.Active)
             return budgets[0];
-    }
-
-    /** 
-        @notice Returns the amount available for the given Budget's project to tap in to.
-        @param _budget The Budget to make the calculation for.
-        @param _withhold The percent of the total to withhold from the total.
-        @param _ethPrice The current price of ETH for the given budget.
-        @return The resulting amount.
-    */
-    function _getTappableAmount(
-        Budget.Data memory _budget,
-        uint256 _withhold,
-        uint256 _ethPrice
-    ) private pure returns (uint256) {
-        if (_budget.total == 0) return 0;
-
-        uint256 _available =
-            Math.min(_budget.target, DSMath.wmul(_budget.total, _ethPrice));
-        return
-            _available.div(uint256(100).add(_withhold)).mul(100).sub(
-                _budget.tappedTarget
-            );
-    }
-
-    /** 
-      @notice Gets the current price of ETH for the provided currency.
-      @param _currency The currency to get a price for.
-      @return price The price of ETH.
-    */
-    function _getETHPrice(uint256 _currency) private view returns (uint256) {
-        // The 0 currency is ETH itself.
-        if (_currency == 0) return 1;
-        AggregatorV3Interface _priceFeed = priceFeeds[_currency];
-        //TODO temp
-        if (_priceFeed == AggregatorV3Interface(0)) return 1600E18;
-        // require(
-        //     _priceFeed != AggregatorV3Interface(0),
-        //     "BudgetStore::getETHPrice NOT_FOUND"
-        // );
-        (, int256 _price, , , ) = _priceFeed.latestRoundData();
-        return uint256(_price);
     }
 }

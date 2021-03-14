@@ -8,14 +8,19 @@ const weth = require("../constants/weth");
 const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 
 const main = async () => {
-  const token = !process.env.HARDHAT_NETWORK && (await deploy("Token"));
-  const budgetStore = await deploy("BudgetStore");
+  const token =
+    process.env.HARDHAT_NETWORK === "localhost" && (await deploy("Token"));
+  const prices = await deploy("Prices");
+  const budgetStore = await deploy("BudgetStore", [prices.address]);
   const ticketStore = await deploy("TicketStore");
 
+  console.log({
+    net: process.env.HARDHAT_NETWORK,
+    k: weth(process.env.HARDHAT_NETWORK) || token.address,
+  });
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
-    5,
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 
@@ -34,11 +39,11 @@ const main = async () => {
   const blockGasLimit = 9000000;
 
   try {
-    const TicketStoreFactory = await l2ethers.getContractFactory("TicketStore");
-    const BudgetStoreFactory = await l2ethers.getContractFactory("BudgetStore");
-    const AdminFactory = await l2ethers.getContractFactory("Admin");
-    const StakerFactory = await l2ethers.getContractFactory("TimelockStaker");
-    const JuicerFactory = await l2ethers.getContractFactory("Juicer");
+    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
+    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
+    const AdminFactory = await ethers.getContractFactory("Admin");
+    const StakerFactory = await ethers.getContractFactory("TimelockStaker");
+    const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedTicketStore = await TicketStoreFactory.attach(
       ticketStore.address
@@ -70,13 +75,7 @@ const main = async () => {
     await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
-    console.log(
-      "⚡️ Granting budget ballot admin privileges over the budget store"
-    );
-    await attachedAdmin.grantAdmin(budgetStore.address, budgetBallot.address, {
-      gasLimit: blockGasLimit,
-    });
-    if (process.env.HARDHAT_NETWORK) {
+    if (process.env.HARDHAT_NETWORK !== "localhost") {
       console.log("⚡️ Adding ETH/USD price feed to the budget store");
       await attachedAdmin.addPriceFeed(
         budgetStore.address,
@@ -87,6 +86,15 @@ const main = async () => {
         }
       );
     }
+    console.log("⚡️ Set the udget store's current ballot");
+    await attachedAdmin.setBudgetBallot(
+      budgetStore.address,
+      budgetBallot.address,
+      {
+        gasLimit: blockGasLimit,
+      }
+    );
+
     console.log("⚡️ Setting the admin of the juicer");
     await attachedJuicer.setAdmin(admin.address, {
       gasLimit: blockGasLimit,
@@ -120,8 +128,8 @@ const main = async () => {
       "https://asdf.com",
       97,
       5,
-      0,
       "0x0000000000000000000000000000000000000000",
+      0,
       {
         gasLimit: blockGasLimit,
       }
@@ -141,7 +149,7 @@ const deploy = async (contractName, _args) => {
   console.log(` 🛰  Deploying: ${contractName}`);
 
   const contractArgs = _args || [];
-  const contractArtifacts = await l2ethers.getContractFactory(contractName);
+  const contractArtifacts = await ethers.getContractFactory(contractName);
   const deployed = await contractArtifacts.deploy(...contractArgs);
   await deployed.deployTransaction.wait();
 

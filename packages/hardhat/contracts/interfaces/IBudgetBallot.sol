@@ -14,9 +14,28 @@ interface IBudgetBallot {
         uint256 amount
     );
 
+    function RECONFIGURATION_VOTING_PERIOD() external view returns (uint256);
+
     function juicer() external view returns (IJuicer);
 
     function staker() external view returns (ITimelockStaker);
+
+    function votes(
+        uint256 _budgetId,
+        uint256 _configured,
+        bool _yay
+    ) external returns (uint256);
+
+    function votesByAddress(
+        uint256 _budgetId,
+        uint256 _configured,
+        address _voter
+    ) external returns (uint256);
+
+    function isApproved(uint256 _budgetId, uint256 _configured)
+        external
+        view
+        returns (bool);
 
     function vote(
         uint256 _budgetId,

@@ -31,59 +31,59 @@ const infuraId = "44bd54e5424e4d8eb5d5d47a41590d63";
 module.exports = {
   defaultNetwork,
   networks: {
-    // OElocalhost: {
-    //   url: "http://localhost:8545",
-    //   /*
-    //     notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
-    //     (you can put in a mnemonic here to set the deployer locally)
-    //   */
-    // },
-    // localhost: {
-    //   url: "http://localhost:9545",
-    // },
-    // rinkeby: {
-    //   url: "https://rinkeby.infura.io/v3/" + infuraId,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // mainnet: {
-    //   url: "https://mainnet.infura.io/v3/" + infuraId,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // ropsten: {
-    //   url: "https://ropsten.infura.io/v3/" + infuraId,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // kovan: {
-    //   url: "https://kovan.infura.io/v3/" + infuraId,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // OEkovan: {
-    //   url: "https://kovan.optimism.io",
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // goerli: {
-    //   url: "https://goerli.infura.io/v3/" + infuraId,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
-    // xdai: {
-    //   url: "https://dai.poa.network",
-    //   gasPrice: 1000000000,
-    //   accounts: {
-    //     mnemonic: mnemonic(),
-    //   },
-    // },
+    OElocalhost: {
+      url: "http://localhost:8545",
+      /*
+        notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
+        (you can put in a mnemonic here to set the deployer locally)
+      */
+    },
+    localhost: {
+      url: "http://localhost:8545", // OE should be 9585
+    },
+    rinkeby: {
+      url: "https://rinkeby.infura.io/v3/" + infuraId,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    mainnet: {
+      url: "https://mainnet.infura.io/v3/" + infuraId,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    ropsten: {
+      url: "https://ropsten.infura.io/v3/" + infuraId,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    kovan: {
+      url: "https://kovan.infura.io/v3/" + infuraId,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    OEkovan: {
+      url: "https://kovan.optimism.io",
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    goerli: {
+      url: "https://goerli.infura.io/v3/" + infuraId,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    xdai: {
+      url: "https://dai.poa.network",
+      gasPrice: 1000000000,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
   },
   solidity: {
     version: "0.7.6",

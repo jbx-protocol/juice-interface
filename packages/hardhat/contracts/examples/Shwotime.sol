@@ -18,7 +18,7 @@ contract Shwotime is JuiceProject {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    struct Tickets {
+    struct Tix {
         address owner;
         uint256 max;
         uint256 sold;
@@ -29,7 +29,7 @@ contract Shwotime is JuiceProject {
         mapping(address => address[]) dependencies;
     }
 
-    mapping(uint256 => Tickets) public tickets;
+    mapping(uint256 => Tix) public tickets;
 
     uint256 public ticketsCount = 0;
 
@@ -56,7 +56,7 @@ contract Shwotime is JuiceProject {
     ) external {
         //Store the new ticket.
         ticketsCount++;
-        Tickets storage _tickets = tickets[ticketsCount];
+        Tix storage _tickets = tickets[ticketsCount];
         _tickets.price = _price;
         _tickets.max = _max;
         _tickets.sold = 0;
@@ -72,7 +72,7 @@ contract Shwotime is JuiceProject {
         );
 
         //Mark the msg.sender as committed to buying.
-        Tickets storage _tickets = tickets[id];
+        Tix storage _tickets = tickets[id];
 
         require(
             _tickets.expiry > block.timestamp,
@@ -130,7 +130,7 @@ contract Shwotime is JuiceProject {
     function collect(IJuicer _juicer, uint256 id) external {
         require(id > 0 && id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
 
-        Tickets storage _tickets = tickets[id];
+        Tix storage _tickets = tickets[id];
 
         require(
             msg.sender == _tickets.owner,

@@ -70,10 +70,9 @@ abstract contract JuiceProject is Ownable {
         If it's 100, each Budget will have equal weight.
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
-        @param _p The percentage of this Budget's surplus to allocate to the owner.
-        @param _b The percentage of this Budget's surplus to allocate towards a beneficiary address. This can be another contract, or an end user address.
-        An example would be a contract that allocates towards a specific purpose, such as Gitcoin grant matching.
-        @param _bAddress The address of the beneficiary contract where a specified percentage is allocated.
+        @param _reserved The percentage of this Budget's surplus to allocate to the owner.
+        @param _donationRecipient An address to send a percent of overflow to.
+        @param _donationAmount The percent of overflow to send to the recipient.
         @return _budgetId The ID of the Budget that was reconfigured.
     */
     function configure(
@@ -84,9 +83,9 @@ abstract contract JuiceProject is Ownable {
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
-        uint256 _p,
-        uint256 _b,
-        address _bAddress
+        uint256 _reserved,
+        address _donationRecipient,
+        uint256 _donationAmount
     ) external returns (uint256) {
         // The pm or the owner can propose configurations.
         require(
@@ -101,9 +100,9 @@ abstract contract JuiceProject is Ownable {
                 _name,
                 _link,
                 _discountRate,
-                _p,
-                _b,
-                _bAddress
+                _reserved,
+                _donationRecipient,
+                _donationAmount
             );
     }
 

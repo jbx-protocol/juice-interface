@@ -159,14 +159,14 @@ library Budget {
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory _self) internal pure returns (uint256) {
-        return _self.weight.mul(_self.discountRate).div(100);
+        return Math.mulDiv(_self.weight, _self.discountRate, 1000);
     }
 
     /** 
         @notice The weight that a certain amount carries in this Budget.
         @param _self The Budget to get the weight from.
         @param _amount The amount to get the weight of in the same currency as the budget's currency.
-        @param _percentage The percentage to account for.
+        @param _percentage The percentage to account for. Out of 1000.
         @return state The weighted amount.
     */
     function _weighted(
@@ -175,8 +175,10 @@ library Budget {
         uint256 _percentage
     ) internal pure returns (uint256) {
         return
-            _self.weight.div(_self.target).mul(_amount).mul(_percentage).div(
-                100
+            Math.mulDiv(
+                DSMath.wdiv(DSMath.wmul(_self.weight, _amount), _self.target),
+                _percentage,
+                1000
             );
     }
 
@@ -196,7 +198,7 @@ library Budget {
         uint256 _available =
             Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice));
         return
-            _available.div(uint256(100).add(_self.fee)).mul(100).sub(
+            Math.mulDiv(_available, 1000, uint256(1000).add(_self.fee)).sub(
                 _self.tappedTarget
             );
     }

@@ -13,6 +13,7 @@ import "./interfaces/IOverflowYielder.sol";
 import "./TicketStore.sol";
 
 import "./libraries/DSMath.sol";
+import "./libraries/Math.sol";
 
 /**
   @notice This contract manages all funds in the Juice ecosystem.
@@ -473,7 +474,11 @@ contract Juicer is IJuicer {
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        _takeFee(_project, _amount.mul(_budget.fee).div(100), _beneficiary);
+        _takeFee(
+            _project,
+            Math.mulDiv(_amount, _budget.fee, 1000),
+            _beneficiary
+        );
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
@@ -490,7 +495,7 @@ contract Juicer is IJuicer {
             _beneficiary,
             _budget._weighted(
                 _covertedCurrencyAmount,
-                uint256(100).sub(_budget.reserved)
+                uint256(1000).sub(_budget.reserved)
             )
         );
 
@@ -544,7 +549,7 @@ contract Juicer is IJuicer {
             _budget
                 ._weighted(
                 _covertedCurrencyAmount,
-                uint256(100).sub(_budget.reserved)
+                uint256(1000).sub(_budget.reserved)
             )
                 .div(2);
 
@@ -580,14 +585,14 @@ contract Juicer is IJuicer {
         if (_budget.donationAmount > 0) {
             weth.safeTransfer(
                 _budget.donationRecipient,
-                _amount.mul(_budget.donationAmount).div(100)
+                Math.mulDiv(_amount, _budget.donationAmount, 1000)
             );
         }
 
         // The portion of the overflow that is claimable by redeeming tickets.
         // This is the total minus the percent donated and used as a fee.
         uint256 _claimablePortion =
-            _amount.mul(uint256(100).sub(_budget.fee)).div(100);
+            Math.mulDiv(_amount, uint256(1000).sub(_budget.fee), 1000);
 
         // The redeemable portion of the overflow can be deposited to earn yield.
         depositable = depositable.add(_claimablePortion);

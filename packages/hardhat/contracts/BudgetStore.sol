@@ -163,7 +163,7 @@ contract BudgetStore is Store, IBudgetStore {
         // The `discountRate` token must be between 95 and 100.
         require(
             _discountRate >= 95 && _discountRate <= 100,
-            "BudgetStore::configure: BAD_BIAS"
+            "BudgetStore::configure: BAD_DISCOUNT_RATE"
         );
 
         // The reserved project ticket percentage must be less than or equal to 100.

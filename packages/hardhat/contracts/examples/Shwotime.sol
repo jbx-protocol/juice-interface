@@ -127,10 +127,14 @@ contract Shwotime is JuiceProject {
     }
 
     //Allow a ticket owner to collect funds once the tickets expire.
-    function collect(IJuicer _juicer, uint256 id) external {
-        require(id > 0 && id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
+    function collect(
+        IJuicer _juicer,
+        uint256 _id,
+        string memory _note
+    ) external {
+        require(_id > 0 && _id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
 
-        Tix storage _tickets = tickets[id];
+        Tix storage _tickets = tickets[_id];
 
         require(
             msg.sender == _tickets.owner,
@@ -146,6 +150,6 @@ contract Shwotime is JuiceProject {
         uint256 _collectable = _total.mul(uint256(100).sub(fee)).div(100);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
-        takeFee(_juicer, _total.sub(_collectable), msg.sender);
+        takeFee(_juicer, _total.sub(_collectable), msg.sender, _note);
     }
 }

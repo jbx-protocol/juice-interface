@@ -99,7 +99,14 @@ contract TicketStore is Store, ITicketStore {
         return
             DSMath
                 .wdiv(DSMath.wmul(claimable[_issuer], _amount), _totalSupply)
-                .mul(_amount < _totalSupply ? _proportion : 1000)
+            // The amount claimable is a function of a bonding curve with the following exceptions:
+            // - if the last tickets are being redeemed.
+            // - if the redeemer is the ticket  issuer.
+                .mul(
+                _amount == _totalSupply || _holder == _issuer
+                    ? 1000
+                    : _proportion
+            )
                 .div(1000);
     }
 

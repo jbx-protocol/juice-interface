@@ -111,23 +111,45 @@ abstract contract JuiceProject is Ownable {
       @param _juicer The Juicer to redeem from.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
-      @param _minReturn The minimum amount of tokens expected in return.
+      @param _minReturnedETH The minimum amount of ETH expected in return.
+      @param _note A note to leave on the emitted event.
+      @return _returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
         IJuicer _juicer,
         address _issuer,
         uint256 _amount,
-        uint256 _minReturn
-    ) external onlyPm {
+        uint256 _minReturnedETH,
+        string memory _note
+    ) external onlyPm returns (uint256 _returnAmount) {
         uint256 _returnAmount =
-            _juicer.redeem(_issuer, _amount, _minReturn, address(this));
+            _juicer.redeem(_issuer, _amount, _minReturnedETH, address(this));
 
         // Surplus goes back to the issuer.
-        _juicer.pay(
-            address(this),
-            _returnAmount,
+        _juicer.pay(address(this), _returnAmount, _issuer, _note);
+    }
+
+    /** 
+      @notice Redeem tickets that have been transfered to this contract.
+      @param _juicer The Juicer to redeem from.
+      @param _issuer The issuer who's tickets are being redeemed.
+      @param _amount The amount of tickets being redeemed.
+      @param _beneficiary The address that is receiving the redeemed tokens.
+      @param _minReturnedETH The minimum amount of ETH expected in return.
+      @return _returnAmount The amount of ETH that was redeemed.
+    */
+    function redeemTickets(
+        IJuicer _juicer,
+        address _issuer,
+        uint256 _amount,
+        address _beneficiary,
+        uint256 _minReturnedETH
+    ) external onlyPm returns (uint256 _returnAmount) {
+        _returnAmount = _juicer.redeem(
             _issuer,
-            "JuiceProject::redeemTicketsAndFund: REGENERATE"
+            _amount,
+            _minReturnedETH,
+            _beneficiary
         );
     }
 
@@ -180,17 +202,14 @@ abstract contract JuiceProject is Ownable {
       @param _juicer The juicer used to process the fee.
       @param _amount The amount of the fee.
       @param _from The address who will receive tickets from this fee.
+      @param _note A note that will be included in the published event.
     */
     function takeFee(
         IJuicer _juicer,
         uint256 _amount,
-        address _from
+        address _from,
+        string memory _note
     ) internal {
-        _juicer.pay(
-            address(this),
-            _amount,
-            _from,
-            "JuiceProject::takeFee: FEE"
-        );
+        _juicer.pay(address(this), _amount, _from, _note);
     }
 }

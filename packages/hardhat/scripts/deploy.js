@@ -14,10 +14,6 @@ const main = async () => {
   const budgetStore = await deploy("BudgetStore", [prices.address]);
   const ticketStore = await deploy("TicketStore");
 
-  console.log({
-    net: process.env.HARDHAT_NETWORK,
-    k: weth(process.env.HARDHAT_NETWORK) || token.address,
-  });
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
@@ -126,8 +122,8 @@ const main = async () => {
       2592000,
       "Juice",
       "https://asdf.com",
-      97,
-      5,
+      970,
+      50,
       "0x0000000000000000000000000000000000000000",
       0,
       {

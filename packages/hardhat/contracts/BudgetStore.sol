@@ -42,7 +42,7 @@ contract BudgetStore is Store, IBudgetStore {
     IBudgetBallot public override budgetBallot;
 
     /// @notice The percent fee the Juice project takes from payments.
-    uint256 public override fee = 2;
+    uint256 public override fee = 25;
 
     // --- external views --- //
 
@@ -162,13 +162,13 @@ contract BudgetStore is Store, IBudgetStore {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
         // The `discountRate` token must be between 95 and 100.
         require(
-            _discountRate >= 95 && _discountRate <= 100,
+            _discountRate >= 950 && _discountRate <= 1000,
             "BudgetStore::configure: BAD_DISCOUNT_RATE"
         );
 
         // The reserved project ticket percentage must be less than or equal to 100.
         require(
-            _reserved <= 100,
+            _reserved <= 1000,
             "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
         );
 

@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./libraries/DSMath.sol";
+import "./libraries/Math.sol";
 
 import "./abstract/Store.sol";
 import "./interfaces/ITicketStore.sol";
@@ -97,17 +98,19 @@ contract TicketStore is Store, ITicketStore {
         );
 
         return
-            DSMath
-                .wdiv(DSMath.wmul(claimable[_issuer], _amount), _totalSupply)
-            // The amount claimable is a function of a bonding curve with the following exceptions:
-            // - if the last tickets are being redeemed.
-            // - if the redeemer is the ticket  issuer.
-                .mul(
+            Math.mulDiv(
+                DSMath.wdiv(
+                    DSMath.wmul(claimable[_issuer], _amount),
+                    _totalSupply
+                ),
+                // The amount claimable is a function of a bonding curve with the following exceptions:
+                // - if the last tickets are being redeemed.
+                // - if the redeemer is the ticket  issuer.
                 _amount == _totalSupply || _holder == _issuer
                     ? 1000
-                    : _proportion
-            )
-                .div(1000);
+                    : _proportion,
+                1000
+            );
     }
 
     // --- external transactions --- //

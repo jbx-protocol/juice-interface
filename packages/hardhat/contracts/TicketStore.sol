@@ -120,10 +120,13 @@ contract TicketStore is Store, ITicketStore {
     /**
         @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Deploys an owner's Ticket ERC-20 token contract.
-        @param _name The ERC-20's name. " Juice ticket" will be appended.
-        @param _symbol The ERC-20's symbol. "j" will be prepended.
+        @param _name The ERC-20's name.
+        @param _symbol The ERC-20's symbol.
     */
-    function issue(bytes memory _name, bytes memory _symbol) external override {
+    function issue(string memory _name, string memory _symbol)
+        external
+        override
+    {
         // An owner only needs to issue their Tickets once before they can be used.
         require(
             tickets[msg.sender] == Tickets(0),
@@ -132,11 +135,7 @@ contract TicketStore is Store, ITicketStore {
 
         // Create the contract in this Juicer contract in order to have mint and burn privileges.
         // Prepend the strings with standards.
-        Tickets _tickets =
-            new Tickets(
-                string(abi.encodePacked(_name, bytes(" Juice tickets"))),
-                string(abi.encodePacked(bytes("j"), _symbol))
-            );
+        Tickets _tickets = new Tickets(_name, _symbol);
 
         tickets[msg.sender] = _tickets;
 

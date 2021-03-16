@@ -54,7 +54,7 @@ abstract contract JuiceProject is Ownable {
         @param _store The ticket store to issue in.
     */
     function issueTickets(ITicketStore _store) external onlyOwner {
-        _store.issue(bytes(ticketName), bytes(ticketSymbol));
+        _store.issue(ticketName, ticketSymbol);
     }
 
     /**

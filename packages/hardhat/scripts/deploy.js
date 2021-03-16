@@ -27,7 +27,7 @@ const main = async () => {
   ]);
 
   const admin = await deploy("Admin", [
-    "",
+    "Juice",
     "JUICE",
     "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
   ]);

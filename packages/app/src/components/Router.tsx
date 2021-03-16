@@ -1,8 +1,9 @@
 import Gimme from 'components/Gimme'
 import Landing from 'components/Landing'
-import Faq from 'components/Landing/Faq'
 import Owner from 'components/Owner'
 import { HashRouter, Route, Switch } from 'react-router-dom'
+
+import PlayCreate from './PlayCreate'
 
 export default function Router() {
   return (
@@ -11,11 +12,11 @@ export default function Router() {
         <Route exact path="/">
           <Landing />
         </Route>
+        <Route path="/create">
+          <PlayCreate />
+        </Route>
         <Route path="/gimme">
           <Gimme />
-        </Route>
-        <Route path="/faq">
-          <Faq />
         </Route>
         <Route path="/:owner">
           <Owner />

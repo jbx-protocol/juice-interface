@@ -1,9 +1,23 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { formatEther, parseEther } from '@ethersproject/units'
+import { formatUnits, parseUnits } from '@ethersproject/units'
 
-// "wad" ==> 1/1e18
-
+const wadPrecision = 18
 const decimalSeparator = '.'
+
+export const parseWad = (amt?: string) => parseUnits(amt ?? '0', wadPrecision)
+export const parsePerMille = (amt?: string) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
+
+export const fromWad = (amt?: BigNumberish) => {
+  const result = formatUnits(amt ?? '0', wadPrecision)
+  return result.substring(result.length - 2) === '.0'
+    ? result.substring(0, result.length - 2)
+    : result
+}
+export const formatWad = (amt?: BigNumberish) =>
+  amt !== undefined && amt !== null ? formattedNum(fromWad(amt)) : undefined
+export const fromPerMille = (amt?: BigNumberish) =>
+  amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
 
 const separateThousands = (str?: string, separator = ',') => {
   if (!str?.trim().length) return
@@ -23,7 +37,7 @@ const separateThousands = (str?: string, separator = ',') => {
 }
 
 export const formattedNum = (num: BigNumberish | undefined, empty = '0') => {
-  if (num === undefined) return
+  if (num === undefined) return empty
 
   const str = num.toString()
 
@@ -40,12 +54,6 @@ export const formattedNum = (num: BigNumberish | undefined, empty = '0') => {
 
   return separateThousands(str)
 }
-
-export const fromWad = (amt?: BigNumberish) =>
-  amt !== undefined && amt !== null ? formatEther(amt) : undefined
-export const formatWad = (amt?: BigNumberish) =>
-  amt !== undefined && amt !== null ? formattedNum(formatEther(amt)) : undefined
-export const parseWad = (amt?: string) => (amt ? parseEther(amt) : undefined)
 
 export class CurrencyUtils {
   // Define non-fractional conversion units
@@ -71,10 +79,10 @@ export class CurrencyUtils {
 
   usdToWei = (usd: number | string | undefined, precision = 8) => {
     if (usd === undefined || this.usdPerEth === undefined) return
-    if (usd === '') return BigNumber.from(0)
+    if (usd === '') return
 
     try {
-      return parseEther(
+      return parseWad(
         (
           (typeof usd === 'string' ? parseFloat(usd) : usd) / this.usdPerEth
         ).toFixed(precision),

@@ -1,51 +1,59 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatBytes32String } from '@ethersproject/strings'
-import { Form, Modal } from 'antd'
+import { Modal } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import BudgetAdvancedForm, {
+  BudgetAdvancedFormFields,
+} from 'components/forms/BudgetAdvancedForm'
+import BudgetForm, { BudgetFormFields } from 'components/forms/BudgetForm'
 import { emptyAddress } from 'constants/empty-address'
 import { UserContext } from 'contexts/userContext'
+import { useUserBudgetSelector } from 'hooks/AppSelector'
 import { BudgetCurrency } from 'models/budget-currency'
-import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
-import { BudgetFormFields } from 'models/forms-fields/budget-form'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
-
-import { fromWad, parseWad } from '../../utils/formatCurrency'
-import BudgetAdvancedForm from '../forms/BudgetAdvancedForm'
-import BudgetForm from '../forms/BudgetForm'
+import {
+  fromPerMille,
+  fromWad,
+  parsePerMille,
+  parseWad,
+} from 'utils/formatCurrency'
 
 export default function ReconfigureBudgetModal({
   visible,
-  onCancel,
+  onDone,
 }: {
   visible?: boolean
-  onCancel?: VoidFunction
+  onDone?: VoidFunction
 }) {
-  const { transactor, contracts, currentBudget } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
+  const userBudget = useUserBudgetSelector()
+  const [loading, setLoading] = useState<boolean>()
+  const [budgetForm] = useForm<BudgetFormFields>()
+  const [budgetAdvancedForm] = useForm<BudgetAdvancedFormFields>()
 
-  const [budgetForm] = Form.useForm<BudgetFormFields>()
-  const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
+  useEffect(() => {
+    if (!userBudget) return
+
+    budgetForm.setFieldsValue({
+      name: userBudget.name,
+      duration: userBudget.duration.toString(),
+      target: fromWad(userBudget.target),
+      currency: userBudget.currency.toString() as BudgetCurrency,
+    })
+    budgetAdvancedForm.setFieldsValue({
+      link: userBudget.link,
+      discountRate: fromPerMille(userBudget.discountRate),
+      donationRecipient: addressExists(userBudget.donationRecipient)
+        ? userBudget.donationRecipient
+        : '',
+      donationAmount: fromPerMille(userBudget.donationAmount),
+      reserved: fromPerMille(userBudget.reserved),
+    })
+  }, [])
 
   if (!transactor || !contracts) return null
 
-  if (currentBudget) {
-    budgetForm.setFieldsValue({
-      name: currentBudget.name,
-      duration: currentBudget.duration.toNumber(),
-      target: fromWad(currentBudget.target),
-      currency: currentBudget.currency.toString() as BudgetCurrency,
-      link: currentBudget.link,
-    })
-    budgetAdvancedForm.setFieldsValue({
-      discountRate: currentBudget.discountRate.toNumber(),
-      beneficiaryAddress: addressExists(currentBudget.bAddress)
-        ? currentBudget.bAddress
-        : '',
-      beneficiaryAllocation: currentBudget.b.toNumber(),
-      projectAllocation: currentBudget.p.toNumber(),
-    })
-  }
-
-  async function submitBudget() {
+  async function saveBudget() {
     if (!transactor || !contracts?.Juicer || !contracts?.Token) return
 
     const valid =
@@ -54,22 +62,36 @@ export default function ReconfigureBudgetModal({
 
     if (!valid) return
 
+    setLoading(true)
+
     const fields = {
       ...budgetForm.getFieldsValue(true),
       ...budgetAdvancedForm.getFieldsValue(true),
     }
 
-    transactor(contracts.BudgetStore, 'configure', [
-      parseWad(fields.target)?.toHexString(),
-      BigNumber.from(fields.duration).toHexString(),
-      BigNumber.from(fields.currency).toHexString(),
-      formatBytes32String(fields.name),
-      formatBytes32String(fields.link),
-      BigNumber.from(fields.discountRate).toHexString(),
-      BigNumber.from(fields.projectAllocation).toHexString(),
-      BigNumber.from(fields.beneficiaryAllocation).toHexString(),
-      fields.beneficiaryAddress ?? emptyAddress,
-    ])
+    transactor(
+      contracts.BudgetStore,
+      'configure',
+      [
+        parseWad(fields.target)?.toHexString(),
+        BigNumber.from(fields.currency).toHexString(),
+        BigNumber.from(fields.duration).toHexString(),
+        fields.name,
+        fields.link,
+        parsePerMille(fields.discountRate).toHexString(),
+        parsePerMille(fields.reserved).toHexString(),
+        addressExists(fields.donationRecipient)
+          ? fields.donationRecipient
+          : emptyAddress,
+        parsePerMille(fields.donationAmount).toHexString(),
+      ],
+      {
+        onDone: () => {
+          setLoading(false)
+          if (onDone) onDone()
+        },
+      },
+    )
   }
 
   return (
@@ -77,22 +99,13 @@ export default function ReconfigureBudgetModal({
       title="Reconfigure budget"
       visible={visible}
       okText="Save changes"
-      onOk={submitBudget}
-      onCancel={onCancel}
+      onOk={saveBudget}
+      onCancel={onDone}
+      confirmLoading={loading}
       width={800}
     >
-      <BudgetForm
-        props={{
-          form: budgetForm,
-          labelCol: { span: 8 },
-        }}
-      />
-      <BudgetAdvancedForm
-        props={{
-          form: budgetAdvancedForm,
-          labelCol: { span: 8 },
-        }}
-      />
+      <BudgetForm form={budgetForm} />
+      <BudgetAdvancedForm form={budgetAdvancedForm} />
     </Modal>
   )
 }

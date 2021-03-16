@@ -48,7 +48,7 @@ export default function UpcomingBudget({
           </Button>
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}
-            onCancel={() => setReconfigureModalVisible(false)}
+            onDone={() => setReconfigureModalVisible(false)}
           />
         </div>
       ) : null}

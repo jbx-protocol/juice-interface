@@ -1,36 +1,24 @@
-import { Form, FormProps, Input } from 'antd'
+import { Form, Input } from 'antd'
+import { FormInstance } from 'antd/lib/form/Form'
 import BudgetTargetInput from 'components/shared/BudgetTargetInput'
 import { BudgetCurrency } from 'models/budget-currency'
-import { BudgetFormFields } from 'models/forms-fields/budget-form'
-import { useEffect, useState } from 'react'
+
+export type BudgetFormFields = {
+  name: string
+  target: string
+  duration: string
+  currency: BudgetCurrency
+}
 
 export default function BudgetForm({
-  props,
-  header,
+  form,
   disabled,
 }: {
-  props: FormProps<BudgetFormFields>
-  header?: JSX.Element
+  form: FormInstance<BudgetFormFields>
   disabled?: boolean
 }) {
-  const [currency, setCurrency] = useState<BudgetCurrency>()
-
-  const formCurrency = props.form?.getFieldValue('currency')
-
-  useEffect(() => setCurrency(formCurrency), [setCurrency, formCurrency])
-
-  function toggleCurrency() {
-    const newCurrency =
-      props.form?.getFieldValue('currency') === '1' ? '0' : '1'
-
-    props.form?.setFieldsValue({ currency: newCurrency })
-    setCurrency(newCurrency)
-  }
-
   return (
-    <Form layout="vertical" {...props}>
-      {header ? <Form.Item>{header}</Form.Item> : null}
-
+    <Form form={form} layout="vertical">
       <Form.Item
         extra="How your project is identified on-chain"
         name="name"
@@ -41,8 +29,8 @@ export default function BudgetForm({
           className="align-end"
           placeholder="Peach's Juice Stand"
           type="string"
-          disabled={disabled}
           autoComplete="off"
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -50,13 +38,14 @@ export default function BudgetForm({
         name="target"
         label="Operating cost"
         rules={[{ required: true }]}
-        initialValue={props.form?.getFieldValue('target')}
       >
         <BudgetTargetInput
-          value={disabled ? props.form?.getFieldValue('target') : undefined}
-          currency={currency}
-          onCurrencyChange={toggleCurrency}
-          onValueChange={val => props.form?.setFieldsValue({ target: val })}
+          value={form.getFieldValue('target')}
+          onValueChange={val => form.setFieldsValue({ target: val })}
+          currency={form.getFieldValue('currency')}
+          onCurrencyChange={currency =>
+            form.setFieldsValue({ currency: currency === '1' ? '0' : '1' })
+          }
           disabled={disabled}
         />
       </Form.Item>
@@ -65,26 +54,14 @@ export default function BudgetForm({
         name="duration"
         label="Time frame"
         rules={[{ required: true }]}
-        initialValue={props.form?.getFieldValue('duration')}
       >
         <Input
           className="align-end"
           placeholder="30"
           type="number"
           suffix="days"
-          disabled={disabled}
           autoComplete="off"
-        />
-      </Form.Item>
-      <Form.Item
-        extra="If you want, a link to your mission statement and your budgeting specs."
-        name="link"
-        label="Link"
-      >
-        <Input
-          placeholder="https://docs.google.com/my-budget-info"
           disabled={disabled}
-          autoComplete="off"
         />
       </Form.Item>
     </Form>

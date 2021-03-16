@@ -1,21 +1,20 @@
-import { Button, Col, Row, Space, Tabs } from 'antd'
+import { Button, Space, Tabs } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
+import { useUserBudgetSelector } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { addressExists } from 'utils/addressExists'
 
-import { colors } from '../../constants/styles/colors'
-import { CardSection } from '../shared/CardSection'
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
-import CurrentBudget from './CurrentBudget'
 import OwnerBackOffice from './OwnerBackOffice'
-import Rewards from './Rewards'
+import Project from './Project'
 import UpcomingBudget from './UpcomingBudget'
 
 export default function Owner() {
@@ -23,7 +22,8 @@ export default function Owner() {
     'found' | 'missing' | 'canCreate'
   >()
 
-  const { userAddress, currentBudget } = useContext(UserContext)
+  const budget = useUserBudgetSelector()
+  const { userAddress } = useContext(UserContext)
 
   const { owner }: { owner?: string } = useParams()
 
@@ -48,11 +48,17 @@ export default function Owner() {
     ),
   })
 
+  const ticketContract = useErc20Contract(ticketAddress)
+
+  const ticketSymbol = useContractReader<string>({
+    contract: ticketContract,
+    functionName: 'symbol',
+  })
+
   useDeepCompareEffectNoCheck(() => {
-    if (currentBudget) setBudgetState('found')
-    if (currentBudget === null)
-      setBudgetState(isOwner ? 'canCreate' : 'missing')
-  }, [isOwner, currentBudget])
+    if (budget) setBudgetState('found')
+    if (budget === null) setBudgetState(isOwner ? 'canCreate' : 'missing')
+  }, [isOwner, budget])
 
   // const currentSustainEvents = (useEventListener({
   //   contracts,
@@ -127,31 +133,12 @@ export default function Owner() {
       return (
         <div>
           <Space direction="vertical" size="large">
-            <div style={{ ...layouts.maxWidth }}>
-              <div style={{ marginBottom: 30 }}>
-                <h1
-                  style={{
-                    fontSize: '2.4rem',
-                    margin: 0,
-                  }}
-                >
-                  {currentBudget?.name}
-                </h1>
-                <h3 style={{ color: colors.grape }}>
-                  {currentBudget?.project}
-                </h3>
-              </div>
-              <Row gutter={60}>
-                <Col xs={24} lg={12}>
-                  <CardSection>
-                    <CurrentBudget ticketAddress={ticketAddress} />
-                  </CardSection>
-                </Col>
-                <Col xs={24} lg={12}>
-                  <Rewards ticketAddress={ticketAddress} />
-                </Col>
-              </Row>
-            </div>
+            <Project
+              ticketSymbol={ticketSymbol}
+              ticketAddress={ticketAddress}
+              budget={budget}
+              style={layouts.maxWidth}
+            />
 
             <Tabs
               defaultActiveKey="1"
@@ -179,16 +166,12 @@ export default function Owner() {
               <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
                   <div style={{ maxWidth: 600 }}>
-                    <BudgetsHistory startId={currentBudget?.previous} />
+                    <BudgetsHistory startId={budget?.previous} />
                   </div>
                 </div>
               </Tabs.TabPane>
               {addressExists(ticketAddress) ? null : (
-                <Tabs.TabPane
-                  tab="Back office stuff"
-                  key="backOffice"
-                  style={tabPaneStyle}
-                >
+                <Tabs.TabPane tab="Tickets" key="tickets" style={tabPaneStyle}>
                   <div style={{ ...layouts.maxWidth }}>
                     <OwnerBackOffice
                       ticketAddress={ticketAddress}

@@ -1,16 +1,17 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BudgetCurrency } from 'models/budget-currency'
 
 export const formatBudgetCurrency = (
-  curr?: BigNumber | string,
+  curr?: BigNumberish,
 ): 'ETH' | 'USD' | undefined => {
   if (!curr) return
 
-  const int = BigNumber.from(curr).toNumber()
+  const str = BigNumber.from(curr).toString() as BudgetCurrency
 
-  switch (int) {
-    case 0:
+  switch (str) {
+    case '0':
       return 'ETH'
-    case 1:
+    case '1':
       return 'USD'
   }
 }

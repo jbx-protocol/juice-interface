@@ -2,19 +2,20 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { ContractName } from 'constants/contract-name'
 import { NETWORKS } from 'constants/networks'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import { useContractLoader } from 'hooks/ContractLoader'
-import useContractReader from 'hooks/ContractReader'
-import { useCurrentBudget } from 'hooks/CurrentBudget'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useTransactor } from 'hooks/Transactor'
+import { useUserBudget } from 'hooks/UserBudget'
 import { useUserProvider } from 'hooks/UserProvider'
+import { useUserTickets } from 'hooks/UserTickets'
 import { useWeth } from 'hooks/Weth'
 import { useCallback, useEffect, useState } from 'react'
+import { editingBudgetActions } from 'redux/slices/editingBudget'
 
 import Navbar from './Navbar'
 import Router from './Router'
@@ -22,6 +23,8 @@ import Router from './Router'
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
   const [signer, setSigner] = useState<JsonRpcSigner>()
+
+  const dispatch = useAppDispatch()
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect()
@@ -52,7 +55,12 @@ function App() {
       typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const currentBudget = useCurrentBudget(userAddress)
+  useEffect(() => {
+    if (userAddress) dispatch(editingBudgetActions.setProject(userAddress))
+  }, [userAddress, dispatch])
+
+  useUserBudget(userAddress)
+  useUserTickets(userAddress)
 
   console.log('User:', userAddress)
 
@@ -64,7 +72,6 @@ function App() {
         transactor,
         contracts,
         onNeedProvider: loadWeb3Modal,
-        currentBudget,
         weth,
       }}
     >

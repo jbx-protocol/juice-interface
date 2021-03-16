@@ -1,11 +1,10 @@
-import { formatBytes32String } from '@ethersproject/strings'
-import { Button, Col, Form, Row } from 'antd'
+import { Button, Col, Row } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import TicketsForm, { TicketsFormFields } from 'components/forms/TicketsForm'
 import { UserContext } from 'contexts/userContext'
-import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 
-import TicketsForm from '../forms/TicketsForm'
 import { CardSection } from '../shared/CardSection'
 import WtfCard from '../shared/WtfCard'
 
@@ -17,25 +16,21 @@ export default function OwnerBackOffice({
   isOwner?: boolean
 }) {
   const { transactor, contracts, onNeedProvider } = useContext(UserContext)
+  const [loading, setLoading] = useState<boolean>()
+  const [form] = useForm<TicketsFormFields>()
 
-  const [ticketsForm] = Form.useForm<TicketsFormFields>()
-  const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>()
-
-  async function initTickets() {
+  async function issueTickets() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    const fields = ticketsForm.getFieldsValue(true)
+    if (!(await form.validateFields())) return
 
-    setLoadingInitTickets(true)
+    setLoading(true)
 
-    transactor(
-      contracts.TicketStore,
-      'issue',
-      [formatBytes32String(fields.name), formatBytes32String(fields.symbol)],
-      {
-        onDone: () => setLoadingInitTickets(false),
-      },
-    )
+    const fields = form.getFieldsValue(true)
+
+    transactor(contracts.TicketStore, 'issue', [fields.name, fields.symbol], {
+      onDone: () => setLoading(false),
+    })
   }
 
   const gutter = 30
@@ -47,7 +42,7 @@ export default function OwnerBackOffice({
           <Col span={12}>
             <CardSection header="Tickets">
               <div style={{ padding: 20 }}>
-                <TicketsForm props={{ form: ticketsForm }}></TicketsForm>
+                <TicketsForm form={form} />
                 <div
                   style={{
                     display: 'flex',
@@ -57,8 +52,8 @@ export default function OwnerBackOffice({
                   <Button
                     htmlType="submit"
                     type="primary"
-                    onClick={initTickets}
-                    loading={loadingInitTickets}
+                    onClick={issueTickets}
+                    loading={loading}
                   >
                     Issue tickets
                   </Button>

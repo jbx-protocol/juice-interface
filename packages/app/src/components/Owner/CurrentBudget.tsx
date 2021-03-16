@@ -5,7 +5,7 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -14,16 +14,17 @@ import { fromWad } from 'utils/formatCurrency'
 import BudgetDetail from './BudgetDetail'
 
 export default function CurrentBudget({
-  ticketAddress,
+  budget,
+  ticketSymbol,
 }: {
-  ticketAddress: string | undefined
+  budget: Budget | undefined | null
+  ticketSymbol: string | undefined
 }) {
   const [payAmount, setPayAmount] = useState<string>()
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
   const {
-    currentBudget,
     userAddress,
     weth,
     contracts,
@@ -43,17 +44,10 @@ export default function CurrentBudget({
     valueDidChange: bigNumbersDiff,
   })
 
-  const ticketContract = useErc20Contract(ticketAddress)
-
-  const ticketSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
-
   const weiPayAmt = converter.usdToWei(payAmount)
 
   function pay() {
-    if (!transactor || !contracts || !currentBudget) return onNeedProvider()
+    if (!transactor || !contracts || !budget) return onNeedProvider()
     if (!allowance || !weiPayAmt) return
 
     if (allowance.lt(weiPayAmt)) {
@@ -83,7 +77,7 @@ export default function CurrentBudget({
 
   return (
     <div>
-      {currentBudget ? <BudgetDetail budget={currentBudget} /> : null}
+      {budget ? <BudgetDetail budget={budget} /> : null}
       <Space
         style={{
           flex: 1,
@@ -121,11 +115,12 @@ export default function CurrentBudget({
         onCancel={() => setApproveModalVisible(false)}
       />
       <ConfirmPayOwnerModal
+        budget={budget}
         visible={payModalVisible}
         onOk={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         ticketSymbol={ticketSymbol}
-        currency={currentBudget?.currency.toString() as BudgetCurrency}
+        currency={budget?.currency.toString() as BudgetCurrency}
         usdAmount={parseFloat(payAmount ?? '0')}
       />
     </div>

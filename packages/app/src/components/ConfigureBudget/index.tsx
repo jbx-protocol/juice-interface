@@ -1,285 +1,85 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatBytes32String } from '@ethersproject/strings'
-import { Button, Col, Form, Row, Space, Steps } from 'antd'
-import { ContractName } from 'constants/contract-name'
-import { emptyAddress } from 'constants/empty-address'
+import { Button } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import BudgetForm, { BudgetFormFields } from 'components/forms/BudgetForm'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import {
+  useEditingBudgetSelector,
+  useUserBudgetSelector,
+} from 'hooks/AppSelector'
 import { BudgetCurrency } from 'models/budget-currency'
-import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
-import { BudgetFormFields } from 'models/forms-fields/budget-form'
-import { TicketsFormFields } from 'models/forms-fields/tickets-form'
-import { Step } from 'models/step'
-import { useContext, useState } from 'react'
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
-import { addressExists } from 'utils/addressExists'
-import { fromWad, parseWad } from 'utils/formatCurrency'
-
-import WtfCard from '../shared/WtfCard'
-import { advancedContractStep } from './steps/advancedContractStep'
-import { contractStep } from './steps/contractStep'
-import { reviewStep } from './steps/reviewStep'
-import { ticketsStep } from './steps/ticketsStep'
+import { useContext, useEffect, useMemo } from 'react'
+import { editingBudgetActions } from 'redux/slices/editingBudget'
+import { fromWad } from 'utils/formatCurrency'
 
 export default function ConfigureBudget() {
-  const {
-    contracts,
-    transactor,
-    onNeedProvider,
-    userAddress,
-    currentBudget,
-  } = useContext(UserContext)
+  const { userAddress } = useContext(UserContext)
+  const [budgetForm] = useForm<BudgetFormFields>()
+  const userBudget = useUserBudgetSelector()
+  const editingBudget = useEditingBudgetSelector()
+  const dispatch = useAppDispatch()
 
-  const [ticketsForm] = Form.useForm<TicketsFormFields>()
-  const [budgetForm] = Form.useForm<BudgetFormFields>()
-  const [budgetAdvancedForm] = Form.useForm<AdvancedBudgetFormFields>()
-  const [loadingInitTickets, setLoadingInitTickets] = useState<boolean>(false)
-  const [loadingCreateBudget, setLoadingCreateBudget] = useState<boolean>(false)
-  const [currentStep, setCurrentStep] = useState<number>(0)
+  console.log({ userBudget, editingBudget })
 
-  const ticketsAddress = useContractReader<string>({
-    contract: ContractName.TicketStore,
-    functionName: 'tickets',
-    args: userAddress ? [userAddress] : null,
-  })
-  const ticketContract = useErc20Contract(ticketsAddress)
-  const ticketsSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
-  const ticketsName = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'name',
-  })
-  const adminFeePercent = useContractReader<number>({
-    contract: ContractName.Juicer,
-    functionName: 'fee',
-    formatter: (val: BigNumber) => val.toNumber(),
-  })
+  const budget = useMemo(() => userBudget ?? editingBudget, [
+    userBudget,
+    editingBudget,
+  ])
 
-  const ticketsInitialized = !!ticketsName && !!ticketsSymbol
-
-  useDeepCompareEffectNoCheck(() => {
-    if (currentBudget) {
+  useEffect(
+    () =>
       budgetForm.setFieldsValue({
-        name: currentBudget.name,
-        duration: currentBudget.duration
-          .div(
-            process.env.NODE_ENV === 'production'
-              ? BigNumber.from(SECONDS_IN_DAY)
-              : 1,
-          )
-          .toNumber(),
-        link: currentBudget.link,
-        currency: currentBudget.currency.toString() as BudgetCurrency,
-        target: fromWad(currentBudget.target),
-      })
-      budgetAdvancedForm.setFieldsValue({
-        discountRate: currentBudget.discountRate.toNumber(),
-        beneficiaryAddress: addressExists(currentBudget.bAddress)
-          ? currentBudget.bAddress
-          : '--',
-        beneficiaryAllocation: currentBudget.b.toNumber(),
-        projectAllocation: currentBudget.p.toNumber(),
-      })
-    } else {
-      budgetForm.setFieldsValue({ currency: '1' })
-    }
-  }, [currentBudget, budgetForm, budgetAdvancedForm])
+        name: budget?.name ?? '',
+        target: fromWad(budget?.target) ?? '0',
+        duration:
+          budget?.duration
+            .div(process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1)
+            .toString() ?? '0',
+        currency: (budget?.currency.toString() ?? '0') as BudgetCurrency,
+      }),
+    [budget, budgetForm],
+  )
 
-  if (ticketsName && ticketsSymbol) {
-    ticketsForm.setFieldsValue({
-      name: ticketsName,
-      symbol: ticketsSymbol,
-    })
-  }
-
-  async function tryNextStep() {
-    const step = steps[currentStep]
-
-    if (step.validate) await step.validate()
-
-    setCurrentStep(currentStep + 1)
-  }
-
-  async function initTickets() {
-    if (!transactor || !contracts) return onNeedProvider()
-
-    const fields = ticketsForm.getFieldsValue(true)
-
-    if (!fields.name || !fields.symbol) {
-      setCurrentStep(1)
-      setTimeout(async () => {
-        await ticketsForm.validateFields()
-      }, 0)
+  const goToReview = () => {
+    if (userBudget && userAddress) {
+      window.location.hash = userAddress
       return
     }
 
-    setLoadingInitTickets(true)
+    const fields = budgetForm.getFieldsValue(true)
+    dispatch(editingBudgetActions.setName(fields.name))
+    dispatch(editingBudgetActions.setTarget(fields.target))
+    dispatch(editingBudgetActions.setDuration(fields.duration))
+    dispatch(editingBudgetActions.setCurrency(fields.currency))
 
-    transactor(
-      contracts.TicketStore,
-      'issue',
-      [formatBytes32String(fields.name), formatBytes32String(fields.symbol)],
-      {
-        onDone: () => setLoadingInitTickets(false),
-      },
-    )
+    if (userAddress) dispatch(editingBudgetActions.setProject(userAddress))
+
+    window.location.hash = 'create'
   }
 
-  function activateContract() {
-    if (!transactor || !contracts) return onNeedProvider()
-
-    const fields = {
-      ...budgetForm.getFieldsValue(true),
-      ...budgetAdvancedForm.getFieldsValue(true),
-    }
-
-    if (
-      !fields.target ||
-      !fields.duration ||
-      !fields.name ||
-      !adminFeePercent
-    ) {
-      setCurrentStep(0)
-      setTimeout(async () => await budgetForm.validateFields(), 0)
-      return
-    }
-
-    setLoadingCreateBudget(true)
-
-    const target = parseWad(fields.target)
-    const targetWithFee = target
-      ?.add(target.mul(adminFeePercent).div(100))
-      .toHexString()
-
-    transactor(
-      contracts.BudgetStore,
-      'configure',
-      [
-        targetWithFee,
-        BigNumber.from(fields.currency).toHexString(),
-        BigNumber.from(
-          fields.duration *
-            (process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1),
-        ).toHexString(),
-        fields.name,
-        fields.link ?? '',
-        BigNumber.from(fields.discountRate).toHexString(),
-        BigNumber.from(fields.projectAllocation || 0).toHexString(),
-        BigNumber.from(fields.beneficiaryAllocation || 0).toHexString(),
-        fields.beneficiaryAddress?.trim() ?? emptyAddress,
-      ],
-      { onDone: () => setLoadingCreateBudget(false) },
-    )
-  }
-
-  const steps: Step[] = [
-    contractStep({
-      form: budgetForm,
-      budgetActivated: !!currentBudget,
-    }),
-    ticketsStep({
-      form: ticketsForm,
-      ticketsInitialized,
-    }),
-    advancedContractStep({
-      form: budgetAdvancedForm,
-      budgetActivated: !!currentBudget,
-    }),
-    reviewStep({
-      ticketsForm,
-      budgetForm,
-      budgetAdvancedForm,
-      ticketsInitialized,
-      currentBudget,
-      ticketsName,
-      ticketsSymbol,
-      initTickets,
-      activateContract,
-      loadingInitTickets,
-      loadingCreateBudget,
-      userAddress,
-      adminFeePercent,
-    }),
-  ]
+  const disabled = !!userBudget
 
   return (
     <div
       style={{
         padding: padding.app,
-        maxWidth: '90vw',
-        width: 1080,
-        margin: 'auto',
+        maxWidth: 600,
       }}
     >
-      <Steps
-        size="small"
-        current={currentStep}
+      <BudgetForm form={budgetForm} disabled={disabled} />
+
+      <div
         style={{
-          marginBottom: 60,
+          display: 'flex',
+          justifyContent: 'flex-end',
         }}
       >
-        {steps.map((step, i) => (
-          <Steps.Step
-            key={i}
-            onClick={() => setCurrentStep(i)}
-            title={step.title}
-          />
-        ))}
-      </Steps>
-
-      <Row align="top">
-        <Col span={10}>
-          {steps[currentStep].content}
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              marginTop: 80,
-            }}
-          >
-            {currentStep === 0 ? (
-              <div></div>
-            ) : (
-              <Button onClick={() => setCurrentStep(currentStep - 1)}>
-                Back
-              </Button>
-            )}
-
-            <Space>
-              {currentStep === steps.length - 1 ? null : (
-                <Button onClick={() => tryNextStep()}>Next</Button>
-              )}
-              {userAddress ? null : (
-                <Button onClick={onNeedProvider} type="primary">
-                  Connect a wallet
-                </Button>
-              )}
-            </Space>
-          </div>
-        </Col>
-
-        <Col
-          style={{
-            paddingLeft: 80,
-          }}
-          span={14}
-        >
-          {steps[currentStep].info?.length ? (
-            <WtfCard>
-              {steps[currentStep].info?.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </WtfCard>
-          ) : null}
-        </Col>
-      </Row>
+        <Button type="primary" onClick={goToReview}>
+          See your project
+        </Button>
+      </div>
     </div>
   )
 }

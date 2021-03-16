@@ -8,6 +8,7 @@ import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
+import { Budget } from 'models/budget'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -21,14 +22,17 @@ import {
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
+  budget,
   ticketAddress,
+  ticketSymbol,
   isOwner,
 }: {
+  budget?: Budget | undefined | null
   ticketAddress?: string
+  ticketSymbol?: string
   isOwner?: boolean
 }) {
   const {
-    currentBudget,
     weth,
     contracts,
     transactor,
@@ -48,19 +52,15 @@ export default function Rewards({
       {
         contract: ContractName.Juicer,
         eventName: 'Pay',
-        topics: currentBudget?.id
-          ? [currentBudget.id.toHexString()]
-          : undefined,
+        topics: budget?.id ? [budget.id.toHexString()] : undefined,
       },
       {
         contract: ContractName.Juicer,
         eventName: 'Redeem',
-        topics: currentBudget?.project
-          ? [[], currentBudget.project]
-          : undefined,
+        topics: budget?.project ? [[], budget.project] : undefined,
       },
     ],
-    [currentBudget?.id, currentBudget?.project],
+    [budget?.id, budget?.project],
   )
 
   const bondingCurveRate = useContractReader<BigNumber>({
@@ -69,10 +69,6 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
   })
   const ticketContract = useErc20Contract(ticketAddress)
-  const ticketSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
@@ -89,10 +85,7 @@ export default function Rewards({
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'iOweYous',
-    args:
-      userAddress && currentBudget
-        ? [currentBudget?.project, userAddress]
-        : null,
+    args: userAddress && budget ? [budget?.project, userAddress] : null,
     valueDidChange: bigNumbersDiff,
     formatter: useCallback(
       (value?: BigNumber) => value ?? BigNumber.from(0),
@@ -103,14 +96,14 @@ export default function Rewards({
       {
         contract: contracts?.TicketStore,
         eventName: 'Issue',
-        topics: currentBudget ? [currentBudget.project] : undefined,
+        topics: budget ? [budget.project] : undefined,
       },
     ],
   })
   const iouSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketStore,
     functionName: 'totalIOweYous',
-    args: currentBudget ? [currentBudget?.project] : null,
+    args: budget ? [budget?.project] : null,
     valueDidChange: bigNumbersDiff,
     formatter: useCallback(
       (value?: BigNumber) => value ?? BigNumber.from(0),
@@ -121,28 +114,27 @@ export default function Rewards({
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'getOverflow',
-    args: useMemo(
-      () => (currentBudget?.project ? [currentBudget?.project] : null),
-      [currentBudget?.project],
-    ),
+    args: useMemo(() => (budget?.project ? [budget?.project] : null), [
+      budget?.project,
+    ]),
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(
       () =>
-        currentBudget?.project
+        budget?.project
           ? [
               {
                 contract: ContractName.Juicer,
                 eventName: 'Pay',
-                topics: [[], currentBudget.project],
+                topics: [[], budget.project],
               },
               {
                 contract: ContractName.Juicer,
                 eventName: 'Tap',
-                topics: [[], currentBudget.project],
+                topics: [[], budget.project],
               },
             ]
           : undefined,
-      [currentBudget?.project],
+      [budget?.project],
     ),
   })
 
@@ -155,11 +147,43 @@ export default function Rewards({
     [ticketSupply, iouSupply],
   )
 
+  const onChangeRedeemAmount = useCallback(
+    (amount: string | undefined) => {
+      setRedeemAmount(amount)
+
+      if (
+        amount === undefined ||
+        !totalOverflow ||
+        !bondingCurveRate ||
+        !combinedSupply ||
+        combinedSupply.eq(0)
+      ) {
+        setMinRedeemAmount(undefined)
+      } else {
+        setMinRedeemAmount(
+          parseWad(amount)
+            ?.mul(totalOverflow)
+            .mul(bondingCurveRate)
+            .div(1000)
+            .div(combinedSupply),
+        )
+      }
+    },
+    [
+      setRedeemAmount,
+      setMinRedeemAmount,
+      bondingCurveRate,
+      combinedSupply,
+      totalOverflow,
+    ],
+  )
+
   useEffect(() => onChangeRedeemAmount(fromWad(totalBalance)), [
     totalBalance,
     totalOverflow,
     combinedSupply,
     bondingCurveRate,
+    onChangeRedeemAmount,
   ])
 
   const share = combinedSupply?.gt(0)
@@ -168,29 +192,6 @@ export default function Rewards({
         .div(combinedSupply)
         .toString()
     : '0'
-
-  function onChangeRedeemAmount(amount: string | undefined) {
-    console.log('change', amount)
-    setRedeemAmount(amount)
-
-    if (
-      amount === undefined ||
-      !totalOverflow ||
-      !bondingCurveRate ||
-      !combinedSupply ||
-      combinedSupply.eq(0)
-    ) {
-      setMinRedeemAmount(undefined)
-    } else {
-      setMinRedeemAmount(
-        parseWad(amount)
-          ?.mul(totalOverflow)
-          .mul(bondingCurveRate)
-          .div(1000)
-          .div(combinedSupply),
-      )
-    }
-  }
 
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
@@ -205,7 +206,7 @@ export default function Rewards({
       contracts.Juicer,
       'redeem',
       [
-        currentBudget?.project,
+        budget?.project,
         redeemWad?.toHexString(),
         minRedeemAmount?.toHexString(),
         userAddress,
@@ -221,7 +222,7 @@ export default function Rewards({
 
     setLoadingClaimIou(true)
 
-    transactor(contracts.TicketStore, 'convert', [currentBudget?.project], {
+    transactor(contracts.TicketStore, 'convert', [budget?.project], {
       onDone: () => setLoadingClaimIou(false),
     })
   }
@@ -229,7 +230,7 @@ export default function Rewards({
   const subText = (text: string) => (
     <div
       style={{
-        fontSize: '.75rem',
+        fontSize: '.8rem',
         fontWeight: 500,
       }}
     >
@@ -249,11 +250,9 @@ export default function Rewards({
     </Tag>
   )
 
-  const iouSymbol = 'tickets'
+  const iouSymbol = ticketSymbol ?? 'tickets'
 
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
-
-  if (!currentBudget) return null
 
   return (
     <Space direction="vertical" size="large" align="start">
@@ -269,7 +268,9 @@ export default function Rewards({
         valueRender={() => (
           <div>
             {formatWad(totalOverflow ?? 0)} {weth?.symbol}
-            <div>{formattedNum(converter.weiToUsd(totalOverflow))} USD</div>
+            <div style={{ fontSize: '.8rem' }}>
+              {formattedNum(converter.weiToUsd(totalOverflow))} USD
+            </div>
           </div>
         )}
       />
@@ -297,7 +298,7 @@ export default function Rewards({
                 `${share ?? 0}% of ${formatWad(combinedSupply) ??
                   0} ${iouSymbol} in circulation`,
               )}
-              {!addressExists(ticketAddress) ? (
+              {!ticketSymbol ? (
                 isOwner ? (
                   <Tooltip
                     title="Issue tickets in the back office"
@@ -319,7 +320,7 @@ export default function Rewards({
         ></Statistic>
       ) : null}
 
-      {addressExists(ticketAddress) && iouSupply?.eq(0) ? (
+      {addressExists(ticketAddress) && !iouSupply?.gt(0) ? (
         <Statistic
           title={
             <TooltipLabel

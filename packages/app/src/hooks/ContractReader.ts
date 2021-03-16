@@ -30,7 +30,7 @@ export default function useContractReader<V>({
   updateOn?: ContractUpdateOn
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
-  valueDidChange?: (a?: V, b?: V) => boolean
+  valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {
   const [value, setValue] = useState<V | undefined>()
 
@@ -56,13 +56,13 @@ export default function useContractReader<V>({
 
         const newValue = _formatter(result)
 
-        if (_valueDidChange(newValue, value)) {
+        if (_valueDidChange(value, newValue)) {
           setValue(newValue)
           _callback(newValue)
         }
       } catch (err) {
         console.log('📕 Read error >', functionName, { args }, { err })
-        setValue(_formatter(undefined))
+        setValue(undefined)
         _callback(undefined)
       }
     }

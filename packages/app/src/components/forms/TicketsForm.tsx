@@ -1,34 +1,31 @@
-import { Form, FormProps, Input } from 'antd'
-import { TicketsFormFields } from 'models/forms-fields/tickets-form'
+import { Form, Input } from 'antd'
+import { FormInstance } from 'antd/lib/form/Form'
+
+export type TicketsFormFields = {
+  name: string
+  symbol: string
+}
 
 export default function TicketsForm({
-  props,
-  header,
+  form,
   disabled,
 }: {
-  props: FormProps<TicketsFormFields>
-  header?: JSX.Element
+  form: FormInstance<TicketsFormFields>
   disabled?: boolean
 }) {
   function capitalizeTicker(value: string) {
-    props.form?.setFieldsValue({ symbol: value.toUpperCase() })
+    form.setFieldsValue({ symbol: value.toUpperCase() })
   }
 
   return (
-    <Form layout="vertical" {...props}>
-      {header ? <Form.Item>{header}</Form.Item> : null}
+    <Form layout="vertical" form={form}>
       <Form.Item
         extra="The name of your ticket token is used across web3."
         name="name"
         label="Name"
         rules={[{ required: true }]}
       >
-        <Input
-          suffix="Juice tickets"
-          placeholder="Peach's"
-          disabled={disabled}
-          autoComplete="off"
-        />
+        <Input placeholder="Peach's" disabled={disabled} autoComplete="off" />
       </Form.Item>
       <Form.Item
         extra="The ticker of your ticket token is used across web3."
@@ -38,7 +35,6 @@ export default function TicketsForm({
       >
         <Input
           placeholder="PEACH"
-          prefix="j"
           onChange={e => capitalizeTicker(e.target.value)}
           disabled={disabled}
           autoComplete="off"

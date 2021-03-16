@@ -1,13 +1,10 @@
 import { Button, Divider, FormInstance, Space, Statistic } from 'antd'
 import { Budget } from 'models/budget'
-import { AdvancedBudgetFormFields } from 'models/forms-fields/advanced-budget-form'
-import { BudgetFormFields } from 'models/forms-fields/budget-form'
-import { TicketsFormFields } from 'models/forms-fields/tickets-form'
 import { Step } from 'models/step'
 import { Link } from 'react-router-dom'
 import { addressExists } from 'utils/addressExists'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formattedNum, fromWad } from 'utils/formatCurrency'
+import { formattedNum, fromPerMille, fromWad } from 'utils/formatCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
 export function reviewStep({
@@ -25,9 +22,9 @@ export function reviewStep({
   adminFeePercent,
   currentBudget,
 }: {
-  ticketsForm: FormInstance<TicketsFormFields>
-  budgetForm: FormInstance<BudgetFormFields>
-  budgetAdvancedForm: FormInstance<AdvancedBudgetFormFields>
+  ticketsForm: FormInstance
+  budgetForm: FormInstance
+  budgetAdvancedForm: FormInstance
   ticketsInitialized: boolean | undefined
   ticketsName: string | undefined
   ticketsSymbol: string | undefined
@@ -68,9 +65,7 @@ export function reviewStep({
           <Statistic
             title="Name"
             value={orEmpty(
-              currentBudget
-                ? currentBudget.name
-                : budgetForm.getFieldValue('name'),
+              currentBudget?.name ?? budgetForm.getFieldValue('name'),
             )}
           />
           <div>
@@ -78,9 +73,8 @@ export function reviewStep({
               <Statistic
                 title="Duration"
                 value={orEmpty(
-                  currentBudget
-                    ? currentBudget.duration.toString()
-                    : budgetForm.getFieldValue('duration'),
+                  currentBudget?.duration.toString() ??
+                    budgetForm.getFieldValue('duration'),
                 )}
                 suffix="days"
               />
@@ -93,9 +87,7 @@ export function reviewStep({
           <Statistic
             title="Link"
             value={orEmpty(
-              currentBudget
-                ? currentBudget.link
-                : budgetForm.getFieldValue('link'),
+              currentBudget?.link ?? budgetForm.getFieldValue('link'),
             )}
           />
           <Space size="large" align="end">
@@ -105,28 +97,26 @@ export function reviewStep({
               }}
               title="Discount rate"
               value={
-                currentBudget
-                  ? currentBudget.discountRate.toString()
-                  : budgetAdvancedForm.getFieldValue('discountRate')
+                fromPerMille(currentBudget?.discountRate) ??
+                budgetAdvancedForm.getFieldValue('discountRate')
               }
               suffix="%"
             />
             <Statistic
               title="Reserved tickets"
               value={
-                currentBudget
-                  ? currentBudget.p.toString()
-                  : budgetAdvancedForm.getFieldValue('projectAllocation') ?? 0
+                fromPerMille(currentBudget?.reserved) ??
+                budgetAdvancedForm.getFieldValue('reserved') ??
+                0
               }
               suffix="%"
             />
             <Statistic
               title="Overflow donation"
               value={
-                currentBudget
-                  ? currentBudget.b
-                  : budgetAdvancedForm.getFieldValue('beneficiaryAllocation') ??
-                    0
+                fromPerMille(currentBudget?.donationAmount) ??
+                budgetAdvancedForm.getFieldValue('donation') ??
+                0
               }
               suffix="%"
             />
@@ -137,10 +127,10 @@ export function reviewStep({
               valueStyle={{ lineBreak: 'anywhere' }}
               value={orEmpty(
                 currentBudget
-                  ? addressExists(currentBudget.bAddress)
-                    ? currentBudget.bAddress
+                  ? addressExists(currentBudget.donationRecipient)
+                    ? currentBudget.donationRecipient
                     : '--'
-                  : budgetAdvancedForm.getFieldValue('beneficiaryAddress'),
+                  : budgetAdvancedForm.getFieldValue('donationRecipient'),
               )}
             />
           </Space>
@@ -177,9 +167,7 @@ export function reviewStep({
                 value={
                   ticketsInitialized
                     ? ticketsName
-                    : ticketsForm.getFieldValue('name')
-                    ? ticketsForm.getFieldValue('name') + 'Juice tickets'
-                    : '--'
+                    : ticketsForm.getFieldValue('name') ?? '--'
                 }
               />
               <Statistic
@@ -187,9 +175,7 @@ export function reviewStep({
                 value={
                   ticketsInitialized
                     ? ticketsSymbol
-                    : ticketsForm.getFieldValue('symbol')
-                    ? 'j' + ticketsForm.getFieldValue('symbol')
-                    : '--'
+                    : ticketsForm.getFieldValue('symbol') ?? '--'
                 }
               />
             </Space>

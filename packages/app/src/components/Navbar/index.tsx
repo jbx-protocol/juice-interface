@@ -1,9 +1,9 @@
-import React from 'react'
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
-import { useContext } from 'react'
+import { useUserBudgetSelector } from 'hooks/AppSelector'
+import React, { useContext } from 'react'
 
 import Account from './Account'
 
@@ -12,7 +12,8 @@ export default function Navbar({
 }: {
   shouldUseNetwork?: string
 }) {
-  const { userAddress, currentBudget } = useContext(UserContext)
+  const userBudget = useUserBudgetSelector()
+  const { userAddress } = useContext(UserContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -61,7 +62,7 @@ export default function Navbar({
             />
           </a>
         </Menu.Item>
-        {currentBudget && userAddress ? (
+        {userBudget && userAddress ? (
           <Menu.Item key="budget">
             {menuItem('Dashboard', '/#/' + userAddress)}
           </Menu.Item>

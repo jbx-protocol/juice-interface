@@ -3,14 +3,20 @@ import { Descriptions, Modal } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo } from 'react'
 import { formatBudgetCurrency } from 'utils/budgetCurrency'
-import { formatWad, parseWad } from 'utils/formatCurrency'
-
-import { useCurrencyConverter } from '../../hooks/CurrencyConverter'
+import {
+  formatWad,
+  fromPerMille,
+  parsePerMille,
+  parseWad,
+} from 'utils/formatCurrency'
 
 export default function ConfirmPayOwnerModal({
+  budget,
   visible,
   currency,
   usdAmount,
@@ -18,6 +24,7 @@ export default function ConfirmPayOwnerModal({
   onOk,
   onCancel,
 }: {
+  budget: Budget | undefined | null
   visible?: boolean
   currency: BudgetCurrency | undefined
   usdAmount: number | undefined
@@ -25,25 +32,19 @@ export default function ConfirmPayOwnerModal({
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const {
-    contracts,
-    transactor,
-    userAddress,
-    currentBudget,
-    weth,
-  } = useContext(UserContext)
+  const { contracts, transactor, userAddress, weth } = useContext(UserContext)
 
   const converter = useCurrencyConverter()
 
   const weiAmount = converter.usdToWei(usdAmount)
 
   function pay() {
-    if (!contracts || !currentBudget || !transactor) return
+    if (!contracts || !budget || !transactor) return
 
     // TODO add note input
 
     transactor(contracts.Juicer, 'pay', [
-      currentBudget.project,
+      budget.project,
       weiAmount?.toHexString(),
       userAddress,
       '',
@@ -52,15 +53,15 @@ export default function ConfirmPayOwnerModal({
     if (onOk) onOk()
   }
 
-  const payerPercentage = currentBudget
-    ? BigNumber.from(100)
-        .sub(currentBudget.p)
+  const payerPercentage = budget
+    ? parsePerMille('100')
+        .sub(budget.reserved)
         .toHexString()
     : undefined
 
-  const budgetId = currentBudget?.id.gt(0)
-    ? currentBudget.id.toHexString()
-    : currentBudget?.previous.toHexString()
+  const budgetId = budget?.id.gt(0)
+    ? budget.id.toHexString()
+    : budget?.previous.toHexString()
 
   const currencyAmount =
     formatBudgetCurrency(currency) === 'USD'
@@ -83,15 +84,15 @@ export default function ConfirmPayOwnerModal({
       () => [
         budgetId,
         currencyAmount?.toHexString(),
-        currentBudget?.p.toHexString(),
+        budget?.reserved.toHexString(),
       ],
-      [budgetId, currencyAmount, currentBudget?.p],
+      [budgetId, currencyAmount, budget?.reserved],
     ),
   })
 
   return (
     <Modal
-      title={'Pay ' + currentBudget?.name}
+      title={'Pay ' + budget?.name}
       visible={visible}
       onOk={pay}
       okText="Pay"
@@ -99,9 +100,7 @@ export default function ConfirmPayOwnerModal({
       width={800}
     >
       <Descriptions column={1} bordered>
-        <Descriptions.Item label="Project">
-          {currentBudget?.project}
-        </Descriptions.Item>
+        <Descriptions.Item label="Project">{budget?.project}</Descriptions.Item>
         <Descriptions.Item label="Pay amount">
           {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
         </Descriptions.Item>

@@ -5,7 +5,6 @@ export interface Budget {
   project: string
   number: BigNumber
   previous: BigNumber
-  next: BigNumber
   name: string
   link: string
   target: BigNumber
@@ -15,9 +14,9 @@ export interface Budget {
   duration: BigNumber
   tappedTarget: BigNumber
   tappedTotal: BigNumber
-  p: BigNumber
-  b: BigNumber
-  bAddress: string
+  reserved: BigNumber
+  donationAmount: BigNumber
+  donationRecipient: string
   weight: BigNumber
   discountRate: BigNumber
   configured: BigNumber

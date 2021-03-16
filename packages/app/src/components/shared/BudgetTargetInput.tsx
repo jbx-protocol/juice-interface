@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Input } from 'antd'
 import { BudgetCurrency } from 'models/budget-currency'
 import React from 'react'
@@ -16,15 +15,15 @@ export default function BudgetTargetInput({
   currency?: BudgetCurrency
   value?: string
   onValueChange: (value: string) => void
-  onCurrencyChange?: VoidFunction
+  onCurrencyChange: (currency: BudgetCurrency) => void
   disabled?: boolean
 }) {
   if (currency === undefined) return null
 
   const budgetCurrencySelector = (
     <InputAccessoryButton
-      onClick={onCurrencyChange}
-      text={formatBudgetCurrency(BigNumber.from(currency))}
+      onClick={() => onCurrencyChange(currency)}
+      text={formatBudgetCurrency(currency)}
     />
   )
 

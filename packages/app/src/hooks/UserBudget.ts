@@ -2,11 +2,15 @@ import { ContractName } from 'constants/contract-name'
 import { Budget } from 'models/budget'
 import { useCallback, useMemo, useState } from 'react'
 import { budgetsDiff } from 'utils/budgetsDiff'
+import { serializeBudget } from 'utils/serializers'
 
+import { userBudgetActions } from '../redux/slices/userBudget'
+import { useAppDispatch } from './AppDispatch'
 import useContractReader from './ContractReader'
 
-export function useCurrentBudget(userAddress?: string) {
-  const [currentBudgetId, setCurrentBudgetId] = useState<string>()
+export function useUserBudget(userAddress?: string) {
+  const [userBudgetId, setUserBudgetId] = useState<string>()
+  const dispatch = useAppDispatch()
 
   const updateOn = useMemo(
     () => [
@@ -24,30 +28,28 @@ export function useCurrentBudget(userAddress?: string) {
             },
           ]
         : []),
-      ...(currentBudgetId
+      ...(userBudgetId
         ? [
             {
               contract: ContractName.Juicer,
               eventName: 'Tap',
-              topics: [currentBudgetId],
+              topics: [userBudgetId],
             },
           ]
         : []),
     ],
-    [userAddress, currentBudgetId],
+    [userAddress, userBudgetId],
   )
 
   const callback = useCallback(
-    (budget?: Budget | null) => setCurrentBudgetId(budget?.id.toHexString()),
-    [setCurrentBudgetId],
+    (budget?: Budget | null | undefined) => {
+      setUserBudgetId(budget?.id.toHexString())
+      dispatch(userBudgetActions.set(budget ? serializeBudget(budget) : null))
+    },
+    [setUserBudgetId, dispatch],
   )
 
-  const formatter = useCallback(b => b ?? null, [])
-
-  const valueDidChange = useCallback(
-    (a, b) => budgetsDiff(a ?? undefined, b ?? undefined),
-    [],
-  )
+  const valueDidChange = useCallback((a, b) => budgetsDiff(a, b), [])
 
   return useContractReader<Budget | null>({
     contract: ContractName.BudgetStore,
@@ -56,6 +58,5 @@ export function useCurrentBudget(userAddress?: string) {
     valueDidChange,
     updateOn,
     callback,
-    formatter,
   })
 }

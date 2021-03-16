@@ -4,8 +4,8 @@ export const budgetsDiff = (a?: Budget, b?: Budget) => {
   if (a && !b) return true
   if (b && !a) return true
   return !(
-    a?.b.eq(b?.b ?? -1) &&
-    a?.bAddress === b?.bAddress &&
+    a?.donationAmount.eq(b?.donationAmount ?? -1) &&
+    a?.donationRecipient === b?.donationRecipient &&
     a?.configured.eq(b?.configured) &&
     a?.currency.eq(b?.currency) &&
     a?.discountRate.eq(b?.discountRate ?? -1) &&
@@ -13,9 +13,8 @@ export const budgetsDiff = (a?: Budget, b?: Budget) => {
     a?.id.eq(b?.id ?? -1) &&
     a?.link === b?.link &&
     a?.name === b?.name &&
-    a?.next.eq(b?.next ?? -1) &&
     a?.number.eq(b?.number ?? -1) &&
-    a?.p.eq(b?.p ?? -1) &&
+    a?.reserved.eq(b?.reserved ?? -1) &&
     a?.previous.eq(b?.previous ?? -1) &&
     a?.project === b?.project &&
     a?.start.eq(b?.start ?? -1) &&

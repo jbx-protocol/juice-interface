@@ -16,9 +16,11 @@ import { formatBudgetCurrency } from 'utils/budgetCurrency'
 import {
   formattedNum,
   formatWad,
+  fromPerMille,
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
+
 import TooltipLabel from '../shared/TooltipLabel'
 import BudgetHeader from './BudgetHeader'
 
@@ -39,18 +41,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const currency = formatBudgetCurrency(budget.currency)
 
-  const juicerFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
-    functionName: 'fee',
-    valueDidChange: bigNumbersDiff,
-  })
-
   const tappableAmount = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'getTappableAmount',
-    args: juicerFeePercent
-      ? [budget.id.toHexString(), juicerFeePercent?.toHexString()]
-      : null,
+    args: [budget.id.toHexString()],
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(
       () =>
@@ -82,30 +76,45 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     [budget.tappedTotal, converter, currency],
   )
 
+  const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
+
   // TODO recalculate every second
-  const secondsLeft =
-    budget &&
-    Math.floor(
-      budget.start.toNumber() +
-        budget.duration.toNumber() -
-        new Date().valueOf() / 1000,
-    )
+  const secondsLeft = budget?.start.add(budget.duration).sub(now)
+
+  const formatDate = (dateMillis: number) =>
+    moment(dateMillis).format('M-DD-YYYY h:mma')
+
+  const formattedStartTime = formatDate(budget.start.mul(1000).toNumber())
+
+  const formattedEndTime = formatDate(
+    budget.start
+      .add(budget.duration)
+      .mul(1000)
+      .toNumber(),
+  )
+
+  const isEnded = secondsLeft.lte(0)
+
+  const isUpcoming = useMemo(() => budget.start.gt(now), [budget.start, now])
 
   const isOwner = budget?.project === userAddress
 
-  function detailedTimeString(millis: number) {
-    if (!millis || millis <= 0) return 0
+  function detailedTimeString(secs: BigNumber) {
+    if (!secs || secs.lte(0)) return 0
 
-    const days = millis && millis / 1000 / SECONDS_IN_DAY
+    const days = parseFloat((secs.toNumber() / SECONDS_IN_DAY).toString())
     const hours = days && (days % 1) * 24
     const minutes = hours && (hours % 1) * 60
     const seconds = minutes && (minutes % 1) * 60
 
-    return `${days && days >= 1 ? Math.floor(days) + 'd ' : ''}${
-      hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''
-    }
+    return (
+      `${days && days > 1 ? Math.floor(days).toString() + 'd ' : ''}${
+        hours && hours >= 1 ? Math.floor(hours) + 'h ' : ''
+      }
         ${minutes && minutes >= 1 ? Math.floor(minutes) + 'm ' : ''}
-        ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`
+        ${seconds && seconds >= 1 ? Math.floor(seconds) + 's' : ''}`.trim() ||
+      '--'
+    )
   }
 
   function tap() {
@@ -146,29 +155,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   }
 
   const gutter = 25
-
-  const formatDate = (date: number) => moment(date).format('M-DD-YYYY h:mma')
-
-  const formattedStartTime = formatDate(budget.start.toNumber() * 1000)
-
-  const formattedEndTime = formatDate(
-    budget.start.add(budget.duration).toNumber() * 1000,
-  )
-
-  const formattedDuration = detailedTimeString(
-    budget && budget.duration.toNumber() * 1000,
-  )
-
-  const now = new Date().valueOf() / 1000
-
-  const isEnded = useMemo(
-    () => budget.start.add(budget.duration).toNumber() < now,
-    [budget.start, budget.duration],
-  )
-
-  const isUpcoming = useMemo(() => budget.start.toNumber() > now, [
-    budget.start,
-  ])
 
   const tappedDescriptionItem = (
     <Descriptions.Item
@@ -257,12 +243,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const upcomingDescriptions = (
     <Descriptions {...descriptionsStyle} column={2} bordered>
-      <Descriptions.Item label="Starts">
-        {formatDate(budget.start.toNumber() * 1000)}
-      </Descriptions.Item>
+      <Descriptions.Item label="Starts">{formattedStartTime}</Descriptions.Item>
 
       <Descriptions.Item label="Duration">
-        {formattedDuration}
+        {detailedTimeString(budget?.duration)}
       </Descriptions.Item>
     </Descriptions>
   )
@@ -270,11 +254,11 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const activeDescriptions = (
     <Descriptions {...descriptionsStyle} column={1} bordered>
       <Descriptions.Item label="Started">
-        {formatDate(budget.start.toNumber() * 1000)}
+        {formattedStartTime}
       </Descriptions.Item>
 
       <Descriptions.Item label="Time left">
-        {detailedTimeString(secondsLeft * 1000)}
+        {detailedTimeString(secondsLeft)}
       </Descriptions.Item>
 
       {tappedDescriptionItem}
@@ -329,7 +313,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               />
             }
           >
-            {budget.discountRate.toString()} %
+            {fromPerMille(budget.discountRate)} %
           </Descriptions.Item>
 
           <Descriptions.Item
@@ -340,10 +324,10 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
               />
             }
           >
-            {budget.p.toString()}%
+            {fromPerMille(budget.reserved)}%
           </Descriptions.Item>
 
-          {!addressExists(budget.bAddress) ? null : (
+          {!addressExists(budget.donationRecipient) ? null : (
             <Descriptions.Item
               label={
                 <TooltipLabel
@@ -352,13 +336,13 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                 />
               }
             >
-              {budget.b.toString()}%
+              {fromPerMille(budget.donationAmount)}%
             </Descriptions.Item>
           )}
 
-          {!addressExists(budget.bAddress) ? null : (
+          {!addressExists(budget.donationRecipient) ? null : (
             <Descriptions.Item label="Beneficiary address" span={2}>
-              {budget.bAddress}
+              {budget.donationRecipient}
             </Descriptions.Item>
           )}
         </Descriptions>

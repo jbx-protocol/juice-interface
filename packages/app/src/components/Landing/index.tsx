@@ -214,7 +214,7 @@ export default function Landing() {
           }}
         >
           <div style={{ marginBottom: 40 }}>
-            {bigHeader('What are you building?')}
+            {bigHeader('What are you working on?')}
           </div>
           <DefineProject />
         </div>

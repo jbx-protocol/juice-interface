@@ -34,16 +34,22 @@ abstract contract JuiceProject is Ownable {
     /// @dev The address that can tap funds from the project and propose reconfigurations.
     address public pm;
 
+    /// @dev The juicer that manages this project.
+    IJuicer public juicer;
+
     /** 
+      @param _juicer The juicer that manages this project.
       @param _ticketName The name for this project's ERC-20 Tickets.
       @param _ticketSymbol The symbol for this project's ERC-20 Tickets.
       @param _pm The project manager address that can tap funds and propose reconfigurations.
     */
     constructor(
+        IJuicer _juicer,
         string memory _ticketName,
         string memory _ticketSymbol,
         address _pm
     ) {
+        juicer = _juicer;
         ticketName = _ticketName;
         ticketSymbol = _ticketSymbol;
         pm = _pm;
@@ -51,15 +57,13 @@ abstract contract JuiceProject is Ownable {
 
     /** 
         @notice Issues this project's Tickets. 
-        @param _store The ticket store to issue in.
     */
-    function issueTickets(ITicketStore _store) external onlyOwner {
-        _store.issue(ticketName, ticketSymbol);
+    function issueTickets() external onlyOwner {
+        juicer.ticketStore().issue(ticketName, ticketSymbol);
     }
 
     /**
         @notice This is how the Budget is configured, and reconfiguration over time.
-        @param _store The budget store to configure in.
         @param _target The new Budget target amount.
         @param _currency The currency of the target.
         @param _duration The new duration of your Budget.
@@ -76,13 +80,13 @@ abstract contract JuiceProject is Ownable {
         @return _budgetId The ID of the Budget that was reconfigured.
     */
     function configure(
-        IBudgetStore _store,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
+        uint256 _bondingCurveRate,
         uint256 _reserved,
         address _donationRecipient,
         uint256 _donationAmount
@@ -93,14 +97,14 @@ abstract contract JuiceProject is Ownable {
             "JuiceProject: UNAUTHORIZED"
         );
         return
-            _store.configure(
+            juicer.budgetStore().configure(
                 _target,
                 _currency,
                 _duration,
                 _name,
                 _link,
                 _discountRate,
-                0,
+                _bondingCurveRate,
                 _reserved,
                 _donationRecipient,
                 _donationAmount
@@ -109,7 +113,6 @@ abstract contract JuiceProject is Ownable {
 
     /** 
       @notice Redeem tickets that have been transfered to this contract and use the claimed amount to fund this project.
-      @param _juicer The Juicer to redeem from.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
@@ -117,22 +120,20 @@ abstract contract JuiceProject is Ownable {
       @return _returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
-        IJuicer _juicer,
         address _issuer,
         uint256 _amount,
         uint256 _minReturnedETH,
         string memory _note
     ) external onlyPm returns (uint256 _returnAmount) {
         uint256 _returnAmount =
-            _juicer.redeem(_issuer, _amount, _minReturnedETH, address(this));
+            juicer.redeem(_issuer, _amount, _minReturnedETH, address(this));
 
         // Surplus goes back to the issuer.
-        _juicer.pay(address(this), _returnAmount, _issuer, _note);
+        juicer.pay(address(this), _returnAmount, _issuer, _note);
     }
 
     /** 
       @notice Redeem tickets that have been transfered to this contract.
-      @param _juicer The Juicer to redeem from.
       @param _issuer The issuer who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _beneficiary The address that is receiving the redeemed tokens.
@@ -140,13 +141,12 @@ abstract contract JuiceProject is Ownable {
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
-        IJuicer _juicer,
         address _issuer,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm returns (uint256 _returnAmount) {
-        _returnAmount = _juicer.redeem(
+        _returnAmount = juicer.redeem(
             _issuer,
             _amount,
             _minReturnedETH,
@@ -163,14 +163,13 @@ abstract contract JuiceProject is Ownable {
       @param _minReturnedETH The minimum number of Eth that the amount should be valued at.
     */
     function tap(
-        IJuicer _juicer,
         uint256 _budgetId,
         uint256 _amount,
         uint256 _currency,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm {
-        _juicer.tap(
+        juicer.tap(
             _budgetId,
             _amount,
             _currency,
@@ -194,23 +193,27 @@ abstract contract JuiceProject is Ownable {
       @param _to The new contract that will manage your Tickets and it's funds.
     */
     function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
-        require(_to != IJuicer(0), "JuiceProject::setJuicer: ZERO_ADDRESS");
+        require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
+        require(_from == juicer, "JuiceProject::migrate: INVALID");
+
+        // Migrate.
         _from.migrate(_to);
+
+        // Set the new juicer.
+        juicer = _to;
     }
 
     /** 
       @notice Take a fee for this project.
-      @param _juicer The juicer used to process the fee.
       @param _amount The amount of the fee.
       @param _from The address who will receive tickets from this fee.
       @param _note A note that will be included in the published event.
     */
     function takeFee(
-        IJuicer _juicer,
         uint256 _amount,
         address _from,
         string memory _note
     ) internal {
-        _juicer.pay(address(this), _amount, _from, _note);
+        juicer.pay(address(this), _amount, _from, _note);
     }
 }

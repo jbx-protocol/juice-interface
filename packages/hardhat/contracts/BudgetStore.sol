@@ -143,7 +143,7 @@ contract BudgetStore is Store, IBudgetStore {
         compared to the project's previous Budget.
         If it's 100, each Budget will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        @param _bondingCurveRate asf.
+        @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
         @param _donationRecipient An address to send a percent of overflow to.
         @param _donationAmount The percent of overflow to send to the recipient.
@@ -185,6 +185,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.duration = _duration;
         _budget.currency = _currency;
         _budget.discountRate = _discountRate;
+        _budget.bondingCurveRate = _bondingCurveRate;
         _budget.reserved = _reserved;
         _budget.fee = fee;
         _budget.donationRecipient = _donationRecipient;
@@ -201,6 +202,7 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.name,
             _budget.link,
             _budget.discountRate,
+            _budget.bondingCurveRate,
             _budget.reserved,
             _budget.donationRecipient,
             _budget.donationAmount

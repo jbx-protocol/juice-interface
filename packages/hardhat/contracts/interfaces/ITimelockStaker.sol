@@ -5,7 +5,9 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface ITimelockStaker {
-    function controller() external view returns (address);
+    function owner() external view returns (address);
+
+    function isController(address _account) external view returns (bool);
 
     function staked(IERC20 _token, address _staker)
         external
@@ -25,5 +27,7 @@ interface ITimelockStaker {
         uint256 _expiry
     ) external;
 
-    function setController(address _controller) external;
+    function setControllerStatus(address _controller, bool _status) external;
+
+    function setOwnership(address _owner) external;
 }

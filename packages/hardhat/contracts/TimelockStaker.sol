@@ -16,8 +16,11 @@ contract TimelockStaker is ITimelockStaker {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
-    /// @notice The address that can set staking timelocks.
-    address public override controller;
+    /// @notice The owner who can manage access permissions of this store.
+    address public override owner;
+
+    /// @notice The addresses that can set staking timelocks.
+    mapping(address => bool) public override isController;
 
     /// @notice The amount of all tokens currently staked by each address.
     mapping(IERC20 => mapping(address => uint256)) public override staked;
@@ -36,7 +39,7 @@ contract TimelockStaker is ITimelockStaker {
         // The message sender should have more than the amount being staked.
         require(
             _token.balanceOf(msg.sender) >= _amount,
-            "stake::stake: INSUFFICIENT_FUNDS"
+            "TimelockStaker::stake: INSUFFICIENT_FUNDS"
         );
 
         // Transfer the funds from the message sender to this address.
@@ -55,13 +58,13 @@ contract TimelockStaker is ITimelockStaker {
         // Tokens cannot be unstaked if they are locked.
         require(
             timelocks[_token][msg.sender] < block.timestamp,
-            "Staking::unstake: TIME_LOCKED"
+            "TimelockStaker::unstake: TIME_LOCKED"
         );
 
         // There must be enough tickets staked to unstake.
         require(
             staked[_token][msg.sender] >= _amount,
-            "Staking::unstake: INSUFFICIENT_FUNDS"
+            "TimelockStaker::unstake: INSUFFICIENT_FUNDS"
         );
 
         // Account for the difference.
@@ -82,7 +85,10 @@ contract TimelockStaker is ITimelockStaker {
         address _staker,
         uint256 _expiry
     ) external override {
-        require(msg.sender == controller, "Staking::setTimelock: UNAUTHORIZED");
+        require(
+            isController[msg.sender] == true,
+            "TimelockStaker::setTimelock: UNAUTHORIZED"
+        );
         //Replace the current timelock if it is after the currently set one.
         timelocks[_token][_staker] = Math.max(
             timelocks[_token][_staker],
@@ -91,15 +97,31 @@ contract TimelockStaker is ITimelockStaker {
     }
 
     /**
-      @notice Sets the timelock controller.
-      @dev This can only be set once.
-      @param _controller The address that can set the timelock.
+      @notice Sets the status of a timelock controller.
+      @param _controller The address to change the controller status of.
+      @param _status The status
     */
-    function setController(address _controller) external override {
+    function setControllerStatus(address _controller, bool _status)
+        external
+        override
+    {
         require(
-            controller == address(0),
-            "Staking::setController: ALREADY_SET"
+            msg.sender == owner,
+            "TimelockStaker::setController: UNAUTHORIZED"
         );
-        controller = _controller;
+        isController[_controller] = _status;
+    }
+
+    /**
+        @notice Set ownership over this contract if it hasn't yet been claimed.
+        @dev This can only be done once.
+        @param _owner The address to set as the owner.
+    */
+    function setOwnership(address _owner) external override {
+        require(
+            owner == address(0),
+            "TimelockStaker::setOwnership: ALREADY_SET"
+        );
+        owner = _owner;
     }
 }

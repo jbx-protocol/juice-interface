@@ -93,7 +93,7 @@ export default function DefineProject() {
               />
             </Form.Item>
             <Form.Item
-              extra="The amount of money you need to make it happen"
+              extra="The amount of money you want to make it happen"
               name="target"
             >
               <BudgetTargetInput
@@ -113,7 +113,7 @@ export default function DefineProject() {
               />
             </Form.Item>
             <Form.Item
-              extra="The duration of this budgeting scope"
+              extra="The recurring time frame of this budget"
               name="duration"
             >
               <Input
@@ -124,7 +124,7 @@ export default function DefineProject() {
               />
             </Form.Item>
             <Form.Item
-              extra="The symbol for your project's ERC-20 token"
+              extra="The symbol for your project's ERC-20 tickets"
               name="ticketsSymbol"
             >
               <Input
@@ -163,7 +163,7 @@ export default function DefineProject() {
                 (formatWad(editingBudget?.target) ?? '0'),
             )}{' '}
             every {bold(editingBudget?.duration.toString(), '0')} days to work.
-            All extra revenue is overflow.
+            All extra money received is overflow.
             <br />
             <br />
             Overflow can be claimed by {bold(
@@ -173,7 +173,7 @@ export default function DefineProject() {
             holders.
             <br />
             <br />
-            Get {bold(editingTickets.symbol, 'tickets')} by paying{' '}
+            Users, patrons, and investors get {bold(editingTickets.symbol, 'tickets')} by contributing to {' '}
             {bold(editingBudget?.name, 'your project')}.
           </div>
         </Col>

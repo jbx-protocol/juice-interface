@@ -39,12 +39,13 @@ contract Shwotime is JuiceProject {
     uint256 public fee;
 
     constructor(
+        IJuicer _juicer,
         string memory _ticketName,
         string memory _ticketSymbol,
         IERC20 _dai,
         uint256 _fee,
         address _pm
-    ) JuiceProject(_ticketName, _ticketSymbol, _pm) {
+    ) JuiceProject(_juicer, _ticketName, _ticketSymbol, _pm) {
         dai = _dai;
         fee = _fee;
     }
@@ -128,11 +129,7 @@ contract Shwotime is JuiceProject {
     }
 
     //Allow a ticket owner to collect funds once the tickets expire.
-    function collect(
-        IJuicer _juicer,
-        uint256 _id,
-        string memory _note
-    ) external {
+    function collect(uint256 _id, string memory _note) external {
         require(_id > 0 && _id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
 
         Tix storage _tickets = tickets[_id];
@@ -152,6 +149,6 @@ contract Shwotime is JuiceProject {
             Math.mulDiv(_total, uint256(1000).sub(fee), 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
-        takeFee(_juicer, _total.sub(_collectable), msg.sender, _note);
+        takeFee(_total.sub(_collectable), msg.sender, _note);
     }
 }

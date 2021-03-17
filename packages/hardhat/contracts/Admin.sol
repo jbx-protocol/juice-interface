@@ -17,10 +17,11 @@ contract Admin is JuiceProject {
     using SafeERC20 for IERC20;
 
     constructor(
+        IJuicer _juicer,
         string memory _ticketName,
         string memory _ticketSymbol,
         address _pm
-    ) JuiceProject(_ticketName, _ticketSymbol, _pm) {}
+    ) JuiceProject(_juicer, _ticketName, _ticketSymbol, _pm) {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
@@ -77,18 +78,6 @@ contract Admin is JuiceProject {
     }
 
     /**
-        @notice Set the bonding curve rate for the juicer.
-        @param _juicer The juicer to change the bonding curve of.
-        @param _rate The new rate.
-    */
-    function setBondingCurveRate(IJuicer _juicer, uint256 _rate)
-        external
-        onlyOwner
-    {
-        _juicer.setBondingCurveRate(_rate);
-    }
-
-    /**
         @notice Adds a price feed to a budget store.
         @param _prices The prices contract to add a feed to.
         @param _feed The price feed to add.
@@ -124,5 +113,19 @@ contract Admin is JuiceProject {
         IBudgetBallot _budgetBallot
     ) external onlyOwner {
         _budgetStore.setBudgetBallot(_budgetBallot);
+    }
+
+    /**
+        @notice Set a staker's controller status for an address.
+        @param _staker The staker to change the controller status of.
+        @param _controller The controller to change the status of.
+        @param _status The new status.
+    */
+    function setControllerStatus(
+        ITimelockStaker _staker,
+        address _controller,
+        bool _status
+    ) external onlyOwner {
+        _staker.setControllerStatus(_controller, _status);
     }
 }

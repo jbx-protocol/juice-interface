@@ -44,7 +44,8 @@ export default function AdvancedSettings({
           />
         </Form.Item>
         <Form.Item
-          extra="For every ticket given to someone who pays you, this percentage of tickets will be reserved for yourself."
+          // extra="For every ticket given to someone who pays you, this percentage of tickets will be reserved for yourself."
+          extra="The percentage of your project's overflow that you'd like to reserve for yourself."
           name="reserved"
           label="Reserved tickets"
           initialValue={5}

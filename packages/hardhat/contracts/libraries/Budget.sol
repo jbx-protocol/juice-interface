@@ -55,8 +55,10 @@ library Budget {
         uint256 fee;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
         uint256 weight;
-        // A number indicating how much more weight to give a Budget compared to its predecessor.
+        // A percentage indicating how much more weight to give a Budget compared to its predecessor.
         uint256 discountRate;
+        // The rate that describes the bonding curve at which overflow can be claimed.
+        uint256 bondingCurveRate;
         // The time when this Budget was last configured.
         uint256 configured;
         // The ballot contract to use to determine this budget's reconfiguration status.
@@ -79,6 +81,7 @@ library Budget {
         _self.project = _baseBudget.project;
         _self.name = _baseBudget.name;
         _self.discountRate = _baseBudget.discountRate;
+        _self.bondingCurveRate = _baseBudget.bondingCurveRate;
         _self.weight = _derivedWeight(_baseBudget);
         _self.reserved = _baseBudget.reserved;
         _self.configured = _baseBudget.configured;
@@ -148,6 +151,7 @@ library Budget {
                 _self.fee,
                 _derivedWeight(_self),
                 _self.discountRate,
+                _self.bondingCurveRate,
                 _self.configured,
                 IBudgetBallot(0)
             );

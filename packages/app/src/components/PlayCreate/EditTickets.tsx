@@ -29,7 +29,7 @@ export default function EditTickets({
         <p>
           Issuing tickets will deploy your ERC-20 contract, which will cost gas.
           If you don't feel like doing this now, you can do it anytime
-          later—your project will automatically use unnamed IOU tickets in the
+          later—your project will automatically use IOU tickets in the
           meantime, so you won't lose any functionality.
         </p>
       </div>

@@ -80,9 +80,6 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
-    /// @notice The rate that describes the bonding curve at which tickets are redeemable.
-    uint256 public override bondingCurveRate = 382;
-
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -195,6 +192,9 @@ contract Juicer is IJuicer {
         uint256 _minReturnedETH,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
+        // Get the current budget.
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_issuer);
+
         // The total raw amount claimable in the ticket store.
         uint256 _totalClaimable = ticketStore.totalClaimable();
 
@@ -205,7 +205,7 @@ contract Juicer is IJuicer {
                 msg.sender,
                 _amount,
                 _minReturnedETH,
-                bondingCurveRate
+                _budget.bondingCurveRate
             );
 
         uint256 _baseReturnAmount = depositable;
@@ -411,15 +411,6 @@ contract Juicer is IJuicer {
     function allowMigration(address _allowed) external override onlyAdmin {
         migrationContractIsAllowed[_allowed] = true;
         emit AddToMigrationAllowList(_allowed);
-    }
-
-    /**
-        @notice The admin can set the bonding curve rate.
-        @param _rate The new rate.
-    */
-    function setBondingCurveRate(uint256 _rate) external override onlyAdmin {
-        bondingCurveRate = _rate;
-        emit SetBondingCurveRate(_rate);
     }
 
     /** 

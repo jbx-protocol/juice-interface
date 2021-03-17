@@ -12,11 +12,6 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "_fee",
-        "type": "uint256"
-      },
-      {
         "internalType": "contract IERC20",
         "name": "_weth",
         "type": "address"
@@ -154,9 +149,9 @@ module.exports = [
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "adminFee",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
       }
     ],
     "name": "Pay",
@@ -243,6 +238,55 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "project",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currencyConvertedAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      }
+    ],
+    "name": "TakeFee",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "budgetId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "project",
         "type": "address"
       },
@@ -273,19 +317,6 @@ module.exports = [
     ],
     "name": "Tap",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "RECONFIGURATION_VOTING_PERIOD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -372,19 +403,6 @@ module.exports = [
   {
     "inputs": [],
     "name": "depositable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "fee",
     "outputs": [
       {
         "internalType": "uint256",

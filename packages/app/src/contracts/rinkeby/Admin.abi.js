@@ -42,13 +42,13 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IBudgetStore",
-        "name": "_budgetStore",
+        "internalType": "contract IPrices",
+        "name": "_prices",
         "type": "address"
       },
       {
         "internalType": "contract AggregatorV3Interface",
-        "name": "_priceFeed",
+        "name": "_feed",
         "type": "address"
       },
       {
@@ -119,18 +119,18 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_p",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_b",
+        "name": "_reserved",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "_bAddress",
+        "name": "_donationRecipient",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_donationAmount",
+        "type": "uint256"
       }
     ],
     "name": "configure",
@@ -160,7 +160,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IAccessControlWrapper",
+        "internalType": "contract IAdminControlWrapper",
         "name": "_contract",
         "type": "address"
       },
@@ -250,13 +250,63 @@ module.exports = [
         "type": "uint256"
       },
       {
+        "internalType": "address",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "_minReturn",
+        "name": "_minReturnedETH",
         "type": "uint256"
       }
     ],
+    "name": "redeemTickets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_returnAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_issuer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minReturnedETH",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_note",
+        "type": "string"
+      }
+    ],
     "name": "redeemTicketsAndFund",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_returnAmount",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -270,7 +320,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IAccessControlWrapper",
+        "internalType": "contract IAdminControlWrapper",
         "name": "_contract",
         "type": "address"
       },
@@ -299,6 +349,42 @@ module.exports = [
       }
     ],
     "name": "setBondingCurveRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBudgetStore",
+        "name": "_budgetStore",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBudgetBallot",
+        "name": "_budgetBallot",
+        "type": "address"
+      }
+    ],
+    "name": "setBudgetBallot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBudgetStore",
+        "name": "_budgetStore",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

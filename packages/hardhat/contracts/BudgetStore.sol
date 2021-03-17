@@ -319,7 +319,7 @@ contract BudgetStore is Store, IBudgetStore {
         );
 
         //Base a new budget on the latest budget if one exists.
-        budget = _aBudget.id > 0 // Budgets with a discountRate of 0 are non-recurring.
+        budget = _aBudget.id > 0
             ? _initBudget(
                 _project,
                 _aBudget.start.add(_aBudget.duration),

@@ -231,7 +231,7 @@ contract BudgetStore is Store, IBudgetStore {
       @param _amount The amount of being tapped.
       @param _currency The currency of the amount being tapped.
       @return budget The budget that is being tapped.
-      @return ethAmount The amount of eth tapped.
+      @return convertedEthAmount The amount of eth tapped.
       @return overflow The overflow that has now become available as a result of tapping.
     */
     function tap(
@@ -245,7 +245,7 @@ contract BudgetStore is Store, IBudgetStore {
         onlyAdmin
         returns (
             Budget.Data memory budget,
-            uint256 ethAmount,
+            uint256 convertedEthAmount,
             uint256 overflow
         )
     {
@@ -264,7 +264,7 @@ contract BudgetStore is Store, IBudgetStore {
         );
 
         // Tap the amount.
-        (ethAmount, overflow) = _budget._tap(
+        (convertedEthAmount, overflow) = _budget._tap(
             _amount,
             prices.getETHPrice(_budget.currency)
         );

@@ -65,7 +65,7 @@ interface IBudgetStore is IStore {
         external
         returns (
             Budget.Data memory budget,
-            uint256 transferAmount,
+            uint256 convertedCurrencyAmount,
             uint256 overflow
         );
 
@@ -78,7 +78,7 @@ interface IBudgetStore is IStore {
         external
         returns (
             Budget.Data memory budget,
-            uint256 ethAmount,
+            uint256 convertedEthAmount,
             uint256 overflow
         );
 

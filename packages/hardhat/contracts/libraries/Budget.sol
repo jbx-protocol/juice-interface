@@ -225,14 +225,14 @@ library Budget {
         @param _self The Budget to tap an amount from.
         @param _amount An amount to tap. In `curency`.
         @param _ethPrice The current price of ETH.
-        @return ethAmount The amount of ETH that was tapped.
+        @return convertedEthAmount The amount of ETH that was tapped.
         @return overflow The amount of new overflow that results.
     */
     function _tap(
         Data storage _self,
         uint256 _amount,
         uint256 _ethPrice
-    ) internal returns (uint256 ethAmount, uint256 overflow) {
+    ) internal returns (uint256 convertedEthAmount, uint256 overflow) {
         // The amount being tapped must be less than the tappable amount.
         require(
             _amount <= _tappableAmount(_self, _ethPrice),
@@ -243,10 +243,10 @@ library Budget {
         _self.tappedTarget = _self.tappedTarget.add(_amount);
 
         // The amount of ETH that is being tapped.
-        ethAmount = DSMath.wdiv(_amount, _ethPrice);
+        convertedEthAmount = DSMath.wdiv(_amount, _ethPrice);
 
         // Add the converted currency amount to the Budget's total amount.
-        _self.tappedTotal = _self.tappedTotal.add(ethAmount);
+        _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
 
         // If this budget is now fully tapped, record the overflow.
         overflow = _tappableAmount(_self, _ethPrice) == 0

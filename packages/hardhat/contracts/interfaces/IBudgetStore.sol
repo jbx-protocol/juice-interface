@@ -59,6 +59,7 @@ interface IBudgetStore is IStore {
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
+        uint256 _bondingCurveRate,
         uint256 _reserved,
         address _donationRecipient,
         uint256 _donationAmount

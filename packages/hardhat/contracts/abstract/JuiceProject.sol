@@ -100,6 +100,7 @@ abstract contract JuiceProject is Ownable {
                 _name,
                 _link,
                 _discountRate,
+                0,
                 _reserved,
                 _donationRecipient,
                 _donationAmount

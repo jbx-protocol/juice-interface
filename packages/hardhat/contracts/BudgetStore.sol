@@ -143,6 +143,7 @@ contract BudgetStore is Store, IBudgetStore {
         compared to the project's previous Budget.
         If it's 100, each Budget will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
+        @param _bondingCurveRate asf.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
         @param _donationRecipient An address to send a percent of overflow to.
         @param _donationAmount The percent of overflow to send to the recipient.
@@ -155,6 +156,7 @@ contract BudgetStore is Store, IBudgetStore {
         string calldata _name,
         string calldata _link,
         uint256 _discountRate,
+        uint256 _bondingCurveRate,
         uint256 _reserved,
         address _donationRecipient,
         uint256 _donationAmount
@@ -162,7 +164,8 @@ contract BudgetStore is Store, IBudgetStore {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
         // The `discountRate` token must be between 95 and 100.
         require(
-            _discountRate >= 950 && _discountRate <= 1000,
+            (_discountRate >= 950 && _discountRate <= 1000) ||
+                _discountRate == 0,
             "BudgetStore::configure: BAD_DISCOUNT_RATE"
         );
 
@@ -341,14 +344,22 @@ contract BudgetStore is Store, IBudgetStore {
         private
         returns (Budget.Data storage budget)
     {
-        // Cannot update active budget, check if there is a standby budget
+        // Cannot update active budget, check if there is a standby budget.
         budget = _standbyBudget(_project);
         if (budget.id > 0) return budget;
+        // Get the latest budget.
         budget = budgets[latestBudgetId[_project]];
         // If there's an active Budget, its end time should correspond to the start time of the new Budget.
         Budget.Data memory _aBudget = _activeBudget(_project);
+
+        // Make sure the budget is recurring.
+        require(
+            _aBudget.id == 0 || _aBudget.discountRate > 0,
+            "BudgetStore::_ensureStandbyBudget: NON_RECURRING"
+        );
+
         //Base a new budget on the latest budget if one exists.
-        budget = _aBudget.id > 0
+        budget = _aBudget.id > 0 // Budgets with a discountRate of 0 are non-recurring.
             ? _initBudget(
                 _project,
                 _aBudget.start.add(_aBudget.duration),
@@ -366,10 +377,10 @@ contract BudgetStore is Store, IBudgetStore {
         private
         returns (Budget.Data storage budget)
     {
-        // Check if there is an active Budget
+        // Check if there is an active Budget.
         budget = _activeBudget(_project);
         if (budget.id > 0) return budget;
-        // No active Budget found, check if there is a standby Budget
+        // No active Budget found, check if there is a standby Budget.
         budget = _standbyBudget(_project);
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
         if (
@@ -383,7 +394,11 @@ contract BudgetStore is Store, IBudgetStore {
         budget = budgets[
             budget.id > 0 ? budget.previous : latestBudgetId[_project]
         ];
-        require(budget.id > 0, "BudgetStore::ensureActiveBudget: NOT_FOUND");
+        // Budgets with a discountRate of 0 are non-recurring.
+        require(
+            budget.id > 0 && budget.discountRate > 0,
+            "BudgetStore::ensureActiveBudget: NOT_FOUND"
+        );
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
         budget = _initBudget(

@@ -101,7 +101,7 @@ const main = async () => {
       gasLimit: blockGasLimit
     });
     console.log("⚡️ Issuing the admin's tickets");
-    await attachedAdmin.issueTickets(ticketStore.address, {
+    await attachedAdmin.issueTickets({
       gasLimit: blockGasLimit
     });
 

@@ -1,7 +1,8 @@
 import { Input } from 'antd'
+import { CaretDownOutlined } from '@ant-design/icons'
 import { BudgetCurrency } from 'models/budget-currency'
 import React from 'react'
-import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 
 import InputAccessoryButton from './InputAccessoryButton'
 
@@ -23,14 +24,21 @@ export default function BudgetTargetInput({
   const budgetCurrencySelector = (
     <InputAccessoryButton
       onClick={() => onCurrencyChange(currency)}
-      text={formatBudgetCurrency(currency)}
+      content={
+        <span>
+          {budgetCurrencyName(currency)}{' '}
+          <CaretDownOutlined
+            style={{ fontSize: 10, marginLeft: -4, marginRight: -4 }}
+          />
+        </span>
+      }
+      placement="suffix"
     />
   )
 
   return (
     <Input
       value={value}
-      className="align-end"
       placeholder="0"
       type="number"
       disabled={disabled}

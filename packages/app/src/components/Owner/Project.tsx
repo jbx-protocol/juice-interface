@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Statistic } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
 import { colors } from 'constants/styles/colors'
 import { Budget } from 'models/budget'
@@ -6,6 +6,7 @@ import { CSSProperties } from 'react'
 
 import CurrentBudget from './CurrentBudget'
 import Rewards from './Rewards'
+import { render } from '@testing-library/react'
 
 export default function Project({
   budget,
@@ -20,7 +21,7 @@ export default function Project({
 }) {
   return (
     <div style={style}>
-      <div style={{ marginBottom: 30 }}>
+      <div style={{ marginBottom: 20 }}>
         <h1
           style={{
             fontSize: '2.4rem',
@@ -29,7 +30,6 @@ export default function Project({
         >
           {budget?.name}
         </h1>
-        <h3 style={{ color: colors.grape }}>{budget?.project}</h3>
       </div>
       <Row gutter={60}>
         <Col xs={24} lg={12}>
@@ -39,6 +39,15 @@ export default function Project({
         </Col>
         <Col xs={24} lg={12}>
           <Rewards ticketSymbol={ticketSymbol} ticketAddress={ticketAddress} />
+          <Statistic
+            title="Address"
+            valueRender={() => (
+              <h3 style={{ color: colors.grape, fontSize: '1rem' }}>
+                {budget?.project}
+              </h3>
+            )}
+            style={{ marginTop: 25 }}
+          ></Statistic>
         </Col>
       </Row>
     </div>

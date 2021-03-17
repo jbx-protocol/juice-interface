@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Drawer, Space } from 'antd'
+import { Button, ButtonProps, Drawer, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import { TicketsFormFields } from 'components/shared/forms/TicketsForm'
 import Project from 'components/Owner/Project'
 import { ContractName } from 'constants/contract-name'
 import { emptyAddress } from 'constants/empty-address'
@@ -19,27 +20,32 @@ import useContractReader from 'hooks/ContractReader'
 import { BudgetCurrency } from 'models/budget-currency'
 import React, { useContext, useEffect, useState } from 'react'
 import { editingBudgetActions } from 'redux/slices/editingBudget'
+import { editingTicketsActions } from 'redux/slices/editingTickets'
 import { addressExists } from 'utils/addressExists'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
 
-import { BudgetAdvancedFormFields } from '../forms/BudgetAdvancedForm'
-import { BudgetFormFields } from '../forms/BudgetForm'
-import { TicketsFormFields } from '../forms/TicketsForm'
+import AddLink, { AddLinkFormFields } from './AddLink'
+import AdvancedSettings, {
+  AdvancedSettingsFormFields,
+} from './AdvancedSettings'
 import ConfirmCreateProject from './ConfirmCreateProject'
 import ConfirmIssueTickets from './ConfirmIssueTickets'
-import EditProject from './EditProject'
 import EditTickets from './EditTickets'
+import ProjectInfo, { ProjectInfoFormFields } from './ProjectInfo'
 
 export default function PlayCreate() {
   const { transactor, contracts, onNeedProvider, userAddress } = useContext(
     UserContext,
   )
-  const [ticketsName, setTicketsName] = useState<string>()
-  const [ticketsSymbol, setTicketsSymbol] = useState<string>()
+  const [step, setStep] = useState<number>(0)
   const [loadingIssueTickets, setLoadingIssueTickets] = useState<boolean>()
-  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
+  const [projectInfoModalVisible, setProjectInfoModalVisible] = useState<
     boolean
   >(false)
+  const [addLinkModalVisible, setAddLinkModalVisible] = useState<boolean>(false)
+  const [advancedModalVisible, setAdvancedModalVisible] = useState<boolean>(
+    false,
+  )
   const [editTicketsModalVisible, setEditTicketsModalVisible] = useState<
     boolean
   >(false)
@@ -49,10 +55,12 @@ export default function PlayCreate() {
   const [createProjectModalVisible, setCreateProjectModalVisible] = useState<
     boolean
   >(false)
-  const [budgetForm] = useForm<BudgetFormFields>()
-  const [budgetAdvancedForm] = useForm<BudgetAdvancedFormFields>()
+  const [projectInfoForm] = useForm<ProjectInfoFormFields>()
+  const [addLinkForm] = useForm<AddLinkFormFields>()
   const [ticketsForm] = useForm<TicketsFormFields>()
+  const [advancedSettingsForm] = useForm<AdvancedSettingsFormFields>()
   const editingBudget = useEditingBudgetSelector()
+  const editingTickets = useAppSelector(state => state.editingTickets)
   const creatingBudget = useAppSelector(state => state.editingBudget.loading)
   const userTickets = useAppSelector(state => state.userTickets.value)
   const userBudget = useUserBudgetSelector()
@@ -63,14 +71,21 @@ export default function PlayCreate() {
       window.location.hash = userAddress
   }, [userBudget, userAddress, userTickets])
 
+  useEffect(() => {
+    if (editingBudget?.name && editingBudget?.duration && editingBudget?.target)
+      setStep(1)
+  }, [])
+
   const adminFeePercent = useContractReader<number>({
     contract: ContractName.BudgetStore,
     functionName: 'fee',
     formatter: (val: BigNumber) => val?.toNumber(),
   })
 
+  const incrementStep = (num: number) => (num > step ? setStep(num) : null)
+
   const resetBudgetForm = () =>
-    budgetForm.setFieldsValue({
+    projectInfoForm.setFieldsValue({
       name: editingBudget?.name ?? '',
       target: fromWad(editingBudget?.target) ?? '0',
       duration:
@@ -80,9 +95,11 @@ export default function PlayCreate() {
       currency: (editingBudget?.currency.toString() ?? '0') as BudgetCurrency,
     })
 
-  const resetBudgetAdvancedForm = () =>
-    budgetAdvancedForm.setFieldsValue({
-      link: editingBudget?.link ?? '',
+  const resetAddLinkForm = () =>
+    addLinkForm.setFieldsValue({ link: editingBudget?.link ?? '' })
+
+  const resetAdvancedSettingsForm = () =>
+    advancedSettingsForm.setFieldsValue({
       discountRate: fromPerMille(editingBudget?.discountRate),
       donationRecipient: addressExists(editingBudget?.donationRecipient)
         ? editingBudget?.donationRecipient
@@ -91,14 +108,10 @@ export default function PlayCreate() {
       reserved: fromWad(editingBudget?.reserved),
     })
 
-  const resetTicketsForm = () =>
-    ticketsForm.setFieldsValue({
-      name: ticketsName,
-      symbol: ticketsSymbol,
-    })
+  const resetTicketsForm = () => ticketsForm.setFieldsValue(editingTickets)
 
-  const onBudgetFormSaved = () => {
-    const fields = budgetForm.getFieldsValue(true)
+  const onProjectInfoFormSaved = () => {
+    const fields = projectInfoForm.getFieldsValue(true)
     dispatch(editingBudgetActions.setName(fields.name))
     dispatch(editingBudgetActions.setTarget(fields.target))
     dispatch(
@@ -112,8 +125,11 @@ export default function PlayCreate() {
     dispatch(editingBudgetActions.setCurrency(fields.currency))
   }
 
-  const onBudgetAdvancedFormSaved = () => {
-    const fields = budgetAdvancedForm.getFieldsValue(true)
+  const onAddLinkFormSaved = () =>
+    dispatch(editingBudgetActions.setLink(addLinkForm.getFieldValue('link')))
+
+  const onAdvancedFormSaved = () => {
+    const fields = advancedSettingsForm.getFieldsValue(true)
     dispatch(editingBudgetActions.setLink(fields.link))
     dispatch(editingBudgetActions.setDiscountRate(fields.discountRate))
     dispatch(editingBudgetActions.setBAddress(fields.donationRecipient))
@@ -123,28 +139,34 @@ export default function PlayCreate() {
 
   const onTicketsFormSaved = () => {
     const fields = ticketsForm.getFieldsValue(true)
-    setTicketsName(fields.name)
-    setTicketsSymbol(fields.symbol)
+    dispatch(editingTicketsActions.set(fields))
   }
 
   useEffect(() => {
     resetBudgetForm()
-    resetBudgetAdvancedForm()
+    resetAddLinkForm()
+    resetTicketsForm()
+    resetAdvancedSettingsForm()
   }, [])
 
   const issueTickets = async () => {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (!ticketsName || !ticketsSymbol) return
+    if (!editingTickets.name || !editingTickets.symbol) return
 
     setLoadingIssueTickets(true)
 
-    transactor(contracts.TicketStore, 'issue', [ticketsName, ticketsSymbol], {
-      onDone: () => {
-        setLoadingIssueTickets(false)
-        setIssueTicketsModalVisible(false)
+    transactor(
+      contracts.TicketStore,
+      'issue',
+      [editingTickets.name, editingTickets.symbol],
+      {
+        onDone: () => {
+          setLoadingIssueTickets(false)
+          setIssueTicketsModalVisible(false)
+        },
       },
-    })
+    )
   }
 
   function createProject() {
@@ -181,11 +203,21 @@ export default function PlayCreate() {
     )
   }
 
+  const stepButton = (
+    text: string,
+    onClick: VoidFunction,
+    type: ButtonProps['type'] = 'default',
+  ) => (
+    <Button type={type} onClick={onClick}>
+      {text}
+    </Button>
+  )
+
   return (
-    <div style={{ ...layouts.maxWidth }}>
-      <div style={{ marginBottom: 80 }}>
+    <div>
+      <div style={{ ...layouts.maxWidth }}>
         <Project
-          ticketSymbol={userTickets?.symbol ?? ticketsSymbol}
+          ticketSymbol={userTickets?.symbol ?? editingTickets.symbol}
           ticketAddress={undefined}
           budget={editingBudget}
         />
@@ -194,68 +226,113 @@ export default function PlayCreate() {
       <div
         style={{
           position: 'fixed',
+          bottom: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          padding: 40,
+          paddingTop: 20,
+          paddingBottom: 20,
           background: colors.background,
-          padding: 20,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
         }}
       >
-        <h3 style={{ margin: 0, color: 'white' }}>Review your budget</h3>
-        <Space direction="horizontal" size="middle">
-          {userTickets ? null : (
-            <Button
-              type="ghost"
-              onClick={() => setEditTicketsModalVisible(true)}
-            >
-              Tickets
-            </Button>
-          )}
-          {userBudget ? null : (
-            <Button
-              type="ghost"
-              onClick={() => setEditProjectModalVisible(true)}
-            >
-              Edit project
-            </Button>
-          )}
-          {userBudget && userAddress ? (
-            <Button
-              type="primary"
-              onClick={() => (window.location.hash = userAddress)}
-            >
-              Go to dashboard
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              onClick={() => setCreateProjectModalVisible(true)}
-            >
-              Create project
-            </Button>
-          )}
-        </Space>
+        <h1>Launch on Juice 🚀</h1>
+
+        <Steps progressDot responsive current={step}>
+          <Steps.Step
+            title={stepButton('Set the basics', () => null)}
+            onClick={() => {
+              setProjectInfoModalVisible(true)
+            }}
+          />
+          <Steps.Step
+            title={stepButton('Add a link', () => null)}
+            onClick={() => {
+              incrementStep(1)
+              setAddLinkModalVisible(true)
+            }}
+          />
+          <Steps.Step
+            title={stepButton('Tune the details', () => null)}
+            onClick={() => {
+              incrementStep(2)
+              setAdvancedModalVisible(true)
+            }}
+          />
+          <Steps.Step
+            title={stepButton('Issue tickets', () => null)}
+            onClick={() => {
+              incrementStep(3)
+              setEditTicketsModalVisible(true)
+            }}
+          />
+          <Steps.Step
+            title={stepButton('Create project', () => null, 'primary')}
+            onClick={() => {
+              incrementStep(4)
+              setCreateProjectModalVisible(true)
+            }}
+          />
+        </Steps>
       </div>
 
       <Drawer
-        visible={editProjectModalVisible}
+        visible={projectInfoModalVisible}
         placement="right"
         width={640}
         onClose={() => {
           resetBudgetForm()
-          setEditProjectModalVisible(false)
+          setProjectInfoModalVisible(false)
         }}
       >
-        <EditProject
-          budgetForm={budgetForm}
-          budgetAdvancedForm={budgetAdvancedForm}
+        <ProjectInfo
+          form={projectInfoForm}
           onSave={() => {
-            onBudgetFormSaved()
-            onBudgetAdvancedFormSaved()
-            setEditProjectModalVisible(false)
+            onProjectInfoFormSaved()
+            setProjectInfoModalVisible(false)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={addLinkModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          resetAddLinkForm()
+          setAddLinkModalVisible(false)
+        }}
+      >
+        <AddLink
+          form={addLinkForm}
+          onSave={() => {
+            onAddLinkFormSaved()
+            setAddLinkModalVisible(false)
+          }}
+          onSkip={() => {
+            resetAddLinkForm()
+            setAddLinkModalVisible(false)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={advancedModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          resetAdvancedSettingsForm()
+          setAdvancedModalVisible(false)
+        }}
+      >
+        <AdvancedSettings
+          form={advancedSettingsForm}
+          onSave={() => {
+            onAdvancedFormSaved()
+            setAdvancedModalVisible(false)
+          }}
+          onSkip={() => {
+            resetAdvancedSettingsForm()
+            setAdvancedModalVisible(false)
           }}
         />
       </Drawer>
@@ -286,7 +363,10 @@ export default function PlayCreate() {
         onCancel={() => setIssueTicketsModalVisible(false)}
         confirmLoading={loadingIssueTickets}
       >
-        <ConfirmIssueTickets name={ticketsName} symbol={ticketsSymbol} />
+        <ConfirmIssueTickets
+          name={editingTickets.name}
+          symbol={editingTickets.symbol}
+        />
       </Modal>
 
       <Modal

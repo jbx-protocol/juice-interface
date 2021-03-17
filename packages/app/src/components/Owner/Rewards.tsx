@@ -378,7 +378,7 @@ export default function Rewards({
               suffix={
                 redeemDisabled ? null : (
                   <InputAccessoryButton
-                    text="MAX"
+                    content="MAX"
                     onClick={() => onChangeRedeemAmount(fromWad(totalBalance))}
                   />
                 )

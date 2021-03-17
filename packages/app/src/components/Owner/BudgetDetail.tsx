@@ -12,7 +12,7 @@ import moment from 'moment'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
   formatWad,
@@ -39,7 +39,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
-  const currency = formatBudgetCurrency(budget.currency)
+  const currency = budgetCurrencyName(budget.currency)
 
   const tappableAmount = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
@@ -221,7 +221,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
                     >
                       {currency}
                       <InputAccessoryButton
-                        text="MAX"
+                        content="MAX"
                         onClick={() => setTapAmount(fromWad(tappableAmount))}
                       />
                     </div>
@@ -319,7 +319,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           <Descriptions.Item
             label={
               <TooltipLabel
-                label="Reserved for owner"
+                label="Reserved"
                 tip="This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires."
               />
             }

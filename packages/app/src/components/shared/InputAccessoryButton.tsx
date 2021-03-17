@@ -1,15 +1,15 @@
-import React from 'react'
-
-import { colors } from '../../constants/styles/colors'
+import { colors } from 'constants/styles/colors'
 
 export default function InputAccessoryButton({
-  text,
+  content,
   onClick,
+  placement,
 }: {
-  text: string | undefined
+  content: string | JSX.Element | undefined
   onClick?: VoidFunction
+  placement?: 'prefix' | 'suffix'
 }) {
-  return text ? (
+  return content ? (
     <div
       style={{
         cursor: 'pointer',
@@ -17,12 +17,13 @@ export default function InputAccessoryButton({
         background: colors.secondaryHint,
         fontWeight: 500,
         padding: '1px 6px',
-        marginLeft: 8,
+        marginLeft: placement === 'suffix' ? 8 : 0,
+        marginRight: placement === 'prefix' ? 8 : 0,
         borderRadius: 4,
       }}
       onClick={onClick}
     >
-      {text}
+      {content}
     </div>
   ) : null
 }

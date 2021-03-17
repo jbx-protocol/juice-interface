@@ -3,7 +3,7 @@ import { Progress } from 'antd'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import React, { useMemo } from 'react'
-import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
   formatWad,
@@ -22,7 +22,7 @@ export default function BudgetHeader({
   gutter: number
 }) {
   const converter = useCurrencyConverter()
-  const currency = formatBudgetCurrency(budget?.currency)
+  const currency = budgetCurrencyName(budget?.currency)
 
   const weiSurplus = useMemo(() => {
     if (!budget?.total || !budget?.target) return

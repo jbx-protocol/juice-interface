@@ -7,7 +7,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo } from 'react'
-import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formatWad,
   fromPerMille,
@@ -64,7 +64,7 @@ export default function ConfirmPayOwnerModal({
     : budget?.previous.toHexString()
 
   const currencyAmount =
-    formatBudgetCurrency(currency) === 'USD'
+    budgetCurrencyName(currency) === 'USD'
       ? parseWad(converter.weiToUsd(weiAmount)?.toString())
       : weiAmount
 

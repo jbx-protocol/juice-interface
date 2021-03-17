@@ -19,7 +19,7 @@ export const editingBudgetSlice = createSlice({
       previous: BigNumber.from(0),
       name: '',
       link: '',
-      target: BigNumber.from(0),
+      target: parseWad('10000'),
       currency: BigNumber.from(1),
       total: parseWad('0'),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),

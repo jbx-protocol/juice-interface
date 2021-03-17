@@ -2,7 +2,7 @@ import { Button, Col, Row, Space } from 'antd'
 import { colors } from 'constants/styles/colors'
 import { CSSProperties } from 'react'
 
-import ConfigureBudget from '../ConfigureBudget'
+import DefineProject from './DefineProject'
 import Faq from './Faq'
 import Footer from './Footer'
 import Tweets from './Tweets'
@@ -145,7 +145,7 @@ export default function Landing() {
         <div
           style={{
             ...wrapper,
-            marginTop: 100,
+            marginTop: 140,
           }}
         >
           <Row gutter={60}>
@@ -210,17 +210,20 @@ export default function Landing() {
           id="create"
           style={{
             ...wrapper,
-            marginBottom: 80,
+            marginTop: 100,
           }}
         >
-          {bigHeader('Play with it')}
-          <ConfigureBudget />
+          <div style={{ marginBottom: 40 }}>
+            {bigHeader('What are you building?')}
+          </div>
+          <DefineProject />
         </div>
       </section>
 
       <section style={wrapper}>
         <div
           style={{
+            marginTop: 180,
             marginBottom: 60,
             fontWeight: 600,
             textAlign: 'center',

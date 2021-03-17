@@ -1,6 +1,8 @@
 import { Button, Col, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import TicketsForm, { TicketsFormFields } from 'components/forms/TicketsForm'
+import TicketsForm, {
+  TicketsFormFields,
+} from 'components/shared/forms/TicketsForm'
 import { UserContext } from 'contexts/userContext'
 import { useContext, useState } from 'react'
 import { addressExists } from 'utils/addressExists'

@@ -1,7 +1,7 @@
 import { Space, Statistic } from 'antd'
 import { useEditingBudgetSelector } from 'hooks/AppSelector'
 import { addressExists } from 'utils/addressExists'
-import { formatBudgetCurrency } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
   formatWad,
@@ -24,7 +24,7 @@ export default function ConfirmCreateProject({
 
     if (targetAmount === undefined) return
 
-    const currency = formatBudgetCurrency(editingBudget?.currency)
+    const currency = budgetCurrencyName(editingBudget?.currency)
 
     return `${formattedNum(targetAmount)} (+${formatWad(
       editingBudget?.target.mul(adminFeePercent).div(100),

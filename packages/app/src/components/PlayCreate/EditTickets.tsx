@@ -1,5 +1,7 @@
-import { FormInstance, Space, Button } from 'antd'
-import TicketsForm, { TicketsFormFields } from 'components/forms/TicketsForm'
+import { Button, FormInstance, Space } from 'antd'
+import TicketsForm, {
+  TicketsFormFields,
+} from 'components/shared/forms/TicketsForm'
 import React from 'react'
 
 export default function EditTickets({
@@ -21,25 +23,20 @@ export default function EditTickets({
           out to people as a receipt for payments received.
         </p>
         <p>
-          Tickets can be redeemed for your contract's overflow on a bonding
-          curve – a ticket is redeemable for 38.2% of its proportional
-          overflowed tokens. Meaning, if there are 100 overflow tokens available
-          and 100 of your tickets in circulation, 10 tickets could be redeemed
-          for 3.82 of the overflow tokens. The rest is left to share between the
-          remaining ticket hodlers, incentivizing commitment.
+          Ticket holders can claim a portion of your project's overflow, and can
+          vote on proposed changes to your budget.
         </p>
         <p>
-          You can propose reconfigurations to your contract's specs at any time.
-          Your ticket holders will have 7 days to vote yay or nay. If there are
-          33% more yays than nays (a supermajority), the new specs will be used
-          once the active budgeting time frame expires.
+          Issuing tickets will deploy your ERC-20 contract, which will cost gas.
+          If you don't feel like doing this now, you can do it anytime
+          later—your project will automatically use unnamed IOU tickets in the
+          meantime, so you won't lose any functionality.
         </p>
       </div>
 
       <TicketsForm form={form} />
 
       <Space size="middle">
-        <Button onClick={onSave}>Save</Button>
         <Button
           type="primary"
           onClick={() => {
@@ -47,8 +44,9 @@ export default function EditTickets({
             onIssue()
           }}
         >
-          Issue now
+          Issue tickets
         </Button>
+        <Button onClick={onSave}>Skip for now</Button>
       </Space>
     </Space>
   )

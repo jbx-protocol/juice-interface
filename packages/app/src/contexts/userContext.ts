@@ -3,10 +3,12 @@ import { Web3Provider } from '@ethersproject/providers'
 import { Contracts } from 'models/contracts'
 import { Transactor } from 'models/transactor'
 import { createContext } from 'react'
+import { NetworkName } from 'models/network-name'
 
 export const UserContext: React.Context<{
-  userProvider?: Web3Provider
+  signingProvider?: Web3Provider
   userAddress?: string
+  network?: NetworkName
   contracts?: Contracts
   transactor?: Transactor
   onNeedProvider: () => Promise<void>

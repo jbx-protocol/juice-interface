@@ -34,9 +34,13 @@ import EditTickets from './EditTickets'
 import ProjectInfo, { ProjectInfoFormFields } from './ProjectInfo'
 
 export default function PlayCreate() {
-  const { transactor, contracts, onNeedProvider, userAddress } = useContext(
-    UserContext,
-  )
+  const {
+    transactor,
+    contracts,
+    onNeedProvider,
+    userAddress,
+    network,
+  } = useContext(UserContext)
   const [step, setStep] = useState<number>(0)
   const [loadingIssueTickets, setLoadingIssueTickets] = useState<boolean>()
   const [projectInfoModalVisible, setProjectInfoModalVisible] = useState<
@@ -215,7 +219,7 @@ export default function PlayCreate() {
 
   return (
     <div>
-      <div style={{ ...layouts.maxWidth }}>
+      <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
         <Project
           ticketSymbol={userTickets?.symbol ?? editingTickets.symbol}
           ticketAddress={undefined}
@@ -371,7 +375,7 @@ export default function PlayCreate() {
 
       <Modal
         visible={createProjectModalVisible}
-        okText="Create project"
+        okText={'Deploy on ' + network}
         onOk={createProject}
         confirmLoading={creatingBudget}
         width={600}

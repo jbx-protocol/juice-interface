@@ -9,12 +9,13 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
+import { useSigningProvider } from 'hooks/SigningProvider'
 import { useTransactor } from 'hooks/Transactor'
 import { useUserBudget } from 'hooks/UserBudget'
-import { useUserProvider } from 'hooks/UserProvider'
 import { useUserTickets } from 'hooks/UserTickets'
 import { useWeth } from 'hooks/Weth'
-import { useCallback, useEffect, useState } from 'react'
+import { NetworkName } from 'models/network-name'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { editingBudgetActions } from 'redux/slices/editingBudget'
 
 import Navbar from './Navbar'
@@ -31,26 +32,26 @@ function App() {
     setInjectedProvider(new Web3Provider(provider))
   }, [setInjectedProvider])
 
-  const userProvider = useUserProvider(injectedProvider)
+  const signingProvider = useSigningProvider(injectedProvider)
 
-  const userAddress = useProviderAddress(userProvider)
+  const userAddress = useProviderAddress(signingProvider)
 
-  const contracts = useContractLoader(userProvider)
+  const contracts = useContractLoader(signingProvider)
 
   const gasPrice = useGasPrice('average')
 
   useEffect(() => {
     async function getSigner() {
-      setSigner(await userProvider?.getSigner())
+      setSigner(await signingProvider?.getSigner())
     }
 
     getSigner()
-  }, [userProvider])
+  }, [signingProvider])
 
   const weth = useWeth(signer)
 
   const transactor = useTransactor({
-    provider: userProvider,
+    provider: signingProvider,
     gasPrice:
       typeof gasPrice === 'number' ? BigNumber.from(gasPrice) : undefined,
   })
@@ -62,13 +63,21 @@ function App() {
   useUserBudget(userAddress)
   useUserTickets(userAddress)
 
+  const network = useMemo(() => {
+    const network = Object.entries(NETWORKS).find(
+      ([name, info]) => info.chainId === signingProvider?.network?.chainId,
+    )
+    return network ? (network[0] as NetworkName) : undefined
+  }, [signingProvider?.network?.chainId])
+
   console.log('User:', userAddress)
 
   return (
     <UserContext.Provider
       value={{
         userAddress,
-        userProvider,
+        signingProvider,
+        network,
         transactor,
         contracts,
         onNeedProvider: loadWeb3Modal,
@@ -84,15 +93,7 @@ function App() {
           background: 'transparent',
         }}
       >
-        <Navbar
-          shouldUseNetwork={
-            userProvider &&
-            userProvider.network?.chainId !== NETWORKS.kovan.chainId &&
-            process.env.NODE_ENV === 'production'
-              ? NETWORKS.kovan.name
-              : undefined
-          }
-        />
+        <Navbar />
 
         <Content>
           <Router />

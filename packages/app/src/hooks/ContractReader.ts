@@ -1,8 +1,9 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import { ContractName } from 'constants/contract-name'
-import { localProvider } from 'constants/local-provider'
+import { readProvider } from 'constants/read-provider'
+import { UserContext } from 'contexts/userContext'
 import { Contracts } from 'models/contracts'
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import { useContractLoader } from './ContractLoader'
@@ -32,6 +33,7 @@ export default function useContractReader<V>({
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {
+  const { network } = useContext(UserContext)
   const [value, setValue] = useState<V | undefined>()
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
@@ -41,7 +43,7 @@ export default function useContractReader<V>({
     [valueDidChange],
   )
 
-  const contracts = useContractLoader(localProvider, true)
+  const contracts = useContractLoader(readProvider(network), true)
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {

@@ -6,7 +6,7 @@ import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 
 export default function Balance({ userAddress }: { userAddress?: string }) {
-  const { userProvider } = useContext(UserContext)
+  const { signingProvider } = useContext(UserContext)
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
 
@@ -15,15 +15,15 @@ export default function Balance({ userAddress }: { userAddress?: string }) {
   // get updated balance
   usePoller(
     () => {
-      if (!userAddress || !userProvider) return
+      if (!userAddress || !signingProvider) return
 
       try {
-        userProvider.getBalance(userAddress).then(setBalance)
+        signingProvider.getBalance(userAddress).then(setBalance)
       } catch (e) {
         console.log('Error getting balance', e)
       }
     },
-    [userAddress, userProvider],
+    [userAddress, signingProvider],
     30000,
   )
 

@@ -1,11 +1,11 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
-import { localProvider } from 'constants/local-provider'
+import { readProvider } from 'constants/read-provider'
+import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { NetworkName } from 'models/network-name'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 
 import { mainnetProvider } from '../constants/mainnet-provider'
 
@@ -18,16 +18,15 @@ export function useWeth(
       address: string
     }>
   | undefined {
+  const { network } = useContext(UserContext)
   const [symbol, setSymbol] = useState<string>()
 
   const provider = useMemo(
     () =>
-      process.env.NODE_ENV === 'production' ||
-      (process.env.REACT_APP_INFURA_DEV_NETWORK &&
-        process.env.REACT_APP_INFURA_DEV_NETWORK !== NetworkName.localhost)
+      process.env.NODE_ENV === 'production'
         ? mainnetProvider
-        : localProvider,
-    [],
+        : readProvider(network),
+    [network],
   )
 
   const address = useContractReader<string>({

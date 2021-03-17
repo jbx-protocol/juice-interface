@@ -1,19 +1,26 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { localProvider } from 'constants/local-provider'
+import { readProvider } from 'constants/read-provider'
+import { UserContext } from 'contexts/userContext'
 import erc20Abi from 'erc-20-abi'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { addressExists } from 'utils/addressExists'
 
 export function useErc20Contract(
   address?: string,
   providerOrSigner?: JsonRpcProvider | JsonRpcSigner,
 ) {
+  const { network } = useContext(UserContext)
+
   return useMemo(
     () =>
       address && addressExists(address)
-        ? new Contract(address, erc20Abi, providerOrSigner ?? localProvider)
+        ? new Contract(
+            address,
+            erc20Abi,
+            providerOrSigner ?? readProvider(network),
+          )
         : undefined,
-    [address, providerOrSigner],
+    [address, providerOrSigner, network],
   )
 }

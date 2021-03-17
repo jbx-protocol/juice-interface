@@ -7,11 +7,7 @@ import React, { useContext } from 'react'
 
 import Account from './Account'
 
-export default function Navbar({
-  shouldUseNetwork,
-}: {
-  shouldUseNetwork?: string
-}) {
+export default function Navbar({}: {}) {
   const userBudget = useUserBudgetSelector()
   const { userAddress } = useContext(UserContext)
 
@@ -90,7 +86,7 @@ export default function Navbar({
         }
       </Menu>
       <div className="hide-mobile">
-        <Account shouldUseNetwork={shouldUseNetwork} />
+        <Account />
       </div>
     </Header>
   )

@@ -64,7 +64,7 @@ export default function Owner() {
   //   contracts,
   //   contractName: ContractName.Juicer,
   //   eventName: 'SustainBudget',
-  //   provider: localProvider,
+  //   provider: readProvider,
   //   startBlock: 1,
   //   getInitial: true,
   //   topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],

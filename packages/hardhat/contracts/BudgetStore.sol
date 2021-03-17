@@ -25,9 +25,6 @@ contract BudgetStore is Store, IBudgetStore {
 
     // --- public properties --- //
 
-    /// @notice A big number to base ticket issuance off of.
-    uint256 public constant BUDGET_BASE_WEIGHT = 10E25;
-
     /// @notice The latest Budget ID for each project address.
     mapping(address => uint256) public override latestBudgetId;
 
@@ -103,27 +100,6 @@ contract BudgetStore is Store, IBudgetStore {
         return budget._nextUp();
     }
 
-    /**
-        @notice The amount left to be withdrawn by the Budget's project.
-        @param _budgetId The ID of the Budget to get the tappable amount from.
-        @return amount The amount.
-    */
-    function getTappableAmount(uint256 _budgetId)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        require(
-            _budgetId > 0 && _budgetId <= budgetCount,
-            "BudgetStore::getTappableAmount:: NOT_FOUND"
-        );
-        return
-            budgets[_budgetId]._tappableAmount(
-                prices.getETHPrice(budgets[_budgetId].currency)
-            );
-    }
-
     // --- external transactions --- //
 
     constructor(IPrices _prices) {
@@ -167,6 +143,11 @@ contract BudgetStore is Store, IBudgetStore {
             (_discountRate >= 950 && _discountRate <= 1000) ||
                 _discountRate == 0,
             "BudgetStore::configure: BAD_DISCOUNT_RATE"
+        );
+        // The `bondingCurveRate` must be between 0 and 1000.
+        require(
+            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
+            "BudgetStore::configure BAD_BONDING_CURVE_RATE"
         );
 
         // The reserved project ticket percentage must be less than or equal to 100.
@@ -233,17 +214,11 @@ contract BudgetStore is Store, IBudgetStore {
         // Creates a new budget based on the project's most recent one if there isn't currently a Budget accepting contributions.
         Budget.Data storage _budget = _ensureActiveBudget(_project);
 
-        // Get the current price of ETH.
-        uint256 _ethPrice = prices.getETHPrice(_budget.currency);
-
-        // The amount being paid in the currency of the budget.
-        convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
-
-        // Add the amount to the Budget.
-        _budget.total = _budget.total.add(_amount);
-
-        // If this budget is fully tapped, record the overflow.
-        overflow = _budget._tappableAmount(_ethPrice) == 0 ? _amount : 0;
+        // Add the amount to the budget.
+        (convertedCurrencyAmount, overflow) = _budget._add(
+            _amount,
+            prices.getETHPrice(_budget.currency)
+        );
 
         // Return the budget.
         budget = _budget;
@@ -288,28 +263,11 @@ contract BudgetStore is Store, IBudgetStore {
             "BudgetStore::tap: BAD_CURRENCY"
         );
 
-        // The current price of ETH in terms of the budget's currency.
-        uint256 _ethPrice = prices.getETHPrice(_budget.currency);
-
-        // The amount being tapped must be less than the tappable amount.
-        require(
-            _amount <= _budget._tappableAmount(_ethPrice),
-            "BudgetStore::tap: INSUFFICIENT_FUNDS"
+        // Tap the amount.
+        (ethAmount, overflow) = _budget._tap(
+            _amount,
+            prices.getETHPrice(_budget.currency)
         );
-
-        // Add the amount to the Budget's tapped amount.
-        _budget.tappedTarget = _budget.tappedTarget.add(_amount);
-
-        // The amount of ETH that is being tapped.
-        ethAmount = DSMath.wdiv(_amount, _ethPrice);
-
-        // Add the converted currency amount to the Budget's total amount.
-        _budget.tappedTotal = _budget.tappedTotal.add(ethAmount);
-
-        // If this budget is now fully tapped, record the overflow.
-        overflow = _budget._tappableAmount(_ethPrice) == 0
-            ? _budget.total.sub(_budget.tappedTotal)
-            : 0;
 
         // Return the budget.
         budget = _budget;
@@ -435,7 +393,7 @@ contract BudgetStore is Store, IBudgetStore {
             newBudget._basedOn(_latestBudget);
         } else {
             newBudget.project = _project;
-            newBudget.weight = BUDGET_BASE_WEIGHT;
+            newBudget.weight = 10E25;
             newBudget.number = 1;
             newBudget.previous = 0;
         }
@@ -474,6 +432,6 @@ contract BudgetStore is Store, IBudgetStore {
         if (budget._state() == Budget.State.Active) return budget;
         budget = budgets[budget.previous];
         if (budget.id == 0 || budget._state() != Budget.State.Active)
-            return budgets[0];
+            budget = budgets[0];
     }
 }

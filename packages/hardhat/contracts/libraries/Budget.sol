@@ -220,6 +220,63 @@ library Budget {
         return _self.ballot.isApproved(_self.id, _self.configured);
     }
 
+    /** 
+        @notice Taps an amount from the budget.
+        @param _self The Budget to tap an amount from.
+        @param _amount An amount to tap. In `curency`.
+        @param _ethPrice The current price of ETH.
+        @return ethAmount The amount of ETH that was tapped.
+        @return overflow The amount of new overflow that results.
+    */
+    function _tap(
+        Data storage _self,
+        uint256 _amount,
+        uint256 _ethPrice
+    ) internal returns (uint256 ethAmount, uint256 overflow) {
+        // The amount being tapped must be less than the tappable amount.
+        require(
+            _amount <= _tappableAmount(_self, _ethPrice),
+            "Budget: INSUFFICIENT_FUNDS"
+        );
+
+        // Add the amount to the Budget's tapped amount.
+        _self.tappedTarget = _self.tappedTarget.add(_amount);
+
+        // The amount of ETH that is being tapped.
+        ethAmount = DSMath.wdiv(_amount, _ethPrice);
+
+        // Add the converted currency amount to the Budget's total amount.
+        _self.tappedTotal = _self.tappedTotal.add(ethAmount);
+
+        // If this budget is now fully tapped, record the overflow.
+        overflow = _tappableAmount(_self, _ethPrice) == 0
+            ? _self.total.sub(_self.tappedTotal)
+            : 0;
+    }
+
+    /** 
+        @notice Adds an amount to the budget.
+        @param _self The Budget to add an amount to.
+        @param _amount An amount to add. In ETH.
+        @param _ethPrice The current price of ETH.
+        @return convertedCurrencyAmount The amount of currency that was converted from the added ETH.
+        @return overflow The amount of new overflow that results.
+    */
+    function _add(
+        Data storage _self,
+        uint256 _amount,
+        uint256 _ethPrice
+    ) internal returns (uint256 convertedCurrencyAmount, uint256 overflow) {
+        // Add the amount to the Budget.
+        _self.total = _self.total.add(_amount);
+
+        // The amount being paid in the currency of the budget.
+        convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
+
+        // If this budget is fully tapped, record the overflow.
+        overflow = _tappableAmount(_self, _ethPrice) == 0 ? _amount : 0;
+    }
+
     // --- private views --- //
 
     /** 

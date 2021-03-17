@@ -117,19 +117,23 @@ abstract contract JuiceProject is Ownable {
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @param _note A note to leave on the emitted event.
-      @return _returnAmount The amount of ETH that was redeemed and used to fund the budget.
+      @return returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
         address _issuer,
         uint256 _amount,
         uint256 _minReturnedETH,
         string memory _note
-    ) external onlyPm returns (uint256 _returnAmount) {
-        uint256 _returnAmount =
-            juicer.redeem(_issuer, _amount, _minReturnedETH, address(this));
+    ) external onlyPm returns (uint256 returnAmount) {
+        returnAmount = juicer.redeem(
+            _issuer,
+            _amount,
+            _minReturnedETH,
+            address(this)
+        );
 
         // Surplus goes back to the issuer.
-        juicer.pay(address(this), _returnAmount, _issuer, _note);
+        juicer.pay(address(this), returnAmount, _issuer, _note);
     }
 
     /** 

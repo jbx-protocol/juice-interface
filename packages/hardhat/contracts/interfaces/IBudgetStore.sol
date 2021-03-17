@@ -25,11 +25,11 @@ interface IBudgetStore is IStore {
 
     function latestBudgetId(address _owner) external view returns (uint256);
 
-    function budgetCount() external returns (uint256);
+    function budgetCount() external view returns (uint256);
 
-    function prices() external returns (IPrices);
+    function prices() external view returns (IPrices);
 
-    function budgetBallot() external returns (IBudgetBallot);
+    function budgetBallot() external view returns (IBudgetBallot);
 
     function fee() external view returns (uint256);
 

@@ -147,8 +147,7 @@ export default function ReconfigureBudgetModal({
           />
         </Form.Item>
         <Form.Item
-          // extra="For every ticket given to someone who pays you, this percentage of tickets will be reserved for yourself."
-          extra="The percentage of your project's overflow that you'd like to reserve for yourself."
+          extra="The percentage of your project's overflow that you'd like to reserve for yourself. In practice, you'll just receive some of your own tickets whenever someone pays you."
           name="reserved"
           label="Reserved tickets"
           initialValue={5}

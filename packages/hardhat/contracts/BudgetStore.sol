@@ -54,6 +54,10 @@ contract BudgetStore is Store, IBudgetStore {
         override
         returns (Budget.Data memory)
     {
+        require(
+            _budgetId > 0 && _budgetId <= budgetCount,
+            "BudgetStore::getBudget: NOT_FOUND"
+        );
         return budgets[_budgetId];
     }
 

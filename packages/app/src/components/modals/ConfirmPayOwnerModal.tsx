@@ -1,12 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Modal } from 'antd'
-import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 
@@ -48,42 +46,32 @@ export default function ConfirmPayOwnerModal({
     if (onOk) onOk()
   }
 
-  const payerPercentage = budget
-    ? parsePerMille('100')
-        .sub(budget.reserved)
-        .toHexString()
-    : undefined
+  const weightedRate = (
+    budget: Budget | null | undefined,
+    amount: BigNumber | undefined,
+    percentage: BigNumber | undefined,
+  ) => {
+    return budget && amount && percentage
+      ? budget.weight
+          .div(budget.target)
+          .mul(amount)
+          .mul(percentage)
+          .div(100)
+      : undefined
+  }
 
-  const budgetId = budget?.id.gt(0)
-    ? budget.id.toHexString()
-    : budget?.previous.toHexString()
+  const payerPercentage = budget
+    ? parsePerMille('100').sub(budget.reserved)
+    : undefined
 
   const currencyAmount =
     budgetCurrencyName(currency) === 'USD'
       ? parseWad(converter.weiToUsd(weiAmount)?.toString())
       : weiAmount
 
-  const receivedTickets = useContractReader<BigNumber>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getWeightedRate',
-    args: useMemo(
-      () => [budgetId, currencyAmount?.toHexString(), payerPercentage],
-      [payerPercentage, budgetId, currencyAmount],
-    ),
-  })
+  const receivedTickets = weightedRate(budget, currencyAmount, payerPercentage)
 
-  const ownerTickets = useContractReader<BigNumber>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getWeightedRate',
-    args: useMemo(
-      () => [
-        budgetId,
-        currencyAmount?.toHexString(),
-        budget?.reserved.toHexString(),
-      ],
-      [budgetId, currencyAmount, budget?.reserved],
-    ),
-  })
+  const ownerTickets = weightedRate(budget, currencyAmount, budget?.reserved)
 
   return (
     <Modal

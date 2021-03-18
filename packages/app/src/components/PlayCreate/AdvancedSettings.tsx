@@ -78,14 +78,15 @@ export default function AdvancedSettings({
             }}
           />
         </Form.Item>
+        <Form.Item>
+          <Space>
+            <Button htmlType="submit" type="primary" onClick={onSave}>
+              Save
+            </Button>
+            <Button onClick={onSkip}>Skip</Button>
+          </Space>
+        </Form.Item>
       </Form>
-
-      <Space>
-        <Button type="primary" onClick={onSave}>
-          Save
-        </Button>
-        <Button onClick={onSkip}>Skip</Button>
-      </Space>
     </Space>
   )
 }

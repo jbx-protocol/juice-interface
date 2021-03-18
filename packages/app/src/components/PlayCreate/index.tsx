@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, ButtonProps, Drawer, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import { TicketsFormFields } from 'components/shared/forms/TicketsForm'
 import Project from 'components/Owner/Project'
+import { TicketsFormFields } from 'components/shared/forms/TicketsForm'
 import { ContractName } from 'constants/contract-name'
 import { emptyAddress } from 'constants/empty-address'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
@@ -70,21 +70,20 @@ export default function PlayCreate() {
   const userBudget = useUserBudgetSelector()
   const dispatch = useAppDispatch()
 
+  // Navigate to project if exists
   useEffect(() => {
-    if (userTickets && userBudget && userAddress)
-      window.location.hash = userAddress
-  }, [userBudget, userAddress, userTickets])
+    if (userBudget) window.location.hash = userBudget.project
+  }, [userBudget, userAddress])
 
   useEffect(() => {
-    if (editingBudget?.name && editingBudget?.duration && editingBudget?.target)
+    if (
+      editingBudget?.name &&
+      editingBudget?.duration &&
+      editingBudget?.target
+    ) {
       setStep(1)
+    }
   }, [])
-
-  const adminFeePercent = useContractReader<number>({
-    contract: ContractName.BudgetStore,
-    functionName: 'fee',
-    formatter: (val: BigNumber) => val?.toNumber(),
-  })
 
   const incrementStep = (num: number) => (num > step ? setStep(num) : null)
 
@@ -174,6 +173,12 @@ export default function PlayCreate() {
     )
   }
 
+  const adminFeePercent = useContractReader<number>({
+    contract: ContractName.BudgetStore,
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val?.toNumber(),
+  })
+
   function createProject() {
     if (!transactor || !contracts) return onNeedProvider()
 
@@ -196,11 +201,11 @@ export default function PlayCreate() {
         editingBudget.currency.toHexString(),
         editingBudget.duration.toHexString(),
         editingBudget.name,
-        editingBudget.link ?? '',
+        editingBudget.link || '',
         editingBudget.discountRate.toHexString(),
         bondingCurveRate,
         editingBudget.reserved.toHexString(),
-        editingBudget.donationRecipient ?? emptyAddress,
+        editingBudget.donationRecipient || emptyAddress,
         editingBudget.donationAmount.toHexString(),
       ],
       {

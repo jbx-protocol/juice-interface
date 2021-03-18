@@ -8,49 +8,53 @@ import "./IStore.sol";
 import "./../Tickets.sol";
 
 interface ITicketStore is IStore {
-    event Issue(address issuer, string name, string symbol);
+    event Issue(bytes32 project, string name, string symbol);
 
-    function tickets(address _issuer) external view returns (Tickets);
+    function tickets(bytes32 _project) external view returns (Tickets);
 
-    function claimable(address _issuer) external view returns (uint256);
+    function claimable(bytes32 _project) external view returns (uint256);
 
     function totalClaimable() external view returns (uint256);
 
-    function iOweYous(address _issuer, address _holder)
+    function iOweYous(bytes32 _project, address _holder)
         external
         view
         returns (uint256);
 
-    function totalIOweYous(address _issuer) external view returns (uint256);
+    function totalIOweYous(bytes32 _project) external view returns (uint256);
 
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        address _issuer,
+        bytes32 _project,
         uint256 _proportion
     ) external view returns (uint256);
 
-    function getTicketValue(address _issuer) external view returns (uint256);
+    function getTicketValue(bytes32 _project) external view returns (uint256);
 
-    function issue(string memory _name, string memory _symbol) external;
+    function issue(
+        bytes32 _project,
+        string memory _name,
+        string memory _symbol
+    ) external;
 
-    function convert(address _issuer) external;
+    function convert(bytes32 _project) external;
 
     function print(
-        address _issuer,
+        bytes32 _project,
         address _for,
         uint256 _amount
     ) external;
 
     function redeem(
-        address _issuer,
+        bytes32 _project,
         address _holder,
         uint256 _amount,
         uint256 _minReturn,
         uint256 _proportion
     ) external returns (uint256 returnAmount);
 
-    function addClaimable(address _issuer, uint256 _amount) external;
+    function addClaimable(bytes32 _project, uint256 _amount) external;
 
-    function clearClaimable(address _issuer) external returns (uint256 amount);
+    function clearClaimable(bytes32 _project) external returns (uint256 amount);
 }

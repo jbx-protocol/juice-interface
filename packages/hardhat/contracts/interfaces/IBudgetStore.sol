@@ -10,7 +10,7 @@ import "../libraries/Budget.sol";
 interface IBudgetStore is IStore {
     event Configure(
         uint256 indexed budgetId,
-        address indexed owner,
+        bytes32 indexed project,
         uint256 indexed target,
         uint256 currency,
         uint256 duration,
@@ -19,11 +19,12 @@ interface IBudgetStore is IStore {
         uint256 discountRate,
         uint256 bondingCurveRate,
         uint256 reserved,
-        address donationRecipient,
-        uint256 donationAmount
+        uint256 donation
     );
 
-    function latestBudgetId(address _owner) external view returns (uint256);
+    function latestBudgetId(bytes32 _project) external view returns (uint256);
+
+    function owners(bytes32 _project) external view returns (address);
 
     function budgetCount() external view returns (uint256);
 
@@ -38,17 +39,18 @@ interface IBudgetStore is IStore {
         view
         returns (Budget.Data memory);
 
-    function getQueuedBudget(address _owner)
+    function getQueuedBudget(bytes32 _project)
         external
         view
         returns (Budget.Data memory);
 
-    function getCurrentBudget(address _owner)
+    function getCurrentBudget(bytes32 _project)
         external
         view
         returns (Budget.Data memory);
 
     function configure(
+        bytes32 _project,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -57,14 +59,14 @@ interface IBudgetStore is IStore {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        address _donationRecipient,
-        uint256 _donationAmount
-    ) external returns (uint256 id);
+        uint256 _donation
+    ) external returns (bytes32 project);
 
-    function payProject(address _project, uint256 _amount)
+    function payProject(bytes32 _project, uint256 _amount)
         external
         returns (
             Budget.Data memory budget,
+            address owner,
             uint256 convertedCurrencyAmount,
             uint256 overflow
         );

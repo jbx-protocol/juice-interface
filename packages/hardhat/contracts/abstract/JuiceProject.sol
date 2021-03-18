@@ -31,6 +31,9 @@ abstract contract JuiceProject is Ownable {
     /// @dev The symbol of this Budget owner's tickets.
     string public ticketSymbol;
 
+    /// @dev The project that is being managed.
+    bytes32 public project;
+
     /// @dev The address that can tap funds from the project and propose reconfigurations.
     address public pm;
 
@@ -59,7 +62,21 @@ abstract contract JuiceProject is Ownable {
         @notice Issues this project's Tickets. 
     */
     function issueTickets() external onlyOwner {
-        juicer.ticketStore().issue(ticketName, ticketSymbol);
+        require(project != 0, "JuiceProject::issueTickets: PROJECT_NOT_FOUND");
+        juicer.ticketStore().issue(project, ticketName, ticketSymbol);
+    }
+
+    /** 
+      @notice Allows anyone to set the project that is being managed.
+      @param _project the project that is being managed.
+    */
+    function setProject(bytes32 _project) external {
+        // The pm or the owner can set the project.
+        require(
+            msg.sender == pm || msg.sender == owner(),
+            "JuiceProject: UNAUTHORIZED"
+        );
+        project = _project;
     }
 
     /**
@@ -75,8 +92,7 @@ abstract contract JuiceProject is Ownable {
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
         @param _reserved The percentage of this Budget's surplus to allocate to the owner.
-        @param _donationRecipient An address to send a percent of overflow to.
-        @param _donationAmount The percent of overflow to send to the recipient.
+        @param _donation The percent of overflow to send to the recipient.
         @return _budgetId The ID of the Budget that was reconfigured.
     */
     function configure(
@@ -88,16 +104,16 @@ abstract contract JuiceProject is Ownable {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        address _donationRecipient,
-        uint256 _donationAmount
+        uint256 _donation
     ) external returns (uint256) {
         // The pm or the owner can propose configurations.
         require(
             msg.sender == pm || msg.sender == owner(),
             "JuiceProject: UNAUTHORIZED"
         );
-        return
+        bytes32 _project =
             juicer.budgetStore().configure(
+                project,
                 _target,
                 _currency,
                 _duration,
@@ -106,52 +122,57 @@ abstract contract JuiceProject is Ownable {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                _donationRecipient,
-                _donationAmount
+                _donation
             );
+
+        if (project == 0) project = _project;
     }
 
     /** 
       @notice Redeem tickets that have been transfered to this contract and use the claimed amount to fund this project.
-      @param _issuer The issuer who's tickets are being redeemed.
+      @param _project The project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @param _note A note to leave on the emitted event.
       @return returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         uint256 _minReturnedETH,
         string memory _note
     ) external onlyPm returns (uint256 returnAmount) {
+        require(
+            project != 0,
+            "JuiceProject::redeemTicketsAndFund: PROJECT_NOT_FOUND"
+        );
         returnAmount = juicer.redeem(
-            _issuer,
+            _project,
             _amount,
             _minReturnedETH,
             address(this)
         );
 
-        // Surplus goes back to the issuer.
-        juicer.pay(address(this), returnAmount, _issuer, _note);
+        // Tickets come back to this project.
+        juicer.pay(project, returnAmount, address(this), _note);
     }
 
     /** 
       @notice Redeem tickets that have been transfered to this contract.
-      @param _issuer The issuer who's tickets are being redeemed.
+      @param _project The project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _beneficiary The address that is receiving the redeemed tokens.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm returns (uint256 _returnAmount) {
         _returnAmount = juicer.redeem(
-            _issuer,
+            _project,
             _amount,
             _minReturnedETH,
             _beneficiary
@@ -199,9 +220,10 @@ abstract contract JuiceProject is Ownable {
     function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
         require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
         require(_from == juicer, "JuiceProject::migrate: INVALID");
+        require(project != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
 
         // Migrate.
-        _from.migrate(_to);
+        _from.migrate(project, _to);
 
         // Set the new juicer.
         juicer = _to;
@@ -218,6 +240,7 @@ abstract contract JuiceProject is Ownable {
         address _from,
         string memory _note
     ) internal {
-        juicer.pay(address(this), _amount, _from, _note);
+        require(project != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
+        juicer.pay(project, _amount, _from, _note);
     }
 }

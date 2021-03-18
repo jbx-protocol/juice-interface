@@ -22,7 +22,7 @@ library Budget {
         // A unique number that's incremented for each new Budget, starting with 1.
         uint256 id;
         // The address who defined this Budget and who has access to its funds.
-        address project;
+        bytes32 project;
         // The number of this budget for the project.
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.
@@ -47,10 +47,8 @@ library Budget {
         uint256 tappedTotal;
         // The percentage of tickets to reserve for the project once the Budget has expired.
         uint256 reserved;
-        // An address to send a percent of overflow to.
-        address donationRecipient;
         // The percentage of overflow to donate to the asdf.
-        uint256 donationAmount;
+        uint256 donation;
         // The percentage of each payment to send as a fee to the Juice admin.
         uint256 fee;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
@@ -88,8 +86,7 @@ library Budget {
         _self.number = _baseBudget.number.add(1);
         _self.previous = _baseBudget.id;
         _self.fee = _baseBudget.fee;
-        _self.donationRecipient = _baseBudget.donationRecipient;
-        _self.donationAmount = _baseBudget.donationAmount;
+        _self.donation = _baseBudget.donation;
     }
 
     // --- internal views --- //
@@ -146,8 +143,7 @@ library Budget {
                 0,
                 0,
                 _self.reserved,
-                _self.donationRecipient,
-                _self.donationAmount,
+                _self.donation,
                 _self.fee,
                 _derivedWeight(_self),
                 _self.discountRate,

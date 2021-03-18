@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IBudgetStore.sol";
 import "./interfaces/IOverflowYielder.sol";
+import "./abstract/JuiceProject.sol";
 
 import "./TicketStore.sol";
 
@@ -80,6 +81,9 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
+    mapping(bytes32 => uint256) public donations;
+    uint256 public totalDonations;
+
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -100,17 +104,17 @@ contract Juicer is IJuicer {
 
     /** 
       @notice Gets the overflow for a specified issuer that this Juicer is responsible for.
-      @param _issuer The ticket issuer to get overflow for.
+      @param _project The project to get overflow for.
       @return The amount of overflow.
     */
-    function getOverflow(address _issuer)
+    function getOverflow(bytes32 _project)
         external
         view
         override
         returns (uint256)
     {
         // The raw amount that the issuer can claim.
-        uint256 _claimable = ticketStore.claimable(_issuer);
+        uint256 _claimable = ticketStore.claimable(_project);
 
         // Return 0 if the user can't claim anything.
         if (_claimable == 0) return 0;
@@ -167,7 +171,7 @@ contract Juicer is IJuicer {
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function pay(
-        address _project,
+        bytes32 _project,
         uint256 _amount,
         address _beneficiary,
         string memory _note
@@ -180,20 +184,20 @@ contract Juicer is IJuicer {
 
     /**
         @notice Addresses can redeem their Tickets to claim overflowed tokens.
-        @param _issuer The issuer of the Tickets being redeemed.
+        @param _project The project of the Tickets being redeemed.
         @param _amount The amount of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the tokens to.
         @return returnAmount The amount that the tickets were redeemed for.
     */
     function redeem(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         uint256 _minReturnedETH,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
         // Get the current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_issuer);
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_project);
 
         // The total raw amount claimable in the ticket store.
         uint256 _totalClaimable = ticketStore.totalClaimable();
@@ -201,7 +205,7 @@ contract Juicer is IJuicer {
         // Redeem at the ticket store. The raw amount claimable for this issuer is returned.
         uint256 _claimable =
             ticketStore.redeem(
-                _issuer,
+                _project,
                 msg.sender,
                 _amount,
                 _minReturnedETH,
@@ -233,7 +237,7 @@ contract Juicer is IJuicer {
 
         emit Redeem(
             msg.sender,
-            _issuer,
+            _project,
             _beneficiary,
             _amount,
             returnAmount,
@@ -273,8 +277,9 @@ contract Juicer is IJuicer {
 
         emit Tap(
             _budgetId,
-            msg.sender,
+            _budget.project,
             _beneficiary,
+            msg.sender,
             _amount,
             _currency,
             _tappedAmount
@@ -305,26 +310,35 @@ contract Juicer is IJuicer {
         @notice Allows an project to migrate their Tickets' control to another contract.
         @dev This makes each project's Ticket's portable.
         @dev Make sure you know what you're doing. This is a one way migration
+        @param _project The project being migrated.
         @param _to The Juicer contract that will gain minting and burning privileges over the Tickets.
     */
-    function migrate(IJuicer _to) external override lock {
+    function migrate(bytes32 _project, IJuicer _to) external override lock {
         require(
             migrationContractIsAllowed[address(_to)],
-            "Juicer:migrateTickets: BAD_DESTINATION"
+            "Juicer::migrate: BAD_DESTINATION"
         );
 
+        require(
+            budgetStore.owners(_project) == msg.sender,
+            "Juicer::migrate: UNAUTHORIZED"
+        );
+
+        // The message sender must own a project.
+        require(_project != 0, "Juicer::migrate: NOT_FOUND");
+
         // Get a reference to the project's Tickets.
-        Tickets _tickets = ticketStore.tickets(msg.sender);
+        Tickets _tickets = ticketStore.tickets(_project);
 
         // The project must have issued Tickets.
-        require(_tickets != Tickets(0), "Juicer::migrateTickets: NOT_FOUND");
+        require(_tickets != Tickets(0), "Juicer::migrate: NOT_FOUND");
 
         // Give the new project admin privileges.
         _tickets.transferOwnership(address(_to));
 
         // In order to move funds over, determine the proportion of funds belonging to the message sender.
         uint256 _totalClaimable = ticketStore.totalClaimable();
-        uint256 _claimable = ticketStore.clearClaimable(msg.sender);
+        uint256 _claimable = ticketStore.clearClaimable(_project);
 
         // Move all claimable tokens for this issuer.
         // Assumes the new contract uses the same ticket store.
@@ -347,19 +361,19 @@ contract Juicer is IJuicer {
 
         // Allow the new project to move funds owned by the issuer from contract.
         weth.safeApprove(address(_to), _amount);
-        _to.addOverflow(msg.sender, _amount, weth);
+        _to.addOverflow(_project, _amount, weth);
 
         emit Migrate(_to, _amount);
     }
 
     /** 
       @notice Transfer funds from the message sender to this contract that should be designated as overflow for the provided ticket issuer.
-      @param _issuer The issuer of the tickets getting credited with overflow.
+      @param _project The project of the tickets getting credited with overflow.
       @param _amount The amount that the claimable tokens are worth.
       @param _token The token of the specified amount.
     */
     function addOverflow(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         IERC20 _token
     ) external override lock {
@@ -391,7 +405,7 @@ contract Juicer is IJuicer {
                 .sub(_totalClaimable);
 
         // Add the raw claimable amount to the ticket store.
-        ticketStore.addClaimable(_issuer, _claimableToAdd);
+        ticketStore.addClaimable(_project, _claimableToAdd);
     }
 
     /**
@@ -449,7 +463,7 @@ contract Juicer is IJuicer {
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function _pay(
-        address _project,
+        bytes32 _project,
         uint256 _amount,
         address _beneficiary,
         string memory _note
@@ -457,6 +471,7 @@ contract Juicer is IJuicer {
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (
             Budget.Data memory _budget,
+            address _owner,
             uint256 _covertedCurrencyAmount,
             uint256 _overflow
         ) = budgetStore.payProject(_project, _amount);
@@ -465,17 +480,13 @@ contract Juicer is IJuicer {
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        _takeFee(
-            _project,
-            Math.mulDiv(_amount, _budget.fee, 1000),
-            _beneficiary
-        );
+        _takeFee(_owner, Math.mulDiv(_amount, _budget.fee, 1000), _beneficiary);
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
             ticketStore.print(
                 _project,
-                _project,
+                _owner,
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
@@ -510,27 +521,31 @@ contract Juicer is IJuicer {
 
     /**
         @notice Takes a fee for the admin's active budget.
-        @param _project The project that the fee is being taken from.
+        @param _from The owner of the project that the fee is being taken from.
         @param _amount Amount of the fee in ETH. Sent as 1E18.
         @param _beneficiary The address to split the newly minted Tickets with. 
     */
     function _takeFee(
-        address _project,
+        address _from,
         uint256 _amount,
         address _beneficiary
     ) private {
+        bytes32 _adminProject = JuiceProject(admin).project();
+        require(_adminProject != 0, "Juicer::_takeFee: PROJECT_NOT_FOUND");
+
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (
             Budget.Data memory _budget,
+            address _owner,
             uint256 _covertedCurrencyAmount,
             uint256 _overflow
-        ) = budgetStore.payProject(admin, _amount);
+        ) = budgetStore.payProject(_adminProject, _amount);
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
             ticketStore.print(
-                admin,
-                admin,
+                _adminProject,
+                _owner,
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
@@ -545,18 +560,18 @@ contract Juicer is IJuicer {
                 .div(2);
 
         // Mint the appropriate amount of tickets for the beneficiary.
-        ticketStore.print(admin, _beneficiary, _printAmount);
+        ticketStore.print(_adminProject, _beneficiary, _printAmount);
 
-        // Mint the appropriate amount of tickets for the project.
-        ticketStore.print(admin, _project, _printAmount);
+        // Mint the appropriate amount of tickets for the project owner that the fee is being taken from.
+        ticketStore.print(_adminProject, _from, _printAmount);
 
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
 
         emit TakeFee(
             _budget.id,
-            admin,
-            _project,
+            _adminProject,
+            _from,
             _beneficiary,
             _amount,
             _covertedCurrencyAmount,
@@ -573,22 +588,30 @@ contract Juicer is IJuicer {
       @param _amount The amount of overflow.
     */
     function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        if (_budget.donationAmount > 0) {
-            weth.safeTransfer(
-                _budget.donationRecipient,
-                Math.mulDiv(_amount, _budget.donationAmount, 1000)
-            );
-        }
+        uint256 _donatedPortion =
+            _budget.donation > 0
+                ? Math.mulDiv(_amount, _budget.donation, 1000)
+                : 0;
 
         // The portion of the overflow that is claimable by redeeming tickets.
         // This is the total minus the percent donated and used as a fee.
         uint256 _claimablePortion =
-            Math.mulDiv(_amount, uint256(1000).sub(_budget.fee), 1000);
+            Math.mulDiv(
+                _amount,
+                uint256(1000).sub(_budget.fee).sub(_budget.donation),
+                1000
+            );
 
         // The redeemable portion of the overflow can be deposited to earn yield.
-        depositable = depositable.add(_claimablePortion);
+        depositable = depositable.add(_claimablePortion).add(_donatedPortion);
 
-        // Add to the raw amount claimable.
+        // Add to the claimable amount.
         ticketStore.addClaimable(_budget.project, _claimablePortion);
+
+        // Add to the donatable amount.
+        donations[_budget.project] = donations[_budget.project].add(
+            _donatedPortion
+        );
+        totalDonations = totalDonations.add(_donatedPortion);
     }
 }

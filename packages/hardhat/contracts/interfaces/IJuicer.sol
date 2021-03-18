@@ -9,7 +9,7 @@ import "./IOverflowYielder.sol";
 interface IBudgetController {
     event Pay(
         uint256 indexed budgetId,
-        address indexed project,
+        bytes32 indexed project,
         address indexed payer,
         address beneficiary,
         uint256 amount,
@@ -21,8 +21,9 @@ interface IBudgetController {
 
     event Tap(
         uint256 indexed budgetId,
-        address indexed project,
+        bytes32 indexed project,
         address indexed beneficiary,
+        address tapper,
         uint256 amount,
         uint256 currency,
         uint256 tappedAmount
@@ -30,8 +31,8 @@ interface IBudgetController {
 
     event TakeFee(
         uint256 indexed budgetId,
-        address indexed admin,
-        address indexed project,
+        bytes32 indexed adminProject,
+        address indexed from,
         address beneficiary,
         uint256 amount,
         uint256 currencyConvertedAmount,
@@ -39,7 +40,7 @@ interface IBudgetController {
     );
 
     function pay(
-        address _owner,
+        bytes32 _project,
         uint256 _amount,
         address _beneficiary,
         string memory _note
@@ -57,7 +58,7 @@ interface IBudgetController {
 interface ITicketsController {
     event Redeem(
         address indexed holder,
-        address indexed issuer,
+        bytes32 indexed project,
         address beneficiary,
         uint256 amount,
         uint256 returnAmount,
@@ -65,7 +66,7 @@ interface ITicketsController {
     );
 
     function redeem(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         uint256 _minReturnedETH,
         address _beneficiary
@@ -99,7 +100,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function weth() external view returns (IERC20);
 
-    function getOverflow(address _issuer) external view returns (uint256);
+    function getOverflow(bytes32 _project) external view returns (uint256);
 
     function getTotalOverflow() external view returns (uint256);
 
@@ -107,10 +108,10 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
 
-    function migrate(IJuicer _to) external;
+    function migrate(bytes32 _project, IJuicer _to) external;
 
     function addOverflow(
-        address _issuer,
+        bytes32 _project,
         uint256 _amount,
         IERC20 _token
     ) external;

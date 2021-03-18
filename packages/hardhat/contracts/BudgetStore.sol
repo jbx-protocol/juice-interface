@@ -25,8 +25,11 @@ contract BudgetStore is Store, IBudgetStore {
 
     // --- public properties --- //
 
-    /// @notice The latest Budget ID for each project address.
-    mapping(address => uint256) public override latestBudgetId;
+    /// @notice The latest Budget ID for each project id.
+    mapping(bytes32 => uint256) public override latestBudgetId;
+
+    /// @notice The project that is each address can configure and tap.
+    mapping(bytes32 => address) public override owners;
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
@@ -62,7 +65,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project of the Budget being looked for.
         @return _budget The Budget.
     */
-    function getQueuedBudget(address _project)
+    function getQueuedBudget(bytes32 _project)
         external
         view
         override
@@ -82,7 +85,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project of the Budget being looked for.
         @return budget The Budget.
     */
-    function getCurrentBudget(address _project)
+    function getCurrentBudget(bytes32 _project)
         external
         view
         override
@@ -110,6 +113,7 @@ contract BudgetStore is Store, IBudgetStore {
         @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
         sets the properties of the Budget that will take effect once the current one expires.
         @dev The msg.sender is the project of the budget.
+        @param _project The project being configured. Send 0 to configure a new project.
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
@@ -121,11 +125,11 @@ contract BudgetStore is Store, IBudgetStore {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
-        @param _donationRecipient An address to send a percent of overflow to.
-        @param _donationAmount The percent of overflow to send to the recipient.
-        @return _budgetId The ID of the Budget that was successfully configured.
+        @param _donation The percent of overflow to send to the recipient.
+        @return _project The project that was successfully configured.
     */
     function configure(
+        bytes32 _project,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -134,10 +138,10 @@ contract BudgetStore is Store, IBudgetStore {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        address _donationRecipient,
-        uint256 _donationAmount
-    ) external override returns (uint256) {
+        uint256 _donation
+    ) external override returns (bytes32) {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
+
         // The `discountRate` token must be between 95 and 100.
         require(
             (_discountRate >= 950 && _discountRate <= 1000) ||
@@ -156,8 +160,26 @@ contract BudgetStore is Store, IBudgetStore {
             "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
         );
 
+        // Either the message sender must be the project owner, or there must not yet be a project owner.
+        require(
+            owners[_project] == msg.sender || owners[_project] == address(0),
+            "BudgetStore::configure: UNAUTHORIZED"
+        );
+
+        // If this is a new project, create an ID.
+        if (owners[_project] == address(0)) {
+            // If a project was not passed in, create one.
+            if (_project == 0)
+                _project = keccak256(
+                    abi.encodePacked(msg.sender, block.timestamp)
+                );
+
+            // Set the owner.
+            owners[_project] = msg.sender;
+        }
+
         // Return's the project's editable budget. Creates one if one doesn't already exists.
-        Budget.Data storage _budget = _ensureStandbyBudget(msg.sender);
+        Budget.Data storage _budget = _ensureStandbyBudget(_project);
 
         // Set the properties of the budget.
         _budget.link = _link;
@@ -169,8 +191,7 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.bondingCurveRate = _bondingCurveRate;
         _budget.reserved = _reserved;
         _budget.fee = fee;
-        _budget.donationRecipient = _donationRecipient;
-        _budget.donationAmount = _donationAmount;
+        _budget.donation = _donation;
         _budget.configured = block.timestamp;
         _budget.ballot = budgetBallot;
 
@@ -185,11 +206,18 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.discountRate,
             _budget.bondingCurveRate,
             _budget.reserved,
-            _budget.donationRecipient,
-            _budget.donationAmount
+            _budget.donation
         );
 
-        return _budget.id;
+        return _project;
+    }
+
+    function transferOwnership(bytes32 _project, address _newOwner) external {
+        require(
+            owners[_project] == msg.sender,
+            "BudgetStore::transferOwnership: UNAUTHORIZED"
+        );
+        owners[_project] = _newOwner;
     }
 
     /** 
@@ -197,15 +225,17 @@ contract BudgetStore is Store, IBudgetStore {
       @param _project The project being paid.
       @param _amount The amount being paid.
       @return budget The budget that is being paid.
+      @return owner The current owner of the budget being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
     */
-    function payProject(address _project, uint256 _amount)
+    function payProject(bytes32 _project, uint256 _amount)
         external
         override
         onlyAdmin
         returns (
             Budget.Data memory budget,
+            address owner,
             uint256 convertedCurrencyAmount,
             uint256 overflow
         )
@@ -222,6 +252,9 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Return the budget.
         budget = _budget;
+
+        //Set the owner.
+        owner = owners[_project];
     }
 
     /** 
@@ -254,8 +287,11 @@ contract BudgetStore is Store, IBudgetStore {
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
 
-        // Only a Budget project can tap its funds.
-        require(_tapper == _budget.project, "BudgetStore::tap: UNAUTHORIZED");
+        // Only a project owner can tap its funds.
+        require(
+            _tapper == owners[_budget.project],
+            "BudgetStore::tap: UNAUTHORIZED"
+        );
 
         // Don't tap budgets with a different currency.
         require(
@@ -297,10 +333,10 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice Returns the standby Budget for this project if it exists, otherwise putting one in standby appropriately.
-        @param _project The address who owns the Budget to look for.
+        @param _project The project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureStandbyBudget(address _project)
+    function _ensureStandbyBudget(bytes32 _project)
         private
         returns (Budget.Data storage budget)
     {
@@ -330,10 +366,10 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice Returns the active Budget for this project if it exists, otherwise activating one appropriately.
-        @param _project The address who owns the Budget to look for.
+        @param _project The project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureActiveBudget(address _project)
+    function _ensureActiveBudget(bytes32 _project)
         private
         returns (Budget.Data storage budget)
     {
@@ -361,22 +397,18 @@ contract BudgetStore is Store, IBudgetStore {
         );
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
-        budget = _initBudget(
-            budget.project,
-            budget._determineNextStart(),
-            budget
-        );
+        budget = _initBudget(_project, budget._determineNextStart(), budget);
     }
 
     /**
         @notice Initializes a Budget to be sustained for the sending address.
-        @param _project The project of the Budget being initialized.
+        @param _project The project to which the Budget being initialized belongs.
         @param _start The start time for the new Budget.
         @param _latestBudget The latest budget for the project.
         @return newBudget The initialized Budget.
     */
     function _initBudget(
-        address _project,
+        bytes32 _project,
         uint256 _start,
         Budget.Data storage _latestBudget
     ) private returns (Budget.Data storage newBudget) {
@@ -392,6 +424,9 @@ contract BudgetStore is Store, IBudgetStore {
         if (_latestBudget.id > 0) {
             newBudget._basedOn(_latestBudget);
         } else {
+            // bytes32 _project =
+            //     keccak256(abi.encodePacked(_owner, block.timestamp));
+            // owners[_project] = _owner;
             newBudget.project = _project;
             newBudget.weight = 10E25;
             newBudget.number = 1;
@@ -401,10 +436,10 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice An project's edittable Budget.
-        @param _project The project of the Budget being looked for.
+        @param _project The project to which the Budget being looked for belongs.
         @return budget The standby Budget.
     */
-    function _standbyBudget(address _project)
+    function _standbyBudget(bytes32 _project)
         private
         view
         returns (Budget.Data storage budget)
@@ -417,10 +452,10 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice The currently active Budget for a project.
-        @param _project The project of the Budget being looked for.
+        @param _project The project to which the Budget being looked for belongs.
         @return budget The active Budget.
     */
-    function _activeBudget(address _project)
+    function _activeBudget(bytes32 _project)
         private
         view
         returns (Budget.Data storage budget)

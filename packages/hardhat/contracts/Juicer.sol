@@ -81,9 +81,6 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
-    mapping(bytes32 => uint256) public donations;
-    uint256 public totalDonations;
-
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -588,30 +585,15 @@ contract Juicer is IJuicer {
       @param _amount The amount of overflow.
     */
     function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        uint256 _donatedPortion =
-            _budget.donation > 0
-                ? Math.mulDiv(_amount, _budget.donation, 1000)
-                : 0;
-
         // The portion of the overflow that is claimable by redeeming tickets.
-        // This is the total minus the percent donated and used as a fee.
+        // This is the total minus the percent used as a fee.
         uint256 _claimablePortion =
-            Math.mulDiv(
-                _amount,
-                uint256(1000).sub(_budget.fee).sub(_budget.donation),
-                1000
-            );
+            Math.mulDiv(_amount, uint256(1000).sub(_budget.fee), 1000);
 
         // The redeemable portion of the overflow can be deposited to earn yield.
-        depositable = depositable.add(_claimablePortion).add(_donatedPortion);
+        depositable = depositable.add(_claimablePortion);
 
         // Add to the claimable amount.
         ticketStore.addClaimable(_budget.project, _claimablePortion);
-
-        // Add to the donatable amount.
-        donations[_budget.project] = donations[_budget.project].add(
-            _donatedPortion
-        );
-        totalDonations = totalDonations.add(_donatedPortion);
     }
 }

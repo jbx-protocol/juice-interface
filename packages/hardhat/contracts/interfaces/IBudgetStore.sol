@@ -18,8 +18,7 @@ interface IBudgetStore is IStore {
         string link,
         uint256 discountRate,
         uint256 bondingCurveRate,
-        uint256 reserved,
-        uint256 donation
+        uint256 reserved
     );
 
     function latestBudgetId(bytes32 _project) external view returns (uint256);
@@ -58,8 +57,7 @@ interface IBudgetStore is IStore {
         string calldata _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved,
-        uint256 _donation
+        uint256 _reserved
     ) external returns (bytes32 project);
 
     function payProject(bytes32 _project, uint256 _amount)

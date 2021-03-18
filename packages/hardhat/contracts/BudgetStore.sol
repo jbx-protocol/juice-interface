@@ -125,7 +125,6 @@ contract BudgetStore is Store, IBudgetStore {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
-        @param _donation The percent of overflow to send to the recipient.
         @return _project The project that was successfully configured.
     */
     function configure(
@@ -137,8 +136,7 @@ contract BudgetStore is Store, IBudgetStore {
         string calldata _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved,
-        uint256 _donation
+        uint256 _reserved
     ) external override returns (bytes32) {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
 
@@ -191,7 +189,6 @@ contract BudgetStore is Store, IBudgetStore {
         _budget.bondingCurveRate = _bondingCurveRate;
         _budget.reserved = _reserved;
         _budget.fee = fee;
-        _budget.donation = _donation;
         _budget.configured = block.timestamp;
         _budget.ballot = budgetBallot;
 
@@ -205,8 +202,7 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.link,
             _budget.discountRate,
             _budget.bondingCurveRate,
-            _budget.reserved,
-            _budget.donation
+            _budget.reserved
         );
 
         return _project;

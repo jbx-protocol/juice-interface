@@ -92,8 +92,7 @@ abstract contract JuiceProject is Ownable {
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
         @param _reserved The percentage of this Budget's surplus to allocate to the owner.
-        @param _donation The percent of overflow to send to the recipient.
-        @return _budgetId The ID of the Budget that was reconfigured.
+        @return _project The ID of the project that was reconfigured.
     */
     function configure(
         uint256 _target,
@@ -103,27 +102,24 @@ abstract contract JuiceProject is Ownable {
         string calldata _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved,
-        uint256 _donation
-    ) external returns (uint256) {
+        uint256 _reserved
+    ) external returns (bytes32 _project) {
         // The pm or the owner can propose configurations.
         require(
             msg.sender == pm || msg.sender == owner(),
             "JuiceProject: UNAUTHORIZED"
         );
-        bytes32 _project =
-            juicer.budgetStore().configure(
-                project,
-                _target,
-                _currency,
-                _duration,
-                _name,
-                _link,
-                _discountRate,
-                _bondingCurveRate,
-                _reserved,
-                _donation
-            );
+        _project = juicer.budgetStore().configure(
+            project,
+            _target,
+            _currency,
+            _duration,
+            _name,
+            _link,
+            _discountRate,
+            _bondingCurveRate,
+            _reserved
+        );
 
         if (project == 0) project = _project;
     }

@@ -1,6 +1,12 @@
 module.exports = [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract IPrices",
+        "name": "_prices",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -58,188 +64,55 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "o",
+        "name": "bondingCurveRate",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "b",
+        "name": "reserved",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "bAddress",
+        "name": "donationRecipient",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "donationAmount",
+        "type": "uint256"
       }
     ],
     "name": "Configure",
     "type": "event"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "previousAdminRole",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "newAdminRole",
-        "type": "bytes32"
-      }
-    ],
-    "name": "RoleAdminChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
         "internalType": "address",
         "name": "account",
         "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
       }
     ],
-    "name": "RoleGranted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleRevoked",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "BUDGET_BASE_WEIGHT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE_",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract AggregatorV3Interface",
-        "name": "_priceFeed",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      }
-    ],
-    "name": "addPriceFeed",
+    "name": "appointAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "budgetBallot",
+    "outputs": [
       {
-        "internalType": "uint256",
-        "name": "_budgetId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_configured",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "_yay",
-        "type": "bool"
-      },
-      {
-        "internalType": "address",
-        "name": "_voter",
+        "internalType": "contract IBudgetBallot",
+        "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
       }
     ],
-    "name": "addVotes",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -289,18 +162,23 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_p",
+        "name": "_bondingCurveRate",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_b",
+        "name": "_reserved",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "_bAddress",
+        "name": "_donationRecipient",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_donationAmount",
+        "type": "uint256"
       }
     ],
     "name": "configure",
@@ -312,6 +190,19 @@ module.exports = [
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -344,11 +235,6 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "next",
             "type": "uint256"
           },
           {
@@ -398,18 +284,23 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
+            "name": "reserved",
             "type": "uint256"
           },
           {
             "internalType": "address",
-            "name": "bAddress",
+            "name": "donationRecipient",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -423,8 +314,18 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
+          },
+          {
+            "internalType": "contract IBudgetBallot",
+            "name": "ballot",
+            "type": "address"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -468,11 +369,6 @@ module.exports = [
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "next",
-            "type": "uint256"
-          },
-          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -519,18 +415,23 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
+            "name": "reserved",
             "type": "uint256"
           },
           {
             "internalType": "address",
-            "name": "bAddress",
+            "name": "donationRecipient",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -544,133 +445,22 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
+          },
+          {
+            "internalType": "contract IBudgetBallot",
+            "name": "ballot",
+            "type": "address"
           }
         ],
         "internalType": "struct Budget.Data",
         "name": "budget",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_project",
-        "type": "address"
-      }
-    ],
-    "name": "getLatestBudget",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "project",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "number",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "next",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "total",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "bAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Budget.Data",
-        "name": "",
         "type": "tuple"
       }
     ],
@@ -710,11 +500,6 @@ module.exports = [
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "next",
-            "type": "uint256"
-          },
-          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -761,18 +546,23 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
+            "name": "reserved",
             "type": "uint256"
           },
           {
             "internalType": "address",
-            "name": "bAddress",
+            "name": "donationRecipient",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -786,8 +576,18 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
+          },
+          {
+            "internalType": "contract IBudgetBallot",
+            "name": "ballot",
+            "type": "address"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -801,168 +601,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
-    ],
-    "name": "getRoleAdmin",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "getRoleMember",
-    "outputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
-    ],
-    "name": "getRoleMemberCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_budgetId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_withhold",
-        "type": "uint256"
-      }
-    ],
-    "name": "getTappableAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_budgetId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_percent",
-        "type": "uint256"
-      }
-    ],
-    "name": "getWeightedRate",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "grantRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "grantRole_",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "hasRole",
+    "name": "isAdmin",
     "outputs": [
       {
         "internalType": "bool",
@@ -1016,16 +660,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_votingPeriod",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_withhold",
-        "type": "uint256"
       }
     ],
     "name": "payProject",
@@ -1050,11 +684,6 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "next",
             "type": "uint256"
           },
           {
@@ -1104,18 +733,23 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
+            "name": "reserved",
             "type": "uint256"
           },
           {
             "internalType": "address",
-            "name": "bAddress",
+            "name": "donationRecipient",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -1129,8 +763,18 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
+          },
+          {
+            "internalType": "contract IBudgetBallot",
+            "name": "ballot",
+            "type": "address"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -1152,17 +796,11 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "priceFeeds",
+    "inputs": [],
+    "name": "prices",
     "outputs": [
       {
-        "internalType": "contract AggregatorV3Interface",
+        "internalType": "contract IPrices",
         "name": "",
         "type": "address"
       }
@@ -1173,17 +811,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
         "internalType": "address",
         "name": "account",
         "type": "address"
       }
     ],
-    "name": "renounceRole",
+    "name": "revokeAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1191,17 +824,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
+        "internalType": "contract IBudgetBallot",
+        "name": "_budgetBallot",
         "type": "address"
       }
     ],
-    "name": "revokeRole",
+    "name": "setBudgetBallot",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1209,17 +837,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
       }
     ],
-    "name": "revokeRole_",
+    "name": "setFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1258,11 +881,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_currency",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_withhold",
-        "type": "uint256"
       }
     ],
     "name": "tap",
@@ -1287,11 +905,6 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "next",
             "type": "uint256"
           },
           {
@@ -1341,18 +954,23 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "p",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "b",
+            "name": "reserved",
             "type": "uint256"
           },
           {
             "internalType": "address",
-            "name": "bAddress",
+            "name": "donationRecipient",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -1366,8 +984,18 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
+          },
+          {
+            "internalType": "contract IBudgetBallot",
+            "name": "ballot",
+            "type": "address"
           }
         ],
         "internalType": "struct Budget.Data",
@@ -1376,7 +1004,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "ethAmount",
+        "name": "convertedEthAmount",
         "type": "uint256"
       },
       {
@@ -1386,64 +1014,6 @@ module.exports = [
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "name": "votes",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "votesByAddress",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ];

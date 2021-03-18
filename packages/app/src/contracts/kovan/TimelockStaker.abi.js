@@ -5,8 +5,27 @@ module.exports = [
     "type": "constructor"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isController",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "controller",
+    "name": "owner",
     "outputs": [
       {
         "internalType": "address",
@@ -23,9 +42,27 @@ module.exports = [
         "internalType": "address",
         "name": "_controller",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_status",
+        "type": "bool"
       }
     ],
-    "name": "setController",
+    "name": "setControllerStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "setOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

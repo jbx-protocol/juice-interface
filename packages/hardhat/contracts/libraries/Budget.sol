@@ -213,7 +213,9 @@ library Budget {
         view
         returns (bool)
     {
-        return _self.ballot.isApproved(_self.id, _self.configured);
+        return
+            _self.ballot == IBudgetBallot(0) ||
+            _self.ballot.isApproved(_self.id, _self.configured);
     }
 
     /** 

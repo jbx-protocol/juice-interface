@@ -17,20 +17,20 @@ const main = async () => {
   const juicer = await deploy("Juicer", [
     budgetStore.address,
     ticketStore.address,
-    weth(process.env.HARDHAT_NETWORK) || token.address
+    weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 
-  const staker = await deploy("TimelockStaker");
-  const budgetBallot = await deploy("BudgetBallot", [
-    juicer.address,
-    staker.address
-  ]);
+  // const staker = await deploy("TimelockStaker");
+  // const budgetBallot = await deploy("BudgetBallot", [
+  //   juicer.address,
+  //   staker.address,
+  // ]);
 
   const admin = await deploy("Admin", [
     juicer.address,
     "Juice",
     "JUICE",
-    "0x766621e1e1274496ab3d65badc5866024f1ab7b8"
+    "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
   ]);
 
   const blockGasLimit = 9000000;
@@ -39,7 +39,7 @@ const main = async () => {
     const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
     const AdminFactory = await ethers.getContractFactory("Admin");
-    const StakerFactory = await ethers.getContractFactory("TimelockStaker");
+    // const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedTicketStore = await TicketStoreFactory.attach(
@@ -49,32 +49,32 @@ const main = async () => {
       budgetStore.address
     );
     const attachedAdmin = await AdminFactory.attach(admin.address);
-    const attachedStaker = await StakerFactory.attach(staker.address);
+    // const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     console.log("⚡️ Setting the ticket store owner");
     await attachedTicketStore.setOwnership(admin.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the budget store owner");
     await attachedBudgetStore.setOwnership(admin.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Setting the staker owner");
-    await attachedStaker.setOwnership(admin.address, {
-      gasLimit: blockGasLimit
-    });
+    // console.log("⚡️ Setting the staker owner");
+    // await attachedStaker.setOwnership(admin.address, {
+    //   gasLimit: blockGasLimit,
+    // });
     console.log(
       "⚡️ Granting the juicer admin privileges over the budget store"
     );
     await attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     console.log(
       "⚡️ Granting the juicer admin privileges over the ticket store"
     );
     await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
     if (process.env.HARDHAT_NETWORK !== "localhost") {
       console.log("⚡️ Adding ETH/USD price feed to the budget store");
@@ -83,26 +83,23 @@ const main = async () => {
         ethUsdPriceFeed(process.env.HARDHAT_NETWORK),
         1,
         {
-          gasLimit: blockGasLimit
+          gasLimit: blockGasLimit,
         }
       );
     }
-    console.log("⚡️ Set the udget store's current ballot");
-    await attachedAdmin.setBudgetBallot(
-      budgetStore.address,
-      budgetBallot.address,
-      {
-        gasLimit: blockGasLimit
-      }
-    );
+
+    // console.log("⚡️ Set the budget store's current ballot");
+    // await attachedAdmin.setBudgetBallot(
+    //   budgetStore.address,
+    //   budgetBallot.address,
+    //   {
+    //     gasLimit: blockGasLimit,
+    //   }
+    // );
 
     console.log("⚡️ Setting the admin of the juicer");
     await attachedJuicer.setAdmin(admin.address, {
-      gasLimit: blockGasLimit
-    });
-    console.log("⚡️ Issuing the admin's tickets");
-    await attachedAdmin.issueTickets({
-      gasLimit: blockGasLimit
+      gasLimit: blockGasLimit,
     });
 
     // TODO set the owner of the admin contract.
@@ -110,16 +107,16 @@ const main = async () => {
     //   gasLimit: blockGasLimit
     // });
 
-    console.log("⚡️ Setting the budget ballot as a controller of the staker");
-    // Make this Ballot a timelock controller of the staker contract.
-    await attachedAdmin.setControllerStatus(
-      staker.address,
-      budgetBallot.address,
-      true,
-      {
-        gasLimit: blockGasLimit
-      }
-    );
+    // console.log("⚡️ Setting the budget ballot as a controller of the staker");
+    // // Make this Ballot a timelock controller of the staker contract.
+    // await attachedAdmin.setControllerStatus(
+    //   staker.address,
+    //   budgetBallot.address,
+    //   true,
+    //   {
+    //     gasLimit: blockGasLimit,
+    //   }
+    // );
 
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
@@ -132,12 +129,15 @@ const main = async () => {
       970,
       382,
       50,
-      "0x0000000000000000000000000000000000000000",
-      0,
       {
-        gasLimit: blockGasLimit
+        gasLimit: blockGasLimit,
       }
     );
+
+    console.log("⚡️ Issuing the admin's tickets");
+    await attachedAdmin.issueTickets({
+      gasLimit: blockGasLimit,
+    });
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }
@@ -195,10 +195,10 @@ const abiEncodeArgs = (deployed, contractArgs) => {
 };
 
 // checks if it is a Solidity file
-const isSolidity = fileName =>
+const isSolidity = (fileName) =>
   fileName.indexOf(".sol") >= 0 && fileName.indexOf(".swp") < 0;
 
-const readArgsFile = contractName => {
+const readArgsFile = (contractName) => {
   let args = [];
   try {
     const argsFile = `./contracts/${contractName}.args`;
@@ -212,7 +212,7 @@ const readArgsFile = contractName => {
 
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });

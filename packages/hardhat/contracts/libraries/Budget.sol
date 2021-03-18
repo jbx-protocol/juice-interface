@@ -183,27 +183,6 @@ library Budget {
     }
 
     /** 
-        @notice Returns the amount available for the given Budget's project to tap in to.
-        @param _self The Budget to make the calculation for.
-        @param _ethPrice The current price of ETH for the given budget.
-        @return The resulting amount.
-    */
-    function _tappableAmount(Data memory _self, uint256 _ethPrice)
-        internal
-        pure
-        returns (uint256)
-    {
-        if (_self.total == 0) return 0;
-
-        uint256 _available =
-            Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice));
-        return
-            Math.mulDiv(_available, 1000, uint256(1000).add(_self.fee)).sub(
-                _self.tappedTarget
-            );
-    }
-
-    /** 
         @notice Whether the budgets configuration is currently approved.
         @param _self The Budget to check the configuration approval of.
         @return Whether the budget's configuration is approved.
@@ -293,5 +272,26 @@ library Budget {
     */
     function _hasExpired(Data memory _self) private view returns (bool) {
         return block.timestamp > _self.start.add(_self.duration);
+    }
+
+    /** 
+        @notice Returns the amount available for the given Budget's project to tap in to.
+        @param _self The Budget to make the calculation for.
+        @param _ethPrice The current price of ETH for the given budget.
+        @return The resulting amount.
+    */
+    function _tappableAmount(Data memory _self, uint256 _ethPrice)
+        private
+        pure
+        returns (uint256)
+    {
+        if (_self.total == 0) return 0;
+
+        uint256 _available =
+            Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice));
+        return
+            Math.mulDiv(_available, 1000, uint256(1000).add(_self.fee)).sub(
+                _self.tappedTarget
+            );
     }
 }

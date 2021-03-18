@@ -477,7 +477,12 @@ contract Juicer is IJuicer {
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        _takeFee(_owner, Math.mulDiv(_amount, _budget.fee, 1000), _beneficiary);
+        _takeFee(
+            _owner,
+            JuiceProject(admin).project(),
+            Math.mulDiv(_amount, _budget.fee, 1000),
+            _beneficiary
+        );
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
@@ -519,29 +524,28 @@ contract Juicer is IJuicer {
     /**
         @notice Takes a fee for the admin's active budget.
         @param _from The owner of the project that the fee is being taken from.
+        @param _project The project the fee is going to.
         @param _amount Amount of the fee in ETH. Sent as 1E18.
         @param _beneficiary The address to split the newly minted Tickets with. 
     */
     function _takeFee(
         address _from,
+        bytes32 _project,
         uint256 _amount,
         address _beneficiary
     ) private {
-        bytes32 _adminProject = JuiceProject(admin).project();
-        require(_adminProject != 0, "Juicer::_takeFee: PROJECT_NOT_FOUND");
-
         // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
         (
             Budget.Data memory _budget,
             address _owner,
             uint256 _covertedCurrencyAmount,
             uint256 _overflow
-        ) = budgetStore.payProject(_adminProject, _amount);
+        ) = budgetStore.payProject(_project, _amount);
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
             ticketStore.print(
-                _adminProject,
+                _project,
                 _owner,
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
@@ -557,17 +561,17 @@ contract Juicer is IJuicer {
                 .div(2);
 
         // Mint the appropriate amount of tickets for the beneficiary.
-        ticketStore.print(_adminProject, _beneficiary, _printAmount);
+        ticketStore.print(_project, _beneficiary, _printAmount);
 
         // Mint the appropriate amount of tickets for the project owner that the fee is being taken from.
-        ticketStore.print(_adminProject, _from, _printAmount);
+        ticketStore.print(_project, _from, _printAmount);
 
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
 
         emit TakeFee(
             _budget.id,
-            _adminProject,
+            _project,
             _from,
             _beneficiary,
             _amount,

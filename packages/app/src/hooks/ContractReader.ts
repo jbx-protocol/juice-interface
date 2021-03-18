@@ -3,7 +3,8 @@ import { ContractName } from 'constants/contract-name'
 import { readProvider } from 'constants/read-provider'
 import { UserContext } from 'contexts/userContext'
 import { Contracts } from 'models/contracts'
-import { useCallback, useContext, useState } from 'react'
+import { NetworkName } from 'models/network-name'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import { useContractLoader } from './ContractLoader'
@@ -24,6 +25,7 @@ export default function useContractReader<V>({
   formatter,
   callback,
   valueDidChange,
+  network,
 }: {
   contract?: ContractConfig
   functionName?: string
@@ -32,8 +34,9 @@ export default function useContractReader<V>({
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
+  network?: NetworkName | undefined
 }) {
-  const { network } = useContext(UserContext)
+  const { network: _network } = useContext(UserContext)
   const [value, setValue] = useState<V | undefined>()
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
@@ -43,7 +46,11 @@ export default function useContractReader<V>({
     [valueDidChange],
   )
 
-  const contracts = useContractLoader(readProvider(network), true)
+  const provider = useMemo(() => readProvider(network ?? _network), [
+    network,
+    _network,
+  ])
+  const contracts = useContractLoader(provider, true)
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {
@@ -59,6 +66,7 @@ export default function useContractReader<V>({
         const newValue = _formatter(result)
 
         if (_valueDidChange(value, newValue)) {
+          console.log('📗 New >', functionName, newValue)
           setValue(newValue)
           _callback(newValue)
         }
@@ -73,7 +81,10 @@ export default function useContractReader<V>({
 
     const listener = (x: any) => getValue()
 
-    let subscriptions: { contract: Contract; filter: EventFilter }[] = []
+    let subscriptions: {
+      contract: Contract
+      filter: EventFilter
+    }[] = []
 
     if (updateOn?.length) {
       try {
@@ -85,10 +96,16 @@ export default function useContractReader<V>({
 
           const filter = _contract.filters[u.eventName](...(u.topics ?? []))
           _contract?.on(filter, listener)
-          subscriptions.push({ contract: _contract, filter })
+          subscriptions.push({
+            contract: _contract,
+            filter,
+          })
         })
       } catch (error) {
-        console.log('Read contract >', { functionName, error })
+        console.log('Read contract >', {
+          functionName,
+          error,
+        })
       }
     }
 

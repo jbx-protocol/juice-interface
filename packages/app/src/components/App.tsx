@@ -48,7 +48,14 @@ function App() {
     getSigner()
   }, [signingProvider])
 
-  const weth = useWeth(signer)
+  const network = useMemo(() => {
+    const network = Object.entries(NETWORKS).find(
+      ([name, info]) => info.chainId === signingProvider?.network?.chainId,
+    )
+    return network ? (network[0] as NetworkName) : undefined
+  }, [signingProvider?.network?.chainId])
+
+  const weth = useWeth(network)
 
   const transactor = useTransactor({
     provider: signingProvider,
@@ -61,14 +68,7 @@ function App() {
   }, [userAddress, dispatch])
 
   useUserBudget(userAddress)
-  useUserTickets(userAddress)
-
-  const network = useMemo(() => {
-    const network = Object.entries(NETWORKS).find(
-      ([name, info]) => info.chainId === signingProvider?.network?.chainId,
-    )
-    return network ? (network[0] as NetworkName) : undefined
-  }, [signingProvider?.network?.chainId])
+  useUserTickets(userAddress, network)
 
   console.log('User:', userAddress)
 

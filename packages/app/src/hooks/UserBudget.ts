@@ -7,8 +7,9 @@ import { serializeBudget } from 'utils/serializers'
 import { userBudgetActions } from '../redux/slices/userBudget'
 import { useAppDispatch } from './AppDispatch'
 import useContractReader from './ContractReader'
+import { NetworkName } from 'models/network-name'
 
-export function useUserBudget(userAddress?: string) {
+export function useUserBudget(userAddress?: string, network?: NetworkName) {
   const [userBudgetId, setUserBudgetId] = useState<string>()
   const dispatch = useAppDispatch()
 
@@ -58,5 +59,6 @@ export function useUserBudget(userAddress?: string) {
     valueDidChange,
     updateOn,
     callback,
+    network,
   })
 }

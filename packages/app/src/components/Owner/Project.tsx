@@ -6,7 +6,6 @@ import { CSSProperties } from 'react'
 
 import CurrentBudget from './CurrentBudget'
 import Rewards from './Rewards'
-import { render } from '@testing-library/react'
 
 export default function Project({
   budget,

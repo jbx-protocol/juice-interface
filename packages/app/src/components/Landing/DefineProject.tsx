@@ -27,8 +27,6 @@ export default function DefineProject() {
   const editingBudget = useEditingBudgetSelector()
   const dispatch = useAppDispatch()
 
-  console.log({ userBudget, editingBudget })
-
   const budget = useMemo(() => userBudget ?? editingBudget, [
     userBudget,
     editingBudget,

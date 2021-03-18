@@ -8,12 +8,7 @@ import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useMemo } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
-import {
-  formatWad,
-  fromPerMille,
-  parsePerMille,
-  parseWad,
-} from 'utils/formatCurrency'
+import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 
 export default function ConfirmPayOwnerModal({
   budget,

@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
-
 import { NetworkName } from 'models/network-name'
+
 import { NETWORKS } from './networks'
 
 const defaultNetworkRpcUrl = (process.env.NODE_ENV === 'production'

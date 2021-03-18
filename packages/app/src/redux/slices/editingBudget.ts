@@ -77,25 +77,25 @@ export const editingBudgetSlice = createSlice({
         duration: action.payload,
       },
     }),
-    setP: (state, action: PayloadAction<string>) => ({
+    setReserved: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        p: action.payload,
+        reserved: action.payload,
       },
     }),
-    setB: (state, action: PayloadAction<string>) => ({
+    setDonationAmount: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        b: action.payload,
+        donationAmount: action.payload,
       },
     }),
-    setBAddress: (state, action: PayloadAction<string>) => ({
+    setDonationRecipient: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        bAddress: action.payload,
+        donationRecipient: action.payload,
       },
     }),
     setDiscountRate: (state, action: PayloadAction<string>) => ({

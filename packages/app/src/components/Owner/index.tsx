@@ -23,7 +23,7 @@ export default function Owner() {
   >()
 
   const budget = useUserBudgetSelector()
-  const { userAddress } = useContext(UserContext)
+  const { userAddress, network } = useContext(UserContext)
 
   const { owner }: { owner?: string } = useParams()
 
@@ -48,7 +48,7 @@ export default function Owner() {
     ),
   })
 
-  const ticketContract = useErc20Contract(ticketAddress)
+  const ticketContract = useErc20Contract(ticketAddress, network)
 
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,

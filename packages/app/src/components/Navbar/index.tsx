@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 
 import Account from './Account'
 
-export default function Navbar({}: {}) {
+export default function Navbar() {
   const userBudget = useUserBudgetSelector()
   const { userAddress } = useContext(UserContext)
 

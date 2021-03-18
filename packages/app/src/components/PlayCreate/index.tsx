@@ -136,9 +136,11 @@ export default function PlayCreate() {
     const fields = advancedSettingsForm.getFieldsValue(true)
     dispatch(editingBudgetActions.setLink(fields.link))
     dispatch(editingBudgetActions.setDiscountRate(fields.discountRate))
-    dispatch(editingBudgetActions.setBAddress(fields.donationRecipient))
-    dispatch(editingBudgetActions.setB(fields.beneficiary))
-    dispatch(editingBudgetActions.setP(fields.reserved))
+    dispatch(
+      editingBudgetActions.setDonationRecipient(fields.donationRecipient),
+    )
+    dispatch(editingBudgetActions.setDonationAmount(fields.donationAmount))
+    dispatch(editingBudgetActions.setReserved(fields.reserved))
   }
 
   const onTicketsFormSaved = () => {

@@ -1,16 +1,11 @@
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcSigner } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
-import { readProvider } from 'constants/read-provider'
-import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { useContext, useMemo, useState } from 'react'
-
-import { mainnetProvider } from '../constants/mainnet-provider'
+import { NetworkName } from 'models/network-name'
 
 export function useWeth(
-  signer?: JsonRpcSigner,
+  network: NetworkName | undefined,
 ):
   | Partial<{
       contract: Contract
@@ -18,36 +13,19 @@ export function useWeth(
       address: string
     }>
   | undefined {
-  const { network } = useContext(UserContext)
-  const [symbol, setSymbol] = useState<string>()
-
-  const provider = useMemo(
-    () =>
-      process.env.NODE_ENV === 'production'
-        ? mainnetProvider
-        : readProvider(network),
-    [network],
-  )
-
   const address = useContractReader<string>({
     contract: ContractName.Juicer,
     functionName: 'weth',
+    network,
   })
 
-  const contract = useErc20Contract(address, signer ?? provider)
+  const contract = useErc20Contract(address, network)
 
-  useContractReader<string>({
+  const symbol = useContractReader<string>({
     contract,
     functionName: 'symbol',
-    callback: setSymbol,
+    network,
   })
 
-  return useMemo(
-    () => ({
-      contract,
-      symbol,
-      address,
-    }),
-    [contract, symbol, address],
-  )
+  return { address, contract, symbol }
 }

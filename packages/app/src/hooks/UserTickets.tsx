@@ -1,12 +1,17 @@
 import { ContractName } from 'constants/contract-name'
 import { useAppDispatch } from 'hooks/AppDispatch'
+import { useCallback } from 'react'
 import { useEffect, useRef } from 'react'
 import { userTicketsActions } from 'redux/slices/userTickets'
 
 import useContractReader from './ContractReader'
 import { useErc20Contract } from './Erc20Contract'
+import { NetworkName } from 'models/network-name'
 
-export function useUserTickets(userAddress: string | undefined) {
+export function useUserTickets(
+  userAddress: string | undefined,
+  network: NetworkName | undefined,
+) {
   const dispatch = useAppDispatch()
   const didInitialCheck = useRef<{
     address: boolean
@@ -29,7 +34,7 @@ export function useUserTickets(userAddress: string | undefined) {
       }),
   })
 
-  const ticketContract = useErc20Contract(ticketsAddress)
+  const ticketContract = useErc20Contract(ticketsAddress, network)
 
   const ticketsSymbol = useContractReader<string>({
     contract: ticketContract,

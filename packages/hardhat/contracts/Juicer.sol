@@ -196,9 +196,6 @@ contract Juicer is IJuicer {
         // Get the current budget.
         Budget.Data memory _budget = budgetStore.getCurrentBudget(_project);
 
-        // The total raw amount claimable in the ticket store.
-        uint256 _totalClaimable = ticketStore.totalClaimable();
-
         // Redeem at the ticket store. The raw amount claimable for this issuer is returned.
         uint256 _claimable =
             ticketStore.redeem(
@@ -215,7 +212,11 @@ contract Juicer is IJuicer {
             _baseReturnAmount.add(overflowYielder.getBalance(weth));
 
         // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
-        returnAmount = _baseReturnAmount.div(_totalClaimable).mul(_claimable);
+        returnAmount = Math.mulDiv(
+            _baseReturnAmount,
+            _claimable,
+            ticketStore.totalClaimable()
+        );
 
         // Subtract the depositable amount if needed.
         if (returnAmount <= depositable) {
@@ -266,11 +267,11 @@ contract Juicer is IJuicer {
             "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 
-        // Transfer the funds to the specified address.
-        weth.safeTransfer(_beneficiary, _tappedAmount);
-
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
+
+        // Transfer the funds to the specified address.
+        weth.safeTransfer(_beneficiary, _tappedAmount);
 
         emit Tap(
             _budgetId,

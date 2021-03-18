@@ -60,11 +60,12 @@ export default function ProjectInfo({
             suffix="days"
           />
         </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit" type="primary" onClick={onSave}>
+            Save
+          </Button>
+        </Form.Item>
       </Form>
-
-      <Button type="primary" onClick={onSave}>
-        Save
-      </Button>
     </Space>
   )
 }

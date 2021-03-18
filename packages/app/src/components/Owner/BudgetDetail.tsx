@@ -327,6 +327,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
           {!addressExists(budget.donationRecipient) ? null : (
             <Descriptions.Item
+              span={2}
               label={
                 <TooltipLabel
                   label="Reserved donation amount"

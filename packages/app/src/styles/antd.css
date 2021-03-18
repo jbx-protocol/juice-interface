@@ -19728,14 +19728,14 @@ span.ant-radio + * {
   position: absolute;
   width: 100%;
   height: 4px;
-  background-color: #131115;
+  background-color: #5a565f;
   border-radius: 2px;
   transition: background-color 0.3s;
 }
 .ant-slider-track {
   position: absolute;
   height: 4px;
-  background-color: #b5feff;
+  background-color: #32c8db;
   border-radius: 2px;
   transition: background-color 0.3s;
 }
@@ -19764,10 +19764,10 @@ span.ant-radio + * {
   border-color: #32c8db;
 }
 .ant-slider:hover .ant-slider-rail {
-  background-color: #e1e1e1;
+  background-color: #908c96;
 }
 .ant-slider:hover .ant-slider-track {
-  background-color: #87eff5;
+  background-color: #32c8db;
 }
 .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
   border-color: #87eff5;

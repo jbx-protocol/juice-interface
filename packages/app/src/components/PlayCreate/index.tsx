@@ -134,7 +134,6 @@ export default function PlayCreate() {
 
   const onAdvancedFormSaved = () => {
     const fields = advancedSettingsForm.getFieldsValue(true)
-    dispatch(editingBudgetActions.setLink(fields.link))
     dispatch(editingBudgetActions.setDiscountRate(fields.discountRate))
     dispatch(
       editingBudgetActions.setDonationRecipient(fields.donationRecipient),

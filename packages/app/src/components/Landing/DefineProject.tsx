@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
-import BudgetTargetInput from 'components/shared/BudgetTargetInput'
+import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -171,7 +171,8 @@ export default function DefineProject() {
             holders.
             <br />
             <br />
-            Users, patrons, and investors get {bold(editingTickets.symbol, 'tickets')} by contributing to {' '}
+            Users, patrons, and investors get{' '}
+            {bold(editingTickets.symbol, 'tickets')} by contributing to{' '}
             {bold(editingBudget?.name, 'your project')}.
           </div>
         </Col>

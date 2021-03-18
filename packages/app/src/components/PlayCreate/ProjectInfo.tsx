@@ -1,5 +1,5 @@
 import { Button, Form, FormInstance, Input, Space } from 'antd'
-import BudgetTargetInput from 'components/shared/BudgetTargetInput'
+import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { BudgetCurrency } from 'models/budget-currency'
 
 export type ProjectInfoFormFields = {
@@ -44,9 +44,7 @@ export default function ProjectInfo({
             value={form.getFieldValue('target')}
             onValueChange={val => form.setFieldsValue({ target: val })}
             currency={form.getFieldValue('currency')}
-            onCurrencyChange={currency =>
-              form.setFieldsValue({ currency: currency === '1' ? '0' : '1' })
-            }
+            onCurrencyChange={currency => form.setFieldsValue({ currency })}
           />
         </Form.Item>
         <Form.Item
@@ -55,13 +53,7 @@ export default function ProjectInfo({
           label="Time frame"
           rules={[{ required: true }]}
         >
-          <Input
-            className="align-end"
-            placeholder="30"
-            type="number"
-            suffix="days"
-            autoComplete="off"
-          />
+          <Input type="number" suffix="days" autoComplete="off" />
         </Form.Item>
       </Form>
 

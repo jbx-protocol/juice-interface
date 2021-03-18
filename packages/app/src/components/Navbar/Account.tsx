@@ -1,4 +1,5 @@
-import { Button, Col, Popover, Row, Tag, Tooltip } from 'antd'
+import { Button, Col, Popover, Row, Tag } from 'antd'
+import { supportedNetworks } from 'constants/supported-networks'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useContext } from 'react'
@@ -6,8 +7,6 @@ import useDeepCompareEffect from 'use-deep-compare-effect'
 
 import Balance from './Balance'
 import Wallet from './Wallet'
-import { supportedNetworks } from '../../constants/supported-networks'
-import { NetworkName } from 'models/network-name'
 
 export default function Account() {
   const { onNeedProvider, signingProvider, userAddress, network } = useContext(

@@ -1,4 +1,5 @@
 import { Button, Form, FormInstance, Input, Space } from 'antd'
+import NumberSlider from 'components/shared/inputs/NumberSlider'
 import React, { useState } from 'react'
 
 export type AdvancedSettingsFormFields = {
@@ -17,7 +18,7 @@ export default function AdvancedSettings({
   onSave: VoidFunction
   onSkip: VoidFunction
 }) {
-  const [donationRecipientRequired, setBeneficiaryAddressRequired] = useState<
+  const [donationRecipientRequired, setDonationRecipientRequired] = useState<
     boolean
   >(false)
 
@@ -30,17 +31,14 @@ export default function AdvancedSettings({
           extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
           name="discountRate"
           label="Discount rate"
-          rules={[{ required: true }]}
-          initialValue={97}
         >
-          <Input
-            className="align-end"
-            suffix="%"
-            type="number"
+          <NumberSlider
             min={95}
-            max={100}
-            placeholder="97"
-            autoComplete="off"
+            value={form.getFieldValue('discountRate')}
+            suffix="%"
+            onChange={(val?: number) =>
+              form.setFieldsValue({ discountRate: val?.toString() })
+            }
           />
         </Form.Item>
         <Form.Item
@@ -50,11 +48,12 @@ export default function AdvancedSettings({
           label="Reserved tickets"
           initialValue={5}
         >
-          <Input
-            className="align-end"
+          <NumberSlider
+            value={form.getFieldValue('reserved')}
             suffix="%"
-            type="number"
-            autoComplete="off"
+            onChange={(val?: number) =>
+              form.setFieldsValue({ reserved: val?.toString() })
+            }
           />
         </Form.Item>
         <Form.Item
@@ -67,18 +66,17 @@ export default function AdvancedSettings({
         </Form.Item>
         <Form.Item
           extra=""
-          name="donation"
+          name="donationAmount"
           label="Donation amount"
           initialValue={0}
         >
-          <Input
-            className="align-end"
+          <NumberSlider
+            value={form.getFieldValue('donation')}
             suffix="%"
-            type="number"
-            onChange={e =>
-              setBeneficiaryAddressRequired(parseFloat(e.target.value) > 0)
-            }
-            autoComplete="off"
+            onChange={(val?: number) => {
+              form.setFieldsValue({ donationAmount: val?.toString() })
+              setDonationRecipientRequired(!!val)
+            }}
           />
         </Form.Item>
       </Form>

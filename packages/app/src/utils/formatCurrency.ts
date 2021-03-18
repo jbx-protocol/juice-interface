@@ -3,6 +3,7 @@ import { formatUnits, parseUnits } from '@ethersproject/units'
 
 const wadPrecision = 18
 const decimalSeparator = '.'
+const thousandsSeparator = ','
 
 export const parseWad = (amt?: string) => parseUnits(amt ?? '0', wadPrecision)
 export const parsePerMille = (amt?: string) =>
@@ -19,40 +20,46 @@ export const formatWad = (amt?: BigNumberish) =>
 export const fromPerMille = (amt?: BigNumberish) =>
   amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
 
-const separateThousands = (str?: string, separator = ',') => {
+const separateThousands = (str?: string, separator = thousandsSeparator) => {
   if (!str?.trim().length) return
 
-  let output = ''
-  let charPosition = 0
-
-  for (let i = str.length - 1; i >= 0; i--) {
-    output =
-      charPosition > 0 && charPosition % 3 === 0
-        ? str[i] + separator + output
-        : str[i] + output
-    charPosition++
-  }
-
-  return output
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
 }
 
-export const formattedNum = (num: BigNumberish | undefined, empty = '0') => {
-  if (num === undefined) return empty
+export const formattedNum = (
+  num: BigNumberish | undefined,
+  config?: {
+    empty?: string
+    thousandsSeparator?: string
+    decimalSeparator?: string
+  },
+) => {
+  const _empty = config?.empty ?? '0'
+  const _thousandsSeparator = config?.thousandsSeparator ?? thousandsSeparator
+  const _decimalSeparator = config?.decimalSeparator ?? decimalSeparator
 
-  const str = num.toString()
+  if (num === undefined) return _empty
 
-  if (!str.length) return empty
+  let str = num.toString()
 
-  if (str.includes(decimalSeparator)) {
-    const [integer, decimal] = str.split(decimalSeparator)
-    return decimal === '0'
-      ? separateThousands(integer)
-      : [separateThousands(integer), decimal.substr(0, 6).padEnd(2, '0')].join(
-          decimalSeparator,
-        )
+  // Trim leading zeros
+  while (str.length && str[0] === '0') {
+    str = str.substr(1)
   }
 
-  return separateThousands(str)
+  if (!str.length) return _empty
+
+  if (str.includes(_decimalSeparator)) {
+    const [integer, decimal] = str.split(_decimalSeparator)
+    return decimal === '0'
+      ? separateThousands(integer, _thousandsSeparator)
+      : [
+          separateThousands(integer, _thousandsSeparator),
+          decimal.substr(0, 6).padEnd(2, '0'),
+        ].join(_decimalSeparator)
+  }
+
+  return separateThousands(str, _thousandsSeparator)
 }
 
 export class CurrencyUtils {

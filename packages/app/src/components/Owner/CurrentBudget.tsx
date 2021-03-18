@@ -94,6 +94,7 @@ export default function CurrentBudget({
             placeholder="0"
             suffix="USD"
             type="number"
+            disabled={budget?.configured.eq(0)}
             onChange={e => setPayAmount(e.target.value)}
           />
 

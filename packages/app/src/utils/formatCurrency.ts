@@ -5,7 +5,7 @@ const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
-export const parseWad = (amt?: string) => parseUnits(amt ?? '0', wadPrecision)
+export const parseWad = (amt?: string) => parseUnits(amt || '0', wadPrecision)
 export const parsePerMille = (amt?: string) =>
   BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
 
@@ -35,10 +35,11 @@ export const formattedNum = (
   },
 ) => {
   const _empty = config?.empty ?? '0'
+
+  if (num === undefined || num === '') return _empty
+
   const _thousandsSeparator = config?.thousandsSeparator ?? thousandsSeparator
   const _decimalSeparator = config?.decimalSeparator ?? decimalSeparator
-
-  if (num === undefined) return _empty
 
   let str = num.toString()
 

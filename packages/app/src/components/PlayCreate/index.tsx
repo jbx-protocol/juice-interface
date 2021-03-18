@@ -185,6 +185,9 @@ export default function PlayCreate() {
       ?.add(editingBudget.target.mul(adminFeePercent).div(100))
       .toHexString()
 
+    // TODO
+    const bondingCurveRate = BigNumber.from(382).toHexString()
+
     transactor(
       contracts.BudgetStore,
       'configure',
@@ -195,6 +198,7 @@ export default function PlayCreate() {
         editingBudget.name,
         editingBudget.link ?? '',
         editingBudget.discountRate.toHexString(),
+        bondingCurveRate,
         editingBudget.reserved.toHexString(),
         editingBudget.donationRecipient ?? emptyAddress,
         editingBudget.donationAmount.toHexString(),
@@ -271,7 +275,7 @@ export default function PlayCreate() {
             }}
           />
           <Steps.Step
-            title={stepButton('Create project', () => null, 'primary')}
+            title={stepButton('Deploy project', () => null, 'primary')}
             onClick={() => {
               incrementStep(4)
               setCreateProjectModalVisible(true)

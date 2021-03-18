@@ -2,6 +2,7 @@ import { Button, Col, Form, Input, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -102,11 +103,8 @@ export default function DefineProject() {
                 }}
                 currency={form.getFieldValue('currency')}
                 onCurrencyChange={currency => {
-                  const val = {
-                    currency: currency === '1' ? '0' : ('1' as BudgetCurrency),
-                  }
-                  form.setFieldsValue(val)
-                  if (onFieldsChange) onFieldsChange(val)
+                  form.setFieldsValue({ currency })
+                  if (onFieldsChange) onFieldsChange({ currency })
                 }}
               />
             </Form.Item>
@@ -114,11 +112,11 @@ export default function DefineProject() {
               extra="The recurring time frame of this budget"
               name="duration"
             >
-              <Input
+              <FormattedNumberInput
                 placeholder="30"
-                type="number"
+                value={form.getFieldValue('duration')}
                 suffix="days"
-                autoComplete="off"
+                onChange={val => form.setFieldsValue({ duration: val })}
               />
             </Form.Item>
             <Form.Item

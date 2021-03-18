@@ -10,6 +10,7 @@ export default function FormattedNumberInput({
   value,
   disabled,
   placeholder,
+  suffix,
   onChange,
 }: {
   style?: CSSProperties
@@ -19,29 +20,39 @@ export default function FormattedNumberInput({
   value?: string
   placeholder?: string
   disabled?: boolean
+  suffix?: string
   onChange?: (val?: string) => void
 }) {
   const thousandsSeparator = ','
   const decimalSeparator = '.'
 
   return (
-    <InputNumber
-      min={min}
-      max={max}
-      style={style}
-      value={value ? parseFloat(value) : undefined}
-      placeholder={placeholder}
-      formatter={(val?: string | number | undefined) =>
-        formattedNum(val, {
-          thousandsSeparator,
-          decimalSeparator,
-        }) ?? ''
-      }
-      parser={(val?: string) => (val ?? '0').replace(thousandsSeparator, '')}
-      disabled={disabled}
-      onChange={value => {
-        if (onChange) onChange(value?.toString())
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'baseline',
+        ...style,
       }}
-    />
+    >
+      <InputNumber
+        min={min}
+        max={max}
+        style={{ width: '100%' }}
+        value={value !== undefined ? parseFloat(value) : undefined}
+        placeholder={placeholder}
+        formatter={(val?: string | number | undefined) =>
+          formattedNum(val, {
+            thousandsSeparator,
+            decimalSeparator,
+          }) ?? '0'
+        }
+        parser={(val?: string) => (val ?? '0').replace(thousandsSeparator, '')}
+        disabled={disabled}
+        onChange={value => {
+          if (onChange) onChange(value?.toString())
+        }}
+      />
+      {suffix ? <div style={{ marginLeft: 8 }}>{suffix}</div> : ''}
+    </div>
   )
 }

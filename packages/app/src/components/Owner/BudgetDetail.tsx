@@ -7,11 +7,11 @@ import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useExchangePrice } from 'hooks/ExchangePrice'
 import { Budget } from 'models/budget'
 import moment from 'moment'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { addressExists } from 'utils/addressExists'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
@@ -33,6 +33,8 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     weth,
   } = useContext(UserContext)
 
+  const ethPrice = useExchangePrice()
+
   const converter = useCurrencyConverter()
 
   const [tapAmount, setTapAmount] = useState<string>()
@@ -41,30 +43,26 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
 
   const currency = budgetCurrencyName(budget.currency)
 
-  const tappableAmount = useContractReader<BigNumber>({
+  const adminFeePercent = useContractReader<number>({
     contract: ContractName.BudgetStore,
-    functionName: 'getTappableAmount',
-    args: [budget.id.toHexString()],
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        budget.id
-          ? [
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Pay',
-                topics: [budget.id.toHexString()],
-              },
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Tap',
-                topics: [budget.id.toHexString()],
-              },
-            ]
-          : undefined,
-      [budget.id],
-    ),
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val?.toNumber(),
   })
+
+  const tappableAmount = useMemo(() => {
+    const total = budget.total.mul(ethPrice ?? 0)
+    const available = budget.target.lt(total) ? budget.target : total
+
+    return available
+      .mul(1000)
+      .div(1000 + (adminFeePercent ?? 0))
+      .sub(budget.tappedTarget)
+  }, [
+    budget.total.toString(),
+    budget.target.toString(),
+    budget.tappedTarget.toString(),
+    adminFeePercent,
+  ])
 
   useEffect(() => setTapAmount(fromWad(tappableAmount)), [tappableAmount])
 

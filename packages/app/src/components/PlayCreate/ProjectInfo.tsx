@@ -1,6 +1,7 @@
 import { Button, Form, FormInstance, Input, Space } from 'antd'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { BudgetCurrency } from 'models/budget-currency'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 
 export type ProjectInfoFormFields = {
   name: string
@@ -53,7 +54,11 @@ export default function ProjectInfo({
           label="Time frame"
           rules={[{ required: true }]}
         >
-          <Input type="number" suffix="days" autoComplete="off" />
+          <FormattedNumberInput
+            value={form.getFieldValue('duration')}
+            onChange={val => form.setFieldsValue({ duration: val })}
+            suffix="days"
+          />
         </Form.Item>
       </Form>
 

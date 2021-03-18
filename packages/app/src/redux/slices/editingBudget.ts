@@ -67,28 +67,28 @@ export const editingBudgetSlice = createSlice({
       ...state,
       value: {
         ...state.value,
-        target: action.payload,
+        target: action.payload || '0',
       },
     }),
     setDuration: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        duration: action.payload,
+        duration: action.payload || '0',
       },
     }),
     setReserved: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        reserved: action.payload,
+        reserved: action.payload || '0',
       },
     }),
     setDonationAmount: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        donationAmount: action.payload,
+        donationAmount: action.payload || '0',
       },
     }),
     setDonationRecipient: (state, action: PayloadAction<string>) => ({
@@ -102,14 +102,14 @@ export const editingBudgetSlice = createSlice({
       ...state,
       value: {
         ...state.value,
-        discountRate: action.payload,
+        discountRate: action.payload || '0',
       },
     }),
     setCurrency: (state, action: PayloadAction<BudgetCurrency>) => ({
       ...state,
       value: {
         ...state.value,
-        currency: action.payload,
+        currency: action.payload || '0',
       },
     }),
     setLoading: (state, action: PayloadAction<boolean>) => ({

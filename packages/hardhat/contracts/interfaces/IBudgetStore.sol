@@ -21,9 +21,15 @@ interface IBudgetStore is IStore {
         uint256 reserved
     );
 
+    event TransferOwnership(
+        bytes32 indexed _project,
+        address indexed _from,
+        address indexed _to
+    );
+
     function latestBudgetId(bytes32 _project) external view returns (uint256);
 
-    function owners(bytes32 _project) external view returns (address);
+    function projectOwner(bytes32 _project) external view returns (address);
 
     function budgetCount() external view returns (uint256);
 

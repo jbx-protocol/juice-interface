@@ -29,7 +29,7 @@ contract BudgetStore is Store, IBudgetStore {
     mapping(bytes32 => uint256) public override latestBudgetId;
 
     /// @notice The project that is each address can configure and tap.
-    mapping(bytes32 => address) public override owners;
+    mapping(bytes32 => address) public override projectOwner;
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
@@ -160,12 +160,13 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Either the message sender must be the project owner, or there must not yet be a project owner.
         require(
-            owners[_project] == msg.sender || owners[_project] == address(0),
+            projectOwner[_project] == msg.sender ||
+                projectOwner[_project] == address(0),
             "BudgetStore::configure: UNAUTHORIZED"
         );
 
         // If this is a new project, create an ID.
-        if (owners[_project] == address(0)) {
+        if (projectOwner[_project] == address(0)) {
             // If a project was not passed in, create one.
             if (_project == 0)
                 _project = keccak256(
@@ -173,7 +174,7 @@ contract BudgetStore is Store, IBudgetStore {
                 );
 
             // Set the owner.
-            owners[_project] = msg.sender;
+            projectOwner[_project] = msg.sender;
         }
 
         // Return's the project's editable budget. Creates one if one doesn't already exists.
@@ -214,10 +215,12 @@ contract BudgetStore is Store, IBudgetStore {
     */
     function transferOwnership(bytes32 _project, address _newOwner) external {
         require(
-            owners[_project] == msg.sender,
+            projectOwner[_project] == msg.sender,
             "BudgetStore::transferOwnership: UNAUTHORIZED"
         );
-        owners[_project] = _newOwner;
+        projectOwner[_project] = _newOwner;
+
+        emit TransferOwnership(_project, msg.sender, _newOwner);
     }
 
     /** 
@@ -254,7 +257,7 @@ contract BudgetStore is Store, IBudgetStore {
         budget = _budget;
 
         //Set the owner.
-        owner = owners[_project];
+        owner = projectOwner[_project];
     }
 
     /** 
@@ -289,7 +292,7 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Only a project owner can tap its funds.
         require(
-            _tapper == owners[_budget.project],
+            _tapper == projectOwner[_budget.project],
             "BudgetStore::tap: UNAUTHORIZED"
         );
 
@@ -424,9 +427,6 @@ contract BudgetStore is Store, IBudgetStore {
         if (_latestBudget.id > 0) {
             newBudget._basedOn(_latestBudget);
         } else {
-            // bytes32 _project =
-            //     keccak256(abi.encodePacked(_owner, block.timestamp));
-            // owners[_project] = _owner;
             newBudget.project = _project;
             newBudget.weight = 10E25;
             newBudget.number = 1;

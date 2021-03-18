@@ -318,7 +318,7 @@ contract Juicer is IJuicer {
         );
 
         require(
-            budgetStore.owners(_project) == msg.sender,
+            budgetStore.projectOwner(_project) == msg.sender,
             "Juicer::migrate: UNAUTHORIZED"
         );
 

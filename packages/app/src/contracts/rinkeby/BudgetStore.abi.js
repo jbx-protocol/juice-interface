@@ -64,6 +64,12 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "bondingCurveRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "reserved",
         "type": "uint256"
       },
@@ -82,19 +88,6 @@ module.exports = [
     ],
     "name": "Configure",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "BUDGET_BASE_WEIGHT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -165,6 +158,11 @@ module.exports = [
       {
         "internalType": "uint256",
         "name": "_discountRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_bondingCurveRate",
         "type": "uint256"
       },
       {
@@ -316,6 +314,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
           },
@@ -438,6 +441,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondingCurveRate",
             "type": "uint256"
           },
           {
@@ -568,6 +576,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
           },
@@ -580,25 +593,6 @@ module.exports = [
         "internalType": "struct Budget.Data",
         "name": "",
         "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_budgetId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getTappableAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -765,6 +759,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondingCurveRate",
             "type": "uint256"
           },
           {
@@ -985,6 +984,11 @@ module.exports = [
           },
           {
             "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "configured",
             "type": "uint256"
           },
@@ -1000,7 +1004,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "ethAmount",
+        "name": "convertedEthAmount",
         "type": "uint256"
       },
       {

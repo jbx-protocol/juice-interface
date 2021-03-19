@@ -24,7 +24,7 @@ export const editingBudgetSlice = createSlice({
       total: parseWad('0'),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
       duration: BigNumber.from(
-        process.env.NODE_ENV === 'production' ? 30 * SECONDS_IN_DAY : '300',
+        process.env.NODE_ENV === 'production' ? 30 * SECONDS_IN_DAY : 300,
       ),
       tappedTarget: BigNumber.from(0),
       tappedTotal: BigNumber.from(0),
@@ -67,28 +67,28 @@ export const editingBudgetSlice = createSlice({
       ...state,
       value: {
         ...state.value,
-        target: action.payload || '0',
+        target: action.payload,
       },
     }),
     setDuration: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        duration: action.payload || '0',
+        duration: action.payload,
       },
     }),
     setReserved: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        reserved: action.payload || '0',
+        reserved: action.payload,
       },
     }),
     setDonationAmount: (state, action: PayloadAction<string>) => ({
       ...state,
       value: {
         ...state.value,
-        donationAmount: action.payload || '0',
+        donationAmount: action.payload,
       },
     }),
     setDonationRecipient: (state, action: PayloadAction<string>) => ({
@@ -102,14 +102,14 @@ export const editingBudgetSlice = createSlice({
       ...state,
       value: {
         ...state.value,
-        discountRate: action.payload || '0',
+        discountRate: action.payload,
       },
     }),
     setCurrency: (state, action: PayloadAction<BudgetCurrency>) => ({
       ...state,
       value: {
         ...state.value,
-        currency: action.payload || '0',
+        currency: action.payload,
       },
     }),
     setLoading: (state, action: PayloadAction<boolean>) => ({

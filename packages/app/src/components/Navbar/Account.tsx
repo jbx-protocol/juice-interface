@@ -7,11 +7,10 @@ import useDeepCompareEffect from 'use-deep-compare-effect'
 
 import Balance from './Balance'
 import Wallet from './Wallet'
+import { NetworkName } from 'models/network-name'
 
 export default function Account() {
-  const { onNeedProvider, signingProvider, userAddress, network } = useContext(
-    UserContext,
-  )
+  const { onNeedProvider, userAddress, network } = useContext(UserContext)
 
   useDeepCompareEffect(() => {
     if (web3Modal.cachedProvider && onNeedProvider) {
@@ -27,7 +26,9 @@ export default function Account() {
   }
 
   const switchNetworkTag =
-    network && supportedNetworks.includes(network) ? null : (
+    !network ||
+    network === NetworkName.localhost ||
+    (network && supportedNetworks.includes(network)) ? null : (
       <Popover
         title="Juice works on:"
         content={

@@ -3,13 +3,13 @@ import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
-import { useUserBudgetSelector } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
+import { Budget } from 'models/budget'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { addressExists } from 'utils/addressExists'
+import { budgetsDiff } from 'utils/budgetsDiff'
 
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
@@ -22,8 +22,7 @@ export default function Owner() {
     'found' | 'missing' | 'canCreate'
   >()
 
-  const budget = useUserBudgetSelector()
-  const { userAddress, network } = useContext(UserContext)
+  const { userAddress, signingProvider } = useContext(UserContext)
 
   const { owner }: { owner?: string } = useParams()
 
@@ -48,17 +47,25 @@ export default function Owner() {
     ),
   })
 
-  const ticketContract = useErc20Contract(ticketAddress, network)
+  const ticketContract = useErc20Contract(ticketAddress, signingProvider)
 
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
   })
 
-  useDeepCompareEffectNoCheck(() => {
-    if (budget) setBudgetState('found')
-    if (budget === null) setBudgetState(isOwner ? 'canCreate' : 'missing')
-  }, [isOwner, budget])
+  const budget = useContractReader<Budget>({
+    contract: ContractName.BudgetStore,
+    functionName: 'getCurrentBudget',
+    args: owner ? [owner] : null,
+    valueDidChange: budgetsDiff,
+    callback: (_budget?: Budget) => {
+      if (budgetState) return
+      if (_budget) {
+        setBudgetState('found')
+      } else setBudgetState(isOwner ? 'canCreate' : 'missing')
+    },
+  })
 
   // const currentSustainEvents = (useEventListener({
   //   contracts,

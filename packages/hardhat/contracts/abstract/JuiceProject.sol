@@ -208,6 +208,15 @@ abstract contract JuiceProject is Ownable {
     }
 
     /** 
+        @notice Transfer the ownership of the project to a new owner.  
+        @dev This contract will no longer be able to reconfigure or tap funds from this project.
+        @param _newOwner The new project owner.
+    */
+    function transferProjectOwnership(address _newOwner) external onlyOwner {
+        juicer.budgetStore().transferProjectOwnership(project, _newOwner);
+    }
+
+    /** 
       @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
       @dev The destination must be in the current Juicer's allow list.
       @param _from The contract that currently manages your Tickets and it's funds.

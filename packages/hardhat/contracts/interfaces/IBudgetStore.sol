@@ -91,4 +91,7 @@ interface IBudgetStore is IStore {
     function setFee(uint256 _fee) external;
 
     function setBudgetBallot(IBudgetBallot _budgetBallot) external;
+
+    function transferProjectOwnership(bytes32 _project, address _newOwner)
+        external;
 }

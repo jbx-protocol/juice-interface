@@ -217,7 +217,10 @@ contract BudgetStore is Store, IBudgetStore {
       @notice Allows a project owner to transfer the project to another owner.
       @dev This transfers the ability to propose reconfigurations, tap funds, and receive tickets on behalf of the project.
     */
-    function transferOwnership(bytes32 _project, address _newOwner) external {
+    function transferProjectOwnership(bytes32 _project, address _newOwner)
+        external
+        override
+    {
         require(
             projectOwner[_project] == msg.sender,
             "BudgetStore::transferOwnership: UNAUTHORIZED"

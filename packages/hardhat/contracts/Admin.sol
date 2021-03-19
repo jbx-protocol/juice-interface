@@ -2,9 +2,6 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
-
 import "./interfaces/IAdminControlWrapper.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IPrices.sol";
@@ -14,8 +11,6 @@ import "./abstract/JuiceProject.sol";
 /// All functions in here should be governable with FLOW.
 /// Owner should eventually change to a governance contract.
 contract Admin is JuiceProject {
-    using SafeERC20 for IERC20;
-
     constructor(
         IJuicer _juicer,
         string memory _ticketName,

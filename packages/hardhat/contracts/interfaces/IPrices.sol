@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "./IAdminControlWrapper.sol";
 
 interface IPrices {
     event AddFeed(uint256 indexed currency, AggregatorV3Interface indexed feed);

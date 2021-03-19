@@ -2,19 +2,14 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./interfaces/IPrices.sol";
 
 /** 
   @notice An immutable contract to manage Budget states.
 */
-contract Prices is IPrices, AccessControl {
-    modifier onlyAdmin {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Store: UNAUTHORIZED");
-        _;
-    }
-
+contract Prices is IPrices, Ownable {
     /// @notice The available price feeds that can be used to get the price of ETH.
     mapping(uint256 => AggregatorV3Interface) public override feeds;
 
@@ -50,7 +45,7 @@ contract Prices is IPrices, AccessControl {
     function addFeed(AggregatorV3Interface _feed, uint256 _currency)
         external
         override
-        onlyAdmin
+        onlyOwner
     {
         feeds[_currency] = _feed;
 

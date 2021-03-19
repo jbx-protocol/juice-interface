@@ -38,6 +38,7 @@ const main = async () => {
   try {
     const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
+    const PricesFactory = await ethers.getContractFactory("Prices");
     const AdminFactory = await ethers.getContractFactory("Admin");
     // const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
@@ -48,6 +49,7 @@ const main = async () => {
     const attachedBudgetStore = await BudgetStoreFactory.attach(
       budgetStore.address
     );
+    const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
     // const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
@@ -58,6 +60,10 @@ const main = async () => {
     });
     console.log("⚡️ Setting the budget store owner");
     await attachedBudgetStore.setOwnership(admin.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Setting the prices owner");
+    await attachedPrices.transferOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
     // console.log("⚡️ Setting the staker owner");

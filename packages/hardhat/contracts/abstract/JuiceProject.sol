@@ -2,8 +2,6 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./../interfaces/IJuicer.sol";
@@ -17,9 +15,6 @@ import "./../TicketStore.sol";
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is Ownable {
-    using SafeMath for uint256;
-    using SafeERC20 for IERC20;
-
     modifier onlyPm {
         require(msg.sender == pm, "JuiceProject: UNAUTHORIZED");
         _;
@@ -67,7 +62,7 @@ abstract contract JuiceProject is Ownable {
     }
 
     /** 
-      @notice Allows anyone to set the project that is being managed.
+      @notice Allows the project that is being managed to be set.
       @param _project the project that is being managed.
     */
     function setProject(bytes32 _project) external {

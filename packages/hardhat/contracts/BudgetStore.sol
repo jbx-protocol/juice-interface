@@ -164,18 +164,14 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Either the message sender must be the project owner, or there must not yet be a project owner.
         require(
-            projectOwner[_project] == msg.sender ||
-                projectOwner[_project] == address(0),
+            projectOwner[_project] == msg.sender || _project == 0,
             "BudgetStore::configure: UNAUTHORIZED"
         );
 
         // If this is a new project, create an ID.
-        if (projectOwner[_project] == address(0)) {
-            // If a project was not passed in, create one.
-            if (_project == 0)
-                _project = keccak256(
-                    abi.encodePacked(msg.sender, block.timestamp)
-                );
+        if (_project == 0) {
+            // Create a project.
+            _project = keccak256(abi.encodePacked(msg.sender, block.timestamp));
 
             // Set the owner.
             projectOwner[_project] = msg.sender;

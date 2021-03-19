@@ -171,11 +171,62 @@ contract Juicer is IJuicer {
         uint256 _amount,
         address _beneficiary,
         string memory _note
-    ) external override lock returns (uint256) {
+    ) external override returns (uint256) {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
-        return _pay(_project, _amount, _beneficiary, _note);
+        // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
+        (
+            Budget.Data memory _budget,
+            uint256 _covertedCurrencyAmount,
+            uint256 _overflow
+        ) = budgetStore.payProject(_project, _amount);
+
+        // Transfer.
+        weth.safeTransferFrom(msg.sender, address(this), _amount);
+
+        // Take fee through the admin's own budget, minting tickets for the project paying the fee.
+        _takeFee(
+            _project,
+            Math.mulDiv(_amount, _budget.fee, 1000),
+            _beneficiary
+        );
+
+        if (_budget.reserved > 0) {
+            // The project gets the budget's project percentage, if one is specified.
+            ticketStore.print(
+                _project,
+                _project,
+                _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
+            );
+        }
+
+        // Mint the appropriate amount of tickets for the contributor.
+        ticketStore.print(
+            _project,
+            _beneficiary,
+            _budget._weighted(
+                _covertedCurrencyAmount,
+                uint256(1000).sub(_budget.reserved)
+            )
+        );
+
+        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
+
+        emit Pay(
+            _budget.id,
+            _budget.project,
+            msg.sender,
+            _beneficiary,
+            _amount,
+            _covertedCurrencyAmount,
+            _budget.currency,
+            _note,
+            _budget.fee
+        );
+
+        return _budget.id;
     }
 
     /**
@@ -437,76 +488,6 @@ contract Juicer is IJuicer {
     }
 
     // --- private transactions --- //
-
-    /**
-        @notice Contribute funds to a project's active Budget.
-        @dev Mints the project's tickets proportional to the amount of the contribution.
-        @dev The sender must approve this contract to transfer the specified amount of tokens.
-        @param _project The project of the budget to contribute funds to.
-        @param _amount Amount of the contribution in ETH. Sent as 1E18.
-        @param _beneficiary The addresses to give the newly minted Tickets to. 
-        @param _note A note that will be included in the published event.
-        @return _budgetId The ID of the Budget that successfully received the contribution.
-    */
-    function _pay(
-        address _project,
-        uint256 _amount,
-        address _beneficiary,
-        string memory _note
-    ) private returns (uint256) {
-        // Do the operation in the budget store, which returns the Budget that was updated and the amount that should be transfered.
-        (
-            Budget.Data memory _budget,
-            uint256 _covertedCurrencyAmount,
-            uint256 _overflow
-        ) = budgetStore.payProject(_project, _amount);
-
-        // Transfer.
-        weth.safeTransferFrom(msg.sender, address(this), _amount);
-
-        // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        _takeFee(
-            _project,
-            Math.mulDiv(_amount, _budget.fee, 1000),
-            _beneficiary
-        );
-
-        if (_budget.reserved > 0) {
-            // The project gets the budget's project percentage, if one is specified.
-            ticketStore.print(
-                _project,
-                _project,
-                _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
-            );
-        }
-
-        // Mint the appropriate amount of tickets for the contributor.
-        ticketStore.print(
-            _project,
-            _beneficiary,
-            _budget._weighted(
-                _covertedCurrencyAmount,
-                uint256(1000).sub(_budget.reserved)
-            )
-        );
-
-        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
-        if (_overflow > 0) _addOverflow(_budget, _overflow);
-
-        emit Pay(
-            _budget.id,
-            _budget.project,
-            msg.sender,
-            _beneficiary,
-            _amount,
-            _covertedCurrencyAmount,
-            _budget.currency,
-            _note,
-            _budget.fee
-        );
-
-        return _budget.id;
-    }
 
     /**
         @notice Takes a fee for the admin's active budget.

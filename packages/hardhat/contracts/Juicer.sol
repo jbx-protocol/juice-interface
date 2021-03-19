@@ -158,6 +158,25 @@ contract Juicer is IJuicer {
     }
 
     /**
+        @notice Issues a project's Tickets that'll be handed out by their budgets in exchange for payments.
+        @dev Only callable by the project's owner.
+        @param _project The project of the tickets being issued.
+        @param _name The ERC-20's name.
+        @param _symbol The ERC-20's symbol.
+    */
+    function issueTickets(
+        bytes32 _project,
+        string memory _name,
+        string memory _symbol
+    ) external override {
+        require(
+            msg.sender == budgetStore.projectOwner(_project),
+            "Juicer::issueTickets: UNAUTHORIZED"
+        );
+        ticketStore.issue(_project, _name, _symbol);
+    }
+
+    /**
         @notice Contribute funds to a project's active Budget.
         @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.

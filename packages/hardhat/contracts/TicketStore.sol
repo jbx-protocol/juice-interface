@@ -113,7 +113,7 @@ contract TicketStore is Store, ITicketStore {
     constructor() {}
 
     /**
-        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
+        @notice Issues a project's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Deploys an owner's Ticket ERC-20 token contract.
         @param _project The project of the tickets being issued.
         @param _name The ERC-20's name.

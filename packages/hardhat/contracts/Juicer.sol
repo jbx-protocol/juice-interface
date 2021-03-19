@@ -185,11 +185,11 @@ contract Juicer is IJuicer {
         ) = budgetStore.payProject(_project, _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        _takeFee(
-            _project,
-            Math.mulDiv(_amount, _budget.fee, 1000),
-            _beneficiary
-        );
+        // _takeFee(
+        //     _project,
+        //     Math.mulDiv(_amount, _budget.fee, 1000),
+        //     _beneficiary
+        // );
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.

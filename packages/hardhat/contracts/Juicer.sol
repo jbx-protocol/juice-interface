@@ -80,6 +80,8 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
+    mapping(address => mapping(address => uint256)) public printableTickets;
+
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -182,9 +184,6 @@ contract Juicer is IJuicer {
             uint256 _overflow
         ) = budgetStore.payProject(_project, _amount);
 
-        // Transfer.
-        weth.safeTransferFrom(msg.sender, address(this), _amount);
-
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
         _takeFee(
             _project,
@@ -194,17 +193,19 @@ contract Juicer is IJuicer {
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
-            ticketStore.print(
-                _project,
-                _project,
+            printableTickets[_project][_project] = printableTickets[_project][
+                _project
+            ]
+                .add(
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        ticketStore.print(
-            _project,
-            _beneficiary,
+        printableTickets[_beneficiary][_project] = printableTickets[
+            _beneficiary
+        ][_project]
+            .add(
             _budget._weighted(
                 _covertedCurrencyAmount,
                 uint256(1000).sub(_budget.reserved)
@@ -213,6 +214,9 @@ contract Juicer is IJuicer {
 
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
+
+        // Transfer.
+        weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         emit Pay(
             _budget.id,
@@ -509,9 +513,7 @@ contract Juicer is IJuicer {
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
-            ticketStore.print(
-                admin,
-                admin,
+            printableTickets[admin][admin] = printableTickets[admin][admin].add(
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
@@ -526,10 +528,15 @@ contract Juicer is IJuicer {
                 .div(2);
 
         // Mint the appropriate amount of tickets for the beneficiary.
-        ticketStore.print(admin, _beneficiary, _printAmount);
+        printableTickets[_beneficiary][admin] = printableTickets[_beneficiary][
+            admin
+        ]
+            .add(_printAmount);
 
         // Mint the appropriate amount of tickets for the project.
-        ticketStore.print(admin, _project, _printAmount);
+        printableTickets[_project][admin] = printableTickets[_project][admin]
+            .add(_printAmount);
+        // ticketStore.print(admin, _project, _printAmount);
 
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
@@ -554,12 +561,12 @@ contract Juicer is IJuicer {
       @param _amount The amount of overflow.
     */
     function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        if (_budget.donationAmount > 0) {
-            weth.safeTransfer(
-                _budget.donationRecipient,
-                Math.mulDiv(_amount, _budget.donationAmount, 1000)
-            );
-        }
+        // if (_budget.donationAmount > 0) {
+        //     weth.safeTransfer(
+        //         _budget.donationRecipient,
+        //         Math.mulDiv(_amount, _budget.donationAmount, 1000)
+        //     );
+        // }
 
         // The portion of the overflow that is claimable by redeeming tickets.
         // This is the total minus the percent donated and used as a fee.

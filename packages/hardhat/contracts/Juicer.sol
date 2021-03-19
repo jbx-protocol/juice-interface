@@ -80,8 +80,6 @@ contract Juicer is IJuicer {
     /// @notice The amount of tokens that are currently depositable into the overflow yielder.
     uint256 public override depositable = 0;
 
-    mapping(address => mapping(address => uint256)) public printableTickets;
-
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -185,27 +183,25 @@ contract Juicer is IJuicer {
         ) = budgetStore.payProject(_project, _amount);
 
         // Take fee through the admin's own budget, minting tickets for the project paying the fee.
-        // _takeFee(
-        //     _project,
-        //     Math.mulDiv(_amount, _budget.fee, 1000),
-        //     _beneficiary
-        // );
+        _takeFee(
+            _project,
+            Math.mulDiv(_amount, _budget.fee, 1000),
+            _beneficiary
+        );
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
-            printableTickets[_project][_project] = printableTickets[_project][
-                _project
-            ]
-                .add(
+            ticketStore.print(
+                _project,
+                _project,
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
 
         // Mint the appropriate amount of tickets for the contributor.
-        printableTickets[_beneficiary][_project] = printableTickets[
-            _beneficiary
-        ][_project]
-            .add(
+        ticketStore.print(
+            _project,
+            _beneficiary,
             _budget._weighted(
                 _covertedCurrencyAmount,
                 uint256(1000).sub(_budget.reserved)
@@ -513,7 +509,9 @@ contract Juicer is IJuicer {
 
         if (_budget.reserved > 0) {
             // The project gets the budget's project percentage, if one is specified.
-            printableTickets[admin][admin] = printableTickets[admin][admin].add(
+            ticketStore.print(
+                admin,
+                admin,
                 _budget._weighted(_covertedCurrencyAmount, _budget.reserved)
             );
         }
@@ -528,15 +526,10 @@ contract Juicer is IJuicer {
                 .div(2);
 
         // Mint the appropriate amount of tickets for the beneficiary.
-        printableTickets[_beneficiary][admin] = printableTickets[_beneficiary][
-            admin
-        ]
-            .add(_printAmount);
+        ticketStore.print(admin, _beneficiary, _printAmount);
 
         // Mint the appropriate amount of tickets for the project.
-        printableTickets[_project][admin] = printableTickets[_project][admin]
-            .add(_printAmount);
-        // ticketStore.print(admin, _project, _printAmount);
+        ticketStore.print(admin, _project, _printAmount);
 
         // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
@@ -561,12 +554,12 @@ contract Juicer is IJuicer {
       @param _amount The amount of overflow.
     */
     function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        // if (_budget.donationAmount > 0) {
-        //     weth.safeTransfer(
-        //         _budget.donationRecipient,
-        //         Math.mulDiv(_amount, _budget.donationAmount, 1000)
-        //     );
-        // }
+        if (_budget.donationAmount > 0) {
+            weth.safeTransfer(
+                _budget.donationRecipient,
+                Math.mulDiv(_amount, _budget.donationAmount, 1000)
+            );
+        }
 
         // The portion of the overflow that is claimable by redeeming tickets.
         // This is the total minus the percent donated and used as a fee.

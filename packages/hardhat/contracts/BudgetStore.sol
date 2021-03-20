@@ -226,15 +226,13 @@ contract BudgetStore is Store, IBudgetStore {
         external
         override
     {
-        // Either the project's current owner must be transfering, or it must not yet have an owner.
-        require(
-            projectOwner[_project] == msg.sender ||
-                projectOwner[_project] == address(0),
-            "BudgetStore::transferOwnership: UNAUTHORIZED"
-        );
-
-        // Remove the project from the old owner.
-        if (projectOwner[_project] == msg.sender) {
+        // Remove the project from the old owner, if there's an old owner.
+        if (projectOwner[_project] != address(0)) {
+            // The project's current owner must be transfering.
+            require(
+                projectOwner[_project] == msg.sender,
+                "BudgetStore::transferOwnership: UNAUTHORIZED"
+            );
             bytes32[] storage _projects = projects[msg.sender];
             delete projects[msg.sender];
             for (uint256 i = 0; i < _projects.length; i++) {

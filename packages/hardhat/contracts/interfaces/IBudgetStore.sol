@@ -54,6 +54,11 @@ interface IBudgetStore is IStore {
         view
         returns (Budget.Data memory);
 
+    function getProjects(address _owner)
+        external
+        view
+        returns (bytes32[] memory);
+
     function configure(
         bytes32 _project,
         uint256 _target,

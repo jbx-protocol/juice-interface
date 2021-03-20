@@ -23,6 +23,9 @@ contract BudgetStore is Store, IBudgetStore {
     // The official record of all Budgets ever created.
     mapping(uint256 => Budget.Data) private budgets;
 
+    // The projects that is each address has owned.
+    mapping(address => bytes32[]) private projects;
+
     // --- public properties --- //
 
     /// @notice The latest Budget ID for each project id.
@@ -105,6 +108,20 @@ contract BudgetStore is Store, IBudgetStore {
         if (budget.id > 0) return budget;
         budget = budgets[latestBudgetId[_project]];
         return budget._nextUp();
+    }
+
+    /** 
+      @notice Gets the projects for an owner.
+      @param _owner The owner to get projects for.
+      @return projects The projects.
+    */
+    function getProjects(address _owner)
+        external
+        view
+        override
+        returns (bytes32[] memory)
+    {
+        return projects[_owner];
     }
 
     // --- external transactions --- //
@@ -215,7 +232,19 @@ contract BudgetStore is Store, IBudgetStore {
                 projectOwner[_project] == address(0),
             "BudgetStore::transferOwnership: UNAUTHORIZED"
         );
+
+        // Remove the project from the old owner.
+        if (projectOwner[_project] == msg.sender) {
+            bytes32[] storage _projects = projects[msg.sender];
+            delete projects[msg.sender];
+            for (uint256 i = 0; i < _projects.length; i++) {
+                if (_projects[i] != _project)
+                    projects[msg.sender].push(_projects[i]);
+            }
+        }
+
         projectOwner[_project] = _newOwner;
+        projects[_newOwner].push(_project);
 
         emit TransferOwnership(_project, msg.sender, _newOwner);
     }

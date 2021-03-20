@@ -50,7 +50,7 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   })
 
   const tappableAmount = useMemo(() => {
-    const total = budget.total.mul(ethPrice ?? 0)
+    const total = budget.total.mul(parseWad(ethPrice?.toString() ?? '0'))
     const available = budget.target.lt(total) ? budget.target : total
 
     return available

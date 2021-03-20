@@ -1,11 +1,11 @@
 import { Contract } from '@ethersproject/contracts'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { NetworkName } from 'models/network-name'
 
 export function useWeth(
-  network: NetworkName | undefined,
+  provider?: JsonRpcProvider,
 ):
   | Partial<{
       contract: Contract
@@ -16,15 +16,15 @@ export function useWeth(
   const address = useContractReader<string>({
     contract: ContractName.Juicer,
     functionName: 'weth',
-    network,
+    provider,
   })
 
-  const contract = useErc20Contract(address, network)
+  const contract = useErc20Contract(address, provider)
 
   const symbol = useContractReader<string>({
     contract,
     functionName: 'symbol',
-    network,
+    provider,
   })
 
   return { address, contract, symbol }

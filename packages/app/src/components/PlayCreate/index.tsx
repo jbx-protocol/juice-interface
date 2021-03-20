@@ -6,7 +6,7 @@ import Project from 'components/Owner/Project'
 import { TicketsFormFields } from 'components/shared/forms/TicketsForm'
 import { ContractName } from 'constants/contract-name'
 import { emptyAddress } from 'constants/empty-address'
-import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
+import { secondsMultiplier, SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
@@ -92,9 +92,7 @@ export default function PlayCreate() {
       name: editingBudget?.name ?? '',
       target: fromWad(editingBudget?.target) ?? '0',
       duration:
-        editingBudget?.duration
-          .div(process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1)
-          .toString() ?? '0',
+        editingBudget?.duration.div(secondsMultiplier).toString() ?? '0',
       currency: (editingBudget?.currency.toString() ?? '0') as BudgetCurrency,
     })
 
@@ -119,10 +117,7 @@ export default function PlayCreate() {
     dispatch(editingBudgetActions.setTarget(fields.target))
     dispatch(
       editingBudgetActions.setDuration(
-        (
-          parseInt(fields.duration) *
-          (process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1)
-        ).toString(),
+        (parseInt(fields.duration) * secondsMultiplier).toString(),
       ),
     )
     dispatch(editingBudgetActions.setCurrency(fields.currency))

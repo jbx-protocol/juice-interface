@@ -38,7 +38,7 @@ export default function Rewards({
     transactor,
     userAddress,
     onNeedProvider,
-    network,
+    signingProvider,
   } = useContext(UserContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
@@ -69,7 +69,7 @@ export default function Rewards({
     functionName: 'bondingCurveRate',
     valueDidChange: bigNumbersDiff,
   })
-  const ticketContract = useErc20Contract(ticketAddress, network)
+  const ticketContract = useErc20Contract(ticketAddress, signingProvider)
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',

@@ -1,3 +1,4 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import { Budget } from 'models/budget'
 import { useCallback, useMemo, useState } from 'react'
@@ -7,9 +8,11 @@ import { serializeBudget } from 'utils/serializers'
 import { userBudgetActions } from '../redux/slices/userBudget'
 import { useAppDispatch } from './AppDispatch'
 import useContractReader from './ContractReader'
-import { NetworkName } from 'models/network-name'
 
-export function useUserBudget(userAddress?: string, network?: NetworkName) {
+export function useUserBudget(
+  userAddress?: string,
+  provider?: JsonRpcProvider,
+) {
   const [userBudgetId, setUserBudgetId] = useState<string>()
   const dispatch = useAppDispatch()
 
@@ -59,6 +62,6 @@ export function useUserBudget(userAddress?: string, network?: NetworkName) {
     valueDidChange,
     updateOn,
     callback,
-    network,
+    provider,
   })
 }

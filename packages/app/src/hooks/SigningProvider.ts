@@ -2,6 +2,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import BurnerProvider from 'burner-provider'
 import { readProvider } from 'constants/read-provider'
 import { UserContext } from 'contexts/userContext'
+import { NetworkName } from 'models/network-name'
 import { useContext, useMemo } from 'react'
 
 export function useSigningProvider(injectedProvider?: Web3Provider) {
@@ -12,7 +13,12 @@ export function useSigningProvider(injectedProvider?: Web3Provider) {
       console.log('🦊 Using injected provider')
       return injectedProvider
     }
-    if (process.env.NODE_ENV === 'production') return
+    if (
+      process.env.NODE_ENV === 'production' ||
+      (process.env.REACT_APP_INFURA_DEV_NETWORK &&
+        process.env.REACT_APP_INFURA_DEV_NETWORK !== NetworkName.localhost)
+    )
+      return
 
     let burnerConfig: {
       privateKey?: string

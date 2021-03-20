@@ -3,7 +3,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
+import { secondsMultiplier, SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -38,10 +38,7 @@ export default function DefineProject() {
       form.setFieldsValue({
         name: budget?.name ?? '',
         target: fromWad(budget?.target) ?? '0',
-        duration:
-          budget?.duration
-            .div(process.env.NODE_ENV === 'production' ? SECONDS_IN_DAY : 1)
-            .toString() ?? '0',
+        duration: budget?.duration.div(secondsMultiplier).toString() ?? '0',
         currency: (budget?.currency.toString() ?? '0') as BudgetCurrency,
       }),
     [budget, form],
@@ -64,7 +61,11 @@ export default function DefineProject() {
     if (fields.target !== undefined)
       dispatch(editingBudgetActions.setTarget(fields.target))
     if (fields.duration !== undefined)
-      dispatch(editingBudgetActions.setDuration(fields.duration))
+      dispatch(
+        editingBudgetActions.setDuration(
+          (parseFloat(fields.duration) * secondsMultiplier).toString(),
+        ),
+      )
     if (fields.currency !== undefined)
       dispatch(editingBudgetActions.setCurrency(fields.currency))
     if (fields.ticketsSymbol !== undefined)
@@ -158,8 +159,12 @@ export default function DefineProject() {
               budgetCurrencySymbol(editingBudget?.currency.toString()) +
                 (formatWad(editingBudget?.target) ?? '0'),
             )}{' '}
-            every {bold(editingBudget?.duration.toString(), '0')} days to work.
-            All extra money received is overflow.
+            every{' '}
+            {bold(
+              editingBudget?.duration.div(secondsMultiplier).toString(),
+              '0',
+            )}{' '}
+            days to work. All extra money received is overflow.
             <br />
             <br />
             Overflow can be claimed by {bold(

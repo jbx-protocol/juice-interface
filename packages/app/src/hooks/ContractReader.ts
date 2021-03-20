@@ -1,10 +1,9 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
-import { readProvider } from 'constants/read-provider'
 import { UserContext } from 'contexts/userContext'
 import { Contracts } from 'models/contracts'
-import { NetworkName } from 'models/network-name'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
 import { useContractLoader } from './ContractLoader'
@@ -25,7 +24,7 @@ export default function useContractReader<V>({
   formatter,
   callback,
   valueDidChange,
-  network,
+  provider,
 }: {
   contract?: ContractConfig
   functionName?: string
@@ -34,9 +33,9 @@ export default function useContractReader<V>({
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
-  network?: NetworkName | undefined
+  provider?: JsonRpcProvider
 }) {
-  const { network: _network } = useContext(UserContext)
+  const { signingProvider } = useContext(UserContext)
   const [value, setValue] = useState<V | undefined>()
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
@@ -46,11 +45,7 @@ export default function useContractReader<V>({
     [valueDidChange],
   )
 
-  const provider = useMemo(() => readProvider(network ?? _network), [
-    network,
-    _network,
-  ])
-  const contracts = useContractLoader(provider, true)
+  const contracts = useContractLoader(provider ?? signingProvider)
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {

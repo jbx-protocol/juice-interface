@@ -12,7 +12,7 @@ export function useExchangePrice() {
   const pollPrice = () => {
     async function getPrice() {
       if (process.env.NODE_ENV === 'development') {
-        // TODO remove once contract deployment can link with mainnet
+        // TODO get eth price from contrat
         setPrice(1600)
         return
       }

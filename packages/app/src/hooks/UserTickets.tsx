@@ -1,17 +1,18 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
+import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useCallback } from 'react'
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { userTicketsActions } from 'redux/slices/userTickets'
 
 import useContractReader from './ContractReader'
 import { useErc20Contract } from './Erc20Contract'
-import { NetworkName } from 'models/network-name'
 
 export function useUserTickets(
   userAddress: string | undefined,
-  network: NetworkName | undefined,
+  provider?: JsonRpcProvider,
 ) {
+  const { signingProvider } = useContext(UserContext)
   const dispatch = useAppDispatch()
   const didInitialCheck = useRef<{
     address: boolean
@@ -34,7 +35,10 @@ export function useUserTickets(
       }),
   })
 
-  const ticketContract = useErc20Contract(ticketsAddress, network)
+  const ticketContract = useErc20Contract(
+    ticketsAddress,
+    provider ?? signingProvider,
+  )
 
   const ticketsSymbol = useContractReader<string>({
     contract: ticketContract,

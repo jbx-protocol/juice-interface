@@ -1,15 +1,13 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
+import { NETWORKS } from 'constants/networks'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
 import { useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 
-export function useContractLoader(
-  provider?: JsonRpcProvider,
-  readOnly?: boolean,
-) {
+export function useContractLoader(provider?: JsonRpcProvider) {
   const [contracts, setContracts] = useState<Contracts>()
 
   useDeepCompareEffect(() => {
@@ -18,17 +16,7 @@ export function useContractLoader(
 
       await provider.ready
 
-      let network: NetworkName
-      switch (provider.network.chainId) {
-        case 1:
-          network = NetworkName.mainnet
-          break
-        case 3:
-          network = NetworkName.ropsten
-          break
-        default:
-          network = NetworkName.localhost
-      }
+      let network = NETWORKS[provider.network.chainId]?.name
 
       if (!network) return
 
@@ -36,7 +24,7 @@ export function useContractLoader(
         const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
 
         // TODO how to automatically use signer if not using burner?
-        const signerOrProvider = readOnly ? provider : provider.getSigner()
+        const signerOrProvider = provider.getSigner() ?? provider
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
@@ -57,7 +45,7 @@ export function useContractLoader(
     }
 
     loadContracts()
-  }, [provider, readOnly, setContracts])
+  }, [provider, setContracts])
 
   return contracts
 }

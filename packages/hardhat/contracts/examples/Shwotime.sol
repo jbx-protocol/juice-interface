@@ -40,12 +40,10 @@ contract Shwotime is JuiceProject {
 
     constructor(
         IJuicer _juicer,
-        string memory _ticketName,
-        string memory _ticketSymbol,
         IERC20 _dai,
         uint256 _fee,
         address _pm
-    ) JuiceProject(_juicer, _ticketName, _ticketSymbol, _pm) {
+    ) JuiceProject(_juicer, _pm) {
         dai = _dai;
         fee = _fee;
     }

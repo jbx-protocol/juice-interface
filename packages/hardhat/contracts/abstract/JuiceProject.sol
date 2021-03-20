@@ -20,12 +20,6 @@ abstract contract JuiceProject is Ownable {
         _;
     }
 
-    /// @dev The name of this Budget owner's tickets.
-    string public ticketName;
-
-    /// @dev The symbol of this Budget owner's tickets.
-    string public ticketSymbol;
-
     /// @dev The project that is being managed.
     bytes32 public project;
 
@@ -37,28 +31,11 @@ abstract contract JuiceProject is Ownable {
 
     /** 
       @param _juicer The juicer that manages this project.
-      @param _ticketName The name for this project's ERC-20 Tickets.
-      @param _ticketSymbol The symbol for this project's ERC-20 Tickets.
       @param _pm The project manager address that can tap funds and propose reconfigurations.
     */
-    constructor(
-        IJuicer _juicer,
-        string memory _ticketName,
-        string memory _ticketSymbol,
-        address _pm
-    ) {
+    constructor(IJuicer _juicer, address _pm) {
         juicer = _juicer;
-        ticketName = _ticketName;
-        ticketSymbol = _ticketSymbol;
         pm = _pm;
-    }
-
-    /** 
-        @notice Issues this project's Tickets. 
-    */
-    function issueTickets() external onlyOwner {
-        require(project != 0, "JuiceProject::issueTickets: PROJECT_NOT_FOUND");
-        juicer.ticketStore().issue(project, ticketName, ticketSymbol);
     }
 
     /** 

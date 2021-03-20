@@ -89,6 +89,7 @@ interface IJuicer is IBudgetController, ITicketsController {
     event Deposit(uint256 depositable, IERC20 token);
 
     function deployProject(
+        address _owner,
         string memory _name,
         string memory _symbol,
         uint256 _target,

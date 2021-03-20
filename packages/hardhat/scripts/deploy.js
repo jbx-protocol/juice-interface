@@ -28,8 +28,6 @@ const main = async () => {
 
   const admin = await deploy("Admin", [
     juicer.address,
-    "Juice",
-    "JUICE",
     "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
   ]);
 
@@ -126,11 +124,13 @@ const main = async () => {
 
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
-    await attachedAdmin.configure(
+    await attachedJuicer.deployProject(
+      admin.address,
+      "Juice",
+      "JUICE",
       "0x3635C9ADC5DEA00000",
       1,
       2592000,
-      "Juice",
       "https://asdf.com",
       970,
       382,

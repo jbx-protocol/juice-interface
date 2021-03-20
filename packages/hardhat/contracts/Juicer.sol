@@ -159,7 +159,7 @@ contract Juicer is IJuicer {
 
     /**
         @notice Issues a project's Tickets that'll be handed out by their budgets in exchange for payments.
-        @dev Only callable by the project's owner.
+        @param _owner The address that will own the project.
         @param _name The project's name.
         @param _symbol The ERC-20's symbol.
         @param _target The new Budget target amount.
@@ -176,6 +176,7 @@ contract Juicer is IJuicer {
         @return project The ID of the project that was reconfigured.
     */
     function deployProject(
+        address _owner,
         string memory _name,
         string memory _symbol,
         uint256 _target,
@@ -206,7 +207,7 @@ contract Juicer is IJuicer {
         ticketStore.issue(project, _name, _symbol);
 
         // Set the message sender as the project's owner.
-        budgetStore.transferProjectOwnership(project, msg.sender);
+        budgetStore.transferProjectOwnership(project, _owner);
     }
 
     /**

@@ -75,9 +75,11 @@ export default function Landing() {
                 }}
               >
                 {bigHeader('A business model for the open internet')}
+                <div>
 
-                <p style={{ fontWeight: 500, fontSize: '1rem' }}>
-                  Projects on Juice say up-front how much cashflow they need to
+                <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>Corporate style profit-seeking gets weird on the decentralized web.</p>
+                <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
+                  Projects on Juice instead say up-front how much cashflow they want to
                   crush what they do. Once they're earning more than that, the
                   overflow can be claimed by their users, patrons, & investors.{' '}
                   <a
@@ -88,6 +90,7 @@ export default function Landing() {
                     #DeWork
                   </a>
                 </p>
+                </div>
 
                 <div
                   style={{

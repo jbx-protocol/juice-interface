@@ -167,16 +167,16 @@ export default function DefineProject() {
             days to work. All extra money received is overflow.
             <br />
             <br />
-            Overflow can be claimed by {bold(
+            Users, patrons, and investors get{' '}
+            {bold(editingTickets.symbol, 'tickets')} alongside you by contributing to{' '}
+            {bold(editingBudget?.name, 'your project')}.
+            <br />
+            <br />
+            All overflow is redistributed back to {bold(
               editingTickets.symbol,
               'ticket',
             )}{' '}
-            holders.
-            <br />
-            <br />
-            Users, patrons, and investors get{' '}
-            {bold(editingTickets.symbol, 'tickets')} by contributing to{' '}
-            {bold(editingBudget?.name, 'your project')}.
+            holders. 
           </div>
         </Col>
       </Row>

@@ -88,11 +88,17 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     event Deposit(uint256 depositable, IERC20 token);
 
-    function issueTickets(
-        bytes32 _project,
+    function deployProject(
         string memory _name,
-        string memory _symbol
-    ) external;
+        string memory _symbol,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        string memory _link,
+        uint256 _discountRate,
+        uint256 _bondingCurveRate,
+        uint256 _reserved
+    ) external returns (bytes32 project);
 
     function admin() external view returns (address);
 

@@ -129,19 +129,19 @@ contract BudgetStore is Store, IBudgetStore {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
-        @return _project The project that was successfully configured.
+        @return _budgetId The id of the budget that was successfully configured.
     */
     function configure(
         bytes32 _project,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string calldata _name,
-        string calldata _link,
+        string memory _name,
+        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external override returns (bytes32) {
+    ) external override returns (uint256) {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
 
         // The `discountRate` token must be between 95 and 100.
@@ -162,20 +162,12 @@ contract BudgetStore is Store, IBudgetStore {
             "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
         );
 
-        // Either the message sender must be the project owner, or there must not yet be a project owner.
+        // Either the message sender must be the project owner, or it must not yet have an owner.
         require(
-            projectOwner[_project] == msg.sender || _project == 0,
+            projectOwner[_project] == msg.sender ||
+                projectOwner[_project] == address(0),
             "BudgetStore::configure: UNAUTHORIZED"
         );
-
-        // If this is a new project, create an ID.
-        if (_project == 0) {
-            // Create a project.
-            _project = keccak256(abi.encodePacked(msg.sender, block.timestamp));
-
-            // Set the owner.
-            projectOwner[_project] = msg.sender;
-        }
 
         // Return's the project's editable budget. Creates one if one doesn't already exists.
         Budget.Data storage _budget = _ensureStandbyBudget(_project);
@@ -206,7 +198,7 @@ contract BudgetStore is Store, IBudgetStore {
             _budget.reserved
         );
 
-        return _project;
+        return _budget.id;
     }
 
     /** 
@@ -217,8 +209,10 @@ contract BudgetStore is Store, IBudgetStore {
         external
         override
     {
+        // Either the project's current owner must be transfering, or it must not yet have an owner.
         require(
-            projectOwner[_project] == msg.sender,
+            projectOwner[_project] == msg.sender ||
+                projectOwner[_project] == address(0),
             "BudgetStore::transferOwnership: UNAUTHORIZED"
         );
         projectOwner[_project] = _newOwner;
@@ -259,7 +253,7 @@ contract BudgetStore is Store, IBudgetStore {
         // Return the budget.
         budget = _budget;
 
-        //Set the owner.
+        // Return the project owner.
         owner = projectOwner[_project];
     }
 

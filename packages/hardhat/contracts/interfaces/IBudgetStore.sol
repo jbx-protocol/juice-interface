@@ -59,12 +59,12 @@ interface IBudgetStore is IStore {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string calldata _name,
-        string calldata _link,
+        string memory _name,
+        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external returns (bytes32 project);
+    ) external returns (uint256 budgetId);
 
     function payProject(bytes32 _project, uint256 _amount)
         external

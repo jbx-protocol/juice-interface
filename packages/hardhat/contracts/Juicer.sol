@@ -160,20 +160,53 @@ contract Juicer is IJuicer {
     /**
         @notice Issues a project's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Only callable by the project's owner.
-        @param _project The project of the tickets being issued.
-        @param _name The ERC-20's name.
+        @param _name The project's name.
         @param _symbol The ERC-20's symbol.
+        @param _target The new Budget target amount.
+        @param _currency The currency of the target.
+        @param _duration The new duration of your Budget.
+        @param _name A name for the Budget.
+        @param _link A link to information about the Budget.
+        @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
+        effectively creating a recency discountRate.
+        If it's 100, each Budget will have equal weight.
+        If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
+        If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
+        @param _reserved The percentage of this Budget's surplus to allocate to the owner.
+        @return project The ID of the project that was reconfigured.
     */
-    function issueTickets(
-        bytes32 _project,
+    function deployProject(
         string memory _name,
-        string memory _symbol
-    ) external override {
-        require(
-            msg.sender == budgetStore.projectOwner(_project),
-            "Juicer::issueTickets: UNAUTHORIZED"
+        string memory _symbol,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        string memory _link,
+        uint256 _discountRate,
+        uint256 _bondingCurveRate,
+        uint256 _reserved
+    ) external override returns (bytes32 project) {
+        // Create a project with a unique bytes.
+        project = keccak256(abi.encodePacked(msg.sender, block.timestamp));
+
+        // Configure the project.
+        budgetStore.configure(
+            project,
+            _target,
+            _currency,
+            _duration,
+            _name,
+            _link,
+            _discountRate,
+            _bondingCurveRate,
+            _reserved
         );
-        ticketStore.issue(_project, _name, _symbol);
+
+        // Issue the tickets.
+        ticketStore.issue(project, _name, _symbol);
+
+        // Set the message sender as the project's owner.
+        budgetStore.transferProjectOwnership(project, msg.sender);
     }
 
     /**

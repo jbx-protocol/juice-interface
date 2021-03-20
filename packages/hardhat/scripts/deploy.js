@@ -139,11 +139,6 @@ const main = async () => {
         gasLimit: blockGasLimit,
       }
     );
-
-    console.log("⚡️ Issuing the admin's tickets");
-    await attachedAdmin.issueTickets({
-      gasLimit: blockGasLimit,
-    });
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }

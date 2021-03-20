@@ -22,7 +22,7 @@ library Budget {
         // A unique number that's incremented for each new Budget, starting with 1.
         uint256 id;
         // The address who defined this Budget and who has access to its funds.
-        bytes32 project;
+        uint256 project;
         // The number of this budget for the project.
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.

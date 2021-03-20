@@ -21,7 +21,7 @@ abstract contract JuiceProject is Ownable {
     }
 
     /// @dev The project that is being managed.
-    bytes32 public project;
+    uint256 public project;
 
     /// @dev The address that can tap funds from the project and propose reconfigurations.
     address public pm;
@@ -42,7 +42,7 @@ abstract contract JuiceProject is Ownable {
       @notice Allows the project that is being managed to be set.
       @param _project the project that is being managed.
     */
-    function setProject(bytes32 _project) external {
+    function setProject(uint256 _project) external {
         // The pm or the owner can set the project.
         require(
             msg.sender == pm || msg.sender == owner(),
@@ -104,7 +104,7 @@ abstract contract JuiceProject is Ownable {
       @return returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         uint256 _minReturnedETH,
         string memory _note
@@ -133,7 +133,7 @@ abstract contract JuiceProject is Ownable {
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH

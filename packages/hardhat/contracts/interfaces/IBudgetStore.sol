@@ -10,7 +10,7 @@ import "../libraries/Budget.sol";
 interface IBudgetStore is IStore {
     event Configure(
         uint256 indexed budgetId,
-        bytes32 indexed project,
+        uint256 indexed project,
         uint256 indexed target,
         uint256 currency,
         uint256 duration,
@@ -22,14 +22,14 @@ interface IBudgetStore is IStore {
     );
 
     event TransferOwnership(
-        bytes32 indexed _project,
+        uint256 indexed _project,
         address indexed _from,
         address indexed _to
     );
 
-    function latestBudgetId(bytes32 _project) external view returns (uint256);
+    function latestBudgetId(uint256 _project) external view returns (uint256);
 
-    function projectOwner(bytes32 _project) external view returns (address);
+    function projectOwner(uint256 _project) external view returns (address);
 
     function budgetCount() external view returns (uint256);
 
@@ -44,12 +44,12 @@ interface IBudgetStore is IStore {
         view
         returns (Budget.Data memory);
 
-    function getQueuedBudget(bytes32 _project)
+    function getQueuedBudget(uint256 _project)
         external
         view
         returns (Budget.Data memory);
 
-    function getCurrentBudget(bytes32 _project)
+    function getCurrentBudget(uint256 _project)
         external
         view
         returns (Budget.Data memory);
@@ -57,10 +57,10 @@ interface IBudgetStore is IStore {
     function getProjects(address _owner)
         external
         view
-        returns (bytes32[] memory);
+        returns (uint256[] memory);
 
     function configure(
-        bytes32 _project,
+        uint256 _project,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -71,7 +71,7 @@ interface IBudgetStore is IStore {
         uint256 _reserved
     ) external returns (uint256 budgetId);
 
-    function payProject(bytes32 _project, uint256 _amount)
+    function payProject(uint256 _project, uint256 _amount)
         external
         returns (
             Budget.Data memory budget,
@@ -97,6 +97,6 @@ interface IBudgetStore is IStore {
 
     function setBudgetBallot(IBudgetBallot _budgetBallot) external;
 
-    function transferProjectOwnership(bytes32 _project, address _newOwner)
+    function transferProjectOwnership(uint256 _project, address _newOwner)
         external;
 }

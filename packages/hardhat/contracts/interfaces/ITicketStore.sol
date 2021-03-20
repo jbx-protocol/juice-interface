@@ -8,44 +8,44 @@ import "./IStore.sol";
 import "./../Tickets.sol";
 
 interface ITicketStore is IStore {
-    event Issue(bytes32 project, string name, string symbol);
+    event Issue(uint256 project, string name, string symbol);
 
-    function tickets(bytes32 _project) external view returns (Tickets);
+    function tickets(uint256 _project) external view returns (Tickets);
 
-    function claimable(bytes32 _project) external view returns (uint256);
+    function claimable(uint256 _project) external view returns (uint256);
 
     function totalClaimable() external view returns (uint256);
 
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        bytes32 _project,
+        uint256 _project,
         uint256 _proportion
     ) external view returns (uint256);
 
-    function getTicketValue(bytes32 _project) external view returns (uint256);
+    function getTicketValue(uint256 _project) external view returns (uint256);
 
     function issue(
-        bytes32 _project,
+        uint256 _project,
         string memory _name,
         string memory _symbol
     ) external;
 
     function print(
-        bytes32 _project,
+        uint256 _project,
         address _for,
         uint256 _amount
     ) external;
 
     function redeem(
-        bytes32 _project,
+        uint256 _project,
         address _holder,
         uint256 _amount,
         uint256 _minReturn,
         uint256 _proportion
     ) external returns (uint256 returnAmount);
 
-    function addClaimable(bytes32 _project, uint256 _amount) external;
+    function addClaimable(uint256 _project, uint256 _amount) external;
 
-    function clearClaimable(bytes32 _project) external returns (uint256 amount);
+    function clearClaimable(uint256 _project) external returns (uint256 amount);
 }

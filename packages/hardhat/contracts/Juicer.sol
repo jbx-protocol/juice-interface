@@ -69,6 +69,8 @@ contract Juicer is IJuicer {
     /// @notice The admin of the contract who makes admin fees and can take fateful decisions over this contract's mechanics.
     address public override admin;
 
+    uint256 public override projectCount = 0;
+
     /// @notice The contract storing all Budget state variables.
     IBudgetStore public immutable override budgetStore;
 
@@ -104,7 +106,7 @@ contract Juicer is IJuicer {
       @param _project The project to get overflow for.
       @return The amount of overflow.
     */
-    function getOverflow(bytes32 _project)
+    function getOverflow(uint256 _project)
         external
         view
         override
@@ -186,13 +188,13 @@ contract Juicer is IJuicer {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external override returns (bytes32 project) {
+    ) external override lock returns (uint256 project) {
         // Create a project with a unique bytes.
-        project = keccak256(abi.encodePacked(msg.sender, block.timestamp));
+        projectCount = projectCount++;
 
         // Configure the project.
         budgetStore.configure(
-            project,
+            projectCount,
             _target,
             _currency,
             _duration,
@@ -204,10 +206,12 @@ contract Juicer is IJuicer {
         );
 
         // Issue the tickets.
-        ticketStore.issue(project, _name, _symbol);
+        ticketStore.issue(projectCount, _name, _symbol);
 
         // Set the message sender as the project's owner.
-        budgetStore.transferProjectOwnership(project, _owner);
+        budgetStore.transferProjectOwnership(projectCount, _owner);
+
+        emit Deploy(projectCount, _owner, msg.sender);
     }
 
     /**
@@ -221,7 +225,7 @@ contract Juicer is IJuicer {
         @return _budgetId The ID of the Budget that successfully received the contribution.
     */
     function pay(
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         address _beneficiary,
         string memory _note
@@ -294,7 +298,7 @@ contract Juicer is IJuicer {
         @return returnAmount The amount that the tickets were redeemed for.
     */
     function redeem(
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         uint256 _minReturnedETH,
         address _beneficiary
@@ -417,7 +421,7 @@ contract Juicer is IJuicer {
         @param _project The project being migrated.
         @param _to The Juicer contract that will gain minting and burning privileges over the Tickets.
     */
-    function migrate(bytes32 _project, IJuicer _to) external override lock {
+    function migrate(uint256 _project, IJuicer _to) external override lock {
         require(
             migrationContractIsAllowed[address(_to)],
             "Juicer::migrate: BAD_DESTINATION"
@@ -477,7 +481,7 @@ contract Juicer is IJuicer {
       @param _token The token of the specified amount.
     */
     function addOverflow(
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         IERC20 _token
     ) external override lock {
@@ -565,7 +569,7 @@ contract Juicer is IJuicer {
     */
     function _takeFee(
         address _from,
-        bytes32 _project,
+        uint256 _project,
         uint256 _amount,
         address _beneficiary
     ) private {

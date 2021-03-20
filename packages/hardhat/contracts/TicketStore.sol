@@ -20,10 +20,10 @@ contract TicketStore is Store, ITicketStore {
     // --- public properties --- //
 
     /// @notice The Tickets handed out by each issuer. Each issuer has their own Tickets contract.
-    mapping(bytes32 => Tickets) public override tickets;
+    mapping(uint256 => Tickets) public override tickets;
 
-    /// @notice The current cumulative amount of tokens redeemable by each issuer's Tickets.
-    mapping(bytes32 => uint256) public override claimable;
+    /// @notice The current cumulative amount of tokens redeemable by each project's Tickets.
+    mapping(uint256 => uint256) public override claimable;
 
     /// @notice The current cumulative amount of tokens redeemable in the system.
     uint256 public override totalClaimable = 0;
@@ -35,7 +35,7 @@ contract TicketStore is Store, ITicketStore {
         @param _project The project of the Ticket to get a value for.
         @return _value The value.
     */
-    function getTicketValue(bytes32 _project)
+    function getTicketValue(uint256 _project)
         external
         view
         override
@@ -60,7 +60,7 @@ contract TicketStore is Store, ITicketStore {
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        bytes32 _project,
+        uint256 _project,
         uint256 _proportion
     ) public view override returns (uint256) {
         // the issuer's tickets, if they've been issued.
@@ -106,7 +106,7 @@ contract TicketStore is Store, ITicketStore {
         @param _symbol The ERC-20's symbol.
     */
     function issue(
-        bytes32 _project,
+        uint256 _project,
         string memory _name,
         string memory _symbol
     ) external override onlyAdmin {
@@ -132,7 +132,7 @@ contract TicketStore is Store, ITicketStore {
       @param _amount The amount of tickets being minted.
     */
     function print(
-        bytes32 _project,
+        uint256 _project,
         address _holder,
         uint256 _amount
     ) external override onlyAdmin {
@@ -154,7 +154,7 @@ contract TicketStore is Store, ITicketStore {
       @param _proportion The proportion of claimable tokens to redeem for the specified amount of tickets.
     */
     function redeem(
-        bytes32 _project,
+        uint256 _project,
         address _holder,
         uint256 _amount,
         uint256 _minClaimed,
@@ -189,7 +189,7 @@ contract TicketStore is Store, ITicketStore {
         @param _project The project of the Ticket.
         @param _amount The amount to increment.
     */
-    function addClaimable(bytes32 _project, uint256 _amount)
+    function addClaimable(uint256 _project, uint256 _amount)
         external
         override
         onlyAdmin
@@ -203,7 +203,7 @@ contract TicketStore is Store, ITicketStore {
         @param _project The project of the Ticket.
         @return amount The amount cleared.
     */
-    function clearClaimable(bytes32 _project)
+    function clearClaimable(uint256 _project)
         external
         override
         onlyAdmin

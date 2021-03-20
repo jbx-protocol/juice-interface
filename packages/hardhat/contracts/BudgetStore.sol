@@ -24,15 +24,15 @@ contract BudgetStore is Store, IBudgetStore {
     mapping(uint256 => Budget.Data) private budgets;
 
     // The projects that is each address has owned.
-    mapping(address => bytes32[]) private projects;
+    mapping(address => uint256[]) private projects;
 
     // --- public properties --- //
 
     /// @notice The latest Budget ID for each project id.
-    mapping(bytes32 => uint256) public override latestBudgetId;
+    mapping(uint256 => uint256) public override latestBudgetId;
 
     /// @notice The project that is each address can configure and tap.
-    mapping(bytes32 => address) public override projectOwner;
+    mapping(uint256 => address) public override projectOwner;
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
@@ -72,7 +72,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project of the Budget being looked for.
         @return _budget The Budget.
     */
-    function getQueuedBudget(bytes32 _project)
+    function getQueuedBudget(uint256 _project)
         external
         view
         override
@@ -92,7 +92,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project of the Budget being looked for.
         @return budget The Budget.
     */
-    function getCurrentBudget(bytes32 _project)
+    function getCurrentBudget(uint256 _project)
         external
         view
         override
@@ -119,7 +119,7 @@ contract BudgetStore is Store, IBudgetStore {
         external
         view
         override
-        returns (bytes32[] memory)
+        returns (uint256[] memory)
     {
         return projects[_owner];
     }
@@ -149,7 +149,7 @@ contract BudgetStore is Store, IBudgetStore {
         @return _budgetId The id of the budget that was successfully configured.
     */
     function configure(
-        bytes32 _project,
+        uint256 _project,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -222,7 +222,7 @@ contract BudgetStore is Store, IBudgetStore {
       @notice Allows a project owner to transfer the project to another owner.
       @dev This transfers the ability to propose reconfigurations, tap funds, and receive tickets on behalf of the project.
     */
-    function transferProjectOwnership(bytes32 _project, address _newOwner)
+    function transferProjectOwnership(uint256 _project, address _newOwner)
         external
         override
     {
@@ -233,7 +233,7 @@ contract BudgetStore is Store, IBudgetStore {
                 projectOwner[_project] == msg.sender,
                 "BudgetStore::transferOwnership: UNAUTHORIZED"
             );
-            bytes32[] storage _projects = projects[msg.sender];
+            uint256[] storage _projects = projects[msg.sender];
             delete projects[msg.sender];
             for (uint256 i = 0; i < _projects.length; i++) {
                 if (_projects[i] != _project)
@@ -256,7 +256,7 @@ contract BudgetStore is Store, IBudgetStore {
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
     */
-    function payProject(bytes32 _project, uint256 _amount)
+    function payProject(uint256 _project, uint256 _amount)
         external
         override
         onlyAdmin
@@ -363,7 +363,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureStandbyBudget(bytes32 _project)
+    function _ensureStandbyBudget(uint256 _project)
         private
         returns (Budget.Data storage budget)
     {
@@ -396,7 +396,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureActiveBudget(bytes32 _project)
+    function _ensureActiveBudget(uint256 _project)
         private
         returns (Budget.Data storage budget)
     {
@@ -435,7 +435,7 @@ contract BudgetStore is Store, IBudgetStore {
         @return newBudget The initialized Budget.
     */
     function _initBudget(
-        bytes32 _project,
+        uint256 _project,
         uint256 _start,
         Budget.Data storage _latestBudget
     ) private returns (Budget.Data storage newBudget) {
@@ -463,7 +463,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project to which the Budget being looked for belongs.
         @return budget The standby Budget.
     */
-    function _standbyBudget(bytes32 _project)
+    function _standbyBudget(uint256 _project)
         private
         view
         returns (Budget.Data storage budget)
@@ -479,7 +479,7 @@ contract BudgetStore is Store, IBudgetStore {
         @param _project The project to which the Budget being looked for belongs.
         @return budget The active Budget.
     */
-    function _activeBudget(bytes32 _project)
+    function _activeBudget(uint256 _project)
         private
         view
         returns (Budget.Data storage budget)

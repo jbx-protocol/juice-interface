@@ -28,12 +28,6 @@ contract TicketStore is Store, ITicketStore {
     /// @notice The current cumulative amount of tokens redeemable in the system.
     uint256 public override totalClaimable = 0;
 
-    /// @notice The amount of Tickets owed to each address from each token issuer.
-    mapping(bytes32 => mapping(address => uint256)) public override iOweYous;
-
-    /// @notice The total amount of Tickets owed for each token issuer.
-    mapping(bytes32 => uint256) public override totalIOweYous;
-
     // --- external views --- //
 
     /**
@@ -72,13 +66,11 @@ contract TicketStore is Store, ITicketStore {
         // the issuer's tickets, if they've been issued.
         Tickets _tickets = tickets[_project];
 
-        // If there isnt any iOweYou for the specified holder, get issued tickets for the issuer.
-        bool _hasIOweYous = iOweYous[_project][_holder] > 0;
+        // If there are no tickets, return zero.
+        if (_tickets == Tickets(0)) return 0;
 
-        // Get the total supply from the ticket and iOweYou's.
-        uint256 _totalSupply = totalIOweYous[_project];
-        if (_tickets != Tickets(0))
-            _totalSupply = _totalSupply.add(_tickets.totalSupply());
+        // Get the total supply from the ticket.
+        uint256 _totalSupply = _tickets.totalSupply();
 
         // Nothing is claimable if there are no tickets or iOweYou's.
         if (_totalSupply == 0) return 0;
@@ -86,11 +78,7 @@ contract TicketStore is Store, ITicketStore {
         // Make sure the specified amount is available.
         require(
             // Get the amount of tickets the specified holder has access to, or is owed.
-            (
-                _hasIOweYous
-                    ? iOweYous[_project][_holder]
-                    : _tickets.balanceOf(_holder)
-            ) >= _amount,
+            _tickets.balanceOf(_holder) >= _amount,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -137,27 +125,6 @@ contract TicketStore is Store, ITicketStore {
         emit Issue(_project, _tickets.name(), _tickets.symbol());
     }
 
-    /**
-      @notice Convert I-owe-you's to tickets
-      @param _project The project of the tickets.
-     */
-    function convert(bytes32 _project) external override {
-        Tickets _tickets = tickets[_project];
-        require(_tickets != Tickets(0), "TicketStore::convert: NOT_CLAIMABLE");
-
-        // The amount of I-owe-yous.
-        uint256 _amount = iOweYous[_project][msg.sender];
-
-        if (_amount == 0) return;
-
-        // Remove any I-owe-yous
-        iOweYous[_project][msg.sender] = 0;
-        totalIOweYous[_project] = totalIOweYous[_project].sub(_amount);
-
-        // Mint the tickets owed.
-        _tickets.mint(msg.sender, _amount);
-    }
-
     /** 
       @notice Mints new ERC-20 tickets, or increments the IOweYou count.
       @param _project The project of the tickets being minted.
@@ -170,16 +137,12 @@ contract TicketStore is Store, ITicketStore {
         uint256 _amount
     ) external override onlyAdmin {
         Tickets _tickets = tickets[_project];
-        uint256 _iOweYou = iOweYous[_project][_holder];
-        // Mint tickets if there are no I-owe-yous and if tickets have been issued.
-        if (_iOweYou == 0 && _tickets != Tickets(0)) {
-            _tickets.mint(_holder, _amount);
-        }
-        // Otherwise add to I-owe-you.
-        else {
-            iOweYous[_project][_holder] = _iOweYou.add(_amount);
-            totalIOweYous[_project] = totalIOweYous[_project].add(_amount);
-        }
+
+        // Tickets must be issued.
+        require(_tickets != Tickets(0), "TicketStore::print: NOT_FOUND");
+
+        // Mint tickets.
+        _tickets.mint(_holder, _amount);
     }
 
     /** 
@@ -197,6 +160,8 @@ contract TicketStore is Store, ITicketStore {
         uint256 _minClaimed,
         uint256 _proportion
     ) external override onlyAdmin returns (uint256 returnAmount) {
+        require(_minClaimed > 0, "TicketStore::redeem: BAD_AMOUNT");
+
         // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         returnAmount = getClaimableAmount(
             _holder,
@@ -211,15 +176,8 @@ contract TicketStore is Store, ITicketStore {
             "TicketStore::redeem: INSUFFICIENT_FUNDS"
         );
 
-        Tickets _tickets = tickets[_project];
-        uint256 _iOweYou = iOweYous[_project][_holder];
-
-        if (_iOweYou == 0 && _tickets != Tickets(0)) {
-            tickets[_project].burn(_holder, _amount);
-        } else {
-            iOweYous[_project][_holder] = _iOweYou.sub(_amount);
-            totalIOweYous[_project] = totalIOweYous[_project].sub(_amount);
-        }
+        // Burn the tickets.
+        tickets[_project].burn(_holder, _amount);
 
         // Subtract the claimed tokens from the total amount claimable.
         claimable[_project] = claimable[_project].sub(returnAmount);

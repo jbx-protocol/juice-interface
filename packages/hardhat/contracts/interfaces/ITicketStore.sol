@@ -16,13 +16,6 @@ interface ITicketStore is IStore {
 
     function totalClaimable() external view returns (uint256);
 
-    function iOweYous(bytes32 _project, address _holder)
-        external
-        view
-        returns (uint256);
-
-    function totalIOweYous(bytes32 _project) external view returns (uint256);
-
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
@@ -37,8 +30,6 @@ interface ITicketStore is IStore {
         string memory _name,
         string memory _symbol
     ) external;
-
-    function convert(bytes32 _project) external;
 
     function print(
         bytes32 _project,

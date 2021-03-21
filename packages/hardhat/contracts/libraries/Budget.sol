@@ -21,8 +21,8 @@ library Budget {
     struct Data {
         // A unique number that's incremented for each new Budget, starting with 1.
         uint256 id;
-        // The address who defined this Budget and who has access to its funds.
-        uint256 project;
+        // The ID of the project contract that this budget belongs to.
+        uint256 projectId;
         // The number of this budget for the project.
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.
@@ -76,7 +76,7 @@ library Budget {
         _self.target = _baseBudget.target;
         _self.currency = _baseBudget.currency;
         _self.duration = _baseBudget.duration;
-        _self.project = _baseBudget.project;
+        _self.projectId = _baseBudget.projectId;
         _self.name = _baseBudget.name;
         _self.discountRate = _baseBudget.discountRate;
         _self.bondingCurveRate = _baseBudget.bondingCurveRate;
@@ -130,7 +130,7 @@ library Budget {
         return
             Data(
                 0,
-                _self.project,
+                _self.projectId,
                 _self.number.add(1),
                 _self.id,
                 _self.name,

@@ -2,14 +2,18 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
 import "./IOverflowYielder.sol";
 
+import "./../Projects.sol";
+
 interface IBudgetController {
     event Pay(
         uint256 indexed budgetId,
-        uint256 indexed project,
+        uint256 indexed projectId,
         address indexed payer,
         address beneficiary,
         uint256 amount,
@@ -21,7 +25,7 @@ interface IBudgetController {
 
     event Tap(
         uint256 indexed budgetId,
-        uint256 indexed project,
+        uint256 indexed projectId,
         address indexed beneficiary,
         address tapper,
         uint256 amount,
@@ -40,7 +44,7 @@ interface IBudgetController {
     );
 
     function pay(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
         string memory _note
@@ -48,6 +52,7 @@ interface IBudgetController {
 
     function tap(
         uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
         address _beneficiary,
@@ -58,7 +63,7 @@ interface IBudgetController {
 interface ITicketsController {
     event Redeem(
         address indexed holder,
-        uint256 indexed project,
+        uint256 indexed _projectId,
         address beneficiary,
         uint256 amount,
         uint256 returnAmount,
@@ -66,7 +71,7 @@ interface ITicketsController {
     );
 
     function redeem(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
         address _beneficiary
@@ -83,7 +88,7 @@ interface IJuicer is IBudgetController, ITicketsController {
     );
 
     event Deploy(
-        uint256 indexed project,
+        uint256 indexed _projectId,
         address indexed owner,
         address indexed deployer
     );
@@ -96,7 +101,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function admin() external view returns (address);
 
-    function projectCount() external view returns (uint256);
+    function projects() external view returns (Projects);
 
     function budgetStore() external view returns (IBudgetStore);
 
@@ -108,7 +113,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function weth() external view returns (IERC20);
 
-    function getOverflow(uint256 _project) external view returns (uint256);
+    function getOverflow(uint256 _projectId) external view returns (uint256);
 
     function getTotalOverflow() external view returns (uint256);
 
@@ -116,7 +121,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
 
-    function migrate(uint256 _project, IJuicer _to) external;
+    function migrate(uint256 _projectId, IJuicer _to) external;
 
     function deployProject(
         address _owner,
@@ -129,10 +134,10 @@ interface IJuicer is IBudgetController, ITicketsController {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external returns (uint256 project);
+    ) external returns (uint256 projectId);
 
     function addOverflow(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _amount,
         IERC20 _token
     ) external;

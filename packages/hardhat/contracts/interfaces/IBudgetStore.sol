@@ -2,6 +2,8 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import "./IStore.sol";
 import "./IPrices.sol";
 import "./IBudgetBallot.sol";
@@ -10,7 +12,7 @@ import "../libraries/Budget.sol";
 interface IBudgetStore is IStore {
     event Configure(
         uint256 indexed budgetId,
-        uint256 indexed project,
+        uint256 indexed projectId,
         uint256 indexed target,
         uint256 currency,
         uint256 duration,
@@ -21,19 +23,13 @@ interface IBudgetStore is IStore {
         uint256 reserved
     );
 
-    event TransferOwnership(
-        uint256 indexed _project,
-        address indexed _from,
-        address indexed _to
-    );
-
     function latestBudgetId(uint256 _project) external view returns (uint256);
-
-    function projectOwner(uint256 _project) external view returns (address);
 
     function budgetCount() external view returns (uint256);
 
     function prices() external view returns (IPrices);
+
+    function projects() external view returns (IERC721);
 
     function budgetBallot() external view returns (IBudgetBallot);
 
@@ -44,23 +40,18 @@ interface IBudgetStore is IStore {
         view
         returns (Budget.Data memory);
 
-    function getQueuedBudget(uint256 _project)
+    function getQueuedBudget(uint256 _projectId)
         external
         view
         returns (Budget.Data memory);
 
-    function getCurrentBudget(uint256 _project)
+    function getCurrentBudget(uint256 _projectId)
         external
         view
         returns (Budget.Data memory);
-
-    function getProjects(address _owner)
-        external
-        view
-        returns (uint256[] memory);
 
     function configure(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -71,18 +62,16 @@ interface IBudgetStore is IStore {
         uint256 _reserved
     ) external returns (uint256 budgetId);
 
-    function payProject(uint256 _project, uint256 _amount)
+    function payProject(uint256 _projectId, uint256 _amount)
         external
         returns (
             Budget.Data memory budget,
-            address owner,
             uint256 convertedCurrencyAmount,
             uint256 overflow
         );
 
     function tap(
         uint256 _budgetId,
-        address _tapper,
         uint256 _amount,
         uint256 _currency
     )
@@ -96,7 +85,4 @@ interface IBudgetStore is IStore {
     function setFee(uint256 _fee) external;
 
     function setBudgetBallot(IBudgetBallot _budgetBallot) external;
-
-    function transferProjectOwnership(uint256 _project, address _newOwner)
-        external;
 }

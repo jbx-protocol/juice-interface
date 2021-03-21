@@ -96,7 +96,7 @@ contract BudgetBallot is IBudgetBallot {
         );
 
         // Get the Tickets used for the Budget.
-        Tickets _tickets = _ticketStore.tickets(_budget.project);
+        Tickets _tickets = _ticketStore.tickets(_budget.projectId);
 
         // Find how many tickets the message sender has staked.
         uint256 _stakedAmount = staker.staked(_tickets, msg.sender);

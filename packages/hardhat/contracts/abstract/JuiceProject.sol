@@ -20,8 +20,8 @@ abstract contract JuiceProject is Ownable {
         _;
     }
 
-    /// @dev The project that is being managed.
-    uint256 public project;
+    /// @dev The ID of the project that is being managed.
+    uint256 public projectId;
 
     /// @dev The address that can tap funds from the project and propose reconfigurations.
     address public pm;
@@ -40,15 +40,15 @@ abstract contract JuiceProject is Ownable {
 
     /** 
       @notice Allows the project that is being managed to be set.
-      @param _project the project that is being managed.
+      @param _projectId The ID of the project that is being managed.
     */
-    function setProject(uint256 _project) external {
+    function setProjectId(uint256 _projectId) external {
         // The pm or the owner can set the project.
         require(
             msg.sender == pm || msg.sender == owner(),
             "JuiceProject: UNAUTHORIZED"
         );
-        project = _project;
+        projectId = _projectId;
     }
 
     /**
@@ -83,7 +83,7 @@ abstract contract JuiceProject is Ownable {
         );
 
         budgetId = juicer.budgetStore().configure(
-            project,
+            projectId,
             _target,
             _currency,
             _duration,
@@ -97,49 +97,49 @@ abstract contract JuiceProject is Ownable {
 
     /** 
       @notice Redeem tickets that have been transfered to this contract and use the claimed amount to fund this project.
-      @param _project The project who's tickets are being redeemed.
+      @param _projectId The ID of the project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @param _note A note to leave on the emitted event.
       @return returnAmount The amount of ETH that was redeemed and used to fund the budget.
     */
     function redeemTicketsAndFund(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
         string memory _note
     ) external onlyPm returns (uint256 returnAmount) {
         require(
-            project != 0,
+            projectId != 0,
             "JuiceProject::redeemTicketsAndFund: PROJECT_NOT_FOUND"
         );
         returnAmount = juicer.redeem(
-            _project,
+            _projectId,
             _amount,
             _minReturnedETH,
             address(this)
         );
 
         // Tickets come back to this project.
-        juicer.pay(project, returnAmount, address(this), _note);
+        juicer.pay(projectId, returnAmount, address(this), _note);
     }
 
     /** 
       @notice Redeem tickets that have been transfered to this contract.
-      @param _project The project who's tickets are being redeemed.
+      @param _projectId The ID of the project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _beneficiary The address that is receiving the redeemed tokens.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm returns (uint256 _returnAmount) {
         _returnAmount = juicer.redeem(
-            _project,
+            _projectId,
             _amount,
             _minReturnedETH,
             _beneficiary
@@ -163,6 +163,7 @@ abstract contract JuiceProject is Ownable {
     ) external onlyPm {
         juicer.tap(
             _budgetId,
+            projectId,
             _amount,
             _currency,
             _beneficiary,
@@ -184,7 +185,7 @@ abstract contract JuiceProject is Ownable {
         @param _newOwner The new project owner.
     */
     function transferProjectOwnership(address _newOwner) external onlyOwner {
-        juicer.budgetStore().transferProjectOwnership(project, _newOwner);
+        juicer.projects().safeTransferFrom(address(this), _newOwner, projectId);
     }
 
     /** 
@@ -196,10 +197,10 @@ abstract contract JuiceProject is Ownable {
     function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
         require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
         require(_from == juicer, "JuiceProject::migrate: INVALID");
-        require(project != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
+        require(projectId != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
 
         // Migrate.
-        _from.migrate(project, _to);
+        _from.migrate(projectId, _to);
 
         // Set the new juicer.
         juicer = _to;
@@ -216,7 +217,7 @@ abstract contract JuiceProject is Ownable {
         address _from,
         string memory _note
     ) internal {
-        require(project != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
-        juicer.pay(project, _amount, _from, _note);
+        require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
+        juicer.pay(projectId, _amount, _from, _note);
     }
 }

@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./libraries/Budget.sol";
 import "./libraries/DSMath.sol";
@@ -23,16 +24,13 @@ contract BudgetStore is Store, IBudgetStore {
     // The official record of all Budgets ever created.
     mapping(uint256 => Budget.Data) private budgets;
 
-    // The projects that is each address has owned.
-    mapping(address => uint256[]) private projects;
-
     // --- public properties --- //
 
     /// @notice The latest Budget ID for each project id.
     mapping(uint256 => uint256) public override latestBudgetId;
 
-    /// @notice The project that is each address can configure and tap.
-    mapping(uint256 => address) public override projectOwner;
+    /// @notice the Projects contract.
+    IERC721 public override projects;
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
@@ -69,17 +67,17 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice The Budget that's next up for a project and not currently accepting payments.
-        @param _project The project of the Budget being looked for.
+        @param _projectId The ID of the project of the Budget being looked for.
         @return _budget The Budget.
     */
-    function getQueuedBudget(uint256 _project)
+    function getQueuedBudget(uint256 _projectId)
         external
         view
         override
         returns (Budget.Data memory)
     {
-        Budget.Data memory _sBudget = _standbyBudget(_project);
-        Budget.Data memory _aBudget = _activeBudget(_project);
+        Budget.Data memory _sBudget = _standbyBudget(_projectId);
+        Budget.Data memory _aBudget = _activeBudget(_projectId);
 
         // If there are both active and standby budgets, the standby budget must be queued.
         if (_sBudget.id > 0 && _aBudget.id > 0) return _sBudget;
@@ -89,52 +87,39 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice The Budget that would be currently accepting sustainments for the provided project.
-        @param _project The project of the Budget being looked for.
+        @param _projectId The ID of the project of the Budget being looked for.
         @return budget The Budget.
     */
-    function getCurrentBudget(uint256 _project)
+    function getCurrentBudget(uint256 _projectId)
         external
         view
         override
         returns (Budget.Data memory budget)
     {
         require(
-            latestBudgetId[_project] > 0,
+            latestBudgetId[_projectId] > 0,
             "BudgetStore::getCurrentBudget: NOT_FOUND"
         );
-        budget = _activeBudget(_project);
+        budget = _activeBudget(_projectId);
         if (budget.id > 0) return budget;
-        budget = _standbyBudget(_project);
+        budget = _standbyBudget(_projectId);
         if (budget.id > 0) return budget;
-        budget = budgets[latestBudgetId[_project]];
+        budget = budgets[latestBudgetId[_projectId]];
         return budget._nextUp();
-    }
-
-    /** 
-      @notice Gets the projects for an owner.
-      @param _owner The owner to get projects for.
-      @return projects The projects.
-    */
-    function getProjects(address _owner)
-        external
-        view
-        override
-        returns (uint256[] memory)
-    {
-        return projects[_owner];
     }
 
     // --- external transactions --- //
 
-    constructor(IPrices _prices) {
+    constructor(IPrices _prices, IERC721 _projects) {
         prices = _prices;
+        projects = _projects;
     }
 
     /**
         @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
         sets the properties of the Budget that will take effect once the current one expires.
         @dev The msg.sender is the project of the budget.
-        @param _project The project being configured. Send 0 to configure a new project.
+        @param _projectId The ID of the project being configured. Send 0 to configure a new project.
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
@@ -149,7 +134,7 @@ contract BudgetStore is Store, IBudgetStore {
         @return _budgetId The id of the budget that was successfully configured.
     */
     function configure(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -179,15 +164,14 @@ contract BudgetStore is Store, IBudgetStore {
             "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
         );
 
-        // Either the message sender must be the project owner, or it must not yet have an owner.
+        // The message sender must be the project owner.
         require(
-            projectOwner[_project] == msg.sender ||
-                projectOwner[_project] == address(0),
+            projects.ownerOf(_projectId) == msg.sender,
             "BudgetStore::configure: UNAUTHORIZED"
         );
 
         // Return's the project's editable budget. Creates one if one doesn't already exists.
-        Budget.Data storage _budget = _ensureStandbyBudget(_project);
+        Budget.Data storage _budget = _ensureStandbyBudget(_projectId);
 
         // Set the properties of the budget.
         _budget.link = _link;
@@ -204,7 +188,7 @@ contract BudgetStore is Store, IBudgetStore {
 
         emit Configure(
             _budget.id,
-            _budget.project,
+            _budget.projectId,
             _budget.target,
             _budget.currency,
             _budget.duration,
@@ -219,57 +203,26 @@ contract BudgetStore is Store, IBudgetStore {
     }
 
     /** 
-      @notice Allows a project owner to transfer the project to another owner.
-      @dev This transfers the ability to propose reconfigurations, tap funds, and receive tickets on behalf of the project.
-    */
-    function transferProjectOwnership(uint256 _project, address _newOwner)
-        external
-        override
-    {
-        // Remove the project from the old owner, if there's an old owner.
-        if (projectOwner[_project] != address(0)) {
-            // The project's current owner must be transfering.
-            require(
-                projectOwner[_project] == msg.sender,
-                "BudgetStore::transferOwnership: UNAUTHORIZED"
-            );
-            uint256[] storage _projects = projects[msg.sender];
-            delete projects[msg.sender];
-            for (uint256 i = 0; i < _projects.length; i++) {
-                if (_projects[i] != _project)
-                    projects[msg.sender].push(_projects[i]);
-            }
-        }
-
-        projectOwner[_project] = _newOwner;
-        projects[_newOwner].push(_project);
-
-        emit TransferOwnership(_project, msg.sender, _newOwner);
-    }
-
-    /** 
       @notice Tracks a payments to the appropriate budget for the project.
-      @param _project The project being paid.
+      @param _projectId The ID of the project being paid.
       @param _amount The amount being paid.
       @return budget The budget that is being paid.
-      @return owner The current owner of the budget being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
     */
-    function payProject(uint256 _project, uint256 _amount)
+    function payProject(uint256 _projectId, uint256 _amount)
         external
         override
         onlyAdmin
         returns (
             Budget.Data memory budget,
-            address owner,
             uint256 convertedCurrencyAmount,
             uint256 overflow
         )
     {
         // Find the Budget that this contribution should go towards.
         // Creates a new budget based on the project's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data storage _budget = _ensureActiveBudget(_project);
+        Budget.Data storage _budget = _ensureActiveBudget(_projectId);
 
         // Add the amount to the budget.
         (convertedCurrencyAmount, overflow) = _budget._add(
@@ -279,15 +232,11 @@ contract BudgetStore is Store, IBudgetStore {
 
         // Return the budget.
         budget = _budget;
-
-        // Return the project owner.
-        owner = projectOwner[_project];
     }
 
     /** 
       @notice Tracks a project tapping its funds.
       @param _budgetId The ID of the budget being tapped.
-      @param _tapper The address that is tapping.
       @param _amount The amount of being tapped.
       @param _currency The currency of the amount being tapped.
       @return budget The budget that is being tapped.
@@ -296,7 +245,6 @@ contract BudgetStore is Store, IBudgetStore {
     */
     function tap(
         uint256 _budgetId,
-        address _tapper,
         uint256 _amount,
         uint256 _currency
     )
@@ -313,12 +261,6 @@ contract BudgetStore is Store, IBudgetStore {
         Budget.Data storage _budget = budgets[_budgetId];
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
-
-        // Only a project owner can tap its funds.
-        require(
-            _tapper == projectOwner[_budget.project],
-            "BudgetStore::tap: UNAUTHORIZED"
-        );
 
         // Don't tap budgets with a different currency.
         require(
@@ -360,20 +302,20 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice Returns the standby Budget for this project if it exists, otherwise putting one in standby appropriately.
-        @param _project The project to which the Budget being looked for belongs.
+        @param _projectId The ID of the project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureStandbyBudget(uint256 _project)
+    function _ensureStandbyBudget(uint256 _projectId)
         private
         returns (Budget.Data storage budget)
     {
         // Cannot update active budget, check if there is a standby budget.
-        budget = _standbyBudget(_project);
+        budget = _standbyBudget(_projectId);
         if (budget.id > 0) return budget;
         // Get the latest budget.
-        budget = budgets[latestBudgetId[_project]];
+        budget = budgets[latestBudgetId[_projectId]];
         // If there's an active Budget, its end time should correspond to the start time of the new Budget.
-        Budget.Data memory _aBudget = _activeBudget(_project);
+        Budget.Data memory _aBudget = _activeBudget(_projectId);
 
         // Make sure the budget is recurring.
         require(
@@ -384,27 +326,27 @@ contract BudgetStore is Store, IBudgetStore {
         //Base a new budget on the latest budget if one exists.
         budget = _aBudget.id > 0
             ? _initBudget(
-                _project,
+                _projectId,
                 _aBudget.start.add(_aBudget.duration),
                 budget
             )
-            : _initBudget(_project, block.timestamp, budget);
+            : _initBudget(_projectId, block.timestamp, budget);
     }
 
     /**
         @notice Returns the active Budget for this project if it exists, otherwise activating one appropriately.
-        @param _project The project to which the Budget being looked for belongs.
+        @param _projectId The ID of the project to which the Budget being looked for belongs.
         @return budget The resulting Budget.
     */
-    function _ensureActiveBudget(uint256 _project)
+    function _ensureActiveBudget(uint256 _projectId)
         private
         returns (Budget.Data storage budget)
     {
         // Check if there is an active Budget.
-        budget = _activeBudget(_project);
+        budget = _activeBudget(_projectId);
         if (budget.id > 0) return budget;
         // No active Budget found, check if there is a standby Budget.
-        budget = _standbyBudget(_project);
+        budget = _standbyBudget(_projectId);
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
         if (
             budget.id > 0 &&
@@ -415,7 +357,7 @@ contract BudgetStore is Store, IBudgetStore {
         // No upcoming Budget found with a successful vote, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
         budget = budgets[
-            budget.id > 0 ? budget.previous : latestBudgetId[_project]
+            budget.id > 0 ? budget.previous : latestBudgetId[_projectId]
         ];
         // Budgets with a discountRate of 0 are non-recurring.
         require(
@@ -424,18 +366,18 @@ contract BudgetStore is Store, IBudgetStore {
         );
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled Budgets ever since the `latest`, even if `latest` is a long time in the past.
-        budget = _initBudget(_project, budget._determineNextStart(), budget);
+        budget = _initBudget(_projectId, budget._determineNextStart(), budget);
     }
 
     /**
         @notice Initializes a Budget to be sustained for the sending address.
-        @param _project The project to which the Budget being initialized belongs.
+        @param _projectId The ID of the project to which the Budget being initialized belongs.
         @param _start The start time for the new Budget.
         @param _latestBudget The latest budget for the project.
         @return newBudget The initialized Budget.
     */
     function _initBudget(
-        uint256 _project,
+        uint256 _projectId,
         uint256 _start,
         Budget.Data storage _latestBudget
     ) private returns (Budget.Data storage newBudget) {
@@ -446,12 +388,12 @@ contract BudgetStore is Store, IBudgetStore {
         newBudget.total = 0;
         newBudget.tappedTotal = 0;
         newBudget.tappedTarget = 0;
-        latestBudgetId[_project] = budgetCount;
+        latestBudgetId[_projectId] = budgetCount;
 
         if (_latestBudget.id > 0) {
             newBudget._basedOn(_latestBudget);
         } else {
-            newBudget.project = _project;
+            newBudget.projectId = _projectId;
             newBudget.weight = 10E25;
             newBudget.number = 1;
             newBudget.previous = 0;
@@ -460,15 +402,15 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice An project's edittable Budget.
-        @param _project The project to which the Budget being looked for belongs.
+        @param _projectId The ID of project to which the Budget being looked for belongs.
         @return budget The standby Budget.
     */
-    function _standbyBudget(uint256 _project)
+    function _standbyBudget(uint256 _projectId)
         private
         view
         returns (Budget.Data storage budget)
     {
-        budget = budgets[latestBudgetId[_project]];
+        budget = budgets[latestBudgetId[_projectId]];
         if (budget.id == 0) return budgets[0];
         // There is no upcoming Budget if the latest Budget is not upcoming
         if (budget._state() != Budget.State.Standby) return budgets[0];
@@ -476,15 +418,15 @@ contract BudgetStore is Store, IBudgetStore {
 
     /**
         @notice The currently active Budget for a project.
-        @param _project The project to which the Budget being looked for belongs.
+        @param _projectId The ID of the project to which the Budget being looked for belongs.
         @return budget The active Budget.
     */
-    function _activeBudget(uint256 _project)
+    function _activeBudget(uint256 _projectId)
         private
         view
         returns (Budget.Data storage budget)
     {
-        budget = budgets[latestBudgetId[_project]];
+        budget = budgets[latestBudgetId[_projectId]];
         if (budget.id == 0) return budgets[0];
         // An Active Budget must be either the latest Budget or the
         // one immediately before it.

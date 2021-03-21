@@ -193,6 +193,8 @@ library Budget {
         returns (bool)
     {
         return
+            // allow if this is the first budget and it hasn't received payments.
+            (_self.number == 1 && _self.total == 0) ||
             _self.ballot == IBudgetBallot(0) ||
             _self.ballot.isApproved(_self.id, _self.configured);
     }

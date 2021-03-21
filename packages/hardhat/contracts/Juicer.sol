@@ -230,7 +230,7 @@ contract Juicer is IJuicer, IERC721Receiver {
         uint256 _amount,
         address _beneficiary,
         string memory _note
-    ) external override returns (uint256) {
+    ) external override lock returns (uint256) {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 

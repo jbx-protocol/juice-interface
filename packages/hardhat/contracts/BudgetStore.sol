@@ -287,7 +287,7 @@ contract BudgetStore is Administered, IBudgetStore {
     }
 
     /** 
-      @notice Sets the minimum percent fee that a budget can have.
+      @notice Sets the percent fee that a budget can have.
       @param _fee The new percent fee.
     */
     function setFee(uint256 _fee) external override onlyAdmin {
@@ -356,12 +356,7 @@ contract BudgetStore is Administered, IBudgetStore {
         // No active Budget found, check if there is a standby Budget.
         budget = _standbyBudget(_projectId);
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
-        if (
-            budget.id > 0 &&
-            (budget._isConfigurationApproved() ||
-                // allow if this is the first budget and it hasn't received payments.
-                (budget.number == 1 && budget.total == 0))
-        ) return budget;
+        if (budget.id > 0 && budget._isConfigurationApproved()) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
         budget = budgets[

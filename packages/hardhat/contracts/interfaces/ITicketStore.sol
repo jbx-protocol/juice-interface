@@ -42,7 +42,7 @@ interface ITicketStore {
         uint256 _amount,
         uint256 _minReturn,
         uint256 _proportion
-    ) external returns (uint256 returnAmount);
+    ) external returns (uint256 claimableAmount, uint256 outOf);
 
     function addClaimable(uint256 _project, uint256 _amount) external;
 

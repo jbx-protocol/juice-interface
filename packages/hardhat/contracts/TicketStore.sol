@@ -152,6 +152,8 @@ contract TicketStore is Administered, ITicketStore {
       @param _amount The amount of tickets being redeemed.
       @param _minClaimed The minimun amount of claimed tokens to receive in return.
       @param _proportion The proportion of claimable tokens to redeem for the specified amount of tickets.
+      @return claimableAmount The amount that is being claimed.
+      @return outOf The total amount that is claimable.
     */
     function redeem(
         uint256 _project,
@@ -159,11 +161,16 @@ contract TicketStore is Administered, ITicketStore {
         uint256 _amount,
         uint256 _minClaimed,
         uint256 _proportion
-    ) external override onlyAdmin returns (uint256 returnAmount) {
+    )
+        external
+        override
+        onlyAdmin
+        returns (uint256 claimableAmount, uint256 outOf)
+    {
         require(_minClaimed > 0, "TicketStore::redeem: BAD_AMOUNT");
 
         // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
-        returnAmount = getClaimableAmount(
+        claimableAmount = getClaimableAmount(
             _holder,
             _amount,
             _project,
@@ -172,16 +179,19 @@ contract TicketStore is Administered, ITicketStore {
 
         // The amount being claimed must be less than the amount claimable.
         require(
-            returnAmount >= _minClaimed,
+            claimableAmount >= _minClaimed,
             "TicketStore::redeem: INSUFFICIENT_FUNDS"
         );
 
         // Burn the tickets.
         tickets[_project].burn(_holder, _amount);
 
+        // Return the total amount claimable before changing the state.
+        outOf = totalClaimable;
+
         // Subtract the claimed tokens from the total amount claimable.
-        claimable[_project] = claimable[_project].sub(returnAmount);
-        totalClaimable = totalClaimable.sub(returnAmount);
+        claimable[_project] = claimable[_project].sub(claimableAmount);
+        totalClaimable = totalClaimable.sub(claimableAmount);
     }
 
     /**

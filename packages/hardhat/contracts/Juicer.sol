@@ -313,42 +313,18 @@ contract Juicer is IJuicer, IERC721Receiver {
         uint256 _minReturnedETH,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
-        // Get the current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
-
         // Redeem at the ticket store. The raw amount claimable for this issuer is returned.
-        uint256 _claimable =
+        (uint256 _claimable, uint256 _outOf) =
             ticketStore.redeem(
                 _projectId,
                 msg.sender,
                 _amount,
                 _minReturnedETH,
-                _budget.bondingCurveRate
+                budgetStore.getCurrentBudget(_projectId).bondingCurveRate
             );
 
-        uint256 _baseReturnAmount = depositable;
-
-        if (overflowYielder != IOverflowYielder(0))
-            _baseReturnAmount.add(overflowYielder.getBalance(weth));
-
-        // The amount that will be redeemed is the total amount earning yield plus what's depositable, times the ratio of raw tokens this issuer has accumulated.
-        returnAmount = Math.mulDiv(
-            _baseReturnAmount,
-            _claimable,
-            ticketStore.totalClaimable()
-        );
-
-        // Subtract the depositable amount if needed.
-        if (returnAmount <= depositable) {
-            depositable = depositable.sub(returnAmount);
-            // Simply withdraw from the overflow yielder if there's nothing depositable.
-        } else if (depositable == 0) {
-            overflowYielder.withdraw(returnAmount, weth);
-            // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
-        } else {
-            overflowYielder.withdraw(returnAmount.sub(depositable), weth);
-            depositable = 0;
-        }
+        // Withdrawn the deposited amount according to the claimable proportion.
+        returnAmount = _withdraw(_claimable, _outOf);
 
         // Transfer funds to the specified address.
         weth.safeTransfer(_beneficiary, returnAmount);
@@ -466,24 +442,8 @@ contract Juicer is IJuicer, IERC721Receiver {
         uint256 _totalClaimable = ticketStore.totalClaimable();
         uint256 _claimable = ticketStore.clearClaimable(_projectId);
 
-        // Move all claimable tokens for this issuer.
-        // Assumes the new contract uses the same ticket store.
-        uint256 _amount =
-            (overflowYielder.getBalance(weth).add(depositable))
-                .mul(_claimable)
-                .div(_totalClaimable);
-
-        // Subtract the depositable amount if needed.
-        if (_amount <= depositable) {
-            depositable = depositable.sub(_amount);
-            // Withdraw from the overflow yielder if there's nothing depositable.
-        } else if (depositable == 0) {
-            overflowYielder.withdraw(_amount, weth);
-            // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
-        } else {
-            overflowYielder.withdraw(_amount.sub(depositable), weth);
-            depositable = 0;
-        }
+        // Withdrawn the deposited amount according to the claimable proportion.
+        uint256 _amount = _withdraw(_claimable, _totalClaimable);
 
         // Allow the new project to move funds owned by the issuer from contract.
         weth.safeApprove(address(_to), _amount);
@@ -667,5 +627,37 @@ contract Juicer is IJuicer, IERC721Receiver {
 
         // Add to the claimable amount.
         ticketStore.addClaimable(_budget.projectId, _claimablePortion);
+    }
+
+    /** 
+      @notice Withdraws an amount from whats been deposited.
+      @param _proportion The proportion of whats being withdrawn.
+      @param _outOf The total amount that the `_proportion` is relative to.
+      @return amount The amount being withdrawn.
+    */
+    function _withdraw(uint256 _proportion, uint256 _outOf)
+        private
+        returns (uint256 amount)
+    {
+        // The amount of weth available.
+        uint256 _available = depositable;
+
+        if (overflowYielder != IOverflowYielder(0))
+            _available.add(overflowYielder.getBalance(weth));
+
+        // The amount that satisfies the proportion.
+        amount = Math.mulDiv(_available, _proportion, _outOf);
+
+        // Subtract the depositable amount if needed.
+        if (amount <= depositable) {
+            depositable = depositable.sub(amount);
+            // Withdraw from the overflow yielder if there's nothing depositable.
+        } else if (depositable == 0) {
+            overflowYielder.withdraw(amount, weth);
+            // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
+        } else {
+            overflowYielder.withdraw(amount.sub(depositable), weth);
+            depositable = 0;
+        }
     }
 }

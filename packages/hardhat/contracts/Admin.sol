@@ -73,15 +73,14 @@ contract Admin is JuiceProject {
     }
 
     /**
-        @notice Sets the minimum fee that a budget can have.
-        @param _budgetStore The budget store to set the mininum fee of.
-        @param _fee The new minimum fee.
+        @notice Sets the fee that a budget needs to pay.
+        @param _budgetStore The budget store to set the fee of.
+        @param _fee The new fee.
     */
-    function reduceFee(IBudgetStore _budgetStore, uint256 _fee)
+    function adjustFee(IBudgetStore _budgetStore, uint256 _fee)
         external
         onlyOwner
     {
-        require(_fee < _budgetStore.fee(), "Admin::reduceFee: BAD_FEE");
         _budgetStore.setFee(_fee);
     }
 

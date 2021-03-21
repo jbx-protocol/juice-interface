@@ -43,7 +43,7 @@ contract BudgetStore is Administered, IBudgetStore {
     IBudgetBallot public override budgetBallot;
 
     /// @notice The percent fee the Juice project takes from payments.
-    uint256 public override fee = 25;
+    uint256 public override fee = 30;
 
     // --- external views --- //
 

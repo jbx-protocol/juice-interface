@@ -237,6 +237,7 @@ contract BudgetStore is Store, IBudgetStore {
     /** 
       @notice Tracks a project tapping its funds.
       @param _budgetId The ID of the budget being tapped.
+      @param _projectId The ID of the project to which the budget being tapped belongs.
       @param _amount The amount of being tapped.
       @param _currency The currency of the amount being tapped.
       @return budget The budget that is being tapped.
@@ -245,6 +246,7 @@ contract BudgetStore is Store, IBudgetStore {
     */
     function tap(
         uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _currency
     )
@@ -261,6 +263,12 @@ contract BudgetStore is Store, IBudgetStore {
         Budget.Data storage _budget = budgets[_budgetId];
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
+
+        // Projects must match.
+        require(
+            _budget.projectId == _projectId,
+            "BudgetStore::tap: UNAUTHORIZED"
+        );
 
         // Don't tap budgets with a different currency.
         require(

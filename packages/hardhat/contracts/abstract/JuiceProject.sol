@@ -2,6 +2,7 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./../interfaces/IJuicer.sol";
@@ -14,7 +15,7 @@ import "./../TicketStore.sol";
     - Which address is the Budget owner, which can tap funds from the Budget.
     - Should this project's Tickets be migrated to a new Juicer. 
 */
-abstract contract JuiceProject is Ownable {
+abstract contract JuiceProject is IERC721Receiver, Ownable {
     modifier onlyPm {
         require(msg.sender == pm, "JuiceProject: UNAUTHORIZED");
         _;
@@ -219,5 +220,17 @@ abstract contract JuiceProject is Ownable {
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
         juicer.pay(projectId, _amount, _from, _note);
+    }
+
+    /** 
+      @notice Allows this contract to receive a project.
+    */
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes memory
+    ) public pure override returns (bytes4) {
+        return this.onERC721Received.selector;
     }
 }

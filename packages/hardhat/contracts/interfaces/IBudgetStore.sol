@@ -72,6 +72,7 @@ interface IBudgetStore is IStore {
 
     function tap(
         uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _currency
     )

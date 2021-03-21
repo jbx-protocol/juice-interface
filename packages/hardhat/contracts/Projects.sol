@@ -9,8 +9,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Projects is ERC721, Ownable {
     constructor() ERC721("Juice project", "PROJECT") {}
 
-    function create(address _to) external onlyOwner returns (uint256 id) {
+    function create() external onlyOwner returns (uint256 id) {
         id = totalSupply() + 1;
-        _safeMint(_to, id);
+        _safeMint(msg.sender, id);
     }
 }

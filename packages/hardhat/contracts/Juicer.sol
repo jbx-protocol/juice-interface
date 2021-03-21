@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
@@ -43,7 +44,7 @@ import "./libraries/Math.sol";
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
-contract Juicer is IJuicer {
+contract Juicer is IJuicer, IERC721Receiver {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using Budget for Budget.Data;
@@ -197,7 +198,7 @@ contract Juicer is IJuicer {
         uint256 _reserved
     ) external override lock returns (uint256 projectId) {
         // Create a new project.
-        projectId = projects.create(_owner);
+        projectId = projects.create();
 
         // Configure the project.
         budgetStore.configure(
@@ -211,6 +212,9 @@ contract Juicer is IJuicer {
             _bondingCurveRate,
             _reserved
         );
+
+        // Transfer the project to the specified owner.
+        projects.safeTransferFrom(address(this), _owner, projectId);
 
         // Issue the tickets.
         ticketStore.issue(projectId, _name, _symbol);
@@ -378,15 +382,12 @@ contract Juicer is IJuicer {
         // Only a project owner can tap its funds.
         require(
             msg.sender == projects.ownerOf(_projectId),
-            "BudgetStore::tap: UNAUTHORIZED"
+            "Juicer::tap: UNAUTHORIZED"
         );
 
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
         (Budget.Data memory _budget, uint256 _tappedAmount, uint256 _overflow) =
-            budgetStore.tap(_budgetId, _amount, _currency);
-
-        // Projects must match.
-        require(_budget.projectId == _projectId, "Juicer::tap: UNAUTHORIZED");
+            budgetStore.tap(_budgetId, _projectId, _amount, _currency);
 
         // Make sure this amount is acceptable.
         require(
@@ -573,6 +574,18 @@ contract Juicer is IJuicer {
         overflowYielder = _newOverflowYielder;
 
         emit SetOverflowYielder(_newOverflowYielder);
+    }
+
+    /** 
+      @notice Allows this contract to receive a project.
+    */
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes memory
+    ) external pure override returns (bytes4) {
+        return this.onERC721Received.selector;
     }
 
     // --- private transactions --- //

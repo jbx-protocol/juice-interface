@@ -11,10 +11,15 @@ const main = async () => {
   const token =
     process.env.HARDHAT_NETWORK === "localhost" && (await deploy("Token"));
   const prices = await deploy("Prices");
-  const budgetStore = await deploy("BudgetStore", [prices.address]);
+  const projects = await deploy("Projects");
+  const budgetStore = await deploy("BudgetStore", [
+    prices.address,
+    projects.address,
+  ]);
   const ticketStore = await deploy("TicketStore");
 
   const juicer = await deploy("Juicer", [
+    projects.address,
     budgetStore.address,
     ticketStore.address,
     weth(process.env.HARDHAT_NETWORK) || token.address,
@@ -34,6 +39,7 @@ const main = async () => {
   const blockGasLimit = 9000000;
 
   try {
+    const ProjectsFactory = await ethers.getContractFactory("Projects");
     const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
     const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
     const PricesFactory = await ethers.getContractFactory("Prices");
@@ -41,6 +47,7 @@ const main = async () => {
     // const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
+    const attachedProjects = await ProjectsFactory.attach(projects.address);
     const attachedTicketStore = await TicketStoreFactory.attach(
       ticketStore.address
     );
@@ -62,6 +69,10 @@ const main = async () => {
     });
     console.log("⚡️ Setting the prices owner");
     await attachedPrices.transferOwnership(admin.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Setting the projects owner");
+    await attachedProjects.transferOwnership(juicer.address, {
       gasLimit: blockGasLimit,
     });
     // console.log("⚡️ Setting the staker owner");

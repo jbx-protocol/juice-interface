@@ -10,12 +10,12 @@ import "./libraries/DSMath.sol";
 
 import "./interfaces/IBudgetStore.sol";
 
-import "./abstract/Store.sol";
+import "./abstract/Administered.sol";
 
 /** 
   @notice An immutable contract to manage Budget states.
 */
-contract BudgetStore is Store, IBudgetStore {
+contract BudgetStore is Administered, IBudgetStore {
     using SafeMath for uint256;
     using Budget for Budget.Data;
 

@@ -2,7 +2,7 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "./interfaces/IAdminControlWrapper.sol";
+import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IPrices.sol";
 import "./interfaces/IBudgetBallot.sol";
@@ -18,7 +18,7 @@ contract Admin is JuiceProject {
       @param _contract The contract that is being given access to.
       @param _newAdmin The address that is being given the admin role.
     */
-    function grantAdmin(IAdminControlWrapper _contract, address _newAdmin)
+    function grantAdmin(IAdministered _contract, address _newAdmin)
         external
         onlyOwner
     {
@@ -28,22 +28,13 @@ contract Admin is JuiceProject {
     /** 
       @notice Revokes the admin role for a contract that this Admin contract controls.
       @param _contract The contract that is having access to revoked.
-      @param _newAdmin The address that is having the admin role revoked.
+      @param _oldAdmin The address that is having the admin role revoked.
     */
-    function revokeAdmin(IAdminControlWrapper _contract, address _newAdmin)
+    function revokeAdmin(IAdministered _contract, address _oldAdmin)
         external
         onlyOwner
     {
-        _contract.revokeAdmin(_newAdmin);
-    }
-
-    /** 
-      @notice Revokes the ability for a Juicer to access its Ticket store and Budget stores
-      @param _juicer The juicer that is being depcrecated.
-    */
-    function deprecateJuicer(IJuicer _juicer) external onlyOwner {
-        _juicer.ticketStore().revokeAdmin(address(_juicer));
-        _juicer.budgetStore().revokeAdmin(address(_juicer));
+        _contract.revokeAdmin(_oldAdmin);
     }
 
     /** 
@@ -86,10 +77,11 @@ contract Admin is JuiceProject {
         @param _budgetStore The budget store to set the mininum fee of.
         @param _fee The new minimum fee.
     */
-    function setFee(IBudgetStore _budgetStore, uint256 _fee)
+    function reduceFee(IBudgetStore _budgetStore, uint256 _fee)
         external
         onlyOwner
     {
+        require(_fee < _budgetStore.fee(), "Admin::reduceFee: BAD_FEE");
         _budgetStore.setFee(_fee);
     }
 
@@ -107,6 +99,7 @@ contract Admin is JuiceProject {
 
     /**
         @notice Set a staker's controller status for an address.
+        @dev This lets the admin give new contracts access to the timelock staker.
         @param _staker The staker to change the controller status of.
         @param _controller The controller to change the status of.
         @param _status The new status.

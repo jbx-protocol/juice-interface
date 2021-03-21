@@ -3,13 +3,12 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./abstract/Administered.sol";
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+contract Projects is ERC721, Administered {
+    constructor() ERC721("Juice project", "JUICE PROJECT") {}
 
-contract Projects is ERC721, Ownable {
-    constructor() ERC721("Juice project", "PROJECT") {}
-
-    function create() external onlyOwner returns (uint256 id) {
+    function create() external onlyAdmin returns (uint256 id) {
         id = totalSupply() + 1;
         _safeMint(msg.sender, id);
     }

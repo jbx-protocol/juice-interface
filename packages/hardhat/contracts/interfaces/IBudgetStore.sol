@@ -4,12 +4,11 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./IStore.sol";
 import "./IPrices.sol";
 import "./IBudgetBallot.sol";
 import "../libraries/Budget.sol";
 
-interface IBudgetStore is IStore {
+interface IBudgetStore {
     event Configure(
         uint256 indexed budgetId,
         uint256 indexed projectId,

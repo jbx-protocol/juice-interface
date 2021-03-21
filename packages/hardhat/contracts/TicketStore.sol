@@ -7,14 +7,14 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./libraries/DSMath.sol";
 import "./libraries/Math.sol";
 
-import "./abstract/Store.sol";
+import "./abstract/Administered.sol";
 import "./interfaces/ITicketStore.sol";
 import "./Tickets.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract TicketStore is Store, ITicketStore {
+contract TicketStore is Administered, ITicketStore {
     using SafeMath for uint256;
 
     // --- public properties --- //

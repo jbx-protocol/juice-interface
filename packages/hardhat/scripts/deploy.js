@@ -59,6 +59,10 @@ const main = async () => {
     // const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
+    console.log("⚡️ Setting the projects owner");
+    await attachedProjects.setOwnership(admin.address, {
+      gasLimit: blockGasLimit,
+    });
     console.log("⚡️ Setting the ticket store owner");
     await attachedTicketStore.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
@@ -71,14 +75,14 @@ const main = async () => {
     await attachedPrices.transferOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Setting the projects owner");
-    await attachedProjects.transferOwnership(juicer.address, {
-      gasLimit: blockGasLimit,
-    });
     // console.log("⚡️ Setting the staker owner");
     // await attachedStaker.setOwnership(admin.address, {
     //   gasLimit: blockGasLimit,
     // });
+    console.log("⚡️ Granting the juicer admin privileges over the projects");
+    await attachedAdmin.grantAdmin(projects.address, juicer.address, {
+      gasLimit: blockGasLimit,
+    });
     console.log(
       "⚡️ Granting the juicer admin privileges over the budget store"
     );

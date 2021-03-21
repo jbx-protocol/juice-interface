@@ -4,10 +4,9 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "./IStore.sol";
 import "./../Tickets.sol";
 
-interface ITicketStore is IStore {
+interface ITicketStore {
     event Issue(uint256 project, string name, string symbol);
 
     function tickets(uint256 _project) external view returns (Tickets);

@@ -95,27 +95,31 @@ contract Juicer is IJuicer, IERC721Receiver {
 
     /** 
       @notice Gets the total overflow that this Juicer is responsible for.
-      @return The amount of overflow.
+      @return overflow The amount of overflow.
     */
-    function getTotalOverflow() external view override returns (uint256) {
-        // If there's no overflow yielder, all of the overflow is depositable.
-        if (overflowYielder != IOverflowYielder(0)) {
-            return overflowYielder.getBalance(weth).add(depositable);
-        } else {
-            return depositable;
-        }
+    function getTotalOverflow()
+        external
+        view
+        override
+        returns (uint256 overflow)
+    {
+        // The amount of weth available.
+        overflow = depositable;
+
+        if (overflowYielder != IOverflowYielder(0))
+            overflow.add(overflowYielder.getBalance(weth));
     }
 
     /** 
       @notice Gets the overflow for a specified issuer that this Juicer is responsible for.
       @param _projectId The project to get overflow for.
-      @return The amount of overflow.
+      @return overflow The amount of overflow.
     */
     function getOverflow(uint256 _projectId)
         external
         view
         override
-        returns (uint256)
+        returns (uint256 overflow)
     {
         // The raw amount that the issuer can claim.
         uint256 _claimable = ticketStore.claimable(_projectId);
@@ -123,28 +127,17 @@ contract Juicer is IJuicer, IERC721Receiver {
         // Return 0 if the user can't claim anything.
         if (_claimable == 0) return 0;
 
-        // The total raw amount that is claimable.
-        uint256 _totalClaimable = ticketStore.totalClaimable();
+        // The amount of weth available.
+        uint256 _available = depositable;
 
-        // If an overflow yielder isn't set, all funds are still depositable.
-        if (overflowYielder != IOverflowYielder(0)) {
-            // The overflow is either in the overflow yielder or still depositable.
-            // The proportion belonging to this issuer is the same proportion as the raw values in the Ticket store.
-            return
-                DSMath.wdiv(
-                    DSMath.wmul(
-                        overflowYielder.getBalance(weth).add(depositable),
-                        _claimable
-                    ),
-                    _totalClaimable
-                );
-        } else {
-            return
-                DSMath.wdiv(
-                    DSMath.wmul(depositable, _claimable),
-                    _totalClaimable
-                );
-        }
+        if (overflowYielder != IOverflowYielder(0))
+            _available.add(overflowYielder.getBalance(weth));
+
+        overflow = Math.mulDiv(
+            _available,
+            _claimable,
+            ticketStore.totalClaimable()
+        );
     }
 
     // --- external transactions --- //
@@ -435,15 +428,15 @@ contract Juicer is IJuicer, IERC721Receiver {
         // The project must have issued Tickets.
         require(_tickets != Tickets(0), "Juicer::migrate: NOT_FOUND");
 
+        // Withdrawn the deposited amount according to the claimable proportion.
+        uint256 _amount =
+            _withdraw(
+                ticketStore.clearClaimable(_projectId),
+                ticketStore.totalClaimable()
+            );
+
         // Give the new project admin privileges.
         _tickets.transferOwnership(address(_to));
-
-        // In order to move funds over, determine the proportion of funds belonging to the message sender.
-        uint256 _totalClaimable = ticketStore.totalClaimable();
-        uint256 _claimable = ticketStore.clearClaimable(_projectId);
-
-        // Withdrawn the deposited amount according to the claimable proportion.
-        uint256 _amount = _withdraw(_claimable, _totalClaimable);
 
         // Allow the new project to move funds owned by the issuer from contract.
         weth.safeApprove(address(_to), _amount);

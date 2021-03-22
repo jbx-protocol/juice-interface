@@ -273,7 +273,10 @@ library Budget {
         @return hasExpired The boolean result.
     */
     function _hasExpired(Data memory _self) private view returns (bool) {
-        return block.timestamp > _self.start.add(_self.duration);
+        // If duration is 0, the budget never expires.
+        return
+            _self.duration > 0 &&
+            block.timestamp > _self.start.add(_self.duration);
     }
 
     /** 

@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./../interfaces/IJuicer.sol";
 
@@ -16,9 +17,17 @@ import "./../TicketStore.sol";
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is IERC721Receiver, Ownable {
+    using SafeMath for uint256;
+
     modifier onlyPm {
         require(msg.sender == pm, "JuiceProject: UNAUTHORIZED");
         _;
+    }
+
+    struct Mod {
+        uint256 id;
+        uint256 percent;
+        address beneficiary;
     }
 
     /// @dev The ID of the project that is being managed.
@@ -29,6 +38,9 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     /// @dev The juicer that manages this project.
     IJuicer public juicer;
+
+    Mod[] public mods;
+    uint256 public modsId = 0;
 
     /** 
       @param _juicer The juicer that manages this project.
@@ -162,13 +174,33 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm {
+        uint256 _modsCut = 0;
+        uint256 _modsMinReturnedETH = 0;
+        for (uint256 i = 0; i < mods.length; i++) {
+            // The amount to send towards mods.
+            uint256 _modCut = Math.mulDiv(_amount, mods[i].percent, 1000);
+            // The minimum amount of ETH to send towards insurance.
+            uint256 _modMinReturnedETH =
+                Math.mulDiv(_minReturnedETH, mods[i].percent, 1000);
+            juicer.tap(
+                _budgetId,
+                projectId,
+                _modCut,
+                _currency,
+                mods[i].beneficiary,
+                _modMinReturnedETH
+            );
+            _modsCut = _modsCut.add(_modCut);
+            _modsMinReturnedETH = _modsMinReturnedETH.add(_modMinReturnedETH);
+        }
+        // Tap the budget for the beneficiary.
         juicer.tap(
             _budgetId,
             projectId,
-            _amount,
+            _amount.sub(_modsCut),
             _currency,
             _beneficiary,
-            _minReturnedETH
+            _minReturnedETH.sub(_modsMinReturnedETH)
         );
     }
 
@@ -220,6 +252,19 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
         juicer.pay(projectId, _amount, _from, _note);
+    }
+
+    function addMod(uint256 _percent, address _beneficiary) external onlyPm {
+        modsId++;
+        mods.push(Mod(modsId, _percent, _beneficiary));
+    }
+
+    function removeMod(uint256 _id) external onlyPm {
+        Mod[] memory _mods = mods;
+        delete mods;
+        for (uint256 i = 0; i < _mods.length; i++) {
+            if (_mods[i].id != _id) mods.push(_mods[i]);
+        }
     }
 
     /** 

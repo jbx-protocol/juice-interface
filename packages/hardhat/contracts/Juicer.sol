@@ -203,7 +203,8 @@ contract Juicer is IJuicer, IERC721Receiver {
             _link,
             _discountRate,
             _bondingCurveRate,
-            _reserved
+            _reserved,
+            IBudgetBallot(0)
         );
 
         // Transfer the project to the specified owner.

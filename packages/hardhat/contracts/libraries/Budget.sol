@@ -149,7 +149,7 @@ library Budget {
                 _self.discountRate,
                 _self.bondingCurveRate,
                 _self.configured,
-                IBudgetBallot(0)
+                _self.ballot
             );
     }
 

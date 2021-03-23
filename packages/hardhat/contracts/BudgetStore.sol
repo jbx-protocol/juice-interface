@@ -39,9 +39,6 @@ contract BudgetStore is Administered, IBudgetStore {
     /// @notice The prices feeds.
     IPrices public override prices;
 
-    /// @notice The ballot where reconfigure votes are kept.
-    IBudgetBallot public override budgetBallot;
-
     /// @notice The percent fee the Juice project takes from payments.
     uint256 public override fee = 30;
 
@@ -131,6 +128,7 @@ contract BudgetStore is Administered, IBudgetStore {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
+        @param _ballot The ballot to use for reconfiguration voting.
         @return _budgetId The id of the budget that was successfully configured.
     */
     function configure(
@@ -142,7 +140,8 @@ contract BudgetStore is Administered, IBudgetStore {
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IBudgetBallot _ballot
     ) external override returns (uint256) {
         require(_target > 0, "BudgetStore::configure: BAD_TARGET");
 
@@ -184,7 +183,7 @@ contract BudgetStore is Administered, IBudgetStore {
         _budget.reserved = _reserved;
         _budget.fee = fee;
         _budget.configured = block.timestamp;
-        _budget.ballot = budgetBallot;
+        _budget.ballot = _ballot;
 
         emit Configure(
             _budget.id,
@@ -196,7 +195,8 @@ contract BudgetStore is Administered, IBudgetStore {
             _budget.link,
             _budget.discountRate,
             _budget.bondingCurveRate,
-            _budget.reserved
+            _budget.reserved,
+            _budget.ballot
         );
 
         return _budget.id;
@@ -294,18 +294,6 @@ contract BudgetStore is Administered, IBudgetStore {
         fee = _fee;
     }
 
-    /** 
-      @notice Sets the budget ballot contract that will be used for forthcoming budget reconfigurations.
-      @param _budgetBallot The new budget ballot.
-    */
-    function setBudgetBallot(IBudgetBallot _budgetBallot)
-        external
-        override
-        onlyAdmin
-    {
-        budgetBallot = _budgetBallot;
-    }
-
     // --- private transactions --- //
 
     /**
@@ -356,7 +344,10 @@ contract BudgetStore is Administered, IBudgetStore {
         // No active Budget found, check if there is a standby Budget.
         budget = _standbyBudget(_projectId);
         // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
-        if (budget.id > 0 && budget._isConfigurationApproved()) return budget;
+        // The first budget doesn't have a previous to get a ballot from.
+        if (
+            budget.id > 1 && budgets[budget.previous]._isConfigurationApproved()
+        ) return budget;
         // No upcoming Budget found with a successful vote, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
         budget = budgets[

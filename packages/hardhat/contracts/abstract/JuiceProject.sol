@@ -77,6 +77,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
         @param _reserved The percentage of this Budget's surplus to allocate to the owner.
+        @param _ballot The ballot to use for reconfiguration voting.
         @return budgetId The ID of the budget that was reconfigured.
     */
     function configure(
@@ -87,7 +88,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IBudgetBallot _ballot
     ) external returns (uint256 budgetId) {
         // The pm or the owner can propose configurations.
         require(
@@ -104,7 +106,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _link,
             _discountRate,
             _bondingCurveRate,
-            _reserved
+            _reserved,
+            _ballot
         );
     }
 

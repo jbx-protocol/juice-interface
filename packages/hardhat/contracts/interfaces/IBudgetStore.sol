@@ -19,7 +19,8 @@ interface IBudgetStore {
         string link,
         uint256 discountRate,
         uint256 bondingCurveRate,
-        uint256 reserved
+        uint256 reserved,
+        IBudgetBallot ballot
     );
 
     function latestBudgetId(uint256 _project) external view returns (uint256);
@@ -29,8 +30,6 @@ interface IBudgetStore {
     function prices() external view returns (IPrices);
 
     function projects() external view returns (IERC721);
-
-    function budgetBallot() external view returns (IBudgetBallot);
 
     function fee() external view returns (uint256);
 
@@ -58,7 +57,8 @@ interface IBudgetStore {
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IBudgetBallot _ballot
     ) external returns (uint256 budgetId);
 
     function payProject(uint256 _projectId, uint256 _amount)
@@ -83,6 +83,4 @@ interface IBudgetStore {
         );
 
     function setFee(uint256 _fee) external;
-
-    function setBudgetBallot(IBudgetBallot _budgetBallot) external;
 }

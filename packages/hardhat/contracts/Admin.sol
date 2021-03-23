@@ -84,18 +84,6 @@ contract Admin is JuiceProject {
         _budgetStore.setFee(_fee);
     }
 
-    /** 
-      @notice Sets the budget ballot contract that will be used for forthcoming budget reconfigurations.
-      @param _budgetStore The budget store to set the budget ballot of.
-      @param _budgetBallot The new budget ballot.
-    */
-    function setBudgetBallot(
-        IBudgetStore _budgetStore,
-        IBudgetBallot _budgetBallot
-    ) external onlyOwner {
-        _budgetStore.setBudgetBallot(_budgetBallot);
-    }
-
     /**
         @notice Set a staker's controller status for an address.
         @dev This lets the admin give new contracts access to the timelock staker.

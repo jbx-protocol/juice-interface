@@ -144,6 +144,21 @@ export default function Landing() {
         </div>
       </section>
 
+      <section style={section} className="hide-mobile">
+        <div
+          id="create"
+          style={{
+            ...wrapper,
+            marginTop: 100,
+          }}
+        >
+          <div style={{ marginBottom: 40 }}>
+            {bigHeader('What are you working on?')}
+          </div>
+          <DefineProject />
+        </div>
+      </section>
+
       <section style={section}>
         <div
           style={{
@@ -153,14 +168,14 @@ export default function Landing() {
         >
           <Row gutter={60}>
             {fourthCol('Do work 💅', [
-              `Make a Juice contract that says how much cashflow you and your
+              `Deploy a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush what you do.`,
             ])}
             {fourthCol('Get paid 💰', [
               `People can fund your project through the Juice dashboard as a
                 patron or investor, or through your app as a paying user. For
                 example, if your users pay you a transaction fee or monthly
-                cost, just route it through Juice's contracts.`,
+                cost, just route it through your Juice contract.`,
               <a
                 href="https://twitter.com/hashtag/composability"
                 target="_blank"
@@ -178,7 +193,7 @@ export default function Landing() {
               </a>,
             ])}
             {fourthCol('Overflow ⛲️', [
-              `If money overflows, your paying customers claim the surplus
+              `If money overflows, your paying contributors claim the surplus
                 alongside you, effectively pushing prices down as your community
                 grows. Early adopters get a discounted rate, and those HODLers
                 who wait longest to claim get a juicier return. While unclaimed,
@@ -201,25 +216,10 @@ export default function Landing() {
             {fourthCol('Repeat 📈', [
               `Your budgeting time frames can be however long you want, and can be
                 recurring. You can make them bigger as your project grows, with
-                the approval of those paying customers that have not yet claimed
+                the approval of those paying contributors that have not yet claimed
                 their fair share of your overflowed surplus.`,
             ])}
           </Row>
-        </div>
-      </section>
-
-      <section style={section} className="hide-mobile">
-        <div
-          id="create"
-          style={{
-            ...wrapper,
-            marginTop: 100,
-          }}
-        >
-          <div style={{ marginBottom: 40 }}>
-            {bigHeader('What are you working on?')}
-          </div>
-          <DefineProject />
         </div>
       </section>
 

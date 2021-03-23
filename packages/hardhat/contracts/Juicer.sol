@@ -403,9 +403,7 @@ contract Juicer is IJuicer, IERC721Receiver {
     }
 
     /**
-        @notice Allows a project owner to migrate the project's Tickets' control to another contract.
-        @dev This makes each project's Ticket's portable.
-        @dev Make sure you know what you're doing. This is a one way migration
+        @notice Allows a project owner to migrate minting and burning control of the project's Tickets to another contract.
         @param _projectId The ID of the project being migrated.
         @param _to The Juicer contract that will gain minting and burning privileges over the Tickets.
     */

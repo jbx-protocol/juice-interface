@@ -81,6 +81,8 @@ contract Admin is JuiceProject {
         external
         onlyOwner
     {
+        // Fee must be 5% or lower.
+        require(_fee <= 50, "Admin::adjustFee: TOO_BIG");
         _budgetStore.setFee(_fee);
     }
 

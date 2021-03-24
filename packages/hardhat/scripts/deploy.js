@@ -104,15 +104,6 @@ const main = async () => {
       );
     }
 
-    // console.log("⚡️ Set the budget store's current ballot");
-    // await attachedAdmin.setBudgetBallot(
-    //   budgetStore.address,
-    //   budgetBallot.address,
-    //   {
-    //     gasLimit: blockGasLimit,
-    //   }
-    // );
-
     console.log("⚡️ Setting the admin of the juicer");
     await attachedJuicer.setAdmin(admin.address, {
       gasLimit: blockGasLimit,
@@ -139,6 +130,7 @@ const main = async () => {
     await attachedJuicer.deploy(
       admin.address,
       "Juice",
+      "juice",
       "0x3635C9ADC5DEA00000",
       1,
       2592000,

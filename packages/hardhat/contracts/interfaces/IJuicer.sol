@@ -8,16 +8,22 @@ import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
 import "./IOverflowYielder.sol";
 
-import "./../Projects.sol";
+import "./IProjects.sol";
 
 interface IBudgetController {
+    event Reconfigure(
+        uint256 indexed budgetId,
+        uint256 indexed projectId,
+        Budget.Data budget
+    );
+
     event Pay(
         uint256 indexed budgetId,
         uint256 indexed projectId,
         address indexed payer,
         address beneficiary,
         uint256 amount,
-        uint256 currencyConvertedAmount,
+        uint256 convertedCurrencyAmount,
         uint256 currency,
         string note,
         uint256 fee
@@ -31,16 +37,6 @@ interface IBudgetController {
         uint256 amount,
         uint256 currency,
         uint256 tappedAmount
-    );
-
-    event TakeFee(
-        uint256 indexed budgetId,
-        uint256 indexed adminProject,
-        address indexed from,
-        address beneficiary,
-        uint256 amount,
-        uint256 currencyConvertedAmount,
-        uint256 currency
     );
 
     function pay(
@@ -88,9 +84,12 @@ interface IJuicer is IBudgetController, ITicketsController {
     );
 
     event Deploy(
-        uint256 indexed _projectId,
+        uint256 indexed projectId,
         address indexed owner,
-        address indexed deployer
+        address indexed deployer,
+        string _name,
+        string _handle,
+        Budget.Data budget
     );
 
     event AddToMigrationAllowList(address indexed allowed);
@@ -101,7 +100,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function admin() external view returns (address);
 
-    function projects() external view returns (Projects);
+    function projects() external view returns (IProjects);
 
     function budgetStore() external view returns (IBudgetStore);
 
@@ -123,7 +122,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function migrate(uint256 _projectId, IJuicer _to) external;
 
-    function deployProject(
+    function deploy(
         address _owner,
         string memory _name,
         string memory _symbol,
@@ -134,7 +133,19 @@ interface IJuicer is IBudgetController, ITicketsController {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external returns (uint256 projectId);
+    ) external;
+
+    function reconfigure(
+        uint256 _projectId,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        string memory _link,
+        uint256 _discountRate,
+        uint256 _bondingCurveRate,
+        uint256 _reserved,
+        IBudgetBallot _ballot
+    ) external returns (uint256 budgetId);
 
     function addOverflow(
         uint256 _projectId,

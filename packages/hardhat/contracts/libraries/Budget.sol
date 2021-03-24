@@ -27,8 +27,6 @@ library Budget {
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.
         uint256 previous;
-        // The name of the budget.
-        string name;
         // A link that points to a justification for these parameters.
         string link;
         // The amount that this Budget is targeting.
@@ -47,8 +45,6 @@ library Budget {
         uint256 tappedTotal;
         // The percentage of tickets to reserve for the project once the Budget has expired.
         uint256 reserved;
-        // The percentage of overflow to donate to the asdf.
-        uint256 donation;
         // The percentage of each payment to send as a fee to the Juice admin.
         uint256 fee;
         // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
@@ -77,7 +73,6 @@ library Budget {
         _self.currency = _baseBudget.currency;
         _self.duration = _baseBudget.duration;
         _self.projectId = _baseBudget.projectId;
-        _self.name = _baseBudget.name;
         _self.discountRate = _baseBudget.discountRate;
         _self.bondingCurveRate = _baseBudget.bondingCurveRate;
         _self.weight = _derivedWeight(_baseBudget);
@@ -86,7 +81,6 @@ library Budget {
         _self.number = _baseBudget.number.add(1);
         _self.previous = _baseBudget.id;
         _self.fee = _baseBudget.fee;
-        _self.donation = _baseBudget.donation;
     }
 
     // --- internal views --- //
@@ -133,7 +127,6 @@ library Budget {
                 _self.projectId,
                 _self.number.add(1),
                 _self.id,
-                _self.name,
                 _self.link,
                 _self.target,
                 _self.currency,
@@ -143,7 +136,6 @@ library Budget {
                 0,
                 0,
                 _self.reserved,
-                _self.donation,
                 _self.fee,
                 _derivedWeight(_self),
                 _self.discountRate,

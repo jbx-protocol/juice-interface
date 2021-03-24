@@ -69,7 +69,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         @param _target The new Budget target amount.
         @param _currency The currency of the target.
         @param _duration The new duration of your Budget.
-        @param _name A name for the Budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
         effectively creating a recency discountRate.
@@ -84,7 +83,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _name,
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
@@ -97,12 +95,11 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             "JuiceProject: UNAUTHORIZED"
         );
 
-        budgetId = juicer.budgetStore().configure(
+        budgetId = juicer.reconfigure(
             projectId,
             _target,
             _currency,
             _duration,
-            _name,
             _link,
             _discountRate,
             _bondingCurveRate,
@@ -224,23 +221,23 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         juicer.projects().safeTransferFrom(address(this), _newOwner, projectId);
     }
 
-    /** 
-      @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
-      @dev The destination must be in the current Juicer's allow list.
-      @param _from The contract that currently manages your Tickets and it's funds.
-      @param _to The new contract that will manage your Tickets and it's funds.
-    */
-    function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
-        require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
-        require(_from == juicer, "JuiceProject::migrate: INVALID");
-        require(projectId != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
+    // /**
+    //   @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
+    //   @dev The destination must be in the current Juicer's allow list.
+    //   @param _from The contract that currently manages your Tickets and it's funds.
+    //   @param _to The new contract that will manage your Tickets and it's funds.
+    // */
+    // function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
+    //     require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
+    //     require(_from == juicer, "JuiceProject::migrate: INVALID");
+    //     require(projectId != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
 
-        // Migrate.
-        _from.migrate(projectId, _to);
+    //     // Migrate.
+    //     _from.migrate(projectId, _to);
 
-        // Set the new juicer.
-        juicer = _to;
-    }
+    //     // Set the new juicer.
+    //     juicer = _to;
+    // }
 
     /** 
       @notice Take a fee for this project.

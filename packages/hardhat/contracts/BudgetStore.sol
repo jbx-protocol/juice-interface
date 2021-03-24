@@ -3,7 +3,6 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./libraries/Budget.sol";
 import "./libraries/DSMath.sol";
@@ -28,9 +27,6 @@ contract BudgetStore is Administered, IBudgetStore {
 
     /// @notice The latest Budget ID for each project id.
     mapping(uint256 => uint256) public override latestBudgetId;
-
-    /// @notice the Projects contract.
-    IERC721 public override projects;
 
     /// @notice The total number of Budgets created, which is used for issuing Budget IDs.
     /// @dev Budgets have IDs > 0.
@@ -107,9 +103,8 @@ contract BudgetStore is Administered, IBudgetStore {
 
     // --- external transactions --- //
 
-    constructor(IPrices _prices, IERC721 _projects) {
+    constructor(IPrices _prices) {
         prices = _prices;
-        projects = _projects;
     }
 
     /**
@@ -120,7 +115,6 @@ contract BudgetStore is Administered, IBudgetStore {
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
-        @param _name The name of the budget.
         @param _link A link to information about the Budget.
         @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
         compared to the project's previous Budget.
@@ -129,52 +123,24 @@ contract BudgetStore is Administered, IBudgetStore {
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
         @param _ballot The ballot to use for reconfiguration voting.
-        @return _budgetId The id of the budget that was successfully configured.
+        @return budget The budget that was successfully configured.
     */
     function configure(
         uint256 _projectId,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _name,
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
         IBudgetBallot _ballot
-    ) external override returns (uint256) {
-        require(_target > 0, "BudgetStore::configure: BAD_TARGET");
-
-        // The `discountRate` token must be between 95 and 100.
-        require(
-            (_discountRate >= 950 && _discountRate <= 1000) ||
-                _discountRate == 0,
-            "BudgetStore::configure: BAD_DISCOUNT_RATE"
-        );
-        // The `bondingCurveRate` must be between 0 and 1000.
-        require(
-            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
-            "BudgetStore::configure BAD_BONDING_CURVE_RATE"
-        );
-
-        // The reserved project ticket percentage must be less than or equal to 100.
-        require(
-            _reserved <= 1000,
-            "BudgetStore::configure: BAD_RESERVE_PERCENTAGES"
-        );
-
-        // The message sender must be the project owner.
-        require(
-            projects.ownerOf(_projectId) == msg.sender,
-            "BudgetStore::configure: UNAUTHORIZED"
-        );
-
+    ) external override onlyAdmin returns (Budget.Data memory budget) {
         // Return's the project's editable budget. Creates one if one doesn't already exists.
         Budget.Data storage _budget = _ensureStandbyBudget(_projectId);
 
         // Set the properties of the budget.
         _budget.link = _link;
-        _budget.name = _name;
         _budget.target = _target;
         _budget.duration = _duration;
         _budget.currency = _currency;
@@ -185,39 +151,37 @@ contract BudgetStore is Administered, IBudgetStore {
         _budget.configured = block.timestamp;
         _budget.ballot = _ballot;
 
-        emit Configure(
-            _budget.id,
-            _budget.projectId,
-            _budget.target,
-            _budget.currency,
-            _budget.duration,
-            _budget.name,
-            _budget.link,
-            _budget.discountRate,
-            _budget.bondingCurveRate,
-            _budget.reserved,
-            _budget.ballot
-        );
-
-        return _budget.id;
+        // Return the budget.
+        budget = _budget;
     }
 
     /** 
       @notice Tracks a payments to the appropriate budget for the project.
       @param _projectId The ID of the project being paid.
       @param _amount The amount being paid.
+      @param _feeBeneficiaryProjectId The ID of the project beneficting from the fee.
       @return budget The budget that is being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
+      @return feeBeneficiaryBudget The budget that is benefiting from the fee being paid.
+      @return feeBeneficiaryConvertedCurrencyAmount The amount of the target currency that was paid to the fee beneficiary.
+      @return feeBeneficiaryOverflow The overflow that has now become available as a result of paying the fee benficiary.
     */
-    function payProject(uint256 _projectId, uint256 _amount)
+    function payProject(
+        uint256 _projectId,
+        uint256 _amount,
+        uint256 _feeBeneficiaryProjectId
+    )
         external
         override
         onlyAdmin
         returns (
             Budget.Data memory budget,
             uint256 convertedCurrencyAmount,
-            uint256 overflow
+            uint256 overflow,
+            Budget.Data memory feeBeneficiaryBudget,
+            uint256 feeBeneficiaryConvertedCurrencyAmount,
+            uint256 feeBeneficiaryOverflow
         )
     {
         // Find the Budget that this contribution should go towards.
@@ -232,6 +196,22 @@ contract BudgetStore is Administered, IBudgetStore {
 
         // Return the budget.
         budget = _budget;
+
+        // Find the fee beneficiary budget.
+        Budget.Data storage _feeBeneficiaryBudget =
+            _ensureActiveBudget(_feeBeneficiaryProjectId);
+
+        // Add the fee amount to the fee beneficiary budget.
+        (
+            feeBeneficiaryConvertedCurrencyAmount,
+            feeBeneficiaryOverflow
+        ) = _feeBeneficiaryBudget._add(
+            Math.mulDiv(_amount, _budget.fee, 1000),
+            prices.getETHPrice(_feeBeneficiaryBudget.currency)
+        );
+
+        // Return the fee beneficiary budget.
+        feeBeneficiaryBudget = _feeBeneficiaryBudget;
     }
 
     /** 

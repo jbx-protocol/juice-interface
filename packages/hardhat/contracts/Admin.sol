@@ -87,17 +87,17 @@ contract Admin is JuiceProject {
     }
 
     /**
-        @notice Set a staker's controller status for an address.
+        @notice Set a staker's controller status for a ticket store.
         @dev This lets the admin give new contracts access to the timelock staker.
-        @param _staker The staker to change the controller status of.
+        @param _ticketStore The timelock controller to change the controller status of.
         @param _controller The controller to change the status of.
         @param _status The new status.
     */
-    function setControllerStatus(
-        ITimelockStaker _staker,
+    function setTimelockControllerStatus(
+        ITicketStore _ticketStore,
         address _controller,
         bool _status
     ) external onlyOwner {
-        _staker.setControllerStatus(_controller, _status);
+        _ticketStore.setTimelockControllerStatus(_controller, _status);
     }
 }

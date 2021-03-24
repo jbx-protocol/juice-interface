@@ -2,34 +2,16 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
 import "./IPrices.sol";
 import "./IBudgetBallot.sol";
 import "../libraries/Budget.sol";
 
 interface IBudgetStore {
-    event Configure(
-        uint256 indexed budgetId,
-        uint256 indexed projectId,
-        uint256 indexed target,
-        uint256 currency,
-        uint256 duration,
-        string name,
-        string link,
-        uint256 discountRate,
-        uint256 bondingCurveRate,
-        uint256 reserved,
-        IBudgetBallot ballot
-    );
-
     function latestBudgetId(uint256 _project) external view returns (uint256);
 
     function budgetCount() external view returns (uint256);
 
     function prices() external view returns (IPrices);
-
-    function projects() external view returns (IERC721);
 
     function fee() external view returns (uint256);
 
@@ -53,20 +35,26 @@ interface IBudgetStore {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _name,
         string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
         IBudgetBallot _ballot
-    ) external returns (uint256 budgetId);
+    ) external returns (Budget.Data memory budget);
 
-    function payProject(uint256 _projectId, uint256 _amount)
+    function payProject(
+        uint256 _projectId,
+        uint256 _amount,
+        uint256 _feeBeneficiaryProjectId
+    )
         external
         returns (
             Budget.Data memory budget,
             uint256 convertedCurrencyAmount,
-            uint256 overflow
+            uint256 overflow,
+            Budget.Data memory feeBeneficiaryBudget,
+            uint256 feeBeneficiaryConvertedCurrencyAmount,
+            uint256 feeBeneficiaryOverflow
         );
 
     function tap(

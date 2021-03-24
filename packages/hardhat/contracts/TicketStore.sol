@@ -2,6 +2,7 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/DSMath.sol";
@@ -9,18 +10,14 @@ import "./libraries/Math.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/ITicketStore.sol";
-import "./Tickets.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract TicketStore is Administered, ITicketStore {
+contract TicketStore is ERC1155, Administered, ITicketStore {
     using SafeMath for uint256;
 
     // --- public properties --- //
-
-    /// @notice The Tickets handed out by each issuer. Each issuer has their own Tickets contract.
-    mapping(uint256 => Tickets) public override tickets;
 
     /// @notice The current cumulative amount of tokens redeemable by each project's Tickets.
     mapping(uint256 => uint256) public override claimable;
@@ -28,20 +25,29 @@ contract TicketStore is Administered, ITicketStore {
     /// @notice The current cumulative amount of tokens redeemable in the system.
     uint256 public override totalClaimable = 0;
 
+    /// @notice The total supply of tickets for each project.
+    mapping(uint256 => uint256) public override totalSupply;
+
+    /// @notice The amount of all tokens currently locked for each address.
+    mapping(uint256 => mapping(address => uint256)) public override timelocks;
+
+    /// @notice The addresses that can set timelocks.
+    mapping(address => bool) public override isTimelockController;
+
     // --- external views --- //
 
     /**
         @notice The amount of tokens that a Ticket can be redeemed for.
-        @param _project The project of the Ticket to get a value for.
+        @param _projectId The ID of the project to which the Ticket to get a value for belongs.
         @return _value The value.
     */
-    function getTicketValue(uint256 _project)
+    function getTicketValue(uint256 _projectId)
         external
         view
         override
         returns (uint256)
     {
-        return claimable[_project].div(tickets[_project].totalSupply());
+        return claimable[_projectId].div(totalSupply[_projectId]);
     }
 
     // --- public views --- //
@@ -51,7 +57,7 @@ contract TicketStore is Administered, ITicketStore {
         @param _holder The address to get an amount for.
         @param _amount The amount of Tickets being redeemed.
         Must be within the holder's balance.
-        @param _project The project of the Tickets to get an amount for.
+        @param _projectId The ID of the project to which the Tickets to get an amount for belong.
         @param _proportion The proportion of the hodler's tickets to make claimable. Out of 1000.
         This creates an opportunity for incenvizing HODLing.
         If the specified `_holder` is the last holder, the proportion will fall back to 1000.
@@ -60,17 +66,11 @@ contract TicketStore is Administered, ITicketStore {
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        uint256 _project,
+        uint256 _projectId,
         uint256 _proportion
     ) public view override returns (uint256) {
-        // the issuer's tickets, if they've been issued.
-        Tickets _tickets = tickets[_project];
-
-        // If there are no tickets, return zero.
-        if (_tickets == Tickets(0)) return 0;
-
         // Get the total supply from the ticket.
-        uint256 _totalSupply = _tickets.totalSupply();
+        uint256 _totalSupply = totalSupply[_projectId];
 
         // Nothing is claimable if there are no tickets or iOweYou's.
         if (_totalSupply == 0) return 0;
@@ -78,14 +78,14 @@ contract TicketStore is Administered, ITicketStore {
         // Make sure the specified amount is available.
         require(
             // Get the amount of tickets the specified holder has access to, or is owed.
-            _tickets.balanceOf(_holder) >= _amount,
+            balanceOf(_holder, _projectId) >= _amount,
             "TicketStore::getClaimableRewardsAmount: INSUFFICIENT_FUNDS"
         );
 
         return
             Math.mulDiv(
                 DSMath.wdiv(
-                    DSMath.wmul(claimable[_project], _amount),
+                    DSMath.wmul(claimable[_projectId], _amount),
                     _totalSupply
                 ),
                 // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
@@ -96,58 +96,39 @@ contract TicketStore is Administered, ITicketStore {
 
     // --- external transactions --- //
 
-    constructor() {}
+    constructor() ERC1155("") {}
 
-    /**
-        @notice Issues a project's Tickets that'll be handed out by their budgets in exchange for payments.
-        @dev Deploys an owner's Ticket ERC-20 token contract.
-        @param _project The project of the tickets being issued.
-        @param _name The ERC-20's name.
-        @param _symbol The ERC-20's symbol.
+    /** 
+      @notice Print new tickets.
+      @param _for The address receiving the new tickets.
+      @param _projectId The project to which the tickets belong.
+      @param _amount The amount to print.
     */
-    function issue(
-        uint256 _project,
-        string memory _name,
-        string memory _symbol
+    function print(
+        address _for,
+        uint256 _projectId,
+        uint256 _amount
     ) external override onlyAdmin {
-        // An owner only needs to issue their Tickets once before they can be used.
-        require(
-            tickets[_project] == Tickets(0),
-            "TicketStore::issue: ALREADY_ISSUED"
-        );
-
-        // Create the contract in this Juicer contract in order to have mint and burn privileges.
-        // Prepend the strings with standards.
-        Tickets _tickets = new Tickets(_name, _symbol);
-
-        tickets[_project] = _tickets;
-
-        emit Issue(_project, _tickets.name(), _tickets.symbol());
+        _mint(_for, _projectId, _amount, "");
     }
 
     /** 
-      @notice Mints new ERC-20 tickets, or increments the IOweYou count.
-      @param _project The project of the tickets being minted.
-      @param _holder The address receiving the minted tickets.
-      @param _amount The amount of tickets being minted.
+      @notice Print many new tickets.
+      @param _for The address receiving the new tickets.
+      @param _projectIds The projects to which the tickets belong.
+      @param _amounts The amounts to print, corresponding to the projectIds.
     */
-    function print(
-        uint256 _project,
-        address _holder,
-        uint256 _amount
+    function printMany(
+        address _for,
+        uint256[] calldata _projectIds,
+        uint256[] calldata _amounts
     ) external override onlyAdmin {
-        Tickets _tickets = tickets[_project];
-
-        // Tickets must be issued.
-        require(_tickets != Tickets(0), "TicketStore::print: NOT_FOUND");
-
-        // Mint tickets.
-        _tickets.mint(_holder, _amount);
+        _mintBatch(_for, _projectIds, _amounts, "");
     }
 
     /** 
       @notice Redeems tickets.
-      @param _project The project of the tickets being redeemed.
+      @param _projectId The ID of the project of the tickets being redeemed.
       @param _holder The address redeeming tickets.
       @param _amount The amount of tickets being redeemed.
       @param _minClaimed The minimun amount of claimed tokens to receive in return.
@@ -156,7 +137,7 @@ contract TicketStore is Administered, ITicketStore {
       @return outOf The total amount that is claimable.
     */
     function redeem(
-        uint256 _project,
+        uint256 _projectId,
         address _holder,
         uint256 _amount,
         uint256 _minClaimed,
@@ -169,11 +150,17 @@ contract TicketStore is Administered, ITicketStore {
     {
         require(_minClaimed > 0, "TicketStore::redeem: BAD_AMOUNT");
 
+        // Make sure the tickets aren't time locked.
+        require(
+            timelocks[_projectId][_holder] < block.timestamp,
+            "TicketStore::redeem: TIME_LOCKED"
+        );
+
         // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         claimableAmount = getClaimableAmount(
             _holder,
             _amount,
-            _project,
+            _projectId,
             _proportion
         );
 
@@ -183,15 +170,15 @@ contract TicketStore is Administered, ITicketStore {
             "TicketStore::redeem: INSUFFICIENT_FUNDS"
         );
 
-        // Burn the tickets.
-        tickets[_project].burn(_holder, _amount);
-
         // Return the total amount claimable before changing the state.
         outOf = totalClaimable;
 
         // Subtract the claimed tokens from the total amount claimable.
-        claimable[_project] = claimable[_project].sub(claimableAmount);
+        claimable[_projectId] = claimable[_projectId].sub(claimableAmount);
         totalClaimable = totalClaimable.sub(claimableAmount);
+
+        // Burn the tickets.
+        _burn(_holder, _projectId, _amount);
     }
 
     /**
@@ -222,5 +209,79 @@ contract TicketStore is Administered, ITicketStore {
         amount = claimable[_project];
         claimable[_project] = 0;
         totalClaimable = totalClaimable.sub(amount);
+    }
+
+    /**
+      @notice Sets a timelock for certain staked tokens within which they can't be unstaked.
+      @param _holder The holder of the tokens.
+      @param _projectId The id of the project to timelock.
+      @param _expiry The time when the lock expires.
+    */
+    function setTimelock(
+        address _holder,
+        uint256 _projectId,
+        uint256 _expiry
+    ) external override {
+        require(
+            isTimelockController[msg.sender] == true,
+            "TicketStore::setTimelock: UNAUTHORIZED"
+        );
+        //Replace the current timelock if it is after the currently set one.
+        timelocks[_projectId][_holder] = Math.max(
+            timelocks[_projectId][_holder],
+            _expiry
+        );
+    }
+
+    /**
+      @notice Sets the status of a timelock controller.
+      @param _controller The address to change the controller status of.
+      @param _status The status
+    */
+    function setTimelockControllerStatus(address _controller, bool _status)
+        external
+        override
+    {
+        require(
+            msg.sender == owner,
+            "TimelockStaker::setController: UNAUTHORIZED"
+        );
+        isTimelockController[_controller] = _status;
+    }
+
+    // --- public transactions --- //
+
+    // Override to prevent transfers from locked tokens.
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) public virtual override(ERC1155, IERC1155) {
+        // Make sure the tickets aren't time locked.
+        require(
+            timelocks[id][from] < block.timestamp,
+            "TicketStore::safeTransferFrom: TIME_LOCKED"
+        );
+        super.safeTransferFrom(from, to, id, amount, data);
+    }
+
+    // Override to prevent transfers from locked tokens.
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) public virtual override(ERC1155, IERC1155) {
+        for (uint256 i = 0; i < ids.length; i++) {
+            // Make sure the tickets aren't time locked.
+            require(
+                timelocks[ids[i]][from] < block.timestamp,
+                "TicketStore::safeTransferFrom: TIME_LOCKED"
+            );
+        }
+        super.safeBatchTransferFrom(from, to, ids, amounts, data);
     }
 }

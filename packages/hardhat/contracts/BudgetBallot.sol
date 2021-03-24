@@ -3,9 +3,9 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 import "./interfaces/IJuicer.sol";
-import "./interfaces/ITimelockStaker.sol";
 import "./interfaces/IBudgetBallot.sol";
 
 /** 
@@ -23,9 +23,6 @@ contract BudgetBallot is IBudgetBallot {
 
     /// @notice The Juicer for which the budget data is being voted on.
     IJuicer public immutable override juicer;
-
-    /// @notice The contract that manages staking.
-    ITimelockStaker public immutable override staker;
 
     /// @notice The number of yay and nay votes cast for each configuration of each Budget ID.
     mapping(uint256 => mapping(uint256 => mapping(bool => uint256)))
@@ -62,11 +59,9 @@ contract BudgetBallot is IBudgetBallot {
 
     /** 
       @param _juicer The Juicer contract that manages to Budgets being voted on.
-      @param _staker The Staking contract that Ticket holders must lock Ticket into before voting.
     */
-    constructor(IJuicer _juicer, ITimelockStaker _staker) {
+    constructor(IJuicer _juicer) {
         juicer = _juicer;
-        staker = _staker;
     }
 
     /** 
@@ -95,11 +90,9 @@ contract BudgetBallot is IBudgetBallot {
             "BudgetBallot::vote: EXPIRED"
         );
 
-        // Get the Tickets used for the Budget.
-        Tickets _tickets = _ticketStore.tickets(_budget.projectId);
-
         // Find how many tickets the message sender has staked.
-        uint256 _stakedAmount = staker.staked(_tickets, msg.sender);
+        uint256 _stakedAmount =
+            _ticketStore.balanceOf(msg.sender, _budget.projectId);
 
         // Find how many votes the message sender has already cast.
         uint256 _votedAmount =
@@ -126,10 +119,12 @@ contract BudgetBallot is IBudgetBallot {
         );
 
         // Lock the tickets until the budget's standby period is over.
-        staker.setTimelock(_tickets, msg.sender, _standbyExpiry);
+        _ticketStore.setTimelock(msg.sender, _budget.projectId, _standbyExpiry);
 
         emit Vote(
             msg.sender,
+            _ticketStore,
+            _budget.projectId,
             _budgetId,
             _budget.configured,
             _yay,

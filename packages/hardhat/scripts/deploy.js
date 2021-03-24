@@ -12,10 +12,7 @@ const main = async () => {
     process.env.HARDHAT_NETWORK === "localhost" && (await deploy("Token"));
   const prices = await deploy("Prices");
   const projects = await deploy("Projects");
-  const budgetStore = await deploy("BudgetStore", [
-    prices.address,
-    projects.address,
-  ]);
+  const budgetStore = await deploy("BudgetStore", [prices.address]);
   const ticketStore = await deploy("TicketStore");
 
   const juicer = await deploy("Juicer", [
@@ -139,10 +136,9 @@ const main = async () => {
 
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
-    await attachedJuicer.deployProject(
+    await attachedJuicer.deploy(
       admin.address,
       "Juice",
-      "JUICE",
       "0x3635C9ADC5DEA00000",
       1,
       2592000,

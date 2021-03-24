@@ -84,19 +84,19 @@ contract Shwotime is JuiceProject {
         );
 
         bool _transferFundsFromMsgSender = true;
-        for (uint256 i = 0; i < addresses.length; i++) {
-            address _address = addresses[i];
+        for (uint256 _i = 0; _i < addresses.length; _i++) {
+            address _address = addresses[_i];
             if (!_tickets.committed[_address])
                 _transferFundsFromMsgSender = false;
             if (_tickets.paid[_address]) continue;
             // Nest once.
             bool _transferFundsFromDependency = true;
             for (
-                uint256 j = 0;
-                j < _tickets.dependencies[_address].length;
-                j++
+                uint256 _j = 0;
+                _j < _tickets.dependencies[_address].length;
+                _j++
             ) {
-                address _subAddress = _tickets.dependencies[_address][j];
+                address _subAddress = _tickets.dependencies[_address][_j];
                 if (
                     _subAddress != msg.sender &&
                     !_tickets.committed[_subAddress]

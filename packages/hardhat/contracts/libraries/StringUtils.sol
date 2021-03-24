@@ -6,13 +6,13 @@ library StringUtils {
     function toLower(string memory str) internal pure returns (string memory) {
         bytes memory bStr = bytes(str);
         bytes memory bLower = new bytes(bStr.length);
-        for (uint256 i = 0; i < bStr.length; i++) {
+        for (uint256 _i = 0; _i < bStr.length; _i++) {
             // Uppercase character...
-            if ((uint8(bStr[i]) >= 65) && (uint8(bStr[i]) <= 90)) {
+            if ((uint8(bStr[_i]) >= 65) && (uint8(bStr[_i]) <= 90)) {
                 // So we add 32 to make it lowercase
-                bLower[i] = bytes1(uint8(bStr[i]) + 32);
+                bLower[_i] = bytes1(uint8(bStr[_i]) + 32);
             } else {
-                bLower[i] = bStr[i];
+                bLower[_i] = bStr[_i];
             }
         }
         return string(bLower);

@@ -275,10 +275,10 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
         uint256[] memory amounts,
         bytes memory data
     ) public virtual override(ERC1155, IERC1155) {
-        for (uint256 i = 0; i < ids.length; i++) {
+        for (uint256 _i = 0; _i < ids.length; _i++) {
             // Make sure the tickets aren't time locked.
             require(
-                timelocks[ids[i]][from] < block.timestamp,
+                timelocks[ids[_i]][from] < block.timestamp,
                 "TicketStore::safeTransferFrom: TIME_LOCKED"
             );
         }

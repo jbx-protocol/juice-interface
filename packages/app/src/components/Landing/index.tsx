@@ -81,7 +81,7 @@ export default function Landing() {
                 <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
                   Projects on Juice instead say up-front how much cashflow they want to
                   crush what they do. Once they're earning more than that, the
-                  overflow can be claimed by their users, patrons, & investors.{' '}
+                  overflow can be claimed by their users, patrons, & investors alongside them.{' '}
                   <a
                     href="https://twitter.com/hashtag/DeWork"
                     target="_blank"

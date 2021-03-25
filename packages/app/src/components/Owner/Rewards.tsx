@@ -261,8 +261,7 @@ export default function Rewards({
         title={
           <TooltipLabel
             label="Unclaimed overflow"
-            tip="You'll receive this project's tickets in return for making payments
-          towards the active budget."
+            tip="This project's overflowed funds accumulate here."
             placement="bottom"
           />
         }

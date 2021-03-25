@@ -77,7 +77,7 @@ export default function Landing() {
                 {bigHeader('A business model for the open internet')}
                 <div>
 
-                <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>Corporate style profit-seeking gets weird on the decentralized web.</p>
+                <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>Corporate style profit-seeking gets weird on the decentralized web. Heck, it gets weird in general.</p>
                 <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
                   Projects on Juice instead say up-front how much cashflow they want to
                   crush what they do. Once they're earning more than that, the

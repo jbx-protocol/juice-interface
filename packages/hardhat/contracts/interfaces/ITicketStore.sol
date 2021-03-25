@@ -35,12 +35,6 @@ interface ITicketStore is IERC1155 {
         uint256 _amount
     ) external;
 
-    function printMany(
-        address _for,
-        uint256[] calldata _projectIds,
-        uint256[] calldata _amounts
-    ) external;
-
     function redeem(
         uint256 _projectId,
         address _holder,

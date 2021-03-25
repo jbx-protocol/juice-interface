@@ -113,20 +113,6 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
     }
 
     /** 
-      @notice Print many new tickets.
-      @param _for The address receiving the new tickets.
-      @param _projectIds The projects to which the tickets belong.
-      @param _amounts The amounts to print, corresponding to the projectIds.
-    */
-    function printMany(
-        address _for,
-        uint256[] calldata _projectIds,
-        uint256[] calldata _amounts
-    ) external override onlyAdmin {
-        _mintBatch(_for, _projectIds, _amounts, "");
-    }
-
-    /** 
       @notice Redeems tickets.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _holder The address redeeming tickets.

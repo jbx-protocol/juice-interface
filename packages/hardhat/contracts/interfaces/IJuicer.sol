@@ -89,6 +89,7 @@ interface IJuicer is IBudgetController, ITicketsController {
         address indexed deployer,
         string _name,
         string _handle,
+        string _logoUri,
         Budget.Data budget
     );
 
@@ -125,7 +126,8 @@ interface IJuicer is IBudgetController, ITicketsController {
     function deploy(
         address _owner,
         string memory _name,
-        string memory _symbol,
+        string memory _handle,
+        string memory _logoUri,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,

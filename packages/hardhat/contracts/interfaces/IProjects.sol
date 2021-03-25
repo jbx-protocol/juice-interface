@@ -8,11 +8,10 @@ interface IProjects is IERC721 {
     struct Identifier {
         string name;
         string handle;
-        // lowercase version of the handler.
-        string uniqueHandle;
+        string logoUri;
     }
 
-    function handleResolver(string memory _handle)
+    function handleResolver(bytes memory _handle)
         external
         returns (uint256 projectId);
 
@@ -24,12 +23,14 @@ interface IProjects is IERC721 {
     function create(
         address _owner,
         string memory _name,
-        string memory _handle
+        string memory _handle,
+        string memory logoUri
     ) external returns (uint256 id);
 
     function setIdentifiers(
         uint256 _projectId,
         string memory _name,
-        string memory _handle
+        string memory _handle,
+        string memory logoUri
     ) external;
 }

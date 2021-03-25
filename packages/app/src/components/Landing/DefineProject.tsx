@@ -168,7 +168,7 @@ export default function DefineProject() {
             <br />
             <br />
             Users, patrons, and investors get{' '}
-            {bold(editingTickets.symbol, 'tickets')} alongside you by contributing to{' '}
+            {bold(editingTickets.symbol, 'tickets')} alongside you when they pay for{' '}
             {bold(editingBudget?.name, 'your project')}.
             <br />
             <br />

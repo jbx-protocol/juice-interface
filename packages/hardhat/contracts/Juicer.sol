@@ -163,6 +163,7 @@ contract Juicer is IJuicer, IERC721Receiver {
         @param _owner The address that will own the project.
         @param _name The project's name.
         @param _handle The project's unique handle.
+        @param _logoUri The URI pointing to the project's logo.
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
         @param _duration The duration of the funding stage for which the `target` amount is needed. 
@@ -181,6 +182,7 @@ contract Juicer is IJuicer, IERC721Receiver {
         address _owner,
         string memory _name,
         string memory _handle,
+        string memory _logoUri,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -211,7 +213,7 @@ contract Juicer is IJuicer, IERC721Receiver {
             budgetStore.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
                 // The identifiers for this project are not functional and done purely for branding by a project's PM.
-                projects.create(_owner, _name, _handle),
+                projects.create(_owner, _name, _handle, _logoUri),
                 _target,
                 _currency,
                 _duration,
@@ -230,6 +232,7 @@ contract Juicer is IJuicer, IERC721Receiver {
             msg.sender,
             _name,
             _handle,
+            _logoUri,
             _budget
         );
     }

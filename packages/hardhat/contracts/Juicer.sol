@@ -334,41 +334,30 @@ contract Juicer is IJuicer, IERC721Receiver {
         (
             Budget.Data memory _budget,
             uint256 _convertedCurrencyAmount,
-            uint256 _overflow,
-            Budget.Data memory _adminBudget,
-            uint256 _adminConvertedCurrencyAmount,
-            uint256 _adminOverflow
-        ) =
-            budgetStore.payProject(
-                _projectId,
-                _amount,
-                JuiceProject(admin).projectId()
-            );
+            uint256 _overflow
+        ) = budgetStore.payProject(_projectId, _amount);
 
-        // Print tickets for the beneficiary, the project owner, and the admin according to the project specs.
-        _printTicketsFromPayment(
+        // Print tickets for the beneficiary.
+        ticketStore.print(
             _beneficiary,
-            _budget,
-            _convertedCurrencyAmount,
-            _adminBudget,
-            _adminConvertedCurrencyAmount
+            _budget.projectId,
+            _budget._weighted(
+                _convertedCurrencyAmount,
+                uint256(1000).sub(_budget.reserved)
+            )
         );
 
-        // Account for overflow from this operation either in the paid project, or the admin project receiving fees.
-        // If both have overflow, they're dealt with together to save on gas.
-        if (_overflow > 0 && _adminOverflow > 0) {
-            Budget.Data[] memory _budgets = new Budget.Data[](2);
-            uint256[] memory _amounts = new uint256[](2);
-            _budgets[0] = _budget;
-            _budgets[1] = _adminBudget;
-            _amounts[0] = _overflow;
-            _amounts[1] = _adminOverflow;
-            _addManyOverflow(_budgets, _amounts);
-        } else if (_overflow > 0) {
-            _addOverflow(_budget, _overflow);
-        } else if (_adminOverflow < 0) {
-            _addOverflow(_adminBudget, _adminOverflow);
+        // Print tickets for the project owner if needed.
+        if (_budget.reserved > 0) {
+            ticketStore.print(
+                projects.ownerOf(_budget.projectId),
+                _budget.projectId,
+                _budget._weighted(_convertedCurrencyAmount, _budget.reserved)
+            );
         }
+
+        // Account for overflow resulting from this operation.
+        if (_overflow > 0) _addOverflow(_budget, _overflow);
 
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);
@@ -452,17 +441,48 @@ contract Juicer is IJuicer, IERC721Receiver {
         );
 
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
-        (Budget.Data memory _budget, uint256 _tappedAmount, uint256 _overflow) =
-            budgetStore.tap(_budgetId, _projectId, _amount, _currency);
+        (
+            Budget.Data memory _budget,
+            uint256 _tappedAmount,
+            uint256 _overflow,
+            Budget.Data memory _adminBudget,
+            uint256 _adminConvertedCurrencyAmount,
+            uint256 _adminOverflow
+        ) =
+            budgetStore.tap(
+                _budgetId,
+                _projectId,
+                _amount,
+                _currency,
+                _minReturnedETH,
+                JuiceProject(admin).projectId()
+            );
 
-        // Make sure this amount is acceptable.
-        require(
-            _tappedAmount >= _minReturnedETH,
-            "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        // Print tickets for the tapper.
+        ticketStore.print(
+            msg.sender,
+            _adminBudget.projectId,
+            _adminBudget._weighted(
+                _adminConvertedCurrencyAmount,
+                uint256(1000).sub(_adminBudget.reserved)
+            )
         );
 
-        // If theres new overflow, give to beneficiary and add the amount of contributed funds that went to overflow to the claimable amount.
+        // Print tickets for the admin if needed.
+        if (_adminBudget.reserved > 0) {
+            ticketStore.print(
+                admin,
+                _adminBudget.projectId,
+                _adminBudget._weighted(
+                    _adminConvertedCurrencyAmount,
+                    _adminBudget.reserved
+                )
+            );
+        }
+
+        // Account for overflow from this operation both in the tapped project and in the admin project.
         if (_overflow > 0) _addOverflow(_budget, _overflow);
+        if (_adminOverflow < 0) _addOverflow(_adminBudget, _adminOverflow);
 
         // Transfer the funds to the specified address.
         weth.safeTransfer(_beneficiary, _tappedAmount);
@@ -660,109 +680,6 @@ contract Juicer is IJuicer, IERC721Receiver {
             overflowYielder.withdraw(amount.sub(depositable), weth);
             depositable = 0;
         }
-    }
-
-    /**
-      @notice Prints tickets for everyone who should get some as a result of a payment.
-      @param _beneficiary The original beneficiary of the payment. Sould receive tickets from the project paid and the admin.
-      @param _budget The funding stage for the project that was paid.
-      @param _amount The amount that was paid to the project, in its native currency.
-      @param _feeBeneficiaryBudget The funding stage for the project that received a fee.
-      @param _feeBeneficiaryAmount The amount taken as a fee, in the fee beneficiary's nativecurrency.
-     */
-    function _printTicketsFromPayment(
-        address _beneficiary,
-        Budget.Data memory _budget,
-        uint256 _amount,
-        Budget.Data memory _feeBeneficiaryBudget,
-        uint256 _feeBeneficiaryAmount
-    ) private {
-        // If the fee beneficiary is reserving some tickets, print them.
-        if (_feeBeneficiaryBudget.reserved > 0) {
-            ticketStore.print(
-                admin,
-                _budget.projectId,
-                _feeBeneficiaryBudget._weighted(
-                    _feeBeneficiaryAmount,
-                    _feeBeneficiaryBudget.reserved
-                )
-            );
-        }
-
-        // Split the fee weighted amount in two. This will get split between the project owner and beneficiary.
-        uint256 _adminPrintAmount =
-            _feeBeneficiaryBudget
-                ._weighted(
-                _feeBeneficiaryAmount,
-                uint256(1000).sub(_feeBeneficiaryBudget.reserved)
-            )
-                .div(2);
-
-        // Batch prints for gas efficiency.
-        uint256[] memory _projectIds = new uint256[](2);
-        uint256[] memory _values = new uint256[](2);
-
-        // The beneficary gets tickets for both the project being paid and the fee beneficiary.
-        _projectIds[0] = _budget.projectId;
-        _values[0] = _budget._weighted(
-            _amount,
-            uint256(1000).sub(_budget.reserved)
-        );
-        _projectIds[1] = _feeBeneficiaryBudget.projectId;
-        _values[1] = _adminPrintAmount;
-        ticketStore.printMany(_beneficiary, _projectIds, _values);
-
-        // Mint the appropriate amount of tickets for the project owner that the fee is being taken from.
-        // The project gets the budget's project percentage, if one is specified.
-        // If there is some amount reserved, batch the printing for gas efficiency.
-        if (_budget.reserved > 0) {
-            // The owner gets the reserved amount of its own tickets, and the same amount as the beneficiary of the fee beneficiary's tickets.
-            _values[0] = _budget._weighted(_amount, _budget.reserved);
-            ticketStore.printMany(
-                projects.ownerOf(_budget.projectId),
-                _projectIds,
-                _values
-            );
-        } else {
-            ticketStore.print(
-                projects.ownerOf(_budget.projectId),
-                _feeBeneficiaryBudget.projectId,
-                _adminPrintAmount
-            );
-        }
-    }
-
-    /** 
-      @notice Batch adds overflow.
-      @param _budgets The budgets to add overflow for.
-      @param _amounts The amounts of overflow to add. Indexes should correspond to `_budgets`.
-    */
-    function _addManyOverflow(
-        Budget.Data[] memory _budgets,
-        uint256[] memory _amounts
-    ) private {
-        // The cumulative new amount that's depositable.
-        uint256 _totalDepositable = 0;
-
-        for (uint256 _i = 0; _i < _budgets.length; _i++) {
-            // The portion of the overflow that is claimable by redeeming tickets.
-            // This is the total minus the percent used as a fee.
-            uint256 _claimablePortion =
-                Math.mulDiv(
-                    _amounts[_i],
-                    uint256(1000).sub(_budgets[_i].fee),
-                    1000
-                );
-
-            // Add to the claimable amount.
-            ticketStore.addClaimable(_budgets[_i].projectId, _claimablePortion);
-
-            // Increment the total depositable.
-            _totalDepositable = _totalDepositable.add(_claimablePortion);
-        }
-
-        // The overflow can be deposited to earn yield.
-        depositable = depositable.add(_totalDepositable);
     }
 
     /** 

@@ -159,29 +159,18 @@ contract BudgetStore is Administered, IBudgetStore {
       @notice Tracks a payments to the appropriate budget for the project.
       @param _projectId The ID of the project being paid.
       @param _amount The amount being paid.
-      @param _feeBeneficiaryProjectId The ID of the project beneficting from the fee.
       @return budget The budget that is being paid.
       @return convertedCurrencyAmount The amount of the target currency that was paid.
       @return overflow The overflow that has now become available as a result of paying.
-      @return feeBeneficiaryBudget The budget that is benefiting from the fee being paid.
-      @return feeBeneficiaryConvertedCurrencyAmount The amount of the target currency that was paid to the fee beneficiary.
-      @return feeBeneficiaryOverflow The overflow that has now become available as a result of paying the fee benficiary.
     */
-    function payProject(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _feeBeneficiaryProjectId
-    )
+    function payProject(uint256 _projectId, uint256 _amount)
         external
         override
         onlyAdmin
         returns (
             Budget.Data memory budget,
             uint256 convertedCurrencyAmount,
-            uint256 overflow,
-            Budget.Data memory feeBeneficiaryBudget,
-            uint256 feeBeneficiaryConvertedCurrencyAmount,
-            uint256 feeBeneficiaryOverflow
+            uint256 overflow
         )
     {
         // Find the Budget that this contribution should go towards.
@@ -196,22 +185,6 @@ contract BudgetStore is Administered, IBudgetStore {
 
         // Return the budget.
         budget = _budget;
-
-        // Find the fee beneficiary budget.
-        Budget.Data storage _feeBeneficiaryBudget =
-            _ensureActiveBudget(_feeBeneficiaryProjectId);
-
-        // Add the fee amount to the fee beneficiary budget.
-        (
-            feeBeneficiaryConvertedCurrencyAmount,
-            feeBeneficiaryOverflow
-        ) = _feeBeneficiaryBudget._add(
-            Math.mulDiv(_amount, _budget.fee, 1000),
-            prices.getETHPrice(_feeBeneficiaryBudget.currency)
-        );
-
-        // Return the fee beneficiary budget.
-        feeBeneficiaryBudget = _feeBeneficiaryBudget;
     }
 
     /** 
@@ -220,15 +193,21 @@ contract BudgetStore is Administered, IBudgetStore {
       @param _projectId The ID of the project to which the budget being tapped belongs.
       @param _amount The amount of being tapped.
       @param _currency The currency of the amount being tapped.
+      @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
       @return budget The budget that is being tapped.
       @return convertedEthAmount The amount of eth tapped.
       @return overflow The overflow that has now become available as a result of tapping.
+      @return feeBeneficiaryBudget The budget that is benefiting from the fee being paid.
+      @return feeBeneficiaryConvertedCurrencyAmount The amount of the target currency that was paid to the fee beneficiary.
+      @return feeBeneficiaryOverflow The overflow that has now become available as a result of paying the fee benficiary.
     */
     function tap(
         uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency
+        uint256 _currency,
+        uint256 _minReturnedETH,
+        uint256 _feeBeneficiaryProjectId
     )
         external
         override
@@ -236,7 +215,10 @@ contract BudgetStore is Administered, IBudgetStore {
         returns (
             Budget.Data memory budget,
             uint256 convertedEthAmount,
-            uint256 overflow
+            uint256 overflow,
+            Budget.Data memory feeBeneficiaryBudget,
+            uint256 feeBeneficiaryConvertedCurrencyAmount,
+            uint256 feeBeneficiaryOverflow
         )
     {
         // Get a reference to the Budget being tapped.
@@ -262,8 +244,32 @@ contract BudgetStore is Administered, IBudgetStore {
             prices.getETHPrice(_budget.currency)
         );
 
+        // Make sure this amount is acceptable.
+        require(
+            convertedEthAmount >= _minReturnedETH,
+            "BudgetStore::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        );
+
         // Return the budget.
         budget = _budget;
+
+        // Find the fee beneficiary budget.
+        Budget.Data storage _feeBeneficiaryBudget =
+            _ensureActiveBudget(_feeBeneficiaryProjectId);
+
+        // Add the fee amount to the fee beneficiary budget.
+        (
+            feeBeneficiaryConvertedCurrencyAmount,
+            feeBeneficiaryOverflow
+        ) = _feeBeneficiaryBudget._add(
+            Math.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
+                convertedEthAmount
+            ),
+            prices.getETHPrice(_feeBeneficiaryBudget.currency)
+        );
+
+        // Return the fee beneficiary budget.
+        feeBeneficiaryBudget = _feeBeneficiaryBudget;
     }
 
     /** 

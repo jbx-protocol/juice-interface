@@ -49,7 +49,7 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _name,
         string memory _handle
     ) external override onlyAdmin returns (uint256 id) {
-        require(bytes(_handle).length > 0, "Project::create: EMPTY_HANDLE");
+        require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
         string memory _uniqueHandle = StringUtils.toLower(_handle);
         projectId++;
         _safeMint(_owner, projectId);
@@ -72,18 +72,18 @@ contract Projects is ERC721, IProjects, Administered {
         // The message sender must be the project owner.
         require(
             ownerOf(_projectId) == msg.sender,
-            "Project::setIdentifiers: UNAUTHORIZED"
+            "Projects::setIdentifiers: UNAUTHORIZED"
         );
         require(
             bytes(_handle).length > 0,
-            "Project::setIdentifiers: EMPTY_HANDLE"
+            "Projects::setIdentifiers: EMPTY_HANDLE"
         );
 
         string memory _uniqueHandle = StringUtils.toLower(_handle);
 
         require(
             handleResolver[_uniqueHandle] == 0,
-            "Project::setIdentifiers: HANDLE_TAKEN"
+            "Projects::setIdentifiers: HANDLE_TAKEN"
         );
 
         // If needed, clear the old handle and set the new one.

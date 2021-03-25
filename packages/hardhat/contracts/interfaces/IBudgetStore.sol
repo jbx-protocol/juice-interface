@@ -42,32 +42,30 @@ interface IBudgetStore {
         IBudgetBallot _ballot
     ) external returns (Budget.Data memory budget);
 
-    function payProject(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _feeBeneficiaryProjectId
-    )
+    function payProject(uint256 _projectId, uint256 _amount)
         external
         returns (
             Budget.Data memory budget,
             uint256 convertedCurrencyAmount,
-            uint256 overflow,
-            Budget.Data memory feeBeneficiaryBudget,
-            uint256 feeBeneficiaryConvertedCurrencyAmount,
-            uint256 feeBeneficiaryOverflow
+            uint256 overflow
         );
 
     function tap(
         uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency
+        uint256 _currency,
+        uint256 _minReturnedETH,
+        uint256 _feeBeneficiaryProjectId
     )
         external
         returns (
             Budget.Data memory budget,
             uint256 convertedEthAmount,
-            uint256 overflow
+            uint256 overflow,
+            Budget.Data memory feeBeneficiaryBudget,
+            uint256 feeBeneficiaryConvertedCurrencyAmount,
+            uint256 feeBeneficiaryOverflow
         );
 
     function setFee(uint256 _fee) external;

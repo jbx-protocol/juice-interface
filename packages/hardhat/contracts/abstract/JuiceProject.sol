@@ -241,23 +241,23 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         juicer.projects().safeTransferFrom(address(this), _newOwner, projectId);
     }
 
-    // /**
-    //   @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
-    //   @dev The destination must be in the current Juicer's allow list.
-    //   @param _from The contract that currently manages your Tickets and it's funds.
-    //   @param _to The new contract that will manage your Tickets and it's funds.
-    // */
-    // function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
-    //     require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
-    //     require(_from == juicer, "JuiceProject::migrate: INVALID");
-    //     require(projectId != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
+    /**
+      @notice Migrates the ability to mint and redeem this contract's Tickets to a new Juicer.
+      @dev The destination must be in the current Juicer's allow list.
+      @param _from The contract that currently manages your Tickets and it's funds.
+      @param _to The new contract that will manage your Tickets and it's funds.
+    */
+    function migrate(IJuicer _from, IJuicer _to) public onlyOwner {
+        require(_to != IJuicer(0), "JuiceProject::migrate: ZERO_ADDRESS");
+        require(_from == juicer, "JuiceProject::migrate: INVALID");
+        require(projectId != 0, "JuiceProject::migrate: PROJECT_NOT_FOUND");
 
-    //     // Migrate.
-    //     _from.migrate(projectId, _to);
+        // Migrate.
+        _from.migrate(projectId, _to);
 
-    //     // Set the new juicer.
-    //     juicer = _to;
-    // }
+        // Set the new juicer.
+        juicer = _to;
+    }
 
     /** 
       @notice Take a fee for this project.
@@ -274,11 +274,20 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         juicer.pay(projectId, _amount, _from, _note);
     }
 
-    function addMod(uint256 _percent, address _beneficiary) external onlyPm {
+    /** 
+      @notice Adds a mod to the list.
+      @param _beneficiary The address being funded from your tapped amount.
+      @param _percent The percent of your target amount to send to the beneficiary of this mod. Out of 1000.
+    */
+    function addMod(address _beneficiary, uint256 _percent) external onlyPm {
         modsId++;
         mods.push(Mod(modsId, _percent, _beneficiary));
     }
 
+    /** 
+      @notice Removes a mod from the list.
+      @param _id The id of the mod to remove.
+    */
     function removeMod(uint256 _id) external onlyPm {
         Mod[] memory _mods = mods;
         delete mods;

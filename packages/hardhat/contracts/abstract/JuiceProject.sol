@@ -228,6 +228,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         @param _pm The new project manager.
     */
     function setPm(address _pm) external onlyOwner {
+        require(_pm != address(0), "JuiceProject::setPm: ZERO_ADDRESS");
         pm = _pm;
     }
 

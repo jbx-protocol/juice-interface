@@ -9,6 +9,7 @@ interface IProjects is IERC721 {
         string name;
         string handle;
         string logoUri;
+        string link;
     }
 
     function handleResolver(bytes memory _handle)
@@ -24,13 +25,15 @@ interface IProjects is IERC721 {
         address _owner,
         string memory _name,
         string memory _handle,
-        string memory logoUri
+        string memory logoUri,
+        string memory link
     ) external returns (uint256 id);
 
     function setIdentifiers(
         uint256 _projectId,
         string memory _name,
         string memory _handle,
-        string memory logoUri
+        string memory logoUri,
+        string memory link
     ) external;
 }

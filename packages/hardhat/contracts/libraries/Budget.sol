@@ -27,8 +27,6 @@ library Budget {
         uint256 number;
         // The ID of the project's Budget that came before this one. 0 if none.
         uint256 previous;
-        // A link that points to a justification for these parameters.
-        string link;
         // The amount that this Budget is targeting.
         uint256 target;
         // The currency that the target is measured in.
@@ -68,7 +66,6 @@ library Budget {
         @param _baseBudget The Budget to clone from.
     */
     function _basedOn(Data storage _self, Data memory _baseBudget) internal {
-        _self.link = _baseBudget.link;
         _self.target = _baseBudget.target;
         _self.currency = _baseBudget.currency;
         _self.duration = _baseBudget.duration;
@@ -127,7 +124,6 @@ library Budget {
                 _self.projectId,
                 _self.number.add(1),
                 _self.id,
-                _self.link,
                 _self.target,
                 _self.currency,
                 0,

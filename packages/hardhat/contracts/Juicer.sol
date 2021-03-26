@@ -213,11 +213,10 @@ contract Juicer is IJuicer, IERC721Receiver {
             budgetStore.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
                 // The identifiers for this project are not functional and done purely for branding by a project's PM.
-                projects.create(_owner, _name, _handle, _logoUri),
+                projects.create(_owner, _name, _handle, _logoUri, _link),
                 _target,
                 _currency,
                 _duration,
-                _link,
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
@@ -247,7 +246,6 @@ contract Juicer is IJuicer, IERC721Receiver {
         @param _duration The duration to set for the funding stage.
         Measured in seconds.
         Send 0 for an indefinite funding stage.
-        @param _link A link to information about the project and funding stage.
         @param _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -263,7 +261,6 @@ contract Juicer is IJuicer, IERC721Receiver {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
@@ -302,7 +299,6 @@ contract Juicer is IJuicer, IERC721Receiver {
                 _target,
                 _currency,
                 _duration,
-                _link,
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,

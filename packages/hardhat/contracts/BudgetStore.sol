@@ -115,7 +115,6 @@ contract BudgetStore is Administered, IBudgetStore {
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
-        @param _link A link to information about the Budget.
         @param _discountRate A number from 95-100 indicating how valuable a contribution to the current Budget is 
         compared to the project's previous Budget.
         If it's 100, each Budget will have equal weight.
@@ -130,7 +129,6 @@ contract BudgetStore is Administered, IBudgetStore {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
@@ -140,7 +138,6 @@ contract BudgetStore is Administered, IBudgetStore {
         Budget.Data storage _budget = _ensureStandbyBudget(_projectId);
 
         // Set the properties of the budget.
-        _budget.link = _link;
         _budget.target = _target;
         _budget.duration = _duration;
         _budget.currency = _currency;

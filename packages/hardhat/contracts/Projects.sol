@@ -42,18 +42,20 @@ contract Projects is ERC721, IProjects, Administered {
         @param _name A name of the project.
         @param _handle A unique handle for the project.
         @param _logoUri A uri to an image representing the project.
+        @param _link A link to more info about the project.
         @return id The new project's ID.
     */
     function create(
         address _owner,
         string memory _name,
         string memory _handle,
-        string memory _logoUri
+        string memory _logoUri,
+        string memory _link
     ) external override onlyAdmin returns (uint256 id) {
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
         projectId++;
         _safeMint(_owner, projectId);
-        identifiers[projectId] = Identifier(_name, _handle, _logoUri);
+        identifiers[projectId] = Identifier(_name, _handle, _logoUri, _link);
         handleResolver[bytes(_handle)] = projectId;
         return projectId;
     }
@@ -64,12 +66,14 @@ contract Projects is ERC721, IProjects, Administered {
       @param _name The new name for the project.
       @param _handle The new unique handle for the project.
       @param _logoUri The new uri to an image representing the project.
+        @param _link A link to more info about the project.
     */
     function setIdentifiers(
         uint256 _projectId,
         string memory _name,
         string memory _handle,
-        string memory _logoUri
+        string memory _logoUri,
+        string memory _link
     ) external override {
         // The message sender must be the project owner.
         require(
@@ -96,6 +100,6 @@ contract Projects is ERC721, IProjects, Administered {
         }
 
         // Set the new identifier.
-        identifiers[_projectId] = Identifier(_name, _handle, _logoUri);
+        identifiers[_projectId] = Identifier(_name, _handle, _logoUri, _link);
     }
 }

@@ -69,7 +69,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         @param _target The new Budget target amount.
         @param _currency The currency of the target.
         @param _duration The new duration of your Budget.
-        @param _link A link to information about the Budget.
         @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
         effectively creating a recency discountRate.
         If it's 100, each Budget will have equal weight.
@@ -83,7 +82,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
@@ -100,11 +98,32 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _target,
             _currency,
             _duration,
-            _link,
             _discountRate,
             _bondingCurveRate,
             _reserved,
             _ballot
+        );
+    }
+
+    /**
+      @notice Allows the PM to set the project's name and handle.
+      @param _name The new name for the project.
+      @param _handle The new unique handle for the project.
+      @param _logoUri The new uri to an image representing the project.
+      @param _link A link to more info about the project.
+    */
+    function setIdentifiers(
+        string memory _name,
+        string memory _handle,
+        string memory _logoUri,
+        string memory _link
+    ) external onlyPm {
+        juicer.projects().setIdentifiers(
+            projectId,
+            _name,
+            _handle,
+            _logoUri,
+            _link
         );
     }
 

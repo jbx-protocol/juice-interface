@@ -142,7 +142,6 @@ interface IJuicer is IBudgetController, ITicketsController {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,

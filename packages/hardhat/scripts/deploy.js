@@ -131,6 +131,7 @@ const main = async () => {
       admin.address,
       "Juice",
       "juice",
+      "https://some.jpg",
       "0x3635C9ADC5DEA00000",
       1,
       2592000,

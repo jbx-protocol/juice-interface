@@ -109,7 +109,11 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
         uint256 _projectId,
         uint256 _amount
     ) external override onlyAdmin {
+        // Mint the tickets.
         _mint(_for, _projectId, _amount, "");
+
+        // Increase the total supply.
+        totalSupply[_projectId] = totalSupply[_projectId].sub(_amount);
     }
 
     /** 
@@ -165,6 +169,9 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
 
         // Burn the tickets.
         _burn(_holder, _projectId, _amount);
+
+        // Reduce the total supply.
+        totalSupply[_projectId] = totalSupply[_projectId].sub(_amount);
     }
 
     /**

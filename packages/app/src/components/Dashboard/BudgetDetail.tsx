@@ -11,7 +11,6 @@ import { useExchangePrice } from 'hooks/ExchangePrice'
 import { Budget } from 'models/budget'
 import moment from 'moment'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { addressExists } from 'utils/addressExists'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
@@ -24,7 +23,13 @@ import {
 import TooltipLabel from '../shared/TooltipLabel'
 import BudgetHeader from './BudgetHeader'
 
-export default function BudgetDetail({ budget }: { budget: Budget }) {
+export default function BudgetDetail({
+  budget,
+  isOwner,
+}: {
+  budget: Budget
+  isOwner: boolean
+}) {
   const {
     transactor,
     onNeedProvider,
@@ -42,6 +47,8 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
   const currency = budgetCurrencyName(budget.currency)
+
+  const isRecurring = budget.discountRate.gt(0)
 
   const adminFeePercent = useContractReader<number>({
     contract: ContractName.BudgetStore,
@@ -94,8 +101,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
   const isEnded = secondsLeft.lte(0)
 
   const isUpcoming = useMemo(() => budget.start.gt(now), [budget.start, now])
-
-  const isOwner = budget?.project === userAddress
 
   function detailedTimeString(secs: BigNumber) {
     if (!secs || secs.lte(0)) return 0
@@ -243,9 +248,11 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
     <Descriptions {...descriptionsStyle} column={2} bordered>
       <Descriptions.Item label="Starts">{formattedStartTime}</Descriptions.Item>
 
-      <Descriptions.Item label="Duration">
-        {detailedTimeString(budget?.duration)}
-      </Descriptions.Item>
+      {isRecurring ? (
+        <Descriptions.Item label="Duration">
+          {detailedTimeString(budget?.duration)}
+        </Descriptions.Item>
+      ) : null}
     </Descriptions>
   )
 
@@ -255,9 +262,11 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
         {formattedStartTime}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Time left">
-        {detailedTimeString(secondsLeft)}
-      </Descriptions.Item>
+      {isRecurring ? (
+        <Descriptions.Item label="Time left">
+          {detailedTimeString(secondsLeft)}
+        </Descriptions.Item>
+      ) : null}
 
       {tappedDescriptionItem}
 
@@ -287,19 +296,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
       {isEnded ? endedDescriptions : null}
       {!isUpcoming && !isEnded ? activeDescriptions : null}
 
-      {budget?.link ? (
-        <div
-          style={{
-            display: 'block',
-            margin: gutter,
-          }}
-        >
-          <a href={budget.link} target="_blank" rel="noopener noreferrer">
-            {budget.link}
-          </a>
-        </div>
-      ) : null}
-
       <div style={{ margin: gutter }}>
         <Descriptions {...descriptionsStyle} size="small" column={2}>
           <Descriptions.Item
@@ -324,26 +320,6 @@ export default function BudgetDetail({ budget }: { budget: Budget }) {
           >
             {fromPerMille(budget.reserved)}%
           </Descriptions.Item>
-
-          {!addressExists(budget.donationRecipient) ? null : (
-            <Descriptions.Item
-              span={2}
-              label={
-                <TooltipLabel
-                  label="Reserved donation amount"
-                  tip="A percentage of this budget's overflow can be reserved for the specified address. For example, if this is set to 5% and there is 1000 DAI of overflow, the donation address will be able to claim 50 DAI once this budget expires."
-                />
-              }
-            >
-              {fromPerMille(budget.donationAmount)}%
-            </Descriptions.Item>
-          )}
-
-          {!addressExists(budget.donationRecipient) ? null : (
-            <Descriptions.Item label="Beneficiary address" span={2}>
-              {budget.donationRecipient}
-            </Descriptions.Item>
-          )}
         </Descriptions>
       </div>
     </div>

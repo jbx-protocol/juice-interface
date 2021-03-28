@@ -5,8 +5,8 @@ import { deserializeBudget } from '../utils/serializers'
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-export const useUserBudgetSelector = () =>
-  useAppSelector(state => deserializeBudget(state.userBudget.value))
-
 export const useEditingBudgetSelector = () =>
-  useAppSelector(state => deserializeBudget(state.editingBudget.value))
+  useAppSelector(state => deserializeBudget(state.editingProject.budget))
+
+export const useEditingBudgetRecurringSelector = () =>
+  useAppSelector(state => state.editingProject.budget.discountRate !== '0')

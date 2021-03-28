@@ -7,10 +7,7 @@ import { fromPerMille } from './formatCurrency'
 export type SerializedBudget = Record<keyof Budget, string>
 
 export const serializeBudget = (budget: Budget): SerializedBudget => ({
-  project: budget.project,
-  name: budget.name,
-  link: budget.link,
-  donationRecipient: budget.donationRecipient,
+  projectId: budget.projectId.toString(),
   id: budget.id.toString(),
   number: budget.number.toString(),
   previous: budget.previous.toString(),
@@ -22,8 +19,9 @@ export const serializeBudget = (budget: Budget): SerializedBudget => ({
   tappedTarget: fromWad(budget.tappedTarget),
   tappedTotal: fromWad(budget.tappedTotal),
   reserved: fromPerMille(budget.reserved),
-  donationAmount: fromPerMille(budget.donationAmount),
   weight: fromWad(budget.weight),
+  fee: fromPerMille(budget.fee),
+  bondingCurveRate: budget.bondingCurveRate.toString(),
   discountRate: fromPerMille(budget.discountRate),
   configured: budget.configured.toString(),
 })
@@ -34,6 +32,7 @@ export const deserializeBudget = (
   budget
     ? {
         ...budget,
+        projectId: BigNumber.from(budget.projectId),
         id: BigNumber.from(budget.id),
         number: BigNumber.from(budget.number),
         previous: BigNumber.from(budget.previous),
@@ -45,8 +44,9 @@ export const deserializeBudget = (
         tappedTarget: parseWad(budget.tappedTarget),
         tappedTotal: parseWad(budget.tappedTotal),
         reserved: parsePerMille(budget.reserved),
-        donationAmount: parsePerMille(budget.donationAmount),
         weight: parseWad(budget.weight),
+        fee: parsePerMille(budget.fee),
+        bondingCurveRate: BigNumber.from(budget.bondingCurveRate),
         discountRate: parsePerMille(budget.discountRate),
         configured: BigNumber.from(budget.configured),
       }

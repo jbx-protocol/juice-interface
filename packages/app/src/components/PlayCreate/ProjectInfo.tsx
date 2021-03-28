@@ -1,7 +1,10 @@
-import { Button, Form, FormInstance, Input, Space } from 'antd'
+import { Button, Checkbox, Form, FormInstance, Input, Space } from 'antd'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
-import { BudgetCurrency } from 'models/budget-currency'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { useEditingBudgetRecurringSelector } from 'hooks/AppSelector'
+import { BudgetCurrency } from 'models/budget-currency'
+import { editingProjectActions } from 'redux/slices/editingProject'
 
 export type ProjectInfoFormFields = {
   name: string
@@ -17,6 +20,9 @@ export default function ProjectInfo({
   form: FormInstance<ProjectInfoFormFields>
   onSave: VoidFunction
 }) {
+  const isRecurring = useEditingBudgetRecurringSelector()
+  const dispatch = useAppDispatch()
+
   return (
     <Space direction="vertical" size="large">
       <h1>Project info</h1>
@@ -48,18 +54,30 @@ export default function ProjectInfo({
             onCurrencyChange={currency => form.setFieldsValue({ currency })}
           />
         </Form.Item>
-        <Form.Item
-          extra="The duration of this budgeting scope."
-          name="duration"
-          label="Time frame"
-          rules={[{ required: true }]}
-        >
-          <FormattedNumberInput
-            value={form.getFieldValue('duration')}
-            onChange={val => form.setFieldsValue({ duration: val })}
-            suffix="days"
-          />
+        <Form.Item>
+          <div style={{ display: 'flex' }}>
+            <Checkbox
+              defaultChecked={isRecurring}
+              onChange={e =>
+                dispatch(editingProjectActions.setIsRecurring(e.target.checked))
+              }
+            ></Checkbox>
+            <div style={{ marginLeft: 10 }}>Use a recurring funding target</div>
+          </div>
         </Form.Item>
+        {isRecurring ? (
+          <Form.Item
+            extra="The time period of this recurring budget"
+            name="duration"
+          >
+            <FormattedNumberInput
+              placeholder="30"
+              value={form.getFieldValue('duration')}
+              suffix="days"
+              onChange={val => form.setFieldsValue({ duration: val })}
+            />
+          </Form.Item>
+        ) : null}
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={onSave}>
             Save

@@ -2,11 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 export interface Budget {
   id: BigNumber
-  project: string
+  projectId: BigNumber
   number: BigNumber
   previous: BigNumber
-  name: string
-  link: string
   target: BigNumber
   currency: BigNumber // 0 ETH, 1 USD
   total: BigNumber
@@ -15,9 +13,9 @@ export interface Budget {
   tappedTarget: BigNumber
   tappedTotal: BigNumber
   reserved: BigNumber
-  donationAmount: BigNumber
-  donationRecipient: string
+  fee: BigNumber
   weight: BigNumber
   discountRate: BigNumber
+  bondingCurveRate: BigNumber
   configured: BigNumber
 }

@@ -1,58 +1,44 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { AddLinkFormFields } from 'components/PlayCreate/AddLink'
-import { AdvancedSettingsFormFields } from 'components/PlayCreate/AdvancedSettings'
+import { FundingDetailsFormFields } from 'components/PlayCreate/FundingDetails'
+import { ProjectDetailsFormFields } from 'components/PlayCreate/ProjectDetails'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
-import { emptyAddress } from 'constants/empty-address'
 import { UserContext } from 'contexts/userContext'
-import { useUserBudgetSelector } from 'hooks/AppSelector'
-import { BudgetCurrency } from 'models/budget-currency'
+import { Budget } from 'models/budget'
 import { useContext, useEffect, useState } from 'react'
-import { addressExists } from 'utils/addressExists'
-import {
-  fromPerMille,
-  fromWad,
-  parsePerMille,
-  parseWad,
-} from 'utils/formatCurrency'
+import { parsePerMille, parseWad } from 'utils/formatCurrency'
 
 export type ReconfigureFormFields = ProjectInfoFormFields &
-  AdvancedSettingsFormFields &
-  AddLinkFormFields
+  FundingDetailsFormFields &
+  ProjectDetailsFormFields
 
 export default function ReconfigureBudgetModal({
+  budget,
   visible,
   onDone,
 }: {
+  budget: Budget | undefined
   visible?: boolean
   onDone?: VoidFunction
 }) {
   const { transactor, contracts } = useContext(UserContext)
-  const userBudget = useUserBudgetSelector()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<ReconfigureFormFields>()
-  const [donationRecipientRequired, setBeneficiaryAddressRequired] = useState<
-    boolean
-  >(false)
 
   useEffect(() => {
-    if (!userBudget) return
+    if (!budget) return
 
-    form.setFieldsValue({
-      name: userBudget.name,
-      duration: userBudget.duration.toString(),
-      target: fromWad(userBudget.target),
-      currency: userBudget.currency.toString() as BudgetCurrency,
-      link: userBudget.link,
-      discountRate: fromPerMille(userBudget.discountRate),
-      donationRecipient: addressExists(userBudget.donationRecipient)
-        ? userBudget.donationRecipient
-        : '',
-      donationAmount: fromPerMille(userBudget.donationAmount),
-      reserved: fromPerMille(userBudget.reserved),
-    })
+    // form.setFieldsValue({
+    //   name: budget.name,
+    //   duration: budget.duration.toString(),
+    //   target: fromWad(budget.target),
+    //   currency: budget.currency.toString() as BudgetCurrency,
+    //   link: budget.link,
+    //   discountRate: fromPerMille(budget.discountRate),
+    //   reserved: fromPerMille(budget.reserved),
+    // })
   }, [])
 
   if (!transactor || !contracts) return null
@@ -79,10 +65,6 @@ export default function ReconfigureBudgetModal({
         fields.link,
         parsePerMille(fields.discountRate).toHexString(),
         parsePerMille(fields.reserved).toHexString(),
-        addressExists(fields.donationRecipient)
-          ? fields.donationRecipient
-          : emptyAddress,
-        parsePerMille(fields.donationAmount).toHexString(),
       ],
       {
         onDone: () => {
@@ -156,30 +138,6 @@ export default function ReconfigureBudgetModal({
             className="align-end"
             suffix="%"
             type="number"
-            autoComplete="off"
-          />
-        </Form.Item>
-        <Form.Item
-          extra="An address that you wish to give a percentage of your overflow to."
-          name="donationRecipient"
-          label="Donation address"
-          rules={[{ required: donationRecipientRequired }]}
-        >
-          <Input placeholder="0x01a2b3c..." autoComplete="off" />
-        </Form.Item>
-        <Form.Item
-          extra=""
-          name="donation"
-          label="Donation amount"
-          initialValue={0}
-        >
-          <Input
-            className="align-end"
-            suffix="%"
-            type="number"
-            onChange={e =>
-              setBeneficiaryAddressRequired(parseFloat(e.target.value) > 0)
-            }
             autoComplete="off"
           />
         </Form.Item>

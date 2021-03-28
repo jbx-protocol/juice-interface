@@ -1,9 +1,10 @@
+import Dashboard from 'components/Dashboard'
 import Gimme from 'components/Gimme'
 import Landing from 'components/Landing'
-import Owner from 'components/Owner'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import PlayCreate from './PlayCreate'
+import Projects from './Projects'
 
 export default function Router() {
   return (
@@ -18,8 +19,11 @@ export default function Router() {
         <Route path="/gimme">
           <Gimme />
         </Route>
-        <Route path="/:owner">
-          <Owner />
+        <Route path="/projects/:owner">
+          <Projects />
+        </Route>
+        <Route path="/p/:projectId">
+          <Dashboard />
         </Route>
       </Switch>
     </HashRouter>

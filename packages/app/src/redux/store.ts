@@ -1,27 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import editingBudgetReducer, {
-  EditingBudgetState,
-} from './slices/editingBudget'
-import editingTicketsReducer, {
-  EditingTicketsState,
-} from './slices/editingTickets'
-import userBudgetReducer, { UserBudgetState } from './slices/userBudget'
-import userTicketsReducer, { UserTicketsState } from './slices/userTickets'
+import editingProjectReducer, {
+  EditingProjectState,
+} from './slices/editingProject'
+import userProjectsReducer, { UserProjectsState } from './slices/userProjects'
 
 export type RootState = {
-  editingTickets: EditingTicketsState
-  editingBudget: EditingBudgetState
-  userBudget: UserBudgetState
-  userTickets: UserTicketsState
+  editingProject: EditingProjectState
+  userProjects: UserProjectsState
 }
 
 const store = configureStore<RootState>({
   reducer: {
-    editingTickets: editingTicketsReducer,
-    userTickets: userTicketsReducer,
-    editingBudget: editingBudgetReducer,
-    userBudget: userBudgetReducer,
+    editingProject: editingProjectReducer,
+    userProjects: userProjectsReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

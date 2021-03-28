@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
@@ -10,9 +11,11 @@ import { CardSection } from '../shared/CardSection'
 import BudgetDetail from './BudgetDetail'
 
 export default function UpcomingBudget({
-  owner,
+  projectId,
+  isOwner,
 }: {
-  owner: string | undefined
+  projectId: BigNumber
+  isOwner: boolean
 }) {
   const { userAddress } = useContext(UserContext)
 
@@ -23,19 +26,17 @@ export default function UpcomingBudget({
   const queuedBudget = useContractReader<Budget>({
     contract: ContractName.BudgetStore,
     functionName: 'getQueuedBudget',
-    args: owner ? [owner] : null,
-    updateOn: owner
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: projectId
       ? [
           {
             contract: ContractName.BudgetStore,
             eventName: 'Configure',
-            topics: [[], owner],
+            topics: [[], projectId.toHexString()],
           },
         ]
       : undefined,
   })
-
-  const isOwner = owner === userAddress
 
   const spacing = 30
 
@@ -49,12 +50,13 @@ export default function UpcomingBudget({
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}
             onDone={() => setReconfigureModalVisible(false)}
+            budget={undefined} // TODO
           />
         </div>
       ) : null}
       <CardSection header="Upcoming budget">
         {queuedBudget ? (
-          <BudgetDetail budget={queuedBudget} />
+          <BudgetDetail isOwner={isOwner} budget={queuedBudget} />
         ) : (
           <div style={{ padding: 25 }}>No upcoming budgets</div>
         )}

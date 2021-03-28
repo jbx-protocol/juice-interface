@@ -9,7 +9,13 @@ import { budgetsDiff } from 'utils/budgetsDiff'
 import BudgetDetail from './BudgetDetail'
 import { CardSection } from '../shared/CardSection'
 
-export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
+export default function BudgetsHistory({
+  startId,
+  isOwner,
+}: {
+  startId?: BigNumber
+  isOwner: boolean
+}) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
 
@@ -49,7 +55,7 @@ export default function BudgetsHistory({ startId }: { startId?: BigNumber }) {
     <Space direction="vertical" size="large">
       {budgets.length ? (
         budgets.map((budget, index) => (
-          <BudgetDetail key={index} budget={budget} />
+          <BudgetDetail isOwner={isOwner} key={index} budget={budget} />
         ))
       ) : (
         <div style={{ padding: 25 }}>No history</div>

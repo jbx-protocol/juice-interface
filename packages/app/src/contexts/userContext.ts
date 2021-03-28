@@ -1,9 +1,10 @@
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 import { Contracts } from 'models/contracts'
+import { NetworkName } from 'models/network-name'
+import { ProjectIdentifier } from 'models/projectIdentifier'
 import { Transactor } from 'models/transactor'
 import { createContext } from 'react'
-import { NetworkName } from 'models/network-name'
 
 export const UserContext: React.Context<{
   signingProvider?: Web3Provider
@@ -12,6 +13,7 @@ export const UserContext: React.Context<{
   contracts?: Contracts
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
+  projects?: Record<string, ProjectIdentifier>
   weth?: Partial<{
     contract: Contract
     symbol: string

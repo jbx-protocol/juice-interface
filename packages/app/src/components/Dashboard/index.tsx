@@ -1,63 +1,50 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space, Tabs } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
 import { Budget } from 'models/budget'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
+import { ProjectIdentifier } from 'models/projectIdentifier'
+import { CSSProperties, useContext, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { addressExists } from 'utils/addressExists'
 import { budgetsDiff } from 'utils/budgetsDiff'
 
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
-import OwnerBackOffice from './OwnerBackOffice'
 import Project from './Project'
 import UpcomingBudget from './UpcomingBudget'
 
-export default function Owner() {
+export default function Dashboard() {
   const [budgetState, setBudgetState] = useState<
     'found' | 'missing' | 'canCreate'
   >()
 
-  const { userAddress, signingProvider } = useContext(UserContext)
+  const { userAddress } = useContext(UserContext)
 
-  const { owner }: { owner?: string } = useParams()
+  let { projectId }: { projectId?: string | BigNumber } = useParams()
 
-  const isOwner = owner === userAddress
+  projectId = BigNumber.from(projectId)
 
-  const ticketAddress = useContractReader<string>({
-    contract: ContractName.TicketStore,
-    functionName: 'tickets',
-    args: useMemo(() => (owner ? [owner] : null), [owner]),
-    updateOn: useMemo(
-      () =>
-        owner
-          ? [
-              {
-                contract: ContractName.TicketStore,
-                eventName: 'Issue',
-                topics: [owner],
-              },
-            ]
-          : undefined,
-      [owner],
-    ),
+  const owner = useContractReader<string>({
+    contract: ContractName.Projects,
+    functionName: 'ownerOf',
+    args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const ticketContract = useErc20Contract(ticketAddress, signingProvider)
+  const isOwner = userAddress === owner
 
-  const ticketSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
+  const project = useContractReader<ProjectIdentifier>({
+    contract: ContractName.Projects,
+    functionName: 'getIdentifier',
+    args: projectId ? [projectId.toHexString()] : null,
   })
 
   const budget = useContractReader<Budget>({
     contract: ContractName.BudgetStore,
     functionName: 'getCurrentBudget',
-    args: owner ? [owner] : null,
+    args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: budgetsDiff,
     callback: (_budget?: Budget) => {
       if (budgetState) return
@@ -66,41 +53,6 @@ export default function Owner() {
       } else setBudgetState(isOwner ? 'canCreate' : 'missing')
     },
   })
-
-  // const currentSustainEvents = (useEventListener({
-  //   contracts,
-  //   contractName: ContractName.Juicer,
-  //   eventName: 'SustainBudget',
-  //   provider: readProvider,
-  //   startBlock: 1,
-  //   getInitial: true,
-  //   topics: currentBudget?.id ? [BigNumber.from(currentBudget?.id)] : [],
-  // }) as SustainEvent[])
-  //   .filter(e => e.project === owner)
-  //   .filter(e => e.budgetId.toNumber() === currentBudget?.id.toNumber())
-
-  // const sustainments = (
-  //   <div>
-  //     <h3>Thanks to...</h3>
-  //     {currentSustainEvents.length ? (
-  //       currentSustainEvents.map((e, i) => (
-  //         <div
-  //           style={{
-  //             marginBottom: 20,
-  //             lineHeight: 1.2,
-  //           }}
-  //           key={i}
-  //         >
-  //           <div>Amount: {e.amount?.toNumber()}</div>
-  //           <div>Sustainer: {e.sustainer}</div>
-  //           <div>Beneficiary: {e.beneficiary}</div>
-  //         </div>
-  //       ))
-  //     ) : (
-  //       <div>No sustainments yet</div>
-  //     )}
-  //   </div>
-  // )
 
   switch (budgetState) {
     case 'missing':
@@ -112,8 +64,8 @@ export default function Owner() {
             ...layouts.centered,
           }}
         >
-          <h2>No budget found for</h2>
-          <p>{owner}</p>
+          <h2>No project found with ID</h2>
+          <p>{projectId.toString()}</p>
         </div>
       )
     case 'canCreate':
@@ -141,8 +93,9 @@ export default function Owner() {
         <div>
           <Space direction="vertical" size="large">
             <Project
-              ticketSymbol={ticketSymbol}
-              ticketAddress={ticketAddress}
+              isOwner={isOwner}
+              projectId={projectId}
+              project={project}
               budget={budget}
               style={layouts.maxWidth}
             />
@@ -166,27 +119,23 @@ export default function Owner() {
               <Tabs.TabPane tab="Future" key="future" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
                   <div style={{ maxWidth: 600 }}>
-                    <UpcomingBudget owner={owner} />
+                    <UpcomingBudget
+                      isOwner={owner === userAddress}
+                      projectId={projectId}
+                    />
                   </div>
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
                 <div style={{ ...layouts.maxWidth }}>
                   <div style={{ maxWidth: 600 }}>
-                    <BudgetsHistory startId={budget?.previous} />
+                    <BudgetsHistory
+                      isOwner={isOwner}
+                      startId={budget?.previous}
+                    />
                   </div>
                 </div>
               </Tabs.TabPane>
-              {addressExists(ticketAddress) ? null : (
-                <Tabs.TabPane tab="Tickets" key="tickets" style={tabPaneStyle}>
-                  <div style={{ ...layouts.maxWidth }}>
-                    <OwnerBackOffice
-                      ticketAddress={ticketAddress}
-                      isOwner={isOwner}
-                    />
-                  </div>
-                </Tabs.TabPane>
-              )}
             </Tabs>
           </Space>
         </div>

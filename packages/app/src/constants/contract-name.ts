@@ -1,10 +1,10 @@
 export enum ContractName {
   Admin = 'Admin',
-  BudgetStore = 'BudgetStore',
   BudgetBallot = 'BudgetBallot',
+  BudgetStore = 'BudgetStore',
   Juicer = 'Juicer',
-  Maintainer = 'Maintainer',
+  Prices = 'Prices',
+  Projects = 'Projects',
   TicketStore = 'TicketStore',
-  TimelockStaker = 'TimelockStaker',
   Token = 'Token',
 }

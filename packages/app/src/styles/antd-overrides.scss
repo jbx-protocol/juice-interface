@@ -78,6 +78,18 @@ input.ant-input[type='number'] {
   text-shadow: none;
 }
 
+.ant-btn[disabled] {
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: transparent;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.16);
+    background: transparent;
+  }
+}
+
 .ant-input-affix-wrapper-disabled,
 .ant-input[disabled] {
   background: transparent;

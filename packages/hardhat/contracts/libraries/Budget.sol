@@ -222,8 +222,9 @@ library Budget {
         );
 
         // Drawn from the external source the difference between what's tappable and the amount.
-        if (_amount > _tappable)
-            drawn = DSMath.wdiv(_amount.sub(_tappable), _ethPrice);
+        drawn = _amount > _tappable
+            ? DSMath.wdiv(_amount.sub(_tappable), _ethPrice)
+            : 0;
 
         // Add the amount to the Budget's tapped amount.
         _self.tappedTarget = _self.tappedTarget.add(_amount);

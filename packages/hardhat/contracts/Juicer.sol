@@ -90,14 +90,14 @@ contract Juicer is IJuicer, IERC721Receiver {
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
-    // --- external views --- //
+    // --- public views --- //
 
     /** 
       @notice Gets the total overflow that this Juicer is responsible for.
       @return overflow The amount of overflow.
     */
     function getTotalOverflow()
-        external
+        public
         view
         override
         returns (uint256 overflow)
@@ -125,14 +125,9 @@ contract Juicer is IJuicer, IERC721Receiver {
         // Return 0 if the user has nothing to claim.
         if (_claimable == 0) return 0;
 
-        // The amount of weth available is what's `depositable` plust whats in the yielder.
-        uint256 _available = depositable;
-        if (overflowYielder != IOverflowYielder(0))
-            _available.add(overflowYielder.getBalance(weth));
-
         // The overflow is the proportion of the total available to what's claimable for the project.
         overflow = Math.mulDiv(
-            _available,
+            getTotalOverflow(),
             _claimable,
             ticketStore.totalClaimable()
         );
@@ -401,7 +396,7 @@ contract Juicer is IJuicer, IERC721Receiver {
             );
 
         // Withdrawn the deposited amount according to the claimable proportion.
-        returnAmount = _withdraw(_claimable, _outOf);
+        returnAmount = _withdrawProportion(_claimable, _outOf);
 
         // Transfer funds to the specified address.
         weth.safeTransfer(_beneficiary, returnAmount);
@@ -419,30 +414,29 @@ contract Juicer is IJuicer, IERC721Receiver {
     /**
         @notice Tap into funds that have been contrubuted to your Budgets.
         @param _budgetId The ID of the budget to tap.
-        @param _projectId The ID of the project to which the budget being tapped belongs.
         @param _amount The amount being tapped.
-        @param _currency The currency of the amount being tapped. Must be the currency the project is in.
         @param _beneficiary The address to transfer the funds to.
         @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
     */
     function tap(
         uint256 _budgetId,
-        uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
+        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
+
         // Only a project owner can tap its funds.
         require(
-            msg.sender == projects.ownerOf(_projectId),
+            msg.sender == projects.ownerOf(_budget.projectId),
             "Juicer::tap: UNAUTHORIZED"
         );
 
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
         (
-            Budget.Data memory _budget,
+            ,
             uint256 _tappedAmount,
+            uint256 _drawn,
             uint256 _overflow,
             Budget.Data memory _adminBudget,
             uint256 _adminConvertedCurrencyAmount,
@@ -450,12 +444,24 @@ contract Juicer is IJuicer, IERC721Receiver {
         ) =
             budgetStore.tap(
                 _budgetId,
-                _projectId,
                 _amount,
-                _currency,
                 _minReturnedETH,
+                this.getOverflow(_budget.projectId),
                 JuiceProject(admin).projectId()
             );
+
+        // Draw from claimable.
+        if (_drawn > 0) {
+            ticketStore.subtractClaimable(
+                _budget.projectId,
+                Math.mulDiv(
+                    ticketStore.claimable(_budget.projectId),
+                    _drawn,
+                    this.getOverflow(_budget.projectId)
+                )
+            );
+            _withdraw(_drawn);
+        }
 
         // Print tickets for the tapper.
         ticketStore.print(
@@ -492,7 +498,7 @@ contract Juicer is IJuicer, IERC721Receiver {
             _beneficiary,
             msg.sender,
             _amount,
-            _currency,
+            _budget.currency,
             _tappedAmount
         );
     }
@@ -538,7 +544,7 @@ contract Juicer is IJuicer, IERC721Receiver {
 
         // Withdrawn the deposited amount according to the claimable proportion.
         uint256 _amount =
-            _withdraw(
+            _withdrawProportion(
                 ticketStore.clearClaimable(_projectId),
                 ticketStore.totalClaimable()
             );
@@ -565,19 +571,16 @@ contract Juicer is IJuicer, IERC721Receiver {
         // The msg sender should have already approved this transfer.
         _token.safeTransferFrom(msg.sender, address(this), _amount);
 
-        uint256 _overflowBefore = depositable;
-
         // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
         if (overflowYielder != IOverflowYielder(0)) {
-            _overflowBefore = _overflowBefore.add(
-                overflowYielder.getBalance(weth)
-            );
             overflowYielder.deposit(_amount, weth);
         } else {
             depositable = depositable.add(_amount);
         }
 
         uint256 _totalClaimable = ticketStore.totalClaimable();
+
+        uint256 _overflowBefore = getTotalOverflow();
 
         // The base amount to add as claimable to the ticket store.
         uint256 _claimableToAdd =
@@ -655,28 +658,27 @@ contract Juicer is IJuicer, IERC721Receiver {
       @param _outOf The total amount that the `_proportion` is relative to.
       @return amount The amount being withdrawn.
     */
-    function _withdraw(uint256 _proportion, uint256 _outOf)
+    function _withdrawProportion(uint256 _proportion, uint256 _outOf)
         private
         returns (uint256 amount)
     {
-        // The amount of weth available.
-        uint256 _available = depositable;
-
-        if (overflowYielder != IOverflowYielder(0))
-            _available.add(overflowYielder.getBalance(weth));
-
         // The amount that satisfies the proportion.
-        amount = Math.mulDiv(_available, _proportion, _outOf);
+        amount = Math.mulDiv(getTotalOverflow(), _proportion, _outOf);
 
+        _withdraw(amount);
+    }
+
+    // TODO docs
+    function _withdraw(uint256 _amount) private {
         // Subtract the depositable amount if needed.
-        if (amount <= depositable) {
-            depositable = depositable.sub(amount);
+        if (_amount <= depositable) {
+            depositable = depositable.sub(_amount);
             // Withdraw from the overflow yielder if there's nothing depositable.
         } else if (depositable == 0) {
-            overflowYielder.withdraw(amount, weth);
+            overflowYielder.withdraw(_amount, weth);
             // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
         } else {
-            overflowYielder.withdraw(amount.sub(depositable), weth);
+            overflowYielder.withdraw(_amount.sub(depositable), weth);
             depositable = 0;
         }
     }

@@ -51,16 +51,16 @@ interface IBudgetStore {
 
     function tap(
         uint256 _budgetId,
-        uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
         uint256 _minReturnedETH,
+        uint256 _currentOverflow,
         uint256 _feeBeneficiaryProjectId
     )
         external
         returns (
             Budget.Data memory budget,
             uint256 convertedEthAmount,
+            uint256 drawn,
             uint256 overflow,
             Budget.Data memory feeBeneficiaryBudget,
             uint256 feeBeneficiaryConvertedCurrencyAmount,

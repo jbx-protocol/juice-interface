@@ -187,12 +187,13 @@ contract BudgetStore is Administered, IBudgetStore {
     /** 
       @notice Tracks a project tapping its funds.
       @param _budgetId The ID of the budget being tapped.
-      @param _projectId The ID of the project to which the budget being tapped belongs.
       @param _amount The amount of being tapped.
-      @param _currency The currency of the amount being tapped.
       @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
+      @param _currentOverflow The current amount of overflow the project has.
+      @param _feeBeneficiaryProjectId The ID of the project that benefits from the budget's fee.
       @return budget The budget that is being tapped.
       @return convertedEthAmount The amount of eth tapped.
+      @return drawn The drawn.
       @return overflow The overflow that has now become available as a result of tapping.
       @return feeBeneficiaryBudget The budget that is benefiting from the fee being paid.
       @return feeBeneficiaryConvertedCurrencyAmount The amount of the target currency that was paid to the fee beneficiary.
@@ -200,10 +201,9 @@ contract BudgetStore is Administered, IBudgetStore {
     */
     function tap(
         uint256 _budgetId,
-        uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
         uint256 _minReturnedETH,
+        uint256 _currentOverflow,
         uint256 _feeBeneficiaryProjectId
     )
         external
@@ -212,6 +212,7 @@ contract BudgetStore is Administered, IBudgetStore {
         returns (
             Budget.Data memory budget,
             uint256 convertedEthAmount,
+            uint256 drawn,
             uint256 overflow,
             Budget.Data memory feeBeneficiaryBudget,
             uint256 feeBeneficiaryConvertedCurrencyAmount,
@@ -223,22 +224,14 @@ contract BudgetStore is Administered, IBudgetStore {
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
 
-        // Projects must match.
-        require(
-            _budget.projectId == _projectId,
-            "BudgetStore::tap: UNAUTHORIZED"
-        );
-
-        // Don't tap budgets with a different currency.
-        require(
-            _currency == _budget.currency,
-            "BudgetStore::tap: BAD_CURRENCY"
-        );
-
         // Tap the amount.
-        (convertedEthAmount, overflow) = _budget._tap(
+        (convertedEthAmount, drawn, overflow) = _budget._tap(
             _amount,
-            prices.getETHPrice(_budget.currency)
+            prices.getETHPrice(_budget.currency),
+            // The budget can tap from its overflow within 30 days of expiring.
+            _budget._hasStarted() && !_budget._didEndBefore(2592000)
+                ? _currentOverflow
+                : 0
         );
 
         // Make sure this amount is acceptable.
@@ -362,7 +355,7 @@ contract BudgetStore is Administered, IBudgetStore {
         newBudget = budgets[budgetCount];
         newBudget.id = budgetCount;
         newBudget.start = _start;
-        newBudget.total = 0;
+        newBudget.total = 0; // Consider adding the total here, and removing from claimable right off the bat.
         newBudget.tappedTotal = 0;
         newBudget.tappedTarget = 0;
         latestBudgetId[_projectId] = budgetCount;

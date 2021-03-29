@@ -89,7 +89,8 @@ library Budget {
     */
     function _state(Data memory _self) internal view returns (State) {
         if (_hasExpired(_self)) return State.Redistributing;
-        if (_hasStarted(_self) && _self.total > 0) return State.Active;
+        if (_hasStarted(_self) && (_self.total > 0 || _self.tappedTotal > 0))
+            return State.Active;
         return State.Standby;
     }
 
@@ -190,21 +191,38 @@ library Budget {
     /** 
         @notice Taps an amount from the budget.
         @param _self The Budget to tap an amount from.
-        @param _amount An amount to tap. In `curency`.
+        @param _amount An amount to tap. In `currency`.
         @param _ethPrice The current price of ETH.
+        @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the budget total.
         @return convertedEthAmount The amount of ETH that was tapped.
+        @return drawn The amount of ETH that was drawn from the external source.
         @return overflow The amount of new overflow that results.
     */
     function _tap(
         Data storage _self,
         uint256 _amount,
-        uint256 _ethPrice
-    ) internal returns (uint256 convertedEthAmount, uint256 overflow) {
-        // The amount being tapped must be less than the tappable amount.
+        uint256 _ethPrice,
+        uint256 _currentlyDrawable
+    )
+        internal
+        returns (
+            uint256 convertedEthAmount,
+            uint256 drawn,
+            uint256 overflow
+        )
+    {
+        uint256 _tappable = _tappableAmount(_self, _ethPrice);
+
+        // The amount being tapped must be less than the tappable amount plus the drawable amount.
         require(
-            _amount <= _tappableAmount(_self, _ethPrice),
+            _amount <=
+                _tappable.add(DSMath.wmul(_currentlyDrawable, _ethPrice)),
             "Budget: INSUFFICIENT_FUNDS"
         );
+
+        // Drawn from the external source the difference between what's tappable and the amount.
+        if (_amount > _tappable)
+            drawn = DSMath.wdiv(_amount.sub(_tappable), _ethPrice);
 
         // Add the amount to the Budget's tapped amount.
         _self.tappedTarget = _self.tappedTarget.add(_amount);
@@ -216,7 +234,7 @@ library Budget {
         _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
 
         // If this budget is now fully tapped, record the overflow.
-        overflow = _tappableAmount(_self, _ethPrice) == 0
+        overflow = _self.tappedTarget == _self.target
             ? _self.total.sub(_self.tappedTotal)
             : 0;
     }
@@ -241,17 +259,15 @@ library Budget {
         convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
 
         // If this budget is fully tapped, record the overflow.
-        overflow = _tappableAmount(_self, _ethPrice) == 0 ? _amount : 0;
+        overflow = _self.tappedTarget == _self.target ? _amount : 0;
     }
-
-    // --- private views --- //
 
     /** 
         @notice Check to see if the given Budget has started.
         @param _self The Budget to check.
         @return hasStarted The boolean result.
     */
-    function _hasStarted(Data memory _self) private view returns (bool) {
+    function _hasStarted(Data memory _self) internal view returns (bool) {
         return block.timestamp >= _self.start;
     }
 
@@ -260,12 +276,29 @@ library Budget {
         @param _self The Budget to check.
         @return hasExpired The boolean result.
     */
-    function _hasExpired(Data memory _self) private view returns (bool) {
+    function _hasExpired(Data memory _self) internal view returns (bool) {
         // If duration is 0, the budget never expires.
         return
             _self.duration > 0 &&
             block.timestamp > _self.start.add(_self.duration);
     }
+
+    /** 
+        @notice Check to see if the given Budget ended before a certain amount of seconds.
+        @param _self The Budget to check.
+        @param _secondsAgo The amount of seconds ago that the budget must have ended before in order for a true result.
+        @return didEndBefore The boolean result.
+    */
+    function _didEndBefore(Data memory _self, uint256 _secondsAgo)
+        internal
+        view
+        returns (bool)
+    {
+        return
+            block.timestamp < _self.start.add(_self.duration).add(_secondsAgo);
+    }
+
+    // --- private views --- //
 
     /** 
         @notice Returns the amount available for the given Budget's project to tap in to.
@@ -278,13 +311,16 @@ library Budget {
         pure
         returns (uint256)
     {
-        if (_self.total == 0) return 0;
+        if (_self.total == 0 || _self.tappedTarget == _self.target) return 0;
 
-        uint256 _available =
-            Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice));
         return
-            Math.mulDiv(_available, 1000, uint256(1000).add(_self.fee)).sub(
-                _self.tappedTarget
-            );
+            Math
+                .mulDiv(
+                // The available amount within the target.
+                Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice)),
+                1000,
+                uint256(1000).add(_self.fee)
+            )
+                .sub(_self.tappedTarget);
     }
 }

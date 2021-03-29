@@ -45,6 +45,8 @@ interface ITicketStore is IERC1155 {
 
     function addClaimable(uint256 _projectId, uint256 _amount) external;
 
+    function subtractClaimable(uint256 _projectId, uint256 _amount) external;
+
     function clearClaimable(uint256 _projectId)
         external
         returns (uint256 amount);

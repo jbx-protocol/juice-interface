@@ -189,6 +189,20 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
     }
 
     /**
+        @notice Subtracts an amount from the total that can be claimed by redeeming the given issuer's Tickets.
+        @param _project The project of the Ticket.
+        @param _amount The amount to decrement.
+    */
+    function subtractClaimable(uint256 _project, uint256 _amount)
+        external
+        override
+        onlyAdmin
+    {
+        claimable[_project] = claimable[_project].sub(_amount);
+        totalClaimable = totalClaimable.sub(_amount);
+    }
+
+    /**
         @notice Clears the amount of claimable tokens the specified issuer has.
         @param _project The project of the Ticket.
         @return amount The amount cleared.

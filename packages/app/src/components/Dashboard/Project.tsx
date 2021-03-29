@@ -1,3 +1,4 @@
+import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Input, Row, Space } from 'antd'
 import ApproveSpendModal from 'components/modals/ApproveSpendModal'
@@ -131,18 +132,20 @@ export default function Project({
         </div>
         <div>
           {isOwner ? (
-            <Button onClick={() => setEditProjectModalVisible(true)}>
-              Edit project
-            </Button>
+            <Button
+              onClick={() => setEditProjectModalVisible(true)}
+              icon={<SettingOutlined />}
+              type="text"
+            ></Button>
           ) : null}
         </div>
       </div>
 
-      <Row gutter={30}>
-        <Col xs={24} lg={10} style={{ marginBottom: 30 }}>
+      <Row>
+        <Col xs={24} lg={11} style={{ marginBottom: 30 }}>
           <Rewards projectId={projectId} />
         </Col>
-        <Col xs={24} lg={14}>
+        <Col xs={24} lg={13}>
           <div
             style={{
               alignItems: 'flex-start',

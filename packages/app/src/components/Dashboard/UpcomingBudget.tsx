@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
-import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
 import { CardSection } from '../shared/CardSection'
@@ -17,8 +16,6 @@ export default function UpcomingBudget({
   projectId: BigNumber
   isOwner: boolean
 }) {
-  const { userAddress } = useContext(UserContext)
-
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
     boolean
   >(false)
@@ -41,11 +38,11 @@ export default function UpcomingBudget({
   const spacing = 30
 
   return (
-    <Space size={spacing} direction="vertical">
+    <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
       {isOwner ? (
         <div>
           <Button onClick={() => setReconfigureModalVisible(true)}>
-            Budget configuration
+            Reconfigure budget
           </Button>
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}
@@ -54,11 +51,15 @@ export default function UpcomingBudget({
           />
         </div>
       ) : null}
-      <CardSection header="Upcoming budget">
+      <CardSection>
         {queuedBudget ? (
-          <BudgetDetail isOwner={isOwner} budget={queuedBudget} />
+          <BudgetDetail
+            showDetail={true}
+            isOwner={isOwner}
+            budget={queuedBudget}
+          />
         ) : (
-          <div style={{ padding: 25 }}>No upcoming budgets</div>
+          <div style={{ padding: 25 }}>No upcoming budget</div>
         )}
       </CardSection>
     </Space>

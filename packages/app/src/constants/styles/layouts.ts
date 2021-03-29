@@ -9,7 +9,7 @@ export const layouts: Record<string, CSSProperties> = {
     justifyContent: 'center',
   },
   maxWidth: {
-    maxWidth: 1200,
+    maxWidth: 1080,
     margin: '0 auto',
     padding: padding.app,
   },

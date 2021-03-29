@@ -1,6 +1,7 @@
-import { Space } from 'antd'
+import { Grid } from 'antd'
 import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
+import { shadowCard } from 'constants/styles/shadow-card'
 import { UserContext } from 'contexts/userContext'
 import { useProjects } from 'hooks/Projects'
 import { ProjectIdentifier } from 'models/projectIdentifier'
@@ -16,29 +17,28 @@ export default function Projects() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      {projects ? (
-        <Space direction="vertical">
-          {Object.entries(projects).map(
+      {projects
+        ? Object.entries(projects).map(
             ([key, project]: [string, ProjectIdentifier]) => (
               <div
                 style={{
-                  background: colors.backgroundTertiary,
-                  borderRadius: 8,
-                  stroke: 'none',
+                  ...shadowCard,
+                  display: 'inline-block',
                   padding: 20,
+                  marginRight: 20,
+                  marginBottom: 20,
+                  width: 'calc(33% - 20px)',
+                  stroke: 'none',
                   cursor: 'pointer',
                 }}
                 key={key}
                 onClick={() => (window.location.hash = '/p/' + key)}
               >
-                {project.name} - {project.handle}
+                <h2>{project.name}</h2>@{project.handle}
               </div>
             ),
-          )}
-        </Space>
-      ) : (
-        'No projects'
-      )}
+          )
+        : 'No projects'}
     </div>
   )
 }

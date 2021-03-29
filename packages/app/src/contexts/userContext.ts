@@ -14,6 +14,7 @@ export const UserContext: React.Context<{
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
   projects?: Record<string, ProjectIdentifier>
+  adminFeePercent?: number
   weth?: Partial<{
     contract: Contract
     symbol: string

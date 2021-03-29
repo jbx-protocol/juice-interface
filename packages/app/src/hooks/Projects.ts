@@ -4,6 +4,7 @@ import { ContractName } from 'constants/contract-name'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { useCallback, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
@@ -29,10 +30,9 @@ export function useProjects(
     valueDidChange: bigNumbersDiff,
     callback: useCallback(
       balance => {
-        console.log('gotproj bal', balance)
         if (balance !== undefined) reset()
       },
-      [setIndex, setProjectIds],
+      [reset],
     ),
   })
 
@@ -52,7 +52,7 @@ export function useProjects(
           if (index?.add(1).lt(balance ?? 0)) setIndex(index?.add(1))
         }
       },
-      [setProjectIds, projectIds],
+      [setProjectIds, projectIds, index],
     ),
   })
 
@@ -62,16 +62,8 @@ export function useProjects(
     contract: ContractName.Projects,
     functionName: 'getIdentifier',
     args: id ? [id.toHexString()] : null,
-    provider: readProvider,
     valueDidChange: useCallback(
-      (oldVal?: ProjectIdentifier, newVal?: ProjectIdentifier) => {
-        return (
-          oldVal?.handle !== newVal?.handle ||
-          oldVal?.link !== newVal?.link ||
-          oldVal?.logoUri !== newVal?.logoUri ||
-          oldVal?.name !== newVal?.name
-        )
-      },
+      (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
       [],
     ),
     callback: useCallback(

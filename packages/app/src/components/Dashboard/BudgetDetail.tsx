@@ -1,9 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, DescriptionsProps, Input, Space } from 'antd'
+import {
+  Button,
+  Collapse,
+  Descriptions,
+  DescriptionsProps,
+  Input,
+  Space,
+} from 'antd'
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
+import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -25,9 +34,11 @@ import BudgetHeader from './BudgetHeader'
 
 export default function BudgetDetail({
   budget,
+  showDetail,
   isOwner,
 }: {
   budget: Budget
+  showDetail?: boolean
   isOwner: boolean
 }) {
   const {
@@ -36,6 +47,7 @@ export default function BudgetDetail({
     contracts,
     userAddress,
     weth,
+    adminFeePercent,
   } = useContext(UserContext)
 
   const ethPrice = useExchangePrice()
@@ -49,12 +61,6 @@ export default function BudgetDetail({
   const currency = budgetCurrencyName(budget.currency)
 
   const isRecurring = budget.discountRate.gt(0)
-
-  const adminFeePercent = useContractReader<number>({
-    contract: ContractName.BudgetStore,
-    functionName: 'fee',
-    formatter: (val: BigNumber) => val?.toNumber(),
-  })
 
   const tappableAmount = useMemo(() => {
     const total = budget.total.mul(parseWad(ethPrice?.toString() ?? '0'))
@@ -99,8 +105,6 @@ export default function BudgetDetail({
   )
 
   const isEnded = secondsLeft.lte(0)
-
-  const isUpcoming = useMemo(() => budget.start.gt(now), [budget.start, now])
 
   function detailedTimeString(secs: BigNumber) {
     if (!secs || secs.lte(0)) return 0
@@ -154,137 +158,10 @@ export default function BudgetDetail({
 
   const descriptionsStyle: DescriptionsProps = {
     labelStyle: { fontWeight: 600 },
-    size: 'middle',
+    size: 'small',
   }
 
   const gutter = 25
-
-  const tappedDescriptionItem = (
-    <Descriptions.Item
-      label={
-        <TooltipLabel
-          label="Tapped"
-          tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
-        />
-      }
-    >
-      {formattedTappedTotal} {currency}
-    </Descriptions.Item>
-  )
-
-  const tappableDescriptionItem = (
-    <Descriptions.Item
-      label={
-        <TooltipLabel
-          label="Tappable"
-          tip="The amount that the project owner can still tap from this budget."
-        />
-      }
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        {formatWad(tappableAmount)} {currency}
-        {isOwner && tappableAmount?.gt(0) ? (
-          <div>
-            <Button
-              loading={loadingWithdraw}
-              onClick={() => setWithdrawModalVisible(true)}
-            >
-              Withdraw
-            </Button>
-            <Modal
-              title="Withdraw funds"
-              visible={withdrawModalVisible}
-              onOk={() => {
-                tap()
-                setWithdrawModalVisible(false)
-              }}
-              onCancel={() => {
-                setTapAmount(undefined)
-                setWithdrawModalVisible(false)
-              }}
-              okText="Withdraw"
-              width={540}
-            >
-              <Space direction="vertical" style={{ width: '100%' }}>
-                <Input
-                  name="withdrawable"
-                  placeholder="0"
-                  suffix={
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {currency}
-                      <InputAccessoryButton
-                        content="MAX"
-                        onClick={() => setTapAmount(fromWad(tappableAmount))}
-                      />
-                    </div>
-                  }
-                  value={tapAmount}
-                  max={fromWad(tappableAmount)}
-                  onChange={e => setTapAmount(e.target.value)}
-                />
-                <div style={{ textAlign: 'right' }}>
-                  {formatWad(converter.usdToWei(tapAmount))} {weth?.symbol}
-                </div>
-              </Space>
-            </Modal>
-          </div>
-        ) : null}
-      </div>
-    </Descriptions.Item>
-  )
-
-  const upcomingDescriptions = (
-    <Descriptions {...descriptionsStyle} column={2} bordered>
-      <Descriptions.Item label="Starts">{formattedStartTime}</Descriptions.Item>
-
-      {isRecurring ? (
-        <Descriptions.Item label="Duration">
-          {detailedTimeString(budget?.duration)}
-        </Descriptions.Item>
-      ) : null}
-    </Descriptions>
-  )
-
-  const activeDescriptions = (
-    <Descriptions {...descriptionsStyle} column={1} bordered>
-      <Descriptions.Item label="Started">
-        {formattedStartTime}
-      </Descriptions.Item>
-
-      {isRecurring ? (
-        <Descriptions.Item label="Time left">
-          {detailedTimeString(secondsLeft)}
-        </Descriptions.Item>
-      ) : null}
-
-      {tappedDescriptionItem}
-
-      {tappableDescriptionItem}
-    </Descriptions>
-  )
-
-  const endedDescriptions = (
-    <Descriptions {...descriptionsStyle} column={1} bordered>
-      <Descriptions.Item span={1} label="Period">
-        {formattedStartTime} - {formattedEndTime}
-      </Descriptions.Item>
-
-      {tappedDescriptionItem}
-
-      {tappableDescriptionItem}
-    </Descriptions>
-  )
 
   if (!budget) return null
 
@@ -292,36 +169,159 @@ export default function BudgetDetail({
     <div>
       <BudgetHeader budget={budget} gutter={gutter} />
 
-      {isUpcoming ? upcomingDescriptions : null}
-      {isEnded ? endedDescriptions : null}
-      {!isUpcoming && !isEnded ? activeDescriptions : null}
+      <Collapse
+        style={{
+          background: 'transparent',
+          border: 'none',
+          paddingLeft: 8,
+          paddingRight: 8,
+          margin: 0,
+        }}
+        defaultActiveKey={showDetail ? '0' : undefined}
+        accordion
+      >
+        <CollapsePanel
+          key={'0'}
+          style={{ border: 'none', padding: 0 }}
+          header={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>Details</div>
 
-      <div style={{ margin: gutter }}>
-        <Descriptions {...descriptionsStyle} size="small" column={2}>
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label="Discount Rate"
-                tip="The rate at which payments to future
-                budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting time frame."
-              />
-            }
-          >
-            {fromPerMille(budget.discountRate)} %
-          </Descriptions.Item>
+              <div style={{ color: colors.textPrimary }}>
+                {isRecurring ? (
+                  isEnded ? (
+                    <div>Ended</div>
+                  ) : (
+                    <div>{detailedTimeString(secondsLeft)} left</div>
+                  )
+                ) : null}
+              </div>
+            </div>
+          }
+        >
+          <Descriptions {...descriptionsStyle} column={2}>
+            <Descriptions.Item label="Start">
+              {formattedStartTime}
+            </Descriptions.Item>
 
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label="Reserved"
-                tip="This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires."
-              />
-            }
-          >
-            {fromPerMille(budget.reserved)}%
-          </Descriptions.Item>
-        </Descriptions>
-      </div>
+            <Descriptions.Item label="End">
+              {formattedEndTime}
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Tapped"
+                  tip="The amount that the project owner has tapped from this budget. The owner can tap up to the specified target."
+                />
+              }
+            >
+              {formattedTappedTotal} {currency}
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Tappable"
+                  tip="The amount that the project owner can still tap from this budget."
+                />
+              }
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                {formatWad(tappableAmount)} {currency}
+                {isOwner && tappableAmount?.gt(0) ? (
+                  <div>
+                    <Button
+                      loading={loadingWithdraw}
+                      onClick={() => setWithdrawModalVisible(true)}
+                    >
+                      Withdraw
+                    </Button>
+                    <Modal
+                      title="Withdraw funds"
+                      visible={withdrawModalVisible}
+                      onOk={() => {
+                        tap()
+                        setWithdrawModalVisible(false)
+                      }}
+                      onCancel={() => {
+                        setTapAmount(undefined)
+                        setWithdrawModalVisible(false)
+                      }}
+                      okText="Withdraw"
+                      width={540}
+                    >
+                      <Space direction="vertical" style={{ width: '100%' }}>
+                        <Input
+                          name="withdrawable"
+                          placeholder="0"
+                          suffix={
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                              }}
+                            >
+                              {currency}
+                              <InputAccessoryButton
+                                content="MAX"
+                                onClick={() =>
+                                  setTapAmount(fromWad(tappableAmount))
+                                }
+                              />
+                            </div>
+                          }
+                          value={tapAmount}
+                          max={fromWad(tappableAmount)}
+                          onChange={e => setTapAmount(e.target.value)}
+                        />
+                        <div style={{ textAlign: 'right' }}>
+                          {formatWad(converter.usdToWei(tapAmount))}{' '}
+                          {weth?.symbol}
+                        </div>
+                      </Space>
+                    </Modal>
+                  </div>
+                ) : null}
+              </div>
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Discount Rate"
+                  tip="The rate at which payments to future
+            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting time frame."
+                />
+              }
+            >
+              {fromPerMille(budget.discountRate)} %
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Reserved"
+                  tip="This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires."
+                />
+              }
+            >
+              {fromPerMille(budget.reserved)}%
+            </Descriptions.Item>
+          </Descriptions>
+        </CollapsePanel>
+      </Collapse>
     </div>
   )
 }

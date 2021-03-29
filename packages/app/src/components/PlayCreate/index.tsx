@@ -203,6 +203,7 @@ export default function PlayCreate() {
       <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
         <Project
           isOwner={true}
+          showCurrentDetail={true}
           budget={editingBudget}
           project={editingProject}
           projectId={BigNumber.from(0)}

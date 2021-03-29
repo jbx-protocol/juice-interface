@@ -2,10 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
+import { ContractName } from 'constants/contract-name'
 import { NETWORKS } from 'constants/networks'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
+import useContractReader from 'hooks/ContractReader'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProjects } from 'hooks/Projects'
 import { useProviderAddress } from 'hooks/ProviderAddress'
@@ -55,6 +57,12 @@ function App() {
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,
   })
 
+  const adminFeePercent = useContractReader<number>({
+    contract: ContractName.BudgetStore,
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val?.toNumber(),
+  })
+
   const projects = useProjects(userAddress, signingProvider)
 
   console.log('User:', userAddress)
@@ -69,6 +77,7 @@ function App() {
         contracts,
         onNeedProvider: loadWeb3Modal,
         projects,
+        adminFeePercent,
         weth,
       }}
     >

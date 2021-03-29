@@ -21918,7 +21918,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-tabs-left > div > .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn,
 .ant-tabs-right > div > .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn {
   font-weight: normal;
-  text-shadow: 0 0 0.25px #219fb5;
+  text-shadow: 0 0 0.25px '#ffffff';
 }
 .ant-tabs-left > .ant-tabs-nav .ant-tabs-nav-wrap,
 .ant-tabs-right > .ant-tabs-nav .ant-tabs-nav-wrap,
@@ -22223,13 +22223,13 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 }
 .ant-tabs > .ant-tabs-nav .ant-tabs-nav-add:hover,
 .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-add:hover {
-  color: #5adce8;
+  color: '#ffffff';
 }
 .ant-tabs > .ant-tabs-nav .ant-tabs-nav-add:active,
 .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-add:active,
 .ant-tabs > .ant-tabs-nav .ant-tabs-nav-add:focus,
 .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-add:focus {
-  color: #219fb5;
+  color: '#ffffff';
 }
 .ant-tabs-extra-content {
   flex: none;
@@ -22240,7 +22240,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 }
 .ant-tabs-ink-bar {
   position: absolute;
-  background: #32c8db;
+  background: #FFB32C;
   pointer-events: none;
 }
 .ant-tabs-tab {
@@ -22263,7 +22263,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-tabs-tab-remove:focus,
 .ant-tabs-tab-btn:active,
 .ant-tabs-tab-remove:active {
-  color: #219fb5;
+  color: '#ffffff';
 }
 .ant-tabs-tab-btn {
   outline: none;
@@ -22285,10 +22285,10 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   color: #FFB32C;
 }
 .ant-tabs-tab:hover {
-  color: #5adce8;
+  color: '#ffffff';
 }
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #32c8db;
+  color: '#ffffff';
   font-weight: 500;
 }
 .ant-tabs-tab.ant-tabs-tab-disabled {

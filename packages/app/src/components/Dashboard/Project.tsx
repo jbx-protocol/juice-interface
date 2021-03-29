@@ -21,6 +21,7 @@ export default function Project({
   project,
   projectId,
   budget,
+  showCurrentDetail,
   style,
   isOwner,
 }: {
@@ -28,6 +29,7 @@ export default function Project({
   projectId: BigNumber
   isOwner: boolean
   budget: Budget | null | undefined
+  showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
   const [payAmount, setPayAmount] = useState<string>()
@@ -87,74 +89,87 @@ export default function Project({
 
   return (
     <div style={style}>
-      <div style={{ marginBottom: 30 }}>
-        {project?.name ? (
-          <h1
-            style={{
-              fontSize: '2.4rem',
-              margin: 0,
-            }}
-          >
-            {project.name}
-          </h1>
-        ) : null}
-        <h3>
-          <Space size="middle">
-            {project?.handle ? (
-              <span style={{ color: colors.grape }}>@{project.handle}</span>
-            ) : null}
-            {project?.link ? (
-              <a
-                style={{ fontWeight: 400 }}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {project.link}
-              </a>
-            ) : null}
-          </Space>
-        </h3>
-      </div>
-
-      <Row gutter={60}>
-        <Col xs={24} lg={12}>
-          <CardSection header="Now funding">
-            {budget ? <BudgetDetail isOwner={isOwner} budget={budget} /> : null}
-          </CardSection>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Space size="large" direction="vertical">
-            <Space
+      <div
+        style={{
+          display: 'flex',
+          marginBottom: 30,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <div>
+          {project?.name ? (
+            <h1
               style={{
-                flex: 1,
-                width: '100%',
-                alignItems: 'flex-start',
-                display: 'flex',
+                fontSize: '2.4rem',
+                margin: 0,
               }}
             >
-              <div style={{ textAlign: 'right' }}>
-                <Input
-                  name="sustain"
-                  placeholder="0"
-                  suffix="USD"
-                  type="number"
-                  disabled={budget?.configured.eq(0)}
-                  onChange={e => setPayAmount(e.target.value)}
-                />
-
-                <div>
-                  Paid as {payAmountInWeth()} {weth?.symbol}
-                </div>
-              </div>
-
-              <Button type="primary" onClick={pay} disabled={!weiPayAmt}>
-                Pay project
-              </Button>
+              {project.name}
+            </h1>
+          ) : null}
+          <h3>
+            <Space size="middle">
+              {project?.handle ? (
+                <span style={{ color: colors.grape }}>@{project.handle}</span>
+              ) : null}
+              {project?.link ? (
+                <a
+                  style={{ fontWeight: 400 }}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {project.link}
+                </a>
+              ) : null}
             </Space>
+          </h3>
+        </div>
+      </div>
 
-            <Rewards projectId={projectId} />
-          </Space>
+      <Row gutter={30}>
+        <Col xs={24} lg={10} style={{ marginBottom: 30 }}>
+          <Rewards projectId={projectId} />
+        </Col>
+        <Col xs={24} lg={14}>
+          <div
+            style={{
+              alignItems: 'flex-start',
+              display: 'inline-flex',
+              marginBottom: 30,
+              width: '100%',
+            }}
+          >
+            <div style={{ textAlign: 'right', flex: 1, marginRight: 10 }}>
+              <Input
+                style={{ width: '100%' }}
+                name="sustain"
+                placeholder="0"
+                suffix="USD"
+                type="number"
+                disabled={budget?.configured.eq(0)}
+                onChange={e => setPayAmount(e.target.value)}
+              />
+
+              <div>
+                Paid as {payAmountInWeth()} {weth?.symbol}
+              </div>
+            </div>
+
+            <Button type="primary" onClick={pay}>
+              Pay project
+            </Button>
+          </div>
+          <CardSection header="Current budget">
+            {budget ? (
+              <BudgetDetail
+                showDetail={showCurrentDetail}
+                isOwner={isOwner}
+                budget={budget}
+              />
+            ) : null}
+          </CardSection>
         </Col>
       </Row>
 

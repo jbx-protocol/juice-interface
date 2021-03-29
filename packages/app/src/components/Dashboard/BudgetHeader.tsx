@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress } from 'antd'
+import { colors } from 'constants/styles/colors'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import React, { useMemo } from 'react'
@@ -11,8 +12,6 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
-
-import { colors } from '../../constants/styles/colors'
 
 export default function BudgetHeader({
   budget,

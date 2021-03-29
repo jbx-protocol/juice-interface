@@ -25,8 +25,6 @@ export default function Account() {
     }, 1)
   }
 
-  console.log({ network })
-
   const switchNetworkTag =
     !network ||
     network === NetworkName.localhost ||

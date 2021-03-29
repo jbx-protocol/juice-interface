@@ -201,7 +201,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
                 Math.mulDiv(_minReturnedETH, mods[_i].percent, 1000);
             juicer.tap(
                 _budgetId,
-                0,
+                projectId,
                 _modCut,
                 mods[_i].beneficiary,
                 _modMinReturnedETH
@@ -212,7 +212,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         // Tap the budget for the beneficiary.
         juicer.tap(
             _budgetId,
-            0,
+            projectId,
             _amount.sub(_modsCut),
             _beneficiary,
             _minReturnedETH.sub(_modsMinReturnedETH)

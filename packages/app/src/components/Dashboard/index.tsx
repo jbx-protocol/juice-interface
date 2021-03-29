@@ -10,12 +10,12 @@ import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useCallback, useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { budgetsDiff } from 'utils/budgetsDiff'
+import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
 import Project from './Project'
 import UpcomingBudget from './UpcomingBudget'
-import { deepEqProjectIdentifiers } from '../../utils/deepEqProjectIdentifiers'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
@@ -56,6 +56,15 @@ export default function Dashboard() {
     functionName: 'getCurrentBudget',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: budgetsDiff,
+    updateOn: projectId
+      ? [
+          {
+            contract: ContractName.BudgetStore,
+            eventName: 'Reconfigure',
+            topics: [[], projectId.toHexString()],
+          },
+        ]
+      : undefined,
   })
 
   if (projectExists === undefined) return <Loading />
@@ -111,8 +120,9 @@ export default function Dashboard() {
             <div style={{ ...layouts.maxWidth }}>
               <div style={{ maxWidth: 600 }}>
                 <UpcomingBudget
-                  isOwner={owner === userAddress}
+                  isOwner={isOwner}
                   projectId={projectId}
+                  currentBudget={budget}
                 />
               </div>
             </div>

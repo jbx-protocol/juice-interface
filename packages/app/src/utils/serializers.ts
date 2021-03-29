@@ -24,6 +24,7 @@ export const serializeBudget = (budget: Budget): SerializedBudget => ({
   bondingCurveRate: budget.bondingCurveRate.toString(),
   discountRate: fromPerMille(budget.discountRate),
   configured: budget.configured.toString(),
+  ballot: budget.ballot,
 })
 
 export const deserializeBudget = (

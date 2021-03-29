@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Signer } from 'crypto'
 import erc20Abi from 'erc-20-abi'
 import { useMemo } from 'react'

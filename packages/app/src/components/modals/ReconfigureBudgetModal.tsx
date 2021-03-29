@@ -1,50 +1,65 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form, Input, Modal } from 'antd'
+import { Checkbox, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { FundingDetailsFormFields } from 'components/PlayCreate/FundingDetails'
-import { ProjectDetailsFormFields } from 'components/PlayCreate/ProjectDetails'
-import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import NumberSlider from 'components/shared/inputs/NumberSlider'
 import { UserContext } from 'contexts/userContext'
 import { Budget } from 'models/budget'
+import { BudgetCurrency } from 'models/budget-currency'
 import { useContext, useEffect, useState } from 'react'
-import { parsePerMille, parseWad } from 'utils/formatCurrency'
+import {
+  fromPerMille,
+  fromWad,
+  parsePerMille,
+  parseWad,
+} from 'utils/formatCurrency'
 
-export type ReconfigureFormFields = ProjectInfoFormFields &
-  FundingDetailsFormFields &
-  ProjectDetailsFormFields
+export type ReconfigureBudgetFormFields = {
+  target: string
+  currency: BudgetCurrency
+  duration: string
+  discountRate: string
+  bondingCurveRate: string
+  reserved: string
+}
 
 export default function ReconfigureBudgetModal({
+  projectId,
   budget,
   visible,
   onDone,
 }: {
-  budget: Budget | undefined
+  projectId: BigNumber
+  budget: Budget | null | undefined
   visible?: boolean
   onDone?: VoidFunction
 }) {
   const { transactor, contracts } = useContext(UserContext)
+  const [isRecurring, setIsRecurring] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
-  const [form] = useForm<ReconfigureFormFields>()
+  const [form] = useForm<ReconfigureBudgetFormFields>()
 
   useEffect(() => {
     if (!budget) return
 
-    // form.setFieldsValue({
-    //   name: budget.name,
-    //   duration: budget.duration.toString(),
-    //   target: fromWad(budget.target),
-    //   currency: budget.currency.toString() as BudgetCurrency,
-    //   link: budget.link,
-    //   discountRate: fromPerMille(budget.discountRate),
-    //   reserved: fromPerMille(budget.reserved),
-    // })
-  }, [])
+    form.setFieldsValue({
+      duration: budget.duration.toString(),
+      target: fromWad(budget.target),
+      currency: budget.currency.toString() as BudgetCurrency,
+      discountRate: fromPerMille(budget.discountRate),
+      reserved: fromPerMille(budget.reserved),
+      bondingCurveRate: budget.bondingCurveRate.toString(),
+    })
+
+    setIsRecurring(!budget.discountRate.eq(0))
+  }, [budget])
 
   if (!transactor || !contracts) return null
 
   async function saveBudget() {
-    if (!transactor || !contracts?.Juicer || !contracts?.Token) return
+    if (!transactor || !contracts?.Juicer || !contracts?.Token || !budget)
+      return
 
     const valid = await form.validateFields()
 
@@ -55,16 +70,17 @@ export default function ReconfigureBudgetModal({
     const fields = form.getFieldsValue(true)
 
     transactor(
-      contracts.BudgetStore,
-      'configure',
+      contracts.Juicer,
+      'reconfigure',
       [
+        projectId.toHexString(),
         parseWad(fields.target)?.toHexString(),
         BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(fields.duration).toHexString(),
-        fields.name,
-        fields.link,
         parsePerMille(fields.discountRate).toHexString(),
+        fields.bondingCurveRate,
         parsePerMille(fields.reserved).toHexString(),
+        budget.ballot,
       ],
       {
         onDone: () => {
@@ -83,22 +99,9 @@ export default function ReconfigureBudgetModal({
       onOk={saveBudget}
       onCancel={onDone}
       confirmLoading={loading}
-      width={800}
+      width={600}
     >
-      <Form form={form}>
-        <Form.Item
-          extra="How your project is identified on-chain"
-          name="name"
-          label="Name"
-          rules={[{ required: true }]}
-        >
-          <Input
-            className="align-end"
-            placeholder="Peach's Juice Stand"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
+      <Form form={form} layout="vertical">
         <Form.Item
           extra="The amount of money you want/need in order to absolutely crush your mission statement."
           name="target"
@@ -109,53 +112,67 @@ export default function ReconfigureBudgetModal({
             value={form.getFieldValue('target')}
             onValueChange={val => form.setFieldsValue({ target: val })}
             currency={form.getFieldValue('currency')}
-            onCurrencyChange={currency =>
-              form.setFieldsValue({ currency: currency === '1' ? '0' : '1' })
-            }
+            onCurrencyChange={currency => form.setFieldsValue({ currency })}
           />
         </Form.Item>
+        <Form.Item>
+          <div style={{ display: 'flex' }}>
+            <Checkbox
+              defaultChecked={isRecurring}
+              onChange={e => setIsRecurring(e.target.checked)}
+            ></Checkbox>
+            <div style={{ marginLeft: 10 }}>Use a recurring funding target</div>
+          </div>
+        </Form.Item>
+        {isRecurring ? (
+          <Form.Item
+            extra="The time period of this recurring budget"
+            name="duration"
+          >
+            <FormattedNumberInput
+              placeholder="30"
+              value={form.getFieldValue('duration')}
+              suffix="days"
+              onChange={val => form.setFieldsValue({ duration: val })}
+            />
+          </Form.Item>
+        ) : null}
         <Form.Item
-          extra="The duration of this budgeting scope."
-          name="duration"
-          label="Time frame"
-          rules={[{ required: true }]}
+          extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
+          name="discountRate"
+          label="Discount rate"
         >
-          <Input
-            className="align-end"
-            placeholder="30"
-            type="number"
-            suffix="days"
-            autoComplete="off"
+          <NumberSlider
+            min={95}
+            value={form.getFieldValue('discountRate')}
+            suffix="%"
+            onChange={(val?: number) =>
+              form.setFieldsValue({ discountRate: val?.toString() })
+            }
           />
         </Form.Item>
         <Form.Item
           extra="The percentage of your project's overflow that you'd like to reserve for yourself. In practice, you'll just receive some of your own tickets whenever someone pays you."
           name="reserved"
           label="Reserved tickets"
-          initialValue={5}
         >
-          <Input
-            className="align-end"
+          <NumberSlider
+            value={form.getFieldValue('reserved')}
             suffix="%"
-            type="number"
-            autoComplete="off"
+            onChange={(val?: number) =>
+              form.setFieldsValue({ reserved: val?.toString() })
+            }
           />
         </Form.Item>
-        <Form.Item
-          extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
-          name="discountRate"
-          label="Discount rate"
-          rules={[{ required: true }]}
-          initialValue={97}
-        >
-          <Input
-            className="align-end"
-            suffix="%"
-            type="number"
-            min={95}
-            max={100}
-            placeholder="97"
-            autoComplete="off"
+        <Form.Item name="bondingCurveRate" label="Bonding curve rate">
+          <NumberSlider
+            min={0}
+            max={1000}
+            step={1}
+            value={form.getFieldValue('bondingCurveRate')}
+            onChange={(val?: number) =>
+              form.setFieldsValue({ bondingCurveRate: val?.toString() })
+            }
           />
         </Form.Item>
       </Form>

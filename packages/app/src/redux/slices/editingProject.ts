@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { emptyAddress } from 'constants/empty-address'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
@@ -46,6 +47,7 @@ export const editingProjectSlice = createSlice({
       bondingCurveRate: BigNumber.from(defaultBondingCurveRate),
       discountRate: parsePerMille(defaultDiscountRate),
       configured: BigNumber.from(0),
+      ballot: emptyAddress,
     }),
     loading: false,
   } as EditingProjectState,

@@ -12,9 +12,11 @@ import BudgetDetail from './BudgetDetail'
 export default function UpcomingBudget({
   projectId,
   isOwner,
+  currentBudget,
 }: {
   projectId: BigNumber
   isOwner: boolean
+  currentBudget: Budget | null | undefined
 }) {
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
     boolean
@@ -28,7 +30,7 @@ export default function UpcomingBudget({
       ? [
           {
             contract: ContractName.BudgetStore,
-            eventName: 'Configure',
+            eventName: 'Reconfigure',
             topics: [[], projectId.toHexString()],
           },
         ]
@@ -47,7 +49,8 @@ export default function UpcomingBudget({
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}
             onDone={() => setReconfigureModalVisible(false)}
-            budget={undefined} // TODO
+            budget={queuedBudget ?? currentBudget}
+            projectId={projectId}
           />
         </div>
       ) : null}

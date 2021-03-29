@@ -59,14 +59,6 @@ export default function FundingDetails({
             }
           />
         </Form.Item>
-        <Form.Item name="fee" label="Juice fee">
-          <NumberSlider
-            value={form.getFieldValue('fee')}
-            onChange={(val?: number) =>
-              form.setFieldsValue({ fee: val?.toString() })
-            }
-          />
-        </Form.Item>
         <Form.Item>
           <Space>
             <Button

@@ -18,4 +18,5 @@ export interface Budget {
   discountRate: BigNumber
   bondingCurveRate: BigNumber
   configured: BigNumber
+  ballot: string
 }

@@ -85,7 +85,6 @@ export default function PlayCreate() {
       discountRate: fromPerMille(editingBudget?.discountRate),
       reserved: fromPerMille(editingBudget?.reserved),
       bondingCurveRate: editingBudget?.bondingCurveRate.toString(),
-      fee: fromPerMille(editingBudget?.fee),
     })
 
   const onProjectInfoFormSaved = () => {

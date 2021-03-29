@@ -4,10 +4,17 @@ import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
+import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
-import { CSSProperties, useCallback, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { useParams } from 'react-router-dom'
 import { budgetsDiff } from 'utils/budgetsDiff'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
@@ -22,9 +29,27 @@ export default function Dashboard() {
 
   const { userAddress } = useContext(UserContext)
 
-  let { projectId }: { projectId?: string | BigNumber } = useParams()
+  let { handle }: { handle?: string } = useParams()
 
-  projectId = BigNumber.from(projectId)
+  const handleBytes = useMemo(() => {
+    if (!handle) return
+
+    let bytes = utils.formatBytes32String(handle)
+
+    while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
+      bytes = bytes.substring(0, bytes.length - 2)
+    }
+
+    return bytes
+  }, [handle])
+
+  const projectId = useContractReader<BigNumber>({
+    contract: ContractName.Projects,
+    functionName: 'handleResolver',
+    args: handleBytes ? [handleBytes] : null,
+  })
+
+  console.log('projectId', projectId)
 
   const owner = useContractReader<string>({
     contract: ContractName.Projects,
@@ -67,7 +92,7 @@ export default function Dashboard() {
       : undefined,
   })
 
-  if (projectExists === undefined) return <Loading />
+  if (projectExists === undefined || !projectId) return <Loading />
 
   if (!projectExists) {
     return (
@@ -78,8 +103,7 @@ export default function Dashboard() {
           ...layouts.centered,
         }}
       >
-        <h2>No project found with ID</h2>
-        <p>{projectId.toString()}</p>
+        <h2>{handle} not found</h2>
       </div>
     )
   }

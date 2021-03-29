@@ -10,7 +10,7 @@ export default function Navbar() {
   const { projects } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
 
-  const hasUserProjects = projects && Object.keys(projects)?.length > 0
+  const hasUserProjects = projects && Object.keys(projects).length > 0
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -58,6 +58,9 @@ export default function Navbar() {
               alt="Juice logo"
             />
           </a>
+        </Menu.Item>
+        <Menu.Item key="explore">
+          {menuItem('Explore', '/#/projects')}
         </Menu.Item>
         {hasUserProjects && userAddress ? (
           <Menu.Item key="budget">

@@ -22,7 +22,10 @@ export default function Router() {
         <Route path="/projects/:owner">
           <Projects />
         </Route>
-        <Route path="/p/:projectId">
+        <Route path="/projects">
+          <Projects />
+        </Route>
+        <Route path="/p/:handle">
           <Dashboard />
         </Route>
       </Switch>

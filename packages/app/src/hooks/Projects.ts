@@ -2,16 +2,18 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import { ProjectIdentifier } from 'models/projectIdentifier'
-import { useCallback, useState } from 'react'
+import { useEffect } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
 export function useProjects(
-  owner: string | undefined,
+  owner: string | undefined | null,
   readProvider: JsonRpcProvider | undefined,
 ) {
+  const [noOwner, setNoOwner] = useState<boolean>()
   const [index, setIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
   const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>(
@@ -24,23 +26,33 @@ export function useProjects(
     setProjects({})
   }
 
-  const balance = useContractReader<BigNumber>({
+  useEffect(() => {
+    reset()
+    setNoOwner(owner === null)
+  }, [owner, setNoOwner])
+
+  const supply = useContractReader<BigNumber>({
     contract: ContractName.Projects,
-    functionName: 'balanceOf',
-    args: owner ? [owner] : null,
+    functionName: noOwner ? 'totalSupply' : 'balanceOf',
+    args: useMemo(() => (noOwner ? undefined : owner ? [owner] : null), [
+      noOwner,
+      owner,
+    ]),
     provider: readProvider,
     valueDidChange: bigNumbersDiff,
-    callback: useCallback(balance => {
-      if (balance !== undefined) reset()
+    callback: useCallback(_supply => {
+      if (_supply !== undefined) reset()
     }, []),
   })
 
-  console.log('balance', owner, balance)
-
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
-    functionName: 'tokenOfOwnerByIndex',
-    args: index && owner ? [owner, index?.toHexString()] : undefined,
+    functionName: noOwner ? 'tokenByIndex' : 'tokenOfOwnerByIndex',
+    args: useMemo(() => {
+      if (noOwner) return index ? [index?.toHexString()] : null
+
+      return index && owner ? [owner, index?.toHexString()] : null
+    }, [owner, noOwner, index]),
     provider: readProvider,
     valueDidChange: bigNumbersDiff,
     callback: useCallback(
@@ -50,7 +62,7 @@ export function useProjects(
           !projectIds.map(t => t.toString()).includes(projectId.toString())
         ) {
           setProjectIds([...projectIds, projectId])
-          if (index?.add(1).lt(balance ?? 0)) setIndex(index?.add(1))
+          if (index?.add(1).lt(supply ?? 0)) setIndex(index?.add(1))
         }
       },
       [setProjectIds, projectIds, index],
@@ -72,10 +84,7 @@ export function useProjects(
       (project?: ProjectIdentifier) => {
         if (!project || !id) return
 
-        setProjects({
-          ...projects,
-          [id?.toString()]: project,
-        })
+        setProjects({ ...projects, [project.handle]: project })
       },
       [projects, setProjects, id],
     ),

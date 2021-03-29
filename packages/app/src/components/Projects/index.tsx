@@ -1,5 +1,3 @@
-import { Grid } from 'antd'
-import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { shadowCard } from 'constants/styles/shadow-card'
 import { UserContext } from 'contexts/userContext'
@@ -13,10 +11,11 @@ export default function Projects() {
 
   const { owner }: { owner?: string } = useParams()
 
-  const projects = useProjects(owner, signingProvider)
+  const projects = useProjects(owner ?? null, signingProvider)
 
   return (
     <div style={{ ...layouts.maxWidth }}>
+      <h1>Projects {owner ? ' for ' + owner : ' on Juice'}</h1>
       {projects
         ? Object.entries(projects).map(
             ([key, project]: [string, ProjectIdentifier]) => (
@@ -32,7 +31,7 @@ export default function Projects() {
                   cursor: 'pointer',
                 }}
                 key={key}
-                onClick={() => (window.location.hash = '/p/' + key)}
+                onClick={() => (window.location.hash = '/p/' + project.handle)}
               >
                 <h2>{project.name}</h2>@{project.handle}
               </div>

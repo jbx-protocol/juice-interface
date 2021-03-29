@@ -215,7 +215,8 @@ library Budget {
 
         // The amount being tapped must be less than the tappable amount plus the drawable amount.
         require(
-            _amount <=
+            _amount <= _self.target &&
+                _amount <=
                 _tappable.add(DSMath.wmul(_currentlyDrawable, _ethPrice)),
             "Budget: INSUFFICIENT_FUNDS"
         );

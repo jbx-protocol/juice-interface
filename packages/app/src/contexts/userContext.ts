@@ -1,8 +1,8 @@
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
+import { Transactor } from 'hooks/Transactor'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
-import { Transactor } from 'models/transactor'
 import { createContext } from 'react'
 
 export const UserContext: React.Context<{

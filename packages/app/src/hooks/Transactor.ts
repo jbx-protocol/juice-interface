@@ -4,13 +4,32 @@ import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
 import {
   JsonRpcProvider,
+  JsonRpcSigner,
   TransactionRequest,
   Web3Provider,
 } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
-import Notify, { InitOptions } from 'bnc-notify'
-import { Transactor, TransactorOptions } from 'models/transactor'
+import { notification } from 'antd'
+import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
 import { useCallback } from 'react'
+
+export type TransactorCallback = (
+  e?: TransactionEvent,
+  signer?: JsonRpcSigner,
+) => void
+
+export type TransactorOptions = {
+  onDone?: VoidFunction
+  onConfirmed?: TransactorCallback
+  onCancelled?: TransactorCallback
+}
+
+export type Transactor = (
+  contract: Contract,
+  functionName: string,
+  args: any[],
+  options?: TransactorOptions,
+) => Promise<boolean>
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
@@ -34,7 +53,7 @@ export function useTransactor({
 
       const network = await provider.getNetwork()
 
-      const initOptions: InitOptions = {
+      const notifyOpts: InitOptions = {
         dappId: '2f161484-1dae-4684-b0db-6ff7c4470e2e', // https://account.blocknative.com
         system: 'ethereum',
         networkId: network.chainId,
@@ -51,7 +70,7 @@ export function useTransactor({
           }
         },
       }
-      const notify = Notify(initOptions)
+      const notify = Notify(notifyOpts)
 
       let etherscanNetwork = ''
       if (network.name && network.chainId > 1) {
@@ -105,17 +124,24 @@ export function useTransactor({
           }))
         } else {
           console.log('LOCAL TX SENT', result.hash)
-          if (result.confirmations && options?.onConfirmed) {
-            options.onConfirmed(result, signer)
-          } else if (options?.onCancelled) {
-            options.onCancelled(result, signer)
+          if (result.confirmations) {
+            options?.onConfirmed && options.onConfirmed(result, signer)
+          } else {
+            options?.onCancelled && options.onCancelled(result, signer)
           }
+          options?.onDone && options.onDone()
         }
-        options?.onDone && options.onDone()
 
         return true
       } catch (e) {
         console.log('Transaction Error:', e.message)
+
+        notification.error({
+          key: new Date().valueOf().toString(),
+          message: 'Transaction failed',
+          description: e.message,
+        })
+
         options?.onDone && options.onDone()
         return false
       }

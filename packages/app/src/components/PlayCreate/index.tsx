@@ -167,10 +167,8 @@ export default function PlayCreate() {
         editingBudget.reserved.toHexString(),
       ],
       {
-        onDone: () => {
-          setCreateProjectModalVisible(false)
-          dispatch(editingProjectActions.setLoading(false))
-        },
+        onDone: () => dispatch(editingProjectActions.setLoading(false)),
+        onConfirmed: () => setCreateProjectModalVisible(false),
       },
     )
   }

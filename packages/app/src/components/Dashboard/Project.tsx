@@ -2,7 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Input, Row, Space } from 'antd'
 import ApproveSpendModal from 'components/modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
+import EditProjectModal from 'components/modals/EditProjectModal'
 import { CardSection } from 'components/shared/CardSection'
+import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -15,8 +17,6 @@ import { fromWad } from 'utils/formatCurrency'
 
 import BudgetDetail from './BudgetDetail'
 import Rewards from './Rewards'
-import { colors } from 'constants/styles/colors'
-import EditProjectModal from 'components/modals/EditProjectModal'
 
 export default function Project({
   project,
@@ -187,7 +187,7 @@ export default function Project({
         visible={approveModalVisible}
         initialWeiAmt={weiPayAmt}
         allowance={allowance}
-        onOk={() => setApproveModalVisible(false)}
+        onSuccess={() => setApproveModalVisible(false)}
         onCancel={() => setApproveModalVisible(false)}
       />
       <ConfirmPayOwnerModal
@@ -195,7 +195,7 @@ export default function Project({
         project={project}
         projectId={projectId}
         visible={payModalVisible}
-        onOk={() => setPayModalVisible(false)}
+        onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         currency={budget?.currency.toString() as BudgetCurrency}
         usdAmount={parseFloat(payAmount ?? '0')}
@@ -204,7 +204,8 @@ export default function Project({
         visible={editProjectModalVisible}
         projectId={projectId}
         project={project}
-        onDone={() => setEditProjectModalVisible(false)}
+        onSuccess={() => setEditProjectModalVisible(false)}
+        onCancel={() => setEditProjectModalVisible(false)}
       />
     </div>
   )

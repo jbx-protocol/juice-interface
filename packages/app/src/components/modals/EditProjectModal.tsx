@@ -1,11 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { ProjectIdentifier } from 'models/projectIdentifier'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { BigNumber } from '@ethersproject/bignumber'
+import React, { useContext, useEffect, useState } from 'react'
 
 export type EditProjectFormFields = {
   name: string
@@ -18,12 +16,14 @@ export default function EditProjectModal({
   project,
   projectId,
   visible,
-  onDone,
+  onSuccess,
+  onCancel,
 }: {
   project: ProjectIdentifier | undefined
   projectId: BigNumber
   visible?: boolean
-  onDone?: VoidFunction
+  onSuccess?: VoidFunction
+  onCancel?: VoidFunction
 }) {
   const { transactor, contracts } = useContext(UserContext)
   const [loading, setLoading] = useState<boolean>()
@@ -58,9 +58,9 @@ export default function EditProjectModal({
         fields.link,
       ],
       {
-        onDone: () => {
-          setLoading(false)
-          if (onDone) onDone()
+        onDone: () => setLoading(false),
+        onConfirmed: () => {
+          if (onSuccess) onSuccess()
         },
       },
     )
@@ -72,7 +72,7 @@ export default function EditProjectModal({
       visible={visible}
       okText="Save changes"
       onOk={setIdentifiers}
-      onCancel={onDone}
+      onCancel={onCancel}
       confirmLoading={loading}
       width={600}
     >

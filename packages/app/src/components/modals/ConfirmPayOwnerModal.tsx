@@ -4,10 +4,10 @@ import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
+import { ProjectIdentifier } from 'models/projectIdentifier'
 import { useContext } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
-import { ProjectIdentifier } from 'models/projectIdentifier'
 
 export default function ConfirmPayOwnerModal({
   projectId,
@@ -16,7 +16,7 @@ export default function ConfirmPayOwnerModal({
   visible,
   currency,
   usdAmount,
-  onOk,
+  onSuccess,
   onCancel,
 }: {
   projectId: BigNumber
@@ -25,7 +25,7 @@ export default function ConfirmPayOwnerModal({
   visible?: boolean
   currency: BudgetCurrency | undefined
   usdAmount: number | undefined
-  onOk?: VoidFunction
+  onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const { contracts, transactor, userAddress, weth } = useContext(UserContext)
@@ -39,14 +39,16 @@ export default function ConfirmPayOwnerModal({
 
     // TODO add note input
 
-    transactor(contracts.Juicer, 'pay', [
-      projectId.toHexString(),
-      weiAmount?.toHexString(),
-      userAddress,
-      '',
-    ])
-
-    if (onOk) onOk()
+    transactor(
+      contracts.Juicer,
+      'pay',
+      [projectId.toHexString(), weiAmount?.toHexString(), userAddress, ''],
+      {
+        onConfirmed: () => {
+          if (onSuccess) onSuccess()
+        },
+      },
+    )
   }
 
   const weightedRate = (

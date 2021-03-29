@@ -8,13 +8,13 @@ export default function ApproveSpendModal({
   visible,
   initialWeiAmt,
   allowance,
-  onOk,
+  onSuccess,
   onCancel,
 }: {
   visible?: boolean
   initialWeiAmt?: BigNumber
   allowance?: BigNumber
-  onOk?: VoidFunction
+  onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const { weth, transactor, contracts } = useContext(UserContext)
@@ -28,12 +28,16 @@ export default function ApproveSpendModal({
   function approve() {
     if (!transactor || !contracts || !weth?.contract) return
 
-    transactor(weth.contract, 'approve', [
-      contracts.Juicer?.address,
-      approveAmount?.toHexString(),
-    ])
-
-    if (onOk) onOk()
+    transactor(
+      weth.contract,
+      'approve',
+      [contracts.Juicer?.address, approveAmount?.toHexString()],
+      {
+        onConfirmed: () => {
+          if (onSuccess) onSuccess()
+        },
+      },
+    )
   }
 
   return (

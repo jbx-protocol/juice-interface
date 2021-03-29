@@ -9,7 +9,6 @@ import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
 import useContractReader from 'hooks/ContractReader'
 import { useGasPrice } from 'hooks/GasPrice'
-import { useProjects } from 'hooks/Projects'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useSigningProvider } from 'hooks/SigningProvider'
 import { useTransactor } from 'hooks/Transactor'
@@ -63,7 +62,13 @@ function App() {
     formatter: (val: BigNumber) => val?.toNumber(),
   })
 
-  const projects = useProjects(userAddress, signingProvider)
+  const userHasProjects = useContractReader<boolean>({
+    contract: ContractName.Projects,
+    functionName: 'balanceOf',
+    provider: signingProvider,
+    args: userAddress ? [userAddress] : null,
+    formatter: (bal?: BigNumber) => bal?.gt(0),
+  })
 
   console.log('User:', userAddress)
 
@@ -76,7 +81,7 @@ function App() {
         transactor,
         contracts,
         onNeedProvider: loadWeb3Modal,
-        projects,
+        userHasProjects,
         adminFeePercent,
         weth,
       }}

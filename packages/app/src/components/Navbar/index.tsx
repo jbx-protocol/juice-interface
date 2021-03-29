@@ -7,10 +7,8 @@ import React, { useContext } from 'react'
 import Account from './Account'
 
 export default function Navbar() {
-  const { projects } = useContext(UserContext)
+  const { userHasProjects } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
-
-  const hasUserProjects = projects && Object.keys(projects).length > 0
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -62,9 +60,9 @@ export default function Navbar() {
         <Menu.Item key="explore">
           {menuItem('Explore', '/#/projects')}
         </Menu.Item>
-        {hasUserProjects && userAddress ? (
+        {userHasProjects ? (
           <Menu.Item key="budget">
-            {menuItem('Your projects', '/#/projects/' + userAddress)}
+            {menuItem('Your projects', '/#/owner/' + userAddress)}
           </Menu.Item>
         ) : null}
         {

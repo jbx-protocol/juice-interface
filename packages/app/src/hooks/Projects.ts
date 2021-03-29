@@ -1,24 +1,30 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
 import { ProjectIdentifier } from 'models/projectIdentifier'
-import { useEffect } from 'react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
-export function useProjects(
-  owner: string | undefined | null,
-  readProvider: JsonRpcProvider | undefined,
-) {
+export function useProjects(owner: string | undefined | null) {
   const [noOwner, setNoOwner] = useState<boolean>()
   const [index, setIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
   const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>(
     {},
   )
+
+  function upsertProject(project: ProjectIdentifier) {
+    setProjects({
+      ...projects,
+      [project.handle]: project,
+    })
+  }
+
+  function upsertProjectId(id: BigNumber) {
+    setProjectIds([...projectIds, id])
+  }
 
   function reset() {
     setIndex(BigNumber.from(0))
@@ -38,7 +44,6 @@ export function useProjects(
       noOwner,
       owner,
     ]),
-    provider: readProvider,
     valueDidChange: bigNumbersDiff,
     callback: useCallback(_supply => {
       if (_supply !== undefined) reset()
@@ -53,7 +58,6 @@ export function useProjects(
 
       return index && owner ? [owner, index?.toHexString()] : null
     }, [owner, noOwner, index]),
-    provider: readProvider,
     valueDidChange: bigNumbersDiff,
     callback: useCallback(
       projectId => {
@@ -61,7 +65,7 @@ export function useProjects(
           projectId &&
           !projectIds.map(t => t.toString()).includes(projectId.toString())
         ) {
-          setProjectIds([...projectIds, projectId])
+          upsertProjectId(projectId)
           if (index?.add(1).lt(supply ?? 0)) setIndex(index?.add(1))
         }
       },
@@ -75,7 +79,6 @@ export function useProjects(
     contract: ContractName.Projects,
     functionName: 'getIdentifier',
     args: id ? [id.toHexString()] : null,
-    provider: readProvider,
     valueDidChange: useCallback(
       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
       [],
@@ -84,7 +87,7 @@ export function useProjects(
       (project?: ProjectIdentifier) => {
         if (!project || !id) return
 
-        setProjects({ ...projects, [project.handle]: project })
+        upsertProject(project)
       },
       [projects, setProjects, id],
     ),

@@ -49,8 +49,6 @@ export default function Dashboard() {
     args: handleBytes ? [handleBytes] : null,
   })
 
-  console.log('projectId', projectId)
-
   const owner = useContractReader<string>({
     contract: ContractName.Projects,
     functionName: 'ownerOf',

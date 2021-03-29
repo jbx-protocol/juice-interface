@@ -102,16 +102,15 @@ export default function Project({
         }}
       >
         <div>
-          {project?.name ? (
-            <h1
-              style={{
-                fontSize: '2.4rem',
-                margin: 0,
-              }}
-            >
-              {project.name}
-            </h1>
-          ) : null}
+          <h1
+            style={{
+              fontSize: '2.4rem',
+              margin: 0,
+              color: project?.name ? colors.juiceOrange : '#ffffff44',
+            }}
+          >
+            {project?.name ? project.name : 'Untitled project'}
+          </h1>
           <h3>
             <Space size="middle">
               {project?.handle ? (

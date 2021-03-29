@@ -114,7 +114,7 @@ contract Juicer is IJuicer, IERC721Receiver {
       @return overflow The amount of overflow.
     */
     function getOverflow(uint256 _projectId)
-        external
+        public
         view
         override
         returns (uint256 overflow)
@@ -414,27 +414,29 @@ contract Juicer is IJuicer, IERC721Receiver {
     /**
         @notice Tap into funds that have been contrubuted to your Budgets.
         @param _budgetId The ID of the budget to tap.
+        @param _projectId The ID of the project to which the budget being tapped belongs.
         @param _amount The amount being tapped.
         @param _beneficiary The address to transfer the funds to.
         @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
     */
     function tap(
         uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
-        Budget.Data memory _budget = budgetStore.getBudget(_budgetId);
-
         // Only a project owner can tap its funds.
         require(
-            msg.sender == projects.ownerOf(_budget.projectId),
+            msg.sender == projects.ownerOf(_projectId),
             "Juicer::tap: UNAUTHORIZED"
         );
 
+        uint256 _projectOverflow = getOverflow(_projectId);
+
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
         (
-            ,
+            Budget.Data memory _budget,
             uint256 _tappedAmount,
             uint256 _drawn,
             uint256 _overflow,
@@ -446,18 +448,22 @@ contract Juicer is IJuicer, IERC721Receiver {
                 _budgetId,
                 _amount,
                 _minReturnedETH,
-                this.getOverflow(_budget.projectId),
+                // Draw from this project's overflow if needed.
+                _projectOverflow,
                 JuiceProject(admin).projectId()
             );
 
-        // Draw from claimable.
+        // The projects must match.
+        require(_budget.projectId == _projectId, "Juicer::tap: UNAUTHORIZED");
+
+        // If drawn from the overflow, subtract the amount claimable and withdraw the funds.
         if (_drawn > 0) {
             ticketStore.subtractClaimable(
                 _budget.projectId,
                 Math.mulDiv(
                     ticketStore.claimable(_budget.projectId),
                     _drawn,
-                    this.getOverflow(_budget.projectId)
+                    _projectOverflow
                 )
             );
             _withdraw(_drawn);
@@ -653,7 +659,7 @@ contract Juicer is IJuicer, IERC721Receiver {
     // --- private transactions --- //
 
     /** 
-      @notice Withdraws an amount from whats been deposited.
+      @notice Withdraws an amount from whats been deposited based on a proportion.
       @param _proportion The proportion of whats being withdrawn.
       @param _outOf The total amount that the `_proportion` is relative to.
       @return amount The amount being withdrawn.
@@ -668,7 +674,10 @@ contract Juicer is IJuicer, IERC721Receiver {
         _withdraw(amount);
     }
 
-    // TODO docs
+    /** 
+      @notice Withdraws an amount from whats been deposited.
+      @param _amount The amount being withdrawn.
+    */
     function _withdraw(uint256 _amount) private {
         // Subtract the depositable amount if needed.
         if (_amount <= depositable) {

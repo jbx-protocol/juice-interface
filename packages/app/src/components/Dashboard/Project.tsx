@@ -16,6 +16,7 @@ import { fromWad } from 'utils/formatCurrency'
 import BudgetDetail from './BudgetDetail'
 import Rewards from './Rewards'
 import { colors } from 'constants/styles/colors'
+import EditProjectModal from 'components/modals/EditProjectModal'
 
 export default function Project({
   project,
@@ -32,6 +33,9 @@ export default function Project({
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
+  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
+    boolean
+  >(false)
   const [payAmount, setPayAmount] = useState<string>()
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
@@ -126,6 +130,13 @@ export default function Project({
             </Space>
           </h3>
         </div>
+        <div>
+          {isOwner ? (
+            <Button onClick={() => setEditProjectModalVisible(true)}>
+              Edit project
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <Row gutter={30}>
@@ -157,7 +168,7 @@ export default function Project({
               </div>
             </div>
 
-            <Button type="primary" onClick={pay}>
+            <Button type="primary" onClick={weiPayAmt ? pay : undefined}>
               Pay project
             </Button>
           </div>
@@ -189,6 +200,12 @@ export default function Project({
         onCancel={() => setPayModalVisible(false)}
         currency={budget?.currency.toString() as BudgetCurrency}
         usdAmount={parseFloat(payAmount ?? '0')}
+      />
+      <EditProjectModal
+        visible={editProjectModalVisible}
+        projectId={projectId}
+        project={project}
+        onDone={() => setEditProjectModalVisible(false)}
       />
     </div>
   )

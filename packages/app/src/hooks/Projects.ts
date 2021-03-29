@@ -14,7 +14,9 @@ export function useProjects(
 ) {
   const [index, setIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
-  const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
+  const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>(
+    {},
+  )
 
   function reset() {
     setIndex(BigNumber.from(0))
@@ -28,13 +30,12 @@ export function useProjects(
     args: owner ? [owner] : null,
     provider: readProvider,
     valueDidChange: bigNumbersDiff,
-    callback: useCallback(
-      balance => {
-        if (balance !== undefined) reset()
-      },
-      [reset],
-    ),
+    callback: useCallback(balance => {
+      if (balance !== undefined) reset()
+    }, []),
   })
+
+  console.log('balance', owner, balance)
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -62,6 +63,7 @@ export function useProjects(
     contract: ContractName.Projects,
     functionName: 'getIdentifier',
     args: id ? [id.toHexString()] : null,
+    provider: readProvider,
     valueDidChange: useCallback(
       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
       [],

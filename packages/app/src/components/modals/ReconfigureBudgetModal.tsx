@@ -58,8 +58,7 @@ export default function ReconfigureBudgetModal({
   if (!transactor || !contracts) return null
 
   async function saveBudget() {
-    if (!transactor || !contracts?.Juicer || !contracts?.Token || !budget)
-      return
+    if (!transactor || !contracts?.Juicer || !budget) return
 
     const valid = await form.validateFields()
 

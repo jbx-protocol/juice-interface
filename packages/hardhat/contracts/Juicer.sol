@@ -87,7 +87,7 @@ contract Juicer is IJuicer {
     IERC20 public immutable override weth;
 
     /// @notice The prices feeds.
-    IPrices public override prices;
+    IPrices public immutable override prices;
 
     /// @notice The current cumulative amount of tokens redeemable by each project's Tickets.
     mapping(uint256 => uint256) public override claimable;
@@ -162,28 +162,26 @@ contract Juicer is IJuicer {
 
         uint256 _tappable = _budget.target.sub(_budget.tappedTarget);
 
-        uint256 _reservedForTapping =
+        uint256 _reservedEthForTapping =
             _tappable == 0
                 ? 0
                 : DSMath.wdiv(_tappable, prices.getETHPrice(_budget.currency));
 
-        if (_reservedForTapping >= claimable[_projectId]) return 0;
+        if (_reservedEthForTapping >= claimable[_projectId]) return 0;
 
         uint256 _totalSupply = ticketStore.totalSupply(_projectId);
 
+        // If the rest of the tickets are being used to claim, don't apply the proportion.
         if (_amount == _totalSupply)
-            return claimable[_projectId].sub(_reservedForTapping);
-
-        uint256 _available =
-            Math.mulDiv(
-                claimable[_projectId].sub(_reservedForTapping),
-                _amount,
-                _totalSupply
-            );
+            return claimable[_projectId].sub(_reservedEthForTapping);
 
         return
             Math.mulDiv(
-                _available,
+                Math.mulDiv(
+                    claimable[_projectId].sub(_reservedEthForTapping),
+                    _amount,
+                    _totalSupply
+                ),
                 // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
                 _proportion,
                 1000

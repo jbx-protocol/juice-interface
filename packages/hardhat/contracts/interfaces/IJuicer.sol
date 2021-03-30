@@ -110,8 +110,6 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function overflowYielder() external view returns (IOverflowYielder);
 
-    function depositable() external view returns (uint256);
-
     function weth() external view returns (IERC20);
 
     function getOverflow(uint256 _projectId) external view returns (uint256);

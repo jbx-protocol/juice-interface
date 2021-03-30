@@ -83,9 +83,6 @@ contract Juicer is IJuicer {
     /// @notice The contract that puts overflow to work.
     IOverflowYielder public override overflowYielder;
 
-    /// @notice The amount of tokens that are currently depositable into the overflow yielder.
-    uint256 public override depositable = 0;
-
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
@@ -104,8 +101,8 @@ contract Juicer is IJuicer {
         override
         returns (uint256 overflow)
     {
-        // The amount of weth available is what's `depositable` plust whats in the yielder.
-        overflow = depositable;
+        // The amount of weth available is this contract's balance plus whats in the yielde.
+        overflow = weth.balanceOf(address(this));
         if (overflowYielder != IOverflowYielder(0))
             overflow.add(overflowYielder.getBalance(weth));
     }
@@ -356,9 +353,6 @@ contract Juicer is IJuicer {
         // Add to the claimable amount.
         ticketStore.addClaimable(_budget.projectId, _amount);
 
-        // The overflow can be deposited to earn yield.
-        depositable = depositable.add(_amount);
-
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
@@ -527,14 +521,15 @@ contract Juicer is IJuicer {
             "Juicer::deposit: SETUP_NEEDED"
         );
 
+        uint256 _depositable = weth.balanceOf(address(this));
+
         // There must be something depositable.
-        require(depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
+        require(_depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
 
         // Deposit and reset what's depositable.
-        overflowYielder.deposit(depositable, weth);
-        depositable = 0;
+        overflowYielder.deposit(_depositable, weth);
 
-        emit Deposit(depositable, weth);
+        emit Deposit(_depositable, weth);
     }
 
     /**
@@ -588,8 +583,6 @@ contract Juicer is IJuicer {
         // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
         if (overflowYielder != IOverflowYielder(0)) {
             overflowYielder.deposit(_amount, weth);
-        } else {
-            depositable = depositable.add(_amount);
         }
 
         uint256 _totalClaimable = ticketStore.totalClaimable();
@@ -640,8 +633,10 @@ contract Juicer is IJuicer {
     {
         // If there is already an overflow yielder, withdraw all funds and move them to the new overflow yielder.
         if (overflowYielder != IOverflowYielder(0)) {
-            uint256 _amount = overflowYielder.withdrawAll(weth);
-            _newOverflowYielder.deposit(_amount, weth);
+            _newOverflowYielder.deposit(
+                overflowYielder.withdrawAll(weth),
+                weth
+            );
         }
 
         // Allow the new overflow yielder to move funds from this contract.
@@ -674,16 +669,13 @@ contract Juicer is IJuicer {
       @param _amount The amount being withdrawn.
     */
     function _withdraw(uint256 _amount) private {
-        // Subtract the depositable amount if needed.
-        if (_amount <= depositable) {
-            depositable = depositable.sub(_amount);
-            // Withdraw from the overflow yielder if there's nothing depositable.
-        } else if (depositable == 0) {
+        uint256 _depositable = weth.balanceOf(address(this));
+        // Withdraw from the overflow yielder if there's nothing depositable.
+        if (_depositable == 0) {
             overflowYielder.withdraw(_amount, weth);
             // Withdraw the difference between whats depositable and whats being returned, while setting depositable to 0.
         } else {
-            overflowYielder.withdraw(_amount.sub(depositable), weth);
-            depositable = 0;
+            overflowYielder.withdraw(_amount.sub(_depositable), weth);
         }
     }
 }

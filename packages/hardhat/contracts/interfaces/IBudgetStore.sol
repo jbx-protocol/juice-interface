@@ -11,8 +11,6 @@ interface IBudgetStore {
 
     function budgetCount() external view returns (uint256);
 
-    function prices() external view returns (IPrices);
-
     function fee() external view returns (uint256);
 
     function getBudget(uint256 _budgetId)
@@ -41,31 +39,13 @@ interface IBudgetStore {
         IBudgetBallot _ballot
     ) external returns (Budget.Data memory budget);
 
-    function payProject(uint256 _projectId, uint256 _amount)
-        external
-        returns (
-            Budget.Data memory budget,
-            uint256 convertedCurrencyAmount,
-            uint256 overflow
-        );
-
     function tap(
         uint256 _budgetId,
         uint256 _amount,
+        uint256 _currency,
         uint256 _minReturnedETH,
-        uint256 _currentOverflow,
-        uint256 _feeBeneficiaryProjectId
-    )
-        external
-        returns (
-            Budget.Data memory budget,
-            uint256 convertedEthAmount,
-            uint256 drawn,
-            uint256 overflow,
-            Budget.Data memory feeBeneficiaryBudget,
-            uint256 feeBeneficiaryConvertedCurrencyAmount,
-            uint256 feeBeneficiaryOverflow
-        );
+        uint256 _currentOverflow
+    ) external returns (Budget.Data memory budget, uint256 convertedEthAmount);
 
     function setFee(uint256 _fee) external;
 }

@@ -90,6 +90,9 @@ contract Juicer is IJuicer, IERC721Receiver {
     /// @notice The address of a the WETH ERC-20 token.
     IERC20 public immutable override weth;
 
+    /// @notice The prices feeds.
+    IPrices public override prices;
+
     // --- public views --- //
 
     /** 
@@ -139,17 +142,20 @@ contract Juicer is IJuicer, IERC721Receiver {
       @param _projects The Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _budgetStore The BudgetStore to use which.
       @param _ticketStore The TicketStore to use which is an ERC-1155 mapping projects to ticket holders.
+      @param _prices The price feed contract to use.
       @param _weth The address for WETH, which all funds are collected and dispersed in.
     */
     constructor(
         IProjects _projects,
         IBudgetStore _budgetStore,
         ITicketStore _ticketStore,
+        IPrices _prices,
         IERC20 _weth
     ) {
         projects = _projects;
         budgetStore = _budgetStore;
         ticketStore = _ticketStore;
+        prices = _prices;
         weth = _weth;
     }
 
@@ -324,17 +330,15 @@ contract Juicer is IJuicer, IERC721Receiver {
         // Positive payments only.
         require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
 
-        // Add a payment to the stored funding stage state of both the project being paid and the admin receiving fees.
-        (
-            Budget.Data memory _budget,
-            uint256 _convertedCurrencyAmount,
-            uint256 _overflow
-        ) = budgetStore.payProject(_projectId, _amount);
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+
+        uint256 _convertedCurrencyAmount =
+            DSMath.wmul(_amount, prices.getETHPrice(_budget.currency));
 
         // Print tickets for the beneficiary.
         ticketStore.print(
             _beneficiary,
-            _budget.projectId,
+            _projectId,
             _budget._weighted(
                 _convertedCurrencyAmount,
                 uint256(1000).sub(_budget.reserved)
@@ -345,13 +349,16 @@ contract Juicer is IJuicer, IERC721Receiver {
         if (_budget.reserved > 0) {
             ticketStore.print(
                 projects.ownerOf(_budget.projectId),
-                _budget.projectId,
+                _projectId,
                 _budget._weighted(_convertedCurrencyAmount, _budget.reserved)
             );
         }
 
-        // Account for overflow resulting from this operation.
-        if (_overflow > 0) _addOverflow(_budget, _overflow);
+        // Add to the claimable amount.
+        ticketStore.addClaimable(_budget.projectId, _amount);
+
+        // The overflow can be deposited to earn yield.
+        depositable = depositable.add(_amount);
 
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);
@@ -415,7 +422,7 @@ contract Juicer is IJuicer, IERC721Receiver {
         @notice Tap into funds that have been contrubuted to your Budgets.
         @param _budgetId The ID of the budget to tap.
         @param _projectId The ID of the project to which the budget being tapped belongs.
-        @param _amount The amount being tapped.
+        @param _amount The amount being tapped, in the budget's currency.
         @param _beneficiary The address to transfer the funds to.
         @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
     */
@@ -423,6 +430,7 @@ contract Juicer is IJuicer, IERC721Receiver {
         uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
@@ -432,70 +440,80 @@ contract Juicer is IJuicer, IERC721Receiver {
             "Juicer::tap: UNAUTHORIZED"
         );
 
+        // Get a reference to this project's current amount of overflow.
         uint256 _projectOverflow = getOverflow(_projectId);
 
         // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
-        (
-            Budget.Data memory _budget,
-            uint256 _tappedAmount,
-            uint256 _drawn,
-            uint256 _overflow,
-            Budget.Data memory _adminBudget,
-            uint256 _adminConvertedCurrencyAmount,
-            uint256 _adminOverflow
-        ) =
+        (Budget.Data memory _budget, uint256 _tappedAmount) =
             budgetStore.tap(
                 _budgetId,
                 _amount,
-                _minReturnedETH,
+                _currency,
+                prices.getETHPrice(_currency),
                 // Draw from this project's overflow if needed.
-                _projectOverflow,
-                JuiceProject(admin).projectId()
+                _projectOverflow
             );
+
+        Budget.Data memory _adminBudget =
+            budgetStore.getCurrentBudget(JuiceProject(admin).projectId());
+
+        // Make sure this amount is acceptable.
+        require(
+            _tappedAmount >= _minReturnedETH,
+            "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        );
 
         // The projects must match.
         require(_budget.projectId == _projectId, "Juicer::tap: UNAUTHORIZED");
 
-        // If drawn from the overflow, subtract the amount claimable and withdraw the funds.
-        if (_drawn > 0) {
-            ticketStore.subtractClaimable(
-                _budget.projectId,
-                Math.mulDiv(
-                    ticketStore.claimable(_budget.projectId),
-                    _drawn,
-                    _projectOverflow
-                )
-            );
-            _withdraw(_drawn);
-        }
+        uint256 _adminFeeAmount =
+            Math.mulDiv(_tappedAmount, 1000, _budget.fee).sub(_tappedAmount);
 
-        // Print tickets for the tapper.
+        uint256 _convertedCurrencyAdminFeeAmount =
+            DSMath.wmul(
+                _adminFeeAmount,
+                prices.getETHPrice(_adminBudget.currency)
+            );
+
+        // If drawn from the overflow, subtract the amount claimable and withdraw the funds.
+        ticketStore.subtractClaimable(
+            _budget.projectId,
+            Math.mulDiv(
+                ticketStore.claimable(_budget.projectId),
+                _tappedAmount.add(_adminFeeAmount),
+                _projectOverflow
+            )
+        );
+
+        // Add to the claimable amount.
+        ticketStore.addClaimable(_adminBudget.projectId, _adminFeeAmount);
+
+        // Print admin tickets for the tapper.
         ticketStore.print(
             msg.sender,
             _adminBudget.projectId,
             _adminBudget._weighted(
-                _adminConvertedCurrencyAmount,
+                _convertedCurrencyAdminFeeAmount,
                 uint256(1000).sub(_adminBudget.reserved)
             )
         );
 
-        // Print tickets for the admin if needed.
+        // Print admin tickets for the admin if needed.
         if (_adminBudget.reserved > 0) {
             ticketStore.print(
                 admin,
                 _adminBudget.projectId,
                 _adminBudget._weighted(
-                    _adminConvertedCurrencyAmount,
+                    _convertedCurrencyAdminFeeAmount,
                     _adminBudget.reserved
                 )
             );
         }
 
-        // Account for overflow from this operation both in the tapped project and in the admin project.
-        if (_overflow > 0) _addOverflow(_budget, _overflow);
-        if (_adminOverflow < 0) _addOverflow(_adminBudget, _adminOverflow);
+        // Withdraw what's being tapped so it can be transfered to the beneficiary.
+        _withdraw(_tappedAmount);
 
-        // Transfer the funds to the specified address.
+        // Transfer the funds to the beneficiary.
         weth.safeTransfer(_beneficiary, _tappedAmount);
 
         emit Tap(
@@ -585,16 +603,15 @@ contract Juicer is IJuicer, IERC721Receiver {
         }
 
         uint256 _totalClaimable = ticketStore.totalClaimable();
-
-        uint256 _overflowBefore = getTotalOverflow();
+        uint256 _totalOverflow = getTotalOverflow();
 
         // The base amount to add as claimable to the ticket store.
         uint256 _claimableToAdd =
             Math
                 .mulDiv(
                 _totalClaimable,
-                _overflowBefore.add(_amount),
-                _overflowBefore
+                _totalOverflow.add(_amount),
+                _totalOverflow
             )
                 .sub(_totalClaimable);
 
@@ -697,16 +714,11 @@ contract Juicer is IJuicer, IERC721Receiver {
       @param _budget The budget to add overflow for.
       @param _amount The amount of overflow to add.
     */
-    function _addOverflow(Budget.Data memory _budget, uint256 _amount) private {
-        // The portion of the overflow that is claimable by redeeming tickets.
-        // This is the total minus the percent used as a fee.
-        uint256 _claimablePortion =
-            Math.mulDiv(_amount, uint256(1000).sub(_budget.fee), 1000);
-
+    function _add(Budget.Data memory _budget, uint256 _amount) private {
         // Add to the claimable amount.
-        ticketStore.addClaimable(_budget.projectId, _claimablePortion);
+        ticketStore.addClaimable(_budget.projectId, _amount);
 
         // The overflow can be deposited to earn yield.
-        depositable = depositable.add(_claimablePortion);
+        depositable = depositable.add(_amount);
     }
 }

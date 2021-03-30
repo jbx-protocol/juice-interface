@@ -32,9 +32,6 @@ contract BudgetStore is Administered, IBudgetStore {
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
 
-    /// @notice The prices feeds.
-    IPrices public override prices;
-
     /// @notice The percent fee the Juice project takes from payments.
     uint256 public override fee = 30;
 
@@ -103,9 +100,7 @@ contract BudgetStore is Administered, IBudgetStore {
 
     // --- external transactions --- //
 
-    constructor(IPrices _prices) {
-        prices = _prices;
-    }
+    constructor() {}
 
     /**
         @notice Configures the sustainability target and duration of the sender's current Budget if it hasn't yet received sustainments, or
@@ -153,113 +148,47 @@ contract BudgetStore is Administered, IBudgetStore {
     }
 
     /** 
-      @notice Tracks a payments to the appropriate budget for the project.
-      @param _projectId The ID of the project being paid.
-      @param _amount The amount being paid.
-      @return budget The budget that is being paid.
-      @return convertedCurrencyAmount The amount of the target currency that was paid.
-      @return overflow The overflow that has now become available as a result of paying.
-    */
-    function payProject(uint256 _projectId, uint256 _amount)
-        external
-        override
-        onlyAdmin
-        returns (
-            Budget.Data memory budget,
-            uint256 convertedCurrencyAmount,
-            uint256 overflow
-        )
-    {
-        // Find the Budget that this contribution should go towards.
-        // Creates a new budget based on the project's most recent one if there isn't currently a Budget accepting contributions.
-        Budget.Data storage _budget = _ensureActiveBudget(_projectId);
-
-        // Add the amount to the budget.
-        (convertedCurrencyAmount, overflow) = _budget._add(
-            _amount,
-            prices.getETHPrice(_budget.currency)
-        );
-
-        // Return the budget.
-        budget = _budget;
-    }
-
-    /** 
       @notice Tracks a project tapping its funds.
       @param _budgetId The ID of the budget being tapped.
       @param _amount The amount of being tapped.
-      @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
       @param _currentOverflow The current amount of overflow the project has.
-      @param _feeBeneficiaryProjectId The ID of the project that benefits from the budget's fee.
+      @param _ethPrice The current price of ETH.
       @return budget The budget that is being tapped.
       @return convertedEthAmount The amount of eth tapped.
-      @return drawn The drawn.
-      @return overflow The overflow that has now become available as a result of tapping.
-      @return feeBeneficiaryBudget The budget that is benefiting from the fee being paid.
-      @return feeBeneficiaryConvertedCurrencyAmount The amount of the target currency that was paid to the fee beneficiary.
-      @return feeBeneficiaryOverflow The overflow that has now become available as a result of paying the fee benficiary.
     */
     function tap(
         uint256 _budgetId,
         uint256 _amount,
-        uint256 _minReturnedETH,
+        uint256 _currency,
         uint256 _currentOverflow,
-        uint256 _feeBeneficiaryProjectId
+        uint256 _ethPrice
     )
         external
         override
         onlyAdmin
-        returns (
-            Budget.Data memory budget,
-            uint256 convertedEthAmount,
-            uint256 drawn,
-            uint256 overflow,
-            Budget.Data memory feeBeneficiaryBudget,
-            uint256 feeBeneficiaryConvertedCurrencyAmount,
-            uint256 feeBeneficiaryOverflow
-        )
+        returns (Budget.Data memory budget, uint256 convertedEthAmount)
     {
         // Get a reference to the Budget being tapped.
         Budget.Data storage _budget = budgets[_budgetId];
 
         require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
-
-        // Tap the amount.
-        (convertedEthAmount, drawn, overflow) = _budget._tap(
-            _amount,
-            prices.getETHPrice(_budget.currency),
-            // The budget can tap from its overflow within 30 days of expiring.
-            _budget._hasStarted() && !_budget._didEndBefore(2592000)
-                ? _currentOverflow
-                : 0
+        require(_budget._hasStarted(), "BudgetStore::tap: TOO_EARLY");
+        require(!_budget._hasExpired(), "BudgetStore::tap: TOO_LATE");
+        require(
+            _currency == _budget.currency,
+            "BudgetStore::tap: UNEXPECTED_CURRENCY"
         );
 
-        // Make sure this amount is acceptable.
-        require(
-            convertedEthAmount >= _minReturnedETH,
-            "BudgetStore::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        // Tap the amount.
+        convertedEthAmount = _budget._tap(
+            _amount,
+            _ethPrice,
+            // The budget can tap from the project's overflow.
+            _currentOverflow
         );
 
         // Return the budget.
         budget = _budget;
-
-        // Find the fee beneficiary budget.
-        Budget.Data storage _feeBeneficiaryBudget =
-            _ensureActiveBudget(_feeBeneficiaryProjectId);
-
-        // Add the fee amount to the fee beneficiary budget.
-        (
-            feeBeneficiaryConvertedCurrencyAmount,
-            feeBeneficiaryOverflow
-        ) = _feeBeneficiaryBudget._add(
-            Math.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
-                convertedEthAmount
-            ),
-            prices.getETHPrice(_feeBeneficiaryBudget.currency)
-        );
-
-        // Return the fee beneficiary budget.
-        feeBeneficiaryBudget = _feeBeneficiaryBudget;
     }
 
     /** 
@@ -355,7 +284,6 @@ contract BudgetStore is Administered, IBudgetStore {
         newBudget = budgets[budgetCount];
         newBudget.id = budgetCount;
         newBudget.start = _start;
-        newBudget.total = 0; // Consider adding the total here, and removing from claimable right off the bat.
         newBudget.tappedTotal = 0;
         newBudget.tappedTarget = 0;
         latestBudgetId[_projectId] = budgetCount;

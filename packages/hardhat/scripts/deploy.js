@@ -12,13 +12,14 @@ const main = async () => {
     process.env.HARDHAT_NETWORK === "localhost" && (await deploy("Token"));
   const prices = await deploy("Prices");
   const projects = await deploy("Projects");
-  const budgetStore = await deploy("BudgetStore", [prices.address]);
+  const budgetStore = await deploy("BudgetStore");
   const ticketStore = await deploy("TicketStore");
 
   const juicer = await deploy("Juicer", [
     projects.address,
     budgetStore.address,
     ticketStore.address,
+    prices.address,
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 

@@ -50,9 +50,12 @@ interface IBudgetController {
         uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         address _beneficiary,
         uint256 _minReturnedEth
     ) external;
+
+    function prices() external view returns (IPrices);
 }
 
 interface ITicketsController {

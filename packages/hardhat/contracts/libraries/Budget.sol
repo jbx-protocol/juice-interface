@@ -31,8 +31,6 @@ library Budget {
         uint256 target;
         // The currency that the target is measured in.
         uint256 currency;
-        // The running amount that's been paid to this Budget.
-        uint256 total;
         // The time when this Budget will become active.
         uint256 start;
         // The number of seconds until this Budget's surplus is redistributed.
@@ -89,8 +87,7 @@ library Budget {
     */
     function _state(Data memory _self) internal view returns (State) {
         if (_hasExpired(_self)) return State.Redistributing;
-        if (_hasStarted(_self) && (_self.total > 0 || _self.tappedTotal > 0))
-            return State.Active;
+        if (_hasStarted(_self) && _self.tappedTotal > 0) return State.Active;
         return State.Standby;
     }
 
@@ -127,7 +124,6 @@ library Budget {
                 _self.id,
                 _self.target,
                 _self.currency,
-                0,
                 _determineNextStart(_self),
                 _self.duration,
                 0,
@@ -182,8 +178,6 @@ library Budget {
         returns (bool)
     {
         return
-            // allow if this is the first budget and it hasn't received payments.
-            (_self.number == 1 && _self.total == 0) ||
             _self.ballot == IBudgetBallot(0) ||
             _self.ballot.isApproved(_self.id, _self.configured);
     }
@@ -195,36 +189,21 @@ library Budget {
         @param _ethPrice The current price of ETH.
         @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the budget total.
         @return convertedEthAmount The amount of ETH that was tapped.
-        @return drawn The amount of ETH that was drawn from the external source.
-        @return overflow The amount of new overflow that results.
     */
     function _tap(
         Data storage _self,
         uint256 _amount,
         uint256 _ethPrice,
         uint256 _currentlyDrawable
-    )
-        internal
-        returns (
-            uint256 convertedEthAmount,
-            uint256 drawn,
-            uint256 overflow
-        )
-    {
-        uint256 _tappable = _tappableAmount(_self, _ethPrice);
-
+    ) internal returns (uint256 convertedEthAmount) {
         // The amount being tapped must be less than the tappable amount plus the drawable amount.
         require(
-            _amount <= _self.target &&
-                _amount <=
-                _tappable.add(DSMath.wmul(_currentlyDrawable, _ethPrice)),
+            // Amount must be within what is drawable.
+            _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
+                // Amount must be within what is still tappable.
+                _amount <= _tappableAmount(_self, _ethPrice),
             "Budget: INSUFFICIENT_FUNDS"
         );
-
-        // Drawn from the external source the difference between what's tappable and the amount.
-        drawn = _amount > _tappable
-            ? DSMath.wdiv(_amount.sub(_tappable), _ethPrice)
-            : 0;
 
         // Add the amount to the Budget's tapped amount.
         _self.tappedTarget = _self.tappedTarget.add(_amount);
@@ -234,35 +213,30 @@ library Budget {
 
         // Add the converted currency amount to the Budget's total amount.
         _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
-
-        // If this budget is now fully tapped, record the overflow.
-        overflow = _self.tappedTarget == _self.target
-            ? _self.total.sub(_self.tappedTotal)
-            : 0;
     }
 
-    /** 
-        @notice Adds an amount to the budget.
-        @param _self The Budget to add an amount to.
-        @param _amount An amount to add. In ETH.
-        @param _ethPrice The current price of ETH.
-        @return convertedCurrencyAmount The amount of currency that was converted from the added ETH.
-        @return overflow The amount of new overflow that results.
-    */
-    function _add(
-        Data storage _self,
-        uint256 _amount,
-        uint256 _ethPrice
-    ) internal returns (uint256 convertedCurrencyAmount, uint256 overflow) {
-        // Add the amount to the Budget.
-        _self.total = _self.total.add(_amount);
+    // /**
+    //     @notice Adds an amount to the budget.
+    //     @param _self The Budget to add an amount to.
+    //     @param _amount An amount to add. In ETH.
+    //     @param _ethPrice The current price of ETH.
+    //     @return convertedCurrencyAmount The amount of currency that was converted from the added ETH.
+    //     @return overflow The amount of new overflow that results.
+    // */
+    // function _add(
+    //     Data storage _self,
+    //     uint256 _amount,
+    //     uint256 _ethPrice
+    // ) internal returns (uint256 convertedCurrencyAmount, uint256 overflow) {
+    //     // Add the amount to the Budget.
+    //     _self.total = _self.total.add(_amount);
 
-        // The amount being paid in the currency of the budget.
-        convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
+    //     // The amount being paid in the currency of the budget.
+    //     convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
 
-        // If this budget is fully tapped, record the overflow.
-        overflow = _self.tappedTarget == _self.target ? _amount : 0;
-    }
+    //     // If this budget is fully tapped, record the overflow.
+    //     overflow = _self.tappedTarget == _self.target ? _amount : 0;
+    // }
 
     /** 
         @notice Check to see if the given Budget has started.
@@ -285,21 +259,6 @@ library Budget {
             block.timestamp > _self.start.add(_self.duration);
     }
 
-    /** 
-        @notice Check to see if the given Budget ended before a certain amount of seconds.
-        @param _self The Budget to check.
-        @param _secondsAgo The amount of seconds ago that the budget must have ended before in order for a true result.
-        @return didEndBefore The boolean result.
-    */
-    function _didEndBefore(Data memory _self, uint256 _secondsAgo)
-        internal
-        view
-        returns (bool)
-    {
-        return
-            block.timestamp < _self.start.add(_self.duration).add(_secondsAgo);
-    }
-
     // --- private views --- //
 
     /** 
@@ -313,16 +272,10 @@ library Budget {
         pure
         returns (uint256)
     {
-        if (_self.total == 0 || _self.tappedTarget == _self.target) return 0;
-
+        if (_self.tappedTarget == _self.target) return 0;
         return
-            Math
-                .mulDiv(
-                // The available amount within the target.
-                Math.min(_self.target, DSMath.wmul(_self.total, _ethPrice)),
-                1000,
-                uint256(1000).add(_self.fee)
-            )
-                .sub(_self.tappedTarget);
+            Math.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)).sub(
+                _self.tappedTarget
+            );
     }
 }

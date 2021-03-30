@@ -160,11 +160,12 @@ contract Juicer is IJuicer {
 
         Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
 
+        uint256 _tappable = _budget.target.sub(_budget.tappedTarget);
+
         uint256 _reservedForTapping =
-            DSMath.wdiv(
-                _budget.target.sub(_budget.tappedTarget),
-                prices.getETHPrice(_budget.currency)
-            );
+            _tappable == 0
+                ? 0
+                : DSMath.wdiv(_tappable, prices.getETHPrice(_budget.currency));
 
         if (_reservedForTapping >= claimable[_projectId]) return 0;
 

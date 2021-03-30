@@ -67,6 +67,17 @@ interface ITicketsController {
         IERC20 returnToken
     );
 
+    function claimable(uint256 _projectId) external view returns (uint256);
+
+    function totalClaimable() external view returns (uint256);
+
+    function getClaimableAmount(
+        address _holder,
+        uint256 _amount,
+        uint256 _projectId,
+        uint256 _proportion
+    ) external view returns (uint256);
+
     function redeem(
         uint256 _projectId,
         uint256 _amount,

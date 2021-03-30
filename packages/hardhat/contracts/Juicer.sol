@@ -89,6 +89,12 @@ contract Juicer is IJuicer {
     /// @notice The prices feeds.
     IPrices public override prices;
 
+    /// @notice The current cumulative amount of tokens redeemable by each project's Tickets.
+    mapping(uint256 => uint256) public override claimable;
+
+    /// @notice The current cumulative amount of tokens redeemable in the system.
+    uint256 public override totalClaimable = 0;
+
     // --- public views --- //
 
     /** 
@@ -119,17 +125,68 @@ contract Juicer is IJuicer {
         returns (uint256 overflow)
     {
         // The base amount that the issuer can claim, which doesn't include any yield generated.
-        uint256 _claimable = ticketStore.claimable(_projectId);
+        uint256 _claimable = claimable[_projectId];
 
         // Return 0 if the user has nothing to claim.
         if (_claimable == 0) return 0;
 
         // The overflow is the proportion of the total available to what's claimable for the project.
-        overflow = Math.mulDiv(
-            getTotalOverflow(),
-            _claimable,
-            ticketStore.totalClaimable()
+        overflow = Math.mulDiv(getTotalOverflow(), _claimable, totalClaimable);
+    }
+
+    /**
+        @notice The amount of tokens that can be claimed by the given address.
+        @param _holder The address to get an amount for.
+        @param _amount The amount of Tickets being redeemed.
+        Must be within the holder's balance.
+        @param _projectId The ID of the project to which the Tickets to get an amount for belong.
+        @param _proportion The proportion of the hodler's tickets to make claimable. Out of 1000.
+        This creates an opportunity for incenvizing HODLing.
+        If the specified `_holder` is the last holder, the proportion will fall back to 1000.
+        @return amount The amount of tokens that can be claimed.
+    */
+    function getClaimableAmount(
+        address _holder,
+        uint256 _amount,
+        uint256 _projectId,
+        uint256 _proportion
+    ) public view override returns (uint256) {
+        // Make sure the specified amount is available.
+        require(
+            // Get the amount of tickets the specified holder has access to, or is owed.
+            ticketStore.balanceOf(_holder, _projectId) >= _amount,
+            "Juice::getClaimableAmount: INSUFFICIENT_FUNDS"
         );
+
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+
+        uint256 _reservedForTapping =
+            DSMath.wdiv(
+                _budget.target.sub(_budget.tappedTarget),
+                prices.getETHPrice(_budget.currency)
+            );
+
+        if (_reservedForTapping >= claimable[_projectId]) return 0;
+
+        uint256 _totalSupply = ticketStore.totalSupply(_projectId);
+
+        if (_amount == _totalSupply)
+            return claimable[_projectId].sub(_reservedForTapping);
+
+        uint256 _available =
+            Math.mulDiv(
+                claimable[_projectId].sub(_reservedForTapping),
+                _amount,
+                _totalSupply
+            );
+
+        return
+            Math.mulDiv(
+                _available,
+                // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
+                _proportion,
+                1000
+            );
     }
 
     // --- external transactions --- //
@@ -352,7 +409,10 @@ contract Juicer is IJuicer {
         }
 
         // Add to the claimable amount.
-        ticketStore.addClaimable(_budget.projectId, _amount);
+        claimable[_budget.projectId] = claimable[_budget.projectId].add(
+            _amount
+        );
+        totalClaimable = totalClaimable.add(_amount);
 
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);
@@ -386,18 +446,32 @@ contract Juicer is IJuicer {
         uint256 _minReturnedETH,
         address _beneficiary
     ) external override lock returns (uint256 returnAmount) {
-        // Redeem at the ticket store. The base amount claimable for this issuer is returned.
-        (uint256 _claimable, uint256 _outOf) =
-            ticketStore.redeem(
-                _projectId,
+        require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
+
+        // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
+        uint256 _claimable =
+            getClaimableAmount(
                 msg.sender,
                 _amount,
-                _minReturnedETH,
+                _projectId,
                 budgetStore.getCurrentBudget(_projectId).bondingCurveRate
             );
 
+        // The amount being claimed must be less than the amount claimable.
+        require(
+            _claimable >= _minReturnedETH,
+            "Juicer::redeem: INSUFFICIENT_FUNDS"
+        );
+
         // Withdrawn the deposited amount according to the claimable proportion.
-        returnAmount = _withdrawProportion(_claimable, _outOf);
+        returnAmount = _withdrawProportion(_claimable, totalClaimable);
+
+        // Subtract the claimed tokens from the total amount claimable.
+        claimable[_projectId] = claimable[_projectId].sub(_claimable);
+        totalClaimable = totalClaimable.sub(_claimable);
+
+        // Redeem the tickets.
+        ticketStore.redeem(_projectId, msg.sender, _amount);
 
         // Transfer funds to the specified address.
         weth.safeTransfer(_beneficiary, returnAmount);
@@ -455,17 +529,20 @@ contract Juicer is IJuicer {
             budgetStore.getCurrentBudget(JuiceProject(admin).projectId());
 
         // Subtract the amount claimable from the project.
-        ticketStore.subtractClaimable(
-            _projectId,
+        uint256 _subtractAmount =
             Math.mulDiv(
-                ticketStore.claimable(_projectId),
+                claimable[_projectId],
                 _tappedAmount.add(_adminFeeAmount),
                 _projectOverflow
-            )
-        );
+            );
+        claimable[_projectId] = claimable[_projectId].sub(_subtractAmount);
 
         // Add to the claimable amount to the admin.
-        ticketStore.addClaimable(_adminBudget.projectId, _adminFeeAmount);
+        claimable[_adminBudget.projectId] = claimable[_adminBudget.projectId]
+            .add(_adminFeeAmount);
+        totalClaimable = totalClaimable.sub(_subtractAmount).add(
+            _adminFeeAmount
+        );
 
         uint256 _convertedCurrencyAdminFeeAmount =
             DSMath.wmul(
@@ -552,12 +629,12 @@ contract Juicer is IJuicer {
         // The message sender must own a project.
         require(_projectId != 0, "Juicer::migrate: NOT_FOUND");
 
+        uint256 _claimable = claimable[_projectId];
         // Withdrawn the deposited amount according to the claimable proportion.
-        uint256 _amount =
-            _withdrawProportion(
-                ticketStore.clearClaimable(_projectId),
-                ticketStore.totalClaimable()
-            );
+        uint256 _amount = _withdrawProportion(_claimable, totalClaimable);
+
+        claimable[_projectId] = 0;
+        totalClaimable = totalClaimable.sub(_claimable);
 
         // Allow the new project to move funds owned by the issuer from contract.
         weth.safeApprove(address(_to), _amount);
@@ -585,21 +662,21 @@ contract Juicer is IJuicer {
         if (overflowYielder != IOverflowYielder(0))
             overflowYielder.deposit(_amount, weth);
 
-        uint256 _totalClaimable = ticketStore.totalClaimable();
         uint256 _totalOverflow = getTotalOverflow();
 
         // The base amount to add as claimable to the ticket store.
         uint256 _claimableToAdd =
             Math
                 .mulDiv(
-                _totalClaimable,
+                totalClaimable,
                 _totalOverflow.add(_amount),
                 _totalOverflow
             )
-                .sub(_totalClaimable);
+                .sub(totalClaimable);
 
         // Add the raw claimable amount to the ticket store.
-        ticketStore.addClaimable(_projectId, _claimableToAdd);
+        claimable[_projectId] = claimable[_projectId].add(_claimableToAdd);
+        totalClaimable = totalClaimable.add(_claimableToAdd);
     }
 
     /**

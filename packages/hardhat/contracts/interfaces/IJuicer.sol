@@ -74,8 +74,7 @@ interface ITicketsController {
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        uint256 _projectId,
-        uint256 _proportion
+        uint256 _projectId
     ) external view returns (uint256);
 
     function redeem(
@@ -163,7 +162,7 @@ interface IJuicer is IBudgetController, ITicketsController {
         IBudgetBallot _ballot
     ) external returns (uint256 budgetId);
 
-    function addOverflow(
+    function addToBalance(
         uint256 _projectId,
         uint256 _amount,
         IERC20 _token

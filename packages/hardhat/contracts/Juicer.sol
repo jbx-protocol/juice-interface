@@ -161,16 +161,12 @@ contract Juicer is IJuicer {
         @param _amount The amount of Tickets being redeemed.
         Must be within the holder's balance.
         @param _projectId The ID of the project to which the Tickets to get an amount for belong.
-        @param _proportion The proportion of the hodler's tickets to make claimable. Out of 1000.
-        This creates an opportunity for incenvizing HODLing.
-        If the specified `_holder` is the last holder, the proportion will fall back to 1000.
         @return amount The amount of tokens that can be claimed.
     */
     function getClaimableAmount(
         address _holder,
         uint256 _amount,
-        uint256 _projectId,
-        uint256 _proportion
+        uint256 _projectId
     ) public view override returns (uint256) {
         // Make sure the specified amount is available.
         require(
@@ -204,7 +200,7 @@ contract Juicer is IJuicer {
                     _totalSupply
                 ),
                 // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
-                _proportion,
+                _budget.bondingCurveRate,
                 1000
             );
     }
@@ -470,12 +466,7 @@ contract Juicer is IJuicer {
 
         // The amount of tokens claimable by the message sender from the specified issuer by redeeming the specified amount.
         uint256 _claimable =
-            getClaimableAmount(
-                msg.sender,
-                _amount,
-                _projectId,
-                budgetStore.getCurrentBudget(_projectId).bondingCurveRate
-            );
+            getClaimableAmount(msg.sender, _amount, _projectId);
 
         // The amount being claimed must be less than the amount claimable.
         require(
@@ -658,18 +649,18 @@ contract Juicer is IJuicer {
 
         // Allow the new project to move funds owned by the issuer from contract.
         weth.safeApprove(address(_to), _amount);
-        _to.addOverflow(_projectId, _amount, weth);
+        _to.addToBalance(_projectId, _amount, weth);
 
         emit Migrate(_to, _amount);
     }
 
     /** 
-      @notice Transfer funds from the message sender to this contract that should be designated as overflow for the provided ticket issuer.
+      @notice Transfer funds from the message sender to this contract belonging to the specified project.
       @param _projectId The ID of the project to which the tickets getting credited with overflow belong.
       @param _amount The amount that the claimable tokens are worth.
       @param _token The token of the specified amount.
     */
-    function addOverflow(
+    function addToBalance(
         uint256 _projectId,
         uint256 _amount,
         IERC20 _token
@@ -678,7 +669,7 @@ contract Juicer is IJuicer {
         // The msg sender should have already approved this transfer.
         _token.safeTransferFrom(msg.sender, address(this), _amount);
 
-        // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
+        // If there is an overflow yielder, deposit to it.
         if (overflowYielder != IOverflowYielder(0))
             overflowYielder.deposit(_amount, weth);
 

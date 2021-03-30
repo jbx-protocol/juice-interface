@@ -1,6 +1,5 @@
 import { Space, Statistic } from 'antd'
-import { useEditingBudgetSelector } from 'hooks/AppSelector'
-import { addressExists } from 'utils/addressExists'
+import { useAppSelector, useEditingBudgetSelector } from 'hooks/AppSelector'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
@@ -16,6 +15,9 @@ export default function ConfirmCreateProject({
   adminFeePercent: number | undefined
 }) {
   const editingBudget = useEditingBudgetSelector()
+  const editingProject = useAppSelector(
+    state => state.editingProject.projectIdentifier,
+  )
 
   const targetWithFee = () => {
     if (adminFeePercent === undefined) return
@@ -33,19 +35,23 @@ export default function ConfirmCreateProject({
 
   return (
     <Space size="large" direction="vertical">
-      <h1 style={{ fontSize: '2rem' }}>Review your contract</h1>
-      <Statistic title="Name" value={orEmpty(editingBudget?.name)} />
-      <div>
-        <Space size="large">
-          <Statistic
-            title="Duration"
-            value={formattedNum(editingBudget?.duration)}
-            suffix="days"
-          />
-          <Statistic title="Amount (+5% admin fee)" value={targetWithFee()} />
-        </Space>
-      </div>
-      <Statistic title="Link" value={orEmpty(editingBudget?.link)} />
+      <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
+      <Space size="large">
+        <Statistic title="Name" value={orEmpty(editingProject?.name)} />
+        <Statistic
+          title="Handle"
+          value={'@' + orEmpty(editingProject?.handle)}
+        />
+      </Space>
+      <Space size="large">
+        <Statistic
+          title="Duration"
+          value={formattedNum(editingBudget?.duration)}
+          suffix="days"
+        />
+        <Statistic title="Amount (+5% admin fee)" value={targetWithFee()} />
+      </Space>
+      <Statistic title="Link" value={orEmpty(editingProject?.link)} />
       <Space size="large" align="end">
         <Statistic
           style={{
@@ -60,21 +66,7 @@ export default function ConfirmCreateProject({
           value={fromPerMille(editingBudget?.reserved)}
           suffix="%"
         />
-        <Statistic
-          title="Overflow donation"
-          value={fromPerMille(editingBudget?.donationAmount)}
-          suffix="%"
-        />
       </Space>
-      <Statistic
-        title="Donation address"
-        valueStyle={{ lineBreak: 'anywhere' }}
-        value={
-          addressExists(editingBudget?.donationRecipient)
-            ? editingBudget?.donationRecipient
-            : '--'
-        }
-      />
     </Space>
   )
 }

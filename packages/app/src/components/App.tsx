@@ -2,21 +2,19 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
+import { ContractName } from 'constants/contract-name'
 import { NETWORKS } from 'constants/networks'
 import { web3Modal } from 'constants/web3-modal'
 import { UserContext } from 'contexts/userContext'
-import { useAppDispatch } from 'hooks/AppDispatch'
 import { useContractLoader } from 'hooks/ContractLoader'
+import useContractReader from 'hooks/ContractReader'
 import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useSigningProvider } from 'hooks/SigningProvider'
 import { useTransactor } from 'hooks/Transactor'
-import { useUserBudget } from 'hooks/UserBudget'
-import { useUserTickets } from 'hooks/UserTickets'
 import { useWeth } from 'hooks/Weth'
 import { NetworkName } from 'models/network-name'
 import { useCallback, useEffect, useState } from 'react'
-import { editingBudgetActions } from 'redux/slices/editingBudget'
 
 import Navbar from './Navbar'
 import Router from './Router'
@@ -24,8 +22,6 @@ import Router from './Router'
 function App() {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
-
-  const dispatch = useAppDispatch()
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect()
@@ -60,12 +56,19 @@ function App() {
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,
   })
 
-  useEffect(() => {
-    if (userAddress) dispatch(editingBudgetActions.setProject(userAddress))
-  }, [userAddress, dispatch])
+  const adminFeePercent = useContractReader<number>({
+    contract: ContractName.BudgetStore,
+    functionName: 'fee',
+    formatter: (val: BigNumber) => val?.toNumber(),
+  })
 
-  useUserBudget(userAddress, signingProvider)
-  useUserTickets(userAddress, signingProvider)
+  const userHasProjects = useContractReader<boolean>({
+    contract: ContractName.Projects,
+    functionName: 'balanceOf',
+    provider: signingProvider,
+    args: userAddress ? [userAddress] : null,
+    formatter: (bal?: BigNumber) => bal?.gt(0),
+  })
 
   console.log('User:', userAddress)
 
@@ -78,6 +81,8 @@ function App() {
         transactor,
         contracts,
         onNeedProvider: loadWeb3Modal,
+        userHasProjects,
+        adminFeePercent,
         weth,
       }}
     >

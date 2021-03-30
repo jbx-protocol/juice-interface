@@ -26,8 +26,7 @@ const QAs: {
   {
     q: 'What are tickets?',
     a: [
-      `Tickets are ERC-20 tokens prefixed with a "j" that are minted every time a Juice project is funded. Each project has its own tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be exchanged for a portion of the overflow. *Link: Calculating Ticket rewards*. Tickets can also be staked to allow voting on changes to a project contract.`,
-      `Creating tickets for your project is optional. Until tickets are created, Juice will use nameless IOU tickets to keep track.`,
+      `Each project has its own tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be exchanged for a portion of the overflow. *Link: Calculating Ticket rewards*. Tickets can also be staked to allow voting on changes to a project contract.`,
     ],
   },
   {

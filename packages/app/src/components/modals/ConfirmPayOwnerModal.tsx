@@ -4,25 +4,28 @@ import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
+import { ProjectIdentifier } from 'models/projectIdentifier'
 import { useContext } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 
 export default function ConfirmPayOwnerModal({
+  projectId,
+  project,
   budget,
   visible,
   currency,
   usdAmount,
-  ticketSymbol,
-  onOk,
+  onSuccess,
   onCancel,
 }: {
-  budget: Budget | undefined | null
+  projectId: BigNumber
+  project: ProjectIdentifier
+  budget: Budget | null | undefined
   visible?: boolean
   currency: BudgetCurrency | undefined
   usdAmount: number | undefined
-  ticketSymbol: string | undefined
-  onOk?: VoidFunction
+  onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const { contracts, transactor, userAddress, weth } = useContext(UserContext)
@@ -32,18 +35,20 @@ export default function ConfirmPayOwnerModal({
   const weiAmount = converter.usdToWei(usdAmount)
 
   function pay() {
-    if (!contracts || !budget || !transactor) return
+    if (!contracts || !projectId || !transactor) return
 
     // TODO add note input
 
-    transactor(contracts.Juicer, 'pay', [
-      budget.project,
-      weiAmount?.toHexString(),
-      userAddress,
-      '',
-    ])
-
-    if (onOk) onOk()
+    transactor(
+      contracts.Juicer,
+      'pay',
+      [projectId.toHexString(), weiAmount?.toHexString(), userAddress, ''],
+      {
+        onConfirmed: () => {
+          if (onSuccess) onSuccess()
+        },
+      },
+    )
   }
 
   const weightedRate = (
@@ -75,7 +80,7 @@ export default function ConfirmPayOwnerModal({
 
   return (
     <Modal
-      title={'Pay ' + budget?.name}
+      title={'Pay ' + project?.name}
       visible={visible}
       onOk={pay}
       okText="Pay"
@@ -83,15 +88,17 @@ export default function ConfirmPayOwnerModal({
       width={800}
     >
       <Descriptions column={1} bordered>
-        <Descriptions.Item label="Project">{budget?.project}</Descriptions.Item>
+        <Descriptions.Item label="Project id">
+          {projectId.toString()}
+        </Descriptions.Item>
         <Descriptions.Item label="Pay amount">
           {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for you">
-          {formatWad(receivedTickets)} {ticketSymbol}
+          {formatWad(receivedTickets)}
         </Descriptions.Item>
         <Descriptions.Item label="Tickets for owner">
-          {formatWad(ownerTickets)} {ticketSymbol}
+          {formatWad(ownerTickets)}
         </Descriptions.Item>
       </Descriptions>
     </Modal>

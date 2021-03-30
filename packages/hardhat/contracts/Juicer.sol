@@ -328,6 +328,7 @@ contract Juicer is IJuicer {
 
         Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
 
+        // The amount of ETH paid converted into the budget's currency.
         uint256 _convertedCurrencyAmount =
             DSMath.wmul(_amount, prices.getETHPrice(_budget.currency));
 
@@ -581,9 +582,8 @@ contract Juicer is IJuicer {
         _token.safeTransferFrom(msg.sender, address(this), _amount);
 
         // If there is an overflow yielder, deposit to it. Otherwise add to what's depositable.
-        if (overflowYielder != IOverflowYielder(0)) {
+        if (overflowYielder != IOverflowYielder(0))
             overflowYielder.deposit(_amount, weth);
-        }
 
         uint256 _totalClaimable = ticketStore.totalClaimable();
         uint256 _totalOverflow = getTotalOverflow();

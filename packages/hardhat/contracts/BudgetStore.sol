@@ -33,7 +33,7 @@ contract BudgetStore is Administered, IBudgetStore {
     uint256 public override budgetCount = 0;
 
     /// @notice The percent fee the Juice project takes from payments.
-    uint256 public override fee = 30;
+    uint256 public override fee = 50;
 
     // --- external views --- //
 
@@ -195,6 +195,7 @@ contract BudgetStore is Administered, IBudgetStore {
             convertedEthAmount
         );
 
+        // Return the ID of the budget that was tapped.
         id = _budget.id;
     }
 

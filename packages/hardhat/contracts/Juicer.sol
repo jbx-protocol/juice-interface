@@ -95,34 +95,55 @@ contract Juicer is IJuicer {
     /// @notice The current cumulative amount of tokens redeemable in the system.
     uint256 public override totalClaimable = 0;
 
-    // --- public views --- //
+    // --- external views --- //
 
     /** 
-      @notice Gets the total overflow that this Juicer is responsible for.
-      @return overflow The amount of overflow.
+      @notice Gets the current overflowed for a specified project that this Juicer is responsible for.
+      @param _projectId The ID of the project to get overflow for.
+      @return overflow The current overflow of funds for the project.
     */
-    function getTotalOverflow()
-        public
+    function currentOverflowOf(uint256 _projectId)
+        external
         view
         override
         returns (uint256 overflow)
     {
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+        uint256 _tappable = _budget.target.sub(_budget.tappedTarget);
+        uint256 _reservedEthForTapping =
+            _tappable == 0
+                ? 0
+                : DSMath.wdiv(_tappable, prices.getETHPrice(_budget.currency));
+        uint256 _balance = balanceOf(_projectId);
+        return
+            _reservedEthForTapping >= _balance
+                ? 0
+                : _balance.sub(_reservedEthForTapping);
+    }
+
+    // --- public views --- //
+
+    /** 
+      @notice Gets the total amount of funds that this Juicer is responsible for.
+      @return amount The balance of funds.
+    */
+    function balance() public view override returns (uint256 amount) {
         // The amount of weth available is this contract's balance plus whats in the yielde.
-        overflow = weth.balanceOf(address(this));
+        amount = weth.balanceOf(address(this));
         if (overflowYielder != IOverflowYielder(0))
-            overflow.add(overflowYielder.getBalance(weth));
+            amount.add(overflowYielder.getBalance(weth));
     }
 
     /** 
-      @notice Gets the overflow for a specified project that this Juicer is responsible for.
+      @notice Gets the balance for a specified project that this Juicer is responsible for.
       @param _projectId The ID of the project to get overflow for.
-      @return overflow The amount of overflow.
+      @return amount The balance of funds for the project.
     */
-    function getOverflow(uint256 _projectId)
+    function balanceOf(uint256 _projectId)
         public
         view
         override
-        returns (uint256 overflow)
+        returns (uint256 amount)
     {
         // The base amount that the issuer can claim, which doesn't include any yield generated.
         uint256 _claimable = claimable[_projectId];
@@ -131,7 +152,7 @@ contract Juicer is IJuicer {
         if (_claimable == 0) return 0;
 
         // The overflow is the proportion of the total available to what's claimable for the project.
-        overflow = Math.mulDiv(getTotalOverflow(), _claimable, totalClaimable);
+        amount = Math.mulDiv(balance(), _claimable, totalClaimable);
     }
 
     /**
@@ -506,7 +527,7 @@ contract Juicer is IJuicer {
         );
 
         // Get a reference to this project's current amount of overflow.
-        uint256 _projectOverflow = getOverflow(_projectId);
+        uint256 _projectBalance = balanceOf(_projectId);
 
         // Get a reference to the Budget being tapped.
         (uint256 _budgetId, uint256 _tappedAmount, uint256 _adminFeeAmount) =
@@ -514,7 +535,7 @@ contract Juicer is IJuicer {
                 _projectId,
                 _amount,
                 _currency,
-                _projectOverflow,
+                _projectBalance,
                 prices.getETHPrice(_currency)
             );
 
@@ -532,7 +553,7 @@ contract Juicer is IJuicer {
             Math.mulDiv(
                 claimable[_projectId],
                 _tappedAmount.add(_adminFeeAmount),
-                _projectOverflow
+                _projectBalance
             );
         claimable[_projectId] = claimable[_projectId].sub(_subtractAmount);
 
@@ -661,17 +682,13 @@ contract Juicer is IJuicer {
         if (overflowYielder != IOverflowYielder(0))
             overflowYielder.deposit(_amount, weth);
 
-        uint256 _totalOverflow = getTotalOverflow();
+        uint256 _balance = balance();
 
         // The base amount to add as claimable to the ticket store.
         uint256 _claimableToAdd =
-            Math
-                .mulDiv(
-                totalClaimable,
-                _totalOverflow.add(_amount),
-                _totalOverflow
-            )
-                .sub(totalClaimable);
+            Math.mulDiv(totalClaimable, _balance.add(_amount), _balance).sub(
+                totalClaimable
+            );
 
         // Add the raw claimable amount to the ticket store.
         claimable[_projectId] = claimable[_projectId].add(_claimableToAdd);
@@ -735,7 +752,7 @@ contract Juicer is IJuicer {
         returns (uint256 amount)
     {
         // The amount that satisfies the proportion.
-        amount = Math.mulDiv(getTotalOverflow(), _proportion, _outOf);
+        amount = Math.mulDiv(balance(), _proportion, _outOf);
 
         _withdraw(amount);
     }

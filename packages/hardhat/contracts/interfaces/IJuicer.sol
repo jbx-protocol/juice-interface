@@ -123,9 +123,14 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function weth() external view returns (IERC20);
 
-    function getOverflow(uint256 _projectId) external view returns (uint256);
+    function balanceOf(uint256 _projectId) external view returns (uint256);
 
-    function getTotalOverflow() external view returns (uint256);
+    function currentOverflowOf(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function balance() external view returns (uint256);
 
     function setAdmin(address _admin) external;
 

@@ -4,7 +4,6 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
@@ -43,7 +42,7 @@ import "./libraries/Math.sol";
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
-contract Juicer is IJuicer, IERC721Receiver {
+contract Juicer is IJuicer {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using Budget for Budget.Data;
@@ -420,14 +419,12 @@ contract Juicer is IJuicer, IERC721Receiver {
 
     /**
         @notice Tap into funds that have been contrubuted to your Budgets.
-        @param _budgetId The ID of the budget to tap.
         @param _projectId The ID of the project to which the budget being tapped belongs.
         @param _amount The amount being tapped, in the budget's currency.
         @param _beneficiary The address to transfer the funds to.
         @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
     */
     function tap(
-        uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
@@ -443,50 +440,43 @@ contract Juicer is IJuicer, IERC721Receiver {
         // Get a reference to this project's current amount of overflow.
         uint256 _projectOverflow = getOverflow(_projectId);
 
-        // Get a reference to the Budget being tapped, the amount to tap, and any overflow that tapping creates.
-        (Budget.Data memory _budget, uint256 _tappedAmount) =
+        // Get a reference to the Budget being tapped.
+        (uint256 _budgetId, uint256 _tappedAmount, uint256 _adminFeeAmount) =
             budgetStore.tap(
-                _budgetId,
+                _projectId,
                 _amount,
                 _currency,
-                prices.getETHPrice(_currency),
-                // Draw from this project's overflow if needed.
-                _projectOverflow
+                _projectOverflow,
+                prices.getETHPrice(_currency)
             );
+
+        // Make sure this amount is acceptable.
+        require(
+            _minReturnedETH <= _tappedAmount,
+            "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        );
 
         Budget.Data memory _adminBudget =
             budgetStore.getCurrentBudget(JuiceProject(admin).projectId());
 
-        // Make sure this amount is acceptable.
-        require(
-            _tappedAmount >= _minReturnedETH,
-            "Juicer::tap: INSUFFICIENT_EXPECTED_AMOUNT"
+        // Subtract the amount claimable from the project.
+        ticketStore.subtractClaimable(
+            _projectId,
+            Math.mulDiv(
+                ticketStore.claimable(_projectId),
+                _tappedAmount.add(_adminFeeAmount),
+                _projectOverflow
+            )
         );
 
-        // The projects must match.
-        require(_budget.projectId == _projectId, "Juicer::tap: UNAUTHORIZED");
-
-        uint256 _adminFeeAmount =
-            Math.mulDiv(_tappedAmount, 1000, _budget.fee).sub(_tappedAmount);
+        // Add to the claimable amount to the admin.
+        ticketStore.addClaimable(_adminBudget.projectId, _adminFeeAmount);
 
         uint256 _convertedCurrencyAdminFeeAmount =
             DSMath.wmul(
                 _adminFeeAmount,
                 prices.getETHPrice(_adminBudget.currency)
             );
-
-        // If drawn from the overflow, subtract the amount claimable and withdraw the funds.
-        ticketStore.subtractClaimable(
-            _budget.projectId,
-            Math.mulDiv(
-                ticketStore.claimable(_budget.projectId),
-                _tappedAmount.add(_adminFeeAmount),
-                _projectOverflow
-            )
-        );
-
-        // Add to the claimable amount.
-        ticketStore.addClaimable(_adminBudget.projectId, _adminFeeAmount);
 
         // Print admin tickets for the tapper.
         ticketStore.print(
@@ -518,11 +508,11 @@ contract Juicer is IJuicer, IERC721Receiver {
 
         emit Tap(
             _budgetId,
-            _budget.projectId,
+            _projectId,
             _beneficiary,
             msg.sender,
             _amount,
-            _budget.currency,
+            _currency,
             _tappedAmount
         );
     }
@@ -661,18 +651,6 @@ contract Juicer is IJuicer, IERC721Receiver {
         emit SetOverflowYielder(_newOverflowYielder);
     }
 
-    /** 
-      @notice Allows this contract to receive a project.
-    */
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes memory
-    ) external pure override returns (bytes4) {
-        return this.onERC721Received.selector;
-    }
-
     // --- private transactions --- //
 
     /** 
@@ -707,18 +685,5 @@ contract Juicer is IJuicer, IERC721Receiver {
             overflowYielder.withdraw(_amount.sub(depositable), weth);
             depositable = 0;
         }
-    }
-
-    /** 
-      @notice Adds overflow without batching.
-      @param _budget The budget to add overflow for.
-      @param _amount The amount of overflow to add.
-    */
-    function _add(Budget.Data memory _budget, uint256 _amount) private {
-        // Add to the claimable amount.
-        ticketStore.addClaimable(_budget.projectId, _amount);
-
-        // The overflow can be deposited to earn yield.
-        depositable = depositable.add(_amount);
     }
 }

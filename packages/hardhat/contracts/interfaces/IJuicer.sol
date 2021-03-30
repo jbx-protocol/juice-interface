@@ -47,7 +47,6 @@ interface IBudgetController {
     ) external returns (uint256 budgetId);
 
     function tap(
-        uint256 _budgetId,
         uint256 _projectId,
         uint256 _amount,
         uint256 _currency,

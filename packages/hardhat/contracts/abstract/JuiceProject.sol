@@ -180,14 +180,12 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     /** 
       @notice Taps the funds available.
-      @param _budgetId The ID of the Budget to tap.
       @param _amount The amount to tap.
       @param _currency The currency to tap.
       @param _beneficiary The address to transfer the funds to.
       @param _minReturnedETH The minimum number of Eth that the amount should be valued at.
     */
     function tap(
-        uint256 _budgetId,
         uint256 _amount,
         uint256 _currency,
         address _beneficiary,
@@ -202,7 +200,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             uint256 _modMinReturnedETH =
                 Math.mulDiv(_minReturnedETH, mods[_i].percent, 1000);
             juicer.tap(
-                _budgetId,
                 projectId,
                 _modCut,
                 _currency,
@@ -214,7 +211,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         }
         // Tap the budget for the beneficiary.
         juicer.tap(
-            _budgetId,
             projectId,
             _amount.sub(_modsCut),
             _currency,

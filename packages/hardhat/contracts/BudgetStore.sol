@@ -149,15 +149,17 @@ contract BudgetStore is Administered, IBudgetStore {
 
     /** 
       @notice Tracks a project tapping its funds.
-      @param _budgetId The ID of the budget being tapped.
+      @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
+      @param _currency The currency of the amount.
       @param _currentOverflow The current amount of overflow the project has.
       @param _ethPrice The current price of ETH.
-      @return budget The budget that is being tapped.
+      @return id The ID of the budget that was tapped.
       @return convertedEthAmount The amount of eth tapped.
+      @return feeAmount The amount of eth that should be charged as a fee.
     */
     function tap(
-        uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
         uint256 _currentOverflow,
@@ -166,14 +168,15 @@ contract BudgetStore is Administered, IBudgetStore {
         external
         override
         onlyAdmin
-        returns (Budget.Data memory budget, uint256 convertedEthAmount)
+        returns (
+            uint256 id,
+            uint256 convertedEthAmount,
+            uint256 feeAmount
+        )
     {
         // Get a reference to the Budget being tapped.
-        Budget.Data storage _budget = budgets[_budgetId];
+        Budget.Data storage _budget = _ensureActiveBudget(_projectId);
 
-        require(_budget.id > 0, "BudgetStore::tap: NOT_FOUND");
-        require(_budget._hasStarted(), "BudgetStore::tap: TOO_EARLY");
-        require(!_budget._hasExpired(), "BudgetStore::tap: TOO_LATE");
         require(
             _currency == _budget.currency,
             "BudgetStore::tap: UNEXPECTED_CURRENCY"
@@ -187,8 +190,12 @@ contract BudgetStore is Administered, IBudgetStore {
             _currentOverflow
         );
 
-        // Return the budget.
-        budget = _budget;
+        // The amount that should be charged to the admin.
+        feeAmount = Math.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
+            convertedEthAmount
+        );
+
+        id = _budget.id;
     }
 
     /** 

@@ -40,12 +40,18 @@ interface IBudgetStore {
     ) external returns (Budget.Data memory budget);
 
     function tap(
-        uint256 _budgetId,
+        uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
         uint256 _minReturnedETH,
         uint256 _currentOverflow
-    ) external returns (Budget.Data memory budget, uint256 convertedEthAmount);
+    )
+        external
+        returns (
+            uint256 id,
+            uint256 convertedEthAmount,
+            uint256 adminEthFeeAmount
+        );
 
     function setFee(uint256 _fee) external;
 }

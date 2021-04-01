@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.7.6;
 
+import "@openzeppelin/contracts/math/SafeMath.sol";
+
 // a library for performing various math operations
 
 library Math {
@@ -25,6 +27,15 @@ library Math {
         } else if (y != 0) {
             z = 1;
         }
+    }
+
+    // Finds the number that increases x the same proportion that y increases z.
+    function proportion(
+        uint256 x,
+        uint256 y,
+        uint256 z
+    ) internal pure returns (uint256) {
+        return SafeMath.sub(mulDiv(x, SafeMath.add(y, z), z), x);
     }
 
     // From https://medium.com/coinmonks/math-in-solidity-part-3-percents-and-proportions-4db014e080b1

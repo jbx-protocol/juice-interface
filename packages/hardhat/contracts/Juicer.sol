@@ -67,6 +67,7 @@ contract Juicer is IJuicer {
     mapping(address => bool) private migrationContractIsAllowed;
 
     // The current cumulative amount of tokens redeemable by each project's Tickets.
+    // NOTE: a project's balance will decrease if it leaves its processableAmount unprocessed with a high yielding yielder.
     mapping(uint256 => uint256) private processableAmount;
 
     // The current cumulative amount of tokens redeemable by each project's Tickets.
@@ -131,15 +132,34 @@ contract Juicer is IJuicer {
         override
         returns (uint256)
     {
+        uint256 _processableAmount = processableAmount[_projectId];
+        uint256 _adjustedBalance = balance(false).sub(_processableAmount);
+        uint256 _adjustesYieldingBalance =
+            balance(true).sub(_processableAmount);
+
+        // Make the calculation from the state without the processable amount.
+        uint256 _adjustedProcessableAmount =
+            _processableAmount == 0
+                ? 0
+                : Math.proportion(
+                    _adjustedBalance,
+                    _processableAmount,
+                    _adjustesYieldingBalance
+                );
+
         uint256 _totalAmount =
-            processedAmount[_projectId].add(processableAmount[_projectId]).sub(
+            processedAmount[_projectId].add(_adjustedProcessableAmount).sub(
                 distributedAmount[_projectId]
             );
 
         // The overflow is the proportion of the total available to what's claimable for the project.
         return
             _includeYield
-                ? Math.mulDiv(balance(true), _totalAmount, balance(false))
+                ? Math.mulDiv(
+                    _adjustesYieldingBalance,
+                    _totalAmount,
+                    _adjustedBalance
+                )
                 : _totalAmount;
     }
 
@@ -518,7 +538,7 @@ contract Juicer is IJuicer {
         require(_beneficiary != address(0), "Juicer::tap: ZERO_ADDRESS");
 
         // Process any processable payments to make sure all reserved tickets are distributed.
-        _process(_projectId);
+        _processPendingAmounts(_projectId);
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _projectBalance = balanceOf(_projectId, true);
@@ -540,7 +560,7 @@ contract Juicer is IJuicer {
         );
 
         // Add to the amount that has now been distributed by the project.
-        // Since the `processedAmount` doesn't include any earned yield but the `_tappedAmount` and `_adminFeeAmount` might include earned yields, the correct proportion must be subtracted.
+        // Since the `distributedAmount` doesn't include any earned yield but the `_tappedAmount` and `_adminFeeAmount` might include earned yields, the correct proportion must be subtracted.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             Math.mulDiv(
                 // The current distributable amount...
@@ -626,7 +646,7 @@ contract Juicer is IJuicer {
         );
 
         // Process any remaining funds if necessary.
-        if (processableAmount[_projectId] < 0) _process(_projectId);
+        _processPendingAmounts(_projectId);
 
         // Add the amount to what has now been distributed.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
@@ -666,25 +686,10 @@ contract Juicer is IJuicer {
         // If there is an yielder, deposit to it.
         if (yielder != IYielder(0)) yielder.deposit(_amount, weth);
 
-        uint256 _balance = balance(false);
-        uint256 _yieldingBalance = balance(true);
-
-        // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
-        uint256 _addAmount =
-            Math
-                .mulDiv(
-                // The total balance in the contract...
-                _balance,
-                // multiplied by the yield adjusted percent increase that this addition causes.
-                _yieldingBalance.add(_amount),
-                _yieldingBalance
-            )
-            // subtracted by the balance.
-                .sub(_balance);
-
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
-            _addAmount
+            // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
+            Math.proportion(balance(false), _amount, balance(true))
         );
     }
 
@@ -745,12 +750,14 @@ contract Juicer is IJuicer {
       @notice Processes payments by making sure the project has received all reserved tickets, and updating the state variables.
       @param _projectId The ID of the project to process payments for.
     */
-    function _process(uint256 _projectId) private {
-        // Get a reference to the current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
-
+    function _processPendingAmounts(uint256 _projectId) private {
         // Get a referrence to the amount current processable for this project.
         uint256 _processableAmount = processableAmount[_projectId];
+
+        if (_processableAmount == 0) return;
+
+        // Get a reference to the current budget.
+        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
 
         // Print tickets for the project owner if needed.
         if (_budget.reserved > 0) {
@@ -763,7 +770,7 @@ contract Juicer is IJuicer {
 
         // Add the processable amount to what is now distributable to tappers and redeemers for this project.
         processedAmount[_projectId] = processedAmount[_projectId].add(
-            _processableAmount
+            Math.proportion(balance(false), _processableAmount, balance(true))
         );
 
         // Clear the processable amount for this project.

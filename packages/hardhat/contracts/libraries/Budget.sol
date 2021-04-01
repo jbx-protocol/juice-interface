@@ -201,7 +201,7 @@ library Budget {
             // Amount must be within what is drawable.
             _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
                 // Amount must be within what is still tappable.
-                _amount <= _tappableAmount(_self, _ethPrice),
+                _amount <= _tappableAmount(_self),
             "Budget: INSUFFICIENT_FUNDS"
         );
 
@@ -214,29 +214,6 @@ library Budget {
         // Add the converted currency amount to the Budget's total amount.
         _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
     }
-
-    // /**
-    //     @notice Adds an amount to the budget.
-    //     @param _self The Budget to add an amount to.
-    //     @param _amount An amount to add. In ETH.
-    //     @param _ethPrice The current price of ETH.
-    //     @return convertedCurrencyAmount The amount of currency that was converted from the added ETH.
-    //     @return overflow The amount of new overflow that results.
-    // */
-    // function _add(
-    //     Data storage _self,
-    //     uint256 _amount,
-    //     uint256 _ethPrice
-    // ) internal returns (uint256 convertedCurrencyAmount, uint256 overflow) {
-    //     // Add the amount to the Budget.
-    //     _self.total = _self.total.add(_amount);
-
-    //     // The amount being paid in the currency of the budget.
-    //     convertedCurrencyAmount = DSMath.wmul(_amount, _ethPrice);
-
-    //     // If this budget is fully tapped, record the overflow.
-    //     overflow = _self.tappedTarget == _self.target ? _amount : 0;
-    // }
 
     /** 
         @notice Check to see if the given Budget has started.
@@ -264,14 +241,9 @@ library Budget {
     /** 
         @notice Returns the amount available for the given Budget's project to tap in to.
         @param _self The Budget to make the calculation for.
-        @param _ethPrice The current price of ETH for the given budget.
         @return The resulting amount.
     */
-    function _tappableAmount(Data memory _self, uint256 _ethPrice)
-        private
-        pure
-        returns (uint256)
-    {
+    function _tappableAmount(Data memory _self) private pure returns (uint256) {
         if (_self.tappedTarget == _self.target) return 0;
         return
             Math.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)).sub(

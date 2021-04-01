@@ -297,7 +297,7 @@ contract BudgetStore is Administered, IBudgetStore {
             newBudget._basedOn(_latestBudget);
         } else {
             newBudget.projectId = _projectId;
-            newBudget.weight = 10E25;
+            newBudget.weight = 10E28;
             newBudget.number = 1;
             newBudget.previous = 0;
         }

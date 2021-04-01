@@ -23,7 +23,6 @@ interface IBudgetController {
         address indexed payer,
         address beneficiary,
         uint256 amount,
-        uint256 convertedCurrencyAmount,
         uint256 currency,
         string note,
         uint256 fee
@@ -66,10 +65,6 @@ interface ITicketsController {
         uint256 returnAmount,
         IERC20 returnToken
     );
-
-    function claimable(uint256 _projectId) external view returns (uint256);
-
-    function totalClaimable() external view returns (uint256);
 
     function getClaimableAmount(
         address _holder,
@@ -121,6 +116,23 @@ interface IJuicer is IBudgetController, ITicketsController {
     function overflowYielder() external view returns (IOverflowYielder);
 
     function weth() external view returns (IERC20);
+
+    function processableAddedAmount(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function processableSubtractedAmount(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function distributableAmount(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function totalDistributableAmount() external view returns (uint256);
 
     function balanceOf(uint256 _projectId) external view returns (uint256);
 

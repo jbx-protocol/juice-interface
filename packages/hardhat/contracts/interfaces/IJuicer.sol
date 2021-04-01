@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./ITicketStore.sol";
 import "./IBudgetStore.sol";
-import "./IOverflowYielder.sol";
+import "./IYielder.sol";
 
 import "./IProjects.sol";
 
@@ -66,7 +66,7 @@ interface ITicketsController {
         IERC20 returnToken
     );
 
-    function getClaimableAmount(
+    function claimableAmount(
         address _holder,
         uint256 _amount,
         uint256 _projectId
@@ -101,7 +101,7 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     event AddToMigrationAllowList(address indexed allowed);
 
-    event SetOverflowYielder(IOverflowYielder indexed newOverflowYielder);
+    event SetYielder(IYielder indexed newYielder);
 
     event Deposit(uint256 depositable, IERC20 token);
 
@@ -113,39 +113,25 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function ticketStore() external view returns (ITicketStore);
 
-    function overflowYielder() external view returns (IOverflowYielder);
+    function yielder() external view returns (IYielder);
 
     function weth() external view returns (IERC20);
 
-    function processableAddedAmount(uint256 _projectId)
+    function balanceOf(uint256 _projectId, bool _includeYield)
         external
         view
         returns (uint256);
-
-    function processableSubtractedAmount(uint256 _projectId)
-        external
-        view
-        returns (uint256);
-
-    function distributableAmount(uint256 _projectId)
-        external
-        view
-        returns (uint256);
-
-    function totalDistributableAmount() external view returns (uint256);
-
-    function balanceOf(uint256 _projectId) external view returns (uint256);
 
     function currentOverflowOf(uint256 _projectId)
         external
         view
         returns (uint256);
 
-    function balance() external view returns (uint256);
+    function balance(bool _includeYield) external view returns (uint256);
 
     function setAdmin(address _admin) external;
 
-    function setOverflowYielder(IOverflowYielder _newOverflowYielder) external;
+    function setYielder(IYielder _yielder) external;
 
     function migrate(uint256 _projectId, IJuicer _to) external;
 
@@ -180,7 +166,7 @@ interface IJuicer is IBudgetController, ITicketsController {
         IERC20 _token
     ) external;
 
-    function deposit() external;
+    function depositIntoYielder() external;
 
     function allowMigration(address _contract) external;
 }

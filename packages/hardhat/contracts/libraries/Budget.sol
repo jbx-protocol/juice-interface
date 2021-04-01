@@ -201,7 +201,7 @@ library Budget {
             // Amount must be within what is drawable.
             _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
                 // Amount must be within what is still tappable.
-                _amount <= _tappableAmount(_self),
+                _amount <= _ownerTappableAmount(_self),
             "Budget: INSUFFICIENT_FUNDS"
         );
 
@@ -239,11 +239,15 @@ library Budget {
     // --- private views --- //
 
     /** 
-        @notice Returns the amount available for the given Budget's project to tap in to.
+        @notice Returns the amount available for the project owner to tap in to.
         @param _self The Budget to make the calculation for.
         @return The resulting amount.
     */
-    function _tappableAmount(Data memory _self) private pure returns (uint256) {
+    function _ownerTappableAmount(Data memory _self)
+        private
+        pure
+        returns (uint256)
+    {
         if (_self.tappedTarget == _self.target) return 0;
         return
             Math.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)).sub(

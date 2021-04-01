@@ -47,15 +47,12 @@ contract Admin is JuiceProject {
     }
 
     /** 
-      @notice Sets a new contract that will yield returns on the juicer's overflow.
-      @param _juicer The juicer to change the recalibration target of.
-      @param _overflowYielder The new overflow yielder.
+      @notice Sets a new contract that will yield returns on the juicer's funds.
+      @param _juicer The juicer to change the yielder of.
+      @param _yielder The new yielder.
     */
-    function setOverflowYielder(
-        IJuicer _juicer,
-        IOverflowYielder _overflowYielder
-    ) external onlyOwner {
-        _juicer.setOverflowYielder(_overflowYielder);
+    function setYielder(IJuicer _juicer, IYielder _yielder) external onlyOwner {
+        _juicer.setYielder(_yielder);
     }
 
     /**

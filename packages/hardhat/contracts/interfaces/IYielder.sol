@@ -6,10 +6,12 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IJuicer.sol";
 
 // In constructure, give unlimited access for Juicer to take money from this.
-interface IOverflowYielder {
+interface IYielder {
     function juicer() external view returns (IJuicer);
 
-    function getBalance(IERC20 _token) external view returns (uint256);
+    function getDelegatedBalance(IERC20 _token) external view returns (uint256);
+
+    function getTotalBalance(IERC20 _token) external view returns (uint256);
 
     function getRate(IERC20 _token) external view returns (uint128);
 

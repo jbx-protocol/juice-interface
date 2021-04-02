@@ -40,6 +40,6 @@ interface IBudgetBallot {
     function vote(
         uint256 _budgetId,
         bool _yay,
-        uint256 _amount
+        uint256 _count
     ) external;
 }

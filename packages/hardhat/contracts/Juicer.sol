@@ -71,10 +71,10 @@ contract Juicer is IJuicer {
     mapping(uint256 => uint256) private processableAmount;
 
     // The current cumulative amount of tokens redeemable by each project's Tickets.
-    mapping(uint256 => uint256) private distributedAmount;
+    mapping(uint256 => uint256) private processedAmount;
 
     // The current cumulative amount of tokens redeemable by each project's Tickets.
-    mapping(uint256 => uint256) private processedAmount;
+    mapping(uint256 => uint256) private distributedAmount;
 
     // --- public properties --- //
 
@@ -538,7 +538,7 @@ contract Juicer is IJuicer {
         require(_beneficiary != address(0), "Juicer::tap: ZERO_ADDRESS");
 
         // Process any processable payments to make sure all reserved tickets are distributed.
-        _processPendingAmounts(_projectId);
+        _processPendingAmount(_projectId);
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _projectBalance = balanceOf(_projectId, true);
@@ -646,7 +646,7 @@ contract Juicer is IJuicer {
         );
 
         // Process any remaining funds if necessary.
-        _processPendingAmounts(_projectId);
+        _processPendingAmount(_projectId);
 
         // Add the amount to what has now been distributed.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
@@ -750,7 +750,7 @@ contract Juicer is IJuicer {
       @notice Processes payments by making sure the project has received all reserved tickets, and updating the state variables.
       @param _projectId The ID of the project to process payments for.
     */
-    function _processPendingAmounts(uint256 _projectId) private {
+    function _processPendingAmount(uint256 _projectId) private {
         // Get a referrence to the amount current processable for this project.
         uint256 _processableAmount = processableAmount[_projectId];
 

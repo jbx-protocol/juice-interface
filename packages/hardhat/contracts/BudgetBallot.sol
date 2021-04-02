@@ -68,12 +68,12 @@ contract BudgetBallot is IBudgetBallot {
       @notice Vote for yay or nay on a budget reconfiguration proposal.
       @param _budgetId The ID for a Budget with a proposed reconfiguration.
       @param _yay True if voting for the proposal, false if voting against.
-      @param _amount The amount of staked tickets to allocate to this vote.
+      @param _count The number of staked tickets to allocate to this vote.
     */
     function vote(
         uint256 _budgetId,
         bool _yay,
-        uint256 _amount
+        uint256 _count
     ) external override {
         IBudgetStore _budgetStore = juicer.budgetStore();
         ITicketStore _ticketStore = juicer.ticketStore();
@@ -103,7 +103,7 @@ contract BudgetBallot is IBudgetBallot {
         uint256 _addableVotes = _stakedAmount.sub(_votedAmount);
 
         require(
-            _addableVotes > _amount,
+            _addableVotes > _count,
             "Juicer::vote: INSUFFICIENT_VOTE_AMOUNT"
         );
 
@@ -111,11 +111,11 @@ contract BudgetBallot is IBudgetBallot {
         votes[_budgetId][_budget.configured][_yay] = votes[_budgetId][
             _budget.configured
         ][_yay]
-            .add(_amount);
+            .add(_count);
         votesByAddress[_budgetId][_budget.configured][
             msg.sender
         ] = votesByAddress[_budgetId][_budget.configured][msg.sender].add(
-            _amount
+            _count
         );
 
         // Lock the tickets until the budget's standby period is over.

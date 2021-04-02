@@ -434,18 +434,18 @@ contract Juicer is IJuicer {
         // Get a reference to the current budget.
         Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
 
+        // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
+        processableAmount[_budget.projectId] = processableAmount[
+            _budget.projectId
+        ]
+            .add(_amount);
+
         // Print tickets for the beneficiary.
         ticketStore.print(
             _beneficiary,
             _projectId,
             _budget._weighted(_amount, uint256(1000).sub(_budget.reserved))
         );
-
-        // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
-        processableAmount[_budget.projectId] = processableAmount[
-            _budget.projectId
-        ]
-            .add(_amount);
 
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);

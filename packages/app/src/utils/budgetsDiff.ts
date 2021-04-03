@@ -19,7 +19,6 @@ export const budgetsDiff = (a?: Budget, b?: Budget) => {
     a?.tappedTarget.eq(b?.tappedTarget ?? -1) &&
     a?.tappedTotal.eq(b?.tappedTotal ?? -1) &&
     a?.target.eq(b?.target ?? -1) &&
-    a?.total.eq(b?.total ?? -1) &&
     a?.weight.eq(b?.weight ?? -1)
   )
 }

@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
 import { CardSection } from '../shared/CardSection'
-import BudgetDetail from './BudgetDetail'
+import FundingTerm from './FundingTerm'
 
 export default function UpcomingBudget({
   projectId,
@@ -56,11 +56,7 @@ export default function UpcomingBudget({
       ) : null}
       <CardSection>
         {queuedBudget ? (
-          <BudgetDetail
-            showDetail={true}
-            isOwner={isOwner}
-            budget={queuedBudget}
-          />
+          <FundingTerm showDetail={true} budget={queuedBudget} />
         ) : (
           <div style={{ padding: 25 }}>No upcoming budget</div>
         )}

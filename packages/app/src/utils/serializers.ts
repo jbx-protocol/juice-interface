@@ -13,7 +13,6 @@ export const serializeBudget = (budget: Budget): SerializedBudget => ({
   previous: budget.previous.toString(),
   target: fromWad(budget.target),
   currency: budget.currency.toString(),
-  total: fromWad(budget.total),
   start: budget.start.toString(),
   duration: budget.duration.toString(),
   tappedTarget: fromWad(budget.tappedTarget),
@@ -28,8 +27,8 @@ export const serializeBudget = (budget: Budget): SerializedBudget => ({
 })
 
 export const deserializeBudget = (
-  budget: SerializedBudget | null | undefined,
-): Budget | null | undefined =>
+  budget: SerializedBudget | undefined,
+): Budget | undefined =>
   budget
     ? {
         ...budget,
@@ -39,7 +38,6 @@ export const deserializeBudget = (
         previous: BigNumber.from(budget.previous),
         target: parseWad(budget.target),
         currency: BigNumber.from(budget.currency),
-        total: parseWad(budget.total),
         start: BigNumber.from(budget.start),
         duration: BigNumber.from(budget.duration),
         tappedTarget: parseWad(budget.tappedTarget),

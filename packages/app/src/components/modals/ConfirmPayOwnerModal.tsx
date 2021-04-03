@@ -88,9 +88,6 @@ export default function ConfirmPayOwnerModal({
       width={800}
     >
       <Descriptions column={1} bordered>
-        <Descriptions.Item label="Project id">
-          {projectId.toString()}
-        </Descriptions.Item>
         <Descriptions.Item label="Pay amount">
           {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
         </Descriptions.Item>

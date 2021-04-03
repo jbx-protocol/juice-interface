@@ -29,24 +29,26 @@ export default function Dashboard() {
 
   const { userAddress } = useContext(UserContext)
 
-  let { handle }: { handle?: string } = useParams()
-
-  const handleBytes = useMemo(() => {
-    if (!handle) return
-
-    let bytes = utils.formatBytes32String(handle)
-
-    while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
-      bytes = bytes.substring(0, bytes.length - 2)
-    }
-
-    return bytes
-  }, [handle])
+  const { handle }: { handle?: string } = useParams()
 
   const projectId = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'handleResolver',
-    args: handleBytes ? [handleBytes] : null,
+    args: useMemo(() => {
+      if (!handle) return null
+
+      let bytes = utils.formatBytes32String(handle.toLowerCase())
+
+      while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
+        bytes = bytes.substring(0, bytes.length - 2)
+      }
+
+      return [bytes]
+    }, [handle]),
+    callback: useCallback(
+      (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
+      [projectExists, setProjectExists],
+    ),
   })
 
   const owner = useContractReader<string>({
@@ -55,8 +57,6 @@ export default function Dashboard() {
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const isOwner = userAddress === owner
-
   const project = useContractReader<ProjectIdentifier>({
     contract: ContractName.Projects,
     functionName: 'getIdentifier',
@@ -64,13 +64,6 @@ export default function Dashboard() {
     valueDidChange: useCallback(
       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
       [],
-    ),
-    callback: useCallback(
-      (_project?: ProjectIdentifier) => {
-        if (projectExists !== undefined) return
-        setProjectExists(!!_project)
-      },
-      [projectExists],
     ),
   })
 
@@ -90,7 +83,9 @@ export default function Dashboard() {
       : undefined,
   })
 
-  if (projectExists === undefined || !projectId) return <Loading />
+  const isOwner = userAddress === owner
+
+  if (projectExists === undefined) return <Loading />
 
   if (!projectExists) {
     return (
@@ -110,6 +105,8 @@ export default function Dashboard() {
     paddingTop: padding.app,
     paddingBottom: 60,
   }
+
+  if (!projectId) return null
 
   return (
     <div>
@@ -152,7 +149,7 @@ export default function Dashboard() {
           <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
             <div style={{ ...layouts.maxWidth }}>
               <div style={{ maxWidth: 600 }}>
-                <BudgetsHistory isOwner={isOwner} startId={budget?.previous} />
+                <BudgetsHistory startId={budget?.previous} />
               </div>
             </div>
           </Tabs.TabPane>

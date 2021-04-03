@@ -34,7 +34,6 @@ export const editingProjectSlice = createSlice({
       previous: BigNumber.from(0),
       target: parseWad('10000'),
       currency: BigNumber.from(1),
-      total: parseWad('0'),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
       duration: BigNumber.from(
         process.env.NODE_ENV === 'production' ? 30 * SECONDS_IN_DAY : 300,

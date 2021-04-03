@@ -7,7 +7,6 @@ export interface Budget {
   previous: BigNumber
   target: BigNumber
   currency: BigNumber // 0 ETH, 1 USD
-  total: BigNumber
   start: BigNumber
   duration: BigNumber
   tappedTarget: BigNumber

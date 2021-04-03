@@ -75,7 +75,7 @@ export default function Rewards({
   })
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'getOverflow',
+    functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(
@@ -98,6 +98,7 @@ export default function Rewards({
     ),
   })
 
+  // TODO Juicer.claimableAmount
   const onChangeRedeemAmount = useCallback(
     (amount: string | undefined) => {
       setRedeemAmount(amount)
@@ -179,18 +180,6 @@ export default function Rewards({
     </div>
   )
 
-  const awaitingIssueTicketsTag = (
-    <Tag
-      style={{
-        background: 'transparent',
-        borderColor: colors.grape,
-        color: colors.grape,
-      }}
-    >
-      ERC-20 tickets not minted yet
-    </Tag>
-  )
-
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   return (
@@ -198,8 +187,8 @@ export default function Rewards({
       <Statistic
         title={
           <TooltipLabel
-            label="Unclaimed overflow"
-            tip="This project's overflowed funds accumulate here."
+            label="Project overflow"
+            tip="Surplus funds for this project that can be claimed by ticket holders."
             placement="bottom"
           />
         }
@@ -233,74 +222,59 @@ export default function Rewards({
               `${share ?? 0}% of ${formatWad(ticketSupply) ??
                 0} tickets in circulation`,
             )}
+            <Space style={{ marginTop: 10 }}>
+              <Input
+                type="number"
+                disabled={redeemDisabled}
+                placeholder="0"
+                value={redeemAmount}
+                suffix={
+                  redeemDisabled ? null : (
+                    <InputAccessoryButton
+                      content="MAX"
+                      onClick={() =>
+                        onChangeRedeemAmount(fromWad(ticketsBalance))
+                      }
+                    />
+                  )
+                }
+                max={fromWad(ticketsBalance)}
+                onChange={e => onChangeRedeemAmount(e.target.value)}
+              />
+              <Button
+                type="primary"
+                onClick={() => setRedeemModalVisible(true)}
+                disabled={redeemDisabled}
+              >
+                Redeem tickets
+              </Button>
+
+              <Modal
+                title="Redeem tickets"
+                visible={redeemModalVisible}
+                onOk={() => {
+                  redeem()
+                  setRedeemModalVisible(false)
+                }}
+                onCancel={() => {
+                  onChangeRedeemAmount(undefined)
+                  setRedeemModalVisible(false)
+                }}
+                okText="Confirm"
+                width={540}
+              >
+                <Space direction="vertical">
+                  <div>Redeem {redeemAmount} tickets</div>
+                  <div>
+                    You will receive minimum {formatWad(minRedeemAmount)}{' '}
+                    {weth?.symbol}
+                  </div>
+                </Space>
+              </Modal>
+            </Space>
           </div>
         )}
       ></Statistic>
-
-      <Statistic
-        title={
-          redeemDisabled ? (
-            <TooltipLabel
-              label="Redeem tickets"
-              tip="Tickets can be redeemed once this project has overflow."
-            />
-          ) : (
-            'Redeem tickets'
-          )
-        }
-        valueRender={() => (
-          <Space>
-            <Input
-              type="number"
-              disabled={redeemDisabled}
-              placeholder="0"
-              value={redeemAmount}
-              suffix={
-                redeemDisabled ? null : (
-                  <InputAccessoryButton
-                    content="MAX"
-                    onClick={() =>
-                      onChangeRedeemAmount(fromWad(ticketsBalance))
-                    }
-                  />
-                )
-              }
-              max={fromWad(ticketsBalance)}
-              onChange={e => onChangeRedeemAmount(e.target.value)}
-            />
-            <Button
-              type="primary"
-              onClick={() => setRedeemModalVisible(true)}
-              disabled={redeemDisabled}
-            >
-              Redeem
-            </Button>
-
-            <Modal
-              title="Redeem tickets"
-              visible={redeemModalVisible}
-              onOk={() => {
-                redeem()
-                setRedeemModalVisible(false)
-              }}
-              onCancel={() => {
-                onChangeRedeemAmount(undefined)
-                setRedeemModalVisible(false)
-              }}
-              okText="Confirm"
-              width={540}
-            >
-              <Space direction="vertical">
-                <div>Redeem {redeemAmount} tickets</div>
-                <div>
-                  You will receive minimum {formatWad(minRedeemAmount)}{' '}
-                  {weth?.symbol}
-                </div>
-              </Space>
-            </Modal>
-          </Space>
-        )}
-      />
     </Space>
   )
 }

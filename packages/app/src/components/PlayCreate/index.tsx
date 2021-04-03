@@ -3,14 +3,12 @@ import { Button, Drawer, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
-import { ContractName } from 'constants/contract-name'
 import { secondsMultiplier } from 'constants/seconds-in-day'
 import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector, useEditingBudgetSelector } from 'hooks/AppSelector'
-import useContractReader from 'hooks/ContractReader'
 import { BudgetCurrency } from 'models/budget-currency'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
@@ -28,6 +26,7 @@ export default function PlayCreate() {
     onNeedProvider,
     userAddress,
     network,
+    adminFeePercent,
   } = useContext(UserContext)
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [projectInfoModalVisible, setProjectInfoModalVisible] = useState<
@@ -130,12 +129,6 @@ export default function PlayCreate() {
     resetFundingDetailsForm()
   }, [])
 
-  const adminFeePercent = useContractReader<number>({
-    contract: ContractName.BudgetStore,
-    functionName: 'fee',
-    formatter: (val: BigNumber) => val?.toNumber(),
-  })
-
   function createProject() {
     if (!transactor || !contracts) return onNeedProvider()
 
@@ -168,7 +161,10 @@ export default function PlayCreate() {
       ],
       {
         onDone: () => dispatch(editingProjectActions.setLoading(false)),
-        onConfirmed: () => setCreateProjectModalVisible(false),
+        onConfirmed: () => {
+          setCreateProjectModalVisible(false)
+          window.location.hash = '/p/' + editingProject.handle
+        },
       },
     )
   }
@@ -305,7 +301,7 @@ export default function PlayCreate() {
         width={600}
         onCancel={() => setCreateProjectModalVisible(false)}
       >
-        <ConfirmCreateProject adminFeePercent={adminFeePercent} />
+        <ConfirmCreateProject />
       </Modal>
     </div>
   )

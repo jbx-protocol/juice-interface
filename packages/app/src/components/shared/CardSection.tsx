@@ -1,12 +1,17 @@
 import { shadowCard } from 'constants/styles/shadow-card'
 import { ChildElems } from 'models/child-elems'
+import { CSSProperties } from 'react'
 
 export function CardSection({
   header,
+  padded,
   children,
+  style,
 }: {
   header?: string
+  padded?: boolean
   children?: ChildElems
+  style?: CSSProperties
 }) {
   return (
     <div>
@@ -24,6 +29,8 @@ export function CardSection({
         style={{
           ...shadowCard,
           overflow: 'hidden',
+          ...style,
+          ...(padded ? { padding: 20 } : {}),
         }}
       >
         {children}

@@ -4,17 +4,15 @@ import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
 import { useCallback, useState } from 'react'
+import { budgetCurrencySymbol } from 'utils/budgetCurrency'
 import { budgetsDiff } from 'utils/budgetsDiff'
 
-import BudgetDetail from './BudgetDetail'
 import { CardSection } from '../shared/CardSection'
 
 export default function BudgetsHistory({
   startId,
-  isOwner,
 }: {
-  startId?: BigNumber
-  isOwner: boolean
+  startId: BigNumber | undefined
 }) {
   const [budgets, setBudgets] = useState<Budget[]>([])
   const [poolNumbers, setPoolNumbers] = useState<BigNumber[]>([])
@@ -54,8 +52,14 @@ export default function BudgetsHistory({
   const budgetElems = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       {budgets.length ? (
-        budgets.map((budget, index) => (
-          <BudgetDetail isOwner={isOwner} key={index} budget={budget} />
+        budgets.map(budget => (
+          <div key={budget.id.toString()}>
+            <div>#{budget.id.toString()}</div>
+            <div>
+              Tapped: {budgetCurrencySymbol(budget.currency)}
+              {budget.tappedTarget}
+            </div>
+          </div>
         ))
       ) : (
         <div style={{ padding: 25 }}>No budget history</div>

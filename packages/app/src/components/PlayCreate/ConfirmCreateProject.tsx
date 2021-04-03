@@ -1,5 +1,7 @@
 import { Space, Statistic } from 'antd'
+import { UserContext } from 'contexts/userContext'
 import { useAppSelector, useEditingBudgetSelector } from 'hooks/AppSelector'
+import { useContext } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
 import {
   formattedNum,
@@ -9,11 +11,9 @@ import {
 } from 'utils/formatCurrency'
 import { orEmpty } from 'utils/orEmpty'
 
-export default function ConfirmCreateProject({
-  adminFeePercent,
-}: {
-  adminFeePercent: number | undefined
-}) {
+export default function ConfirmCreateProject() {
+  const { adminFeePercent } = useContext(UserContext)
+
   const editingBudget = useEditingBudgetSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,

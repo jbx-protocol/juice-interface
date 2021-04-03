@@ -56,10 +56,10 @@ function App() {
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const adminFeePercent = useContractReader<number>({
+  const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.BudgetStore,
     functionName: 'fee',
-    formatter: (val: BigNumber) => val?.toNumber(),
+    provider: signingProvider,
   })
 
   const userHasProjects = useContractReader<boolean>({

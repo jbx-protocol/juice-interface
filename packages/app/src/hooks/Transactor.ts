@@ -140,6 +140,7 @@ export function useTransactor({
           key: new Date().valueOf().toString(),
           message: 'Transaction failed',
           description: e.message,
+          duration: 0,
         })
 
         options?.onDone && options.onDone()

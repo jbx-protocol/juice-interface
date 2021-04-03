@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 import { Transactor } from 'hooks/Transactor'
@@ -13,7 +14,7 @@ export const UserContext: React.Context<{
   transactor?: Transactor
   onNeedProvider: () => Promise<void>
   userHasProjects?: boolean
-  adminFeePercent?: number
+  adminFeePercent?: BigNumber
   weth?: Partial<{
     contract: Contract
     symbol: string

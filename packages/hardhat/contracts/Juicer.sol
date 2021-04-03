@@ -19,24 +19,19 @@ import "./libraries/DSMath.sol";
 import "./libraries/Math.sol";
 
 /**
-  @notice This contract manages all funds in the Juice ecosystem.
-  @dev  1 (optional). A project project issues their Tickets at the ticket store.
-        2. A project configures their first Budget at the budget store.
-        3. Any address (end user or smart contract) can contribute funds to a Budget in this Juicer contract.
-           In return, your contributors receive some of your project's tickets. 
+  @notice This contract manages the Juice ecosystem, and manages the flow of funds.
+  @dev  1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 
+           You can specify your funding target in USD or ETH.
+        2. Anyone can pay your project in ETH, which gives them Tickets.
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
-              - The contributed amount. The more someone contributes, the more Tickets they'll receive.
+              - The contributed amount of ETH. The more someone contributes, the more Tickets they'll receive.
               - The target amount of your Budget. The bigger your Budget's target amount, the fewer tickets that'll be minted for each token paid.
               - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate`. 
                 This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
                 current Budget than to future budgets.
-        4. You can collect any funds made to your project's Budget within its configured target.
-           Any overflow will be accounted for seperately. 
-        5. Your project's Ticket holders can redeem their Tickets for a share of your project's accumulated overflow along a bonding curve. 
-           The bonding curve starts at 38.2%, meaning each ticket can be redeemed for 38.2% of its proportial overflow.
-           For example, if there were 100 tickets circulating and 100 DAI of unclaimed overflow, 10 tickets could be redeemed for 3.82 DAI.
-           The rest is left to share between the remaining ticket hodlers.
-        6. You can reconfigure your Budget at any time with the approval of your Ticket holders, 
+        3. You can tap ETH up to the specified amount. 
+           Any overflow can be claimed by Ticket holders by redeeming tickets, otherwise it rolls over to your next funding period.
+        6. You can reconfigure your project at any time with the approval of your Ticket holders, 
            The new configuration will go into effect once the current budget one expires.
 
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.

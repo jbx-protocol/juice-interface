@@ -440,7 +440,7 @@ contract Juicer is IJuicer {
         ticketStore.print(
             _beneficiary,
             _projectId,
-            _budget._weighted(_amount, uint256(1000).sub(_budget.reserved))
+            _budget._weighted(_amount, uint256(1000).add(_budget.reserved))
         );
 
         // Transfer the weth from the sender to this contract.

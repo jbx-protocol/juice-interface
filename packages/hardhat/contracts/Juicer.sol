@@ -16,7 +16,8 @@ import "./abstract/JuiceProject.sol";
 import "./TicketStore.sol";
 
 import "./libraries/DSMath.sol";
-import "./libraries/Math.sol";
+import "./libraries/ProportionMath.sol";
+import "./libraries/FullMath.sol";
 
 /**
   @notice This contract manages the Juice ecosystem, and manages the flow of funds.
@@ -136,7 +137,7 @@ contract Juicer is IJuicer {
         uint256 _adjustedProcessableAmount =
             _processableAmount == 0
                 ? 0
-                : Math.proportion(
+                : ProportionMath.find(
                     _adjustedBalance,
                     _processableAmount,
                     _adjustesYieldingBalance
@@ -150,7 +151,7 @@ contract Juicer is IJuicer {
         // The overflow is the proportion of the total available to what's claimable for the project.
         return
             _includeYield
-                ? Math.mulDiv(
+                ? FullMath.mulDiv(
                     _adjustesYieldingBalance,
                     _totalAmount,
                     _adjustedBalance
@@ -221,9 +222,9 @@ contract Juicer is IJuicer {
 
         return
             // The proportion along the bonding curve.
-            Math.mulDiv(
+            FullMath.mulDiv(
                 // The proportion of held tickets compared to the total supply.
-                Math.mulDiv(_currentOverflow, _count, _totalSupply),
+                FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
                 // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
                 _budget.bondingCurveRate,
                 1000
@@ -488,7 +489,7 @@ contract Juicer is IJuicer {
         // Add to the amount that has now been distributed by the project.
         // Since the `redeemedAmount` shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
-            Math.mulDiv(
+            FullMath.mulDiv(
                 // The current balance amount with no yield considerations...
                 balanceOf(_projectId, false),
                 // multiplied by the ratio of the amount redeemed to the total yielding balance of the project.
@@ -557,7 +558,7 @@ contract Juicer is IJuicer {
         // Add to the amount that has now been distributed by the project.
         // Since the `distributedAmount` doesn't include any earned yield but the `_tappedAmount` and `_adminFeeAmount` might include earned yields, the correct proportion must be subtracted.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
-            Math.mulDiv(
+            FullMath.mulDiv(
                 // The current distributable amount...
                 balanceOf(_projectId, false),
                 // multiplied by the ratio of the amount being tapped and used as a fee to the total yielding balance of the project.
@@ -684,7 +685,7 @@ contract Juicer is IJuicer {
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
-            Math.proportion(balance(false), _amount, balance(true))
+            ProportionMath.find(balance(false), _amount, balance(true))
         );
     }
 
@@ -765,7 +766,11 @@ contract Juicer is IJuicer {
 
         // Add the processable amount to what is now distributable to tappers and redeemers for this project.
         processedAmount[_projectId] = processedAmount[_projectId].add(
-            Math.proportion(balance(false), _processableAmount, balance(true))
+            ProportionMath.find(
+                balance(false),
+                _processableAmount,
+                balance(true)
+            )
         );
 
         // Clear the processable amount for this project.

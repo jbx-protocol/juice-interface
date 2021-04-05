@@ -195,10 +195,10 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _modsMinReturnedETH = 0;
         for (uint256 _i = 0; _i < mods.length; _i++) {
             // The amount to send towards mods.
-            uint256 _modCut = Math.mulDiv(_amount, mods[_i].percent, 1000);
+            uint256 _modCut = FullMath.mulDiv(_amount, mods[_i].percent, 1000);
             // The minimum amount of ETH to send towards insurance.
             uint256 _modMinReturnedETH =
-                Math.mulDiv(_minReturnedETH, mods[_i].percent, 1000);
+                FullMath.mulDiv(_minReturnedETH, mods[_i].percent, 1000);
             juicer.tap(
                 projectId,
                 _modCut,

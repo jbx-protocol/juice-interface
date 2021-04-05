@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
 import "../abstract/JuiceProject.sol";
-import "../libraries/Math.sol";
+import "../libraries/FullMath.sol";
 
 /** 
   @dev 
@@ -144,7 +144,7 @@ contract Shwotime is JuiceProject {
 
         uint256 _total = _tickets.price.mul(_tickets.sold);
         uint256 _collectable =
-            Math.mulDiv(_total, uint256(1000).sub(fee), 1000);
+            FullMath.mulDiv(_total, uint256(1000).sub(fee), 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
         takeFee(_total.sub(_collectable), msg.sender, _note);

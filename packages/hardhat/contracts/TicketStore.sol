@@ -5,8 +5,7 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-import "./libraries/DSMath.sol";
-import "./libraries/Math.sol";
+import "./libraries/CompareMath.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/ITicketStore.sol";
@@ -92,7 +91,7 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
             "TicketStore::setTimelock: UNAUTHORIZED"
         );
         //Replace the current timelock if it is after the currently set one.
-        timelocks[_projectId][_holder] = Math.max(
+        timelocks[_projectId][_holder] = CompareMath.max(
             timelocks[_projectId][_holder],
             _expiry
         );

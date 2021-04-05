@@ -48,7 +48,7 @@ contract TicketStore is ERC1155, Administered, ITicketStore {
         _mint(_for, _projectId, _amount, "");
 
         // Increase the total supply.
-        totalSupply[_projectId] = totalSupply[_projectId].sub(_amount);
+        totalSupply[_projectId] = totalSupply[_projectId].add(_amount);
     }
 
     /** 

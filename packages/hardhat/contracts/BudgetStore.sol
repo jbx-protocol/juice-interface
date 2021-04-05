@@ -188,7 +188,7 @@ contract BudgetStore is Administered, IBudgetStore {
         );
 
         // The amount that should be charged to the admin.
-        feeAmount = Math.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
+        feeAmount = FullMath.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
             convertedEthAmount
         );
 

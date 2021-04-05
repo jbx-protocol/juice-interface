@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-import "./Math.sol";
+import "./FullMath.sol";
 import "./DSMath.sol";
 import "./../interfaces/IBudgetBallot.sol";
 
@@ -144,7 +144,7 @@ library Budget {
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory _self) internal pure returns (uint256) {
-        return Math.mulDiv(_self.weight, _self.discountRate, 1000);
+        return FullMath.mulDiv(_self.weight, _self.discountRate, 1000);
     }
 
     /** 
@@ -160,8 +160,8 @@ library Budget {
         uint256 _percentage
     ) internal pure returns (uint256) {
         return
-            Math.mulDiv(
-                DSMath.wdiv(DSMath.wmul(_self.weight, _amount), _self.target),
+            FullMath.mulDiv(
+                FullMath.mulDiv(_self.weight, _amount, _self.target),
                 _percentage,
                 1000
             );
@@ -250,8 +250,8 @@ library Budget {
     {
         if (_self.tappedTarget == _self.target) return 0;
         return
-            Math.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)).sub(
-                _self.tappedTarget
-            );
+            FullMath
+                .mulDiv(_self.target, 1000, uint256(1000).add(_self.fee))
+                .sub(_self.tappedTarget);
     }
 }

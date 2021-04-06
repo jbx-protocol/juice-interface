@@ -206,10 +206,10 @@ export default function Rewards({
         title={
           <TooltipLabel
             label="Your wallet"
-            tip="Tickets can be redeemed for your contract's overflow on a bonding
+            tip="Credits can be redeemed for your contract's overflow on a bonding
             curve – a ticket is redeemable for 38.2% of its proportional
             overflowed tokens. Meaning, if there are 100 overflow tokens available
-            and 100 of your tickets in circulation, 10 tickets could be redeemed
+            and 100 of your credits in circulation, 10 credits could be redeemed
             for 3.82 of the overflow tokens. The rest is left to share between the
             remaining ticket hodlers."
             placement="bottom"
@@ -217,10 +217,10 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            <div>{formatWad(ticketsBalance ?? 0)} tickets</div>
+            <div>{formatWad(ticketsBalance ?? 0)} credits</div>
             {subText(
               `${share ?? 0}% of ${formatWad(ticketSupply) ??
-                0} tickets in circulation`,
+                0} credits in circulation`,
             )}
             <Space style={{ marginTop: 10 }}>
               <Input
@@ -246,11 +246,11 @@ export default function Rewards({
                 onClick={() => setRedeemModalVisible(true)}
                 disabled={redeemDisabled}
               >
-                Redeem tickets
+                Redeem credits
               </Button>
 
               <Modal
-                title="Redeem tickets"
+                title="Redeem credits"
                 visible={redeemModalVisible}
                 onOk={() => {
                   redeem()
@@ -264,7 +264,7 @@ export default function Rewards({
                 width={540}
               >
                 <Space direction="vertical">
-                  <div>Redeem {redeemAmount} tickets</div>
+                  <div>Redeem {redeemAmount} credits</div>
                   <div>
                     You will receive minimum {formatWad(minRedeemAmount)}{' '}
                     {weth?.symbol}

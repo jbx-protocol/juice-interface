@@ -1,4 +1,3 @@
-import { CaretDownOutlined } from '@ant-design/icons'
 import { BudgetCurrency } from 'models/budget-currency'
 import React, { useEffect, useState } from 'react'
 import { budgetCurrencyName } from 'utils/budgetCurrency'
@@ -42,14 +41,8 @@ export default function BudgetTargetInput({
           setCurrency(newCurrency)
           onCurrencyChange(newCurrency)
         }}
-        content={
-          <span>
-            {budgetCurrencyName(_currency)}{' '}
-            <CaretDownOutlined
-              style={{ fontSize: 10, marginLeft: -4, marginRight: -4 }}
-            />
-          </span>
-        }
+        content={<span>{budgetCurrencyName(_currency)}</span>}
+        withArrow={true}
         placement="suffix"
       />
     </div>

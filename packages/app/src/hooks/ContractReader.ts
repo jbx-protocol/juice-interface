@@ -61,7 +61,7 @@ export default function useContractReader<V>({
         const newValue = _formatter(result)
 
         if (_valueDidChange(value, newValue)) {
-          console.log('📗 New >', functionName, newValue)
+          console.log('📗 New >', functionName, args, newValue)
           setValue(newValue)
           _callback(newValue)
         }

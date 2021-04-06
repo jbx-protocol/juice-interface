@@ -9,7 +9,7 @@ import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useState } from 'react'
 
 import FundingTerm from './FundingTerm'
-import OwnerControls from './OwnerControls'
+import Term from './Term'
 import Pay from './Pay'
 import Rewards from './Rewards'
 
@@ -34,7 +34,7 @@ export default function Project({
 
   if (!projectId || !project) return null
 
-  const gutter = 30
+  const gutter = 40
 
   return (
     <div style={style}>
@@ -88,21 +88,19 @@ export default function Project({
 
       <Row gutter={gutter}>
         <Col xs={24} md={12}>
-          <Rewards projectId={projectId} />
+          <Pay budget={budget} projectId={projectId} project={project} />
 
-          <div style={{ marginTop: gutter }}>
-            <Pay budget={budget} projectId={projectId} project={project} />
-          </div>
+          <CardSection padded style={{ marginTop: gutter }}>
+            <Term
+              projectId={projectId}
+              budget={budget}
+              showDetail={showCurrentDetail}
+            />
+          </CardSection>
         </Col>
 
         <Col xs={24} md={12}>
-          <CardSection>
-            <div style={{ padding: 20 }}>
-              <OwnerControls projectId={projectId} budget={budget} />
-            </div>
-
-            <FundingTerm budget={budget} showDetail={showCurrentDetail} />
-          </CardSection>
+          <Rewards projectId={projectId} />
         </Col>
       </Row>
 

@@ -1,6 +1,7 @@
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { secondsMultiplier } from 'constants/seconds-in-day'
@@ -49,7 +50,7 @@ export default function DefineProject() {
     if (fields.duration !== undefined)
       dispatch(
         editingProjectActions.setDuration(
-          (parseFloat(fields.duration) * secondsMultiplier).toString(),
+          (parseFloat(fields.duration || '0') * secondsMultiplier).toString(),
         ),
       )
     if (fields.currency !== undefined)
@@ -77,7 +78,7 @@ export default function DefineProject() {
               />
             </Form.Item>
             <Form.Item
-              extra="The amount of money you want to make it happen"
+              extra="The money you want to make it happen"
               name="target"
             >
               <BudgetTargetInput
@@ -93,34 +94,25 @@ export default function DefineProject() {
                 }}
               />
             </Form.Item>
-            <Form.Item>
-              <div style={{ display: 'flex' }}>
-                <Checkbox
-                  defaultChecked={isRecurring}
-                  onChange={e => {
-                    dispatch(
-                      editingProjectActions.setIsRecurring(e.target.checked),
-                    )
-                  }}
-                ></Checkbox>
-                <div style={{ marginLeft: 10 }}>
-                  Use a recurring funding target
-                </div>
-              </div>
+            <Form.Item extra="The life cycle of your project" name="duration">
+              <FormattedNumberInput
+                placeholder="30"
+                value={form.getFieldValue('duration')}
+                suffix="days"
+                accessory={
+                  <InputAccessoryButton
+                    content={isRecurring ? 'recurring' : 'one-time'}
+                    withArrow={true}
+                    onClick={() =>
+                      dispatch(
+                        editingProjectActions.setIsRecurring(!isRecurring),
+                      )
+                    }
+                  />
+                }
+                onChange={val => form.setFieldsValue({ duration: val })}
+              />
             </Form.Item>
-            {isRecurring ? (
-              <Form.Item
-                extra="The time period of this recurring budget"
-                name="duration"
-              >
-                <FormattedNumberInput
-                  placeholder="30"
-                  value={form.getFieldValue('duration')}
-                  suffix="days"
-                  onChange={val => form.setFieldsValue({ duration: val })}
-                />
-              </Form.Item>
-            ) : null}
           </Form>
 
           <div
@@ -156,11 +148,11 @@ export default function DefineProject() {
             to work. All extra money received is overflow.
             <br />
             <br />
-            Users, patrons, and investors get tickets alongside you when they
-            pay for {bold(editingProject?.name, 'your project')}.
+            Users, patrons, and investors get credits when they pay{' '}
+            {bold(editingProject?.name, 'your project')}.
             <br />
             <br />
-            All overflow is redistributed back to ticket holders.
+            Credits can be exchanged for overflow.
           </div>
         </Col>
       </Row>

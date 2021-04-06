@@ -62,7 +62,7 @@ export default function BudgetsHistory({
           </div>
         ))
       ) : (
-        <div style={{ padding: 25 }}>No budget history</div>
+        <div style={{ padding: 25 }}>No term history</div>
       )}
     </Space>
   )

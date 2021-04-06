@@ -23,7 +23,7 @@ export default function Landing() {
   )
 
   const listData = [
-    "Ethereum projects",
+    'Ethereum projects',
     'Internet public goods',
     'Open source businesses',
     'Indie artists, journalists, & researchers',
@@ -76,19 +76,19 @@ export default function Landing() {
               >
                 {bigHeader('Get yourself paid on the open internet')}
                 <div>
-
-                <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
-                  Projects on Juice say up-front how much cashflow they want to
-                  crush what they do. Once they're earning more than that, the
-                  ETH overflow can be claimed by their users, patrons, & investors alongside them.{' '}
-                  <a
-                    href="https://twitter.com/hashtag/DeWork"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    #DeWork
-                  </a>
-                </p>
+                  <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
+                    Projects on Juice say up-front how much cashflow they want
+                    to crush what they do. Once they're earning more than that,
+                    the ETH overflow can be claimed by their users, patrons, &
+                    investors alongside them.{' '}
+                    <a
+                      href="https://twitter.com/hashtag/DeWork"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      #DeWork
+                    </a>
+                  </p>
                 </div>
 
                 <div
@@ -149,6 +149,7 @@ export default function Landing() {
           style={{
             ...wrapper,
             marginTop: 100,
+            marginBottom: 120,
           }}
         >
           <div style={{ marginBottom: 40 }}>
@@ -158,11 +159,59 @@ export default function Landing() {
         </div>
       </section>
 
+      <section
+        style={{
+          padding: 30,
+          paddingTop: 80,
+          paddingBottom: 80,
+          background: colors.light,
+          color: colors.dark,
+        }}
+      >
+        <div style={wrapper}>
+          <Row align="middle" gutter={40}>
+            <Col xs={24} md={14}>
+              <div style={{ display: 'grid', rowGap: 20 }}>
+                {bigHeader('Should you Juice?')}
+                <div>
+                  <p className="ol">Almost definitely.</p>
+                  <p className="ol">
+                    With Juice, we end up getting community-driven online goods
+                    and services with no ads, data integrity, and business
+                    operation accountability. All built by motivated punks
+                    getting transparently paid what they ask for, while
+                    rewarding everyone who helped create the overflow an
+                    opportunity to capitalize on it.
+                  </p>
+                  <a
+                    className="ol"
+                    href="https://twitter.com/hashtag/dework"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: colors.secondaryDark }}
+                  >
+                    #DeWork
+                  </a>
+                </div>
+              </div>
+            </Col>
+
+            <Col xs={24} md={10}>
+              <img
+                style={{ maxWidth: '100%' }}
+                src="/assets/banana_dwgj.png"
+                alt="Banana chilling and saying 'DO WORK GET JUICED'"
+              />
+            </Col>
+          </Row>
+        </div>
+      </section>
+
       <section style={section}>
         <div
           style={{
             ...wrapper,
-            marginTop: 140,
+            marginTop: 80,
           }}
         >
           <Row gutter={60}>
@@ -225,63 +274,12 @@ export default function Landing() {
       <section style={wrapper}>
         <div
           style={{
-            marginTop: 180,
-            marginBottom: 60,
             fontWeight: 600,
             textAlign: 'center',
           }}
         >
           Create value for your community, crush your craft, make your money,
           and lift up your people.<br></br>
-          <span style={{ fontSize: '30px' }}>🧃⚡️</span>
-        </div>
-      </section>
-
-      <section
-        style={{
-          padding: 30,
-          paddingTop: 80,
-          paddingBottom: 80,
-          background: colors.light,
-          color: colors.dark,
-        }}
-      >
-        <div style={wrapper}>
-          <Row align="middle" gutter={40}>
-            <Col xs={24} md={14}>
-              <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader('Should you Juice?')}
-                <div>
-                  <p className="ol">Almost definitely.</p>
-                  <p className="ol">
-                    With Juice, we end up getting community-driven online goods
-                    and services with no ads, data integrity, and business
-                    operation accountability. All built by motivated punks
-                    getting transparently paid what they ask for, while
-                    rewarding everyone who helped create the overflow an
-                    opportunity to capitalize on it.
-                  </p>
-                  <a
-                    className="ol"
-                    href="https://twitter.com/hashtag/dework"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: colors.secondaryDark }}
-                  >
-                    #DeWork
-                  </a>
-                </div>
-              </div>
-            </Col>
-
-            <Col xs={24} md={10}>
-              <img
-                style={{ maxWidth: '100%' }}
-                src="/assets/banana_dwgj.png"
-                alt="Banana chilling and saying 'DO WORK GET JUICED'"
-              />
-            </Col>
-          </Row>
         </div>
       </section>
 
@@ -296,12 +294,6 @@ export default function Landing() {
           }}
         >
           <Faq />
-        </div>
-      </section>
-
-      <section>
-        <div style={{ ...wrapper, padding: 30 }}>
-          <Tweets />
         </div>
       </section>
 

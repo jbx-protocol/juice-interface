@@ -1,11 +1,12 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Collapse, Descriptions } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { colors } from 'constants/styles/colors'
 import { Budget } from 'models/budget'
 import moment from 'moment'
-import React, { useMemo } from 'react'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
-import { formattedNum, formatWad, fromPerMille } from 'utils/formatCurrency'
+import React from 'react'
+import { fromPerMille } from 'utils/formatCurrency'
+import { detailedTimeString } from 'utils/formatTime'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
@@ -16,18 +17,6 @@ export default function FundingTerm({
   budget: Budget | undefined
   showDetail?: boolean
 }) {
-  const converter = useCurrencyConverter()
-
-  const currency = budgetCurrencyName(budget?.currency)
-
-  const formattedTappedTotal = useMemo(
-    () =>
-      currency === 'USD'
-        ? formattedNum(converter.weiToUsd(budget?.tappedTotal))
-        : formatWad(budget?.tappedTotal),
-    [budget?.tappedTotal, converter, currency],
-  )
-
   if (!budget) return null
 
   const formatDate = (dateMillis: number) =>
@@ -42,21 +31,50 @@ export default function FundingTerm({
       .toNumber(),
   )
 
+  const isRecurring = budget?.discountRate.gt(0)
+
+  const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
+  const secondsLeft = budget.start.add(budget.duration).sub(now)
+  const isEnded = secondsLeft.lte(0)
+
   return (
     <Collapse
       style={{
         background: 'transparent',
         border: 'none',
         margin: 0,
-        padding: 4,
+        padding: 0,
       }}
+      className="no-pad"
       defaultActiveKey={showDetail ? '0' : undefined}
       accordion
     >
       <CollapsePanel
         key={'0'}
         style={{ border: 'none', padding: 0 }}
-        header={<div>Term details</div>}
+        header={
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            Term {budget.number.toString()}
+            {isRecurring && !isEnded ? (
+              <div
+                style={{
+                  opacity: 0.5,
+                  color: colors.textPrimary,
+                  fontWeight: 400,
+                  fontSize: '.8rem',
+                }}
+              >
+                {detailedTimeString(secondsLeft)} left
+              </div>
+            ) : null}
+          </div>
+        }
       >
         <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
           <Descriptions.Item label="Start">

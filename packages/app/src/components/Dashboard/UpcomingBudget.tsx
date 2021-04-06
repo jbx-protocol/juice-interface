@@ -58,7 +58,7 @@ export default function UpcomingBudget({
         {queuedBudget ? (
           <FundingTerm showDetail={true} budget={queuedBudget} />
         ) : (
-          <div style={{ padding: 25 }}>No upcoming budget</div>
+          <div style={{ padding: 25 }}>No upcoming term</div>
         )}
       </CardSection>
     </Space>

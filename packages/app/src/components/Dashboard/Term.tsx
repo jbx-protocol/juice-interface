@@ -17,14 +17,17 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
-import { detailedTimeString } from 'utils/formatTime'
 
-export default function OwnerControls({
+import FundingTerm from './FundingTerm'
+
+export default function Term({
   projectId,
   budget,
+  showDetail,
 }: {
   projectId: BigNumber
   budget: Budget | undefined
+  showDetail?: boolean
 }) {
   const {
     weth,
@@ -127,15 +130,15 @@ export default function OwnerControls({
 
   if (!budget) return null
 
-  const isRecurring = budget?.discountRate.gt(0)
-
-  const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
-  const secondsLeft = budget.start.add(budget.duration).sub(now)
-  const isEnded = secondsLeft.lte(0)
-
   return (
     <div>
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
         <h3
           style={{
             fontWeight: 600,
@@ -143,17 +146,8 @@ export default function OwnerControls({
             marginRight: 20,
           }}
         >
-          {percentPaid}% Juiced in term {budget.number.toString()}
+          Paid
         </h3>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'baseline' }}>
-        <Progress
-          style={{ marginRight: 20 }}
-          percent={percentPaid}
-          showInfo={false}
-          strokeColor={colors.juiceOrange}
-        />
         <div>
           {budgetCurrencySymbol(budget.currency)}
           <span style={{ fontWeight: 600 }}>{formattedPaid}</span>/
@@ -161,38 +155,60 @@ export default function OwnerControls({
         </div>
       </div>
 
-      <div style={{ opacity: 0.5 }}>
-        {isRecurring && !isEnded ? (
-          <div>Next term in {detailedTimeString(secondsLeft)}</div>
-        ) : null}
+      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        <Progress
+          percent={percentPaid}
+          showInfo={false}
+          strokeColor={colors.juiceOrange}
+        />
       </div>
+
+      <FundingTerm budget={budget} showDetail={showDetail} />
 
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
-          marginTop: 20,
+          marginTop: 10,
         }}
       >
+        <Statistic
+          style={{ flex: 1 }}
+          title="Collected"
+          valueRender={() => (
+            <div>
+              {budgetCurrencySymbol(budget.currency)}
+              {formatWad(budget.tappedTarget) || '0'}
+            </div>
+          )}
+        />
+        <Statistic
+          style={{ flex: 1 }}
+          title="Available"
+          valueRender={() => (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
+            >
+              {budgetCurrencySymbol(budget.currency)}
+              {formatWad(balance) || '0'}
+              <Button
+                style={{ marginLeft: 10 }}
+                type="ghost"
+                size="small"
+                loading={loadingWithdraw}
+                onClick={() => setWithdrawModalVisible(true)}
+              >
+                Collect
+              </Button>
+            </div>
+          )}
+        />
         <div>
-          <Statistic
-            title="Available balance"
-            valueRender={() => (
-              <div>
-                {budgetCurrencySymbol(budget.currency)}
-                {formatWad(balance) || '0'}
-              </div>
-            )}
-          />
-        </div>
-        <div>
-          <Button
-            loading={loadingWithdraw}
-            onClick={() => setWithdrawModalVisible(true)}
-          >
-            Collect
-          </Button>
           <Modal
             title="Withdraw funds"
             visible={withdrawModalVisible}
@@ -218,7 +234,7 @@ export default function OwnerControls({
                       alignItems: 'center',
                     }}
                   >
-                    {currency}
+                    <span style={{ marginRight: 8 }}>{currency}</span>
                     <InputAccessoryButton
                       content="MAX"
                       onClick={() => setTapAmount(fromWad(balance))}
@@ -230,7 +246,8 @@ export default function OwnerControls({
                 onChange={e => setTapAmount(e.target.value)}
               />
               <div style={{ textAlign: 'right' }}>
-                {formatWad(converter.usdToWei(tapAmount))} {weth?.symbol}
+                {formatWad(converter.usdToWei(tapAmount)) || '--'}{' '}
+                {weth?.symbol}
               </div>
             </Space>
           </Modal>

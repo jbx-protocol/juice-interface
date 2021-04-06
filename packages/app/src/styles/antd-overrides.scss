@@ -129,3 +129,19 @@ input:-webkit-autofill-selected {
   -webkit-box-shadow: none !important;
   background-image: none !important;
 }
+
+.ant-collapse.no-pad {
+  .ant-collapse-content-box {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .ant-collapse-header {
+    padding-right: 0;
+    padding-left: 24px;
+
+    .ant-collapse-arrow {
+      left: 0;
+    }
+  }
+}

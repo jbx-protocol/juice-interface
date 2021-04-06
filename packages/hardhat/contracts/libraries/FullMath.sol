@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.0;
 
-// DIRECTLY FROM UNISWAP https://github.com/Uniswap/uniswap-v3-core/blob/f03155670ec1667406b83a539e23dcccf32a03bc/contracts/libraries/FullMath.sol#L14-L106
+// Attribution: https://github.com/Uniswap/uniswap-v3-core/blob/f03155670ec1667406b83a539e23dcccf32a03bc/contracts/libraries/FullMath.sol#L14-L106
 
 /// @title Contains 512-bit math functions
 /// @notice Facilitates multiplication and division that can have overflow of an intermediate value without any loss of precision

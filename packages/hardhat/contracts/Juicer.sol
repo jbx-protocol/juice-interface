@@ -130,7 +130,10 @@ contract Juicer is IJuicer {
     {
         uint256 _processableAmount = processableAmount[_projectId];
         uint256 _adjustedBalance = balance(false).sub(_processableAmount);
-        uint256 _adjustesYieldingBalance =
+
+        if (_adjustedBalance == 0) return 0;
+
+        uint256 _adjustedYieldingBalance =
             balance(true).sub(_processableAmount);
 
         // Make the calculation from the state without the processable amount.
@@ -140,7 +143,7 @@ contract Juicer is IJuicer {
                 : ProportionMath.find(
                     _adjustedBalance,
                     _processableAmount,
-                    _adjustesYieldingBalance
+                    _adjustedYieldingBalance
                 );
 
         uint256 _totalAmount =
@@ -152,7 +155,7 @@ contract Juicer is IJuicer {
         return
             _includeYield
                 ? FullMath.mulDiv(
-                    _adjustesYieldingBalance,
+                    _adjustedYieldingBalance,
                     _totalAmount,
                     _adjustedBalance
                 )
@@ -182,8 +185,14 @@ contract Juicer is IJuicer {
                 ? 0
                 : DSMath.wdiv(_tappable, prices.getETHPrice(_budget.currency));
 
+        // Get the current balance of the project.
+        uint256 _balanceOf = balanceOf(_projectId, true);
+
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return balanceOf(_projectId, true).sub(_reservedEthForTapping);
+        return
+            _balanceOf < _reservedEthForTapping
+                ? _balanceOf
+                : _balanceOf.sub(_reservedEthForTapping);
     }
 
     /**

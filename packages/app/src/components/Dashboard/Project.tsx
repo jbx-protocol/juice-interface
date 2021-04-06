@@ -88,11 +88,11 @@ export default function Project({
 
       <Row gutter={gutter}>
         <Col xs={24} md={12}>
-          <Pay budget={budget} projectId={projectId} project={project} />
+          <Rewards projectId={projectId} />
 
-          <CardSection padded style={{ marginTop: gutter }}>
-            <Rewards projectId={projectId} />
-          </CardSection>
+          <div style={{ marginTop: gutter }}>
+            <Pay budget={budget} projectId={projectId} project={project} />
+          </div>
         </Col>
 
         <Col xs={24} md={12}>

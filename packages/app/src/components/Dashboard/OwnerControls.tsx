@@ -43,7 +43,7 @@ export default function OwnerControls({
   const balance = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'balanceOf',
-    args: projectId ? [projectId.toHexString()] : null,
+    args: projectId ? [projectId.toHexString(), true] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(
       () =>
@@ -102,14 +102,14 @@ export default function OwnerControls({
   const currency = budgetCurrencyName(budget?.currency)
 
   const percentPaid = useMemo(() => {
-    if (!totalPaid || !budget?.target) return
+    if (!totalPaid || !budget?.target) return 0
 
     const total =
       currency === 'USD'
         ? parseWad(converter.weiToUsd(totalPaid)?.toString())
         : totalPaid
 
-    if (!total) return
+    if (!total) return 0
 
     return fracDiv(total.toString(), budget.target.toString()) * 100
   }, [budget?.target, totalPaid, currency, converter])
@@ -143,7 +143,7 @@ export default function OwnerControls({
             marginRight: 20,
           }}
         >
-          Collected in term {budget.number.toString()}
+          {percentPaid}% Juiced in term {budget.number.toString()}
         </h3>
       </div>
 

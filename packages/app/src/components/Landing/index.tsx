@@ -76,9 +76,9 @@ export default function Landing() {
               >
                 {bigHeader('Get yourself paid on the open internet')}
                 <div>
-                  <p style={{ fontWeight: 500, fontSize: '1.1rem' }}>
-                    Projects on Juice say up-front how much cashflow they want
-                    to crush what they do. Once they're earning more than that,
+                  <p style={{ fontWeight: 500, fontSize: '1.2rem' }}>
+                    Projects on Juice say up front how much cashflow they want
+                    in order to crush what they do. Once they're earning more than that,
                     the ETH overflow can be claimed by their users, patrons, &
                     investors alongside them.{' '}
                     <a
@@ -100,7 +100,7 @@ export default function Landing() {
                   }}
                 >
                   <p style={{ color: colors.juiceOrange, opacity: 1 }}>
-                    Juice is ideal for:
+                    Perfect for:
                   </p>
                   {listData.map((data, i) => (
                     <Space
@@ -120,7 +120,7 @@ export default function Landing() {
 
                 <div className="hide-mobile">
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Play with it
+                    Get started
                   </Button>
                 </div>
               </div>

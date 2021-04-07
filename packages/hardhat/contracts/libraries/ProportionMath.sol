@@ -12,6 +12,7 @@ library ProportionMath {
         uint256 y,
         uint256 z
     ) internal pure returns (uint256) {
+        require(z > 0);
         return SafeMath.sub(FullMath.mulDiv(x, SafeMath.add(y, z), z), x);
     }
 }

@@ -128,11 +128,23 @@ contract Juicer is IJuicer {
         override
         returns (uint256)
     {
+        // Get a reference to the balance.
+        uint256 _balance = balance(false);
+
+        // If there is no balance, the project must not have a balance either.
+        if (_balance == 0) return 0;
+
+        // Get a reference to the amount that is processable.
+        // The balance should include this amount, while adjusting for any amount of yield.
         uint256 _processableAmount = processableAmount[_projectId];
-        uint256 _adjustedBalance = balance(false).sub(_processableAmount);
 
-        if (_adjustedBalance == 0) return 0;
+        // If the balance is composed entirely of the processable amount, return it.
+        if (_balance == _processableAmount) return _processableAmount;
 
+        // The total balance in this contract without accounting for the processable amount.
+        uint256 _adjustedBalance = _balance.sub(_processableAmount);
+
+        // The total balance in this contract, including any generated yield, without accounting for the processable amount.
         uint256 _adjustedYieldingBalance =
             balance(true).sub(_processableAmount);
 
@@ -155,8 +167,8 @@ contract Juicer is IJuicer {
         return
             _includeYield
                 ? FullMath.mulDiv(
-                    _adjustedYieldingBalance,
                     _totalAmount,
+                    _adjustedYieldingBalance,
                     _adjustedBalance
                 )
                 : _totalAmount;

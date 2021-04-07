@@ -5,12 +5,14 @@ import { colors } from 'constants/styles/colors'
 import { Budget } from 'models/budget'
 import moment from 'moment'
 import React from 'react'
-import { fromPerMille } from 'utils/formatCurrency'
+import { budgetCurrencySymbol } from 'utils/budgetCurrency'
+import { formatWad, fromPerMille } from 'utils/formatCurrency'
 import { detailedTimeString } from 'utils/formatTime'
 
 import TooltipLabel from '../shared/TooltipLabel'
+import { secsToDays } from '../../utils/formatTime'
 
-export default function FundingTerm({
+export default function TermDetails({
   budget,
   showDetail,
 }: {
@@ -45,7 +47,7 @@ export default function FundingTerm({
         margin: 0,
         padding: 0,
       }}
-      className="no-pad"
+      className="minimal"
       defaultActiveKey={showDetail ? '0' : undefined}
       accordion
     >
@@ -53,30 +55,24 @@ export default function FundingTerm({
         key={'0'}
         style={{ border: 'none', padding: 0 }}
         header={
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            Term {budget.number.toString()}
-            {isRecurring && !isEnded ? (
-              <div
-                style={{
-                  opacity: 0.5,
-                  color: colors.textPrimary,
-                  fontWeight: 400,
-                  fontSize: '.8rem',
-                }}
-              >
-                {detailedTimeString(secondsLeft)} left
-              </div>
-            ) : null}
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Withdraw limit:</span>
+            <span>
+              {budgetCurrencySymbol(budget.currency)}
+              {formatWad(budget.target)} / {secsToDays(budget.duration)} days
+            </span>
           </div>
         }
       >
         <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
+          <Descriptions.Item label="Term">
+            {budget.number.toString()}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Time left">
+            {isRecurring && !isEnded ? detailedTimeString(secondsLeft) : '--'}
+          </Descriptions.Item>
+
           <Descriptions.Item label="Start">
             {formattedStartTime}
           </Descriptions.Item>

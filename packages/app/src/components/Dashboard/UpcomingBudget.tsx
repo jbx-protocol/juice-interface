@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
 import { CardSection } from '../shared/CardSection'
-import FundingTerm from './FundingTerm'
+import TermDetails from './TermDetails'
 
 export default function UpcomingBudget({
   projectId,
@@ -56,7 +56,7 @@ export default function UpcomingBudget({
       ) : null}
       <CardSection>
         {queuedBudget ? (
-          <FundingTerm showDetail={true} budget={queuedBudget} />
+          <TermDetails showDetail={true} budget={queuedBudget} />
         ) : (
           <div style={{ padding: 25 }}>No upcoming term</div>
         )}

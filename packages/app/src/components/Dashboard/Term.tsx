@@ -18,16 +18,20 @@ import {
   parseWad,
 } from 'utils/formatCurrency'
 
-import FundingTerm from './FundingTerm'
+import TermDetails from './TermDetails'
+import { secsToDays } from '../../utils/formatTime'
+import { trimLeft } from 'contracts/kovan/Admin.address'
 
 export default function Term({
   projectId,
   budget,
   showDetail,
+  isOwner,
 }: {
   projectId: BigNumber
   budget: Budget | undefined
   showDetail?: boolean
+  isOwner?: boolean
 }) {
   const {
     weth,
@@ -132,68 +136,35 @@ export default function Term({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-        }}
-      >
-        <h3
-          style={{
-            fontWeight: 600,
-            marginBottom: 0,
-            marginRight: 20,
-          }}
-        >
-          Paid
-        </h3>
+      <Space direction="vertical" style={{ width: '100%' }}>
         <div>
-          {budgetCurrencySymbol(budget.currency)}
-          <span style={{ fontWeight: 600 }}>{formattedPaid}</span>/
-          <span>{formatWad(budget.target)}</span>
+          <h2
+            style={{
+              fontWeight: 600,
+              margin: 0,
+            }}
+          >
+            {budgetCurrencySymbol(budget.currency)}
+            <span style={{ fontWeight: 600 }}>{formattedPaid}</span> paid
+          </h2>
+
+          <Progress
+            percent={percentPaid}
+            showInfo={false}
+            strokeColor={colors.juiceOrange}
+          />
         </div>
-      </div>
 
-      <div style={{ display: 'flex', alignItems: 'baseline' }}>
-        <Progress
-          percent={percentPaid}
-          showInfo={false}
-          strokeColor={colors.juiceOrange}
-        />
-      </div>
-
-      <FundingTerm budget={budget} showDetail={showDetail} />
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          marginTop: 10,
-        }}
-      >
-        <Statistic
-          style={{ flex: 1 }}
-          title="Collected"
-          valueRender={() => (
+        {isOwner ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            <div>Available:</div>
             <div>
-              {budgetCurrencySymbol(budget.currency)}
-              {formatWad(budget.tappedTarget) || '0'}
-            </div>
-          )}
-        />
-        <Statistic
-          style={{ flex: 1 }}
-          title="Available"
-          valueRender={() => (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-              }}
-            >
               {budgetCurrencySymbol(budget.currency)}
               {formatWad(balance) || '0'}
               <Button
@@ -203,56 +174,56 @@ export default function Term({
                 loading={loadingWithdraw}
                 onClick={() => setWithdrawModalVisible(true)}
               >
-                Collect
+                Withdraw
               </Button>
             </div>
-          )}
-        />
-        <div>
-          <Modal
-            title="Withdraw funds"
-            visible={withdrawModalVisible}
-            onOk={() => {
-              tap()
-              setWithdrawModalVisible(false)
-            }}
-            onCancel={() => {
-              setTapAmount(undefined)
-              setWithdrawModalVisible(false)
-            }}
-            okText="Withdraw"
-            width={540}
-          >
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <Input
-                name="withdrawable"
-                placeholder="0"
-                suffix={
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span style={{ marginRight: 8 }}>{currency}</span>
-                    <InputAccessoryButton
-                      content="MAX"
-                      onClick={() => setTapAmount(fromWad(balance))}
-                    />
-                  </div>
-                }
-                value={tapAmount}
-                max={fromWad(balance)}
-                onChange={e => setTapAmount(e.target.value)}
-              />
-              <div style={{ textAlign: 'right' }}>
-                {formatWad(converter.usdToWei(tapAmount)) || '--'}{' '}
-                {weth?.symbol}
+          </div>
+        ) : null}
+
+        <TermDetails budget={budget} showDetail={showDetail} />
+      </Space>
+
+      <Modal
+        title="Withdraw funds"
+        visible={withdrawModalVisible}
+        onOk={() => {
+          tap()
+          setWithdrawModalVisible(false)
+        }}
+        onCancel={() => {
+          setTapAmount(undefined)
+          setWithdrawModalVisible(false)
+        }}
+        okText="Withdraw"
+        width={540}
+      >
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Input
+            name="withdrawable"
+            placeholder="0"
+            suffix={
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ marginRight: 8 }}>{currency}</span>
+                <InputAccessoryButton
+                  content="MAX"
+                  onClick={() => setTapAmount(fromWad(balance))}
+                />
               </div>
-            </Space>
-          </Modal>
-        </div>
-      </div>
+            }
+            value={tapAmount}
+            max={fromWad(balance)}
+            onChange={e => setTapAmount(e.target.value)}
+          />
+          <div style={{ textAlign: 'right' }}>
+            {formatWad(converter.usdToWei(tapAmount)) || '--'} {weth?.symbol}
+          </div>
+        </Space>
+      </Modal>
     </div>
   )
 }

@@ -8,7 +8,7 @@ import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useState } from 'react'
 
-import FundingTerm from './FundingTerm'
+import TermDetails from './TermDetails'
 import Term from './Term'
 import Pay from './Pay'
 import Rewards from './Rewards'
@@ -95,6 +95,7 @@ export default function Project({
               projectId={projectId}
               budget={budget}
               showDetail={showCurrentDetail}
+              isOwner={isOwner}
             />
           </CardSection>
         </Col>

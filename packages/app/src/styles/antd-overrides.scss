@@ -130,7 +130,7 @@ input:-webkit-autofill-selected {
   background-image: none !important;
 }
 
-.ant-collapse.no-pad {
+.ant-collapse.minimal {
   .ant-collapse-content-box {
     padding-left: 0;
     padding-right: 0;
@@ -139,6 +139,7 @@ input:-webkit-autofill-selected {
   .ant-collapse-header {
     padding-right: 0;
     padding-left: 24px;
+    color: white;
 
     .ant-collapse-arrow {
       left: 0;

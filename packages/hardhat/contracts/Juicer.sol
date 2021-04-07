@@ -17,6 +17,7 @@ import "./TicketStore.sol";
 
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
+import "./libraries/CompareMath.sol";
 import "./libraries/FullMath.sol";
 
 /**
@@ -189,22 +190,19 @@ contract Juicer is IJuicer {
         Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
 
         // Get a reference to the amount still tappable in the current budget.
-        uint256 _tappable = _budget.target.sub(_budget.tappedTarget);
-
-        // The amount of ETH currently reserved for the owner to tap. This amount isn't considered overflow.
-        uint256 _reservedEthForTapping =
-            _tappable == 0
-                ? 0
-                : DSMath.wdiv(_tappable, prices.getETHPrice(_budget.currency));
+        uint256 _limit = _budget.target.sub(_budget.tappedTarget);
 
         // Get the current balance of the project.
         uint256 _balanceOf = balanceOf(_projectId, true);
 
+        // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
+        uint256 _ethLimit =
+            _limit == 0
+                ? 0
+                : DSMath.wdiv(_limit, prices.getETHPrice(_budget.currency));
+
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return
-            _balanceOf < _reservedEthForTapping
-                ? _balanceOf
-                : _balanceOf.sub(_reservedEthForTapping);
+        return _balanceOf < _ethLimit ? 0 : _balanceOf.sub(_ethLimit);
     }
 
     /**

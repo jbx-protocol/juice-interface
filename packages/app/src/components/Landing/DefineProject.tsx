@@ -122,7 +122,7 @@ export default function DefineProject() {
             }}
           >
             <Button type="primary" onClick={goToReview}>
-              See your project
+              Preview your project
             </Button>
           </div>
         </Col>

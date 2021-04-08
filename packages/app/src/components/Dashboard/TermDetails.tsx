@@ -65,12 +65,12 @@ export default function TermDetails({
         }
       >
         <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
-          <Descriptions.Item label="Term">
-            {budget.number.toString()}
-          </Descriptions.Item>
-
           <Descriptions.Item label="Time left">
             {isRecurring && !isEnded ? detailedTimeString(secondsLeft) : '--'}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Term">
+            {budget.number.toString()}
           </Descriptions.Item>
 
           <Descriptions.Item label="Start">
@@ -82,7 +82,7 @@ export default function TermDetails({
           <Descriptions.Item
             label={
               <TooltipLabel
-                label="Discount Rate"
+                label="Discount rate"
                 tip="The rate at which payments to future
             budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting time frame."
               />
@@ -100,6 +100,10 @@ export default function TermDetails({
             }
           >
             {fromPerMille(budget.reserved)}%
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Bonding curve rate">
+            {fromPerMille(budget.bondingCurveRate)}%
           </Descriptions.Item>
         </Descriptions>
       </CollapsePanel>

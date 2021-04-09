@@ -293,7 +293,7 @@ export default function Term({
           </div>
         </div>
 
-        {true ? (
+        {isOwner ? (
           <div
             style={{
               display: 'flex',

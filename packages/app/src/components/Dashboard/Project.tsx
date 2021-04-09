@@ -8,7 +8,6 @@ import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useState } from 'react'
 
-import TermDetails from './TermDetails'
 import Term from './Term'
 import Pay from './Pay'
 import Rewards from './Rewards'
@@ -28,9 +27,10 @@ export default function Project({
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
-  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [
+    editProjectModalVisible,
+    setEditProjectModalVisible,
+  ] = useState<boolean>(false)
 
   if (!projectId || !project) return null
 
@@ -90,7 +90,13 @@ export default function Project({
         <Col xs={24} md={12}>
           <Pay budget={budget} projectId={projectId} project={project} />
 
-          <CardSection padded style={{ marginTop: gutter }}>
+          <div style={{ marginTop: gutter }}>
+            <Rewards projectId={projectId} />
+          </div>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <CardSection padded>
             <Term
               projectId={projectId}
               budget={budget}
@@ -98,10 +104,6 @@ export default function Project({
               isOwner={isOwner}
             />
           </CardSection>
-        </Col>
-
-        <Col xs={24} md={12}>
-          <Rewards projectId={projectId} />
         </Col>
       </Row>
 

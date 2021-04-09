@@ -7,7 +7,7 @@ export default function TooltipLabel({
   tip,
   placement,
 }: {
-  label: string
+  label: string | JSX.Element
   tip?: string
   placement?: TooltipProps['placement']
 }) {

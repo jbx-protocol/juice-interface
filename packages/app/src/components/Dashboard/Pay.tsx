@@ -10,7 +10,16 @@ import { BudgetCurrency } from 'models/budget-currency'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import React, { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { fromWad } from 'utils/formatCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
+import {
+  formattedNum,
+  formatWad,
+  fromWad,
+  parsePerMille,
+  parseWad,
+} from 'utils/formatCurrency'
+import { weightedRate } from 'utils/math'
+import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({
   budget,
@@ -47,21 +56,6 @@ export default function Pay({
 
   const weiPayAmt = converter.usdToWei(payAmount)
 
-  const payAmountInWeth = (): string => {
-    try {
-      const amt = fromWad(weiPayAmt)?.split('.')
-      if (amt && amt[1]) {
-        // Always 4 decimal places
-        amt[1] = amt[1].substr(0, 4)
-        return amt.join('.')
-      }
-    } catch (e) {
-      console.log(e)
-    }
-
-    return '--'
-  }
-
   function pay() {
     if (!transactor || !contracts) return onNeedProvider()
     if (!allowance || !weiPayAmt) return
@@ -73,6 +67,17 @@ export default function Pay({
 
     setPayModalVisible(true)
   }
+
+  const formatReceivedTickets = (amount: BigNumber) =>
+    formatWad(
+      budget
+        ? weightedRate(
+            budget,
+            amount,
+            parsePerMille('100').sub(budget.reserved),
+          )
+        : undefined,
+    )
 
   if (!budget || !projectId || !project) return null
 
@@ -97,7 +102,26 @@ export default function Pay({
             />
 
             <div>
-              Paid as {payAmountInWeth()} {weth?.symbol}
+              Paid as <CurrencySymbol currency="0" />
+              {formatWad(weiPayAmt) || '0'}
+            </div>
+            <div>
+              Receive{' '}
+              {payAmount && weiPayAmt?.gt(0) ? (
+                formatReceivedTickets(
+                  budgetCurrencyName(budget.currency) === 'USD'
+                    ? weiPayAmt
+                    : parseWad(payAmount),
+                ) + ' credits'
+              ) : (
+                <span>
+                  {formatReceivedTickets(
+                    converter.usdToWei('1') ?? BigNumber.from(0),
+                  )}{' '}
+                  credits/
+                  <CurrencySymbol currency="1" />
+                </span>
+              )}
             </div>
           </div>
 
@@ -121,7 +145,6 @@ export default function Pay({
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
-        currency={budget?.currency.toString() as BudgetCurrency}
         usdAmount={parseFloat(payAmount ?? '0')}
       />
     </div>

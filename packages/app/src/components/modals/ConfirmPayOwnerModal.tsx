@@ -3,18 +3,16 @@ import { Descriptions, Modal } from 'antd'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { useContext } from 'react'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
-import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
+import { formatWad, parsePerMille } from 'utils/formatCurrency'
+import { weightedRate } from 'utils/math'
 
 export default function ConfirmPayOwnerModal({
   projectId,
   project,
   budget,
   visible,
-  currency,
   usdAmount,
   onSuccess,
   onCancel,
@@ -23,7 +21,6 @@ export default function ConfirmPayOwnerModal({
   project: ProjectIdentifier
   budget: Budget | null | undefined
   visible?: boolean
-  currency: BudgetCurrency | undefined
   usdAmount: number | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
@@ -51,32 +48,13 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const weightedRate = (
-    budget: Budget | null | undefined,
-    amount: BigNumber | undefined,
-    percentage: BigNumber | undefined,
-  ) => {
-    return budget && amount && percentage
-      ? budget.weight
-          .div(budget.target)
-          .mul(amount)
-          .mul(percentage)
-          .div(100)
-      : undefined
-  }
+  const receivedTickets = weightedRate(
+    budget,
+    weiAmount,
+    parsePerMille('100').sub(budget?.reserved ?? '0'),
+  )
 
-  const payerPercentage = budget
-    ? parsePerMille('100').sub(budget.reserved)
-    : undefined
-
-  const currencyAmount =
-    budgetCurrencyName(currency) === 'USD'
-      ? parseWad(converter.weiToUsd(weiAmount)?.toString())
-      : weiAmount
-
-  const receivedTickets = weightedRate(budget, currencyAmount, payerPercentage)
-
-  const ownerTickets = weightedRate(budget, currencyAmount, budget?.reserved)
+  const ownerTickets = weightedRate(budget, weiAmount, budget?.reserved)
 
   return (
     <Modal

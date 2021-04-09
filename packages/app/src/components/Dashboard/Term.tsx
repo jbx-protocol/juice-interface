@@ -1,13 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input, Modal, Progress, Space, Statistic } from 'antd'
+import { Button, Input, Modal, Progress, Space } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import TooltipLabel from 'components/shared/TooltipLabel'
 import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
-import React, { useContext, useMemo, useState } from 'react'
+import { BudgetCurrency } from 'models/budget-currency'
+import React, { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { budgetCurrencyName, budgetCurrencySymbol } from 'utils/budgetCurrency'
 import {
@@ -18,9 +20,9 @@ import {
   parseWad,
 } from 'utils/formatCurrency'
 
-import TermDetails from './TermDetails'
 import { secsToDays } from '../../utils/formatTime'
-import { trimLeft } from 'contracts/kovan/Admin.address'
+import CurrencySymbol from '../shared/CurrencySymbol'
+import TermDetails from './TermDetails'
 
 export default function Term({
   projectId,
@@ -51,6 +53,31 @@ export default function Term({
     contract: ContractName.Juicer,
     functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString(), true] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [[], projectId.toHexString()],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
+
+  const totalOverflow = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'currentOverflowOf',
+    args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(
       () =>
@@ -121,41 +148,152 @@ export default function Term({
     return fracDiv(total.toString(), budget.target.toString()) * 100
   }, [budget?.target, totalPaid, currency, converter])
 
-  const formattedPaid = useMemo(() => {
-    if (!totalPaid) return '0'
-
-    const amount =
-      currency === 'USD'
-        ? formattedNum(converter.weiToUsd(totalPaid))
-        : formatWad(totalPaid)
-
-    return amount ?? '0'
-  }, [currency, totalPaid, converter])
-
   if (!budget) return null
+
+  const smallHeader = (text: string) => (
+    <span style={{ fontSize: '.7rem', fontWeight: 500 }}>{text}</span>
+  )
+
+  const primaryPaidStyle: CSSProperties = {
+    fontSize: '1.2rem',
+    fontWeight: 500,
+  }
+
+  const periodWithdrawable = budget.target.sub(budget.tappedTarget)
 
   return (
     <div>
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
-          <h2
-            style={{
-              fontWeight: 600,
-              margin: 0,
-            }}
-          >
-            {budgetCurrencySymbol(budget.currency)}
-            <span style={{ fontWeight: 600 }}>{formattedPaid}</span> paid
-          </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              {smallHeader('PAID')}
+              {currency === 'USD' ? (
+                <div>
+                  <span
+                    style={{
+                      ...primaryPaidStyle,
+                      color: colors.juiceOrange,
+                    }}
+                  >
+                    <CurrencySymbol currency="1" />
+                    {formattedNum(converter.weiToUsd(totalPaid))}
+                  </span>{' '}
+                  <span style={{ opacity: 0.6 }}>
+                    <CurrencySymbol currency="0" />
+                    {formatWad(totalPaid)}
+                  </span>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    ...primaryPaidStyle,
+                    color: colors.juiceOrange,
+                  }}
+                >
+                  <CurrencySymbol currency="0" />
+                  {formatWad(totalPaid)}
+                </div>
+              )}
+            </div>
 
-          <Progress
-            percent={percentPaid}
-            showInfo={false}
-            strokeColor={colors.juiceOrange}
-          />
+            <div style={{ textAlign: 'right' }}>
+              {smallHeader('OVERFLOW')}
+              {currency === 'USD' ? (
+                <div>
+                  <span
+                    style={{
+                      ...primaryPaidStyle,
+                      color: colors.secondary,
+                    }}
+                  >
+                    <CurrencySymbol currency="1" />
+                    {formattedNum(converter.weiToUsd(totalOverflow))}
+                  </span>{' '}
+                  <span style={{ opacity: 0.6 }}>
+                    <CurrencySymbol currency="0" />
+                    {formatWad(totalOverflow ?? 0)}
+                  </span>
+                </div>
+              ) : (
+                <span
+                  style={{
+                    ...primaryPaidStyle,
+                    color: colors.secondary,
+                  }}
+                >
+                  <CurrencySymbol currency="0" />
+                  {formatWad(totalOverflow ?? 0)}
+                </span>
+              )}
+              {/* <TooltipLabel
+              label="overflow"
+              tip="Surplus funds for this project that can be claimed by ticket holders."
+              placement="bottom"
+            /> */}
+            </div>
+          </div>
+
+          {totalOverflow?.gt(0) ? (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Progress
+                percent={percentPaid}
+                showInfo={false}
+                strokeColor={colors.juiceOrange}
+              />
+              <div
+                style={{
+                  width: 4,
+                  height: 15,
+                  borderRadius: '2px',
+                  background: 'white',
+                  marginLeft: 5,
+                  marginRight: 5,
+                  marginTop: 3,
+                }}
+              ></div>
+              <Progress
+                style={{
+                  width:
+                    fracDiv(
+                      totalOverflow?.toString() ?? '0',
+                      balance?.toString() ?? '1',
+                    ) *
+                      100 +
+                    '%',
+                  minWidth: 10,
+                }}
+                percent={100}
+                showInfo={false}
+                strokeColor={colors.secondary}
+              />
+            </div>
+          ) : (
+            <Progress
+              percent={percentPaid}
+              showInfo={false}
+              strokeColor={colors.juiceOrange}
+            />
+          )}
+
+          <div>
+            <div>
+              <span style={{ color: 'white', fontWeight: 500 }}>
+                {budgetCurrencySymbol(budget.currency)}
+                {formatWad(budget.target)}{' '}
+                <span style={{ opacity: 0.6 }}>
+                  {smallHeader(
+                    'withdraw limit every ' +
+                      secsToDays(budget.duration) +
+                      ' days',
+                  )}
+                </span>
+              </span>{' '}
+            </div>
+          </div>
         </div>
 
-        {isOwner ? (
+        {true ? (
           <div
             style={{
               display: 'flex',
@@ -165,7 +303,7 @@ export default function Term({
           >
             <div>Available:</div>
             <div>
-              {budgetCurrencySymbol(budget.currency)}
+              <CurrencySymbol currency="0" />
               {formatWad(balance) || '0'}
               <Button
                 style={{ marginLeft: 10 }}
@@ -197,6 +335,13 @@ export default function Term({
         okText="Withdraw"
         width={540}
       >
+        <div style={{ marginBottom: 10 }}>
+          Withdraw up to:{' '}
+          <CurrencySymbol
+            currency={budget.currency.toString() as BudgetCurrency}
+          />
+          {formatWad(periodWithdrawable)}
+        </div>
         <Space direction="vertical" style={{ width: '100%' }}>
           <Input
             name="withdrawable"
@@ -211,12 +356,21 @@ export default function Term({
                 <span style={{ marginRight: 8 }}>{currency}</span>
                 <InputAccessoryButton
                   content="MAX"
-                  onClick={() => setTapAmount(fromWad(balance))}
+                  onClick={() =>
+                    setTapAmount(
+                      fromWad(
+                        balance?.gt(periodWithdrawable)
+                          ? periodWithdrawable
+                          : balance,
+                      ),
+                    )
+                  }
                 />
               </div>
             }
+            type="number"
             value={tapAmount}
-            max={fromWad(balance)}
+            max={fromWad(periodWithdrawable)}
             onChange={e => setTapAmount(e.target.value)}
           />
           <div style={{ textAlign: 'right' }}>

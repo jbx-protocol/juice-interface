@@ -1,20 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input, Space, Statistic, Tag } from 'antd'
+import { Button, Input, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
-import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import {
-  formattedNum,
-  formatWad,
-  fromWad,
-  parseWad,
-} from 'utils/formatCurrency'
+import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
@@ -34,8 +27,6 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
-
-  const converter = useCurrencyConverter()
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -139,10 +130,7 @@ export default function Rewards({
   ])
 
   const share = ticketSupply?.gt(0)
-    ? ticketsBalance
-        ?.mul(100)
-        .div(ticketSupply)
-        .toString()
+    ? ticketsBalance?.mul(100).div(ticketSupply).toString()
     : '0'
 
   function redeem() {
@@ -183,35 +171,17 @@ export default function Rewards({
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   return (
-    <Space direction="vertical" size="large" align="start">
-      <Statistic
-        title={
-          <TooltipLabel
-            label="Project overflow"
-            tip="Surplus funds for this project that can be claimed by ticket holders."
-            placement="bottom"
-          />
-        }
-        valueRender={() => (
-          <div>
-            {formatWad(totalOverflow ?? 0)} {weth?.symbol}
-            <div style={{ fontSize: '.8rem' }}>
-              {formattedNum(converter.weiToUsd(totalOverflow))} USD
-            </div>
-          </div>
-        )}
-      />
-
+    <div>
       <Statistic
         title={
           <TooltipLabel
             label="Your wallet"
             tip="Credits can be redeemed for your contract's overflow on a bonding
-            curve – a ticket is redeemable for 38.2% of its proportional
-            overflowed tokens. Meaning, if there are 100 overflow tokens available
-            and 100 of your credits in circulation, 10 credits could be redeemed
-            for 3.82 of the overflow tokens. The rest is left to share between the
-            remaining ticket hodlers."
+        curve – a ticket is redeemable for 38.2% of its proportional
+        overflowed tokens. Meaning, if there are 100 overflow tokens available
+        and 100 of your credits in circulation, 10 credits could be redeemed
+        for 3.82 of the overflow tokens. The rest is left to share between the
+        remaining ticket hodlers."
             placement="bottom"
           />
         }
@@ -219,11 +189,13 @@ export default function Rewards({
           <div>
             <div>{formatWad(ticketsBalance ?? 0)} credits</div>
             {subText(
-              `${share ?? 0}% of ${formatWad(ticketSupply) ??
-                0} credits in circulation`,
+              `${share ?? 0}% of ${
+                formatWad(ticketSupply) ?? 0
+              } credits in circulation`,
             )}
-            <Space style={{ marginTop: 10 }}>
+            <div style={{ display: 'flex', marginTop: 10 }}>
               <Input
+                style={{ flex: 1, marginRight: 10 }}
                 type="number"
                 disabled={redeemDisabled}
                 placeholder="0"
@@ -248,33 +220,32 @@ export default function Rewards({
               >
                 Redeem credits
               </Button>
-
-              <Modal
-                title="Redeem credits"
-                visible={redeemModalVisible}
-                onOk={() => {
-                  redeem()
-                  setRedeemModalVisible(false)
-                }}
-                onCancel={() => {
-                  onChangeRedeemAmount(undefined)
-                  setRedeemModalVisible(false)
-                }}
-                okText="Confirm"
-                width={540}
-              >
-                <Space direction="vertical">
-                  <div>Redeem {redeemAmount} credits</div>
-                  <div>
-                    You will receive minimum {formatWad(minRedeemAmount)}{' '}
-                    {weth?.symbol}
-                  </div>
-                </Space>
-              </Modal>
-            </Space>
+            </div>
           </div>
         )}
-      ></Statistic>
-    </Space>
+      />
+
+      <Modal
+        title="Redeem credits"
+        visible={redeemModalVisible}
+        onOk={() => {
+          redeem()
+          setRedeemModalVisible(false)
+        }}
+        onCancel={() => {
+          onChangeRedeemAmount(undefined)
+          setRedeemModalVisible(false)
+        }}
+        okText="Confirm"
+        width={540}
+      >
+        <Space direction="vertical">
+          <div>Redeem {redeemAmount} credits</div>
+          <div>
+            You will receive minimum {formatWad(minRedeemAmount)} {weth?.symbol}
+          </div>
+        </Space>
+      </Modal>
+    </div>
   )
 }

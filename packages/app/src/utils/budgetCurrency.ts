@@ -1,13 +1,17 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { BudgetCurrency } from 'models/budget-currency'
+import { CSSProperties } from 'react'
 
 const budgetCurrencies: Record<
   BudgetCurrency,
-  { name: string; symbol: string }
+  { name: string; symbol: string; style?: CSSProperties }
 > = {
   '0': {
     name: 'WETH',
     symbol: 'Ξ',
+    style: {
+      fontFamily: 'sans-serif',
+    },
   },
   '1': {
     name: 'USD',
@@ -15,18 +19,17 @@ const budgetCurrencies: Record<
   },
 }
 
-export const budgetCurrencyName = (curr?: BigNumberish) => {
-  if (!curr) return
+export const budgetCurrencyName = (curr?: BigNumberish) =>
+  curr
+    ? budgetCurrencies[BigNumber.from(curr).toString() as BudgetCurrency].name
+    : undefined
 
-  const str = BigNumber.from(curr).toString() as BudgetCurrency
+export const budgetCurrencySymbol = (curr?: BigNumberish) =>
+  curr
+    ? budgetCurrencies[BigNumber.from(curr).toString() as BudgetCurrency].symbol
+    : undefined
 
-  return budgetCurrencies[str].name
-}
-
-export const budgetCurrencySymbol = (curr?: BigNumberish) => {
-  if (!curr) return
-
-  const str = BigNumber.from(curr).toString() as BudgetCurrency
-
-  return budgetCurrencies[str].symbol
-}
+export const budgetCurrencyStyle = (curr?: BigNumberish) =>
+  curr
+    ? budgetCurrencies[BigNumber.from(curr).toString() as BudgetCurrency].style
+    : undefined

@@ -53,9 +53,9 @@ export const formattedNum = (
   if (str.includes(_decimalSeparator)) {
     const [integer, decimal] = str.split(_decimalSeparator)
     return decimal === '0'
-      ? separateThousands(integer, _thousandsSeparator)
+      ? separateThousands(integer, _thousandsSeparator) || '0'
       : [
-          separateThousands(integer, _thousandsSeparator),
+          separateThousands(integer, _thousandsSeparator) || '0',
           decimal.substr(0, 6).padEnd(2, '0'),
         ].join(_decimalSeparator)
   }

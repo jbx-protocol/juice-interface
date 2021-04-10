@@ -78,9 +78,9 @@ export default function Landing() {
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.2rem' }}>
                     Projects on Juice say up front how much cashflow they want
-                    in order to crush what they do. Once they're earning more than that,
-                    the ETH overflow can be claimed by their users, patrons, &
-                    investors alongside them.{' '}
+                    in order to crush what they do. Once they're earning more
+                    than that, the ETH overflow can be claimed by their users,
+                    patrons, & investors alongside them.{' '}
                     <a
                       href="https://twitter.com/hashtag/DeWork"
                       target="_blank"
@@ -164,7 +164,7 @@ export default function Landing() {
           padding: 30,
           paddingTop: 80,
           paddingBottom: 80,
-          background: colors.light,
+          background: colors.juiceLight,
           color: colors.dark,
         }}
       >
@@ -188,7 +188,7 @@ export default function Landing() {
                     href="https://twitter.com/hashtag/dework"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: colors.secondaryDark }}
+                    style={{ color: colors.cta }}
                   >
                     #DeWork
                   </a>

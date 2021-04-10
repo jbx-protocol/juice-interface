@@ -1,52 +1,53 @@
 // https://gitee.com/ant-design/ant-design/blob/master/components/style/themes/default.less
 
 @import 'antd/dist/antd.less';
+@import 'colors.less';
 
-@juiceOrange: #FFB32C;
-@juiceBlue: #32c8db;
-@grape: #5a565f;
-@grapeLight: #908c96;
-@body: fade(#fff, 85%);
-@darkBase: #131115;
-@stroke: fade(#fff, 16%);
+// @juiceOrange: #FFB32C;
+// @cta: #32c8db;
+// @grape: #5a565f;
+// @grapeHint: #908c96;
+// @body: fade(#fff, 85%);
+// @darkBase: #131115;
+// @stroke: fade(#fff, 16%);
 
-@primary-color: @juiceBlue;
+@primary-color: @cta;
 @border-color-base: @grape;
-@background-color-base: @darkBase;
-@background-color-light: @darkBase; // background of header and selected item
+@background-color-base: @background;
+@background-color-light: @background; // background of header and selected item
 
 @heading-color: @juiceOrange;
 @info-color: @grape;
 
-@text-color: @body;
-@text-color-secondary: fade(#fff, 65%);
+@text-color: @bodyPrimary;
+@text-color-secondary: @bodySecondary;
 
-@input-placeholder-color: fade(#fff, 35%);
-@input-hover-border-color: @grapeLight;
+@input-placeholder-color: fade(@bodyPrimary, 40%);
+@input-hover-border-color: @grape;
 
 @divider-color: fade(#fff, 12%);
 
-@component-background: @darkBase;
+@component-background: @background;
 
 @btn-primary-color: #000;
 @btn-font-weight: 500;
 
-@disabled-color: @stroke;
-@btn-disable-color: #000;
-@btn-disable-bg: fade(@grapeLight, 70%);
+@disabled-color: @grape;
+@btn-disable-color: @background;
+@btn-disable-bg: fade(@grapeHint, 70%);
 @btn-disable-border: @btn-disable-bg;
 
-@border-color-base: @stroke; // base border outline a component
+@border-color-base: @grape; // base border outline a component
 @border-color-split: fade(#fff, 6%); // split border inside a component
 
-@tooltip-bg: fade(#000, 92%);
+@tooltip-bg: fade(@backgroundSecondary, 98%);
 
-@slider-track-background-color: @juiceBlue;
-@slider-track-background-color-hover: @juiceBlue;
+@slider-track-background-color: @cta;
+@slider-track-background-color-hover: @cta;
 @slider-rail-background-color: @grape;
-@slider-rail-background-color-hover: @grapeLight;
+@slider-rail-background-color-hover: @grapeHint;
 
-@tabs-active-color: '#ffffff';
-@tabs-hover-color: '#ffffff';
-@tabs-highlight-color: '#ffffff';
+@tabs-active-color: @bodyPrimary;
+@tabs-hover-color: @bodyPrimary;
+@tabs-highlight-color: @bodyPrimary;
 @tabs-ink-bar-color: @juiceOrange;

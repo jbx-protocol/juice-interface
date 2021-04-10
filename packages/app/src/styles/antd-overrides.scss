@@ -24,14 +24,14 @@ th.ant-descriptions-item-label {
   > .ant-steps-item-container
   > .ant-steps-item-icon
   .ant-steps-icon {
-  color: #131115;
+  color: $background;
   font-weight: 600;
 }
 .ant-steps-item-process
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: #32c8db;
+  color: $cta;
 }
 
 .ant-timeline-item-last {
@@ -71,7 +71,7 @@ input.ant-input[type='number'] {
 }
 
 .ant-descriptions-item-label {
-  color: #ffffffcc;
+  color: $bodySecondary;
 }
 
 .ant-btn-primary {
@@ -104,7 +104,7 @@ input.ant-input[type='number'] {
 }
 
 .ant-statistic-content {
-  color: $body;
+  color: $bodyPrimary;
 }
 
 .ant-collapse-header {
@@ -139,7 +139,7 @@ input:-webkit-autofill-selected {
   .ant-collapse-header {
     padding-right: 0;
     padding-left: 24px;
-    color: white;
+    color: $bodyPrimary;
 
     .ant-collapse-arrow {
       left: 0;

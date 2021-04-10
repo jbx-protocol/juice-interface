@@ -1,6 +1,4 @@
-$juiceOrange: #ffb32c;
-$body: rgba(255, 255, 255, 0.85);
-$bodySecondary: rgba(255, 255, 255, 0.65);
+@import 'colors.scss';
 
 body {
   margin: 0;
@@ -35,33 +33,21 @@ label {
 }
 
 a {
-  color: #32c8db;
+  color: $cta;
   font-weight: 600;
 
   &:hover {
-    color: #61edff;
-  }
-
-  &.ol {
-    color: #00b0c7;
-
-    &:hover {
-      color: #32c8db;
-    }
+    color: $ctaLight;
   }
 }
 
 p {
-  color: #ffffffaa;
-
-  &.ol {
-    color: #000000bb;
-  }
+  color: $bodyPrimary;
 }
 
 input {
-  background: #131115;
-  color: white;
+  background: $background;
+  color: $bodyPrimary;
 }
 
 @media screen and (min-width: 0px) and (max-width: 600px) {

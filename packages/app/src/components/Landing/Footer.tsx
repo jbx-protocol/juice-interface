@@ -3,7 +3,7 @@ import { colors } from 'constants/styles/colors'
 export default function Footer() {
   const link = (text: string, link: string) => (
     <a
-      style={{ color: colors.secondary, marginLeft: 10, marginRight: 10 }}
+      style={{ color: colors.cta, marginLeft: 10, marginRight: 10 }}
       href={link}
     >
       {text}

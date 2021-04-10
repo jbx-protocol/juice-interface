@@ -100,4 +100,12 @@ Deployment is managed via a CI workflow defined in `.github/workflows/main.yaml`
 
 The react app is packaged and published to the (juice.work/web-production Google Cloud App Engine)[https://console.cloud.google.com/appengine?project=web-production-294102&serviceId=default]. Once new versions have been published, they must be manually promoted in App Engine before they become live.# juicehouse
 
+## App styles
+
+The app uses (antd)[https://ant-design.gitee.io/] components. Antd is only compatible with LESS, so some steps have been taken here to make style variables compatible across LESS, SCSS, and TS/TSX.:
+
+Antd internal LESS variables are overriden in app/src/styles/antd.less. Run `yarn compile-less` in packages/app to compile changes. (Custom antd class overrides are in styles/antd-overrides.scss)
+
+Color variables are defined in app/src/constants/styles/colors.ts. Run `yarn compile-styles` to compile colors for SCSS and LESS files. Will also compile antd LESS variables.
+
 # juicehouse

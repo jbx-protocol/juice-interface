@@ -28,10 +28,11 @@
     "web3modal": "^1.9.2"
   },
   "scripts": {
+    "compile-styles": "tsc --project tsconfig.colors.json && node ./scripts/compile-colors.js && yarn compile-less",
     "compile-less": "lessc ./src/styles/antd.less ./src/styles/antd.css --js",
-    "start": "yarn compile-less && react-scripts start",
-    "build": "yarn compile-less && react-scripts build",
-    "test": "yarn compile-less && react-scripts test",
+    "start": "yarn compile-styles && react-scripts start",
+    "build": "yarn compile-styles && react-scripts build",
+    "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
     "ipfs": "yarn build && ipfs-deploy ./build"
   },

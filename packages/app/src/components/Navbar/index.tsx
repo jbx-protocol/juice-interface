@@ -2,7 +2,7 @@ import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 import Account from './Account'
 
@@ -15,7 +15,7 @@ export default function Navbar() {
 
     return (
       <a
-        style={{ fontWeight: 600, color: colors.textPrimary }}
+        style={{ fontWeight: 600, color: colors.bodyPrimary }}
         href={route}
         onClick={onClick}
         {...(external

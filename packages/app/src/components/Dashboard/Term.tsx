@@ -204,7 +204,7 @@ export default function Term({
                   <span
                     style={{
                       ...primaryPaidStyle,
-                      color: colors.secondary,
+                      color: colors.cta,
                     }}
                   >
                     <CurrencySymbol currency="1" />
@@ -219,7 +219,7 @@ export default function Term({
                 <span
                   style={{
                     ...primaryPaidStyle,
-                    color: colors.secondary,
+                    color: colors.cta,
                   }}
                 >
                   <CurrencySymbol currency="0" />
@@ -265,7 +265,7 @@ export default function Term({
                 }}
                 percent={100}
                 showInfo={false}
-                strokeColor={colors.secondary}
+                strokeColor={colors.cta}
               />
             </div>
           ) : (

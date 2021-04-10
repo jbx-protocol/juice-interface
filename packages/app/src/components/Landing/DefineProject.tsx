@@ -1,10 +1,12 @@
 import { Button, Col, Form, Input, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { secondsMultiplier } from 'constants/seconds-in-day'
+import { colors } from 'constants/styles/colors'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -130,10 +132,11 @@ export default function DefineProject() {
             style={{ fontSize: '1.8rem', lineHeight: 1.3, color: '#ffffffbb' }}
           >
             {bold(editingProject?.name, 'Your project')} needs{' '}
-            {bold(
-              budgetCurrencySymbol(editingBudget?.currency.toString()) +
-                (formatWad(editingBudget?.target) ?? '0'),
-            )}{' '}
+            <CurrencySymbol
+              style={{ color: colors.bodyPrimary, fontWeight: 600 }}
+              currency={editingBudget?.currency.toString() as BudgetCurrency}
+            />
+            {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
             {isRecurring ? (
               <span>
                 every{' '}

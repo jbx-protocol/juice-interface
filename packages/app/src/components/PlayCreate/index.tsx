@@ -29,18 +29,22 @@ export default function PlayCreate() {
     adminFeePercent,
   } = useContext(UserContext)
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [projectInfoModalVisible, setProjectInfoModalVisible] = useState<
-    boolean
-  >(false)
-  const [projectDetailsModalVisible, setProjectDetailsModalVisible] = useState<
-    boolean
-  >(false)
-  const [fundingDetailsModalVisible, setFundingDetailsModalVisible] = useState<
-    boolean
-  >(false)
-  const [createProjectModalVisible, setCreateProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [
+    projectInfoModalVisible,
+    setProjectInfoModalVisible,
+  ] = useState<boolean>(false)
+  const [
+    projectDetailsModalVisible,
+    setProjectDetailsModalVisible,
+  ] = useState<boolean>(false)
+  const [
+    fundingDetailsModalVisible,
+    setFundingDetailsModalVisible,
+  ] = useState<boolean>(false)
+  const [
+    createProjectModalVisible,
+    setCreateProjectModalVisible,
+  ] = useState<boolean>(false)
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()
   const [projectDetailsForm] = useForm<ProjectDetailsFormFields>()
   const [fundingDetailsForm] = useForm<FundingDetailsFormFields>()
@@ -196,7 +200,7 @@ export default function PlayCreate() {
       <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
         <Project
           isOwner={false}
-          showCurrentDetail={true}
+          showCurrentDetail={currentStep > 2}
           budget={editingBudget}
           project={editingProject}
           projectId={BigNumber.from(0)}

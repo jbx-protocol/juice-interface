@@ -47,7 +47,9 @@ export default function NumberSlider({
         formatter={(val?: string | number | undefined) =>
           `${val ?? ''}${suffix ?? ''}`
         }
-        parser={(val?: string) => val?.replace(suffix ?? '', '') ?? ''}
+        parser={(val?: string) =>
+          parseFloat(val?.replace(suffix ?? '', '') ?? '0')
+        }
         onChange={(val: string | number | null | undefined) => {
           const newVal =
             (typeof val === 'string' ? parseFloat(val) : val) ?? undefined

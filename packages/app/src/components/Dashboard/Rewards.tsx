@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Input, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
@@ -194,24 +195,22 @@ export default function Rewards({
               } credits in circulation`,
             )}
             <div style={{ display: 'flex', marginTop: 10 }}>
-              <Input
+              <FormattedNumberInput
                 style={{ flex: 1, marginRight: 10 }}
-                type="number"
+                min={0}
                 disabled={redeemDisabled}
+                step={0.001}
                 placeholder="0"
                 value={redeemAmount}
-                suffix={
-                  redeemDisabled ? null : (
-                    <InputAccessoryButton
-                      content="MAX"
-                      onClick={() =>
-                        onChangeRedeemAmount(fromWad(ticketsBalance))
-                      }
-                    />
-                  )
+                accessory={
+                  <InputAccessoryButton
+                    content="MAX"
+                    onClick={() =>
+                      onChangeRedeemAmount(fromWad(ticketsBalance))
+                    }
+                  />
                 }
-                max={fromWad(ticketsBalance)}
-                onChange={e => onChangeRedeemAmount(e.target.value)}
+                onChange={val => onChangeRedeemAmount(val)}
               />
               <Button
                 type="primary"

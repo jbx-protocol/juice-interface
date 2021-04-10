@@ -50,7 +50,7 @@ export default function TermDetails({
         style={{ border: 'none', padding: 0 }}
         header={
           isRecurring && !isEnded
-            ? 'Period ends in ' + detailedTimeString(secondsLeft)
+            ? 'Term ends in ' + detailedTimeString(secondsLeft)
             : detailedTimeString(secondsLeft) + ' left'
         }
       >

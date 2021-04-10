@@ -282,11 +282,7 @@ export default function Term({
                 {budgetCurrencySymbol(budget.currency)}
                 {formatWad(budget.target)}{' '}
                 <span style={{ opacity: 0.6 }}>
-                  {smallHeader(
-                    'withdraw limit every ' +
-                      secsToDays(budget.duration) +
-                      ' days',
-                  )}
+                  {smallHeader('withdraw limit this term')}
                 </span>
               </span>{' '}
             </div>

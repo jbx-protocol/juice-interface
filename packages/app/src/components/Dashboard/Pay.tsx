@@ -1,7 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input } from 'antd'
+import { Button } from 'antd'
 import ApproveSpendModal from 'components/modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -10,15 +12,10 @@ import { BudgetCurrency } from 'models/budget-currency'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import React, { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
-import {
-  formattedNum,
-  formatWad,
-  fromWad,
-  parsePerMille,
-  parseWad,
-} from 'utils/formatCurrency'
+import { budgetCurrencyName, budgetCurrencySymbol } from 'utils/budgetCurrency'
+import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
+
 import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({
@@ -30,6 +27,7 @@ export default function Pay({
   project: ProjectIdentifier | undefined
   projectId: BigNumber | undefined
 }) {
+  const [payAs, setPayAs] = useState<BudgetCurrency>('1')
   const [payAmount, setPayAmount] = useState<string>()
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
@@ -54,7 +52,8 @@ export default function Pay({
     valueDidChange: bigNumbersDiff,
   })
 
-  const weiPayAmt = converter.usdToWei(payAmount)
+  const weiPayAmt =
+    payAs === '1' ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
   function pay() {
     if (!transactor || !contracts) return onNeedProvider()
@@ -90,21 +89,22 @@ export default function Pay({
             width: '100%',
           }}
         >
-          <div style={{ textAlign: 'right', flex: 1, marginRight: 10 }}>
-            <Input
-              style={{ width: '100%' }}
-              name="sustain"
+          <div style={{ flex: 1, marginRight: 10 }}>
+            <FormattedNumberInput
               placeholder="0"
-              suffix="USD"
-              type="number"
               disabled={budget?.configured.eq(0)}
-              onChange={e => setPayAmount(e.target.value)}
+              onChange={val => setPayAmount(val)}
+              value={payAmount}
+              min={0}
+              accessory={
+                <InputAccessoryButton
+                  withArrow={true}
+                  content={budgetCurrencyName(payAs)}
+                  onClick={() => setPayAs(payAs === '0' ? '1' : '0')}
+                />
+              }
             />
 
-            <div>
-              Paid as <CurrencySymbol currency="0" />
-              {formatWad(weiPayAmt) || '0'}
-            </div>
             <div>
               Receive{' '}
               {payAmount && weiPayAmt?.gt(0) ? (
@@ -116,18 +116,31 @@ export default function Pay({
               ) : (
                 <span>
                   {formatReceivedTickets(
-                    converter.usdToWei('1') ?? BigNumber.from(0),
+                    (payAs === '0' ? parseWad('1') : converter.usdToWei('1')) ??
+                      BigNumber.from(0),
                   )}{' '}
                   credits/
-                  <CurrencySymbol currency="1" />
+                  <CurrencySymbol currency={payAs} />
                 </span>
               )}
             </div>
           </div>
 
-          <Button type="primary" onClick={weiPayAmt ? pay : undefined}>
-            Pay project
-          </Button>
+          <div style={{ textAlign: 'center', minWidth: 150 }}>
+            <Button
+              style={{ width: '100%' }}
+              type="primary"
+              onClick={weiPayAmt ? pay : undefined}
+            >
+              Pay project
+            </Button>
+            {payAs === '1' ? (
+              <div>
+                Paid as <CurrencySymbol currency="0" />
+                {formatWad(weiPayAmt) || '0'}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 

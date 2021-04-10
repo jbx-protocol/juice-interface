@@ -79,7 +79,7 @@ export const editingProjectSlice = createSlice({
         handle: action.payload,
       },
     }),
-    logoUri: (state, action: PayloadAction<string>) => ({
+    setLogoUri: (state, action: PayloadAction<string>) => ({
       ...state,
       projectIdentifier: {
         ...state.projectIdentifier,

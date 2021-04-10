@@ -84,7 +84,6 @@ export default function EditProjectModal({
           rules={[{ required: true }]}
         >
           <Input
-            className="align-end"
             placeholder="Peach's Juice Stand"
             type="string"
             autoComplete="off"
@@ -110,15 +109,17 @@ export default function EditProjectModal({
             autoComplete="off"
           />
         </Form.Item>
-        {/* TODO */}
-        {/* <Form.Item name="logoUri">
+        <Form.Item
+          name="logoUri"
+          label="Logo URL"
+          extra="The URL of your logo hosted somewhere on the internet."
+        >
           <Input
-            className="align-end"
-            placeholder="http://your-project.com"
+            placeholder="http://ipfs.your-host.io/your-logo.jpg"
             type="string"
             autoComplete="off"
           />
-        </Form.Item> */}
+        </Form.Item>
       </Form>
     </Modal>
   )

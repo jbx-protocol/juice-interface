@@ -81,6 +81,7 @@ export default function PlayCreate() {
     projectDetailsForm.setFieldsValue({
       link: editingProject?.link ?? '',
       handle: editingProject?.handle ?? '',
+      logoUri: editingProject?.logoUri ?? '',
     })
 
   const resetFundingDetailsForm = () =>
@@ -107,15 +108,10 @@ export default function PlayCreate() {
   }
 
   const onProjectDetailsFormSaved = () => {
-    dispatch(
-      editingProjectActions.setLink(projectDetailsForm.getFieldValue('link')),
-    )
-    dispatch(
-      editingProjectActions.setHandle(
-        projectDetailsForm.getFieldValue('handle'),
-      ),
-    )
-
+    const fields = projectDetailsForm.getFieldsValue(true)
+    dispatch(editingProjectActions.setLink(fields.link))
+    dispatch(editingProjectActions.setHandle(fields.handle))
+    dispatch(editingProjectActions.setLogoUri(fields.logoUri))
     incrementStep(2)
   }
 
@@ -217,6 +213,7 @@ export default function PlayCreate() {
           paddingTop: 20,
           paddingBottom: 20,
           background: colors.background,
+          zIndex: 100,
         }}
       >
         <h1>Launch on Juice 🚀</h1>

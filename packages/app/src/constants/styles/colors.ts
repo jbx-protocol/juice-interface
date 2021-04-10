@@ -5,6 +5,7 @@ export const colors: Record<string, CSSProperties['color']> = {
   backgroundSecondary: '#241c2b',
   backgroundTertiary: '#392b46',
   grape: '#5a565f',
+  grapeHint: '#5a565f36',
   dark: '#000',
   textPrimary: '#fff',
   juiceOrange: '#FFB32C',

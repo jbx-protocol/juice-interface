@@ -36,7 +36,7 @@ export default function ProjectInfo({
           rules={[{ required: true }]}
         >
           <Input
-            className="align-end"
+            autoFocus
             placeholder="Peach's Juice Stand"
             type="string"
             autoComplete="off"

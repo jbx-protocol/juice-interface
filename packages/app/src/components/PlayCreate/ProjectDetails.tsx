@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from 'react'
 export type ProjectDetailsFormFields = {
   link: string
   handle: string
+  logoUri: string
 }
 
 export default function ProjectDetails({
@@ -83,15 +84,17 @@ export default function ProjectDetails({
             autoComplete="off"
           />
         </Form.Item>
-        {/* TODO */}
-        {/* <Form.Item name="logoUri">
+        <Form.Item
+          name="logoUri"
+          label="Logo URL"
+          extra="The URL of your logo hosted somewhere on the internet."
+        >
           <Input
-            className="align-end"
-            placeholder="http://your-project.com"
+            placeholder="http://ipfs.your-host.io/your-logo.jpg"
             type="string"
             autoComplete="off"
           />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item>
           <Space>
             <Button htmlType="submit" type="primary" onClick={onSave}>

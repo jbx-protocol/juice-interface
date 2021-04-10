@@ -8,9 +8,9 @@ import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useState } from 'react'
 
-import Term from './Term'
 import Pay from './Pay'
 import Rewards from './Rewards'
+import Term from './Term'
 
 export default function Project({
   project,
@@ -35,25 +35,62 @@ export default function Project({
   if (!projectId || !project) return null
 
   const gutter = 40
+  const headerHeight = 80
 
   return (
     <div style={style}>
       <div
         style={{
           display: 'flex',
-          marginBottom: gutter,
           alignItems: 'center',
+          marginBottom: gutter,
         }}
       >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            height: headerHeight,
+            width: headerHeight,
+            borderRadius: 20,
+            marginRight: headerHeight / 4,
+            border: project.logoUri
+              ? undefined
+              : '1px solid ' + colors.grapeHint,
+          }}
+        >
+          {project.logoUri ? (
+            <img
+              id="logo-img"
+              style={{
+                maxHeight: '100%',
+                objectFit: 'fill',
+                objectPosition: 'center',
+              }}
+              src={project.logoUri}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: '1.2rem',
+              }}
+            >
+              ⚡️
+            </div>
+          )}
+        </div>
+
         <div style={{ flex: 1 }}>
           <h1
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: project?.name ? colors.juiceOrange : '#ffffff44',
+              color: project.name ? colors.juiceOrange : '#ffffff44',
             }}
           >
-            {project?.name ? project.name : 'Untitled project'}
+            {project.name ? project.name : 'Untitled project'}
           </h1>
 
           <h3>
@@ -75,7 +112,12 @@ export default function Project({
           </h3>
         </div>
 
-        <div>
+        <div
+          style={{
+            height: headerHeight,
+            marginLeft: 20,
+          }}
+        >
           {isOwner ? (
             <Button
               onClick={() => setEditProjectModalVisible(true)}

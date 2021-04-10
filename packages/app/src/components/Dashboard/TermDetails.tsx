@@ -88,9 +88,11 @@ export default function TermDetails({
             {budget.number.toString()}
           </Descriptions.Item>
 
-          <Descriptions.Item label="Bonding curve rate">
-            {budget.bondingCurveRate.toString()}
-          </Descriptions.Item>
+          {budget.bondingCurveRate.gt(0) ? (
+            <Descriptions.Item label="Bonding curve rate">
+              {budget.bondingCurveRate.toString()}
+            </Descriptions.Item>
+          ) : null}
         </Descriptions>
       </CollapsePanel>
     </Collapse>

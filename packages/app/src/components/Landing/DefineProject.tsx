@@ -71,7 +71,6 @@ export default function DefineProject() {
           <Form form={form} layout="vertical" onValuesChange={onFieldsChange}>
             <Form.Item extra="The name of your project on-chain" name="name">
               <Input
-                className="align-end"
                 placeholder="Peach's Juice Stand"
                 type="string"
                 autoComplete="off"

@@ -1,4 +1,5 @@
 import { Button, Checkbox, Form, FormInstance, Input, Space } from 'antd'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -54,30 +55,23 @@ export default function ProjectInfo({
             onCurrencyChange={currency => form.setFieldsValue({ currency })}
           />
         </Form.Item>
-        <Form.Item>
-          <div style={{ display: 'flex' }}>
-            <Checkbox
-              defaultChecked={isRecurring}
-              onChange={e =>
-                dispatch(editingProjectActions.setIsRecurring(e.target.checked))
-              }
-            ></Checkbox>
-            <div style={{ marginLeft: 10 }}>Use a recurring funding target</div>
-          </div>
+        <Form.Item extra="The life cycle of your project" name="duration">
+          <FormattedNumberInput
+            placeholder="30"
+            value={form.getFieldValue('duration')}
+            suffix="days"
+            accessory={
+              <InputAccessoryButton
+                content={isRecurring ? 'recurring' : 'one-time'}
+                withArrow={true}
+                onClick={() =>
+                  dispatch(editingProjectActions.setIsRecurring(!isRecurring))
+                }
+              />
+            }
+            onChange={val => form.setFieldsValue({ duration: val })}
+          />
         </Form.Item>
-        {isRecurring ? (
-          <Form.Item
-            extra="The time period of this recurring budget"
-            name="duration"
-          >
-            <FormattedNumberInput
-              placeholder="30"
-              value={form.getFieldValue('duration')}
-              suffix="days"
-              onChange={val => form.setFieldsValue({ duration: val })}
-            />
-          </Form.Item>
-        ) : null}
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={onSave}>
             Save

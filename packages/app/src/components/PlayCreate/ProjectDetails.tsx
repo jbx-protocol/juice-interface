@@ -1,4 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, FormInstance, Input, Space } from 'antd'
+import { ContractName } from 'constants/contract-name'
+import { utils } from 'ethers'
+import useContractReader from 'hooks/ContractReader'
+import { useCallback, useMemo, useState } from 'react'
 
 export type ProjectDetailsFormFields = {
   link: string
@@ -12,17 +17,58 @@ export default function ProjectDetails({
   form: FormInstance<ProjectDetailsFormFields>
   onSave: VoidFunction
 }) {
+  const [handleInputVal, setHandleInputVal] = useState<string>()
+  const handle = form.getFieldValue('handle')
+
+  const handleExists = useContractReader<boolean>({
+    contract: ContractName.Projects,
+    functionName: 'handleResolver',
+    args: useMemo(() => {
+      if (!handleInputVal) return null
+
+      let bytes = utils.formatBytes32String(handleInputVal.toLowerCase())
+
+      while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
+        bytes = bytes.substring(0, bytes.length - 2)
+      }
+
+      return [bytes]
+    }, [handleInputVal]),
+    formatter: useCallback((res: BigNumber) => res?.gt(0), []),
+  })
+
+  const formatHandle = (text: string) =>
+    text
+      .split('')
+      .filter(char => ![' ', ',', '.', '-'].includes(char))
+      .join('')
+
   return (
     <Space direction="vertical" size="large">
       <h1>Project details</h1>
 
       <Form form={form} layout="vertical">
-        <Form.Item label="Handle" name="handle" rules={[{ required: true }]}>
+        <Form.Item
+          label="Handle"
+          extra={
+            handleExists ? (
+              <span style={{ color: 'red' }}>Handle not avilable</span>
+            ) : undefined
+          }
+          status={handleExists ? 'warning' : undefined}
+          rules={[{ required: true }]}
+        >
           <Input
             prefix="@"
             placeholder="yourProject"
             type="string"
             autoComplete="off"
+            value={handle}
+            onChange={e => {
+              const val = formatHandle(e.target.value)
+              form.setFieldsValue({ handle: val })
+              setHandleInputVal(val)
+            }}
           />
         </Form.Item>
         <Form.Item

@@ -20,7 +20,7 @@ export const colors: Record<JuiceColor, CSSProperties['color']> = {
   backgroundSecondary: '#241c2b',
   backgroundTertiary: '#392b46',
   grape: '#5a565f',
-  grapeHint: '#5a565f36',
+  grapeHint: '#5a565f64',
   dark: '#000',
   bodyPrimary: '#ffffffee',
   bodySecondary: '#ffffffbb',

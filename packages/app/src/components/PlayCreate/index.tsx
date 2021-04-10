@@ -55,15 +55,14 @@ export default function PlayCreate() {
   const creatingProject = useAppSelector(state => state.editingProject.loading)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    if (
-      editingProject.name &&
-      editingBudget?.duration &&
-      editingBudget?.target
-    ) {
-      setCurrentStep(1)
-    }
-  }, [])
+  const setHandleFromName = (name: string) => {
+    const handle = name.split(' ').join('').substr(0, 24) ?? ''
+    dispatch(editingProjectActions.setHandle(handle))
+
+    projectDetailsForm.setFieldsValue({
+      handle,
+    })
+  }
 
   const incrementStep = (num: number) =>
     num > currentStep ? setCurrentStep(num) : null
@@ -77,12 +76,13 @@ export default function PlayCreate() {
       currency: (editingBudget?.currency.toString() ?? '0') as BudgetCurrency,
     })
 
-  const resetProjectDetailsForm = () =>
+  const resetProjectDetailsForm = () => {
     projectDetailsForm.setFieldsValue({
       link: editingProject?.link ?? '',
       handle: editingProject?.handle ?? '',
       logoUri: editingProject?.logoUri ?? '',
     })
+  }
 
   const resetFundingDetailsForm = () =>
     fundingDetailsForm.setFieldsValue({
@@ -101,6 +101,8 @@ export default function PlayCreate() {
       ),
     )
     dispatch(editingProjectActions.setCurrency(fields.currency))
+
+    if (!editingProject.handle) setHandleFromName(fields.name)
 
     if (fields?.name && fields?.duration && fields?.target) {
       incrementStep(1)
@@ -124,9 +126,19 @@ export default function PlayCreate() {
   }
 
   useEffect(() => {
+    if (
+      editingProject.name &&
+      editingBudget?.duration &&
+      editingBudget?.target
+    ) {
+      setCurrentStep(1)
+    }
+
     resetBudgetForm()
     resetProjectDetailsForm()
     resetFundingDetailsForm()
+
+    setHandleFromName(editingProject?.name)
   }, [])
 
   function createProject() {

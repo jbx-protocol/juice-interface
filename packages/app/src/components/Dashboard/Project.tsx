@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Row, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import { CardSection } from 'components/shared/CardSection'
+import ProjectLogo from 'components/shared/ProjectLogo'
 import { colors } from 'constants/styles/colors'
 import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
@@ -46,40 +47,12 @@ export default function Project({
           marginBottom: gutter,
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            height: headerHeight,
-            width: headerHeight,
-            borderRadius: 20,
-            marginRight: headerHeight / 4,
-            border: project.logoUri
-              ? undefined
-              : '1px solid ' + colors.grapeHint,
-          }}
-        >
-          {project.logoUri ? (
-            <img
-              id="logo-img"
-              style={{
-                maxHeight: '100%',
-                objectFit: 'fill',
-                objectPosition: 'center',
-              }}
-              src={project.logoUri}
-            />
-          ) : (
-            <div
-              style={{
-                fontSize: '1.2rem',
-              }}
-            >
-              ⚡️
-            </div>
-          )}
+        <div style={{ marginRight: 20 }}>
+          <ProjectLogo
+            uri={project?.logoUri}
+            name={project?.name}
+            size={headerHeight}
+          />
         </div>
 
         <div style={{ flex: 1 }}>

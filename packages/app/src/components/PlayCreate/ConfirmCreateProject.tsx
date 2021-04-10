@@ -29,7 +29,7 @@ export default function ConfirmCreateProject() {
     const currency = budgetCurrencyName(editingBudget?.currency)
 
     return `${formattedNum(targetAmount)} (+${formatWad(
-      editingBudget?.target.mul(adminFeePercent).div(100),
+      editingBudget?.target.mul(adminFeePercent).div(1000),
     )} ${currency})`
   }
 

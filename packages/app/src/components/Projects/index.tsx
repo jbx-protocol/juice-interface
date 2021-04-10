@@ -8,7 +8,7 @@ export default function Projects() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <h1>Projects on Juice</h1>
+      <h1 style={{ marginBottom: 40 }}>Projects on Juice</h1>
       <ProjectsGrid projects={Object.values(projects)} />
     </div>
   )

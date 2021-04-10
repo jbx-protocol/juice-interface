@@ -19430,7 +19430,7 @@ span.ant-radio + * {
   border-color: #32c8db;
 }
 .ant-slider:hover .ant-slider-rail {
-  background-color: #5a565f36;
+  background-color: #5a565f64;
 }
 .ant-slider:hover .ant-slider-track {
   background-color: #32c8db;

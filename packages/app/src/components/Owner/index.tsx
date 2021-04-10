@@ -11,7 +11,7 @@ export default function Owner() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <h1>Owned by {owner}</h1>
+      <h1 style={{ marginBottom: 40 }}>Owned by {owner}</h1>
       <ProjectsGrid
         projects={Object.values(projects).sort((a, b) =>
           a.name < b.name ? -1 : 1,

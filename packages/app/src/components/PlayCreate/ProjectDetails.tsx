@@ -51,6 +51,7 @@ export default function ProjectDetails({
       <Form form={form} layout="vertical">
         <Form.Item
           label="Handle"
+          name="handle"
           extra={
             handleExists ? (
               <span style={{ color: 'red' }}>Handle not avilable</span>
@@ -97,7 +98,14 @@ export default function ProjectDetails({
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button htmlType="submit" type="primary" onClick={onSave}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              onClick={async () => {
+                await form.validateFields()
+                onSave()
+              }}
+            >
               Save
             </Button>
           </Space>

@@ -9,3 +9,12 @@ export const weightedRate = (
   budget && wei && percentage
     ? budget.weight.div(budget.target).mul(wei).mul(percentage).div(1000)
     : undefined
+
+export const feeForAmount = (
+  target?: BigNumber,
+  adminFeePercent?: BigNumber,
+) => {
+  if (!adminFeePercent || !target) return
+
+  return target.mul(adminFeePercent).div(1000)
+}

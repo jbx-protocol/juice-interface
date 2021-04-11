@@ -13,6 +13,7 @@ import { BudgetCurrency } from 'models/budget-currency'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
+import { feeForAmount } from 'utils/math'
 
 import ConfirmCreateProject from './ConfirmCreateProject'
 import FundingDetails, { FundingDetailsFormFields } from './FundingDetails'
@@ -148,9 +149,11 @@ export default function PlayCreate() {
 
     dispatch(editingProjectActions.setLoading(true))
 
-    const targetWithFee = editingBudget.target
-      ?.add(editingBudget.target.mul(adminFeePercent).div(100))
-      .toHexString()
+    const fee = feeForAmount(editingBudget.target, adminFeePercent)
+
+    if (!fee) return
+
+    const targetWithFee = editingBudget.target?.add(fee).toHexString()
 
     // TODO
     const bondingCurveRate = BigNumber.from(382).toHexString()

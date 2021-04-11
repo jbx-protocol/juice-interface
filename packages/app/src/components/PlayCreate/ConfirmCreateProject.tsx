@@ -9,6 +9,7 @@ import {
   fromPerMille,
   fromWad,
 } from 'utils/formatCurrency'
+import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
 export default function ConfirmCreateProject() {
@@ -19,7 +20,7 @@ export default function ConfirmCreateProject() {
     state => state.editingProject.projectIdentifier,
   )
 
-  const targetWithFee = () => {
+  const formattedTargetWithFee = () => {
     if (adminFeePercent === undefined) return
 
     const targetAmount = fromWad(editingBudget?.target)
@@ -29,7 +30,7 @@ export default function ConfirmCreateProject() {
     const currency = budgetCurrencyName(editingBudget?.currency)
 
     return `${formattedNum(targetAmount)} (+${formatWad(
-      editingBudget?.target.mul(adminFeePercent).div(1000),
+      feeForAmount(editingBudget?.target, adminFeePercent),
     )} ${currency})`
   }
 
@@ -49,7 +50,10 @@ export default function ConfirmCreateProject() {
           value={formattedNum(editingBudget?.duration)}
           suffix="days"
         />
-        <Statistic title="Amount (+5% admin fee)" value={targetWithFee()} />
+        <Statistic
+          title="Amount (+5% admin fee)"
+          value={formattedTargetWithFee()}
+        />
       </Space>
       <Statistic title="Link" value={orEmpty(editingProject?.link)} />
       <Space size="large" align="end">

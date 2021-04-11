@@ -1,9 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Checkbox, Form, Modal } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import NumberSlider from 'components/shared/inputs/NumberSlider'
+import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
 import { Budget } from 'models/budget'
 import { BudgetCurrency } from 'models/budget-currency'
@@ -92,7 +90,7 @@ export default function ReconfigureBudgetModal({
 
   return (
     <Modal
-      title="Reconfigure budget"
+      title="Reconfigure funding"
       visible={visible}
       okText="Save changes"
       onOk={saveBudget}
@@ -101,79 +99,42 @@ export default function ReconfigureBudgetModal({
       width={600}
     >
       <Form form={form} layout="vertical">
-        <Form.Item
-          extra="The amount of money you want/need in order to absolutely crush your mission statement."
+        <FormItems.ProjectTarget
           name="target"
-          label="Operating cost"
-          rules={[{ required: true }]}
-        >
-          <BudgetTargetInput
-            value={form.getFieldValue('target')}
-            onValueChange={val => form.setFieldsValue({ target: val })}
-            currency={form.getFieldValue('currency')}
-            onCurrencyChange={currency => form.setFieldsValue({ currency })}
-          />
-        </Form.Item>
-        <Form.Item>
-          <div style={{ display: 'flex' }}>
-            <Checkbox
-              defaultChecked={isRecurring}
-              onChange={e => setIsRecurring(e.target.checked)}
-            ></Checkbox>
-            <div style={{ marginLeft: 10 }}>Use a recurring funding target</div>
-          </div>
-        </Form.Item>
-        {isRecurring ? (
-          <Form.Item
-            extra="The time period of this recurring budget"
-            name="duration"
-          >
-            <FormattedNumberInput
-              placeholder="30"
-              value={form.getFieldValue('duration')}
-              suffix="days"
-              onChange={val => form.setFieldsValue({ duration: val })}
-            />
-          </Form.Item>
-        ) : null}
-        <Form.Item
-          extra="The rate (95%-100%) at which payments to future budgeting time frames are valued compared to payments to the current one."
+          value={form.getFieldValue('target')}
+          onValueChange={val => form.setFieldsValue({ target: val })}
+          currency={form.getFieldValue('currency')}
+          onCurrencyChange={currency => form.setFieldsValue({ currency })}
+          formItemProps={{ rules: [{ required: true }] }}
+        />
+        <FormItems.ProjectDuration
+          name="duration"
+          value={form.getFieldValue('duration')}
+          onChange={val => form.setFieldsValue({ duration: val })}
+          isRecurring={isRecurring}
+          onToggleRecurring={() => setIsRecurring(!isRecurring)}
+        />
+        <FormItems.ProjectDiscountRate
           name="discountRate"
-          label="Discount rate"
-        >
-          <NumberSlider
-            min={95}
-            value={form.getFieldValue('discountRate')}
-            suffix="%"
-            onChange={(val?: number) =>
-              form.setFieldsValue({ discountRate: val?.toString() })
-            }
-          />
-        </Form.Item>
-        <Form.Item
-          extra="The percentage of your project's overflow that you'd like to reserve for yourself. In practice, you'll just receive some of your own tickets whenever someone pays you."
+          value={form.getFieldValue('discountRate')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ discountRate: val?.toString() })
+          }
+        />
+        <FormItems.ProjectReserved
           name="reserved"
-          label="Reserved tickets"
-        >
-          <NumberSlider
-            value={form.getFieldValue('reserved')}
-            suffix="%"
-            onChange={(val?: number) =>
-              form.setFieldsValue({ reserved: val?.toString() })
-            }
-          />
-        </Form.Item>
-        <Form.Item name="bondingCurveRate" label="Bonding curve rate">
-          <NumberSlider
-            min={0}
-            max={1000}
-            step={1}
-            value={form.getFieldValue('bondingCurveRate')}
-            onChange={(val?: number) =>
-              form.setFieldsValue({ bondingCurveRate: val?.toString() })
-            }
-          />
-        </Form.Item>
+          value={form.getFieldValue('reserved')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ reserved: val?.toString() })
+          }
+        />
+        <FormItems.ProjectBondingCurveRate
+          name="bondingCurveRate"
+          value={form.getFieldValue('bondingCurveRate')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ bondingCurveRate: val?.toString() })
+          }
+        />
       </Form>
     </Modal>
   )

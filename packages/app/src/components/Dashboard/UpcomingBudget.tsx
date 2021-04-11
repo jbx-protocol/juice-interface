@@ -18,9 +18,10 @@ export default function UpcomingBudget({
   isOwner: boolean
   currentBudget: Budget | null | undefined
 }) {
-  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
-    boolean
-  >(false)
+  const [
+    reconfigureModalVisible,
+    setReconfigureModalVisible,
+  ] = useState<boolean>(false)
 
   const queuedBudget = useContractReader<Budget>({
     contract: ContractName.BudgetStore,
@@ -44,7 +45,7 @@ export default function UpcomingBudget({
       {isOwner ? (
         <div>
           <Button onClick={() => setReconfigureModalVisible(true)}>
-            Reconfigure budget
+            Reconfigure funding
           </Button>
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}

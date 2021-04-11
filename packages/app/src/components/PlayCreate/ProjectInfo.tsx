@@ -1,4 +1,5 @@
 import { Button, Checkbox, Form, FormInstance, Input, Space } from 'antd'
+import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -29,49 +30,31 @@ export default function ProjectInfo({
       <h1>Project info</h1>
 
       <Form form={form} layout="vertical">
-        <Form.Item
-          extra="How your project is identified on-chain"
+        <FormItems.ProjectName
           name="name"
-          label="Name"
-          rules={[{ required: true }]}
-        >
-          <Input
-            autoFocus
-            placeholder="Peach's Juice Stand"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
-        <Form.Item
-          extra="The amount of money you want/need in order to absolutely crush your mission statement."
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
+        />
+        <FormItems.ProjectTarget
           name="target"
-          label="Operating cost"
-          rules={[{ required: true }]}
-        >
-          <BudgetTargetInput
-            value={form.getFieldValue('target')}
-            onValueChange={val => form.setFieldsValue({ target: val })}
-            currency={form.getFieldValue('currency')}
-            onCurrencyChange={currency => form.setFieldsValue({ currency })}
-          />
-        </Form.Item>
-        <Form.Item extra="The life cycle of your project" name="duration">
-          <FormattedNumberInput
-            placeholder="30"
-            value={form.getFieldValue('duration')}
-            suffix="days"
-            accessory={
-              <InputAccessoryButton
-                content={isRecurring ? 'recurring' : 'one-time'}
-                withArrow={true}
-                onClick={() =>
-                  dispatch(editingProjectActions.setIsRecurring(!isRecurring))
-                }
-              />
-            }
-            onChange={val => form.setFieldsValue({ duration: val })}
-          />
-        </Form.Item>
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
+          value={form.getFieldValue('target')}
+          onValueChange={val => form.setFieldsValue({ target: val })}
+          currency={form.getFieldValue('currency')}
+          onCurrencyChange={currency => form.setFieldsValue({ currency })}
+        />
+        <FormItems.ProjectDuration
+          name="duration"
+          value={form.getFieldValue('duration')}
+          isRecurring={isRecurring}
+          onToggleRecurring={() =>
+            dispatch(editingProjectActions.setIsRecurring(!isRecurring))
+          }
+          onChange={val => form.setFieldsValue({ duration: val })}
+        />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={onSave}>
             Save

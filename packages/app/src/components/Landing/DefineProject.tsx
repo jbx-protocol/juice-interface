@@ -1,10 +1,8 @@
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
-import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { FormItems } from 'components/shared/formItems'
 import { secondsMultiplier } from 'constants/seconds-in-day'
 import { colors } from 'constants/styles/colors'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -16,7 +14,6 @@ import {
 import { BudgetCurrency } from 'models/budget-currency'
 import { useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { budgetCurrencySymbol } from 'utils/budgetCurrency'
 import { formatWad, fromWad } from 'utils/formatCurrency'
 
 type FormFields = ProjectInfoFormFields
@@ -71,61 +68,41 @@ export default function DefineProject() {
       <Row gutter={60}>
         <Col xs={24} lg={10}>
           <Form form={form} layout="vertical" onValuesChange={onFieldsChange}>
-            <Form.Item extra="The name of your project on-chain" name="name">
-              <Input
-                placeholder="Peach's Juice Stand"
-                type="string"
-                autoComplete="off"
-              />
-            </Form.Item>
-            <Form.Item
-              extra="The money you want to make it happen"
+            <FormItems.ProjectName name="name" hideLabel />
+            <FormItems.ProjectTarget
               name="target"
+              value={form.getFieldValue('target')}
+              onValueChange={val => {
+                form.setFieldsValue({ target: val })
+                if (onFieldsChange) onFieldsChange({ target: val })
+              }}
+              currency={form.getFieldValue('currency')}
+              onCurrencyChange={currency => {
+                form.setFieldsValue({ currency })
+                if (onFieldsChange) onFieldsChange({ currency })
+              }}
+              hideLabel
+            />
+            <FormItems.ProjectDuration
+              name="duration"
+              value={form.getFieldValue('duration')}
+              onChange={val => form.setFieldsValue({ duration: val })}
+              isRecurring={isRecurring}
+              onToggleRecurring={() =>
+                dispatch(editingProjectActions.setIsRecurring(!isRecurring))
+              }
+              hideLabel
+            />
+            <Form.Item
+              style={{
+                textAlign: 'right',
+              }}
             >
-              <BudgetTargetInput
-                value={form.getFieldValue('target')}
-                onValueChange={val => {
-                  form.setFieldsValue({ target: val })
-                  if (onFieldsChange) onFieldsChange({ target: val })
-                }}
-                currency={form.getFieldValue('currency')}
-                onCurrencyChange={currency => {
-                  form.setFieldsValue({ currency })
-                  if (onFieldsChange) onFieldsChange({ currency })
-                }}
-              />
-            </Form.Item>
-            <Form.Item extra="The life cycle of your project" name="duration">
-              <FormattedNumberInput
-                placeholder="30"
-                value={form.getFieldValue('duration')}
-                suffix="days"
-                accessory={
-                  <InputAccessoryButton
-                    content={isRecurring ? 'recurring' : 'one-time'}
-                    withArrow={true}
-                    onClick={() =>
-                      dispatch(
-                        editingProjectActions.setIsRecurring(!isRecurring),
-                      )
-                    }
-                  />
-                }
-                onChange={val => form.setFieldsValue({ duration: val })}
-              />
+              <Button type="primary" htmlType="submit" onClick={goToReview}>
+                Preview your project
+              </Button>
             </Form.Item>
           </Form>
-
-          <div
-            style={{
-              textAlign: 'right',
-              paddingTop: 20,
-            }}
-          >
-            <Button type="primary" onClick={goToReview}>
-              Preview your project
-            </Button>
-          </div>
         </Col>
         <Col xs={24} lg={14}>
           <div

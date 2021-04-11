@@ -173,7 +173,7 @@ export default function Landing() {
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
                 {bigHeader('Should you Juice?')}
-                <div>
+                <div style={{ color: colors.dark }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
                     With Juice, we end up getting community-driven online goods

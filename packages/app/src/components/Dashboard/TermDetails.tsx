@@ -90,7 +90,7 @@ export default function TermDetails({
 
           {budget.bondingCurveRate.gt(0) ? (
             <Descriptions.Item label="Bonding curve rate">
-              {budget.bondingCurveRate.toString()}
+              {fromPerMille(budget.bondingCurveRate)}%
             </Descriptions.Item>
           ) : null}
         </Descriptions>

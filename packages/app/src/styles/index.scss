@@ -9,6 +9,7 @@ body {
   font-family: 'DM Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $bodyPrimary;
 }
 
 div#root {
@@ -39,10 +40,6 @@ a {
   &:hover {
     color: $ctaLight;
   }
-}
-
-p {
-  color: $bodyPrimary;
 }
 
 input {

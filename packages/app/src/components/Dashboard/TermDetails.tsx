@@ -29,7 +29,7 @@ export default function TermDetails({
         label={
           <TooltipLabel
             label="Reserved"
-            tip="This project's owner can mint tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 tickets for themselves once the budget expires."
+            tip="This project's owner can mint Tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 Tickets for themselves once the budget expires."
           />
         }
       >
@@ -41,7 +41,7 @@ export default function TermDetails({
           <TooltipLabel
             label="Discount rate"
             tip="The rate at which payments to future
-            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tickets received by someone who paid 100 towards this budgeting time frame."
+            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame."
           />
         }
       >

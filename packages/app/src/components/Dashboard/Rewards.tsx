@@ -171,11 +171,10 @@ export default function Rewards({
         title={
           <TooltipLabel
             label="Your wallet"
-            tip="Credits can be redeemed for your contract's overflow on a bonding
-        curve – a ticket is redeemable for 38.2% of its proportional
-        overflowed tokens. Meaning, if there are 100 overflow tokens available
-        and 100 of your credits in circulation, 10 credits could be redeemed
-        for 3.82 of the overflow tokens. The rest is left to share between the
+            tip="Tickets can be redeemed for your project's overflow according to the current term's bonding
+        curve rate. Meaning, if the rate is 70% and there's 100 ETH overflow available
+        with 100 of your Tickets in circulation, 10 Tickets could be redeemed
+        for 7 ETH from the overflow. The rest is left to share between the
         remaining ticket hodlers."
             placement="bottom"
           />
@@ -187,7 +186,7 @@ export default function Rewards({
               {subText(
                 `${share ?? 0}% of ${
                   formatWad(ticketSupply) ?? 0
-                } credits in circulation`,
+                } Tickets in circulation`,
               )}
             </div>
             <div style={{ display: 'flex', marginTop: 10 }}>
@@ -213,7 +212,7 @@ export default function Rewards({
                 onClick={() => setRedeemModalVisible(true)}
                 disabled={redeemDisabled}
               >
-                Redeem credits
+                Redeem Tickets 
               </Button>
             </div>
           </div>
@@ -221,7 +220,7 @@ export default function Rewards({
       />
 
       <Modal
-        title="Redeem credits"
+        title="Redeem Tickets"
         visible={redeemModalVisible}
         onOk={() => {
           redeem()
@@ -235,7 +234,7 @@ export default function Rewards({
         width={540}
       >
         <Space direction="vertical">
-          <div>Redeem {redeemAmount} credits</div>
+          <div>Redeem {redeemAmount} Tickets</div>
           <div>
             You will receive minimum {formatWad(minRedeemAmount)} {weth?.symbol}
           </div>

@@ -112,14 +112,14 @@ export default function Pay({
                   budgetCurrencyName(budget.currency) === 'USD'
                     ? weiPayAmt
                     : parseWad(payAmount),
-                ) + ' credits'
+                ) + ' Tickets'
               ) : (
                 <span>
                   {formatReceivedTickets(
                     (payAs === '0' ? parseWad('1') : converter.usdToWei('1')) ??
                       BigNumber.from(0),
                   )}{' '}
-                  credits/
+                  tickets/
                   <CurrencySymbol currency={payAs} />
                 </span>
               )}

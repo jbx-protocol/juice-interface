@@ -11,7 +11,7 @@ export default function Landing() {
 
   const bigHeader = (text: string) => (
     <h1
-      style={{ fontSize: '3rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
+      style={{ fontSize: '2.5rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
     >
       {text}
     </h1>
@@ -73,20 +73,22 @@ export default function Landing() {
                   paddingBottom: 60,
                 }}
               >
-                {bigHeader('Get yourself paid on the open internet')}
+                {/* {bigHeader('Fund your project on the open internet')} */}
+                {bigHeader('Freshly squeezed cashflow for your projects')}
                 <div>
-                  <p style={{ fontWeight: 500, fontSize: '1.2rem' }}>
-                    Projects on Juice say up front how much cashflow they want
+                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>Juice is a business-model-as-a-service.</p>
+                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
+                    Projects say up front how much cashflow they want
                     in order to crush what they do. Once they're earning more
                     than that, the ETH overflow can be claimed by their users,
                     patrons, & investors alongside them.{' '}
-                    <a
+                    {/* <a
                       href="https://twitter.com/hashtag/DeWork"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       #DeWork
-                    </a>
+                    </a> */}
                   </p>
                 </div>
 
@@ -242,7 +244,7 @@ export default function Landing() {
             {fourthCol('Overflow ⛲️', [
               `If money overflows, your paying contributors claim the surplus
                 alongside you, effectively pushing prices down as your community
-                grows. Early adopters get a discounted rate, and those HODLers
+                grows. Early adopters get a discounted rate, and those hodlers
                 who wait longest to claim get a juicier return. While unclaimed,
                 overflow earns interest.`,
               <a

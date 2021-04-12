@@ -13,13 +13,13 @@ const QAs: {
     q: 'Who funds Juice projects?',
     a: [
       `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on juice.work).`,
-      `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive tickets in return. *Link: Using Juice composibly.*`,
+      `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive Tickets in return. *Link: Using Juice composibly.*`,
     ],
   },
   {
     q: `What does Juice cost?`,
     a: [
-      `Juice is an open protocol on Ethereum's Optimism L2 (soon) that makes money using Juice itself. You can check out the contractualized budget specs here (soon), and the under-the-hood specs and docs here.`,
+      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs here (soon), and the under-the-hood specs and docs here.`,
       `5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.`,
     ],
   },

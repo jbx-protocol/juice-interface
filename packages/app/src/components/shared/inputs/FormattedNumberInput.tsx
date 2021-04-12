@@ -55,7 +55,7 @@ export default function FormattedNumberInput({
     const accessory = document.getElementById(accessoryId)
     if (!accessory) return
     setAccessoryWidth(accessory.clientWidth)
-  }, [accessory])
+  }, [accessory, accessoryId])
 
   return (
     <div

@@ -51,7 +51,7 @@ export default function ReconfigureBudgetModal({
     })
 
     setIsRecurring(!budget.discountRate.eq(0))
-  }, [budget])
+  }, [budget, form])
 
   if (!transactor || !contracts) return null
 

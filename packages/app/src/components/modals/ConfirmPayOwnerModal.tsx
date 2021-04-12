@@ -45,7 +45,7 @@ export default function ConfirmPayOwnerModal({
         projectId.toHexString(),
         weiAmount?.toHexString(),
         userAddress,
-        form.getFieldValue('note'),
+        form.getFieldValue('note') || '',
       ],
       {
         onConfirmed: () => {

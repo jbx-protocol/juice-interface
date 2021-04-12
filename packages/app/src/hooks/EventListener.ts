@@ -1,34 +1,38 @@
 import { JsonRpcProvider, Listener } from '@ethersproject/providers'
 import { ContractName } from 'constants/contract-name'
-import { Contracts } from 'models/contracts'
-import { useEffect, useState } from 'react'
+import { useContractLoader } from 'hooks/ContractLoader'
+import { useEffect, useMemo, useState } from 'react'
 
-export default function useEventListener({
-  contracts,
+export default function useEventListener<E>({
   contractName,
   eventName,
   provider,
   startBlock,
   topics,
-  getInitial,
+  includeHistory,
 }: {
-  contracts?: Contracts
   contractName?: ContractName
   eventName?: string
   provider?: JsonRpcProvider
   startBlock?: number
   topics?: (any | any[])[]
-  getInitial?: boolean
+  includeHistory?: boolean
 }) {
-  const [events, setEvents] = useState<any[]>([])
-  const [needsInitialGet, setNeedsInitialGet] = useState<boolean>(!!getInitial)
+  const contracts = useContractLoader(provider)
+
+  const [events, setEvents] = useState<(E & { timestamp: number })[]>([])
+  const [shouldGetHistory, setShouldGetHistory] = useState<boolean>(
+    !!includeHistory,
+  )
 
   const contract = contracts && contractName && contracts[contractName]
 
-  function formatEvent(event: any) {
+  const formatEvent = async (event: any) => {
+    console.log('format', event)
+    const timestamp = (await event.getBlock()).timestamp
     return {
       ...event.args,
-      ...event.blockNumber,
+      timestamp,
     }
   }
 
@@ -38,48 +42,59 @@ export default function useEventListener({
     eventName &&
     contracts[contractName].interface.getEventTopic(eventName)
 
-  const filter = contract &&
-    eventName && {
-      address: contract.address,
-      topics: [...(eventTopic ? [eventTopic] : []), ...(topics ?? [])],
+  const filter = useMemo(() => {
+    return (
+      contract &&
+      eventName && {
+        address: contract.address,
+        topics: [...(eventTopic ? [eventTopic] : []), ...(topics ?? [])],
+      }
+    )
+  }, [contract, eventName, eventTopic, topics])
+
+  // Get all events history
+  useEffect(() => {
+    if (shouldGetHistory && filter) {
+      contract?.queryFilter(filter).then(async initialEvents => {
+        // Slice last (most recent) event, will be retrieved by listener
+        const events = await Promise.all(
+          initialEvents
+            .slice(0, initialEvents.length - 1)
+            .map(e => formatEvent(e))
+            .reverse(),
+        )
+
+        setEvents(events)
+        setShouldGetHistory(false)
+      })
     }
+  }, [shouldGetHistory, filter, contract])
 
-  if (needsInitialGet && filter) {
-    contract?.queryFilter(filter).then(initialEvents => {
-      // Slice last (most recent) event, will be retrieved by listener
-      setEvents(
-        initialEvents
-          .slice(0, initialEvents.length - 1)
-          .map(e => formatEvent(e)),
-      )
-      setNeedsInitialGet(false)
-    })
-  }
-
+  // Setup listener for future events
   useEffect(() => {
     if (provider && startBlock !== undefined) {
       // if you want to read _all_ events from your contracts, set this to the block number it is deployed
       provider.resetEventsBlock(startBlock)
     }
 
-    if (contract && eventTopic) {
+    if (contract && filter) {
       try {
-        const listener: Listener = (..._events: any[]) => {
-          const event = _events[_events.length - 1]
+        const listener: Listener = async (..._events: any[]) => {
+          const event = await formatEvent(_events[_events.length - 1])
 
-          setEvents((events: any[]) => [formatEvent(event), ...events])
+          setEvents((events: any[]) => [event, ...events])
         }
 
-        contract.on(eventTopic, listener)
+        contract.on(filter, listener)
 
         return () => {
-          contract.off(eventTopic, listener)
+          contract.off(filter, listener)
         }
       } catch (e) {
         console.log(e)
       }
     }
-  }, [provider, startBlock, contract, eventName])
+  }, [provider, startBlock, contract, eventName, filter])
 
   return events
 }

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Space, Tabs } from 'antd'
+import { Col, Row, Tabs } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
@@ -21,6 +21,7 @@ import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
+import PayEvents from './PayEvents'
 import Project from './Project'
 import UpcomingBudget from './UpcomingBudget'
 
@@ -47,7 +48,7 @@ export default function Dashboard() {
     }, [handle]),
     callback: useCallback(
       (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
-      [projectExists, setProjectExists],
+      [setProjectExists],
     ),
   })
 
@@ -109,52 +110,45 @@ export default function Dashboard() {
   if (!projectId) return null
 
   return (
-    <div>
-      <Space direction="vertical" size="large">
-        <Project
-          isOwner={isOwner}
-          projectId={projectId}
-          project={project}
-          budget={budget}
-          style={layouts.maxWidth}
-        />
+    <div style={layouts.maxWidth}>
+      <Project
+        isOwner={isOwner}
+        projectId={projectId}
+        project={project}
+        budget={budget}
+      />
 
-        <Tabs
-          defaultActiveKey="1"
-          size="large"
-          style={{
-            overflow: 'visible',
-            width: '100vw',
-          }}
-          tabBarStyle={{
-            ...layouts.maxWidth,
-            width: '100vw',
-            fontWeight: 600,
-            marginBottom: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
-          }}
-        >
-          <Tabs.TabPane tab="Upcoming" key="future" style={tabPaneStyle}>
-            <div style={{ ...layouts.maxWidth }}>
-              <div style={{ maxWidth: 600 }}>
+      <div style={{ marginTop: 80 }}>
+        <Row gutter={40}>
+          <Col xs={24} md={12}>
+            <h2>Activity</h2>
+            <PayEvents projectId={projectId} />
+          </Col>
+          <Col xs={24} md={12}>
+            <Tabs
+              defaultActiveKey="1"
+              size="large"
+              tabBarStyle={{
+                fontWeight: 600,
+                marginBottom: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+              }}
+            >
+              <Tabs.TabPane tab="History" key="activity" style={tabPaneStyle}>
+                <BudgetsHistory startId={budget?.previous} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Upcoming" key="future" style={tabPaneStyle}>
                 <UpcomingBudget
                   isOwner={isOwner}
                   projectId={projectId}
                   currentBudget={budget}
                 />
-              </div>
-            </div>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
-            <div style={{ ...layouts.maxWidth }}>
-              <div style={{ maxWidth: 600 }}>
-                <BudgetsHistory startId={budget?.previous} />
-              </div>
-            </div>
-          </Tabs.TabPane>
-        </Tabs>
-      </Space>
+              </Tabs.TabPane>
+            </Tabs>
+          </Col>
+        </Row>
+      </div>
     </div>
   )
 }

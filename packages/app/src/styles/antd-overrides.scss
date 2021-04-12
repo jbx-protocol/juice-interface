@@ -40,7 +40,6 @@ th.ant-descriptions-item-label {
 
 .ant-menu-item:hover {
   background: none !important;
-  opacity: 0.7;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -57,8 +56,10 @@ input.ant-input::-webkit-inner-spin-button {
   border-bottom: none;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-tabs-tab .ant-tabs-tab-btn {
   font-weight: inherit;
+  color: $juiceOrange;
 }
 
 /* Firefox */

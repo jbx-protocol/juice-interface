@@ -26,10 +26,12 @@ export default function ProjectsGrid({
       </div>
 
       <div>
-        <h2>{project.name}</h2>
+        <h2 style={{ color: colors.bodyPrimary }}>{project.name}</h2>
         <h3>
           <Space size="middle">
-            <span style={{ color: colors.grape }}>@{project.handle}</span>
+            <span style={{ color: colors.bodySecondary }}>
+              @{project.handle}
+            </span>
             {project?.link ? (
               <span style={{ fontWeight: 400, color: colors.cta }}>
                 {project.link}
@@ -46,7 +48,7 @@ export default function ProjectsGrid({
   return (
     <div>
       {projects?.map((project, i) =>
-        i % 2 == 0 ? (
+        i % 2 === 0 ? (
           <Row gutter={gutter} style={{ marginBottom: gutter }}>
             <Col xs={24} sm={12}>
               {projectCard(project)}

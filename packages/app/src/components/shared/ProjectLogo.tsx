@@ -32,6 +32,7 @@ export default function ProjectLogo({
             objectPosition: 'center',
           }}
           src={uri}
+          alt={name + ' logo'}
         />
       ) : (
         <div

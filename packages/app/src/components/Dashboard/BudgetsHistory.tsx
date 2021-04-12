@@ -1,13 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { Budget } from 'models/budget'
 import { useCallback, useState } from 'react'
-import { budgetCurrencySymbol } from 'utils/budgetCurrency'
 import { budgetsDiff } from 'utils/budgetsDiff'
+import { formatWad } from 'utils/formatCurrency'
 
 import { CardSection } from '../shared/CardSection'
+import TermDetails from './TermDetails'
 
 export default function BudgetsHistory({
   startId,
@@ -53,16 +55,28 @@ export default function BudgetsHistory({
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       {budgets.length ? (
         budgets.map(budget => (
-          <div key={budget.id.toString()}>
-            <div>#{budget.id.toString()}</div>
-            <div>
-              Tapped: {budgetCurrencySymbol(budget.currency)}
-              {budget.tappedTarget}
+          <div key={budget.id.toString()} style={{ padding: 20 }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h2>#{budget.id.toString()}</h2>
+              <div>
+                <span style={{ fontSize: '1rem' }}>
+                  <CurrencySymbol currency="0" />
+                  {formatWad(budget.tappedTotal)}
+                </span>{' '}
+                withdrawn
+              </div>
             </div>
+            <TermDetails budget={budget} />
           </div>
         ))
       ) : (
-        <div style={{ padding: 25 }}>No term history</div>
+        <div style={{ padding: 25 }}>No previous funding cycles</div>
       )}
     </Space>
   )

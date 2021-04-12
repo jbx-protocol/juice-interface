@@ -4,6 +4,7 @@ import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ContractName } from 'constants/contract-name'
+import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useCallback, useContext, useMemo, useState } from 'react'
@@ -155,6 +156,7 @@ export default function Rewards({
       style={{
         fontSize: '.8rem',
         fontWeight: 500,
+        color: 'inherit',
       }}
     >
       {text}
@@ -181,11 +183,13 @@ export default function Rewards({
         valueRender={() => (
           <div>
             <div>{formatWad(ticketsBalance ?? 0)} credits</div>
-            {subText(
-              `${share ?? 0}% of ${
-                formatWad(ticketSupply) ?? 0
-              } credits in circulation`,
-            )}
+            <div style={{ color: colors.bodySecondary }}>
+              {subText(
+                `${share ?? 0}% of ${
+                  formatWad(ticketSupply) ?? 0
+                } credits in circulation`,
+              )}
+            </div>
             <div style={{ display: 'flex', marginTop: 10 }}>
               <FormattedNumberInput
                 style={{ flex: 1, marginRight: 10 }}

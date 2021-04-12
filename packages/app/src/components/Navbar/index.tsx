@@ -15,7 +15,7 @@ export default function Navbar() {
 
     return (
       <a
-        style={{ fontWeight: 600, color: colors.bodyPrimary }}
+        style={{ fontWeight: 600 }}
         href={route}
         onClick={onClick}
         {...(external

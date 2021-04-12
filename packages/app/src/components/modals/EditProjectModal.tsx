@@ -38,7 +38,7 @@ export default function EditProjectModal({
       link: project.link,
       logoUri: project.logoUri,
     })
-  }, [project])
+  }, [project, form])
 
   async function setIdentifiers() {
     if (!transactor || !contracts?.Juicer || !project) return

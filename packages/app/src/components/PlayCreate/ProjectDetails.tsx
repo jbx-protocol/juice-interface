@@ -1,4 +1,4 @@
-import { Button, Form, FormInstance, Input, Space } from 'antd'
+import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 
 export type ProjectDetailsFormFields = {

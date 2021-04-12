@@ -60,7 +60,7 @@ export default function Project({
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: project.name ? colors.juiceOrange : '#ffffff44',
+              color: project.name ? colors.bodyPrimary : colors.bodySecondary,
             }}
           >
             {project.name ? project.name : 'Untitled project'}
@@ -69,7 +69,9 @@ export default function Project({
           <h3>
             <Space size="middle">
               {project?.handle ? (
-                <span style={{ color: colors.grape }}>@{project.handle}</span>
+                <span style={{ color: colors.bodySecondary }}>
+                  @{project.handle}
+                </span>
               ) : null}
               {project?.link ? (
                 <a

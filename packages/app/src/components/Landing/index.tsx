@@ -5,7 +5,6 @@ import { CSSProperties } from 'react'
 import DefineProject from './DefineProject'
 import Faq from './Faq'
 import Footer from './Footer'
-import Tweets from './Tweets'
 
 export default function Landing() {
   const totalMaxWidth = 1080

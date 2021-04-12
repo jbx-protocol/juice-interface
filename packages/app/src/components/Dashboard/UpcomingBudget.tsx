@@ -57,9 +57,9 @@ export default function UpcomingBudget({
       ) : null}
       <CardSection>
         {queuedBudget ? (
-          <TermDetails showDetail={true} budget={queuedBudget} />
+          <TermDetails budget={queuedBudget} />
         ) : (
-          <div style={{ padding: 25 }}>No upcoming term</div>
+          <div style={{ padding: 25 }}>No upcoming funding cycle</div>
         )}
       </CardSection>
     </Space>

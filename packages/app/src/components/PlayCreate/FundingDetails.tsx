@@ -1,8 +1,6 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import NumberSlider from 'components/shared/inputs/NumberSlider'
 import React from 'react'
-import ProjectBondingCurveRate from '../shared/formItems/ProjectBondingCurveRate'
 
 export type FundingDetailsFormFields = {
   discountRate: string

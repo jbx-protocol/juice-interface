@@ -15,6 +15,7 @@
     "bnc-notify": "^1.5.1",
     "burner-provider": "^1.0.38",
     "erc-20-abi": "^1.0.0",
+    "ethers": "^5.1.0",
     "ipfs-deploy": "^8.0.1",
     "node-sass": "4.14.1",
     "react": "^17",

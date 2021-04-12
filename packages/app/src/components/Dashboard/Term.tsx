@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input, Modal, Progress, Space } from 'antd'
+import { Button, Collapse, Input, Modal, Progress, Space } from 'antd'
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import TooltipLabel from 'components/shared/TooltipLabel'
 import { ContractName } from 'constants/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
@@ -20,7 +20,7 @@ import {
   parseWad,
 } from 'utils/formatCurrency'
 
-import { secsToDays } from '../../utils/formatTime'
+import { detailedTimeString } from '../../utils/formatTime'
 import CurrencySymbol from '../shared/CurrencySymbol'
 import TermDetails from './TermDetails'
 
@@ -160,6 +160,20 @@ export default function Term({
   }
 
   const periodWithdrawable = budget.target.sub(budget.tappedTarget)
+
+  const isRecurring = budget?.discountRate.gt(0)
+
+  const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
+  const secondsLeft = budget.start.add(budget.duration).sub(now)
+  const isEnded = secondsLeft.lte(0)
+
+  let header: string
+
+  if (isRecurring) {
+    header = isEnded
+      ? 'Cycle ended'
+      : 'Cycle ends in ' + detailedTimeString(secondsLeft)
+  } else header = detailedTimeString(secondsLeft) + ' left'
 
   return (
     <div>
@@ -314,7 +328,24 @@ export default function Term({
           </div>
         ) : null}
 
-        <TermDetails budget={budget} showDetail={showDetail} />
+        <Collapse
+          style={{
+            background: 'transparent',
+            border: 'none',
+            margin: 0,
+            padding: 0,
+          }}
+          className="minimal"
+          defaultActiveKey={showDetail ? '0' : undefined}
+        >
+          <CollapsePanel
+            key={'0'}
+            style={{ border: 'none', padding: 0 }}
+            header={header}
+          >
+            <TermDetails budget={budget} />
+          </CollapsePanel>
+        </Collapse>
       </Space>
 
       <Modal

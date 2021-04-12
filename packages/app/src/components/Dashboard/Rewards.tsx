@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Input, Space, Statistic } from 'antd'
+import { Button, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 
@@ -121,14 +121,6 @@ export default function Rewards({
       totalOverflow,
     ],
   )
-
-  useEffect(() => onChangeRedeemAmount(fromWad(ticketsBalance)), [
-    ticketsBalance,
-    totalOverflow,
-    ticketSupply,
-    bondingCurveRate,
-    onChangeRedeemAmount,
-  ])
 
   const share = ticketSupply?.gt(0)
     ? ticketsBalance?.mul(100).div(ticketSupply).toString()

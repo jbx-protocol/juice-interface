@@ -1,29 +1,18 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, parseEther } from '@ethersproject/units'
-import { Descriptions, Input, Modal } from 'antd'
+import { Modal } from 'antd'
 import { UserContext } from 'contexts/userContext'
-import { useContext, useEffect, useState } from 'react'
+import { constants } from 'ethers'
+import { useContext } from 'react'
 
 export default function ApproveSpendModal({
   visible,
-  initialWeiAmt,
-  allowance,
   onSuccess,
   onCancel,
 }: {
   visible?: boolean
-  initialWeiAmt?: BigNumber
-  allowance?: BigNumber
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const { weth, transactor, contracts } = useContext(UserContext)
-
-  const [approveAmount, setApproveAmount] = useState<BigNumber>()
-
-  useEffect(() => setApproveAmount(initialWeiAmt ?? BigNumber.from(0)), [
-    initialWeiAmt,
-  ])
 
   function approve() {
     if (!transactor || !contracts || !weth?.contract) return
@@ -31,7 +20,7 @@ export default function ApproveSpendModal({
     transactor(
       weth.contract,
       'approve',
-      [contracts.Juicer?.address, approveAmount?.toHexString()],
+      [contracts.Juicer?.address, constants.MaxUint256.toHexString()],
       {
         onConfirmed: () => {
           if (onSuccess) onSuccess()
@@ -42,23 +31,13 @@ export default function ApproveSpendModal({
 
   return (
     <Modal
-      title={`Approve ETH spending allowance`}
       visible={visible}
       onOk={approve}
       onCancel={onCancel}
-      width={600}
       okText="Approve"
+      centered={true}
     >
-      <Descriptions>
-        <Descriptions.Item label="Current allowance">
-          {allowance ? formatEther(allowance) : undefined} {weth?.symbol}
-        </Descriptions.Item>
-      </Descriptions>
-      <Input
-        defaultValue={initialWeiAmt ? formatEther(initialWeiAmt) : '0'}
-        onChange={e => setApproveAmount(parseEther(e.target.value || '0'))}
-        suffix={weth?.symbol}
-      />
+      <h2>Allow Juice to spend your {weth?.symbol}?</h2>
     </Modal>
   )
 }

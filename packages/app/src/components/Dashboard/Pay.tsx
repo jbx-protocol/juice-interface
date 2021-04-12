@@ -12,7 +12,7 @@ import { BudgetCurrency } from 'models/budget-currency'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import React, { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { budgetCurrencyName, budgetCurrencySymbol } from 'utils/budgetCurrency'
+import { budgetCurrencyName } from 'utils/budgetCurrency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
@@ -146,8 +146,6 @@ export default function Pay({
 
       <ApproveSpendModal
         visible={approveModalVisible}
-        initialWeiAmt={weiPayAmt}
-        allowance={allowance}
         onSuccess={() => setApproveModalVisible(false)}
         onCancel={() => setApproveModalVisible(false)}
       />

@@ -76,10 +76,12 @@ export default function FormattedNumberInput({
         placeholder={placeholder}
         formatter={(val?: string | number | undefined) =>
           _prefix +
-          (formattedNum(val, {
-            thousandsSeparator,
-            decimalSeparator,
-          }) ?? '0') +
+          (val
+            ? formattedNum(val, {
+                thousandsSeparator,
+                decimalSeparator,
+              })
+            : '') +
           _suffix
         }
         parser={(val?: string) =>

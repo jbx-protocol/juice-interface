@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Descriptions, Modal } from 'antd'
+import { Input, Descriptions, Form, Modal, Space } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { Budget } from 'models/budget'
@@ -25,21 +26,27 @@ export default function ConfirmPayOwnerModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress, weth } = useContext(UserContext)
 
   const converter = useCurrencyConverter()
 
   const weiAmount = converter.usdToWei(usdAmount)
 
-  function pay() {
+  async function pay() {
     if (!contracts || !projectId || !transactor) return
 
-    // TODO add note input
+    await form.validateFields()
 
     transactor(
       contracts.Juicer,
       'pay',
-      [projectId.toHexString(), weiAmount?.toHexString(), userAddress, ''],
+      [
+        projectId.toHexString(),
+        weiAmount?.toHexString(),
+        userAddress,
+        form.getFieldValue('note'),
+      ],
       {
         onConfirmed: () => {
           if (onSuccess) onSuccess()
@@ -64,18 +71,31 @@ export default function ConfirmPayOwnerModal({
       okText="Pay"
       onCancel={onCancel}
       width={800}
+      centered={true}
     >
-      <Descriptions column={1} bordered>
-        <Descriptions.Item label="Pay amount">
-          {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
-        </Descriptions.Item>
-        <Descriptions.Item label="Tickets for you">
-          {formatWad(receivedTickets)}
-        </Descriptions.Item>
-        <Descriptions.Item label="Tickets for owner">
-          {formatWad(ownerTickets)}
-        </Descriptions.Item>
-      </Descriptions>
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <Descriptions column={1} bordered>
+          <Descriptions.Item label="Pay amount">
+            {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
+          </Descriptions.Item>
+          <Descriptions.Item label="Tickets for you">
+            {formatWad(receivedTickets)}
+          </Descriptions.Item>
+          <Descriptions.Item label="Tickets for owner">
+            {formatWad(ownerTickets)}
+          </Descriptions.Item>
+        </Descriptions>
+        <Form form={form}>
+          <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
+            <Input.TextArea
+              placeholder="Add a note to this payment on-chain."
+              maxLength={256}
+              showCount
+              autoSize
+            />
+          </Form.Item>
+        </Form>
+      </Space>
     </Modal>
   )
 }

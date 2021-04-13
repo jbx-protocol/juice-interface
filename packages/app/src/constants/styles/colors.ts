@@ -12,6 +12,7 @@ export type JuiceColor =
   | 'grape'
   | 'grapeHint'
   | 'dark'
+  | 'medium'
   | 'bodyPrimary'
   | 'bodySecondary'
 
@@ -22,6 +23,7 @@ export const colors: Record<JuiceColor, CSSProperties['color']> = {
   grape: '#574c67',
   grapeHint: '#574c6748',
   dark: '#000',
+  medium: '#ffffff44',
   bodyPrimary: '#ffffffee',
   bodySecondary: '#a29fa7',
   juiceOrange: '#FFB32C',

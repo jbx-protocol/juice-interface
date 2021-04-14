@@ -88,7 +88,7 @@ export default function ConfirmPayOwnerModal({
         <Form form={form}>
           <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
             <Input.TextArea
-              placeholder="Add a note to this payment on-chain."
+              placeholder="Add a note to this payment on-chain (optional)."
               maxLength={256}
               showCount
               autoSize

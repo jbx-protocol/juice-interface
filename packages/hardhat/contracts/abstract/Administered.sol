@@ -11,6 +11,10 @@ abstract contract Administered is IAdministered {
         require(isAdmin[msg.sender], "Administrated: UNAUTHORIZED");
         _;
     }
+    modifier onlyOwner {
+        require(msg.sender == owner, "Administrated: UNAUTHORIZED");
+        _;
+    }
 
     /// @notice The owner who can manage access permissions of this store.
     address public override owner;
@@ -18,19 +22,11 @@ abstract contract Administered is IAdministered {
     /// @notice A mapping of admins.
     mapping(address => bool) public override isAdmin;
 
-    function appointAdmin(address account) external override {
-        require(
-            msg.sender == owner,
-            "Administrated::appointAdmin: UNAUTHORIZED"
-        );
+    function appointAdmin(address account) external override onlyOwner {
         isAdmin[account] = true;
     }
 
-    function revokeAdmin(address account) external override {
-        require(
-            msg.sender == owner,
-            "Administrated::revokeAdmin: UNAUTHORIZED"
-        );
+    function revokeAdmin(address account) external override onlyOwner {
         isAdmin[account] = false;
     }
 

@@ -23,12 +23,6 @@ const main = async () => {
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 
-  // const staker = await deploy("TimelockStaker");
-  // const budgetBallot = await deploy("BudgetBallot", [
-  //   juicer.address,
-  //   staker.address,
-  // ]);
-
   const admin = await deploy("Admin", [
     juicer.address,
     "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
@@ -73,10 +67,6 @@ const main = async () => {
     await attachedPrices.transferOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
-    // console.log("⚡️ Setting the staker owner");
-    // await attachedStaker.setOwnership(admin.address, {
-    //   gasLimit: blockGasLimit,
-    // });
     console.log("⚡️ Granting the juicer admin privileges over the projects");
     await attachedAdmin.grantAdmin(projects.address, juicer.address, {
       gasLimit: blockGasLimit,
@@ -115,17 +105,6 @@ const main = async () => {
     //   gasLimit: blockGasLimit
     // });
 
-    // console.log("⚡️ Setting the budget ballot as a controller of the staker");
-    // // Make this Ballot a timelock controller of the staker contract.
-    // await attachedAdmin.setControllerStatus(
-    //   staker.address,
-    //   budgetBallot.address,
-    //   true,
-    //   {
-    //     gasLimit: blockGasLimit,
-    //   }
-    // );
-
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
     await attachedJuicer.deploy(
@@ -138,7 +117,7 @@ const main = async () => {
       2592000,
       "https://juice.work",
       970,
-      382,
+      690,
       50,
       {
         gasLimit: blockGasLimit,

@@ -75,6 +75,12 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
+    /// @notice The number of seconds that must pass for a budget reconfiguration to become active.
+    uint256 public constant override reconfigurationDelay = 1209600;
+
+    /// @notice The percent fee the Juice project takes from payments. Out of 1000.
+    uint256 public constant override fee = 50;
+
     /// @notice The admin of the contract who makes admin fees and can take fateful decisions over this contract's mechanics.
     address public override admin;
 
@@ -335,9 +341,8 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                // The first funding stage doesn't have a budget ballot,
-                // which allows the owner to make the first reconfiguration without approval.
-                IBudgetBallot(0)
+                0, // There is no reconfiguration delay for the first budget.
+                fee
             );
 
         emit Deploy(
@@ -368,7 +373,6 @@ contract Juicer is IJuicer {
         @param _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @param _reserved A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
-        @param _ballot The ballot to use for reconfiguration voting.
         @return _budgetId The id of the budget that was successfully configured.
     */
     function reconfigure(
@@ -378,8 +382,7 @@ contract Juicer is IJuicer {
         uint256 _duration,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved,
-        IBudgetBallot _ballot
+        uint256 _reserved
     ) external override lock returns (uint256) {
         require(_target > 0, "Juicer::reconfigure: BAD_TARGET");
 
@@ -417,7 +420,8 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                _ballot
+                reconfigurationDelay,
+                fee
             );
 
         emit Reconfigure(_budget.id, _budget.projectId, _budget);
@@ -698,7 +702,7 @@ contract Juicer is IJuicer {
         // The msg sender should have already approved this transfer.
         _token.safeTransferFrom(msg.sender, address(this), _amount);
 
-        // If there is an yielder, deposit to it.
+        // If there is a yielder, deposit to it.
         if (yielder != IYielder(0)) yielder.deposit(_amount, weth);
 
         // Add the processed amount.

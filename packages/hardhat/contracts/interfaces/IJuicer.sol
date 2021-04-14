@@ -38,6 +38,20 @@ interface IBudgetController {
         uint256 tappedAmount
     );
 
+    function reconfigurationDelay() external view returns (uint256);
+
+    function fee() external view returns (uint256);
+
+    function reconfigure(
+        uint256 _projectId,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        uint256 _discountRate,
+        uint256 _bondingCurveRate,
+        uint256 _reserved
+    ) external returns (uint256 budgetId);
+
     function pay(
         uint256 _projectId,
         uint256 _amount,
@@ -82,12 +96,6 @@ interface ITicketsController {
 
 interface IJuicer is IBudgetController, ITicketsController {
     event Migrate(IJuicer indexed to, uint256 _amount);
-
-    event Collect(
-        address indexed collecter,
-        address indexed beneficiary,
-        uint256 amount
-    );
 
     event Deploy(
         uint256 indexed projectId,
@@ -148,17 +156,6 @@ interface IJuicer is IBudgetController, ITicketsController {
         uint256 _bondingCurveRate,
         uint256 _reserved
     ) external;
-
-    function reconfigure(
-        uint256 _projectId,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
-        IBudgetBallot _ballot
-    ) external returns (uint256 budgetId);
 
     function addToBalance(
         uint256 _projectId,

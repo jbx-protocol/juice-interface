@@ -29,9 +29,6 @@ contract BudgetStore is Administered, IBudgetStore {
     /// @dev Budgets have IDs > 0.
     uint256 public override budgetCount = 0;
 
-    /// @notice The percent fee the Juice project takes from payments.
-    uint256 public override fee = 50;
-
     // --- external views --- //
 
     /**
@@ -113,7 +110,8 @@ contract BudgetStore is Administered, IBudgetStore {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this Budget's overflow to reserve for the project.
-        @param _ballot The ballot to use for reconfiguration voting.
+        @param _reconfigurationDelay The number of seconds that must pass for this configuration to become active.
+        @param _fee The fee that this configuration incures.
         @return budget The budget that was successfully configured.
     */
     function configure(
@@ -124,7 +122,8 @@ contract BudgetStore is Administered, IBudgetStore {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        IBudgetBallot _ballot
+        uint256 _reconfigurationDelay,
+        uint256 _fee
     ) external override onlyAdmin returns (Budget.Data memory budget) {
         // Return's the project's editable budget. Creates one if one doesn't already exists.
         Budget.Data storage _budget = _ensureStandbyBudget(_projectId);
@@ -136,9 +135,9 @@ contract BudgetStore is Administered, IBudgetStore {
         _budget.discountRate = _discountRate;
         _budget.bondingCurveRate = _bondingCurveRate;
         _budget.reserved = _reserved;
-        _budget.fee = fee;
+        _budget.fee = _fee;
         _budget.configured = block.timestamp;
-        _budget.ballot = _ballot;
+        _budget.eligibleAfter = block.timestamp.add(_reconfigurationDelay);
 
         // Return the budget.
         budget = _budget;
@@ -187,21 +186,13 @@ contract BudgetStore is Administered, IBudgetStore {
             _currentOverflow
         );
 
-        // The amount that should be charged to the admin.
+        // The amount that should be charged as a fee for tapping.
         feeAmount = FullMath.mulDiv(convertedEthAmount, 1000, _budget.fee).sub(
             convertedEthAmount
         );
 
         // Return the ID of the budget that was tapped.
         id = _budget.id;
-    }
-
-    /** 
-      @notice Sets the percent fee that a budget can have.
-      @param _fee The new percent fee.
-    */
-    function setFee(uint256 _fee) external override onlyAdmin {
-        fee = _fee;
     }
 
     // --- private transactions --- //
@@ -253,12 +244,10 @@ contract BudgetStore is Administered, IBudgetStore {
         if (budget.id > 0) return budget;
         // No active Budget found, check if there is a standby Budget.
         budget = _standbyBudget(_projectId);
-        // Budget if exists, has been in standby for enough time, and has more yay votes than nay, return it.
-        // The first budget doesn't have a previous to get a ballot from.
-        if (
-            budget.id > 1 && budgets[budget.previous]._isConfigurationApproved()
-        ) return budget;
-        // No upcoming Budget found with a successful vote, clone the latest active Budget.
+        // Budget if exists, has been in standby for enough time to become eligible.
+        if (budget.id > 0 && block.timestamp > budget.eligibleAfter)
+            return budget;
+        // No upcoming Budget found that is eligible to become active, clone the latest active Budget.
         // Use the standby Budget's previous budget if it exists but doesn't meet activation criteria.
         budget = budgets[
             budget.id > 0 ? budget.previous : latestBudgetId[_projectId]

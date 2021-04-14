@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./FullMath.sol";
 import "./DSMath.sol";
-import "./../interfaces/IBudgetBallot.sol";
 
 /// @notice Budget data and logic.
 library Budget {
@@ -52,7 +51,7 @@ library Budget {
         // The time when this Budget was last configured.
         uint256 configured;
         // The ballot contract to use to determine this budget's reconfiguration status.
-        IBudgetBallot ballot;
+        uint256 eligibleAfter;
     }
 
     // --- internal transactions --- //
@@ -73,6 +72,7 @@ library Budget {
         _self.weight = _derivedWeight(_baseBudget);
         _self.reserved = _baseBudget.reserved;
         _self.configured = _baseBudget.configured;
+        _self.eligibleAfter = _baseBudget.eligibleAfter;
         _self.number = _baseBudget.number.add(1);
         _self.previous = _baseBudget.id;
         _self.fee = _baseBudget.fee;
@@ -134,7 +134,7 @@ library Budget {
                 _self.discountRate,
                 _self.bondingCurveRate,
                 _self.configured,
-                _self.ballot
+                _self.eligibleAfter
             );
     }
 
@@ -165,21 +165,6 @@ library Budget {
                 _percentage,
                 1000
             );
-    }
-
-    /** 
-        @notice Whether the budgets configuration is currently approved.
-        @param _self The Budget to check the configuration approval of.
-        @return Whether the budget's configuration is approved.
-    */
-    function _isConfigurationApproved(Data memory _self)
-        internal
-        view
-        returns (bool)
-    {
-        return
-            _self.ballot == IBudgetBallot(0) ||
-            _self.ballot.isApproved(_self.id, _self.configured);
     }
 
     /** 

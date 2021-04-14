@@ -3,15 +3,12 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "./IPrices.sol";
-import "./IBudgetBallot.sol";
 import "../libraries/Budget.sol";
 
 interface IBudgetStore {
     function latestBudgetId(uint256 _project) external view returns (uint256);
 
     function budgetCount() external view returns (uint256);
-
-    function fee() external view returns (uint256);
 
     function getBudget(uint256 _budgetId)
         external
@@ -36,7 +33,8 @@ interface IBudgetStore {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        IBudgetBallot _ballot
+        uint256 _reconfigurationDelay,
+        uint256 _fee
     ) external returns (Budget.Data memory budget);
 
     function tap(
@@ -52,6 +50,4 @@ interface IBudgetStore {
             uint256 convertedEthAmount,
             uint256 adminEthFeeAmount
         );
-
-    function setFee(uint256 _fee) external;
 }

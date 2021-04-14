@@ -5,7 +5,6 @@ pragma experimental ABIEncoderV2;
 import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IPrices.sol";
-import "./interfaces/IBudgetBallot.sol";
 import "./abstract/JuiceProject.sol";
 
 /// All functions in here should be governable with FLOW.
@@ -67,34 +66,5 @@ contract Admin is JuiceProject {
         uint256 _currency
     ) external onlyOwner {
         _prices.addFeed(_feed, _currency);
-    }
-
-    /**
-        @notice Sets the fee that a budget needs to pay.
-        @param _budgetStore The budget store to set the fee of.
-        @param _fee The new fee.
-    */
-    function adjustFee(IBudgetStore _budgetStore, uint256 _fee)
-        external
-        onlyOwner
-    {
-        // Fee must be 5% or lower.
-        require(_fee <= 50, "Admin::adjustFee: TOO_BIG");
-        _budgetStore.setFee(_fee);
-    }
-
-    /**
-        @notice Set a staker's controller status for a ticket store.
-        @dev This lets the admin give new contracts access to the timelock staker.
-        @param _ticketStore The timelock controller to change the controller status of.
-        @param _controller The controller to change the status of.
-        @param _status The new status.
-    */
-    function setTimelockControllerStatus(
-        ITicketStore _ticketStore,
-        address _controller,
-        bool _status
-    ) external onlyOwner {
-        _ticketStore.setTimelockControllerStatus(_controller, _status);
     }
 }

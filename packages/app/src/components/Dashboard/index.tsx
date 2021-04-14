@@ -18,6 +18,7 @@ import {
 import { useParams } from 'react-router-dom'
 import { budgetsDiff } from 'utils/budgetsDiff'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
+import { normalizeHandle } from 'utils/formatHandle'
 
 import Loading from '../shared/Loading'
 import BudgetsHistory from './BudgetsHistory'
@@ -38,7 +39,7 @@ export default function Dashboard() {
     args: useMemo(() => {
       if (!handle) return null
 
-      let bytes = utils.formatBytes32String(handle.toLowerCase())
+      let bytes = utils.formatBytes32String(normalizeHandle(handle))
 
       while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
         bytes = bytes.substring(0, bytes.length - 2)
@@ -121,12 +122,8 @@ export default function Dashboard() {
       <div style={{ marginTop: 80 }}>
         <Row gutter={40}>
           <Col xs={24} md={12}>
-            <h2>Activity</h2>
-            <PayEvents projectId={projectId} />
-          </Col>
-          <Col xs={24} md={12}>
             <Tabs
-              defaultActiveKey="1"
+              defaultActiveKey="upcoming"
               size="large"
               tabBarStyle={{
                 fontWeight: 600,
@@ -134,18 +131,23 @@ export default function Dashboard() {
                 paddingTop: 0,
                 paddingBottom: 0,
               }}
+              style={{ overflow: 'visible' }}
             >
-              <Tabs.TabPane tab="History" key="activity" style={tabPaneStyle}>
-                <BudgetsHistory startId={budget?.previous} />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Upcoming" key="future" style={tabPaneStyle}>
+              <Tabs.TabPane tab="Upcoming" key="upcoming" style={tabPaneStyle}>
                 <UpcomingBudget
                   isOwner={isOwner}
                   projectId={projectId}
                   currentBudget={budget}
                 />
               </Tabs.TabPane>
+              <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
+                <BudgetsHistory startId={budget?.previous} />
+              </Tabs.TabPane>
             </Tabs>
+          </Col>
+
+          <Col xs={24} md={12}>
+            <PayEvents projectId={projectId} />
           </Col>
         </Row>
       </div>

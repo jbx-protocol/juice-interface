@@ -6,7 +6,7 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useEventListener from 'hooks/EventListener'
-import React, { useContext } from 'react'
+import React, { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 import { toUint256 } from 'utils/formatNumber'
@@ -30,44 +30,37 @@ export default function PayEvents({
     includeHistory: true,
   })
 
-  console.log({ events })
+  const smallHeaderStyle: CSSProperties = {
+    fontSize: '.7rem',
+    color: colors.grape,
+  }
+
+  const contentLineHeight = 1.5
 
   return (
     <div>
-      {events?.length
-        ? events.map((event, i) => (
+      {events?.length ? (
+        events.map((event, i) => (
+          <div
+            style={{
+              marginBottom: 20,
+              paddingBottom: 20,
+              borderBottom: '1px solid ' + colors.grapeHint,
+            }}
+            key={i}
+          >
             <div
               style={{
-                paddingTop: 20,
-                paddingBottom: 20,
-                borderBottom: '1px solid ' + colors.grapeHint,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignContent: 'space-between',
               }}
-              key={i}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  justifyContent: 'space-between',
-                  fontSize: '.8rem',
-                  color: colors.grape,
-                }}
-              >
-                <div>Received</div>
-                <div style={{ fontSize: '.7rem' }}>
-                  {formatDate(event.timestamp * 1000)}
-                </div>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <div>
+                <div style={smallHeaderStyle}>Received</div>
                 <div
                   style={{
+                    lineHeight: contentLineHeight,
                     fontSize: '1rem',
                     fontWeight: 600,
                     marginRight: 10,
@@ -87,26 +80,40 @@ export default function PayEvents({
                     </span>
                   )}
                 </div>
-
-                <div
-                  style={{
-                    color: colors.bodySecondary,
-                    fontSize: '0.7rem',
-                    cursor: 'default',
-                  }}
-                >
-                  <ArrowLeftOutlined /> {event.payer}
-                </div>
               </div>
 
-              {event.note ? (
-                <div style={{ color: colors.bodySecondary, marginTop: 5 }}>
-                  "{event.note}"
+              <div>
+                <div
+                  style={{
+                    ...smallHeaderStyle,
+                    textAlign: 'right',
+                  }}
+                >
+                  {formatDate(event.timestamp * 1000)}
                 </div>
-              ) : null}
+                <div
+                  style={{
+                    ...smallHeaderStyle,
+                    color: colors.bodySecondary,
+                    marginTop: '.3rem',
+                    lineHeight: contentLineHeight,
+                  }}
+                >
+                  {event.payer}
+                </div>
+              </div>
             </div>
-          ))
-        : 'No activity yet'}
+
+            {event.note ? (
+              <div style={{ color: colors.bodySecondary, marginTop: 5 }}>
+                "{event.note}"
+              </div>
+            ) : null}
+          </div>
+        ))
+      ) : (
+        <div style={{ color: colors.bodySecondary }}>No activity yet.</div>
+      )}
     </div>
   )
 }

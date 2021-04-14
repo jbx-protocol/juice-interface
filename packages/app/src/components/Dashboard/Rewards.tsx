@@ -181,39 +181,18 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            <div>{formatWad(ticketsBalance ?? 0)} credits</div>
+            <div>
+              {formatWad(ticketsBalance ?? 0)} tickets{' '}
+              <Button size="small" onClick={() => setRedeemModalVisible(true)}>
+                Redeem
+              </Button>
+            </div>
             <div style={{ color: colors.bodySecondary }}>
               {subText(
                 `${share ?? 0}% of ${
                   formatWad(ticketSupply) ?? 0
-                } Tickets in circulation`,
+                } tickets in circulation`,
               )}
-            </div>
-            <div style={{ display: 'flex', marginTop: 10 }}>
-              <FormattedNumberInput
-                style={{ flex: 1, marginRight: 10 }}
-                min={0}
-                disabled={redeemDisabled}
-                step={0.001}
-                placeholder="0"
-                value={redeemAmount}
-                accessory={
-                  <InputAccessoryButton
-                    content="MAX"
-                    onClick={() =>
-                      onChangeRedeemAmount(fromWad(ticketsBalance))
-                    }
-                  />
-                }
-                onChange={val => onChangeRedeemAmount(val)}
-              />
-              <Button
-                type="primary"
-                onClick={() => setRedeemModalVisible(true)}
-                disabled={redeemDisabled}
-              >
-                Redeem Tickets 
-              </Button>
             </div>
           </div>
         )}
@@ -230,14 +209,38 @@ export default function Rewards({
           onChangeRedeemAmount(undefined)
           setRedeemModalVisible(false)
         }}
-        okText="Confirm"
+        okText="Redeem"
+        okButtonProps={{ disabled: redeemDisabled }}
         width={540}
       >
-        <Space direction="vertical">
-          <div>Redeem {redeemAmount} Tickets</div>
-          <div>
-            You will receive minimum {formatWad(minRedeemAmount)} {weth?.symbol}
-          </div>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <div>Balance: {formatWad(ticketsBalance ?? 0)} tickets</div>
+          {redeemDisabled ? (
+            <div style={{ color: colors.juiceLight, fontWeight: 500 }}>
+              You can redeem tickets once this project has overflow!
+            </div>
+          ) : (
+            <div>
+              <FormattedNumberInput
+                min={0}
+                step={0.001}
+                placeholder="0"
+                value={redeemAmount}
+                disabled={redeemDisabled}
+                accessory={
+                  <InputAccessoryButton
+                    content="MAX"
+                    onClick={() =>
+                      onChangeRedeemAmount(fromWad(ticketsBalance))
+                    }
+                  />
+                }
+                onChange={val => onChangeRedeemAmount(val)}
+              />
+              You will receive minimum {formatWad(minRedeemAmount) || '--'}{' '}
+              {weth?.symbol}
+            </div>
+          )}
         </Space>
       </Modal>
     </div>

@@ -105,14 +105,6 @@ export default function Project({
 
       <Row gutter={gutter}>
         <Col xs={24} md={12}>
-          <Pay budget={budget} projectId={projectId} project={project} />
-
-          <div style={{ marginTop: gutter }}>
-            <Rewards projectId={projectId} />
-          </div>
-        </Col>
-
-        <Col xs={24} md={12}>
           <CardSection padded>
             <Term
               projectId={projectId}
@@ -121,6 +113,14 @@ export default function Project({
               isOwner={isOwner}
             />
           </CardSection>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <Pay budget={budget} projectId={projectId} project={project} />
+
+          <div style={{ marginTop: gutter }}>
+            <Rewards projectId={projectId} />
+          </div>
         </Col>
       </Row>
 

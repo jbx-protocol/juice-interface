@@ -4,6 +4,7 @@ import { ContractName } from 'constants/contract-name'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import React, { useCallback, useMemo, useState } from 'react'
+import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
 
@@ -33,12 +34,6 @@ export default function ProjectHandle({
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 
-  const formatHandle = (text: string) =>
-    text
-      .split('')
-      .filter(char => ![' ', ',', '.', '-'].includes(char))
-      .join('')
-
   return (
     <Form.Item
       name={name}
@@ -58,7 +53,7 @@ export default function ProjectHandle({
         autoComplete="off"
         value={value}
         onChange={e => {
-          const val = formatHandle(e.target.value)
+          const val = normalizeHandle(e.target.value)
           setHandleInputVal(val)
           onChange(val)
         }}

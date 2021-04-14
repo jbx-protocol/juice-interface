@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Collapse, Input, Modal, Progress, Space } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import { Button, Collapse, Input, Modal, Progress, Space, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import { ContractName } from 'constants/contract-name'
@@ -150,8 +151,19 @@ export default function Term({
 
   if (!budget) return null
 
-  const smallHeader = (text: string) => (
-    <span style={{ fontSize: '.7rem', fontWeight: 500 }}>{text}</span>
+  const smallHeader = (text: string, tip?: string) => (
+    <span style={{ fontSize: '.7rem', fontWeight: 500, cursor: 'default' }}>
+      {tip ? (
+        <Tooltip title={tip}>
+          {text}
+          <span style={{ marginLeft: 5, color: colors.bodySecondary }}>
+            <InfoCircleOutlined />
+          </span>
+        </Tooltip>
+      ) : (
+        text
+      )}
+    </span>
   )
 
   const primaryPaidStyle: CSSProperties = {
@@ -181,7 +193,10 @@ export default function Term({
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              {smallHeader('PAID')}
+              {smallHeader(
+                'PAID',
+                'The total paid to this project in this funding cycle, plus any unclaimed surplus remaining from previous funding cycles.',
+              )}
               {currency === 'USD' ? (
                 <div>
                   <span
@@ -212,7 +227,10 @@ export default function Term({
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              {smallHeader('OVERFLOW')}
+              {smallHeader(
+                'OVERFLOW',
+                'The amount of funds currently available that exceed how much the project can withdraw in this funding cycle.',
+              )}
               {currency === 'USD' ? (
                 <div>
                   <span
@@ -296,7 +314,10 @@ export default function Term({
                 {budgetCurrencySymbol(budget.currency)}
                 {formatWad(budget.target)}{' '}
                 <span style={{ opacity: 0.6 }}>
-                  {smallHeader('withdraw limit this term')}
+                  {smallHeader(
+                    'withdraw limit',
+                    'The maximum amount this project can withdraw in the current funding cycle.',
+                  )}
                 </span>
               </span>{' '}
             </div>

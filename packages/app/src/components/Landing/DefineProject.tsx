@@ -131,7 +131,7 @@ export default function DefineProject() {
             {bold(editingProject?.name, 'your project')}.
             <br />
             <br />
-            Credits can be exchanged for overflow.
+            Tickets can be exchanged for overflow.
           </div>
         </Col>
       </Row>

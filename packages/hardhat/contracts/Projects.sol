@@ -12,8 +12,8 @@ contract Projects is ERC721, IProjects, Administered {
     // A running count of project IDs.
     uint256 private projectId = 0;
 
-    // The identifiers for a project.
-    mapping(uint256 => Identifier) private identifiers;
+    // The info for each project.
+    mapping(uint256 => Info) private info;
 
     // --- public properties --- //
 
@@ -21,17 +21,17 @@ contract Projects is ERC721, IProjects, Administered {
     mapping(bytes => uint256) public override handleResolver;
 
     /**
-        @notice Get the identifiers for a project.
+        @notice Get the info for a project.
         @param _projectId The ID of the project.
-        @return _identifier The identifiers.
+        @return _info The info.
     */
-    function getIdentifier(uint256 _projectId)
+    function getInfo(uint256 _projectId)
         external
         view
         override
-        returns (Identifier memory)
+        returns (Info memory)
     {
-        return identifiers[_projectId];
+        return info[_projectId];
     }
 
     constructor() ERC721("Juice project", "JUICE PROJECT") {}
@@ -55,7 +55,7 @@ contract Projects is ERC721, IProjects, Administered {
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
         projectId++;
         _safeMint(_owner, projectId);
-        identifiers[projectId] = Identifier(_name, _handle, _logoUri, _link);
+        info[projectId] = Info(_name, _handle, _logoUri, _link);
         handleResolver[bytes(_handle)] = projectId;
         return projectId;
     }
@@ -68,7 +68,7 @@ contract Projects is ERC721, IProjects, Administered {
       @param _logoUri The new uri to an image representing the project.
         @param _link A link to more info about the project.
     */
-    function setIdentifiers(
+    function setInfo(
         uint256 _projectId,
         string memory _name,
         string memory _handle,
@@ -78,28 +78,25 @@ contract Projects is ERC721, IProjects, Administered {
         // The message sender must be the project owner.
         require(
             ownerOf(_projectId) == msg.sender,
-            "Projects::setIdentifiers: UNAUTHORIZED"
+            "Projects::setInfo: UNAUTHORIZED"
         );
-        require(
-            bytes(_handle).length > 0,
-            "Projects::setIdentifiers: EMPTY_HANDLE"
-        );
+        require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
         require(
             handleResolver[bytes(_handle)] == 0,
-            "Projects::setIdentifiers: HANDLE_TAKEN"
+            "Projects::setInfo: HANDLE_TAKEN"
         );
 
         // If needed, clear the old handle and set the new one.
-        Identifier memory _identifier = identifiers[_projectId];
+        Info memory _info = info[_projectId];
 
         // If the handle is changing, register the change in the resolver.
-        if (keccak256(bytes(_identifier.handle)) == keccak256(bytes(_handle))) {
-            handleResolver[bytes(_identifier.handle)] = 0;
+        if (keccak256(bytes(_info.handle)) == keccak256(bytes(_handle))) {
+            handleResolver[bytes(_info.handle)] = 0;
             handleResolver[bytes(_handle)] = _projectId;
         }
 
         // Set the new identifier.
-        identifiers[_projectId] = Identifier(_name, _handle, _logoUri, _link);
+        info[_projectId] = Info(_name, _handle, _logoUri, _link);
     }
 }

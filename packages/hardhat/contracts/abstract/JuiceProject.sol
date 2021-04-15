@@ -101,25 +101,19 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     }
 
     /**
-      @notice Allows the PM to set the project's name and handle.
+      @notice Allows the PM to set the project's name, link, logo, and handle.
       @param _name The new name for the project.
       @param _handle The new unique handle for the project.
       @param _logoUri The new uri to an image representing the project.
       @param _link A link to more info about the project.
     */
-    function setIdentifiers(
+    function setInfo(
         string memory _name,
         string memory _handle,
         string memory _logoUri,
         string memory _link
     ) external onlyPm {
-        juicer.projects().setIdentifiers(
-            projectId,
-            _name,
-            _handle,
-            _logoUri,
-            _link
-        );
+        juicer.projects().setInfo(projectId, _name, _handle, _logoUri, _link);
     }
 
     /** 

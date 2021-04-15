@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 interface IProjects is IERC721 {
-    struct Identifier {
+    struct Info {
         string name;
         string handle;
         string logoUri;
@@ -16,10 +16,7 @@ interface IProjects is IERC721 {
         external
         returns (uint256 projectId);
 
-    function getIdentifier(uint256 _projectId)
-        external
-        view
-        returns (Identifier memory);
+    function getInfo(uint256 _projectId) external view returns (Info memory);
 
     function create(
         address _owner,
@@ -29,7 +26,7 @@ interface IProjects is IERC721 {
         string memory link
     ) external returns (uint256 id);
 
-    function setIdentifiers(
+    function setInfo(
         uint256 _projectId,
         string memory _name,
         string memory _handle,

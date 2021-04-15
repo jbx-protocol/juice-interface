@@ -2,15 +2,18 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
 import { constants } from 'ethers'
-import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
+import { FundingCycle } from 'models/fundingCycle'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { parsePerMille, parseWad } from 'utils/formatCurrency'
-import { serializeBudget, SerializedBudget } from 'utils/serializers'
+import {
+  SerializedFundingCycle,
+  serializeFundingCycle,
+} from 'utils/serializers'
 
 export type EditingProjectState = {
   projectIdentifier: ProjectIdentifier
-  budget: SerializedBudget
+  fundingCycle: SerializedFundingCycle
   loading: boolean
 }
 
@@ -27,7 +30,7 @@ export const editingProjectSlice = createSlice({
       handle: '',
       logoUri: '',
     },
-    budget: serializeBudget({
+    fundingCycle: serializeFundingCycle({
       id: BigNumber.from(1),
       projectId: BigNumber.from(0),
       number: BigNumber.from(1),
@@ -86,70 +89,70 @@ export const editingProjectSlice = createSlice({
         logoUri: action.payload,
       },
     }),
-    setBudget: (state, action: PayloadAction<Budget>) => ({
+    setFundingCycle: (state, action: PayloadAction<FundingCycle>) => ({
       ...state,
-      budget: serializeBudget(action.payload),
+      fundingCycle: serializeFundingCycle(action.payload),
     }),
     setId: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         id: action.payload,
       },
     }),
     setProjectId: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         projectId: action.payload,
       },
     }),
     setNumber: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         number: action.payload,
       },
     }),
     setTarget: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         target: action.payload,
       },
     }),
     setDuration: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         duration: action.payload,
       },
     }),
     setReserved: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         reserved: action.payload,
       },
     }),
     setDiscountRate: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         discountRate: action.payload,
       },
     }),
     setBondingCurveRate: (state, action: PayloadAction<string>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         bondingCurveRate: action.payload,
       },
     }),
-    setCurrency: (state, action: PayloadAction<BudgetCurrency>) => ({
+    setCurrency: (state, action: PayloadAction<CurrencyOption>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         currency: action.payload,
       },
     }),
@@ -159,8 +162,8 @@ export const editingProjectSlice = createSlice({
     }),
     setIsRecurring: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      budget: {
-        ...state.budget,
+      fundingCycle: {
+        ...state.fundingCycle,
         discountRate: action.payload ? defaultDiscountRate : '0',
       },
     }),

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-export interface Budget {
+export interface FundingCycle {
   id: BigNumber
   projectId: BigNumber
   number: BigNumber

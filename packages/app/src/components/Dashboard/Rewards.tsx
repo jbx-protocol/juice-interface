@@ -52,7 +52,7 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
   })
   const ticketsBalance = useContractReader<BigNumber>({
-    contract: ContractName.TicketStore,
+    contract: ContractName.Tickets,
     functionName: 'balanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
@@ -60,7 +60,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const ticketSupply = useContractReader<BigNumber>({
-    contract: ContractName.TicketStore,
+    contract: ContractName.Tickets,
     functionName: 'totalSupply',
     args: [projectId?.toHexString()],
     valueDidChange: bigNumbersDiff,

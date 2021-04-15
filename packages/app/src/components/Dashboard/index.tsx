@@ -6,7 +6,6 @@ import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import {
   CSSProperties,
@@ -16,15 +15,16 @@ import {
   useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
-import { budgetsDiff } from 'utils/budgetsDiff'
+import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 import { normalizeHandle } from 'utils/formatHandle'
 
+import { FundingCycle } from '../../models/fundingCycle'
 import Loading from '../shared/Loading'
-import BudgetsHistory from './BudgetsHistory'
+import FundingHistory from './FundingHistory'
 import PayEvents from './PayEvents'
 import Project from './Project'
-import UpcomingBudget from './UpcomingBudget'
+import QueuedFundingCycle from './QueuedFundingCycle'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
@@ -69,15 +69,15 @@ export default function Dashboard() {
     ),
   })
 
-  const budget = useContractReader<Budget>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getCurrentBudget',
+  const fundingCycle = useContractReader<FundingCycle>({
+    contract: ContractName.FundingCycles,
+    functionName: 'getCurrent',
     args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: budgetsDiff,
+    valueDidChange: (a, b) => !deepEqFundingCycles(a, b),
     updateOn: projectId
       ? [
           {
-            contract: ContractName.BudgetStore,
+            contract: ContractName.FundingCycles,
             eventName: 'Reconfigure',
             topics: [[], projectId.toHexString()],
           },
@@ -116,7 +116,7 @@ export default function Dashboard() {
         isOwner={isOwner}
         projectId={projectId}
         project={project}
-        budget={budget}
+        fundingCycle={fundingCycle}
       />
 
       <div style={{ marginTop: 80 }}>
@@ -134,14 +134,14 @@ export default function Dashboard() {
               style={{ overflow: 'visible' }}
             >
               <Tabs.TabPane tab="Upcoming" key="upcoming" style={tabPaneStyle}>
-                <UpcomingBudget
+                <QueuedFundingCycle
                   isOwner={isOwner}
                   projectId={projectId}
-                  currentBudget={budget}
+                  currentCycle={fundingCycle}
                 />
               </Tabs.TabPane>
               <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
-                <BudgetsHistory startId={budget?.previous} />
+                <FundingHistory startId={fundingCycle?.previous} />
               </Tabs.TabPane>
             </Tabs>
           </Col>

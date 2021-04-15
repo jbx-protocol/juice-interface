@@ -7,27 +7,27 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
+import { FundingCycle } from 'models/fundingCycle'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import React, { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
+import { currencyName } from 'utils/currency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({
-  budget,
+  fundingCycle,
   project,
   projectId,
 }: {
-  budget: Budget | undefined
+  fundingCycle: FundingCycle | undefined
   project: ProjectIdentifier | undefined
   projectId: BigNumber | undefined
 }) {
-  const [payAs, setPayAs] = useState<BudgetCurrency>('1')
+  const [payAs, setPayAs] = useState<CurrencyOption>('1')
   const [payAmount, setPayAmount] = useState<string>()
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
@@ -69,16 +69,16 @@ export default function Pay({
 
   const formatReceivedTickets = (amount: BigNumber) =>
     formatWad(
-      budget
+      fundingCycle
         ? weightedRate(
-            budget,
+            fundingCycle,
             amount,
-            parsePerMille('100').sub(budget.reserved),
+            parsePerMille('100').sub(fundingCycle.reserved),
           )
         : undefined,
     )
 
-  if (!budget || !projectId || !project) return null
+  if (!fundingCycle || !projectId || !project) return null
 
   return (
     <div>
@@ -92,14 +92,14 @@ export default function Pay({
           <div style={{ flex: 1, marginRight: 10 }}>
             <FormattedNumberInput
               placeholder="0"
-              disabled={budget?.configured.eq(0)}
+              disabled={fundingCycle?.configured.eq(0)}
               onChange={val => setPayAmount(val)}
               value={payAmount}
               min={0}
               accessory={
                 <InputAccessoryButton
                   withArrow={true}
-                  content={budgetCurrencyName(payAs)}
+                  content={currencyName(payAs)}
                   onClick={() => setPayAs(payAs === '0' ? '1' : '0')}
                 />
               }
@@ -109,7 +109,7 @@ export default function Pay({
               Receive{' '}
               {payAmount && weiPayAmt?.gt(0) ? (
                 formatReceivedTickets(
-                  budgetCurrencyName(budget.currency) === 'USD'
+                  currencyName(fundingCycle.currency) === 'USD'
                     ? weiPayAmt
                     : parseWad(payAmount),
                 ) + ' Tickets'
@@ -150,7 +150,7 @@ export default function Pay({
         onCancel={() => setApproveModalVisible(false)}
       />
       <ConfirmPayOwnerModal
-        budget={budget}
+        fundingCycle={fundingCycle}
         project={project}
         projectId={projectId}
         visible={payModalVisible}

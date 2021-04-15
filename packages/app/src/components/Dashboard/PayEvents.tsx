@@ -112,7 +112,15 @@ export default function PayEvents({
           </div>
         ))
       ) : (
-        <div style={{ color: colors.bodySecondary }}>No activity yet.</div>
+        <div
+          style={{
+            color: colors.bodySecondary,
+            paddingTop: 20,
+            borderTop: '1px solid ' + colors.grapeHint,
+          }}
+        >
+          No activity yet
+        </div>
       )}
     </div>
   )

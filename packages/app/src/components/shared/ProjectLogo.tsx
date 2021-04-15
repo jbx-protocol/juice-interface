@@ -37,11 +37,10 @@ export default function ProjectLogo({
       ) : (
         <div
           style={{
-            fontSize: '2rem',
-            color: colors.juiceOrange,
+            fontSize: '2.5rem',
           }}
         >
-          {name?.split(' ').join('')?.substr(0, 2) || '⚡️'}
+          🧃
         </div>
       )}
     </div>

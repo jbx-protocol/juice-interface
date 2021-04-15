@@ -5,18 +5,18 @@ import EditProjectModal from 'components/modals/EditProjectModal'
 import { CardSection } from 'components/shared/CardSection'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { colors } from 'constants/styles/colors'
-import { Budget } from 'models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { CSSProperties, useState } from 'react'
 
+import Funding from './Funding'
 import Pay from './Pay'
 import Rewards from './Rewards'
-import Term from './Term'
 
 export default function Project({
   project,
   projectId,
-  budget,
+  fundingCycle,
   showCurrentDetail,
   style,
   isOwner,
@@ -24,7 +24,7 @@ export default function Project({
   project: ProjectIdentifier | undefined
   projectId: BigNumber
   isOwner: boolean
-  budget: Budget | undefined
+  fundingCycle: FundingCycle | undefined
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
@@ -106,9 +106,9 @@ export default function Project({
       <Row gutter={gutter}>
         <Col xs={24} md={12}>
           <CardSection padded>
-            <Term
+            <Funding
               projectId={projectId}
-              budget={budget}
+              fundingCycle={fundingCycle}
               showDetail={showCurrentDetail}
               isOwner={isOwner}
             />
@@ -116,7 +116,11 @@ export default function Project({
         </Col>
 
         <Col xs={24} md={12}>
-          <Pay budget={budget} projectId={projectId} project={project} />
+          <Pay
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            project={project}
+          />
 
           <div style={{ marginTop: gutter }}>
             <Rewards projectId={projectId} />

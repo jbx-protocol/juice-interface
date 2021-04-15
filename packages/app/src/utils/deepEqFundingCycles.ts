@@ -1,9 +1,9 @@
-import { Budget } from '../models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 
-export const budgetsDiff = (a?: Budget, b?: Budget) => {
-  if (a && !b) return true
-  if (b && !a) return true
-  return !(
+export const deepEqFundingCycles = (a?: FundingCycle, b?: FundingCycle) => {
+  if (a && !b) return false
+  if (b && !a) return false
+  return (
     a?.bondingCurveRate.eq(b?.bondingCurveRate ?? -1) &&
     a?.ballot === b?.ballot &&
     a?.configured.eq(b?.configured ?? -1) &&

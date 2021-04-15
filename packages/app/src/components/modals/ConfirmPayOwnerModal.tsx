@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Input, Descriptions, Form, Modal, Space } from 'antd'
+import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { Budget } from 'models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import { useContext } from 'react'
 import { formatWad, parsePerMille } from 'utils/formatCurrency'
@@ -12,7 +12,7 @@ import { weightedRate } from 'utils/math'
 export default function ConfirmPayOwnerModal({
   projectId,
   project,
-  budget,
+  fundingCycle,
   visible,
   usdAmount,
   onSuccess,
@@ -20,7 +20,7 @@ export default function ConfirmPayOwnerModal({
 }: {
   projectId: BigNumber
   project: ProjectIdentifier
-  budget: Budget | null | undefined
+  fundingCycle: FundingCycle | undefined
   visible?: boolean
   usdAmount: number | undefined
   onSuccess?: VoidFunction
@@ -56,12 +56,16 @@ export default function ConfirmPayOwnerModal({
   }
 
   const receivedTickets = weightedRate(
-    budget,
+    fundingCycle,
     weiAmount,
-    parsePerMille('100').sub(budget?.reserved ?? '0'),
+    parsePerMille('100').sub(fundingCycle?.reserved ?? '0'),
   )
 
-  const ownerTickets = weightedRate(budget, weiAmount, budget?.reserved)
+  const ownerTickets = weightedRate(
+    fundingCycle,
+    weiAmount,
+    fundingCycle?.reserved,
+  )
 
   return (
     <Modal

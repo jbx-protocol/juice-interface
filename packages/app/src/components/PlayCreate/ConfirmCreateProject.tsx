@@ -1,8 +1,11 @@
 import { Space, Statistic } from 'antd'
 import { UserContext } from 'contexts/userContext'
-import { useAppSelector, useEditingBudgetSelector } from 'hooks/AppSelector'
+import {
+  useAppSelector,
+  useEditingFundingCycleSelector,
+} from 'hooks/AppSelector'
 import { useContext } from 'react'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
+import { currencyName } from 'utils/currency'
 import {
   formattedNum,
   formatWad,
@@ -15,7 +18,7 @@ import { orEmpty } from 'utils/orEmpty'
 export default function ConfirmCreateProject() {
   const { adminFeePercent } = useContext(UserContext)
 
-  const editingBudget = useEditingBudgetSelector()
+  const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
@@ -27,7 +30,7 @@ export default function ConfirmCreateProject() {
 
     if (targetAmount === undefined) return
 
-    const currency = budgetCurrencyName(editingBudget?.currency)
+    const currency = currencyName(editingBudget?.currency)
 
     return `${formattedNum(targetAmount)} (+${formatWad(
       feeForAmount(editingBudget?.target, adminFeePercent),

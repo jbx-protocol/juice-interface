@@ -1,52 +1,54 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { fromWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 
-import { Budget } from '../models/budget'
+import { FundingCycle } from '../models/fundingCycle'
 import { fromPerMille } from './formatCurrency'
 
-export type SerializedBudget = Record<keyof Budget, string>
+export type SerializedFundingCycle = Record<keyof FundingCycle, string>
 
-export const serializeBudget = (budget: Budget): SerializedBudget => ({
-  projectId: budget.projectId.toString(),
-  id: budget.id.toString(),
-  number: budget.number.toString(),
-  previous: budget.previous.toString(),
-  target: fromWad(budget.target),
-  currency: budget.currency.toString(),
-  start: budget.start.toString(),
-  duration: budget.duration.toString(),
-  tappedTarget: fromWad(budget.tappedTarget),
-  tappedTotal: fromWad(budget.tappedTotal),
-  reserved: fromPerMille(budget.reserved),
-  weight: fromWad(budget.weight),
-  fee: fromPerMille(budget.fee),
-  bondingCurveRate: fromPerMille(budget.bondingCurveRate),
-  discountRate: fromPerMille(budget.discountRate),
-  configured: budget.configured.toString(),
-  ballot: budget.ballot,
+export const serializeFundingCycle = (
+  fc: FundingCycle,
+): SerializedFundingCycle => ({
+  projectId: fc.projectId.toString(),
+  id: fc.id.toString(),
+  number: fc.number.toString(),
+  previous: fc.previous.toString(),
+  target: fromWad(fc.target),
+  currency: fc.currency.toString(),
+  start: fc.start.toString(),
+  duration: fc.duration.toString(),
+  tappedTarget: fromWad(fc.tappedTarget),
+  tappedTotal: fromWad(fc.tappedTotal),
+  reserved: fromPerMille(fc.reserved),
+  weight: fromWad(fc.weight),
+  fee: fromPerMille(fc.fee),
+  bondingCurveRate: fromPerMille(fc.bondingCurveRate),
+  discountRate: fromPerMille(fc.discountRate),
+  configured: fc.configured.toString(),
+  ballot: fc.ballot,
 })
 
-export const deserializeBudget = (
-  budget: SerializedBudget | undefined,
-): Budget | undefined =>
-  budget
+export const deserializeFundingCycle = (
+  fc: SerializedFundingCycle | undefined,
+): FundingCycle | undefined =>
+  fc
     ? {
-        ...budget,
-        projectId: BigNumber.from(budget.projectId),
-        id: BigNumber.from(budget.id),
-        number: BigNumber.from(budget.number),
-        previous: BigNumber.from(budget.previous),
-        target: parseWad(budget.target),
-        currency: BigNumber.from(budget.currency),
-        start: BigNumber.from(budget.start),
-        duration: BigNumber.from(budget.duration),
-        tappedTarget: parseWad(budget.tappedTarget),
-        tappedTotal: parseWad(budget.tappedTotal),
-        reserved: parsePerMille(budget.reserved),
-        weight: parseWad(budget.weight),
-        fee: parsePerMille(budget.fee),
-        bondingCurveRate: parsePerMille(budget.bondingCurveRate),
-        discountRate: parsePerMille(budget.discountRate),
-        configured: BigNumber.from(budget.configured),
+        ...fc,
+        projectId: BigNumber.from(fc.projectId),
+        id: BigNumber.from(fc.id),
+        number: BigNumber.from(fc.number),
+        previous: BigNumber.from(fc.previous),
+        target: parseWad(fc.target),
+        currency: BigNumber.from(fc.currency),
+        start: BigNumber.from(fc.start),
+        duration: BigNumber.from(fc.duration),
+        tappedTarget: parseWad(fc.tappedTarget),
+        tappedTotal: parseWad(fc.tappedTotal),
+        reserved: parsePerMille(fc.reserved),
+        weight: parseWad(fc.weight),
+        fee: parsePerMille(fc.fee),
+        bondingCurveRate: parsePerMille(fc.bondingCurveRate),
+        discountRate: parsePerMille(fc.discountRate),
+        configured: BigNumber.from(fc.configured),
       }
-    : budget
+    : fc

@@ -1,22 +1,22 @@
 import { Descriptions } from 'antd'
-import { Budget } from 'models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 import React from 'react'
 import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
-export default function TermDetails({
-  budget,
+export default function FundingCycleDetails({
+  fundingCycle,
 }: {
-  budget: Budget | undefined
+  fundingCycle: FundingCycle | undefined
 }) {
-  if (!budget) return null
+  if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(budget.start.mul(1000).toNumber())
+  const formattedStartTime = formatDate(fundingCycle.start.mul(1000).toNumber())
 
   const formattedEndTime = formatDate(
-    budget.start.add(budget.duration).mul(1000).toNumber(),
+    fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
   )
 
   return (
@@ -33,7 +33,7 @@ export default function TermDetails({
           />
         }
       >
-        {fromPerMille(budget.reserved)}%
+        {fromPerMille(fundingCycle.reserved)}%
       </Descriptions.Item>
 
       <Descriptions.Item
@@ -45,16 +45,16 @@ export default function TermDetails({
           />
         }
       >
-        {fromPerMille(budget.discountRate)} %
+        {fromPerMille(fundingCycle.discountRate)} %
       </Descriptions.Item>
 
       <Descriptions.Item label="Term">
-        {budget.number.toString()}
+        {fundingCycle.number.toString()}
       </Descriptions.Item>
 
-      {budget.bondingCurveRate.gt(0) ? (
+      {fundingCycle.bondingCurveRate.gt(0) ? (
         <Descriptions.Item label="Bonding curve rate">
-          {fromPerMille(budget.bondingCurveRate)}%
+          {fromPerMille(fundingCycle.bondingCurveRate)}%
         </Descriptions.Item>
       ) : null}
     </Descriptions>

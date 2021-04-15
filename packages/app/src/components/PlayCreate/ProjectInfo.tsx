@@ -1,15 +1,15 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useEditingBudgetRecurringSelector } from 'hooks/AppSelector'
-import { BudgetCurrency } from 'models/budget-currency'
+import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
+import { CurrencyOption } from 'models/currencyOption'
 import { editingProjectActions } from 'redux/slices/editingProject'
 
 export type ProjectInfoFormFields = {
   name: string
   target: string
   duration: string
-  currency: BudgetCurrency
+  currency: CurrencyOption
 }
 
 export default function ProjectInfo({
@@ -19,7 +19,7 @@ export default function ProjectInfo({
   form: FormInstance<ProjectInfoFormFields>
   onSave: VoidFunction
 }) {
-  const isRecurring = useEditingBudgetRecurringSelector()
+  const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
 
   return (

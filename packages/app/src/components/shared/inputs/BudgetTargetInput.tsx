@@ -1,6 +1,6 @@
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
 import React, { useEffect, useState } from 'react'
-import { budgetCurrencyName } from 'utils/budgetCurrency'
+import { currencyName } from 'utils/currency'
 
 import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from './FormattedNumberInput'
@@ -13,14 +13,14 @@ export default function BudgetTargetInput({
   disabled,
   placeholder,
 }: {
-  currency: BudgetCurrency
+  currency: CurrencyOption
   value: string | undefined
   onValueChange: (value?: string) => void
-  onCurrencyChange: (currency: BudgetCurrency) => void
+  onCurrencyChange: (currency: CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
 }) {
-  const [_currency, setCurrency] = useState<BudgetCurrency>()
+  const [_currency, setCurrency] = useState<CurrencyOption>()
 
   useEffect(() => setCurrency(currency), [currency])
 
@@ -38,7 +38,7 @@ export default function BudgetTargetInput({
             setCurrency(newCurrency)
             onCurrencyChange(newCurrency)
           }}
-          content={<span>{budgetCurrencyName(_currency)}</span>}
+          content={<span>{currencyName(_currency)}</span>}
           withArrow={true}
           placement="suffix"
         />

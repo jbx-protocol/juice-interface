@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
 
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
@@ -16,8 +16,8 @@ export default function ProjectDuration({
 }: {
   value: string | undefined
   onValueChange: (val: string | undefined) => void
-  currency: BudgetCurrency
-  onCurrencyChange: (val: BudgetCurrency) => void
+  currency: CurrencyOption
+  onCurrencyChange: (val: CurrencyOption) => void
   disabled?: boolean
 } & FormItemExt) {
   return (

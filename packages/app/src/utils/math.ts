@@ -1,13 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Budget } from 'models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 
 export const weightedRate = (
-  budget: Budget | null | undefined,
+  fc: FundingCycle | undefined,
   wei: BigNumber | undefined,
   percentage: BigNumber | undefined,
 ) =>
-  budget && wei && percentage
-    ? budget.weight.div(budget.target).mul(wei).mul(percentage).div(1000)
+  fc && wei && percentage
+    ? fc.weight.div(fc.target).mul(wei).mul(percentage).div(1000)
     : undefined
 
 export const feeForAmount = (

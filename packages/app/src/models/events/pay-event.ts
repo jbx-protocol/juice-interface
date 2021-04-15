@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
 
 export interface PayEvent {
   amount: BigNumber
   beneficiary: string
-  budgetId: BigNumber
-  currency: BudgetCurrency
+  fundingCycleId: BigNumber
+  currency: CurrencyOption
   fee: BigNumber
   note: string
   payer: string

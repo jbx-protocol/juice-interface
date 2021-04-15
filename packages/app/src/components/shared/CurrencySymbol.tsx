@@ -1,22 +1,22 @@
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
 import { CSSProperties } from 'react'
-import { budgetCurrencyStyle, budgetCurrencySymbol } from 'utils/budgetCurrency'
+import { currencyStyle, currencySymbol } from 'utils/currency'
 
 export default function CurrencySymbol({
   currency,
   style,
 }: {
-  currency: BudgetCurrency
+  currency: CurrencyOption
   style?: CSSProperties
 }) {
   return (
     <span
       style={{
         ...style,
-        ...budgetCurrencyStyle(currency),
+        ...currencyStyle(currency),
       }}
     >
-      {budgetCurrencySymbol(currency)}
+      {currencySymbol(currency)}
     </span>
   )
 }

@@ -3,8 +3,8 @@ import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
-import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
+import { FundingCycle } from 'models/fundingCycle'
 import { useContext, useEffect, useState } from 'react'
 import {
   fromPerMille,
@@ -15,7 +15,7 @@ import {
 
 export type ReconfigureBudgetFormFields = {
   target: string
-  currency: BudgetCurrency
+  currency: CurrencyOption
   duration: string
   discountRate: string
   bondingCurveRate: string
@@ -24,12 +24,12 @@ export type ReconfigureBudgetFormFields = {
 
 export default function ReconfigureBudgetModal({
   projectId,
-  budget,
+  fundingCycle,
   visible,
   onDone,
 }: {
   projectId: BigNumber
-  budget: Budget | null | undefined
+  fundingCycle: FundingCycle | undefined
   visible?: boolean
   onDone?: VoidFunction
 }) {
@@ -39,24 +39,24 @@ export default function ReconfigureBudgetModal({
   const [form] = useForm<ReconfigureBudgetFormFields>()
 
   useEffect(() => {
-    if (!budget) return
+    if (!fundingCycle) return
 
     form.setFieldsValue({
-      duration: budget.duration.toString(),
-      target: fromWad(budget.target),
-      currency: budget.currency.toString() as BudgetCurrency,
-      discountRate: fromPerMille(budget.discountRate),
-      reserved: fromPerMille(budget.reserved),
-      bondingCurveRate: fromPerMille(budget.bondingCurveRate),
+      duration: fundingCycle.duration.toString(),
+      target: fromWad(fundingCycle.target),
+      currency: fundingCycle.currency.toString() as CurrencyOption,
+      discountRate: fromPerMille(fundingCycle.discountRate),
+      reserved: fromPerMille(fundingCycle.reserved),
+      bondingCurveRate: fromPerMille(fundingCycle.bondingCurveRate),
     })
 
-    setIsRecurring(!budget.discountRate.eq(0))
-  }, [budget, form])
+    setIsRecurring(!fundingCycle.discountRate.eq(0))
+  }, [fundingCycle, form])
 
   if (!transactor || !contracts) return null
 
   async function saveBudget() {
-    if (!transactor || !contracts?.Juicer || !budget) return
+    if (!transactor || !contracts?.Juicer || !fundingCycle) return
 
     const valid = await form.validateFields()
 
@@ -77,7 +77,7 @@ export default function ReconfigureBudgetModal({
         parsePerMille(fields.discountRate).toHexString(),
         parsePerMille(fields.bondingCurveRate).toHexString(),
         parsePerMille(fields.reserved).toHexString(),
-        budget.ballot,
+        fundingCycle.ballot,
       ],
       {
         onDone: () => {

@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Collapse, Input, Modal, Progress, Space, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -8,11 +8,11 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { Budget } from 'models/budget'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
+import { FundingCycle } from 'models/fundingCycle'
 import React, { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { budgetCurrencyName, budgetCurrencySymbol } from 'utils/budgetCurrency'
+import { currencyName, currencySymbol } from 'utils/currency'
 import {
   formattedNum,
   formatWad,
@@ -20,19 +20,19 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
+import { detailedTimeString } from 'utils/formatTime'
 
-import { detailedTimeString } from '../../utils/formatTime'
 import CurrencySymbol from '../shared/CurrencySymbol'
-import TermDetails from './TermDetails'
+import FundingCycleDetails from './FundingCycleDetails'
 
-export default function Term({
+export default function Funding({
   projectId,
-  budget,
+  fundingCycle,
   showDetail,
   isOwner,
 }: {
   projectId: BigNumber
-  budget: Budget | undefined
+  fundingCycle: FundingCycle | undefined
   showDetail?: boolean
   isOwner?: boolean
 }) {
@@ -101,11 +101,12 @@ export default function Term({
   })
 
   function tap() {
-    if (!transactor || !contracts?.Juicer || !budget) return onNeedProvider()
+    if (!transactor || !contracts?.Juicer || !fundingCycle)
+      return onNeedProvider()
 
     setLoadingWithdraw(true)
 
-    const id = budget.id.toHexString()
+    const id = fundingCycle.id.toHexString()
 
     if (!tapAmount) {
       setLoadingWithdraw(false)
@@ -125,19 +126,19 @@ export default function Term({
     transactor(
       contracts.Juicer,
       'tap',
-      [id, amount.toHexString(), budget.currency, userAddress, minAmount],
+      [id, amount.toHexString(), fundingCycle.currency, userAddress, minAmount],
       {
         onDone: () => setLoadingWithdraw(false),
       },
     )
   }
 
-  const totalPaid = balance?.add(budget?.tappedTotal ?? 0)
+  const totalPaid = balance?.add(fundingCycle?.tappedTotal ?? 0)
 
-  const currency = budgetCurrencyName(budget?.currency)
+  const currency = currencyName(fundingCycle?.currency)
 
   const percentPaid = useMemo(() => {
-    if (!totalPaid || !budget?.target) return 0
+    if (!totalPaid || !fundingCycle?.target) return 0
 
     const total =
       currency === 'USD'
@@ -146,10 +147,10 @@ export default function Term({
 
     if (!total) return 0
 
-    return fracDiv(total.toString(), budget.target.toString()) * 100
-  }, [budget?.target, totalPaid, currency, converter])
+    return fracDiv(total.toString(), fundingCycle.target.toString()) * 100
+  }, [fundingCycle?.target, totalPaid, currency, converter])
 
-  if (!budget) return null
+  if (!fundingCycle) return null
 
   const smallHeader = (text: string, tip?: string) => (
     <span style={{ fontSize: '.7rem', fontWeight: 500, cursor: 'default' }}>
@@ -171,12 +172,12 @@ export default function Term({
     fontWeight: 500,
   }
 
-  const periodWithdrawable = budget.target.sub(budget.tappedTarget)
+  const periodWithdrawable = fundingCycle.target.sub(fundingCycle.tappedTarget)
 
-  const isRecurring = budget?.discountRate.gt(0)
+  const isRecurring = fundingCycle?.discountRate.gt(0)
 
   const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
-  const secondsLeft = budget.start.add(budget.duration).sub(now)
+  const secondsLeft = fundingCycle.start.add(fundingCycle.duration).sub(now)
   const isEnded = secondsLeft.lte(0)
 
   let header: string
@@ -311,8 +312,8 @@ export default function Term({
           <div>
             <div>
               <span style={{ color: 'white', fontWeight: 500 }}>
-                {budgetCurrencySymbol(budget.currency)}
-                {formatWad(budget.target)}{' '}
+                {currencySymbol(fundingCycle.currency)}
+                {formatWad(fundingCycle.target)}{' '}
                 <span style={{ opacity: 0.6 }}>
                   {smallHeader(
                     'withdraw limit',
@@ -364,7 +365,7 @@ export default function Term({
             style={{ border: 'none', padding: 0 }}
             header={header}
           >
-            <TermDetails budget={budget} />
+            <FundingCycleDetails fundingCycle={fundingCycle} />
           </CollapsePanel>
         </Collapse>
       </Space>
@@ -386,7 +387,7 @@ export default function Term({
         <div style={{ marginBottom: 10 }}>
           Withdraw up to:{' '}
           <CurrencySymbol
-            currency={budget.currency.toString() as BudgetCurrency}
+            currency={fundingCycle.currency.toString() as CurrencyOption}
           />
           {formatWad(periodWithdrawable)}
         </div>

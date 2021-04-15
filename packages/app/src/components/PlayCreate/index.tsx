@@ -8,8 +8,11 @@ import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector, useEditingBudgetSelector } from 'hooks/AppSelector'
-import { BudgetCurrency } from 'models/budget-currency'
+import {
+  useAppSelector,
+  useEditingFundingCycleSelector,
+} from 'hooks/AppSelector'
+import { CurrencyOption } from 'models/currencyOption'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
@@ -50,7 +53,7 @@ export default function PlayCreate() {
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()
   const [projectDetailsForm] = useForm<ProjectDetailsFormFields>()
   const [fundingDetailsForm] = useForm<FundingDetailsFormFields>()
-  const editingBudget = useEditingBudgetSelector()
+  const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
@@ -68,13 +71,13 @@ export default function PlayCreate() {
   const incrementStep = (num: number) =>
     num > currentStep ? setCurrentStep(num) : null
 
-  const resetBudgetForm = () =>
+  const resetFundingCycleForm = () =>
     projectInfoForm.setFieldsValue({
       name: editingProject?.name ?? '',
       target: fromWad(editingBudget?.target) ?? '0',
       duration:
         editingBudget?.duration.div(secondsMultiplier).toString() ?? '0',
-      currency: (editingBudget?.currency.toString() ?? '0') as BudgetCurrency,
+      currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
     })
 
   const resetProjectDetailsForm = () => {
@@ -136,7 +139,7 @@ export default function PlayCreate() {
       setCurrentStep(1)
     }
 
-    resetBudgetForm()
+    resetFundingCycleForm()
     resetProjectDetailsForm()
     resetFundingDetailsForm()
 
@@ -210,7 +213,7 @@ export default function PlayCreate() {
         <Project
           isOwner={false}
           showCurrentDetail={currentStep > 2}
-          budget={editingBudget}
+          fundingCycle={editingBudget}
           project={editingProject}
           projectId={BigNumber.from(0)}
         />
@@ -256,7 +259,7 @@ export default function PlayCreate() {
         placement="right"
         width={640}
         onClose={() => {
-          resetBudgetForm()
+          resetFundingCycleForm()
           setProjectInfoModalVisible(false)
         }}
       >

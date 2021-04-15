@@ -8,10 +8,10 @@ import { colors } from 'constants/styles/colors'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
-  useEditingBudgetRecurringSelector,
-  useEditingBudgetSelector,
+  useEditingFundingCycleRecurringSelector,
+  useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { BudgetCurrency } from 'models/budget-currency'
+import { CurrencyOption } from 'models/currencyOption'
 import { useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { formatWad, fromWad } from 'utils/formatCurrency'
@@ -20,11 +20,11 @@ type FormFields = ProjectInfoFormFields
 
 export default function DefineProject() {
   const [form] = useForm<FormFields>()
-  const editingBudget = useEditingBudgetSelector()
+  const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
-  const isRecurring = useEditingBudgetRecurringSelector()
+  const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
 
   useEffect(
@@ -34,7 +34,7 @@ export default function DefineProject() {
         target: fromWad(editingBudget?.target) ?? '0',
         duration:
           editingBudget?.duration.div(secondsMultiplier).toString() ?? '0',
-        currency: (editingBudget?.currency.toString() ?? '0') as BudgetCurrency,
+        currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
       }),
     [],
   )
@@ -111,7 +111,7 @@ export default function DefineProject() {
             {bold(editingProject?.name, 'Your project')} needs{' '}
             <CurrencySymbol
               style={{ color: colors.bodyPrimary, fontWeight: 600 }}
-              currency={editingBudget?.currency.toString() as BudgetCurrency}
+              currency={editingBudget?.currency.toString() as CurrencyOption}
             />
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
             {isRecurring ? (

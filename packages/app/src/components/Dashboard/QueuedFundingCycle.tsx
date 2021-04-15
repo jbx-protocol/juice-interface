@@ -2,35 +2,35 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
-import { Budget } from 'models/budget'
+import { FundingCycle } from 'models/fundingCycle'
 import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
 import { CardSection } from '../shared/CardSection'
-import TermDetails from './TermDetails'
+import FundingCycleDetails from './FundingCycleDetails'
 
-export default function UpcomingBudget({
+export default function QueuedFundingCycle({
   projectId,
   isOwner,
-  currentBudget,
+  currentCycle,
 }: {
   projectId: BigNumber
   isOwner: boolean
-  currentBudget: Budget | null | undefined
+  currentCycle: FundingCycle | undefined
 }) {
   const [
     reconfigureModalVisible,
     setReconfigureModalVisible,
   ] = useState<boolean>(false)
 
-  const queuedBudget = useContractReader<Budget>({
-    contract: ContractName.BudgetStore,
-    functionName: 'getQueuedBudget',
+  const queuedCycle = useContractReader<FundingCycle>({
+    contract: ContractName.FundingCycles,
+    functionName: 'getQueued',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: projectId
       ? [
           {
-            contract: ContractName.BudgetStore,
+            contract: ContractName.FundingCycles,
             eventName: 'Reconfigure',
             topics: [[], projectId.toHexString()],
           },
@@ -50,14 +50,14 @@ export default function UpcomingBudget({
           <ReconfigureBudgetModal
             visible={reconfigureModalVisible}
             onDone={() => setReconfigureModalVisible(false)}
-            budget={queuedBudget ?? currentBudget}
+            fundingCycle={queuedCycle ?? currentCycle}
             projectId={projectId}
           />
         </div>
       ) : null}
       <CardSection>
-        {queuedBudget ? (
-          <TermDetails budget={queuedBudget} />
+        {queuedCycle ? (
+          <FundingCycleDetails fundingCycle={queuedCycle} />
         ) : (
           <div style={{ padding: 25 }}>No upcoming funding cycle</div>
         )}

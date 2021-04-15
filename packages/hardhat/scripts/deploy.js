@@ -12,13 +12,13 @@ const main = async () => {
     process.env.HARDHAT_NETWORK === "localhost" && (await deploy("Token"));
   const prices = await deploy("Prices");
   const projects = await deploy("Projects");
-  const budgetStore = await deploy("BudgetStore");
-  const ticketStore = await deploy("TicketStore");
+  const fundingCycles = await deploy("FundingCycles");
+  const tickets = await deploy("Tickets");
 
   const juicer = await deploy("Juicer", [
     projects.address,
-    budgetStore.address,
-    ticketStore.address,
+    fundingCycles.address,
+    tickets.address,
     prices.address,
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
@@ -32,19 +32,19 @@ const main = async () => {
 
   try {
     const ProjectsFactory = await ethers.getContractFactory("Projects");
-    const TicketStoreFactory = await ethers.getContractFactory("TicketStore");
-    const BudgetStoreFactory = await ethers.getContractFactory("BudgetStore");
+    const TicketsFactory = await ethers.getContractFactory("Tickets");
+    const FundingCyclesFactory = await ethers.getContractFactory(
+      "FundingCycles"
+    );
     const PricesFactory = await ethers.getContractFactory("Prices");
     const AdminFactory = await ethers.getContractFactory("Admin");
     // const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
-    const attachedTicketStore = await TicketStoreFactory.attach(
-      ticketStore.address
-    );
-    const attachedBudgetStore = await BudgetStoreFactory.attach(
-      budgetStore.address
+    const attachedTickets = await TicketsFactory.attach(tickets.address);
+    const attachedFundingCycles = await FundingCyclesFactory.attach(
+      fundingCycles.address
     );
     const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
@@ -55,12 +55,12 @@ const main = async () => {
     await attachedProjects.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Setting the ticket store owner");
-    await attachedTicketStore.setOwnership(admin.address, {
+    console.log("⚡️ Setting the tickets owner");
+    await attachedTickets.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Setting the budget store owner");
-    await attachedBudgetStore.setOwnership(admin.address, {
+    console.log("⚡️ Setting the fundingCycles owner");
+    await attachedFundingCycles.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the prices owner");
@@ -72,21 +72,19 @@ const main = async () => {
       gasLimit: blockGasLimit,
     });
     console.log(
-      "⚡️ Granting the juicer admin privileges over the budget store"
+      "⚡️ Granting the juicer admin privileges over the funding cycles"
     );
-    await attachedAdmin.grantAdmin(budgetStore.address, juicer.address, {
+    await attachedAdmin.grantAdmin(fundingCycles.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
-    console.log(
-      "⚡️ Granting the juicer admin privileges over the ticket store"
-    );
-    await attachedAdmin.grantAdmin(ticketStore.address, juicer.address, {
+    console.log("⚡️ Granting the juicer admin privileges over the tickets");
+    await attachedAdmin.grantAdmin(tickets.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
     if (process.env.HARDHAT_NETWORK !== "localhost") {
-      console.log("⚡️ Adding ETH/USD price feed to the budget store");
+      console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
       await attachedAdmin.addPriceFeed(
-        budgetStore.address,
+        fundingCycles.address,
         ethUsdPriceFeed(process.env.HARDHAT_NETWORK),
         1,
         {

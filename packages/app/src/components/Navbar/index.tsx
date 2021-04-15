@@ -61,7 +61,7 @@ export default function Navbar() {
           {menuItem('Explore', '/#/projects')}
         </Menu.Item>
         {userHasProjects ? (
-          <Menu.Item key="budget">
+          <Menu.Item key="yourProjects">
             {menuItem('Your projects', '/#/owner/' + userAddress)}
           </Menu.Item>
         ) : null}

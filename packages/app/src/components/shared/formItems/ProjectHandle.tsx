@@ -4,6 +4,7 @@ import { ContractName } from 'constants/contract-name'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useEffect } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -16,6 +17,8 @@ export default function ProjectHandle({
   onChange,
 }: { value: string; onChange: (val?: string) => void } & FormItemExt) {
   const [handleInputVal, setHandleInputVal] = useState<string>()
+
+  useEffect(() => setHandleInputVal(value), [])
 
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,

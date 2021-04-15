@@ -359,12 +359,13 @@ contract Juicer is IJuicer {
             _handle,
             _logoUri,
             _link,
-            _target,
-            _currency,
-            _duration,
-            _discountRate,
-            _bondingCurveRate,
-            _reserved
+            _fundingCycle.target,
+            _fundingCycle.currency,
+            _fundingCycle.duration,
+            _fundingCycle.discountRate,
+            _fundingCycle.bondingCurveRate,
+            _fundingCycle.reserved,
+            _fundingCycle.fee
         );
     }
 
@@ -445,7 +446,8 @@ contract Juicer is IJuicer {
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
             _fundingCycle.reserved,
-            _fundingCycle.eligibleAfter
+            _fundingCycle.eligibleAfter,
+            _fundingCycle.fee
         );
 
         return _fundingCycle.id;

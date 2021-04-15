@@ -20,7 +20,8 @@ interface IFundingCyclesController {
         uint256 discountRate,
         uint256 bondingCurveRate,
         uint256 reserved,
-        uint256 eligibleAfter
+        uint256 eligibleAfter,
+        uint256 fee
     );
 
     event Pay(
@@ -117,7 +118,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 duration,
         uint256 discountRate,
         uint256 bondingCurveRate,
-        uint256 reserved
+        uint256 reserved,
+        uint256 fee
     );
 
     event AddToMigrationAllowList(address indexed allowed);

@@ -1,6 +1,7 @@
-import { Col, ColProps, Row, Space } from 'antd'
+import { Col, ColProps, Row } from 'antd'
 import { colors } from 'constants/styles/colors'
-import { ProjectIdentifier } from 'models/projectIdentifier'
+import { ProjectIdentifier } from 'models/project-identifier'
+
 import ProjectLogo from './ProjectLogo'
 
 export default function ProjectsGrid({

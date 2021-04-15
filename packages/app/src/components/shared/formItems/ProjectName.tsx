@@ -1,5 +1,4 @@
 import { Form, Input } from 'antd'
-import React from 'react'
 
 import { FormItemExt } from './formItemExt'
 

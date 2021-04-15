@@ -1,6 +1,5 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import React from 'react'
 
 export type FundingDetailsFormFields = {
   discountRate: string

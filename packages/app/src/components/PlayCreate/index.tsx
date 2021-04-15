@@ -3,17 +3,17 @@ import { Button, Drawer, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
-import { secondsMultiplier } from 'constants/seconds-in-day'
 import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
+import { SECONDS_MULTIPLIER } from 'constants/units'
 import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { CurrencyOption } from 'models/currencyOption'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { CurrencyOption } from 'models/currency-option'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -53,7 +53,7 @@ export default function PlayCreate() {
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()
   const [projectDetailsForm] = useForm<ProjectDetailsFormFields>()
   const [fundingDetailsForm] = useForm<FundingDetailsFormFields>()
-  const editingBudget = useEditingFundingCycleSelector()
+  const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
@@ -74,10 +74,9 @@ export default function PlayCreate() {
   const resetFundingCycleForm = () =>
     projectInfoForm.setFieldsValue({
       name: editingProject?.name ?? '',
-      target: fromWad(editingBudget?.target) ?? '0',
-      duration:
-        editingBudget?.duration.div(secondsMultiplier).toString() ?? '0',
-      currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
+      target: fromWad(editingFC?.target) ?? '0',
+      duration: editingFC?.duration.div(SECONDS_MULTIPLIER).toString() ?? '0',
+      currency: (editingFC?.currency.toString() ?? '0') as CurrencyOption,
     })
 
   const resetProjectDetailsForm = () => {
@@ -90,9 +89,9 @@ export default function PlayCreate() {
 
   const resetFundingDetailsForm = () =>
     fundingDetailsForm.setFieldsValue({
-      discountRate: fromPerMille(editingBudget?.discountRate),
-      reserved: fromPerMille(editingBudget?.reserved),
-      bondingCurveRate: fromPerMille(editingBudget?.bondingCurveRate),
+      discountRate: fromPerMille(editingFC?.discountRate),
+      reserved: fromPerMille(editingFC?.reserved),
+      bondingCurveRate: fromPerMille(editingFC?.bondingCurveRate),
     })
 
   const onProjectInfoFormSaved = () => {
@@ -101,7 +100,7 @@ export default function PlayCreate() {
     dispatch(editingProjectActions.setTarget(fields.target))
     dispatch(
       editingProjectActions.setDuration(
-        (parseInt(fields.duration) * secondsMultiplier).toString(),
+        (parseInt(fields.duration) * SECONDS_MULTIPLIER).toString(),
       ),
     )
     dispatch(editingProjectActions.setCurrency(fields.currency))
@@ -131,11 +130,7 @@ export default function PlayCreate() {
   }
 
   useEffect(() => {
-    if (
-      editingProject.name &&
-      editingBudget?.duration &&
-      editingBudget?.target
-    ) {
+    if (editingProject.name && editingFC?.duration && editingFC?.target) {
       setCurrentStep(1)
     }
 
@@ -149,15 +144,15 @@ export default function PlayCreate() {
   function createProject() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (!adminFeePercent || !editingBudget) return
+    if (!adminFeePercent || !editingFC) return
 
     dispatch(editingProjectActions.setLoading(true))
 
-    const fee = feeForAmount(editingBudget.target, adminFeePercent)
+    const fee = feeForAmount(editingFC.target, adminFeePercent)
 
     if (!fee) return
 
-    const targetWithFee = editingBudget.target?.add(fee).toHexString()
+    const targetWithFee = editingFC.target?.add(fee).toHexString()
 
     transactor(
       contracts.Juicer,
@@ -168,12 +163,12 @@ export default function PlayCreate() {
         editingProject.handle,
         editingProject.logoUri,
         targetWithFee,
-        editingBudget.currency.toHexString(),
-        editingBudget.duration.toHexString(),
+        editingFC.currency.toHexString(),
+        editingFC.duration.toHexString(),
         editingProject.link || '',
-        editingBudget.discountRate.toHexString(),
-        editingBudget.bondingCurveRate.toHexString(),
-        editingBudget.reserved.toHexString(),
+        editingFC.discountRate.toHexString(),
+        editingFC.bondingCurveRate.toHexString(),
+        editingFC.reserved.toHexString(),
       ],
       {
         onDone: () => dispatch(editingProjectActions.setLoading(false)),
@@ -213,7 +208,7 @@ export default function PlayCreate() {
         <Project
           isOwner={false}
           showCurrentDetail={currentStep > 2}
-          fundingCycle={editingBudget}
+          fundingCycle={editingFC}
           project={editingProject}
           projectId={BigNumber.from(0)}
         />

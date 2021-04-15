@@ -1,4 +1,4 @@
-import { shadowCard } from 'constants/styles/shadow-card'
+import { shadowCard } from 'constants/styles/shadowCard'
 import { ChildElems } from 'models/child-elems'
 import { CSSProperties } from 'react'
 

@@ -1,7 +1,6 @@
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
 import { useProjects } from 'hooks/Projects'
-import React from 'react'
 
 export default function Projects() {
   const projects = useProjects(null)

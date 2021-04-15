@@ -1,7 +1,7 @@
 import { Fetcher, Route, Token, WETH } from '@uniswap/sdk'
-import { mainnetProvider } from 'constants/mainnet-provider'
 import { DAI } from 'constants/tokens/dai'
 import { useState } from 'react'
+import { mainnetProvider } from 'utils/providers'
 
 import { usePoller } from './Poller'
 

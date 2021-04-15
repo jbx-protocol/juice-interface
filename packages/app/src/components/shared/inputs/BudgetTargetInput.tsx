@@ -1,5 +1,5 @@
-import { CurrencyOption } from 'models/currencyOption'
-import React, { useEffect, useState } from 'react'
+import { CurrencyOption } from 'models/currency-option'
+import { useEffect, useState } from 'react'
 import { currencyName } from 'utils/currency'
 
 import InputAccessoryButton from '../InputAccessoryButton'

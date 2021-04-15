@@ -3,7 +3,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ProjectInfoFormFields } from 'components/PlayCreate/ProjectInfo'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
-import { secondsMultiplier } from 'constants/seconds-in-day'
+import { SECONDS_MULTIPLIER } from 'constants/units'
 import { colors } from 'constants/styles/colors'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -11,7 +11,7 @@ import {
   useEditingFundingCycleRecurringSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { CurrencyOption } from 'models/currencyOption'
+import { CurrencyOption } from 'models/currency-option'
 import { useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { formatWad, fromWad } from 'utils/formatCurrency'
@@ -33,7 +33,7 @@ export default function DefineProject() {
         name: editingProject?.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
         duration:
-          editingBudget?.duration.div(secondsMultiplier).toString() ?? '0',
+          editingBudget?.duration.div(SECONDS_MULTIPLIER).toString() ?? '0',
         currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
       }),
     [],
@@ -49,7 +49,7 @@ export default function DefineProject() {
     if (fields.duration !== undefined)
       dispatch(
         editingProjectActions.setDuration(
-          (parseFloat(fields.duration || '0') * secondsMultiplier).toString(),
+          (parseFloat(fields.duration || '0') * SECONDS_MULTIPLIER).toString(),
         ),
       )
     if (fields.currency !== undefined)
@@ -118,7 +118,7 @@ export default function DefineProject() {
               <span>
                 every{' '}
                 {bold(
-                  editingBudget?.duration.div(secondsMultiplier).toString(),
+                  editingBudget?.duration.div(SECONDS_MULTIPLIER).toString(),
                   '0',
                 )}{' '}
                 days

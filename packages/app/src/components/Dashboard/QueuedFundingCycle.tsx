@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
-import { ContractName } from 'constants/contract-name'
 import useContractReader from 'hooks/ContractReader'
-import { FundingCycle } from 'models/fundingCycle'
+import { ContractName } from 'models/contract-name'
+import { FundingCycle } from 'models/funding-cycle'
 import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'

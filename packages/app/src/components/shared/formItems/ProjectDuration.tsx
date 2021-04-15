@@ -1,4 +1,3 @@
-import React from 'react'
 import { Form } from 'antd'
 import FormattedNumberInput from '../inputs/FormattedNumberInput'
 import InputAccessoryButton from '../InputAccessoryButton'

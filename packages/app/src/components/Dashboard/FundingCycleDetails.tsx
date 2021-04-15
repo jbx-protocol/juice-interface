@@ -1,6 +1,5 @@
 import { Descriptions } from 'antd'
-import { FundingCycle } from 'models/fundingCycle'
-import React from 'react'
+import { FundingCycle } from 'models/funding-cycle'
 import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 

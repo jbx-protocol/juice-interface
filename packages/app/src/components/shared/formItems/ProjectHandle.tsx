@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input } from 'antd'
-import { ContractName } from 'constants/contract-name'
+import { ContractName } from 'models/contract-name'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import React, { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useEffect } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 

@@ -1,13 +1,13 @@
 import { Button, Col, Popover, Row, Tag } from 'antd'
-import { supportedNetworks } from 'constants/supported-networks'
-import { web3Modal } from 'constants/web3-modal'
+import { SUPPORTED_NETWORKS } from 'constants/supportedNetworks'
 import { UserContext } from 'contexts/userContext'
+import { NetworkName } from 'models/network-name'
 import { useContext } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
+import { web3Modal } from 'utils/web3Modal'
 
 import Balance from './Balance'
 import Wallet from './Wallet'
-import { NetworkName } from 'models/network-name'
 
 export default function Account() {
   const { onNeedProvider, userAddress, network } = useContext(UserContext)
@@ -28,12 +28,12 @@ export default function Account() {
   const switchNetworkTag =
     !network ||
     network === NetworkName.localhost ||
-    (network && supportedNetworks.includes(network)) ? null : (
+    (network && SUPPORTED_NETWORKS.includes(network)) ? null : (
       <Popover
         title="Juice works on:"
         content={
           <div>
-            {supportedNetworks.map(network => (
+            {SUPPORTED_NETWORKS.map(network => (
               <div key={network}>{network}</div>
             ))}
           </div>

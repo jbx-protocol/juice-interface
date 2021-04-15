@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { CurrencyOption } from 'models/currencyOption'
+import { CurrencyOption } from 'models/currency-option'
 
 export interface PayEvent {
   amount: BigNumber

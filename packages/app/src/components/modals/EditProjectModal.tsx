@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
-import { ProjectIdentifier } from 'models/projectIdentifier'
-import React, { useContext, useEffect, useState } from 'react'
+import { ProjectIdentifier } from 'models/project-identifier'
+import { useContext, useEffect, useState } from 'react'
 
 export type EditProjectFormFields = {
   name: string

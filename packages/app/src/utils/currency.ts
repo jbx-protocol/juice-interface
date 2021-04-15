@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { CurrencyOption } from 'models/currencyOption'
+import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties } from 'react'
 
 const currencies: Record<

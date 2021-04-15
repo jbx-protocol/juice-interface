@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { fromWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 
-import { FundingCycle } from '../models/fundingCycle'
+import { FundingCycle } from '../models/funding-cycle'
 import { fromPerMille } from './formatCurrency'
 
 export type SerializedFundingCycle = Record<keyof FundingCycle, string>

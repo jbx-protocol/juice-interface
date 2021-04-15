@@ -1,4 +1,4 @@
-import { ProjectIdentifier } from 'models/projectIdentifier'
+import { ProjectIdentifier } from 'models/project-identifier'
 
 export const deepEqProjectIdentifiers = (
   a?: ProjectIdentifier,

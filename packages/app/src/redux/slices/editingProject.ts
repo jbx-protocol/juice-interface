@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
+import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
-import { CurrencyOption } from 'models/currencyOption'
-import { FundingCycle } from 'models/fundingCycle'
-import { ProjectIdentifier } from 'models/projectIdentifier'
+import { CurrencyOption } from 'models/currency-option'
+import { FundingCycle } from 'models/funding-cycle'
+import { ProjectIdentifier } from 'models/project-identifier'
 import { parsePerMille, parseWad } from 'utils/formatCurrency'
 import {
   SerializedFundingCycle,

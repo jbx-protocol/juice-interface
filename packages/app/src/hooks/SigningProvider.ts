@@ -1,9 +1,9 @@
 import { Web3Provider } from '@ethersproject/providers'
 import BurnerProvider from 'burner-provider'
-import { readProvider } from 'constants/read-provider'
 import { UserContext } from 'contexts/userContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useMemo } from 'react'
+import { readProvider } from 'utils/providers'
 
 export function useSigningProvider(injectedProvider?: Web3Provider) {
   const { network } = useContext(UserContext)

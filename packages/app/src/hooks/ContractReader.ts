@@ -1,7 +1,7 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ContractName } from 'constants/contract-name'
 import { UserContext } from 'contexts/userContext'
+import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'

@@ -1,7 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { ContractName } from 'constants/contract-name'
 import { NETWORKS } from 'constants/networks'
+import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
 import { useState } from 'react'

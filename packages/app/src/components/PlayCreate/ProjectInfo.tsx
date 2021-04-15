@@ -2,7 +2,7 @@ import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
-import { CurrencyOption } from 'models/currencyOption'
+import { CurrencyOption } from 'models/currency-option'
 import { editingProjectActions } from 'redux/slices/editingProject'
 
 export type ProjectInfoFormFields = {

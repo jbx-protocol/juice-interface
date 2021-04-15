@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { SECONDS_IN_DAY } from 'constants/seconds-in-day'
+import { SECONDS_IN_DAY } from 'constants/units'
 
 export function secsToDays(secs?: BigNumber) {
   if (!secs || secs.lte(0)) return 0

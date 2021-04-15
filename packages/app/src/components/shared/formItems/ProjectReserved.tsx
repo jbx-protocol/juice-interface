@@ -1,5 +1,4 @@
 import { Form } from 'antd'
-import React from 'react'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 

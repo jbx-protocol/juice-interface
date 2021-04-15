@@ -1,6 +1,6 @@
 import { JsonRpcProvider, Listener } from '@ethersproject/providers'
-import { ContractName } from 'constants/contract-name'
 import { useContractLoader } from 'hooks/ContractLoader'
+import { ContractName } from 'models/contract-name'
 import { useEffect, useMemo, useState } from 'react'
 
 export default function useEventListener<E>({
@@ -28,7 +28,6 @@ export default function useEventListener<E>({
   const contract = contracts && contractName && contracts[contractName]
 
   const formatEvent = async (event: any) => {
-    console.log('format', event)
     const timestamp = (await event.getBlock()).timestamp
     return {
       ...event.args,

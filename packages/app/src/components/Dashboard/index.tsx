@@ -1,12 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Tabs } from 'antd'
-import { ContractName } from 'constants/contract-name'
+import { ContractName } from 'models/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import { ProjectIdentifier } from 'models/projectIdentifier'
+import { FundingCycle } from 'models/funding-cycle'
+import { ProjectIdentifier } from 'models/project-identifier'
 import {
   CSSProperties,
   useCallback,
@@ -19,7 +20,6 @@ import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 import { normalizeHandle } from 'utils/formatHandle'
 
-import { FundingCycle } from '../../models/fundingCycle'
 import Loading from '../shared/Loading'
 import FundingHistory from './FundingHistory'
 import PayEvents from './PayEvents'

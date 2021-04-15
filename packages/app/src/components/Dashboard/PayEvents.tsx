@@ -1,17 +1,15 @@
-import { ArrowLeftOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { ContractName } from 'constants/contract-name'
+import { ContractName } from 'models/contract-name'
 import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useEventListener from 'hooks/EventListener'
-import React, { CSSProperties, useContext } from 'react'
+import { PayEvent } from 'models/events/pay-event'
+import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 import { toUint256 } from 'utils/formatNumber'
-
-import { PayEvent } from '../../models/events/pay-event'
 
 export default function PayEvents({
   projectId,

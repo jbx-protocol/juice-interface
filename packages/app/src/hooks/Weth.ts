@@ -1,6 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ContractName } from 'constants/contract-name'
+import { ContractName } from 'models/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 

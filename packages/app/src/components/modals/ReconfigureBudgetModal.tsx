@@ -3,8 +3,8 @@ import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
-import { CurrencyOption } from 'models/currencyOption'
-import { FundingCycle } from 'models/fundingCycle'
+import { CurrencyOption } from 'models/currency-option'
+import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useEffect, useState } from 'react'
 import {
   fromPerMille,

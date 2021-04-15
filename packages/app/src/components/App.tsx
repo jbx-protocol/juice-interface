@@ -57,7 +57,7 @@ function App() {
   })
 
   const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.BudgetStore,
+    contract: ContractName.Juicer,
     functionName: 'fee',
     provider: signingProvider,
   })

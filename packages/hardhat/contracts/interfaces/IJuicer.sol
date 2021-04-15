@@ -148,10 +148,10 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         string memory _name,
         string memory _handle,
         string memory _logoUri,
+        string memory _link,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        string memory _link,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved

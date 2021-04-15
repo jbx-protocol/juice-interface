@@ -7,13 +7,13 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract IBudgetStore",
-        "name": "_budgetStore",
+        "internalType": "contract IFundingCycles",
+        "name": "_fundingCycles",
         "type": "address"
       },
       {
-        "internalType": "contract ITicketStore",
-        "name": "_ticketStore",
+        "internalType": "contract ITickets",
+        "name": "_tickets",
         "type": "address"
       },
       {
@@ -171,8 +171,8 @@ module.exports = [
           }
         ],
         "indexed": false,
-        "internalType": "struct Budget.Data",
-        "name": "budget",
+        "internalType": "struct FundingCycle.Data",
+        "name": "fundingCycle",
         "type": "tuple"
       }
     ],
@@ -223,7 +223,7 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
@@ -278,7 +278,7 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
@@ -376,8 +376,8 @@ module.exports = [
           }
         ],
         "indexed": false,
-        "internalType": "struct Budget.Data",
-        "name": "budget",
+        "internalType": "struct FundingCycle.Data",
+        "name": "fundingCycle",
         "type": "tuple"
       }
     ],
@@ -446,7 +446,7 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
@@ -582,19 +582,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "budgetStore",
-    "outputs": [
-      {
-        "internalType": "contract IBudgetStore",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -707,7 +694,7 @@ module.exports = [
   },
   {
     "inputs": [],
-    "name": "depositIntoYielder",
+    "name": "deposit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -720,6 +707,19 @@ module.exports = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fundingCycles",
+    "outputs": [
+      {
+        "internalType": "contract IFundingCycles",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -960,10 +960,10 @@ module.exports = [
   },
   {
     "inputs": [],
-    "name": "ticketStore",
+    "name": "tickets",
     "outputs": [
       {
-        "internalType": "contract ITicketStore",
+        "internalType": "contract ITickets",
         "name": "",
         "type": "address"
       }

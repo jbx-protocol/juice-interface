@@ -130,7 +130,7 @@ module.exports = [
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "fundingCycleId",
         "type": "uint256"
       }
     ],

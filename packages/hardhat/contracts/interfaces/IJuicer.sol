@@ -42,7 +42,8 @@ interface IFundingCyclesController {
         address tapper,
         uint256 amount,
         uint256 currency,
-        uint256 tappedAmount
+        uint256 tappedAmount,
+        uint256 transferAmount
     );
 
     function reconfigurationDelay() external view returns (uint256);

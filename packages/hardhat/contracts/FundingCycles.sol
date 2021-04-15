@@ -195,9 +195,11 @@ contract FundingCycles is Administered, IFundingCycles {
         );
 
         // The amount that should be charged as a fee for tapping.
-        feeAmount = FullMath
-            .mulDiv(convertedEthAmount, 1000, _fundingCycle.fee)
-            .sub(convertedEthAmount);
+        feeAmount = _fundingCycle.fee == 0
+            ? 0
+            : FullMath.mulDiv(convertedEthAmount, 1000, _fundingCycle.fee).sub(
+                convertedEthAmount
+            );
 
         // Return the ID of the funding cycle that was tapped.
         id = _fundingCycle.id;

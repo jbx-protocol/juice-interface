@@ -589,7 +589,7 @@ contract Juicer is IJuicer {
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _projectBalance = balanceOf(_projectId, true);
 
-        // Save the new state of the funding cycle.
+        // Save the tapped state of the funding cycle.
         (
             uint256 _fundingCycleId,
             uint256 _tappedAmount,
@@ -616,36 +616,50 @@ contract Juicer is IJuicer {
                 // The current distributable amount...
                 balanceOf(_projectId, false),
                 // multiplied by the ratio of the amount being tapped and used as a fee to the total yielding balance of the project.
-                _tappedAmount.add(_adminFeeAmount),
+                _tappedAmount,
                 _projectBalance
             )
         );
 
-        // Get a reference to the admin's funding cycle, which will be receiving the fee.
-        FundingCycle.Data memory _adminFundingCycle =
-            fundingCycles.getCurrent(JuiceProject(admin).projectId());
+        // Get a reference to the admin's project ID.
+        uint256 _adminProjectId = JuiceProject(admin).projectId();
 
-        // Add to the processable amount for the admin, which will eventually distribute reserved tickets to the admin's owner.
-        processableAmount[_adminFundingCycle.projectId] = processableAmount[
-            _adminFundingCycle.projectId
-        ]
-            .add(_adminFeeAmount);
+        // Get a reference to the amount that will be transfered from this contract to the beneficiary.
+        uint256 _transferAmount;
 
-        // Print admin tickets for the tapper.
-        tickets.print(
-            msg.sender,
-            _adminFundingCycle.projectId,
-            _adminFundingCycle._weighted(
-                _adminFeeAmount,
-                uint256(1000).sub(_adminFundingCycle.reserved)
-            )
-        );
+        // Only process an admin fee if the project being tapped is not the admin.
+        if (_adminProjectId != _projectId) {
+            // Get a reference to the admin's funding cycle, which will be receiving the fee.
+            FundingCycle.Data memory _adminFundingCycle =
+                fundingCycles.getCurrent(_adminProjectId);
 
-        // Make sure the amount being tapped is in the posession of this contract and not in the yielder.
-        _ensureAvailability(_tappedAmount);
+            // Add to the processable amount for the admin, which will eventually distribute reserved tickets to the admin's owner.
+            processableAmount[_adminProjectId] = processableAmount[
+                _adminProjectId
+            ]
+                .add(_adminFeeAmount);
 
-        // Transfer the funds to the beneficiary.
-        weth.safeTransfer(_beneficiary, _tappedAmount);
+            // Print admin tickets for the tapper.
+            tickets.print(
+                msg.sender,
+                _adminProjectId,
+                _adminFundingCycle._weighted(
+                    _adminFeeAmount,
+                    uint256(1000).sub(_adminFundingCycle.reserved)
+                )
+            );
+
+            // Transfer the tapped amount minus the fees.
+            _transferAmount = _tappedAmount.sub(_adminFeeAmount);
+        } else {
+            _transferAmount = _tappedAmount;
+        }
+
+        // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
+        _ensureAvailability(_transferAmount);
+
+        // Transfer the  funds to the beneficiary.
+        weth.safeTransfer(_beneficiary, _transferAmount);
 
         emit Tap(
             _fundingCycleId,
@@ -654,7 +668,8 @@ contract Juicer is IJuicer {
             msg.sender,
             _amount,
             _currency,
-            _tappedAmount
+            _tappedAmount,
+            _transferAmount
         );
     }
 

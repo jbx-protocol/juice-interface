@@ -6,7 +6,6 @@ export type FundingDetailsFormFields = {
   discountRate: string
   reserved: string
   bondingCurveRate: string
-  fee: string
 }
 
 export default function FundingDetails({

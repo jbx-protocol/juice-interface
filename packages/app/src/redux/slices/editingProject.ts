@@ -139,6 +139,13 @@ export const editingProjectSlice = createSlice({
         discountRate: action.payload,
       },
     }),
+    setBondingCurveRate: (state, action: PayloadAction<string>) => ({
+      ...state,
+      budget: {
+        ...state.budget,
+        bondingCurveRate: action.payload,
+      },
+    }),
     setCurrency: (state, action: PayloadAction<BudgetCurrency>) => ({
       ...state,
       budget: {

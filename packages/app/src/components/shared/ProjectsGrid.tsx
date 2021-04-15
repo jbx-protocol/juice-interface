@@ -1,4 +1,4 @@
-import { Col, Row, Space } from 'antd'
+import { Col, ColProps, Row, Space } from 'antd'
 import { colors } from 'constants/styles/colors'
 import { ProjectIdentifier } from 'models/projectIdentifier'
 import ProjectLogo from './ProjectLogo'
@@ -17,6 +17,7 @@ export default function ProjectsGrid({
         borderRadius: 12,
         border: '1px solid ' + colors.grapeHint,
         cursor: 'pointer',
+        overflow: 'hidden',
       }}
       key={project.handle}
       onClick={() => (window.location.hash = '/p/' + project.handle)}
@@ -25,38 +26,41 @@ export default function ProjectsGrid({
         <ProjectLogo uri={project.logoUri} name={project.name} size={80} />
       </div>
 
-      <div>
+      <div style={{ whiteSpace: 'break-spaces', minWidth: 0 }}>
         <h2 style={{ color: colors.bodyPrimary }}>{project.name}</h2>
-        <h3>
-          <Space size="middle">
-            <span style={{ color: colors.bodySecondary }}>
-              @{project.handle}
-            </span>
-            {project?.link ? (
-              <span style={{ fontWeight: 400, color: colors.cta }}>
-                {project.link}
-              </span>
-            ) : null}
-          </Space>
-        </h3>
+        <span
+          style={{
+            fontWeight: 500,
+            color: colors.bodySecondary,
+            marginRight: 10,
+            display: 'inline-block',
+          }}
+        >
+          @{project.handle}
+        </span>
+        {project?.link ? (
+          <span style={{ color: colors.cta }}>{project.link}</span>
+        ) : null}
       </div>
     </div>
   )
 
   const gutter = 20
 
+  const colProps: ColProps = {
+    xs: 24,
+    md: 12,
+    style: { marginBottom: gutter },
+  }
+
   return (
     <div>
       {projects?.map((project, i) =>
         i % 2 === 0 ? (
-          <Row gutter={gutter} style={{ marginBottom: gutter }}>
-            <Col xs={24} sm={12}>
-              {projectCard(project)}
-            </Col>
+          <Row gutter={gutter}>
+            <Col {...colProps}>{projectCard(project)}</Col>
             {i + 1 < projects.length ? (
-              <Col xs={24} sm={12}>
-                {projectCard(projects[i + 1])}
-              </Col>
+              <Col {...colProps}>{projectCard(projects[i + 1])}</Col>
             ) : null}
           </Row>
         ) : null,

@@ -58,9 +58,6 @@ export default function ConfirmCreateProject() {
       <Statistic title="Link" value={orEmpty(editingProject?.link)} />
       <Space size="large" align="end">
         <Statistic
-          style={{
-            minWidth: 100,
-          }}
           title="Discount rate"
           value={fromPerMille(editingBudget?.discountRate)}
           suffix="%"
@@ -68,6 +65,11 @@ export default function ConfirmCreateProject() {
         <Statistic
           title="Reserved tickets"
           value={fromPerMille(editingBudget?.reserved)}
+          suffix="%"
+        />
+        <Statistic
+          title="Bonding curve rate"
+          value={fromPerMille(editingBudget?.bondingCurveRate)}
           suffix="%"
         />
       </Space>

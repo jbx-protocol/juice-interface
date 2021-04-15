@@ -20,7 +20,7 @@ export const serializeBudget = (budget: Budget): SerializedBudget => ({
   reserved: fromPerMille(budget.reserved),
   weight: fromWad(budget.weight),
   fee: fromPerMille(budget.fee),
-  bondingCurveRate: budget.bondingCurveRate.toString(),
+  bondingCurveRate: fromPerMille(budget.bondingCurveRate),
   discountRate: fromPerMille(budget.discountRate),
   configured: budget.configured.toString(),
   ballot: budget.ballot,
@@ -45,7 +45,7 @@ export const deserializeBudget = (
         reserved: parsePerMille(budget.reserved),
         weight: parseWad(budget.weight),
         fee: parsePerMille(budget.fee),
-        bondingCurveRate: BigNumber.from(budget.bondingCurveRate),
+        bondingCurveRate: parsePerMille(budget.bondingCurveRate),
         discountRate: parsePerMille(budget.discountRate),
         configured: BigNumber.from(budget.configured),
       }

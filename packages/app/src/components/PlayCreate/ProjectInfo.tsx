@@ -23,7 +23,7 @@ export default function ProjectInfo({
   const dispatch = useAppDispatch()
 
   return (
-    <Space direction="vertical" size="large">
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>Project info</h1>
 
       <Form form={form} layout="vertical">

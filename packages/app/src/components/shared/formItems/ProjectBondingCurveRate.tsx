@@ -23,8 +23,8 @@ export default function ProjectBondingCurveRate({
     >
       <NumberSlider
         min={0}
-        max={1000}
-        step={1}
+        max={100}
+        step={0.1}
         value={value}
         onChange={onChange}
       />

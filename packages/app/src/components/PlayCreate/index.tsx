@@ -13,6 +13,7 @@ import { BudgetCurrency } from 'models/budget-currency'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
+import { normalizeHandle } from 'utils/formatHandle'
 import { feeForAmount } from 'utils/math'
 
 import ConfirmCreateProject from './ConfirmCreateProject'
@@ -57,9 +58,8 @@ export default function PlayCreate() {
   const dispatch = useAppDispatch()
 
   const setHandleFromName = (name: string) => {
-    const handle = name.split(' ').join('').substr(0, 24) ?? ''
+    const handle = normalizeHandle(name)
     dispatch(editingProjectActions.setHandle(handle))
-
     projectDetailsForm.setFieldsValue({
       handle,
     })
@@ -89,7 +89,7 @@ export default function PlayCreate() {
     fundingDetailsForm.setFieldsValue({
       discountRate: fromPerMille(editingBudget?.discountRate),
       reserved: fromPerMille(editingBudget?.reserved),
-      bondingCurveRate: editingBudget?.bondingCurveRate.toString(),
+      bondingCurveRate: fromPerMille(editingBudget?.bondingCurveRate),
     })
 
   const onProjectInfoFormSaved = () => {
@@ -122,6 +122,7 @@ export default function PlayCreate() {
     const fields = fundingDetailsForm.getFieldsValue(true)
     dispatch(editingProjectActions.setDiscountRate(fields.discountRate))
     dispatch(editingProjectActions.setReserved(fields.reserved))
+    dispatch(editingProjectActions.setBondingCurveRate(fields.bondingCurveRate))
 
     incrementStep(3)
   }
@@ -155,9 +156,6 @@ export default function PlayCreate() {
 
     const targetWithFee = editingBudget.target?.add(fee).toHexString()
 
-    // TODO
-    const bondingCurveRate = BigNumber.from(382).toHexString()
-
     transactor(
       contracts.Juicer,
       'deploy',
@@ -171,7 +169,7 @@ export default function PlayCreate() {
         editingBudget.duration.toHexString(),
         editingProject.link || '',
         editingBudget.discountRate.toHexString(),
-        bondingCurveRate,
+        editingBudget.bondingCurveRate.toHexString(),
         editingBudget.reserved.toHexString(),
       ],
       {

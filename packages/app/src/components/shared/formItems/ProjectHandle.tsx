@@ -40,7 +40,7 @@ export default function ProjectHandle({
       label={hideLabel ? undefined : 'Handle'}
       extra={
         handleExists ? (
-          <span style={{ color: 'red' }}>Handle not avilable</span>
+          <span style={{ color: 'red' }}>Handle not available</span>
         ) : undefined
       }
       status={handleExists ? 'warning' : undefined}

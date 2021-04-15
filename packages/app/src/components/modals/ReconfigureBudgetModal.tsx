@@ -47,7 +47,7 @@ export default function ReconfigureBudgetModal({
       currency: budget.currency.toString() as BudgetCurrency,
       discountRate: fromPerMille(budget.discountRate),
       reserved: fromPerMille(budget.reserved),
-      bondingCurveRate: budget.bondingCurveRate.toString(),
+      bondingCurveRate: fromPerMille(budget.bondingCurveRate),
     })
 
     setIsRecurring(!budget.discountRate.eq(0))
@@ -75,7 +75,7 @@ export default function ReconfigureBudgetModal({
         BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(fields.duration).toHexString(),
         parsePerMille(fields.discountRate).toHexString(),
-        fields.bondingCurveRate,
+        parsePerMille(fields.bondingCurveRate).toHexString(),
         parsePerMille(fields.reserved).toHexString(),
         budget.ballot,
       ],

@@ -27,6 +27,7 @@ export default function ProjectBondingCurveRate({
         step={0.1}
         value={value}
         onChange={onChange}
+        suffix="%"
       />
     </Form.Item>
   )

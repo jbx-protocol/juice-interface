@@ -16,24 +16,25 @@ export default function ProjectHandle({
   value,
   onChange,
 }: { value: string; onChange: (val?: string) => void } & FormItemExt) {
-  const [handleInputVal, setHandleInputVal] = useState<string>()
+  const [inputContents, setInputContents] = useState<string>()
 
-  useEffect(() => setHandleInputVal(value), [])
+  useEffect(() => setInputContents(value), [value, setInputContents])
 
+  // InputContents pattern allows checking if handle exists while typing
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,
     functionName: 'handleResolver',
     args: useMemo(() => {
-      if (!handleInputVal) return null
+      if (!inputContents) return null
 
-      let bytes = utils.formatBytes32String(handleInputVal.toLowerCase())
+      let bytes = utils.formatBytes32String(inputContents.toLowerCase())
 
       while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
         bytes = bytes.substring(0, bytes.length - 2)
       }
 
       return [bytes]
-    }, [handleInputVal]),
+    }, [inputContents]),
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 
@@ -57,7 +58,7 @@ export default function ProjectHandle({
         value={value}
         onChange={e => {
           const val = normalizeHandle(e.target.value)
-          setHandleInputVal(val)
+          setInputContents(val)
           onChange(val)
         }}
       />

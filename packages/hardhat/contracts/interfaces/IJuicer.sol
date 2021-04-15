@@ -19,7 +19,8 @@ interface IFundingCyclesController {
         uint256 duration,
         uint256 discountRate,
         uint256 bondingCurveRate,
-        uint256 reserved
+        uint256 reserved,
+        uint256 eligibleAfter
     );
 
     event Pay(

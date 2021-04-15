@@ -444,7 +444,8 @@ contract Juicer is IJuicer {
             _fundingCycle.duration,
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
-            _fundingCycle.reserved
+            _fundingCycle.reserved,
+            _fundingCycle.eligibleAfter
         );
 
         return _fundingCycle.id;

@@ -354,10 +354,17 @@ contract Juicer is IJuicer {
             _fundingCycle.projectId,
             _owner,
             msg.sender,
+            _fundingCycle.id,
             _name,
             _handle,
             _logoUri,
-            _fundingCycle
+            _link,
+            _target,
+            _currency,
+            _duration,
+            _discountRate,
+            _bondingCurveRate,
+            _reserved
         );
     }
 
@@ -432,7 +439,12 @@ contract Juicer is IJuicer {
         emit Reconfigure(
             _fundingCycle.id,
             _fundingCycle.projectId,
-            _fundingCycle
+            _fundingCycle.target,
+            _fundingCycle.currency,
+            _fundingCycle.duration,
+            _fundingCycle.discountRate,
+            _fundingCycle.bondingCurveRate,
+            _fundingCycle.reserved
         );
 
         return _fundingCycle.id;

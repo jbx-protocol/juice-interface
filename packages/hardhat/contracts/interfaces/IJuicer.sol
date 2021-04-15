@@ -14,7 +14,12 @@ interface IFundingCyclesController {
     event Reconfigure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        FundingCycle.Data fundingCycle
+        uint256 target,
+        uint256 currency,
+        uint256 duration,
+        uint256 discountRate,
+        uint256 bondingCurveRate,
+        uint256 reserved
     );
 
     event Pay(
@@ -101,10 +106,17 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 indexed projectId,
         address indexed owner,
         address indexed deployer,
-        string _name,
-        string _handle,
-        string _logoUri,
-        FundingCycle.Data fundingCycle
+        uint256 fundingCycleId,
+        string name,
+        string handle,
+        string logoUri,
+        string link,
+        uint256 target,
+        uint256 currency,
+        uint256 duration,
+        uint256 discountRate,
+        uint256 bondingCurveRate,
+        uint256 reserved
     );
 
     event AddToMigrationAllowList(address indexed allowed);

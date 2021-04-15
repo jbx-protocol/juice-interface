@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IBudgetStore.sol";
+import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IYielder.sol";
 import "./interfaces/IProjects.sol";
 import "./abstract/JuiceProject.sol";
 
-import "./TicketStore.sol";
+import "./Tickets.sol";
 
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
@@ -27,14 +27,14 @@ import "./libraries/FullMath.sol";
         2. Anyone can pay your project in ETH, which gives them Tickets.
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
               - The contributed amount of ETH. The more someone contributes, the more Tickets they'll receive.
-              - The target amount of your Budget. The bigger your Budget's target amount, the fewer tickets that'll be minted for each token paid.
-              - The Budget's weight, which is a number that decreases with each of your Budgets at a configured `discountRate`. 
+              - The target amount of your funding cycle. The bigger your funding cycle's target amount, the fewer tickets that'll be minted for each token paid.
+              - The funding cycle's weight, which is a number that decreases with each of your funding cycles at a configured `discountRate`. 
                 This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
-                current Budget than to future budgets.
+                current funding cycle than to future funding cycles.
         3. You can tap ETH up to the specified amount. 
            Any overflow can be claimed by Ticket holders by redeeming tickets, otherwise it rolls over to your next funding period.
         6. You can reconfigure your project at any time with the approval of your Ticket holders, 
-           The new configuration will go into effect once the current budget one expires.
+           The new configuration will go into effect once the current funding cycle one expires.
 
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
@@ -42,7 +42,7 @@ import "./libraries/FullMath.sol";
 contract Juicer is IJuicer {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
-    using Budget for Budget.Data;
+    using FundingCycle for FundingCycle.Data;
 
     /// @dev Limit sustain, redeem, swap, and tap to being called one at a time.
     uint256 private unlocked = 1;
@@ -75,7 +75,7 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
-    /// @notice The number of seconds that must pass for a budget reconfiguration to become active.
+    /// @notice The number of seconds that must pass for a funding cycle reconfiguration to become active.
     uint256 public constant override reconfigurationDelay = 1209600;
 
     /// @notice The percent fee the Juice project takes from payments. Out of 1000.
@@ -87,11 +87,11 @@ contract Juicer is IJuicer {
     /// @notice The projects contract.
     IProjects public immutable override projects;
 
-    /// @notice The contract storing all Budget state variables.
-    IBudgetStore public immutable override budgetStore;
+    /// @notice The contract storing all funding cycle configurations.
+    IFundingCycles public immutable override fundingCycles;
 
     /// @notice The contract that manages the Tickets.
-    ITicketStore public immutable override ticketStore;
+    ITickets public immutable override tickets;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
@@ -192,11 +192,12 @@ contract Juicer is IJuicer {
         override
         returns (uint256 overflow)
     {
-        // Get a reference to the project's current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+        // Get a reference to the project's current funding cycle.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
 
-        // Get a reference to the amount still tappable in the current budget.
-        uint256 _limit = _budget.target.sub(_budget.tappedTarget);
+        // Get a reference to the amount still tappable in the current funding cycle.
+        uint256 _limit = _fundingCycle.target.sub(_fundingCycle.tappedTarget);
 
         // Get the current balance of the project.
         uint256 _balanceOf = balanceOf(_projectId, true);
@@ -205,7 +206,10 @@ contract Juicer is IJuicer {
         uint256 _ethLimit =
             _limit == 0
                 ? 0
-                : DSMath.wdiv(_limit, prices.getETHPrice(_budget.currency));
+                : DSMath.wdiv(
+                    _limit,
+                    prices.getETHPrice(_fundingCycle.currency)
+                );
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
         return _balanceOf < _ethLimit ? 0 : _balanceOf.sub(_ethLimit);
@@ -226,12 +230,13 @@ contract Juicer is IJuicer {
     ) public view override returns (uint256) {
         // The holder must have the specified number of the project's tickets.
         require(
-            ticketStore.balanceOf(_holder, _projectId) >= _count,
+            tickets.balanceOf(_holder, _projectId) >= _count,
             "Juice::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
-        // Get a reference to the current budget for the project.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
 
         // Get the amount of current overflow.
         uint256 _currentOverflow = currentOverflowOf(_projectId);
@@ -240,7 +245,7 @@ contract Juicer is IJuicer {
         if (_currentOverflow == 0) return 0;
 
         // Get the total number of tickets in circulation.
-        uint256 _totalSupply = ticketStore.totalSupply(_projectId);
+        uint256 _totalSupply = tickets.totalSupply(_projectId);
 
         // If the rest of the tickets are being used to claim, don't apply the proportion.
         if (_count == _totalSupply) return _currentOverflow;
@@ -251,7 +256,7 @@ contract Juicer is IJuicer {
                 // The proportion of held tickets compared to the total supply.
                 FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
                 // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
-                _budget.bondingCurveRate,
+                _fundingCycle.bondingCurveRate,
                 1000
             );
     }
@@ -260,27 +265,27 @@ contract Juicer is IJuicer {
 
     /** 
       @param _projects The Projects contract which mints ERC-721's that represent project ownership and transfers.
-      @param _budgetStore The BudgetStore to use which.
-      @param _ticketStore The TicketStore to use which is an ERC-1155 mapping projects to ticket holders.
+      @param _fundingCycles The funding cycle configurations.
+      @param _tickets The ERC-1155 mapping projects to ticket holders.
       @param _prices The price feed contract to use.
       @param _weth The address for WETH, which all funds are collected and dispersed in.
     */
     constructor(
         IProjects _projects,
-        IBudgetStore _budgetStore,
-        ITicketStore _ticketStore,
+        IFundingCycles _fundingCycles,
+        ITickets _tickets,
         IPrices _prices,
         IERC20 _weth
     ) {
         projects = _projects;
-        budgetStore = _budgetStore;
-        ticketStore = _ticketStore;
+        fundingCycles = _fundingCycles;
+        tickets = _tickets;
         prices = _prices;
         weth = _weth;
     }
 
     /**
-        @notice Deploys a project. This will mint an ERC-721 into the `_owner`'s account and configure a first budget.
+        @notice Deploys a project. This will mint an ERC-721 into the `_owner`'s account and configure a first funding cycle.
         @param _owner The address that will own the project.
         @param _name The project's name.
         @param _handle The project's unique handle.
@@ -330,8 +335,8 @@ contract Juicer is IJuicer {
         require(_reserved <= 1000, "Juicer::deploy: BAD_RESERVE_PERCENTAGES");
 
         // Configure the project.
-        Budget.Data memory _budget =
-            budgetStore.configure(
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
                 // The identifiers for this project are not functional and done purely for branding by a project's PM.
                 projects.create(_owner, _name, _handle, _logoUri, _link),
@@ -341,25 +346,25 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                0, // There is no reconfiguration delay for the first budget.
+                0, // There is no reconfiguration delay for the first funding cycle.
                 fee
             );
 
         emit Deploy(
-            _budget.projectId,
+            _fundingCycle.projectId,
             _owner,
             msg.sender,
             _name,
             _handle,
             _logoUri,
-            _budget
+            _fundingCycle
         );
     }
 
     /**
         @notice Reconfigures the properties of the current funding stage if it hasn't yet received payments, or
         sets the properties of the proposed funding stage that will take effect once the current one expires.
-        @dev The msg.sender must be the project of the budget.
+        @dev The msg.sender must be the project of the funding cycle.
         @param _projectId The ID of the project being reconfigured. 
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
@@ -373,7 +378,7 @@ contract Juicer is IJuicer {
         @param _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @param _reserved A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
-        @return _budgetId The id of the budget that was successfully configured.
+        @return _fundingCycleId The id of the funding cycle that was successfully configured.
     */
     function reconfigure(
         uint256 _projectId,
@@ -411,8 +416,8 @@ contract Juicer is IJuicer {
         );
 
         // Configure the funding stage's state.
-        Budget.Data memory _budget =
-            budgetStore.configure(
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.configure(
                 _projectId,
                 _target,
                 _currency,
@@ -424,9 +429,13 @@ contract Juicer is IJuicer {
                 fee
             );
 
-        emit Reconfigure(_budget.id, _budget.projectId, _budget);
+        emit Reconfigure(
+            _fundingCycle.id,
+            _fundingCycle.projectId,
+            _fundingCycle
+        );
 
-        return _budget.id;
+        return _fundingCycle.id;
     }
 
     /**
@@ -437,7 +446,7 @@ contract Juicer is IJuicer {
         @param _amount Amount of the contribution in ETH. Sent as 1E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
-        @return _budgetId The ID of the funding stage that successfully received the contribution.
+        @return _fundingCycleId The ID of the funding stage that successfully received the contribution.
     */
     function pay(
         uint256 _projectId,
@@ -450,37 +459,40 @@ contract Juicer is IJuicer {
         // Cant send tickets to the zero address.
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
-        // Get a reference to the current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+        // Get a reference to the current funding cycle.
+        FundingCycle.Data memory _fundingCycle = fundingCycles.get(_projectId);
 
         // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
-        processableAmount[_budget.projectId] = processableAmount[
-            _budget.projectId
+        processableAmount[_fundingCycle.projectId] = processableAmount[
+            _fundingCycle.projectId
         ]
             .add(_amount);
 
         // Print tickets for the beneficiary.
-        ticketStore.print(
+        tickets.print(
             _beneficiary,
             _projectId,
-            _budget._weighted(_amount, uint256(1000).add(_budget.reserved))
+            _fundingCycle._weighted(
+                _amount,
+                uint256(1000).add(_fundingCycle.reserved)
+            )
         );
 
         // Transfer the weth from the sender to this contract.
         weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         emit Pay(
-            _budget.id,
+            _fundingCycle.id,
             _projectId,
             msg.sender,
             _beneficiary,
             _amount,
-            _budget.currency,
+            _fundingCycle.currency,
             _note,
-            _budget.fee
+            _fundingCycle.fee
         );
 
-        return _budget.id;
+        return _fundingCycle.id;
     }
 
     /**
@@ -525,7 +537,7 @@ contract Juicer is IJuicer {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the sender's wallet.
-        ticketStore.redeem(_projectId, msg.sender, _count);
+        tickets.redeem(_projectId, msg.sender, _count);
 
         // Transfer funds to the specified address.
         weth.safeTransfer(_beneficiary, amount);
@@ -534,9 +546,9 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Tap into funds that have been contributed to your Budgets.
-        @param _projectId The ID of the project to which the budget being tapped belongs.
-        @param _amount The amount being tapped, in the budget's currency.
+        @notice Tap into funds that have been contributed to your funding cycles.
+        @param _projectId The ID of the project to which the funding cycle being tapped belongs.
+        @param _amount The amount being tapped, in the funding cycle's currency.
         @param _beneficiary The address to transfer the funds to.
         @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
     */
@@ -562,9 +574,13 @@ contract Juicer is IJuicer {
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _projectBalance = balanceOf(_projectId, true);
 
-        // Save the new state of the budget.
-        (uint256 _budgetId, uint256 _tappedAmount, uint256 _adminFeeAmount) =
-            budgetStore.tap(
+        // Save the new state of the funding cycle.
+        (
+            uint256 _fundingCycleId,
+            uint256 _tappedAmount,
+            uint256 _adminFeeAmount
+        ) =
+            fundingCycles.tap(
                 _projectId,
                 _amount,
                 _currency,
@@ -590,23 +606,23 @@ contract Juicer is IJuicer {
             )
         );
 
-        // Get a reference to the admin's budget, which will be receiving the fee.
-        Budget.Data memory _adminBudget =
-            budgetStore.getCurrentBudget(JuiceProject(admin).projectId());
+        // Get a reference to the admin's funding cycle, which will be receiving the fee.
+        FundingCycle.Data memory _adminFundingCycle =
+            fundingCycles.getCurrent(JuiceProject(admin).projectId());
 
         // Add to the processable amount for the admin, which will eventually distribute reserved tickets to the admin's owner.
-        processableAmount[_adminBudget.projectId] = processableAmount[
-            _adminBudget.projectId
+        processableAmount[_adminFundingCycle.projectId] = processableAmount[
+            _adminFundingCycle.projectId
         ]
             .add(_adminFeeAmount);
 
         // Print admin tickets for the tapper.
-        ticketStore.print(
+        tickets.print(
             msg.sender,
-            _adminBudget.projectId,
-            _adminBudget._weighted(
+            _adminFundingCycle.projectId,
+            _adminFundingCycle._weighted(
                 _adminFeeAmount,
-                uint256(1000).sub(_adminBudget.reserved)
+                uint256(1000).sub(_adminFundingCycle.reserved)
             )
         );
 
@@ -617,7 +633,7 @@ contract Juicer is IJuicer {
         weth.safeTransfer(_beneficiary, _tappedAmount);
 
         emit Tap(
-            _budgetId,
+            _fundingCycleId,
             _projectId,
             _beneficiary,
             msg.sender,
@@ -630,7 +646,7 @@ contract Juicer is IJuicer {
     /**
       @notice Deposit any overflow funds that are not earning interest into the yielder.
     */
-    function depositIntoYielder() external override lock {
+    function deposit() external override lock {
         // Can't deposit if an yielder has not yet been set.
         require(yielder != IYielder(0), "Juicer::deposit: SETUP_NEEDED");
 
@@ -775,15 +791,19 @@ contract Juicer is IJuicer {
 
         if (_processableAmount == 0) return;
 
-        // Get a reference to the current budget.
-        Budget.Data memory _budget = budgetStore.getCurrentBudget(_projectId);
+        // Get a reference to the current funding cycle.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
 
         // Print tickets for the project owner if needed.
-        if (_budget.reserved > 0) {
-            ticketStore.print(
+        if (_fundingCycle.reserved > 0) {
+            tickets.print(
                 projects.ownerOf(_projectId),
                 _projectId,
-                _budget._weighted(_processableAmount, _budget.reserved)
+                _fundingCycle._weighted(
+                    _processableAmount,
+                    _fundingCycle.reserved
+                )
             );
         }
 

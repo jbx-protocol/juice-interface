@@ -8,12 +8,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./../interfaces/IJuicer.sol";
 
-import "./../TicketStore.sol";
-
 /** 
   @notice A contract that inherits from JuiceProject can use Juice as a business-model-as-a-service.
   @dev The owner of the contract makes admin decisions such as:
-    - Which address is the Budget owner, which can tap funds from the Budget.
+    - Which address is the funding cycle owner, which can tap funds from the funding cycle.
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is IERC721Receiver, Ownable {
@@ -65,17 +63,17 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     }
 
     /**
-        @notice This is how the Budget is configured, and reconfiguration over time.
-        @param _target The new Budget target amount.
+        @notice This is how the funding cycle is configured, and reconfiguration over time.
+        @param _target The new funding cycle target amount.
         @param _currency The currency of the target.
-        @param _duration The new duration of your Budget.
-        @param _discountRate A number from 70-130 indicating how valuable a Budget is compared to the owners previous Budget,
+        @param _duration The new duration of your funding cycle.
+        @param _discountRate A number from 70-130 indicating how valuable a funding cycle is compared to the owners previous funding cycle,
         effectively creating a recency discountRate.
-        If it's 100, each Budget will have equal weight.
-        If the number is 130, each Budget will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
-        If it's 0.7, each Budget will be 0.7 times as valuable as the previous Budget's weight.
-        @param _reserved The percentage of this Budget's surplus to allocate to the owner.
-        @return budgetId The ID of the budget that was reconfigured.
+        If it's 100, each funding cycle will have equal weight.
+        If the number is 130, each funding cycle will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
+        If it's 0.7, each funding cycle will be 0.7 times as valuable as the previous funding cycle's weight.
+        @param _reserved The percentage of this funding cycle's surplus to allocate to the owner.
+        @return fundingCycleId The ID of the funding cycle that was reconfigured.
     */
     function configure(
         uint256 _target,
@@ -84,14 +82,14 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external returns (uint256 budgetId) {
+    ) external returns (uint256 fundingCycleId) {
         // The pm or the owner can propose configurations.
         require(
             msg.sender == pm || msg.sender == owner(),
             "JuiceProject: UNAUTHORIZED"
         );
 
-        budgetId = juicer.reconfigure(
+        fundingCycleId = juicer.reconfigure(
             projectId,
             _target,
             _currency,
@@ -130,7 +128,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @param _note A note to leave on the emitted event.
-      @return returnAmount The amount of ETH that was redeemed and used to fund the budget.
+      @return returnAmount The amount of ETH that was redeemed and used to fund the funding cycle.
     */
     function redeemTicketsAndFund(
         uint256 _projectId,
@@ -206,7 +204,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _modsCut = _modsCut.add(_modCut);
             _modsMinReturnedETH = _modsMinReturnedETH.add(_modMinReturnedETH);
         }
-        // Tap the budget for the beneficiary.
+        // Tap the funding cycle for the beneficiary.
         juicer.tap(
             projectId,
             _amount.sub(_modsCut),
@@ -217,7 +215,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     }
 
     /** 
-        @notice Sets the address that can tap the Budget. 
+        @notice Sets the address that can tap the funding cycle. 
         @param _pm The new project manager.
     */
     function setPm(address _pm) external onlyOwner {

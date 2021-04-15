@@ -55,7 +55,7 @@ contract Admin is JuiceProject {
     }
 
     /**
-        @notice Adds a price feed to a budget store.
+        @notice Adds a price feed.
         @param _prices The prices contract to add a feed to.
         @param _feed The price feed to add.
         @param _currency The currency the price feed is for.

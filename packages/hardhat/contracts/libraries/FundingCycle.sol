@@ -8,81 +8,83 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./FullMath.sol";
 import "./DSMath.sol";
 
-/// @notice Budget data and logic.
-library Budget {
+/// @notice Funding cycle data and logic.
+library FundingCycle {
     using SafeMath for uint256;
 
-    /// @notice Possible states that a Budget may be in
-    /// @dev Budget's are immutable once they are active.
+    /// @notice Possible states that a funding cycle may be in
+    /// @dev Funding cycles's are immutable once they are active.
     enum State {Standby, Active, Redistributing}
 
-    /// @notice The Budgets structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.
+    /// @notice The funding cycle structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.
     struct Data {
-        // A unique number that's incremented for each new Budget, starting with 1.
+        // A unique number that's incremented for each new funding cycle, starting with 1.
         uint256 id;
-        // The ID of the project contract that this budget belongs to.
+        // The ID of the project contract that this funding cycle belongs to.
         uint256 projectId;
-        // The number of this budget for the project.
+        // The number of this funding cycle for the project.
         uint256 number;
-        // The ID of the project's Budget that came before this one. 0 if none.
+        // The ID of the project's funding cycle that came before this one. 0 if none.
         uint256 previous;
-        // The amount that this Budget is targeting.
+        // The amount that this funding cycle is targeting.
         uint256 target;
         // The currency that the target is measured in.
         uint256 currency;
-        // The time when this Budget will become active.
+        // The time when this funding cycle will become active.
         uint256 start;
-        // The number of seconds until this Budget's surplus is redistributed.
+        // The number of seconds until this funding cycle's surplus is redistributed.
         uint256 duration;
         // The amount of available funds that have been tapped by the project in terms of the currency.
         uint256 tappedTarget;
         // The amount of available funds that have been tapped by the project in terms of eth.
         uint256 tappedTotal;
-        // The percentage of tickets to reserve for the project once the Budget has expired.
+        // The percentage of tickets to reserve for the project once the funding cycle has expired.
         uint256 reserved;
         // The percentage of each payment to send as a fee to the Juice admin.
         uint256 fee;
-        // A number determining the amount of redistribution shares this Budget will issue to each sustainer.
+        // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
         uint256 weight;
-        // A percentage indicating how much more weight to give a Budget compared to its predecessor.
+        // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
         uint256 discountRate;
         // The rate that describes the bonding curve at which overflow can be claimed.
         uint256 bondingCurveRate;
-        // The time when this Budget was last configured.
+        // The time when this funding cycle was last configured.
         uint256 configured;
-        // The ballot contract to use to determine this budget's reconfiguration status.
+        // The time after which this cycle is eligible to become the active cycle.
         uint256 eligibleAfter;
     }
 
     // --- internal transactions --- //
 
     /**
-        @notice Clones the properties from the base Budget.
-        @dev The base must be the Budget directly preceeding self.
-        @param _self The Budget to clone onto.
-        @param _baseBudget The Budget to clone from.
+        @notice Clones the properties from the base funding cycle.
+        @dev The base must be the funding cycle directly preceeding self.
+        @param _self The funding cycle to clone onto.
+        @param _baseFundingCycle The funding cycle to clone from.
     */
-    function _basedOn(Data storage _self, Data memory _baseBudget) internal {
-        _self.target = _baseBudget.target;
-        _self.currency = _baseBudget.currency;
-        _self.duration = _baseBudget.duration;
-        _self.projectId = _baseBudget.projectId;
-        _self.discountRate = _baseBudget.discountRate;
-        _self.bondingCurveRate = _baseBudget.bondingCurveRate;
-        _self.weight = _derivedWeight(_baseBudget);
-        _self.reserved = _baseBudget.reserved;
-        _self.configured = _baseBudget.configured;
-        _self.eligibleAfter = _baseBudget.eligibleAfter;
-        _self.number = _baseBudget.number.add(1);
-        _self.previous = _baseBudget.id;
-        _self.fee = _baseBudget.fee;
+    function _basedOn(Data storage _self, Data memory _baseFundingCycle)
+        internal
+    {
+        _self.target = _baseFundingCycle.target;
+        _self.currency = _baseFundingCycle.currency;
+        _self.duration = _baseFundingCycle.duration;
+        _self.projectId = _baseFundingCycle.projectId;
+        _self.discountRate = _baseFundingCycle.discountRate;
+        _self.bondingCurveRate = _baseFundingCycle.bondingCurveRate;
+        _self.weight = _derivedWeight(_baseFundingCycle);
+        _self.reserved = _baseFundingCycle.reserved;
+        _self.configured = _baseFundingCycle.configured;
+        _self.eligibleAfter = _baseFundingCycle.eligibleAfter;
+        _self.number = _baseFundingCycle.number.add(1);
+        _self.previous = _baseFundingCycle.id;
+        _self.fee = _baseFundingCycle.fee;
     }
 
     // --- internal views --- //
 
     /** 
-        @notice The state the Budget is in.
-        @param _self The Budget to get the state of.
+        @notice The state the funding cycle is in.
+        @param _self The funding cycle to get the state of.
         @return state The state.
     */
     function _state(Data memory _self) internal view returns (State) {
@@ -93,7 +95,7 @@ library Budget {
 
     /** 
         @notice The date that is the nearest multiple of duration from oldEnd.
-        @param _self The Budget to make the calculation for.
+        @param _self The funding cycle to make the calculation for.
         @return start The date.
     */
     function _determineNextStart(Data memory _self)
@@ -111,9 +113,9 @@ library Budget {
     }
 
     /** 
-        @notice A view of the Budget that would be created after this one if the project doesn't make a reconfiguration.
-        @param _self The Budget to make the calculation for.
-        @return _budget The next Budget, with an ID set to 0.
+        @notice A view of the funding cycle that would be created after this one if the project doesn't make a reconfiguration.
+        @param _self The funding cycle to make the calculation for.
+        @return _fundingCycle The next funding cycle, with an ID set to 0.
     */
     function _nextUp(Data memory _self) internal view returns (Data memory) {
         return
@@ -140,7 +142,7 @@ library Budget {
 
     /** 
         @notice The weight derived from the current weight and the discountRate.
-        @param _self The Budget to make the calculation for.
+        @param _self The funding cycle to make the calculation for.
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory _self) internal pure returns (uint256) {
@@ -148,9 +150,9 @@ library Budget {
     }
 
     /** 
-        @notice The weight that a certain amount carries in this Budget.
-        @param _self The Budget to get the weight from.
-        @param _amount The amount to get the weight of in the same currency as the budget's currency.
+        @notice The weight that a certain amount carries in this funding cycle.
+        @param _self The funding cycle to get the weight from.
+        @param _amount The amount to get the weight of in the same currency as the funding cycle's currency.
         @param _percentage The percentage to account for. Out of 1000.
         @return state The weighted amount.
     */
@@ -168,11 +170,11 @@ library Budget {
     }
 
     /** 
-        @notice Taps an amount from the budget.
-        @param _self The Budget to tap an amount from.
+        @notice Taps an amount from the funding cycle.
+        @param _self The funding cycle to tap an amount from.
         @param _amount An amount to tap. In `currency`.
         @param _ethPrice The current price of ETH.
-        @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the budget total.
+        @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the funding cycle total.
         @return convertedEthAmount The amount of ETH that was tapped.
     */
     function _tap(
@@ -187,22 +189,22 @@ library Budget {
             _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
                 // Amount must be within what is still tappable.
                 _amount <= _ownerTappableAmount(_self),
-            "Budget: INSUFFICIENT_FUNDS"
+            "FundingCycle: INSUFFICIENT_FUNDS"
         );
 
-        // Add the amount to the Budget's tapped amount.
+        // Add the amount to the funding cycle's tapped amount.
         _self.tappedTarget = _self.tappedTarget.add(_amount);
 
         // The amount of ETH that is being tapped.
         convertedEthAmount = DSMath.wdiv(_amount, _ethPrice);
 
-        // Add the converted currency amount to the Budget's total amount.
+        // Add the converted currency amount to the funding cycle's total amount.
         _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
     }
 
     /** 
-        @notice Check to see if the given Budget has started.
-        @param _self The Budget to check.
+        @notice Check to see if the given funding cycle has started.
+        @param _self The funding cycle to check.
         @return hasStarted The boolean result.
     */
     function _hasStarted(Data memory _self) internal view returns (bool) {
@@ -210,22 +212,19 @@ library Budget {
     }
 
     /** 
-        @notice Check to see if the given Budget has expired.
-        @param _self The Budget to check.
+        @notice Check to see if the given funding cycle has expired.
+        @param _self The funding cycle to check.
         @return hasExpired The boolean result.
     */
     function _hasExpired(Data memory _self) internal view returns (bool) {
-        // If duration is 0, the budget never expires.
-        return
-            _self.duration > 0 &&
-            block.timestamp > _self.start.add(_self.duration);
+        return block.timestamp > _self.start.add(_self.duration);
     }
 
     // --- private views --- //
 
     /** 
         @notice Returns the amount available for the project owner to tap in to.
-        @param _self The Budget to make the calculation for.
+        @param _self The funding cycle to make the calculation for.
         @return The resulting amount.
     */
     function _ownerTappableAmount(Data memory _self)

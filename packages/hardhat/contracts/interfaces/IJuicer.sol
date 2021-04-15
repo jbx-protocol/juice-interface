@@ -4,21 +4,21 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./ITicketStore.sol";
-import "./IBudgetStore.sol";
+import "./ITickets.sol";
+import "./IFundingCycles.sol";
 import "./IYielder.sol";
 
 import "./IProjects.sol";
 
-interface IBudgetController {
+interface IFundingCyclesController {
     event Reconfigure(
-        uint256 indexed budgetId,
+        uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        Budget.Data budget
+        FundingCycle.Data fundingCycle
     );
 
     event Pay(
-        uint256 indexed budgetId,
+        uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed payer,
         address beneficiary,
@@ -29,7 +29,7 @@ interface IBudgetController {
     );
 
     event Tap(
-        uint256 indexed budgetId,
+        uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
         address tapper,
@@ -50,14 +50,14 @@ interface IBudgetController {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved
-    ) external returns (uint256 budgetId);
+    ) external returns (uint256 fundingCycleId);
 
     function pay(
         uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
         string memory _note
-    ) external returns (uint256 budgetId);
+    ) external returns (uint256 fundingCycleId);
 
     function tap(
         uint256 _projectId,
@@ -94,7 +94,7 @@ interface ITicketsController {
     ) external returns (uint256 returnAmount);
 }
 
-interface IJuicer is IBudgetController, ITicketsController {
+interface IJuicer is IFundingCyclesController, ITicketsController {
     event Migrate(IJuicer indexed to, uint256 _amount);
 
     event Deploy(
@@ -104,7 +104,7 @@ interface IJuicer is IBudgetController, ITicketsController {
         string _name,
         string _handle,
         string _logoUri,
-        Budget.Data budget
+        FundingCycle.Data fundingCycle
     );
 
     event AddToMigrationAllowList(address indexed allowed);
@@ -117,9 +117,9 @@ interface IJuicer is IBudgetController, ITicketsController {
 
     function projects() external view returns (IProjects);
 
-    function budgetStore() external view returns (IBudgetStore);
+    function fundingCycles() external view returns (IFundingCycles);
 
-    function ticketStore() external view returns (ITicketStore);
+    function tickets() external view returns (ITickets);
 
     function yielder() external view returns (IYielder);
 
@@ -163,7 +163,7 @@ interface IJuicer is IBudgetController, ITicketsController {
         IERC20 _token
     ) external;
 
-    function depositIntoYielder() external;
+    function deposit() external;
 
     function allowMigration(address _contract) external;
 }

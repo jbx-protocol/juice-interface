@@ -3,27 +3,27 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "./IPrices.sol";
-import "../libraries/Budget.sol";
+import "../libraries/FundingCycle.sol";
 
-interface IBudgetStore {
-    function latestBudgetId(uint256 _project) external view returns (uint256);
+interface IFundingCycles {
+    function latestId(uint256 _project) external view returns (uint256);
 
-    function budgetCount() external view returns (uint256);
+    function count() external view returns (uint256);
 
-    function getBudget(uint256 _budgetId)
+    function get(uint256 _fundingCycleId)
         external
         view
-        returns (Budget.Data memory);
+        returns (FundingCycle.Data memory);
 
-    function getQueuedBudget(uint256 _projectId)
+    function getQueued(uint256 _projectId)
         external
         view
-        returns (Budget.Data memory);
+        returns (FundingCycle.Data memory);
 
-    function getCurrentBudget(uint256 _projectId)
+    function getCurrent(uint256 _projectId)
         external
         view
-        returns (Budget.Data memory);
+        returns (FundingCycle.Data memory);
 
     function configure(
         uint256 _projectId,
@@ -35,7 +35,7 @@ interface IBudgetStore {
         uint256 _reserved,
         uint256 _reconfigurationDelay,
         uint256 _fee
-    ) external returns (Budget.Data memory budget);
+    ) external returns (FundingCycle.Data memory fundingCycle);
 
     function tap(
         uint256 _projectId,

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IPrices.sol";
 
 /** 
-  @notice An immutable contract to manage Budget states.
+  @notice An immutable contract to manage price feeds.
 */
 contract Prices is IPrices, Ownable {
     /// @notice The available price feeds that can be used to get the price of ETH.

@@ -10,7 +10,7 @@ export default function ProjectName({
 }: FormItemExt) {
   return (
     <Form.Item
-      extra="The name of your project on-chain"
+      extra="The name of your project."
       name={name}
       label={hideLabel ? undefined : 'Project name'}
       {...formItemProps}

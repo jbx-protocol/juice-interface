@@ -1,1 +1,1 @@
-module.exports = ["Admin","BudgetBallot","BudgetStore","Juicer","Prices","TicketStore","TimelockStaker"];
+module.exports = ["Admin","BudgetStore","Juicer","Prices","Projects","TicketStore","Token"];

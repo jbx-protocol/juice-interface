@@ -7,16 +7,6 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "string",
-        "name": "_ticketName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_ticketSymbol",
-        "type": "string"
-      },
-      {
         "internalType": "address",
         "name": "_pm",
         "type": "address"
@@ -43,6 +33,24 @@ module.exports = [
     ],
     "name": "OwnershipTransferred",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_percent",
+        "type": "uint256"
+      }
+    ],
+    "name": "addMod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -103,16 +111,6 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_link",
-        "type": "string"
-      },
-      {
         "internalType": "uint256",
         "name": "_discountRate",
         "type": "uint256"
@@ -126,23 +124,13 @@ module.exports = [
         "internalType": "uint256",
         "name": "_reserved",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_donationRecipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_donationAmount",
-        "type": "uint256"
       }
     ],
     "name": "configure",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "budgetId",
         "type": "uint256"
       }
     ],
@@ -152,20 +140,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      }
-    ],
-    "name": "deprecateJuicer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IAdminControlWrapper",
+        "internalType": "contract IAdministered",
         "name": "_contract",
         "type": "address"
       },
@@ -176,13 +151,6 @@ module.exports = [
       }
     ],
     "name": "grantAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "issueTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -219,6 +187,82 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "mods",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "modsId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "onERC721Received",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -245,11 +289,24 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "projectId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -281,9 +338,9 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -313,6 +370,19 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeMod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -322,13 +392,13 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IAdminControlWrapper",
+        "internalType": "contract IAdministered",
         "name": "_contract",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_newAdmin",
+        "name": "_oldAdmin",
         "type": "address"
       }
     ],
@@ -340,76 +410,27 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IBudgetStore",
-        "name": "_budgetStore",
-        "type": "address"
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
       },
       {
-        "internalType": "contract IBudgetBallot",
-        "name": "_budgetBallot",
-        "type": "address"
+        "internalType": "string",
+        "name": "_handle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_logoUri",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_link",
+        "type": "string"
       }
     ],
-    "name": "setBudgetBallot",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract ITimelockStaker",
-        "name": "_staker",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_controller",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "_status",
-        "type": "bool"
-      }
-    ],
-    "name": "setControllerStatus",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IBudgetStore",
-        "name": "_budgetStore",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_fee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IOverflowYielder",
-        "name": "_overflowYielder",
-        "type": "address"
-      }
-    ],
-    "name": "setOverflowYielder",
+    "name": "setIdentifiers",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -431,9 +452,35 @@ module.exports = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_budgetId",
+        "name": "_projectId",
         "type": "uint256"
+      }
+    ],
+    "name": "setProjectId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
       },
+      {
+        "internalType": "contract IYielder",
+        "name": "_yielder",
+        "type": "address"
+      }
+    ],
+    "name": "setYielder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "uint256",
         "name": "_amount",
@@ -461,32 +508,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "ticketName",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ticketSymbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -495,6 +516,19 @@ module.exports = [
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferProjectOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

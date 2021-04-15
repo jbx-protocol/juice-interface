@@ -11,9 +11,9 @@ export default function ProjectLink({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Link'}
+      label={hideLabel ? undefined : 'Link (optional)'}
       extra="Add a URL that points to where someone could find more information about
-        your project. (optional)"
+        your project."
       {...formItemProps}
     >
       <Input

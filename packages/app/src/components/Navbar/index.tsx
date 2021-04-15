@@ -82,7 +82,7 @@ export default function Navbar() {
           <Menu.Item key="fluid-dynamics">
             {menuItem(
               'Fluid dynamics',
-              'https://www.figma.com/file/ZklsxqZUsjK3XO5BksCyE4/Fluid-Dynamics?node-id=0%3A1',
+              'https://www.figma.com/file/dHsQ7Bt3ryXbZ2sRBAfBq5/Fluid-Dynamics?node-id=0%3A1',
             )}
           </Menu.Item>
         }

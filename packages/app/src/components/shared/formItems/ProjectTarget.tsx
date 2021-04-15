@@ -22,7 +22,7 @@ export default function ProjectDuration({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The money you want to make it happen"
+      extra="The money you need to make it happen."
       name={name}
       label={hideLabel ? undefined : 'Operating cost'}
       {...formItemProps}

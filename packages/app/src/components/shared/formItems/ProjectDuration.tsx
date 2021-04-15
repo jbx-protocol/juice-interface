@@ -19,7 +19,7 @@ export default function ProjectDuration({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The life cycle of your project"
+      extra="The duration that you need the money for."
       name={name}
       {...formItemProps}
     >

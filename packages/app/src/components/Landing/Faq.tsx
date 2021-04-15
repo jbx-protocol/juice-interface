@@ -13,34 +13,34 @@ const QAs: {
     q: 'Who funds Juice projects?',
     a: [
       `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on juice.work).`,
-      `For users paying through your app, you should route those funds through the Juice smart contracts to ensure they receive Tickets in return. *Link: Using Juice composibly.*`,
+      `For users paying through your app, you should route those funds through the Juice smart contracts so they receive Tickets in return.`,
     ],
   },
   {
     q: `What does Juice cost?`,
     a: [
-      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs here (soon), and the under-the-hood specs and docs here.`,
-      `5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time, and voting power on how Juice's cashflow needs should evolve.`,
+      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at http://juice.work/p/juice.`,
+      `5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time.`,
     ],
   },
   {
     q: 'What are tickets?',
     a: [
-      `Each project has its own tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be exchanged for a portion of the overflow. *Link: Calculating Ticket rewards*. Tickets can also be staked to allow voting on changes to a project contract.`,
+      `Each project has its own ERC-1155 tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be redeemed for a portion of the overflow.`,
     ],
   },
   {
-    q: `Why should I want to own a project's tickets?`,
+    q: `Why should I want to own a project's Tickets?`,
     a: [
-      `Tickets can be redeemed for a portion of a project's overflow.`,
+      `Tickets can be redeemed for a portion of a project's overflow, letting you benefit from the project's up-side.`,
       `If you earned a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases.`,
     ],
   },
   {
     q: `What's a discount rate?`,
     a: [
-      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new budgeting time frame, the discount rate decreases the number of tickets that are minted per payment.`,
-      `For example: with a discount rate of 97%, 100 DAI paid to a project today might mint 100 tickets, but the same amount paid during the next budgeting time frame would only mint 97.`,
+      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new funding cycle, the discount rate decreases the number of tickets that are minted per payment.`,
+      `For example: with a discount rate of 97%, $100 paid to a project today might mint you 100 tickets, but the same amount paid during the next funding cycle would only mint you 97.`,
     ],
   },
   {
@@ -54,19 +54,14 @@ const QAs: {
     q: 'Does a project benefit from its own overflow?',
     a: [
       `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of minted tickets is instead transferred back to the project.`,
-      `Holding these tickets entitles a project to a portion of its own overflow, which can create an incentive for the maintainer team to continue growing a project past its target.`,
+      `Holding these tickets entitles a project to a portion of its own overflow, which can create an incentive for the project owner to continue growing a project past its target.`,
     ],
   },
   {
     q: "Can I change my project's contract after it's been created?",
     a: [
-      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended. All proposed changes must be voted on by the project's ticket holders before they are accepted.`,
-      `The voting period for contract changes takes place over 7 days, and is decided by a supermajority. Voters must stake tickets to participate, which are then locked until the voting period has ended.`,
+      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended. A minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives Ticket holders time to react to the decision.`,
     ],
-  },
-  {
-    q: "Can I rename my project's tickets?",
-    a: [`Right now, no.`],
   },
   {
     q: `Does putting a cap on profit remove incentive for project creators to innovate?`,

@@ -8,44 +8,119 @@ module.exports = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "issuer",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "symbol",
-        "type": "string"
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
       }
     ],
-    "name": "Issue",
+    "name": "ApprovalForAll",
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
         "internalType": "address",
-        "name": "_issuer",
+        "name": "operator",
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "TransferBatch",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
         "type": "uint256"
       }
     ],
-    "name": "addClaimable",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "name": "TransferSingle",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "URI",
+    "type": "event"
   },
   {
     "inputs": [
@@ -64,11 +139,16 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "account",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       }
     ],
-    "name": "claimable",
+    "name": "balanceOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -82,107 +162,22 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "clearClaimable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "convert",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_holder",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
       },
       {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_proportion",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
       }
     ],
-    "name": "getClaimableAmount",
+    "name": "balanceOfBatch",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint256[]",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "getTicketValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "iOweYous",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -210,19 +205,25 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
       }
     ],
-    "name": "issue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "isApprovedForAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -242,13 +243,13 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_issuer",
+        "name": "_for",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_holder",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -264,9 +265,9 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "address",
@@ -277,26 +278,10 @@ module.exports = [
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minClaimed",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_proportion",
-        "type": "uint256"
       }
     ],
     "name": "redeem",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "returnAmount",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -317,6 +302,90 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_owner",
         "type": "address"
       }
@@ -329,25 +398,31 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
       }
     ],
-    "name": "tickets",
+    "name": "supportsInterface",
     "outputs": [
       {
-        "internalType": "contract Tickets",
+        "internalType": "bool",
         "name": "",
-        "type": "address"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "totalClaimable",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "totalSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -361,17 +436,17 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "totalIOweYous",
-    "outputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "name": "uri",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",

@@ -99,9 +99,9 @@ export default function EditProjectModal({
         </Form.Item>
         <Form.Item
           name="link"
-          label="Link"
+          label="Link (optional)"
           extra="Add a URL that points to where someone could find more information about
-        your project. (optional)"
+        your project."
         >
           <Input
             placeholder="http://your-project.com"
@@ -111,7 +111,7 @@ export default function EditProjectModal({
         </Form.Item>
         <Form.Item
           name="logoUri"
-          label="Logo URL"
+          label="Logo URL (optional)"
           extra="The URL of your logo hosted somewhere on the internet."
         >
           <Input

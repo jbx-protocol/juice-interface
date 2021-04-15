@@ -12,7 +12,7 @@ export default function ProjectLogoUri({
     <Form.Item
       name={name}
       extra="The URL of your logo hosted somewhere on the internet."
-      label={hideLabel ? undefined : 'Logo URL'}
+      label={hideLabel ? undefined : 'Logo URL (optional)'}
       {...formItemProps}
     >
       <Input

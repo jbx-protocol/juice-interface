@@ -423,6 +423,9 @@ contract Juicer is IJuicer {
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
+        // Get a reference to the amount of tickets.
+        uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
+
         // Configure the funding stage's state.
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.configure(
@@ -434,8 +437,7 @@ contract Juicer is IJuicer {
                 _bondingCurveRate,
                 _reserved,
                 // If no tickets are currently issued, the active funding cycle can be configured.
-                // tickets.totalSupply(_projectId) == 0 ? 0 : reconfigurationDelay,
-                reconfigurationDelay,
+                _totalTicketSupply == 0 ? 0 : reconfigurationDelay,
                 fee
             );
 

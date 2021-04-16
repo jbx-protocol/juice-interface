@@ -72,6 +72,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
     /**
         @notice The funding cycle that would be currently accepting sustainments for the provided project.
+        @dev This runs very similar logic to `_ensureActive`.
         @param _projectId The ID of the project of the funding cycle being looked for.
         @return fundingCycle The funding cycle.
     */
@@ -85,11 +86,24 @@ contract FundingCycles is Administered, IFundingCycles {
             latestId[_projectId] > 0,
             "FundingCycle::getCurrent: NOT_FOUND"
         );
+        // Check if there is an active funding cycle.
         fundingCycle = _active(_projectId);
         if (fundingCycle.id > 0) return fundingCycle;
+        // No active funding cycle found, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
-        if (fundingCycle.id > 0) return fundingCycle;
-        fundingCycle = fundingCycles[latestId[_projectId]];
+        // Funding cycle if exists, has been in standby for enough time to become eligible.
+        if (fundingCycle.id > 0 && block.timestamp > fundingCycle.eligibleAfter)
+            return fundingCycle;
+        // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+        // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
+        fundingCycle = fundingCycles[
+            fundingCycle.id > 0 ? fundingCycle.previous : latestId[_projectId]
+        ];
+        // Funding cycles with a discountRate of 0 are non-recurring.
+        require(
+            fundingCycle.id > 0 && fundingCycle.discountRate > 0,
+            "FundingCycle::getCurrent: NOT_FOUND"
+        );
         return fundingCycle._nextUp();
     }
 
@@ -132,7 +146,8 @@ contract FundingCycles is Administered, IFundingCycles {
         returns (FundingCycle.Data memory fundingCycle)
     {
         // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
-        FundingCycle.Data storage _fundingCycle = _ensureStandby(_projectId);
+        FundingCycle.Data storage _fundingCycle =
+            _ensureConfigurable(_projectId, _reconfigurationDelay == 0);
 
         // Set the properties of the funding cycle.
         _fundingCycle.target = _target;
@@ -210,26 +225,31 @@ contract FundingCycles is Administered, IFundingCycles {
     // --- private transactions --- //
 
     /**
-        @notice Returns the standby funding cycle for this project if it exists, otherwise putting one in standby appropriately.
+        @notice Returns the configurable funding cycle for this project if it exists, otherwise making one appropriately.
         @param _projectId The ID of the project to which the funding cycle being looked for belongs.
+        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
         @return fundingCycle The resulting funding cycle.
     */
-    function _ensureStandby(uint256 _projectId)
-        private
-        returns (FundingCycle.Data storage fundingCycle)
-    {
+    function _ensureConfigurable(
+        uint256 _projectId,
+        bool _configureActiveFundingCycle
+    ) private returns (FundingCycle.Data storage fundingCycle) {
         // Cannot update active funding cycle, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
         if (fundingCycle.id > 0) return fundingCycle;
         // Get the latest funding cycle.
         fundingCycle = fundingCycles[latestId[_projectId]];
         // If there's an active funding cycle, its end time should correspond to the start time of the new funding cycle.
-        FundingCycle.Data memory _aFundingCycle = _active(_projectId);
+        FundingCycle.Data storage _aFundingCycle = _active(_projectId);
+
+        // Return the active funding cycle if allowed.
+        if (_aFundingCycle.id > 0 && _configureActiveFundingCycle)
+            return _aFundingCycle;
 
         // Make sure the funding cycle is recurring.
         require(
             _aFundingCycle.id == 0 || _aFundingCycle.discountRate > 0,
-            "FundingCycle::_ensureStandby: NON_RECURRING"
+            "FundingCycle::_configureActiveFundingCycle: NON_RECURRING"
         );
 
         //Base a new funding cycle on the latest funding cycle if one exists.
@@ -267,7 +287,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Funding cycles with a discountRate of 0 are non-recurring.
         require(
             fundingCycle.id > 0 && fundingCycle.discountRate > 0,
-            "FundingCycle::ensureActiveFundingCycle: NOT_FOUND"
+            "FundingCycle::_ensureActive: NOT_FOUND"
         );
         // Use a start date that's a multiple of the duration.
         // This creates the effect that there have been scheduled funding cycles ever since the `latest`, even if `latest` is a long time in the past.
@@ -309,7 +329,7 @@ contract FundingCycles is Administered, IFundingCycles {
     }
 
     /**
-        @notice An project's editable funding cycle.
+        @notice An project's funding cycle that hasn't yet started.
         @param _projectId The ID of project to which the funding cycle being looked for belongs.
         @return fundingCycle The standby funding cycle.
     */
@@ -326,7 +346,7 @@ contract FundingCycles is Administered, IFundingCycles {
     }
 
     /**
-        @notice The currently active funding cycle for a project.
+        @notice The funding cycle for a project that has started and hasn't yet expired.
         @param _projectId The ID of the project to which the funding cycle being looked for belongs.
         @return fundingCycle active funding cycle.
     */

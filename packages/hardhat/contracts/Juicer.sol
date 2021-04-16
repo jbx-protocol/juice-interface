@@ -433,6 +433,8 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
+                // If no tickets are currently issued, the active funding cycle can be configured.
+                // tickets.totalSupply(_projectId) == 0 ? 0 : reconfigurationDelay,
                 reconfigurationDelay,
                 fee
             );

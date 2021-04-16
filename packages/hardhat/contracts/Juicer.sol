@@ -803,12 +803,9 @@ contract Juicer is IJuicer {
     function _ensureAvailability(uint256 _amount) private {
         uint256 _balance = weth.balanceOf(address(this));
         // No need to withdraw from the yielder if the current balance is greater than the amount being ensured.
+        if (_balance >= _amount) return;
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
-        if (_balance > _amount)
-            yielder.withdraw(
-                _balance == 0 ? _amount : _amount.sub(_balance),
-                weth
-            );
+        yielder.withdraw(_balance == 0 ? _amount : _amount.sub(_balance), weth);
     }
 
     /** 

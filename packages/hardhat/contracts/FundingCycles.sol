@@ -195,11 +195,13 @@ contract FundingCycles is Administered, IFundingCycles {
         );
 
         // The amount that should be charged as a fee for tapping.
-        feeAmount = _fundingCycle.fee == 0
-            ? 0
-            : FullMath.mulDiv(convertedEthAmount, 1000, _fundingCycle.fee).sub(
-                convertedEthAmount
-            );
+        feeAmount = convertedEthAmount.sub(
+            FullMath.mulDiv(
+                convertedEthAmount,
+                1000,
+                _fundingCycle.fee.add(1000)
+            )
+        );
 
         // Return the ID of the funding cycle that was tapped.
         id = _fundingCycle.id;
@@ -340,6 +342,8 @@ contract FundingCycles is Administered, IFundingCycles {
         if (fundingCycle._state() == FundingCycle.State.Active)
             return fundingCycle;
         fundingCycle = fundingCycles[fundingCycle.previous];
+
+        // Return the 0th empty cycle if the previous doesn't exist or if its not active.
         if (
             fundingCycle.id == 0 ||
             fundingCycle._state() != FundingCycle.State.Active

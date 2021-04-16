@@ -77,7 +77,7 @@ export function useProjects(owner: string | undefined | null) {
 
   useContractReader<ProjectIdentifier>({
     contract: ContractName.Projects,
-    functionName: 'getIdentifier',
+    functionName: 'getInfo',
     args: id ? [id.toHexString()] : null,
     valueDidChange: useCallback(
       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),

@@ -61,7 +61,7 @@ export default function Dashboard() {
 
   const project = useContractReader<ProjectIdentifier>({
     contract: ContractName.Projects,
-    functionName: 'getIdentifier',
+    functionName: 'getInfo',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: useCallback(
       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),

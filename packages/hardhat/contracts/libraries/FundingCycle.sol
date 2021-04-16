@@ -14,7 +14,7 @@ library FundingCycle {
 
     /// @notice Possible states that a funding cycle may be in
     /// @dev Funding cycles's are immutable once they are active.
-    enum State {Standby, Active, Redistributing}
+    enum State {Standby, Active, Expired}
 
     /// @notice The funding cycle structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.
     struct Data {
@@ -88,8 +88,8 @@ library FundingCycle {
         @return state The state.
     */
     function _state(Data memory _self) internal view returns (State) {
-        if (_hasExpired(_self)) return State.Redistributing;
-        if (_hasStarted(_self) && _self.tappedTotal > 0) return State.Active;
+        if (_hasExpired(_self)) return State.Expired;
+        if (_hasStarted(_self)) return State.Active;
         return State.Standby;
     }
 

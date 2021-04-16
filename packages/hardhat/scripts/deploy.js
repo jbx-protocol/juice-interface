@@ -25,6 +25,7 @@ const main = async () => {
 
   const admin = await deploy("Admin", [
     juicer.address,
+    // TODO Set the PM as an address controlled by the team.
     "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
   ]);
 
@@ -121,6 +122,10 @@ const main = async () => {
         gasLimit: blockGasLimit,
       }
     );
+
+    console.log("⚡️ Setting the admin's project ID");
+    // Create the admin's budget.
+    await attachedAdmin.setProjectId(1);
   } catch (e) {
     console.log("Failed to establish admin contract ownership: ", e);
   }

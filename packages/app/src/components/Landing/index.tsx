@@ -80,15 +80,8 @@ export default function Landing() {
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
                     Projects say up front how much cashflow they want
                     in order to crush what they do. Once they're earning more
-                    than that, the ETH overflow can be claimed by their users,
+                    than that, the $ETH overflow can be claimed by their users,
                     patrons, & investors alongside them.{' '}
-                    {/* <a
-                      href="https://twitter.com/hashtag/DeWork"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      #DeWork
-                    </a> */}
                   </p>
                 </div>
 
@@ -178,8 +171,8 @@ export default function Landing() {
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
                     With Juice, we end up getting community-driven online goods
-                    and services with no ads, data integrity, and business
-                    operation accountability. All built by motivated punks
+                    and services with data integrity, business
+                    operation accountability, and no ads. All built by motivated punks
                     getting transparently paid what they ask for, while
                     rewarding everyone who helped create the overflow an
                     opportunity to capitalize on it.

@@ -1,1 +1,1 @@
-module.exports = ["Tickets", "TimelockStaker", "BudgetBallot"];
+module.exports = ["Tickets", "YearnYielder"];

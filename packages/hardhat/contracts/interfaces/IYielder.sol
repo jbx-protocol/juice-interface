@@ -9,17 +9,13 @@ import "./IJuicer.sol";
 interface IYielder {
     function juicer() external view returns (IJuicer);
 
-    function getDelegatedBalance(IERC20 _token) external view returns (uint256);
+    function deposited() external view returns (uint256);
 
-    function getTotalBalance(IERC20 _token) external view returns (uint256);
+    function getCurrentBalance() external view returns (uint256);
 
-    function getRate(IERC20 _token) external view returns (uint128);
+    function deposit(uint256 _amount) external;
 
-    function deposit(uint256 _amount, IERC20 _token) external;
+    function withdraw(uint256 _amount) external;
 
-    function withdraw(uint256 _amount, IERC20 _token) external;
-
-    function withdrawAll(IERC20 _token)
-        external
-        returns (uint256 amountEarning);
+    function withdrawAll() external returns (uint256);
 }

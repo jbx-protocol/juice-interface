@@ -39,6 +39,21 @@ import "./libraries/FullMath.sol";
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
        Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
+
+// ───────────────────────────────────────────────────────────────────────────────────────────
+// ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
+// ─────────██░░██──███░░██──██░░██──██░░░░░░██──██░░░░░░░░░░██──██░░░░░░░░░░██──██░░░░░░░░░░░░██───
+// ─────────██░░██──███░░██──██░░██──████░░████──██░░██████████──██░░██████████──██░░████████░░██───
+// ─────────██░░██──███░░██──██░░██────██░░██────██░░██──────────██░░██──────────██░░██────██░░██───
+// ─────────██░░██──███░░██──██░░██────██░░██────██░░██──────────██░░██████████──██░░████████░░██───
+// ─────────██░░██──███░░██──██░░██────██░░██────██░░██──────────██░░░░░░░░░░██──██░░░░░░░░░░░░██───
+// ─██████──██░░██──███░░██──██░░██────██░░██────██░░██──────────██░░██████████──██░░██████░░████───
+// ─██░░██──██░░██──███░░██──██░░██────██░░██────██░░██──────────██░░██──────────██░░██──██░░██─────
+// ─██░░██████░░██──███░░██████░░██──████░░████──██░░██████████──██░░██████████──██░░██──██░░██████─
+// ─██░░░░░░░░░░██──███░░░░░░░░░░██──██░░░░░░██──██░░░░░░░░░░██──██░░░░░░░░░░██──██░░██──██░░░░░░██─
+// ─██████████████──███████████████──██████████──██████████████──██████████████──██████──██████████─
+// ───────────────────────────────────────────────────────────────────────────────────────────
+
 contract Juicer is IJuicer {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
@@ -81,7 +96,7 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the Juice project takes from payments. Out of 1000.
     uint256 public constant override fee = 50;
 
-    /// @notice The admin of the contract who makes admin fees and can take fateful decisions over this contract's mechanics.
+    /// @notice The admin of the contract who makes admin fees and can take a handful of decisions over this contract's mechanics.
     address public override admin;
 
     /// @notice The projects contract.
@@ -115,12 +130,12 @@ contract Juicer is IJuicer {
         override
         returns (uint256 amount)
     {
-        // The amount of weth available is this contract's balance plus whats in the yielde.
+        // The amount of weth available is this contract's balance plus whats in the yielder.
         amount = weth.balanceOf(address(this));
         if (yielder != IYielder(0))
             _includeYield
-                ? amount.add(yielder.getTotalBalance(weth))
-                : amount.add(yielder.getDelegatedBalance(weth));
+                ? amount.add(yielder.getCurrentBalance())
+                : amount.add(yielder.deposited());
     }
 
     /** 
@@ -691,7 +706,7 @@ contract Juicer is IJuicer {
         require(_depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
 
         // Deposit in the yielder.
-        yielder.deposit(_depositable, weth);
+        yielder.deposit(_depositable);
 
         emit Deposit(_depositable, weth);
     }
@@ -753,7 +768,7 @@ contract Juicer is IJuicer {
         _token.safeTransferFrom(msg.sender, address(this), _amount);
 
         // If there is a yielder, deposit to it.
-        if (yielder != IYielder(0)) yielder.deposit(_amount, weth);
+        if (yielder != IYielder(0)) yielder.deposit(_amount);
 
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
@@ -788,8 +803,7 @@ contract Juicer is IJuicer {
     */
     function setYielder(IYielder _yielder) external override onlyAdmin {
         // If there is already an yielder, withdraw all funds and move them to the new yielder.
-        if (yielder != IYielder(0))
-            _yielder.deposit(yielder.withdrawAll(weth), weth);
+        if (yielder != IYielder(0)) _yielder.deposit(yielder.withdrawAll());
 
         // Allow the new yielder to move funds from this contract.
         weth.safeApprove(address(_yielder), uint256(-1));
@@ -809,7 +823,7 @@ contract Juicer is IJuicer {
         // No need to withdraw from the yielder if the current balance is greater than the amount being ensured.
         if (_balance >= _amount) return;
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
-        yielder.withdraw(_balance == 0 ? _amount : _amount.sub(_balance), weth);
+        yielder.withdraw(_balance == 0 ? _amount : _amount.sub(_balance));
     }
 
     /** 

@@ -17,7 +17,7 @@
 // import "./../interfaces/IOverflowYielder.sol";
 // import "./../interfaces/IJuicer.sol";
 
-// contract AaveOverflowLender is IOverflowYielder {
+// contract YearnYielder is IYielder {
 //     using SafeERC20 for IERC20;
 
 //     IJuicer public override juicer;

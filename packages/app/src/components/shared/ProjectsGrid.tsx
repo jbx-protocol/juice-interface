@@ -16,10 +16,10 @@ export default function ProjectsGrid({
         alignItems: 'center',
         padding: 20,
         borderRadius: 12,
-        border: '1px solid ' + colors.grapeHint,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
+      className="clickable-border"
       key={project.handle}
       onClick={() => (window.location.hash = '/p/' + project.handle)}
     >
@@ -58,7 +58,7 @@ export default function ProjectsGrid({
     <div>
       {projects?.map((project, i) =>
         i % 2 === 0 ? (
-          <Row gutter={gutter}>
+          <Row gutter={gutter} key={project.handle}>
             <Col {...colProps}>{projectCard(project)}</Col>
             {i + 1 < projects.length ? (
               <Col {...colProps}>{projectCard(projects[i + 1])}</Col>

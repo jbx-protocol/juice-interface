@@ -1,8 +1,9 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ContractName } from 'models/contract-name'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
+import { ContractName } from 'models/contract-name'
+import { useReadProvider } from 'utils/providers'
 
 export function useWeth(
   provider?: JsonRpcProvider,
@@ -13,18 +14,22 @@ export function useWeth(
       address: string
     }>
   | undefined {
+  const readProvider = useReadProvider()
+
+  const _provider = provider ?? readProvider
+
   const address = useContractReader<string>({
     contract: ContractName.Juicer,
     functionName: 'weth',
-    provider,
+    provider: _provider,
   })
 
-  const contract = useErc20Contract(address, provider)
+  const contract = useErc20Contract(address, _provider)
 
   const symbol = useContractReader<string>({
     contract,
     functionName: 'symbol',
-    provider,
+    provider: _provider,
   })
 
   return { address, contract, symbol }

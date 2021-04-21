@@ -11,6 +11,7 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 
+import { useWeth } from '../../hooks/Weth'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
@@ -18,17 +19,15 @@ export default function Rewards({
 }: {
   projectId: BigNumber | undefined
 }) {
-  const {
-    weth,
-    contracts,
-    transactor,
-    userAddress,
-    onNeedProvider,
-  } = useContext(UserContext)
+  const { contracts, transactor, userAddress, onNeedProvider } = useContext(
+    UserContext,
+  )
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
+
+  const weth = useWeth()
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [

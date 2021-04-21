@@ -4,11 +4,14 @@ import { Button } from 'antd'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
+import { useWeth } from 'hooks/Weth'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 export default function Gimme() {
-  const { userAddress, contracts, transactor, weth } = useContext(UserContext)
+  const { userAddress, contracts, transactor } = useContext(UserContext)
+
+  const weth = useWeth()
 
   const [gimmeAmount, setGimmeAmount] = useState<string>('2')
   const [allowanceAmount, setAllowanceAmount] = useState<string>('10000')

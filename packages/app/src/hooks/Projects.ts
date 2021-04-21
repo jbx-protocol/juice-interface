@@ -7,9 +7,10 @@ import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
-export function useProjects(owner: string | undefined | null) {
+/** Get projects for owner. Pass `false` to get all projects. */
+export function useProjects(owner: string | undefined | false) {
   const [noOwner, setNoOwner] = useState<boolean>()
-  const [index, setIndex] = useState<BigNumber>()
+  const [loadingIndex, setLoadingIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
   const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>(
     {},
@@ -27,14 +28,14 @@ export function useProjects(owner: string | undefined | null) {
   }
 
   function reset() {
-    setIndex(BigNumber.from(0))
+    setLoadingIndex(BigNumber.from(0))
     setProjectIds([])
     setProjects({})
   }
 
   useEffect(() => {
     reset()
-    setNoOwner(owner === null)
+    setNoOwner(owner === false)
   }, [owner, setNoOwner])
 
   const supply = useContractReader<BigNumber>({
@@ -54,10 +55,10 @@ export function useProjects(owner: string | undefined | null) {
     contract: ContractName.Projects,
     functionName: noOwner ? 'tokenByIndex' : 'tokenOfOwnerByIndex',
     args: useMemo(() => {
-      if (noOwner) return index ? [index?.toHexString()] : null
+      if (noOwner) return loadingIndex ? [loadingIndex?.toHexString()] : null
 
-      return index && owner ? [owner, index?.toHexString()] : null
-    }, [owner, noOwner, index]),
+      return loadingIndex && owner ? [owner, loadingIndex?.toHexString()] : null
+    }, [owner, noOwner, loadingIndex]),
     valueDidChange: bigNumbersDiff,
     callback: useCallback(
       projectId => {
@@ -66,14 +67,15 @@ export function useProjects(owner: string | undefined | null) {
           !projectIds.map(t => t.toString()).includes(projectId.toString())
         ) {
           upsertProjectId(projectId)
-          if (index?.add(1).lt(supply ?? 0)) setIndex(index?.add(1))
+          if (loadingIndex?.add(1).lt(supply ?? 0))
+            setLoadingIndex(loadingIndex?.add(1))
         }
       },
-      [setProjectIds, projectIds, index],
+      [setProjectIds, projectIds, loadingIndex],
     ),
   })
 
-  const id = index ? projectIds[index.toNumber()] : undefined
+  const id = loadingIndex ? projectIds[loadingIndex.toNumber()] : undefined
 
   useContractReader<ProjectIdentifier>({
     contract: ContractName.Projects,

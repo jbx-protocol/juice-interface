@@ -3,10 +3,12 @@ import BurnerProvider from 'burner-provider'
 import { UserContext } from 'contexts/userContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useMemo } from 'react'
-import { readProvider } from 'utils/providers'
+import { useReadProvider } from 'utils/providers'
 
 export function useSigningProvider(injectedProvider?: Web3Provider) {
   const { network } = useContext(UserContext)
+
+  const readProvider = useReadProvider(network)
 
   return useMemo(() => {
     if (injectedProvider) {
@@ -46,13 +48,12 @@ export function useSigningProvider(injectedProvider?: Web3Provider) {
     }
 
     console.log('🔥 Using burner provider', burnerConfig)
-    const _readProvider = readProvider(network)
-    if (_readProvider.connection && _readProvider.connection.url) {
-      burnerConfig.rpcUrl = _readProvider.connection.url
+    if (readProvider.connection && readProvider.connection.url) {
+      burnerConfig.rpcUrl = readProvider.connection.url
       return new Web3Provider(new BurnerProvider(burnerConfig))
     } else {
       // eslint-disable-next-line no-underscore-dangle
-      const networkName = _readProvider._network && _readProvider._network.name
+      const networkName = readProvider._network && readProvider._network.name
       if (!process.env.REACT_APP_INFURA_ID) {
         console.log(
           'Missing env.REACT_APP_INFURA_ID! Cant create burner provider',

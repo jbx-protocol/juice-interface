@@ -3,7 +3,7 @@ import { layouts } from 'constants/styles/layouts'
 import { useProjects } from 'hooks/Projects'
 
 export default function Projects() {
-  const projects = useProjects(null)
+  const projects = useProjects(false)
 
   return (
     <div style={{ ...layouts.maxWidth }}>

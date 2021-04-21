@@ -208,7 +208,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "getIdentifier",
+    "name": "getInfo",
     "outputs": [
       {
         "components": [
@@ -233,7 +233,7 @@ module.exports = [
             "type": "string"
           }
         ],
-        "internalType": "struct IProjects.Identifier",
+        "internalType": "struct IProjects.Info",
         "name": "",
         "type": "tuple"
       }
@@ -458,7 +458,7 @@ module.exports = [
         "type": "string"
       }
     ],
-    "name": "setIdentifiers",
+    "name": "setInfo",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

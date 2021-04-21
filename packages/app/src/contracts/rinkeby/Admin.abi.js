@@ -430,7 +430,7 @@ module.exports = [
         "type": "string"
       }
     ],
-    "name": "setIdentifiers",
+    "name": "setInfo",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

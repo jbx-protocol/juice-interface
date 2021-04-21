@@ -3,6 +3,7 @@ import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useWeth } from 'hooks/Weth'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
@@ -27,7 +28,9 @@ export default function ConfirmPayOwnerModal({
   onCancel?: VoidFunction
 }) {
   const [form] = useForm<{ note: string }>()
-  const { contracts, transactor, userAddress, weth } = useContext(UserContext)
+  const { contracts, transactor, userAddress } = useContext(UserContext)
+
+  const weth = useWeth()
 
   const converter = useCurrencyConverter()
 

@@ -1,6 +1,7 @@
 import { Modal } from 'antd'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
+import { useWeth } from 'hooks/Weth'
 import { useContext } from 'react'
 
 export default function ApproveSpendModal({
@@ -12,7 +13,9 @@ export default function ApproveSpendModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { weth, transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, signingProvider } = useContext(UserContext)
+
+  const weth = useWeth(signingProvider)
 
   function approve() {
     if (!transactor || !contracts || !weth?.contract) return

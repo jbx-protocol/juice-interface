@@ -10,7 +10,6 @@ import { useGasPrice } from 'hooks/GasPrice'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useSigningProvider } from 'hooks/SigningProvider'
 import { useTransactor } from 'hooks/Transactor'
-import { useWeth } from 'hooks/Weth'
 import { ContractName } from 'models/contract-name'
 import { NetworkName } from 'models/network-name'
 import { useCallback, useEffect, useState } from 'react'
@@ -47,8 +46,6 @@ function App() {
 
   const contracts = useContractLoader(signingProvider)
 
-  const weth = useWeth(signingProvider)
-
   const gasPrice = useGasPrice('average')
 
   const transactor = useTransactor({
@@ -83,7 +80,6 @@ function App() {
         onNeedProvider: loadWeb3Modal,
         userHasProjects,
         adminFeePercent,
-        weth,
       }}
     >
       <Layout

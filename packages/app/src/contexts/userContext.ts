@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 import { Transactor } from 'hooks/Transactor'
 import { Contracts } from 'models/contracts'
@@ -15,11 +14,6 @@ export const UserContext: React.Context<{
   onNeedProvider: () => Promise<void>
   userHasProjects?: boolean
   adminFeePercent?: BigNumber
-  weth?: Partial<{
-    contract: Contract
-    symbol: string
-    address: string
-  }>
 }> = createContext({
   onNeedProvider: () => Promise.resolve(),
 })

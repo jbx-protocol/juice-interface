@@ -7,6 +7,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useWeth } from 'hooks/Weth'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
@@ -32,15 +33,13 @@ export default function Pay({
   const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const {
-    userAddress,
-    weth,
-    contracts,
-    transactor,
-    onNeedProvider,
-  } = useContext(UserContext)
+  const { userAddress, contracts, transactor, onNeedProvider } = useContext(
+    UserContext,
+  )
 
   const converter = useCurrencyConverter()
+
+  const weth = useWeth()
 
   const allowance = useContractReader<BigNumber>({
     contract: weth?.contract,

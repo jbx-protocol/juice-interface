@@ -47,6 +47,14 @@ input {
   color: $bodyPrimary;
 }
 
+.clickable-border {
+  border: 1px solid $grapeHint;
+
+  &:hover {
+    border-color: $grape;
+  }
+}
+
 @media screen and (min-width: 0px) and (max-width: 600px) {
   .hide-mobile {
     display: none;

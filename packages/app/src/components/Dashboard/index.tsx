@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Tabs } from 'antd'
-import { ContractName } from 'models/contract-name'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import {
@@ -29,7 +29,7 @@ import QueuedFundingCycle from './QueuedFundingCycle'
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
 
-  const { userAddress } = useContext(UserContext)
+  const { userAddress, network } = useContext(UserContext)
 
   const { handle }: { handle?: string } = useParams()
 

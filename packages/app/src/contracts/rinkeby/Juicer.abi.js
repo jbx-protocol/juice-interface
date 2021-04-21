@@ -66,114 +66,75 @@ module.exports = [
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
-        "name": "_name",
+        "name": "name",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "_handle",
+        "name": "handle",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "_logoUri",
+        "name": "logoUri",
         "type": "string"
       },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "projectId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "number",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct FundingCycle.Data",
-        "name": "fundingCycle",
-        "type": "tuple"
+        "internalType": "string",
+        "name": "link",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bondingCurveRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reserved",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
       }
     ],
     "name": "Deploy",
@@ -288,97 +249,52 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "projectId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "number",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "previous",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "target",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "weight",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct FundingCycle.Data",
-        "name": "fundingCycle",
-        "type": "tuple"
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bondingCurveRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reserved",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eligibleAfter",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
+        "type": "uint256"
       }
     ],
     "name": "Reconfigure",
@@ -483,6 +399,12 @@ module.exports = [
         "indexed": false,
         "internalType": "uint256",
         "name": "tappedAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "transferAmount",
         "type": "uint256"
       }
     ],
@@ -652,6 +574,11 @@ module.exports = [
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "_link",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "_target",
         "type": "uint256"
@@ -665,11 +592,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_duration",
         "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_link",
-        "type": "string"
       },
       {
         "internalType": "uint256",

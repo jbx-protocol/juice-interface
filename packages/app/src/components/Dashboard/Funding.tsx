@@ -7,6 +7,7 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useWeth } from 'hooks/Weth'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -36,19 +37,17 @@ export default function Funding({
   showDetail?: boolean
   isOwner?: boolean
 }) {
-  const {
-    weth,
-    transactor,
-    contracts,
-    onNeedProvider,
-    userAddress,
-  } = useContext(UserContext)
+  const { transactor, contracts, onNeedProvider, userAddress } = useContext(
+    UserContext,
+  )
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
   const converter = useCurrencyConverter()
+
+  const weth = useWeth()
 
   const balance = useContractReader<BigNumber>({
     contract: ContractName.Juicer,

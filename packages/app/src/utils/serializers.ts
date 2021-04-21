@@ -29,8 +29,8 @@ export const serializeFundingCycle = (
 })
 
 export const deserializeFundingCycle = (
-  fc: SerializedFundingCycle | undefined,
-): FundingCycle | undefined =>
+  fc: SerializedFundingCycle,
+): FundingCycle =>
   fc
     ? {
         ...fc,

@@ -158,6 +158,11 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     function balance(bool _includeYield) external view returns (uint256);
 
     function setAdmin(address payable _admin) external;
+<<<<<<< HEAD
+=======
+
+    function setYielder(IYielder _yielder) external;
+>>>>>>> compiles
 
     function migrate(uint256 _projectId, IJuicer _to) external;
 

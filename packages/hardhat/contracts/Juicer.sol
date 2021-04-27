@@ -262,17 +262,27 @@ contract Juicer is IJuicer {
         // Get the total number of tickets in circulation.
         uint256 _totalSupply = tickets.totalSupply(_projectId);
 
-        // If the rest of the tickets are being used to claim, don't apply the proportion.
-        if (_count == _totalSupply) return _currentOverflow;
+        // Get a reference to the queued funding cycle for the project.
+        FundingCycle.Data memory _queuedCycle =
+            fundingCycles.getQueued(_projectId);
+
+        uint256 _baseAmount =
+            FullMath.mulDiv(_currentOverflow, _count, _totalSupply);
+        if (block.timestamp <= _queuedCycle.eligibleAfter) return _baseAmount;
 
         return
-            // The proportion along the bonding curve.
-            FullMath.mulDiv(
-                // The proportion of held tickets compared to the total supply.
-                FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
-                // The amount claimable is a function of a bonding curve unless the last tickets are being redeemed.
-                _fundingCycle.bondingCurveRate,
-                1000
+            _baseAmount.mul(
+                _fundingCycle
+                    .bondingCurveRate
+                    .sub(
+                    FullMath.mulDiv(
+                        _count,
+                        _fundingCycle.bondingCurveRate,
+                        _totalSupply
+                    )
+                )
+                    .div(1000)
+                    .add(_count.div(_totalSupply))
             );
     }
 

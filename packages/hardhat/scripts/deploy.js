@@ -20,7 +20,6 @@ const main = async () => {
     fundingCycles.address,
     tickets.address,
     prices.address,
-    weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
 
   const admin = await deploy("Admin", [

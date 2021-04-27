@@ -97,7 +97,7 @@ contract Juicer is IJuicer {
     uint256 public constant override fee = 50;
 
     /// @notice The admin of the contract who makes admin fees and can take a handful of decisions over this contract's mechanics.
-    address public override admin;
+    address payable public override admin;
 
     /// @notice The projects contract.
     IProjects public immutable override projects;
@@ -110,9 +110,6 @@ contract Juicer is IJuicer {
 
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
-
-    /// @notice The address of a the WETH ERC-20 token.
-    IERC20 public immutable override weth;
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
@@ -130,8 +127,8 @@ contract Juicer is IJuicer {
         override
         returns (uint256 amount)
     {
-        // The amount of weth available is this contract's balance plus whats in the yielder.
-        amount = weth.balanceOf(address(this));
+        // The amount of eth available is this contract's balance plus whats in the yielder.
+        amount = address(this).balance;
         if (yielder != IYielder(0))
             _includeYield
                 ? amount.add(yielder.getCurrentBalance())
@@ -283,20 +280,17 @@ contract Juicer is IJuicer {
       @param _fundingCycles The funding cycle configurations.
       @param _tickets The ERC-1155 mapping projects to ticket holders.
       @param _prices The price feed contract to use.
-      @param _weth The address for WETH, which all funds are collected and dispersed in.
     */
     constructor(
         IProjects _projects,
         IFundingCycles _fundingCycles,
         ITickets _tickets,
-        IPrices _prices,
-        IERC20 _weth
+        IPrices _prices
     ) {
         projects = _projects;
         fundingCycles = _fundingCycles;
         tickets = _tickets;
         prices = _prices;
-        weth = _weth;
     }
 
     /**
@@ -476,20 +470,19 @@ contract Juicer is IJuicer {
         @notice Contribute funds to a project.
         @dev Mints the project's tickets proportional to the amount of the contribution.
         @dev The sender must approve this contract to transfer the specified amount of tokens.
+        @dev The msg.value is the amount of the contribution in ETH. Sent as 1E18.
         @param _projectId The ID of the project being contribute to.
-        @param _amount Amount of the contribution in ETH. Sent as 1E18.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
         @return _fundingCycleId The ID of the funding stage that successfully received the contribution.
     */
     function pay(
         uint256 _projectId,
-        uint256 _amount,
         address _beneficiary,
         string memory _note
-    ) external override lock returns (uint256) {
+    ) external payable override lock returns (uint256) {
         // Positive payments only.
-        require(_amount > 0, "Juicer::pay: BAD_AMOUNT");
+        require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
         // Cant send tickets to the zero address.
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
@@ -500,27 +493,24 @@ contract Juicer is IJuicer {
         processableAmount[_fundingCycle.projectId] = processableAmount[
             _fundingCycle.projectId
         ]
-            .add(_amount);
+            .add(msg.value);
 
         // Print tickets for the beneficiary.
         tickets.print(
             _beneficiary,
             _projectId,
             _fundingCycle._weighted(
-                _amount,
+                msg.value,
                 uint256(1000).add(_fundingCycle.reserved)
             )
         );
-
-        // Transfer the weth from the sender to this contract.
-        weth.safeTransferFrom(msg.sender, address(this), _amount);
 
         emit Pay(
             _fundingCycle.id,
             _projectId,
             msg.sender,
             _beneficiary,
-            _amount,
+            msg.value,
             _fundingCycle.currency,
             _note,
             _fundingCycle.fee
@@ -541,7 +531,7 @@ contract Juicer is IJuicer {
         uint256 _projectId,
         uint256 _count,
         uint256 _minReturnedETH,
-        address _beneficiary
+        address payable _beneficiary
     ) external override lock returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
@@ -574,9 +564,9 @@ contract Juicer is IJuicer {
         tickets.redeem(_projectId, msg.sender, _count);
 
         // Transfer funds to the specified address.
-        weth.safeTransfer(_beneficiary, amount);
+        _beneficiary.transfer(amount);
 
-        emit Redeem(msg.sender, _projectId, _beneficiary, _count, amount, weth);
+        emit Redeem(msg.sender, _projectId, _beneficiary, _count, amount);
     }
 
     /**
@@ -590,7 +580,7 @@ contract Juicer is IJuicer {
         uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
-        address _beneficiary,
+        address payable _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
         // Only a project owner can tap its funds.
@@ -677,8 +667,8 @@ contract Juicer is IJuicer {
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
 
-        // Transfer the  funds to the beneficiary.
-        weth.safeTransfer(_beneficiary, _transferAmount);
+        // Transfer the funds to the beneficiary.
+        _beneficiary.transfer(_transferAmount);
 
         emit Tap(
             _fundingCycleId,
@@ -700,15 +690,15 @@ contract Juicer is IJuicer {
         require(yielder != IYielder(0), "Juicer::deposit: SETUP_NEEDED");
 
         // Any ETH currently in posession of this contract can be deposited.
-        uint256 _depositable = weth.balanceOf(address(this));
+        uint256 _depositable = address(this).balance;
 
         // There must be something depositable.
         require(_depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
 
         // Deposit in the yielder.
-        yielder.deposit(_depositable);
+        yielder.deposit{value: _depositable}();
 
-        emit Deposit(_depositable, weth);
+        emit Deposit(_depositable);
     }
 
     /**
@@ -743,37 +733,25 @@ contract Juicer is IJuicer {
         // Make sure the necessary funds are in the posession of this contract.
         _ensureAvailability(_amount);
 
-        // Allow the new project to move funds owned by the issuer from contract.
-        weth.safeApprove(address(_to), _amount);
-
         // Move the funds to the new Juicer.
-        _to.addToBalance(_projectId, _amount, weth);
+        _to.addToBalance{value: _amount}(_projectId);
 
         emit Migrate(_to, _amount);
     }
 
     /** 
       @notice Transfer funds from the message sender to this contract belonging to the specified project.
+      @dev The msg.value is the amount that the claimable tokens are worth.
       @param _projectId The ID of the project to which the tickets getting credited with overflow belong.
-      @param _amount The amount that the claimable tokens are worth.
-      @param _token The token of the specified amount.
     */
-    function addToBalance(
-        uint256 _projectId,
-        uint256 _amount,
-        IERC20 _token
-    ) external override lock {
-        // Transfer the specified amount from the msg sender to this contract.
-        // The msg sender should have already approved this transfer.
-        _token.safeTransferFrom(msg.sender, address(this), _amount);
-
+    function addToBalance(uint256 _projectId) external payable override lock {
         // If there is a yielder, deposit to it.
-        if (yielder != IYielder(0)) yielder.deposit(_amount);
+        if (yielder != IYielder(0)) yielder.deposit{value: msg.value}();
 
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
-            ProportionMath.find(balance(false), _amount, balance(true))
+            ProportionMath.find(balance(false), msg.value, balance(true))
         );
     }
 
@@ -782,7 +760,7 @@ contract Juicer is IJuicer {
         @dev Can be set once. The admin will set this upon being deployed.
         @param _admin The admin to set.
     */
-    function setAdmin(address _admin) external override {
+    function setAdmin(address payable _admin) external override {
         require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
         admin = _admin;
     }
@@ -803,10 +781,9 @@ contract Juicer is IJuicer {
     */
     function setYielder(IYielder _yielder) external override onlyAdmin {
         // If there is already an yielder, withdraw all funds and move them to the new yielder.
-        if (yielder != IYielder(0)) _yielder.deposit(yielder.withdrawAll());
+        if (yielder != IYielder(0))
+            _yielder.deposit{value: yielder.withdrawAll(address(this))}();
 
-        // Allow the new yielder to move funds from this contract.
-        weth.safeApprove(address(_yielder), uint256(-1));
         yielder = _yielder;
 
         emit SetYielder(_yielder);
@@ -819,11 +796,14 @@ contract Juicer is IJuicer {
       @param _amount The amount to ensure.
     */
     function _ensureAvailability(uint256 _amount) private {
-        uint256 _balance = weth.balanceOf(address(this));
+        uint256 _balance = address(this).balance;
         // No need to withdraw from the yielder if the current balance is greater than the amount being ensured.
         if (_balance >= _amount) return;
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
-        yielder.withdraw(_balance == 0 ? _amount : _amount.sub(_balance));
+        yielder.withdraw(
+            _balance == 0 ? _amount : _amount.sub(_balance),
+            address(this)
+        );
     }
 
     /** 
@@ -864,4 +844,6 @@ contract Juicer is IJuicer {
         // Clear the processable amount for this project.
         processableAmount[_projectId] = 0;
     }
+
+    receive() external payable {}
 }

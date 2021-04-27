@@ -25,7 +25,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     struct Mod {
         uint256 id;
         uint256 percent;
-        address beneficiary;
+        address payable beneficiary;
     }
 
     /// @dev The ID of the project that is being managed.
@@ -142,8 +142,10 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         );
 
         // Tickets come back to this project.
-        juicer.pay(projectId, returnAmount, address(this), _note);
+        juicer.pay{value: returnAmount}(projectId, address(this), _note);
     }
+
+    receive() external payable {}
 
     /** 
       @notice Redeem tickets that have been transfered to this contract.
@@ -156,7 +158,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     function redeemTickets(
         uint256 _projectId,
         uint256 _amount,
-        address _beneficiary,
+        address payable _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm returns (uint256 _returnAmount) {
         _returnAmount = juicer.redeem(
@@ -177,7 +179,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     function tap(
         uint256 _amount,
         uint256 _currency,
-        address _beneficiary,
+        address payable _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm {
         uint256 _modsCut = 0;
@@ -256,7 +258,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         string memory _note
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
-        juicer.pay(projectId, _amount, _from, _note);
+        juicer.pay{value: _amount}(projectId, _from, _note);
     }
 
     /** 
@@ -264,7 +266,10 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @param _beneficiary The address being funded from your tapped amount.
       @param _percent The percent of your target amount to send to the beneficiary of this mod. Out of 1000.
     */
-    function addMod(address _beneficiary, uint256 _percent) external onlyPm {
+    function addMod(address payable _beneficiary, uint256 _percent)
+        external
+        onlyPm
+    {
         modsId++;
         mods.push(Mod(modsId, _percent, _beneficiary));
     }

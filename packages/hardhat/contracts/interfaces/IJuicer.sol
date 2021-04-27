@@ -62,16 +62,15 @@ interface IFundingCyclesController {
 
     function pay(
         uint256 _projectId,
-        uint256 _amount,
         address _beneficiary,
         string memory _note
-    ) external returns (uint256 fundingCycleId);
+    ) external payable returns (uint256 fundingCycleId);
 
     function tap(
         uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
-        address _beneficiary,
+        address payable _beneficiary,
         uint256 _minReturnedEth
     ) external;
 
@@ -84,8 +83,7 @@ interface ITicketsController {
         uint256 indexed _projectId,
         address beneficiary,
         uint256 amount,
-        uint256 returnAmount,
-        IERC20 returnToken
+        uint256 returnAmount
     );
 
     function claimableAmount(
@@ -98,7 +96,7 @@ interface ITicketsController {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        address _beneficiary
+        address payable _beneficiary
     ) external returns (uint256 returnAmount);
 }
 
@@ -127,9 +125,9 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event SetYielder(IYielder indexed newYielder);
 
-    event Deposit(uint256 depositable, IERC20 token);
+    event Deposit(uint256 depositable);
 
-    function admin() external view returns (address);
+    function admin() external view returns (address payable);
 
     function projects() external view returns (IProjects);
 
@@ -138,8 +136,6 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     function tickets() external view returns (ITickets);
 
     function yielder() external view returns (IYielder);
-
-    function weth() external view returns (IERC20);
 
     function balanceOf(uint256 _projectId, bool _includeYield)
         external
@@ -153,7 +149,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function balance(bool _includeYield) external view returns (uint256);
 
-    function setAdmin(address _admin) external;
+    function setAdmin(address payable _admin) external;
 
     function setYielder(IYielder _yielder) external;
 
@@ -173,11 +169,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _reserved
     ) external;
 
-    function addToBalance(
-        uint256 _projectId,
-        uint256 _amount,
-        IERC20 _token
-    ) external;
+    function addToBalance(uint256 _projectId) external payable;
 
     function deposit() external;
 

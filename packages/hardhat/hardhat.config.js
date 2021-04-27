@@ -1,5 +1,5 @@
-require("@eth-optimism/plugins/hardhat/compiler");
-require("@eth-optimism/plugins/hardhat/ethers");
+// require("@eth-optimism/plugins/hardhat/compiler");
+// require("@eth-optimism/plugins/hardhat/ethers");
 const { utils } = require("ethers");
 const fs = require("fs");
 const chalk = require("chalk");
@@ -31,13 +31,13 @@ const infuraId = "44bd54e5424e4d8eb5d5d47a41590d63";
 module.exports = {
   defaultNetwork,
   networks: {
-    OElocalhost: {
-      url: "http://localhost:8545",
-      /*
-        notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
-        (you can put in a mnemonic here to set the deployer locally)
-      */
-    },
+    // OElocalhost: {
+    //   url: "http://localhost:8545",
+    //   /*
+    //     notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
+    //     (you can put in a mnemonic here to set the deployer locally)
+    //   */
+    // },
     localhost: {
       url: "http://localhost:8545", // OE should be 9585
     },
@@ -65,12 +65,12 @@ module.exports = {
         mnemonic: mnemonic(),
       },
     },
-    OEkovan: {
-      url: "https://kovan.optimism.io",
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
+    // OEkovan: {
+    //   url: "https://kovan.optimism.io",
+    //   accounts: {
+    //     mnemonic: mnemonic(),
+    //   },
+    // },
     goerli: {
       url: "https://goerli.infura.io/v3/" + infuraId,
       accounts: {

@@ -114,6 +114,9 @@ contract Juicer is IJuicer {
     /// @notice The prices feeds.
     IPrices public immutable override prices;
 
+    /// @notice A mapping of the addresses that are designated operators of each account.
+    mapping(address => mapping(address => bool)) public override operators;
+
     // --- public views --- //
 
     /** 
@@ -531,6 +534,7 @@ contract Juicer is IJuicer {
 
     /**
         @notice Addresses can redeem their Tickets to claim overflowed tokens.
+        @param _account The account to redeem tickets for.
         @param _projectId The ID of the project to which the Tickets being redeemed belong.
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
@@ -538,6 +542,7 @@ contract Juicer is IJuicer {
         @return amount The amount that the tickets were redeemed for.
     */
     function redeem(
+        address _account,
         uint256 _projectId,
         uint256 _count,
         uint256 _minReturnedETH,
@@ -545,6 +550,12 @@ contract Juicer is IJuicer {
     ) external override lock returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
+
+        // Only a msg.sender or a specified operator can redeem its tickets.
+        require(
+            msg.sender == _account || operators[_account][msg.sender],
+            "Juicer::redeem: UNAUTHORIZED"
+        );
 
         // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
         amount = claimableAmount(msg.sender, _projectId, _count);
@@ -593,9 +604,12 @@ contract Juicer is IJuicer {
         address payable _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
-        // Only a project owner can tap its funds.
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can tap its funds.
         require(
-            msg.sender == projects.ownerOf(_projectId),
+            msg.sender == _owner || operators[_owner][msg.sender],
             "Juicer::tap: UNAUTHORIZED"
         );
 
@@ -660,7 +674,7 @@ contract Juicer is IJuicer {
 
             // Print admin tickets for the tapper.
             tickets.print(
-                msg.sender,
+                _beneficiary,
                 _adminProjectId,
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
@@ -763,6 +777,22 @@ contract Juicer is IJuicer {
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
             ProportionMath.find(balance(false), msg.value, balance(true))
         );
+    }
+
+    /** 
+      @notice Allows the specified operator tap funds and redeem tickets on the msg.sender's behalf.
+      @param _operator The operator to give permission to.
+    */
+    function addOperator(address _operator) external override {
+        operators[msg.sender][_operator] = true;
+    }
+
+    /** 
+      @notice Revokes the ability for the specified operator to tap funds and redeem tickets on the msg.sender's behalf.
+      @param _operator The operator to give permission to.
+    */
+    function removeOperator(address _operator) external override {
+        operators[msg.sender][_operator] = false;
     }
 
     /**

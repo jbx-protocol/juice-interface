@@ -93,6 +93,7 @@ interface ITicketsController {
     ) external view returns (uint256);
 
     function redeem(
+        address _account,
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
@@ -128,6 +129,11 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     event Deposit(uint256 depositable);
 
     function admin() external view returns (address payable);
+
+    function operators(address _account, address _operator)
+        external
+        view
+        returns (bool);
 
     function projects() external view returns (IProjects);
 
@@ -170,6 +176,10 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     ) external;
 
     function addToBalance(uint256 _projectId) external payable;
+
+    function addOperator(address _operator) external;
+
+    function removeOperator(address _operator) external;
 
     function deposit() external;
 

@@ -10,7 +10,10 @@ import "./abstract/JuiceProject.sol";
 /// All functions in here should be governable with FLOW.
 /// Owner should eventually change to a governance contract.
 contract Admin is JuiceProject {
-    constructor(IJuicer _juicer, address _pm) JuiceProject(_juicer, _pm) {}
+    constructor(IJuicer _juicer, address _pm) JuiceProject(_juicer, _pm) {
+        // Add the deployer as an operator.
+        _juicer.addOperator(msg.sender);
+    }
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.

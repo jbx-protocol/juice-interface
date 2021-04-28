@@ -126,9 +126,13 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event SetYielder(IYielder indexed newYielder);
 
-    event Deposit(uint256 depositable);
-
     function admin() external view returns (address payable);
+
+    event Deposit(uint256 amount);
+
+    event AddOperator(address account, address operator);
+
+    event RemoveOperator(address account, address operator);
 
     function operators(address _account, address _operator)
         external
@@ -181,7 +185,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function removeOperator(address _operator) external;
 
-    function deposit() external;
+    function deposit(uint256 _amount) external;
 
     function allowMigration(address _contract) external;
 }

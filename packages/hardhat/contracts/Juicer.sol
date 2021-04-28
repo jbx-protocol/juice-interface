@@ -339,6 +339,12 @@ contract Juicer is IJuicer {
         uint256 _bondingCurveRate,
         uint256 _reserved
     ) external override lock {
+        // Only a msg.sender or a specified operator can deploy its project.
+        require(
+            msg.sender == _owner || operators[_owner][msg.sender],
+            "Juicer::deploy: UNAUTHORIZED"
+        );
+
         require(_target > 0, "Juicer::deploy: BAD_TARGET");
 
         // The `discountRate` token must be between 90% and 100%.
@@ -419,6 +425,15 @@ contract Juicer is IJuicer {
         uint256 _bondingCurveRate,
         uint256 _reserved
     ) external override lock returns (uint256) {
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
+        // Only a msg.sender or a specified operator can reconfigure its.
+        require(
+            (_owner == msg.sender || operators[_owner][msg.sender]),
+            "Juicer::reconfigure: UNAUTHORIZED"
+        );
+
         require(_target > 0, "Juicer::reconfigure: BAD_TARGET");
 
         // The `discountRate` token must be between 90% and 100%.
@@ -437,12 +452,6 @@ contract Juicer is IJuicer {
         require(
             _reserved <= 1000,
             "Juicer::reconfigure: BAD_RESERVE_PERCENTAGES"
-        );
-
-        // The message sender must be the project owner.
-        require(
-            projects.ownerOf(_projectId) == msg.sender,
-            "Juicer::reconfigure: UNAUTHORIZED"
         );
 
         // Get a reference to the amount of tickets.
@@ -709,20 +718,23 @@ contract Juicer is IJuicer {
     /**
       @notice Deposit any overflow funds that are not earning interest into the yielder.
     */
-    function deposit() external override lock {
+    function deposit(uint256 _amount) external override lock {
         // Can't deposit if an yielder has not yet been set.
         require(yielder != IYielder(0), "Juicer::deposit: SETUP_NEEDED");
 
-        // Any ETH currently in posession of this contract can be deposited.
-        uint256 _depositable = address(this).balance;
-
         // There must be something depositable.
-        require(_depositable > 0, "Juicer::deposit: INSUFFICIENT_FUNDS");
+        require(_amount > 0, "Juicer::deposit: BAD_AMOUNT");
+
+        // Any ETH currently in posession of this contract can be deposited.
+        require(
+            _amount <= address(this).balance,
+            "Juicer::deposit: INSUFFICIENT_FUNDS"
+        );
 
         // Deposit in the yielder.
-        yielder.deposit{value: _depositable}();
+        yielder.deposit{value: _amount}();
 
-        emit Deposit(_depositable);
+        emit Deposit(_amount);
     }
 
     /**
@@ -731,15 +743,18 @@ contract Juicer is IJuicer {
         @param _to The Juicer contract that will gain the project's funds.
     */
     function migrate(uint256 _projectId, IJuicer _to) external override lock {
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
         // The migration destination must be allowed.
         require(
             migrationContractIsAllowed[address(_to)],
             "Juicer::migrate: BAD_DESTINATION"
         );
 
-        // Only the project owner can migrate its funds.
+        // Only the project owner, or a delegated operator, can migrate its funds.
         require(
-            projects.ownerOf(_projectId) == msg.sender,
+            msg.sender == _owner || operators[_owner][msg.sender],
             "Juicer::migrate: UNAUTHORIZED"
         );
 
@@ -785,6 +800,7 @@ contract Juicer is IJuicer {
     */
     function addOperator(address _operator) external override {
         operators[msg.sender][_operator] = true;
+        emit AddOperator(msg.sender, _operator);
     }
 
     /** 
@@ -793,6 +809,7 @@ contract Juicer is IJuicer {
     */
     function removeOperator(address _operator) external override {
         operators[msg.sender][_operator] = false;
+        emit RemoveOperator(msg.sender, _operator);
     }
 
     /**

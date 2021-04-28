@@ -118,6 +118,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     /** 
       @notice Redeem tickets that have been transfered to this contract and use the claimed amount to fund this project.
+      @param _account The account to redeem tickets for.
       @param _projectId The ID of the project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
@@ -125,6 +126,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @return returnAmount The amount of ETH that was redeemed and used to fund the funding cycle.
     */
     function redeemTicketsAndFund(
+        address _account,
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
@@ -135,6 +137,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             "JuiceProject::redeemTicketsAndFund: PROJECT_NOT_FOUND"
         );
         returnAmount = juicer.redeem(
+            _account,
             _projectId,
             _amount,
             _minReturnedETH,
@@ -147,6 +150,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     /** 
       @notice Redeem tickets that have been transfered to this contract.
+      @param _account The account to redeem tickets for.
       @param _projectId The ID of the project who's tickets are being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _beneficiary The address that is receiving the redeemed tokens.
@@ -154,12 +158,14 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
+        address _account,
         uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
         uint256 _minReturnedETH
     ) external onlyPm returns (uint256 _returnAmount) {
         _returnAmount = juicer.redeem(
+            _account,
             _projectId,
             _amount,
             _minReturnedETH,

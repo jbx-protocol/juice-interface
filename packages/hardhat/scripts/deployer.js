@@ -4,6 +4,7 @@ const chalk = require("chalk");
 const { ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
+const weth = require("../constants/weth");
 
 module.exports = async (wethAddr, ethUsdAddr) => {
   const token = !wethAddr && (await deploy("Token"));
@@ -11,7 +12,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const projects = await deploy("Projects");
   const fundingCycles = await deploy("FundingCycles");
   const tickets = await deploy("Tickets");
-  const yielder = await deploy("YearnYielder");
+  const yielder = await deploy("YearnYielder", [
+    weth(process.env.HARDHAT_NETWORK) || token.address,
+  ]);
 
   const juicer = await deploy("Juicer", [
     projects.address,

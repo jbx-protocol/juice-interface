@@ -161,9 +161,12 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
     function setYielder(IYielder _yielder) external;
 >>>>>>> compiles
 
+=======
+>>>>>>> added immutable yielder to constructor
     function migrate(uint256 _projectId, IJuicer _to) external;
 
     function deploy(

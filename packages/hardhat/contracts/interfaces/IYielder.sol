@@ -7,8 +7,11 @@ import "./IJuicer.sol";
 
 // In constructure, give unlimited access for Juicer to take money from this.
 interface IYielder {
+<<<<<<< HEAD
     function weth() external view returns (address);
 
+=======
+>>>>>>> added immutable yielder to constructor
     function weth() external view returns (address);
 
     function deposited() external view returns (uint256);

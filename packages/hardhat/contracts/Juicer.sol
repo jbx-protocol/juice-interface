@@ -673,7 +673,9 @@ contract Juicer is IJuicer {
         uint256 _transferAmount;
 
         // Only process an admin fee if the project being tapped is not the admin.
-        if (_adminProjectId != _projectId) {
+        if (_projectId == _adminProjectId) {
+            _transferAmount = _tappedAmount;
+        } else {
             // Get a reference to the admin's funding cycle, which will be receiving the fee.
             FundingCycle.Data memory _adminFundingCycle =
                 fundingCycles.getCurrent(_adminProjectId);
@@ -696,8 +698,6 @@ contract Juicer is IJuicer {
 
             // Transfer the tapped amount minus the fees.
             _transferAmount = _tappedAmount.sub(_adminFeeAmount);
-        } else {
-            _transferAmount = _tappedAmount;
         }
 
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.

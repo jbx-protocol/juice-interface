@@ -9,8 +9,6 @@ import "./IJuicer.sol";
 interface IYielder {
     function weth() external view returns (address);
 
-    function weth() external view returns (address);
-
     function deposited() external view returns (uint256);
 
     function getCurrentBalance() external view returns (uint256);

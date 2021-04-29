@@ -2,6 +2,7 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
@@ -11,16 +12,9 @@ import "./interfaces/IyVaultV2.sol";
 import "./interfaces/WETH.sol";
 import "./libraries/FullMath.sol";
 
-contract YearnYielder is IYielder {
+contract YearnYielder is IYielder, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
-
-    modifier onlyJuicer {
-        require(msg.sender == address(juicer), "YearnYielder: UNAUTHORIZED");
-        _;
-    }
-
-    IJuicer public override juicer;
 
     IyVaultV2 public wethVault =
         IyVaultV2(0xa9fE4601811213c340e850ea305481afF02f5b28);
@@ -29,8 +23,7 @@ contract YearnYielder is IYielder {
 
     uint256 public override deposited = 0;
 
-    constructor(IJuicer _juicer, address _weth) {
-        juicer = _juicer;
+    constructor(address _weth) {
         weth = _weth;
     }
 
@@ -38,7 +31,7 @@ contract YearnYielder is IYielder {
         return _sharesToTokens(wethVault.balanceOf(address(this)));
     }
 
-    function deposit() external payable override onlyJuicer {
+    function deposit() external payable override onlyOwner {
         WETH(weth).deposit{value: msg.value}();
         IERC20(weth).safeApprove(address(wethVault), uint256(-1));
         wethVault.deposit(msg.value);
@@ -48,7 +41,7 @@ contract YearnYielder is IYielder {
     function withdraw(uint256 _amount, address payable _beneficiary)
         public
         override
-        onlyJuicer
+        onlyOwner
     {
         // Withdraw the amount of tokens from the vault.
         wethVault.withdraw(_tokensToShares(_amount));
@@ -67,7 +60,7 @@ contract YearnYielder is IYielder {
     function withdrawAll(address payable _beneficiary)
         external
         override
-        onlyJuicer
+        onlyOwner
         returns (uint256 _balance)
     {
         _balance = getCurrentBalance();

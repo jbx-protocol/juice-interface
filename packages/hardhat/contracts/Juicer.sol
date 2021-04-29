@@ -109,7 +109,7 @@ contract Juicer is IJuicer {
     ITickets public immutable override tickets;
 
     /// @notice The contract that puts idle funds to work.
-    IYielder public override yielder;
+    IYielder public immutable override yielder;
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
@@ -293,17 +293,20 @@ contract Juicer is IJuicer {
       @param _fundingCycles The funding cycle configurations.
       @param _tickets The ERC-1155 mapping projects to ticket holders.
       @param _prices The price feed contract to use.
+      @param _yielder The contract responsible for earning yield on idle funds.
     */
     constructor(
         IProjects _projects,
         IFundingCycles _fundingCycles,
         ITickets _tickets,
-        IPrices _prices
+        IPrices _prices,
+        IYielder _yielder
     ) {
         projects = _projects;
         fundingCycles = _fundingCycles;
         tickets = _tickets;
         prices = _prices;
+        yielder = _yielder;
     }
 
     /**
@@ -719,9 +722,6 @@ contract Juicer is IJuicer {
       @notice Deposit any overflow funds that are not earning interest into the yielder.
     */
     function deposit(uint256 _amount) external override lock {
-        // Can't deposit if an yielder has not yet been set.
-        require(yielder != IYielder(0), "Juicer::deposit: SETUP_NEEDED");
-
         // There must be something depositable.
         require(_amount > 0, "Juicer::deposit: BAD_AMOUNT");
 
@@ -784,9 +784,6 @@ contract Juicer is IJuicer {
       @param _projectId The ID of the project to which the tickets getting credited with overflow belong.
     */
     function addToBalance(uint256 _projectId) external payable override lock {
-        // If there is a yielder, deposit to it.
-        if (yielder != IYielder(0)) yielder.deposit{value: msg.value}();
-
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
@@ -829,21 +826,6 @@ contract Juicer is IJuicer {
     function allowMigration(address _allowed) external override onlyAdmin {
         migrationContractIsAllowed[_allowed] = true;
         emit AddToMigrationAllowList(_allowed);
-    }
-
-    /** 
-      @notice Allow the admin to change the yielder. 
-      @dev All funds will be migrated from the old yielder to the new one.
-      @param _yielder The new yielder.
-    */
-    function setYielder(IYielder _yielder) external override onlyAdmin {
-        // If there is already an yielder, withdraw all funds and move them to the new yielder.
-        if (yielder != IYielder(0))
-            _yielder.deposit{value: yielder.withdrawAll(address(this))}();
-
-        yielder = _yielder;
-
-        emit SetYielder(_yielder);
     }
 
     // --- private transactions --- //

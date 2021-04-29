@@ -11,12 +11,14 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const projects = await deploy("Projects");
   const fundingCycles = await deploy("FundingCycles");
   const tickets = await deploy("Tickets");
+  const yielder = await deploy("YearnYielder");
 
   const juicer = await deploy("Juicer", [
     projects.address,
     fundingCycles.address,
     tickets.address,
     prices.address,
+    yielder.address,
   ]);
 
   const admin = await deploy("Admin", [
@@ -34,8 +36,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "FundingCycles"
     );
     const PricesFactory = await ethers.getContractFactory("Prices");
+    const YielderFactory = await ethers.getContractFactory("YearnYielder");
     const AdminFactory = await ethers.getContractFactory("Admin");
-    // const StakerFactory = await ethers.getContractFactory("TimelockStaker");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
@@ -44,8 +46,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       fundingCycles.address
     );
     const attachedPrices = await PricesFactory.attach(prices.address);
+    const attachedYielder = await YielderFactory.attach(yielder.address);
     const attachedAdmin = await AdminFactory.attach(admin.address);
-    // const attachedStaker = await StakerFactory.attach(staker.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     console.log("⚡️ Setting the projects owner");
@@ -62,6 +64,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     });
     console.log("⚡️ Setting the prices owner");
     await attachedPrices.transferOwnership(admin.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Setting the yielder owner");
+    await attachedYielder.transferOwnership(juicer.address, {
       gasLimit: blockGasLimit,
     });
 

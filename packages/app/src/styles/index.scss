@@ -65,4 +65,9 @@ input {
   display: inline-flex !important;
 }
 
+.dcg-container {
+  background: none !important;
+  background-color: none !important;
+}
+
 @import 'antd-overrides.scss';

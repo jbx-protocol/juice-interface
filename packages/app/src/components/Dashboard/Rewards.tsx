@@ -11,7 +11,6 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 
-import { useWeth } from '../../hooks/Weth'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
@@ -26,8 +25,6 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
-
-  const weth = useWeth()
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -237,8 +234,7 @@ export default function Rewards({
                 }
                 onChange={val => onChangeRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(minRedeemAmount) || '--'}{' '}
-              {weth?.symbol}
+              You will receive minimum {formatWad(minRedeemAmount) || '--'} ETH
             </div>
           )}
         </Space>

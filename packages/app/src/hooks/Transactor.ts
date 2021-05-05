@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
@@ -19,6 +19,7 @@ export type TransactorCallback = (
 ) => void
 
 export type TransactorOptions = {
+  value?: BigNumberish
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback
   onCancelled?: TransactorCallback
@@ -82,7 +83,10 @@ export function useTransactor({
         etherscanTxUrl = 'https://blockscout.com/poa/xdai/tx/'
       }
 
-      const tx: Deferrable<TransactionRequest> = contract[functionName](...args)
+      const tx: Deferrable<TransactionRequest> =
+        options?.value !== undefined
+          ? contract[functionName](...args, { value: options.value })
+          : contract[functionName](...args)
 
       const reportArgs = Object.values(contract.interface.functions)
         .find(f => f.name === functionName)

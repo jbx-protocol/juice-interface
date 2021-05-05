@@ -7,7 +7,6 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useWeth } from 'hooks/Weth'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -46,8 +45,6 @@ export default function Funding({
   const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
 
   const converter = useCurrencyConverter()
-
-  const weth = useWeth()
 
   const balance = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -422,7 +419,7 @@ export default function Funding({
             onChange={e => setTapAmount(e.target.value)}
           />
           <div style={{ textAlign: 'right' }}>
-            {formatWad(converter.usdToWei(tapAmount)) || '--'} {weth?.symbol}
+            {formatWad(converter.usdToWei(tapAmount)) || '--'} ETH
           </div>
         </Space>
       </Modal>

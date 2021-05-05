@@ -3,7 +3,6 @@ import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useWeth } from 'hooks/Weth'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
@@ -30,8 +29,6 @@ export default function ConfirmPayOwnerModal({
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
 
-  const weth = useWeth()
-
   const converter = useCurrencyConverter()
 
   const weiAmount = converter.usdToWei(usdAmount)
@@ -44,13 +41,9 @@ export default function ConfirmPayOwnerModal({
     transactor(
       contracts.Juicer,
       'pay',
-      [
-        projectId.toHexString(),
-        weiAmount?.toHexString(),
-        userAddress,
-        form.getFieldValue('note') || '',
-      ],
+      [projectId.toHexString(), userAddress, form.getFieldValue('note') || ''],
       {
+        value: weiAmount?.toHexString(),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
         },
@@ -83,7 +76,7 @@ export default function ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Descriptions column={1} bordered>
           <Descriptions.Item label="Pay amount">
-            {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
+            {usdAmount} USD ({formatWad(weiAmount)} ETH)
           </Descriptions.Item>
           <Descriptions.Item label="Tickets for you">
             {formatWad(receivedTickets)}

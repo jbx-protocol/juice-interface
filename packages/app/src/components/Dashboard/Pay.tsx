@@ -1,18 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
-import ApproveSpendModal from 'components/modals/ApproveSpendModal'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useWeth } from 'hooks/Weth'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { currencyName } from 'utils/currency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
@@ -30,38 +26,18 @@ export default function Pay({
 }) {
   const [payAs, setPayAs] = useState<CurrencyOption>('1')
   const [payAmount, setPayAmount] = useState<string>()
-  const [approveModalVisible, setApproveModalVisible] = useState<boolean>(false)
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const { userAddress, contracts, transactor, onNeedProvider } = useContext(
-    UserContext,
-  )
+  const { contracts, transactor, onNeedProvider } = useContext(UserContext)
 
   const converter = useCurrencyConverter()
-
-  const weth = useWeth()
-
-  const allowance = useContractReader<BigNumber>({
-    contract: weth?.contract,
-    functionName: 'allowance',
-    args:
-      userAddress && contracts?.Juicer
-        ? [userAddress, contracts?.Juicer?.address]
-        : null,
-    valueDidChange: bigNumbersDiff,
-  })
 
   const weiPayAmt =
     payAs === '1' ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
   function pay() {
     if (!transactor || !contracts) return onNeedProvider()
-    if (!allowance || !weiPayAmt) return
-
-    if (allowance.lt(weiPayAmt)) {
-      setApproveModalVisible(true)
-      return
-    }
+    if (!weiPayAmt) return
 
     setPayModalVisible(true)
   }
@@ -144,11 +120,6 @@ export default function Pay({
         </div>
       </div>
 
-      <ApproveSpendModal
-        visible={approveModalVisible}
-        onSuccess={() => setApproveModalVisible(false)}
-        onCancel={() => setApproveModalVisible(false)}
-      />
       <ConfirmPayOwnerModal
         fundingCycle={fundingCycle}
         project={project}

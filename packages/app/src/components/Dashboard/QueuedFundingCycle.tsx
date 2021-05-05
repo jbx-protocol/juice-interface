@@ -55,7 +55,7 @@ export default function QueuedFundingCycle({
           />
         </div>
       ) : null}
-      <CardSection>
+      <CardSection padded>
         {queuedCycle ? (
           <FundingCycleDetails fundingCycle={queuedCycle} />
         ) : (

@@ -124,13 +124,13 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event AddToMigrationAllowList(address indexed allowed);
 
-    function admin() external view returns (address payable);
-
     event Deposit(uint256 amount);
 
     event AddOperator(address account, address operator);
 
     event RemoveOperator(address account, address operator);
+
+    function admin() external view returns (address payable);
 
     function operators(address _account, address _operator)
         external
@@ -158,15 +158,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     function balance(bool _includeYield) external view returns (uint256);
 
     function setAdmin(address payable _admin) external;
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
-    function setYielder(IYielder _yielder) external;
->>>>>>> compiles
-
-=======
->>>>>>> added immutable yielder to constructor
     function migrate(uint256 _projectId, IJuicer _to) external;
 
     function deploy(

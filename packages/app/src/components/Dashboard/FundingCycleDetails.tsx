@@ -1,5 +1,6 @@
 import { Descriptions } from 'antd'
 import { FundingCycle } from 'models/funding-cycle'
+import { useEffect } from 'react'
 import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 
@@ -52,7 +53,18 @@ export default function FundingCycleDetails({
       </Descriptions.Item>
 
       {fundingCycle.bondingCurveRate.gt(0) ? (
-        <Descriptions.Item label="Bonding curve rate">
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label="Bonding curve"
+              tip="A lower bonding curve has the effect of increasing the redeem value
+              of a ticket as the remaining ticket supply decreases, creating
+              incentive to hodl tickets and not redeem them early. A bonding curve
+              of 100% means all tickets will have the same value regardless
+              of when they are redeemed."
+            />
+          }
+        >
           {fromPerMille(fundingCycle.bondingCurveRate)}%
         </Descriptions.Item>
       ) : null}

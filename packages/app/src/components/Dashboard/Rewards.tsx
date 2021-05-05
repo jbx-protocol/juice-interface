@@ -139,6 +139,7 @@ export default function Rewards({
       contracts.Juicer,
       'redeem',
       [
+        userAddress,
         projectId.toHexString(),
         redeemWad.toHexString(),
         minRedeemAmount.toHexString(),

@@ -260,7 +260,8 @@ export default function PlayCreate() {
       >
         <ProjectInfo
           form={projectInfoForm}
-          onSave={() => {
+          onSave={async () => {
+            await projectInfoForm.validateFields()
             onProjectInfoFormSaved()
             setProjectInfoModalVisible(false)
           }}
@@ -279,7 +280,8 @@ export default function PlayCreate() {
       >
         <ProjectDetails
           form={projectDetailsForm}
-          onSave={() => {
+          onSave={async () => {
+            await projectDetailsForm.validateFields()
             onProjectDetailsFormSaved()
             setProjectDetailsModalVisible(false)
             incrementStep(2)
@@ -298,7 +300,8 @@ export default function PlayCreate() {
       >
         <FundingDetails
           form={fundingDetailsForm}
-          onSave={() => {
+          onSave={async () => {
+            await fundingDetailsForm.validateFields()
             onAdvancedFormSaved()
             setFundingDetailsModalVisible(false)
           }}

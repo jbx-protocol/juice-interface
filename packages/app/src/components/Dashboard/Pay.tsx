@@ -129,6 +129,7 @@ export default function Pay({
             <Button
               style={{ width: '100%' }}
               type="primary"
+              disabled={fundingCycle?.configured.eq(0)}
               onClick={weiPayAmt ? pay : undefined}
             >
               Pay project

@@ -57,16 +57,6 @@ contract YearnYielder is IYielder, Ownable {
         );
     }
 
-    function withdrawAll(address payable _beneficiary)
-        external
-        override
-        onlyOwner
-        returns (uint256 _balance)
-    {
-        _balance = getCurrentBalance();
-        withdraw(_balance, _beneficiary);
-    }
-
     /// @dev Computes the number of tokens an amount of shares is worth.
     ///
     /// @param _sharesAmount the amount of shares.

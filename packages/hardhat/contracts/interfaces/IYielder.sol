@@ -16,8 +16,4 @@ interface IYielder {
     function deposit() external payable;
 
     function withdraw(uint256 _amount, address payable _beneficiary) external;
-
-    function withdrawAll(address payable _beneficiary)
-        external
-        returns (uint256);
 }

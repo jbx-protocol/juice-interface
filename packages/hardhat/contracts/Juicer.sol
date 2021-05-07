@@ -271,8 +271,7 @@ contract Juicer is IJuicer {
 
         return
             _baseAmount.mul(
-                _fundingCycle
-                    .bondingCurveRate
+                uint256(_fundingCycle.bondingCurveRate)
                     .sub(
                     FullMath.mulDiv(
                         _count,
@@ -320,13 +319,14 @@ contract Juicer is IJuicer {
         Measured in seconds.
         Send 0 for an indefinite funding stage.
         @param _link A link to information about the project and this funding stage.
-        @param _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @dev _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
+        @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
-        @param _reserved A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
+        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
     */
     function deploy(
         address _owner,
@@ -337,32 +337,13 @@ contract Juicer is IJuicer {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _packedRates
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
         require(
             msg.sender == _owner || operators[_owner][msg.sender],
             "Juicer::deploy: UNAUTHORIZED"
         );
-
-        require(_target > 0, "Juicer::deploy: BAD_TARGET");
-
-        // The `discountRate` token must be between 90% and 100%.
-        require(
-            (_discountRate >= 900 && _discountRate <= 1000) ||
-                _discountRate == 0,
-            "Juicer::deploy: BAD_DISCOUNT_RATE"
-        );
-        // The `bondingCurveRate` must be between 0 and 1000.
-        require(
-            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
-            "Juicer::deploy BAD_BONDING_CURVE_RATE"
-        );
-
-        // The reserved project ticket percentage must be less than or equal to 100.
-        require(_reserved <= 1000, "Juicer::deploy: BAD_RESERVE_PERCENTAGES");
 
         // Configure the project.
         FundingCycle.Data memory _fundingCycle =
@@ -373,9 +354,7 @@ contract Juicer is IJuicer {
                 _target,
                 _currency,
                 _duration,
-                _discountRate,
-                _bondingCurveRate,
-                _reserved,
+                _packedRates,
                 fee,
                 IFundingCycleBallot(0),
                 true
@@ -395,7 +374,7 @@ contract Juicer is IJuicer {
             _fundingCycle.duration,
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
-            _fundingCycle.reserved,
+            _fundingCycle.reservedRate,
             _fundingCycle.fee
         );
     }
@@ -410,13 +389,14 @@ contract Juicer is IJuicer {
         @param _duration The duration to set for the funding stage.
         Measured in seconds.
         Send 0 for an indefinite funding stage.
-        @param _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @dev _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
+        @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
-        @param _reserved A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
+        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycleId The id of the funding cycle that was successfully configured.
     */
@@ -425,9 +405,7 @@ contract Juicer is IJuicer {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
+        uint256 _packedRates,
         IFundingCycleBallot _ballot
     ) external override lock returns (uint256) {
         // Get a reference to the project owner.
@@ -437,26 +415,6 @@ contract Juicer is IJuicer {
         require(
             (_owner == msg.sender || operators[_owner][msg.sender]),
             "Juicer::reconfigure: UNAUTHORIZED"
-        );
-
-        require(_target > 0, "Juicer::reconfigure: BAD_TARGET");
-
-        // The `discountRate` token must be between 90% and 100%.
-        require(
-            (_discountRate >= 900 && _discountRate <= 1000) ||
-                _discountRate == 0,
-            "Juicer::reconfigure: BAD_DISCOUNT_RATE"
-        );
-        // The `bondingCurveRate` must be between 0 and 1000.
-        require(
-            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
-            "Juicer::reconfigure BAD_BONDING_CURVE_RATE"
-        );
-
-        // The reserved project ticket percentage must be less than or equal to 100.
-        require(
-            _reserved <= 1000,
-            "Juicer::reconfigure: BAD_RESERVE_PERCENTAGES"
         );
 
         // Get a reference to the amount of tickets.
@@ -469,9 +427,7 @@ contract Juicer is IJuicer {
                 _target,
                 _currency,
                 _duration,
-                _discountRate,
-                _bondingCurveRate,
-                _reserved,
+                _packedRates,
                 fee,
                 _ballot,
                 // If no tickets are currently issued, the active funding cycle can be configured.
@@ -486,7 +442,7 @@ contract Juicer is IJuicer {
             _fundingCycle.duration,
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
-            _fundingCycle.reserved,
+            _fundingCycle.reservedRate,
             _fundingCycle.fee,
             _fundingCycle.ballot
         );
@@ -529,7 +485,7 @@ contract Juicer is IJuicer {
             _projectId,
             _fundingCycle._weighted(
                 msg.value,
-                uint256(1000).add(_fundingCycle.reserved)
+                uint256(1000).add(_fundingCycle.reservedRate)
             )
         );
 
@@ -695,7 +651,7 @@ contract Juicer is IJuicer {
                 _adminProjectId,
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
-                    uint256(1000).sub(_adminFundingCycle.reserved)
+                    uint256(1000).sub(_adminFundingCycle.reservedRate)
                 )
             );
 
@@ -863,13 +819,13 @@ contract Juicer is IJuicer {
             fundingCycles.getCurrent(_projectId);
 
         // Print tickets for the project owner if needed.
-        if (_fundingCycle.reserved > 0) {
+        if (_fundingCycle.reservedRate > 0) {
             tickets.print(
                 projects.ownerOf(_projectId),
                 _projectId,
                 _fundingCycle._weighted(
                     _processableAmount,
-                    _fundingCycle.reserved
+                    _fundingCycle.reservedRate
                 )
             );
         }

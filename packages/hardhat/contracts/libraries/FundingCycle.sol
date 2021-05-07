@@ -19,6 +19,22 @@ library FundingCycle {
 
     /// @notice The funding cycle structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.
     struct Data {
+        // The currency that the target is measured in.
+        uint8 currency;
+        // The percentage of each payment to send as a fee to the Juice admin.
+        uint16 fee;
+        // The percentage of tickets to reserve for the project once the funding cycle has expired.
+        uint16 reservedRate;
+        // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
+        uint16 discountRate;
+        // The rate that describes the bonding curve at which overflow can be claimed.
+        uint16 bondingCurveRate;
+        // The number of seconds until this funding cycle's surplus is redistributed.
+        uint32 duration;
+        // The time when this funding cycle will become active.
+        uint48 start;
+        // The time when this funding cycle was last configured.
+        uint48 configured;
         // A unique number that's incremented for each new funding cycle, starting with 1.
         uint256 id;
         // The ID of the project contract that this funding cycle belongs to.
@@ -29,28 +45,12 @@ library FundingCycle {
         uint256 previous;
         // The amount that this funding cycle is targeting.
         uint256 target;
-        // The currency that the target is measured in.
-        uint256 currency;
-        // The time when this funding cycle will become active.
-        uint256 start;
-        // The number of seconds until this funding cycle's surplus is redistributed.
-        uint256 duration;
         // The amount of available funds that have been tapped by the project in terms of the currency.
         uint256 tappedTarget;
         // The amount of available funds that have been tapped by the project in terms of eth.
         uint256 tappedTotal;
-        // The percentage of tickets to reserve for the project once the funding cycle has expired.
-        uint256 reserved;
-        // The percentage of each payment to send as a fee to the Juice admin.
-        uint256 fee;
         // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
         uint256 weight;
-        // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
-        uint256 discountRate;
-        // The rate that describes the bonding curve at which overflow can be claimed.
-        uint256 bondingCurveRate;
-        // The time when this funding cycle was last configured.
-        uint256 configured;
         // The ballot contract to use to determine a subsequent funding cycle's reconfiguration status.
         IFundingCycleBallot ballot;
         // The ballot contract to use to determine this funding cycle's reconfiguration status.
@@ -75,7 +75,7 @@ library FundingCycle {
         _self.discountRate = _baseFundingCycle.discountRate;
         _self.bondingCurveRate = _baseFundingCycle.bondingCurveRate;
         _self.weight = _derivedWeight(_baseFundingCycle);
-        _self.reserved = _baseFundingCycle.reserved;
+        _self.reservedRate = _baseFundingCycle.reservedRate;
         _self.configured = _baseFundingCycle.configured;
         _self.number = _baseFundingCycle.number.add(1);
         _self.previous = _baseFundingCycle.id;
@@ -109,7 +109,7 @@ library FundingCycle {
         view
         returns (uint256)
     {
-        uint256 _end = _self.start.add(_self.duration);
+        uint256 _end = uint256(_self.start).add(_self.duration);
         // Use the old end if the current time is still within the duration.
         if (_end.add(_self.duration) > block.timestamp) return _end;
         // Otherwise, use the closest multiple of the duration from the old end.
@@ -126,22 +126,22 @@ library FundingCycle {
     function _nextUp(Data memory _self) internal view returns (Data memory) {
         return
             Data(
+                _self.currency,
+                _self.fee,
+                _self.reservedRate,
+                _self.discountRate,
+                _self.bondingCurveRate,
+                _self.duration,
+                uint32(_determineNextStart(_self)),
+                _self.configured,
                 0,
                 _self.projectId,
                 _self.number.add(1),
                 _self.id,
                 _self.target,
-                _self.currency,
-                _determineNextStart(_self),
-                _self.duration,
                 0,
                 0,
-                _self.reserved,
-                _self.fee,
                 _derivedWeight(_self),
-                _self.discountRate,
-                _self.bondingCurveRate,
-                _self.configured,
                 _self.ballot,
                 _self.currentBallot
             );
@@ -224,7 +224,7 @@ library FundingCycle {
         @return hasExpired The boolean result.
     */
     function _hasExpired(Data memory _self) internal view returns (bool) {
-        return block.timestamp > _self.start.add(_self.duration);
+        return block.timestamp > uint256(_self.start).add(_self.duration);
     }
 
     /** 

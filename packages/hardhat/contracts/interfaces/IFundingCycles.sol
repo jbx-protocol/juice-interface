@@ -31,9 +31,7 @@ interface IFundingCycles {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
+        uint256 _packedRates,
         uint256 _fee,
         IFundingCycleBallot _ballot,
         bool _configureActiveFundingCycle

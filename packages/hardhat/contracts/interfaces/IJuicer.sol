@@ -53,9 +53,7 @@ interface IFundingCyclesController {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
+        uint256 _packedRates,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
 
@@ -169,9 +167,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _packedRates
     ) external;
 
     function addToBalance(uint256 _projectId) external payable;

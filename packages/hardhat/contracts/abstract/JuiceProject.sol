@@ -67,12 +67,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         @param _target The new funding cycle target amount.
         @param _currency The currency of the target.
         @param _duration The new duration of your funding cycle.
-        @param _discountRate A number from 70-130 indicating how valuable a funding cycle is compared to the owners previous funding cycle,
+        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @dev _discountRate A number from 0-1000 indicating how valuable a funding cycle is compared to the owners previous funding cycle,
         effectively creating a recency discountRate.
         If it's 100, each funding cycle will have equal weight.
         If the number is 130, each funding cycle will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each funding cycle will be 0.7 times as valuable as the previous funding cycle's weight.
-        @param _reserved The percentage of this funding cycle's surplus to allocate to the owner.
+        @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
+        If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
+        @dev _reservedRate The number from 0-1000 of this funding cycle's surplus to allocate to the owner.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycleId The ID of the funding cycle that was reconfigured.
     */
@@ -80,9 +83,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
+        uint256 _packedRates,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId) {
         // The pm or the owner can propose configurations.
@@ -96,9 +97,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _target,
             _currency,
             _duration,
-            _discountRate,
-            _bondingCurveRate,
-            _reserved,
+            _packedRates,
             _ballot
         );
     }

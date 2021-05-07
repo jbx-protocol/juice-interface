@@ -51,10 +51,10 @@ library FundingCycle {
         uint256 bondingCurveRate;
         // The time when this funding cycle was last configured.
         uint256 configured;
-        // The time after which this cycle is eligible to become the active cycle.
-        uint256 eligibleAfter;
-        // The ballot contract to use to determine this budget's reconfiguration status.
+        // The ballot contract to use to determine a subsequent funding cycle's reconfiguration status.
         IFundingCycleBallot ballot;
+        // The ballot contract to use to determine this funding cycle's reconfiguration status.
+        IFundingCycleBallot currentBallot;
     }
 
     // --- internal transactions --- //
@@ -77,11 +77,13 @@ library FundingCycle {
         _self.weight = _derivedWeight(_baseFundingCycle);
         _self.reserved = _baseFundingCycle.reserved;
         _self.configured = _baseFundingCycle.configured;
-        _self.eligibleAfter = _baseFundingCycle.eligibleAfter;
         _self.number = _baseFundingCycle.number.add(1);
         _self.previous = _baseFundingCycle.id;
         _self.fee = _baseFundingCycle.fee;
         _self.ballot = _baseFundingCycle.ballot;
+
+        // Use the base funding cycle's ballot as this funding cycle's current ballot.
+        _self.currentBallot = _baseFundingCycle.ballot;
     }
 
     // --- internal views --- //
@@ -140,8 +142,8 @@ library FundingCycle {
                 _self.discountRate,
                 _self.bondingCurveRate,
                 _self.configured,
-                _self.eligibleAfter,
-                _self.ballot
+                _self.ballot,
+                _self.currentBallot
             );
     }
 
@@ -226,9 +228,9 @@ library FundingCycle {
     }
 
     /** 
-        @notice Whether the budgets configuration is currently approved.
-        @param _self The Budget to check the configuration approval of.
-        @return Whether the budget's configuration is approved.
+        @notice Whether a funding cycle configuration is currently approved.
+        @param _self The funding cycle configuration to check the approval of.
+        @return Whether the funding cycle's configuration is approved.
     */
     function _isConfigurationApproved(Data memory _self)
         internal
@@ -236,8 +238,23 @@ library FundingCycle {
         returns (bool)
     {
         return
-            _self.ballot == IFundingCycleBallot(0) ||
-            _self.ballot.isApproved(_self.id, _self.configured);
+            _self.currentBallot == IFundingCycleBallot(0) ||
+            _self.currentBallot.isApproved(_self.id, _self.configured);
+    }
+
+    /** 
+        @notice Whether a funding cycle configuration is currently pending approval.
+        @param _self The funding cycle configuration to check the pending status of.
+        @return Whether the funding cycle's configuration is pending approved.
+    */
+    function _isConfigurationPending(Data memory _self)
+        internal
+        view
+        returns (bool)
+    {
+        return
+            _self.currentBallot != IFundingCycleBallot(0) &&
+            _self.currentBallot.isPending(_self.id, _self.configured);
     }
 
     // --- private views --- //

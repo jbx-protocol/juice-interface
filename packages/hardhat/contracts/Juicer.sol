@@ -90,9 +90,6 @@ contract Juicer is IJuicer {
 
     // --- public properties --- //
 
-    /// @notice The number of seconds that must pass for a funding cycle reconfiguration to become active.
-    uint256 public constant override reconfigurationDelay = 1209600;
-
     /// @notice The percent fee the Juice project takes from payments. Out of 1000.
     uint256 public constant override fee = 50;
 
@@ -268,7 +265,9 @@ contract Juicer is IJuicer {
 
         uint256 _baseAmount =
             FullMath.mulDiv(_currentOverflow, _count, _totalSupply);
-        if (block.timestamp <= _queuedCycle.eligibleAfter) return _baseAmount;
+
+        // linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
+        if (_queuedCycle._isConfigurationPending()) return _baseAmount;
 
         return
             _baseAmount.mul(
@@ -377,9 +376,9 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                0, // There is no reconfiguration delay for the first funding cycle.
                 fee,
-                IFundingCycleBallot(0)
+                IFundingCycleBallot(0),
+                true
             );
 
         emit Deploy(
@@ -473,10 +472,10 @@ contract Juicer is IJuicer {
                 _discountRate,
                 _bondingCurveRate,
                 _reserved,
-                // If no tickets are currently issued, the active funding cycle can be configured.
-                _totalTicketSupply == 0 ? 0 : reconfigurationDelay,
                 fee,
-                _ballot
+                _ballot,
+                // If no tickets are currently issued, the active funding cycle can be configured.
+                _totalTicketSupply == 0
             );
 
         emit Reconfigure(
@@ -488,8 +487,8 @@ contract Juicer is IJuicer {
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
             _fundingCycle.reserved,
-            _fundingCycle.eligibleAfter,
-            _fundingCycle.fee
+            _fundingCycle.fee,
+            _fundingCycle.ballot
         );
 
         return _fundingCycle.id;

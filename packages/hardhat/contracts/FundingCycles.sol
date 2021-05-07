@@ -91,8 +91,8 @@ contract FundingCycles is Administered, IFundingCycles {
         if (fundingCycle.id > 0) return fundingCycle;
         // No active funding cycle found, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
-        // Funding cycle if exists, has been in standby for enough time to become eligible.
-        if (fundingCycle.id > 0 && block.timestamp > fundingCycle.eligibleAfter)
+        // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
+        if (fundingCycle.id > 0 && fundingCycle._isConfigurationApproved())
             return fundingCycle;
         // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
         // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
@@ -125,9 +125,9 @@ contract FundingCycles is Administered, IFundingCycles {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
         @param _reserved The percentage of this funding cycle's overflow to reserve for the project.
-        @param _reconfigurationDelay The number of seconds that must pass for this configuration to become active.
         @param _fee The fee that this configuration incures.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
         @return fundingCycle The funding cycle that was successfully configured.
     */
     function configure(
@@ -138,9 +138,9 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        uint256 _reconfigurationDelay,
         uint256 _fee,
-        IFundingCycleBallot _ballot
+        IFundingCycleBallot _ballot,
+        bool _configureActiveFundingCycle
     )
         external
         override
@@ -149,7 +149,7 @@ contract FundingCycles is Administered, IFundingCycles {
     {
         // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
         FundingCycle.Data storage _fundingCycle =
-            _ensureConfigurable(_projectId, _reconfigurationDelay == 0);
+            _ensureConfigurable(_projectId, _configureActiveFundingCycle);
 
         // Set the properties of the funding cycle.
         _fundingCycle.target = _target;
@@ -160,9 +160,6 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.reserved = _reserved;
         _fundingCycle.fee = _fee;
         _fundingCycle.configured = block.timestamp;
-        _fundingCycle.eligibleAfter = block.timestamp.add(
-            _reconfigurationDelay
-        );
         _fundingCycle.ballot = _ballot;
 
         // Return the funding cycle.
@@ -282,7 +279,8 @@ contract FundingCycles is Administered, IFundingCycles {
         // Funding cycle if exists, has been in standby for enough time to become eligible.
         if (
             fundingCycle.id > 0 &&
-            fundingCycles[fundingCycle.previous]._isConfigurationApproved()
+            // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
+            fundingCycle._isConfigurationApproved()
         ) return fundingCycle;
         // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
         // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.

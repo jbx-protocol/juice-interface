@@ -34,9 +34,9 @@ interface IFundingCycles {
         uint256 _discountRate,
         uint256 _bondingCurveRate,
         uint256 _reserved,
-        uint256 _reconfigurationDelay,
         uint256 _fee,
-        IFundingCycleBallot _ballot
+        IFundingCycleBallot _ballot,
+        bool _configureActiveFundingCycle
     ) external returns (FundingCycle.Data memory fundingCycle);
 
     function tap(

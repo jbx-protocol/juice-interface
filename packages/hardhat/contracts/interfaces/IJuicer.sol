@@ -20,8 +20,8 @@ interface IFundingCyclesController {
         uint256 discountRate,
         uint256 bondingCurveRate,
         uint256 reserved,
-        uint256 eligibleAfter,
-        uint256 fee
+        uint256 fee,
+        IFundingCycleBallot ballot
     );
 
     event Pay(
@@ -45,8 +45,6 @@ interface IFundingCyclesController {
         uint256 tappedAmount,
         uint256 transferAmount
     );
-
-    function reconfigurationDelay() external view returns (uint256);
 
     function fee() external view returns (uint256);
 

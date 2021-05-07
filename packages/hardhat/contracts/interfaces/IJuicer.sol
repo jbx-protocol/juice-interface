@@ -104,7 +104,6 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     event Deploy(
         uint256 indexed projectId,
         address indexed owner,
-        address indexed deployer,
         uint256 fundingCycleId,
         string name,
         string handle,
@@ -116,7 +115,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 discountRate,
         uint256 bondingCurveRate,
         uint256 reserved,
-        uint256 fee
+        uint256 fee,
+        IFundingCycleBallot ballot
     );
 
     event AddToMigrationAllowList(address indexed allowed);
@@ -167,7 +167,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _packedRates
+        uint256 _packedRates,
+        IFundingCycleBallot _ballot
     ) external;
 
     function addToBalance(uint256 _projectId) external payable;

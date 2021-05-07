@@ -327,6 +327,7 @@ contract Juicer is IJuicer {
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
+        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
     */
     function deploy(
         address _owner,
@@ -337,7 +338,8 @@ contract Juicer is IJuicer {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _packedRates
+        uint256 _packedRates,
+        IFundingCycleBallot _ballot
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
         require(
@@ -363,7 +365,6 @@ contract Juicer is IJuicer {
         emit Deploy(
             _fundingCycle.projectId,
             _owner,
-            msg.sender,
             _fundingCycle.id,
             _name,
             _handle,
@@ -375,7 +376,8 @@ contract Juicer is IJuicer {
             _fundingCycle.discountRate,
             _fundingCycle.bondingCurveRate,
             _fundingCycle.reservedRate,
-            _fundingCycle.fee
+            _fundingCycle.fee,
+            _fundingCycle.ballot
         );
     }
 

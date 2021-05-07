@@ -127,6 +127,7 @@ contract FundingCycles is Administered, IFundingCycles {
         @param _reserved The percentage of this funding cycle's overflow to reserve for the project.
         @param _reconfigurationDelay The number of seconds that must pass for this configuration to become active.
         @param _fee The fee that this configuration incures.
+        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycle The funding cycle that was successfully configured.
     */
     function configure(
@@ -138,7 +139,8 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _bondingCurveRate,
         uint256 _reserved,
         uint256 _reconfigurationDelay,
-        uint256 _fee
+        uint256 _fee,
+        IFundingCycleBallot _ballot
     )
         external
         override
@@ -161,6 +163,7 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.eligibleAfter = block.timestamp.add(
             _reconfigurationDelay
         );
+        _fundingCycle.ballot = _ballot;
 
         // Return the funding cycle.
         fundingCycle = _fundingCycle;
@@ -277,8 +280,10 @@ contract FundingCycles is Administered, IFundingCycles {
         // No active funding cycle found, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
         // Funding cycle if exists, has been in standby for enough time to become eligible.
-        if (fundingCycle.id > 0 && block.timestamp > fundingCycle.eligibleAfter)
-            return fundingCycle;
+        if (
+            fundingCycle.id > 0 &&
+            fundingCycles[fundingCycle.previous]._isConfigurationApproved()
+        ) return fundingCycle;
         // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
         // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
         fundingCycle = fundingCycles[

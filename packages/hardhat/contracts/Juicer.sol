@@ -378,7 +378,8 @@ contract Juicer is IJuicer {
                 _bondingCurveRate,
                 _reserved,
                 0, // There is no reconfiguration delay for the first funding cycle.
-                fee
+                fee,
+                IFundingCycleBallot(0)
             );
 
         emit Deploy(
@@ -417,7 +418,8 @@ contract Juicer is IJuicer {
         @param _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @param _reserved A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
-        @return _fundingCycleId The id of the funding cycle that was successfully configured.
+        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @return fundingCycleId The id of the funding cycle that was successfully configured.
     */
     function reconfigure(
         uint256 _projectId,
@@ -426,7 +428,8 @@ contract Juicer is IJuicer {
         uint256 _duration,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IFundingCycleBallot _ballot
     ) external override lock returns (uint256) {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -472,7 +475,8 @@ contract Juicer is IJuicer {
                 _reserved,
                 // If no tickets are currently issued, the active funding cycle can be configured.
                 _totalTicketSupply == 0 ? 0 : reconfigurationDelay,
-                fee
+                fee,
+                _ballot
             );
 
         emit Reconfigure(

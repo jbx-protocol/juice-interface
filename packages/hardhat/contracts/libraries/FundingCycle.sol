@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./FullMath.sol";
 import "./DSMath.sol";
+import "./../interfaces/IFundingCycleBallot.sol";
 
 /// @notice Funding cycle data and logic.
 library FundingCycle {
@@ -52,6 +53,8 @@ library FundingCycle {
         uint256 configured;
         // The time after which this cycle is eligible to become the active cycle.
         uint256 eligibleAfter;
+        // The ballot contract to use to determine this budget's reconfiguration status.
+        IFundingCycleBallot ballot;
     }
 
     // --- internal transactions --- //
@@ -78,6 +81,7 @@ library FundingCycle {
         _self.number = _baseFundingCycle.number.add(1);
         _self.previous = _baseFundingCycle.id;
         _self.fee = _baseFundingCycle.fee;
+        _self.ballot = _baseFundingCycle.ballot;
     }
 
     // --- internal views --- //
@@ -136,7 +140,8 @@ library FundingCycle {
                 _self.discountRate,
                 _self.bondingCurveRate,
                 _self.configured,
-                _self.eligibleAfter
+                _self.eligibleAfter,
+                _self.ballot
             );
     }
 
@@ -218,6 +223,21 @@ library FundingCycle {
     */
     function _hasExpired(Data memory _self) internal view returns (bool) {
         return block.timestamp > _self.start.add(_self.duration);
+    }
+
+    /** 
+        @notice Whether the budgets configuration is currently approved.
+        @param _self The Budget to check the configuration approval of.
+        @return Whether the budget's configuration is approved.
+    */
+    function _isConfigurationApproved(Data memory _self)
+        internal
+        view
+        returns (bool)
+    {
+        return
+            _self.ballot == IFundingCycleBallot(0) ||
+            _self.ballot.isApproved(_self.id, _self.configured);
     }
 
     // --- private views --- //

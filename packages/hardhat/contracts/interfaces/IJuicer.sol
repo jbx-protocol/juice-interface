@@ -57,7 +57,8 @@ interface IFundingCyclesController {
         uint256 _duration,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
 
     function pay(

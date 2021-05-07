@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "./IPrices.sol";
+import "./IFundingCycleBallot.sol";
 import "../libraries/FundingCycle.sol";
 
 interface IFundingCycles {
@@ -34,7 +35,8 @@ interface IFundingCycles {
         uint256 _bondingCurveRate,
         uint256 _reserved,
         uint256 _reconfigurationDelay,
-        uint256 _fee
+        uint256 _fee,
+        IFundingCycleBallot _ballot
     ) external returns (FundingCycle.Data memory fundingCycle);
 
     function tap(

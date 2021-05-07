@@ -73,6 +73,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         If the number is 130, each funding cycle will be treated as 1.3 times as valuable than the previous, meaning sustainers get twice as much redistribution shares.
         If it's 0.7, each funding cycle will be 0.7 times as valuable as the previous funding cycle's weight.
         @param _reserved The percentage of this funding cycle's surplus to allocate to the owner.
+        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycleId The ID of the funding cycle that was reconfigured.
     */
     function configure(
@@ -81,7 +82,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _duration,
         uint256 _discountRate,
         uint256 _bondingCurveRate,
-        uint256 _reserved
+        uint256 _reserved,
+        IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId) {
         // The pm or the owner can propose configurations.
         require(
@@ -96,7 +98,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _duration,
             _discountRate,
             _bondingCurveRate,
-            _reserved
+            _reserved,
+            _ballot
         );
     }
 

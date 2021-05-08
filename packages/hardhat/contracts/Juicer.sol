@@ -23,17 +23,16 @@ import "./libraries/FullMath.sol";
 /**
   @notice This contract manages the Juice ecosystem, and manages the flow of funds.
   @dev  1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 
-           You can specify your funding target in USD or ETH.
-        2. Anyone can pay your project in ETH, which gives them Tickets.
+        2. Anyone can pay your project in ETH, which gives them Tickets in return that can be redeemed for any of your project's overflow.
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
               - The contributed amount of ETH. The more someone contributes, the more Tickets they'll receive.
-              - The target amount of your funding cycle. The bigger your funding cycle's target amount, the fewer tickets that'll be minted for each token paid.
-              - The funding cycle's weight, which is a number that decreases with each of your funding cycles at a configured `discountRate`. 
-                This rate is called a `discountRate` because it allows you to give out more Tickets to contributors to your 
-                current funding cycle than to future funding cycles.
-        3. You can tap ETH up to the specified amount. 
-           Any overflow can be claimed by Ticket holders by redeeming tickets, otherwise it rolls over to your next funding period.
-        6. You can reconfigure your project at any time with the approval of your Ticket holders, 
+              - The target amount of your funding cycle. The bigger your funding cycle's target amount, the fewer tickets that'll be minted for each ETH paid.
+              - The funding cycle's weight, which is a number that decreases with subsequent funding cycle at a configured discount rate. 
+                This rate is called a "discount rate" because it allows you to give out more Tickets to those who contribute to your 
+                earlier funding cycles, effectively giving earlier adopters a discounted rate.
+        3. You can tap ETH up to your specified denominated amount. 
+           Any overflow can be claimed by Ticket holders by redeeming tickets, otherwise it rolls over to your future funding periods.
+        6. You can reconfigure your project at any time with the approval of a ballot that you pre set.
            The new configuration will go into effect once the current funding cycle one expires.
 
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
@@ -59,7 +58,7 @@ contract Juicer is IJuicer {
     using SafeERC20 for IERC20;
     using FundingCycle for FundingCycle.Data;
 
-    /// @dev Limit sustain, redeem, swap, and tap to being called one at a time.
+    /// @dev Limit sustain, redeem, swap, and tap to being called one at a time and non reentrent.
     uint256 private unlocked = 1;
     modifier lock() {
         require(unlocked == 1, "Juicer: LOCKED");
@@ -127,17 +126,16 @@ contract Juicer is IJuicer {
         override
         returns (uint256 amount)
     {
-        // The amount of eth available is this contract's balance plus whats in the yielder.
+        // The amount of ETH available is this contract's balance plus whatever is in the yielder.
         amount = address(this).balance;
-        if (yielder != IYielder(0))
-            _includeYield
-                ? amount.add(yielder.getCurrentBalance())
-                : amount.add(yielder.deposited());
+        _includeYield
+            ? amount.add(yielder.getCurrentBalance())
+            : amount.add(yielder.deposited());
     }
 
     /** 
       @notice Gets the balance for a specified project that this Juicer is responsible for.
-      @param _projectId The ID of the project to get overflow for.
+      @param _projectId The ID of the project to get the balance of.
       @param _includeYield If the result should include any accumulated yield.
       @return amount The balance of funds for the project.
     */
@@ -153,7 +151,7 @@ contract Juicer is IJuicer {
         // If there is no balance, the project must not have a balance either.
         if (_balance == 0) return 0;
 
-        // Get a reference to the amount that is processable.
+        // Get a reference to the amount that is processable for this project.
         // The balance should include this amount, while adjusting for any amount of yield.
         uint256 _processableAmount = processableAmount[_projectId];
 
@@ -177,6 +175,7 @@ contract Juicer is IJuicer {
                     _adjustedYieldingBalance
                 );
 
+        // processed amount plus the processable amount, minus whats already been distributed.
         uint256 _totalAmount =
             processedAmount[_projectId].add(_adjustedProcessableAmount).sub(
                 distributedAmount[_projectId]
@@ -194,7 +193,7 @@ contract Juicer is IJuicer {
     }
 
     /** 
-      @notice Gets the current overflowed for a specified project that this Juicer is responsible for.
+      @notice Gets the current overflowed amount for a specified project.
       @param _projectId The ID of the project to get overflow for.
       @return overflow The current overflow of funds for the project.
     */
@@ -229,20 +228,21 @@ contract Juicer is IJuicer {
 
     /**
         @notice The amount of tokens that can be claimed by the given address.
-        @param _holder The address to get an amount for.
+        @param _account The address to get an amount for.
         Must be within the holder's balance.
-        @param _projectId The ID of the project to which the Tickets to get an amount for belong.
-        @param _count The number of Tickets being redeemed.
+        @param _projectId The ID of the project to get a claimable amount for.
+        @param _count The number of Tickets that would be redeemed to get the resulting amount.
+        @dev The _account must have at least _count tickets for the specified project.
         @return amount The amount of tokens that can be claimed.
     */
     function claimableAmount(
-        address _holder,
+        address _account,
         uint256 _projectId,
         uint256 _count
     ) public view override returns (uint256) {
         // The holder must have the specified number of the project's tickets.
         require(
-            tickets.balanceOf(_holder, _projectId) >= _count,
+            tickets.balanceOf(_account, _projectId) >= _count,
             "Juice::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -263,13 +263,14 @@ contract Juicer is IJuicer {
         FundingCycle.Data memory _queuedCycle =
             fundingCycles.getQueued(_projectId);
 
+        // The proportional amount of overflow accessible to the account.
         uint256 _baseAmount =
             FullMath.mulDiv(_currentOverflow, _count, _totalSupply);
 
-        // linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
+        // Linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         if (_queuedCycle._isConfigurationPending()) return _baseAmount;
 
-        // The bondign curve rate is the first 16 bytes of the data property.
+        // The bonding curve rate is the first 16 bytes of the data property.
         uint256 _bondingCurveRate = uint16(_fundingCycle.data);
 
         return

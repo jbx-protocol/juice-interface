@@ -85,7 +85,7 @@ interface ITicketsController {
     );
 
     function claimableAmount(
-        address _holder,
+        address _account,
         uint256 _amount,
         uint256 _projectId
     ) external view returns (uint256);

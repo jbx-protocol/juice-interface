@@ -10,6 +10,11 @@ import "./IYielder.sol";
 
 import "./IProjects.sol";
 
+struct FundingCycleMetadata {
+    uint16 bondingCurveRate;
+    uint16 reservedRate;
+}
+
 interface IFundingCyclesController {
     event Reconfigure(
         uint256 indexed fundingCycleId,
@@ -19,7 +24,7 @@ interface IFundingCyclesController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        uint256 data,
+        FundingCycleMetadata data,
         IFundingCycleBallot ballot
     );
 
@@ -53,7 +58,7 @@ interface IFundingCyclesController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _data,
+        FundingCycleMetadata memory _data,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
 
@@ -122,7 +127,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        uint256 data,
+        FundingCycleMetadata data,
         IFundingCycleBallot ballot
     );
 
@@ -177,7 +182,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _data,
+        FundingCycleMetadata memory _data,
         IFundingCycleBallot _ballot
     ) external;
 

@@ -84,7 +84,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _data,
+        FundingCycleMetadata memory _data,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId) {
         // The pm or the owner can propose configurations.

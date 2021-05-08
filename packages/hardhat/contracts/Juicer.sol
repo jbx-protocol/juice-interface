@@ -339,7 +339,7 @@ contract Juicer is IJuicer {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _data,
+        FundingCycleMetadata memory _data,
         IFundingCycleBallot _ballot
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
@@ -362,7 +362,7 @@ contract Juicer is IJuicer {
                 _discountRate,
                 fee,
                 IFundingCycleBallot(0),
-                _data,
+                _data.bondingCurveRate |= _data.reservedRate << 16,
                 true
             );
 
@@ -411,7 +411,7 @@ contract Juicer is IJuicer {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _data,
+        FundingCycleMetadata memory _data,
         IFundingCycleBallot _ballot
     ) external override lock returns (uint256) {
         // Get a reference to the project owner.
@@ -438,7 +438,7 @@ contract Juicer is IJuicer {
                 _discountRate,
                 fee,
                 _ballot,
-                _data,
+                _data.bondingCurveRate |= _data.reservedRate << 16,
                 // If no tickets are currently issued, the active funding cycle can be configured.
                 _totalTicketSupply == 0
             );
@@ -458,20 +458,20 @@ contract Juicer is IJuicer {
         return _fundingCycle.id;
     }
 
-    function _validateData(uint256 _data) private {
-        // Unpack to validate extra data.
-        uint256 _bondingCurveRate = uint16(_data >> 16);
-        uint256 _reservedRate = uint16(_data >> 32);
+    function _validateData(FundingCycleMetadata memory _data) private {
+        // // Unpack to validate extra data.
+        // uint256 _bondingCurveRate = uint16(_data >> 16);
+        // uint256 _reservedRate = uint16(_data >> 32);
 
         // The `bondingCurveRate` must be between 0 and 1000.
         require(
-            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
+            _data.bondingCurveRate > 0 && _data.bondingCurveRate <= 1000,
             "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
         );
 
         // The reserved project ticket rate must be less than or equal to 1000.
         require(
-            _reservedRate <= 1000,
+            _data.reservedRate <= 1000,
             "FundingCycles::_validateData: BAD_RESERVED_RATE"
         );
     }

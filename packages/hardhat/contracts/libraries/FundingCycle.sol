@@ -51,8 +51,8 @@ library FundingCycle {
         uint256 tappedTotal;
         // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
         uint256 weight;
-        // The percentage of tickets to reserve for the project once the funding cycle has expired.
-        uint256 data;
+        // A packed list of extra data. The first 8 bytes are reserved for versioning.
+        uint256 metadata;
     }
 
     // --- internal transactions --- //
@@ -71,7 +71,7 @@ library FundingCycle {
         _self.duration = _baseFundingCycle.duration;
         _self.projectId = _baseFundingCycle.projectId;
         _self.discountRate = _baseFundingCycle.discountRate;
-        _self.data = _baseFundingCycle.data;
+        _self.metadata = _baseFundingCycle.metadata;
         _self.weight = _derivedWeight(_baseFundingCycle);
         _self.configured = _baseFundingCycle.configured;
         _self.number = _baseFundingCycle.number.add(1);
@@ -139,7 +139,7 @@ library FundingCycle {
                 0,
                 0,
                 _derivedWeight(_self),
-                _self.data
+                _self.metadata
             );
     }
 

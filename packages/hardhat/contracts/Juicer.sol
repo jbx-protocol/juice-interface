@@ -271,8 +271,9 @@ contract Juicer is IJuicer {
         if (_queuedCycle._isConfigurationPending()) return _baseAmount;
 
         // The bonding curve rate is the first 16 bytes of the data property.
-        uint256 _bondingCurveRate = uint16(_fundingCycle.data);
+        uint256 _bondingCurveRate = uint16(_fundingCycle.metadata >> 8);
 
+        // The bonding curve formula.
         return
             _baseAmount.mul(
                 uint256(_bondingCurveRate)
@@ -323,7 +324,7 @@ contract Juicer is IJuicer {
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _data the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @param _metadata the _bondingCurveRate, and _reservedRate are uint16s packed together in order.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
@@ -339,7 +340,7 @@ contract Juicer is IJuicer {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _data,
+        FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
@@ -347,8 +348,6 @@ contract Juicer is IJuicer {
             msg.sender == _owner || operators[_owner][msg.sender],
             "Juicer::deploy: UNAUTHORIZED"
         );
-
-        _validateData(_data);
 
         // Configure the project.
         FundingCycle.Data memory _fundingCycle =
@@ -362,7 +361,7 @@ contract Juicer is IJuicer {
                 _discountRate,
                 fee,
                 IFundingCycleBallot(0),
-                _data.bondingCurveRate |= _data.reservedRate << 16,
+                _validateAndPackFundingCycleMetadata(_metadata),
                 true
             );
 
@@ -379,7 +378,7 @@ contract Juicer is IJuicer {
             _currency,
             _duration,
             _discountRate,
-            _data,
+            _metadata,
             _ballot
         );
     }
@@ -398,7 +397,7 @@ contract Juicer is IJuicer {
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _data the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @param _metadata the _bondingCurveRate, and _reservedRate are uint16s packed together in order.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
@@ -411,7 +410,7 @@ contract Juicer is IJuicer {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _data,
+        FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external override lock returns (uint256) {
         // Get a reference to the project owner.
@@ -422,8 +421,6 @@ contract Juicer is IJuicer {
             (_owner == msg.sender || operators[_owner][msg.sender]),
             "Juicer::reconfigure: UNAUTHORIZED"
         );
-
-        _validateData(_data);
 
         // Get a reference to the amount of tickets.
         uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
@@ -438,7 +435,7 @@ contract Juicer is IJuicer {
                 _discountRate,
                 fee,
                 _ballot,
-                _data.bondingCurveRate |= _data.reservedRate << 16,
+                _validateAndPackFundingCycleMetadata(_metadata),
                 // If no tickets are currently issued, the active funding cycle can be configured.
                 _totalTicketSupply == 0
             );
@@ -451,29 +448,11 @@ contract Juicer is IJuicer {
             _currency,
             _duration,
             _discountRate,
-            _data,
+            _metadata,
             _ballot
         );
 
         return _fundingCycle.id;
-    }
-
-    function _validateData(FundingCycleMetadata memory _data) private {
-        // // Unpack to validate extra data.
-        // uint256 _bondingCurveRate = uint16(_data >> 16);
-        // uint256 _reservedRate = uint16(_data >> 32);
-
-        // The `bondingCurveRate` must be between 0 and 1000.
-        require(
-            _data.bondingCurveRate > 0 && _data.bondingCurveRate <= 1000,
-            "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
-        );
-
-        // The reserved project ticket rate must be less than or equal to 1000.
-        require(
-            _data.reservedRate <= 1000,
-            "FundingCycles::_validateData: BAD_RESERVED_RATE"
-        );
     }
 
     /**
@@ -512,7 +491,7 @@ contract Juicer is IJuicer {
             _fundingCycle._weighted(
                 msg.value,
                 // The reserved rate are the second 16 bytes of the data property.
-                uint256(1000).add(uint16(_fundingCycle.data >> 16))
+                uint256(1000).add(uint16(_fundingCycle.metadata >> 24))
             )
         );
 
@@ -686,7 +665,7 @@ contract Juicer is IJuicer {
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
                     // The reserved rate are the second 16 bytes of the data property.
-                    uint256(1000).sub(uint16(_adminFundingCycle.data >> 16))
+                    uint256(1000).sub(uint16(_adminFundingCycle.metadata >> 24))
                 )
             );
 
@@ -857,7 +836,7 @@ contract Juicer is IJuicer {
             fundingCycles.getCurrent(_projectId);
 
         // The reserved rate are the second 16 bytes of the data property.
-        uint256 _reservedRate = uint16(_fundingCycle.data >> 16);
+        uint256 _reservedRate = uint16(_fundingCycle.metadata >> 24);
 
         // Print tickets for the project owner if needed.
         if (_reservedRate > 0) {
@@ -879,6 +858,34 @@ contract Juicer is IJuicer {
 
         // Clear the processable amount for this project.
         processableAmount[_projectId] = 0;
+    }
+
+    /**
+      @notice Validate the funding cycle metadata.
+      @param _metadata The metadata to validate.
+     */
+    function _validateAndPackFundingCycleMetadata(
+        FundingCycleMetadata memory _metadata
+    ) private pure returns (uint256 _packed) {
+        // The `bondingCurveRate` must be between 0 and 1000.
+        require(
+            _metadata.bondingCurveRate > 0 &&
+                _metadata.bondingCurveRate <= 1000,
+            "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
+        );
+
+        // The reserved project ticket rate must be less than or equal to 1000.
+        require(
+            _metadata.reservedRate <= 1000,
+            "FundingCycles::_validateData: BAD_RESERVED_RATE"
+        );
+
+        // version 0 in the first 8 bytes.
+        _packed = uint256(0);
+        // bonding curve in bytes 9-24.
+        _packed |= _metadata.bondingCurveRate << 8;
+        // reserved rate in bytes 25-30 bytes.
+        _packed |= _metadata.reservedRate << 24;
     }
 
     receive() external payable {}

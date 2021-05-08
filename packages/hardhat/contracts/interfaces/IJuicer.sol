@@ -24,7 +24,7 @@ interface IFundingCyclesController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        FundingCycleMetadata data,
+        FundingCycleMetadata metadata,
         IFundingCycleBallot ballot
     );
 
@@ -58,7 +58,7 @@ interface IFundingCyclesController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _data,
+        FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
 
@@ -127,7 +127,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        FundingCycleMetadata data,
+        FundingCycleMetadata metadata,
         IFundingCycleBallot ballot
     );
 
@@ -182,7 +182,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _data,
+        FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external;
 

@@ -34,7 +34,7 @@ interface IFundingCycles {
         uint256 _discountRate,
         uint256 _fee,
         IFundingCycleBallot _ballot,
-        uint256 _data,
+        uint256 _metadata,
         bool _configureActiveFundingCycle
     ) external returns (FundingCycle.Data memory fundingCycle);
 

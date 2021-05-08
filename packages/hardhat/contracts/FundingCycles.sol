@@ -125,7 +125,7 @@ contract FundingCycles is Administered, IFundingCycles {
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
         @param _fee The fee that this configuration incures.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _data Data to store with the funding cycle. The discount rate must be the first 16 bytes. 
+        @param _metadata Data to store with the funding cycle. The discount rate must be the first 16 bytes. 
         @param _configureActiveFundingCycle If the active funding cycle should be configurable.
         @return fundingCycle The funding cycle that was successfully configured.
     */
@@ -137,7 +137,7 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _discountRate,
         uint256 _fee,
         IFundingCycleBallot _ballot,
-        uint256 _data,
+        uint256 _metadata,
         bool _configureActiveFundingCycle
     )
         external
@@ -162,7 +162,7 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.duration = uint32(_duration);
         _fundingCycle.currency = uint8(_currency);
         _fundingCycle.discountRate = uint16(_discountRate);
-        _fundingCycle.data = _data;
+        _fundingCycle.metadata = _metadata;
         _fundingCycle.fee = uint16(_fee);
         _fundingCycle.configured = uint48(block.timestamp);
         _fundingCycle.ballot = _ballot;

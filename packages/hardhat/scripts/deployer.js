@@ -6,16 +6,6 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const weth = require("../constants/weth");
 
-// function getInt64Bytes(x, size) {
-//   const bytes = [];
-//   let i = Math.sqrt(size);
-//   do {
-//     bytes[--i] = x & 255;
-//     x >>= size;
-//   } while (i);
-//   return bytes;
-// }
-
 module.exports = async (wethAddr, ethUsdAddr) => {
   const token = !wethAddr && (await deploy("Token"));
   const prices = await deploy("Prices");
@@ -121,6 +111,14 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     console.log("⚡️ Configuring the admins budget");
     // Create the admin's budget.
 
+    const duration = 2592000; // 30 days;
+    const discountRate = 970;
+    const bondingCurveRate = 690;
+    const reservedRate = 48;
+
+    let data = bondingCurveRate;
+    data |= reservedRate << 16;
+
     await attachedJuicer.deploy(
       admin.address,
       "Juice",
@@ -129,9 +127,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "https://juice.work",
       "0x3635C9ADC5DEA00000",
       1,
-      2592000,
-      // TODO fix this
-      // 970 & (690 << 16) & (48 << 32),
+      duration,
+      discountRate,
+      data,
       ballot.address,
       {
         gasLimit: blockGasLimit,

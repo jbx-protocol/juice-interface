@@ -269,15 +269,14 @@ contract Juicer is IJuicer {
         // linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         if (_queuedCycle._isConfigurationPending()) return _baseAmount;
 
+        // The bondign curve rate is the first 16 bytes of the data property.
+        uint256 _bondingCurveRate = uint16(_fundingCycle.data);
+
         return
             _baseAmount.mul(
-                uint256(_fundingCycle.bondingCurveRate)
+                uint256(_bondingCurveRate)
                     .sub(
-                    FullMath.mulDiv(
-                        _count,
-                        _fundingCycle.bondingCurveRate,
-                        _totalSupply
-                    )
+                    FullMath.mulDiv(_count, _bondingCurveRate, _totalSupply)
                 )
                     .div(1000)
                     .add(_count.div(_totalSupply))
@@ -319,11 +318,11 @@ contract Juicer is IJuicer {
         Measured in seconds.
         Send 0 for an indefinite funding stage.
         @param _link A link to information about the project and this funding stage.
-        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
-        @dev _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
+        @param _data the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
@@ -338,7 +337,8 @@ contract Juicer is IJuicer {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _packedRates,
+        uint256 _discountRate,
+        uint256 _data,
         IFundingCycleBallot _ballot
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
@@ -346,6 +346,8 @@ contract Juicer is IJuicer {
             msg.sender == _owner || operators[_owner][msg.sender],
             "Juicer::deploy: UNAUTHORIZED"
         );
+
+        _validateData(_data);
 
         // Configure the project.
         FundingCycle.Data memory _fundingCycle =
@@ -356,9 +358,10 @@ contract Juicer is IJuicer {
                 _target,
                 _currency,
                 _duration,
-                _packedRates,
+                _discountRate,
                 fee,
                 IFundingCycleBallot(0),
+                _data,
                 true
             );
 
@@ -374,7 +377,8 @@ contract Juicer is IJuicer {
             _target,
             _currency,
             _duration,
-            _packedRates,
+            _discountRate,
+            _data,
             _ballot
         );
     }
@@ -389,11 +393,11 @@ contract Juicer is IJuicer {
         @param _duration The duration to set for the funding stage.
         Measured in seconds.
         Send 0 for an indefinite funding stage.
-        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
-        @dev _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        @param _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
+        @param _data the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
         If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
         @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
@@ -405,7 +409,8 @@ contract Juicer is IJuicer {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _packedRates,
+        uint256 _discountRate,
+        uint256 _data,
         IFundingCycleBallot _ballot
     ) external override lock returns (uint256) {
         // Get a reference to the project owner.
@@ -417,6 +422,8 @@ contract Juicer is IJuicer {
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
+        _validateData(_data);
+
         // Get a reference to the amount of tickets.
         uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
 
@@ -427,9 +434,10 @@ contract Juicer is IJuicer {
                 _target,
                 _currency,
                 _duration,
-                _packedRates,
+                _discountRate,
                 fee,
                 _ballot,
+                _data,
                 // If no tickets are currently issued, the active funding cycle can be configured.
                 _totalTicketSupply == 0
             );
@@ -441,11 +449,30 @@ contract Juicer is IJuicer {
             _target,
             _currency,
             _duration,
-            _packedRates,
+            _discountRate,
+            _data,
             _ballot
         );
 
         return _fundingCycle.id;
+    }
+
+    function _validateData(uint256 _data) private {
+        // Unpack to validate extra data.
+        uint256 _bondingCurveRate = uint16(_data >> 16);
+        uint256 _reservedRate = uint16(_data >> 32);
+
+        // The `bondingCurveRate` must be between 0 and 1000.
+        require(
+            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
+            "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
+        );
+
+        // The reserved project ticket rate must be less than or equal to 1000.
+        require(
+            _reservedRate <= 1000,
+            "FundingCycles::_validateData: BAD_RESERVED_RATE"
+        );
     }
 
     /**
@@ -483,7 +510,8 @@ contract Juicer is IJuicer {
             _projectId,
             _fundingCycle._weighted(
                 msg.value,
-                uint256(1000).add(_fundingCycle.reservedRate)
+                // The reserved rate are the second 16 bytes of the data property.
+                uint256(1000).add(uint16(_fundingCycle.data >> 16))
             )
         );
 
@@ -656,7 +684,8 @@ contract Juicer is IJuicer {
                 _adminProjectId,
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
-                    uint256(1000).sub(_adminFundingCycle.reservedRate)
+                    // The reserved rate are the second 16 bytes of the data property.
+                    uint256(1000).sub(uint16(_adminFundingCycle.data >> 16))
                 )
             );
 
@@ -826,15 +855,15 @@ contract Juicer is IJuicer {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
+        // The reserved rate are the second 16 bytes of the data property.
+        uint256 _reservedRate = uint16(_fundingCycle.data >> 16);
+
         // Print tickets for the project owner if needed.
-        if (_fundingCycle.reservedRate > 0) {
+        if (_reservedRate > 0) {
             tickets.print(
                 projects.ownerOf(_projectId),
                 _projectId,
-                _fundingCycle._weighted(
-                    _processableAmount,
-                    _fundingCycle.reservedRate
-                )
+                _fundingCycle._weighted(_processableAmount, _reservedRate)
             );
         }
 

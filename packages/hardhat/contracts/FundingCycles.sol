@@ -119,15 +119,13 @@ contract FundingCycles is Administered, IFundingCycles {
         @param _target The cashflow target to set.
         @param _currency The currency of the target.
         @param _duration The duration to set, measured in seconds.
-        @param _packedRates the _discountRate, _bondingCurveRate, and _reservedRate are uint16s packed together in order.
-        @dev _discountRate A number from 95-100 indicating how valuable a contribution to the current funding cycle is 
+        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current funding cycle is 
         compared to the project's previous funding cycle.
         If it's 100, each funding cycle will have equal weight.
         If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        @dev _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
-        @dev _reservedRate The percentage of this funding cycle's overflow to reserve for the project.
         @param _fee The fee that this configuration incures.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @param _data Data to store with the funding cycle. The discount rate must be the first 16 bytes. 
         @param _configureActiveFundingCycle If the active funding cycle should be configurable.
         @return fundingCycle The funding cycle that was successfully configured.
     */
@@ -136,9 +134,10 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
-        uint256 _packedRates,
+        uint256 _discountRate,
         uint256 _fee,
         IFundingCycleBallot _ballot,
+        uint256 _data,
         bool _configureActiveFundingCycle
     )
         external
@@ -152,27 +151,10 @@ contract FundingCycles is Administered, IFundingCycles {
         FundingCycle.Data storage _fundingCycle =
             _ensureConfigurable(_projectId, _configureActiveFundingCycle);
 
-        // unpack.
-        uint256 _discountRate = uint256(uint16(_packedRates));
-        uint256 _bondingCurveRate = uint256(uint16(_packedRates >> 16));
-        uint256 _reservedRate = uint256(uint16(_packedRates >> 32));
-
-        // The `discountRate` token must be between 90% and 100%.
+        // The `discountRate` token must be between 0% and 100%.
         require(
-            (_discountRate >= 900 && _discountRate <= 1000) ||
-                _discountRate == 0,
+            _discountRate >= 0 && _discountRate <= 1000,
             "FundingCycles::deploy: BAD_DISCOUNT_RATE"
-        );
-        // The `bondingCurveRate` must be between 0 and 1000.
-        require(
-            _bondingCurveRate > 0 && _bondingCurveRate <= 1000,
-            "FundingCycles::deploy BAD_BONDING_CURVE_RATE"
-        );
-
-        // The reserved project ticket rate must be less than or equal to 1000.
-        require(
-            _reservedRate <= 1000,
-            "FundingCycles::deploy: BAD_RESERVED_RATE"
         );
 
         // Set the properties of the funding cycle.
@@ -180,8 +162,7 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.duration = uint32(_duration);
         _fundingCycle.currency = uint8(_currency);
         _fundingCycle.discountRate = uint16(_discountRate);
-        _fundingCycle.bondingCurveRate = uint16(_bondingCurveRate);
-        _fundingCycle.reservedRate = uint16(_reservedRate);
+        _fundingCycle.data = _data;
         _fundingCycle.fee = uint16(_fee);
         _fundingCycle.configured = uint48(block.timestamp);
         _fundingCycle.ballot = _ballot;

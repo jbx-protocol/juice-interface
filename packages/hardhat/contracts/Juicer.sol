@@ -366,7 +366,16 @@ contract Juicer is IJuicer {
             _fundingCycle.projectId,
             _owner,
             msg.sender,
-            _fundingCycle.id
+            _fundingCycle.id,
+            _name,
+            _handle,
+            _logoUri,
+            _link,
+            _target,
+            _currency,
+            _duration,
+            _packedRates,
+            _ballot
         );
     }
 
@@ -425,7 +434,16 @@ contract Juicer is IJuicer {
                 _totalTicketSupply == 0
             );
 
-        emit Reconfigure(_fundingCycle.id, _fundingCycle.projectId, msg.sender);
+        emit Reconfigure(
+            _fundingCycle.id,
+            _fundingCycle.projectId,
+            msg.sender,
+            _target,
+            _currency,
+            _duration,
+            _packedRates,
+            _ballot
+        );
 
         return _fundingCycle.id;
     }

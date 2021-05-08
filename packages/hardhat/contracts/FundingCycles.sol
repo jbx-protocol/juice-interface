@@ -186,6 +186,10 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.configured = uint48(block.timestamp);
         _fundingCycle.ballot = _ballot;
 
+        // If there isn't a current ballot inherited, set the current ballot to the provided one.
+        if (_fundingCycle.currentBallot == IFundingCycleBallot(0))
+            _fundingCycle.currentBallot = _ballot;
+
         // Return the funding cycle.
         fundingCycle = _fundingCycle;
     }

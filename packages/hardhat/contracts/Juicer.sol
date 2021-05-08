@@ -365,19 +365,8 @@ contract Juicer is IJuicer {
         emit Deploy(
             _fundingCycle.projectId,
             _owner,
-            _fundingCycle.id,
-            _name,
-            _handle,
-            _logoUri,
-            _link,
-            _fundingCycle.target,
-            _fundingCycle.currency,
-            _fundingCycle.duration,
-            _fundingCycle.discountRate,
-            _fundingCycle.bondingCurveRate,
-            _fundingCycle.reservedRate,
-            _fundingCycle.fee,
-            _fundingCycle.ballot
+            msg.sender,
+            _fundingCycle.id
         );
     }
 
@@ -436,18 +425,7 @@ contract Juicer is IJuicer {
                 _totalTicketSupply == 0
             );
 
-        emit Reconfigure(
-            _fundingCycle.id,
-            _fundingCycle.projectId,
-            _fundingCycle.target,
-            _fundingCycle.currency,
-            _fundingCycle.duration,
-            _fundingCycle.discountRate,
-            _fundingCycle.bondingCurveRate,
-            _fundingCycle.reservedRate,
-            _fundingCycle.fee,
-            _fundingCycle.ballot
-        );
+        emit Reconfigure(_fundingCycle.id, _fundingCycle.projectId, msg.sender);
 
         return _fundingCycle.id;
     }
@@ -560,7 +538,14 @@ contract Juicer is IJuicer {
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
 
-        emit Redeem(msg.sender, _projectId, _beneficiary, _count, amount);
+        emit Redeem(
+            _account,
+            _beneficiary,
+            _projectId,
+            msg.sender,
+            _count,
+            amount
+        );
     }
 
     /**
@@ -736,7 +721,7 @@ contract Juicer is IJuicer {
         // Move the funds to the new Juicer.
         _to.addToBalance{value: _amount}(_projectId);
 
-        emit Migrate(_to, _amount);
+        emit Migrate(_projectId, msg.sender, _to, _amount);
     }
 
     /** 
@@ -750,6 +735,8 @@ contract Juicer is IJuicer {
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
             ProportionMath.find(balance(false), msg.value, balance(true))
         );
+
+        emit AddToBalance(_projectId, msg.sender);
     }
 
     /** 
@@ -778,6 +765,7 @@ contract Juicer is IJuicer {
     function setAdmin(address payable _admin) external override {
         require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
         admin = _admin;
+        emit SetAdmin(_admin);
     }
 
     /**

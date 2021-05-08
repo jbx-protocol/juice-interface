@@ -14,14 +14,7 @@ interface IFundingCyclesController {
     event Reconfigure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        uint256 target,
-        uint256 currency,
-        uint256 duration,
-        uint256 discountRate,
-        uint256 bondingCurveRate,
-        uint256 reserved,
-        uint256 fee,
-        IFundingCycleBallot ballot
+        address indexed operator
     );
 
     event Pay(
@@ -39,7 +32,7 @@ interface IFundingCyclesController {
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
-        address tapper,
+        address operator,
         uint256 amount,
         uint256 currency,
         uint256 tappedAmount,
@@ -77,8 +70,9 @@ interface IFundingCyclesController {
 interface ITicketsController {
     event Redeem(
         address indexed holder,
+        address indexed beneficiary,
         uint256 indexed _projectId,
-        address beneficiary,
+        address operator,
         uint256 amount,
         uint256 returnAmount
     );
@@ -99,24 +93,20 @@ interface ITicketsController {
 }
 
 interface IJuicer is IFundingCyclesController, ITicketsController {
-    event Migrate(IJuicer indexed to, uint256 _amount);
+    event Migrate(
+        uint256 indexed projectId,
+        address indexed operator,
+        IJuicer indexed to,
+        uint256 _amount
+    );
+
+    event AddToBalance(uint256 indexed projectId, address sender);
 
     event Deploy(
         uint256 indexed projectId,
         address indexed owner,
-        uint256 fundingCycleId,
-        string name,
-        string handle,
-        string logoUri,
-        string link,
-        uint256 target,
-        uint256 currency,
-        uint256 duration,
-        uint256 discountRate,
-        uint256 bondingCurveRate,
-        uint256 reserved,
-        uint256 fee,
-        IFundingCycleBallot ballot
+        address indexed operator,
+        uint256 fundingCycleId
     );
 
     event AddToMigrationAllowList(address indexed allowed);
@@ -126,6 +116,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     event AddOperator(address account, address operator);
 
     event RemoveOperator(address account, address operator);
+
+    event SetAdmin(address admin);
 
     function admin() external view returns (address payable);
 

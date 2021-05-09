@@ -491,7 +491,7 @@ contract Juicer is IJuicer {
             _fundingCycle._weighted(
                 msg.value,
                 // The reserved rate are the second 16 bytes of the data property.
-                uint256(1000).add(uint16(_fundingCycle.metadata >> 24))
+                uint256(1000).sub(uint16(_fundingCycle.metadata >> 24))
             )
         );
 

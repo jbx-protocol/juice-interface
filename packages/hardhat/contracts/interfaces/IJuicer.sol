@@ -4,11 +4,11 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./ITickets.sol";
+import "./IERC1155Tickets.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
-
 import "./IProjects.sol";
+import "./IERC20Ticket.sol";
 
 struct FundingCycleMetadata {
     uint16 bondingCurveRate;
@@ -100,7 +100,8 @@ interface ITicketsController {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        address payable _beneficiary
+        address payable _beneficiary,
+        bool _erc20
     ) external returns (uint256 returnAmount);
 }
 
@@ -141,6 +142,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event SetAdmin(address admin);
 
+    event Issue(uint256 projectId, address issuer, string name, string symbole);
+
     function admin() external view returns (address payable);
 
     function operators(address _account, address _operator)
@@ -152,9 +155,14 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function fundingCycles() external view returns (IFundingCycles);
 
-    function tickets() external view returns (ITickets);
+    function tickets() external view returns (IERC1155Tickets);
 
     function yielder() external view returns (IYielder);
+
+    function erc20Tickets(uint256 _projectId)
+        external
+        view
+        returns (IERC20Ticket);
 
     function balanceOf(uint256 _projectId, bool _includeYield)
         external
@@ -187,6 +195,14 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external;
+
+    function issue(
+        uint256 _projectId,
+        string memory _name,
+        string memory _symbol
+    ) external;
+
+    function convertToERC20(address _account, uint256 _projectId) external;
 
     function addToBalance(uint256 _projectId) external payable;
 

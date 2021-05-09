@@ -13,7 +13,8 @@ import "./interfaces/IYielder.sol";
 import "./interfaces/IProjects.sol";
 import "./abstract/JuiceProject.sol";
 
-import "./Tickets.sol";
+import "./ERC1155Tickets.sol";
+import "./ERC20Ticket.sol";
 
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
@@ -101,8 +102,8 @@ contract Juicer is IJuicer {
     /// @notice The contract storing all funding cycle configurations.
     IFundingCycles public immutable override fundingCycles;
 
-    /// @notice The contract that manages the Tickets.
-    ITickets public immutable override tickets;
+    /// @notice The contract that manages the ERC1155Tickets.
+    IERC1155Tickets public immutable override tickets;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public immutable override yielder;
@@ -115,6 +116,9 @@ contract Juicer is IJuicer {
 
     /// @notice A mapping of whether or not a project has migrated away from this Juicer.
     mapping(uint256 => bool) public override migrated;
+
+    /// @notice The Tickets handed out by each issuer. Each issuer has their own Tickets contract.
+    mapping(uint256 => IERC20Ticket) public override erc20Tickets;
 
     // --- public views --- //
 
@@ -245,7 +249,9 @@ contract Juicer is IJuicer {
     ) public view override returns (uint256) {
         // The holder must have the specified number of the project's tickets.
         require(
-            tickets.balanceOf(_account, _projectId) >= _count,
+            tickets.balanceOf(_account, _projectId).add(
+                erc20Tickets[_projectId].balanceOf(_account)
+            ) >= _count,
             "Juice::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -260,7 +266,10 @@ contract Juicer is IJuicer {
         if (_currentOverflow == 0) return 0;
 
         // Get the total number of tickets in circulation.
-        uint256 _totalSupply = tickets.totalSupply(_projectId);
+        uint256 _totalSupply =
+            tickets.totalSupply(_projectId).add(
+                erc20Tickets[_projectId].totalSupply()
+            );
 
         // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
@@ -300,7 +309,7 @@ contract Juicer is IJuicer {
     constructor(
         IProjects _projects,
         IFundingCycles _fundingCycles,
-        ITickets _tickets,
+        IERC1155Tickets _tickets,
         IPrices _prices,
         IYielder _yielder
     ) {
@@ -426,7 +435,10 @@ contract Juicer is IJuicer {
         );
 
         // Get a reference to the amount of tickets.
-        uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
+        uint256 _totalTicketSupply =
+            tickets.totalSupply(_projectId).add(
+                erc20Tickets[_projectId].totalSupply()
+            );
 
         // Configure the funding stage's state.
         FundingCycle.Data memory _fundingCycle =
@@ -491,16 +503,17 @@ contract Juicer is IJuicer {
         ]
             .add(msg.value);
 
-        // Print tickets for the beneficiary.
-        tickets.print(
-            _beneficiary,
-            _projectId,
+        uint256 _ticketAmount =
             _fundingCycle._weighted(
                 msg.value,
                 // The reserved rate are the second 16 bytes of the data property.
                 uint256(1000).sub(uint16(_fundingCycle.metadata >> 24))
-            )
-        );
+            );
+
+        IERC20Ticket _erc20Tickets = erc20Tickets[_projectId];
+        _erc20Tickets != IERC20Ticket(0)
+            ? _erc20Tickets.print(_beneficiary, _ticketAmount)
+            : tickets.print(_beneficiary, _projectId, _ticketAmount);
 
         emit Pay(
             _fundingCycle.id,
@@ -523,6 +536,7 @@ contract Juicer is IJuicer {
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the tokens to.
+        @param _erc20 If erc20s are being redeemed.
         @return amount The amount that the tickets were redeemed for.
     */
     function redeem(
@@ -530,7 +544,8 @@ contract Juicer is IJuicer {
         uint256 _projectId,
         uint256 _count,
         uint256 _minReturnedETH,
-        address payable _beneficiary
+        address payable _beneficiary,
+        bool _erc20
     ) external override lock returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
@@ -566,7 +581,9 @@ contract Juicer is IJuicer {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the sender's wallet.
-        tickets.redeem(_projectId, msg.sender, _count);
+        _erc20
+            ? erc20Tickets[_projectId].redeem(_account, _count)
+            : tickets.redeem(_projectId, _account, _count);
 
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
@@ -665,16 +682,18 @@ contract Juicer is IJuicer {
             ]
                 .add(_adminFeeAmount);
 
-            // Print admin tickets for the tapper.
-            tickets.print(
-                _beneficiary,
-                _adminProjectId,
+            uint256 _ticketAmount =
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
                     // The reserved rate are the second 16 bytes of the data property.
                     uint256(1000).sub(uint16(_adminFundingCycle.metadata >> 24))
-                )
-            );
+                );
+
+            IERC20Ticket _adminErc20Tickets = erc20Tickets[_adminProjectId];
+            // Print admin tickets for the tapper.
+            _adminErc20Tickets != IERC20Ticket(0)
+                ? _adminErc20Tickets.print(_beneficiary, _ticketAmount)
+                : tickets.print(_beneficiary, _adminProjectId, _ticketAmount);
 
             // Transfer the tapped amount minus the fees.
             _transferAmount = _tappedAmount.sub(_adminFeeAmount);
@@ -758,6 +777,10 @@ contract Juicer is IJuicer {
         // Set the address that the project has migrated to.
         migrated[_projectId] = true;
 
+        // Transfer the power to print and redeem tickets to the new juicer.
+        if (erc20Tickets[_projectId] != IERC20Ticket(0))
+            erc20Tickets[_projectId].migrate(address(_to));
+
         emit Migrate(_projectId, msg.sender, _to, _amount);
     }
 
@@ -774,6 +797,35 @@ contract Juicer is IJuicer {
         );
 
         emit AddToBalance(_projectId, msg.sender);
+    }
+
+    /**
+        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
+        @dev Deploys an owner's Ticket ERC-20 token contract.
+        @param _name The ERC-20's name. " Juice ticket" will be appended.
+        @param _symbol The ERC-20's symbol. "j" will be prepended.
+    */
+    function issue(
+        uint256 _projectId,
+        string memory _name,
+        string memory _symbol
+    ) external override {
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can tap its funds.
+        require(
+            msg.sender == _owner || operators[_owner][msg.sender],
+            "Juicer::issue: UNAUTHORIZED"
+        );
+
+        // Create the contract in this Juicer contract in order to have mint and burn privileges.
+        // Prepend the strings with standards.
+        ERC20Ticket _tickets = new ERC20Ticket(_name, _symbol);
+
+        erc20Tickets[_projectId] = _tickets;
+
+        emit Issue(_projectId, msg.sender, _tickets.name(), _tickets.symbol());
     }
 
     /** 
@@ -814,6 +866,34 @@ contract Juicer is IJuicer {
         emit AddToMigrationAllowList(_allowed);
     }
 
+    /**
+      @notice TODOConvert I-owe-you's to tickets
+      @param _account TODOThe issuer of the tickets.
+      @param _projectId TODOThe issuer of the tickets.
+     */
+    function convertToERC20(address _account, uint256 _projectId)
+        external
+        override
+    {
+        require(
+            erc20Tickets[_projectId] != IERC20Ticket(0),
+            "Juicer:convertToERC20: NOT_FOUND"
+        );
+
+        // Only an account or a specified operator can convert its tickets.
+        require(
+            msg.sender == _account || operators[_account][msg.sender],
+            "Juicer::convertToERC20: UNAUTHORIZED"
+        );
+
+        uint256 _amount = tickets.balanceOf(_account, _projectId);
+
+        if (_amount == 0) return;
+
+        tickets.redeem(_projectId, _account, _amount);
+        erc20Tickets[_projectId].print(_account, _amount);
+    }
+
     // --- private transactions --- //
 
     /** 
@@ -850,11 +930,13 @@ contract Juicer is IJuicer {
 
         // Print tickets for the project owner if needed.
         if (_reservedRate > 0) {
-            tickets.print(
-                projects.ownerOf(_projectId),
-                _projectId,
-                _fundingCycle._weighted(_processableAmount, _reservedRate)
-            );
+            address _beneficiary = projects.ownerOf(_projectId);
+            uint256 _ticketAmount =
+                _fundingCycle._weighted(_processableAmount, _reservedRate);
+            IERC20Ticket _erc20Tickets = erc20Tickets[_projectId];
+            _erc20Tickets != IERC20Ticket(0)
+                ? _erc20Tickets.print(_beneficiary, _ticketAmount)
+                : tickets.print(_beneficiary, _projectId, _ticketAmount);
         }
 
         // Add the processable amount to what is now distributable to tappers and redeemers for this project.

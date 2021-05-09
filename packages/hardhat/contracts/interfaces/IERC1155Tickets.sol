@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-interface ITickets is IERC1155 {
+interface IERC1155Tickets is IERC1155 {
     function totalSupply(uint256 _projectId) external view returns (uint256);
 
     function print(

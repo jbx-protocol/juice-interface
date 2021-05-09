@@ -127,6 +127,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @param _amount The amount of tickets being redeemed.
       @param _minReturnedETH The minimum amount of ETH expected in return.
       @param _note A note to leave on the emitted event.
+      @param _erc20 Whether to redeem erc20 tickets or not.
       @return returnAmount The amount of ETH that was redeemed and used to fund the funding cycle.
     */
     function redeemTicketsAndFund(
@@ -134,7 +135,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        string memory _note
+        string memory _note,
+        bool _erc20
     ) external onlyPm returns (uint256 returnAmount) {
         require(
             projectId != 0,
@@ -145,7 +147,8 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _projectId,
             _amount,
             _minReturnedETH,
-            address(this)
+            address(this),
+            _erc20
         );
 
         // Tickets come back to this project.
@@ -161,6 +164,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @param _amount The amount of tickets being redeemed.
       @param _beneficiary The address that is receiving the redeemed tokens.
       @param _minReturnedETH The minimum amount of ETH expected in return.
+      @param _erc20 Whether to redeem erc20 tickets or not.
       @return _returnAmount The amount of ETH that was redeemed.
     */
     function redeemTickets(
@@ -168,14 +172,16 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         uint256 _projectId,
         uint256 _amount,
         address payable _beneficiary,
-        uint256 _minReturnedETH
+        uint256 _minReturnedETH,
+        bool _erc20
     ) external onlyPm returns (uint256 _returnAmount) {
         _returnAmount = juicer.redeem(
             _account,
             _projectId,
             _amount,
             _minReturnedETH,
-            _beneficiary
+            _beneficiary,
+            _erc20
         );
     }
 

@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./libraries/CompareMath.sol";
 
 import "./abstract/Administered.sol";
-import "./interfaces/ITickets.sol";
+import "./interfaces/IERC1155Tickets.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract Tickets is ERC1155, Administered, ITickets {
+contract ERC1155Tickets is ERC1155, Administered, IERC1155Tickets {
     using SafeMath for uint256;
 
     // --- public properties --- //

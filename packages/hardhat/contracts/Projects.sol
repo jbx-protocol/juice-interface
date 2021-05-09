@@ -53,6 +53,10 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _link
     ) external override onlyAdmin returns (uint256 id) {
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
+        require(
+            handleResolver[bytes(_handle)] == 0,
+            "Projects::create: HANDLE_TAKEN"
+        );
         projectId++;
         _safeMint(_owner, projectId);
         info[projectId] = Info(_name, _handle, _logoUri, _link);
@@ -99,4 +103,9 @@ contract Projects is ERC721, IProjects, Administered {
         // Set the new identifier.
         info[_projectId] = Info(_name, _handle, _logoUri, _link);
     }
+
+    // TODO renew
+    // projects must renew their claim on a handle once a year.
+    // The script will make sure the project has been productive enough to keep the handle.
+    // Otherwise it can be claimed.
 }

@@ -171,7 +171,7 @@ export default function Landing() {
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
                     With Juice, we end up getting community-driven online creations that automatically reward
-                    the people who help it grow and succeed. Projects are created and maintained by motivated punks
+                    the people who help them succeed. Projects are created and maintained by motivated punks
                     getting transparently paid what they ask for, and funded by a community of users, patrons, and investors
                     who have the opportunity to capitalize on the overflow they help create.
                   </p>

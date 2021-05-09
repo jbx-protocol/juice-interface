@@ -819,6 +819,12 @@ contract Juicer is IJuicer {
             "Juicer::issue: UNAUTHORIZED"
         );
 
+        // Only one ERC20 ticket can be issued.
+        require(
+            erc20Tickets[_projectId] == IERC20Ticket(0),
+            "Juicer::issue: ALREADY_ISSUED"
+        );
+
         // Create the contract in this Juicer contract in order to have mint and burn privileges.
         // Prepend the strings with standards.
         ERC20Ticket _tickets = new ERC20Ticket(_name, _symbol);

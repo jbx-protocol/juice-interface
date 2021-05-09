@@ -10,6 +10,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const token = !wethAddr && (await deploy("Token"));
   const prices = await deploy("Prices");
   const projects = await deploy("Projects");
+  await deploy("DirectPayments", [projects.address]);
   const fundingCycles = await deploy("FundingCycles");
   const tickets = await deploy("Tickets");
   const yielder = await deploy("YearnYielder", [

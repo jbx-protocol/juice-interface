@@ -113,6 +113,9 @@ contract Juicer is IJuicer {
     /// @notice A mapping of the addresses that are designated operators of each account.
     mapping(address => mapping(address => bool)) public override operators;
 
+    /// @notice A mapping of whether or not a project has migrated away from this Juicer.
+    mapping(uint256 => bool) public override migrated;
+
     // --- public views --- //
 
     /** 
@@ -470,8 +473,12 @@ contract Juicer is IJuicer {
         address _beneficiary,
         string memory _note
     ) external payable override lock returns (uint256) {
+        // The project should not have migrated away.
+        require(migrated[_projectId], "Juicer::pay: MIGRATED");
+
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
+
         // Cant send tickets to the zero address.
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
@@ -747,6 +754,9 @@ contract Juicer is IJuicer {
 
         // Move the funds to the new Juicer.
         _to.addToBalance{value: _amount}(_projectId);
+
+        // Set the address that the project has migrated to.
+        migrated[_projectId] = true;
 
         emit Migrate(_projectId, msg.sender, _to, _amount);
     }

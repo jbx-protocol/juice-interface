@@ -22,7 +22,7 @@ export default function Landing() {
   )
 
   const listData = [
-    'Ethereum projects',
+    'Ethereum projects and communities',
     'Internet public goods',
     'Open source businesses',
     'Indie artists, journalists, & researchers',
@@ -78,7 +78,7 @@ export default function Landing() {
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>Juice is a business-model-as-a-service.</p>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    Projects say up front how much cashflow they want
+                    Projects say up front how much cashflow they need
                     in order to crush what they do. Once they're earning more
                     than that, the $ETH overflow can be claimed by their users,
                     patrons, & investors alongside them.{' '}
@@ -170,12 +170,10 @@ export default function Landing() {
                 <div style={{ color: colors.dark }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting community-driven online goods
-                    and services with data integrity, business
-                    operation accountability, and no ads. All built by motivated punks
-                    getting transparently paid what they ask for, while
-                    rewarding everyone who helped create the overflow an
-                    opportunity to capitalize on it.
+                    With Juice, we end up getting community-driven online creations that automatically reward
+                    the people who help it grow and succeed. Projects are created and maintained by motivated punks
+                    getting transparently paid what they ask for, and funded by a community of users, patrons, and investors
+                    who have the opportunity to capitalize on the overflow they help create.
                   </p>
                   <a
                     className="ol"

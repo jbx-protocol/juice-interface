@@ -214,7 +214,7 @@ export default function Rewards({
           <div>Balance: {formatWad(ticketsBalance ?? 0)} tickets</div>
           {redeemDisabled ? (
             <div style={{ color: colors.juiceLight, fontWeight: 500 }}>
-              You can redeem tickets once this project has overflow!
+              You can redeem tickets once this project has overflow.
             </div>
           ) : (
             <div>

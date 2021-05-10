@@ -30,6 +30,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     projects.address,
     operatorStore.address,
   ]);
+  const modStore = await deploy("ModStore", [
+    projects.address,
+    operatorStore.address,
+  ]);
+
   const yielder = await deploy("YearnYielder", [
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
@@ -39,15 +44,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     fundingCycles.address,
     tickets.address,
     operatorStore.address,
+    modStore.address,
     prices.address,
     yielder.address,
   ]);
 
-  const admin = await deploy("Admin", [
-    juicer.address,
-    // TODO Set the PM as an address controlled by the team.
-    "0x766621e1e1274496ab3d65badc5866024f1ab7b8",
-  ]);
+  const admin = await deploy("Admin", [juicer.address]);
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 

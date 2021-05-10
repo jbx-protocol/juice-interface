@@ -12,7 +12,6 @@ import "./abstract/JuiceProject.sol";
 
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
-import "./libraries/CompareMath.sol";
 import "./libraries/FullMath.sol";
 
 /**
@@ -494,14 +493,15 @@ contract Juicer is IJuicer {
         ]
             .add(msg.value);
 
-        uint256 _ticketAmount =
+        tickets.print(
+            _beneficiary,
+            _projectId,
             _fundingCycle._weighted(
                 msg.value,
                 // The reserved rate are the second 16 bytes of the data property.
                 uint256(1000).sub(uint16(_fundingCycle.metadata >> 24))
-            );
-
-        tickets.print(_beneficiary, _projectId, _ticketAmount);
+            )
+        );
 
         emit Pay(
             _fundingCycle.id,
@@ -922,6 +922,11 @@ contract Juicer is IJuicer {
                 _modCut
             );
         }
+        // The mods must not add up to over 100%.
+        require(
+            _modsCut <= _totalTransferAmount,
+            "Juicer::_transferToMods: BAD_MODS"
+        );
         _remaining = _totalTransferAmount.sub(_modsCut);
     }
 

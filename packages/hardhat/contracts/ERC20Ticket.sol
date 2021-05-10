@@ -34,8 +34,4 @@ contract ERC20Ticket is ERC20, IERC20Ticket, Ownable {
     {
         return _burn(_account, _amount);
     }
-
-    function migrate(address _to) external override onlyOwner {
-        transferOwnership(_to);
-    }
 }

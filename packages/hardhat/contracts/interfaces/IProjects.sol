@@ -4,6 +4,8 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
+import "./IOperatorStore.sol";
+
 interface IProjects is IERC721 {
     struct Info {
         string name;
@@ -11,6 +13,32 @@ interface IProjects is IERC721 {
         string logoUri;
         string link;
     }
+
+    event SetInfo(
+        uint256 indexed projectId,
+        string handle,
+        string name,
+        string logoUri,
+        string link,
+        address operator
+    );
+
+    event TransferHandle(
+        uint256 indexed projectId,
+        address indexed to,
+        string handle,
+        string newHandle,
+        address operator
+    );
+
+    event ClaimHandle(
+        address indexed account,
+        uint256 indexed projectId,
+        string handle,
+        address operator
+    );
+
+    function operatorStore() external view returns (IOperatorStore);
 
     function handleResolver(bytes memory _handle)
         external

@@ -4,11 +4,11 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./IERC1155Tickets.sol";
+import "./ITickets.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
-import "./IERC20TicketStore.sol";
+import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
     uint16 bondingCurveRate;
@@ -105,10 +105,18 @@ interface ITicketsController {
     ) external returns (uint256 returnAmount);
 }
 
-interface IJuicer is IFundingCyclesController, ITicketsController {
+interface IProjectFundsManager {
+    function addToBalance(uint256 _projectId) external payable;
+}
+
+interface IJuicer is
+    IFundingCyclesController,
+    ITicketsController,
+    IProjectFundsManager
+{
     event Migrate(
         uint256 indexed projectId,
-        IJuicer indexed to,
+        IProjectFundsManager indexed to,
         uint256 _amount,
         address operator
     );
@@ -136,63 +144,19 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event Deposit(uint256 amount);
 
-    event AddOperator(address indexed account, address operator);
-
-    event RemoveOperator(
-        address indexed account,
-        address indexed remover,
-        address operator
-    );
-
     event SetAdmin(address admin);
 
-    event Issue(
-        uint256 indexed projectId,
-        string name,
-        string symbol,
-        address operator
-    );
-
-    event SetInfo(
-        uint256 indexed projectId,
-        string handle,
-        string name,
-        string logoUri,
-        string link,
-        address operator
-    );
-
-    event TransferHandle(
-        uint256 indexed projectId,
-        address indexed to,
-        string handle,
-        string newHandle,
-        address operator
-    );
-
-    event ClaimHandle(
-        address indexed account,
-        uint256 indexed projectId,
-        string handle,
-        address operator
-    );
-
     function admin() external view returns (address payable);
-
-    function operators(address _account, address _operator)
-        external
-        view
-        returns (bool);
 
     function projects() external view returns (IProjects);
 
     function fundingCycles() external view returns (IFundingCycles);
 
-    function tickets() external view returns (IERC1155Tickets);
+    function tickets() external view returns (ITickets);
+
+    function operatorStore() external view returns (IOperatorStore);
 
     function yielder() external view returns (IYielder);
-
-    function erc20TicketStore() external view returns (IERC20TicketStore);
 
     function balanceOf(uint256 _projectId, bool _includeYield)
         external
@@ -206,11 +170,9 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function balance(bool _includeYield) external view returns (uint256);
 
-    function migrated(uint256 _projectId) external view returns (bool);
-
     function setAdmin(address payable _admin) external;
 
-    function migrate(uint256 _projectId, IJuicer _to) external;
+    function migrate(uint256 _projectId, IProjectFundsManager _to) external;
 
     function deploy(
         address _owner,
@@ -225,40 +187,6 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external;
-
-    function issue(
-        uint256 _projectId,
-        string memory _name,
-        string memory _symbol
-    ) external;
-
-    function setInfo(
-        uint256 _projectId,
-        string memory _name,
-        string memory _handle,
-        string memory logoUri,
-        string memory link
-    ) external;
-
-    function transferHandle(
-        uint256 _projectId,
-        address _to,
-        string memory _newHandle
-    ) external;
-
-    function claimHandle(
-        address _for,
-        uint256 _projectId,
-        string memory _handle
-    ) external;
-
-    function convertToERC20(address _account, uint256 _projectId) external;
-
-    function addToBalance(uint256 _projectId) external payable;
-
-    function addOperator(address _operator) external;
-
-    function removeOperator(address _account, address _operator) external;
 
     function deposit(uint256 _amount) external;
 

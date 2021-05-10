@@ -23,6 +23,9 @@ contract Projects is ERC721, IProjects, Administered {
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes => address) public override transferedHandles;
 
+    /// @notice A contract sotring operator assignments.
+    IOperatorStore public immutable override operatorStore;
+
     /**
         @notice Get the info for a project.
         @param _projectId The ID of the project.
@@ -37,7 +40,11 @@ contract Projects is ERC721, IProjects, Administered {
         return info[_projectId];
     }
 
-    constructor() ERC721("Juice project", "JUICE PROJECT") {}
+    constructor(IOperatorStore _operatorStore)
+        ERC721("Juice project", "JUICE PROJECT")
+    {
+        operatorStore = _operatorStore;
+    }
 
     /**
         @notice Create a new project.
@@ -77,7 +84,17 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _handle,
         string memory _logoUri,
         string memory _link
-    ) external override onlyAdmin {
+    ) external override {
+        // Get a reference to the project owner.
+        address _owner = ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can change its info.
+        require(
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
+            "Projects::setInfo: UNAUTHORIZED"
+        );
+
         require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
         require(
@@ -102,6 +119,8 @@ contract Projects is ERC721, IProjects, Administered {
         _info.handle = _handle;
         _info.logoUri = _logoUri;
         _info.link = _link;
+
+        emit SetInfo(_projectId, _name, _handle, _logoUri, _link, msg.sender);
     }
 
     /**
@@ -115,6 +134,16 @@ contract Projects is ERC721, IProjects, Administered {
         address _to,
         string memory _newHandle
     ) external override onlyAdmin returns (string memory _handle) {
+        // Get a reference to the project owner.
+        address _owner = ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can transfer its handle.
+        require(
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender) ||
+                this.isAdmin(msg.sender),
+            "Projects::transferHandle: UNAUTHORIZED"
+        );
         require(
             bytes(_newHandle).length > 0,
             "Projects::transferHandle: EMPTY_HANDLE"
@@ -140,6 +169,8 @@ contract Projects is ERC721, IProjects, Administered {
 
         // Set the new handle.
         _info.handle = _newHandle;
+
+        emit TransferHandle(_projectId, _to, _handle, _newHandle, msg.sender);
     }
 
     function claimHandle(
@@ -147,6 +178,22 @@ contract Projects is ERC721, IProjects, Administered {
         uint256 _projectId,
         string memory _handle
     ) external override onlyAdmin {
+        // Only an account or a specified operator can claim a handle.
+        require(
+            msg.sender == _for || operatorStore.isOperator(_for, msg.sender),
+            "Projects::transferHandle: UNAUTHORIZED"
+        );
+
+        // Get a reference to the project owner.
+        address _owner = ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can set its handle.
+        require(
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
+            "Projects::transferHandle: UNAUTHORIZED"
+        );
+
         require(
             transferedHandles[bytes(_handle)] == _for,
             "Projects::claimHandle: UNAUTHORIZED"
@@ -160,5 +207,7 @@ contract Projects is ERC721, IProjects, Administered {
 
         // Set the new handle.
         _info.handle = _handle;
+
+        emit ClaimHandle(_for, _projectId, _handle, msg.sender);
     }
 }

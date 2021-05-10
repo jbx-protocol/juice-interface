@@ -11,11 +11,9 @@ import "./interfaces/IJuicer.sol";
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IYielder.sol";
 import "./interfaces/IProjects.sol";
-import "./interfaces/IERC20TicketStore.sol";
+import "./interfaces/ITickets.sol";
+import "./interfaces/IOperatorStore.sol";
 import "./abstract/JuiceProject.sol";
-
-import "./ERC1155Tickets.sol";
-import "./ERC20Ticket.sol";
 
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
@@ -104,22 +102,16 @@ contract Juicer is IJuicer {
     IFundingCycles public immutable override fundingCycles;
 
     /// @notice The contract that manages the ERC1155Tickets.
-    IERC1155Tickets public immutable override tickets;
+    ITickets public immutable override tickets;
+
+    /// @notice A contract sotring operator assignments.
+    IOperatorStore public immutable override operatorStore;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public immutable override yielder;
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
-
-    /// @notice ERC-20 Tickets for projects.
-    IERC20TicketStore public immutable override erc20TicketStore;
-
-    /// @notice A mapping of the addresses that are designated operators of each account.
-    mapping(address => mapping(address => bool)) public override operators;
-
-    /// @notice A mapping of whether or not a project has migrated away from this Juicer.
-    mapping(uint256 => bool) public override migrated;
 
     // --- public views --- //
 
@@ -248,13 +240,9 @@ contract Juicer is IJuicer {
         uint256 _projectId,
         uint256 _count
     ) public view override returns (uint256) {
-        IERC20Ticket _erc20Ticket = erc20TicketStore.tickets(_projectId);
-
         // The holder must have the specified number of the project's tickets.
         require(
-            tickets.balanceOf(_account, _projectId).add(
-                _erc20Ticket.balanceOf(_account)
-            ) >= _count,
+            tickets.combinedBalanceOf(_account, _projectId) >= _count,
             "Juice::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -269,8 +257,7 @@ contract Juicer is IJuicer {
         if (_currentOverflow == 0) return 0;
 
         // Get the total number of tickets in circulation.
-        uint256 _totalSupply =
-            tickets.totalSupply(_projectId).add(_erc20Ticket.totalSupply());
+        uint256 _totalSupply = tickets.combinedTotalSupply(_projectId);
 
         // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
@@ -303,22 +290,23 @@ contract Juicer is IJuicer {
     /** 
       @param _projects The Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _fundingCycles The funding cycle configurations.
-      @param _tickets The ERC-1155 mapping projects to ticket holders.
+      @param _tickets The mapping projects to ticket holders.
+      @param _operatorStore The storage of operator assignment.
       @param _prices The price feed contract to use.
       @param _yielder The contract responsible for earning yield on idle funds.
     */
     constructor(
         IProjects _projects,
         IFundingCycles _fundingCycles,
-        IERC1155Tickets _tickets,
-        IERC20TicketStore _erc20TicketStore,
+        ITickets _tickets,
+        IOperatorStore _operatorStore,
         IPrices _prices,
         IYielder _yielder
     ) {
         projects = _projects;
         fundingCycles = _fundingCycles;
         tickets = _tickets;
-        erc20TicketStore = _erc20TicketStore;
+        operatorStore = _operatorStore;
         prices = _prices;
         yielder = _yielder;
     }
@@ -360,7 +348,8 @@ contract Juicer is IJuicer {
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
         require(
-            msg.sender == _owner || operators[_owner][msg.sender],
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
             "Juicer::deploy: UNAUTHORIZED"
         );
 
@@ -379,6 +368,9 @@ contract Juicer is IJuicer {
                 _validateAndPackFundingCycleMetadata(_metadata),
                 true
             );
+
+        // Set this contract as the controller who can print and redeem tickets on behalf of the project.
+        tickets.initialize(_fundingCycle.projectId);
 
         emit Deploy(
             _fundingCycle.projectId,
@@ -433,15 +425,13 @@ contract Juicer is IJuicer {
 
         // Only a msg.sender or a specified operator can reconfigure its.
         require(
-            (_owner == msg.sender || operators[_owner][msg.sender]),
+            _owner == msg.sender ||
+                operatorStore.isOperator(_owner, msg.sender),
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
         // Get a reference to the amount of tickets.
-        uint256 _totalTicketSupply =
-            tickets.totalSupply(_projectId).add(
-                erc20TicketStore.tickets(_projectId).totalSupply()
-            );
+        uint256 _totalTicketSupply = tickets.combinedTotalSupply(_projectId);
 
         // Configure the funding stage's state.
         FundingCycle.Data memory _fundingCycle =
@@ -488,9 +478,6 @@ contract Juicer is IJuicer {
         address _beneficiary,
         string memory _note
     ) external payable override lock returns (uint256) {
-        // The project should not have migrated away.
-        require(migrated[_projectId], "Juicer::pay: MIGRATED");
-
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
 
@@ -513,10 +500,7 @@ contract Juicer is IJuicer {
                 uint256(1000).sub(uint16(_fundingCycle.metadata >> 24))
             );
 
-        IERC20Ticket _erc20Tickets = erc20TicketStore.tickets(_projectId);
-        _erc20Tickets != IERC20Ticket(0)
-            ? _erc20Tickets.print(_beneficiary, _ticketAmount)
-            : tickets.print(_beneficiary, _projectId, _ticketAmount);
+        tickets.print(_beneficiary, _projectId, _ticketAmount);
 
         emit Pay(
             _fundingCycle.id,
@@ -555,7 +539,8 @@ contract Juicer is IJuicer {
 
         // Only a msg.sender or a specified operator can redeem its tickets.
         require(
-            msg.sender == _account || operators[_account][msg.sender],
+            msg.sender == _account ||
+                operatorStore.isOperator(_account, msg.sender),
             "Juicer::redeem: UNAUTHORIZED"
         );
 
@@ -584,9 +569,7 @@ contract Juicer is IJuicer {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the sender's wallet.
-        _erc20
-            ? erc20TicketStore.tickets(_projectId).redeem(_account, _count)
-            : tickets.redeem(_projectId, _account, _count);
+        tickets.redeem(_account, _projectId, _count, _erc20);
 
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
@@ -620,7 +603,8 @@ contract Juicer is IJuicer {
 
         // Only a project owner or a specified operator can tap its funds.
         require(
-            msg.sender == _owner || operators[_owner][msg.sender],
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
             "Juicer::tap: UNAUTHORIZED"
         );
 
@@ -685,19 +669,16 @@ contract Juicer is IJuicer {
             ]
                 .add(_adminFeeAmount);
 
-            uint256 _ticketAmount =
+            // Print admin tickets for the tapper.
+            tickets.print(
+                _beneficiary,
+                _adminProjectId,
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
                     // The reserved rate are the second 16 bytes of the data property.
                     uint256(1000).sub(uint16(_adminFundingCycle.metadata >> 24))
-                );
-
-            IERC20Ticket _adminErc20Tickets =
-                erc20TicketStore.tickets(_adminProjectId);
-            // Print admin tickets for the tapper.
-            _adminErc20Tickets != IERC20Ticket(0)
-                ? _adminErc20Tickets.print(_beneficiary, _ticketAmount)
-                : tickets.print(_beneficiary, _adminProjectId, _ticketAmount);
+                )
+            );
 
             // Transfer the tapped amount minus the fees.
             _transferAmount = _tappedAmount.sub(_adminFeeAmount);
@@ -745,7 +726,11 @@ contract Juicer is IJuicer {
         @param _projectId The ID of the project being migrated.
         @param _to The Juicer contract that will gain the project's funds.
     */
-    function migrate(uint256 _projectId, IJuicer _to) external override lock {
+    function migrate(uint256 _projectId, IProjectFundsManager _to)
+        external
+        override
+        lock
+    {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
@@ -757,7 +742,8 @@ contract Juicer is IJuicer {
 
         // Only the project owner, or a delegated operator, can migrate its funds.
         require(
-            msg.sender == _owner || operators[_owner][msg.sender],
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
             "Juicer::migrate: UNAUTHORIZED"
         );
 
@@ -778,12 +764,9 @@ contract Juicer is IJuicer {
         // Move the funds to the new Juicer.
         _to.addToBalance{value: _amount}(_projectId);
 
-        // Set the address that the project has migrated to.
-        migrated[_projectId] = true;
-
         // Transfer the power to print and redeem tickets to the new juicer.
-        IERC20Ticket _ticket = erc20TicketStore.tickets(_projectId);
-        if (_ticket != IERC20Ticket(0)) _ticket.migrate(address(_to));
+        tickets.addController(address(_to), _projectId);
+        tickets.removeController(address(this), _projectId);
 
         emit Migrate(_projectId, _to, _amount, msg.sender);
     }
@@ -801,178 +784,6 @@ contract Juicer is IJuicer {
         );
 
         emit AddToBalance(_projectId, msg.sender);
-    }
-
-    /**
-      @notice Allows a project owner to set the project's name and handle.
-      @param _projectId The ID of the project.
-      @param _name The new name for the project.
-      @param _handle The new unique handle for the project.
-      @param _logoUri The new uri to an image representing the project.
-      @param _link A link to more info about the project.
-    */
-    function setInfo(
-        uint256 _projectId,
-        string memory _name,
-        string memory _handle,
-        string memory _logoUri,
-        string memory _link
-    ) external override lock {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can change its info.
-        require(
-            msg.sender == _owner || operators[_owner][msg.sender],
-            "Juicer::setInfo: UNAUTHORIZED"
-        );
-
-        projects.setInfo(_projectId, _name, _handle, _logoUri, _link);
-
-        emit SetInfo(_projectId, _name, _handle, _logoUri, _link, msg.sender);
-    }
-
-    /**
-      @notice Allows a project owner to transfer its handle to another address.
-      @param _projectId The ID of the project to transfer the handle from.
-      @param _to The address that can now reallocate the handle.
-      @param _newHandle The new unique handle for the project that will replace the transfered one.
-    */
-    function transferHandle(
-        uint256 _projectId,
-        address _to,
-        string memory _newHandle
-    ) external override lock {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can transfer its handle.
-        require(
-            msg.sender == _owner ||
-                operators[_owner][msg.sender] ||
-                msg.sender == admin,
-            "Juicer::transferHandle: UNAUTHORIZED"
-        );
-
-        string memory _handle =
-            projects.transferHandle(_projectId, _to, _newHandle);
-
-        emit TransferHandle(_projectId, _to, _handle, _newHandle, msg.sender);
-    }
-
-    function claimHandle(
-        address _for,
-        uint256 _projectId,
-        string memory _handle
-    ) external override lock {
-        // Only an account or a specified operator can claim a handle.
-        require(
-            msg.sender == _for || operators[_for][msg.sender],
-            "Juicer::transferHandle: UNAUTHORIZED"
-        );
-
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can set its handle.
-        require(
-            msg.sender == _owner || operators[_owner][msg.sender],
-            "Juicer::transferHandle: UNAUTHORIZED"
-        );
-
-        projects.claimHandle(_for, _projectId, _handle);
-
-        emit ClaimHandle(_for, _projectId, _handle, msg.sender);
-    }
-
-    /**
-        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
-        @dev Deploys an owner's Ticket ERC-20 token contract.
-        @param _name The ERC-20's name. " Juice ticket" will be appended.
-        @param _symbol The ERC-20's symbol. "j" will be prepended.
-    */
-    function issue(
-        uint256 _projectId,
-        string memory _name,
-        string memory _symbol
-    ) external override lock {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can tap its funds.
-        require(
-            msg.sender == _owner || operators[_owner][msg.sender],
-            "Juicer::issue: UNAUTHORIZED"
-        );
-
-        // Only one ERC20 ticket can be issued.
-        require(
-            erc20TicketStore.tickets(_projectId) == IERC20Ticket(0),
-            "Juicer::issue: ALREADY_ISSUED"
-        );
-
-        // Create the contract in this Juicer contract in order to have mint and burn privileges.
-        // Prepend the strings with standards.
-        erc20TicketStore.set(new ERC20Ticket(_name, _symbol), _projectId);
-
-        emit Issue(_projectId, _name, _symbol, msg.sender);
-    }
-
-    /**
-      @notice TODOConvert I-owe-you's to tickets
-      @param _account TODOThe issuer of the tickets.
-      @param _projectId TODOThe issuer of the tickets.
-     */
-    function convertToERC20(address _account, uint256 _projectId)
-        external
-        override
-        lock
-    {
-        IERC20Ticket _ticket = erc20TicketStore.tickets(_projectId);
-        require(_ticket != IERC20Ticket(0), "Juicer:convertToERC20: NOT_FOUND");
-
-        // Only an account or a specified operator can convert its tickets.
-        require(
-            msg.sender == _account || operators[_account][msg.sender],
-            "Juicer::convertToERC20: UNAUTHORIZED"
-        );
-
-        uint256 _amount = tickets.balanceOf(_account, _projectId);
-
-        if (_amount == 0) return;
-
-        tickets.redeem(_projectId, _account, _amount);
-        _ticket.print(_account, _amount);
-    }
-
-    /** 
-      @notice Allows the specified operator tap funds and redeem tickets on the msg.sender's behalf.
-      @param _operator The operator to give permission to.
-    */
-    function addOperator(address _operator) external override {
-        operators[msg.sender][_operator] = true;
-        emit AddOperator(msg.sender, _operator);
-    }
-
-    /** 
-      @notice Revokes the ability for the specified operator to tap funds and redeem tickets on the msg.sender's behalf.
-      @param _operator The operator to give permission to.
-    */
-    function removeOperator(address _account, address _operator)
-        external
-        override
-    {
-        // Revoke the operator if there's no msg.sender.
-        if (_operator == address(0)) _operator = msg.sender;
-
-        // Only an account or a specified operator can remove an operator. A specified operator can only remove themselves
-        require(
-            msg.sender == _account ||
-                (operators[_account][msg.sender] && _operator == msg.sender),
-            "Juicer::removeOperator: UNAUTHORIZED"
-        );
-        operators[_account][_operator] = false;
-        emit RemoveOperator(_account, msg.sender, _operator);
     }
 
     /**
@@ -1031,13 +842,11 @@ contract Juicer is IJuicer {
 
         // Print tickets for the project owner if needed.
         if (_reservedRate > 0) {
-            address _beneficiary = projects.ownerOf(_projectId);
-            uint256 _ticketAmount =
-                _fundingCycle._weighted(_processableAmount, _reservedRate);
-            IERC20Ticket _erc20Tickets = erc20TicketStore.tickets(_projectId);
-            _erc20Tickets != IERC20Ticket(0)
-                ? _erc20Tickets.print(_beneficiary, _ticketAmount)
-                : tickets.print(_beneficiary, _projectId, _ticketAmount);
+            tickets.print(
+                projects.ownerOf(_projectId),
+                _projectId,
+                _fundingCycle._weighted(_processableAmount, _reservedRate)
+            );
         }
 
         // Add the processable amount to what is now distributable to tappers and redeemers for this project.

@@ -12,9 +12,11 @@ contract DirectPayments {
     mapping(address => address) public beneficiaries;
     /// @notice The projects contract.
     IProjects public immutable projects;
+    IOperatorStore public immutable operatorStore;
 
-    constructor(IProjects _projects) {
+    constructor(IProjects _projects, IOperatorStore _operatorStore) {
         projects = _projects;
+        operatorStore = _operatorStore;
     }
 
     function allAddresses(uint256 _projectId)
@@ -51,7 +53,8 @@ contract DirectPayments {
 
         // Only a project owner or a specified operator can tap its funds.
         require(
-            msg.sender == _owner || _juicer.operators(_owner, msg.sender),
+            msg.sender == _owner ||
+                operatorStore.isOperator(_owner, msg.sender),
             "Juicer::tap: UNAUTHORIZED"
         );
 

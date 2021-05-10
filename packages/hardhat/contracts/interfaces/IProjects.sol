@@ -12,28 +12,6 @@ interface IProjects is IERC721 {
         string link;
     }
 
-    event TransferHandle(
-        uint256 indexed projectId,
-        address indexed to,
-        string indexed handle,
-        string newHandle
-    );
-
-    event ClaimHandle(
-        address indexed claimer,
-        uint256 indexed projectId,
-        string indexed handle
-    );
-
-    event SetInfo(
-        address indexed acount,
-        uint256 indexed projectId,
-        string indexed handle,
-        string name,
-        string logoUri,
-        string link
-    );
-
     function handleResolver(bytes memory _handle)
         external
         returns (uint256 projectId);
@@ -64,11 +42,11 @@ interface IProjects is IERC721 {
         uint256 _projectId,
         address _to,
         string memory _newHandle
-    ) external;
+    ) external returns (string memory _handle);
 
     function claimHandle(
+        address _for,
         uint256 _projectId,
-        address _to,
         string memory _handle
     ) external;
 }

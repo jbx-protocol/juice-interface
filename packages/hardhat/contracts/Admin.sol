@@ -61,4 +61,21 @@ contract Admin is JuiceProject {
     ) external onlyOwner {
         _prices.addFeed(_feed, _currency);
     }
+
+    /**
+        @notice Allows the admin to transfer handles to/from different projects.
+        @dev This power is in place to eventually allow project's to exchange handles on a marketplace. 
+        @param _juicer The juicer to transfer the handle in.
+        @param _projectId The ID of the project to transfer the handle from.
+        @param _to The address that can claim the newly transfered handle.
+        @param _newHandle The handle to replace the transfered one with.
+    */
+    function transferHandle(
+        IJuicer _juicer,
+        uint256 _projectId,
+        address _to,
+        string memory _newHandle
+    ) external onlyOwner {
+        _juicer.transferHandle(_projectId, _to, _newHandle);
+    }
 }

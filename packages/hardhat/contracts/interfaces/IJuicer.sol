@@ -19,35 +19,35 @@ interface IFundingCyclesController {
     event Reconfigure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        address indexed operator,
         uint256 target,
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
         FundingCycleMetadata metadata,
-        IFundingCycleBallot ballot
+        IFundingCycleBallot ballot,
+        address operator
     );
 
     event Pay(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        address indexed payer,
-        address beneficiary,
+        address indexed beneficiary,
         uint256 amount,
         uint256 currency,
         string note,
-        uint256 fee
+        uint256 fee,
+        address operator
     );
 
     event Tap(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
-        address operator,
         uint256 amount,
         uint256 currency,
         uint256 tappedAmount,
-        uint256 transferAmount
+        uint256 transferAmount,
+        address operator
     );
 
     function fee() external view returns (uint256);
@@ -108,9 +108,9 @@ interface ITicketsController {
 interface IJuicer is IFundingCyclesController, ITicketsController {
     event Migrate(
         uint256 indexed projectId,
-        address indexed operator,
         IJuicer indexed to,
-        uint256 _amount
+        uint256 _amount,
+        address operator
     );
 
     event AddToBalance(uint256 indexed projectId, address sender);
@@ -118,7 +118,6 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
     event Deploy(
         uint256 indexed projectId,
         address indexed owner,
-        address indexed operator,
         uint256 fundingCycleId,
         string name,
         string handle,
@@ -129,7 +128,8 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 duration,
         uint256 discountRate,
         FundingCycleMetadata metadata,
-        IFundingCycleBallot ballot
+        IFundingCycleBallot ballot,
+        address operator
     );
 
     event AddToMigrationAllowList(address indexed allowed);
@@ -148,9 +148,33 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event Issue(
         uint256 indexed projectId,
-        address indexed issuer,
         string name,
-        string symbol
+        string symbol,
+        address operator
+    );
+
+    event SetInfo(
+        uint256 indexed projectId,
+        string handle,
+        string name,
+        string logoUri,
+        string link,
+        address operator
+    );
+
+    event TransferHandle(
+        uint256 indexed projectId,
+        address indexed to,
+        string handle,
+        string newHandle,
+        address operator
+    );
+
+    event ClaimHandle(
+        address indexed account,
+        uint256 indexed projectId,
+        string handle,
+        address operator
     );
 
     function admin() external view returns (address payable);
@@ -206,6 +230,26 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _projectId,
         string memory _name,
         string memory _symbol
+    ) external;
+
+    function setInfo(
+        uint256 _projectId,
+        string memory _name,
+        string memory _handle,
+        string memory logoUri,
+        string memory link
+    ) external;
+
+    function transferHandle(
+        uint256 _projectId,
+        address _to,
+        string memory _newHandle
+    ) external;
+
+    function claimHandle(
+        address _for,
+        uint256 _projectId,
+        string memory _handle
     ) external;
 
     function convertToERC20(address _account, uint256 _projectId) external;

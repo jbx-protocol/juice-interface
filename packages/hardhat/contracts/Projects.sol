@@ -77,12 +77,7 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _handle,
         string memory _logoUri,
         string memory _link
-    ) external override {
-        // The message sender must be the project owner.
-        require(
-            ownerOf(_projectId) == msg.sender,
-            "Projects::setInfo: UNAUTHORIZED"
-        );
+    ) external override onlyAdmin {
         require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
         require(
@@ -107,8 +102,6 @@ contract Projects is ERC721, IProjects, Administered {
         _info.handle = _handle;
         _info.logoUri = _logoUri;
         _info.link = _link;
-
-        emit SetInfo(msg.sender, _projectId, _name, _handle, _logoUri, _link);
     }
 
     /**
@@ -121,12 +114,7 @@ contract Projects is ERC721, IProjects, Administered {
         uint256 _projectId,
         address _to,
         string memory _newHandle
-    ) external override {
-        // The message sender must be the project owner or the admin.
-        require(
-            ownerOf(_projectId) == msg.sender || this.isAdmin(msg.sender),
-            "Projects::transferHandle: UNAUTHORIZED"
-        );
+    ) external override onlyAdmin returns (string memory _handle) {
         require(
             bytes(_newHandle).length > 0,
             "Projects::transferHandle: EMPTY_HANDLE"
@@ -139,32 +127,28 @@ contract Projects is ERC721, IProjects, Administered {
 
         // If needed, clear the old handle and set the new one.
         Info storage _info = info[_projectId];
-        string memory _handle = _info.handle;
+        _handle = _info.handle;
 
         // If the handle is changing, register the change in the resolver.
         handleResolver[bytes(_newHandle)] = _projectId;
+
+        // Remove the resolver for the transfered handle.
+        handleResolver[bytes(_handle)] = 0;
 
         // Transfer the current handle.
         transferedHandles[bytes(_handle)] = _to;
 
         // Set the new handle.
         _info.handle = _newHandle;
-
-        emit TransferHandle(_projectId, _to, _handle, _newHandle);
     }
 
     function claimHandle(
+        address _for,
         uint256 _projectId,
-        address _to,
         string memory _handle
-    ) external override {
+    ) external override onlyAdmin {
         require(
-            transferedHandles[bytes(_handle)] == msg.sender,
-            "Projects::claimHandle: UNAUTHORIZED"
-        );
-        // The message sender must be the project owner.
-        require(
-            ownerOf(_projectId) == msg.sender,
+            transferedHandles[bytes(_handle)] == _for,
             "Projects::claimHandle: UNAUTHORIZED"
         );
 
@@ -176,7 +160,5 @@ contract Projects is ERC721, IProjects, Administered {
 
         // Set the new handle.
         _info.handle = _handle;
-
-        emit ClaimHandle(msg.sender, _projectId, _handle);
     }
 }

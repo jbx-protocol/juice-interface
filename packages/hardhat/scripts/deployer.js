@@ -10,9 +10,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const token = !wethAddr && (await deploy("Token"));
   const prices = await deploy("Prices");
   const projects = await deploy("Projects");
-  await deploy("DirectPayments", [projects.address]);
   const fundingCycles = await deploy("FundingCycles");
-  const tickets = await deploy("Tickets");
+  const tickets = await deploy("ERC1155Tickets");
+  const erc20TicketStore = await deploy("ERC20TicketStore");
   const yielder = await deploy("YearnYielder", [
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
@@ -21,6 +21,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     projects.address,
     fundingCycles.address,
     tickets.address,
+    erc20TicketStore.address,
     prices.address,
     yielder.address,
   ]);
@@ -33,11 +34,16 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 
+  await deploy("DirectPayments", [projects.address]);
+
   const blockGasLimit = 9000000;
 
   try {
     const ProjectsFactory = await ethers.getContractFactory("Projects");
-    const TicketsFactory = await ethers.getContractFactory("Tickets");
+    const TicketsFactory = await ethers.getContractFactory("ERC1155Tickets");
+    const ERC20TicketStoreFactory = await ethers.getContractFactory(
+      "ERC20TicketStore"
+    );
     const FundingCyclesFactory = await ethers.getContractFactory(
       "FundingCycles"
     );
@@ -48,6 +54,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
     const attachedTickets = await TicketsFactory.attach(tickets.address);
+    const attachedERC20TicketStore = await ERC20TicketStoreFactory.attach(
+      erc20TicketStore.address
+    );
     const attachedFundingCycles = await FundingCyclesFactory.attach(
       fundingCycles.address
     );
@@ -62,6 +71,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     });
     console.log("⚡️ Setting the tickets owner");
     await attachedTickets.setOwnership(admin.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Setting the ERC20 ticket store owner");
+    await attachedERC20TicketStore.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the fundingCycles owner");
@@ -89,6 +102,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     });
     console.log("⚡️ Granting the juicer admin privileges over the tickets");
     await attachedAdmin.grantAdmin(tickets.address, juicer.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log(
+      "⚡️ Granting the juicer admin privileges over the ERC20 ticket store"
+    );
+    await attachedAdmin.grantAdmin(erc20TicketStore.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
 
@@ -136,12 +155,17 @@ module.exports = async (wethAddr, ethUsdAddr) => {
         gasLimit: blockGasLimit,
       }
     );
+    console.log("⚡️ Removing the operator role");
+    await attachedJuicer.removeOperator(
+      admin.address,
+      "0x0000000000000000000000000000000000000000"
+    );
 
     console.log("⚡️ Setting the admin's project ID");
     // Create the admin's budget.
     await attachedAdmin.setProjectId(1);
   } catch (e) {
-    console.log("Failed to establish admin contract ownership: ", e);
+    console.log("Failed to set up environment: ", e);
   }
 
   console.log(

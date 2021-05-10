@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 interface IAdministered {
     function owner() external view returns (address);
 
-    function isAdmin(address account) external returns (bool);
+    function isAdmin(address account) external view returns (bool);
 
     function appointAdmin(address account) external;
 

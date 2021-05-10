@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface IERC20Ticket is IERC20 {
-    function migrate(address to) external;
+    function migrate(address _to) external;
 
     function print(address _account, uint256 _amount) external;
 

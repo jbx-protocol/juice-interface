@@ -8,7 +8,7 @@ import "./IERC1155Tickets.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
-import "./IERC20Ticket.sol";
+import "./IERC20TicketStore.sol";
 
 struct FundingCycleMetadata {
     uint16 bondingCurveRate;
@@ -136,13 +136,22 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     event Deposit(uint256 amount);
 
-    event AddOperator(address account, address operator);
+    event AddOperator(address indexed account, address operator);
 
-    event RemoveOperator(address account, address operator);
+    event RemoveOperator(
+        address indexed account,
+        address indexed remover,
+        address operator
+    );
 
     event SetAdmin(address admin);
 
-    event Issue(uint256 projectId, address issuer, string name, string symbole);
+    event Issue(
+        uint256 indexed projectId,
+        address indexed issuer,
+        string name,
+        string symbol
+    );
 
     function admin() external view returns (address payable);
 
@@ -159,10 +168,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function yielder() external view returns (IYielder);
 
-    function erc20Tickets(uint256 _projectId)
-        external
-        view
-        returns (IERC20Ticket);
+    function erc20TicketStore() external view returns (IERC20TicketStore);
 
     function balanceOf(uint256 _projectId, bool _includeYield)
         external
@@ -208,7 +214,7 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function addOperator(address _operator) external;
 
-    function removeOperator(address _operator) external;
+    function removeOperator(address _account, address _operator) external;
 
     function deposit(uint256 _amount) external;
 

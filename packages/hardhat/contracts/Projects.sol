@@ -20,6 +20,9 @@ contract Projects is ERC721, IProjects, Administered {
     /// @notice The project that each unique handle represents.
     mapping(bytes => uint256) public override handleResolver;
 
+    /// @notice Handles that have been transfered to the specified address.
+    mapping(bytes => address) public override transferedHandles;
+
     /**
         @notice Get the info for a project.
         @param _projectId The ID of the project.
@@ -53,10 +56,6 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _link
     ) external override onlyAdmin returns (uint256 id) {
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
-        require(
-            handleResolver[bytes(_handle)] == 0,
-            "Projects::create: HANDLE_TAKEN"
-        );
         projectId++;
         _safeMint(_owner, projectId);
         info[projectId] = Info(_name, _handle, _logoUri, _link);
@@ -70,7 +69,7 @@ contract Projects is ERC721, IProjects, Administered {
       @param _name The new name for the project.
       @param _handle The new unique handle for the project.
       @param _logoUri The new uri to an image representing the project.
-        @param _link A link to more info about the project.
+      @param _link A link to more info about the project.
     */
     function setInfo(
         uint256 _projectId,
@@ -87,12 +86,15 @@ contract Projects is ERC721, IProjects, Administered {
         require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
         require(
-            handleResolver[bytes(_handle)] == 0,
+            (handleResolver[bytes(_handle)] == 0 ||
+                handleResolver[bytes(_handle)] == _projectId) &&
+                (transferedHandles[bytes(_handle)] == address(0) ||
+                    transferedHandles[bytes(_handle)] == msg.sender),
             "Projects::setInfo: HANDLE_TAKEN"
         );
 
         // If needed, clear the old handle and set the new one.
-        Info memory _info = info[_projectId];
+        Info storage _info = info[_projectId];
 
         // If the handle is changing, register the change in the resolver.
         if (keccak256(bytes(_info.handle)) == keccak256(bytes(_handle))) {
@@ -101,11 +103,80 @@ contract Projects is ERC721, IProjects, Administered {
         }
 
         // Set the new identifier.
-        info[_projectId] = Info(_name, _handle, _logoUri, _link);
+        _info.name = _name;
+        _info.handle = _handle;
+        _info.logoUri = _logoUri;
+        _info.link = _link;
+
+        emit SetInfo(msg.sender, _projectId, _name, _handle, _logoUri, _link);
     }
 
-    // TODO renew
-    // projects must renew their claim on a handle once a year.
-    // The script will make sure the project has been productive enough to keep the handle.
-    // Otherwise it can be claimed.
+    /**
+      @notice Allows a project owner to transfer its handle to another address.
+      @param _projectId The ID of the project to transfer the handle from.
+      @param _to The address that can now reallocate the handle.
+      @param _newHandle The new unique handle for the project that will replace the transfered one.
+    */
+    function transferHandle(
+        uint256 _projectId,
+        address _to,
+        string memory _newHandle
+    ) external override {
+        // The message sender must be the project owner or the admin.
+        require(
+            ownerOf(_projectId) == msg.sender || this.isAdmin(msg.sender),
+            "Projects::transferHandle: UNAUTHORIZED"
+        );
+        require(
+            bytes(_newHandle).length > 0,
+            "Projects::transferHandle: EMPTY_HANDLE"
+        );
+
+        require(
+            handleResolver[bytes(_newHandle)] == 0,
+            "Projects::transferHandle: HANDLE_TAKEN"
+        );
+
+        // If needed, clear the old handle and set the new one.
+        Info storage _info = info[_projectId];
+        string memory _handle = _info.handle;
+
+        // If the handle is changing, register the change in the resolver.
+        handleResolver[bytes(_newHandle)] = _projectId;
+
+        // Transfer the current handle.
+        transferedHandles[bytes(_handle)] = _to;
+
+        // Set the new handle.
+        _info.handle = _newHandle;
+
+        emit TransferHandle(_projectId, _to, _handle, _newHandle);
+    }
+
+    function claimHandle(
+        uint256 _projectId,
+        address _to,
+        string memory _handle
+    ) external override {
+        require(
+            transferedHandles[bytes(_handle)] == msg.sender,
+            "Projects::claimHandle: UNAUTHORIZED"
+        );
+        // The message sender must be the project owner.
+        require(
+            ownerOf(_projectId) == msg.sender,
+            "Projects::claimHandle: UNAUTHORIZED"
+        );
+
+        // If needed, clear the old handle and set the new one.
+        Info storage _info = info[_projectId];
+
+        // Register the change in the resolver.
+        handleResolver[bytes(_handle)] = _projectId;
+
+        // Set the new handle.
+        _info.handle = _handle;
+
+        emit ClaimHandle(msg.sender, _projectId, _handle);
+    }
 }

@@ -128,11 +128,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     const duration = 2592000; // 30 days;
     const discountRate = 970;
-    const bondingCurveRate = 690;
-    const reservedRate = 48;
-
-    let data = bondingCurveRate;
-    data |= reservedRate << 16;
 
     await attachedJuicer.deploy(
       admin.address,
@@ -144,7 +139,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       1,
       duration,
       discountRate,
-      data,
+      {
+        bondingCurveRate: 690,
+        reservedRate: 48,
+      },
       ballot.address,
       {
         gasLimit: blockGasLimit,

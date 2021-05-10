@@ -122,7 +122,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     // });
 
     console.log("⚡️ Set the deployer as an operator of the admin");
-    await attachedAdmin.addOperator(operatorStore.address, deployerAddress);
+    await attachedAdmin.addOperator(operatorStore.address, deployerAddress, 3);
 
     console.log("⚡️ Configuring the admins budget");
 

@@ -5,7 +5,9 @@ import "./interfaces/IOperatorStore.sol";
 
 contract OperatorStore is IOperatorStore {
     /// @notice A mapping of the addresses that are designated operators of each account.
-    mapping(address => mapping(address => bool)) public override isOperator;
+    mapping(address => mapping(uint256 => mapping(address => uint256)))
+        public
+        override operatorLevel;
 
     constructor() public {}
 
@@ -13,29 +15,35 @@ contract OperatorStore is IOperatorStore {
       @notice Allows the specified operator tap funds and redeem tickets on the msg.sender's behalf.
       @param _operator The operator to give permission to.
     */
-    function addOperator(address _operator) external override {
-        isOperator[msg.sender][_operator] = true;
-        emit AddOperator(msg.sender, _operator);
+    function addOperator(
+        uint256 _projectId,
+        address _operator,
+        uint256 _level
+    ) external override {
+        operatorLevel[msg.sender][_projectId][_operator] = _level;
+        emit AddOperator(msg.sender, _projectId, _level, _operator);
     }
 
     /** 
       @notice Revokes the ability for the specified operator to tap funds and redeem tickets on the msg.sender's behalf.
       @param _operator The operator to give permission to.
     */
-    function removeOperator(address _account, address _operator)
-        external
-        override
-    {
+    function removeOperator(
+        address _account,
+        uint256 _projectId,
+        address _operator
+    ) external override {
         // Revoke the operator if there's no msg.sender.
         if (_operator == address(0)) _operator = msg.sender;
 
         // Only an account or a specified operator can remove an operator. A specified operator can only remove themselves
         require(
             msg.sender == _account ||
-                (isOperator[_account][msg.sender] && _operator == msg.sender),
+                (operatorLevel[_account][_projectId][msg.sender] == 1 &&
+                    _operator == msg.sender),
             "Juicer::removeOperator: UNAUTHORIZED"
         );
-        isOperator[_account][_operator] = false;
-        emit RemoveOperator(_account, msg.sender, _operator);
+        operatorLevel[_account][_projectId][_operator] = 0;
+        emit RemoveOperator(_account, _projectId, msg.sender, _operator);
     }
 }

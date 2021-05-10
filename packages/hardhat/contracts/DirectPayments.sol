@@ -8,7 +8,7 @@ import "./interfaces/IProjects.sol";
 
 contract DirectPayments {
     mapping(uint256 => DirectPaymentAddress[]) private addresses;
-    mapping(uint256 => IJuicer) public juicers;
+    mapping(uint256 => IJuiceTerminal) public juiceTerminals;
     mapping(address => address) public beneficiaries;
     /// @notice The projects contract.
     IProjects public immutable projects;
@@ -29,14 +29,15 @@ contract DirectPayments {
 
     function deployAddress(
         uint256 _projectId,
-        IJuicer _juicer,
+        IJuiceTerminal _juiceTerminal,
         string memory _note
     ) external {
-        if (juicers[_projectId] == IJuicer(0)) juicers[_projectId] = _juicer;
+        if (juiceTerminals[_projectId] == IJuiceTerminal(0))
+            juiceTerminals[_projectId] = _juiceTerminal;
 
         require(
-            juicers[_projectId] == _juicer,
-            "DirectPayment::deployAddress: WRONG_JUICER"
+            juiceTerminals[_projectId] == _juiceTerminal,
+            "DirectPayment::deployAddress: WRONG_TERMINAL"
         );
 
         addresses[_projectId].push(
@@ -47,18 +48,22 @@ contract DirectPayments {
             beneficiaries[msg.sender] = msg.sender;
     }
 
-    function setJuicer(uint256 _projectId, IJuicer _juicer) external {
+    function setJuiceTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
+        external
+    {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
         // Only a project owner or a specified operator can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                // Allow level 2 operators.
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                2,
             "Juicer::tap: UNAUTHORIZED"
         );
 
-        juicers[_projectId] = _juicer;
+        juiceTerminals[_projectId] = _juiceTerminal;
     }
 
     function setBeneficiary(address _beneficiary) external {
@@ -82,7 +87,7 @@ contract DirectPaymentAddress {
     }
 
     receive() external payable {
-        directPayments.juicers(projectId).pay{value: msg.value}(
+        directPayments.juiceTerminals(projectId).pay{value: msg.value}(
             projectId,
             directPayments.beneficiaries(msg.sender),
             note

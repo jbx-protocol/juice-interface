@@ -77,11 +77,12 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         _modStore.removeMod(projectId, _id);
     }
 
-    function addOperator(IOperatorStore _operatorStore, address _operator)
-        external
-        onlyOwner
-    {
-        _operatorStore.addOperator(_operator);
+    function addOperator(
+        IOperatorStore _operatorStore,
+        address _operator,
+        uint256 _level
+    ) external onlyOwner {
+        _operatorStore.addOperator(projectId, _operator, _level);
     }
 
     function removeOperator(
@@ -89,6 +90,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         address _account,
         address _operator
     ) external onlyOwner {
-        _operatorStore.removeOperator(_account, _operator);
+        _operatorStore.removeOperator(_account, projectId, _operator);
     }
 }

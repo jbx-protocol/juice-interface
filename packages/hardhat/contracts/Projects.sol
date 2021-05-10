@@ -91,7 +91,8 @@ contract Projects is ERC721, IProjects, Administered {
         // Only a project owner or a specified operator can change its info.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                3,
             "Projects::setInfo: UNAUTHORIZED"
         );
 
@@ -140,7 +141,8 @@ contract Projects is ERC721, IProjects, Administered {
         // Only a project owner or a specified operator can transfer its handle.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender) ||
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                3 ||
                 this.isAdmin(msg.sender),
             "Projects::transferHandle: UNAUTHORIZED"
         );
@@ -180,7 +182,10 @@ contract Projects is ERC721, IProjects, Administered {
     ) external override onlyAdmin {
         // Only an account or a specified operator can claim a handle.
         require(
-            msg.sender == _for || operatorStore.isOperator(_for, msg.sender),
+            msg.sender == _for ||
+                operatorStore.operatorLevel(_for, _projectId, msg.sender) >=
+                2 ||
+                operatorStore.operatorLevel(_for, 0, msg.sender) >= 2,
             "Projects::transferHandle: UNAUTHORIZED"
         );
 
@@ -190,7 +195,8 @@ contract Projects is ERC721, IProjects, Administered {
         // Only a project owner or a specified operator can set its handle.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                2,
             "Projects::transferHandle: UNAUTHORIZED"
         );
 

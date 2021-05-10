@@ -3,20 +3,35 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 interface IOperatorStore {
-    event AddOperator(address indexed account, address operator);
+    event AddOperator(
+        address indexed account,
+        uint256 indexed projectId,
+        uint256 level,
+        address operator
+    );
 
     event RemoveOperator(
         address indexed account,
+        uint256 indexed projectId,
         address indexed remover,
         address operator
     );
 
-    function isOperator(address _account, address _operator)
-        external
-        view
-        returns (bool);
+    function operatorLevel(
+        address _account,
+        uint256 _projectId,
+        address _operator
+    ) external view returns (uint256);
 
-    function addOperator(address _operator) external;
+    function addOperator(
+        uint256 _projectId,
+        address _operator,
+        uint256 _level
+    ) external;
 
-    function removeOperator(address _account, address _operator) external;
+    function removeOperator(
+        address _account,
+        uint256 _projectId,
+        address _operator
+    ) external;
 }

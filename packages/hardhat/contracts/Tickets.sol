@@ -82,7 +82,8 @@ contract Tickets is ERC1155, ITickets {
         // Only a project owner or a specified operator can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                3,
             "ERC20TicketStore::issue: UNAUTHORIZED"
         );
 
@@ -181,7 +182,7 @@ contract Tickets is ERC1155, ITickets {
         // Only an account or a specified operator can convert its tickets.
         require(
             msg.sender == _account ||
-                operatorStore.isOperator(_account, msg.sender),
+                operatorStore.operatorLevel(_account, 0, msg.sender) >= 1,
             "Juicer::convertToERC20: UNAUTHORIZED"
         );
 

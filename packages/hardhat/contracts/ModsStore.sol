@@ -43,7 +43,9 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                // Allow level 2 operators.
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                2,
             "Juicer::addMod: UNAUTHORIZED"
         );
 
@@ -63,7 +65,9 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator, can remove a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                // Allow level 2 operators.
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                2,
             "Juicer::removeMod: UNAUTHORIZED"
         );
         Mod[] memory _mods = mods[_projectId];

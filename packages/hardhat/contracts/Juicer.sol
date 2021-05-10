@@ -349,7 +349,7 @@ contract Juicer is IJuicer {
         // Only a msg.sender or a specified operator can deploy its project.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                operatorStore.operatorLevel(_owner, 0, msg.sender) >= 3,
             "Juicer::deploy: UNAUTHORIZED"
         );
 
@@ -426,7 +426,9 @@ contract Juicer is IJuicer {
         // Only a msg.sender or a specified operator can reconfigure its.
         require(
             _owner == msg.sender ||
-                operatorStore.isOperator(_owner, msg.sender),
+                // Allow level 2 operators.
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                2,
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
@@ -541,7 +543,10 @@ contract Juicer is IJuicer {
         // Only a msg.sender or a specified operator can redeem its tickets.
         require(
             msg.sender == _account ||
-                operatorStore.isOperator(_account, msg.sender),
+                // Allow level 2 operators.
+                operatorStore.operatorLevel(_account, 0, msg.sender) >= 2 ||
+                operatorStore.operatorLevel(_account, _projectId, msg.sender) >=
+                2,
             "Juicer::redeem: UNAUTHORIZED"
         );
 
@@ -605,7 +610,9 @@ contract Juicer is IJuicer {
         // Only a project owner or a specified operator can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                // Allow level 1 operators
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
+                1,
             "Juicer::tap: UNAUTHORIZED"
         );
 
@@ -747,7 +754,8 @@ contract Juicer is IJuicer {
         // Only the project owner, or a delegated operator, can migrate its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.isOperator(_owner, msg.sender),
+                operatorStore.operatorLevel(_owner, _projectId, msg.sender) ==
+                4,
             "Juicer::migrate: UNAUTHORIZED"
         );
 

@@ -33,13 +33,13 @@ contract OperatorStore is IOperatorStore {
         uint256 _projectId,
         address _operator
     ) external override {
-        // Revoke the operator if there's no msg.sender.
+        // Revoke the msg.sender if there's no operator.
         if (_operator == address(0)) _operator = msg.sender;
 
         // Only an account or a specified operator can remove an operator. A specified operator can only remove themselves
         require(
             msg.sender == _account ||
-                (operatorLevel[_account][_projectId][msg.sender] == 1 &&
+                (operatorLevel[_account][_projectId][msg.sender] > 0 &&
                     _operator == msg.sender),
             "Juicer::removeOperator: UNAUTHORIZED"
         );

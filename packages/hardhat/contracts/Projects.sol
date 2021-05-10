@@ -143,7 +143,7 @@ contract Projects is ERC721, IProjects, Administered {
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
                 3 ||
-                this.isAdmin(msg.sender),
+                msg.sender == owner,
             "Projects::transferHandle: UNAUTHORIZED"
         );
         require(

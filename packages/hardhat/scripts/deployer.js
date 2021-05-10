@@ -6,21 +6,7 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const weth = require("../constants/weth");
 
-let localDeployerMnemonic;
-try {
-  localDeployerMnemonic = fs.readFileSync("./mnemonic.txt");
-  localDeployerMnemonic = localDeployerMnemonic.toString().trim();
-} catch (e) {
-  /* do nothing - this file isn't always there */
-}
-
 module.exports = async (wethAddr, ethUsdAddr) => {
-  const deployerWallet = new ethers.Wallet.fromMnemonic(
-    localDeployerMnemonic
-  ).connect(ethers.provider);
-
-  const deployerAddress = deployerWallet.address;
-
   const token = !wethAddr && (await deploy("Token"));
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
@@ -122,7 +108,14 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     // });
 
     console.log("⚡️ Set the deployer as an operator of the admin");
-    await attachedAdmin.addOperator(operatorStore.address, deployerAddress, 3);
+    await attachedAdmin.addOperator(
+      operatorStore.address,
+      admin.signer.address,
+      3,
+      {
+        gasLimit: blockGasLimit,
+      }
+    );
 
     console.log("⚡️ Configuring the admins budget");
 
@@ -153,7 +146,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     await attachedAdmin.removeOperator(
       operatorStore.address,
       admin.address,
-      deployerAddress
+      admin.signer.address,
+      {
+        gasLimit: blockGasLimit,
+      }
     );
 
     console.log("⚡️ Setting the admin's project ID");

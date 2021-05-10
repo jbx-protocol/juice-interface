@@ -347,12 +347,11 @@ contract Juicer is IJuicer {
         IFundingCycleBallot _ballot
     ) external override lock {
         // Only a msg.sender or a specified operator can deploy its project.
-        //TODO
-        // require(
-        //     msg.sender == _owner ||
-        //         operatorStore.operatorLevel(_owner, 0, msg.sender) >= 3,
-        //     "Juicer::deploy: UNAUTHORIZED"
-        // );
+        require(
+            msg.sender == _owner ||
+                operatorStore.operatorLevel(_owner, 0, msg.sender) >= 3,
+            "Juicer::deploy: UNAUTHORIZED"
+        );
 
         // Configure the project.
         FundingCycle.Data memory _fundingCycle =

@@ -830,7 +830,7 @@ contract Juicer is IJuicer {
         if (_balance >= _amount) return;
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
         yielder.withdraw(
-            _balance == 0 ? _amount : _amount.sub(_balance),
+            _balance == 0 ? _amount : _amount - _balance,
             address(this)
         );
     }
@@ -935,7 +935,7 @@ contract Juicer is IJuicer {
             _modsCut <= _totalTransferAmount,
             "Juicer::_transferToMods: BAD_MODS"
         );
-        _remaining = _totalTransferAmount.sub(_modsCut);
+        _remaining = _totalTransferAmount - _modsCut;
     }
 
     receive() external payable {}

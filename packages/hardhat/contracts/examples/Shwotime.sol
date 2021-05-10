@@ -39,11 +39,10 @@ contract Shwotime is JuiceProject {
     uint256 public fee;
 
     constructor(
-        IJuicer _juicer,
+        IJuiceTerminal _juiceTerminal,
         IERC20 _dai,
-        uint256 _fee,
-        address _pm
-    ) JuiceProject(_juicer, _pm) {
+        uint256 _fee
+    ) JuiceProject(_juiceTerminal) {
         dai = _dai;
         fee = _fee;
     }
@@ -147,6 +146,10 @@ contract Shwotime is JuiceProject {
             FullMath.mulDiv(_total, uint256(1000).sub(fee), 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
-        takeFee(_total.sub(_collectable), msg.sender, _note);
+        juiceTerminal.pay{value: _total.sub(_collectable)}(
+            projectId,
+            msg.sender,
+            _note
+        );
     }
 }

@@ -8,6 +8,7 @@ import "./ITickets.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
+import "./IModStore.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
@@ -47,7 +48,16 @@ interface IFundingCyclesController {
         uint256 currency,
         uint256 tappedAmount,
         uint256 transferAmount,
+        uint256 remainingAmount,
         address operator
+    );
+
+    event ModPayment(
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 percent,
+        uint256 total,
+        uint256 modCut
     );
 
     function fee() external view returns (uint256);
@@ -61,12 +71,6 @@ interface IFundingCyclesController {
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
-
-    function pay(
-        uint256 _projectId,
-        address _beneficiary,
-        string memory _note
-    ) external payable returns (uint256 fundingCycleId);
 
     function tap(
         uint256 _projectId,
@@ -109,10 +113,19 @@ interface IProjectFundsManager {
     function addToBalance(uint256 _projectId) external payable;
 }
 
+interface IJuiceTerminal {
+    function pay(
+        uint256 _projectId,
+        address _beneficiary,
+        string memory _note
+    ) external payable returns (uint256 fundingCycleId);
+}
+
 interface IJuicer is
     IFundingCyclesController,
     ITicketsController,
-    IProjectFundsManager
+    IProjectFundsManager,
+    IJuiceTerminal
 {
     event Migrate(
         uint256 indexed projectId,
@@ -157,6 +170,8 @@ interface IJuicer is
     function operatorStore() external view returns (IOperatorStore);
 
     function yielder() external view returns (IYielder);
+
+    function modStore() external view returns (IModStore);
 
     function balanceOf(uint256 _projectId, bool _includeYield)
         external

@@ -6,13 +6,30 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const weth = require("../constants/weth");
 
+let localDeployerMnemonic;
+try {
+  localDeployerMnemonic = fs.readFileSync("./mnemonic.txt");
+  localDeployerMnemonic = localDeployerMnemonic.toString().trim();
+} catch (e) {
+  /* do nothing - this file isn't always there */
+}
+
 module.exports = async (wethAddr, ethUsdAddr) => {
+  const deployerWallet = new ethers.Wallet.fromMnemonic(
+    localDeployerMnemonic
+  ).connect(ethers.provider);
+
+  const deployerAddress = deployerWallet.address;
+
   const token = !wethAddr && (await deploy("Token"));
   const prices = await deploy("Prices");
-  const projects = await deploy("Projects");
+  const operatorStore = await deploy("OperatorStore");
+  const projects = await deploy("Projects", [operatorStore.address]);
   const fundingCycles = await deploy("FundingCycles");
-  const tickets = await deploy("ERC1155Tickets");
-  const erc20TicketStore = await deploy("ERC20TicketStore");
+  const tickets = await deploy("Tickets", [
+    projects.address,
+    operatorStore.address,
+  ]);
   const yielder = await deploy("YearnYielder", [
     weth(process.env.HARDHAT_NETWORK) || token.address,
   ]);
@@ -21,7 +38,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     projects.address,
     fundingCycles.address,
     tickets.address,
-    erc20TicketStore.address,
+    operatorStore.address,
     prices.address,
     yielder.address,
   ]);
@@ -34,16 +51,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 
-  await deploy("DirectPayments", [projects.address]);
+  await deploy("DirectPayments", [projects.address, operatorStore.address]);
 
   const blockGasLimit = 9000000;
 
   try {
     const ProjectsFactory = await ethers.getContractFactory("Projects");
-    const TicketsFactory = await ethers.getContractFactory("ERC1155Tickets");
-    const ERC20TicketStoreFactory = await ethers.getContractFactory(
-      "ERC20TicketStore"
-    );
     const FundingCyclesFactory = await ethers.getContractFactory(
       "FundingCycles"
     );
@@ -53,10 +66,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
-    const attachedTickets = await TicketsFactory.attach(tickets.address);
-    const attachedERC20TicketStore = await ERC20TicketStoreFactory.attach(
-      erc20TicketStore.address
-    );
     const attachedFundingCycles = await FundingCyclesFactory.attach(
       fundingCycles.address
     );
@@ -67,14 +76,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     console.log("⚡️ Setting the projects owner");
     await attachedProjects.setOwnership(admin.address, {
-      gasLimit: blockGasLimit,
-    });
-    console.log("⚡️ Setting the tickets owner");
-    await attachedTickets.setOwnership(admin.address, {
-      gasLimit: blockGasLimit,
-    });
-    console.log("⚡️ Setting the ERC20 ticket store owner");
-    await attachedERC20TicketStore.setOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the fundingCycles owner");
@@ -100,16 +101,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     await attachedAdmin.grantAdmin(fundingCycles.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Granting the juicer admin privileges over the tickets");
-    await attachedAdmin.grantAdmin(tickets.address, juicer.address, {
-      gasLimit: blockGasLimit,
-    });
-    console.log(
-      "⚡️ Granting the juicer admin privileges over the ERC20 ticket store"
-    );
-    await attachedAdmin.grantAdmin(erc20TicketStore.address, juicer.address, {
-      gasLimit: blockGasLimit,
-    });
 
     if (ethUsdAddr) {
       console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
@@ -128,8 +119,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     //   gasLimit: blockGasLimit
     // });
 
+    console.log("⚡️ Set the deployer as an operator of the admin");
+    await attachedAdmin.addOperator(operatorStore.address, deployerAddress);
+
     console.log("⚡️ Configuring the admins budget");
-    // Create the admin's budget.
 
     const duration = 2592000; // 30 days;
     const discountRate = 970;
@@ -155,10 +148,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
         gasLimit: blockGasLimit,
       }
     );
-    console.log("⚡️ Removing the operator role");
-    await attachedJuicer.removeOperator(
+
+    console.log("⚡️ Remove the deployer as an operator of the admin");
+    await attachedAdmin.removeOperator(
+      operatorStore.address,
       admin.address,
-      "0x0000000000000000000000000000000000000000"
+      deployerAddress
     );
 
     console.log("⚡️ Setting the admin's project ID");

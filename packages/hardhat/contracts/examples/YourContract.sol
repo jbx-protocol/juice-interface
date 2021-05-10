@@ -6,5 +6,5 @@ import "../abstract/JuiceProject.sol";
 
 /// @dev This contract is an example of how you can use Juice to fund your own project.
 contract YourContract is JuiceProject {
-    constructor(IJuicer _juicer, address _pm) JuiceProject(_juicer, _pm) {}
+    constructor(IJuiceTerminal _juicer) JuiceProject(_juicer) {}
 }

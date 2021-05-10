@@ -14,7 +14,7 @@ import "./ERC20Ticket.sol";
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract ERC1155Tickets is ERC1155, ITickets {
+contract Tickets is ERC1155, ITickets {
     using SafeMath for uint256;
 
     // The total supply of 1155 tickets for each project.
@@ -40,7 +40,7 @@ contract ERC1155Tickets is ERC1155, ITickets {
         operatorStore = _operatorStore;
     }
 
-    function combinedTotalSupply(uint256 _projectId)
+    function totalSupply(uint256 _projectId)
         external
         view
         override
@@ -52,7 +52,7 @@ contract ERC1155Tickets is ERC1155, ITickets {
             _result = _result.add(_erc20Ticket.totalSupply());
     }
 
-    function combinedBalanceOf(address _holder, uint256 _projectId)
+    function totalBalanceOf(address _holder, uint256 _projectId)
         external
         view
         override

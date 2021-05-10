@@ -52,12 +52,9 @@ interface ITickets is IERC1155 {
         view
         returns (bool);
 
-    function combinedTotalSupply(uint256 _projectId)
-        external
-        view
-        returns (uint256);
+    function totalSupply(uint256 _projectId) external view returns (uint256);
 
-    function combinedBalanceOf(address _holder, uint256 _projectId)
+    function totalBalanceOf(address _holder, uint256 _projectId)
         external
         view
         returns (uint256 _result);

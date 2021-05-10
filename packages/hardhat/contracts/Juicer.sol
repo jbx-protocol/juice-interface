@@ -8,11 +8,6 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IFundingCycles.sol";
-import "./interfaces/IYielder.sol";
-import "./interfaces/IProjects.sol";
-import "./interfaces/ITickets.sol";
-import "./interfaces/IOperatorStore.sol";
 import "./abstract/JuiceProject.sol";
 
 import "./libraries/DSMath.sol";
@@ -109,6 +104,9 @@ contract Juicer is IJuicer {
 
     /// @notice The contract that puts idle funds to work.
     IYielder public immutable override yielder;
+
+    /// @notice The contract that stores mods for each project.
+    IModStore public immutable override modStore;
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
@@ -242,7 +240,7 @@ contract Juicer is IJuicer {
     ) public view override returns (uint256) {
         // The holder must have the specified number of the project's tickets.
         require(
-            tickets.combinedBalanceOf(_account, _projectId) >= _count,
+            tickets.totalBalanceOf(_account, _projectId) >= _count,
             "Juice::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
@@ -257,7 +255,7 @@ contract Juicer is IJuicer {
         if (_currentOverflow == 0) return 0;
 
         // Get the total number of tickets in circulation.
-        uint256 _totalSupply = tickets.combinedTotalSupply(_projectId);
+        uint256 _totalSupply = tickets.totalSupply(_projectId);
 
         // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
@@ -292,6 +290,7 @@ contract Juicer is IJuicer {
       @param _fundingCycles The funding cycle configurations.
       @param _tickets The mapping projects to ticket holders.
       @param _operatorStore The storage of operator assignment.
+      @param _modStore The storage for a project's mods.
       @param _prices The price feed contract to use.
       @param _yielder The contract responsible for earning yield on idle funds.
     */
@@ -300,6 +299,7 @@ contract Juicer is IJuicer {
         IFundingCycles _fundingCycles,
         ITickets _tickets,
         IOperatorStore _operatorStore,
+        IModStore _modStore,
         IPrices _prices,
         IYielder _yielder
     ) {
@@ -307,6 +307,7 @@ contract Juicer is IJuicer {
         fundingCycles = _fundingCycles;
         tickets = _tickets;
         operatorStore = _operatorStore;
+        modStore = _modStore;
         prices = _prices;
         yielder = _yielder;
     }
@@ -431,7 +432,7 @@ contract Juicer is IJuicer {
         );
 
         // Get a reference to the amount of tickets.
-        uint256 _totalTicketSupply = tickets.combinedTotalSupply(_projectId);
+        uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
 
         // Configure the funding stage's state.
         FundingCycle.Data memory _fundingCycle =
@@ -687,8 +688,10 @@ contract Juicer is IJuicer {
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
 
-        // Transfer the funds to the beneficiary.
-        _beneficiary.transfer(_transferAmount);
+        uint256 _remaining = _transferToMods(_projectId, _transferAmount);
+
+        // Transfer to mods, and transfer any remaining balance to the beneficiary.
+        _beneficiary.transfer(_remaining);
 
         emit Tap(
             _fundingCycleId,
@@ -698,6 +701,7 @@ contract Juicer is IJuicer {
             _currency,
             _tappedAmount,
             _transferAmount,
+            _remaining,
             msg.sender
         );
     }
@@ -731,14 +735,14 @@ contract Juicer is IJuicer {
         override
         lock
     {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
         // The migration destination must be allowed.
         require(
             migrationContractIsAllowed[address(_to)],
             "Juicer::migrate: BAD_DESTINATION"
         );
+
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
 
         // Only the project owner, or a delegated operator, can migrate its funds.
         require(
@@ -888,6 +892,37 @@ contract Juicer is IJuicer {
         _packed |= _metadata.bondingCurveRate << 8;
         // reserved rate in bytes 25-30 bytes.
         _packed |= _metadata.reservedRate << 24;
+    }
+
+    /** 
+      @notice Transfers the appropriate percentages to each of a project's mod.
+      @param _projectId The ID of the project whos mods are getting paid.
+      @param _totalTransferAmount The amount to base the percentages on.
+      @return _remaining The amount remaining from the `_totalTransferAmount` after all mods have been paid.
+    */
+    function _transferToMods(uint256 _projectId, uint256 _totalTransferAmount)
+        private
+        returns (uint256 _remaining)
+    {
+        uint256 _modsCut = 0;
+        Mod[] memory _mods = modStore.allMods(_projectId);
+        //Transfer between all mods.
+        for (uint256 _i = 0; _i < _mods.length; _i++) {
+            // The amount to send towards mods.
+            uint256 _modCut =
+                FullMath.mulDiv(_totalTransferAmount, _mods[_i].percent, 1000);
+            _mods[_i].beneficiary.transfer(_modCut);
+            _modsCut = _modsCut.add(_modCut);
+
+            emit ModPayment(
+                _projectId,
+                _mods[_i].beneficiary,
+                _mods[_i].percent,
+                _totalTransferAmount,
+                _modCut
+            );
+        }
+        _remaining = _totalTransferAmount.sub(_modsCut);
     }
 
     receive() external payable {}

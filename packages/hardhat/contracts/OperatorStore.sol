@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 
 import "./interfaces/IOperatorStore.sol";
 
-contract Operators is IOperatorStore {
+contract OperatorStore is IOperatorStore {
     /// @notice A mapping of the addresses that are designated operators of each account.
     mapping(address => mapping(address => bool)) public override isOperator;
 

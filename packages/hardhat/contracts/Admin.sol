@@ -10,10 +10,7 @@ import "./abstract/JuiceProject.sol";
 /// All functions in here should be governable with FLOW.
 /// Owner should eventually change to a governance contract.
 contract Admin is JuiceProject {
-    constructor(IJuicer _juicer, address _pm) JuiceProject(_juicer, _pm) {
-        // Add the deployer as an operator.
-        _juicer.operatorStore().addOperator(msg.sender);
-    }
+    constructor(IJuiceTerminal _juiceTerminal) JuiceProject(_juiceTerminal) {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.
@@ -62,20 +59,20 @@ contract Admin is JuiceProject {
         _prices.addFeed(_feed, _currency);
     }
 
-    // /**
-    //     @notice Allows the admin to transfer handles to/from different projects.
-    //     @dev This power is in place to eventually allow project's to exchange handles on a marketplace.
-    //     @param _juicer The juicer to transfer the handle in.
-    //     @param _projectId The ID of the project to transfer the handle from.
-    //     @param _to The address that can claim the newly transfered handle.
-    //     @param _newHandle The handle to replace the transfered one with.
-    // */
-    // function transferHandle(
-    //     IJuicer _juicer,
-    //     uint256 _projectId,
-    //     address _to,
-    //     string memory _newHandle
-    // ) external onlyOwner {
-    //     _juicer.transferHandle(_projectId, _to, _newHandle);
-    // }
+    /**
+        @notice Allows the admin to transfer handles to/from different projects.
+        @dev This power is in place to eventually allow project's to exchange handles on a marketplace.
+        @param _projects The projects contract.
+        @param _projectId The ID of the project to transfer the handle from.
+        @param _to The address that can claim the newly transfered handle.
+        @param _newHandle The handle to replace the transfered one with.
+    */
+    function transferHandle(
+        IProjects _projects,
+        uint256 _projectId,
+        address _to,
+        string memory _newHandle
+    ) external onlyOwner {
+        _projects.transferHandle(_projectId, _to, _newHandle);
+    }
 }

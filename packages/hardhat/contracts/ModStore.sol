@@ -4,19 +4,34 @@ pragma experimental ABIEncoderV2;
 
 import "./interfaces/IModStore.sol";
 
+// Stores mods for each project.
 contract ModStore is IModStore {
+    // All mods for each project ID.
     mapping(uint256 => Mod[]) private mods;
 
+    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
+
+    /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
 
-    uint256 public override modsId = 0;
+    /// @notice the total number of mods.
+    uint256 public override count = 0;
 
+    /** 
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+      @param _operatorStore A contract storing operator assignments.
+    */
     constructor(IProjects _projects, IOperatorStore _operatorStore) {
         projects = _projects;
         operatorStore = _operatorStore;
     }
 
+    /**
+      @notice Get all mods for the specified prject ID.
+      @param _projectId The ID of the project to get mods for.
+      @return An array of all mods for the project.
+     */
     function allMods(uint256 _projectId)
         external
         view
@@ -30,6 +45,7 @@ contract ModStore is IModStore {
       @notice Adds a mod to the list.
       @param _projectId The project to add a mod to.
       @param _beneficiary The address being funded from your tapped amount.
+      @param _amount The amount to send to the beneficiary of this mod. If 0, the percent will be used instead.
       @param _percent The percent of your target amount to send to the beneficiary of this mod. Out of 1000.
     */
     function addMod(
@@ -41,10 +57,9 @@ contract ModStore is IModStore {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // Only the project owner, or a delegated operator, can add a mod.
+        // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                // Allow level 2 operators.
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
                 2,
             "Juicer::addMod: UNAUTHORIZED"
@@ -59,12 +74,15 @@ contract ModStore is IModStore {
         // The percent should be less than 1000.
         require(_percent <= 1000, "ModStore::addMod: BAD_PERCENT");
 
-        modsId++;
+        // Increment the count.
+        count++;
+
+        // Push the new mod into the project's list of mods.
         mods[_projectId].push(
-            Mod(_beneficiary, uint16(_percent), _amount, modsId)
+            Mod(_beneficiary, uint16(_percent), _amount, count)
         );
 
-        emit AddMod(_projectId, modsId, _beneficiary, _amount, _percent);
+        emit AddMod(_projectId, count, _beneficiary, _amount, _percent);
     }
 
     /** 
@@ -76,19 +94,21 @@ contract ModStore is IModStore {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // Only the project owner, or a delegated operator, can remove a mod.
+        // Only the project owner, or a delegated operator of level 2 or greater, can remove a mod.
         require(
             msg.sender == _owner ||
-                // Allow level 2 operators.
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
                 2,
             "Juicer::removeMod: UNAUTHORIZED"
         );
+
+        // Get all of the project's mods into memory.
         Mod[] memory _mods = mods[_projectId];
+        // Delete the storage value.
         delete mods[_projectId];
-        for (uint256 _i = 0; _i < _mods.length; _i++) {
+        // Add the non deleted mods into storage.
+        for (uint256 _i = 0; _i < _mods.length; _i++)
             if (_mods[_i].id != _id) mods[_projectId].push(_mods[_i]);
-        }
 
         emit RemoveMod(_projectId, _id);
     }

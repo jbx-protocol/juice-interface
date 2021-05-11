@@ -6,8 +6,8 @@ interface IOperatorStore {
     event AddOperator(
         address indexed account,
         uint256 indexed projectId,
-        uint256 level,
-        address operator
+        address operator,
+        uint256 level
     );
 
     event RemoveOperator(

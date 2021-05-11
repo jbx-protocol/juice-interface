@@ -78,8 +78,8 @@ interface IProjects is IERC721 {
     ) external returns (string memory _handle);
 
     function claimHandle(
+        string memory _handle,
         address _for,
-        uint256 _projectId,
-        string memory _handle
+        uint256 _projectId
     ) external;
 }

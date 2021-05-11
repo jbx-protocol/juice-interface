@@ -10,9 +10,6 @@ import "./interfaces/IERC20Ticket.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/** 
-  @notice A token that can be minted in exchange for something.
-*/
 contract ERC20Ticket is ERC20, IERC20Ticket, Ownable {
     constructor(string memory _name, string memory _symbol)
         public

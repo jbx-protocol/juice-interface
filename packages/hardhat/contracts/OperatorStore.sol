@@ -22,7 +22,7 @@ contract OperatorStore is IOperatorStore {
         uint256 _level
     ) external override {
         operatorLevel[msg.sender][_projectId][_operator] = _level;
-        emit AddOperator(msg.sender, _projectId, _level, _operator);
+        emit AddOperator(msg.sender, _projectId, _operator, _level);
     }
 
     /** 
@@ -44,7 +44,10 @@ contract OperatorStore is IOperatorStore {
                     _operator == msg.sender),
             "Juicer::removeOperator: UNAUTHORIZED"
         );
+
+        // Set the operator to level 0.
         operatorLevel[_account][_projectId][_operator] = 0;
+
         emit RemoveOperator(_account, _projectId, msg.sender, _operator);
     }
 }

@@ -28,7 +28,7 @@ interface IModStore {
 
     function operatorStore() external view returns (IOperatorStore);
 
-    function modsId() external view returns (uint256);
+    function count() external view returns (uint256);
 
     function allMods(uint256 _projectId) external view returns (Mod[] memory);
 

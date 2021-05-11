@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 
+// Stores project ownership and identifying information.
 contract Projects is ERC721, IProjects, Administered {
     // --- private properties --- //
 
@@ -188,14 +189,21 @@ contract Projects is ERC721, IProjects, Administered {
         emit TransferHandle(_projectId, _to, _handle, _newHandle, msg.sender);
     }
 
+    /**
+      @notice Allows an address to claim and handle that has been transfered to them and apply it to a project of theirs.
+      @param _handle The handle being claimed.
+      @param _for The address that the handle has been transfered to.
+      @param _projectId The ID of the project to use the claimed handle.
+    */
     function claimHandle(
+        string memory _handle,
         address _for,
-        uint256 _projectId,
-        string memory _handle
+        uint256 _projectId
     ) external override onlyAdmin {
-        // Only an account or a specified operator can claim a handle.
+        // Only an account or a specified operator of level 2 or higher can claim a handle.
         require(
             msg.sender == _for ||
+                // Allow personal operators (setting projectId to 0), or operators of the specified project.
                 operatorStore.operatorLevel(_for, _projectId, msg.sender) >=
                 2 ||
                 operatorStore.operatorLevel(_for, 0, msg.sender) >= 2,
@@ -205,7 +213,7 @@ contract Projects is ERC721, IProjects, Administered {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
 
-        // Only a project owner or a specified operator can set its handle.
+        // Only a project owner or a specified operator of level 2 or higher can set its handle.
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
@@ -213,16 +221,17 @@ contract Projects is ERC721, IProjects, Administered {
             "Projects::transferHandle: UNAUTHORIZED"
         );
 
+        // The handle must have been transfered to the specified address.
         require(
             transferedHandles[bytes(_handle)] == _for,
             "Projects::claimHandle: UNAUTHORIZED"
         );
 
-        // If needed, clear the old handle and set the new one.
-        Info storage _info = info[_projectId];
-
         // Register the change in the resolver.
         handleResolver[bytes(_handle)] = _projectId;
+
+        // If needed, clear the old handle and set the new one.
+        Info storage _info = info[_projectId];
 
         // Set the new handle.
         _info.handle = _handle;

@@ -2,7 +2,6 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./FullMath.sol";
@@ -196,7 +195,7 @@ library FundingCycle {
         );
 
         // Add the amount to the funding cycle's tapped amount.
-        _self.tappedTarget = _self.tappedTarget.add(_amount);
+        _self.tappedTarget = _self.tappedTarget + _amount;
 
         // The amount of ETH that is being tapped.
         convertedEthAmount = DSMath.wdiv(_amount, _ethPrice);

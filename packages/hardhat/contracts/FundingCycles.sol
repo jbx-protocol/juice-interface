@@ -121,17 +121,17 @@ contract FundingCycles is Administered, IFundingCycles {
         @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
         sets the properties of the funding cycle that will take effect once the current one expires.
         @dev The msg.sender is the project of the funding cycle.
-        @param _projectId The ID of the project being configured. Send 0 to configure a new project.
-        @param _target The cashflow target to set.
-        @param _currency The currency of the target.
-        @param _duration The duration to set, measured in seconds.
-        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current funding cycle is 
-        compared to the project's previous funding cycle.
-        If it's 100, each funding cycle will have equal weight.
-        If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        @param _fee The fee that this configuration incures.
+        @param _projectId The ID of the project being reconfigured. 
+        @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
+        @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+        @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        If it's 1000, each funding stage will have equal weight.
+        If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+        If the number is 0, an non-recurring funding stage will get made.
+        @param _fee The fee that this configuration will incure when tapping.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _metadata Data to store with the funding cycle. The discount rate must be the first 16 bytes. 
+        @param _metadata Data to store with the funding cycle. 
         @param _configureActiveFundingCycle If the active funding cycle should be configurable.
         @return fundingCycle The funding cycle that was successfully configured.
     */

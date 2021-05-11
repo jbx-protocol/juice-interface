@@ -897,9 +897,9 @@ contract Juicer is IJuicer {
         // version 0 in the first 8 bytes.
         _packed = uint256(0);
         // bonding curve in bytes 9-24.
-        _packed |= _metadata.bondingCurveRate << 8;
+        _packed |= uint256(_metadata.bondingCurveRate) << 8; //_metadata.bondingCurveRate << 8;
         // reserved rate in bytes 25-30 bytes.
-        _packed |= _metadata.reservedRate << 24;
+        _packed |= uint256(_metadata.reservedRate) << 24; //_metadata.reservedRate << 24;
     }
 
     /** 

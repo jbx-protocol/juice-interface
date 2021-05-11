@@ -134,7 +134,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       discountRate,
       {
         bondingCurveRate: 690,
-        reservedRate: 48,
+        reservedRate: 50,
       },
       ballot.address,
       {

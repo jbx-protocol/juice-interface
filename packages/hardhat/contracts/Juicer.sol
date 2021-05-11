@@ -349,7 +349,7 @@ contract Juicer is IJuicer {
         // Only a msg.sender or a specified operator can deploy its project.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, 0, msg.sender) >= 3,
+                operatorStore.operatorLevel(_owner, 0, msg.sender) >= 4,
             "Juicer::deploy: UNAUTHORIZED"
         );
 
@@ -370,7 +370,7 @@ contract Juicer is IJuicer {
             );
 
         // Set this contract as the controller who can print and redeem tickets on behalf of the project.
-        // tickets.initialize(_fundingCycle.projectId);
+        tickets.initialize(_fundingCycle.projectId);
 
         emit Deploy(
             _fundingCycle.projectId,
@@ -426,9 +426,9 @@ contract Juicer is IJuicer {
         // Only a msg.sender or a specified operator can reconfigure its.
         require(
             _owner == msg.sender ||
-                // Allow level 2 operators.
+                // Allow level 3 operators.
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                2,
+                3,
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
@@ -755,7 +755,7 @@ contract Juicer is IJuicer {
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) ==
-                4,
+                5,
             "Juicer::migrate: UNAUTHORIZED"
         );
 
@@ -897,9 +897,9 @@ contract Juicer is IJuicer {
         // version 0 in the first 8 bytes.
         _packed = uint256(0);
         // bonding curve in bytes 9-24.
-        _packed |= uint256(_metadata.bondingCurveRate) << 8; //_metadata.bondingCurveRate << 8;
+        _packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-30 bytes.
-        _packed |= uint256(_metadata.reservedRate) << 24; //_metadata.reservedRate << 24;
+        _packed |= uint256(_metadata.reservedRate) << 24;
     }
 
     /** 

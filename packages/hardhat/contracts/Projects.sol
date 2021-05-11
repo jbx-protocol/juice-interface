@@ -104,7 +104,7 @@ contract Projects is ERC721, IProjects, Administered {
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                3,
+                4,
             "Projects::setInfo: UNAUTHORIZED"
         );
 
@@ -154,7 +154,8 @@ contract Projects is ERC721, IProjects, Administered {
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                3 ||
+                4 ||
+                // The contract's owner can transfer a handle also.s
                 msg.sender == owner,
             "Projects::transferHandle: UNAUTHORIZED"
         );

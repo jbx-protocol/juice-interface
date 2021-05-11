@@ -111,7 +111,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     await attachedAdmin.addOperator(
       operatorStore.address,
       admin.signer.address,
-      3,
+      4,
       {
         gasLimit: blockGasLimit,
       }

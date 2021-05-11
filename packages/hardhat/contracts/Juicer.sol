@@ -191,7 +191,7 @@ contract Juicer is IJuicer {
             fundingCycles.getCurrent(_projectId);
 
         // Get a reference to the amount still tappable in the current funding cycle.
-        uint256 _limit = _fundingCycle.target.sub(_fundingCycle.tappedTarget);
+        uint256 _limit = _fundingCycle.target - _fundingCycle.tappedTarget;
 
         // Get the current balance of the project with yield.
         (, uint256 _balanceOfWithYield) = balanceOf(_projectId);

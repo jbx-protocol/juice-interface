@@ -48,10 +48,8 @@ contract Projects is ERC721, IProjects, Administered {
     {
         uint256 _balance = balanceOf(_owner);
         infos = new Info[](_balance);
-        for (uint256 _i = 0; _i < _balance; _i++) {
+        for (uint256 _i = 0; _i < _balance; _i++)
             infos[_i] = info[tokenOfOwnerByIndex(_owner, _i)];
-        }
-        return infos;
     }
 
     constructor(IOperatorStore _operatorStore)

@@ -145,7 +145,11 @@ contract FundingCycles is Administered, IFundingCycles {
         onlyAdmin
         returns (FundingCycle.Data memory fundingCycle)
     {
+        // Target must be greater than 0.
         require(_target > 0, "FundingCycles::reconfigure: BAD_TARGET");
+
+        // Duration must be greater than 0.
+        require(_duration > 0, "FundingCycles::reconfigure: BAD_DURATION");
 
         // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
         FundingCycle.Data storage _fundingCycle =

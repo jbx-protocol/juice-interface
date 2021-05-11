@@ -62,34 +62,33 @@ contract Juicer is IJuicer {
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
-    // The current amount of funds that have been paid to each project since the last time the project tapped its funds.
-    // NOTE: a project's balance will decrease if it leaves its processableAmount unprocessed with a high yielding yielder.
+    // The current amount of funds that have been paid to each project since the last time the project tapped its funds (or migrated to a new juicer).
     mapping(uint256 => uint256) private processableAmount;
 
-    // The current cumulative amount of tokens redeemable by each project's Tickets.
+    // The current cumulative amount of tokens that have been redeemable by each project's Tickets.
     mapping(uint256 => uint256) private processedAmount;
 
-    // The current cumulative amount of tokens redeemable by each project's Tickets.
+    // The current cumulative amount of tokens distributed to each project's Ticket holders.
     mapping(uint256 => uint256) private distributedAmount;
 
     // --- public properties --- //
 
-    /// @notice The percent fee the Juice project takes from payments. Out of 1000.
+    /// @notice The percent fee the Juice project takes from tapped amounts. Out of 1000.
     uint256 public constant override fee = 50;
 
-    /// @notice The admin of the contract who makes admin fees and can take a handful of decisions over this contract's mechanics.
+    /// @notice The admin of the contract who makes admin fees and can allow new Juicer contracts to be migrated to by project owners.
     address payable public override admin;
 
-    /// @notice The projects contract.
+    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
 
     /// @notice The contract storing all funding cycle configurations.
     IFundingCycles public immutable override fundingCycles;
 
-    /// @notice The contract that manages the ERC1155Tickets.
+    /// @notice The contract that manages Ticket printing and redeeming.
     ITickets public immutable override tickets;
 
-    /// @notice A contract sotring operator assignments.
+    /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
 
     /// @notice The contract that puts idle funds to work.
@@ -116,8 +115,8 @@ contract Juicer is IJuicer {
     {
         // The amount of ETH available is this contract's balance plus whatever is in the yielder.
         amount = address(this).balance;
-        _includeYield
-            ? amount.add(yielder.getCurrentBalance())
+        _includeYield // Include the total balance of the yielder.
+            ? amount.add(yielder.getCurrentBalance()) // Just include the balance deposited in the yielder.
             : amount.add(yielder.deposited());
     }
 
@@ -202,7 +201,7 @@ contract Juicer is IJuicer {
         uint256 _balanceOf = balanceOf(_projectId, true);
 
         // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
-        uint256 _ethLimit =
+        uint256 _ethTapLimit =
             _limit == 0
                 ? 0
                 : DSMath.wdiv(
@@ -211,16 +210,16 @@ contract Juicer is IJuicer {
                 );
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return _balanceOf < _ethLimit ? 0 : _balanceOf.sub(_ethLimit);
+        return _balanceOf < _ethTapLimit ? 0 : _balanceOf - _ethTapLimit;
     }
 
     /**
         @notice The amount of tokens that can be claimed by the given address.
+        @dev The _account must have at least _count tickets for the specified project.
+        @dev If there is a funding cycle reconfiguration ballot open for the project, the project's current bonding curve is bypassed.
         @param _account The address to get an amount for.
-        Must be within the holder's balance.
         @param _projectId The ID of the project to get a claimable amount for.
         @param _count The number of Tickets that would be redeemed to get the resulting amount.
-        @dev The _account must have at least _count tickets for the specified project.
         @return amount The amount of tokens that can be claimed.
     */
     function claimableAmount(
@@ -231,7 +230,7 @@ contract Juicer is IJuicer {
         // The holder must have the specified number of the project's tickets.
         require(
             tickets.totalBalanceOf(_account, _projectId) >= _count,
-            "Juice::claimableAmount: INSUFFICIENT_FUNDS"
+            "Juicer::claimableAmount: INSUFFICIENT_FUNDS"
         );
 
         // Get a reference to the current funding cycle for the project.
@@ -258,10 +257,12 @@ contract Juicer is IJuicer {
         // Linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         if (_queuedCycle._isConfigurationPending()) return _baseAmount;
 
-        // The bonding curve rate is the first 16 bytes of the data property.
+        // The bonding curve rate is stored in bytes 9-25 of the data property after.
         uint256 _bondingCurveRate = uint16(_fundingCycle.metadata >> 8);
 
         // The bonding curve formula.
+        // https://www.desmos.com/calculator/sp9ru6zbpk
+        // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
         return
             _baseAmount.mul(
                 uint256(_bondingCurveRate)
@@ -276,13 +277,13 @@ contract Juicer is IJuicer {
     // --- external transactions --- //
 
     /** 
-      @param _projects The Projects contract which mints ERC-721's that represent project ownership and transfers.
-      @param _fundingCycles The funding cycle configurations.
-      @param _tickets The mapping projects to ticket holders.
-      @param _operatorStore The storage of operator assignment.
-      @param _modStore The storage for a project's mods.
-      @param _prices The price feed contract to use.
-      @param _yielder The contract responsible for earning yield on idle funds.
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+      @param _fundingCycles A funding cycle configuration store.
+      @param _tickets A contract that manages Ticket printing and redeeming.
+      @param _operatorStore A contract storing operator assignments.
+      @param _modStore A storage for a project's mods.
+      @param _prices A price feed contract to use.
+      @param _yielder A contract responsible for earning yield on idle funds.
     */
     constructor(
         IProjects _projects,
@@ -308,20 +309,19 @@ contract Juicer is IJuicer {
         @param _name The project's name.
         @param _handle The project's unique handle.
         @param _logoUri The URI pointing to the project's logo.
+        @param _link A link to information about the project and this funding stage.
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-        @param _duration The duration of the funding stage for which the `target` amount is needed. 
-        Measured in seconds.
-        Send 0 for an indefinite funding stage.
-        @param _link A link to information about the project and this funding stage.
+        @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
         @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _metadata the _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
-        If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
-        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
+        The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
+        where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
     */
     function deploy(
@@ -337,18 +337,17 @@ contract Juicer is IJuicer {
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external override lock {
-        // Only a msg.sender or a specified operator can deploy its project.
+        // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, 0, msg.sender) >= 4,
             "Juicer::deploy: UNAUTHORIZED"
         );
 
-        // Configure the project.
+        // Configure the funding cycle.
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
-                // The identifiers for this project are not functional and done purely for branding by a project's PM.
                 projects.create(_owner, _name, _handle, _logoUri, _link),
                 _target,
                 _currency,
@@ -382,23 +381,21 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Reconfigures the properties of the current funding stage if it hasn't yet received payments, or
+        @notice Reconfigures the properties of the current funding stage if the project hasn't distributed tickets yet, or
         sets the properties of the proposed funding stage that will take effect once the current one expires.
-        @dev The msg.sender must be the project of the funding cycle.
         @param _projectId The ID of the project being reconfigured. 
-        @param _target The cashflow target to set.
-        @param _currency The currency of the target.
-        @param _duration The duration to set for the funding stage.
-        Measured in seconds.
-        Send 0 for an indefinite funding stage.
-        @param _discountRate A number from 900-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
+        @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+        @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
         If it's 1000, each funding stage will have equal weight.
         If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
-        @param _metadata the _bondingCurveRate, and _reservedRate are uint16s packed together in order.
+        @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
         @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
-        If its 500, tickets redeemed today are woth 50% of their proportional amount, meaning if there are 100 total tickets and $40 claimable, 10 tickets can be redeemed for $2.
-        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project.
+        The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
+        where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycleId The id of the funding cycle that was successfully configured.
     */
@@ -414,7 +411,7 @@ contract Juicer is IJuicer {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // Only a msg.sender or a specified operator can reconfigure its.
+        // Only a msg.sender or a specified operator of level 3 or higher can reconfigure its funding cycles.
         require(
             _owner == msg.sender ||
                 // Allow level 3 operators.
@@ -457,14 +454,13 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Contribute funds to a project.
+        @notice Contribute ETH to a project.
         @dev Mints the project's tickets proportional to the amount of the contribution.
-        @dev The sender must approve this contract to transfer the specified amount of tokens.
-        @dev The msg.value is the amount of the contribution in ETH. Sent as 1E18.
+        @dev The msg.value is the amount of the contribution in ETH. Sent as a wad.
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
-        @return _fundingCycleId The ID of the funding stage that successfully received the contribution.
+        @return _fundingCycleId The ID of the funding stage that the payment was made during.
     */
     function pay(
         uint256 _projectId,
@@ -491,8 +487,8 @@ contract Juicer is IJuicer {
             _projectId,
             _fundingCycle._weighted(
                 msg.value,
-                // The reserved rate are the second 16 bytes of the data property.
-                uint256(1000).sub(uint16(_fundingCycle.metadata >> 24))
+                // The reserved rate are in bytes 25 - 30 of the data property.
+                uint256(1000) - uint256(uint16(_fundingCycle.metadata >> 24))
             )
         );
 
@@ -511,14 +507,14 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Addresses can redeem their Tickets to claim overflowed tokens.
+        @notice Addresses can redeem their Tickets to claim the project's overflowed ETH.
         @param _account The account to redeem tickets for.
         @param _projectId The ID of the project to which the Tickets being redeemed belong.
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
-        @param _beneficiary The address to send the tokens to.
-        @param _erc20 If erc20s are being redeemed.
-        @return amount The amount that the tickets were redeemed for.
+        @param _beneficiary The address to send the ETH to.
+        @param _useErc20 If ERC20s are being redeemed. Otherwise the ERC1155s will be redeemed.
+        @return amount The amount of ETH that the tickets were redeemed for.
     */
     function redeem(
         address _account,
@@ -526,15 +522,15 @@ contract Juicer is IJuicer {
         uint256 _count,
         uint256 _minReturnedETH,
         address payable _beneficiary,
-        bool _erc20
+        bool _useErc20
     ) external override lock returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
 
-        // Only a msg.sender or a specified operator can redeem its tickets.
+        // Only a msg.sender or a specified operator of level 2 or greater can redeem its tickets.
         require(
             msg.sender == _account ||
-                // Allow level 2 operators.
+                // Allow personal operators (setting projectId to 0), or operators of the specified project.
                 operatorStore.operatorLevel(_account, 0, msg.sender) >= 2 ||
                 operatorStore.operatorLevel(_account, _projectId, msg.sender) >=
                 2,
@@ -551,7 +547,7 @@ contract Juicer is IJuicer {
         );
 
         // Add to the amount that has now been distributed by the project.
-        // Since the `redeemedAmount` shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
+        // Since the distributed amount shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             FullMath.mulDiv(
                 // The current balance amount with no yield considerations...
@@ -566,7 +562,7 @@ contract Juicer is IJuicer {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the sender's wallet.
-        tickets.redeem(_account, _projectId, _count, _erc20);
+        tickets.redeem(_account, _projectId, _count, _useErc20);
 
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
@@ -577,12 +573,13 @@ contract Juicer is IJuicer {
             _projectId,
             msg.sender,
             _count,
-            amount
+            amount,
+            _useErc20
         );
     }
 
     /**
-        @notice Tap into funds that have been contributed to your funding cycles.
+        @notice Tap into funds that have been contributed to a project's funding cycles.
         @param _projectId The ID of the project to which the funding cycle being tapped belongs.
         @param _amount The amount being tapped, in the funding cycle's currency.
         @param _beneficiary The address to transfer the funds to.
@@ -598,10 +595,9 @@ contract Juicer is IJuicer {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // Only a project owner or a specified operator can tap its funds.
+        // Only a project owner or a specified operator of level 1 or greater can tap its funds.
         require(
             msg.sender == _owner ||
-                // Allow level 1 operators
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
                 1,
             "Juicer::tap: UNAUTHORIZED"
@@ -610,16 +606,20 @@ contract Juicer is IJuicer {
         // Can't tap funds to the zero address.
         require(_beneficiary != address(0), "Juicer::tap: ZERO_ADDRESS");
 
-        // Process any processable payments to make sure all reserved tickets are distributed.
-        _processPendingAmount(_projectId);
+        // Process any processable payments to make sure all eligible funds are available
+        // and the project owner receives its reserved tickets.
+        _processPendingAmount(_projectId, _owner);
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _projectBalance = balanceOf(_projectId, true);
 
         // Save the tapped state of the funding cycle.
         (
+            // The ID of the funding cycle that was tapped.
             uint256 _fundingCycleId,
+            // The amount of ETH tapped.
             uint256 _tappedAmount,
+            // The amount of ETH from the _tappedAmount to pay as a fee.
             uint256 _adminFeeAmount
         ) =
             fundingCycles.tap(
@@ -637,7 +637,9 @@ contract Juicer is IJuicer {
         );
 
         // Add to the amount that has now been distributed by the project.
-        // Since the `distributedAmount` doesn't include any earned yield but the `_tappedAmount` and `_adminFeeAmount` might include earned yields, the correct proportion must be subtracted.
+        // Since the distributed amount doesn't include any earned yield but the
+        // `_tappedAmount` and `_adminFeeAmount` might include earned yields,
+        // the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             FullMath.mulDiv(
                 // The current distributable amount...
@@ -675,20 +677,22 @@ contract Juicer is IJuicer {
                 _adminFundingCycle._weighted(
                     _adminFeeAmount,
                     // The reserved rate are the second 16 bytes of the data property.
-                    uint256(1000).sub(uint16(_adminFundingCycle.metadata >> 24))
+                    uint256(1000) -
+                        uint256(uint16(_adminFundingCycle.metadata >> 24))
                 )
             );
 
             // Transfer the tapped amount minus the fees.
-            _transferAmount = _tappedAmount.sub(_adminFeeAmount);
+            _transferAmount = _tappedAmount - _adminFeeAmount;
         }
 
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
 
+        // Transfer funds to the project's mods, and get a reference to how much is remaining after all mods have been paid.
         uint256 _remaining = _transferToMods(_projectId, _transferAmount);
 
-        // Transfer to mods, and transfer any remaining balance to the beneficiary.
+        // Transfer any remaining balance to the beneficiary.
         _beneficiary.transfer(_remaining);
 
         emit Tap(
@@ -705,7 +709,8 @@ contract Juicer is IJuicer {
     }
 
     /**
-      @notice Deposit any overflow funds that are not earning interest into the yielder.
+      @notice Deposit idle funds into the yielder.
+      @param _amount The amount of funds to deposit.
     */
     function deposit(uint256 _amount) external override lock {
         // There must be something depositable.
@@ -724,9 +729,9 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Allows a project owner to migrate its funds to a new Juicer.
+        @notice Allows a project owner to migrate its funds to a new contract that can manage a project's funds.
         @param _projectId The ID of the project being migrated.
-        @param _to The Juicer contract that will gain the project's funds.
+        @param _to The contract that will gain the project's funds.
     */
     function migrate(uint256 _projectId, IProjectFundsManager _to)
         external
@@ -742,7 +747,7 @@ contract Juicer is IJuicer {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // Only the project owner, or a delegated operator, can migrate its funds.
+        // Only the project owner, or a delegated operator of level 5, can migrate its funds.
         require(
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) ==
@@ -751,7 +756,7 @@ contract Juicer is IJuicer {
         );
 
         // Process any remaining funds if necessary.
-        _processPendingAmount(_projectId);
+        _processPendingAmount(_projectId, _owner);
 
         // Add the amount to what has now been distributed.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
@@ -764,22 +769,60 @@ contract Juicer is IJuicer {
         // Make sure the necessary funds are in the posession of this contract.
         _ensureAvailability(_amount);
 
-        // Move the funds to the new Juicer.
+        // Move the funds to the new contract.
         _to.addToBalance{value: _amount}(_projectId);
 
-        // Transfer the power to print and redeem tickets to the new juicer.
+        // Transfer the power to print and redeem tickets to the new contract.
         tickets.addController(address(_to), _projectId);
         tickets.removeController(address(this), _projectId);
 
         emit Migrate(_projectId, _to, _amount, msg.sender);
     }
 
-    /** 
-      @notice Transfer funds from the message sender to this contract belonging to the specified project.
-      @dev The msg.value is the amount that the claimable tokens are worth.
-      @param _projectId The ID of the project to which the tickets getting credited with overflow belong.
+    /**
+        @notice Set the admin of this contract.
+        @dev Can be set once. 
+        @param _admin The admin to set.
     */
-    function addToBalance(uint256 _projectId) external payable override lock {
+    function setAdmin(address payable _admin) external override {
+        // An admin can't already be set.
+        require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
+        // The admin can't be the zero address.
+        require(_admin != address(0), "Juicer::setAdmin: ZERO_ADDRESS");
+
+        // Set the admin.
+        admin = _admin;
+
+        emit SetAdmin(_admin);
+    }
+
+    /**
+        @notice Adds to the contract addresses that projects can migrate their Tickets to.
+        @param _contract The contract to allow.
+    */
+    function allowMigration(address _contract) external override {
+        // Only the admin can take this action.
+        require(msg.sender == admin, "Juicer::allowMigration: UNAUTHORIZED");
+
+        // Can't allow the zero address.
+        require(
+            _contract != address(0),
+            "Juicer::allowMigration: ZERO_ADDRESS"
+        );
+
+        // Set the contract as allowed
+        migrationContractIsAllowed[_contract] = true;
+
+        emit AddToMigrationAllowList(_contract);
+    }
+
+    // --- public transactions --- //
+
+    /** 
+      @notice Receives funds belonging to the specified project.
+      @param _projectId The ID of the project to which the funds received belong.
+    */
+    function addToBalance(uint256 _projectId) public payable override lock {
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
@@ -789,37 +832,19 @@ contract Juicer is IJuicer {
         emit AddToBalance(_projectId, msg.sender);
     }
 
-    /**
-        @notice The admin of this contract.
-        @dev Can be set once. The admin will set this upon being deployed.
-        @param _admin The admin to set.
-    */
-    function setAdmin(address payable _admin) external override {
-        require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
-        admin = _admin;
-        emit SetAdmin(_admin);
-    }
-
-    /**
-        @notice Adds to the contract addresses that projects can migrate their Tickets to.
-        @param _allowed The contract to allow.
-    */
-    function allowMigration(address _allowed) external override {
-        require(msg.sender == admin, "Juicer::allowMigration: UNAUTHORIZED");
-        migrationContractIsAllowed[_allowed] = true;
-        emit AddToMigrationAllowList(_allowed);
-    }
-
     // --- private transactions --- //
 
     /** 
-      @notice Makes sure the requested amount is in the posession of this contract.
+      @notice Makes sure the specified amount is in the possession of this contract.
       @param _amount The amount to ensure.
     */
     function _ensureAvailability(uint256 _amount) private {
+        // Get a reference to the amount of ETH currently in this contract.
         uint256 _balance = address(this).balance;
+
         // No need to withdraw from the yielder if the current balance is greater than the amount being ensured.
         if (_balance >= _amount) return;
+
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
         yielder.withdraw(
             _balance == 0 ? _amount : _amount - _balance,
@@ -830,24 +855,26 @@ contract Juicer is IJuicer {
     /** 
       @notice Processes payments by making sure the project has received all reserved tickets, and updating the state variables.
       @param _projectId The ID of the project to process payments for.
+      @param _owner The owner of the project.
     */
-    function _processPendingAmount(uint256 _projectId) private {
+    function _processPendingAmount(uint256 _projectId, address _owner) private {
         // Get a referrence to the amount current processable for this project.
         uint256 _processableAmount = processableAmount[_projectId];
 
+        // If nothing is processable, there's no work to do.
         if (_processableAmount == 0) return;
 
         // Get a reference to the current funding cycle.
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
-        // The reserved rate are the second 16 bytes of the data property.
+        // The reserved rate are stored in bytes 25-30 of the data property.
         uint256 _reservedRate = uint16(_fundingCycle.metadata >> 24);
 
         // Print tickets for the project owner if needed.
         if (_reservedRate > 0) {
             tickets.print(
-                projects.ownerOf(_projectId),
+                _owner,
                 _projectId,
                 _fundingCycle._weighted(_processableAmount, _reservedRate)
             );
@@ -867,13 +894,14 @@ contract Juicer is IJuicer {
     }
 
     /**
-      @notice Validate the funding cycle metadata.
-      @param _metadata The metadata to validate.
+      @notice Validate and pack the funding cycle metadata.
+      @param _metadata The metadata to validate and pack.
+      @return packed The packed uint256 of all metadata params. The first 8 bytes specify the version.
      */
     function _validateAndPackFundingCycleMetadata(
         FundingCycleMetadata memory _metadata
-    ) private pure returns (uint256 _packed) {
-        // The `bondingCurveRate` must be between 0 and 1000.
+    ) private pure returns (uint256 packed) {
+        // The bonding curve rate must be between 0 and 1000.
         require(
             _metadata.bondingCurveRate > 0 &&
                 _metadata.bondingCurveRate <= 1000,
@@ -887,15 +915,15 @@ contract Juicer is IJuicer {
         );
 
         // version 0 in the first 8 bytes.
-        _packed = uint256(0);
+        packed = uint256(0);
         // bonding curve in bytes 9-24.
-        _packed |= uint256(_metadata.bondingCurveRate) << 8;
+        packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-30 bytes.
-        _packed |= uint256(_metadata.reservedRate) << 24;
+        packed |= uint256(_metadata.reservedRate) << 24;
     }
 
     /** 
-      @notice Transfers the appropriate percentages to each of a project's mod.
+      @notice Transfers the appropriate amounts to each of a project's mod.
       @param _projectId The ID of the project whos mods are getting paid.
       @param _totalTransferAmount The amount to base the percentages on.
       @return _remaining The amount remaining from the `_totalTransferAmount` after all mods have been paid.
@@ -904,6 +932,7 @@ contract Juicer is IJuicer {
         private
         returns (uint256 _remaining)
     {
+        // The total amount sent to mods.
         uint256 _modsCut = 0;
         Mod[] memory _mods = modStore.allMods(_projectId);
         //Transfer between all mods.
@@ -917,7 +946,11 @@ contract Juicer is IJuicer {
                         _mods[_i].percent,
                         1000
                     );
+
+            // Transfer ETH to the mod.
             _mods[_i].beneficiary.transfer(_modCut);
+
+            // Add the amount to the total sent to mods.
             _modsCut = _modsCut.add(_modCut);
 
             emit ModPayment(
@@ -936,5 +969,8 @@ contract Juicer is IJuicer {
         _remaining = _totalTransferAmount - _modsCut;
     }
 
-    receive() external payable {}
+    // If funds are sent to this contract directly, add to the admins processable amount.
+    receive() external payable {
+        addToBalance(JuiceProject(admin).projectId());
+    }
 }

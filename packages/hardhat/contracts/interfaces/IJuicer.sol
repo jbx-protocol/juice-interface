@@ -90,7 +90,8 @@ interface ITicketsController {
         uint256 indexed _projectId,
         address operator,
         uint256 amount,
-        uint256 returnAmount
+        uint256 returnAmount,
+        bool _useErc20
     );
 
     function claimableAmount(
@@ -105,7 +106,7 @@ interface ITicketsController {
         uint256 _amount,
         uint256 _minReturnedETH,
         address payable _beneficiary,
-        bool _erc20
+        bool _useErc20
     ) external returns (uint256 returnAmount);
 }
 

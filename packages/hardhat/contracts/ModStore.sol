@@ -35,6 +35,7 @@ contract ModStore is IModStore {
     function addMod(
         uint256 _projectId,
         address payable _beneficiary,
+        uint256 _amount,
         uint256 _percent
     ) external override {
         // Get a reference to the project owner.
@@ -49,8 +50,21 @@ contract ModStore is IModStore {
             "Juicer::addMod: UNAUTHORIZED"
         );
 
+        // Either the amount or the percent must be specified.
+        require(
+            _amount > 0 || _percent > 0,
+            "ModStore::addMod: UNSPECIFIED_PORTION"
+        );
+
+        // The percent should be less than 1000.
+        require(_percent <= 1000, "ModStore::addMod: BAD_PERCENT");
+
         modsId++;
-        mods[_projectId].push(Mod(modsId, uint16(_percent), _beneficiary));
+        mods[_projectId].push(
+            Mod(_beneficiary, uint16(_percent), _amount, modsId)
+        );
+
+        emit AddMod(_projectId, modsId, _beneficiary, _amount, _percent);
     }
 
     /** 
@@ -75,5 +89,7 @@ contract ModStore is IModStore {
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             if (_mods[_i].id != _id) mods[_projectId].push(_mods[_i]);
         }
+
+        emit RemoveMod(_projectId, _id);
     }
 }

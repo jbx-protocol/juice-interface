@@ -65,18 +65,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         return this.onERC721Received.selector;
     }
 
-    function addMod(
-        IModStore _modStore,
-        address payable _beneficiary,
-        uint256 _percent
-    ) external onlyOwner {
-        _modStore.addMod(projectId, _beneficiary, _percent);
-    }
-
-    function removeMod(IModStore _modStore, uint256 _id) external onlyOwner {
-        _modStore.removeMod(projectId, _id);
-    }
-
     function addOperator(
         IOperatorStore _operatorStore,
         address _operator,

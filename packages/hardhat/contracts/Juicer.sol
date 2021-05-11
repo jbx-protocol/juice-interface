@@ -2,9 +2,6 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IJuicer.sol";
@@ -15,9 +12,9 @@ import "./libraries/ProportionMath.sol";
 import "./libraries/FullMath.sol";
 
 /**
-  @notice This contract manages the Juice ecosystem, and manages the flow of funds.
+  @notice This contract manages the Juice ecosystem, and manages all funds.
   @dev  1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 
-        2. Anyone can pay your project in ETH, which gives them Tickets in return that can be redeemed for any of your project's overflow.
+        2. Anyone can pay your project in ETH, which gives them your Tickets in return that can be redeemed for your project's overflowed funds.
            They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
               - The contributed amount of ETH. The more someone contributes, the more Tickets they'll receive.
               - The target amount of your funding cycle. The bigger your funding cycle's target amount, the fewer tickets that'll be minted for each ETH paid.
@@ -25,12 +22,12 @@ import "./libraries/FullMath.sol";
                 This rate is called a "discount rate" because it allows you to give out more Tickets to those who contribute to your 
                 earlier funding cycles, effectively giving earlier adopters a discounted rate.
         3. You can tap ETH up to your specified denominated amount. 
-           Any overflow can be claimed by Ticket holders by redeeming tickets, otherwise it rolls over to your future funding periods.
+           Any overflow can be claimed by Ticket holders by redeeming tickets along a bonding curve that rewards those who wait longer to redeem, 
+           otherwise overflow rolls over to your future funding periods.
         6. You can reconfigure your project at any time with the approval of a ballot that you pre set.
            The new configuration will go into effect once the current funding cycle one expires.
 
   @dev A project can transfer its funds, along with the power to mint/burn their Tickets, from this contract to another allowed contract at any time.
-       Contracts that are allowed to take on the power to mint/burn Tickets can be set by this controller's admin.
 */
 
 // ───────────────────────────────────────────────────────────────────────────────────────────
@@ -49,10 +46,9 @@ import "./libraries/FullMath.sol";
 
 contract Juicer is IJuicer {
     using SafeMath for uint256;
-    using SafeERC20 for IERC20;
     using FundingCycle for FundingCycle.Data;
 
-    /// @dev Limit sustain, redeem, swap, and tap to being called one at a time and non reentrent.
+    // A function modifier to prevent reentrent calls.
     uint256 private unlocked = 1;
     modifier lock() {
         require(unlocked == 1, "Juicer: LOCKED");
@@ -61,17 +57,12 @@ contract Juicer is IJuicer {
         unlocked = 1;
     }
 
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Juicer: UNAUTHORIZED");
-        _;
-    }
-
     // --- private properties --- //
 
-    // If a particulate contract is available for projects to migrate their Tickets to.
+    // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
-    // The current cumulative amount of tokens redeemable by each project's Tickets.
+    // The current amount of funds that have been paid to each project since the last time the project tapped its funds.
     // NOTE: a project's balance will decrease if it leaves its processableAmount unprocessed with a high yielding yielder.
     mapping(uint256 => uint256) private processableAmount;
 
@@ -813,7 +804,8 @@ contract Juicer is IJuicer {
         @notice Adds to the contract addresses that projects can migrate their Tickets to.
         @param _allowed The contract to allow.
     */
-    function allowMigration(address _allowed) external override onlyAdmin {
+    function allowMigration(address _allowed) external override {
+        require(msg.sender == admin, "Juicer::allowMigration: UNAUTHORIZED");
         migrationContractIsAllowed[_allowed] = true;
         emit AddToMigrationAllowList(_allowed);
     }
@@ -918,7 +910,13 @@ contract Juicer is IJuicer {
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             // The amount to send towards mods.
             uint256 _modCut =
-                FullMath.mulDiv(_totalTransferAmount, _mods[_i].percent, 1000);
+                _mods[_i].amount > 0
+                    ? _mods[_i].amount
+                    : FullMath.mulDiv(
+                        _totalTransferAmount,
+                        _mods[_i].percent,
+                        1000
+                    );
             _mods[_i].beneficiary.transfer(_modCut);
             _modsCut = _modsCut.add(_modCut);
 

@@ -6,28 +6,23 @@ import "./IOperatorStore.sol";
 import "./IProjects.sol";
 
 struct Mod {
-    uint256 id;
-    uint16 percent;
     address payable beneficiary;
+    // Optional. Either specify amount or percent (out of 1000).
+    uint16 percent;
+    uint256 amount;
+    uint256 id;
 }
 
 interface IModStore {
     event AddMod(
         uint256 indexed projectId,
-        string handle,
-        string name,
-        string logoUri,
-        string link,
-        address operator
+        uint256 indexed id,
+        address indexed beneficiary,
+        uint256 amount,
+        uint256 percent
     );
 
-    event RemoveMod(
-        uint256 indexed projectId,
-        address indexed to,
-        string handle,
-        string newHandle,
-        address operator
-    );
+    event RemoveMod(uint256 indexed projectId, uint256 indexed id);
 
     function projects() external view returns (IProjects);
 
@@ -40,6 +35,7 @@ interface IModStore {
     function addMod(
         uint256 _projectId,
         address payable _beneficiary,
+        uint256 _amount,
         uint256 _percent
     ) external;
 

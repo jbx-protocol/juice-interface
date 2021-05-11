@@ -75,7 +75,6 @@ interface IFundingCyclesController {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
         address payable _beneficiary,
         uint256 _minReturnedEth
     ) external;
@@ -174,17 +173,20 @@ interface IJuicer is
 
     function modStore() external view returns (IModStore);
 
-    function balanceOf(uint256 _projectId, bool _includeYield)
+    function balanceOf(uint256 _projectId)
         external
         view
-        returns (uint256);
+        returns (uint256 amountWithoutYield, uint256 amountWithYield);
 
     function currentOverflowOf(uint256 _projectId)
         external
         view
         returns (uint256);
 
-    function balance(bool _includeYield) external view returns (uint256);
+    function balance()
+        external
+        view
+        returns (uint256 amountWithoutYield, uint256 amountWithYield);
 
     function setAdmin(address payable _admin) external;
 

@@ -11,7 +11,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
-  const fundingCycles = await deploy("FundingCycles");
+  const fundingCycles = await deploy("FundingCycles", [prices.address]);
   const tickets = await deploy("Tickets", [
     projects.address,
     operatorStore.address,

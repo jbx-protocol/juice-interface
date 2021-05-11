@@ -106,7 +106,7 @@ library FundingCycle {
         view
         returns (uint256)
     {
-        uint256 _end = uint256(_self.start).add(_self.duration);
+        uint256 _end = uint256(_self.start).add(uint256(_self.duration));
         // Use the old end if the current time is still within the duration.
         if (_end.add(_self.duration) > block.timestamp) return _end;
         // Otherwise, use the closest multiple of the duration from the old end.
@@ -267,8 +267,7 @@ library FundingCycle {
     {
         if (_self.tappedTarget == _self.target) return 0;
         return
-            FullMath
-                .mulDiv(_self.target, 1000, uint256(1000).add(_self.fee))
-                .sub(_self.tappedTarget);
+            FullMath.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)) -
+            _self.tappedTarget;
     }
 }

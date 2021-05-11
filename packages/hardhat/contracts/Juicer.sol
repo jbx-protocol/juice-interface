@@ -104,53 +104,53 @@ contract Juicer is IJuicer {
 
     /** 
       @notice Gets the total amount of funds that this Juicer is responsible for.
-      @param _includeYield If the result should include any accumulated yield.
-      @return amount The balance of funds.
+      @return amountWithoutYield The balance of funds not including any yield.
+      @return amountWithYield The balance of funds including any yield.
     */
-    function balance(bool _includeYield)
+    function balance()
         public
         view
         override
-        returns (uint256 amount)
+        returns (uint256 amountWithoutYield, uint256 amountWithYield)
     {
         // The amount of ETH available is this contract's balance plus whatever is in the yielder.
-        amount = address(this).balance;
-        _includeYield // Include the total balance of the yielder.
-            ? amount.add(yielder.getCurrentBalance()) // Just include the balance deposited in the yielder.
-            : amount.add(yielder.deposited());
+        uint256 _amount = address(this).balance;
+        amountWithoutYield = _amount.add(yielder.deposited());
+        amountWithYield = _amount.add(yielder.getCurrentBalance());
     }
 
     /** 
       @notice Gets the balance for a specified project that this Juicer is responsible for.
       @param _projectId The ID of the project to get the balance of.
-      @param _includeYield If the result should include any accumulated yield.
-      @return amount The balance of funds for the project.
+      @return amountWithoutYield The balance of funds for the project not including any yield.
+      @return amountWithYield The balance of funds for the project including any yield.
     */
-    function balanceOf(uint256 _projectId, bool _includeYield)
+    function balanceOf(uint256 _projectId)
         public
         view
         override
-        returns (uint256)
+        returns (uint256 amountWithoutYield, uint256 amountWithYield)
     {
         // Get a reference to the balance.
-        uint256 _balance = balance(false);
+        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
         // If there is no balance, the project must not have a balance either.
-        if (_balance == 0) return 0;
+        if (_balanceWithoutYield == 0) return (0, 0);
 
         // Get a reference to the amount that is processable for this project.
         // The balance should include this amount, while adjusting for any amount of yield.
         uint256 _processableAmount = processableAmount[_projectId];
 
         // If the balance is composed entirely of the processable amount, return it.
-        if (_balance == _processableAmount) return _processableAmount;
+        if (_balanceWithoutYield == _processableAmount)
+            return (_processableAmount, _processableAmount);
 
         // The total balance in this contract without accounting for the processable amount.
-        uint256 _adjustedBalance = _balance.sub(_processableAmount);
+        uint256 _adjustedBalance = _balanceWithoutYield - _processableAmount;
 
         // The total balance in this contract, including any generated yield, without accounting for the processable amount.
         uint256 _adjustedYieldingBalance =
-            balance(true).sub(_processableAmount);
+            _balanceWithYield - _processableAmount;
 
         // Make the calculation from the state without the processable amount.
         uint256 _adjustedProcessableAmount =
@@ -163,20 +163,16 @@ contract Juicer is IJuicer {
                 );
 
         // processed amount plus the processable amount, minus whats already been distributed.
-        uint256 _totalAmount =
-            processedAmount[_projectId].add(_adjustedProcessableAmount).sub(
-                distributedAmount[_projectId]
-            );
+        amountWithoutYield = processedAmount[_projectId]
+            .add(_adjustedProcessableAmount)
+            .sub(distributedAmount[_projectId]);
 
         // The overflow is the proportion of the total available to what's claimable for the project.
-        return
-            _includeYield
-                ? FullMath.mulDiv(
-                    _totalAmount,
-                    _adjustedYieldingBalance,
-                    _adjustedBalance
-                )
-                : _totalAmount;
+        amountWithYield = FullMath.mulDiv(
+            amountWithoutYield,
+            _adjustedYieldingBalance,
+            _adjustedBalance
+        );
     }
 
     /** 
@@ -197,8 +193,8 @@ contract Juicer is IJuicer {
         // Get a reference to the amount still tappable in the current funding cycle.
         uint256 _limit = _fundingCycle.target.sub(_fundingCycle.tappedTarget);
 
-        // Get the current balance of the project.
-        uint256 _balanceOf = balanceOf(_projectId, true);
+        // Get the current balance of the project with yield.
+        (, uint256 _balanceOfWithYield) = balanceOf(_projectId);
 
         // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
         uint256 _ethTapLimit =
@@ -210,7 +206,10 @@ contract Juicer is IJuicer {
                 );
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return _balanceOf < _ethTapLimit ? 0 : _balanceOf - _ethTapLimit;
+        return
+            _balanceOfWithYield < _ethTapLimit
+                ? 0
+                : _balanceOfWithYield - _ethTapLimit;
     }
 
     /**
@@ -473,24 +472,8 @@ contract Juicer is IJuicer {
         // Cant send tickets to the zero address.
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
-        // Get a reference to the current funding cycle.
-        FundingCycle.Data memory _fundingCycle = fundingCycles.get(_projectId);
-
-        // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
-        processableAmount[_fundingCycle.projectId] = processableAmount[
-            _fundingCycle.projectId
-        ]
-            .add(msg.value);
-
-        tickets.print(
-            _beneficiary,
-            _projectId,
-            _fundingCycle._weighted(
-                msg.value,
-                // The reserved rate are in bytes 25 - 30 of the data property.
-                uint256(1000) - uint256(uint16(_fundingCycle.metadata >> 24))
-            )
-        );
+        FundingCycle.Data memory _fundingCycle =
+            _fund(_projectId, msg.value, _beneficiary);
 
         emit Pay(
             _fundingCycle.id,
@@ -546,15 +529,19 @@ contract Juicer is IJuicer {
             "Juicer::redeem: INSUFFICIENT_FUNDS"
         );
 
+        // Get the project's balance with and without yield.
+        (uint256 _balanceOfWithoutYield, uint256 _balanceOfWithYield) =
+            balanceOf(_projectId);
+
         // Add to the amount that has now been distributed by the project.
         // Since the distributed amount shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             FullMath.mulDiv(
                 // The current balance amount with no yield considerations...
-                balanceOf(_projectId, false),
+                _balanceOfWithoutYield,
                 // multiplied by the ratio of the amount redeemed to the total yielding balance of the project.
                 amount,
-                balanceOf(_projectId, true)
+                _balanceOfWithYield
             )
         );
 
@@ -588,7 +575,6 @@ contract Juicer is IJuicer {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
         address payable _beneficiary,
         uint256 _minReturnedETH
     ) external override lock {
@@ -611,7 +597,8 @@ contract Juicer is IJuicer {
         _processPendingAmount(_projectId, _owner);
 
         // Get a reference to this project's current balance, included any earned yield.
-        uint256 _projectBalance = balanceOf(_projectId, true);
+        (uint256 _balanceOfWithoutYield, uint256 _balanceOfWithYield) =
+            balanceOf(_projectId);
 
         // Save the tapped state of the funding cycle.
         (
@@ -621,14 +608,7 @@ contract Juicer is IJuicer {
             uint256 _tappedAmount,
             // The amount of ETH from the _tappedAmount to pay as a fee.
             uint256 _adminFeeAmount
-        ) =
-            fundingCycles.tap(
-                _projectId,
-                _amount,
-                _currency,
-                _projectBalance,
-                prices.getETHPrice(_currency)
-            );
+        ) = fundingCycles.tap(_projectId, _amount, _balanceOfWithYield);
 
         // The amount being tapped must be at least as much as was expected.
         require(
@@ -642,11 +622,11 @@ contract Juicer is IJuicer {
         // the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             FullMath.mulDiv(
-                // The current distributable amount...
-                balanceOf(_projectId, false),
+                // The current balance without yield...
+                _balanceOfWithoutYield,
                 // multiplied by the ratio of the amount being tapped and used as a fee to the total yielding balance of the project.
                 _tappedAmount,
-                _projectBalance
+                _balanceOfWithYield
             )
         );
 
@@ -660,28 +640,8 @@ contract Juicer is IJuicer {
         if (_projectId == _adminProjectId) {
             _transferAmount = _tappedAmount;
         } else {
-            // Get a reference to the admin's funding cycle, which will be receiving the fee.
-            FundingCycle.Data memory _adminFundingCycle =
-                fundingCycles.getCurrent(_adminProjectId);
-
-            // Add to the processable amount for the admin, which will eventually distribute reserved tickets to the admin's owner.
-            processableAmount[_adminProjectId] = processableAmount[
-                _adminProjectId
-            ]
-                .add(_adminFeeAmount);
-
-            // Print admin tickets for the tapper.
-            tickets.print(
-                _beneficiary,
-                _adminProjectId,
-                _adminFundingCycle._weighted(
-                    _adminFeeAmount,
-                    // The reserved rate are the second 16 bytes of the data property.
-                    uint256(1000) -
-                        uint256(uint16(_adminFundingCycle.metadata >> 24))
-                )
-            );
-
+            // Fund the admin.
+            _fund(_adminProjectId, _adminFeeAmount, _beneficiary);
             // Transfer the tapped amount minus the fees.
             _transferAmount = _tappedAmount - _adminFeeAmount;
         }
@@ -700,8 +660,8 @@ contract Juicer is IJuicer {
             _projectId,
             _beneficiary,
             _amount,
-            _currency,
             _tappedAmount,
+            _transferAmount,
             _transferAmount,
             _remaining,
             msg.sender
@@ -758,25 +718,26 @@ contract Juicer is IJuicer {
         // Process any remaining funds if necessary.
         _processPendingAmount(_projectId, _owner);
 
+        // Get a reference to this project's current balance, included any earned yield.
+        (uint256 _balanceOfWithoutYield, uint256 _balanceOfWithYield) =
+            balanceOf(_projectId);
+
         // Add the amount to what has now been distributed.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
-            balanceOf(_projectId, false)
+            _balanceOfWithoutYield
         );
 
-        // Withdrawn all of the project's funds, included any earned interest.
-        uint256 _amount = balanceOf(_projectId, true);
-
         // Make sure the necessary funds are in the posession of this contract.
-        _ensureAvailability(_amount);
+        _ensureAvailability(_balanceOfWithYield);
 
         // Move the funds to the new contract.
-        _to.addToBalance{value: _amount}(_projectId);
+        _to.addToBalance{value: _balanceOfWithYield}(_projectId);
 
         // Transfer the power to print and redeem tickets to the new contract.
         tickets.addController(address(_to), _projectId);
         tickets.removeController(address(this), _projectId);
 
-        emit Migrate(_projectId, _to, _amount, msg.sender);
+        emit Migrate(_projectId, _to, _balanceOfWithYield, msg.sender);
     }
 
     /**
@@ -823,10 +784,17 @@ contract Juicer is IJuicer {
       @param _projectId The ID of the project to which the funds received belong.
     */
     function addToBalance(uint256 _projectId) public payable override lock {
+        // Get a reference to the balances.
+        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
+
         // Add the processed amount.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
-            ProportionMath.find(balance(false), msg.value, balance(true))
+            ProportionMath.find(
+                _balanceWithoutYield,
+                msg.value,
+                _balanceWithYield
+            )
         );
 
         emit AddToBalance(_projectId, msg.sender);
@@ -880,12 +848,15 @@ contract Juicer is IJuicer {
             );
         }
 
+        // Get a reference to the balances.
+        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
+
         // Add the processable amount to what is now distributable to tappers and redeemers for this project.
         processedAmount[_projectId] = processedAmount[_projectId].add(
             ProportionMath.find(
-                balance(false),
+                _balanceWithoutYield,
                 _processableAmount,
-                balance(true)
+                _balanceWithYield
             )
         );
 
@@ -920,6 +891,38 @@ contract Juicer is IJuicer {
         packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-30 bytes.
         packed |= uint256(_metadata.reservedRate) << 24;
+    }
+
+    /** 
+      @notice Fund a project.
+      @param _projectId The ID of the project to fund.
+      @param _amount The amount to fund.
+      @param _beneficiary The address to send the newly minted tickets to.
+      @return fundingCycle The funding cycle that was funded.
+    */
+    function _fund(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary
+    ) private returns (FundingCycle.Data memory fundingCycle) {
+        // Get a reference to the current funding cycle for the project.
+        fundingCycle = fundingCycles.getCurrent(_projectId);
+
+        // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
+        processableAmount[_projectId] = processableAmount[_projectId].add(
+            _amount
+        );
+
+        // Print admin tickets for the tapper.
+        tickets.print(
+            _beneficiary,
+            _projectId,
+            fundingCycle._weighted(
+                _amount,
+                // The reserved rate is stored in bytes 25-30 of the metadata property.
+                1000 - uint256(uint16(fundingCycle.metadata >> 24))
+            )
+        );
     }
 
     /** 
@@ -969,8 +972,8 @@ contract Juicer is IJuicer {
         _remaining = _totalTransferAmount - _modsCut;
     }
 
-    // If funds are sent to this contract directly, add to the admins processable amount.
+    // If funds are sent to this contract directly, fund the admin.
     receive() external payable {
-        addToBalance(JuiceProject(admin).projectId());
+        _fund(JuiceProject(admin).projectId(), msg.value, msg.sender);
     }
 }

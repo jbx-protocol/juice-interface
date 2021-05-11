@@ -11,6 +11,8 @@ interface IFundingCycles {
 
     function count() external view returns (uint256);
 
+    function prices() external view returns (IPrices);
+
     function get(uint256 _fundingCycleId)
         external
         view
@@ -41,8 +43,6 @@ interface IFundingCycles {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
-        uint256 _minReturnedETH,
         uint256 _currentOverflow
     )
         external

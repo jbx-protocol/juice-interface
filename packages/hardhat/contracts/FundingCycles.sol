@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/FundingCycle.sol";
 import "./interfaces/IFundingCycles.sol";
+import "./interfaces/IPrices.sol";
 import "./abstract/Administered.sol";
 
 /** 
@@ -28,6 +29,9 @@ contract FundingCycles is Administered, IFundingCycles {
     /// @notice The total number of funding cycles created, which is used for issuing funding cycle IDs.
     /// @dev Funding cycles have IDs > 0.
     uint256 public override count = 0;
+
+    /// @notice The prices feeds.
+    IPrices public immutable override prices;
 
     // --- external views --- //
 
@@ -109,7 +113,9 @@ contract FundingCycles is Administered, IFundingCycles {
 
     // --- external transactions --- //
 
-    constructor() {}
+    constructor(IPrices _prices) {
+        prices = _prices;
+    }
 
     /**
         @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
@@ -183,9 +189,7 @@ contract FundingCycles is Administered, IFundingCycles {
       @notice Tracks a project tapping its funds.
       @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
-      @param _currency The currency of the amount.
       @param _currentOverflow The current amount of overflow the project has.
-      @param _ethPrice The current price of ETH.
       @return id The ID of the funding cycle that was tapped.
       @return convertedEthAmount The amount of eth tapped.
       @return feeAmount The amount of eth that should be charged as a fee.
@@ -193,9 +197,7 @@ contract FundingCycles is Administered, IFundingCycles {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
-        uint256 _currentOverflow,
-        uint256 _ethPrice
+        uint256 _currentOverflow
     )
         external
         override
@@ -209,15 +211,11 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get a reference to the funding cycle being tapped.
         FundingCycle.Data storage _fundingCycle = _ensureActive(_projectId);
 
-        require(
-            _currency == _fundingCycle.currency,
-            "FundingCycle::tap: UNEXPECTED_CURRENCY"
-        );
-
         // Tap the amount.
         convertedEthAmount = _fundingCycle._tap(
             _amount,
-            _ethPrice,
+            // Pass in a reference to the current ETH price.
+            prices.getETHPrice(_fundingCycle.currency),
             // The funding cycle can tap from the project's overflow.
             _currentOverflow
         );

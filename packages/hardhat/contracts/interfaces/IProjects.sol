@@ -50,6 +50,11 @@ interface IProjects is IERC721 {
 
     function getInfo(uint256 _projectId) external view returns (Info memory);
 
+    function getAllProjectInfo(address _owner)
+        external
+        view
+        returns (Info[] memory);
+
     function create(
         address _owner,
         string memory _name,

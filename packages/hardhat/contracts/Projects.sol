@@ -40,6 +40,20 @@ contract Projects is ERC721, IProjects, Administered {
         return info[_projectId];
     }
 
+    function getAllProjectInfo(address _owner)
+        external
+        view
+        override
+        returns (Info[] memory infos)
+    {
+        uint256 _balance = balanceOf(_owner);
+        infos = new Info[](_balance);
+        for (uint256 _i = 0; _i < _balance; _i++) {
+            infos[_i] = info[tokenOfOwnerByIndex(_owner, _i)];
+        }
+        return infos;
+    }
+
     constructor(IOperatorStore _operatorStore)
         ERC721("Juice project", "JUICE PROJECT")
     {

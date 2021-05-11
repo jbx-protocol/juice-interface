@@ -14,6 +14,7 @@ import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
+import { decodeFCMetadata } from '../../utils/fundingCycle'
 
 export default function Pay({
   fundingCycle,
@@ -32,6 +33,8 @@ export default function Pay({
 
   const converter = useCurrencyConverter()
 
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+
   const weiPayAmt =
     payAs === '1' ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
@@ -48,7 +51,7 @@ export default function Pay({
         ? weightedRate(
             fundingCycle,
             amount,
-            parsePerMille('100').sub(fundingCycle.reserved),
+            parsePerMille('100').sub(metadata?.reserved || 0),
           )
         : undefined,
     )
@@ -67,7 +70,7 @@ export default function Pay({
           <div style={{ flex: 1, marginRight: 10 }}>
             <FormattedNumberInput
               placeholder="0"
-              disabled={fundingCycle?.configured.eq(0)}
+              disabled={fundingCycle?.configured === 0}
               onChange={val => setPayAmount(val)}
               value={payAmount}
               min={0}
@@ -105,7 +108,7 @@ export default function Pay({
             <Button
               style={{ width: '100%' }}
               type="primary"
-              disabled={fundingCycle?.configured.eq(0)}
+              disabled={fundingCycle?.configured === 0}
               onClick={weiPayAmt ? pay : undefined}
             >
               Pay project

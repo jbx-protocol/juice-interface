@@ -170,11 +170,11 @@ export default function Funding({
 
   const periodWithdrawable = fundingCycle.target.sub(fundingCycle.tappedTarget)
 
-  const isRecurring = fundingCycle?.discountRate.gt(0)
+  const isRecurring = fundingCycle?.discountRate > 0
 
-  const now = BigNumber.from(Math.round(new Date().valueOf() / 1000))
-  const secondsLeft = fundingCycle.start.add(fundingCycle.duration).sub(now)
-  const isEnded = secondsLeft.lte(0)
+  const now = Math.round(new Date().valueOf() / 1000)
+  const secondsLeft = fundingCycle.start + fundingCycle.duration - now
+  const isEnded = secondsLeft <= 0
 
   let header: string
 

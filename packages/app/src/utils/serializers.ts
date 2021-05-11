@@ -4,10 +4,15 @@ import { fromWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { FundingCycle } from '../models/funding-cycle'
 import { fromPerMille } from './formatCurrency'
 
-export type SerializedFundingCycle = Record<keyof FundingCycle, string>
+export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
+  reserved: number
+  bondingCurveRate: number
+}
+
+export type SerializedFundingCycle = Record<keyof EditingFundingCycle, string>
 
 export const serializeFundingCycle = (
-  fc: FundingCycle,
+  fc: EditingFundingCycle,
 ): SerializedFundingCycle => ({
   projectId: fc.projectId.toString(),
   id: fc.id.toString(),
@@ -30,7 +35,7 @@ export const serializeFundingCycle = (
 
 export const deserializeFundingCycle = (
   fc: SerializedFundingCycle,
-): FundingCycle =>
+): EditingFundingCycle =>
   fc
     ? {
         ...fc,
@@ -39,16 +44,17 @@ export const deserializeFundingCycle = (
         number: BigNumber.from(fc.number),
         previous: BigNumber.from(fc.previous),
         target: parseWad(fc.target),
-        currency: BigNumber.from(fc.currency),
-        start: BigNumber.from(fc.start),
-        duration: BigNumber.from(fc.duration),
+        currency: parseInt(fc.currency) as 0 | 1,
+        start: parseInt(fc.start),
+        duration: parseInt(fc.duration),
         tappedTarget: parseWad(fc.tappedTarget),
         tappedTotal: parseWad(fc.tappedTotal),
-        reserved: parsePerMille(fc.reserved),
         weight: parseWad(fc.weight),
-        fee: parsePerMille(fc.fee),
-        bondingCurveRate: parsePerMille(fc.bondingCurveRate),
-        discountRate: parsePerMille(fc.discountRate),
-        configured: BigNumber.from(fc.configured),
+        fee: parsePerMille(fc.fee).toNumber(),
+        reserved: parsePerMille(fc.reserved).toNumber(),
+        bondingCurveRate: parsePerMille(fc.bondingCurveRate).toNumber(),
+        discountRate: parsePerMille(fc.discountRate).toNumber(),
+        configured: parseInt(fc.configured),
+        ballot: fc.ballot,
       }
     : fc

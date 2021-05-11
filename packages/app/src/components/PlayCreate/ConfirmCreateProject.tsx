@@ -18,7 +18,7 @@ import { orEmpty } from 'utils/orEmpty'
 export default function ConfirmCreateProject() {
   const { adminFeePercent } = useContext(UserContext)
 
-  const editingBudget = useEditingFundingCycleSelector()
+  const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
@@ -26,14 +26,14 @@ export default function ConfirmCreateProject() {
   const formattedTargetWithFee = () => {
     if (adminFeePercent === undefined) return
 
-    const targetAmount = fromWad(editingBudget?.target)
+    const targetAmount = fromWad(editingFC?.target)
 
     if (targetAmount === undefined) return
 
-    const currency = currencyName(editingBudget?.currency)
+    const currency = currencyName(editingFC?.currency)
 
     return `${formattedNum(targetAmount)} (+${formatWad(
-      feeForAmount(editingBudget?.target, adminFeePercent),
+      feeForAmount(editingFC?.target, adminFeePercent),
     )} ${currency})`
   }
 
@@ -50,7 +50,7 @@ export default function ConfirmCreateProject() {
       <Space size="large">
         <Statistic
           title="Duration"
-          value={formattedNum(editingBudget?.duration)}
+          value={formattedNum(editingFC?.duration)}
           suffix="days"
         />
         <Statistic
@@ -62,17 +62,17 @@ export default function ConfirmCreateProject() {
       <Space size="large" align="end">
         <Statistic
           title="Discount rate"
-          value={fromPerMille(editingBudget?.discountRate)}
+          value={fromPerMille(editingFC?.discountRate)}
           suffix="%"
         />
         <Statistic
           title="Reserved tickets"
-          value={fromPerMille(editingBudget?.reserved)}
+          value={fromPerMille(editingFC?.reserved)}
           suffix="%"
         />
         <Statistic
           title="Bonding curve rate"
-          value={fromPerMille(editingBudget?.bondingCurveRate)}
+          value={fromPerMille(editingFC?.bondingCurveRate)}
           suffix="%"
         />
       </Space>

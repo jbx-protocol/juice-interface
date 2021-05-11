@@ -141,6 +141,7 @@ export default function Rewards({
         redeemWad.toHexString(),
         minRedeemAmount.toHexString(),
         userAddress,
+        false,
       ],
       {
         onConfirmed: () => onChangeRedeemAmount(undefined),

@@ -5,6 +5,7 @@ import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 
 import TooltipLabel from '../shared/TooltipLabel'
+import { decodeFCMetadata } from '../../utils/fundingCycle'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -13,11 +14,13 @@ export default function FundingCycleDetails({
 }) {
   if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(fundingCycle.start.mul(1000).toNumber())
+  const formattedStartTime = formatDate(fundingCycle.start * 1000)
 
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
+    fundingCycle.start + fundingCycle.duration * 1000,
   )
+
+  const metadata = decodeFCMetadata(fundingCycle.metadata)
 
   return (
     <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
@@ -33,7 +36,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerMille(fundingCycle.reserved)}%
+        {fromPerMille(metadata?.reserved)}%
       </Descriptions.Item>
 
       <Descriptions.Item
@@ -52,22 +55,20 @@ export default function FundingCycleDetails({
         {fundingCycle.number.toString()}
       </Descriptions.Item>
 
-      {fundingCycle.bondingCurveRate.gt(0) ? (
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label="Bonding curve"
-              tip="A lower bonding curve has the effect of increasing the redeem value
+      <Descriptions.Item
+        label={
+          <TooltipLabel
+            label="Bonding curve"
+            tip="A lower bonding curve has the effect of increasing the redeem value
               of a ticket as the remaining ticket supply decreases, creating
               incentive to hodl tickets and not redeem them early. A bonding curve
               of 100% means all tickets will have the same value regardless
               of when they are redeemed."
-            />
-          }
-        >
-          {fromPerMille(fundingCycle.bondingCurveRate)}%
-        </Descriptions.Item>
-      ) : null}
+          />
+        }
+      >
+        {fromPerMille(metadata?.bondingCurveRate)}%
+      </Descriptions.Item>
     </Descriptions>
   )
 }

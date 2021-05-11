@@ -7,6 +7,7 @@ import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { SECONDS_MULTIPLIER } from 'constants/units'
 import { UserContext } from 'contexts/userContext'
+import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -15,10 +16,12 @@ import {
 import { CurrencyOption } from 'models/currency-option'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromPerMille, fromWad } from 'utils/formatCurrency'
+import { fromPerMille, fromWad, parsePerMille } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
+import { encodeFCMetadata } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 
+import { FundingCycle } from '../../models/funding-cycle'
 import ConfirmCreateProject from './ConfirmCreateProject'
 import FundingDetails, { FundingDetailsFormFields } from './FundingDetails'
 import ProjectDetails, { ProjectDetailsFormFields } from './ProjectDetails'
@@ -75,7 +78,7 @@ export default function PlayCreate() {
     projectInfoForm.setFieldsValue({
       name: editingProject?.name ?? '',
       target: fromWad(editingFC?.target) ?? '0',
-      duration: editingFC?.duration.div(SECONDS_MULTIPLIER).toString() ?? '0',
+      duration: (editingFC?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
       currency: (editingFC?.currency.toString() ?? '0') as CurrencyOption,
     })
 
@@ -164,11 +167,16 @@ export default function PlayCreate() {
         editingProject.logoUri,
         editingProject.link || '',
         targetWithFee,
-        editingFC.currency.toHexString(),
-        editingFC.duration.toHexString(),
-        editingFC.discountRate.toHexString(),
-        editingFC.bondingCurveRate.toHexString(),
-        editingFC.reserved.toHexString(),
+        BigNumber.from(editingFC.currency).toHexString(),
+        BigNumber.from(editingFC.duration).toHexString(),
+        BigNumber.from(editingFC.discountRate).toHexString(),
+        {
+          reservedRate: BigNumber.from(editingFC.reserved).toHexString(),
+          bondingCurveRate: BigNumber.from(
+            editingFC.bondingCurveRate,
+          ).toHexString(),
+        },
+        constants.AddressZero,
       ],
       {
         onDone: () => dispatch(editingProjectActions.setLoading(false)),
@@ -202,13 +210,20 @@ export default function PlayCreate() {
     [currentStep],
   )
 
+  const fundingCycle: FundingCycle = {
+    ...editingFC,
+    metadata: encodeFCMetadata(editingFC.reserved, editingFC.bondingCurveRate),
+  }
+
+  console.log({ fundingCycle })
+
   return (
     <div>
       <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
         <Project
           isOwner={false}
           showCurrentDetail={currentStep > 2}
-          fundingCycle={editingFC}
+          fundingCycle={fundingCycle}
           project={editingProject}
           projectId={BigNumber.from(0)}
         />

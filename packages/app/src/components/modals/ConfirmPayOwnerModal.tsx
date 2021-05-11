@@ -8,6 +8,7 @@ import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
 import { formatWad, parsePerMille } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
+import { decodeFCMetadata } from '../../utils/fundingCycle'
 
 export default function ConfirmPayOwnerModal({
   projectId,
@@ -33,6 +34,8 @@ export default function ConfirmPayOwnerModal({
 
   const weiAmount = converter.usdToWei(usdAmount)
 
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+
   async function pay() {
     if (!contracts || !projectId || !transactor) return
 
@@ -54,14 +57,12 @@ export default function ConfirmPayOwnerModal({
   const receivedTickets = weightedRate(
     fundingCycle,
     weiAmount,
-    parsePerMille('100').sub(fundingCycle?.reserved ?? '0'),
+    parsePerMille('100').sub(metadata?.reserved ?? 0),
   )
 
-  const ownerTickets = weightedRate(
-    fundingCycle,
-    weiAmount,
-    fundingCycle?.reserved,
-  )
+  const ownerTickets =
+    metadata &&
+    weightedRate(fundingCycle, weiAmount, BigNumber.from(metadata.reserved))
 
   return (
     <Modal

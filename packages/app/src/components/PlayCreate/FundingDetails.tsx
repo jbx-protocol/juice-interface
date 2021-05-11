@@ -19,18 +19,18 @@ export default function FundingDetails({
       <h1>Extra details</h1>
 
       <Form form={form} layout="vertical">
-        <FormItems.ProjectDiscountRate
-          name="discountRate"
-          value={form.getFieldValue('discountRate')}
-          onChange={(val?: number) =>
-            form.setFieldsValue({ discountRate: val?.toString() })
-          }
-        />
         <FormItems.ProjectReserved
           name="reserved"
           value={form.getFieldValue('reserved')}
           onChange={(val?: number) =>
             form.setFieldsValue({ reserved: val?.toString() })
+          }
+        />
+        <FormItems.ProjectDiscountRate
+          name="discountRate"
+          value={form.getFieldValue('discountRate')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ discountRate: val?.toString() })
           }
         />
         <FormItems.ProjectBondingCurveRate

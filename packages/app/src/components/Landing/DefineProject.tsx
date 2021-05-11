@@ -33,7 +33,7 @@ export default function DefineProject() {
         name: editingProject?.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
         duration:
-          editingBudget?.duration.div(SECONDS_MULTIPLIER).toString() ?? '0',
+          (editingBudget?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
         currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
       }),
     [],
@@ -118,7 +118,7 @@ export default function DefineProject() {
               <span>
                 every{' '}
                 {bold(
-                  editingBudget?.duration.div(SECONDS_MULTIPLIER).toString(),
+                  (editingBudget?.duration / SECONDS_MULTIPLIER).toString(),
                   '0',
                 )}{' '}
                 days

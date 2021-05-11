@@ -3,10 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { parsePerMille, parseWad } from 'utils/formatCurrency'
 import {
+  EditingFundingCycle,
   SerializedFundingCycle,
   serializeFundingCycle,
 } from 'utils/serializers'
@@ -17,9 +17,7 @@ export type EditingProjectState = {
   loading: boolean
 }
 
-const defaultDiscountRate = '97'
-const defaultFee = '15'
-const defaultBondingCurveRate = '318'
+const defaultDiscountRate = 97
 
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
@@ -36,19 +34,18 @@ export const editingProjectSlice = createSlice({
       number: BigNumber.from(1),
       previous: BigNumber.from(0),
       target: parseWad('10000'),
-      currency: BigNumber.from(1),
-      start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-      duration: BigNumber.from(
+      currency: 1,
+      start: Math.floor(new Date().valueOf() / 1000),
+      duration:
         process.env.NODE_ENV === 'production' ? 30 * SECONDS_IN_DAY : 300,
-      ),
       tappedTarget: BigNumber.from(0),
       tappedTotal: BigNumber.from(0),
-      reserved: parsePerMille('5'),
       weight: BigNumber.from(0),
-      fee: parsePerMille(defaultFee),
-      bondingCurveRate: BigNumber.from(defaultBondingCurveRate),
-      discountRate: parsePerMille(defaultDiscountRate),
-      configured: BigNumber.from(0),
+      fee: 15,
+      reserved: 50,
+      bondingCurveRate: 500,
+      discountRate: parsePerMille(defaultDiscountRate.toString()).toNumber(),
+      configured: 0,
       ballot: constants.AddressZero,
     }),
     loading: false,
@@ -89,7 +86,7 @@ export const editingProjectSlice = createSlice({
         logoUri: action.payload,
       },
     }),
-    setFundingCycle: (state, action: PayloadAction<FundingCycle>) => ({
+    setFundingCycle: (state, action: PayloadAction<EditingFundingCycle>) => ({
       ...state,
       fundingCycle: serializeFundingCycle(action.payload),
     }),
@@ -164,7 +161,7 @@ export const editingProjectSlice = createSlice({
       ...state,
       fundingCycle: {
         ...state.fundingCycle,
-        discountRate: action.payload ? defaultDiscountRate : '0',
+        discountRate: action.payload ? defaultDiscountRate.toString() : '0',
       },
     }),
   },

@@ -174,21 +174,9 @@ library FundingCycle {
         @param _amount An amount to tap. In `currency`.
     */
     function _tap(Data storage _self, uint256 _amount) internal {
-        // The amount tapped must be less then the target.
+        // Amount must be within what is still tappable.
         require(
-            _self.tapped < _self.target,
-            "FundingCycle: INSUFFICIENT_FUNDS"
-        );
-
-        // The amount that is still tappable.
-        uint256 _tappableAmount =
-            FullMath.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)) -
-                _self.tapped;
-
-        // The amount being tapped must be less than the tappable amount plus the drawable amount.
-        require(
-            // Amount must be within what is still tappable.
-            _amount <= _tappableAmount,
+            _amount <= _self.target - _self.tapped,
             "FundingCycle: INSUFFICIENT_FUNDS"
         );
 

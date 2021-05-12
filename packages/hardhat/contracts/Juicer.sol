@@ -968,6 +968,10 @@ contract Juicer is IJuicer {
         // The total amount sent to mods.
         uint256 _modsCut = 0;
         Mod[] memory _mods = modStore.allMods(_projectId);
+
+        // If no mods, return the full amount.
+        if (_mods.length == 0) return _totalTransferAmount;
+
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             // The amount to send towards mods.

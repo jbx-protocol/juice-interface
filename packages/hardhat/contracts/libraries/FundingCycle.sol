@@ -45,9 +45,7 @@ library FundingCycle {
         // The amount that this funding cycle is targeting.
         uint256 target;
         // The amount of available funds that have been tapped by the project in terms of the currency.
-        uint256 tappedTarget;
-        // The amount of available funds that have been tapped by the project in terms of eth.
-        uint256 tappedTotal;
+        uint256 tapped;
         // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
         uint256 weight;
         // A packed list of extra data. The first 8 bytes are reserved for versioning.
@@ -136,7 +134,6 @@ library FundingCycle {
                 _self.id,
                 _self.target,
                 0,
-                0,
                 _derivedWeight(_self),
                 _self.metadata
             );
@@ -175,33 +172,28 @@ library FundingCycle {
         @notice Taps an amount from the funding cycle.
         @param _self The funding cycle to tap an amount from.
         @param _amount An amount to tap. In `currency`.
-        @param _ethPrice The current price of ETH.
-        @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the funding cycle total.
-        @return convertedEthAmount The amount of ETH that was tapped.
     */
-    function _tap(
-        Data storage _self,
-        uint256 _amount,
-        uint256 _ethPrice,
-        uint256 _currentlyDrawable
-    ) internal returns (uint256 convertedEthAmount) {
+    function _tap(Data storage _self, uint256 _amount) internal {
+        // The amount tapped must be less then the target.
+        require(
+            _self.tapped < _self.target,
+            "FundingCycle: INSUFFICIENT_FUNDS"
+        );
+
+        // The amount that is still tappable.
+        uint256 _tappableAmount =
+            FullMath.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)) -
+                _self.tapped;
+
         // The amount being tapped must be less than the tappable amount plus the drawable amount.
         require(
-            // Amount must be within what is drawable.
-            _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
-                // Amount must be within what is still tappable.
-                _amount <= _ownerTappableAmount(_self),
+            // Amount must be within what is still tappable.
+            _amount <= _tappableAmount,
             "FundingCycle: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the funding cycle's tapped amount.
-        _self.tappedTarget = _self.tappedTarget + _amount;
-
-        // The amount of ETH that is being tapped.
-        convertedEthAmount = DSMath.wdiv(_amount, _ethPrice);
-
-        // Add the converted currency amount to the funding cycle's total amount.
-        _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
+        _self.tapped = _self.tapped + _amount;
     }
 
     /** 
@@ -250,23 +242,5 @@ library FundingCycle {
         return
             _self.currentBallot != IFundingCycleBallot(0) &&
             _self.currentBallot.isPending(_self.id, _self.configured);
-    }
-
-    // --- private views --- //
-
-    /** 
-        @notice Returns the amount available for the project owner to tap in to.
-        @param _self The funding cycle to make the calculation for.
-        @return The resulting amount.
-    */
-    function _ownerTappableAmount(Data memory _self)
-        private
-        pure
-        returns (uint256)
-    {
-        if (_self.tappedTarget == _self.target) return 0;
-        return
-            FullMath.mulDiv(_self.target, 1000, uint256(1000).add(_self.fee)) -
-            _self.tappedTarget;
     }
 }

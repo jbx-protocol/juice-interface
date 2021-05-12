@@ -46,7 +46,7 @@ interface IFundingCyclesController {
         address indexed beneficiary,
         uint256 amount,
         uint256 currency,
-        uint256 tappedAmount,
+        uint256 tappedETHAmount,
         uint256 transferAmount,
         uint256 remainingAmount,
         address operator

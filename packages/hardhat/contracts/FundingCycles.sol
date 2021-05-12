@@ -30,9 +30,6 @@ contract FundingCycles is Administered, IFundingCycles {
     /// @dev Funding cycles have IDs > 0.
     uint256 public override count = 0;
 
-    /// @notice The prices feeds.
-    IPrices public immutable override prices;
-
     // --- external views --- //
 
     /**
@@ -113,9 +110,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
     // --- external transactions --- //
 
-    constructor(IPrices _prices) {
-        prices = _prices;
-    }
+    constructor() {}
 
     /**
         @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
@@ -189,48 +184,21 @@ contract FundingCycles is Administered, IFundingCycles {
       @notice Tracks a project tapping its funds.
       @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
-      @param _currentOverflow The current amount of overflow the project has.
-      @return id The ID of the funding cycle that was tapped.
-      @return convertedEthAmount The amount of eth tapped.
-      @return feeAmount The amount of eth that should be charged as a fee.
+        @return fundingCycle The funding cycle that was successfully tapped.
     */
-    function tap(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _currentOverflow
-    )
+    function tap(uint256 _projectId, uint256 _amount)
         external
         override
         onlyAdmin
-        returns (
-            uint256 id,
-            uint256 convertedEthAmount,
-            uint256 feeAmount
-        )
+        returns (FundingCycle.Data memory)
     {
         // Get a reference to the funding cycle being tapped.
         FundingCycle.Data storage _fundingCycle = _ensureActive(_projectId);
 
         // Tap the amount.
-        convertedEthAmount = _fundingCycle._tap(
-            _amount,
-            // Pass in a reference to the current ETH price.
-            prices.getETHPrice(_fundingCycle.currency),
-            // The funding cycle can tap from the project's overflow.
-            _currentOverflow
-        );
+        _fundingCycle._tap(_amount);
 
-        // The amount that should be charged as a fee for tapping.
-        feeAmount = convertedEthAmount.sub(
-            FullMath.mulDiv(
-                convertedEthAmount,
-                1000,
-                uint256(_fundingCycle.fee).add(1000)
-            )
-        );
-
-        // Return the ID of the funding cycle that was tapped.
-        id = _fundingCycle.id;
+        return _fundingCycle;
     }
 
     // --- private transactions --- //
@@ -328,8 +296,7 @@ contract FundingCycles is Administered, IFundingCycles {
         newFundingCycle = fundingCycles[count];
         newFundingCycle.id = count;
         newFundingCycle.start = uint48(_start);
-        newFundingCycle.tappedTotal = 0;
-        newFundingCycle.tappedTarget = 0;
+        newFundingCycle.tapped = 0;
         latestId[_projectId] = count;
 
         if (_latestFundingCycle.id > 0) {

@@ -11,8 +11,6 @@ interface IFundingCycles {
 
     function count() external view returns (uint256);
 
-    function prices() external view returns (IPrices);
-
     function get(uint256 _fundingCycleId)
         external
         view
@@ -40,15 +38,7 @@ interface IFundingCycles {
         bool _configureActiveFundingCycle
     ) external returns (FundingCycle.Data memory fundingCycle);
 
-    function tap(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _currentOverflow
-    )
+    function tap(uint256 _projectId, uint256 _amount)
         external
-        returns (
-            uint256 id,
-            uint256 convertedEthAmount,
-            uint256 adminEthFeeAmount
-        );
+        returns (FundingCycle.Data memory fundingCycle);
 }

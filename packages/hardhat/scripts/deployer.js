@@ -11,7 +11,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
-  const fundingCycles = await deploy("FundingCycles", [prices.address]);
+  const fundingCycles = await deploy("FundingCycles");
   const tickets = await deploy("Tickets", [
     projects.address,
     operatorStore.address,
@@ -21,9 +21,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
   ]);
 
-  const yielder = await deploy("YearnYielder", [
-    weth(process.env.HARDHAT_NETWORK) || token.address,
-  ]);
+  const yielder =
+    process.env.HARDHAT_NETWORK == "mainnet" &&
+    (await deploy("YearnYielder", [
+      weth(process.env.HARDHAT_NETWORK) || token.address,
+    ]));
 
   const juicer = await deploy("Juicer", [
     projects.address,
@@ -32,7 +34,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
     modStore.address,
     prices.address,
-    yielder.address,
+    yielder ? yielder.address : "0x0000000000000000000000000000000000000000",
   ]);
 
   const admin = await deploy("Admin", [juicer.address]);
@@ -49,7 +51,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "FundingCycles"
     );
     const PricesFactory = await ethers.getContractFactory("Prices");
-    const YielderFactory = await ethers.getContractFactory("YearnYielder");
+    const YielderFactory =
+      yielder && (await ethers.getContractFactory("YearnYielder"));
     const AdminFactory = await ethers.getContractFactory("Admin");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
@@ -58,7 +61,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       fundingCycles.address
     );
     const attachedPrices = await PricesFactory.attach(prices.address);
-    const attachedYielder = await YielderFactory.attach(yielder.address);
+    const attachedYielder =
+      yielder && (await YielderFactory.attach(yielder.address));
     const attachedAdmin = await AdminFactory.attach(admin.address);
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
@@ -74,10 +78,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     await attachedPrices.transferOwnership(admin.address, {
       gasLimit: blockGasLimit,
     });
-    console.log("⚡️ Setting the yielder owner");
-    await attachedYielder.transferOwnership(juicer.address, {
-      gasLimit: blockGasLimit,
-    });
+    if (attachedYielder) {
+      console.log("⚡️ Setting the yielder owner");
+      await attachedYielder.transferOwnership(juicer.address, {
+        gasLimit: blockGasLimit,
+      });
+    }
 
     console.log("⚡️ Granting the juicer admin privileges over the projects");
     await attachedAdmin.grantAdmin(projects.address, juicer.address, {

@@ -115,7 +115,10 @@ contract Juicer is IJuicer {
     {
         // The amount of ETH available is this contract's balance plus whatever is in the yielder.
         uint256 _amount = address(this).balance;
-        if (yielder != IYielder(0)) {
+        if (yielder == IYielder(0)) {
+            amountWithoutYield = _amount;
+            amountWithYield = _amount;
+        } else {
             amountWithoutYield = _amount.add(yielder.deposited());
             amountWithYield = _amount.add(yielder.getCurrentBalance());
         }

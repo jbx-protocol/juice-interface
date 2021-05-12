@@ -29,7 +29,7 @@ import QueuedFundingCycle from './QueuedFundingCycle'
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
 
-  const { userAddress, network } = useContext(UserContext)
+  const { userAddress } = useContext(UserContext)
 
   const { handle }: { handle?: string } = useParams()
 
@@ -77,8 +77,18 @@ export default function Dashboard() {
     updateOn: projectId
       ? [
           {
-            contract: ContractName.FundingCycles,
+            contract: ContractName.Juicer,
             eventName: 'Reconfigure',
+            topics: [[], projectId.toHexString()],
+          },
+          {
+            contract: ContractName.Juicer,
+            eventName: 'Pay',
+            topics: [[], projectId.toHexString()],
+          },
+          {
+            contract: ContractName.Juicer,
+            eventName: 'Tap',
             topics: [[], projectId.toHexString()],
           },
         ]
@@ -118,7 +128,6 @@ export default function Dashboard() {
         project={project}
         fundingCycle={fundingCycle}
       />
-
       <div style={{ marginTop: 80 }}>
         <Row gutter={40}>
           <Col xs={24} md={12}>

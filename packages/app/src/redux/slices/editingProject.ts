@@ -38,8 +38,7 @@ export const editingProjectSlice = createSlice({
       start: Math.floor(new Date().valueOf() / 1000),
       duration:
         process.env.NODE_ENV === 'production' ? 30 * SECONDS_IN_DAY : 300,
-      tappedTarget: BigNumber.from(0),
-      tappedTotal: BigNumber.from(0),
+      tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
       fee: 15,
       reserved: 50,

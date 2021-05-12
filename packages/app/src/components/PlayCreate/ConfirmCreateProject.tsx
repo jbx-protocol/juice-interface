@@ -1,11 +1,12 @@
 import { Space, Statistic } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
-import { currencyName } from 'utils/currency'
 import {
   formattedNum,
   formatWad,
@@ -30,11 +31,15 @@ export default function ConfirmCreateProject() {
 
     if (targetAmount === undefined) return
 
-    const currency = currencyName(editingFC?.currency)
-
-    return `${formattedNum(targetAmount)} (+${formatWad(
-      feeForAmount(editingFC?.target, adminFeePercent),
-    )} ${currency})`
+    return (
+      <span>
+        <CurrencySymbol
+          currency={editingFC?.currency.toString() as CurrencyOption}
+        />
+        {formattedNum(targetAmount)} (+
+        {formatWad(feeForAmount(editingFC?.target, adminFeePercent))})
+      </span>
+    )
   }
 
   return (
@@ -55,7 +60,7 @@ export default function ConfirmCreateProject() {
         />
         <Statistic
           title="Amount (+5% admin fee)"
-          value={formattedTargetWithFee()}
+          valueRender={() => formattedTargetWithFee()}
         />
       </Space>
       <Statistic title="Link" value={orEmpty(editingProject?.link)} />

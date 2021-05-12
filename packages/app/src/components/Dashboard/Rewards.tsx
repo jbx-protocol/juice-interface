@@ -15,8 +15,10 @@ import TooltipLabel from '../shared/TooltipLabel'
 
 export default function Rewards({
   projectId,
+  bondingCurveRate,
 }: {
   projectId: BigNumber | undefined
+  bondingCurveRate: number | undefined
 }) {
   const { contracts, transactor, userAddress, onNeedProvider } = useContext(
     UserContext,
@@ -42,11 +44,6 @@ export default function Rewards({
     [projectId],
   )
 
-  const bondingCurveRate = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
-    functionName: 'bondingCurveRate',
-    valueDidChange: bigNumbersDiff,
-  })
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ContractName.Tickets,
     functionName: 'balanceOf',
@@ -86,6 +83,8 @@ export default function Rewards({
       [projectId],
     ),
   })
+
+  console.log('ticketsubbly', ticketSupply?.toString())
 
   // TODO Juicer.claimableAmount
   const onChangeRedeemAmount = useCallback(

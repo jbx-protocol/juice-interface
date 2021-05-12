@@ -42,7 +42,7 @@ library FundingCycle {
         uint256 number;
         // The ID of the project's funding cycle that came before this one. 0 if none.
         uint256 previous;
-        // The amount that this funding cycle is targeting.
+        // The amount that this funding cycle is targeting in terms of the currency.
         uint256 target;
         // The amount of available funds that have been tapped by the project in terms of the currency.
         uint256 tapped;

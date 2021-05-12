@@ -1,11 +1,9 @@
 import { Form } from 'antd'
 import { colors } from 'constants/styles/colors'
-import { CSSProperties, useEffect } from 'react'
-import { useLayoutEffect, useMemo, useState } from 'react'
+import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-import { padding } from 'constants/styles/padding'
 
 export default function ProjectBondingCurveRate({
   name,

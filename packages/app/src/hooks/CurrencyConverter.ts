@@ -1,10 +1,9 @@
+import { useEtherPrice } from 'hooks/EtherPrice'
 import { useMemo } from 'react'
-
-import { CurrencyUtils } from '../utils/formatCurrency'
-import { useExchangePrice } from './ExchangePrice'
+import { CurrencyUtils } from 'utils/formatCurrency'
 
 export function useCurrencyConverter() {
-  const exchangePrice = useExchangePrice()
+  const usdPerEth = useEtherPrice()
 
-  return useMemo(() => new CurrencyUtils(exchangePrice), [exchangePrice])
+  return useMemo(() => new CurrencyUtils(usdPerEth), [usdPerEth])
 }

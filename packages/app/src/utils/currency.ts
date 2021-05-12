@@ -4,10 +4,10 @@ import { CSSProperties } from 'react'
 
 const currencies: Record<
   CurrencyOption,
-  { name: string; symbol: string; style?: CSSProperties }
+  { name: 'ETH' | 'USD'; symbol: 'Ξ' | '$'; style?: CSSProperties }
 > = {
   '0': {
-    name: 'WETH',
+    name: 'ETH',
     symbol: 'Ξ',
     style: {
       fontFamily: 'sans-serif',
@@ -19,7 +19,9 @@ const currencies: Record<
   },
 }
 
-export const currencyName = (curr?: BigNumberish) =>
+export const currencyName = (
+  curr?: BigNumberish,
+): typeof currencies[keyof typeof currencies]['name'] | undefined =>
   curr
     ? currencies[BigNumber.from(curr).toString() as CurrencyOption].name
     : undefined

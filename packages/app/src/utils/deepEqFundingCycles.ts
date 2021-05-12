@@ -14,8 +14,7 @@ export const deepEqFundingCycles = (a?: FundingCycle, b?: FundingCycle) => {
     a?.number.eq(b?.number ?? -1) &&
     a?.previous.eq(b?.previous ?? -1) &&
     a?.start === (b?.start ?? -1) &&
-    a?.tappedTarget.eq(b?.tappedTarget ?? -1) &&
-    a?.tappedTotal.eq(b?.tappedTotal ?? -1) &&
+    a?.tapped.eq(b?.tapped ?? -1) &&
     a?.target.eq(b?.target ?? -1) &&
     a?.weight.eq(b?.weight ?? -1)
   )

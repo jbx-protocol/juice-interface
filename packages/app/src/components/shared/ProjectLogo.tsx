@@ -1,5 +1,3 @@
-import { colors } from 'constants/styles/colors'
-
 export default function ProjectLogo({
   uri,
   name,

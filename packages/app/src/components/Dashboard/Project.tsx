@@ -8,6 +8,7 @@ import { colors } from 'constants/styles/colors'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { CSSProperties, useState } from 'react'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import Funding from './Funding'
 import Pay from './Pay'
@@ -37,6 +38,8 @@ export default function Project({
 
   const gutter = 40
   const headerHeight = 80
+
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
   return (
     <div style={style}>
@@ -123,7 +126,10 @@ export default function Project({
           />
 
           <div style={{ marginTop: gutter }}>
-            <Rewards projectId={projectId} />
+            <Rewards
+              projectId={projectId}
+              bondingCurveRate={metadata?.bondingCurveRate}
+            />
           </div>
         </Col>
       </Row>

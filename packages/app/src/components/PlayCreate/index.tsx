@@ -16,7 +16,7 @@ import {
 import { CurrencyOption } from 'models/currency-option'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromPerMille, fromWad, parsePerMille } from 'utils/formatCurrency'
+import { fromPerMille, fromWad } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
 import { encodeFCMetadata } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'

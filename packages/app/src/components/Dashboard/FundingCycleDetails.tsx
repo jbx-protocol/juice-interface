@@ -1,11 +1,10 @@
 import { Descriptions } from 'antd'
 import { FundingCycle } from 'models/funding-cycle'
-import { useEffect } from 'react'
 import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 
-import TooltipLabel from '../shared/TooltipLabel'
 import { decodeFCMetadata } from '../../utils/fundingCycle'
+import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
   fundingCycle,

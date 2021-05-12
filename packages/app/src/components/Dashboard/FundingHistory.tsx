@@ -3,6 +3,7 @@ import { Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -66,8 +67,10 @@ export default function FundingHistory({
               <h2>#{cycle.id.toString()}</h2>
               <div>
                 <span style={{ fontSize: '1rem' }}>
-                  <CurrencySymbol currency="0" />
-                  {formatWad(cycle.tappedTotal)}
+                  <CurrencySymbol
+                    currency={cycle.currency.toString() as CurrencyOption}
+                  />
+                  {formatWad(cycle.tapped)}
                 </span>{' '}
                 withdrawn
               </div>

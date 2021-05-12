@@ -3,11 +3,7 @@ import { formatEther, parseEther } from '@ethersproject/units'
 import { Button } from 'antd'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
-import { useEffect } from 'react'
-import { useMemo } from 'react'
-import { useContext, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { useContext, useEffect, useState } from 'react'
 
 export default function Gimme() {
   const { userAddress, contracts, transactor, signingProvider } = useContext(

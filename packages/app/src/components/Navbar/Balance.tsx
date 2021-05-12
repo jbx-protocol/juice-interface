@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther } from '@ethersproject/units'
 import { UserContext } from 'contexts/userContext'
-import { useExchangePrice } from 'hooks/ExchangePrice'
+import { useEtherPrice } from 'hooks/EtherPrice'
 import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 
@@ -10,7 +10,7 @@ export default function Balance({ userAddress }: { userAddress?: string }) {
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
 
-  const usdPerEth = useExchangePrice()
+  const usdPerEth = useEtherPrice()
 
   // get updated balance
   usePoller(

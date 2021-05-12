@@ -674,7 +674,7 @@ contract Juicer is IJuicer {
                     FullMath.mulDiv(
                         _tappedETHAmount,
                         1000,
-                        uint256(_fundingCycle.fee).add(1000)
+                        uint256(_fundingCycle.fee) + 1000
                     );
 
             // Get a reference to the current funding cycle for the project.

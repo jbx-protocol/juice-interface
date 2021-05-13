@@ -26,6 +26,10 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     receive() external payable {}
 
+    /** 
+      @notice Switches the contract where fees are sent.
+      @param _to The new terminal to send fees to.
+    */
     function switchJuiceTerminal(IJuiceTerminal _to) external onlyOwner {
         juiceTerminal = _to;
     }
@@ -36,6 +40,23 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     */
     function setProjectId(uint256 _projectId) external onlyOwner {
         projectId = _projectId;
+    }
+
+    /** 
+      @notice Withdraws ETH from this contract to specified address.
+      @param _beneficiary The address to withdraw ETH to.
+      @param _amount The amount of ETH to withdraw.
+    */
+    function withdraw(address payable _beneficiary, uint256 _amount)
+        external
+        onlyOwner
+    {
+        // This contract must have enought ETH.
+        require(
+            _amount <= address(this).balance,
+            "JuiceProject::withdraw: INSUFFICENT_FUNDS"
+        );
+        _beneficiary.transfer(_amount);
     }
 
     /** 

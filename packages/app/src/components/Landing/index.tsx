@@ -11,7 +11,7 @@ export default function Landing() {
 
   const bigHeader = (text: string) => (
     <h1
-      style={{ fontSize: '2.5rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
+      style={{ fontSize: '3.2rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
     >
       {text}
     </h1>
@@ -22,10 +22,10 @@ export default function Landing() {
   )
 
   const listData = [
+    'Indie artists, programmers, journalists, & researchers',
     'Ethereum projects and communities',
     'Internet public goods',
     'Open source businesses',
-    'Indie artists, journalists, & researchers',
     'Just about any web project with predictable costs',
   ]
 
@@ -74,9 +74,8 @@ export default function Landing() {
                 }}
               >
                 {/* {bigHeader('Fund your project on the open internet')} */}
-                {bigHeader('Freshly squeezed cashflow for your projects')}
+                {bigHeader("The business model of the future")}
                 <div>
-                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>Juice is a business-model-as-a-service.</p>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
                     Projects say up front how much cashflow they need
                     in order to crush what they do. Once they're earning more
@@ -175,15 +174,6 @@ export default function Landing() {
                     getting transparently paid what they ask for, and funded by a community of users, patrons, and investors
                     who have the opportunity to capitalize on the overflow they help create.
                   </p>
-                  <a
-                    className="ol"
-                    href="https://twitter.com/hashtag/dework"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: colors.cta }}
-                  >
-                    #DeWork
-                  </a>
                 </div>
               </div>
             </Col>

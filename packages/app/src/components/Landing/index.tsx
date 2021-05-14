@@ -225,6 +225,7 @@ export default function Landing() {
         <div
           style={{
             fontWeight: 600,
+            marginTop: 40,
             textAlign: 'center',
           }}
         >

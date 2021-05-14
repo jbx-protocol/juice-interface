@@ -189,71 +189,40 @@ export default function Landing() {
         </div>
       </section>
 
-      <section style={section}>
+      <section style={{...section, marginTop: 0, paddingTop: 20, paddingBottom: 80, background: "rgb(57, 43, 70)"}}>
         <div
           style={{
             ...wrapper,
-            marginTop: 80,
+            marginTop: 80
           }}
         >
+
+          <div style={{ display: 'grid', rowGap: 60 }}>
+          {bigHeader('How it works')}
           <Row gutter={60}>
             {fourthCol('Do work 💅', [
               `Deploy a Juice contract that says how much cashflow you and your
-                team want/need in order to absolutely crush what you do.`,
+                team want/need in order to absolutely crush what you do.`,<br></br>,<br></br>,`Your funding cycles can be however long you want, and can be recurring.`
             ])}
             {fourthCol('Get paid 💰', [
               `People can fund your project through the Juice dashboard as a
-                patron or investor, or through your app as a paying user. For
+                patron or investor, or through your app as a paying user.`,<br></br>,<br></br>, `For
                 example, if your users pay you a transaction fee or monthly
-                cost, just route it through your Juice contract.`,
-              <a
-                href="https://twitter.com/hashtag/composability"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #composability
-              </a>,
-              <br />,
-              <a
-                href="https://twitter.com/hashtag/BusinessModelAsAService"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #BusinessModelAsAService
-              </a>,
+                cost within your app, just route it through your Juice contract so your people can share in your success.`
             ])}
             {fourthCol('Overflow ⛲️', [
               `If money overflows, your paying contributors claim the surplus
                 alongside you, effectively pushing prices down as your community
-                grows. Early adopters get a discounted rate, and those hodlers
-                who wait longest to claim get a juicier return. While unclaimed,
-                overflow earns interest.`,
-              <a
-                href="https://twitter.com/hashtag/DeFi"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #DeFi
-              </a>,
-              <a
-                href="https://twitter.com/hashtag/RegenFinance"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #RegenFinance
-              </a>,
+                grows.`,<br></br>,<br></br>, `Early adopters get a discounted rate, and those hodlers
+                who wait longest to claim get a juicier return.`,<br></br>,<br></br>,`While unclaimed,
+                overflow earns interest.`
             ])}
             {fourthCol('Repeat 📈', [
-              `Your budgeting time frames can be however long you want, and can be
-                recurring. You can make them bigger as your project grows, with
-                the approval of those paying contributors that have not yet claimed
-                their fair share of your overflowed surplus.`,
+              `If your funding cycles are recurring, any overflow you have will be used to fund your next funding cycle.`,<br></br>,<br></br>,`You can also reconfigure your funding needs as your project grows, and democratically involve your community in enacting these decisions along the way.  
+                `,
             ])}
           </Row>
-        </div>
-      </section>
-
-      <section style={wrapper}>
+              </div>
         <div
           style={{
             fontWeight: 600,
@@ -263,6 +232,7 @@ export default function Landing() {
           Create value for your community, crush your craft, make your money,
           and lift up your people.<br></br>
         </div>
+        </div>
       </section>
 
       <section>
@@ -270,12 +240,19 @@ export default function Landing() {
           id="faq"
           style={{
             ...wrapper,
-            paddingTop: 80,
+            paddingTop: 20,
             paddingBottom: 80,
-            maxWidth: 800,
+            maxWidth: 800
           }}
         >
+        <div
+          style={wrapper}
+        >
+          <div style={{ display: 'grid', rowGap: 60 }}>
+          {bigHeader('FAQs')}
           <Faq />
+          </div>
+        </div>
         </div>
       </section>
 

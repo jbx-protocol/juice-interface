@@ -141,11 +141,10 @@ export default function Landing() {
           id="create"
           style={{
             ...wrapper,
-            marginTop: 100,
             marginBottom: 120,
           }}
         >
-          <div style={{ marginBottom: 40 }}>
+          <div style={{ paddingTop: 80, marginBottom: 40 }}>
             {bigHeader('What are you working on?')}
           </div>
           <DefineProject />

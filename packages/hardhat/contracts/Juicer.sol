@@ -745,9 +745,6 @@ contract Juicer is IJuicer {
         // There must be something depositable.
         require(_amount > 0, "Juicer::deposit: BAD_AMOUNT");
 
-        // // The depositing can't be paused.
-        // require(!paused, "Juicer::depost: PAUSED");
-
         // Any ETH currently in posession of this contract can be deposited.
         require(
             _amount <= address(this).balance,
@@ -759,23 +756,6 @@ contract Juicer is IJuicer {
 
         emit Deposit(_amount);
     }
-
-    // /**
-    //   @notice Pauses the yielder from utilizing idle funds.
-    // */
-    // function pause() external override lock {
-    //     // There must be a yielder.
-    //     require(yielder != IYielder(0), "Juicer::deposit: NOT_FOUND");
-
-    //     // Only governance can take this action.
-    //     require(msg.sender == governance, "Juicer::pause: UNAUTHORIZED");
-
-    //     if (!paused) yielder.withdrawAll();
-
-    //     paused = !paused;
-
-    //     emit Pause(paused);
-    // }
 
     /**
         @notice Allows a project owner to migrate its funds to a new contract that can manage a project's funds.

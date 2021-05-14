@@ -2,8 +2,8 @@ import { Descriptions } from 'antd'
 import { FundingCycle } from 'models/funding-cycle'
 import { fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
-import { decodeFCMetadata } from '../../utils/fundingCycle'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
@@ -16,7 +16,7 @@ export default function FundingCycleDetails({
   const formattedStartTime = formatDate(fundingCycle.start * 1000)
 
   const formattedEndTime = formatDate(
-    fundingCycle.start + fundingCycle.duration * 1000,
+    (fundingCycle.start + fundingCycle.duration) * 1000,
   )
 
   const metadata = decodeFCMetadata(fundingCycle.metadata)
@@ -58,11 +58,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Bonding curve"
-            tip="This rate determines the amount of overflow that each Ticket can be redeemed for at any given time. 
-              Redeeming a ticket on a lower bonding curve reduces its immediate value, while increasing the redeem value
-              of each remaining ticket. This creates an incentive to hodl tickets and not redeem them earlier 
-              than others. A bonding curve of 100% means all tickets will have the same value regardless
-              of when they are redeemed."
+            tip="This rate determines the amount of overflow that each Ticket can be redeemed for at any given time. On a lower bonding curve, redeeming a ticket increases the value of each remaining ticket, creating an incentive to hodl tickets longer than others. A bonding curve of 100% means all tickets will have equal value regardless of when they are redeemed."
           />
         }
       >

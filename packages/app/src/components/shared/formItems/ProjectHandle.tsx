@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input } from 'antd'
-import { ContractName } from 'models/contract-name'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import { useCallback, useMemo, useState } from 'react'
-import { useEffect } from 'react'
+import { ContractName } from 'models/contract-name'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -14,8 +13,7 @@ export default function ProjectHandle({
   hideLabel,
   formItemProps,
   value,
-  onChange,
-}: { value: string; onChange: (val?: string) => void } & FormItemExt) {
+}: { value: string } & FormItemExt) {
   const [inputContents, setInputContents] = useState<string>()
 
   useEffect(() => setInputContents(value), [value, setInputContents])
@@ -59,7 +57,6 @@ export default function ProjectHandle({
         onChange={e => {
           const val = normalizeHandle(e.target.value)
           setInputContents(val)
-          onChange(val)
         }}
       />
     </Form.Item>

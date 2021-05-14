@@ -6,7 +6,8 @@ export default function ProjectName({
   name,
   hideLabel,
   formItemProps,
-}: FormItemExt) {
+  onChange,
+}: { onChange?: (val?: string) => void } & FormItemExt) {
   return (
     <Form.Item
       extra="The name of your project."
@@ -18,6 +19,7 @@ export default function ProjectName({
         placeholder="Peach's Juice Stand"
         type="string"
         autoComplete="off"
+        onChange={onChange ? e => onChange(e.target.value) : undefined}
       />
     </Form.Item>
   )

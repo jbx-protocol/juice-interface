@@ -1,6 +1,7 @@
 import { Form } from 'antd'
-import FormattedNumberInput from '../inputs/FormattedNumberInput'
+
 import InputAccessoryButton from '../InputAccessoryButton'
+import FormattedNumberInput from '../inputs/FormattedNumberInput'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectDuration({
@@ -8,18 +9,18 @@ export default function ProjectDuration({
   formItemProps,
   value,
   isRecurring,
+  hideLabel,
   onToggleRecurring,
-  onChange,
 }: {
   value: string | undefined
   isRecurring: boolean | undefined
   onToggleRecurring: VoidFunction
-  onChange: (val?: string) => void
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The duration that you need the money for."
+      extra="How long one funding cycle will last."
       name={name}
+      label={hideLabel ? undefined : 'Funding period'}
       {...formItemProps}
     >
       <FormattedNumberInput
@@ -33,7 +34,6 @@ export default function ProjectDuration({
             onClick={onToggleRecurring}
           />
         }
-        onChange={onChange}
       />
     </Form.Item>
   )

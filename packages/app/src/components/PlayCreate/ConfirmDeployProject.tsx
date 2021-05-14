@@ -5,7 +5,6 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { CurrencyOption } from 'models/currency-option'
 import { useContext } from 'react'
 import {
   formattedNum,
@@ -16,7 +15,7 @@ import {
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-export default function ConfirmCreateProject() {
+export default function ConfirmDeployProject() {
   const { adminFeePercent } = useContext(UserContext)
 
   const editingFC = useEditingFundingCycleSelector()

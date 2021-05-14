@@ -16,15 +16,14 @@ import {
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
-import { normalizeHandle } from 'utils/formatHandle'
 import { encodeFCMetadata } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 
 import { FundingCycle } from '../../models/funding-cycle'
-import ConfirmCreateProject from './ConfirmCreateProject'
-import FundingDetails, { FundingDetailsFormFields } from './FundingDetails'
-import ProjectDetails, { ProjectDetailsFormFields } from './ProjectDetails'
-import ProjectInfo, { ProjectInfoFormFields } from './ProjectInfo'
+import BudgetInfo, { BudgetFormFields } from './BudgetForm'
+import ConfirmDeployProject from './ConfirmDeployProject'
+import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function PlayCreate() {
   const {
@@ -36,25 +35,24 @@ export default function PlayCreate() {
     adminFeePercent,
   } = useContext(UserContext)
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
+    false,
+  )
   const [
-    projectInfoModalVisible,
-    setProjectInfoModalVisible,
+    projectFormModalVisible,
+    setProjectFormModalVisible,
   ] = useState<boolean>(false)
   const [
-    projectDetailsModalVisible,
-    setProjectDetailsModalVisible,
+    ticketingFormModalVisible,
+    setTicketingFormModalVisible,
   ] = useState<boolean>(false)
   const [
-    fundingDetailsModalVisible,
-    setFundingDetailsModalVisible,
+    deployProjectModalVisible,
+    setDeployProjectModalVisible,
   ] = useState<boolean>(false)
-  const [
-    createProjectModalVisible,
-    setCreateProjectModalVisible,
-  ] = useState<boolean>(false)
-  const [projectInfoForm] = useForm<ProjectInfoFormFields>()
-  const [projectDetailsForm] = useForm<ProjectDetailsFormFields>()
-  const [fundingDetailsForm] = useForm<FundingDetailsFormFields>()
+  const [budgetForm] = useForm<BudgetFormFields>()
+  const [projectForm] = useForm<ProjectFormFields>()
+  const [ticketingForm] = useForm<TicketingFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
@@ -62,43 +60,33 @@ export default function PlayCreate() {
   const creatingProject = useAppSelector(state => state.editingProject.loading)
   const dispatch = useAppDispatch()
 
-  const setHandleFromName = (name: string) => {
-    const handle = normalizeHandle(name)
-    dispatch(editingProjectActions.setHandle(handle))
-    projectDetailsForm.setFieldsValue({
-      handle,
-    })
-  }
-
   const incrementStep = (num: number) =>
     num > currentStep ? setCurrentStep(num) : null
 
-  const resetFundingCycleForm = () =>
-    projectInfoForm.setFieldsValue({
-      name: editingProject?.name ?? '',
+  const resetBudgetForm = () =>
+    budgetForm.setFieldsValue({
       target: fromWad(editingFC?.target) ?? '0',
       duration: (editingFC?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
       currency: editingFC?.currency ?? 0,
     })
 
-  const resetProjectDetailsForm = () => {
-    projectDetailsForm.setFieldsValue({
+  const resetProjectForm = () =>
+    projectForm.setFieldsValue({
+      name: editingProject?.name ?? '',
       link: editingProject?.link ?? '',
       handle: editingProject?.handle ?? '',
       logoUri: editingProject?.logoUri ?? '',
     })
-  }
 
-  const resetFundingDetailsForm = () =>
-    fundingDetailsForm.setFieldsValue({
+  const resetTicketingForm = () =>
+    ticketingForm.setFieldsValue({
       discountRate: fromPerMille(editingFC?.discountRate),
       reserved: fromPerMille(editingFC?.reserved),
       bondingCurveRate: fromPerMille(editingFC?.bondingCurveRate),
     })
 
-  const onProjectInfoFormSaved = () => {
-    const fields = projectInfoForm.getFieldsValue(true)
-    dispatch(editingProjectActions.setName(fields.name))
+  const onBudgetFormSaved = () => {
+    const fields = budgetForm.getFieldsValue(true)
     dispatch(editingProjectActions.setTarget(fields.target))
     dispatch(
       editingProjectActions.setDuration(
@@ -107,23 +95,23 @@ export default function PlayCreate() {
     )
     dispatch(editingProjectActions.setCurrency(fields.currency))
 
-    if (!editingProject.handle) setHandleFromName(fields.name)
-
-    if (fields?.name && fields?.duration && fields?.target) {
+    if (fields?.duration && fields?.target) {
       incrementStep(1)
     }
   }
 
-  const onProjectDetailsFormSaved = () => {
-    const fields = projectDetailsForm.getFieldsValue(true)
+  const onProjectFormSaved = () => {
+    const fields = projectForm.getFieldsValue(true)
+    dispatch(editingProjectActions.setName(fields.name))
     dispatch(editingProjectActions.setLink(fields.link))
     dispatch(editingProjectActions.setHandle(fields.handle))
     dispatch(editingProjectActions.setLogoUri(fields.logoUri))
+
     incrementStep(2)
   }
 
-  const onAdvancedFormSaved = () => {
-    const fields = fundingDetailsForm.getFieldsValue(true)
+  const onTicketingFormSaved = () => {
+    const fields = ticketingForm.getFieldsValue(true)
     dispatch(editingProjectActions.setDiscountRate(fields.discountRate))
     dispatch(editingProjectActions.setReserved(fields.reserved))
     dispatch(editingProjectActions.setBondingCurveRate(fields.bondingCurveRate))
@@ -136,14 +124,12 @@ export default function PlayCreate() {
       setCurrentStep(1)
     }
 
-    resetFundingCycleForm()
-    resetProjectDetailsForm()
-    resetFundingDetailsForm()
-
-    setHandleFromName(editingProject?.name)
+    resetBudgetForm()
+    resetProjectForm()
+    resetTicketingForm()
   }, [])
 
-  function createProject() {
+  function deployProject() {
     if (!transactor || !contracts) return onNeedProvider()
 
     if (!adminFeePercent || !editingFC) return
@@ -180,7 +166,7 @@ export default function PlayCreate() {
       {
         onDone: () => dispatch(editingProjectActions.setLoading(false)),
         onConfirmed: () => {
-          setCreateProjectModalVisible(false)
+          setDeployProjectModalVisible(false)
           window.location.hash = '/p/' + editingProject.handle
         },
       },
@@ -214,10 +200,40 @@ export default function PlayCreate() {
     metadata: encodeFCMetadata(editingFC.reserved, editingFC.bondingCurveRate),
   }
 
-  console.log({ fundingCycle })
-
   return (
     <div>
+      <div
+        style={{
+          ...layouts.maxWidth,
+          marginTop: 20,
+          marginBottom: 20,
+          borderRadius: 10,
+          padding: 40,
+          border: '1px solid ' + colors.grapeHint,
+        }}
+      >
+        <h1 style={{ marginBottom: 20 }}>Deploy your project 🚀</h1>
+
+        {buildSteps([
+          {
+            title: 'Configure budget',
+            callback: () => setBudgetFormModalVisible(true),
+          },
+          {
+            title: 'Set project info',
+            callback: () => setProjectFormModalVisible(true),
+          },
+          {
+            title: 'Edit ticketing',
+            callback: () => setTicketingFormModalVisible(true),
+          },
+          {
+            title: 'Deploy',
+            callback: () => setDeployProjectModalVisible(true),
+          },
+        ])}
+      </div>
+
       <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
         <Project
           isOwner={false}
@@ -228,109 +244,74 @@ export default function PlayCreate() {
         />
       </div>
 
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: 40,
-          paddingTop: 20,
-          paddingBottom: 20,
-          background: colors.background,
-          zIndex: 100,
-        }}
-      >
-        <h1>Deploy your project 🚀</h1>
-
-        {buildSteps([
-          {
-            title: 'Set the basics',
-            callback: () => setProjectInfoModalVisible(true),
-          },
-          {
-            title: 'Project details',
-            callback: () => setProjectDetailsModalVisible(true),
-          },
-          {
-            title: 'Funding details',
-            callback: () => setFundingDetailsModalVisible(true),
-          },
-          {
-            title: 'Deploy project',
-            callback: () => setCreateProjectModalVisible(true),
-          },
-        ])}
-      </div>
-
       <Drawer
-        visible={projectInfoModalVisible}
+        visible={budgetFormModalVisible}
         placement="right"
         width={640}
         onClose={() => {
-          resetFundingCycleForm()
-          setProjectInfoModalVisible(false)
+          resetBudgetForm()
+          setBudgetFormModalVisible(false)
         }}
       >
-        <ProjectInfo
-          form={projectInfoForm}
+        <BudgetInfo
+          form={budgetForm}
           onSave={async () => {
-            await projectInfoForm.validateFields()
-            onProjectInfoFormSaved()
-            setProjectInfoModalVisible(false)
+            await budgetForm.validateFields()
+            onBudgetFormSaved()
+            setBudgetFormModalVisible(false)
           }}
         />
       </Drawer>
 
       <Drawer
-        visible={projectDetailsModalVisible}
+        visible={projectFormModalVisible}
         placement="right"
         width={640}
         onClose={() => {
-          resetProjectDetailsForm()
-          setProjectDetailsModalVisible(false)
+          resetProjectForm()
+          setProjectFormModalVisible(false)
           incrementStep(2)
         }}
       >
-        <ProjectDetails
-          form={projectDetailsForm}
+        <ProjectForm
+          form={projectForm}
           onSave={async () => {
-            await projectDetailsForm.validateFields()
-            onProjectDetailsFormSaved()
-            setProjectDetailsModalVisible(false)
+            await projectForm.validateFields()
+            onProjectFormSaved()
+            setProjectFormModalVisible(false)
             incrementStep(2)
           }}
         />
       </Drawer>
 
       <Drawer
-        visible={fundingDetailsModalVisible}
+        visible={ticketingFormModalVisible}
         placement="right"
         width={640}
         onClose={() => {
-          resetFundingDetailsForm()
-          setFundingDetailsModalVisible(false)
+          resetTicketingForm()
+          setTicketingFormModalVisible(false)
         }}
       >
-        <FundingDetails
-          form={fundingDetailsForm}
+        <TicketingForm
+          form={ticketingForm}
           onSave={async () => {
-            await fundingDetailsForm.validateFields()
-            onAdvancedFormSaved()
-            setFundingDetailsModalVisible(false)
+            await ticketingForm.validateFields()
+            onTicketingFormSaved()
+            setTicketingFormModalVisible(false)
           }}
         />
       </Drawer>
 
       <Modal
-        visible={createProjectModalVisible}
+        visible={deployProjectModalVisible}
         okText={'Deploy on ' + network}
-        onOk={createProject}
+        onOk={deployProject}
         confirmLoading={creatingProject}
         width={600}
-        onCancel={() => setCreateProjectModalVisible(false)}
+        onCancel={() => setDeployProjectModalVisible(false)}
       >
-        <ConfirmCreateProject />
+        <ConfirmDeployProject />
       </Modal>
     </div>
   )

@@ -1,28 +1,38 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { normalizeHandle } from 'utils/formatHandle'
 
-export type ProjectDetailsFormFields = {
+export type ProjectFormFields = {
+  name: string
   link: string
   handle: string
   logoUri: string
 }
 
-export default function ProjectDetails({
+export default function ProjectForm({
   form,
   onSave,
 }: {
-  form: FormInstance<ProjectDetailsFormFields>
+  form: FormInstance<ProjectFormFields>
   onSave: VoidFunction
 }) {
   return (
     <Space direction="vertical" size="large">
-      <h1>Project details</h1>
+      <h1>Project info</h1>
 
       <Form form={form} layout="vertical">
+        <FormItems.ProjectName
+          name="name"
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
+          onChange={name =>
+            name && form.setFieldsValue({ handle: normalizeHandle(name) })
+          }
+        />
         <FormItems.ProjectHandle
           name="handle"
           value={form.getFieldValue('handle')}
-          onChange={handle => form.setFieldsValue({ handle })}
           formItemProps={{
             rules: [{ required: true }],
           }}

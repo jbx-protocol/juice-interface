@@ -113,7 +113,6 @@ export default function ReconfigureBudgetModal({
         <FormItems.ProjectDuration
           name="duration"
           value={form.getFieldValue('duration')}
-          onChange={val => form.setFieldsValue({ duration: val })}
           isRecurring={isRecurring}
           onToggleRecurring={() => setIsRecurring(!isRecurring)}
         />

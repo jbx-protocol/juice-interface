@@ -1,7 +1,7 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 
-export type FundingDetailsFormFields = {
+export type TicketingFormFields = {
   discountRate: string
   reserved: string
   bondingCurveRate: string
@@ -11,7 +11,7 @@ export default function FundingDetails({
   form,
   onSave,
 }: {
-  form: FormInstance<FundingDetailsFormFields>
+  form: FormInstance<TicketingFormFields>
   onSave: VoidFunction
 }) {
   return (

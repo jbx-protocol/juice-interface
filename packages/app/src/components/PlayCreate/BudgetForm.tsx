@@ -5,18 +5,17 @@ import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
 import { editingProjectActions } from 'redux/slices/editingProject'
 
-export type ProjectInfoFormFields = {
-  name: string
+export type BudgetFormFields = {
   target: string
   duration: string
   currency: CurrencyOption
 }
 
-export default function ProjectInfo({
+export default function BudgetForm({
   form,
   onSave,
 }: {
-  form: FormInstance<ProjectInfoFormFields>
+  form: FormInstance<BudgetFormFields>
   onSave: VoidFunction
 }) {
   const isRecurring = useEditingFundingCycleRecurringSelector()
@@ -24,15 +23,9 @@ export default function ProjectInfo({
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <h1>Project info</h1>
+      <h1>Budget</h1>
 
       <Form form={form} layout="vertical">
-        <FormItems.ProjectName
-          name="name"
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
-        />
         <FormItems.ProjectTarget
           name="target"
           formItemProps={{
@@ -50,7 +43,9 @@ export default function ProjectInfo({
           onToggleRecurring={() =>
             dispatch(editingProjectActions.setIsRecurring(!isRecurring))
           }
-          onChange={val => form.setFieldsValue({ duration: val })}
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
         />
         <Form.Item>
           <Button htmlType="submit" type="primary" onClick={onSave}>

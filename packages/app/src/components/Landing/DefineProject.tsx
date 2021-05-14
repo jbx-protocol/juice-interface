@@ -127,7 +127,7 @@ export default function DefineProject() {
             to work. All extra money received is overflow.
             <br />
             <br />
-            Users, patrons, and investors get Tickets when they pay{' '}
+            Users, patrons, and investors get Tickets alongside you when they pay{' '}
             {bold(editingProject?.name, 'your project')}.
             <br />
             <br />

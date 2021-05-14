@@ -44,7 +44,10 @@ export default function DefineProject() {
     [],
   )
 
-  const goToReview = () => (window.location.hash = 'create')
+  const goToReview = () => {
+    window.location.hash = 'create'
+    window.scrollTo({ top: 0 })
+  }
 
   const onFieldsChange = (fields: Partial<FormFields>) => {
     if (fields.name !== undefined) {

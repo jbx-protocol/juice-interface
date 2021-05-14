@@ -3,6 +3,8 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 interface WETH {
+    function decimals() external view returns (uint256);
+
     function deposit() external payable;
 
     function withdraw(uint256 wad) external;

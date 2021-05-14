@@ -23,9 +23,12 @@ contract YearnYielder is IYielder, Ownable {
 
     uint256 public override deposited = 0;
 
+    uint256 public decimals;
+
     constructor(address _weth) {
         require(wethVault.token() == _weth, "YearnYielder: INCOMPATIBLE");
         weth = _weth;
+        decimals = WETH(weth).decimals();
         updateApproval();
     }
 
@@ -75,7 +78,11 @@ contract YearnYielder is IYielder, Ownable {
         returns (uint256)
     {
         return
-            FullMath.mulDiv(_sharesAmount, wethVault.pricePerShare(), 10**18);
+            FullMath.mulDiv(
+                _sharesAmount,
+                wethVault.pricePerShare(),
+                10**decimals
+            );
     }
 
     /// @dev Computes the number of shares an amount of tokens is worth.
@@ -89,6 +96,10 @@ contract YearnYielder is IYielder, Ownable {
         returns (uint256)
     {
         return
-            FullMath.mulDiv(_tokensAmount, 10**18, wethVault.pricePerShare());
+            FullMath.mulDiv(
+                _tokensAmount,
+                10**decimals,
+                wethVault.pricePerShare()
+            );
     }
 }

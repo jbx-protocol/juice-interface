@@ -242,7 +242,7 @@ export default function PlayCreate() {
           zIndex: 100,
         }}
       >
-        <h1>Deploy this project 🚀</h1>
+        <h1>Deploy your project 🚀</h1>
 
         {buildSteps([
           {

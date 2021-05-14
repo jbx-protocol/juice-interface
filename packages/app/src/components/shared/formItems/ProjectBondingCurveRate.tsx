@@ -155,11 +155,11 @@ export default function ProjectBondingCurveRate({
           </div>
 
           <div>
-            A lower bonding curve has the effect of increasing the redeem value
-            of a ticket as the remaining ticket supply decreases, creating
-            incentive to hodl tickets and not redeem them early. A bonding curve
-            of 100% means all tickets will have the same value regardless of
-            when they are redeemed.
+            This rate determines the amount of overflow that each Ticket can be redeemed for at any given time. 
+              Redeeming a ticket on a lower bonding curve reduces its immediate value, while increasing the redeem value
+              of each remaining ticket. This creates an incentive to hodl tickets and not redeem them earlier 
+              than others. A bonding curve of 100% means all tickets will have the same value regardless
+              of when they are redeemed.
           </div>
         </div>
       }

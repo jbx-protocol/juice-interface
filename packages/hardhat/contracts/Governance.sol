@@ -7,10 +7,9 @@ import "./interfaces/IJuicer.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/JuiceProject.sol";
 
-/// All functions in here should be governable with FLOW.
-/// Owner should eventually change to a governance contract.
-contract Admin is JuiceProject {
-    constructor(IJuiceTerminal _juiceTerminal) JuiceProject(_juiceTerminal) {}
+/// Owner should eventually change to a multisig wallet contract.
+contract Governance is JuiceProject {
+    constructor() JuiceProject(IJuiceTerminal(0)) {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.

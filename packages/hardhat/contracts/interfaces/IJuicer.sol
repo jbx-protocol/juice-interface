@@ -157,9 +157,7 @@ interface IJuicer is
 
     event Deposit(uint256 amount);
 
-    event SetAdmin(address admin);
-
-    function admin() external view returns (address payable);
+    function governance() external view returns (address payable);
 
     function projects() external view returns (IProjects);
 
@@ -187,8 +185,6 @@ interface IJuicer is
         external
         view
         returns (uint256 amountWithoutYield, uint256 amountWithYield);
-
-    function setAdmin(address payable _admin) external;
 
     function migrate(uint256 _projectId, IProjectFundsManager _to) external;
 

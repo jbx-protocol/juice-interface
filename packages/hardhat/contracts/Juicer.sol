@@ -76,8 +76,8 @@ contract Juicer is IJuicer {
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 1000.
     uint256 public constant override fee = 50;
 
-    /// @notice The admin of the contract who makes admin fees and can allow new Juicer contracts to be migrated to by project owners.
-    address payable public override admin;
+    /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
+    address payable public override governance;
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
@@ -296,8 +296,19 @@ contract Juicer is IJuicer {
         IOperatorStore _operatorStore,
         IModStore _modStore,
         IPrices _prices,
-        IYielder _yielder
+        IYielder _yielder,
+        address payable _governance
     ) {
+        require(
+            _projects != IProjects(0) &&
+                _fundingCycles != IFundingCycles(0) &&
+                _tickets != ITickets(0) &&
+                _operatorStore != IOperatorStore(0) &&
+                _modStore != IModStore(0) &&
+                _prices != IPrices(0) &&
+                _governance != address(0),
+            "Juicer: ZERO_ADDRESS"
+        );
         projects = _projects;
         fundingCycles = _fundingCycles;
         tickets = _tickets;
@@ -305,6 +316,7 @@ contract Juicer is IJuicer {
         modStore = _modStore;
         prices = _prices;
         yielder = _yielder;
+        governance = _governance;
     }
 
     /**
@@ -646,7 +658,7 @@ contract Juicer is IJuicer {
 
         // Add to the amount that has now been distributed by the project.
         // Since the distributed amount doesn't include any earned yield but the
-        // `_tappedETHAmount` and `_adminFeeAmount` might include earned yields,
+        // `_tappedETHAmount` might include earned yields,
         // the correct proportion must be calculated.
         distributedAmount[_projectId] = distributedAmount[_projectId].add(
             FullMath.mulDiv(
@@ -658,18 +670,18 @@ contract Juicer is IJuicer {
             )
         );
 
-        // Get a reference to the admin's project ID.
-        uint256 _adminProjectId = JuiceProject(admin).projectId();
+        // Get a reference to governance's project ID.
+        uint256 _govProjectId = JuiceProject(governance).projectId();
 
         // Get a reference to the amount that will be transfered from this contract to the beneficiary.
         uint256 _transferAmount;
 
-        // Only process an admin fee if the project being tapped is not the admin.
-        if (_projectId == _adminProjectId) {
+        // Only process an fee if the project being tapped is not the governance.
+        if (_projectId == _govProjectId) {
             _transferAmount = _tappedETHAmount;
         } else {
             // The amount of ETH from the _tappedAmount to pay as a fee.
-            uint256 _adminFeeAmount =
+            uint256 _govFeeAmount =
                 _tappedETHAmount -
                     FullMath.mulDiv(
                         _tappedETHAmount,
@@ -678,28 +690,26 @@ contract Juicer is IJuicer {
                     );
 
             // Get a reference to the current funding cycle for the project.
-            FundingCycle.Data memory _adminFundingCycle =
-                fundingCycles.getCurrent(_adminProjectId);
+            FundingCycle.Data memory _govFundingCycle =
+                fundingCycles.getCurrent(_govProjectId);
 
             // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
-            processableAmount[_adminProjectId] = processableAmount[
-                _adminProjectId
-            ]
-                .add(_adminFeeAmount);
+            processableAmount[_govProjectId] = processableAmount[_govProjectId]
+                .add(_govFeeAmount);
 
             // Print tickets for the beneficiary.
             tickets.print(
                 _beneficiary,
-                _adminProjectId,
-                _adminFundingCycle._weighted(
-                    _adminFeeAmount,
+                _govProjectId,
+                _govFundingCycle._weighted(
+                    _govFeeAmount,
                     // The reserved rate is stored in bytes 25-30 of the metadata property.
-                    1000 - uint256(uint16(_adminFundingCycle.metadata >> 24))
+                    1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
                 )
             );
 
             // Transfer the tapped amount minus the fees.
-            _transferAmount = _tappedETHAmount - _adminFeeAmount;
+            _transferAmount = _tappedETHAmount - _govFeeAmount;
         }
 
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
@@ -735,6 +745,9 @@ contract Juicer is IJuicer {
         // There must be something depositable.
         require(_amount > 0, "Juicer::deposit: BAD_AMOUNT");
 
+        // // The depositing can't be paused.
+        // require(!paused, "Juicer::depost: PAUSED");
+
         // Any ETH currently in posession of this contract can be deposited.
         require(
             _amount <= address(this).balance,
@@ -746,6 +759,23 @@ contract Juicer is IJuicer {
 
         emit Deposit(_amount);
     }
+
+    // /**
+    //   @notice Pauses the yielder from utilizing idle funds.
+    // */
+    // function pause() external override lock {
+    //     // There must be a yielder.
+    //     require(yielder != IYielder(0), "Juicer::deposit: NOT_FOUND");
+
+    //     // Only governance can take this action.
+    //     require(msg.sender == governance, "Juicer::pause: UNAUTHORIZED");
+
+    //     if (!paused) yielder.withdrawAll();
+
+    //     paused = !paused;
+
+    //     emit Pause(paused);
+    // }
 
     /**
         @notice Allows a project owner to migrate its funds to a new contract that can manage a project's funds.
@@ -800,29 +830,15 @@ contract Juicer is IJuicer {
     }
 
     /**
-        @notice Set the admin of this contract.
-        @dev Can be set once. 
-        @param _admin The admin to set.
-    */
-    function setAdmin(address payable _admin) external override {
-        // An admin can't already be set.
-        require(admin == address(0), "Juicer::setAdmin: ALREADY_SET");
-        // The admin can't be the zero address.
-        require(_admin != address(0), "Juicer::setAdmin: ZERO_ADDRESS");
-
-        // Set the admin.
-        admin = _admin;
-
-        emit SetAdmin(_admin);
-    }
-
-    /**
         @notice Adds to the contract addresses that projects can migrate their Tickets to.
         @param _contract The contract to allow.
     */
     function allowMigration(address _contract) external override {
-        // Only the admin can take this action.
-        require(msg.sender == admin, "Juicer::allowMigration: UNAUTHORIZED");
+        // Only governance can take this action.
+        require(
+            msg.sender == governance,
+            "Juicer::allowMigration: UNAUTHORIZED"
+        );
 
         // Can't allow the zero address.
         require(
@@ -1006,25 +1022,26 @@ contract Juicer is IJuicer {
         _remaining = _totalTransferAmount - _modsCut;
     }
 
-    // If funds are sent to this contract directly, fund the admin.
+    // If funds are sent to this contract directly, fund governance.
     receive() external payable {
-        uint256 _adminProjectId = JuiceProject(admin).projectId();
+        uint256 _govProjectId = JuiceProject(governance).projectId();
         // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _adminFundingCycle =
-            fundingCycles.getCurrent(_adminProjectId);
+        FundingCycle.Data memory _govFundingCycle =
+            fundingCycles.getCurrent(_govProjectId);
 
         // Add to the processable amount for this project, which will be processed when tapped by distributing reserved tickets to this project's owner.
-        processableAmount[_adminProjectId] = processableAmount[_adminProjectId]
-            .add(msg.value);
+        processableAmount[_govProjectId] = processableAmount[_govProjectId].add(
+            msg.value
+        );
 
         // Print tickets for the beneficiary.
         tickets.print(
             msg.sender,
-            _adminProjectId,
-            _adminFundingCycle._weighted(
+            _govProjectId,
+            _govFundingCycle._weighted(
                 msg.value,
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_adminFundingCycle.metadata >> 24))
+                1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
             )
         );
     }

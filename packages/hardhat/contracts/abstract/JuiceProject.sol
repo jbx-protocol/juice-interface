@@ -27,10 +27,10 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     receive() external payable {}
 
     /** 
-      @notice Switches the contract where fees are sent.
+      @notice Sets the contract where fees are sent.
       @param _to The new terminal to send fees to.
     */
-    function switchJuiceTerminal(IJuiceTerminal _to) external onlyOwner {
+    function setJuiceTerminal(IJuiceTerminal _to) external onlyOwner {
         juiceTerminal = _to;
     }
 

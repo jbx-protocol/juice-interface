@@ -27,6 +27,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       weth(process.env.HARDHAT_NETWORK) || token.address,
     ]));
 
+  const governance = await deploy("Governance");
+
   const juicer = await deploy("Juicer", [
     projects.address,
     fundingCycles.address,
@@ -35,9 +37,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     modStore.address,
     prices.address,
     yielder ? yielder.address : "0x0000000000000000000000000000000000000000",
+    governance.address,
   ]);
-
-  const admin = await deploy("Admin", [juicer.address]);
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 
@@ -53,7 +54,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const PricesFactory = await ethers.getContractFactory("Prices");
     const YielderFactory =
       yielder && (await ethers.getContractFactory("YearnYielder"));
-    const AdminFactory = await ethers.getContractFactory("Admin");
+    const GovernanceFactory = await ethers.getContractFactory("Governance");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
@@ -63,19 +64,21 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedYielder =
       yielder && (await YielderFactory.attach(yielder.address));
-    const attachedAdmin = await AdminFactory.attach(admin.address);
+    const attachedGovernance = await GovernanceFactory.attach(
+      governance.address
+    );
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     console.log("⚡️ Setting the projects owner");
-    await attachedProjects.setOwnership(admin.address, {
+    await attachedProjects.setOwnership(governance.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the fundingCycles owner");
-    await attachedFundingCycles.setOwnership(admin.address, {
+    await attachedFundingCycles.setOwnership(governance.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the prices owner");
-    await attachedPrices.transferOwnership(admin.address, {
+    await attachedPrices.transferOwnership(governance.address, {
       gasLimit: blockGasLimit,
     });
     if (attachedYielder) {
@@ -86,25 +89,30 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     }
 
     console.log("⚡️ Granting the juicer admin privileges over the projects");
-    await attachedAdmin.grantAdmin(projects.address, juicer.address, {
+    await attachedGovernance.grantAdmin(projects.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
     console.log(
       "⚡️ Granting the juicer admin privileges over the funding cycles"
     );
-    await attachedAdmin.grantAdmin(fundingCycles.address, juicer.address, {
+    await attachedGovernance.grantAdmin(fundingCycles.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
 
     if (ethUsdAddr) {
       console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
-      await attachedAdmin.addPriceFeed(fundingCycles.address, ethUsdAddr, 1, {
-        gasLimit: blockGasLimit,
-      });
+      await attachedGovernance.addPriceFeed(
+        fundingCycles.address,
+        ethUsdAddr,
+        1,
+        {
+          gasLimit: blockGasLimit,
+        }
+      );
     }
 
-    console.log("⚡️ Setting the admin of the juicer");
-    await attachedJuicer.setAdmin(admin.address, {
+    console.log("⚡️ Setting governance's Juice terminal");
+    await attachedGovernance.setJuiceTerminal(juicer.address, {
       gasLimit: blockGasLimit,
     });
 
@@ -113,23 +121,23 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     //   gasLimit: blockGasLimit
     // });
 
-    console.log("⚡️ Set the deployer as an operator of the admin");
-    await attachedAdmin.addOperator(
+    console.log("⚡️ Set the deployer as an operator of governance");
+    await attachedGovernance.addOperator(
       operatorStore.address,
-      admin.signer.address,
+      governance.signer.address,
       4,
       {
         gasLimit: blockGasLimit,
       }
     );
 
-    console.log("⚡️ Configuring the admins budget");
+    console.log("⚡️ Configuring governance's budget");
 
     const duration = 2592000; // 30 days;
     const discountRate = 970;
 
     await attachedJuicer.deploy(
-      admin.address,
+      governance.address,
       "Juice",
       "juice",
       "https://medmunch.com/wp-content/uploads/2020/04/Mango-Juice.jpg",
@@ -148,19 +156,19 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       }
     );
 
-    console.log("⚡️ Remove the deployer as an operator of the admin");
-    await attachedAdmin.removeOperator(
+    console.log("⚡️ Remove the deployer as an operator of governance");
+    await attachedGovernance.removeOperator(
       operatorStore.address,
-      admin.address,
-      admin.signer.address,
+      governance.address,
+      governance.signer.address,
       {
         gasLimit: blockGasLimit,
       }
     );
 
-    console.log("⚡️ Setting the admin's project ID");
+    console.log("⚡️ Setting governance's project ID");
     // Create the admin's budget.
-    await attachedAdmin.setProjectId(1);
+    await attachedGovernance.setProjectId(1);
   } catch (e) {
     console.log("Failed to set up environment: ", e);
   }
@@ -172,7 +180,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   );
 
   return {
-    admin,
+    governance,
     token,
     prices,
     projects,

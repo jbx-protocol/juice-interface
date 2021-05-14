@@ -22,11 +22,11 @@ export default function Landing() {
   )
 
   const listData = [
-    'Indie artists, programmers, journalists, & researchers',
-    'Ethereum projects and communities',
-    'Internet public goods',
+    'Indie artists, devs, journalists, & researchers',
+    'Ethereum protocols & communities',
+    'Public goods',
     'Open source businesses',
-    'Just about any web project with predictable costs',
+    'Just about any project with predictable costs',
   ]
 
   const section: CSSProperties = {

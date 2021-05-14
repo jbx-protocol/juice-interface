@@ -6,8 +6,10 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
-import { formatWad, parsePerMille } from 'utils/formatCurrency'
+import { currencyName } from 'utils/currency'
+import { formattedNum, formatWad, parsePerMille } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
+
 import { decodeFCMetadata } from '../../utils/fundingCycle'
 
 export default function ConfirmPayOwnerModal({
@@ -15,7 +17,7 @@ export default function ConfirmPayOwnerModal({
   project,
   fundingCycle,
   visible,
-  usdAmount,
+  weiAmount,
   onSuccess,
   onCancel,
 }: {
@@ -23,7 +25,7 @@ export default function ConfirmPayOwnerModal({
   project: ProjectIdentifier
   fundingCycle: FundingCycle | undefined
   visible?: boolean
-  usdAmount: number | undefined
+  weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
@@ -32,7 +34,7 @@ export default function ConfirmPayOwnerModal({
 
   const converter = useCurrencyConverter()
 
-  const weiAmount = converter.usdToWei(usdAmount)
+  const usdAmount = converter.weiToUsd(weiAmount)
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
@@ -77,7 +79,8 @@ export default function ConfirmPayOwnerModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Descriptions column={1} bordered>
           <Descriptions.Item label="Pay amount">
-            {usdAmount} USD ({formatWad(weiAmount)} ETH)
+            {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
+            {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item label="Tickets for you">
             {formatWad(receivedTickets)}

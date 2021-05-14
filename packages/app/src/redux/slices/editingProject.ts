@@ -149,7 +149,7 @@ export const editingProjectSlice = createSlice({
       ...state,
       fundingCycle: {
         ...state.fundingCycle,
-        currency: action.payload,
+        currency: action.payload.toString(),
       },
     }),
     setLoading: (state, action: PayloadAction<boolean>) => ({

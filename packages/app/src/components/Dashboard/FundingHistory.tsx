@@ -67,9 +67,7 @@ export default function FundingHistory({
               <h2>#{cycle.id.toString()}</h2>
               <div>
                 <span style={{ fontSize: '1rem' }}>
-                  <CurrencySymbol
-                    currency={cycle.currency.toString() as CurrencyOption}
-                  />
+                  <CurrencySymbol currency={cycle.currency} />
                   {formatWad(cycle.tapped)}
                 </span>{' '}
                 withdrawn

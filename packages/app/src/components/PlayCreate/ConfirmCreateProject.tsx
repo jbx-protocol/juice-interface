@@ -33,9 +33,7 @@ export default function ConfirmCreateProject() {
 
     return (
       <span>
-        <CurrencySymbol
-          currency={editingFC?.currency.toString() as CurrencyOption}
-        />
+        <CurrencySymbol currency={editingFC?.currency} />
         {formattedNum(targetAmount)} (+
         {formatWad(feeForAmount(editingFC?.target, adminFeePercent))})
       </span>

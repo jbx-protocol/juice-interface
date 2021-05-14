@@ -7,18 +7,28 @@ import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
+import {
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/formatCurrency'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import TooltipLabel from '../shared/TooltipLabel'
+import { currencyName } from 'utils/currency'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
 export default function Rewards({
   projectId,
-  bondingCurveRate,
+  currentCycle,
 }: {
   projectId: BigNumber | undefined
-  bondingCurveRate: number | undefined
+  currentCycle: FundingCycle | undefined
 }) {
   const { contracts, transactor, userAddress, onNeedProvider } = useContext(
     UserContext,
@@ -26,7 +36,10 @@ export default function Rewards({
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
+  const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
+
+  const converter = useCurrencyConverter()
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -84,7 +97,8 @@ export default function Rewards({
     ),
   })
 
-  console.log('ticketsubbly', ticketSupply?.toString())
+  const bondingCurveRate = decodeFCMetadata(currentCycle?.metadata)
+    ?.bondingCurveRate
 
   // TODO Juicer.claimableAmount
   const onChangeRedeemAmount = useCallback(
@@ -127,6 +141,8 @@ export default function Rewards({
 
     if (!minRedeemAmount) return
 
+    setLoadingRedeem(true)
+
     const redeemWad = parseWad(redeemAmount)
 
     if (!redeemWad || !projectId) return
@@ -144,6 +160,7 @@ export default function Rewards({
       ],
       {
         onConfirmed: () => onChangeRedeemAmount(undefined),
+        onDone: () => setLoadingRedeem(false),
       },
     )
   }
@@ -163,7 +180,36 @@ export default function Rewards({
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   return (
-    <div>
+    <Space direction="vertical" size="large">
+      <Statistic
+        title={
+          <TooltipLabel
+            label="Overflow"
+            tip="The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders."
+            placement="bottom"
+          />
+        }
+        valueRender={() =>
+          currentCycle?.currency === 1 ? (
+            <div>
+              <span>
+                <CurrencySymbol currency={1} />
+                {formattedNum(converter.weiToUsd(totalOverflow))}{' '}
+              </span>
+              <span style={{ opacity: 0.6, fontSize: '0.8rem' }}>
+                <CurrencySymbol currency={0} />
+                {formatWad(totalOverflow ?? 0)}
+              </span>
+            </div>
+          ) : (
+            <div>
+              <CurrencySymbol currency={0} />
+              {formatWad(totalOverflow ?? 0)}
+            </div>
+          )
+        }
+      />
+
       <Statistic
         title={
           <TooltipLabel
@@ -180,7 +226,11 @@ export default function Rewards({
           <div>
             <div>
               {formatWad(ticketsBalance ?? 0)} tickets{' '}
-              <Button size="small" onClick={() => setRedeemModalVisible(true)}>
+              <Button
+                loading={loadingRedeem}
+                size="small"
+                onClick={() => setRedeemModalVisible(true)}
+              >
                 Redeem
               </Button>
             </div>
@@ -239,6 +289,6 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
-    </div>
+    </Space>
   )
 }

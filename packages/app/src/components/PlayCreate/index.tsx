@@ -13,7 +13,6 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { CurrencyOption } from 'models/currency-option'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
@@ -79,7 +78,7 @@ export default function PlayCreate() {
       name: editingProject?.name ?? '',
       target: fromWad(editingFC?.target) ?? '0',
       duration: (editingFC?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
-      currency: (editingFC?.currency.toString() ?? '0') as CurrencyOption,
+      currency: editingFC?.currency ?? 0,
     })
 
   const resetProjectDetailsForm = () => {

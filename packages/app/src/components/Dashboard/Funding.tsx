@@ -9,15 +9,8 @@ import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
-import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { currencyName } from 'utils/currency'
 import {
@@ -106,13 +99,6 @@ export default function Funding({
     ),
   })
 
-  console.log('check overflow', {
-    balance: balance?.toString(),
-    overflow: totalOverflow?.toString(),
-    target: fundingCycle?.target.toString(),
-    tapped: fundingCycle?.tapped.toString(),
-  })
-
   function tap() {
     if (!transactor || !contracts?.Juicer || !fundingCycle)
       return onNeedProvider()
@@ -126,7 +112,7 @@ export default function Funding({
 
     // Arbitrary discrete value (wei) subtracted
     const minAmount =
-      currency === 'USD'
+      fundingCycle.currency === 1
         ? converter.usdToWei(tapAmount)
         : parseWad(tapAmount)?.sub(1e12)
 
@@ -145,14 +131,17 @@ export default function Funding({
     )
   }
 
-  const currency = currencyName(fundingCycle?.currency)
-
   const balanceInCurrency = useMemo(
     () =>
-      currency === 'USD'
-        ? parseWad(converter.weiToUsd(balance)?.toString())
-        : balance,
-    [currency, balance, converter],
+      balance && converter.wadToCurrency(balance, fundingCycle?.currency, 0),
+    [fundingCycle?.currency, balance, converter],
+  )
+
+  const overflowInCurrency = useMemo(
+    () =>
+      totalOverflow &&
+      converter.wadToCurrency(totalOverflow, fundingCycle?.currency, 0),
+    [fundingCycle?.currency, totalOverflow, converter],
   )
 
   const paidInCurrency = balanceInCurrency?.add(fundingCycle?.tapped ?? 0)
@@ -169,7 +158,13 @@ export default function Funding({
   if (!fundingCycle) return null
 
   const smallHeader = (text: string, tip?: string) => (
-    <span style={{ fontSize: '.7rem', fontWeight: 500, cursor: 'default' }}>
+    <span
+      style={{
+        fontSize: '.7rem',
+        fontWeight: 500,
+        cursor: 'default',
+      }}
+    >
       {tip ? (
         <Tooltip title={tip}>
           {text}
@@ -183,18 +178,13 @@ export default function Funding({
     </span>
   )
 
-  const primaryPaidStyle: CSSProperties = {
-    fontSize: '1.2rem',
-    fontWeight: 500,
-  }
-
   const untapped = fundingCycle.target.sub(fundingCycle.tapped)
 
   const withdrawable = balanceInCurrency?.gt(untapped)
     ? untapped
     : balanceInCurrency
 
-  const isRecurring = fundingCycle?.discountRate > 0
+  const isRecurring = fundingCycle.discountRate > 0
 
   const now = Math.round(new Date().valueOf() / 1000)
   const secondsLeft = fundingCycle.start + fundingCycle.duration - now
@@ -212,72 +202,35 @@ export default function Funding({
     <div>
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-              {smallHeader(
-                'PAID',
-                'The total paid to the project in this funding cycle, plus any overflow carried over from the previous funding cycle.',
-              )}
-              {currency === 'USD' ? (
-                <div>
+          <div>
+            {smallHeader(
+              'PAID',
+              'The total paid to the project in this funding cycle, plus any overflow carried over from the previous funding cycle.',
+            )}
+            <div
+              style={{
+                fontSize: '1.4rem',
+                fontWeight: 500,
+                color: colors.juiceOrange,
+              }}
+            >
+              <CurrencySymbol currency={fundingCycle.currency} />
+              {fundingCycle.currency === 1 ? (
+                <span>
+                  {formatWad(paidInCurrency)}{' '}
                   <span
                     style={{
-                      ...primaryPaidStyle,
-                      color: colors.juiceOrange,
+                      opacity: 0.6,
+                      fontSize: 'initial',
+                      color: 'white',
                     }}
                   >
-                    <CurrencySymbol currency="1" />
-                    {formatWad(paidInCurrency)}
-                  </span>{' '}
-                  <span style={{ opacity: 0.6 }}>
-                    <CurrencySymbol currency="0" />
+                    <CurrencySymbol currency={0} />
                     {formatWad(converter.usdToWei(fromWad(paidInCurrency)))}
                   </span>
-                </div>
+                </span>
               ) : (
-                <div
-                  style={{
-                    ...primaryPaidStyle,
-                    color: colors.juiceOrange,
-                  }}
-                >
-                  <CurrencySymbol currency="0" />
-                  {formatWad(paidInCurrency)}
-                </div>
-              )}
-            </div>
-
-            <div style={{ textAlign: 'right' }}>
-              {smallHeader(
-                'OVERFLOW',
-                'The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders.',
-              )}
-              {currency === 'USD' ? (
-                <div>
-                  <span
-                    style={{
-                      ...primaryPaidStyle,
-                      color: colors.cta,
-                    }}
-                  >
-                    <CurrencySymbol currency="1" />
-                    {formattedNum(converter.weiToUsd(totalOverflow))}
-                  </span>{' '}
-                  <span style={{ opacity: 0.6 }}>
-                    <CurrencySymbol currency="0" />
-                    {formatWad(totalOverflow ?? 0)}
-                  </span>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    ...primaryPaidStyle,
-                    color: colors.cta,
-                  }}
-                >
-                  <CurrencySymbol currency="0" />
-                  {formatWad(totalOverflow ?? 0)}
-                </div>
+                formatWad(paidInCurrency)
               )}
             </div>
           </div>
@@ -293,7 +246,7 @@ export default function Funding({
                 style={{
                   width: 4,
                   height: 15,
-                  borderRadius: '2px',
+                  borderRadius: 2,
                   background: 'white',
                   marginLeft: 5,
                   marginRight: 5,
@@ -304,8 +257,8 @@ export default function Funding({
                 style={{
                   width:
                     fracDiv(
-                      totalOverflow?.toString() ?? '0',
-                      balanceInCurrency?.toString() ?? '1',
+                      overflowInCurrency?.toString() ?? '0',
+                      paidInCurrency?.toString() ?? '1',
                     ) *
                       100 +
                     '%',
@@ -313,7 +266,7 @@ export default function Funding({
                 }}
                 percent={100}
                 showInfo={false}
-                strokeColor={colors.cta}
+                strokeColor={colors.juiceOrange}
               />
             </div>
           ) : (
@@ -324,21 +277,53 @@ export default function Funding({
             />
           )}
 
-          <div>
-            <div>
-              <span style={{ color: 'white', fontWeight: 500 }}>
-                <CurrencySymbol
-                  currency={fundingCycle.currency.toString() as CurrencyOption}
-                />
-                {formatWad(fundingCycle.target)}{' '}
-                <span style={{ opacity: 0.6 }}>
-                  {smallHeader(
-                    'withdraw limit',
-                    'The maximum amount this project can withdraw in the current funding cycle.',
-                  )}
-                </span>
-              </span>{' '}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '1rem',
+              marginTop: 4,
+            }}
+          >
+            <div style={{ fontWeight: 500 }}>
+              <CurrencySymbol currency={fundingCycle.currency} />
+              {formatWad(fundingCycle.target)}{' '}
+              <div style={{ opacity: 0.6, lineHeight: 1 }}>
+                {smallHeader(
+                  'target',
+                  'The maximum amount this project can withdraw in the current funding cycle.',
+                )}
+              </div>
             </div>
+
+            {totalOverflow?.gt(0) && (
+              <div style={{ fontWeight: 500, textAlign: 'right' }}>
+                {fundingCycle.currency === 1 ? (
+                  <span>
+                    <span>
+                      <CurrencySymbol currency={1} />
+                      {formattedNum(converter.weiToUsd(totalOverflow))}{' '}
+                    </span>
+                    <span style={{ opacity: 0.6, fontSize: '0.8rem' }}>
+                      <CurrencySymbol currency={0} />
+                      {formatWad(totalOverflow ?? 0)}
+                    </span>
+                  </span>
+                ) : (
+                  <span>
+                    <CurrencySymbol currency={0} />
+                    {formatWad(totalOverflow ?? 0)}
+                  </span>
+                )}
+
+                <div style={{ opacity: 0.6, lineHeight: 1 }}>
+                  {smallHeader(
+                    'overflow',
+                    'The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders.',
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -356,10 +341,8 @@ export default function Funding({
             >
               <div>Withdrawn:</div>
               <div>
-                <CurrencySymbol
-                  currency={fundingCycle?.currency.toString() as CurrencyOption}
-                />
-                {formatWad(fundingCycle?.tapped) || '0'}
+                <CurrencySymbol currency={fundingCycle.currency} />
+                {formatWad(fundingCycle.tapped) || '0'}
               </div>
             </div>
             <div
@@ -371,9 +354,7 @@ export default function Funding({
             >
               <div>Available:</div>
               <div>
-                <CurrencySymbol
-                  currency={fundingCycle?.currency.toString() as CurrencyOption}
-                />
+                <CurrencySymbol currency={fundingCycle.currency} />
                 {formatWad(withdrawable) || '0'}
                 <Button
                   style={{ marginLeft: 10 }}
@@ -424,10 +405,7 @@ export default function Funding({
         width={540}
       >
         <div style={{ marginBottom: 10 }}>
-          Withdraw up to:{' '}
-          <CurrencySymbol
-            currency={fundingCycle.currency.toString() as CurrencyOption}
-          />
+          Withdraw up to: <CurrencySymbol currency={fundingCycle.currency} />
           {formatWad(withdrawable)}
         </div>
         <Space direction="vertical" style={{ width: '100%' }}>
@@ -441,7 +419,9 @@ export default function Funding({
                   alignItems: 'center',
                 }}
               >
-                <span style={{ marginRight: 8 }}>{currency}</span>
+                <span style={{ marginRight: 8 }}>
+                  {currencyName(fundingCycle.currency)}
+                </span>
                 <InputAccessoryButton
                   content="MAX"
                   onClick={() => setTapAmount(fromWad(withdrawable))}
@@ -453,10 +433,10 @@ export default function Funding({
             max={fromWad(withdrawable)}
             onChange={e => setTapAmount(e.target.value)}
           />
-          {currency === 'USD' && (
+          {fundingCycle.currency === 1 && (
             <div style={{ textAlign: 'right' }}>
               {formatWad(converter.usdToWei(tapAmount)) || '--'}{' '}
-              <CurrencySymbol currency={'0'} />
+              <CurrencySymbol currency={0} />
             </div>
           )}
         </Space>

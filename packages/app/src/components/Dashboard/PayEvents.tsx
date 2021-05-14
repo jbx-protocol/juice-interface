@@ -66,13 +66,13 @@ export default function PayEvents({
                   }}
                 >
                   <CurrencySymbol currency={event.currency} />
-                  {event.currency === '0' ? (
+                  {event.currency === 0 ? (
                     formatWad(event.amount)
                   ) : (
                     <span>
                       {converter.weiToUsd(event.amount)?.toString()}{' '}
                       <span style={{ fontSize: '.8rem', fontWeight: 400 }}>
-                        <CurrencySymbol currency="0" />
+                        <CurrencySymbol currency={0} />
                         {formatWad(event.amount)}
                       </span>
                     </span>

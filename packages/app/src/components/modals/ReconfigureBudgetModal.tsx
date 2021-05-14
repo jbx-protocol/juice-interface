@@ -47,7 +47,7 @@ export default function ReconfigureBudgetModal({
     form.setFieldsValue({
       duration: fundingCycle.duration.toString(),
       target: fromWad(fundingCycle.target),
-      currency: fundingCycle.currency.toString() as CurrencyOption,
+      currency: fundingCycle.currency,
       discountRate: fromPerMille(fundingCycle.discountRate),
       reserved: fromPerMille(metadata.reserved),
       bondingCurveRate: fromPerMille(metadata.bondingCurveRate),

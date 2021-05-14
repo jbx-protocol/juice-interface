@@ -1,4 +1,3 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties } from 'react'
 
@@ -20,18 +19,12 @@ const currencies: Record<
 }
 
 export const currencyName = (
-  curr?: BigNumberish,
+  currency?: CurrencyOption,
 ): typeof currencies[keyof typeof currencies]['name'] | undefined =>
-  curr
-    ? currencies[BigNumber.from(curr).toString() as CurrencyOption].name
-    : undefined
+  currency !== undefined ? currencies[currency].name : undefined
 
-export const currencySymbol = (curr?: BigNumberish) =>
-  curr
-    ? currencies[BigNumber.from(curr).toString() as CurrencyOption].symbol
-    : undefined
+export const currencySymbol = (currency?: CurrencyOption) =>
+  currency !== undefined ? currencies[currency].symbol : undefined
 
-export const currencyStyle = (curr?: BigNumberish) =>
-  curr
-    ? currencies[BigNumber.from(curr).toString() as CurrencyOption].style
-    : undefined
+export const currencyStyle = (currency?: CurrencyOption) =>
+  currency !== undefined ? currencies[currency].style : undefined

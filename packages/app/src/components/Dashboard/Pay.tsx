@@ -13,8 +13,8 @@ import { currencyName } from 'utils/currency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
-import CurrencySymbol from '../shared/CurrencySymbol'
 import { decodeFCMetadata } from '../../utils/fundingCycle'
+import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({
   fundingCycle,
@@ -25,7 +25,7 @@ export default function Pay({
   project: ProjectIdentifier | undefined
   projectId: BigNumber | undefined
 }) {
-  const [payAs, setPayAs] = useState<CurrencyOption>('1')
+  const [payAs, setPayAs] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
@@ -36,7 +36,7 @@ export default function Pay({
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
   const weiPayAmt =
-    payAs === '1' ? converter.usdToWei(payAmount) : parseWad(payAmount)
+    payAs === 1 ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
   function pay() {
     if (!transactor || !contracts) return onNeedProvider()
@@ -78,7 +78,7 @@ export default function Pay({
                 <InputAccessoryButton
                   withArrow={true}
                   content={currencyName(payAs)}
-                  onClick={() => setPayAs(payAs === '0' ? '1' : '0')}
+                  onClick={() => setPayAs(payAs === 0 ? 1 : 0)}
                 />
               }
             />
@@ -94,7 +94,7 @@ export default function Pay({
               ) : (
                 <span>
                   {formatReceivedTickets(
-                    (payAs === '0' ? parseWad('1') : converter.usdToWei('1')) ??
+                    (payAs === 0 ? parseWad('1') : converter.usdToWei('1')) ??
                       BigNumber.from(0),
                   )}{' '}
                   tickets/
@@ -113,9 +113,9 @@ export default function Pay({
             >
               Pay project
             </Button>
-            {payAs === '1' ? (
+            {payAs === 1 ? (
               <div>
-                Paid as <CurrencySymbol currency="0" />
+                Paid as <CurrencySymbol currency={0} />
                 {formatWad(weiPayAmt) || '0'}
               </div>
             ) : null}
@@ -130,7 +130,9 @@ export default function Pay({
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
-        usdAmount={parseFloat(payAmount ?? '0')}
+        weiAmount={
+          payAs === 0 ? parseWad(payAmount) : converter.usdToWei(payAmount)
+        }
       />
     </div>
   )

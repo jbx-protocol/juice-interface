@@ -34,7 +34,7 @@ export default function DefineProject() {
         target: fromWad(editingBudget?.target) ?? '0',
         duration:
           (editingBudget?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
-        currency: (editingBudget?.currency.toString() ?? '0') as CurrencyOption,
+        currency: editingBudget?.currency ?? 0,
       }),
     [],
   )
@@ -111,7 +111,7 @@ export default function DefineProject() {
             {bold(editingProject?.name, 'Your project')} needs{' '}
             <CurrencySymbol
               style={{ color: colors.bodyPrimary, fontWeight: 600 }}
-              currency={editingBudget?.currency.toString() as CurrencyOption}
+              currency={editingBudget?.currency}
             />
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
             {isRecurring ? (

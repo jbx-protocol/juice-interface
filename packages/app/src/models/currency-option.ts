@@ -1,1 +1,1 @@
-export type CurrencyOption = '1' | '0'
+export type CurrencyOption = 1 | 0

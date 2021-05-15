@@ -100,6 +100,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
 
+    /// @notice The target amount of ETH to keep in this contract instead of depositing.
+    uint256 public override targetBalance = 1000 * (10**18);
+
     // --- public views --- //
 
     /** 
@@ -742,26 +745,35 @@ contract Juicer is IJuicer, ReentrancyGuard {
     }
 
     /**
-      @notice Deposit idle funds into the yielder.
-      @param _amount The amount of funds to deposit.
+      @notice Deposit idle funds into the yielder while keeping the specified cash on hand.
     */
-    function deposit(uint256 _amount) external override nonReentrant {
+    function deposit() external override nonReentrant {
         // There must be a yielder.
         require(yielder != IYielder(0), "Juicer::deposit: NOT_FOUND");
 
-        // There must be something depositable.
-        require(_amount > 0, "Juicer::deposit: BAD_AMOUNT");
-
         // Any ETH currently in posession of this contract can be deposited.
         require(
-            _amount <= address(this).balance,
+            address(this).balance > targetBalance,
             "Juicer::deposit: INSUFFICIENT_FUNDS"
         );
+
+        uint256 _amount = address(this).balance - targetBalance;
 
         // Deposit in the yielder.
         yielder.deposit{value: _amount}();
 
         emit Deposit(_amount);
+    }
+
+    /** 
+      @notice Sets the target amount of ETH to keep in this contract instead of depositing.
+      @param _amount The new target balance amount.
+    */
+    function setTargetBalance(uint256 _amount) external override onlyGov {
+        targetBalance = _amount;
+
+        _ensureAvailability(_amount);
+        emit SetTargetBalance(_amount);
     }
 
     /**

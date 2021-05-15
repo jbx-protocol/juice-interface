@@ -162,6 +162,8 @@ interface IJuicer is
 
     event SetYielder(IYielder indexed newYielder);
 
+    event SetTargetBalance(uint256 amount);
+
     function governance() external view returns (address payable);
 
     function pendingGovernance() external view returns (address payable);
@@ -177,6 +179,8 @@ interface IJuicer is
     function yielder() external view returns (IYielder);
 
     function modStore() external view returns (IModStore);
+
+    function targetBalance() external view returns (uint256);
 
     function balanceOf(uint256 _projectId)
         external
@@ -209,13 +213,15 @@ interface IJuicer is
         IFundingCycleBallot _ballot
     ) external;
 
-    function deposit(uint256 _amount) external;
+    function deposit() external;
 
     function allowMigration(address _contract) external;
 
     function appointGovernance(address payable _pendingGovernance) external;
 
     function setYielder(IYielder _yielder) external;
+
+    function setTargetBalance(uint256 _amount) external;
 
     function acceptGovernance() external;
 }

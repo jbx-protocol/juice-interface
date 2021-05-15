@@ -34,9 +34,7 @@ interface IFundingCyclesController {
         uint256 indexed projectId,
         address indexed beneficiary,
         uint256 amount,
-        uint256 currency,
         string note,
-        uint256 fee,
         address operator
     );
 
@@ -48,6 +46,7 @@ interface IFundingCyclesController {
         uint256 currency,
         uint256 tappedETHAmount,
         uint256 transferAmount,
+        uint256 govFeeAmount,
         uint256 remainingAmount,
         address operator
     );

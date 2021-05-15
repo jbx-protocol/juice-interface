@@ -482,7 +482,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _projectId,
         address _beneficiary,
         string memory _note
-    ) external payable override nonReentrant returns (uint256) {
+    ) external payable override returns (uint256) {
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
 
@@ -514,9 +514,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _projectId,
             _beneficiary,
             msg.value,
-            _fundingCycle.currency,
             _note,
-            _fundingCycle.fee,
             msg.sender
         );
 
@@ -670,24 +668,18 @@ contract Juicer is IJuicer, ReentrancyGuard {
             )
         );
 
-        // Get a reference to governance's project ID.
-        uint256 _govProjectId = JuiceProject(governance).projectId();
+        // The amount of ETH from the _tappedAmount to pay as a fee.
+        uint256 _govFeeAmount =
+            _tappedETHAmount -
+                FullMath.mulDiv(
+                    _tappedETHAmount,
+                    1000,
+                    uint256(_fundingCycle.fee) + 1000
+                );
 
-        // Get a reference to the amount that will be transfered from this contract to the beneficiary.
-        uint256 _transferAmount;
-
-        // Only process an fee if the project being tapped is not the governance.
-        if (_projectId == _govProjectId) {
-            _transferAmount = _tappedETHAmount;
-        } else {
-            // The amount of ETH from the _tappedAmount to pay as a fee.
-            uint256 _govFeeAmount =
-                _tappedETHAmount -
-                    FullMath.mulDiv(
-                        _tappedETHAmount,
-                        1000,
-                        uint256(_fundingCycle.fee) + 1000
-                    );
+        // When processing the admin fee, save gas if the admin is using this juice terminal.
+        if (JuiceProject(governance).juiceTerminal() == this) {
+            uint256 _govProjectId = JuiceProject(governance).projectId();
 
             // Get a reference to the current funding cycle for the project.
             FundingCycle.Data memory _govFundingCycle =
@@ -708,9 +700,23 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 )
             );
 
-            // Transfer the tapped amount minus the fees.
-            _transferAmount = _tappedETHAmount - _govFeeAmount;
+            emit Pay(
+                _govFundingCycle.id,
+                _govProjectId,
+                _beneficiary,
+                _govFeeAmount,
+                "Juice fee",
+                msg.sender
+            );
+        } else {
+            JuiceProject(governance).pay{value: _govFeeAmount}(
+                _beneficiary,
+                "Juice fee"
+            );
         }
+
+        // Transfer the tapped amount minus the fees.
+        uint256 _transferAmount = _tappedETHAmount - _govFeeAmount;
 
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
@@ -729,6 +735,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _fundingCycle.currency,
             _tappedETHAmount,
             _transferAmount,
+            _govFeeAmount,
             _remaining,
             msg.sender
         );

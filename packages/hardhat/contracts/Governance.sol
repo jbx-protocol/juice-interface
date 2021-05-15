@@ -9,7 +9,9 @@ import "./abstract/JuiceProject.sol";
 
 /// Owner should eventually change to a multisig wallet contract.
 contract Governance is JuiceProject {
-    constructor() JuiceProject(IJuiceTerminal(0)) {}
+    constructor(uint256 _projectId)
+        JuiceProject(IJuiceTerminal(0), _projectId)
+    {}
 
     /** 
       @notice Grants the admin role for a contract that this Admin contract controls.

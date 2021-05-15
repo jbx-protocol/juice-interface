@@ -27,7 +27,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       weth(process.env.HARDHAT_NETWORK) || token.address,
     ]));
 
-  const governance = await deploy("Governance");
+  const governance = await deploy("Governance", [1]);
 
   const juicer = await deploy("Juicer", [
     projects.address,
@@ -134,6 +134,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     console.log("⚡️ Set the deployer as an operator of governance");
     await attachedGovernance.addOperator(
       operatorStore.address,
+      0,
       governance.signer.address,
       4,
       {
@@ -170,15 +171,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     await attachedGovernance.removeOperator(
       operatorStore.address,
       governance.address,
+      0,
       governance.signer.address,
       {
         gasLimit: blockGasLimit,
       }
     );
-
-    console.log("⚡️ Setting governance's project ID");
-    // Create the admin's budget.
-    await attachedGovernance.setProjectId(1);
   } catch (e) {
     console.log("Failed to set up environment: ", e);
   }

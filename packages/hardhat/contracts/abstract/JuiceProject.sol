@@ -20,11 +20,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     IJuiceTerminal public juiceTerminal;
     uint256 public projectId;
 
-    constructor(IJuiceTerminal _juiceTerminal) {
+    constructor(IJuiceTerminal _juiceTerminal, uint256 _projectId) {
         juiceTerminal = _juiceTerminal;
+        projectId = _projectId;
     }
 
-    receive() external payable {}
+    receive() external payable {
+        require(projectId != 0, "JuiceProject: PROJECT_NOT_FOUND");
+        juiceTerminal.pay{value: msg.value}(projectId, msg.sender, "");
+    }
 
     /** 
       @notice Sets the contract where fees are sent.
@@ -43,20 +47,28 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     }
 
     /** 
-      @notice Withdraws ETH from this contract to specified address.
-      @param _beneficiary The address to withdraw ETH to.
-      @param _amount The amount of ETH to withdraw.
+      @notice Make a payment to this project.
+      @param _beneficiary The address who will receive tickets from this fee.
+      @param _note A note that will be included in the published event.
     */
-    function withdraw(address payable _beneficiary, uint256 _amount)
-        external
-        onlyOwner
-    {
-        // This contract must have enought ETH.
-        require(
-            _amount <= address(this).balance,
-            "JuiceProject::withdraw: INSUFFICENT_FUNDS"
-        );
-        _beneficiary.transfer(_amount);
+    function pay(address _beneficiary, string memory _note) external payable {
+        require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
+        juiceTerminal.pay{value: msg.value}(projectId, _beneficiary, _note);
+    }
+
+    /** 
+      @notice Take a fee for this project from this contract.
+      @param _amount The payment amount.
+      @param _beneficiary The address who will receive tickets from this fee.
+      @param _note A note that will be included in the published event.
+    */
+    function takeFee(
+        uint256 _amount,
+        address _beneficiary,
+        string memory _note
+    ) internal {
+        require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
+        juiceTerminal.pay{value: _amount}(projectId, _beneficiary, _note);
     }
 
     /** 
@@ -88,17 +100,19 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     function addOperator(
         IOperatorStore _operatorStore,
+        uint256 _projectId,
         address _operator,
         uint256 _level
     ) external onlyOwner {
-        _operatorStore.addOperator(projectId, _operator, _level);
+        _operatorStore.addOperator(_projectId, _operator, _level);
     }
 
     function removeOperator(
         IOperatorStore _operatorStore,
         address _account,
+        uint256 _projectId,
         address _operator
     ) external onlyOwner {
-        _operatorStore.removeOperator(_account, projectId, _operator);
+        _operatorStore.removeOperator(_account, _projectId, _operator);
     }
 }

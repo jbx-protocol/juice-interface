@@ -765,17 +765,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         emit Deposit(_amount);
     }
 
-    /** 
-      @notice Sets the target amount of ETH to keep in this contract instead of depositing.
-      @param _amount The new target balance amount.
-    */
-    function setTargetBalance(uint256 _amount) external override onlyGov {
-        targetBalance = _amount;
-
-        _ensureAvailability(_amount);
-        emit SetTargetBalance(_amount);
-    }
-
     /**
         @notice Allows a project owner to migrate its funds to a new contract that can manage a project's funds.
         @param _projectId The ID of the project being migrated.
@@ -828,23 +817,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         emit Migrate(_projectId, _to, _balanceOfWithYield, msg.sender);
     }
 
-    /**
-        @notice Adds to the contract addresses that projects can migrate their Tickets to.
-        @param _contract The contract to allow.
-    */
-    function allowMigration(address _contract) external override onlyGov {
-        // Can't allow the zero address.
-        require(
-            _contract != address(0),
-            "Juicer::allowMigration: ZERO_ADDRESS"
-        );
-
-        // Set the contract as allowed
-        migrationContractIsAllowed[_contract] = true;
-
-        emit AddToMigrationAllowList(_contract);
-    }
-
     /** 
       @notice Receives funds belonging to the specified project.
       @param _projectId The ID of the project to which the funds received belong.
@@ -869,6 +841,34 @@ contract Juicer is IJuicer, ReentrancyGuard {
         );
 
         emit AddToBalance(_projectId, msg.sender);
+    }
+
+    /**
+        @notice Adds to the contract addresses that projects can migrate their Tickets to.
+        @param _contract The contract to allow.
+    */
+    function allowMigration(address _contract) external override onlyGov {
+        // Can't allow the zero address.
+        require(
+            _contract != address(0),
+            "Juicer::allowMigration: ZERO_ADDRESS"
+        );
+
+        // Set the contract as allowed
+        migrationContractIsAllowed[_contract] = true;
+
+        emit AddToMigrationAllowList(_contract);
+    }
+
+    /** 
+      @notice Sets the target amount of ETH to keep in this contract instead of depositing.
+      @param _amount The new target balance amount.
+    */
+    function setTargetBalance(uint256 _amount) external override onlyGov {
+        targetBalance = _amount;
+
+        _ensureAvailability(_amount);
+        emit SetTargetBalance(_amount);
     }
 
     /** 

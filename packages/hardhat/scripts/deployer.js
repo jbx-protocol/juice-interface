@@ -51,6 +51,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const FundingCyclesFactory = await ethers.getContractFactory(
       "FundingCycles"
     );
+    const TicketsFactory = await ethers.getContractFactory("Tickets");
     const PricesFactory = await ethers.getContractFactory("Prices");
     const YielderFactory =
       yielder && (await ethers.getContractFactory("YearnYielder"));
@@ -61,6 +62,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const attachedFundingCycles = await FundingCyclesFactory.attach(
       fundingCycles.address
     );
+    const attachedTickets = await TicketsFactory.attach(tickets.address);
     const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedYielder =
       yielder && (await YielderFactory.attach(yielder.address));
@@ -75,6 +77,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     });
     console.log("⚡️ Setting the fundingCycles owner");
     await attachedFundingCycles.setOwnership(governance.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Setting the tickets owner");
+    await attachedTickets.setOwnership(governance.address, {
       gasLimit: blockGasLimit,
     });
     console.log("⚡️ Setting the prices owner");
@@ -96,6 +102,10 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "⚡️ Granting the juicer admin privileges over the funding cycles"
     );
     await attachedGovernance.grantAdmin(fundingCycles.address, juicer.address, {
+      gasLimit: blockGasLimit,
+    });
+    console.log("⚡️ Granting the juicer admin privileges over the tickets");
+    await attachedGovernance.grantAdmin(tickets.address, juicer.address, {
       gasLimit: blockGasLimit,
     });
 

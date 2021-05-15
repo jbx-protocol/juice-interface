@@ -216,7 +216,7 @@ export default function PlayCreate() {
 
         {buildSteps([
           {
-            title: 'Configure budget',
+            title: 'Configure funding',
             callback: () => setBudgetFormModalVisible(true),
           },
           {
@@ -224,7 +224,7 @@ export default function PlayCreate() {
             callback: () => setProjectFormModalVisible(true),
           },
           {
-            title: 'Edit ticketing',
+            title: 'Configure tickets',
             callback: () => setTicketingFormModalVisible(true),
           },
           {

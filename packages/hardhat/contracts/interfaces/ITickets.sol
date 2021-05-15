@@ -40,8 +40,6 @@ interface ITickets is IERC1155 {
 
     function projects() external view returns (IProjects);
 
-    function initialized(uint256 _projectId) external view returns (bool);
-
     function erc20Tickets(uint256 _projectId)
         external
         view
@@ -79,8 +77,6 @@ interface ITickets is IERC1155 {
     ) external;
 
     function convert(address _account, uint256 _projectId) external;
-
-    function initialize(uint256 _projectId) external;
 
     function addController(address _controller, uint256 _projectId) external;
 

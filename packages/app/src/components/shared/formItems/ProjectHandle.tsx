@@ -39,7 +39,7 @@ export default function ProjectHandle({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Handle'}
+      label={hideLabel ? undefined : 'Unique handle'}
       extra={
         handleExists ? (
           <span style={{ color: 'red' }}>Handle not available</span>

@@ -23,7 +23,7 @@ export default function BudgetForm({
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <h1>Budget</h1>
+      <h1>Funding specs</h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectTarget

@@ -59,6 +59,15 @@ contract Projects is ERC721, IProjects, Administered {
         operatorStore = _operatorStore;
     }
 
+    /** 
+      @notice Whether the specified project exists.
+      @param _projectId The project to check the existence of.
+      @return If the project exists.
+    */
+    function exists(uint256 _projectId) external returns (bool) {
+        return _exists(_projectId);
+    }
+
     /**
         @notice Create a new project.
         @param _owner The owner of the project.

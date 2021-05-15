@@ -9,12 +9,14 @@ import "./libraries/CompareMath.sol";
 
 import "./interfaces/ITickets.sol";
 
+import "./abstract/Administered.sol";
+
 import "./ERC20Ticket.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract Tickets is ERC1155, ITickets {
+contract Tickets is ERC1155, Administered, ITickets {
     using SafeMath for uint256;
 
     // The total supply of 1155 tickets for each project.
@@ -22,7 +24,6 @@ contract Tickets is ERC1155, ITickets {
 
     // --- public properties --- //
 
-    mapping(uint256 => bool) public override initialized;
     mapping(uint256 => IERC20Ticket) public override erc20Tickets;
     mapping(uint256 => mapping(address => bool)) public override isController;
 
@@ -169,9 +170,9 @@ contract Tickets is ERC1155, ITickets {
     }
 
     /**
-      @notice TODOConvert I-owe-you's to tickets
-      @param _account TODOThe issuer of the tickets.
-      @param _projectId TODOThe issuer of the tickets.
+      @notice Converts a project's ERC1155 tickets to ERC20s.
+      @param _account The owner of the tickets to convert.
+      @param _projectId The ID of the project whos tickets are being converted.
      */
     function convert(address _account, uint256 _projectId) external override {
         // Get a reference to the project's ERC20 tickets.
@@ -198,22 +199,12 @@ contract Tickets is ERC1155, ITickets {
         emit Convert(_account, _projectId, _amount, msg.sender);
     }
 
-    function initialize(uint256 _projectId) external override {
-        require(
-            !initialized[_projectId],
-            "Tickets::setController: ALREADY_INITIALIZED"
-        );
-        initialized[_projectId] = true;
-        isController[_projectId][msg.sender] = true;
-        emit Initialize(_projectId, msg.sender);
-    }
-
     function addController(address _controller, uint256 _projectId)
         external
         override
     {
         require(
-            isController[_projectId][msg.sender],
+            isController[_projectId][msg.sender] || this.isAdmin(msg.sender),
             "Tickets::addAdmin: UNAUTHORIZED"
         );
 

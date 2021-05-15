@@ -16,7 +16,7 @@ export default function FundingDetails({
 }) {
   return (
     <Space direction="vertical" size="large">
-      <h1>Extra details</h1>
+      <h1>Ticketing specs</h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved

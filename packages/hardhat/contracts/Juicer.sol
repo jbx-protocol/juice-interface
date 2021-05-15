@@ -57,6 +57,11 @@ contract Juicer is IJuicer {
         unlocked = 1;
     }
 
+    modifier onlyGov() {
+        require(msg.sender == governance, "Juicer: UNAUTHORIZED");
+        _;
+    }
+
     // --- private properties --- //
 
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
@@ -78,6 +83,9 @@ contract Juicer is IJuicer {
 
     /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
     address payable public override governance;
+
+    /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
+    address payable public override pendingGovernance;
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
@@ -376,7 +384,7 @@ contract Juicer is IJuicer {
             );
 
         // Set this contract as the controller who can print and redeem tickets on behalf of the project.
-        tickets.initialize(_fundingCycle.projectId);
+        tickets.addController(address(this), _fundingCycle.projectId);
 
         emit Deploy(
             _fundingCycle.projectId,
@@ -813,13 +821,7 @@ contract Juicer is IJuicer {
         @notice Adds to the contract addresses that projects can migrate their Tickets to.
         @param _contract The contract to allow.
     */
-    function allowMigration(address _contract) external override {
-        // Only governance can take this action.
-        require(
-            msg.sender == governance,
-            "Juicer::allowMigration: UNAUTHORIZED"
-        );
-
+    function allowMigration(address _contract) external override onlyGov {
         // Can't allow the zero address.
         require(
             _contract != address(0),
@@ -832,13 +834,11 @@ contract Juicer is IJuicer {
         emit AddToMigrationAllowList(_contract);
     }
 
-    // --- public transactions --- //
-
     /** 
       @notice Receives funds belonging to the specified project.
       @param _projectId The ID of the project to which the funds received belong.
     */
-    function addToBalance(uint256 _projectId) public payable override lock {
+    function addToBalance(uint256 _projectId) external payable override lock {
         // Get a reference to the balances.
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
@@ -853,6 +853,37 @@ contract Juicer is IJuicer {
         );
 
         emit AddToBalance(_projectId, msg.sender);
+    }
+
+    function setPendingGovernance(address payable _pendingGovernance)
+        external
+        onlyGov
+    {
+        // The new governance can't be the zero address.
+        require(
+            _pendingGovernance != address(0),
+            "Juicer::setPendingGovernance: ZERO_ADDRESS"
+        );
+
+        pendingGovernance = _pendingGovernance;
+
+        emit PendingGovernanceUpdated(_pendingGovernance);
+    }
+
+    function acceptGovernance() external {
+        // Only the pending governance address can accept.
+        require(
+            msg.sender == pendingGovernance,
+            "Juicer::acceptGovernance: UNAUTHORIZED"
+        );
+
+        // Get a reference to the pending governance.
+        address payable _pendingGovernance = pendingGovernance;
+
+        // Set the govenance to the pending value.
+        governance = _pendingGovernance;
+
+        emit GovernanceUpdated(_pendingGovernance);
     }
 
     // --- private transactions --- //

@@ -127,6 +127,10 @@ interface IJuicer is
     IProjectFundsManager,
     IJuiceTerminal
 {
+    event GovernanceUpdated(address governance);
+
+    event PendingGovernanceUpdated(address pendingGovernance);
+
     event Migrate(
         uint256 indexed projectId,
         IProjectFundsManager indexed to,
@@ -158,6 +162,8 @@ interface IJuicer is
     event Deposit(uint256 amount);
 
     function governance() external view returns (address payable);
+
+    function pendingGovernance() external view returns (address payable);
 
     function projects() external view returns (IProjects);
 

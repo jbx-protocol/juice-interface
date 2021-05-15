@@ -58,6 +58,15 @@ contract Governance is JuiceProject {
         _prices.addFeed(_feed, _currency);
     }
 
+    /** 
+      @notice Sets a new contract that will yield returns on the juicer's funds.
+      @param _juicer The juicer to change the yielder of.
+      @param _yielder The new yielder.
+    */
+    function setYielder(IJuicer _juicer, IYielder _yielder) external onlyOwner {
+        _juicer.setYielder(_yielder);
+    }
+
     /**
         @notice Allows the admin to transfer handles to/from different projects.
         @dev This power is in place to eventually allow project's to exchange handles on a marketplace.

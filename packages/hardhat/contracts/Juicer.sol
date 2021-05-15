@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./abstract/JuiceProject.sol";
@@ -44,18 +45,9 @@ import "./libraries/FullMath.sol";
 // ─██████████████──███████████████──██████████──██████████████──██████████████──██████──██████████─
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
-contract Juicer is IJuicer {
+contract Juicer is IJuicer, ReentrancyGuard {
     using SafeMath for uint256;
     using FundingCycle for FundingCycle.Data;
-
-    // A function modifier to prevent reentrent calls.
-    uint256 private unlocked = 1;
-    modifier lock() {
-        require(unlocked == 1, "Juicer: LOCKED");
-        unlocked = 0;
-        _;
-        unlocked = 1;
-    }
 
     modifier onlyGov() {
         require(msg.sender == governance, "Juicer: UNAUTHORIZED");
@@ -99,14 +91,14 @@ contract Juicer is IJuicer {
     /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
 
-    /// @notice The contract that puts idle funds to work.
-    IYielder public immutable override yielder;
-
     /// @notice The contract that stores mods for each project.
     IModStore public immutable override modStore;
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
+
+    /// @notice The contract that puts idle funds to work.
+    IYielder public override yielder;
 
     // --- public views --- //
 
@@ -360,7 +352,7 @@ contract Juicer is IJuicer {
         uint256 _discountRate,
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
-    ) external override lock {
+    ) external override nonReentrant {
         // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
         require(
             msg.sender == _owner ||
@@ -431,7 +423,7 @@ contract Juicer is IJuicer {
         uint256 _discountRate,
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
-    ) external override lock returns (uint256) {
+    ) external override nonReentrant returns (uint256) {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
@@ -490,7 +482,7 @@ contract Juicer is IJuicer {
         uint256 _projectId,
         address _beneficiary,
         string memory _note
-    ) external payable override lock returns (uint256) {
+    ) external payable override nonReentrant returns (uint256) {
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
 
@@ -548,7 +540,7 @@ contract Juicer is IJuicer {
         uint256 _minReturnedETH,
         address payable _beneficiary,
         bool _useErc20
-    ) external override lock returns (uint256 amount) {
+    ) external override nonReentrant returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
 
@@ -619,7 +611,7 @@ contract Juicer is IJuicer {
         uint256 _amount,
         address payable _beneficiary,
         uint256 _minReturnedETH
-    ) external override lock {
+    ) external override nonReentrant {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
@@ -746,7 +738,7 @@ contract Juicer is IJuicer {
       @notice Deposit idle funds into the yielder.
       @param _amount The amount of funds to deposit.
     */
-    function deposit(uint256 _amount) external override lock {
+    function deposit(uint256 _amount) external override nonReentrant {
         // There must be a yielder.
         require(yielder != IYielder(0), "Juicer::deposit: NOT_FOUND");
 
@@ -773,7 +765,7 @@ contract Juicer is IJuicer {
     function migrate(uint256 _projectId, IProjectFundsManager _to)
         external
         override
-        lock
+        nonReentrant
     {
         // The migration destination must be allowed.
         require(
@@ -838,7 +830,12 @@ contract Juicer is IJuicer {
       @notice Receives funds belonging to the specified project.
       @param _projectId The ID of the project to which the funds received belong.
     */
-    function addToBalance(uint256 _projectId) external payable override lock {
+    function addToBalance(uint256 _projectId)
+        external
+        payable
+        override
+        nonReentrant
+    {
         // Get a reference to the balances.
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
@@ -855,8 +852,29 @@ contract Juicer is IJuicer {
         emit AddToBalance(_projectId, msg.sender);
     }
 
-    function setPendingGovernance(address payable _pendingGovernance)
+    /** 
+      @notice Allow the admin to change the yielder. 
+      @dev All funds will be migrated from the old yielder to the new one.
+      @param _yielder The new yielder.
+    */
+    function setYielder(IYielder _yielder) external override onlyGov {
+        // If there is already an yielder, withdraw all funds and move them to the new yielder.
+        if (yielder != IYielder(0))
+            _yielder.deposit{value: yielder.withdrawAll(address(this))}();
+
+        yielder = _yielder;
+
+        emit SetYielder(_yielder);
+    }
+
+    /** 
+      @notice Allows governance to transfer its privileges to another contract.
+      @param _pendingGovernance The governance to transition power to. 
+      This address will have to claim the responsibility in a subsequent transaction.
+    */
+    function appointGovernance(address payable _pendingGovernance)
         external
+        override
         onlyGov
     {
         // The new governance can't be the zero address.
@@ -867,10 +885,13 @@ contract Juicer is IJuicer {
 
         pendingGovernance = _pendingGovernance;
 
-        emit PendingGovernanceUpdated(_pendingGovernance);
+        emit AppointGovernance(_pendingGovernance);
     }
 
-    function acceptGovernance() external {
+    /** 
+      @notice Allows contract to accept its appointment as the new governance.
+    */
+    function acceptGovernance() external override {
         // Only the pending governance address can accept.
         require(
             msg.sender == pendingGovernance,
@@ -883,7 +904,7 @@ contract Juicer is IJuicer {
         // Set the govenance to the pending value.
         governance = _pendingGovernance;
 
-        emit GovernanceUpdated(_pendingGovernance);
+        emit AcceptGovernance(_pendingGovernance);
     }
 
     // --- private transactions --- //

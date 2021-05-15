@@ -62,6 +62,16 @@ contract YearnYielder is IYielder, Ownable {
         _beneficiary.transfer(_amount);
     }
 
+    function withdrawAll(address payable _beneficiary)
+        external
+        override
+        onlyOwner
+        returns (uint256 _balance)
+    {
+        _balance = getCurrentBalance();
+        withdraw(_balance, _beneficiary);
+    }
+
     /// @dev Updates the vaults approval of the token to be the maximum value.
     function updateApproval() public override {
         IERC20(weth).safeApprove(address(wethVault), uint256(-1));

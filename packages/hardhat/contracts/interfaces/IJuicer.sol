@@ -127,9 +127,9 @@ interface IJuicer is
     IProjectFundsManager,
     IJuiceTerminal
 {
-    event GovernanceUpdated(address governance);
+    event AppointGovernance(address governance);
 
-    event PendingGovernanceUpdated(address pendingGovernance);
+    event AcceptGovernance(address governance);
 
     event Migrate(
         uint256 indexed projectId,
@@ -160,6 +160,8 @@ interface IJuicer is
     event AddToMigrationAllowList(address indexed allowed);
 
     event Deposit(uint256 amount);
+
+    event SetYielder(IYielder indexed newYielder);
 
     function governance() external view returns (address payable);
 
@@ -211,4 +213,10 @@ interface IJuicer is
     function deposit(uint256 _amount) external;
 
     function allowMigration(address _contract) external;
+
+    function appointGovernance(address payable _pendingGovernance) external;
+
+    function setYielder(IYielder _yielder) external;
+
+    function acceptGovernance() external;
 }

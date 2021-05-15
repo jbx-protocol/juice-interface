@@ -64,7 +64,7 @@ contract Projects is ERC721, IProjects, Administered {
       @param _projectId The project to check the existence of.
       @return If the project exists.
     */
-    function exists(uint256 _projectId) external returns (bool) {
+    function exists(uint256 _projectId) external view returns (bool) {
         return _exists(_projectId);
     }
 

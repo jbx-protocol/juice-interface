@@ -63,7 +63,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     mapping(uint256 => uint256) private processedTicketBalanceOf;
 
     // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
-    mapping(uint256 => uint256) private balanceOf;
+    mapping(uint256 => uint256) private rawBalanceOf;
 
     // --- public properties --- //
 
@@ -129,7 +129,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @param _projectId The ID of the project to get the balance of.
       @return The balance of funds for the project including any yield.
     */
-    function yieldingBalanceOf(uint256 _projectId)
+    function balanceOf(uint256 _projectId)
         public
         view
         override
@@ -144,7 +144,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // The overflow is the proportion of the total available to what's claimable for the project.
         return
             FullMath.mulDiv(
-                balanceOf[_projectId],
+                rawBalanceOf[_projectId],
                 _balanceWithYield,
                 _balanceWithoutYield
             );
@@ -169,7 +169,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _limit = _fundingCycle.target - _fundingCycle.tapped;
 
         // Get the current balance of the project with yield.
-        uint256 _yieldingBalanceOf = yieldingBalanceOf(_projectId);
+        uint256 _balanceOf = balanceOf(_projectId);
 
         // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
         uint256 _ethLimit =
@@ -181,8 +181,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 );
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return
-            _yieldingBalanceOf < _ethLimit ? 0 : _yieldingBalanceOf - _ethLimit;
+        return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
     }
 
     /**
@@ -471,7 +470,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
         // Increment the balance of the project.
-        balanceOf[_projectId] = balanceOf[_projectId].add(msg.value);
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId].add(msg.value);
 
         // Get a reference to the current funding cycle for the project.
         FundingCycle.Data memory _fundingCycle =
@@ -519,14 +518,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _ethPrice = prices.getETHPrice(_fundingCycle.currency);
 
         // Get a reference to this project's current balance, included any earned yield.
-        uint256 _yieldingBalanceOf = yieldingBalanceOf(_fundingCycle.projectId);
+        uint256 _balanceOf = balanceOf(_fundingCycle.projectId);
 
         // The amount of ETH that is being tapped.
         uint256 _tappedETHAmount = DSMath.wdiv(_amount, _ethPrice);
 
         // The amount being tapped must be available.
         require(
-            _tappedETHAmount <= _yieldingBalanceOf,
+            _tappedETHAmount <= _balanceOf,
             "Juicer::_processTap: INSUFFICIENT_FUNDS"
         );
 
@@ -540,15 +539,15 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Since the distributed amount doesn't include any earned yield but the
         // `_tappedETHAmount` might include earned yields,
         // the correct proportion must be calculated.
-        balanceOf[_fundingCycle.projectId] =
-            balanceOf[_fundingCycle.projectId] -
+        rawBalanceOf[_fundingCycle.projectId] =
+            rawBalanceOf[_fundingCycle.projectId] -
             FullMath.mulDiv(
                 // The the amount being tapped and used as a fee...
                 _tappedETHAmount,
                 // multiplied by the current balance without yield...
-                balanceOf[_fundingCycle.projectId],
+                rawBalanceOf[_fundingCycle.projectId],
                 // divided by the total yielding balance of the project.
-                _yieldingBalanceOf
+                _balanceOf
             );
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
@@ -571,7 +570,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             FundingCycle.Data memory _govFundingCycle =
                 fundingCycles.getCurrent(_govProjectId);
 
-            balanceOf[_govProjectId] = balanceOf[_govProjectId].add(
+            rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
                 _tappedETHAmount
             );
 
@@ -706,8 +705,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // Add to the amount that has now been distributed by the project.
         // Since the distributed amount shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
-        balanceOf[_projectId] =
-            balanceOf[_projectId] -
+        rawBalanceOf[_projectId] =
+            rawBalanceOf[_projectId] -
             FullMath.mulDiv(
                 // The amount redeemed...
                 amount,
@@ -890,22 +889,22 @@ contract Juicer is IJuicer, ReentrancyGuard {
         );
 
         // Get a reference to this project's current balance, included any earned yield.
-        uint256 _yieldingBalanceOf = yieldingBalanceOf(_projectId);
+        uint256 _balanceOf = balanceOf(_projectId);
 
         // Set the balance to 0.
-        balanceOf[_projectId] = 0;
+        rawBalanceOf[_projectId] = 0;
 
         // Make sure the necessary funds are in the posession of this contract.
-        _ensureAvailability(_yieldingBalanceOf);
+        _ensureAvailability(_balanceOf);
 
         // Move the funds to the new contract.
-        _to.addToBalance{value: _yieldingBalanceOf}(_projectId);
+        _to.addToBalance{value: _balanceOf}(_projectId);
 
         // Transfer the power to print and redeem tickets to the new contract.
         tickets.addController(address(_to), _projectId);
         tickets.removeController(address(this), _projectId);
 
-        emit Migrate(_projectId, _to, _yieldingBalanceOf, msg.sender);
+        emit Migrate(_projectId, _to, _balanceOf, msg.sender);
     }
 
     /** 
@@ -922,7 +921,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
         // Add the processed amount.
-        balanceOf[_projectId] = balanceOf[_projectId].add(
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId].add(
             // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
             ProportionMath.find(
                 _balanceWithoutYield,
@@ -1081,7 +1080,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
         FundingCycle.Data memory _govFundingCycle =
             fundingCycles.getCurrent(_govProjectId);
 
-        balanceOf[_govProjectId] = balanceOf[_govProjectId].add(msg.value);
+        rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
+            msg.value
+        );
 
         uint256 _ticketCount =
             _govFundingCycle._weighted(

@@ -193,10 +193,7 @@ interface IJuicer is
 
     function targetLocalETH() external view returns (uint256);
 
-    function yieldingBalanceOf(uint256 _projectId)
-        external
-        view
-        returns (uint256);
+    function balanceOf(uint256 _projectId) external view returns (uint256);
 
     function currentOverflowOf(uint256 _projectId)
         external

@@ -29,15 +29,6 @@ interface IFundingCyclesController {
         address operator
     );
 
-    event Pay(
-        uint256 indexed fundingCycleId,
-        uint256 indexed projectId,
-        address indexed beneficiary,
-        uint256 amount,
-        string note,
-        address operator
-    );
-
     event Tap(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
@@ -48,25 +39,6 @@ interface IFundingCyclesController {
         uint256 beneficiaryTransferAmount,
         uint256 govFeeAmount,
         address operator
-    );
-
-    event PrintReserveTickets(
-        uint256 indexed fundingCycleId,
-        uint256 indexed projectId,
-        address indexed beneficiary,
-        uint256 count,
-        uint256 beneficiaryTicketAmount,
-        address operator
-    );
-
-    event ModDistribution(
-        uint256 indexed fundingCycleId,
-        uint256 indexed projectId,
-        address indexed beneficiary,
-        uint256 percent,
-        uint256 modCut,
-        uint256 total,
-        ModKind kind
     );
 
     function fee() external view returns (uint256);
@@ -86,8 +58,6 @@ interface IFundingCyclesController {
         uint256 _amount,
         uint256 _minReturnedEth
     ) external;
-
-    function prices() external view returns (IPrices);
 }
 
 interface ITicketsController {
@@ -120,6 +90,15 @@ interface IProjectFundsManager {
 }
 
 interface IJuiceTerminal {
+    event Pay(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 amount,
+        string note,
+        address operator
+    );
+
     function pay(
         uint256 _projectId,
         address _beneficiary,
@@ -133,6 +112,24 @@ interface IJuicer is
     IProjectFundsManager,
     IJuiceTerminal
 {
+    event PrintReserveTickets(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 count,
+        uint256 beneficiaryTicketAmount,
+        address operator
+    );
+
+    event ModDistribution(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 percent,
+        uint256 modCut,
+        uint256 total,
+        ModKind kind
+    );
     event AppointGovernance(address governance);
 
     event AcceptGovernance(address governance);
@@ -163,11 +160,13 @@ interface IJuicer is
         address operator
     );
 
-    event AddToMigrationAllowList(address indexed allowed);
+    event AddToMigrationAllowList(address allowed);
 
     event Deposit(uint256 amount);
 
-    event SetYielder(IYielder indexed newYielder);
+    event SetYielder(IYielder newYielder);
+
+    event SetFee(uint256 _amount);
 
     event SetTargetLocalETH(uint256 amount);
 
@@ -182,6 +181,8 @@ interface IJuicer is
     function tickets() external view returns (ITickets);
 
     function operatorStore() external view returns (IOperatorStore);
+
+    function prices() external view returns (IPrices);
 
     function yielder() external view returns (IYielder);
 
@@ -224,6 +225,8 @@ interface IJuicer is
     function deposit() external;
 
     function allowMigration(address _contract) external;
+
+    function setFee(uint256 _fee) external;
 
     function appointGovernance(address payable _pendingGovernance) external;
 

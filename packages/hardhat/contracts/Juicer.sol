@@ -68,7 +68,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     // --- public properties --- //
 
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 1000.
-    uint256 public constant override fee = 50;
+    uint256 public override fee = 50;
 
     /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
     address payable public override governance;
@@ -535,8 +535,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
             "Juicer::_processTap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 
-        // Add to the amount that has now been distributed by the project.
-        // Since the distributed amount doesn't include any earned yield but the
+        // Remove from the balance of the project.
+        // Since the balance doesn't include any earned yield but the
         // `_tappedETHAmount` might include earned yields,
         // the correct proportion must be calculated.
         rawBalanceOf[_fundingCycle.projectId] =
@@ -564,14 +564,16 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // When processing the admin fee, save gas if the admin is using this juice terminal.
         if (JuiceProject(governance).juiceTerminal() == this) {
+            // Get a reference to governance's Juice project ID.
             uint256 _govProjectId = JuiceProject(governance).projectId();
 
             // Get a reference to the current funding cycle for the project.
             FundingCycle.Data memory _govFundingCycle =
                 fundingCycles.getCurrent(_govProjectId);
 
+            // Add to the raw balance of governance's project.
             rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
-                _tappedETHAmount
+                _govFeeAmount
             );
 
             // Print tickets for the beneficiary.
@@ -606,6 +608,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
 
+        // Get a reference to the leftover transfer amount after all mods have been paid.
         uint256 _leftoverTransferAmount = _transferAmount;
 
         // The total amount sent to mods.
@@ -696,8 +699,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Get a reference to the balance.
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
-        // Add to the amount that has now been distributed by the project.
-        // Since the distributed amount shouldn't include any earned yield but the `amount` does, the correct proportion must be calculated.
+        // Remove from the balance of the project.
+        // Since the balance shouldn't include any earned yield but the `amount` does,
+        // the correct proportion must be calculated.
         rawBalanceOf[_projectId] =
             rawBalanceOf[_projectId] -
             FullMath.mulDiv(
@@ -774,6 +778,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             ) -
             _unprocessedTicketBalanceOf;
 
+        // Get a reference to the leftover reserved ticket amount after printing for all mods.
         uint256 _leftoverTicketAmount = reservedTickets;
 
         // The total amount sent to mods.
@@ -789,6 +794,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 uint256 _modCut =
                     FullMath.mulDiv(reservedTickets, _mod.percent, 1000);
 
+                // Print tickets for the mod.
                 tickets.print(_mod.beneficiary, _projectId, _modCut);
 
                 // Subtract from the amount to be sent to the beneficiary.
@@ -910,7 +916,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // Add the processed amount.
         rawBalanceOf[_projectId] = rawBalanceOf[_projectId].add(
-            // Calculate the amount to add to the project's processed amount, removing any influence of yield accumulated prior to adding.
+            // Calculate the amount to add to the project's processed amount,
+            // removing any influence of yield accumulated prior to adding.
             ProportionMath.find(
                 _balanceWithoutYield,
                 msg.value,
@@ -966,6 +973,19 @@ contract Juicer is IJuicer, ReentrancyGuard {
         yielder = _yielder;
 
         emit SetYielder(_yielder);
+    }
+
+    /** 
+      @notice Allow the admin to change the fee. 
+      @param _fee The new fee percent. Out of 1000.
+    */
+    function setFee(uint256 _fee) external override onlyGov {
+        require(_fee <= 1000, "Juicer::setFee: BAD_FEE");
+
+        // Set the fee.
+        fee = _fee;
+
+        emit SetFee(_fee);
     }
 
     /** 
@@ -1063,33 +1083,42 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
     // If funds are sent to this contract directly, fund governance.
     receive() external payable {
-        uint256 _govProjectId = JuiceProject(governance).projectId();
-        // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _govFundingCycle =
-            fundingCycles.getCurrent(_govProjectId);
+        // Save gas if the admin is using this juice terminal.
+        if (JuiceProject(governance).juiceTerminal() == this) {
+            uint256 _govProjectId = JuiceProject(governance).projectId();
+            // Get a reference to the current funding cycle for the project.
+            FundingCycle.Data memory _govFundingCycle =
+                fundingCycles.getCurrent(_govProjectId);
 
-        rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
-            msg.value
-        );
+            // Add to the raw balance of governance's project.
+            rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
+                msg.value
+            );
 
-        // Print tickets for the beneficiary.
-        tickets.print(
-            msg.sender,
-            _govProjectId,
-            _govFundingCycle._weighted(
+            // Print tickets for the beneficiary.
+            tickets.print(
+                msg.sender,
+                _govProjectId,
+                _govFundingCycle._weighted(
+                    msg.value,
+                    // The reserved rate is stored in bytes 25-30 of the metadata property.
+                    1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
+                )
+            );
+
+            emit Pay(
+                _govFundingCycle.id,
+                _govProjectId,
+                msg.sender,
                 msg.value,
-                // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
-            )
-        );
-
-        emit Pay(
-            _govFundingCycle.id,
-            _govProjectId,
-            msg.sender,
-            msg.value,
-            "Direct payment to Juicer",
-            msg.sender
-        );
+                "Direct payment to Juicer",
+                msg.sender
+            );
+        } else {
+            JuiceProject(governance).pay{value: msg.value}(
+                msg.sender,
+                "Direct payment to Juicer"
+            );
+        }
     }
 }

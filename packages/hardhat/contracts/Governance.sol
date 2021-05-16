@@ -97,4 +97,13 @@ contract Governance is JuiceProject {
     {
         _juicer.setTargetLocalETH(_amount);
     }
+
+    /** 
+      @notice Sets the fee of the Juicer.
+      @param _juicer The juicer to change the fee of.
+      @param _fee The new fee.
+    */
+    function setFee(IJuicer _juicer, uint256 _fee) external onlyOwner {
+        _juicer.setFee(_fee);
+    }
 }

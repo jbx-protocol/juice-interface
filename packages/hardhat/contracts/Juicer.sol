@@ -59,8 +59,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
-    // The amount of tickets that have been used to mint reserved tickets.
-    mapping(uint256 => uint256) private processedTicketBalanceOf;
+    // The difference between the processedTicketTracker of a project and the project's ticket's totalSupply is the amount of tickets that
+    // still need to have reserves printed against them.
+    mapping(uint256 => int256) private processedTicketTracker;
 
     // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
     mapping(uint256 => uint256) private rawBalanceOf;
@@ -151,6 +152,41 @@ contract Juicer is IJuicer, ReentrancyGuard {
     }
 
     /** 
+      @notice Gets the amount of reserved tickets that a project has.
+      @param _projectId The ID of the project to get overflow for.
+      @param _reservedRate The reserved rate to use to make the calculation.
+      @return amount overflow The current overflow of funds for the project.
+    */
+    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
+        public
+        view
+        override
+        returns (uint256)
+    {
+        // Get a reference to the processed ticket tracker for the project.
+        int256 _processedTicketTracker = processedTicketTracker[_projectId];
+
+        // Get a reference to the amount of tickets that are unprocessed.
+        uint256 _unprocessedTicketBalanceOf =
+            _processedTicketTracker >= 0
+                ? tickets.totalSupply(_projectId) -
+                    uint256(_processedTicketTracker)
+                : tickets.totalSupply(_projectId).add(
+                    uint256(-_processedTicketTracker)
+                );
+
+        // If there are no unprocessed tickets, return.
+        if (_unprocessedTicketBalanceOf == 0) return 0;
+
+        return
+            FullMath.mulDiv(
+                _unprocessedTicketBalanceOf,
+                1000,
+                1000 - _reservedRate
+            ) - _unprocessedTicketBalanceOf;
+    }
+
+    /** 
       @notice Gets the current overflowed amount for a specified project.
       @param _projectId The ID of the project to get overflow for.
       @return overflow The current overflow of funds for the project.
@@ -217,18 +253,17 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Get the total number of tickets in circulation.
         uint256 _totalSupply = tickets.totalSupply(_projectId);
 
-        // Get a reference to the amount of tickets that are unprocessed.
-        uint256 _unprocessedTicketBalanceOf =
-            _totalSupply - processedTicketBalanceOf[_projectId];
-
-        if (_unprocessedTicketBalanceOf > 0)
-            _totalSupply = _totalSupply.add(
-                FullMath.mulDiv(
-                    _unprocessedTicketBalanceOf,
-                    1000,
-                    1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-                )
+        // Get the number of reserved tickets the project has.
+        uint256 _reservedTicketAmount =
+            reservedTicketAmount(
+                _projectId,
+                // The reserved rate is in bits 25-30 of the metadata.
+                uint256(uint16(_fundingCycle.metadata >> 24))
             );
+
+        // If there are reserved tickets, add them to the total supply.
+        if (_reservedTicketAmount > 0)
+            _totalSupply = _totalSupply.add(_reservedTicketAmount);
 
         // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
@@ -722,19 +757,11 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
 
-        uint256 _unprocessedBalanceOf =
-            tickets.totalSupply(_projectId) -
-                processedTicketBalanceOf[_projectId];
-
-        if (_unprocessedBalanceOf >= _count) {
-            processedTicketBalanceOf[_projectId] =
-                processedTicketBalanceOf[_projectId] -
-                _count;
-        } else if (_unprocessedBalanceOf > 0) {
-            processedTicketBalanceOf[_projectId] = tickets.totalSupply(
-                _projectId
-            );
-        }
+        // Subtract from processed tickets so that the difference between whats been processed and the
+        // total supply remains the same.
+        // If there are at least as many processed tickets as there are tickets being redeemed,
+        // the processedTicketTracker of the project will be positive. Otherwise it will be negative.
+        _setProcessedTicketTracker(_projectId, _count);
 
         emit Redeem(
             _account,
@@ -749,40 +776,30 @@ contract Juicer is IJuicer, ReentrancyGuard {
     /**
         @notice Prints all reserved tickets for a project.
         @param _projectId The ID of the project to which the reserved tickets belong.
-        @return reservedTickets The amount of tickets that are being printed.
+        @return amount The amount of tickets that are being printed.
     */
     function printReservedTickets(uint256 _projectId)
         external
         override
         nonReentrant
-        returns (uint256 reservedTickets)
+        returns (uint256 amount)
     {
-        // Get a reference to the amount of tickets that are unprocessed.
-        uint256 _unprocessedTicketBalanceOf =
-            tickets.totalSupply(_projectId) -
-                processedTicketBalanceOf[_projectId];
-
-        // If there are no unprocessed tickets, return.
-        if (_unprocessedTicketBalanceOf == 0) return 0;
-
-        // The ID of the funding cycle that was tapped.
+        // Get the current funding cycle to read the reserved rate from.
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
         // Get a reference to the number of tickets that need to be printed.
-        reservedTickets =
-            FullMath.mulDiv(
-                _unprocessedTicketBalanceOf,
-                1000,
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-            ) -
-            _unprocessedTicketBalanceOf;
+        amount = reservedTicketAmount(
+            _projectId,
+            // The reserved rate is in bits 25-30 of the metadata.
+            uint256(uint16(_fundingCycle.metadata >> 24))
+        );
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
-        uint256 _leftoverTicketAmount = reservedTickets;
+        uint256 _leftoverTicketAmount = amount;
 
         // The total amount sent to mods.
-        Mod[] memory _mods = modStore.allMods(_fundingCycle.projectId);
+        Mod[] memory _mods = modStore.allMods(_projectId);
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
@@ -791,8 +808,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
             if (_mod.kind == ModKind.ReservedTickets) {
                 // The amount to send towards mods.
-                uint256 _modCut =
-                    FullMath.mulDiv(reservedTickets, _mod.percent, 1000);
+                uint256 _modCut = FullMath.mulDiv(amount, _mod.percent, 1000);
 
                 // Print tickets for the mod.
                 tickets.print(_mod.beneficiary, _projectId, _modCut);
@@ -806,7 +822,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                     _mod.beneficiary,
                     _mod.percent,
                     _modCut,
-                    reservedTickets,
+                    amount,
                     _mod.kind
                 );
             }
@@ -819,16 +835,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
         if (_leftoverTicketAmount > 0)
             tickets.print(_owner, _projectId, _leftoverTicketAmount);
 
-        // Since we're going to print reserved tickets, the entire supply has now been processed.
-        processedTicketBalanceOf[_fundingCycle.projectId] = tickets.totalSupply(
-            _fundingCycle.projectId
-        );
+        // Set the processed amount to be the total supply, since all tickets have now been processed.
+        _setProcessedTicketTracker(_projectId, tickets.totalSupply(_projectId));
 
         emit PrintReserveTickets(
             _fundingCycle.id,
             _projectId,
             _owner,
-            reservedTickets,
+            amount,
             _leftoverTicketAmount,
             msg.sender
         );
@@ -847,6 +861,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             "Juicer::deposit: INSUFFICIENT_FUNDS"
         );
 
+        // Keep the target local ETH in this contract.
         uint256 _amount = address(this).balance - targetLocalETH;
 
         // Deposit in the yielder.
@@ -1079,6 +1094,26 @@ contract Juicer is IJuicer, ReentrancyGuard {
         packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-30 bytes.
         packed |= uint256(_metadata.reservedRate) << 24;
+    }
+
+    /** 
+      @notice Sets the signed int tracker using an unsigned int value.
+      @param _projectId The ID of the project to set the tracker for.
+      @param _value The value to set.
+    */
+    function _setProcessedTicketTracker(uint256 _projectId, uint256 _value)
+        private
+    {
+        // Cast the total supply to an int.
+        int256 _intValue = int256(_value);
+
+        // Make sure int casting isnt overflowing.
+        require(
+            uint256(_intValue) == _value,
+            "Juicer::_setProcessedTicketTracker: INT_LIMIT_REACHED"
+        );
+
+        processedTicketTracker[_projectId] = _intValue;
     }
 
     // If funds are sent to this contract directly, fund governance.

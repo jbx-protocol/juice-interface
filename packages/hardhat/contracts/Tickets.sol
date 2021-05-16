@@ -23,42 +23,67 @@ contract Tickets is Administered, ITickets {
 
     // --- public properties --- //
 
+    // Each project's ERC20 Ticket tokens.
     mapping(uint256 => IERC20Ticket) public override erc20Tickets;
+
+    // Each holder's balance of IOU Tickets for each project.
     mapping(address => mapping(uint256 => uint256)) public override IOU;
+
+    // Each project's controller addresses.
     mapping(uint256 => mapping(address => bool)) public override isController;
 
+    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
+
+    /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
 
     // --- external transactions --- //
 
+    /** 
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+      @param _operatorStore A contract storing operator assignments.
+    */
     constructor(IProjects _projects, IOperatorStore _operatorStore) {
         projects = _projects;
         operatorStore = _operatorStore;
     }
 
+    /** 
+      @notice The total supply of tickets for each project, including IOU and ERC20 tickets.
+      @return supply The total supply.
+    */
     function totalSupply(uint256 _projectId)
         external
         view
         override
-        returns (uint256 _result)
+        returns (uint256 supply)
     {
-        _result = IOUTotalSupply[_projectId];
+        // Get the IOU supply.
+        supply = IOUTotalSupply[_projectId];
+
+        // Add the ERC20 supply if it's been issued.
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
         if (_erc20Ticket != IERC20Ticket(0))
-            _result = _result.add(_erc20Ticket.totalSupply());
+            supply = supply.add(_erc20Ticket.totalSupply());
     }
 
+    /** 
+      @notice The total balance of tickets a holder has for a specified project, including IOU and ERC20 tickets.
+      @param _holder The ticket holder to get a balance for.
+      @param _projectId The project to get the `_hodler`s balance of.
+      @return balance The balance.
+    */
     function totalBalanceOf(address _holder, uint256 _projectId)
         external
         view
         override
-        returns (uint256 _result)
+        returns (uint256 balance)
     {
-        _result = IOU[_holder][_projectId];
+        balance = IOU[_holder][_projectId];
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
         if (_erc20Ticket != IERC20Ticket(0))
-            _result = _result.add(_erc20Ticket.balanceOf(_holder));
+            balance = balance.add(_erc20Ticket.balanceOf(_holder));
     }
 
     /**
@@ -108,11 +133,13 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         uint256 _amount
     ) external override {
+        // The printer must be a controller.
         require(
             isController[_projectId][msg.sender],
             "Tickets::print: UNAUTHORIZED"
         );
 
+        // Add to the IOU balance and total supply.
         IOU[_holder][_projectId] = IOU[_holder][_projectId].add(_amount);
         IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(_amount);
 
@@ -130,6 +157,7 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         uint256 _amount
     ) external override {
+        // The redeemer must be a controller.
         require(
             isController[_projectId][msg.sender],
             "Tickets::redeem: UNAUTHORIZED"
@@ -138,21 +166,23 @@ contract Tickets is Administered, ITickets {
         // Get a reference to the project's ERC20 tickets.
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
 
+        // Get a reference to the IOU amount.
         uint256 _IOU = IOU[_holder][_projectId];
 
+        // Redeem only IOUs if there are enough available.
         if (_IOU > _amount) {
+            // Reduce the holders balance and the total supply.
             IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
-
-            // Reduce the total supply.
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
         } else {
+            // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
             require(
                 _erc20Ticket != IERC20Ticket(0),
                 "Tickets::redeem: INSUFICIENT_FUNDS"
             );
             if (_IOU > 0) {
+                // Reduce the holders balance and the total supply.
                 IOU[_holder][_projectId] = 0;
-                // Reduce the total supply.
                 IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _IOU;
                 _erc20Ticket.redeem(_holder, _amount - _IOU);
             } else {
@@ -183,39 +213,59 @@ contract Tickets is Administered, ITickets {
             "Juicer::claim: UNAUTHORIZED"
         );
 
+        // Get a reference to the amount of IOUs.
         uint256 _amount = IOU[_holder][_projectId];
 
+        // If there are no IOUs, there's nothing to claim.
         if (_amount == 0) return;
 
-        IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
+        // Set the IOUs to zero.
+        IOU[_holder][_projectId] = 0;
+
+        // Print the equivalent amount of ERC20s.
         _erc20Ticket.print(_holder, _amount);
 
         emit Claim(_holder, _projectId, _amount, msg.sender);
     }
 
+    /** 
+      @notice Adds a controller that can print and redeem tickets on a project's behalf.
+      @param _controller The controller to add.
+      @param _projectId The ID of the project that will be controlled.
+    */
     function addController(address _controller, uint256 _projectId)
         external
         override
     {
+        // The message sender must already be a controller of the project, or it must be the admin.
         require(
             isController[_projectId][msg.sender] || this.isAdmin(msg.sender),
             "Tickets::addAdmin: UNAUTHORIZED"
         );
 
+        // The the controller status.
         isController[_projectId][_controller] = true;
 
         emit AddController(_controller, _projectId, msg.sender);
     }
 
+    /** 
+      @notice Removes a controller.
+      @param _controller The controller to remove.
+      @param _projectId The ID of the project that will no longer be controlled.
+    */
     function removeController(address _controller, uint256 _projectId)
         external
         override
     {
+        // The message sender must already be a controller of the project, or it must be the admin.
         require(
             isController[_projectId][msg.sender],
             "Tickets::addAdmin: UNAUTHORIZED"
         );
+        // The the controller status.
         isController[_projectId][_controller] = false;
+
         emit RemoveController(_controller, _projectId, msg.sender);
     }
 }

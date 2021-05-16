@@ -594,6 +594,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
                     uint256(_fundingCycle.fee) + 1000
                 );
 
+        // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
+        // and receive any extra tapped funds not allocated to mods.
         address payable _projectOwner =
             payable(projects.ownerOf(_fundingCycle.projectId));
 

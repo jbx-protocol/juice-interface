@@ -36,7 +36,7 @@ interface IFundingCycles {
         IFundingCycleBallot _ballot,
         uint256 _metadata,
         bool _configureActiveFundingCycle
-    ) external returns (FundingCycle.Data memory fundingCycle);
+    ) external returns (FundingCycle.Data memory);
 
     function tap(uint256 _projectId, uint256 _amount)
         external

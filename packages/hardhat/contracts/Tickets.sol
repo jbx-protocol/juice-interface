@@ -99,12 +99,12 @@ contract Tickets is Administered, ITickets {
 
     /** 
       @notice Print new tickets.
-      @param _for The address receiving the new tickets.
+      @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
     */
     function print(
-        address _for,
+        address _holder,
         uint256 _projectId,
         uint256 _amount
     ) external override {
@@ -113,8 +113,10 @@ contract Tickets is Administered, ITickets {
             "Tickets::print: UNAUTHORIZED"
         );
 
-        IOU[_for][_projectId] = IOU[_for][_projectId].add(_amount);
+        IOU[_holder][_projectId] = IOU[_holder][_projectId].add(_amount);
         IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(_amount);
+
+        emit Print(_projectId, _holder, _amount, msg.sender);
     }
 
     /** 
@@ -122,13 +124,11 @@ contract Tickets is Administered, ITickets {
       @param _holder The address redeeming tickets.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _amount The amount of tickets being redeemed.
-      @param _erc20 If ERC20 tickets should be redeemed.
     */
     function redeem(
         address _holder,
         uint256 _projectId,
-        uint256 _amount,
-        bool _erc20
+        uint256 _amount
     ) external override {
         require(
             isController[_projectId][msg.sender],
@@ -138,15 +138,29 @@ contract Tickets is Administered, ITickets {
         // Get a reference to the project's ERC20 tickets.
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
 
-        // Redeem ERC20 if specified and if they exist.
-        if (_erc20 && _erc20Ticket != IERC20Ticket(0)) {
-            _erc20Ticket.redeem(_holder, _amount);
-        } else {
+        uint256 _IOU = IOU[_holder][_projectId];
+
+        if (_IOU > _amount) {
             IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
 
             // Reduce the total supply.
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
+        } else {
+            require(
+                _erc20Ticket != IERC20Ticket(0),
+                "Tickets::redeem: INSUFICIENT_FUNDS"
+            );
+            if (_IOU > 0) {
+                IOU[_holder][_projectId] = 0;
+                // Reduce the total supply.
+                IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _IOU;
+                _erc20Ticket.redeem(_holder, _amount - _IOU);
+            } else {
+                _erc20Ticket.redeem(_holder, _amount);
+            }
         }
+
+        emit Redeem(_projectId, _holder, _amount, _IOU, msg.sender);
     }
 
     /**

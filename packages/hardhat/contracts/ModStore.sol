@@ -42,14 +42,12 @@ contract ModStore is IModStore {
       @notice Adds a mod to the list.
       @param _projectId The project to add a mod to.
       @param _beneficiaries The addresses being funded from your tapped amount.
-      @param _amounts The amounts to send to the beneficiary of this mod. If 0, the percent will be used instead.
       @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 1000.
       @param _kinds The kinds of your mods. This can be either TapAmount or ReservedTickets
     */
     function setMods(
         uint256 _projectId,
         address payable[] memory _beneficiaries,
-        uint256[] memory _amounts,
         uint256[] memory _percents,
         ModKind[] memory _kinds
     ) external override {
@@ -66,35 +64,35 @@ contract ModStore is IModStore {
 
         // The params must be of equal lengths.
         require(
-            _beneficiaries.length == _amounts.length &&
-                _beneficiaries.length == _percents.length &&
+            _beneficiaries.length == _percents.length &&
                 _beneficiaries.length == _kinds.length,
             "ModStore::setMods: BAD_ARGS"
         );
 
         delete mods[_projectId];
 
+        // Add up all the percents to make sure they cumulative are under 100%.
+        uint256 _percentTotal = 0;
+
         for (uint256 _i = 0; _i < _beneficiaries.length; _i++) {
             // Either the amount or the percent must be specified.
-            require(
-                _amounts[_i] > 0 || _percents[_i] > 0,
-                "ModStore::setMods: UNSPECIFIED_PORTION"
-            );
+            require(_percents[_i] > 0, "ModStore::setMods: ZERO_PERCENT");
 
             // The percent should be less than 1000.
             require(_percents[_i] <= 1000, "ModStore::setMods: BAD_PERCENT");
 
+            // Add to the total percents.
+            _percentTotal = _percentTotal + _percents[_i];
+
             // Push the new mod into the project's list of mods.
             mods[_projectId].push(
-                Mod(
-                    _beneficiaries[_i],
-                    uint16(_percents[_i]),
-                    _amounts[_i],
-                    _kinds[_i]
-                )
+                Mod(_beneficiaries[_i], uint16(_percents[_i]), _kinds[_i])
             );
         }
 
-        emit SetMods(_projectId, _beneficiaries, _amounts, _percents, _kinds);
+        // The total percent should be less than 1000.
+        require(_percentTotal <= 1000, "ModStore::setMods: BAD_PERCENTS");
+
+        emit SetMods(_projectId, _beneficiaries, _percents, _kinds);
     }
 }

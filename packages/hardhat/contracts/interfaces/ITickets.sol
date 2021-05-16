@@ -13,6 +13,20 @@ interface ITickets {
         string symbol,
         address operator
     );
+    event Print(
+        uint256 projectId,
+        address holder,
+        uint256 amount,
+        address controller
+    );
+
+    event Redeem(
+        uint256 projectId,
+        address holder,
+        uint256 amount,
+        uint256 IOU,
+        address controller
+    );
 
     event Claim(
         address indexed account,
@@ -67,7 +81,7 @@ interface ITickets {
     ) external;
 
     function print(
-        address _for,
+        address _holder,
         uint256 _projectId,
         uint256 _amount
     ) external;
@@ -75,8 +89,7 @@ interface ITickets {
     function redeem(
         address _holder,
         uint256 _projectId,
-        uint256 _amount,
-        bool _erc20
+        uint256 _amount
     ) external;
 
     function claim(address _holder, uint256 _projectId) external;

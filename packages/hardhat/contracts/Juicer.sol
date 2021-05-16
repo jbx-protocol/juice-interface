@@ -476,22 +476,22 @@ contract Juicer is IJuicer, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
-        uint256 _ticketCount =
+        // Print tickets for the beneficiary.
+        tickets.print(
+            _beneficiary,
+            _projectId,
             _fundingCycle._weighted(
                 msg.value,
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
                 1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-            );
-
-        // Print tickets for the beneficiary.
-        tickets.print(_beneficiary, _projectId, _ticketCount);
+            )
+        );
 
         emit Pay(
             _fundingCycle.id,
             _projectId,
             _beneficiary,
             msg.value,
-            _ticketCount,
             _note,
             msg.sender
         );
@@ -574,22 +574,22 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _tappedETHAmount
             );
 
-            uint256 _ticketCount =
+            // Print tickets for the beneficiary.
+            tickets.print(
+                _projectOwner,
+                _govProjectId,
                 _govFundingCycle._weighted(
                     _govFeeAmount,
                     // The reserved rate is stored in bytes 25-30 of the metadata property.
                     1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
-                );
-
-            // Print tickets for the beneficiary.
-            tickets.print(_projectOwner, _govProjectId, _ticketCount);
+                )
+            );
 
             emit Pay(
                 _govFundingCycle.id,
                 _govProjectId,
                 _projectOwner,
                 _govFeeAmount,
-                _ticketCount,
                 "Juice fee",
                 msg.sender
             );
@@ -613,19 +613,15 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
-            if (_mods[_i].kind == ModKind.TapAmount) {
+            // Get a reference to the mod being iterated on.
+            Mod memory _mod = _mods[_i];
+            if (_mod.kind == ModKind.TapAmount) {
                 // The amount to send towards mods.
                 uint256 _modCut =
-                    _mods[_i].amount > 0
-                        ? _mods[_i].amount
-                        : FullMath.mulDiv(
-                            _transferAmount,
-                            _mods[_i].percent,
-                            1000
-                        );
+                    FullMath.mulDiv(_transferAmount, _mod.percent, 1000);
 
                 // Transfer ETH to the mod.
-                _mods[_i].beneficiary.transfer(_modCut);
+                _mod.beneficiary.transfer(_modCut);
 
                 // Subtract from the amount to be sent to the beneficiary.
                 _leftoverTransferAmount = _leftoverTransferAmount.sub(_modCut);
@@ -633,12 +629,11 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 emit ModDistribution(
                     _fundingCycle.id,
                     _fundingCycle.projectId,
-                    _mods[_i].beneficiary,
-                    _mods[_i].amount,
-                    _mods[_i].percent,
+                    _mod.beneficiary,
+                    _mod.percent,
                     _modCut,
                     _transferAmount,
-                    _mods[_i].kind
+                    _mod.kind
                 );
             }
         }
@@ -667,7 +662,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the ETH to.
-        @param _useErc20 If ERC20s are being redeemed. Otherwise the ERC1155s will be redeemed.
         @return amount The amount of ETH that the tickets were redeemed for.
     */
     function redeem(
@@ -675,8 +669,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _projectId,
         uint256 _count,
         uint256 _minReturnedETH,
-        address payable _beneficiary,
-        bool _useErc20
+        address payable _beneficiary
     ) external override nonReentrant returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
@@ -720,7 +713,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the sender's wallet.
-        tickets.redeem(_account, _projectId, _count, _useErc20);
+        tickets.redeem(_account, _projectId, _count);
 
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
@@ -745,8 +738,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _projectId,
             msg.sender,
             _count,
-            amount,
-            _useErc20
+            amount
         );
     }
 
@@ -789,18 +781,15 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
-            if (_mods[_i].kind == ModKind.ReservedTickets) {
+            // Get a reference to the mod being iterated on.
+            Mod memory _mod = _mods[_i];
+
+            if (_mod.kind == ModKind.ReservedTickets) {
                 // The amount to send towards mods.
                 uint256 _modCut =
-                    _mods[_i].amount > 0
-                        ? _mods[_i].amount
-                        : FullMath.mulDiv(
-                            reservedTickets,
-                            _mods[_i].percent,
-                            1000
-                        );
+                    FullMath.mulDiv(reservedTickets, _mod.percent, 1000);
 
-                tickets.print(_mods[_i].beneficiary, _projectId, _modCut);
+                tickets.print(_mod.beneficiary, _projectId, _modCut);
 
                 // Subtract from the amount to be sent to the beneficiary.
                 _leftoverTicketAmount = _leftoverTicketAmount.sub(_modCut);
@@ -808,12 +797,11 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 emit ModDistribution(
                     _fundingCycle.id,
                     _projectId,
-                    _mods[_i].beneficiary,
-                    _mods[_i].amount,
-                    _mods[_i].percent,
+                    _mod.beneficiary,
+                    _mod.percent,
                     _modCut,
                     reservedTickets,
-                    _mods[_i].kind
+                    _mod.kind
                 );
             }
         }
@@ -961,7 +949,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Make sure the target is met.
         _ensureAvailability(_amount);
 
-        emit SetTargetBalance(_amount);
+        emit SetTargetLocalETH(_amount);
     }
 
     /** 
@@ -1084,23 +1072,23 @@ contract Juicer is IJuicer, ReentrancyGuard {
             msg.value
         );
 
-        uint256 _ticketCount =
+        // Print tickets for the beneficiary.
+        tickets.print(
+            msg.sender,
+            _govProjectId,
             _govFundingCycle._weighted(
                 msg.value,
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
                 1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
-            );
-
-        // Print tickets for the beneficiary.
-        tickets.print(msg.sender, _govProjectId, _ticketCount);
+            )
+        );
 
         emit Pay(
             _govFundingCycle.id,
             _govProjectId,
             msg.sender,
             msg.value,
-            _ticketCount,
-            "Direct payment",
+            "Direct payment to Juicer",
             msg.sender
         );
     }

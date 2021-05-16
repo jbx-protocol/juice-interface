@@ -47,7 +47,7 @@ export default function Funding({
 
   const balance = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'yieldingBalanceOf',
+    functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
     // updateOn: useMemo(

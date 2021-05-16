@@ -128,7 +128,7 @@ contract FundingCycles is Administered, IFundingCycles {
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @param _metadata Data to store with the funding cycle. 
         @param _configureActiveFundingCycle If the active funding cycle should be configurable.
-        @return fundingCycle The funding cycle that was successfully configured.
+        @return The funding cycle that was successfully configured.
     */
     function configure(
         uint256 _projectId,
@@ -140,12 +140,7 @@ contract FundingCycles is Administered, IFundingCycles {
         IFundingCycleBallot _ballot,
         uint256 _metadata,
         bool _configureActiveFundingCycle
-    )
-        external
-        override
-        onlyAdmin
-        returns (FundingCycle.Data memory fundingCycle)
-    {
+    ) external override onlyAdmin returns (FundingCycle.Data memory) {
         // Target must be greater than 0.
         require(_target > 0, "FundingCycles::reconfigure: BAD_TARGET");
 
@@ -177,7 +172,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _fundingCycle.currentBallot = _ballot;
 
         // Return the funding cycle.
-        fundingCycle = _fundingCycle;
+        return _fundingCycle;
     }
 
     /** 

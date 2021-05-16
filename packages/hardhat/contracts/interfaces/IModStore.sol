@@ -9,9 +9,7 @@ enum ModKind {TapAmount, ReservedTickets}
 
 struct Mod {
     address payable beneficiary;
-    // Optional. Either specify amount or percent (out of 1000).
     uint16 percent;
-    uint256 amount;
     ModKind kind;
 }
 
@@ -19,7 +17,6 @@ interface IModStore {
     event SetMods(
         uint256 indexed projectId,
         address payable[] _beneficiaries,
-        uint256[] _amounts,
         uint256[] _percents,
         ModKind[] _kinds
     );
@@ -33,7 +30,6 @@ interface IModStore {
     function setMods(
         uint256 _projectId,
         address payable[] memory _beneficiaries,
-        uint256[] memory _amounts,
         uint256[] memory _percents,
         ModKind[] memory _kinds
     ) external;

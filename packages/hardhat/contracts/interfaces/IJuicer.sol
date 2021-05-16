@@ -34,7 +34,6 @@ interface IFundingCyclesController {
         uint256 indexed projectId,
         address indexed beneficiary,
         uint256 amount,
-        uint256 beneficiaryTicketCount,
         string note,
         address operator
     );
@@ -61,10 +60,9 @@ interface IFundingCyclesController {
     );
 
     event ModDistribution(
-        uint256 indexed FundingCycleId,
+        uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
-        uint256 amount,
         uint256 percent,
         uint256 modCut,
         uint256 total,
@@ -99,8 +97,7 @@ interface ITicketsController {
         uint256 indexed _projectId,
         address operator,
         uint256 amount,
-        uint256 returnAmount,
-        bool _useErc20
+        uint256 returnAmount
     );
 
     function claimableAmount(
@@ -114,8 +111,7 @@ interface ITicketsController {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        address payable _beneficiary,
-        bool _useErc20
+        address payable _beneficiary
     ) external returns (uint256 returnAmount);
 }
 
@@ -173,7 +169,7 @@ interface IJuicer is
 
     event SetYielder(IYielder indexed newYielder);
 
-    event SetTargetBalance(uint256 amount);
+    event SetTargetLocalETH(uint256 amount);
 
     function governance() external view returns (address payable);
 

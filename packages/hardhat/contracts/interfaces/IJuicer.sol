@@ -34,6 +34,7 @@ interface IFundingCyclesController {
         uint256 indexed projectId,
         address indexed beneficiary,
         uint256 amount,
+        uint256 beneficiaryTicketCount,
         string note,
         address operator
     );
@@ -44,19 +45,30 @@ interface IFundingCyclesController {
         address indexed beneficiary,
         uint256 amount,
         uint256 currency,
-        uint256 tappedETHAmount,
         uint256 transferAmount,
+        uint256 beneficiaryTransferAmount,
         uint256 govFeeAmount,
-        uint256 remainingAmount,
         address operator
     );
 
-    event ModPayment(
+    event PrintReserveTickets(
+        uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
+        uint256 count,
+        uint256 beneficiaryTicketAmount,
+        address operator
+    );
+
+    event ModDistribution(
+        uint256 indexed FundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 amount,
         uint256 percent,
+        uint256 modCut,
         uint256 total,
-        uint256 modCut
+        ModKind kind
     );
 
     function fee() external view returns (uint256);
@@ -74,7 +86,6 @@ interface IFundingCyclesController {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        address payable _beneficiary,
         uint256 _minReturnedEth
     ) external;
 
@@ -180,12 +191,12 @@ interface IJuicer is
 
     function modStore() external view returns (IModStore);
 
-    function targetBalance() external view returns (uint256);
+    function targetLocalETH() external view returns (uint256);
 
-    function balanceOf(uint256 _projectId)
+    function yieldingBalanceOf(uint256 _projectId)
         external
         view
-        returns (uint256 amountWithoutYield, uint256 amountWithYield);
+        returns (uint256);
 
     function currentOverflowOf(uint256 _projectId)
         external
@@ -213,6 +224,10 @@ interface IJuicer is
         IFundingCycleBallot _ballot
     ) external;
 
+    function printReservedTickets(uint256 _projectId)
+        external
+        returns (uint256 reservedTicketsToPrint);
+
     function deposit() external;
 
     function allowMigration(address _contract) external;
@@ -221,7 +236,7 @@ interface IJuicer is
 
     function setYielder(IYielder _yielder) external;
 
-    function setTargetBalance(uint256 _amount) external;
+    function setTargetLocalETH(uint256 _amount) external;
 
     function acceptGovernance() external;
 }

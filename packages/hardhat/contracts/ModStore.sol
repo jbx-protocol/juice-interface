@@ -44,12 +44,14 @@ contract ModStore is IModStore {
       @param _beneficiaries The addresses being funded from your tapped amount.
       @param _amounts The amounts to send to the beneficiary of this mod. If 0, the percent will be used instead.
       @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 1000.
+      @param _kinds The kinds of your mods. This can be either TapAmount or ReservedTickets
     */
     function setMods(
         uint256 _projectId,
         address payable[] memory _beneficiaries,
         uint256[] memory _amounts,
-        uint256[] memory _percents
+        uint256[] memory _percents,
+        ModKind[] memory _kinds
     ) external override {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -65,7 +67,8 @@ contract ModStore is IModStore {
         // The params must be of equal lengths.
         require(
             _beneficiaries.length == _amounts.length &&
-                _beneficiaries.length == _percents.length,
+                _beneficiaries.length == _percents.length &&
+                _beneficiaries.length == _kinds.length,
             "ModStore::setMods: BAD_ARGS"
         );
 
@@ -83,10 +86,15 @@ contract ModStore is IModStore {
 
             // Push the new mod into the project's list of mods.
             mods[_projectId].push(
-                Mod(_beneficiaries[_i], uint16(_percents[_i]), _amounts[_i])
+                Mod(
+                    _beneficiaries[_i],
+                    uint16(_percents[_i]),
+                    _amounts[_i],
+                    _kinds[_i]
+                )
             );
         }
 
-        emit SetMods(_projectId, _beneficiaries, _amounts, _percents);
+        emit SetMods(_projectId, _beneficiaries, _amounts, _percents, _kinds);
     }
 }

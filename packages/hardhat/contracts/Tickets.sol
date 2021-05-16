@@ -2,7 +2,6 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/CompareMath.sol";
@@ -16,27 +15,24 @@ import "./ERC20Ticket.sol";
 /** 
   @notice An immutable contract to manage Ticket states.
 */
-contract Tickets is ERC1155, Administered, ITickets {
+contract Tickets is Administered, ITickets {
     using SafeMath for uint256;
 
     // The total supply of 1155 tickets for each project.
-    mapping(uint256 => uint256) private erc1155TotalSupply;
+    mapping(uint256 => uint256) private IOUTotalSupply;
 
     // --- public properties --- //
 
     mapping(uint256 => IERC20Ticket) public override erc20Tickets;
+    mapping(address => mapping(uint256 => uint256)) public override IOU;
     mapping(uint256 => mapping(address => bool)) public override isController;
 
     IProjects public immutable override projects;
     IOperatorStore public immutable override operatorStore;
 
-    // --- public views --- //
-
     // --- external transactions --- //
 
-    constructor(IProjects _projects, IOperatorStore _operatorStore)
-        ERC1155("")
-    {
+    constructor(IProjects _projects, IOperatorStore _operatorStore) {
         projects = _projects;
         operatorStore = _operatorStore;
     }
@@ -47,7 +43,7 @@ contract Tickets is ERC1155, Administered, ITickets {
         override
         returns (uint256 _result)
     {
-        _result = erc1155TotalSupply[_projectId];
+        _result = IOUTotalSupply[_projectId];
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
         if (_erc20Ticket != IERC20Ticket(0))
             _result = _result.add(_erc20Ticket.totalSupply());
@@ -59,7 +55,7 @@ contract Tickets is ERC1155, Administered, ITickets {
         override
         returns (uint256 _result)
     {
-        _result = balanceOf(_holder, _projectId);
+        _result = IOU[_holder][_projectId];
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
         if (_erc20Ticket != IERC20Ticket(0))
             _result = _result.add(_erc20Ticket.balanceOf(_holder));
@@ -117,21 +113,8 @@ contract Tickets is ERC1155, Administered, ITickets {
             "Tickets::print: UNAUTHORIZED"
         );
 
-        // Get a reference to the project's ERC20 tickets.
-        IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
-
-        // Print ERC20 tickets if they exist.
-        if (_erc20Ticket != IERC20Ticket(0)) {
-            _erc20Ticket.print(_for, _amount);
-        } else {
-            // Mint the tickets.
-            _mint(_for, _projectId, _amount, "");
-
-            // Increase the total supply.
-            erc1155TotalSupply[_projectId] = erc1155TotalSupply[_projectId].add(
-                _amount
-            );
-        }
+        IOU[_for][_projectId] = IOU[_for][_projectId].add(_amount);
+        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(_amount);
     }
 
     /** 
@@ -159,44 +142,41 @@ contract Tickets is ERC1155, Administered, ITickets {
         if (_erc20 && _erc20Ticket != IERC20Ticket(0)) {
             _erc20Ticket.redeem(_holder, _amount);
         } else {
-            // Burn the tickets.
-            _burn(_holder, _projectId, _amount);
+            IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
 
             // Reduce the total supply.
-            erc1155TotalSupply[_projectId] = erc1155TotalSupply[_projectId].sub(
-                _amount
-            );
+            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
         }
     }
 
     /**
-      @notice Converts a project's ERC1155 tickets to ERC20s.
-      @param _account The owner of the tickets to convert.
-      @param _projectId The ID of the project whos tickets are being converted.
+      @notice Claims ERC20 tickets from IOUs.
+      @param _holder The owner of the tickets to convert.
+      @param _projectId The ID of the project whos tickets are being claimed.
      */
-    function convert(address _account, uint256 _projectId) external override {
+    function claim(address _holder, uint256 _projectId) external override {
         // Get a reference to the project's ERC20 tickets.
         IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
 
-        require(_erc20Ticket != IERC20Ticket(0), "Tickets:convert: NOT_FOUND");
+        require(_erc20Ticket != IERC20Ticket(0), "Tickets:claim: NOT_FOUND");
 
         // Only an account or a specified operator can convert its tickets.
         require(
-            msg.sender == _account ||
-                operatorStore.operatorLevel(_account, 0, msg.sender) >= 1 ||
-                operatorStore.operatorLevel(_account, _projectId, msg.sender) >=
+            msg.sender == _holder ||
+                operatorStore.operatorLevel(_holder, 0, msg.sender) >= 1 ||
+                operatorStore.operatorLevel(_holder, _projectId, msg.sender) >=
                 1,
-            "Juicer::convertToERC20: UNAUTHORIZED"
+            "Juicer::claim: UNAUTHORIZED"
         );
 
-        uint256 _amount = balanceOf(_account, _projectId);
+        uint256 _amount = IOU[_holder][_projectId];
 
         if (_amount == 0) return;
 
-        _burn(_account, _projectId, _amount);
-        _erc20Ticket.print(_account, _amount);
+        IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
+        _erc20Ticket.print(_holder, _amount);
 
-        emit Convert(_account, _projectId, _amount, msg.sender);
+        emit Claim(_holder, _projectId, _amount, msg.sender);
     }
 
     function addController(address _controller, uint256 _projectId)

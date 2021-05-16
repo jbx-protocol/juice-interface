@@ -2,13 +2,11 @@
 pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-
 import "./IProjects.sol";
 import "./IOperatorStore.sol";
 import "./IERC20Ticket.sol";
 
-interface ITickets is IERC1155 {
+interface ITickets {
     event Issue(
         uint256 indexed projectId,
         string name,
@@ -16,7 +14,7 @@ interface ITickets is IERC1155 {
         address operator
     );
 
-    event Convert(
+    event Claim(
         address indexed account,
         uint256 indexed projectId,
         uint256 amount,
@@ -44,6 +42,11 @@ interface ITickets is IERC1155 {
         external
         view
         returns (IERC20Ticket);
+
+    function IOU(address _holder, uint256 _projectId)
+        external
+        view
+        returns (uint256);
 
     function isController(uint256 _projectId, address _controller)
         external
@@ -76,7 +79,7 @@ interface ITickets is IERC1155 {
         bool _erc20
     ) external;
 
-    function convert(address _account, uint256 _projectId) external;
+    function claim(address _holder, uint256 _projectId) external;
 
     function addController(address _controller, uint256 _projectId) external;
 

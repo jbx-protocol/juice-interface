@@ -87,14 +87,14 @@ contract Governance is JuiceProject {
     }
 
     /** 
-      @notice Sets the target amount of ETH to keep in this contract instead of depositing.
-      @param _juicer The juicer to change the yielder of.
-      @param _amount The new target balance.
+      @notice Sets the target amount of ETH to keep in the Juicer's contract instead of depositing.
+      @param _juicer The juicer to change the target local ETH of.
+      @param _amount The new target.
     */
-    function setTargetBalance(IJuicer _juicer, uint256 _amount)
+    function setTargetLocalETH(IJuicer _juicer, uint256 _amount)
         external
         onlyOwner
     {
-        _juicer.setTargetBalance(_amount);
+        _juicer.setTargetLocalETH(_amount);
     }
 }

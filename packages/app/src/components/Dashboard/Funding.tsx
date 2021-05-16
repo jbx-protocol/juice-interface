@@ -47,31 +47,31 @@ export default function Funding({
 
   const balance = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'balanceOf',
+    functionName: 'yieldingBalanceOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId],
-    ),
-    formatter: useCallback(
-      ({ amountWithYield }: { amountWithYield: BigNumber }) => amountWithYield,
-      [],
-    ),
+    // updateOn: useMemo(
+    //   () =>
+    //     projectId
+    //       ? [
+    //           {
+    //             contract: ContractName.Juicer,
+    //             eventName: 'Pay',
+    //             topics: [[], projectId.toHexString()],
+    //           },
+    //           {
+    //             contract: ContractName.Juicer,
+    //             eventName: 'Tap',
+    //             topics: [[], projectId.toHexString()],
+    //           },
+    //         ]
+    //       : undefined,
+    //   [projectId],
+    // ),
+    // formatter: useCallback(
+    //   ({ amountWithYield }: { amountWithYield: BigNumber }) => amountWithYield,
+    //   [],
+    // ),
   })
 
   const totalOverflow = useContractReader<BigNumber>({
@@ -122,7 +122,7 @@ export default function Funding({
       [
         projectId.toHexString(),
         parseWad(tapAmount).toHexString(),
-        userAddress,
+        // userAddress,
         minAmount?.toHexString(),
       ],
       {

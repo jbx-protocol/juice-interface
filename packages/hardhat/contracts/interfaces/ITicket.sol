@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-interface IERC20Ticket is IERC20 {
+interface ITicket is IERC20 {
     function print(address _account, uint256 _amount) external;
 
     function redeem(address _account, uint256 _amount) external;

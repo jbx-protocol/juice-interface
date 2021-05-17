@@ -390,8 +390,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 true
             );
 
-        // Set this contract as the controller who can print and redeem tickets on behalf of the project.
-        tickets.addController(address(this), _fundingCycle.projectId);
+        // Allow this contract to print and redeem tickets.
+        tickets.initialize(address(this), _fundingCycle.projectId);
 
         emit Deploy(
             _fundingCycle.projectId,

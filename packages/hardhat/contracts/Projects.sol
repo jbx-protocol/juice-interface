@@ -156,7 +156,7 @@ contract Projects is ERC721, IProjects, Administered {
         uint256 _projectId,
         address _to,
         string memory _newHandle
-    ) external override onlyAdmin returns (string memory _handle) {
+    ) external override returns (string memory _handle) {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
 
@@ -208,7 +208,7 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _handle,
         address _for,
         uint256 _projectId
-    ) external override onlyAdmin {
+    ) external override {
         // Only an account or a specified operator of level 2 or higher can claim a handle.
         require(
             msg.sender == _for ||

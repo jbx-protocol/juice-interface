@@ -106,4 +106,16 @@ contract Governance is JuiceProject {
     function setFee(IJuicer _juicer, uint256 _fee) external onlyOwner {
         _juicer.setFee(_fee);
     }
+
+    /** 
+      @notice Sets the fee of the Juicer.
+      @param _juicer The juicer to change the governance of.
+      @param _newGovernance The address to appoint as governance.
+    */
+    function appointGovernance(IJuicer _juicer, address payable _newGovernance)
+        external
+        onlyOwner
+    {
+        _juicer.appointGovernance(_newGovernance);
+    }
 }

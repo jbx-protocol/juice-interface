@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "./IProjects.sol";
 import "./IOperatorStore.sol";
-import "./IERC20Ticket.sol";
+import "./ITicket.sol";
 
 interface ITickets {
     event Issue(
@@ -35,6 +35,12 @@ interface ITickets {
         address operator
     );
 
+    event Initialize(
+        address indexed controller,
+        uint256 indexed projectId,
+        address operator
+    );
+
     event AddController(
         address indexed controller,
         uint256 indexed projectId,
@@ -52,10 +58,7 @@ interface ITickets {
 
     function projects() external view returns (IProjects);
 
-    function erc20Tickets(uint256 _projectId)
-        external
-        view
-        returns (IERC20Ticket);
+    function tickets(uint256 _projectId) external view returns (ITicket);
 
     function IOU(address _holder, uint256 _projectId)
         external
@@ -93,6 +96,8 @@ interface ITickets {
     ) external;
 
     function claim(address _holder, uint256 _projectId) external;
+
+    function initialize(address _controller, uint256 _projectId) external;
 
     function addController(address _controller, uint256 _projectId) external;
 

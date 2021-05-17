@@ -6,11 +6,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./libraries/CompareMath.sol";
 
 import "./abstract/Administered.sol";
-import "./interfaces/IERC20Ticket.sol";
+import "./interfaces/ITicket.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ERC20Ticket is ERC20, IERC20Ticket, Ownable {
+contract Ticket is ERC20, ITicket, Ownable {
     constructor(string memory _name, string memory _symbol)
         public
         ERC20(_name, _symbol)

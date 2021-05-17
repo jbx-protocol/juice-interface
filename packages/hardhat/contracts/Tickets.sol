@@ -10,7 +10,7 @@ import "./interfaces/ITickets.sol";
 
 import "./abstract/Administered.sol";
 
-import "./ERC20Ticket.sol";
+import "./Ticket.sol";
 
 /** 
   @notice An immutable contract to manage Ticket states.
@@ -24,7 +24,7 @@ contract Tickets is Administered, ITickets {
     // --- public properties --- //
 
     // Each project's ERC20 Ticket tokens.
-    mapping(uint256 => IERC20Ticket) public override erc20Tickets;
+    mapping(uint256 => ITicket) public override tickets;
 
     // Each holder's balance of IOU Tickets for each project.
     mapping(address => mapping(uint256 => uint256)) public override IOU;
@@ -63,9 +63,8 @@ contract Tickets is Administered, ITickets {
         supply = IOUTotalSupply[_projectId];
 
         // Add the ERC20 supply if it's been issued.
-        IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
-        if (_erc20Ticket != IERC20Ticket(0))
-            supply = supply.add(_erc20Ticket.totalSupply());
+        ITicket _ticket = tickets[_projectId];
+        if (_ticket != ITicket(0)) supply = supply.add(_ticket.totalSupply());
     }
 
     /** 
@@ -81,9 +80,9 @@ contract Tickets is Administered, ITickets {
         returns (uint256 balance)
     {
         balance = IOU[_holder][_projectId];
-        IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
-        if (_erc20Ticket != IERC20Ticket(0))
-            balance = balance.add(_erc20Ticket.balanceOf(_holder));
+        ITicket _ticket = tickets[_projectId];
+        if (_ticket != ITicket(0))
+            balance = balance.add(_ticket.balanceOf(_holder));
     }
 
     /**
@@ -106,18 +105,18 @@ contract Tickets is Administered, ITickets {
             msg.sender == _owner ||
                 operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
                 4,
-            "ERC20TicketStore::issue: UNAUTHORIZED"
+            "Tickets::issue: UNAUTHORIZED"
         );
 
         // Only one ERC20 ticket can be issued.
         require(
-            erc20Tickets[_projectId] == IERC20Ticket(0),
-            "ERC20TicketStore::issue: ALREADY_ISSUED"
+            tickets[_projectId] == ITicket(0),
+            "Tickets::issue: ALREADY_ISSUED"
         );
 
         // Create the contract in this Juicer contract in order to have mint and burn privileges.
         // Prepend the strings with standards.
-        erc20Tickets[_projectId] = new ERC20Ticket(_name, _symbol);
+        tickets[_projectId] = new Ticket(_name, _symbol);
 
         emit Issue(_projectId, _name, _symbol, msg.sender);
     }
@@ -164,7 +163,7 @@ contract Tickets is Administered, ITickets {
         );
 
         // Get a reference to the project's ERC20 tickets.
-        IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
+        ITicket _ticket = tickets[_projectId];
 
         // Get a reference to the IOU amount.
         uint256 _IOU = IOU[_holder][_projectId];
@@ -177,16 +176,16 @@ contract Tickets is Administered, ITickets {
         } else {
             // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
             require(
-                _erc20Ticket != IERC20Ticket(0),
+                _ticket != ITicket(0),
                 "Tickets::redeem: INSUFICIENT_FUNDS"
             );
             if (_IOU > 0) {
                 // Reduce the holders balance and the total supply.
                 IOU[_holder][_projectId] = 0;
                 IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _IOU;
-                _erc20Ticket.redeem(_holder, _amount - _IOU);
+                _ticket.redeem(_holder, _amount - _IOU);
             } else {
-                _erc20Ticket.redeem(_holder, _amount);
+                _ticket.redeem(_holder, _amount);
             }
         }
 
@@ -200,9 +199,9 @@ contract Tickets is Administered, ITickets {
      */
     function claim(address _holder, uint256 _projectId) external override {
         // Get a reference to the project's ERC20 tickets.
-        IERC20Ticket _erc20Ticket = erc20Tickets[_projectId];
+        ITicket _ticket = tickets[_projectId];
 
-        require(_erc20Ticket != IERC20Ticket(0), "Tickets:claim: NOT_FOUND");
+        require(_ticket != ITicket(0), "Tickets:claim: NOT_FOUND");
 
         // Only an account or a specified operator can convert its tickets.
         require(
@@ -223,9 +222,25 @@ contract Tickets is Administered, ITickets {
         IOU[_holder][_projectId] = 0;
 
         // Print the equivalent amount of ERC20s.
-        _erc20Ticket.print(_holder, _amount);
+        _ticket.print(_holder, _amount);
 
         emit Claim(_holder, _projectId, _amount, msg.sender);
+    }
+
+    /** 
+      @notice Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
+      @param _controller The controller to add.
+      @param _projectId The ID of the project that will be controlled.
+    */
+    function initialize(address _controller, uint256 _projectId)
+        external
+        override
+        onlyAdmin
+    {
+        // The the controller status.
+        isController[_projectId][_controller] = true;
+
+        emit Initialize(_controller, _projectId, msg.sender);
     }
 
     /** 
@@ -239,7 +254,7 @@ contract Tickets is Administered, ITickets {
     {
         // The message sender must already be a controller of the project, or it must be the admin.
         require(
-            isController[_projectId][msg.sender] || this.isAdmin(msg.sender),
+            isController[_projectId][msg.sender],
             "Tickets::addAdmin: UNAUTHORIZED"
         );
 

@@ -14,6 +14,7 @@ import "./IOperatorStore.sol";
 struct FundingCycleMetadata {
     uint16 bondingCurveRate;
     uint16 reservedRate;
+    uint16 reconfigurationBondingCurveRate;
 }
 
 interface IFundingCyclesController {

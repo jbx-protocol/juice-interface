@@ -277,21 +277,17 @@ contract Juicer is IJuicer, ReentrancyGuard {
         FundingCycle.Data memory _queuedCycle =
             fundingCycles.getQueued(_projectId);
 
-        // The proportional amount of overflow accessible to the account.
-        uint256 _baseAmount =
-            FullMath.mulDiv(_currentOverflow, _count, _totalSupply);
-
-        // Linear bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
-        if (_queuedCycle._isConfigurationPending()) return _baseAmount;
-
-        // The bonding curve rate is stored in bytes 9-25 of the data property after.
-        uint256 _bondingCurveRate = uint16(_fundingCycle.metadata >> 8);
+        // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
+        uint256 _bondingCurveRate =
+            _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 31-46 of the metadata property.
+                ? uint16(_fundingCycle.metadata >> 30) // The bonding curve rate is stored in bytes 9-25 of the data property after.
+                : uint16(_fundingCycle.metadata >> 8);
 
         // The bonding curve formula.
         // https://www.desmos.com/calculator/sp9ru6zbpk
         // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
         return
-            _baseAmount.mul(
+            FullMath.mulDiv(_currentOverflow, _count, _totalSupply).mul(
                 uint256(_bondingCurveRate)
                     .sub(
                     FullMath.mulDiv(_count, _bondingCurveRate, _totalSupply)
@@ -1111,6 +1107,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
         packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-30 bytes.
         packed |= uint256(_metadata.reservedRate) << 24;
+        // reconfiguration reserved rate in bytes 31-46 bytes.
+        packed |= uint256(_metadata.reconfigurationBondingCurveRate) << 30;
     }
 
     /** 

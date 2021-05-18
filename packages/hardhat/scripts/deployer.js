@@ -160,6 +160,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       {
         bondingCurveRate: 690,
         reservedRate: 50,
+        reconfigurationBondingCurveRate: 1000,
       },
       ballot.address,
       {

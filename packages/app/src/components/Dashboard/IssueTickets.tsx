@@ -1,8 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Form, Input, Modal } from 'antd'
+import { Button, Form, Input, Modal, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useContext, useState } from 'react'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function IssueTickets({
   projectId,
@@ -35,15 +36,25 @@ export default function IssueTickets({
 
   return (
     <div>
-      <Button loading={loading} onClick={() => setModalVisible(true)}>
-        Issue tickets
-      </Button>
+      <Space>
+        <Button loading={loading} onClick={() => setModalVisible(true)}>
+          Issue tickets
+        </Button>
+        <Tooltip
+          title="Issue an ERC-20 token to be used as this project's tickets. Once
+          issued, current ticket holders will be able to claim their existing
+          balance in the new token."
+        >
+          <InfoCircleOutlined style={{ color: undefined }} />
+        </Tooltip>
+      </Space>
 
       <Modal
         visible={modalVisible}
         title="Issue ERC-20 tickets"
         okText="Issue tickets"
         onOk={issue}
+        onCancel={() => setModalVisible(false)}
       >
         <p>
           Issue an ERC-20 token to be used as this project's tickets. Once

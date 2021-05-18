@@ -242,7 +242,9 @@ export default function Rewards({
 
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
-  const ticketsIssued = ticketAddress && ticketAddress !== constants.AddressZero
+  const ticketsIssued = ticketAddress
+    ? ticketAddress !== constants.AddressZero
+    : undefined
 
   const redeemButton = (
     <Button
@@ -255,7 +257,7 @@ export default function Rewards({
   )
 
   return (
-    <Space direction="vertical" size="large">
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <Statistic
         title={
           <TooltipLabel
@@ -299,18 +301,21 @@ export default function Rewards({
         }
         valueRender={() => (
           <div>
-            <div>
-              {formatWad(totalBalance ?? 0)}{' '}
-              {ticketsIssued && iouBalance?.gt(0) ? (
-                <Button loading={loadingClaim} onClick={claim}>
-                  Claim {ticketSymbol}
-                </Button>
-              ) : (
-                <span>
-                  {ticketSymbol} {redeemButton}
-                </span>
-              )}
-            </div>
+            {iouBalance?.gt(0) || ticketsIssued === false ? (
+              <div>
+                {formatWad(iouBalance ?? 0)} tickets{' '}
+                {ticketsIssued ? (
+                  <Button loading={loadingClaim} onClick={claim} size="small">
+                    Claim {ticketSymbol}
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
+            {ticketsIssued === true ? (
+              <div>
+                {formatWad(ticketsBalance ?? 0)} <span>{ticketSymbol}</span>
+              </div>
+            ) : null}
             <div style={{ color: colors.text.secondary }}>
               {subText(
                 `${share ?? 0}% of ${formatWad(ticketSupply) ?? 0} ${
@@ -318,6 +323,7 @@ export default function Rewards({
                 } in circulation`,
               )}
             </div>
+            {redeemButton}
           </div>
         )}
       />

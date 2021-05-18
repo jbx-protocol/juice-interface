@@ -2,12 +2,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useEventListener from 'hooks/EventListener'
 import { ContractName } from 'models/contract-name'
 import { PayEvent } from 'models/events/pay-event'
 import { CSSProperties, useContext } from 'react'
-import { formattedNum, formatWad } from 'utils/formatCurrency'
+import { formatWad } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 import { toUint256 } from 'utils/formatNumber'
 
@@ -18,8 +17,6 @@ export default function PayEvents({
 }) {
   const { signingProvider } = useContext(UserContext)
   const { colors } = useContext(ThemeContext).theme
-
-  const converter = useCurrencyConverter()
 
   const events = useEventListener<PayEvent>({
     contractName: ContractName.Juicer,
@@ -66,8 +63,8 @@ export default function PayEvents({
                     color: colors.text.primary,
                   }}
                 >
-                  <CurrencySymbol currency={1} />
-                  {formattedNum(converter.weiToUsd(event.amount)?.toString())}
+                  <CurrencySymbol currency={0} />
+                  {formatWad(event.amount)}
                 </div>
               </div>
 

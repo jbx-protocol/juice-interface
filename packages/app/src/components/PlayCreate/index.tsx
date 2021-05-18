@@ -198,7 +198,11 @@ export default function PlayCreate() {
 
   const fundingCycle: FundingCycle = {
     ...editingFC,
-    metadata: encodeFCMetadata(editingFC.reserved, editingFC.bondingCurveRate),
+    metadata: encodeFCMetadata(
+      editingFC.reserved,
+      editingFC.bondingCurveRate,
+      1000,
+    ),
   }
 
   return (

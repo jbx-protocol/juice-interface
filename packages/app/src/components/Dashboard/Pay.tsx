@@ -11,9 +11,9 @@ import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { decodeFCMetadata } from '../../utils/fundingCycle'
 import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({

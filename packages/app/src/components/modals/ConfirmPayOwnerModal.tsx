@@ -7,7 +7,12 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
-import { formattedNum, formatWad, parsePerMille } from 'utils/formatCurrency'
+import {
+  formattedNum,
+  formatWad,
+  parsePerMille,
+  parseWad,
+} from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
 import { decodeFCMetadata } from '../../utils/fundingCycle'
@@ -56,15 +61,20 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
+  const amountForTicketWeight =
+    fundingCycle?.currency === 0 ? weiAmount : parseWad(usdAmount?.toString())
   const receivedTickets = weightedRate(
     fundingCycle,
-    weiAmount,
+    amountForTicketWeight,
     parsePerMille('100').sub(metadata?.reserved ?? 0),
   )
-
   const ownerTickets =
     metadata &&
-    weightedRate(fundingCycle, weiAmount, BigNumber.from(metadata.reserved))
+    weightedRate(
+      fundingCycle,
+      amountForTicketWeight,
+      BigNumber.from(metadata.reserved),
+    )
 
   return (
     <Modal
@@ -78,14 +88,17 @@ export default function ConfirmPayOwnerModal({
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Descriptions column={1} bordered>
-          <Descriptions.Item label="Pay amount">
+          <Descriptions.Item label="Pay amount" className="content-right">
             {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
             {currencyName(0)})
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets for you">
+          <Descriptions.Item label="Tickets for you" className="content-right">
             {formatWad(receivedTickets)}
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets for owner">
+          <Descriptions.Item
+            label="Tickets for owner"
+            className="content-right"
+          >
             {formatWad(ownerTickets)}
           </Descriptions.Item>
         </Descriptions>

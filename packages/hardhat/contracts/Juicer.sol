@@ -1107,7 +1107,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-40 bytes.
         packed |= uint256(_metadata.reservedRate) << 24;
-        // reconfiguration reserved rate in bytes 41-56 bytes.
+        // reconfiguration bonding curve rate in bytes 41-56 bytes.
         packed |= uint256(_metadata.reconfigurationBondingCurveRate) << 40;
     }
 

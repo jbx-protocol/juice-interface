@@ -23,6 +23,9 @@ contract FundingCycles is Administered, IFundingCycles {
 
     // --- public properties --- //
 
+    // The starting weight for each project's first funding cycle.
+    uint256 public constant override BASE_WEIGHT = 10E25;
+
     /// @notice The latest FundingCycle ID for each project id.
     mapping(uint256 => uint256) public override latestId;
 
@@ -298,9 +301,8 @@ contract FundingCycles is Administered, IFundingCycles {
             newFundingCycle._basedOn(_latestFundingCycle);
         } else {
             newFundingCycle.projectId = _projectId;
-            newFundingCycle.weight = 10E28;
+            newFundingCycle.weight = BASE_WEIGHT;
             newFundingCycle.number = 1;
-            newFundingCycle.previous = 0;
         }
     }
 

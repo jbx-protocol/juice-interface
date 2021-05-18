@@ -11,6 +11,8 @@ interface IFundingCycles {
 
     function count() external view returns (uint256);
 
+    function BASE_WEIGHT() external view returns (uint256);
+
     function get(uint256 _fundingCycleId)
         external
         view

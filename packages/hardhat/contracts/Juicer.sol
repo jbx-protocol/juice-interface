@@ -1101,6 +1101,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
             "FundingCycles::_validateData: BAD_RESERVED_RATE"
         );
 
+        // The reconfiguration bonding curve rate must be less than or equal to 1000.
+        require(
+            _metadata.reconfigurationBondingCurveRate <= 1000,
+            "FundingCycles::_validateData: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
+        );
+
         // version 0 in the first 8 bytes.
         packed = uint256(0);
         // bonding curve in bytes 9-24.

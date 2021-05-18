@@ -294,7 +294,6 @@ contract FundingCycles is Administered, IFundingCycles {
         newFundingCycle = fundingCycles[count];
         newFundingCycle.id = count;
         newFundingCycle.start = uint48(_start);
-        newFundingCycle.tapped = 0;
         latestId[_projectId] = count;
 
         if (_latestFundingCycle.id > 0) {

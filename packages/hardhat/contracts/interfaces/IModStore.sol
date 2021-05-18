@@ -5,8 +5,6 @@ pragma experimental ABIEncoderV2;
 import "./IOperatorStore.sol";
 import "./IProjects.sol";
 
-enum ModKind {Payment, Ticket, Both}
-
 struct PaymentMod {
     address payable beneficiary;
     uint16 percent;
@@ -19,6 +17,8 @@ struct TicketMod {
 }
 
 interface IModStore {
+    enum ModKind {Payment, Ticket, Both}
+
     event SetPaymentMods(uint256 indexed projectId, PaymentMod[] mods);
 
     event SetTicketMods(uint256 indexed projectId, TicketMod[] mods);

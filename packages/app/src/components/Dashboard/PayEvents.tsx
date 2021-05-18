@@ -66,24 +66,8 @@ export default function PayEvents({
                     color: colors.text.primary,
                   }}
                 >
-                  <CurrencySymbol currency={event.currency} />
-                  {event.currency === 0 ? (
-                    <span>
-                      <CurrencySymbol currency={0} />
-                      {formatWad(event.amount)}
-                    </span>
-                  ) : (
-                    <span>
-                      <CurrencySymbol currency={1} />
-                      {formattedNum(
-                        converter.weiToUsd(event.amount)?.toString(),
-                      )}{' '}
-                      <span style={{ fontSize: '.8rem', fontWeight: 400 }}>
-                        <CurrencySymbol currency={0} />
-                        {formatWad(event.amount)}
-                      </span>
-                    </span>
-                  )}
+                  <CurrencySymbol currency={1} />
+                  {formattedNum(converter.weiToUsd(event.amount)?.toString())}
                 </div>
               </div>
 
@@ -105,7 +89,7 @@ export default function PayEvents({
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {event.payer}
+                  {event.operator}
                 </div>
               </div>
             </div>

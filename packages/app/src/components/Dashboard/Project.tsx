@@ -125,7 +125,11 @@ export default function Project({
           />
 
           <div style={{ marginTop: gutter }}>
-            <Rewards projectId={projectId} currentCycle={fundingCycle} />
+            <Rewards
+              projectId={projectId}
+              currentCycle={fundingCycle}
+              isOwner={isOwner}
+            />
           </div>
         </Col>
       </Row>

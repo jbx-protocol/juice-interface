@@ -1,10 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
+import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useMemo, useState } from 'react'
@@ -16,19 +21,19 @@ import {
   parseWad,
 } from 'utils/formatCurrency'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
-import { currencyName } from 'utils/currency'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { ThemeContext } from 'contexts/themeContext'
+import IssueTickets from './IssueTickets'
 
 export default function Rewards({
   projectId,
   currentCycle,
+  isOwner,
 }: {
   projectId: BigNumber | undefined
   currentCycle: FundingCycle | undefined
+  isOwner: boolean | undefined
 }) {
   const { contracts, transactor, userAddress, onNeedProvider } = useContext(
     UserContext,
@@ -39,6 +44,7 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
+  const [loadingClaim, setLoadingClaim] = useState<boolean>()
   const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
 
   const converter = useCurrencyConverter()
@@ -55,13 +61,49 @@ export default function Rewards({
         eventName: 'Redeem',
         topics: projectId ? [[], projectId?.toHexString()] : undefined,
       },
+      {
+        contract: ContractName.Tickets,
+        eventName: 'Claim',
+        topics:
+          projectId && userAddress
+            ? [userAddress, projectId?.toHexString()]
+            : undefined,
+      },
     ],
     [projectId],
   )
 
-  const ticketsBalance = useContractReader<BigNumber>({
+  const ticketAddress = useContractReader<string>({
     contract: ContractName.Tickets,
+    functionName: 'tickets',
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: useMemo(
+      () => [
+        {
+          contract: ContractName.Tickets,
+          eventName: 'Issue',
+          topics: projectId ? [projectId.toHexString()] : undefined,
+        },
+      ],
+      [],
+    ),
+  })
+  const readProvider = useReadProvider()
+  const ticketContract = useErc20Contract(ticketAddress, readProvider)
+  const ticketSymbol = useContractReader<string>({
+    contract: ticketContract,
+    functionName: 'symbol',
+  })
+  const ticketsBalance = useContractReader<BigNumber>({
+    contract: ticketContract,
     functionName: 'balanceOf',
+    args: userAddress && projectId ? [userAddress] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: ticketsUpdateOn,
+  })
+  const iouBalance = useContractReader<BigNumber>({
+    contract: ContractName.Tickets,
+    functionName: 'IOU',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -134,9 +176,28 @@ export default function Rewards({
     ],
   )
 
+  const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
+
   const share = ticketSupply?.gt(0)
-    ? ticketsBalance?.mul(100).div(ticketSupply).toString()
+    ? totalBalance?.mul(100).div(ticketSupply).toString()
     : '0'
+
+  function claim() {
+    if (!transactor || !contracts) return onNeedProvider()
+
+    if (!projectId) return
+
+    setLoadingClaim(true)
+
+    transactor(
+      contracts.Tickets,
+      'claim',
+      [userAddress, projectId.toHexString()],
+      {
+        onDone: () => setLoadingClaim(false),
+      },
+    )
+  }
 
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
@@ -181,6 +242,18 @@ export default function Rewards({
 
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
+  const ticketsIssued = ticketAddress && ticketAddress !== constants.AddressZero
+
+  const redeemButton = (
+    <Button
+      loading={loadingRedeem}
+      size="small"
+      onClick={() => setRedeemModalVisible(true)}
+    >
+      Redeem
+    </Button>
+  )
+
   return (
     <Space direction="vertical" size="large">
       <Statistic
@@ -217,38 +290,44 @@ export default function Rewards({
           <TooltipLabel
             label="Your wallet"
             tip="Tickets can be redeemed for your project's overflow according to the current term's bonding
-        curve rate. Meaning, if the rate is 70% and there's 100 ETH overflow available
-        with 100 of your Tickets in circulation, 10 Tickets could be redeemed
-        for 7 ETH from the overflow. The rest is left to share between the
-        remaining ticket hodlers."
+            curve rate. Meaning, if the rate is 70% and there's 100 ETH overflow available
+            with 100 of your Tickets in circulation, 10 Tickets could be redeemed
+            for 7 ETH from the overflow. The rest is left to share between the
+            remaining ticket hodlers."
             placement="bottom"
           />
         }
         valueRender={() => (
           <div>
             <div>
-              {formatWad(ticketsBalance ?? 0)} tickets{' '}
-              <Button
-                loading={loadingRedeem}
-                size="small"
-                onClick={() => setRedeemModalVisible(true)}
-              >
-                Redeem
-              </Button>
+              {formatWad(totalBalance ?? 0)}{' '}
+              {ticketsIssued && iouBalance?.gt(0) ? (
+                <Button loading={loadingClaim} onClick={claim}>
+                  Claim {ticketSymbol}
+                </Button>
+              ) : (
+                <span>
+                  {ticketSymbol} {redeemButton}
+                </span>
+              )}
             </div>
             <div style={{ color: colors.text.secondary }}>
               {subText(
-                `${share ?? 0}% of ${
-                  formatWad(ticketSupply) ?? 0
-                } tickets in circulation`,
+                `${share ?? 0}% of ${formatWad(ticketSupply) ?? 0} ${
+                  ticketSymbol ?? 'tickets'
+                } in circulation`,
               )}
             </div>
           </div>
         )}
       />
 
+      {!ticketsIssued && isOwner ? (
+        <IssueTickets projectId={projectId} />
+      ) : null}
+
       <Modal
-        title="Redeem Tickets"
+        title={`Redeem ${ticketSymbol ?? 'Tickets'}`}
         visible={redeemModalVisible}
         onOk={() => {
           redeem()

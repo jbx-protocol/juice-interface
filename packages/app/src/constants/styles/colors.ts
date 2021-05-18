@@ -27,7 +27,7 @@ export const juiceColors: Record<JuiceColor, Property.Color> = {
   light0: '#d9d5e0',
   light1: '#d9d5e088',
   light2: '#d9d5e048',
-  light3: '#d9d5e022',
+  light3: '#d9d5e032',
   dark0: '#131115',
   dark1: '#241c2b',
   dark2: '#392b46',

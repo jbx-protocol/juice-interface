@@ -12,7 +12,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import {
   formattedNum,
@@ -20,7 +20,6 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
@@ -45,7 +44,6 @@ export default function Rewards({
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingClaim, setLoadingClaim] = useState<boolean>()
-  const [minRedeemAmount, setMinRedeemAmount] = useState<BigNumber>()
 
   const converter = useCurrencyConverter()
 
@@ -63,7 +61,7 @@ export default function Rewards({
       },
       {
         contract: ContractName.Tickets,
-        eventName: 'Claim',
+        eventName: 'Convert',
         topics:
           projectId && userAddress
             ? [userAddress, projectId?.toHexString()]
@@ -97,7 +95,7 @@ export default function Rewards({
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
-    args: userAddress && projectId ? [userAddress] : null,
+    args: ticketContract && userAddress ? [userAddress] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
@@ -140,41 +138,39 @@ export default function Rewards({
       [projectId],
     ),
   })
+  const claimableAmount = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'claimableAmount',
+    args:
+      userAddress && projectId && redeemAmount
+        ? [
+            userAddress,
+            projectId.toHexString(),
+            parseWad(redeemAmount).toHexString(),
+          ]
+        : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId && userAddress
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString(), userAddress],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Redeem',
+                topics: [projectId.toHexString(), userAddress],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
 
-  const bondingCurveRate = decodeFCMetadata(currentCycle?.metadata)
-    ?.bondingCurveRate
-
-  // TODO Juicer.claimableAmount
-  const onChangeRedeemAmount = useCallback(
-    (amount: string | undefined) => {
-      setRedeemAmount(amount)
-
-      if (
-        amount === undefined ||
-        !totalOverflow ||
-        !bondingCurveRate ||
-        !ticketSupply ||
-        ticketSupply.eq(0)
-      ) {
-        setMinRedeemAmount(undefined)
-      } else {
-        setMinRedeemAmount(
-          parseWad(amount)
-            ?.mul(totalOverflow)
-            .mul(bondingCurveRate)
-            .div(1000)
-            .div(ticketSupply),
-        )
-      }
-    },
-    [
-      setRedeemAmount,
-      setMinRedeemAmount,
-      bondingCurveRate,
-      ticketSupply,
-      totalOverflow,
-    ],
-  )
+  console.log('claimable', claimableAmount, parseWad(redeemAmount))
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
@@ -191,7 +187,7 @@ export default function Rewards({
 
     transactor(
       contracts.Tickets,
-      'claim',
+      'convert',
       [userAddress, projectId.toHexString()],
       {
         onDone: () => setLoadingClaim(false),
@@ -202,7 +198,7 @@ export default function Rewards({
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (!minRedeemAmount) return
+    if (!claimableAmount) return
 
     setLoadingRedeem(true)
 
@@ -217,12 +213,12 @@ export default function Rewards({
         userAddress,
         projectId.toHexString(),
         redeemWad.toHexString(),
-        minRedeemAmount.toHexString(),
+        claimableAmount.toHexString(),
         userAddress,
         false,
       ],
       {
-        onConfirmed: () => onChangeRedeemAmount(undefined),
+        onConfirmed: () => setRedeemAmount(undefined),
         onDone: () => setLoadingRedeem(false),
       },
     )
@@ -340,7 +336,7 @@ export default function Rewards({
           setRedeemModalVisible(false)
         }}
         onCancel={() => {
-          onChangeRedeemAmount(undefined)
+          setRedeemAmount(undefined)
           setRedeemModalVisible(false)
         }}
         okText="Redeem"
@@ -348,7 +344,7 @@ export default function Rewards({
         width={540}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <div>Balance: {formatWad(ticketsBalance ?? 0)} tickets</div>
+          <div>Balance: {formatWad(totalBalance ?? 0)} tickets</div>
           {redeemDisabled ? (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
               You can redeem tickets once this project has overflow.
@@ -364,14 +360,12 @@ export default function Rewards({
                 accessory={
                   <InputAccessoryButton
                     content="MAX"
-                    onClick={() =>
-                      onChangeRedeemAmount(fromWad(ticketsBalance))
-                    }
+                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
                   />
                 }
-                onChange={val => onChangeRedeemAmount(val)}
+                onChange={val => setRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(minRedeemAmount) || '--'} ETH
+              You will receive minimum {formatWad(claimableAmount) || '--'} ETH
             </div>
           )}
         </Space>

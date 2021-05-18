@@ -18,7 +18,7 @@ interface ITickets {
         address holder,
         uint256 amount,
         ITicket ticket,
-        bool preferClaimedTickets,
+        bool preferConvertedTickets,
         address controller
     );
 
@@ -30,7 +30,7 @@ interface ITickets {
         address controller
     );
 
-    event Claim(
+    event Convert(
         address indexed account,
         uint256 indexed projectId,
         uint256 amount,
@@ -108,7 +108,7 @@ interface ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferClaimedTickets
+        bool _preferConvertedTickets
     ) external;
 
     function redeem(
@@ -117,7 +117,7 @@ interface ITickets {
         uint256 _amount
     ) external;
 
-    function claim(address _holder, uint256 _projectId) external;
+    function convert(address _holder, uint256 _projectId) external;
 
     function initialize(address _controller, uint256 _projectId) external;
 

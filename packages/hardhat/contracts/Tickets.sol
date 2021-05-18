@@ -129,13 +129,13 @@ contract Tickets is Administered, ITickets {
       @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
-      @param _preferClaimedTickets Whether ERC20's should be claimed automatically if they have been issued.
+      @param _preferConvertedTickets Whether ERC20's should be converted automatically if they have been issued.
     */
     function print(
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferClaimedTickets
+        bool _preferConvertedTickets
     ) external override {
         // The printer must be a controller.
         require(
@@ -146,7 +146,7 @@ contract Tickets is Administered, ITickets {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        if (_preferClaimedTickets && _ticket != ITicket(0)) {
+        if (_preferConvertedTickets && _ticket != ITicket(0)) {
             // Print the equivalent amount of ERC20s.
             _ticket.print(_holder, _amount);
         } else {
@@ -162,7 +162,7 @@ contract Tickets is Administered, ITickets {
             _holder,
             _amount,
             _ticket,
-            _preferClaimedTickets,
+            _preferConvertedTickets,
             msg.sender
         );
     }
@@ -218,15 +218,15 @@ contract Tickets is Administered, ITickets {
     }
 
     /**
-      @notice Claims ERC20 tickets from IOUs.
+      @notice Converts to  ERC20 tickets from IOUs.
       @param _holder The owner of the tickets to convert.
-      @param _projectId The ID of the project whos tickets are being claimed.
+      @param _projectId The ID of the project whos tickets are being converted.
      */
-    function claim(address _holder, uint256 _projectId) external override {
+    function convert(address _holder, uint256 _projectId) external override {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        require(_ticket != ITicket(0), "Tickets:claim: NOT_FOUND");
+        require(_ticket != ITicket(0), "Tickets:convert: NOT_FOUND");
 
         // Only an account or a specified operator can convert its tickets.
         require(
@@ -234,14 +234,14 @@ contract Tickets is Administered, ITickets {
                 operatorStore.operatorLevel(_holder, 0, msg.sender) >= 1 ||
                 operatorStore.operatorLevel(_holder, _projectId, msg.sender) >=
                 1,
-            "Juicer::claim: UNAUTHORIZED"
+            "Juicer::convert: UNAUTHORIZED"
         );
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
             IOU[_holder][_projectId] - locked[_holder][_projectId];
 
-        // If there are no IOUs, there's nothing to claim.
+        // If there are no IOUs, there's nothing to convert.
         if (_unlockedIOUs == 0) return;
 
         // Set the IOUs to the locked amount.
@@ -250,7 +250,7 @@ contract Tickets is Administered, ITickets {
         // Print the equivalent amount of ERC20s.
         _ticket.print(_holder, _unlockedIOUs);
 
-        emit Claim(_holder, _projectId, _unlockedIOUs, msg.sender);
+        emit Convert(_holder, _projectId, _unlockedIOUs, msg.sender);
     }
 
     /** 
@@ -312,7 +312,7 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Lock a project's tickets, preventing them from being redeemed and from claiming ERC20 representations.
+      @notice Lock a project's tickets, preventing them from being redeemed and from converting to ERC20s.
       @param _holder The holder to lock tickets from.
       @param _projectId The ID of the project whos tickets are being locked.
       @param _amount The amount of tickets to lock.

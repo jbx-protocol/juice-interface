@@ -97,7 +97,7 @@ interface IJuiceTerminal {
         address indexed beneficiary,
         uint256 amount,
         string note,
-        bool preferClaimedTickets,
+        bool preferConvertedTickets,
         address operator
     );
 
@@ -105,7 +105,7 @@ interface IJuiceTerminal {
         uint256 _projectId,
         address _beneficiary,
         string memory _note,
-        bool _preferClaimedTickets
+        bool _preferConvertedTickets
     ) external payable returns (uint256 fundingCycleId);
 }
 

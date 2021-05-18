@@ -61,14 +61,14 @@ contract ModStore is IModStore {
       @param _kinds The kinds of your mods. This can be either TapAmount or ReservedTickets
       @param _beneficiaries The addresses being funded from your tapped amount.
       @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 1000.
-      @param _preferClaimedTickets Whether allocated tickets should attempt to auto claim ERC20s.
+      @param _preferConvertedTickets Whether allocated tickets should attempt to auto claim ERC20s.
     */
     function setMods(
         uint256 _projectId,
         ModKind[] memory _kinds,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
-        bool[] memory _preferClaimedTickets
+        bool[] memory _preferConvertedTickets
     ) external override {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -88,7 +88,7 @@ contract ModStore is IModStore {
         require(
             _beneficiaries.length == _percents.length &&
                 _beneficiaries.length == _kinds.length &&
-                _beneficiaries.length == _preferClaimedTickets.length,
+                _beneficiaries.length == _preferConvertedTickets.length,
             "ModStore::setMods: BAD_ARGS"
         );
 
@@ -123,7 +123,7 @@ contract ModStore is IModStore {
                     TicketMod(
                         _beneficiaries[_i],
                         uint16(_percents[_i]),
-                        _preferClaimedTickets[_i]
+                        _preferConvertedTickets[_i]
                     )
                 );
                 // Add to the total percents.
@@ -210,13 +210,13 @@ contract ModStore is IModStore {
       @param _projectId The project to add a mod to.
       @param _beneficiaries The addresses to send tickets to.
       @param _percents The percents of total tickets to send to each mod.
-      @param _preferClaimedTickets Whether allocated tickets should attempt to auto claim ERC20s.
+      @param _preferConvertedTickets Whether allocated tickets should attempt to auto claim ERC20s.
     */
     function setTicketMods(
         uint256 _projectId,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
-        bool[] memory _preferClaimedTickets
+        bool[] memory _preferConvertedTickets
     ) external override {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -235,7 +235,7 @@ contract ModStore is IModStore {
         // The params must be of equal lengths.
         require(
             _beneficiaries.length == _percents.length &&
-                _beneficiaries.length == _preferClaimedTickets.length,
+                _beneficiaries.length == _preferConvertedTickets.length,
             "ModStore::setTicketMods: BAD_ARGS"
         );
 
@@ -256,7 +256,7 @@ contract ModStore is IModStore {
                 TicketMod(
                     _beneficiaries[_i],
                     uint16(_percents[_i]),
-                    _preferClaimedTickets[_i]
+                    _preferConvertedTickets[_i]
                 )
             );
             // Add to the total percents.

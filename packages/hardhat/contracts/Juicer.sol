@@ -495,14 +495,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _note A note that will be included in the published event.
-      @param _preferClaimedTickets Whether ERC20's should be claimed automatically if they have been issued.
+      @param _preferConvertedTickets Whether ERC20's should be claimed automatically if they have been issued.
         @return _fundingCycleId The ID of the funding stage that the payment was made during.
     */
     function pay(
         uint256 _projectId,
         address _beneficiary,
         string memory _note,
-        bool _preferClaimedTickets
+        bool _preferConvertedTickets
     ) external payable override returns (uint256) {
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
@@ -529,7 +529,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
                 1000 - uint256(uint16(_fundingCycle.metadata >> 24))
             ),
-            _preferClaimedTickets
+            _preferConvertedTickets
         );
 
         emit Pay(
@@ -538,7 +538,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _beneficiary,
             msg.value,
             _note,
-            _preferClaimedTickets,
+            _preferConvertedTickets,
             msg.sender
         );
 
@@ -831,7 +831,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _mod.beneficiary,
                 _projectId,
                 _modCut,
-                _mod.preferClaimed
+                _mod.preferConverted
             );
 
             // Subtract from the amount to be sent to the beneficiary.

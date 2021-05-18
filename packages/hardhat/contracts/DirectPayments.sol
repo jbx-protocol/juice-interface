@@ -18,7 +18,7 @@ contract DirectPayments {
     mapping(address => address) public beneficiaries;
 
     // For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
-    mapping(address => bool) public preferClaimedTickets;
+    mapping(address => bool) public preferConvertedTickets;
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable projects;
@@ -111,7 +111,7 @@ contract DirectPayments {
       @param _preference The preference to set.
     */
     function setPreferClaimedTickets(bool _preference) external {
-        preferClaimedTickets[msg.sender] = _preference;
+        preferConvertedTickets[msg.sender] = _preference;
     }
 }
 
@@ -140,7 +140,7 @@ contract DirectPaymentAddress {
             projectId,
             _beneficiary != address(0) ? _beneficiary : msg.sender,
             note,
-            directPayments.preferClaimedTickets(msg.sender)
+            directPayments.preferConvertedTickets(msg.sender)
         );
     }
 }

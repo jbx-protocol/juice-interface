@@ -13,7 +13,7 @@ struct PaymentMod {
 struct TicketMod {
     address payable beneficiary;
     uint16 percent;
-    bool preferClaimed;
+    bool preferConverted;
 }
 
 interface IModStore {
@@ -42,7 +42,7 @@ interface IModStore {
         ModKind[] memory _kinds,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
-        bool[] memory _preferClaimedTickets
+        bool[] memory _preferConvertedTickets
     ) external;
 
     function setPaymentMods(
@@ -55,6 +55,6 @@ interface IModStore {
         uint256 _projectId,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
-        bool[] memory _preferClaimedTickets
+        bool[] memory _preferConvertedTickets
     ) external;
 }

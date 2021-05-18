@@ -54,11 +54,30 @@ interface ITickets {
 
     event Initialize(uint256 indexed projectId, address indexed controller);
 
+    event Lock(
+        address indexed holder,
+        uint256 projectId,
+        uint256 amount,
+        address operator
+    );
+
+    event Unlock(
+        address indexed holder,
+        uint256 projectId,
+        uint256 amount,
+        address operator
+    );
+
     function operatorStore() external view returns (IOperatorStore);
 
     function projects() external view returns (IProjects);
 
     function tickets(uint256 _projectId) external view returns (ITicket);
+
+    function locked(address _holder, uint256 _projectId)
+        external
+        view
+        returns (uint256);
 
     function IOU(address _holder, uint256 _projectId)
         external
@@ -102,4 +121,16 @@ interface ITickets {
     function addController(address _controller, uint256 _projectId) external;
 
     function removeController(address _controller, uint256 _projectId) external;
+
+    function lock(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external;
+
+    function unlock(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external;
 }

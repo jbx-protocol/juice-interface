@@ -155,14 +155,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @notice Gets the amount of reserved tickets that a project has.
       @param _projectId The ID of the project to get overflow for.
       @param _reservedRate The reserved rate to use to make the calculation.
+      @param _currency The currency to base the rate off of.
       @return amount overflow The current overflow of funds for the project.
     */
-    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function reservedTicketAmount(
+        uint256 _projectId,
+        uint256 _reservedRate,
+        uint256 _currency
+    ) public view override returns (uint256) {
         // Get a reference to the processed ticket tracker for the project.
         int256 _processedTicketTracker = processedTicketTracker[_projectId];
 
@@ -178,12 +178,19 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
 
+        // Convert the unprocessed amount to the specified currency.
+        uint256 _currentUnprocessedTicketBalanceOf =
+            DSMath.wmul(
+                _unprocessedTicketBalanceOf,
+                prices.getETHPrice(_currency)
+            );
+
         return
             FullMath.mulDiv(
-                _unprocessedTicketBalanceOf,
+                _currentUnprocessedTicketBalanceOf,
                 1000,
                 1000 - _reservedRate
-            ) - _unprocessedTicketBalanceOf;
+            ) - _currentUnprocessedTicketBalanceOf;
     }
 
     /** 
@@ -258,7 +265,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
             reservedTicketAmount(
                 _projectId,
                 // The reserved rate is in bits 25-30 of the metadata.
-                uint256(uint16(_fundingCycle.metadata >> 24))
+                uint256(uint16(_fundingCycle.metadata >> 24)),
+                _fundingCycle.currency
             );
 
         // If there are reserved tickets, add them to the total supply.
@@ -516,7 +524,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _beneficiary,
             _projectId,
             _fundingCycle._weighted(
-                msg.value,
+                DSMath.wmul(
+                    msg.value,
+                    prices.getETHPrice(_fundingCycle.currency)
+                ),
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
                 1000 - uint256(uint16(_fundingCycle.metadata >> 24))
             )
@@ -618,7 +629,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _projectOwner,
                 _govProjectId,
                 _govFundingCycle._weighted(
-                    _govFeeAmount,
+                    DSMath.wmul(
+                        _govFeeAmount,
+                        prices.getETHPrice(_govFundingCycle.currency)
+                    ),
                     // The reserved rate is stored in bytes 25-30 of the metadata property.
                     1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
                 )
@@ -794,7 +808,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
         amount = reservedTicketAmount(
             _projectId,
             // The reserved rate is in bits 25-30 of the metadata.
-            uint256(uint16(_fundingCycle.metadata >> 24))
+            uint256(uint16(_fundingCycle.metadata >> 24)),
+            _fundingCycle.currency
         );
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
@@ -1137,7 +1152,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 msg.sender,
                 _govProjectId,
                 _govFundingCycle._weighted(
-                    msg.value,
+                    DSMath.wmul(
+                        msg.value,
+                        prices.getETHPrice(_govFundingCycle.currency)
+                    ),
                     // The reserved rate is stored in bytes 25-30 of the metadata property.
                     1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
                 )

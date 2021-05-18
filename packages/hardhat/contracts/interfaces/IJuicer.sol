@@ -190,10 +190,11 @@ interface IJuicer is
 
     function targetLocalETH() external view returns (uint256);
 
-    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
-        external
-        view
-        returns (uint256);
+    function reservedTicketAmount(
+        uint256 _projectId,
+        uint256 _reservedRate,
+        uint256 _currency
+    ) external view returns (uint256);
 
     function balanceOf(uint256 _projectId) external view returns (uint256);
 

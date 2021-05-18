@@ -29,6 +29,9 @@ contract Tickets is Administered, ITickets {
     // Each holder's balance of IOU Tickets for each project.
     mapping(address => mapping(uint256 => uint256)) public override IOU;
 
+    // The amount of each holders tickets that are locked.
+    mapping(address => mapping(uint256 => uint256)) public override locked;
+
     // Each project's controller addresses.
     mapping(uint256 => mapping(address => bool)) public override isController;
 
@@ -166,10 +169,11 @@ contract Tickets is Administered, ITickets {
         ITicket _ticket = tickets[_projectId];
 
         // Get a reference to the IOU amount.
-        uint256 _IOU = IOU[_holder][_projectId];
+        uint256 _unlockedIOU =
+            IOU[_holder][_projectId] - locked[_holder][_projectId];
 
-        // Redeem only IOUs if there are enough available.
-        if (_IOU > _amount) {
+        // Redeem only IOUs if there are enough available and they aren't locked.
+        if (_unlockedIOU > _amount) {
             // Reduce the holders balance and the total supply.
             IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
@@ -179,17 +183,19 @@ contract Tickets is Administered, ITickets {
                 _ticket != ITicket(0),
                 "Tickets::redeem: INSUFICIENT_FUNDS"
             );
-            if (_IOU > 0) {
+            if (_unlockedIOU > 0) {
                 // Reduce the holders balance and the total supply.
                 IOU[_holder][_projectId] = 0;
-                IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _IOU;
-                _ticket.redeem(_holder, _amount - _IOU);
+                IOUTotalSupply[_projectId] =
+                    IOUTotalSupply[_projectId] -
+                    _unlockedIOU;
+                _ticket.redeem(_holder, _amount - _unlockedIOU);
             } else {
                 _ticket.redeem(_holder, _amount);
             }
         }
 
-        emit Redeem(_projectId, _holder, _amount, _IOU, msg.sender);
+        emit Redeem(_projectId, _holder, _amount, _unlockedIOU, msg.sender);
     }
 
     /**
@@ -212,19 +218,20 @@ contract Tickets is Administered, ITickets {
             "Juicer::claim: UNAUTHORIZED"
         );
 
-        // Get a reference to the amount of IOUs.
-        uint256 _amount = IOU[_holder][_projectId];
+        // Get a reference to the amount of unlockedIOUs.
+        uint256 _unlockedIOUs =
+            IOU[_holder][_projectId] - locked[_holder][_projectId];
 
         // If there are no IOUs, there's nothing to claim.
-        if (_amount == 0) return;
+        if (_unlockedIOUs == 0) return;
 
-        // Set the IOUs to zero.
-        IOU[_holder][_projectId] = 0;
+        // Set the IOUs to the locked amount.
+        IOU[_holder][_projectId] = locked[_holder][_projectId];
 
         // Print the equivalent amount of ERC20s.
-        _ticket.print(_holder, _amount);
+        _ticket.print(_holder, _unlockedIOUs);
 
-        emit Claim(_holder, _projectId, _amount, msg.sender);
+        emit Claim(_holder, _projectId, _unlockedIOUs, msg.sender);
     }
 
     /** 
@@ -278,9 +285,56 @@ contract Tickets is Administered, ITickets {
             isController[_projectId][msg.sender],
             "Tickets::addAdmin: UNAUTHORIZED"
         );
+
         // The the controller status.
         isController[_projectId][_controller] = false;
 
         emit RemoveController(_controller, _projectId, msg.sender);
+    }
+
+    /** 
+      @notice Lock a project's tickets, preventing them from being redeemed and from claiming ERC20 representations.
+      @param _holder The holder to lock tickets from.
+      @param _projectId The ID of the project whos tickets are being locked.
+      @param _amount The amount of tickets to lock.
+    */
+    function lock(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external override onlyAdmin {
+        // The holder must have enough tickets to lock.
+        require(
+            IOU[_holder][_projectId] - locked[_holder][_projectId] >= _amount,
+            "Tickets::lock: INSUFFICIENT_TICKETS"
+        );
+
+        // Update the lock.
+        locked[_holder][_projectId] = locked[_holder][_projectId] + _amount;
+
+        emit Lock(_holder, _projectId, _amount, msg.sender);
+    }
+
+    /** 
+      @notice Unlock a project's tickets.
+      @param _holder The holder to unlock tickets from.
+      @param _projectId The ID of the project whos tickets are being unlocked.
+      @param _amount The amount of tickets to unlock.
+    */
+    function unlock(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external override onlyAdmin {
+        // There must be enough locked tickets to unlock.
+        require(
+            locked[_holder][_projectId] >= _amount,
+            "Tickets::lock: INSUFFICIENT_TICKETS"
+        );
+
+        // Update the lock.
+        locked[_holder][_projectId] = locked[_holder][_projectId] - _amount;
+
+        emit Unlock(_holder, _projectId, _amount, msg.sender);
     }
 }

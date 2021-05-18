@@ -114,11 +114,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     // });
 
     console.log("⚡️ Set the deployer as an operator of governance");
-    await attachedGovernance.addOperator(
+    await attachedGovernance.addOperators(
       operatorStore.address,
-      0,
-      governance.signer.address,
-      4,
+      [0],
+      [governance.signer.address],
+      [4],
       {
         gasLimit: blockGasLimit,
       }
@@ -151,11 +151,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     );
 
     console.log("⚡️ Remove the deployer as an operator of governance");
-    await attachedGovernance.removeOperator(
+    await attachedGovernance.removeOperators(
       operatorStore.address,
       governance.address,
-      0,
-      governance.signer.address,
+      [0],
+      [governance.signer.address],
       {
         gasLimit: blockGasLimit,
       }

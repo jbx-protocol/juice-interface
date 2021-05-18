@@ -18,7 +18,7 @@ export default function ProjectLogo({
         overflow: 'hidden',
         height: _size,
         width: _size,
-        borderRadius: 20,
+        borderRadius: _size / 4,
         background: uri ? undefined : '#ffffff10',
       }}
     >

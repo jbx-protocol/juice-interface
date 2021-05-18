@@ -4,10 +4,10 @@ import { Button, Col, Row, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import { CardSection } from 'components/shared/CardSection'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 
 import Funding from './Funding'
 import Pay from './Pay'
@@ -32,6 +32,8 @@ export default function Project({
     editProjectModalVisible,
     setEditProjectModalVisible,
   ] = useState<boolean>(false)
+
+  const { colors } = useContext(ThemeContext).theme
 
   if (!projectId || !project) return null
 
@@ -60,7 +62,7 @@ export default function Project({
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: project.name ? colors.bodyPrimary : colors.bodySecondary,
+              color: project.name ? colors.text.primary : colors.text.secondary,
             }}
           >
             {project.name ? project.name : 'Untitled project'}
@@ -69,7 +71,7 @@ export default function Project({
           <h3>
             <Space size="middle">
               {project?.handle ? (
-                <span style={{ color: colors.bodySecondary }}>
+                <span style={{ color: colors.text.secondary }}>
                   @{project.handle}
                 </span>
               ) : null}

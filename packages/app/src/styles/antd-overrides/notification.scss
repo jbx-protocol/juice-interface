@@ -1,0 +1,14 @@
+.ant-notification-notice {
+  background: var(--background-l0);
+
+  .ant-notification-notice-message {
+    color: var(--text-primary);
+  }
+  .ant-notification-notice-description {
+    color: var(--text-secondary);
+  }
+
+  .ant-notification-close-x {
+    color: var(--icon-secondary);
+  }
+}

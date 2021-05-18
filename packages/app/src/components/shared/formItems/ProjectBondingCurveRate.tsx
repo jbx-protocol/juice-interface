@@ -1,6 +1,12 @@
 import { Form } from 'antd'
-import { colors } from 'constants/styles/colors'
-import { CSSProperties, useEffect, useLayoutEffect, useState } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import {
+  CSSProperties,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -15,6 +21,7 @@ export default function ProjectBondingCurveRate({
   value: number | undefined
   onChange: (val?: number) => void
 } & FormItemExt) {
+  const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>()
 
   const graphContainerId = 'graph-container'
@@ -73,12 +80,12 @@ export default function ProjectBondingCurveRate({
       latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
         _value / 100
       })/${supply})`,
-      color: colors.juiceOrange,
+      color: colors.text.brand.primary,
     })
     calculator.setExpression({
       id: baseCurveId,
       latex: `y=x`,
-      color: colors.grapeHint,
+      color: colors.stroke.secondary,
     })
   }
 
@@ -124,8 +131,8 @@ export default function ProjectBondingCurveRate({
                 left: graphPad / 2,
                 width: graphSize - graphPad,
                 height: graphSize - graphPad,
-                borderLeft: '2px solid ' + colors.grapeHint,
-                borderBottom: '2px solid ' + colors.grapeHint,
+                borderLeft: '2px solid ' + colors.stroke.secondary,
+                borderBottom: '2px solid ' + colors.stroke.secondary,
               }}
             ></div>
 

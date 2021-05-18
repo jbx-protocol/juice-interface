@@ -1,14 +1,14 @@
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useContext } from 'react'
 
 import Account from './Account'
 
 export default function Navbar() {
-  const { userHasProjects } = useContext(UserContext)
-  const { userAddress } = useContext(UserContext)
+  const { userHasProjects, userAddress } = useContext(UserContext)
+  const { colors } = useContext(ThemeContext).theme
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -35,7 +35,7 @@ export default function Navbar() {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        background: colors.background,
+        background: colors.background.l0,
       }}
     >
       <Menu
@@ -44,7 +44,7 @@ export default function Navbar() {
         style={{
           display: 'inline-block',
           border: 'none',
-          background: colors.background,
+          background: colors.background.l0,
         }}
         selectable={false}
       >

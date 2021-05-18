@@ -3,7 +3,6 @@ import { Button, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { colors } from 'constants/styles/colors'
 import { UserContext } from 'contexts/userContext'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
@@ -22,6 +21,7 @@ import TooltipLabel from '../shared/TooltipLabel'
 import { currencyName } from 'utils/currency'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { ThemeContext } from 'contexts/themeContext'
 
 export default function Rewards({
   projectId,
@@ -33,6 +33,8 @@ export default function Rewards({
   const { contracts, transactor, userAddress, onNeedProvider } = useContext(
     UserContext,
   )
+
+  const { colors } = useContext(ThemeContext).theme
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
@@ -234,7 +236,7 @@ export default function Rewards({
                 Redeem
               </Button>
             </div>
-            <div style={{ color: colors.bodySecondary }}>
+            <div style={{ color: colors.text.secondary }}>
               {subText(
                 `${share ?? 0}% of ${
                   formatWad(ticketSupply) ?? 0
@@ -263,7 +265,7 @@ export default function Rewards({
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>Balance: {formatWad(ticketsBalance ?? 0)} tickets</div>
           {redeemDisabled ? (
-            <div style={{ color: colors.juiceLight, fontWeight: 500 }}>
+            <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
               You can redeem tickets once this project has overflow.
             </div>
           ) : (

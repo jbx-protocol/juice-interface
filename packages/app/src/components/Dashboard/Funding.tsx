@@ -4,7 +4,7 @@ import { Button, Collapse, Input, Modal, Progress, Space, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -38,6 +38,8 @@ export default function Funding({
   const { transactor, contracts, onNeedProvider, userAddress } = useContext(
     UserContext,
   )
+
+  const { colors } = useContext(ThemeContext).theme
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -168,7 +170,7 @@ export default function Funding({
       {tip ? (
         <Tooltip title={tip}>
           {text}
-          <span style={{ marginLeft: 5, color: colors.bodySecondary }}>
+          <span style={{ marginLeft: 5, color: colors.icon.secondary }}>
             <InfoCircleOutlined />
           </span>
         </Tooltip>
@@ -211,7 +213,7 @@ export default function Funding({
               style={{
                 fontSize: '1.4rem',
                 fontWeight: 500,
-                color: colors.juiceOrange,
+                color: colors.text.brand.primary,
               }}
             >
               <CurrencySymbol currency={fundingCycle.currency} />
@@ -240,7 +242,7 @@ export default function Funding({
               <Progress
                 percent={percentPaid}
                 showInfo={false}
-                strokeColor={colors.juiceOrange}
+                strokeColor={colors.text.brand.primary}
               />
               <div
                 style={{
@@ -266,14 +268,14 @@ export default function Funding({
                 }}
                 percent={100}
                 showInfo={false}
-                strokeColor={colors.juiceOrange}
+                strokeColor={colors.text.brand.primary}
               />
             </div>
           ) : (
             <Progress
               percent={percentPaid}
               showInfo={false}
-              strokeColor={colors.juiceOrange}
+              strokeColor={colors.text.brand.primary}
             />
           )}
 

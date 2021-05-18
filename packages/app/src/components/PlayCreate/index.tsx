@@ -3,9 +3,9 @@ import { Button, Drawer, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
-import { colors } from 'constants/styles/colors'
 import { layouts } from 'constants/styles/layouts'
 import { SECONDS_MULTIPLIER } from 'constants/units'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -34,6 +34,7 @@ export default function PlayCreate() {
     network,
     adminFeePercent,
   } = useContext(UserContext)
+  const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
     false,
@@ -207,9 +208,9 @@ export default function PlayCreate() {
           ...layouts.maxWidth,
           marginTop: 20,
           marginBottom: 20,
-          borderRadius: 10,
+          borderRadius: radii.lg,
           padding: 40,
-          border: '1px solid ' + colors.grapeHint,
+          border: '1px solid ' + colors.stroke.secondary,
         }}
       >
         <h1 style={{ marginBottom: 20 }}>Deploy your project 🚀</h1>

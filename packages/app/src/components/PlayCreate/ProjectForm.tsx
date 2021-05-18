@@ -32,9 +32,10 @@ export default function ProjectForm({
         />
         <FormItems.ProjectHandle
           name="handle"
-          value={form.getFieldValue('handle')}
+          onValueChange={val => form.setFieldsValue({ handle: val })}
           formItemProps={{
             rules: [{ required: true }],
+            dependencies: ['name'],
           }}
         />
         <FormItems.ProjectLink name="link" />

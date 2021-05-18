@@ -1,9 +1,9 @@
+import { SemanticTheme } from 'models/semantic-theme/theme'
 import { CSSProperties } from 'react'
-import { colors } from './colors'
 
-export const shadowCard: CSSProperties = {
-  background: colors.backgroundTertiary,
-  boxShadow: '10px 10px ' + colors.backgroundSecondary,
-  borderRadius: 8,
-  stroke: 'none'
-}
+export const shadowCard = (theme: SemanticTheme): CSSProperties => ({
+  background: theme.colors.background.l2,
+  boxShadow: '10px 10px ' + theme.colors.background.l1,
+  borderRadius: theme.radii.md,
+  stroke: 'none',
+})

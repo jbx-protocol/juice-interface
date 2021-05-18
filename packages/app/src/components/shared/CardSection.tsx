@@ -1,5 +1,7 @@
 import { shadowCard } from 'constants/styles/shadowCard'
+import { ThemeContext } from 'contexts/themeContext'
 import { ChildElems } from 'models/child-elems'
+import { useContext } from 'react'
 import { CSSProperties } from 'react'
 
 export function CardSection({
@@ -13,6 +15,7 @@ export function CardSection({
   children?: ChildElems
   style?: CSSProperties
 }) {
+  const theme = useContext(ThemeContext).theme
   return (
     <div>
       {header ? (
@@ -27,7 +30,7 @@ export function CardSection({
       ) : null}
       <div
         style={{
-          ...shadowCard,
+          ...shadowCard(theme),
           overflow: 'hidden',
           ...style,
           ...(padded ? { padding: 20 } : {}),

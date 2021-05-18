@@ -1,0 +1,20 @@
+.ant-tabs-top > .ant-tabs-nav::before,
+.ant-tabs-bottom > .ant-tabs-nav::before,
+.ant-tabs-top > div > .ant-tabs-nav::before,
+.ant-tabs-bottom > div > .ant-tabs-nav::before {
+  border-bottom: none;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-tabs-tab .ant-tabs-tab-btn {
+  font-weight: inherit;
+  color: var(--text-brand-primary);
+}
+
+.ant-tabs-ink-bar {
+  background: var(--text-brand-primary);
+}
+
+.ant-tabs {
+  color: var(--text-primary);
+}

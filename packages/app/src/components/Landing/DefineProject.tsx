@@ -2,8 +2,8 @@ import { Button, Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
-import { colors } from 'constants/styles/colors'
 import { SECONDS_MULTIPLIER } from 'constants/units'
+import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -11,7 +11,7 @@ import {
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { formatWad, fromWad } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -24,6 +24,7 @@ type FormFields = {
 }
 
 export default function DefineProject() {
+  const { colors } = useContext(ThemeContext).theme
   const [form] = useForm<FormFields>()
   const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
@@ -115,7 +116,7 @@ export default function DefineProject() {
           >
             {bold(editingProject?.name, 'Your project')} needs{' '}
             <CurrencySymbol
-              style={{ color: colors.bodyPrimary, fontWeight: 600 }}
+              style={{ color: colors.text.primary, fontWeight: 600 }}
               currency={editingBudget?.currency}
             />
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}

@@ -1,9 +1,16 @@
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export default function Footer() {
+  const { colors } = useContext(ThemeContext).theme
+
   const link = (text: string, link: string) => (
     <a
-      style={{ color: colors.cta, marginLeft: 10, marginRight: 10 }}
+      style={{
+        color: colors.text.action.primary,
+        marginLeft: 10,
+        marginRight: 10,
+      }}
       href={link}
     >
       {text}

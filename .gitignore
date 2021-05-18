@@ -12,9 +12,6 @@ packages/app/src/contracts/localhost
 packages/app/src/styles/antd.css
 packages/hardhat/cache
 
-packages/app/src/constants/styles/colors.js
-packages/app/src/styles/colors.less
-packages/app/src/styles/colors.scss
 packages/app/src/styles/antd.css
 
 docker/**/data

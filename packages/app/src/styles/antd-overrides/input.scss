@@ -1,0 +1,113 @@
+.ant-input-number,
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-affix-wrapper-disabled,
+.ant-input[disabled] {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--stroke-secondary);
+
+  &:hover {
+    border-color: var(--stroke-primary) !important;
+  }
+
+  &.ant-input-number-focused {
+    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
+    border-color: var(--stroke-action-secondary);
+  }
+
+  &.ant-input-affix-wrapper-focused {
+    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
+    border-color: var(--stroke-action-secondary);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
+    border-color: var(--stroke-action-secondary);
+  }
+
+  &.err-suffix {
+    .ant-input-suffix {
+      color: var(--text-warn);
+    }
+  }
+}
+
+.ant-form-item-explain.ant-form-item-explain-error {
+  color: var(--text-failure);
+}
+
+.ant-form-item-has-error {
+  .ant-input-number,
+  .ant-input,
+  .ant-input-affix-wrapper {
+    border-color: var(--stroke-failure);
+  }
+  .ant-input-prefix {
+    color: var(--text-failure);
+  }
+}
+
+.ant-form-item-has-error {
+  .ant-input-number,
+  .ant-input,
+  .ant-input-affix-wrapper {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+.ant-input::placeholder {
+  color: var(--text-placeholder);
+}
+
+.antd-no-number-handler {
+  .ant-input-number-handler-wrap {
+    display: none;
+  }
+}
+
+.ant-form-item-extra {
+  color: var(--text-tertiary);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.ant-input::-webkit-outer-spin-button,
+input.ant-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.ant-input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.ant-input-prefix {
+  color: var(--text-secondary);
+}
+
+input:-internal-autofill,
+input:-internal-autofill:hover,
+input:-internal-autofill:focus,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill-selected {
+  background: transparent !important;
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  background-image: none !important;
+}
+
+.ant-input-affix-wrapper.align-end > input {
+  text-align: end;
+}
+
+.ant-form-item-label > label {
+  color: var(--text-header);
+}
+
+.ant-input-textarea-show-count::after {
+  color: var(--text-tertiary);
+}

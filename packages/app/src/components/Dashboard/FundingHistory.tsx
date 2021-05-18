@@ -64,7 +64,7 @@ export default function FundingHistory({
                 justifyContent: 'space-between',
               }}
             >
-              <h2>#{cycle.id.toString()}</h2>
+              <h2>#{cycle.number.toString()}</h2>
               <div>
                 <span style={{ fontSize: '1rem' }}>
                   <CurrencySymbol currency={cycle.currency} />

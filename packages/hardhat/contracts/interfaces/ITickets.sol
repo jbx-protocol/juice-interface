@@ -17,6 +17,8 @@ interface ITickets {
         uint256 projectId,
         address holder,
         uint256 amount,
+        ITicket ticket,
+        bool preferClaimedTickets,
         address controller
     );
 
@@ -105,7 +107,8 @@ interface ITickets {
     function print(
         address _holder,
         uint256 _projectId,
-        uint256 _amount
+        uint256 _amount,
+        bool _preferClaimedTickets
     ) external;
 
     function redeem(

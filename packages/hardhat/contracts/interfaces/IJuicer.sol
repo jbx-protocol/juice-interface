@@ -97,13 +97,15 @@ interface IJuiceTerminal {
         address indexed beneficiary,
         uint256 amount,
         string note,
+        bool preferClaimedTickets,
         address operator
     );
 
     function pay(
         uint256 _projectId,
         address _beneficiary,
-        string memory _note
+        string memory _note,
+        bool _preferClaimedTickets
     ) external payable returns (uint256 fundingCycleId);
 }
 
@@ -128,8 +130,7 @@ interface IJuicer is
         address indexed beneficiary,
         uint256 percent,
         uint256 modCut,
-        uint256 total,
-        ModKind kind
+        uint256 total
     );
     event AppointGovernance(address governance);
 

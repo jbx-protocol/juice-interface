@@ -129,11 +129,13 @@ contract Tickets is Administered, ITickets {
       @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
+      @param _preferClaimedTickets Whether ERC20's should be claimed automatically if they have been issued.
     */
     function print(
         address _holder,
         uint256 _projectId,
-        uint256 _amount
+        uint256 _amount,
+        bool _preferClaimedTickets
     ) external override {
         // The printer must be a controller.
         require(
@@ -141,11 +143,28 @@ contract Tickets is Administered, ITickets {
             "Tickets::print: UNAUTHORIZED"
         );
 
-        // Add to the IOU balance and total supply.
-        IOU[_holder][_projectId] = IOU[_holder][_projectId].add(_amount);
-        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(_amount);
+        // Get a reference to the project's ERC20 tickets.
+        ITicket _ticket = tickets[_projectId];
 
-        emit Print(_projectId, _holder, _amount, msg.sender);
+        if (_preferClaimedTickets && _ticket != ITicket(0)) {
+            // Print the equivalent amount of ERC20s.
+            _ticket.print(_holder, _amount);
+        } else {
+            // Add to the IOU balance and total supply.
+            IOU[_holder][_projectId] = IOU[_holder][_projectId].add(_amount);
+            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(
+                _amount
+            );
+        }
+
+        emit Print(
+            _projectId,
+            _holder,
+            _amount,
+            _ticket,
+            _preferClaimedTickets,
+            msg.sender
+        );
     }
 
     /** 

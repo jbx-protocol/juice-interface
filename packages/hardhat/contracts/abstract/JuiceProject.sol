@@ -27,7 +27,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
 
     receive() external payable {
         require(projectId != 0, "JuiceProject: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: msg.value}(projectId, msg.sender, "");
+        juiceTerminal.pay{value: msg.value}(projectId, msg.sender, "", false);
     }
 
     /** 
@@ -53,7 +53,12 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     */
     function pay(address _beneficiary, string memory _note) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: msg.value}(projectId, _beneficiary, _note);
+        juiceTerminal.pay{value: msg.value}(
+            projectId,
+            _beneficiary,
+            _note,
+            false
+        );
     }
 
     /** 
@@ -68,7 +73,12 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         string memory _note
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: _amount}(projectId, _beneficiary, _note);
+        juiceTerminal.pay{value: _amount}(
+            projectId,
+            _beneficiary,
+            _note,
+            false
+        );
     }
 
     /** 

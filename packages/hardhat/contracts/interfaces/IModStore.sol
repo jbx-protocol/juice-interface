@@ -5,32 +5,56 @@ pragma experimental ABIEncoderV2;
 import "./IOperatorStore.sol";
 import "./IProjects.sol";
 
-enum ModKind {TapAmount, ReservedTickets}
+enum ModKind {Payment, Ticket, Both}
 
-struct Mod {
+struct PaymentMod {
     address payable beneficiary;
     uint16 percent;
-    ModKind kind;
+}
+
+struct TicketMod {
+    address payable beneficiary;
+    uint16 percent;
+    bool preferClaimed;
 }
 
 interface IModStore {
-    event SetMods(
-        uint256 indexed projectId,
-        address payable[] _beneficiaries,
-        uint256[] _percents,
-        ModKind[] _kinds
-    );
+    event SetPaymentMods(uint256 indexed projectId, PaymentMod[] mods);
+
+    event SetTicketMods(uint256 indexed projectId, TicketMod[] mods);
 
     function projects() external view returns (IProjects);
 
     function operatorStore() external view returns (IOperatorStore);
 
-    function allMods(uint256 _projectId) external view returns (Mod[] memory);
+    function allPaymentMods(uint256 _projectId)
+        external
+        view
+        returns (PaymentMod[] memory);
+
+    function allTicketMods(uint256 _projectId)
+        external
+        view
+        returns (TicketMod[] memory);
 
     function setMods(
         uint256 _projectId,
+        ModKind[] memory _kinds,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
-        ModKind[] memory _kinds
+        bool[] memory _preferClaimedTickets
+    ) external;
+
+    function setPaymentMods(
+        uint256 _projectId,
+        address payable[] memory _beneficiaries,
+        uint256[] memory _percents
+    ) external;
+
+    function setTicketMods(
+        uint256 _projectId,
+        address payable[] memory _beneficiaries,
+        uint256[] memory _percents,
+        bool[] memory _preferClaimedTickets
     ) external;
 }

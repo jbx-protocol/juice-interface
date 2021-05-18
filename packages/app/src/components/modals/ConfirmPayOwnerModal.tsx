@@ -51,7 +51,7 @@ export default function ConfirmPayOwnerModal({
     transactor(
       contracts.Juicer,
       'pay',
-      [projectId.toHexString(), userAddress, form.getFieldValue('note') || ''],
+      [projectId.toHexString(), userAddress, form.getFieldValue('note') || '', false],
       {
         value: weiAmount?.toHexString(),
         onConfirmed: () => {

@@ -24,6 +24,7 @@ import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 export default function Rewards({
   projectId,
@@ -46,6 +47,8 @@ export default function Rewards({
   const [loadingClaim, setLoadingClaim] = useState<boolean>()
 
   const converter = useCurrencyConverter()
+
+  const metadata = decodeFCMetadata(currentCycle?.metadata)
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -114,6 +117,19 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
+  const reservedTickets = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'reservedTicketAmount',
+    args:
+      projectId && metadata?.reserved
+        ? [
+            projectId.toHexString(),
+            BigNumber.from(metadata.reserved).toHexString(),
+          ]
+        : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: ticketsUpdateOn,
+  })
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'currentOverflowOf',
@@ -171,9 +187,10 @@ export default function Rewards({
   })
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
+  const totalSupply = ticketSupply?.add(reservedTickets ?? 0)
 
-  const share = ticketSupply?.gt(0)
-    ? totalBalance?.mul(100).div(ticketSupply).toString()
+  const share = totalSupply?.gt(0)
+    ? totalBalance?.mul(100).div(totalSupply).toString()
     : '0'
 
   function claim() {
@@ -205,8 +222,7 @@ export default function Rewards({
     if (!redeemWad || !projectId) return
 
     // Arbitrary discrete value (wei) subtracted
-    const minAmount =
-      claimableOverflow?.sub(1e12).toHexString()
+    const minAmount = claimableOverflow?.sub(1e12).toHexString()
 
     transactor(
       contracts.Juicer,
@@ -216,7 +232,7 @@ export default function Rewards({
         projectId.toHexString(),
         redeemWad.toHexString(),
         minAmount,
-        userAddress
+        userAddress,
       ],
       {
         onConfirmed: () => setRedeemAmount(undefined),
@@ -315,7 +331,7 @@ export default function Rewards({
             ) : null}
             <div style={{ color: colors.text.secondary }}>
               {subText(
-                `${share ?? 0}% of ${formatWad(ticketSupply) ?? 0} ${
+                `${share ?? 0}% of ${formatWad(totalSupply) ?? 0} ${
                   ticketSymbol ?? 'tickets'
                 } in circulation`,
               )}
@@ -366,7 +382,8 @@ export default function Rewards({
                 }
                 onChange={val => setRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(claimableOverflow) || '--'} ETH
+              You will receive minimum {formatWad(claimableOverflow) || '--'}{' '}
+              ETH
             </div>
           )}
         </Space>

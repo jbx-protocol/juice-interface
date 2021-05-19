@@ -111,3 +111,33 @@ input:-webkit-autofill-selected {
 .ant-input-textarea-show-count::after {
   color: var(--text-tertiary);
 }
+
+.ant-select {
+  .ant-select-selector {
+    background-color: transparent !important;
+    color: var(--text-primary);
+    border-color: var(--stroke-secondary) !important;
+  }
+
+  .ant-select-arrow {
+    color: var(--text-primary);
+  }
+}
+
+.ant-select-dropdown {
+  background-color: var(--background-l1);
+
+  .ant-select-item-option {
+    color: var(--text-primary);
+  }
+
+  .ant-select-item-option-active {
+    color: var(--text-primary);
+    background-color: var(--background-l2);
+  }
+
+  .ant-select-item-option-selected {
+    color: var(--text-primary);
+    background-color: var(--background-l2);
+  }
+}

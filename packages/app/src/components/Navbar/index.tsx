@@ -1,13 +1,11 @@
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { useContext } from 'react'
 
 import Account from './Account'
 
 export default function Navbar() {
-  const { userHasProjects, userAddress } = useContext(UserContext)
   const { colors } = useContext(ThemeContext).theme
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
@@ -57,14 +55,9 @@ export default function Navbar() {
             />
           </a>
         </Menu.Item>
-        <Menu.Item key="explore">
-          {menuItem('Explore', '/#/projects')}
+        <Menu.Item key="projects">
+          {menuItem('Projects', '/#/projects')}
         </Menu.Item>
-        {userHasProjects ? (
-          <Menu.Item key="yourProjects">
-            {menuItem('Your projects', '/#/owner/' + userAddress)}
-          </Menu.Item>
-        ) : null}
         {
           <Menu.Item key="faq">
             {menuItem('FAQ', undefined, () => {

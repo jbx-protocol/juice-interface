@@ -170,8 +170,6 @@ export default function Rewards({
     ),
   })
 
-  console.log('claimable', claimableOverflow, parseWad(redeemAmount))
-
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
   const share = ticketSupply?.gt(0)
@@ -206,6 +204,10 @@ export default function Rewards({
 
     if (!redeemWad || !projectId) return
 
+    // Arbitrary discrete value (wei) subtracted
+    const minAmount =
+      claimableOverflow?.sub(1e12).toHexString()
+
     transactor(
       contracts.Juicer,
       'redeem',
@@ -213,7 +215,7 @@ export default function Rewards({
         userAddress,
         projectId.toHexString(),
         redeemWad.toHexString(),
-        claimableOverflow.toHexString(),
+        minAmount,
         userAddress
       ],
       {

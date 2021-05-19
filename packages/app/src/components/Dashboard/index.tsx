@@ -41,9 +41,12 @@ export default function Dashboard() {
 
       let bytes = utils.formatBytes32String(normalizeHandle(handle))
 
-      while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
-        bytes = bytes.substring(0, bytes.length - 2)
+      // Trim trailing zeros
+      while (bytes.length && bytes.charAt(bytes.length - 1) === '0') {
+        bytes = bytes.substring(0, bytes.length - 1)
       }
+      // Bytes must have even length
+      if (bytes.length % 2 === 1) bytes += '0'
 
       return [bytes]
     }, [handle]),

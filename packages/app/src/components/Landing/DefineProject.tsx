@@ -51,6 +51,7 @@ export default function DefineProject() {
   }
 
   const onFieldsChange = (fields: Partial<FormFields>) => {
+    console.log('change', fields)
     if (fields.name !== undefined) {
       dispatch(editingProjectActions.setName(fields.name))
       dispatch(editingProjectActions.setHandle(normalizeHandle(fields.name)))
@@ -84,10 +85,16 @@ export default function DefineProject() {
               name="target"
               value={form.getFieldValue('target')}
               onValueChange={val => {
+                // TODO
                 form.setFieldsValue({ target: val })
+                onFieldsChange({ ...form.getFieldsValue(true), target: val })
               }}
               currency={form.getFieldValue('currency')}
-              onCurrencyChange={currency => form.setFieldsValue({ currency })}
+              onCurrencyChange={currency => {
+                // TODO
+                form.setFieldsValue({ currency })
+                onFieldsChange({...form.getFieldsValue(true), currency})
+              }}
               hideLabel
             />
             <FormItems.ProjectDuration

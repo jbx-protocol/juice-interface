@@ -192,7 +192,7 @@ contract Tickets is Administered, ITickets {
             IOU[_holder][_projectId] - locked[_holder][_projectId];
 
         // Redeem only IOUs if there are enough available and they aren't locked.
-        if (_unlockedIOU > _amount) {
+        if (_unlockedIOU >= _amount) {
             // Reduce the holders balance and the total supply.
             IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
@@ -208,8 +208,18 @@ contract Tickets is Administered, ITickets {
                 IOUTotalSupply[_projectId] =
                     IOUTotalSupply[_projectId] -
                     _unlockedIOU;
-                _ticket.redeem(_holder, _amount - _unlockedIOU);
+                // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
+                uint256 _difference = _amount - _unlockedIOU;
+                require(
+                    _ticket.balanceOf(_holder) >= _difference,
+                    "Tickets::redeem: INSUFICIENT_FUNDS"
+                );
+                _ticket.redeem(_holder, _difference);
             } else {
+                require(
+                    _ticket.balanceOf(_holder) >= _amount,
+                    "Tickets::redeem: INSUFICIENT_FUNDS"
+                );
                 _ticket.redeem(_holder, _amount);
             }
         }

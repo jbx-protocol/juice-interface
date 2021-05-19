@@ -384,7 +384,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _duration,
                 _discountRate,
                 fee,
-                IFundingCycleBallot(0),
+                _ballot,
                 _validateAndPackFundingCycleMetadata(_metadata),
                 true
             );
@@ -745,8 +745,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Get a reference to the balance.
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
-        // Remove from the balance of the project.
-        // Since the balance shouldn't include any earned yield but the `amount` does,
+        // Remove from the raw balance of the project.
+        // Since the raw balance shouldn't include any earned yield but the `amount` does,
         // the correct proportion must be calculated.
         rawBalanceOf[_projectId] =
             rawBalanceOf[_projectId] -
@@ -759,10 +759,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _balanceWithYield
             );
 
-        // Make sure the amount being claimed is in the posession of this contract and not in the yielder.
+        // Make sure the amount being claimed is in the posession of this contract and not in the vault.
         _ensureAvailability(amount);
 
-        // Redeem the tickets, which removes and burns them from the sender's wallet.
+        // Redeem the tickets, which removes and burns them from the account's wallet.
         tickets.redeem(_account, _projectId, _count);
 
         // Transfer funds to the specified address.

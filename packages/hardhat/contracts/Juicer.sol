@@ -619,7 +619,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _govFeeAmount
             );
 
-            // Print tickets for the beneficiary.
+            // Print governance tickets for the project owner.
             tickets.print(
                 _projectOwner,
                 _govProjectId,
@@ -1151,7 +1151,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 msg.value
             );
 
-            // Print tickets for the beneficiary.
+            // Print governance tickets for the project owner.
             tickets.print(
                 msg.sender,
                 _govProjectId,

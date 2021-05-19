@@ -71,7 +71,7 @@ interface ITicketsController {
         uint256 returnAmount
     );
 
-    function claimableAmount(
+    function claimableOverflow(
         address _account,
         uint256 _amount,
         uint256 _projectId

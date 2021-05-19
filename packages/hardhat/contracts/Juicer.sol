@@ -229,7 +229,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         @param _count The number of Tickets that would be redeemed to get the resulting amount.
         @return amount The amount of tokens that can be claimed.
     */
-    function claimableAmount(
+    function claimableOverflow(
         address _account,
         uint256 _projectId,
         uint256 _count
@@ -237,7 +237,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // The holder must have the specified number of the project's tickets.
         require(
             tickets.totalBalanceOf(_account, _projectId) >= _count,
-            "Juicer::claimableAmount: INSUFFICIENT_FUNDS"
+            "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
         );
 
         // Get a reference to the current funding cycle for the project.
@@ -261,33 +261,35 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 uint256(uint16(_fundingCycle.metadata >> 24))
             );
 
-        return _reservedTicketAmount;
         // If there are reserved tickets, add them to the total supply.
-        // if (_reservedTicketAmount > 0)
-        //     _totalSupply = _totalSupply.add(_reservedTicketAmount);
+        if (_reservedTicketAmount > 0)
+            _totalSupply = _totalSupply.add(_reservedTicketAmount);
 
         // // Get a reference to the queued funding cycle for the project.
-        // FundingCycle.Data memory _queuedCycle =
-        //     fundingCycles.getQueued(_projectId);
+        FundingCycle.Data memory _queuedCycle =
+            fundingCycles.getQueued(_projectId);
 
         // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
-        // uint256 _bondingCurveRate =
-        //     _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-        //         ? uint16(_fundingCycle.metadata >> 40) // The bonding curve rate is stored in bytes 9-25 of the data property after.
-        //         : uint16(_fundingCycle.metadata >> 8);
+        uint256 _bondingCurveRate =
+            _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+                ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
+                : uint256(uint16(_fundingCycle.metadata >> 8));
 
-        // // The bonding curve formula.
-        // // https://www.desmos.com/calculator/sp9ru6zbpk
-        // // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        // return
-        //     FullMath.mulDiv(_currentOverflow, _count, _totalSupply).mul(
-        //         uint256(_bondingCurveRate)
-        //             .sub(
-        //             FullMath.mulDiv(_count, _bondingCurveRate, _totalSupply)
-        //         )
-        //             .div(1000)
-        //             .add(_count.div(_totalSupply))
-        //     );
+        // The bonding curve formula.
+        // https://www.desmos.com/calculator/sp9ru6zbpk
+        // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        return
+            FullMath.mulDiv(
+                FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
+                _bondingCurveRate.add(
+                    FullMath.mulDiv(
+                        _count,
+                        1000 - _bondingCurveRate,
+                        _totalSupply
+                    )
+                ),
+                1000
+            );
     }
 
     // --- external transactions --- //
@@ -732,7 +734,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         );
 
         // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
-        amount = claimableAmount(msg.sender, _projectId, _count);
+        amount = claimableOverflow(msg.sender, _projectId, _count);
 
         // The amount being claimed must be at least as much as was expected.
         require(

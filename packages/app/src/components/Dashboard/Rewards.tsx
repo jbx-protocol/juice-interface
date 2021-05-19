@@ -138,9 +138,9 @@ export default function Rewards({
       [projectId],
     ),
   })
-  const claimableAmount = useContractReader<BigNumber>({
+  const claimableOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'claimableAmount',
+    functionName: 'claimableOverflow',
     args:
       userAddress && projectId && redeemAmount
         ? [
@@ -170,7 +170,7 @@ export default function Rewards({
     ),
   })
 
-  console.log('claimable', claimableAmount, parseWad(redeemAmount))
+  console.log('claimable', claimableOverflow, parseWad(redeemAmount))
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
@@ -198,7 +198,7 @@ export default function Rewards({
   function redeem() {
     if (!transactor || !contracts) return onNeedProvider()
 
-    if (!claimableAmount) return
+    if (!claimableOverflow) return
 
     setLoadingRedeem(true)
 
@@ -213,7 +213,7 @@ export default function Rewards({
         userAddress,
         projectId.toHexString(),
         redeemWad.toHexString(),
-        claimableAmount.toHexString(),
+        claimableOverflow.toHexString(),
         userAddress,
         false,
       ],
@@ -365,7 +365,7 @@ export default function Rewards({
                 }
                 onChange={val => setRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(claimableAmount) || '--'} ETH
+              You will receive minimum {formatWad(claimableOverflow) || '--'} ETH
             </div>
           )}
         </Space>

@@ -61,12 +61,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
 
+    // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
+    mapping(uint256 => uint256) private rawBalanceOf;
+
     // The difference between the processedTicketTracker of a project and the project's ticket's totalSupply is the amount of tickets that
     // still need to have reserves printed against them.
     mapping(uint256 => int256) private processedTicketTracker;
-
-    // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
-    mapping(uint256 => uint256) private rawBalanceOf;
 
     // The largest uint256 that can fit in an int256;
     uint256 public constant LARGEST_SIGNED_INT = 2**255 - 1;

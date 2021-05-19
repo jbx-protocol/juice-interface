@@ -1,12 +1,18 @@
 import { juiceTheme } from 'constants/theme'
-import { SemanticTheme } from 'models/semantic-theme/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { SemanticTheme } from 'models/semantic-theme/theme'
 import { createContext } from 'react'
 
-export const ThemeContext = createContext<{
+const defaultThemeOption: ThemeOption = ThemeOption.dark
+
+export type ThemeContext = {
+  themeOption: ThemeOption
   theme: SemanticTheme
   setThemeOption: (themeOption: ThemeOption) => void
-}>({
-  theme: juiceTheme(ThemeOption.dark),
-  setThemeOption: (themeOption: ThemeOption) => null,
+}
+
+export const ThemeContext = createContext<ThemeContext>({
+  themeOption: defaultThemeOption,
+  theme: juiceTheme(defaultThemeOption),
+  setThemeOption: (themeOption: ThemeOption) => {},
 })

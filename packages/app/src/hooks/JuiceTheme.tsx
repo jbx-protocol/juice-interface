@@ -1,5 +1,6 @@
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
 import { useEffect, useState } from 'react'
 
 const flattenNestedObject = (
@@ -16,8 +17,10 @@ const flattenNestedObject = (
     }
   }, {})
 
-export function useJuiceTheme(initialThemeOption: ThemeOption) {
-  const [currentThemeOption, setCurrentThemeOption] = useState<ThemeOption>()
+export function useJuiceTheme(initialThemeOption: ThemeOption): ThemeContext {
+  const [currentThemeOption, setCurrentThemeOption] = useState<ThemeOption>(
+    initialThemeOption,
+  )
 
   const setRootVarsForThemeOption = (themeOption: ThemeOption) => {
     Object.entries(
@@ -40,6 +43,7 @@ export function useJuiceTheme(initialThemeOption: ThemeOption) {
   ])
 
   return {
+    themeOption: currentThemeOption,
     theme: juiceTheme(initialThemeOption || currentThemeOption),
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)

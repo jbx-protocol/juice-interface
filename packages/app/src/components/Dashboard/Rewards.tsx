@@ -214,8 +214,7 @@ export default function Rewards({
         projectId.toHexString(),
         redeemWad.toHexString(),
         claimableOverflow.toHexString(),
-        userAddress,
-        false,
+        userAddress
       ],
       {
         onConfirmed: () => setRedeemAmount(undefined),

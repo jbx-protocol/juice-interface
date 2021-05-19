@@ -734,7 +734,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         );
 
         // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
-        amount = claimableOverflow(msg.sender, _projectId, _count);
+        amount = claimableOverflow(_account, _projectId, _count);
 
         // The amount being claimed must be at least as much as was expected.
         require(

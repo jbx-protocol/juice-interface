@@ -135,7 +135,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "juice",
       "https://medmunch.com/wp-content/uploads/2020/04/Mango-Juice.jpg",
       "https://juice.work",
-      "0x3635C9ADC5DEA00000",
+      "0x8AC7230489E80000", // 3635C9ADC5DEA00000",
       1,
       duration,
       discountRate,

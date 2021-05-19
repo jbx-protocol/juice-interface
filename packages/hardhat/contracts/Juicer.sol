@@ -12,6 +12,8 @@ import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
 import "./libraries/FullMath.sol";
 
+import "hardhat/console.sol";
+
 /**
   @notice This contract manages the Juice ecosystem, and manages all funds.
   @dev  1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 
@@ -65,6 +67,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
     // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
     mapping(uint256 => uint256) private rawBalanceOf;
+
+    // The largest uint256 that can fit in an int256;
+    uint256 public constant LARGEST_SIGNED_INT = 2**255 - 1;
 
     // --- public properties --- //
 
@@ -178,6 +183,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
 
+        // If there are no unprocessed tickets, return.
         return
             FullMath.mulDiv(
                 _unprocessedTicketBalanceOf,
@@ -768,11 +774,26 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Transfer funds to the specified address.
         _beneficiary.transfer(amount);
 
+        // Get a reference to the processed ticket tracker for the project.
+        int256 _processedTicketTracker = processedTicketTracker[_projectId];
+
+        // Safely subtract the count from the processed ticket tracker.
         // Subtract from processed tickets so that the difference between whats been processed and the
         // total supply remains the same.
         // If there are at least as many processed tickets as there are tickets being redeemed,
         // the processedTicketTracker of the project will be positive. Otherwise it will be negative.
-        _setProcessedTicketTracker(_projectId, _count);
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _count <= LARGEST_SIGNED_INT,
+            "Juicer::redeem: INT_LIMIT_REACHED"
+        );
+
+        // Set the tracker.
+        processedTicketTracker[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
+            ? -int256(uint256(-_processedTicketTracker).add(_count)) // the tracker is less than the count, subtract it from the count and reverse it.
+            : _processedTicketTracker < int256(_count)
+            ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
+            : _processedTicketTracker - int256(_count);
 
         emit Redeem(
             _account,
@@ -848,8 +869,19 @@ contract Juicer is IJuicer, ReentrancyGuard {
         if (_leftoverTicketAmount > 0)
             tickets.print(_owner, _projectId, _leftoverTicketAmount, false);
 
-        // Set the processed amount to be the total supply, since all tickets have now been processed.
-        _setProcessedTicketTracker(_projectId, tickets.totalSupply(_projectId));
+        // Get a reference to the total supply of tickets.
+        uint256 _totalTickets = tickets.totalSupply(_projectId);
+
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _totalTickets <= LARGEST_SIGNED_INT,
+            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
+        );
+
+        // Set the tracker.
+        processedTicketTracker[_projectId] = int256(
+            tickets.totalSupply(_projectId)
+        );
 
         emit PrintReserveTickets(
             _fundingCycle.id,
@@ -1115,26 +1147,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         packed |= uint256(_metadata.reservedRate) << 24;
         // reconfiguration bonding curve rate in bytes 41-56 bytes.
         packed |= uint256(_metadata.reconfigurationBondingCurveRate) << 40;
-    }
-
-    /** 
-      @notice Sets the signed int tracker using an unsigned int value.
-      @param _projectId The ID of the project to set the tracker for.
-      @param _value The value to set.
-    */
-    function _setProcessedTicketTracker(uint256 _projectId, uint256 _value)
-        private
-    {
-        // Cast the total supply to an int.
-        int256 _intValue = int256(_value);
-
-        // Make sure int casting isnt overflowing.
-        require(
-            uint256(_intValue) == _value,
-            "Juicer::_setProcessedTicketTracker: INT_LIMIT_REACHED"
-        );
-
-        processedTicketTracker[_projectId] = _intValue;
     }
 
     // If funds are sent to this contract directly, fund governance.

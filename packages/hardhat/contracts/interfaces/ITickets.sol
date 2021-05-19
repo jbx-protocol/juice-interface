@@ -54,8 +54,6 @@ interface ITickets {
         address operator
     );
 
-    event Initialize(uint256 indexed projectId, address indexed controller);
-
     event Lock(
         address indexed holder,
         uint256 projectId,

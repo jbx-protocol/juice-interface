@@ -155,14 +155,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @notice Gets the amount of reserved tickets that a project has.
       @param _projectId The ID of the project to get overflow for.
       @param _reservedRate The reserved rate to use to make the calculation.
-      @param _currency The currency to base the rate off of.
       @return amount overflow The current overflow of funds for the project.
     */
-    function reservedTicketAmount(
-        uint256 _projectId,
-        uint256 _reservedRate,
-        uint256 _currency
-    ) public view override returns (uint256) {
+    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
+        public
+        view
+        override
+        returns (uint256)
+    {
         // Get a reference to the processed ticket tracker for the project.
         int256 _processedTicketTracker = processedTicketTracker[_projectId];
 
@@ -178,19 +178,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
 
-        // Convert the unprocessed amount to the specified currency.
-        uint256 _currentUnprocessedTicketBalanceOf =
-            DSMath.wmul(
-                _unprocessedTicketBalanceOf,
-                prices.getETHPrice(_currency)
-            );
-
         return
             FullMath.mulDiv(
-                _currentUnprocessedTicketBalanceOf,
+                _unprocessedTicketBalanceOf,
                 1000,
                 1000 - _reservedRate
-            ) - _currentUnprocessedTicketBalanceOf;
+            ) - _unprocessedTicketBalanceOf;
     }
 
     /** 
@@ -265,36 +258,36 @@ contract Juicer is IJuicer, ReentrancyGuard {
             reservedTicketAmount(
                 _projectId,
                 // The reserved rate is in bits 25-30 of the metadata.
-                uint256(uint16(_fundingCycle.metadata >> 24)),
-                _fundingCycle.currency
+                uint256(uint16(_fundingCycle.metadata >> 24))
             );
 
+        return _reservedTicketAmount;
         // If there are reserved tickets, add them to the total supply.
-        if (_reservedTicketAmount > 0)
-            _totalSupply = _totalSupply.add(_reservedTicketAmount);
+        // if (_reservedTicketAmount > 0)
+        //     _totalSupply = _totalSupply.add(_reservedTicketAmount);
 
-        // Get a reference to the queued funding cycle for the project.
-        FundingCycle.Data memory _queuedCycle =
-            fundingCycles.getQueued(_projectId);
+        // // Get a reference to the queued funding cycle for the project.
+        // FundingCycle.Data memory _queuedCycle =
+        //     fundingCycles.getQueued(_projectId);
 
-        // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
-        uint256 _bondingCurveRate =
-            _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-                ? uint16(_fundingCycle.metadata >> 40) // The bonding curve rate is stored in bytes 9-25 of the data property after.
-                : uint16(_fundingCycle.metadata >> 8);
+        // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
+        // uint256 _bondingCurveRate =
+        //     _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+        //         ? uint16(_fundingCycle.metadata >> 40) // The bonding curve rate is stored in bytes 9-25 of the data property after.
+        //         : uint16(_fundingCycle.metadata >> 8);
 
-        // The bonding curve formula.
-        // https://www.desmos.com/calculator/sp9ru6zbpk
-        // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        return
-            FullMath.mulDiv(_currentOverflow, _count, _totalSupply).mul(
-                uint256(_bondingCurveRate)
-                    .sub(
-                    FullMath.mulDiv(_count, _bondingCurveRate, _totalSupply)
-                )
-                    .div(1000)
-                    .add(_count.div(_totalSupply))
-            );
+        // // The bonding curve formula.
+        // // https://www.desmos.com/calculator/sp9ru6zbpk
+        // // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        // return
+        //     FullMath.mulDiv(_currentOverflow, _count, _totalSupply).mul(
+        //         uint256(_bondingCurveRate)
+        //             .sub(
+        //             FullMath.mulDiv(_count, _bondingCurveRate, _totalSupply)
+        //         )
+        //             .div(1000)
+        //             .add(_count.div(_totalSupply))
+        //     );
     }
 
     // --- external transactions --- //
@@ -808,8 +801,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         amount = reservedTicketAmount(
             _projectId,
             // The reserved rate is in bits 25-30 of the metadata.
-            uint256(uint16(_fundingCycle.metadata >> 24)),
-            _fundingCycle.currency
+            uint256(uint16(_fundingCycle.metadata >> 24))
         );
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.

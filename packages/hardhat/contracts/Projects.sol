@@ -84,7 +84,16 @@ contract Projects is ERC721, IProjects, Administered {
         string memory _logoUri,
         string memory _link
     ) external override onlyAdmin returns (uint256 id) {
+        // Handle must exist.
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
+
+        // Handle must be unique.
+        require(
+            handleResolver[bytes(_handle)] == 0 &&
+                (transferedHandles[bytes(_handle)] == address(0) ||
+                    transferedHandles[bytes(_handle)] == msg.sender),
+            "Projects::setInfo: HANDLE_TAKEN"
+        );
         projectId++;
         _safeMint(_owner, projectId);
         info[projectId] = Info(_name, _handle, _logoUri, _link);
@@ -118,8 +127,10 @@ contract Projects is ERC721, IProjects, Administered {
             "Projects::setInfo: UNAUTHORIZED"
         );
 
+        // Handle must exist.
         require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
+        // Handle must be unique.
         require(
             (handleResolver[bytes(_handle)] == 0 ||
                 handleResolver[bytes(_handle)] == _projectId) &&

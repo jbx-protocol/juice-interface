@@ -161,6 +161,7 @@ export default function PlayCreate() {
           bondingCurveRate: BigNumber.from(
             editingFC.bondingCurveRate,
           ).toHexString(),
+          reconfigurationBondingCurveRate: BigNumber.from(1000).toHexString(),
         },
         constants.AddressZero,
       ],

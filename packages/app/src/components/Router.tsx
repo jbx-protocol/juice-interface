@@ -3,6 +3,7 @@ import Gimme from 'components/Gimme'
 import Landing from 'components/Landing'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
+import CatchallRedirect from './CatchallRedirect'
 import PlayCreate from './PlayCreate'
 import Projects from './Projects'
 
@@ -27,6 +28,9 @@ export default function Router() {
         </Route>
         <Route path="/p/:handle">
           <Dashboard />
+        </Route>
+        <Route path="/:route">
+          <CatchallRedirect />
         </Route>
       </Switch>
     </HashRouter>

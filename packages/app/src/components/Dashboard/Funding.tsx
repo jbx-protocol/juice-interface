@@ -195,6 +195,11 @@ export default function Funding({
       : 'Cycle ends in ' + detailedTimeString(secondsLeft)
   } else header = detailedTimeString(secondsLeft) + ' left'
 
+  const percentOverflow = fracDiv(
+    overflowInCurrency?.toString() ?? '0',
+    paidInCurrency?.toString() ?? '1',
+  )
+
   return (
     <div>
       <Space direction="vertical" style={{ width: '100%' }}>
@@ -235,6 +240,10 @@ export default function Funding({
           {totalOverflow?.gt(0) ? (
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Progress
+                style={{
+                  width: (1 - percentOverflow) * 100 + '%',
+                  minWidth: 10,
+                }}
                 percent={percentPaid}
                 showInfo={false}
                 strokeColor={colors.text.brand.primary}
@@ -252,13 +261,7 @@ export default function Funding({
               ></div>
               <Progress
                 style={{
-                  width:
-                    fracDiv(
-                      overflowInCurrency?.toString() ?? '0',
-                      paidInCurrency?.toString() ?? '1',
-                    ) *
-                      100 +
-                    '%',
+                  width: percentOverflow * 100 + '%',
                   minWidth: 10,
                 }}
                 percent={100}

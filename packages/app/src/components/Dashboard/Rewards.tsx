@@ -44,6 +44,7 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
+  const [loadingPrint, setLoadingPrint] = useState<boolean>()
   const [loadingClaim, setLoadingClaim] = useState<boolean>()
 
   const converter = useCurrencyConverter()
@@ -58,16 +59,16 @@ export default function Rewards({
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.Juicer,
+        contract: ContractName.Tickets,
         eventName: 'Redeem',
-        topics: projectId ? [[], projectId?.toHexString()] : undefined,
+        topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
         contract: ContractName.Tickets,
         eventName: 'Convert',
         topics:
           projectId && userAddress
-            ? [userAddress, projectId?.toHexString()]
+            ? [userAddress, projectId.toHexString()]
             : undefined,
       },
     ],
@@ -128,7 +129,17 @@ export default function Rewards({
           ]
         : null,
     valueDidChange: bigNumbersDiff,
-    updateOn: ticketsUpdateOn,
+    updateOn: useMemo(
+      () => [
+        ...ticketsUpdateOn,
+        {
+          contract: ContractName.Juicer,
+          eventName: 'PrintReserveTickets',
+          topics: projectId ? [[], projectId.toHexString()] : undefined,
+        },
+      ],
+      [ticketsUpdateOn],
+    ),
   })
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -194,7 +205,7 @@ export default function Rewards({
     : '0'
 
   function claim() {
-    if (!transactor || !contracts) return onNeedProvider()
+    if (!transactor || !contracts || !userAddress) return onNeedProvider()
 
     if (!projectId) return
 
@@ -206,6 +217,23 @@ export default function Rewards({
       [userAddress, projectId.toHexString()],
       {
         onDone: () => setLoadingClaim(false),
+      },
+    )
+  }
+
+  function print() {
+    if (!transactor || !contracts) return onNeedProvider()
+
+    if (!projectId) return
+
+    setLoadingPrint(true)
+
+    transactor(
+      contracts.Juicer,
+      'printReservedTickets',
+      [projectId.toHexString()],
+      {
+        onDone: () => setLoadingPrint(false),
       },
     )
   }
@@ -259,16 +287,6 @@ export default function Rewards({
     ? ticketAddress !== constants.AddressZero
     : undefined
 
-  const redeemButton = (
-    <Button
-      loading={loadingRedeem}
-      size="small"
-      onClick={() => setRedeemModalVisible(true)}
-    >
-      Redeem
-    </Button>
-  )
-
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <Statistic
@@ -276,7 +294,6 @@ export default function Rewards({
           <TooltipLabel
             label="Overflow"
             tip="The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders."
-            placement="bottom"
           />
         }
         valueRender={() =>
@@ -309,34 +326,73 @@ export default function Rewards({
             with 100 of your Tickets in circulation, 10 Tickets could be redeemed
             for 7 ETH from the overflow. The rest is left to share between the
             remaining ticket hodlers."
-            placement="bottom"
           />
         }
         valueRender={() => (
-          <div>
-            {iouBalance?.gt(0) || ticketsIssued === false ? (
-              <div>
-                {formatWad(iouBalance ?? 0)} tickets{' '}
-                {ticketsIssued ? (
-                  <Button loading={loadingClaim} onClick={claim} size="small">
-                    Claim {ticketSymbol}
-                  </Button>
-                ) : null}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            <div>
+              {iouBalance?.gt(0) || ticketsIssued === false ? (
+                <div>
+                  {formatWad(iouBalance ?? 0)} tickets{' '}
+                  {ticketsIssued ? (
+                    <Button loading={loadingClaim} onClick={claim} size="small">
+                      Claim {ticketSymbol}
+                    </Button>
+                  ) : null}
+                </div>
+              ) : null}
+              {ticketsIssued === true ? (
+                <div>
+                  {formatWad(ticketsBalance ?? 0)} <span>{ticketSymbol}</span>
+                </div>
+              ) : null}
+              <div style={{ color: colors.text.secondary }}>
+                {subText(
+                  `${share ?? 0}% of total ${formatWad(totalSupply) ?? 0}`,
+                )}
               </div>
-            ) : null}
-            {ticketsIssued === true ? (
-              <div>
-                {formatWad(ticketsBalance ?? 0)} <span>{ticketSymbol}</span>
-              </div>
-            ) : null}
-            <div style={{ color: colors.text.secondary }}>
-              {subText(
-                `${share ?? 0}% of ${formatWad(totalSupply) ?? 0} ${
-                  ticketSymbol ?? 'tickets'
-                } in circulation`,
-              )}
             </div>
-            {redeemButton}
+            <Button
+              loading={loadingRedeem}
+              size="small"
+              onClick={() => setRedeemModalVisible(true)}
+            >
+              Redeem
+            </Button>
+          </div>
+        )}
+      />
+
+      <Statistic
+        title={
+          <TooltipLabel
+            label="Reserved"
+            tip="Tickets reserved by the project for itself or for other chosen addresses. Reserved tickets must be printed before they can be redeemed."
+          />
+        }
+        valueRender={() => (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            <div>{formatWad(reservedTickets) || 0} tickets</div>
+            <Button
+              loading={loadingPrint}
+              size="small"
+              onClick={print}
+              disabled={!reservedTickets?.gt(0)}
+            >
+              Print
+            </Button>
           </div>
         )}
       />

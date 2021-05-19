@@ -1,5 +1,6 @@
 import { Input, Select, Space } from 'antd'
 import { Option } from 'antd/lib/mentions'
+import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
@@ -28,7 +29,7 @@ export default function Projects() {
 
   const projects = useProjects(owner || false)
 
-  if (!selectOption) return null
+  if (!selectOption || !projects) return <Loading />
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -73,7 +74,7 @@ export default function Projects() {
           )}
         </Space>
       </div>
-      {projects && Object.values(projects).length ? (
+      {Object.values(projects).length ? (
         <ProjectsGrid projects={Object.values(projects)} />
       ) : (
         <div style={{ padding: 40, textAlign: 'center', fontStyle: 'italic' }}>

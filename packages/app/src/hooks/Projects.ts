@@ -12,9 +12,7 @@ export function useProjects(owner: string | undefined | false) {
   const [noOwner, setNoOwner] = useState<boolean>()
   const [loadingIndex, setLoadingIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
-  const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>(
-    {},
-  )
+  const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
 
   function upsertProject(project: ProjectIdentifier) {
     setProjects({
@@ -30,7 +28,7 @@ export function useProjects(owner: string | undefined | false) {
   function reset() {
     setLoadingIndex(BigNumber.from(0))
     setProjectIds([])
-    setProjects({})
+    setProjects(undefined)
   }
 
   useEffect(() => {

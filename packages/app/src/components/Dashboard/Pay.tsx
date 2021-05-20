@@ -10,8 +10,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
-import { formatWad, parsePerMille, parseWad } from 'utils/formatCurrency'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { formatWad, parseWad } from 'utils/formatCurrency'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
@@ -33,8 +32,6 @@ export default function Pay({
 
   const converter = useCurrencyConverter()
 
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
-
   const weiPayAmt =
     payAs === 1 ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
@@ -45,15 +42,13 @@ export default function Pay({
     setPayModalVisible(true)
   }
 
-  const formatReceivedTickets = (amount: BigNumber) =>
+  const formatReceivedTickets = (wei: BigNumber) =>
     formatWad(
-      fundingCycle
-        ? weightedRate(
-            fundingCycle,
-            amount,
-            parsePerMille('100').sub(metadata?.reserved || 0),
-          )
-        : undefined,
+      weightedRate(
+        fundingCycle,
+        fundingCycle?.currency === 0 ? wei : converter.weiToUsd(wei),
+        'payer'
+      ),
     )
 
   if (!fundingCycle || !projectId || !project) return null
@@ -86,11 +81,7 @@ export default function Pay({
             <div>
               Receive{' '}
               {payAmount && weiPayAmt?.gt(0) ? (
-                formatReceivedTickets(
-                  currencyName(fundingCycle.currency) === 'USD'
-                    ? weiPayAmt
-                    : parseWad(payAmount),
-                ) + ' Tickets'
+                formatReceivedTickets(weiPayAmt) + ' Tickets'
               ) : (
                 <span>
                   {formatReceivedTickets(
@@ -130,9 +121,7 @@ export default function Pay({
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
-        weiAmount={
-          payAs === 0 ? parseWad(payAmount) : converter.usdToWei(payAmount)
-        }
+        weiAmount={weiPayAmt}
       />
     </div>
   )

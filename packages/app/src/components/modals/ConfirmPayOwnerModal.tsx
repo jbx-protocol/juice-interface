@@ -65,20 +65,10 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const amountForTicketWeight =
-    fundingCycle?.currency === 0 ? weiAmount : parseWad(usdAmount?.toString())
-  const receivedTickets = weightedRate(
-    fundingCycle,
-    amountForTicketWeight,
-    parsePerMille('100').sub(metadata?.reserved ?? 0),
-  )
-  const ownerTickets =
-    metadata &&
-    weightedRate(
-      fundingCycle,
-      amountForTicketWeight,
-      BigNumber.from(metadata.reserved),
-    )
+  const currencyWad =
+    fundingCycle?.currency === 0 ? weiAmount : converter.weiToUsd(weiAmount)
+  const receivedTickets = weightedRate(fundingCycle, currencyWad, 'payer')
+  const ownerTickets = weightedRate(fundingCycle, currencyWad, 'reserved')
 
   return (
     <Modal

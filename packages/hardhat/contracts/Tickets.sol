@@ -366,4 +366,45 @@ contract Tickets is Administered, ITickets {
 
         emit Unlock(_holder, _projectId, _amount, msg.sender);
     }
+
+    /** 
+      @notice Allows a ticket holder to transfer its tickets to another account, without converting to ERC-20s.
+      @param _holder The holder to transfer tickets from.
+      @param _projectId The ID of the project whos tickets are being transfered.
+      @param _amount The amount of tickets to transfer.
+      @param _recipient The recipient of the tickets.
+    */
+    function transfer(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount,
+        address _recipient
+    ) external override {
+        // Only an account or a specified operator can transfer its tickets.
+        require(
+            msg.sender == _holder ||
+                operatorStore.operatorLevel(_holder, 0, msg.sender) >= 2 ||
+                operatorStore.operatorLevel(_holder, _projectId, msg.sender) >=
+                2,
+            "Juicer::transfer: UNAUTHORIZED"
+        );
+
+        // Get a reference to the amount of unlockedIOUs.
+        uint256 _unlockedIOUs =
+            IOU[_holder][_projectId] - locked[_holder][_projectId];
+
+        // There must be enough unlocked IOUs to transfer.
+        require(
+            _amount <= _unlockedIOUs,
+            "Tickets::transfer: INSUFFICIENT_FUNDS"
+        );
+
+        // Subtract from the holder.
+        IOU[_holder][_projectId] = _unlockedIOUs - _amount;
+
+        // Add the tickets to the recipient.
+        IOU[_recipient][_projectId] = IOU[_recipient][_projectId].add(_amount);
+
+        emit Transfer(_holder, _projectId, _recipient, _amount, msg.sender);
+    }
 }

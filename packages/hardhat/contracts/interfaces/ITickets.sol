@@ -68,6 +68,14 @@ interface ITickets {
         address operator
     );
 
+    event Transfer(
+        address indexed holder,
+        uint256 indexed projectId,
+        address indexed recipient,
+        uint256 amount,
+        address operator
+    );
+
     function operatorStore() external view returns (IOperatorStore);
 
     function projects() external view returns (IProjects);
@@ -133,5 +141,12 @@ interface ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount
+    ) external;
+
+    function transfer(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount,
+        address _recipient
     ) external;
 }

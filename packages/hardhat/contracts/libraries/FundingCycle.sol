@@ -160,7 +160,7 @@ library FundingCycle {
         uint256 _amount,
         uint256 _percentage
     ) internal pure returns (uint256) {
-        uint256 _base = FullMath.mulDiv(_self.weight, _amount, _self.target);
+        uint256 _base = DSMath.wmul(_amount, _self.weight);
         if (_percentage == 1000) return _base;
         return FullMath.mulDiv(_base, _percentage, 1000);
     }

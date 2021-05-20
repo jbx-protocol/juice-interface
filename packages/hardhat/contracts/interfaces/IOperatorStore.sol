@@ -7,14 +7,14 @@ interface IOperatorStore {
         address indexed account,
         uint256 indexed projectId,
         address operator,
-        uint256 level
+        uint256[] _permissionIndexes
     );
 
     event AddOperators(
         address indexed account,
         uint256[] indexed projectIds,
         address[] operators,
-        uint256[] levels
+        uint256[][] _permissionIndexes
     );
 
     event RemoveOperator(
@@ -31,7 +31,21 @@ interface IOperatorStore {
         address[] operators
     );
 
-    function operatorLevel(
+    function hasPermission(
+        address _account,
+        uint256 _projectId,
+        address _operator,
+        uint256 _permissionIndex
+    ) external returns (bool);
+
+    function hasPermissions(
+        address _account,
+        uint256 _projectId,
+        address _operator,
+        uint256[] memory _permissionIndexes
+    ) external returns (bool);
+
+    function operatorPermissions(
         address _account,
         uint256 _projectId,
         address _operator
@@ -40,13 +54,13 @@ interface IOperatorStore {
     function addOperator(
         uint256 _projectId,
         address _operator,
-        uint256 _level
+        uint256[] memory _permissionIndexe
     ) external;
 
     function addOperators(
         uint256[] memory _projectIds,
         address[] memory _operators,
-        uint256[] memory _levels
+        uint256[][] memory _permissionIndexes
     ) external;
 
     function removeOperator(

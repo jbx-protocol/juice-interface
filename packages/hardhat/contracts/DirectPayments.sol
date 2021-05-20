@@ -89,8 +89,7 @@ contract DirectPayments {
         // Only a project owner or a specified operator of level 2 or greater can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 0),
             "Juicer::setJuiceTerminal: UNAUTHORIZED"
         );
 

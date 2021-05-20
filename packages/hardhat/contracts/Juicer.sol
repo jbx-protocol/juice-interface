@@ -376,7 +376,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, 0, msg.sender) >= 4,
+                operatorStore.hasPermission(_owner, 0, msg.sender, 2),
             "Juicer::deploy: UNAUTHORIZED"
         );
 
@@ -451,8 +451,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(
             _owner == msg.sender ||
                 // Allow level 3 operators.
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                3,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 3),
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
@@ -731,9 +730,13 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(
             msg.sender == _account ||
                 // Allow personal operators (setting projectId to 0), or operators of the specified project.
-                operatorStore.operatorLevel(_account, 0, msg.sender) >= 2 ||
-                operatorStore.operatorLevel(_account, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_account, 0, msg.sender, 4) ||
+                operatorStore.hasPermission(
+                    _account,
+                    _projectId,
+                    msg.sender,
+                    4
+                ),
             "Juicer::redeem: UNAUTHORIZED"
         );
 
@@ -934,8 +937,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Only the project owner, or a delegated operator of level 5, can migrate its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) ==
-                5,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 5),
             "Juicer::migrate: UNAUTHORIZED"
         );
 

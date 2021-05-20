@@ -106,8 +106,7 @@ contract Tickets is Administered, ITickets {
         // Only a project owner or a specified operator can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                4,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 12),
             "Tickets::issue: UNAUTHORIZED"
         );
 
@@ -241,9 +240,13 @@ contract Tickets is Administered, ITickets {
         // Only an account or a specified operator can convert its tickets.
         require(
             msg.sender == _holder ||
-                operatorStore.operatorLevel(_holder, 0, msg.sender) >= 1 ||
-                operatorStore.operatorLevel(_holder, _projectId, msg.sender) >=
-                1,
+                operatorStore.hasPermission(_holder, 0, msg.sender, 13) ||
+                operatorStore.hasPermission(
+                    _holder,
+                    _projectId,
+                    msg.sender,
+                    13
+                ),
             "Juicer::convert: UNAUTHORIZED"
         );
 
@@ -383,9 +386,13 @@ contract Tickets is Administered, ITickets {
         // Only an account or a specified operator can transfer its tickets.
         require(
             msg.sender == _holder ||
-                operatorStore.operatorLevel(_holder, 0, msg.sender) >= 2 ||
-                operatorStore.operatorLevel(_holder, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_holder, 0, msg.sender, 14) ||
+                operatorStore.hasPermission(
+                    _holder,
+                    _projectId,
+                    msg.sender,
+                    14
+                ),
             "Juicer::transfer: UNAUTHORIZED"
         );
 

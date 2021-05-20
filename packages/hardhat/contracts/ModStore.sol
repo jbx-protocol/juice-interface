@@ -76,8 +76,7 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 6),
             "Juicer::setMods: UNAUTHORIZED"
         );
 
@@ -161,8 +160,7 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 7),
             "Juicer::setPaymentMods: UNAUTHORIZED"
         );
 
@@ -224,8 +222,7 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.operatorLevel(_owner, _projectId, msg.sender) >=
-                2,
+                operatorStore.hasPermission(_owner, _projectId, msg.sender, 8),
             "ModStore::setTicketMods: UNAUTHORIZED"
         );
 

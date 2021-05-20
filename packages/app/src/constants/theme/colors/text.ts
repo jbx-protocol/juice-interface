@@ -43,7 +43,7 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
     secondary: juiceColors.light1,
     tertiary: juiceColors.light2,
     placeholder: juiceColors.light3,
-    disabled: juiceColors.light2 + 'dd',
+    disabled: juiceColors.light2,
     success: juiceColors.green,
     warn: juiceColors.yellow,
     failure: juiceColors.red,

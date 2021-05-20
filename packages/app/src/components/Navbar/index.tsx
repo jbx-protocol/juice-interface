@@ -1,13 +1,9 @@
 import { Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 
 import Account from './Account'
 
 export default function Navbar() {
-  const { colors } = useContext(ThemeContext).theme
-
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
 
@@ -33,16 +29,13 @@ export default function Navbar() {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        background: colors.background.l0,
       }}
     >
       <Menu
         mode="horizontal"
-        theme="dark"
         style={{
           display: 'inline-block',
           border: 'none',
-          background: colors.background.l0,
         }}
         selectable={false}
       >
@@ -80,6 +73,7 @@ export default function Navbar() {
           </Menu.Item>
         }
       </Menu>
+      {/* <ThemePicker /> */}
       <div className="hide-mobile">
         <Account />
       </div>

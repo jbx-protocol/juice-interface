@@ -1,13 +1,15 @@
 import { Button, Col, Row, Space } from 'antd'
+import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
-
 import DefineProject from './DefineProject'
 import Faq from './Faq'
 import Footer from './Footer'
 
 export default function Landing() {
-  const { colors } = useContext(ThemeContext).theme
+  const { theme, forThemeOption } = useContext(ThemeContext)
+
+  const colors = theme.colors
 
   const totalMaxWidth = 1080
 
@@ -135,7 +137,13 @@ export default function Landing() {
                   maxWidth: '100%',
                   objectFit: 'contain',
                 }}
-                src="/assets/orange_lady-od.png"
+                src={
+                  forThemeOption &&
+                  forThemeOption({
+                    [ThemeOption.dark]: '/assets/orange_lady-od.png',
+                    [ThemeOption.light]: '/assets/orange_lady.png',
+                  })
+                }
                 alt="GET JUICED"
               />
             </Col>
@@ -204,7 +212,6 @@ export default function Landing() {
           marginTop: 0,
           paddingTop: 20,
           paddingBottom: 80,
-          background: 'rgb(57, 43, 70)',
         }}
       >
         <div

@@ -2,6 +2,7 @@ import { Button, Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
+import { ThemeOption } from 'constants/theme/theme-option'
 import { SECONDS_MULTIPLIER } from 'constants/units'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -24,7 +25,8 @@ type FormFields = {
 }
 
 export default function DefineProject() {
-  const { colors } = useContext(ThemeContext).theme
+  const { theme, forThemeOption } = useContext(ThemeContext)
+  const colors = theme.colors
   const [form] = useForm<FormFields>()
   const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
@@ -51,7 +53,6 @@ export default function DefineProject() {
   }
 
   const onFieldsChange = (fields: Partial<FormFields>) => {
-    console.log('change', fields)
     if (fields.name !== undefined) {
       dispatch(editingProjectActions.setName(fields.name))
       dispatch(editingProjectActions.setHandle(normalizeHandle(fields.name)))
@@ -70,7 +71,19 @@ export default function DefineProject() {
 
   const bold = (text?: string, placeholder?: string) =>
     text ? (
-      <span style={{ fontWeight: 600, color: '#fff' }}>{text}</span>
+      <span
+        style={{
+          fontWeight: 600,
+          color:
+            forThemeOption &&
+            forThemeOption({
+              [ThemeOption.dark]: '#fff',
+              [ThemeOption.light]: '#000',
+            }),
+        }}
+      >
+        {text}
+      </span>
     ) : (
       <span style={{ fontWeight: 600 }}>{placeholder}</span>
     )
@@ -93,7 +106,7 @@ export default function DefineProject() {
               onCurrencyChange={currency => {
                 // TODO
                 form.setFieldsValue({ currency })
-                onFieldsChange({...form.getFieldsValue(true), currency})
+                onFieldsChange({ ...form.getFieldsValue(true), currency })
               }}
               hideLabel
             />
@@ -119,7 +132,16 @@ export default function DefineProject() {
         </Col>
         <Col xs={24} lg={14}>
           <div
-            style={{ fontSize: '1.8rem', lineHeight: 1.3, color: '#ffffffbb' }}
+            style={{
+              fontSize: '1.8rem',
+              lineHeight: 1.3,
+              color:
+                forThemeOption &&
+                forThemeOption({
+                  [ThemeOption.dark]: '#ffffffbb',
+                  [ThemeOption.light]: '#000000dd',
+                }),
+            }}
           >
             {bold(editingProject?.name, 'Your project')} needs{' '}
             <CurrencySymbol

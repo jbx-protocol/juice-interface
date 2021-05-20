@@ -45,6 +45,7 @@ export function useJuiceTheme(initialThemeOption: ThemeOption): ThemeContext {
   return {
     themeOption: currentThemeOption,
     theme: juiceTheme(initialThemeOption || currentThemeOption),
+    forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)

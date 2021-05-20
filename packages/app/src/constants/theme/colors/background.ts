@@ -7,9 +7,9 @@ export const backgroundColors: Record<
   SemanticColors['background']
 > = {
   [ThemeOption.light]: {
-    l0: juiceColors.white,
-    l1: juiceColors.white,
-    l2: juiceColors.white,
+    l0: '#fff',
+    l1: '#e7e3dc',
+    l2: '#f3f1ec',
     disabled: juiceColors.white,
     success: juiceColors.green,
     warn: juiceColors.yellow,

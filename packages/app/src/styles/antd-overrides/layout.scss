@@ -1,3 +1,18 @@
+.ant-menu,
+.ant-menu-item,
+.ant-menu-item > a {
+  color: var(--text-primary) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .ant-layout-header {
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background: var(--background-l0) !important;
+}
+
+.ant-menu-item-active {
+  border: none !important;
+  box-shadow: none !important;
 }

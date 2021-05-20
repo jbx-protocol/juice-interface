@@ -9,6 +9,7 @@ export type ThemeContext = {
   themeOption: ThemeOption
   theme: SemanticTheme
   setThemeOption: (themeOption: ThemeOption) => void
+  forThemeOption?: <T>(map: Record<ThemeOption, T>) => T
 }
 
 export const ThemeContext = createContext<ThemeContext>({

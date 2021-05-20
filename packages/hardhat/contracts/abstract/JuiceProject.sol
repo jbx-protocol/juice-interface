@@ -125,8 +125,14 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         IOperatorStore _operatorStore,
         address _account,
         uint256[] memory _projectIds,
-        address[] memory _operators
+        address[] memory _operators,
+        uint256[][] memory _permissionIndexes
     ) external onlyOwner {
-        _operatorStore.removeOperators(_account, _projectIds, _operators);
+        _operatorStore.removeOperators(
+            _account,
+            _projectIds,
+            _operators,
+            _permissionIndexes
+        );
     }
 }

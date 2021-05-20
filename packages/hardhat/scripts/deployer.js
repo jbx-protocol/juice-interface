@@ -156,6 +156,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       governance.address,
       [0],
       [governance.signer.address],
+      [[2]],
       {
         gasLimit: blockGasLimit,
       }

@@ -31,6 +31,14 @@ interface IOperatorStore {
         address[] operators
     );
 
+    event SetPackedPermissions(
+        address indexed account,
+        uint256 indexed projectId,
+        address indexed operator,
+        uint256 packedPermission,
+        address caller
+    );
+
     function hasPermission(
         address _account,
         uint256 _projectId,
@@ -51,6 +59,12 @@ interface IOperatorStore {
         address _operator
     ) external view returns (uint256);
 
+    function setPackedPermissions(
+        uint256 _projectId,
+        address _operator,
+        uint256 _packedPermissions
+    ) external;
+
     function addOperator(
         uint256 _projectId,
         address _operator,
@@ -66,12 +80,14 @@ interface IOperatorStore {
     function removeOperator(
         address _account,
         uint256 _projectId,
-        address _operator
+        address _operator,
+        uint256[] memory _permissionIndexes
     ) external;
 
     function removeOperators(
         address _account,
         uint256[] memory _projectIds,
-        address[] memory _operator
+        address[] memory _operator,
+        uint256[][] memory _permissionIndexes
     ) external;
 }

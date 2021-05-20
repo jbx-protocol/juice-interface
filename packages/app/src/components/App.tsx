@@ -32,7 +32,7 @@ function App() {
 
   const signingProvider = useSigningProvider(injectedProvider)
 
-  const juiceTheme = useJuiceTheme(ThemeOption.dark)
+  const juiceTheme = useJuiceTheme()
 
   useEffect(() => {
     async function getNetwork() {

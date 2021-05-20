@@ -1,9 +1,18 @@
-import { Menu } from 'antd'
+import { Menu, Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
+import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 import Account from './Account'
+import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
+  const {
+    theme: { colors },
+    forThemeOption,
+  } = useContext(ThemeContext)
+
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
 
@@ -29,13 +38,17 @@ export default function Navbar() {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        background: colors.background.l0,
       }}
     >
       <Menu
         mode="horizontal"
         style={{
+          flex: 1,
           display: 'inline-block',
           border: 'none',
+          background: colors.background.l0,
         }}
         selectable={false}
       >
@@ -43,7 +56,13 @@ export default function Navbar() {
           <a href="/" style={{ display: 'inline-block' }}>
             <img
               style={{ height: 40 }}
-              src="/assets/juice_logo-od.png"
+              src={
+                forThemeOption &&
+                forThemeOption({
+                  [ThemeOption.light]: '/assets/juice_logo-ol.png',
+                  [ThemeOption.dark]: '/assets/juice_logo-od.png',
+                })
+              }
               alt="Juice logo"
             />
           </a>
@@ -73,10 +92,12 @@ export default function Navbar() {
           </Menu.Item>
         }
       </Menu>
-      {/* <ThemePicker /> */}
-      <div className="hide-mobile">
-        <Account />
-      </div>
+      <Space size="middle">
+        <ThemePicker />
+        <div className="hide-mobile">
+          <Account />
+        </div>
+      </Space>
     </Header>
   )
 }

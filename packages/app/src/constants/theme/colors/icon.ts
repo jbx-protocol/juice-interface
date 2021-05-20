@@ -4,9 +4,9 @@ import { ThemeOption } from 'constants/theme/theme-option'
 
 export const iconColors: Record<ThemeOption, SemanticColors['icon']> = {
   [ThemeOption.light]: {
-    primary: juiceColors.black,
-    secondary: juiceColors.black,
-    tertiary: juiceColors.black,
+    primary: '#000000ee',
+    secondary: '#00000099',
+    tertiary: '#00000055',
     placeholder: juiceColors.light2,
     disabled: juiceColors.light2 + 'dd',
     success: juiceColors.green,

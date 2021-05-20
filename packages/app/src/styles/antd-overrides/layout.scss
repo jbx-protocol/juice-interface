@@ -5,14 +5,12 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+
+  &:hover {
+    opacity: .8;
+  }
 }
 
 .ant-layout-header {
-  color: var(--text-primary) !important;
-  background: var(--background-l0) !important;
-}
-
-.ant-menu-item-active {
-  border: none !important;
-  box-shadow: none !important;
+  color: var(--text-primary);
 }

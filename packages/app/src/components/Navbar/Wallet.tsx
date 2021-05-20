@@ -20,7 +20,7 @@ export default function Wallet({ userAddress }: { userAddress?: string }) {
         padding: '0px 10px',
         display: 'flex',
         alignItems: 'center',
-        background: colors.background.l1,
+        background: colors.background.l2,
         cursor: 'default',
         userSelect: 'all',
       }}

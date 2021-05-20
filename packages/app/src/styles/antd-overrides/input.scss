@@ -6,6 +6,7 @@
   background: transparent;
   color: var(--text-primary);
   border-color: var(--stroke-secondary);
+  border-radius: var(--radius-sm);
 
   &:hover {
     border-color: var(--stroke-primary) !important;

@@ -3,23 +3,4 @@
   &.ant-switch-checked {
     background: var(--background-action-primary);
   }
-
-  &.theme-switcher {
-    &.ant-switch-checked {
-      background: var(--background-l2);
-
-      .ant-switch-handle:before {
-        content: '☾';
-      }
-    }
-
-    .ant-switch-handle:before {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      content: '☼';
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
 }

@@ -24,7 +24,7 @@ export interface SemanticColors {
     SemanticColor.Tertiary &
     SemanticColor.Status &
     SemanticColor.Brand &
-    SemanticColor.Action &
+    SemanticColor.ActionHighlight &
     SemanticColor.Disabled &
     SemanticColor.Placeholder &
     SemanticColor.Over & { header: Property.Color }

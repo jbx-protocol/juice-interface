@@ -222,9 +222,8 @@ export default function Funding({
                   {formatWad(paidInCurrency)}{' '}
                   <span
                     style={{
-                      opacity: 0.6,
                       fontSize: 'initial',
-                      color: 'white',
+                      color: colors.text.tertiary,
                     }}
                   >
                     <CurrencySymbol currency={0} />
@@ -253,7 +252,7 @@ export default function Funding({
                   width: 4,
                   height: 15,
                   borderRadius: 2,
-                  background: 'white',
+                  background: colors.text.primary,
                   marginLeft: 5,
                   marginRight: 5,
                   marginTop: 3,

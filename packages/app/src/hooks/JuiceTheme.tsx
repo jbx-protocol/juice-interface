@@ -17,7 +17,12 @@ const flattenNestedObject = (
     }
   }, {})
 
-export function useJuiceTheme(initialThemeOption: ThemeOption): ThemeContext {
+export function useJuiceTheme(
+  storageKey: string = 'juice_theme',
+): ThemeContext {
+  const initialThemeOption =
+    (localStorage.getItem(storageKey) as ThemeOption) || ThemeOption.light
+
   const [currentThemeOption, setCurrentThemeOption] = useState<ThemeOption>(
     initialThemeOption,
   )
@@ -44,11 +49,12 @@ export function useJuiceTheme(initialThemeOption: ThemeOption): ThemeContext {
 
   return {
     themeOption: currentThemeOption,
-    theme: juiceTheme(initialThemeOption || currentThemeOption),
+    theme: juiceTheme(currentThemeOption),
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)
+      localStorage.setItem(storageKey, themeOption)
     },
   }
 }

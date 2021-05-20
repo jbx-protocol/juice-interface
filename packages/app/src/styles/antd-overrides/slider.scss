@@ -20,8 +20,9 @@
     }
 
     .ant-slider-handle {
-      background: var(--background-action-highlight);
-      border-color: var(--stroke-action-highlight);
+      background: var(--background-action-highlight) !important;
+      border-color: var(--stroke-action-highlight) !important;
+      box-shadow: 0 0 0 5px var(--background-action-secondary);
     }
   }
 

@@ -15,7 +15,7 @@ export function CardSection({
   children?: ChildElems
   style?: CSSProperties
 }) {
-  const theme = useContext(ThemeContext).theme
+  const { theme, themeOption } = useContext(ThemeContext)
   return (
     <div>
       {header ? (

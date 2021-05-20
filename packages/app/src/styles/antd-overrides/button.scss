@@ -3,6 +3,7 @@
   border-color: var(--stroke-action-secondary);
   color: var(--text-over-action-secondary);
   font-weight: 500;
+  border-radius: var(--radius-sm);
 
   &:hover {
     background: transparent;
@@ -20,7 +21,7 @@
 
 .ant-btn-primary {
   background: var(--background-action-primary);
-  border: none;
+  border-color: transparent;
   color: var(--text-over-action-primary);
 
   &:hover {
@@ -39,16 +40,34 @@
 
 .ant-btn-primary {
   text-shadow: none;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+  border-color: transparent;
+
+  &:hover {
+    border-color: transparent;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+  }
 }
 
 .ant-btn[disabled] {
-  color: rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-disabled);
+  border-color: var(--stroke-disabled);
   background: transparent;
 
+  &.ant-btn-primary {
+    background: var(--background-disabled);
+    border-color: transparent;
+
+    &:hover {
+      background: var(--background-disabled);
+      border-color: transparent;
+    }
+  }
+
   &:hover {
-    color: rgba(255, 255, 255, 0.4);
-    border-color: rgba(255, 255, 255, 0.16);
+    color: var(--text-disabled);
+    border-color: var(--stroke-disabled);
     background: transparent;
+    opacity: 0.7;
   }
 }

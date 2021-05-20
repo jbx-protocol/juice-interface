@@ -4,17 +4,17 @@ import { SemanticColors } from 'models/semantic-theme/colors'
 
 export const strokeColors: Record<ThemeOption, SemanticColors['stroke']> = {
   [ThemeOption.light]: {
-    primary: juiceColors.light0,
-    secondary: juiceColors.light1,
-    tertiary: juiceColors.light2,
+    primary: '#00000048',
+    secondary: '#00000032',
+    tertiary: '#00000018',
     success: juiceColors.green,
     warn: juiceColors.yellow,
     failure: juiceColors.red,
     disabled: juiceColors.light2,
     action: {
       primary: juiceColors.cta,
-      secondary: juiceColors.ctaHint,
-      highlight: juiceColors.ctaHighlight,
+      secondary: '#32c8db44',
+      highlight: '#3dd1e4',
     },
   },
   [ThemeOption.dark]: {

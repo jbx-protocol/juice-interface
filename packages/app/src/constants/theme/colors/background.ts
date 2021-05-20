@@ -10,7 +10,7 @@ export const backgroundColors: Record<
     l0: '#fff',
     l1: '#e7e3dc',
     l2: '#f3f1ec',
-    disabled: juiceColors.white,
+    disabled: '#00000018',
     success: juiceColors.green,
     warn: juiceColors.yellow,
     failure: juiceColors.red,
@@ -20,8 +20,8 @@ export const backgroundColors: Record<
     },
     action: {
       primary: juiceColors.cta,
-      secondary: juiceColors.ctaHint,
-      highlight: juiceColors.ctaHighlight,
+      secondary: '#32c8db44',
+      highlight: '#3dd1e4',
     },
   },
   [ThemeOption.dark]: {

@@ -4,11 +4,11 @@ import { SemanticColors } from 'models/semantic-theme/colors'
 
 export const textColors: Record<ThemeOption, SemanticColors['text']> = {
   [ThemeOption.light]: {
-    primary: juiceColors.black,
-    secondary: juiceColors.black,
-    tertiary: juiceColors.black,
+    primary: '#000000ee',
+    secondary: '#00000099',
+    tertiary: '#00000055',
     placeholder: juiceColors.light0,
-    disabled: juiceColors.light2 + 'dd',
+    disabled: '#00000048',
     success: juiceColors.green,
     warn: juiceColors.yellow,
     failure: juiceColors.red,
@@ -16,6 +16,7 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
     action: {
       primary: juiceColors.cta,
       secondary: juiceColors.cta,
+      highlight: '#34dbf1',
     },
     brand: {
       primary: juiceColors.juiceOrange,
@@ -50,6 +51,7 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
     action: {
       primary: juiceColors.cta,
       secondary: juiceColors.cta,
+      highlight: juiceColors.ctaHighlight,
     },
     brand: {
       primary: juiceColors.juiceOrange,

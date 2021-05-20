@@ -28,7 +28,7 @@ export const backgroundColors: Record<
     l0: juiceColors.dark0,
     l1: juiceColors.dark1,
     l2: juiceColors.dark2,
-    disabled: juiceColors.dark2 + 'dd',
+    disabled: juiceColors.light0 + '44',
     success: juiceColors.green,
     warn: juiceColors.yellow,
     failure: juiceColors.red,

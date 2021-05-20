@@ -539,7 +539,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _beneficiary,
             msg.value,
             _note,
-            _preferConvertedTickets,
             msg.sender
         );
 
@@ -646,7 +645,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _projectOwner,
                 _govFeeAmount,
                 "Juice fee",
-                false,
                 msg.sender
             );
         } else {
@@ -1178,7 +1176,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 msg.sender,
                 msg.value,
                 "Direct payment to Juicer",
-                false,
                 msg.sender
             );
         } else {

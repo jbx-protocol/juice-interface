@@ -97,7 +97,6 @@ interface IJuiceTerminal {
         address indexed beneficiary,
         uint256 amount,
         string note,
-        bool preferConvertedTickets,
         address operator
     );
 

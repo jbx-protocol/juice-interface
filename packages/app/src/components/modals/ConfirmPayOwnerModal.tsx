@@ -13,9 +13,8 @@ import {
   parsePerMille,
   parseWad,
 } from 'utils/formatCurrency'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
-
-import { decodeFCMetadata } from '../../utils/fundingCycle'
 
 export default function ConfirmPayOwnerModal({
   projectId,
@@ -51,7 +50,12 @@ export default function ConfirmPayOwnerModal({
     transactor(
       contracts.Juicer,
       'pay',
-      [projectId.toHexString(), userAddress, form.getFieldValue('note') || '', false],
+      [
+        projectId.toHexString(),
+        userAddress,
+        form.getFieldValue('note') || '',
+        false,
+      ],
       {
         value: weiAmount?.toHexString(),
         onConfirmed: () => {

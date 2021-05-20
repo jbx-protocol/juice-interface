@@ -6,7 +6,8 @@ const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
-export const parseWad = (amt?: string) => parseUnits(amt || '0', wadPrecision)
+export const parseWad = (amt?: string | number) =>
+  parseUnits(amt?.toString() || '0', wadPrecision)
 export const parsePerMille = (amt?: string) =>
   BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
 

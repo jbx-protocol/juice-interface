@@ -183,7 +183,7 @@ export default function Landing() {
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting community-driven online
+                    With Juice, we end up getting community-owned online
                     creations that automatically reward the people who help them
                     succeed. Projects are created and maintained by motivated
                     punks getting transparently paid what they ask for, and
@@ -191,6 +191,7 @@ export default function Landing() {
                     have the opportunity to capitalize on the overflow they help
                     create.
                   </p>
+                  <p className="ol">Plus, Juice runs on Juice itself, so its owned by us all.</p>
                 </div>
               </div>
             </Col>

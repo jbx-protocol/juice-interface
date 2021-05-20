@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 

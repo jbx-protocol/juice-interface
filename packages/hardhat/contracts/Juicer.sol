@@ -372,7 +372,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _discountRate,
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
-    ) external override nonReentrant {
+    ) external override {
         // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
         require(
             msg.sender == _owner ||
@@ -443,7 +443,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _discountRate,
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
-    ) external override nonReentrant returns (uint256) {
+    ) external override returns (uint256) {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
@@ -813,7 +813,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
     function printReservedTickets(uint256 _projectId)
         external
         override
-        nonReentrant
         returns (uint256 amount)
     {
         // Get the current funding cycle to read the reserved rate from.
@@ -965,12 +964,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @notice Receives funds belonging to the specified project.
       @param _projectId The ID of the project to which the funds received belong.
     */
-    function addToBalance(uint256 _projectId)
-        external
-        payable
-        override
-        nonReentrant
-    {
+    function addToBalance(uint256 _projectId) external payable override {
         // Get a reference to the balances.
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 

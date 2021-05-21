@@ -5,6 +5,7 @@ pragma experimental ABIEncoderV2;
 import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IProjects.sol";
+import "./libraries/Operations.sol";
 
 // Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
 contract DirectPayments {
@@ -89,7 +90,12 @@ contract DirectPayments {
         // Only a project owner or a specified operator of level 2 or greater can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 0),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetTerminal
+                ),
             "Juicer::setJuiceTerminal: UNAUTHORIZED"
         );
 

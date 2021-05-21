@@ -11,7 +11,7 @@ interface ITickets {
         uint256 indexed projectId,
         string name,
         string symbol,
-        address operator
+        address caller
     );
     event Print(
         uint256 projectId,
@@ -34,38 +34,38 @@ interface ITickets {
         address indexed account,
         uint256 indexed projectId,
         uint256 amount,
-        address operator
+        address caller
     );
 
     event Initialize(
         address indexed controller,
         uint256 indexed projectId,
-        address operator
+        address caller
     );
 
     event AddController(
         address indexed controller,
         uint256 indexed projectId,
-        address operator
+        address caller
     );
     event RemoveController(
         address indexed controller,
         uint256 indexed projectId,
-        address operator
+        address caller
     );
 
     event Lock(
         address indexed holder,
         uint256 projectId,
         uint256 amount,
-        address operator
+        address caller
     );
 
     event Unlock(
         address indexed holder,
         uint256 projectId,
         uint256 amount,
-        address operator
+        address caller
     );
 
     event Transfer(
@@ -73,7 +73,7 @@ interface ITickets {
         uint256 indexed projectId,
         address indexed recipient,
         uint256 amount,
-        address operator
+        address caller
     );
 
     function operatorStore() external view returns (IOperatorStore);

@@ -177,7 +177,7 @@ contract OperatorStore is IOperatorStore {
             )
         );
 
-        emit RemoveOperator(_account, _projectId, msg.sender, _operator);
+        emit RemoveOperator(_account, _projectId, _operator, msg.sender);
     }
 
     /** 
@@ -226,7 +226,7 @@ contract OperatorStore is IOperatorStore {
             );
         }
 
-        emit RemoveOperators(_account, _projectIds, msg.sender, _operators);
+        emit RemoveOperators(_account, _projectIds, _operators, msg.sender);
     }
 
     /** 

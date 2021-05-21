@@ -6,29 +6,29 @@ interface IOperatorStore {
     event AddOperator(
         address indexed account,
         uint256 indexed projectId,
-        address operator,
+        address indexed operator,
         uint256[] _permissionIndexes
     );
 
     event AddOperators(
         address indexed account,
         uint256[] indexed projectIds,
-        address[] operators,
+        address[] indexed operators,
         uint256[][] _permissionIndexes
     );
 
     event RemoveOperator(
         address indexed account,
         uint256 indexed projectId,
-        address indexed remover,
-        address operator
+        address indexed operator,
+        address caller
     );
 
     event RemoveOperators(
         address indexed account,
         uint256[] indexed projectId,
-        address indexed remover,
-        address[] operators
+        address[] indexed operators,
+        address caller
     );
 
     event SetPackedPermissions(

@@ -20,7 +20,7 @@ interface IProjects is IERC721 {
         string name,
         string logoUri,
         string link,
-        address operator
+        address caller
     );
 
     event TransferHandle(
@@ -28,14 +28,14 @@ interface IProjects is IERC721 {
         address indexed to,
         string handle,
         string newHandle,
-        address operator
+        address caller
     );
 
     event ClaimHandle(
         address indexed account,
         uint256 indexed projectId,
         string handle,
-        address operator
+        address caller
     );
 
     function operatorStore() external view returns (IOperatorStore);

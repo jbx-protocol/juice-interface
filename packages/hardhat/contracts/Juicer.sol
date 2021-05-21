@@ -11,6 +11,7 @@ import "./abstract/JuiceProject.sol";
 import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
 import "./libraries/FullMath.sol";
+import "./libraries/Operations.sol";
 
 import "hardhat/console.sol";
 
@@ -376,7 +377,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, 0, msg.sender, 2),
+                operatorStore.hasPermission(
+                    _owner,
+                    0,
+                    msg.sender,
+                    Operations.Deploy
+                ),
             "Juicer::deploy: UNAUTHORIZED"
         );
 
@@ -451,7 +457,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(
             _owner == msg.sender ||
                 // Allow level 3 operators.
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 3),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.Reconfigure
+                ),
             "Juicer::reconfigure: UNAUTHORIZED"
         );
 
@@ -730,12 +741,17 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(
             msg.sender == _account ||
                 // Allow personal operators (setting projectId to 0), or operators of the specified project.
-                operatorStore.hasPermission(_account, 0, msg.sender, 4) ||
+                operatorStore.hasPermission(
+                    _account,
+                    0,
+                    msg.sender,
+                    Operations.Redeem
+                ) ||
                 operatorStore.hasPermission(
                     _account,
                     _projectId,
                     msg.sender,
-                    4
+                    Operations.Redeem
                 ),
             "Juicer::redeem: UNAUTHORIZED"
         );
@@ -800,9 +816,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _account,
             _beneficiary,
             _projectId,
-            msg.sender,
             _count,
-            amount
+            amount,
+            msg.sender
         );
     }
 
@@ -937,7 +953,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Only the project owner, or a delegated operator of level 5, can migrate its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 5),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.Migrate
+                ),
             "Juicer::migrate: UNAUTHORIZED"
         );
 

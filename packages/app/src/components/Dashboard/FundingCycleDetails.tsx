@@ -43,7 +43,7 @@ export default function FundingCycleDetails({
           <TooltipLabel
             label="Discount rate"
             tip="The rate at which payments to future
-            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame."
+            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
           />
         }
       >

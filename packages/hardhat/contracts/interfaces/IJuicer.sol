@@ -27,7 +27,7 @@ interface IFundingCyclesController {
         uint256 discountRate,
         FundingCycleMetadata metadata,
         IFundingCycleBallot ballot,
-        address operator
+        address caller
     );
 
     event Tap(
@@ -39,7 +39,7 @@ interface IFundingCyclesController {
         uint256 transferAmount,
         uint256 beneficiaryTransferAmount,
         uint256 govFeeAmount,
-        address operator
+        address caller
     );
 
     function fee() external view returns (uint256);
@@ -66,9 +66,9 @@ interface ITicketsController {
         address indexed holder,
         address indexed beneficiary,
         uint256 indexed _projectId,
-        address operator,
         uint256 amount,
-        uint256 returnAmount
+        uint256 returnAmount,
+        address caller
     );
 
     function claimableOverflow(
@@ -97,7 +97,7 @@ interface IJuiceTerminal {
         address indexed beneficiary,
         uint256 amount,
         string note,
-        address operator
+        address caller
     );
 
     function pay(
@@ -120,7 +120,7 @@ interface IJuicer is
         address indexed beneficiary,
         uint256 count,
         uint256 beneficiaryTicketAmount,
-        address operator
+        address caller
     );
 
     event ModDistribution(
@@ -139,7 +139,7 @@ interface IJuicer is
         uint256 indexed projectId,
         IProjectFundsManager indexed to,
         uint256 _amount,
-        address operator
+        address caller
     );
 
     event AddToBalance(uint256 indexed projectId, address sender);
@@ -158,7 +158,7 @@ interface IJuicer is
         uint256 discountRate,
         FundingCycleMetadata metadata,
         IFundingCycleBallot ballot,
-        address operator
+        address caller
     );
 
     event AddToMigrationAllowList(address allowed);

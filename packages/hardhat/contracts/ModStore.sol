@@ -3,6 +3,7 @@ pragma solidity 0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "./interfaces/IModStore.sol";
+import "./libraries/Operations.sol";
 
 // Stores mods for each project.
 contract ModStore is IModStore {
@@ -76,7 +77,18 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 6),
+                (operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetPaymentMods
+                ) &&
+                    operatorStore.hasPermission(
+                        _owner,
+                        _projectId,
+                        msg.sender,
+                        Operations.SetTicketMods
+                    )),
             "Juicer::setMods: UNAUTHORIZED"
         );
 
@@ -160,7 +172,12 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 7),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetPaymentMods
+                ),
             "Juicer::setPaymentMods: UNAUTHORIZED"
         );
 
@@ -222,7 +239,12 @@ contract ModStore is IModStore {
         // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 8),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetTicketMods
+                ),
             "ModStore::setTicketMods: UNAUTHORIZED"
         );
 

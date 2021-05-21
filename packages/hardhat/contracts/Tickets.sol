@@ -5,6 +5,7 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/CompareMath.sol";
+import "./libraries/Operations.sol";
 
 import "./interfaces/ITickets.sol";
 
@@ -106,7 +107,12 @@ contract Tickets is Administered, ITickets {
         // Only a project owner or a specified operator can tap its funds.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 12),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.Issue
+                ),
             "Tickets::issue: UNAUTHORIZED"
         );
 
@@ -240,12 +246,17 @@ contract Tickets is Administered, ITickets {
         // Only an account or a specified operator can convert its tickets.
         require(
             msg.sender == _holder ||
-                operatorStore.hasPermission(_holder, 0, msg.sender, 13) ||
+                operatorStore.hasPermission(
+                    _holder,
+                    0,
+                    msg.sender,
+                    Operations.Convert
+                ) ||
                 operatorStore.hasPermission(
                     _holder,
                     _projectId,
                     msg.sender,
-                    13
+                    Operations.Convert
                 ),
             "Juicer::convert: UNAUTHORIZED"
         );
@@ -386,12 +397,17 @@ contract Tickets is Administered, ITickets {
         // Only an account or a specified operator can transfer its tickets.
         require(
             msg.sender == _holder ||
-                operatorStore.hasPermission(_holder, 0, msg.sender, 14) ||
+                operatorStore.hasPermission(
+                    _holder,
+                    0,
+                    msg.sender,
+                    Operations.Transfer
+                ) ||
                 operatorStore.hasPermission(
                     _holder,
                     _projectId,
                     msg.sender,
-                    14
+                    Operations.Transfer
                 ),
             "Juicer::transfer: UNAUTHORIZED"
         );

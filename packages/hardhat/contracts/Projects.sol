@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
+import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
 contract Projects is ERC721, IProjects, Administered {
@@ -123,7 +124,12 @@ contract Projects is ERC721, IProjects, Administered {
         // Only a project owner or a specified operator can change its info.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 9),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetInfo
+                ),
             "Projects::setInfo: UNAUTHORIZED"
         );
 
@@ -178,7 +184,7 @@ contract Projects is ERC721, IProjects, Administered {
                     _owner,
                     _projectId,
                     msg.sender,
-                    10
+                    Operations.TransferHandle
                 ) ||
                 // The contract's owner can transfer a handle also.s
                 msg.sender == owner,
@@ -228,8 +234,18 @@ contract Projects is ERC721, IProjects, Administered {
         require(
             msg.sender == _for ||
                 // Allow personal operators (setting projectId to 0), or operators of the specified project.
-                operatorStore.hasPermission(_for, _projectId, msg.sender, 11) ||
-                operatorStore.hasPermission(_for, 0, msg.sender, 11),
+                operatorStore.hasPermission(
+                    _for,
+                    _projectId,
+                    msg.sender,
+                    Operations.ClaimHandle
+                ) ||
+                operatorStore.hasPermission(
+                    _for,
+                    0,
+                    msg.sender,
+                    Operations.ClaimHandle
+                ),
             "Projects::transferHandle: UNAUTHORIZED"
         );
 
@@ -239,7 +255,12 @@ contract Projects is ERC721, IProjects, Administered {
         // Only a project owner or a specified operator of level 2 or higher can set its handle.
         require(
             msg.sender == _owner ||
-                operatorStore.hasPermission(_owner, _projectId, msg.sender, 11),
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.ClaimHandle
+                ),
             "Projects::transferHandle: UNAUTHORIZED"
         );
 

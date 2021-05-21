@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Space, Statistic } from 'antd'
+import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
+import { SwapOutlined } from '@ant-design/icons'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -26,6 +27,7 @@ import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
+import Loading from 'components/shared/Loading'
 
 export default function Rewards({
   projectId,
@@ -339,7 +341,7 @@ export default function Rewards({
               children={<div>{formatWad(totalSupply)}</div>}
             />
             <Descriptions.Item
-              label="Your wallet"
+              label="Your balance"
               children={
                 <div
                   style={{
@@ -354,13 +356,16 @@ export default function Rewards({
                       <div>
                         {formatWad(iouBalance ?? 0)}{' '}
                         {ticketsIssued && (
-                          <Button
-                            loading={loadingConvert}
-                            onClick={convert}
-                            size="small"
-                          >
-                            Convert {ticketSymbol}
-                          </Button>
+                          <Tooltip title={'Convert to ' + ticketSymbol}>
+                            {loadingConvert ? (
+                              <Loading />
+                            ) : (
+                              <SwapOutlined
+                                onClick={convert}
+                                style={{ color: colors.icon.action.primary }}
+                              />
+                            )}
+                          </Tooltip>
                         )}
                       </div>
                     )}
@@ -371,16 +376,15 @@ export default function Rewards({
                       </div>
                     )}
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Space>
                     <div
                       style={{
                         fontSize: '.8rem',
                         color: colors.text.secondary,
                         fontWeight: 500,
-                        marginRight: 5,
                       }}
                     >
-                      ({share ?? 0}%)
+                      {share ?? 0}%
                     </div>
                     <Button
                       loading={loadingRedeem}
@@ -389,7 +393,7 @@ export default function Rewards({
                     >
                       Redeem
                     </Button>
-                  </div>
+                  </Space>
                 </div>
               }
             />

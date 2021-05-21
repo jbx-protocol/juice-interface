@@ -355,7 +355,7 @@ export default function Rewards({
                     {(iouBalance?.gt(0) || ticketsIssued === false) && (
                       <div>
                         {formatWad(iouBalance ?? 0)}{' '}
-                        {ticketsIssued && (
+                        {ticketsIssued && iouBalance?.gt(0) && (
                           <Tooltip title={'Convert to ' + ticketSymbol}>
                             {loadingConvert ? (
                               <Loading />

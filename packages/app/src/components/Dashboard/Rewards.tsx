@@ -4,6 +4,7 @@ import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -20,11 +21,11 @@ import {
   fromWad,
   parseWad,
 } from 'utils/formatCurrency'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 
 export default function Rewards({
   projectId,
@@ -39,7 +40,10 @@ export default function Rewards({
     UserContext,
   )
 
-  const { colors } = useContext(ThemeContext).theme
+  const {
+    theme: { colors },
+    forThemeOption,
+  } = useContext(ThemeContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
@@ -282,6 +286,14 @@ export default function Rewards({
           <TooltipLabel
             label="Overflow"
             tip="The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders."
+            style={{
+              fontWeight:
+                forThemeOption &&
+                forThemeOption({
+                  [ThemeOption.light]: 600,
+                  [ThemeOption.dark]: 400,
+                }),
+            }}
           />
         }
         valueRender={() =>
@@ -310,6 +322,14 @@ export default function Rewards({
           <TooltipLabel
             label="Tickets"
             tip="Tickets are earned by paying a project, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
+            style={{
+              fontWeight:
+                forThemeOption &&
+                forThemeOption({
+                  [ThemeOption.light]: 600,
+                  [ThemeOption.dark]: 400,
+                }),
+            }}
           />
         }
         valueRender={() => (

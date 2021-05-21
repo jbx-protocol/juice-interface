@@ -1,4 +1,4 @@
-import { juiceColors } from 'constants/styles/colors'
+import { darkColors, lightColors } from 'constants/styles/colors'
 import { SemanticColors } from 'models/semantic-theme/colors'
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -11,35 +11,35 @@ export const backgroundColors: Record<
     l1: '#e7e3dc',
     l2: '#f3f1ec',
     disabled: '#00000018',
-    success: juiceColors.green,
-    warn: juiceColors.yellow,
-    failure: juiceColors.red,
+    success: lightColors.green,
+    warn: lightColors.yellow,
+    failure: lightColors.red,
     brand: {
-      primary: juiceColors.juiceOrange,
-      secondary: juiceColors.juiceLight,
+      primary: lightColors.juiceOrange,
+      secondary: lightColors.juiceLight,
     },
     action: {
-      primary: juiceColors.cta,
+      primary: lightColors.cta,
       secondary: '#32c8db44',
       highlight: '#3dd1e4',
     },
   },
   [ThemeOption.dark]: {
-    l0: juiceColors.dark0,
-    l1: juiceColors.dark1,
-    l2: juiceColors.dark2,
-    disabled: juiceColors.light0 + '44',
-    success: juiceColors.green,
-    warn: juiceColors.yellow,
-    failure: juiceColors.red,
+    l0: darkColors.dark0,
+    l1: darkColors.dark1,
+    l2: darkColors.dark2,
+    disabled: darkColors.light0 + '44',
+    success: darkColors.green,
+    warn: darkColors.yellow,
+    failure: darkColors.red,
     brand: {
-      primary: juiceColors.juiceOrange,
-      secondary: juiceColors.juiceLight,
+      primary: darkColors.juiceOrange,
+      secondary: darkColors.juiceLight,
     },
     action: {
-      primary: juiceColors.cta,
-      secondary: juiceColors.ctaHint,
-      highlight: juiceColors.ctaHighlight,
+      primary: darkColors.cta,
+      secondary: darkColors.ctaHint,
+      highlight: darkColors.ctaHighlight,
     },
   },
 }

@@ -1,27 +1,23 @@
-import { Property } from 'csstype'
+export const lightColors = {
+  black: '#000',
+  white: '#fff',
+  dark0: '#000000ee',
+  dark1: '#00000099',
+  dark2: '#00000055',
+  dark3: '#00000044',
+  grape: '#574c67',
+  grapeHint: '#574c6748',
+  juiceOrange: '#f5a312',
+  juiceLight: '#FFECBB',
+  cta: '#18b4c7',
+  ctaHighlight: '#25c4d8',
+  ctaHint: '#18b4c722',
+  green: 'green',
+  red: 'tomato',
+  yellow: 'yellow',
+}
 
-export type JuiceColor =
-  | 'black'
-  | 'white'
-  | 'light0'
-  | 'light1'
-  | 'light2'
-  | 'light3'
-  | 'dark0'
-  | 'dark1'
-  | 'dark2'
-  | 'grape'
-  | 'grapeHint'
-  | 'juiceOrange'
-  | 'juiceLight'
-  | 'cta'
-  | 'ctaHighlight'
-  | 'ctaHint'
-  | 'green'
-  | 'red'
-  | 'yellow'
-
-export const juiceColors: Record<JuiceColor, Property.Color> = {
+export const darkColors = {
   black: '#000',
   white: '#fff',
   light0: '#d9d5e0',

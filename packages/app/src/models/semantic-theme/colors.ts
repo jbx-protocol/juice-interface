@@ -35,7 +35,6 @@ export interface SemanticColors {
     SemanticColor.Brand &
     SemanticColor.Action &
     SemanticColor.Disabled &
-    SemanticColor.Placeholder &
     SemanticColor.Over
   stroke: SemanticColor.Primary &
     SemanticColor.Secondary &

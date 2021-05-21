@@ -50,7 +50,7 @@
 }
 
 .ant-btn[disabled] {
-  color: var(--text-disabled);
+  color: var(--text-over-disabled);
   border-color: var(--stroke-disabled);
   background: transparent;
 
@@ -65,7 +65,7 @@
   }
 
   &:hover {
-    color: var(--text-disabled);
+    color: var(--text-over-disabled);
     border-color: var(--stroke-disabled);
     background: transparent;
     opacity: 0.7;

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Space, Statistic } from 'antd'
+import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
@@ -45,7 +45,7 @@ export default function Rewards({
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingPrint, setLoadingPrint] = useState<boolean>()
-  const [loadingClaim, setLoadingClaim] = useState<boolean>()
+  const [loadingConvert, setLoadingConvert] = useState<boolean>()
 
   const converter = useCurrencyConverter()
 
@@ -67,7 +67,7 @@ export default function Rewards({
         contract: ContractName.Tickets,
         eventName: 'Convert',
         topics:
-          projectId && userAddress
+          userAddress && projectId
             ? [userAddress, projectId.toHexString()]
             : undefined,
       },
@@ -204,19 +204,19 @@ export default function Rewards({
     ? totalBalance?.mul(100).div(totalSupply).toString()
     : '0'
 
-  function claim() {
+  function convert() {
     if (!transactor || !contracts || !userAddress) return onNeedProvider()
 
     if (!projectId) return
 
-    setLoadingClaim(true)
+    setLoadingConvert(true)
 
     transactor(
       contracts.Tickets,
       'convert',
       [userAddress, projectId.toHexString()],
       {
-        onDone: () => setLoadingClaim(false),
+        onDone: () => setLoadingConvert(false),
       },
     )
   }
@@ -269,18 +269,6 @@ export default function Rewards({
     )
   }
 
-  const subText = (text: string) => (
-    <div
-      style={{
-        fontSize: '.8rem',
-        fontWeight: 500,
-        color: 'inherit',
-      }}
-    >
-      {text}
-    </div>
-  )
-
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   const ticketsIssued = ticketAddress
@@ -288,7 +276,7 @@ export default function Rewards({
     : undefined
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large">
       <Statistic
         title={
           <TooltipLabel
@@ -320,80 +308,100 @@ export default function Rewards({
       <Statistic
         title={
           <TooltipLabel
-            label="Your wallet"
-            tip="Tickets can be redeemed for your project's overflow according to the current term's bonding
-            curve rate. Meaning, if the rate is 70% and there's 100 ETH overflow available
-            with 100 of your Tickets in circulation, 10 Tickets could be redeemed
-            for 7 ETH from the overflow. The rest is left to share between the
-            remaining ticket hodlers."
+            label="Tickets"
+            tip="Tickets are earned by paying a project, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
           />
         }
         valueRender={() => (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div>
-              {iouBalance?.gt(0) || ticketsIssued === false ? (
-                <div>
-                  {formatWad(iouBalance ?? 0)} tickets{' '}
-                  {ticketsIssued ? (
-                    <Button loading={loadingClaim} onClick={claim} size="small">
-                      Claim {ticketSymbol}
+          <Descriptions layout="horizontal" column={1}>
+            <Descriptions.Item
+              label="Total supply"
+              children={<div>{formatWad(totalSupply)}</div>}
+            />
+            <Descriptions.Item
+              label="Your wallet"
+              children={
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <div>
+                    {(iouBalance?.gt(0) || ticketsIssued === false) && (
+                      <div>
+                        {formatWad(iouBalance ?? 0)}{' '}
+                        {ticketsIssued && (
+                          <Button
+                            loading={loadingConvert}
+                            onClick={convert}
+                            size="small"
+                          >
+                            Convert {ticketSymbol}
+                          </Button>
+                        )}
+                      </div>
+                    )}
+                    {ticketsIssued && (
+                      <div>
+                        {formatWad(ticketsBalance ?? 0)}{' '}
+                        <span>{ticketSymbol}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        fontSize: '.8rem',
+                        color: colors.text.secondary,
+                        fontWeight: 500,
+                        marginRight: 5,
+                      }}
+                    >
+                      ({share ?? 0}%)
+                    </div>
+                    <Button
+                      loading={loadingRedeem}
+                      size="small"
+                      onClick={() => setRedeemModalVisible(true)}
+                    >
+                      Redeem
                     </Button>
-                  ) : null}
+                  </div>
                 </div>
-              ) : null}
-              {ticketsIssued === true ? (
-                <div>
-                  {formatWad(ticketsBalance ?? 0)} <span>{ticketSymbol}</span>
+              }
+            />
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Reserved"
+                  tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
+                />
+              }
+              children={
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <div>{formatWad(reservedTickets) || 0}</div>
+                  <Button
+                    loading={loadingPrint}
+                    size="small"
+                    onClick={print}
+                    disabled={!reservedTickets?.gt(0)}
+                  >
+                    Print
+                  </Button>
                 </div>
-              ) : null}
-              <div style={{ color: colors.text.secondary }}>
-                {subText(
-                  `${share ?? 0}% of total ${formatWad(totalSupply) ?? 0}`,
-                )}
-              </div>
-            </div>
-            <Button
-              loading={loadingRedeem}
-              size="small"
-              onClick={() => setRedeemModalVisible(true)}
-            >
-              Redeem
-            </Button>
-          </div>
-        )}
-      />
-
-      <Statistic
-        title={
-          <TooltipLabel
-            label="Reserved"
-            tip="Tickets reserved by the project for itself or for other chosen addresses. Reserved tickets must be printed before they can be redeemed."
-          />
-        }
-        valueRender={() => (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div>{formatWad(reservedTickets) || 0} tickets</div>
-            <Button
-              loading={loadingPrint}
-              size="small"
-              onClick={print}
-              disabled={!reservedTickets?.gt(0)}
-            >
-              Print
-            </Button>
-          </div>
+              }
+            />
+          </Descriptions>
         )}
       />
 
@@ -418,6 +426,12 @@ export default function Rewards({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>Balance: {formatWad(totalBalance ?? 0)} tickets</div>
+          <p>
+            Tickets can be redeemed for a project's overflow according to the
+            bonding curve rate of the current funding cycle. For example, if the
+            rate is 70%, there's 100 ETH overflow available, and 100 Tickets in
+            circulation, 10 Tickets could be redeemed for 7 ETH.
+          </p>
           {redeemDisabled ? (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
               You can redeem tickets once this project has overflow.

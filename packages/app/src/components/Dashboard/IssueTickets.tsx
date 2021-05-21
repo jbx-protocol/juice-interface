@@ -38,7 +38,7 @@ export default function IssueTickets({
     <div>
       <Space>
         <Button loading={loading} onClick={() => setModalVisible(true)}>
-          Issue tickets
+          Issue ERC-20 token
         </Button>
         <Tooltip
           title="Issue an ERC-20 token to be used as this project's tickets. Once
@@ -51,8 +51,8 @@ export default function IssueTickets({
 
       <Modal
         visible={modalVisible}
-        title="Issue ERC-20 tickets"
-        okText="Issue tickets"
+        title="Issue ERC-20 token"
+        okText="Issue token"
         onOk={issue}
         onCancel={() => setModalVisible(false)}
       >

@@ -25,7 +25,7 @@ export default function ProjectLogo({
         height: _size,
         width: _size,
         borderRadius: _size / 4,
-        background: uri ? undefined : colors.background.l2,
+        background: uri ? undefined : colors.background.l1,
       }}
     >
       {uri ? (

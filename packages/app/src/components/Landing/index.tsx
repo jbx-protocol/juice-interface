@@ -191,7 +191,9 @@ export default function Landing() {
                     have the opportunity to capitalize on the overflow they help
                     create.
                   </p>
-                  <p className="ol">Plus, Juice runs on Juice itself, so its owned by us all.</p>
+                  <p className="ol">
+                    Plus, Juice runs on Juice itself, so its owned by us all.
+                  </p>
                 </div>
               </div>
             </Col>
@@ -213,6 +215,8 @@ export default function Landing() {
           marginTop: 0,
           paddingTop: 20,
           paddingBottom: 80,
+          background: 'rgb(57, 43, 70)',
+          color: 'white',
         }}
       >
         <div

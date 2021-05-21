@@ -90,7 +90,7 @@ export default function ConfirmPayOwnerModal({
             {formatWad(receivedTickets)}
           </Descriptions.Item>
           <Descriptions.Item
-            label="Tickets for owner"
+            label="Tickets reserved"
             className="content-right"
           >
             {formatWad(ownerTickets)}

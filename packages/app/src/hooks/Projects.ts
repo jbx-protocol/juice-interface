@@ -7,9 +7,7 @@ import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
-/** Get projects for owner. Pass `false` to get all projects. */
-export function useProjects(owner: string | undefined | false) {
-  const [noOwner, setNoOwner] = useState<boolean>()
+export function useProjects() {
   const [loadingIndex, setLoadingIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
   const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
@@ -31,18 +29,9 @@ export function useProjects(owner: string | undefined | false) {
     setProjects(undefined)
   }
 
-  useEffect(() => {
-    reset()
-    setNoOwner(owner === false)
-  }, [owner, setNoOwner])
-
   const supply = useContractReader<BigNumber>({
     contract: ContractName.Projects,
-    functionName: noOwner ? 'totalSupply' : 'balanceOf',
-    args: useMemo(() => (noOwner ? undefined : owner ? [owner] : null), [
-      noOwner,
-      owner,
-    ]),
+    functionName: 'totalSupply',
     valueDidChange: bigNumbersDiff,
     callback: useCallback(_supply => {
       if (_supply !== undefined) reset()
@@ -51,12 +40,8 @@ export function useProjects(owner: string | undefined | false) {
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
-    functionName: noOwner ? 'tokenByIndex' : 'tokenOfOwnerByIndex',
-    args: useMemo(() => {
-      if (noOwner) return loadingIndex ? [loadingIndex?.toHexString()] : null
-
-      return loadingIndex && owner ? [owner, loadingIndex?.toHexString()] : null
-    }, [owner, noOwner, loadingIndex]),
+    functionName: 'tokenByIndex',
+    args: loadingIndex ? [loadingIndex.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
     callback: useCallback(
       projectId => {
@@ -69,7 +54,7 @@ export function useProjects(owner: string | undefined | false) {
             setLoadingIndex(loadingIndex?.add(1))
         }
       },
-      [setProjectIds, projectIds, loadingIndex],
+      [projectIds, loadingIndex],
     ),
   })
 
@@ -85,11 +70,10 @@ export function useProjects(owner: string | undefined | false) {
     ),
     callback: useCallback(
       (project?: ProjectIdentifier) => {
-        if (!project || !id) return
-
+        if (!project) return
         upsertProject(project)
       },
-      [projects, setProjects, id],
+      [id],
     ),
   })
 

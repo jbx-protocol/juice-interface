@@ -65,7 +65,8 @@ export default function useContractReader<V>({
         }
       } catch (err) {
         console.log('📕 Read error >', functionName, { args }, { err })
-        setValue(undefined)
+        const newValue = _formatter(undefined)
+        setValue(newValue)
         _callback(undefined)
       }
     }

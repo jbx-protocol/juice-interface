@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
@@ -9,6 +8,8 @@ import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
 import "./IModStore.sol";
+import "./IJuiceTerminal.sol";
+import "./IDirectPayments.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
@@ -86,32 +87,9 @@ interface ITicketsController {
     ) external returns (uint256 returnAmount);
 }
 
-interface IProjectFundsManager {
-    function addToBalance(uint256 _projectId) external payable;
-}
-
-interface IJuiceTerminal {
-    event Pay(
-        uint256 indexed fundingCycleId,
-        uint256 indexed projectId,
-        address indexed beneficiary,
-        uint256 amount,
-        string note,
-        address caller
-    );
-
-    function pay(
-        uint256 _projectId,
-        address _beneficiary,
-        string memory _note,
-        bool _preferConvertedTickets
-    ) external payable returns (uint256 fundingCycleId);
-}
-
 interface IJuicer is
     IFundingCyclesController,
     ITicketsController,
-    IProjectFundsManager,
     IJuiceTerminal
 {
     event PrintReserveTickets(
@@ -137,14 +115,8 @@ interface IJuicer is
 
     event Migrate(
         uint256 indexed projectId,
-        IProjectFundsManager indexed to,
+        IJuiceTerminal indexed to,
         uint256 _amount,
-        address caller
-    );
-
-    event AddToBalance(
-        uint256 indexed projectId,
-        uint256 value,
         address caller
     );
 
@@ -167,6 +139,8 @@ interface IJuicer is
 
     event AddToMigrationAllowList(address allowed);
 
+    event AddToBalance(uint256 amount);
+
     event Deposit(uint256 amount);
 
     event SetYielder(IYielder newYielder);
@@ -188,6 +162,8 @@ interface IJuicer is
     function operatorStore() external view returns (IOperatorStore);
 
     function prices() external view returns (IPrices);
+
+    function directPayments() external view returns (IDirectPayments);
 
     function yielder() external view returns (IYielder);
 
@@ -212,7 +188,7 @@ interface IJuicer is
         view
         returns (uint256 amountWithoutYield, uint256 amountWithYield);
 
-    function migrate(uint256 _projectId, IProjectFundsManager _to) external;
+    function migrate(uint256 _projectId, IJuiceTerminal _to) external;
 
     function deploy(
         address _owner,
@@ -232,8 +208,6 @@ interface IJuicer is
         external
         returns (uint256 reservedTicketsToPrint);
 
-    function deposit() external;
-
     function allowMigration(address _contract) external;
 
     function setFee(uint256 _fee) external;
@@ -241,6 +215,8 @@ interface IJuicer is
     function appointGovernance(address payable _pendingGovernance) external;
 
     function setYielder(IYielder _yielder) external;
+
+    function deposit() external;
 
     function setTargetLocalETH(uint256 _amount) external;
 

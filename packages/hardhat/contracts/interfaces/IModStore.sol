@@ -1,13 +1,33 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "./IOperatorStore.sol";
 import "./IProjects.sol";
 
+interface IModAllocator {
+    event Allocate(
+        uint256 indexed projectId,
+        uint256 indexed forProjectId,
+        address indexed beneficiary,
+        uint256 amount,
+        string note,
+        address caller
+    );
+
+    function allocate(
+        uint256 _projectId,
+        uint256 _forProjectId,
+        address _beneficiary,
+        string memory _note
+    ) external payable;
+}
+
 struct PaymentMod {
+    IModAllocator allocator;
+    uint256 projectId;
     address payable beneficiary;
     uint16 percent;
+    string note;
 }
 
 struct TicketMod {
@@ -42,13 +62,19 @@ interface IModStore {
         ModKind[] memory _kinds,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
+        IModAllocator[] memory _allocators,
+        uint256[] memory _forProjectIds,
+        string[] memory notes,
         bool[] memory _preferConvertedTickets
     ) external;
 
     function setPaymentMods(
         uint256 _projectId,
+        IModAllocator[] memory _allocators,
+        uint256[] memory _forProjectIds,
         address payable[] memory _beneficiaries,
-        uint256[] memory _percents
+        uint256[] memory _percents,
+        string[] memory notes
     ) external;
 
     function setTicketMods(

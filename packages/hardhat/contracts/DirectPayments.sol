@@ -1,31 +1,32 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
+import "./interfaces/IDirectPayments.sol";
 import "./interfaces/IProjects.sol";
+import "./interfaces/IDirectPaymentAddress.sol";
 import "./libraries/Operations.sol";
 
 // Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
-contract DirectPayments {
+contract DirectPayments is IDirectPayments {
     // A list of contracts for each project ID that can receive funds directly.
-    mapping(uint256 => DirectPaymentAddress[]) private addresses;
+    mapping(uint256 => IDirectPaymentAddress[]) private addresses;
 
     // For each project ID, the juice terminal that the direct payment addresses are proxies for.
-    mapping(uint256 => IJuiceTerminal) public juiceTerminals;
+    mapping(uint256 => IJuiceTerminal) public override juiceTerminals;
 
     // For each address, the address that will be used as the beneficiary of direct payments made.
-    mapping(address => address) public beneficiaries;
+    mapping(address => address) public override beneficiaries;
 
     // For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
-    mapping(address => bool) public preferConvertedTickets;
+    mapping(address => bool) public override preferConvertedTickets;
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
-    IProjects public immutable projects;
+    IProjects public immutable override projects;
 
     /// @notice A contract storing operator assignments.
-    IOperatorStore public immutable operatorStore;
+    IOperatorStore public immutable override operatorStore;
 
     /** 
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
@@ -44,7 +45,8 @@ contract DirectPayments {
     function allAddresses(uint256 _projectId)
         external
         view
-        returns (DirectPaymentAddress[] memory)
+        override
+        returns (IDirectPaymentAddress[] memory)
     {
         return addresses[_projectId];
     }
@@ -59,7 +61,7 @@ contract DirectPayments {
         uint256 _projectId,
         IJuiceTerminal _juiceTerminal,
         string memory _note
-    ) external {
+    ) external override {
         // Set the terminal for the project if it's not already set.
         if (juiceTerminals[_projectId] == IJuiceTerminal(address(0)))
             juiceTerminals[_projectId] = _juiceTerminal;
@@ -83,6 +85,7 @@ contract DirectPayments {
     */
     function setJuiceTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external
+        override
     {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -107,7 +110,7 @@ contract DirectPayments {
       @notice Allows any address to pre set the beneficiary of their payments to any direct payment address.
       @param _beneficiary The beneficiary to set.
     */
-    function setBeneficiary(address _beneficiary) external {
+    function setBeneficiary(address _beneficiary) external override {
         beneficiaries[msg.sender] = _beneficiary;
     }
 
@@ -115,21 +118,21 @@ contract DirectPayments {
       @notice Allows any address to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
       @param _preference The preference to set.
     */
-    function setPreferClaimedTickets(bool _preference) external {
+    function setPreferClaimedTickets(bool _preference) external override {
         preferConvertedTickets[msg.sender] = _preference;
     }
 }
 
-contract DirectPaymentAddress {
+contract DirectPaymentAddress is IDirectPaymentAddress {
     /// @notice The direct payment contract to use with this address.
-    DirectPayments public directPayments;
+    IDirectPayments public override directPayments;
     /// @notice The project ID to pay when this contract receives funds.
-    uint256 public projectId;
+    uint256 public override projectId;
     /// @notice The note to use when this contract receives funds.
-    string public note;
+    string public override note;
 
     constructor(
-        DirectPayments _directPayments,
+        IDirectPayments _directPayments,
         uint256 _projectId,
         string memory _note
     ) {

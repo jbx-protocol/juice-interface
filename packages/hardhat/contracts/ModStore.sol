@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "./interfaces/IModStore.sol";
 import "./libraries/Operations.sol";
@@ -62,13 +61,19 @@ contract ModStore is IModStore {
       @param _kinds The kinds of your mods. This can be either TapAmount or ReservedTickets
       @param _beneficiaries The addresses being funded from your tapped amount.
       @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 1000.
-      @param _preferConvertedTickets Whether allocated tickets should attempt to auto claim ERC20s.
+      @param _allocators The contract to send payments to that is in charge of allocating on the project's behalf. Ignored for Tickets kind.
+      @param _forProjectIds The IDs of the Juice project forward to the allocator, or to send payments to on Juice if there is no allocator and no project ID.
+      @param _notes The notes to forward to the allocator, or use in the payment to a Juice project.
+      @param _preferConvertedTickets Whether allocated tickets should attempt to auto claim ERC20s. Ignored for Payment kind.
     */
     function setMods(
         uint256 _projectId,
         ModKind[] memory _kinds,
         address payable[] memory _beneficiaries,
         uint256[] memory _percents,
+        IModAllocator[] memory _allocators,
+        uint256[] memory _forProjectIds,
+        string[] memory _notes,
         bool[] memory _preferConvertedTickets
     ) external override {
         // Get a reference to the project owner.
@@ -99,6 +104,9 @@ contract ModStore is IModStore {
         require(
             _beneficiaries.length == _percents.length &&
                 _beneficiaries.length == _kinds.length &&
+                _beneficiaries.length == _allocators.length &&
+                _beneficiaries.length == _forProjectIds.length &&
+                _beneficiaries.length == _notes.length &&
                 _beneficiaries.length == _preferConvertedTickets.length,
             "ModStore::setMods: BAD_ARGS"
         );
@@ -121,7 +129,13 @@ contract ModStore is IModStore {
             if (_kinds[_i] == ModKind.Payment || _kinds[_i] == ModKind.Both) {
                 // Push the new mod into the project's list of mods.
                 paymentMods[_projectId].push(
-                    PaymentMod(_beneficiaries[_i], uint16(_percents[_i]))
+                    PaymentMod(
+                        _allocators[_i],
+                        _forProjectIds[_i],
+                        _beneficiaries[_i],
+                        uint16(_percents[_i]),
+                        _notes[_i]
+                    )
                 );
                 // Add to the total percents.
                 _paymentModPercentTotal =
@@ -158,13 +172,19 @@ contract ModStore is IModStore {
     /** 
       @notice Adds a mod to the payment mods list.
       @param _projectId The project to add a mod to.
-      @param _beneficiaries The addresses to send payments to.
+      @param _allocators The contract to send payments to that is in charge of allocating on the project's behalf.
+      @param _forProjectIds The IDs of the Juice project to forward to the allocator, or to send payments to on Juice if there is no allocator.
+      @param _beneficiaries The addresses to forward to the allocator, or to send the funds to directly if there is no allocator and no project ID.
       @param _percents The percents of total funds to send to each mod.
+      @param _notes The notes to forward to the allocator, or use in the payment to a Juice project.
     */
     function setPaymentMods(
         uint256 _projectId,
+        IModAllocator[] memory _allocators,
+        uint256[] memory _forProjectIds,
         address payable[] memory _beneficiaries,
-        uint256[] memory _percents
+        uint256[] memory _percents,
+        string[] memory _notes
     ) external override {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -186,7 +206,10 @@ contract ModStore is IModStore {
 
         // The params must be of equal lengths.
         require(
-            _beneficiaries.length == _percents.length,
+            _beneficiaries.length == _percents.length &&
+                _beneficiaries.length == _allocators.length &&
+                _beneficiaries.length == _notes.length &&
+                _beneficiaries.length == _forProjectIds.length,
             "ModStore::setPaymentMods: BAD_ARGS"
         );
 
@@ -205,7 +228,13 @@ contract ModStore is IModStore {
 
             // Push the new mod into the project's list of mods.
             paymentMods[_projectId].push(
-                PaymentMod(_beneficiaries[_i], uint16(_percents[_i]))
+                PaymentMod(
+                    _allocators[_i],
+                    _forProjectIds[_i],
+                    _beneficiaries[_i],
+                    uint16(_percents[_i]),
+                    _notes[_i]
+                )
             );
             // Add to the total percents.
             _paymentModPercentTotal = _paymentModPercentTotal + _percents[_i];

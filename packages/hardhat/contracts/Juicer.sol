@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
-pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
@@ -97,6 +96,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
     /// @notice The prices feeds.
     IPrices public immutable override prices;
+
+    /// @notice The direct deposit terminals.
+    IDirectPayments public immutable override directPayments;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
@@ -311,6 +313,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         IOperatorStore _operatorStore,
         IModStore _modStore,
         IPrices _prices,
+        IDirectPayments _directPayments,
         address payable _governance
     ) {
         require(
@@ -320,6 +323,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _operatorStore != IOperatorStore(address(0)) &&
                 _modStore != IModStore(address(0)) &&
                 _prices != IPrices(address(0)) &&
+                _directPayments != IDirectPayments(address(0)) &&
                 _governance != address(address(0)),
             "Juicer: ZERO_ADDRESS"
         );
@@ -329,6 +333,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         operatorStore = _operatorStore;
         modStore = _modStore;
         prices = _prices;
+        directPayments = _directPayments;
         governance = _governance;
     }
 
@@ -513,38 +518,14 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Cant send tickets to the zero address.
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
-        // Increment the balance of the project.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + msg.value;
-
-        // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _fundingCycle =
-            fundingCycles.getCurrent(_projectId);
-
-        // Print tickets for the beneficiary.
-        tickets.print(
-            _beneficiary,
-            _projectId,
-            _fundingCycle._weighted(
-                PRBMathUD60x18.mul(
-                    msg.value,
-                    prices.getETHPrice(_fundingCycle.currency)
-                ),
-                // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-            ),
-            _preferConvertedTickets
-        );
-
-        emit Pay(
-            _fundingCycle.id,
-            _projectId,
-            _beneficiary,
-            msg.value,
-            _note,
-            msg.sender
-        );
-
-        return _fundingCycle.id;
+        return
+            _pay(
+                _projectId,
+                msg.value,
+                _beneficiary,
+                _note,
+                _preferConvertedTickets
+            );
     }
 
     /**
@@ -614,40 +595,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // When processing the admin fee, save gas if the admin is using this juice terminal.
         if (JuiceProject(governance).juiceTerminal() == this) {
-            // Get a reference to governance's Juice project ID.
-            uint256 _govProjectId = JuiceProject(governance).projectId();
-
-            // Get a reference to the current funding cycle for the project.
-            FundingCycle.Data memory _govFundingCycle =
-                fundingCycles.getCurrent(_govProjectId);
-
-            // Add to the raw balance of governance's project.
-            rawBalanceOf[_govProjectId] =
-                rawBalanceOf[_govProjectId] +
-                _govFeeAmount;
-
-            // Print governance tickets for the project owner.
-            tickets.print(
-                _projectOwner,
-                _govProjectId,
-                _govFundingCycle._weighted(
-                    PRBMathUD60x18.mul(
-                        _govFeeAmount,
-                        prices.getETHPrice(_govFundingCycle.currency)
-                    ),
-                    // The reserved rate is stored in bytes 25-30 of the metadata property.
-                    1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
-                ),
-                false
-            );
-
-            emit Pay(
-                _govFundingCycle.id,
-                _govProjectId,
-                _projectOwner,
+            _pay(
+                JuiceProject(governance).projectId(),
                 _govFeeAmount,
+                _projectOwner,
                 "Juice fee",
-                msg.sender
+                false
             );
         } else {
             JuiceProject(governance).pay{value: _govFeeAmount}(
@@ -678,7 +631,44 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 PRBMathCommon.mulDiv(_transferAmount, _mod.percent, 1000);
 
             // Transfer ETH to the mod.
-            Address.sendValue(_mod.beneficiary, _modCut);
+            if (_mod.allocator != IModAllocator(address(0))) {
+                _mod.allocator.allocate{value: _modCut}(
+                    _fundingCycle.projectId,
+                    _mod.projectId,
+                    _mod.beneficiary,
+                    _mod.note
+                );
+            } else if (_mod.projectId != 0) {
+                // Get a reference to the Juice terminal being used.
+                IJuiceTerminal _terminal =
+                    directPayments.juiceTerminals(_mod.projectId);
+
+                // The project must have a juice terminal to send funds to.
+                require(
+                    _terminal != IJuiceTerminal(address(0)),
+                    "Juicer::tap: BAD_MOD"
+                );
+
+                // Save gas if this terminal is being used.
+                if (_terminal == this) {
+                    _pay(
+                        _mod.projectId,
+                        _modCut,
+                        _mod.beneficiary,
+                        _mod.note,
+                        false
+                    );
+                } else {
+                    _terminal.pay{value: _modCut}(
+                        _mod.projectId,
+                        _mod.beneficiary,
+                        _mod.note,
+                        false
+                    );
+                }
+            } else {
+                Address.sendValue(_mod.beneficiary, _modCut);
+            }
 
             // Subtract from the amount to be sent to the beneficiary.
             _leftoverTransferAmount = _leftoverTransferAmount - _modCut;
@@ -708,6 +698,47 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _govFeeAmount,
             msg.sender
         );
+    }
+
+    function _pay(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        string memory _note,
+        bool _preferConvertedTickets
+    ) private returns (uint256) {
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
+
+        // Add to the raw balance of governance's project.
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
+
+        // Print governance tickets for the project owner.
+        tickets.print(
+            _beneficiary,
+            _projectId,
+            _fundingCycle._weighted(
+                PRBMathUD60x18.mul(
+                    _amount,
+                    prices.getETHPrice(_fundingCycle.currency)
+                ),
+                // The reserved rate is stored in bytes 25-30 of the metadata property.
+                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
+            ),
+            _preferConvertedTickets
+        );
+
+        emit Pay(
+            _fundingCycle.id,
+            _projectId,
+            _beneficiary,
+            _amount,
+            _note,
+            msg.sender
+        );
+
+        return _fundingCycle.id;
     }
 
     /**
@@ -928,7 +959,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         @param _projectId The ID of the project being migrated.
         @param _to The contract that will gain the project's funds.
     */
-    function migrate(uint256 _projectId, IProjectFundsManager _to)
+    function migrate(uint256 _projectId, IJuiceTerminal _to)
         external
         override
         nonReentrant
@@ -974,7 +1005,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     }
 
     /** 
-      @notice Receives funds belonging to the specified project.
+      @notice Receives and allocates funds belonging to the specified project.
       @param _projectId The ID of the project to which the funds received belong.
     */
     function addToBalance(uint256 _projectId) external payable override {

@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
-
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/FundingCycle.sol";
 import "./interfaces/IFundingCycles.sol";
@@ -13,7 +11,6 @@ import "./abstract/Administered.sol";
   @notice An immutable contract to manage funding cycle configurations.
 */
 contract FundingCycles is Administered, IFundingCycles {
-    using SafeMath for uint256;
     using FundingCycle for FundingCycle.Data;
 
     // --- private properties --- //
@@ -171,7 +168,7 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycle.ballot = _ballot;
 
         // If there isn't a current ballot inherited, set the current ballot to the provided one.
-        if (_fundingCycle.currentBallot == IFundingCycleBallot(0))
+        if (_fundingCycle.currentBallot == IFundingCycleBallot(address(0)))
             _fundingCycle.currentBallot = _ballot;
 
         // Return the funding cycle.
@@ -233,7 +230,7 @@ contract FundingCycles is Administered, IFundingCycles {
         fundingCycle = _aFundingCycle.id > 0
             ? _init(
                 _projectId,
-                uint256(_aFundingCycle.start).add(_aFundingCycle.duration),
+                uint256(_aFundingCycle.start) + _aFundingCycle.duration,
                 fundingCycle
             )
             : _init(_projectId, block.timestamp, fundingCycle);

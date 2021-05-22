@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "../abstract/JuiceProject.sol";
 import "../libraries/FullMath.sol";
@@ -16,7 +15,6 @@ import "../libraries/FullMath.sol";
   Not reliable for situations where networks dont entirely overlap.
 */
 contract Shwotime is JuiceProject {
-    using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     struct Tix {
@@ -142,9 +140,8 @@ contract Shwotime is JuiceProject {
             "Shwotime::collect: TOO_SOON"
         );
 
-        uint256 _total = _tickets.price.mul(_tickets.sold);
-        uint256 _collectable =
-            FullMath.mulDiv(_total, uint256(1000).sub(fee), 1000);
+        uint256 _total = _tickets.price * _tickets.sold;
+        uint256 _collectable = FullMath.mulDiv(_total, 1000 - fee, 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
         takeFee(_total - _collectable, msg.sender, _note);

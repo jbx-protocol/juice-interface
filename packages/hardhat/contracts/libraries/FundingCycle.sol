@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
-
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./FullMath.sol";
 import "./DSMath.sol";
@@ -10,8 +8,6 @@ import "./../interfaces/IFundingCycleBallot.sol";
 
 /// @notice Funding cycle data and logic.
 library FundingCycle {
-    using SafeMath for uint256;
-
     /// @notice Possible states that a funding cycle may be in
     /// @dev Funding cycles's are immutable once they are active.
     enum State {Standby, Active, Expired}
@@ -71,7 +67,7 @@ library FundingCycle {
         _self.metadata = _baseFundingCycle.metadata;
         _self.weight = _derivedWeight(_baseFundingCycle);
         _self.configured = _baseFundingCycle.configured;
-        _self.number = _baseFundingCycle.number.add(1);
+        _self.number = _baseFundingCycle.number + 1;
         _self.previous = _baseFundingCycle.id;
         _self.fee = _baseFundingCycle.fee;
         _self.ballot = _baseFundingCycle.ballot;
@@ -103,13 +99,12 @@ library FundingCycle {
         view
         returns (uint256)
     {
-        uint256 _end = uint256(_self.start).add(uint256(_self.duration));
+        uint256 _end = uint256(_self.start) + uint256(_self.duration);
         // Use the old end if the current time is still within the duration.
-        if (_end.add(_self.duration) > block.timestamp) return _end;
+        if (_end + _self.duration > block.timestamp) return _end;
         // Otherwise, use the closest multiple of the duration from the old end.
-        uint256 _distanceToStart =
-            (block.timestamp.sub(_end)).mod(_self.duration);
-        return block.timestamp.sub(_distanceToStart);
+        uint256 _distanceToStart = (block.timestamp - _end) % _self.duration;
+        return block.timestamp - _distanceToStart;
     }
 
     /** 
@@ -130,7 +125,7 @@ library FundingCycle {
                 _self.configured,
                 0,
                 _self.projectId,
-                _self.number.add(1),
+                _self.number + 1,
                 _self.id,
                 _self.target,
                 0,
@@ -196,7 +191,7 @@ library FundingCycle {
         @return hasExpired The boolean result.
     */
     function _hasExpired(Data memory _self) internal view returns (bool) {
-        return block.timestamp > uint256(_self.start).add(_self.duration);
+        return block.timestamp > uint256(_self.start) + _self.duration;
     }
 
     /** 
@@ -210,7 +205,7 @@ library FundingCycle {
         returns (bool)
     {
         return
-            _self.currentBallot == IFundingCycleBallot(0) ||
+            _self.currentBallot == IFundingCycleBallot(address(0)) ||
             _self.currentBallot.isApproved(_self.id, _self.configured);
     }
 
@@ -225,7 +220,7 @@ library FundingCycle {
         returns (bool)
     {
         return
-            _self.currentBallot != IFundingCycleBallot(0) &&
+            _self.currentBallot != IFundingCycleBallot(address(0)) &&
             _self.currentBallot.isPending(_self.id, _self.configured);
     }
 }

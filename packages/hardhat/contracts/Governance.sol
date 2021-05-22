@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./interfaces/IAdministered.sol";
@@ -10,7 +10,7 @@ import "./abstract/JuiceProject.sol";
 /// Owner should eventually change to a multisig wallet contract.
 contract Governance is JuiceProject {
     constructor(uint256 _projectId)
-        JuiceProject(IJuiceTerminal(0), _projectId)
+        JuiceProject(IJuiceTerminal(address(0)), _projectId)
     {}
 
     /** 

@@ -12,11 +12,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const fundingCycles = await deploy("FundingCycles");
   const tickets = await deploy("Tickets", [
     projects.address,
-    operatorStore.address,
+    operatorStore.address
   ]);
   const modStore = await deploy("ModStore", [
     projects.address,
-    operatorStore.address,
+    operatorStore.address
   ]);
 
   const governance = await deploy("Governance", [1]);
@@ -28,8 +28,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
     modStore.address,
     prices.address,
-    "0x0000000000000000000000000000000000000000",
-    governance.address,
+    governance.address
   ]);
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
@@ -61,34 +60,34 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     console.log("⚡️ Setting the projects owner");
     await attachedProjects.setOwnership(governance.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Setting the fundingCycles owner");
     await attachedFundingCycles.setOwnership(governance.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Setting the tickets owner");
     await attachedTickets.setOwnership(governance.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Setting the prices owner");
     await attachedPrices.transferOwnership(governance.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
 
     console.log("⚡️ Granting the juicer admin privileges over the projects");
     await attachedGovernance.grantAdmin(projects.address, juicer.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
     console.log(
       "⚡️ Granting the juicer admin privileges over the funding cycles"
     );
     await attachedGovernance.grantAdmin(fundingCycles.address, juicer.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
     console.log("⚡️ Granting the juicer admin privileges over the tickets");
     await attachedGovernance.grantAdmin(tickets.address, juicer.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
 
     if (ethUsdAddr) {
@@ -98,14 +97,14 @@ module.exports = async (wethAddr, ethUsdAddr) => {
         ethUsdAddr,
         1,
         {
-          gasLimit: blockGasLimit,
+          gasLimit: blockGasLimit
         }
       );
     }
 
     console.log("⚡️ Setting governance's Juice terminal");
     await attachedGovernance.setJuiceTerminal(juicer.address, {
-      gasLimit: blockGasLimit,
+      gasLimit: blockGasLimit
     });
 
     // TODO set the owner of the admin contract.
@@ -120,7 +119,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       [governance.signer.address],
       [[0]],
       {
-        gasLimit: blockGasLimit,
+        gasLimit: blockGasLimit
       }
     );
 
@@ -142,11 +141,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       {
         bondingCurveRate: 690,
         reservedRate: 50,
-        reconfigurationBondingCurveRate: 1000,
+        reconfigurationBondingCurveRate: 1000
       },
       ballot.address,
       {
-        gasLimit: blockGasLimit,
+        gasLimit: blockGasLimit
       }
     );
 
@@ -158,7 +157,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       [governance.signer.address],
       [[1]],
       {
-        gasLimit: blockGasLimit,
+        gasLimit: blockGasLimit
       }
     );
   } catch (e) {
@@ -177,7 +176,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     projects,
     fundingCycles,
     tickets,
-    juicer,
+    juicer
   };
 };
 
@@ -227,10 +226,10 @@ const abiEncodeArgs = (deployed, contractArgs) => {
 };
 
 // checks if it is a Solidity file
-const isSolidity = (fileName) =>
+const isSolidity = fileName =>
   fileName.indexOf(".sol") >= 0 && fileName.indexOf(".swp") < 0;
 
-const readArgsFile = (contractName) => {
+const readArgsFile = contractName => {
   let args = [];
   try {
     const argsFile = `./contracts/${contractName}.args`;

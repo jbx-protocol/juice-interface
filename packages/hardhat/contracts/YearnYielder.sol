@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "./interfaces/IYielder.sol";
 import "./interfaces/IJuicer.sol";
@@ -13,7 +12,6 @@ import "./interfaces/WETH.sol";
 import "./libraries/FullMath.sol";
 
 contract YearnYielder is IYielder, Ownable {
-    using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     IyVaultV2 public wethVault =
@@ -39,7 +37,7 @@ contract YearnYielder is IYielder, Ownable {
     function deposit() external payable override onlyOwner {
         WETH(weth).deposit{value: msg.value}();
         wethVault.deposit(msg.value);
-        deposited = deposited.add(msg.value);
+        deposited = deposited + msg.value;
     }
 
     function withdraw(uint256 _amount, address payable _beneficiary)
@@ -48,9 +46,9 @@ contract YearnYielder is IYielder, Ownable {
         onlyOwner
     {
         // Reduce the proportional amount that has been deposited before the withdrawl.
-        deposited = deposited.sub(
-            FullMath.mulDiv(_amount, deposited, getCurrentBalance())
-        );
+        deposited =
+            deposited -
+            FullMath.mulDiv(_amount, deposited, getCurrentBalance());
 
         // Withdraw the amount of tokens from the vault.
         wethVault.withdraw(_tokensToShares(_amount));
@@ -74,7 +72,7 @@ contract YearnYielder is IYielder, Ownable {
 
     /// @dev Updates the vaults approval of the token to be the maximum value.
     function updateApproval() public override {
-        IERC20(weth).safeApprove(address(wethVault), uint256(-1));
+        IERC20(weth).safeApprove(address(wethVault), type(uint256).max);
     }
 
     /// @dev Computes the number of tokens an amount of shares is worth.

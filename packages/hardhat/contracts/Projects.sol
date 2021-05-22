@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
-contract Projects is ERC721, IProjects, Administered {
+contract Projects is ERC721Enumerable, IProjects, Administered {
     // --- private properties --- //
 
     // A running count of project IDs.

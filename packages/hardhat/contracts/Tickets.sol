@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
-
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./libraries/CompareMath.sol";
 import "./libraries/Operations.sol";
@@ -17,8 +15,6 @@ import "./Ticket.sol";
   @notice An immutable contract to manage Ticket states.
 */
 contract Tickets is Administered, ITickets {
-    using SafeMath for uint256;
-
     // The total supply of 1155 tickets for each project.
     mapping(uint256 => uint256) private IOUTotalSupply;
 
@@ -68,7 +64,8 @@ contract Tickets is Administered, ITickets {
 
         // Add the ERC20 supply if it's been issued.
         ITicket _ticket = tickets[_projectId];
-        if (_ticket != ITicket(0)) supply = supply.add(_ticket.totalSupply());
+        if (_ticket != ITicket(address(0)))
+            supply = supply + _ticket.totalSupply();
     }
 
     /** 
@@ -85,8 +82,8 @@ contract Tickets is Administered, ITickets {
     {
         balance = IOU[_holder][_projectId];
         ITicket _ticket = tickets[_projectId];
-        if (_ticket != ITicket(0))
-            balance = balance.add(_ticket.balanceOf(_holder));
+        if (_ticket != ITicket(address(0)))
+            balance = balance + _ticket.balanceOf(_holder);
     }
 
     /**
@@ -118,7 +115,7 @@ contract Tickets is Administered, ITickets {
 
         // Only one ERC20 ticket can be issued.
         require(
-            tickets[_projectId] == ITicket(0),
+            tickets[_projectId] == ITicket(address(0)),
             "Tickets::issue: ALREADY_ISSUED"
         );
 
@@ -151,15 +148,13 @@ contract Tickets is Administered, ITickets {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        if (_preferConvertedTickets && _ticket != ITicket(0)) {
+        if (_preferConvertedTickets && _ticket != ITicket(address(0))) {
             // Print the equivalent amount of ERC20s.
             _ticket.print(_holder, _amount);
         } else {
             // Add to the IOU balance and total supply.
-            IOU[_holder][_projectId] = IOU[_holder][_projectId].add(_amount);
-            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId].add(
-                _amount
-            );
+            IOU[_holder][_projectId] = IOU[_holder][_projectId] + _amount;
+            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] + _amount;
         }
 
         emit Print(
@@ -199,12 +194,12 @@ contract Tickets is Administered, ITickets {
         // Redeem only IOUs if there are enough available and they aren't locked.
         if (_unlockedIOU >= _amount) {
             // Reduce the holders balance and the total supply.
-            IOU[_holder][_projectId] = IOU[_holder][_projectId].sub(_amount);
+            IOU[_holder][_projectId] = IOU[_holder][_projectId] - _amount;
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
         } else {
             // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
             require(
-                _ticket != ITicket(0),
+                _ticket != ITicket(address(0)),
                 "Tickets::redeem: INSUFICIENT_FUNDS"
             );
             if (_unlockedIOU > 0) {
@@ -241,7 +236,7 @@ contract Tickets is Administered, ITickets {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        require(_ticket != ITicket(0), "Tickets:convert: NOT_FOUND");
+        require(_ticket != ITicket(address(0)), "Tickets:convert: NOT_FOUND");
 
         // Only an account or a specified operator can convert its tickets.
         require(
@@ -426,7 +421,7 @@ contract Tickets is Administered, ITickets {
         IOU[_holder][_projectId] = _unlockedIOUs - _amount;
 
         // Add the tickets to the recipient.
-        IOU[_recipient][_projectId] = IOU[_recipient][_projectId].add(_amount);
+        IOU[_recipient][_projectId] = IOU[_recipient][_projectId] + _amount;
 
         emit Transfer(_holder, _projectId, _recipient, _amount, msg.sender);
     }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./abstract/JuiceProject.sol";
@@ -12,8 +12,6 @@ import "./libraries/DSMath.sol";
 import "./libraries/ProportionMath.sol";
 import "./libraries/FullMath.sol";
 import "./libraries/Operations.sol";
-
-import "hardhat/console.sol";
 
 /**
   @notice This contract manages the Juice ecosystem, and manages all funds.
@@ -49,7 +47,6 @@ import "hardhat/console.sol";
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
 contract Juicer is IJuicer, ReentrancyGuard {
-    using SafeMath for uint256;
     using FundingCycle for FundingCycle.Data;
 
     modifier onlyGov() {
@@ -122,12 +119,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
     {
         // The amount of ETH available is this contract's balance plus whatever is in the yielder.
         uint256 _amount = address(this).balance;
-        if (yielder == IYielder(0)) {
+        if (yielder == IYielder(address(0))) {
             amountWithoutYield = _amount;
             amountWithYield = _amount;
         } else {
-            amountWithoutYield = _amount.add(yielder.deposited());
-            amountWithYield = _amount.add(yielder.getCurrentBalance());
+            amountWithoutYield = _amount + yielder.deposited();
+            amountWithYield = _amount + yielder.getCurrentBalance();
         }
     }
 
@@ -177,9 +174,8 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _processedTicketTracker >= 0
                 ? tickets.totalSupply(_projectId) -
                     uint256(_processedTicketTracker)
-                : tickets.totalSupply(_projectId).add(
-                    uint256(-_processedTicketTracker)
-                );
+                : tickets.totalSupply(_projectId) +
+                    uint256(-_processedTicketTracker);
 
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
@@ -270,7 +266,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // If there are reserved tickets, add them to the total supply.
         if (_reservedTicketAmount > 0)
-            _totalSupply = _totalSupply.add(_reservedTicketAmount);
+            _totalSupply = _totalSupply + _reservedTicketAmount;
 
         // // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
@@ -288,13 +284,12 @@ contract Juicer is IJuicer, ReentrancyGuard {
         return
             FullMath.mulDiv(
                 FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
-                _bondingCurveRate.add(
+                _bondingCurveRate +
                     FullMath.mulDiv(
                         _count,
                         1000 - _bondingCurveRate,
                         _totalSupply
-                    )
-                ),
+                    ),
                 1000
             );
     }
@@ -308,7 +303,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @param _operatorStore A contract storing operator assignments.
       @param _modStore A storage for a project's mods.
       @param _prices A price feed contract to use.
-      @param _yielder A contract responsible for earning yield on idle funds.
     */
     constructor(
         IProjects _projects,
@@ -317,17 +311,16 @@ contract Juicer is IJuicer, ReentrancyGuard {
         IOperatorStore _operatorStore,
         IModStore _modStore,
         IPrices _prices,
-        IYielder _yielder,
         address payable _governance
     ) {
         require(
-            _projects != IProjects(0) &&
-                _fundingCycles != IFundingCycles(0) &&
-                _tickets != ITickets(0) &&
-                _operatorStore != IOperatorStore(0) &&
-                _modStore != IModStore(0) &&
-                _prices != IPrices(0) &&
-                _governance != address(0),
+            _projects != IProjects(address(0)) &&
+                _fundingCycles != IFundingCycles(address(0)) &&
+                _tickets != ITickets(address(0)) &&
+                _operatorStore != IOperatorStore(address(0)) &&
+                _modStore != IModStore(address(0)) &&
+                _prices != IPrices(address(0)) &&
+                _governance != address(address(0)),
             "Juicer: ZERO_ADDRESS"
         );
         projects = _projects;
@@ -336,7 +329,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         operatorStore = _operatorStore;
         modStore = _modStore;
         prices = _prices;
-        yielder = _yielder;
         governance = _governance;
     }
 
@@ -522,7 +514,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
 
         // Increment the balance of the project.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId].add(msg.value);
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + msg.value;
 
         // Get a reference to the current funding cycle for the project.
         FundingCycle.Data memory _fundingCycle =
@@ -630,9 +622,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 fundingCycles.getCurrent(_govProjectId);
 
             // Add to the raw balance of governance's project.
-            rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
-                _govFeeAmount
-            );
+            rawBalanceOf[_govProjectId] =
+                rawBalanceOf[_govProjectId] +
+                _govFeeAmount;
 
             // Print governance tickets for the project owner.
             tickets.print(
@@ -686,10 +678,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 FullMath.mulDiv(_transferAmount, _mod.percent, 1000);
 
             // Transfer ETH to the mod.
-            _mod.beneficiary.transfer(_modCut);
+            Address.sendValue(_mod.beneficiary, _modCut);
 
             // Subtract from the amount to be sent to the beneficiary.
-            _leftoverTransferAmount = _leftoverTransferAmount.sub(_modCut);
+            _leftoverTransferAmount = _leftoverTransferAmount - _modCut;
 
             emit ModDistribution(
                 _fundingCycle.id,
@@ -703,7 +695,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // Transfer any remaining balance to the beneficiary.
         if (_leftoverTransferAmount > 0)
-            _projectOwner.transfer(_leftoverTransferAmount);
+            Address.sendValue(_projectOwner, _leftoverTransferAmount);
 
         emit Tap(
             _fundingCycle.id,
@@ -789,7 +781,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         tickets.redeem(_account, _projectId, _count);
 
         // Transfer funds to the specified address.
-        _beneficiary.transfer(amount);
+        Address.sendValue(_beneficiary, amount);
 
         // Get a reference to the processed ticket tracker for the project.
         int256 _processedTicketTracker = processedTicketTracker[_projectId];
@@ -807,7 +799,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // Set the tracker.
         processedTicketTracker[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
-            ? -int256(uint256(-_processedTicketTracker).add(_count)) // the tracker is less than the count, subtract it from the count and reverse it.
+            ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
             : _processedTicketTracker < int256(_count)
             ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
             : _processedTicketTracker - int256(_count);
@@ -866,7 +858,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             );
 
             // Subtract from the amount to be sent to the beneficiary.
-            _leftoverTicketAmount = _leftoverTicketAmount.sub(_modCut);
+            _leftoverTicketAmount = _leftoverTicketAmount - _modCut;
 
             emit ModDistribution(
                 _fundingCycle.id,
@@ -914,7 +906,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     */
     function deposit() external override nonReentrant {
         // There must be a yielder.
-        require(yielder != IYielder(0), "Juicer::deposit: NOT_FOUND");
+        require(yielder != IYielder(address(0)), "Juicer::deposit: NOT_FOUND");
 
         // Any ETH currently in posession of this contract can be deposited.
         require(
@@ -990,15 +982,15 @@ contract Juicer is IJuicer, ReentrancyGuard {
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
         // Add the processed amount.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId].add(
+        rawBalanceOf[_projectId] =
+            rawBalanceOf[_projectId] +
             // Calculate the amount to add to the project's processed amount,
             // removing any influence of yield accumulated prior to adding.
             ProportionMath.find(
                 _balanceWithoutYield,
                 msg.value,
                 _balanceWithYield
-            )
-        );
+            );
 
         emit AddToBalance(_projectId, msg.sender);
     }
@@ -1041,8 +1033,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
     */
     function setYielder(IYielder _yielder) external override onlyGov {
         // If there is already an yielder, withdraw all funds and move them to the new yielder.
-        if (yielder != IYielder(0))
-            _yielder.deposit{value: yielder.withdrawAll(address(this))}();
+        if (yielder != IYielder(address(0)))
+            _yielder.deposit{
+                value: yielder.withdrawAll(payable(address(this)))
+            }();
 
         // Set the yielder.
         yielder = _yielder;
@@ -1112,7 +1106,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     */
     function _ensureAvailability(uint256 _amount) private {
         // If there's no yielder, all funds are already in this contract.
-        if (yielder == IYielder(0)) return;
+        if (yielder == IYielder(address(0))) return;
 
         // Get a reference to the amount of ETH currently in this contract.
         uint256 _balance = address(this).balance;
@@ -1123,7 +1117,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
         yielder.withdraw(
             _balance == 0 ? _amount : _amount - _balance,
-            address(this)
+            payable(address(this))
         );
     }
 
@@ -1166,6 +1160,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
     // If funds are sent to this contract directly, fund governance.
     receive() external payable {
+        // If a contract sent ETH, don't add to the project.
+        // This allows the vault to send ETH back to this contract.
+        if (Address.isContract(msg.sender)) return;
+
         // Save gas if the admin is using this juice terminal.
         if (JuiceProject(governance).juiceTerminal() == this) {
             uint256 _govProjectId = JuiceProject(governance).projectId();
@@ -1174,9 +1172,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 fundingCycles.getCurrent(_govProjectId);
 
             // Add to the raw balance of governance's project.
-            rawBalanceOf[_govProjectId] = rawBalanceOf[_govProjectId].add(
-                msg.value
-            );
+            rawBalanceOf[_govProjectId] =
+                rawBalanceOf[_govProjectId] +
+                msg.value;
 
             // Print governance tickets for the project owner.
             tickets.print(

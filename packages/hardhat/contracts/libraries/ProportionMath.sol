@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.0;
-
-import "@openzeppelin/contracts/math/SafeMath.sol";
+pragma solidity >=0.8.0;
 
 import "./FullMath.sol";
 
@@ -13,6 +11,6 @@ library ProportionMath {
         uint256 z
     ) internal pure returns (uint256) {
         require(z > 0);
-        return SafeMath.sub(FullMath.mulDiv(x, SafeMath.add(y, z), z), x);
+        return FullMath.mulDiv(x, y + z, z) - x;
     }
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./interfaces/IOperatorStore.sol";
@@ -10,7 +10,7 @@ contract OperatorStore is IOperatorStore {
         public
         override operatorPermissions;
 
-    constructor() public {}
+    constructor() {}
 
     /** 
       @notice Whether or not an operator has the permission to take a certain action pertaining to the specified account's project.
@@ -24,7 +24,7 @@ contract OperatorStore is IOperatorStore {
         uint256 _projectId,
         address _operator,
         uint256 _permissionIndex
-    ) external override returns (bool) {
+    ) external view override returns (bool) {
         require(
             _permissionIndex <= 255,
             "OperatorStore::hasPermissions: BAD_INDEX"
@@ -46,7 +46,7 @@ contract OperatorStore is IOperatorStore {
         uint256 _projectId,
         address _operator,
         uint256[] memory _permissionIndexes
-    ) external override returns (bool) {
+    ) external view override returns (bool) {
         for (uint256 _i = 0; _i < _permissionIndexes.length; _i++) {
             uint256 _permissionIndex = _permissionIndexes[_i];
 
@@ -67,19 +67,14 @@ contract OperatorStore is IOperatorStore {
       @notice Allows accounts to set operators of their accounts by setting the packed permissions value directly.
       @param _projectId The ID of the project that the operator is being given permissions to operate.
       @param _operator The operator to give permission to.
-      @param _packedPermissions The packed permissions.
+      @param _value The packed permissions.
     */
     function setPackedPermissions(
         uint256 _projectId,
         address _operator,
-        uint256 _packedPermissions
+        uint256 _value
     ) external override {
-        _setPackedPermissions(
-            msg.sender,
-            _projectId,
-            _operator,
-            _packedPermissions
-        );
+        _setPackedPermissions(msg.sender, _projectId, _operator, _value);
     }
 
     /** 
@@ -234,22 +229,20 @@ contract OperatorStore is IOperatorStore {
       @param _account The account that is being operated.
       @param _projectId The ID of the project that the operator is being given permissions to operate.
       @param _operator The operator to give permission to.
-      @param _packedPermissions The packed permissions.
+      @param _value The packed permissions.
     */
     function _setPackedPermissions(
         address _account,
         uint256 _projectId,
         address _operator,
-        uint256 _packedPermissions
+        uint256 _value
     ) private {
-        operatorPermissions[_account][_projectId][
-            _operator
-        ] = _packedPermissions;
+        operatorPermissions[_account][_projectId][_operator] = _value;
         emit SetPackedPermissions(
             _account,
             _projectId,
             _operator,
-            _packedPermissions,
+            _value,
             msg.sender
         );
     }
@@ -264,7 +257,7 @@ contract OperatorStore is IOperatorStore {
         uint256 _base,
         uint256[] memory _permissionIndexes,
         bool _flag
-    ) private returns (uint256 packed) {
+    ) private pure returns (uint256 packed) {
         // Zero out the value;
         packed = _base;
         for (uint256 _i = 0; _i < _permissionIndexes.length; _i++) {

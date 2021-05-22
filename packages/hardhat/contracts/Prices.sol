@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -28,7 +28,7 @@ contract Prices is IPrices, Ownable {
         if (_currency == 0) return 1E18;
         AggregatorV3Interface _feed = feeds[_currency];
         //TODO temp
-        if (_feed == AggregatorV3Interface(0)) return 1600E18;
+        if (_feed == AggregatorV3Interface(address(0))) return 1600E18;
         // require(
         //     _priceFeed != AggregatorV3Interface(0),
         //     "BudgetStore::getETHPrice NOT_FOUND"

@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./../interfaces/IJuicer.sol";
 
@@ -15,8 +14,6 @@ import "./../interfaces/IJuicer.sol";
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is IERC721Receiver, Ownable {
-    using SafeMath for uint256;
-
     IJuiceTerminal public juiceTerminal;
     uint256 public projectId;
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 interface IOperatorStore {
@@ -39,25 +39,25 @@ interface IOperatorStore {
         address caller
     );
 
+    function operatorPermissions(
+        address _account,
+        uint256 _projectId,
+        address _operator
+    ) external view returns (uint256);
+
     function hasPermission(
         address _account,
         uint256 _projectId,
         address _operator,
         uint256 _permissionIndex
-    ) external returns (bool);
+    ) external view returns (bool);
 
     function hasPermissions(
         address _account,
         uint256 _projectId,
         address _operator,
         uint256[] memory _permissionIndexes
-    ) external returns (bool);
-
-    function operatorPermissions(
-        address _account,
-        uint256 _projectId,
-        address _operator
-    ) external view returns (uint256);
+    ) external view returns (bool);
 
     function setPackedPermissions(
         uint256 _projectId,

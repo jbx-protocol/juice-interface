@@ -1,6 +1,6 @@
 // Adapted from https://github.com/dapphub/ds-math/blob/master/src/math.sol
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 
 library DSMath {
     //rounds to zero if x*y < WAD / 2

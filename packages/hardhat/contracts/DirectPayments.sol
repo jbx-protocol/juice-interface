@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./interfaces/IAdministered.sol";
@@ -61,7 +61,7 @@ contract DirectPayments {
         string memory _note
     ) external {
         // Set the terminal for the project if it's not already set.
-        if (juiceTerminals[_projectId] == IJuiceTerminal(0))
+        if (juiceTerminals[_projectId] == IJuiceTerminal(address(0)))
             juiceTerminals[_projectId] = _juiceTerminal;
 
         // The specified juice terminal must match the one stored.

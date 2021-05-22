@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.0;
+pragma solidity >=0.8.0;
 
 // Attribution: https://github.com/Uniswap/uniswap-v3-core/blob/f03155670ec1667406b83a539e23dcccf32a03bc/contracts/libraries/FullMath.sol#L14-L106
 
@@ -63,7 +63,7 @@ library FullMath {
         // Factor powers of two out of denominator
         // Compute largest power of two divisor of denominator.
         // Always >= 1.
-        uint256 twos = -denominator & denominator;
+        uint256 twos = denominator & (~denominator + 1);
         // Divide denominator by power of two
         assembly {
             denominator := div(denominator, twos)

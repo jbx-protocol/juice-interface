@@ -2,8 +2,9 @@
 pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "./FullMath.sol";
-import "./DSMath.sol";
+import "prb-math/contracts/PRBMathUD60x18.sol";
+import "prb-math/contracts/PRBMathCommon.sol";
+
 import "./../interfaces/IFundingCycleBallot.sol";
 
 /// @notice Funding cycle data and logic.
@@ -140,7 +141,7 @@ library FundingCycle {
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory _self) internal pure returns (uint256) {
-        return FullMath.mulDiv(_self.weight, _self.discountRate, 1000);
+        return PRBMathCommon.mulDiv(_self.weight, _self.discountRate, 1000);
     }
 
     /** 
@@ -155,9 +156,9 @@ library FundingCycle {
         uint256 _amount,
         uint256 _percentage
     ) internal pure returns (uint256) {
-        uint256 _base = DSMath.wmul(_amount, _self.weight);
+        uint256 _base = PRBMathUD60x18.mul(_amount, _self.weight);
         if (_percentage == 1000) return _base;
-        return FullMath.mulDiv(_base, _percentage, 1000);
+        return PRBMathCommon.mulDiv(_base, _percentage, 1000);
     }
 
     /** 

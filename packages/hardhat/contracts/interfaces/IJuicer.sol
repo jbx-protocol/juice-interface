@@ -142,7 +142,11 @@ interface IJuicer is
         address caller
     );
 
-    event AddToBalance(uint256 indexed projectId, address sender);
+    event AddToBalance(
+        uint256 indexed projectId,
+        uint256 value,
+        address caller
+    );
 
     event Deploy(
         uint256 indexed projectId,

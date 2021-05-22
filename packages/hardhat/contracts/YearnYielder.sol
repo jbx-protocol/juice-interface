@@ -5,11 +5,12 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "prb-math/contracts/PRBMathCommon.sol";
+
 import "./interfaces/IYielder.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IyVaultV2.sol";
 import "./interfaces/WETH.sol";
-import "./libraries/FullMath.sol";
 
 contract YearnYielder is IYielder, Ownable {
     using SafeERC20 for IERC20;
@@ -48,7 +49,7 @@ contract YearnYielder is IYielder, Ownable {
         // Reduce the proportional amount that has been deposited before the withdrawl.
         deposited =
             deposited -
-            FullMath.mulDiv(_amount, deposited, getCurrentBalance());
+            PRBMathCommon.mulDiv(_amount, deposited, getCurrentBalance());
 
         // Withdraw the amount of tokens from the vault.
         wethVault.withdraw(_tokensToShares(_amount));
@@ -86,7 +87,7 @@ contract YearnYielder is IYielder, Ownable {
         returns (uint256)
     {
         return
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 _sharesAmount,
                 wethVault.pricePerShare(),
                 10**decimals
@@ -104,7 +105,7 @@ contract YearnYielder is IYielder, Ownable {
         returns (uint256)
     {
         return
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 _tokensAmount,
                 10**decimals,
                 wethVault.pricePerShare()

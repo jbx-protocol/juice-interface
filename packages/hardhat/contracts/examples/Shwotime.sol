@@ -3,9 +3,9 @@ pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "prb-math/contracts/PRBMathCommon.sol";
 
 import "../abstract/JuiceProject.sol";
-import "../libraries/FullMath.sol";
 
 /** 
   @dev 
@@ -141,7 +141,7 @@ contract Shwotime is JuiceProject {
         );
 
         uint256 _total = _tickets.price * _tickets.sold;
-        uint256 _collectable = FullMath.mulDiv(_total, 1000 - fee, 1000);
+        uint256 _collectable = PRBMathCommon.mulDiv(_total, 1000 - fee, 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
         takeFee(_total - _collectable, msg.sender, _note);

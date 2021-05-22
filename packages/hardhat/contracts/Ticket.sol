@@ -5,7 +5,6 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "@paulrberg/contracts/token/erc20/Erc20Permit.sol";
-import "./libraries/CompareMath.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/ITicket.sol";

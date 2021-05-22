@@ -25,6 +25,7 @@
     "hardhat": "^2.0.2",
     "moment": "^2.29.1",
     "node-watch": "^0.7.0",
+    "prb-math": "^1.1.0",
     "qrcode-terminal": "^0.12.0",
     "ramda": "^0.27.1"
   },

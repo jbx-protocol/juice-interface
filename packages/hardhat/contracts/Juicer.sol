@@ -5,12 +5,12 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
+import "prb-math/contracts/PRBMathCommon.sol";
+import "prb-math/contracts/PRBMathUD60x18.sol";
+
 import "./interfaces/IJuicer.sol";
 import "./abstract/JuiceProject.sol";
 
-import "./libraries/DSMath.sol";
-import "./libraries/ProportionMath.sol";
-import "./libraries/FullMath.sol";
 import "./libraries/Operations.sol";
 
 /**
@@ -147,7 +147,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // The overflow is the proportion of the total available to what's claimable for the project.
         return
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 rawBalanceOf[_projectId],
                 _balanceWithYield,
                 _balanceWithoutYield
@@ -182,7 +182,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
 
         // If there are no unprocessed tickets, return.
         return
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 _unprocessedTicketBalanceOf,
                 1000,
                 1000 - _reservedRate
@@ -214,7 +214,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _ethLimit =
             _limit == 0
                 ? 0
-                : DSMath.wdiv(
+                : PRBMathUD60x18.div(
                     _limit,
                     prices.getETHPrice(_fundingCycle.currency)
                 );
@@ -282,10 +282,10 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // https://www.desmos.com/calculator/sp9ru6zbpk
         // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
         return
-            FullMath.mulDiv(
-                FullMath.mulDiv(_currentOverflow, _count, _totalSupply),
+            PRBMathCommon.mulDiv(
+                PRBMathCommon.mulDiv(_currentOverflow, _count, _totalSupply),
                 _bondingCurveRate +
-                    FullMath.mulDiv(
+                    PRBMathCommon.mulDiv(
                         _count,
                         1000 - _bondingCurveRate,
                         _totalSupply
@@ -525,7 +525,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             _beneficiary,
             _projectId,
             _fundingCycle._weighted(
-                DSMath.wmul(
+                PRBMathUD60x18.mul(
                     msg.value,
                     prices.getETHPrice(_fundingCycle.currency)
                 ),
@@ -569,7 +569,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         uint256 _balanceOf = balanceOf(_fundingCycle.projectId);
 
         // The amount of ETH that is being tapped.
-        uint256 _tappedETHAmount = DSMath.wdiv(_amount, _ethPrice);
+        uint256 _tappedETHAmount = PRBMathUD60x18.div(_amount, _ethPrice);
 
         // The amount being tapped must be available.
         require(
@@ -589,7 +589,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // the correct proportion must be calculated.
         rawBalanceOf[_fundingCycle.projectId] =
             rawBalanceOf[_fundingCycle.projectId] -
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 // The the amount being tapped and used as a fee...
                 _tappedETHAmount,
                 // multiplied by the current balance without yield...
@@ -601,7 +601,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // The amount of ETH from the _tappedAmount to pay as a fee.
         uint256 _govFeeAmount =
             _tappedETHAmount -
-                FullMath.mulDiv(
+                PRBMathCommon.mulDiv(
                     _tappedETHAmount,
                     1000,
                     uint256(_fundingCycle.fee) + 1000
@@ -631,7 +631,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _projectOwner,
                 _govProjectId,
                 _govFundingCycle._weighted(
-                    DSMath.wmul(
+                    PRBMathUD60x18.mul(
                         _govFeeAmount,
                         prices.getETHPrice(_govFundingCycle.currency)
                     ),
@@ -675,7 +675,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             PaymentMod memory _mod = _mods[_i];
             // The amount to send towards mods.
             uint256 _modCut =
-                FullMath.mulDiv(_transferAmount, _mod.percent, 1000);
+                PRBMathCommon.mulDiv(_transferAmount, _mod.percent, 1000);
 
             // Transfer ETH to the mod.
             Address.sendValue(_mod.beneficiary, _modCut);
@@ -765,7 +765,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // the correct proportion must be calculated.
         rawBalanceOf[_projectId] =
             rawBalanceOf[_projectId] -
-            FullMath.mulDiv(
+            PRBMathCommon.mulDiv(
                 // The amount redeemed...
                 amount,
                 // multiplied by the current balance amount with no yield considerations...
@@ -847,7 +847,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             TicketMod memory _mod = _mods[_i];
 
             // The amount to send towards mods.
-            uint256 _modCut = FullMath.mulDiv(amount, _mod.percent, 1000);
+            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 1000);
 
             // Print tickets for the mod.
             tickets.print(
@@ -982,17 +982,17 @@ contract Juicer is IJuicer, ReentrancyGuard {
         (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
 
         // Add the processed amount.
-        rawBalanceOf[_projectId] =
-            rawBalanceOf[_projectId] +
-            // Calculate the amount to add to the project's processed amount,
-            // removing any influence of yield accumulated prior to adding.
-            ProportionMath.find(
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] +
+            _balanceWithYield ==
+            0
+            ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
+            : PRBMathCommon.mulDiv(
                 _balanceWithoutYield,
-                msg.value,
+                msg.value + _balanceWithYield,
                 _balanceWithYield
-            );
+            ) - _balanceWithoutYield;
 
-        emit AddToBalance(_projectId, msg.sender);
+        emit AddToBalance(_projectId, msg.value, msg.sender);
     }
 
     /**
@@ -1181,7 +1181,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 msg.sender,
                 _govProjectId,
                 _govFundingCycle._weighted(
-                    DSMath.wmul(
+                    PRBMathUD60x18.mul(
                         msg.value,
                         prices.getETHPrice(_govFundingCycle.currency)
                     ),

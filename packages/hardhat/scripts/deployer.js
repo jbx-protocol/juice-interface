@@ -21,6 +21,11 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
   const governance = await deploy("Governance", [1]);
 
+  const directPayments = await deploy("DirectPayments", [
+    projects.address,
+    operatorStore.address
+  ]);
+
   const juicer = await deploy("Juicer", [
     projects.address,
     fundingCycles.address,
@@ -28,6 +33,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
     modStore.address,
     prices.address,
+    directPayments.address,
     governance.address
   ]);
 

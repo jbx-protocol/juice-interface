@@ -87,12 +87,21 @@ contract DirectPayments is IDirectPayments {
         external
         override
     {
+        // Get a reference to the current terminal being used.
+        IJuiceTerminal _currentTerminal = juiceTerminals[_projectId];
+
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
+        // Allow the current terminal to set a new terminal with implicit authorization from the owner.
+        // If theres not a terminal currently set but the project has an owner, the terminal can set itself.
         // Only a project owner or a specified operator of level 2 or greater can tap its funds.
         require(
-            msg.sender == _owner ||
+            (msg.sender == address(_juiceTerminal) &&
+                _owner != address(0) &&
+                _currentTerminal == IJuiceTerminal(address(0))) ||
+                msg.sender == address(_currentTerminal) ||
+                msg.sender == _owner ||
                 operatorStore.hasPermission(
                     _owner,
                     _projectId,

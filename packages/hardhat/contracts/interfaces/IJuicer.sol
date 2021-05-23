@@ -139,8 +139,6 @@ interface IJuicer is
 
     event AddToMigrationAllowList(address allowed);
 
-    event AddToBalance(uint256 amount);
-
     event Deposit(uint256 amount);
 
     event SetYielder(IYielder newYielder);

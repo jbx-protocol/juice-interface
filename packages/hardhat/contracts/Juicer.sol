@@ -401,6 +401,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Allow this contract to print and redeem tickets.
         tickets.initialize(address(this), _fundingCycle.projectId);
 
+        // Register this Juicer in the directory.
+        directPayments.setJuiceTerminal(_fundingCycle.projectId, this);
+
         emit Deploy(
             _fundingCycle.projectId,
             _owner,
@@ -631,6 +634,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 PRBMathCommon.mulDiv(_transferAmount, _mod.percent, 1000);
 
             // Transfer ETH to the mod.
+            // If there's an allocator set, transfer to its `allocate` function.
             if (_mod.allocator != IModAllocator(address(0))) {
                 _mod.allocator.allocate{value: _modCut}(
                     _fundingCycle.projectId,
@@ -638,6 +642,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                     _mod.beneficiary,
                     _mod.note
                 );
+                // Otherwise, if a project is specified, pay its Juice project.
             } else if (_mod.projectId != 0) {
                 // Get a reference to the Juice terminal being used.
                 IJuiceTerminal _terminal =
@@ -656,16 +661,17 @@ contract Juicer is IJuicer, ReentrancyGuard {
                         _modCut,
                         _mod.beneficiary,
                         _mod.note,
-                        false
+                        _mod.preferConverted
                     );
                 } else {
                     _terminal.pay{value: _modCut}(
                         _mod.projectId,
                         _mod.beneficiary,
                         _mod.note,
-                        false
+                        _mod.preferConverted
                     );
                 }
+                // Otherwise, send the funds directly to the beneficiary.
             } else {
                 Address.sendValue(_mod.beneficiary, _modCut);
             }
@@ -1000,6 +1006,9 @@ contract Juicer is IJuicer, ReentrancyGuard {
         // Transfer the power to print and redeem tickets to the new contract.
         tickets.addController(address(_to), _projectId);
         tickets.removeController(address(this), _projectId);
+
+        // Switch the direct payment terminal.
+        directPayments.setJuiceTerminal(_projectId, _to);
 
         emit Migrate(_projectId, _to, _balanceOf, msg.sender);
     }

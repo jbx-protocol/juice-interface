@@ -38,7 +38,7 @@ interface IOperatorStore {
         address caller
     );
 
-    function operatorPermissions(
+    function permissions(
         address _account,
         uint256 _projectId,
         address _operator

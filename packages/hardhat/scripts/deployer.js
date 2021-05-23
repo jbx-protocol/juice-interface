@@ -177,6 +177,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   );
 
   return {
+    operatorStore,
+    modStore,
+    directPayments,
     governance,
     prices,
     projects,

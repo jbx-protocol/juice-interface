@@ -7,7 +7,7 @@ contract OperatorStore is IOperatorStore {
     /// @notice A permissions mapping for the addresses that are designated operators of each account.
     mapping(address => mapping(uint256 => mapping(address => uint256)))
         public
-        override operatorPermissions;
+        override permissions;
 
     constructor() {}
 
@@ -29,7 +29,7 @@ contract OperatorStore is IOperatorStore {
             "OperatorStore::hasPermissions: BAD_INDEX"
         );
         return
-            ((operatorPermissions[_account][_projectId][_operator] >>
+            ((permissions[_account][_projectId][_operator] >>
                 _permissionIndex) & uint256(1)) == 1;
     }
 
@@ -55,7 +55,7 @@ contract OperatorStore is IOperatorStore {
             );
 
             if (
-                ((operatorPermissions[_account][_projectId][_operator] >>
+                ((permissions[_account][_projectId][_operator] >>
                     _permissionIndex) & uint256(1)) == 0
             ) return false;
         }
@@ -92,7 +92,7 @@ contract OperatorStore is IOperatorStore {
             _projectId,
             _operator,
             _packedPermissions(
-                operatorPermissions[msg.sender][_projectId][_operator],
+                permissions[msg.sender][_projectId][_operator],
                 _permissionIndexes,
                 true
             )
@@ -123,9 +123,7 @@ contract OperatorStore is IOperatorStore {
                 _projectIds[_i],
                 _operators[_i],
                 _packedPermissions(
-                    operatorPermissions[msg.sender][_projectIds[_i]][
-                        _operators[_i]
-                    ],
+                    permissions[msg.sender][_projectIds[_i]][_operators[_i]],
                     _permissionIndexes[_i],
                     true
                 )
@@ -155,7 +153,7 @@ contract OperatorStore is IOperatorStore {
         require(
             msg.sender == _account ||
                 (_operator == msg.sender &&
-                    operatorPermissions[_account][_projectId][msg.sender] > 0),
+                    permissions[_account][_projectId][msg.sender] > 0),
             "Juicer::removeOperator: UNAUTHORIZED"
         );
 
@@ -165,7 +163,7 @@ contract OperatorStore is IOperatorStore {
             _projectId,
             _operator,
             _packedPermissions(
-                operatorPermissions[_account][_projectId][_operator],
+                permissions[_account][_projectId][_operator],
                 _permissionIndexes,
                 false
             )
@@ -200,9 +198,8 @@ contract OperatorStore is IOperatorStore {
             if (_account != msg.sender) {
                 require(
                     msg.sender == _operators[_i] &&
-                        (operatorPermissions[_account][_projectIds[_i]][
-                            msg.sender
-                        ] > 0),
+                        (permissions[_account][_projectIds[_i]][msg.sender] >
+                            0),
                     "Juicer::removeOperators: UNAUTHORIZED"
                 );
             }
@@ -211,9 +208,7 @@ contract OperatorStore is IOperatorStore {
                 _projectIds[_i],
                 _operators[_i],
                 _packedPermissions(
-                    operatorPermissions[_account][_projectIds[_i]][
-                        _operators[_i]
-                    ],
+                    permissions[_account][_projectIds[_i]][_operators[_i]],
                     _permissionIndexes[_i],
                     false
                 )
@@ -236,7 +231,7 @@ contract OperatorStore is IOperatorStore {
         address _operator,
         uint256 _value
     ) private {
-        operatorPermissions[_account][_projectId][_operator] = _value;
+        permissions[_account][_projectId][_operator] = _value;
         emit SetPackedPermissions(
             _account,
             _projectId,

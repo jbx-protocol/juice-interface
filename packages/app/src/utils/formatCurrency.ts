@@ -1,11 +1,13 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
+import { CurrencyOption } from 'models/currency-option'
 
 const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
-export const parseWad = (amt?: string) => parseUnits(amt || '0', wadPrecision)
+export const parseWad = (amt?: string | number) =>
+  parseUnits(amt?.toString() || '0', wadPrecision)
 export const parsePerMille = (amt?: string) =>
   BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
 
@@ -32,6 +34,7 @@ export const formattedNum = (
     empty?: string
     thousandsSeparator?: string
     decimalSeparator?: string
+    padEnd?: number
   },
 ) => {
   const _empty = config?.empty ?? '0'
@@ -56,7 +59,7 @@ export const formattedNum = (
       ? separateThousands(integer, _thousandsSeparator) || '0'
       : [
           separateThousands(integer, _thousandsSeparator) || '0',
-          decimal.substr(0, 6).padEnd(2, '0'),
+          decimal.substr(0, 6).padEnd(config?.padEnd || 2, '0'),
         ].join(_decimalSeparator)
   }
 
@@ -85,19 +88,32 @@ export class CurrencyUtils {
     }
   }
 
-  usdToWei = (usd: number | string | undefined, precision = 8) => {
-    if (usd === undefined || this.usdPerEth === undefined) return
-    if (usd === '') return
+  usdToWei = (amount: number | string | undefined, precision = 8) => {
+    if (amount === undefined || this.usdPerEth === undefined) return
+    if (amount === '') return
 
     try {
       return parseWad(
         (
-          (typeof usd === 'string' ? parseFloat(usd) : usd) / this.usdPerEth
+          (typeof amount === 'string' ? parseFloat(amount) : amount) /
+          this.usdPerEth
         ).toFixed(precision),
       )
     } catch (e) {
-      console.log("Couldn't convert USD amount", usd.toString(), 'to wei', e)
+      console.log("Couldn't convert USD amount", amount.toString(), 'to wei', e)
     }
+  }
+
+  wadToCurrency = (
+    amount: BigNumberish | undefined,
+    targetCurrency: CurrencyOption | undefined,
+    sourceCurrency: CurrencyOption | undefined,
+  ) => {
+    if (targetCurrency === undefined || sourceCurrency === undefined) return
+    if (targetCurrency === sourceCurrency) return BigNumber.from(amount)
+    if (targetCurrency === 1) return parseWad(this.weiToUsd(amount)?.toString())
+    if (targetCurrency === 0 && this.usdPerEth !== undefined)
+      return BigNumber.from(amount).div(this.usdPerEth)
   }
 }
 

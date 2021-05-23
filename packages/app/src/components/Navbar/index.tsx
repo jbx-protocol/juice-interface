@@ -1,14 +1,17 @@
-import { Menu } from 'antd'
+import { Menu, Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { colors } from 'constants/styles/colors'
-import { UserContext } from 'contexts/userContext'
+import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import Account from './Account'
+import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
-  const { userHasProjects } = useContext(UserContext)
-  const { userAddress } = useContext(UserContext)
+  const {
+    theme: { colors },
+    forThemeOption,
+  } = useContext(ThemeContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -35,16 +38,17 @@ export default function Navbar() {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        background: colors.background,
+        alignItems: 'center',
+        background: colors.background.l0,
       }}
     >
       <Menu
         mode="horizontal"
-        theme="dark"
         style={{
+          flex: 1,
           display: 'inline-block',
           border: 'none',
-          background: colors.background,
+          background: colors.background.l0,
         }}
         selectable={false}
       >
@@ -52,19 +56,20 @@ export default function Navbar() {
           <a href="/" style={{ display: 'inline-block' }}>
             <img
               style={{ height: 40 }}
-              src="/assets/juice_logo-od.png"
+              src={
+                forThemeOption &&
+                forThemeOption({
+                  [ThemeOption.light]: '/assets/juice_logo-ol.png',
+                  [ThemeOption.dark]: '/assets/juice_logo-od.png',
+                })
+              }
               alt="Juice logo"
             />
           </a>
         </Menu.Item>
-        <Menu.Item key="explore">
-          {menuItem('Explore', '/#/projects')}
+        <Menu.Item key="projects">
+          {menuItem('Projects', '/#/projects')}
         </Menu.Item>
-        {userHasProjects ? (
-          <Menu.Item key="yourProjects">
-            {menuItem('Your projects', '/#/owner/' + userAddress)}
-          </Menu.Item>
-        ) : null}
         {
           <Menu.Item key="faq">
             {menuItem('FAQ', undefined, () => {
@@ -87,9 +92,12 @@ export default function Navbar() {
           </Menu.Item>
         }
       </Menu>
-      <div className="hide-mobile">
-        <Account />
-      </div>
+      <Space size="middle">
+        <ThemePicker />
+        <div className="hide-mobile">
+          <Account />
+        </div>
+      </Space>
     </Header>
   )
 }

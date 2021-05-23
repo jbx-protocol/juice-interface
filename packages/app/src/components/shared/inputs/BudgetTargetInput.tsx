@@ -34,7 +34,7 @@ export default function BudgetTargetInput({
       accessory={
         <InputAccessoryButton
           onClick={() => {
-            const newCurrency = _currency === '1' ? '0' : '1'
+            const newCurrency = _currency === 1 ? 0 : 1
             setCurrency(newCurrency)
             onCurrencyChange(newCurrency)
           }}

@@ -1,6 +1,6 @@
 // Adapted from https://gist.github.com/thomasmaclean/276cb6e824e48b7ca4372b194ec05b97
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity >=0.8.0;
 
 library StringUtils {
     function toLower(string memory str) internal pure returns (string memory) {

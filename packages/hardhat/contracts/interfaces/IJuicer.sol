@@ -1,14 +1,22 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
+pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./ITickets.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
-
 import "./IProjects.sol";
+import "./IModStore.sol";
+import "./IJuiceTerminal.sol";
+import "./IDirectPayments.sol";
+import "./IOperatorStore.sol";
+
+struct FundingCycleMetadata {
+    uint16 bondingCurveRate;
+    uint16 reservedRate;
+    uint16 reconfigurationBondingCurveRate;
+}
 
 interface IFundingCyclesController {
     event Reconfigure(
@@ -18,35 +26,22 @@ interface IFundingCyclesController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        uint256 bondingCurveRate,
-        uint256 reserved,
-        uint256 eligibleAfter,
-        uint256 fee
-    );
-
-    event Pay(
-        uint256 indexed fundingCycleId,
-        uint256 indexed projectId,
-        address indexed payer,
-        address beneficiary,
-        uint256 amount,
-        uint256 currency,
-        string note,
-        uint256 fee
+        FundingCycleMetadata metadata,
+        IFundingCycleBallot ballot,
+        address caller
     );
 
     event Tap(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         address indexed beneficiary,
-        address tapper,
         uint256 amount,
         uint256 currency,
-        uint256 tappedAmount,
-        uint256 transferAmount
+        uint256 transferAmount,
+        uint256 beneficiaryTransferAmount,
+        uint256 govFeeAmount,
+        address caller
     );
-
-    function reconfigurationDelay() external view returns (uint256);
 
     function fee() external view returns (uint256);
 
@@ -56,40 +51,29 @@ interface IFundingCyclesController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved
-    ) external returns (uint256 fundingCycleId);
-
-    function pay(
-        uint256 _projectId,
-        uint256 _amount,
-        address _beneficiary,
-        string memory _note
+        FundingCycleMetadata memory _metadata,
+        IFundingCycleBallot _ballot
     ) external returns (uint256 fundingCycleId);
 
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _currency,
-        address _beneficiary,
         uint256 _minReturnedEth
     ) external;
-
-    function prices() external view returns (IPrices);
 }
 
 interface ITicketsController {
     event Redeem(
         address indexed holder,
+        address indexed beneficiary,
         uint256 indexed _projectId,
-        address beneficiary,
         uint256 amount,
         uint256 returnAmount,
-        IERC20 returnToken
+        address caller
     );
 
-    function claimableAmount(
-        address _holder,
+    function claimableOverflow(
+        address _account,
         uint256 _amount,
         uint256 _projectId
     ) external view returns (uint256);
@@ -99,17 +83,46 @@ interface ITicketsController {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        address _beneficiary
+        address payable _beneficiary
     ) external returns (uint256 returnAmount);
 }
 
-interface IJuicer is IFundingCyclesController, ITicketsController {
-    event Migrate(IJuicer indexed to, uint256 _amount);
+interface IJuicer is
+    IFundingCyclesController,
+    ITicketsController,
+    IJuiceTerminal
+{
+    event PrintReserveTickets(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 count,
+        uint256 beneficiaryTicketAmount,
+        address caller
+    );
+
+    event ModDistribution(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 percent,
+        uint256 modCut,
+        uint256 total
+    );
+    event AppointGovernance(address governance);
+
+    event AcceptGovernance(address governance);
+
+    event Migrate(
+        uint256 indexed projectId,
+        IJuiceTerminal indexed to,
+        uint256 _amount,
+        address caller
+    );
 
     event Deploy(
         uint256 indexed projectId,
         address indexed owner,
-        address indexed deployer,
         uint256 fundingCycleId,
         string name,
         string handle,
@@ -119,27 +132,24 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 currency,
         uint256 duration,
         uint256 discountRate,
-        uint256 bondingCurveRate,
-        uint256 reserved,
-        uint256 fee
+        FundingCycleMetadata metadata,
+        IFundingCycleBallot ballot,
+        address caller
     );
 
-    event AddToMigrationAllowList(address indexed allowed);
+    event AddToMigrationAllowList(address allowed);
 
-    event SetYielder(IYielder indexed newYielder);
+    event Deposit(uint256 amount);
 
-    event Deposit(uint256 amount, IERC20 token);
+    event SetYielder(IYielder newYielder);
 
-    event AddOperator(address account, address operator);
+    event SetFee(uint256 _amount);
 
-    event RemoveOperator(address account, address operator);
+    event SetTargetLocalETH(uint256 amount);
 
-    function operators(address _account, address _operator)
-        external
-        view
-        returns (bool);
+    function governance() external view returns (address payable);
 
-    function admin() external view returns (address);
+    function pendingGovernance() external view returns (address payable);
 
     function projects() external view returns (IProjects);
 
@@ -147,27 +157,36 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
 
     function tickets() external view returns (ITickets);
 
+    function operatorStore() external view returns (IOperatorStore);
+
+    function prices() external view returns (IPrices);
+
+    function directPayments() external view returns (IDirectPayments);
+
     function yielder() external view returns (IYielder);
 
-    function weth() external view returns (IERC20);
+    function modStore() external view returns (IModStore);
 
-    function balanceOf(uint256 _projectId, bool _includeYield)
+    function targetLocalETH() external view returns (uint256);
+
+    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
         external
         view
         returns (uint256);
+
+    function balanceOf(uint256 _projectId) external view returns (uint256);
 
     function currentOverflowOf(uint256 _projectId)
         external
         view
         returns (uint256);
 
-    function balance(bool _includeYield) external view returns (uint256);
+    function balance()
+        external
+        view
+        returns (uint256 amountWithoutYield, uint256 amountWithYield);
 
-    function setAdmin(address _admin) external;
-
-    function setYielder(IYielder _yielder) external;
-
-    function migrate(uint256 _projectId, IJuicer _to) external;
+    function migrate(uint256 _projectId, IJuiceTerminal _to) external;
 
     function deploy(
         address _owner,
@@ -179,21 +198,25 @@ interface IJuicer is IFundingCyclesController, ITicketsController {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved
+        FundingCycleMetadata memory _metadata,
+        IFundingCycleBallot _ballot
     ) external;
 
-    function addToBalance(
-        uint256 _projectId,
-        uint256 _amount,
-        IERC20 _token
-    ) external;
-
-    function addOperator(address _operator) external;
-
-    function removeOperator(address _operator) external;
-
-    function deposit(uint256 _amount) external;
+    function printReservedTickets(uint256 _projectId)
+        external
+        returns (uint256 reservedTicketsToPrint);
 
     function allowMigration(address _contract) external;
+
+    function setFee(uint256 _fee) external;
+
+    function appointGovernance(address payable _pendingGovernance) external;
+
+    function setYielder(IYielder _yielder) external;
+
+    function deposit() external;
+
+    function setTargetLocalETH(uint256 _amount) external;
+
+    function acceptGovernance() external;
 }

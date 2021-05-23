@@ -1,11 +1,15 @@
 import { Form } from 'antd'
-import { colors } from 'constants/styles/colors'
-import { CSSProperties, useEffect } from 'react'
-import { useLayoutEffect, useMemo, useState } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import {
+  CSSProperties,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-import { padding } from 'constants/styles/padding'
 
 export default function ProjectBondingCurveRate({
   name,
@@ -17,6 +21,7 @@ export default function ProjectBondingCurveRate({
   value: number | undefined
   onChange: (val?: number) => void
 } & FormItemExt) {
+  const { colors } = useContext(ThemeContext).theme
   const [calculator, setCalculator] = useState<any>()
 
   const graphContainerId = 'graph-container'
@@ -75,12 +80,12 @@ export default function ProjectBondingCurveRate({
       latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
         _value / 100
       })/${supply})`,
-      color: colors.juiceOrange,
+      color: colors.text.brand.primary,
     })
     calculator.setExpression({
       id: baseCurveId,
       latex: `y=x`,
-      color: colors.grapeHint,
+      color: colors.stroke.secondary,
     })
   }
 
@@ -126,8 +131,8 @@ export default function ProjectBondingCurveRate({
                 left: graphPad / 2,
                 width: graphSize - graphPad,
                 height: graphSize - graphPad,
-                borderLeft: '2px solid ' + colors.grapeHint,
-                borderBottom: '2px solid ' + colors.grapeHint,
+                borderLeft: '2px solid ' + colors.stroke.secondary,
+                borderBottom: '2px solid ' + colors.stroke.secondary,
               }}
             ></div>
 
@@ -157,11 +162,12 @@ export default function ProjectBondingCurveRate({
           </div>
 
           <div>
-            A lower bonding curve has the effect of increasing the redeem value
-            of a ticket as the remaining ticket supply decreases, creating
-            incentive to hodl tickets and not redeem them early. A bonding curve
-            of 100% means all tickets will have the same value regardless of
-            when they are redeemed.
+            This rate determines the amount of overflow that each Ticket can be
+            redeemed for at any given time. On a lower bonding curve, redeeming
+            a ticket increases the value of each remaining ticket, creating an
+            incentive to hodl tickets longer than others. A bonding curve of
+            100% means all tickets will have equal value regardless of when they
+            are redeemed.
           </div>
         </div>
       }

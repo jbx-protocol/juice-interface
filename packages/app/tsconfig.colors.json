@@ -1,8 +1,0 @@
-{
-  "files": ["src/constants/styles/colors.ts"],
-  "compilerOptions": {
-    "target": "es5",
-    "strict": false,
-    "skipLibCheck": true,
-  }
-}

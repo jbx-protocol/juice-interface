@@ -19,5 +19,5 @@ export const useReadProvider = (network?: NetworkName) => {
   const url = network
     ? NETWORKS_BY_NAME[network].rpcUrl
     : defaultReadNetworkRpcUrl
-  return useMemo(() => new JsonRpcProvider(url), [network])
+  return useMemo(() => new JsonRpcProvider(url), [network, url])
 }

@@ -3,10 +3,13 @@ import { Web3Provider } from '@ethersproject/providers'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import { NETWORKS } from 'constants/networks'
+import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
 import useContractReader from 'hooks/ContractReader'
 import { useGasPrice } from 'hooks/GasPrice'
+import { useJuiceTheme } from 'hooks/JuiceTheme'
 import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useSigningProvider } from 'hooks/SigningProvider'
 import { useTransactor } from 'hooks/Transactor'
@@ -28,6 +31,8 @@ function App() {
   }, [setInjectedProvider])
 
   const signingProvider = useSigningProvider(injectedProvider)
+
+  const juiceTheme = useJuiceTheme()
 
   useEffect(() => {
     async function getNetwork() {
@@ -70,34 +75,35 @@ function App() {
   console.log('User:', userAddress)
 
   return (
-    <UserContext.Provider
-      value={{
-        userAddress,
-        signingProvider,
-        network,
-        transactor,
-        contracts,
-        onNeedProvider: loadWeb3Modal,
-        userHasProjects,
-        adminFeePercent,
-      }}
-    >
-      <Layout
-        className="App"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          background: 'transparent',
+    <ThemeContext.Provider value={juiceTheme}>
+      <UserContext.Provider
+        value={{
+          userAddress,
+          signingProvider,
+          network,
+          transactor,
+          contracts,
+          onNeedProvider: loadWeb3Modal,
+          userHasProjects,
+          adminFeePercent,
         }}
       >
-        <Navbar />
-
-        <Content>
-          <Router />
-        </Content>
-      </Layout>
-    </UserContext.Provider>
+        <Layout
+          className="App"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            background: 'transparent',
+          }}
+        >
+          <Navbar />
+          <Content>
+            <Router />
+          </Content>
+        </Layout>
+      </UserContext.Provider>
+    </ThemeContext.Provider>
   )
 }
 

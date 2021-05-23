@@ -1,17 +1,26 @@
 import { Button, Col, Row, Space } from 'antd'
-import { colors } from 'constants/styles/colors'
-import { CSSProperties } from 'react'
-
+import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
+import { CSSProperties, useContext } from 'react'
 import DefineProject from './DefineProject'
 import Faq from './Faq'
 import Footer from './Footer'
 
 export default function Landing() {
+  const { theme, forThemeOption } = useContext(ThemeContext)
+
+  const colors = theme.colors
+
   const totalMaxWidth = 1080
 
   const bigHeader = (text: string) => (
     <h1
-      style={{ fontSize: '2.5rem', fontWeight: 600, lineHeight: 1.2, margin: 0 }}
+      style={{
+        fontSize: '3.2rem',
+        fontWeight: 600,
+        lineHeight: 1.2,
+        margin: 0,
+      }}
     >
       {text}
     </h1>
@@ -22,11 +31,11 @@ export default function Landing() {
   )
 
   const listData = [
-    'Ethereum projects',
-    'Internet public goods',
+    'Indie artists, devs, journalists, & researchers',
+    'Ethereum protocols & communities',
+    'Public goods',
     'Open source businesses',
-    'Indie artists, journalists, & researchers',
-    'Just about any web project with predictable costs',
+    'Just about any project with predictable costs',
   ]
 
   const section: CSSProperties = {
@@ -74,14 +83,13 @@ export default function Landing() {
                 }}
               >
                 {/* {bigHeader('Fund your project on the open internet')} */}
-                {bigHeader('Freshly squeezed cashflow for your projects')}
+                {bigHeader('The business model of the future')}
                 <div>
-                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>Juice is a business-model-as-a-service.</p>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    Projects say up front how much cashflow they want
-                    in order to crush what they do. Once they're earning more
-                    than that, the $ETH overflow can be claimed by their users,
-                    patrons, & investors alongside them.{' '}
+                    Projects say up front how much cashflow they need in order
+                    to crush what they do. Once they're earning more than that,
+                    the $ETH overflow can be claimed by their users, patrons, &
+                    investors alongside them.{' '}
                   </p>
                 </div>
 
@@ -93,7 +101,7 @@ export default function Landing() {
                     fontWeight: 600,
                   }}
                 >
-                  <p style={{ color: colors.juiceOrange, opacity: 1 }}>
+                  <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
                     Perfect for:
                   </p>
                   {listData.map((data, i) => (
@@ -129,7 +137,13 @@ export default function Landing() {
                   maxWidth: '100%',
                   objectFit: 'contain',
                 }}
-                src="/assets/orange_lady-od.png"
+                src={
+                  forThemeOption &&
+                  forThemeOption({
+                    [ThemeOption.dark]: '/assets/orange_lady-od.png',
+                    [ThemeOption.light]: '/assets/orange_lady.png',
+                  })
+                }
                 alt="GET JUICED"
               />
             </Col>
@@ -142,11 +156,10 @@ export default function Landing() {
           id="create"
           style={{
             ...wrapper,
-            marginTop: 100,
             marginBottom: 120,
           }}
         >
-          <div style={{ marginBottom: 40 }}>
+          <div style={{ paddingTop: 80, marginBottom: 40 }}>
             {bigHeader('What are you working on?')}
           </div>
           <DefineProject />
@@ -158,8 +171,8 @@ export default function Landing() {
           padding: 30,
           paddingTop: 80,
           paddingBottom: 80,
-          background: colors.juiceLight,
-          color: colors.dark,
+          background: colors.background.brand.secondary,
+          color: colors.text.over.brand.secondary,
         }}
       >
         <div style={wrapper}>
@@ -167,25 +180,20 @@ export default function Landing() {
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
                 {bigHeader('Should you Juice?')}
-                <div style={{ color: colors.dark }}>
+                <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting community-driven online goods
-                    and services with data integrity, business
-                    operation accountability, and no ads. All built by motivated punks
-                    getting transparently paid what they ask for, while
-                    rewarding everyone who helped create the overflow an
-                    opportunity to capitalize on it.
+                    With Juice, we end up getting community-owned online
+                    creations that automatically reward the people who help them
+                    succeed. Projects are created and maintained by motivated
+                    punks getting transparently paid what they ask for, and
+                    funded by a community of users, patrons, and investors who
+                    have the opportunity to capitalize on the overflow they help
+                    create.
                   </p>
-                  <a
-                    className="ol"
-                    href="https://twitter.com/hashtag/dework"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: colors.cta }}
-                  >
-                    #DeWork
-                  </a>
+                  <p className="ol">
+                    Plus, Juice runs on Juice itself, so its owned by us all.
+                  </p>
                 </div>
               </div>
             </Col>
@@ -201,79 +209,73 @@ export default function Landing() {
         </div>
       </section>
 
-      <section style={section}>
+      <section
+        style={{
+          ...section,
+          marginTop: 0,
+          paddingTop: 20,
+          paddingBottom: 80,
+          background: 'rgb(57, 43, 70)',
+          color: 'white',
+        }}
+      >
         <div
           style={{
             ...wrapper,
             marginTop: 80,
           }}
         >
-          <Row gutter={60}>
-            {fourthCol('Do work 💅', [
-              `Deploy a Juice contract that says how much cashflow you and your
+          <div style={{ display: 'grid', rowGap: 60 }}>
+            {bigHeader('How it works')}
+            <Row gutter={60}>
+              {fourthCol('Do work 💅', [
+                `Deploy a Juice contract that says how much cashflow you and your
                 team want/need in order to absolutely crush what you do.`,
-            ])}
-            {fourthCol('Get paid 💰', [
-              `People can fund your project through the Juice dashboard as a
-                patron or investor, or through your app as a paying user. For
+                <br></br>,
+                <br></br>,
+                `Your funding cycles can be however long you want, and can be recurring.`,
+              ])}
+              {fourthCol('Get paid 💰', [
+                `People can fund your project through the Juice dashboard as a
+                patron or investor, or through your app as a paying user.`,
+                <br></br>,
+                <br></br>,
+                `For
                 example, if your users pay you a transaction fee or monthly
-                cost, just route it through your Juice contract.`,
-              <a
-                href="https://twitter.com/hashtag/composability"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #composability
-              </a>,
-              <br />,
-              <a
-                href="https://twitter.com/hashtag/BusinessModelAsAService"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #BusinessModelAsAService
-              </a>,
-            ])}
-            {fourthCol('Overflow ⛲️', [
-              `If money overflows, your paying contributors claim the surplus
+                cost within your app, just route it through your Juice contract so your people can share in your success.`,
+              ])}
+              {fourthCol('Overflow ⛲️', [
+                `If money overflows, your paying contributors claim the surplus
                 alongside you, effectively pushing prices down as your community
-                grows. Early adopters get a discounted rate, and those hodlers
-                who wait longest to claim get a juicier return. While unclaimed,
+                grows.`,
+                <br></br>,
+                <br></br>,
+                `Early adopters get a discounted rate, and those hodlers
+                who wait longest to claim get a juicier return.`,
+                <br></br>,
+                <br></br>,
+                `While unclaimed,
                 overflow earns interest.`,
-              <a
-                href="https://twitter.com/hashtag/DeFi"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #DeFi
-              </a>,
-              <a
-                href="https://twitter.com/hashtag/RegenFinance"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                #RegenFinance
-              </a>,
-            ])}
-            {fourthCol('Repeat 📈', [
-              `Your budgeting time frames can be however long you want, and can be
-                recurring. You can make them bigger as your project grows, with
-                the approval of those paying contributors that have not yet claimed
-                their fair share of your overflowed surplus.`,
-            ])}
-          </Row>
-        </div>
-      </section>
-
-      <section style={wrapper}>
-        <div
-          style={{
-            fontWeight: 600,
-            textAlign: 'center',
-          }}
-        >
-          Create value for your community, crush your craft, make your money,
-          and lift up your people.<br></br>
+              ])}
+              {fourthCol('Repeat 📈', [
+                `If your funding cycles are recurring, any overflow you have will be used to fund your next funding cycle.`,
+                <br></br>,
+                <br></br>,
+                `You can also reconfigure your funding needs as your project grows, and democratically involve your community in enacting these decisions along the way.  
+                `,
+              ])}
+            </Row>
+          </div>
+          <div
+            style={{
+              fontWeight: 600,
+              marginTop: 40,
+              textAlign: 'center',
+            }}
+          >
+            Create value for your community, crush your craft, make your money,
+            and lift up your people.<br></br>
+          </div>
         </div>
       </section>
 
@@ -282,12 +284,17 @@ export default function Landing() {
           id="faq"
           style={{
             ...wrapper,
-            paddingTop: 80,
+            paddingTop: 20,
             paddingBottom: 80,
             maxWidth: 800,
           }}
         >
-          <Faq />
+          <div style={wrapper}>
+            <div style={{ display: 'grid', rowGap: 60 }}>
+              {bigHeader('FAQs')}
+              <Faq />
+            </div>
+          </div>
         </div>
       </section>
 

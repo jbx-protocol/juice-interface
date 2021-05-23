@@ -1,9 +1,9 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { colors } from 'constants/styles/colors'
 import { shadowCard } from 'constants/styles/shadowCard'
+import { ThemeContext } from 'contexts/themeContext'
 import { ChildElems } from 'models/child-elems'
-import { CSSProperties } from 'react'
+import { CSSProperties, useContext } from 'react'
 
 export default function WtfCard({
   children,
@@ -12,8 +12,12 @@ export default function WtfCard({
   children?: ChildElems
   style?: CSSProperties
 }) {
+  const theme = useContext(ThemeContext).theme
+
+  const shadowCardStyle = shadowCard(theme)
+
   const collapseStyle: CSSProperties = {
-    background: shadowCard.background,
+    background: shadowCardStyle.background,
     border: 'none',
   }
 
@@ -22,13 +26,15 @@ export default function WtfCard({
       style={{
         ...shadowCard,
         padding: 20,
-        background: colors.backgroundTertiary,
+        background: theme.colors.background.l2,
         ...style,
       }}
     >
       <Collapse style={collapseStyle}>
         <CollapsePanel header="WTF?" key={1} style={{ ...collapseStyle }}>
-          <div style={{ background: shadowCard.background }}>{children}</div>
+          <div style={{ background: shadowCardStyle.background }}>
+            {children}
+          </div>
         </CollapsePanel>
       </Collapse>
     </div>

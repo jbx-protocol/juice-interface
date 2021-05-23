@@ -1,0 +1,22 @@
+// Antd supports overriding base vars (https://gitee.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
+// but overriding with :root vars breaks due to antd's use of LESS functions.
+// To support dynamic theming, antd styles are overridden manually here
+
+@import 'button.scss';
+@import 'collapse.scss';
+@import 'description.scss';
+@import 'drawer.scss';
+@import 'input.scss';
+@import 'layout.scss';
+@import 'menu-item.scss';
+@import 'modal.scss';
+@import 'notification.scss';
+@import 'progress.scss';
+@import 'slider.scss';
+@import 'spin.scss';
+@import 'statistic.scss';
+@import 'step.scss';
+@import 'switch.scss';
+@import 'tab.scss';
+@import 'timeline.scss';
+@import 'tooltip.scss';

@@ -1,8 +1,9 @@
 import { Descriptions } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FundingCycle } from 'models/funding-cycle'
-import { useEffect } from 'react'
-import { fromPerMille } from 'utils/formatCurrency'
+import { formatWad, fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
@@ -13,17 +14,24 @@ export default function FundingCycleDetails({
 }) {
   if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(fundingCycle.start.mul(1000).toNumber())
+  const formattedStartTime = formatDate(fundingCycle.start * 1000)
 
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
+    (fundingCycle.start + fundingCycle.duration) * 1000,
   )
+
+  const metadata = decodeFCMetadata(fundingCycle.metadata)
 
   return (
     <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
       <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>
 
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
+
+      <Descriptions.Item label={<TooltipLabel label="Target" />}>
+        <CurrencySymbol currency={fundingCycle.currency} />
+        {formatWad(fundingCycle.target)}
+      </Descriptions.Item>
 
       <Descriptions.Item
         label={
@@ -33,7 +41,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerMille(fundingCycle.reserved)}%
+        {fromPerMille(metadata?.reserved)}%
       </Descriptions.Item>
 
       <Descriptions.Item
@@ -41,33 +49,23 @@ export default function FundingCycleDetails({
           <TooltipLabel
             label="Discount rate"
             tip="The rate at which payments to future
-            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame."
+            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
           />
         }
       >
         {fromPerMille(fundingCycle.discountRate)} %
       </Descriptions.Item>
 
-      <Descriptions.Item label="Term">
-        {fundingCycle.number.toString()}
+      <Descriptions.Item
+        label={
+          <TooltipLabel
+            label="Bonding curve"
+            tip="This rate determines the amount of overflow that each Ticket can be redeemed for at any given time. On a lower bonding curve, redeeming a ticket increases the value of each remaining ticket, creating an incentive to hodl tickets longer than others. A bonding curve of 100% means all tickets will have equal value regardless of when they are redeemed."
+          />
+        }
+      >
+        {fromPerMille(metadata?.bondingCurveRate)}%
       </Descriptions.Item>
-
-      {fundingCycle.bondingCurveRate.gt(0) ? (
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label="Bonding curve"
-              tip="A lower bonding curve has the effect of increasing the redeem value
-              of a ticket as the remaining ticket supply decreases, creating
-              incentive to hodl tickets and not redeem them early. A bonding curve
-              of 100% means all tickets will have the same value regardless
-              of when they are redeemed."
-            />
-          }
-        >
-          {fromPerMille(fundingCycle.bondingCurveRate)}%
-        </Descriptions.Item>
-      ) : null}
     </Descriptions>
   )
 }

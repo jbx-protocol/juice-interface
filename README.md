@@ -100,12 +100,10 @@ Deployment is managed via a CI workflow defined in `.github/workflows/main.yaml`
 
 The react app is packaged and published to the (juice.work/web-production Google Cloud App Engine)[https://console.cloud.google.com/appengine?project=web-production-294102&serviceId=default]. Once new versions have been published, they must be manually promoted in App Engine before they become live.# juicehouse
 
-## App styles
+## Theme
 
-The app uses (antd)[https://ant-design.gitee.io/] components. Antd is only compatible with LESS, so some steps have been taken here to make style variables compatible across LESS, SCSS, and TS/TSX.:
+The app uses the `SemanticTheme` pattern defined in src/models/semantic-theme, which allows mapping style properties to any number of enumerated `ThemeOption`s. These properties are defined in src/constants/theme. Theme styles can be accessed via `ThemeContext` defined in src/contexts/themeContext and instantiated in src/hooks/JuiceTheme, or via CSS root variables.
 
-Antd internal LESS variables are overriden in app/src/styles/antd.less. Run `yarn compile-less` in packages/app to compile changes. (Custom antd class overrides are in styles/antd-overrides.scss)
-
-Color variables are defined in app/src/constants/styles/colors.ts. Run `yarn compile-styles` to compile colors for SCSS and LESS files. Will also compile antd LESS variables.
+The app also relies on (antd)[https://ant-design.gitee.io/] components. To make Antd compatible with `SemanticTheme`, overrides are defined in src/styles/antd-overrides.
 
 # juicehouse

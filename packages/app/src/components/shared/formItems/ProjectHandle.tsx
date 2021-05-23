@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input } from 'antd'
-import { ContractName } from 'models/contract-name'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import { useCallback, useMemo, useState } from 'react'
-import { useEffect } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -13,12 +12,9 @@ export default function ProjectHandle({
   name,
   hideLabel,
   formItemProps,
-  value,
-  onChange,
-}: { value: string; onChange: (val?: string) => void } & FormItemExt) {
+  onValueChange,
+}: { onValueChange: (val: string) => void } & FormItemExt) {
   const [inputContents, setInputContents] = useState<string>()
-
-  useEffect(() => setInputContents(value), [value, setInputContents])
 
   // InputContents pattern allows checking if handle exists while typing
   const handleExists = useContractReader<boolean>({
@@ -38,28 +34,34 @@ export default function ProjectHandle({
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 
+  const checkHandle = useCallback(
+    (rule: any, value: any) => {
+      if (handleExists) return Promise.reject('Handle not available')
+      else return Promise.resolve()
+    },
+    [handleExists],
+  )
+
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Handle'}
-      extra={
-        handleExists ? (
-          <span style={{ color: 'red' }}>Handle not available</span>
-        ) : undefined
-      }
+      label={hideLabel ? undefined : 'Unique handle'}
       status={handleExists ? 'warning' : undefined}
       {...formItemProps}
+      rules={[{ validator: checkHandle }, ...(formItemProps?.rules ?? [])]}
     >
       <Input
+        id="testinput"
         prefix="@"
+        suffix={handleExists ? 'Handle taken' : ''}
+        className="err-suffix"
         placeholder="yourProject"
         type="string"
         autoComplete="off"
-        value={value}
         onChange={e => {
           const val = normalizeHandle(e.target.value)
           setInputContents(val)
-          onChange(val)
+          onValueChange(val)
         }}
       />
     </Form.Item>

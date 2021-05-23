@@ -78,6 +78,7 @@ export default function FormattedNumberInput({
             ? formattedNum(val, {
                 thousandsSeparator,
                 decimalSeparator,
+                padEnd: 1,
               })
             : '') +
           _suffix
@@ -105,7 +106,7 @@ export default function FormattedNumberInput({
           fontSize: '.8rem',
         }}
       >
-        {accessory ? <div id={accessoryId}>{accessory}</div> : null}
+        {accessory && <div id={accessoryId}>{accessory}</div>}
       </div>
     </div>
   )

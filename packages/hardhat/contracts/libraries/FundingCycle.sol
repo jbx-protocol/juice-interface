@@ -1,23 +1,35 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
+pragma solidity >=0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
+import "prb-math/contracts/PRBMathUD60x18.sol";
+import "prb-math/contracts/PRBMathCommon.sol";
 
-import "./FullMath.sol";
-import "./DSMath.sol";
+import "./../interfaces/IFundingCycleBallot.sol";
 
 /// @notice Funding cycle data and logic.
 library FundingCycle {
-    using SafeMath for uint256;
-
     /// @notice Possible states that a funding cycle may be in
     /// @dev Funding cycles's are immutable once they are active.
     enum State {Standby, Active, Expired}
 
     /// @notice The funding cycle structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.
     struct Data {
+        // The ballot contract to use to determine a subsequent funding cycle's reconfiguration status.
+        IFundingCycleBallot ballot;
+        // The ballot contract to use to determine this funding cycle's reconfiguration status.
+        IFundingCycleBallot currentBallot;
+        // The currency that the target is measured in.
+        uint8 currency;
+        // The percentage of each payment to send as a fee to the Juice admin.
+        uint16 fee;
+        // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
+        uint16 discountRate;
+        // The number of seconds until this funding cycle's surplus is redistributed.
+        uint32 duration;
+        // The time when this funding cycle will become active.
+        uint48 start;
+        // The time when this funding cycle was last configured.
+        uint48 configured;
         // A unique number that's incremented for each new funding cycle, starting with 1.
         uint256 id;
         // The ID of the project contract that this funding cycle belongs to.
@@ -26,32 +38,14 @@ library FundingCycle {
         uint256 number;
         // The ID of the project's funding cycle that came before this one. 0 if none.
         uint256 previous;
-        // The amount that this funding cycle is targeting.
+        // The amount that this funding cycle is targeting in terms of the currency.
         uint256 target;
-        // The currency that the target is measured in.
-        uint256 currency;
-        // The time when this funding cycle will become active.
-        uint256 start;
-        // The number of seconds until this funding cycle's surplus is redistributed.
-        uint256 duration;
         // The amount of available funds that have been tapped by the project in terms of the currency.
-        uint256 tappedTarget;
-        // The amount of available funds that have been tapped by the project in terms of eth.
-        uint256 tappedTotal;
-        // The percentage of tickets to reserve for the project once the funding cycle has expired.
-        uint256 reserved;
-        // The percentage of each payment to send as a fee to the Juice admin.
-        uint256 fee;
+        uint256 tapped;
         // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
         uint256 weight;
-        // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
-        uint256 discountRate;
-        // The rate that describes the bonding curve at which overflow can be claimed.
-        uint256 bondingCurveRate;
-        // The time when this funding cycle was last configured.
-        uint256 configured;
-        // The time after which this cycle is eligible to become the active cycle.
-        uint256 eligibleAfter;
+        // A packed list of extra data. The first 8 bytes are reserved for versioning.
+        uint256 metadata;
     }
 
     // --- internal transactions --- //
@@ -70,14 +64,16 @@ library FundingCycle {
         _self.duration = _baseFundingCycle.duration;
         _self.projectId = _baseFundingCycle.projectId;
         _self.discountRate = _baseFundingCycle.discountRate;
-        _self.bondingCurveRate = _baseFundingCycle.bondingCurveRate;
+        _self.metadata = _baseFundingCycle.metadata;
         _self.weight = _derivedWeight(_baseFundingCycle);
-        _self.reserved = _baseFundingCycle.reserved;
         _self.configured = _baseFundingCycle.configured;
-        _self.eligibleAfter = _baseFundingCycle.eligibleAfter;
-        _self.number = _baseFundingCycle.number.add(1);
+        _self.number = _baseFundingCycle.number + 1;
         _self.previous = _baseFundingCycle.id;
         _self.fee = _baseFundingCycle.fee;
+        _self.ballot = _baseFundingCycle.ballot;
+
+        // Use the base funding cycle's ballot as this funding cycle's current ballot.
+        _self.currentBallot = _baseFundingCycle.ballot;
     }
 
     // --- internal views --- //
@@ -103,13 +99,12 @@ library FundingCycle {
         view
         returns (uint256)
     {
-        uint256 _end = _self.start.add(_self.duration);
+        uint256 _end = uint256(_self.start) + uint256(_self.duration);
         // Use the old end if the current time is still within the duration.
-        if (_end.add(_self.duration) > block.timestamp) return _end;
+        if (_end + _self.duration > block.timestamp) return _end;
         // Otherwise, use the closest multiple of the duration from the old end.
-        uint256 _distanceToStart =
-            (block.timestamp.sub(_end)).mod(_self.duration);
-        return block.timestamp.sub(_distanceToStart);
+        uint256 _distanceToStart = (block.timestamp - _end) % _self.duration;
+        return block.timestamp - _distanceToStart;
     }
 
     /** 
@@ -120,23 +115,22 @@ library FundingCycle {
     function _nextUp(Data memory _self) internal view returns (Data memory) {
         return
             Data(
+                _self.ballot,
+                _self.currentBallot,
+                _self.currency,
+                _self.fee,
+                _self.discountRate,
+                _self.duration,
+                uint32(_determineNextStart(_self)),
+                _self.configured,
                 0,
                 _self.projectId,
-                _self.number.add(1),
+                _self.number + 1,
                 _self.id,
                 _self.target,
-                _self.currency,
-                _determineNextStart(_self),
-                _self.duration,
                 0,
-                0,
-                _self.reserved,
-                _self.fee,
                 _derivedWeight(_self),
-                _self.discountRate,
-                _self.bondingCurveRate,
-                _self.configured,
-                _self.eligibleAfter
+                _self.metadata
             );
     }
 
@@ -146,7 +140,7 @@ library FundingCycle {
         @return _weight The new weight.
     */
     function _derivedWeight(Data memory _self) internal pure returns (uint256) {
-        return FullMath.mulDiv(_self.weight, _self.discountRate, 1000);
+        return PRBMathCommon.mulDiv(_self.weight, _self.discountRate, 1000);
     }
 
     /** 
@@ -161,45 +155,25 @@ library FundingCycle {
         uint256 _amount,
         uint256 _percentage
     ) internal pure returns (uint256) {
-        return
-            FullMath.mulDiv(
-                FullMath.mulDiv(_self.weight, _amount, _self.target),
-                _percentage,
-                1000
-            );
+        uint256 _base = PRBMathUD60x18.mul(_amount, _self.weight);
+        if (_percentage == 1000) return _base;
+        return PRBMathCommon.mulDiv(_base, _percentage, 1000);
     }
 
     /** 
         @notice Taps an amount from the funding cycle.
         @param _self The funding cycle to tap an amount from.
         @param _amount An amount to tap. In `currency`.
-        @param _ethPrice The current price of ETH.
-        @param _currentlyDrawable The amount of ETH that can be drawn from an external source if there's not enough in the funding cycle total.
-        @return convertedEthAmount The amount of ETH that was tapped.
     */
-    function _tap(
-        Data storage _self,
-        uint256 _amount,
-        uint256 _ethPrice,
-        uint256 _currentlyDrawable
-    ) internal returns (uint256 convertedEthAmount) {
-        // The amount being tapped must be less than the tappable amount plus the drawable amount.
+    function _tap(Data storage _self, uint256 _amount) internal {
+        // Amount must be within what is still tappable.
         require(
-            // Amount must be within what is drawable.
-            _amount <= DSMath.wmul(_currentlyDrawable, _ethPrice) &&
-                // Amount must be within what is still tappable.
-                _amount <= _ownerTappableAmount(_self),
+            _amount <= _self.target - _self.tapped,
             "FundingCycle: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the funding cycle's tapped amount.
-        _self.tappedTarget = _self.tappedTarget.add(_amount);
-
-        // The amount of ETH that is being tapped.
-        convertedEthAmount = DSMath.wdiv(_amount, _ethPrice);
-
-        // Add the converted currency amount to the funding cycle's total amount.
-        _self.tappedTotal = _self.tappedTotal.add(convertedEthAmount);
+        _self.tapped = _self.tapped + _amount;
     }
 
     /** 
@@ -217,25 +191,36 @@ library FundingCycle {
         @return hasExpired The boolean result.
     */
     function _hasExpired(Data memory _self) internal view returns (bool) {
-        return block.timestamp > _self.start.add(_self.duration);
+        return block.timestamp > uint256(_self.start) + _self.duration;
     }
 
-    // --- private views --- //
+    /** 
+        @notice Whether a funding cycle configuration is currently approved.
+        @param _self The funding cycle configuration to check the approval of.
+        @return Whether the funding cycle's configuration is approved.
+    */
+    function _isConfigurationApproved(Data memory _self)
+        internal
+        view
+        returns (bool)
+    {
+        return
+            _self.currentBallot == IFundingCycleBallot(address(0)) ||
+            _self.currentBallot.isApproved(_self.id, _self.configured);
+    }
 
     /** 
-        @notice Returns the amount available for the project owner to tap in to.
-        @param _self The funding cycle to make the calculation for.
-        @return The resulting amount.
+        @notice Whether a funding cycle configuration is currently pending approval.
+        @param _self The funding cycle configuration to check the pending status of.
+        @return Whether the funding cycle's configuration is pending approved.
     */
-    function _ownerTappableAmount(Data memory _self)
-        private
-        pure
-        returns (uint256)
+    function _isConfigurationPending(Data memory _self)
+        internal
+        view
+        returns (bool)
     {
-        if (_self.tappedTarget == _self.target) return 0;
         return
-            FullMath
-                .mulDiv(_self.target, 1000, uint256(1000).add(_self.fee))
-                .sub(_self.tappedTarget);
+            _self.currentBallot != IFundingCycleBallot(address(0)) &&
+            _self.currentBallot.isPending(_self.id, _self.configured);
     }
 }

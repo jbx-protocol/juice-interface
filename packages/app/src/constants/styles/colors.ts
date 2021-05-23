@@ -1,34 +1,40 @@
-import { CSSProperties } from 'react'
-
-export type JuiceColor =
-  | 'juiceOrange'
-  | 'juiceLight'
-  | 'cta'
-  | 'ctaLight'
-  | 'ctaHint'
-  | 'background'
-  | 'backgroundSecondary'
-  | 'backgroundTertiary'
-  | 'grape'
-  | 'grapeHint'
-  | 'dark'
-  | 'medium'
-  | 'bodyPrimary'
-  | 'bodySecondary'
-
-export const colors: Record<JuiceColor, CSSProperties['color']> = {
-  background: '#131115',
-  backgroundSecondary: '#241c2b',
-  backgroundTertiary: '#392b46',
+export const lightColors = {
+  black: '#000',
+  white: '#fff',
+  dark0: '#000000ee',
+  dark1: '#00000099',
+  dark2: '#00000055',
+  dark3: '#00000044',
   grape: '#574c67',
   grapeHint: '#574c6748',
-  dark: '#000',
-  medium: '#ffffff44',
-  bodyPrimary: '#ffffffee',
-  bodySecondary: '#a29fa7',
-  juiceOrange: '#FFB32C',
-  cta: '#32c8db',
-  ctaLight: '#61edff',
-  ctaHint: '#32c8db22',
+  juiceOrange: '#f5a312',
   juiceLight: '#FFECBB',
+  cta: '#18b4c7',
+  ctaHighlight: '#25c4d8',
+  ctaHint: '#18b4c722',
+  green: 'green',
+  red: 'tomato',
+  yellow: 'yellow',
+}
+
+export const darkColors = {
+  black: '#000',
+  white: '#fff',
+  light0: '#d9d5e0',
+  light1: '#d9d5e096',
+  light2: '#d9d5e068',
+  light3: '#d9d5e048',
+  dark0: '#131115',
+  dark1: '#241c2b',
+  dark2: '#392b46',
+  grape: '#574c67',
+  grapeHint: '#574c6748',
+  juiceOrange: '#FFB32C',
+  juiceLight: '#FFECBB',
+  cta: '#32c8db',
+  ctaHighlight: '#38e9ff',
+  ctaHint: '#32c8db22',
+  green: 'green',
+  red: 'tomato',
+  yellow: 'yellow',
 }

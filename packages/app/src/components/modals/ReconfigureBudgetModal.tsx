@@ -6,6 +6,7 @@ import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useEffect, useState } from 'react'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import {
   fromPerMille,
   fromWad,
@@ -38,19 +39,21 @@ export default function ReconfigureBudgetModal({
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<ReconfigureBudgetFormFields>()
 
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+
   useEffect(() => {
-    if (!fundingCycle) return
+    if (!fundingCycle || !metadata) return
 
     form.setFieldsValue({
       duration: fundingCycle.duration.toString(),
       target: fromWad(fundingCycle.target),
-      currency: fundingCycle.currency.toString() as CurrencyOption,
+      currency: fundingCycle.currency,
       discountRate: fromPerMille(fundingCycle.discountRate),
-      reserved: fromPerMille(fundingCycle.reserved),
-      bondingCurveRate: fromPerMille(fundingCycle.bondingCurveRate),
+      reserved: fromPerMille(metadata.reserved),
+      bondingCurveRate: fromPerMille(metadata.bondingCurveRate),
     })
 
-    setIsRecurring(!fundingCycle.discountRate.eq(0))
+    setIsRecurring(fundingCycle.discountRate !== 0)
   }, [fundingCycle, form])
 
   if (!transactor || !contracts) return null
@@ -110,7 +113,6 @@ export default function ReconfigureBudgetModal({
         <FormItems.ProjectDuration
           name="duration"
           value={form.getFieldValue('duration')}
-          onChange={val => form.setFieldsValue({ duration: val })}
           isRecurring={isRecurring}
           onToggleRecurring={() => setIsRecurring(!isRecurring)}
         />

@@ -1,9 +1,16 @@
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export default function Footer() {
+  const { colors } = useContext(ThemeContext).theme
+
   const link = (text: string, link: string) => (
     <a
-      style={{ color: colors.cta, marginLeft: 10, marginRight: 10 }}
+      style={{
+        color: colors.text.action.primary,
+        marginLeft: 10,
+        marginRight: 10,
+      }}
       href={link}
     >
       {text}
@@ -23,7 +30,7 @@ export default function Footer() {
       <div style={{ display: 'inline-flex', justifyContent: 'center' }}>
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {link('Github', 'https://github.com/juice-work/juicehouse')}
-        {link('Twitter', 'https://twitter.com/doworkgetjuice')}
+        {link('Twitter', 'https://twitter.com/juicedotwork')}
       </div>
     </div>
   )

@@ -3,50 +3,30 @@ import { formatEther, parseEther } from '@ethersproject/units'
 import { Button } from 'antd'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
-import { useWeth } from 'hooks/Weth'
-import { useContext, useState } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { useContext, useEffect, useState } from 'react'
 
 export default function Gimme() {
-  const { userAddress, contracts, transactor } = useContext(UserContext)
-
-  const weth = useWeth()
+  const { userAddress, contracts, transactor, signingProvider } = useContext(
+    UserContext,
+  )
+  const [balance, setBalance] = useState<BigNumber>()
 
   const [gimmeAmount, setGimmeAmount] = useState<string>('2')
-  const [allowanceAmount, setAllowanceAmount] = useState<string>('10000')
 
-  const balance = useContractReader<BigNumber>({
-    contract: weth?.contract,
-    functionName: 'balanceOf',
-    args: userAddress ? [userAddress] : null,
-    valueDidChange: bigNumbersDiff,
-  })
+  useEffect(() => {
+    async function getBalance() {
+      if (!signingProvider || !userAddress) return
+      setBalance(await signingProvider.getBalance(userAddress))
+    }
 
-  const allowance = useContractReader<BigNumber>({
-    contract: weth?.contract,
-    functionName: 'allowance',
-    args:
-      userAddress && contracts?.Juicer
-        ? [userAddress, contracts?.Juicer?.address]
-        : null,
-    valueDidChange: bigNumbersDiff,
-  })
+    getBalance()
+  }, [userAddress, signingProvider])
 
   function gimme() {
     if (!transactor || !contracts?.Token) return
 
     transactor(contracts.Token, 'gimme', [
       parseEther(gimmeAmount).toHexString(),
-    ])
-  }
-
-  function approve() {
-    if (!transactor || !contracts?.Juicer || !contracts?.Token) return
-
-    transactor(contracts.Token, 'approve', [
-      contracts.Juicer?.address,
-      parseEther(allowanceAmount).toHexString(),
     ])
   }
 
@@ -60,20 +40,7 @@ export default function Gimme() {
       }}
     >
       <div>
-        <h4>
-          Current {weth?.symbol} allowance: {formatEther(allowance ?? 0)}
-        </h4>
-        <input
-          defaultValue={allowanceAmount}
-          placeholder="0"
-          onChange={e => setAllowanceAmount(e.target.value)}
-        />
-        <Button onClick={approve}>Update</Button>
-      </div>
-      <div>
-        <h2>
-          Current {weth?.symbol} balance {formatEther(balance ?? 0)}
-        </h2>
+        <h2>Current ETH balance {formatEther(balance ?? 0)}</h2>
         <h4>Get Token</h4>
         <input
           defaultValue={gimmeAmount}

@@ -33,7 +33,7 @@ export default function useContractReader<V>({
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
   provider?: JsonRpcProvider
-}) {
+}): V | undefined {
   const [value, setValue] = useState<V | undefined>()
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
@@ -65,7 +65,8 @@ export default function useContractReader<V>({
         }
       } catch (err) {
         console.log('📕 Read error >', functionName, { args }, { err })
-        setValue(undefined)
+        const newValue = _formatter(undefined)
+        setValue(newValue)
         _callback(undefined)
       }
     }

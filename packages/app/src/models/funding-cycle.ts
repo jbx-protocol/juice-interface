@@ -6,16 +6,21 @@ export interface FundingCycle {
   number: BigNumber
   previous: BigNumber
   target: BigNumber
-  currency: BigNumber // 0 ETH, 1 USD
-  start: BigNumber
-  duration: BigNumber
-  tappedTarget: BigNumber
-  tappedTotal: BigNumber
-  reserved: BigNumber
-  fee: BigNumber
+  currency: 0 | 1 // 0 ETH, 1 USD
+  start: number
+  duration: number
+  tapped: BigNumber
+  fee: number
   weight: BigNumber
-  discountRate: BigNumber
-  bondingCurveRate: BigNumber
-  configured: BigNumber
+  discountRate: number
+  configured: number
   ballot: string
+  metadata: BigNumber // encoded FundingCycleData
+}
+
+export interface FCMetadata {
+  version: number
+  bondingCurveRate: number
+  reconfigurationBondingCurveRate: number
+  reserved: number
 }

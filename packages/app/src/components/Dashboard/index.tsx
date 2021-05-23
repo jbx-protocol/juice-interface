@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Col, Row, Tabs } from 'antd'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
@@ -8,28 +7,19 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import Loading from '../shared/Loading'
-import FundingHistory from './FundingHistory'
-import PayEvents from './PayEvents'
 import Project from './Project'
-import QueuedFundingCycle from './QueuedFundingCycle'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
 
-  const { userAddress, network } = useContext(UserContext)
+  const { userAddress } = useContext(UserContext)
 
   const { handle }: { handle?: string } = useParams()
 
@@ -41,9 +31,12 @@ export default function Dashboard() {
 
       let bytes = utils.formatBytes32String(normalizeHandle(handle))
 
-      while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
-        bytes = bytes.substring(0, bytes.length - 2)
+      // Trim trailing zeros
+      while (bytes.length && bytes.charAt(bytes.length - 1) === '0') {
+        bytes = bytes.substring(0, bytes.length - 1)
       }
+      // Bytes must have even length
+      if (bytes.length % 2 === 1) bytes += '0'
 
       return [bytes]
     }, [handle]),
@@ -77,8 +70,18 @@ export default function Dashboard() {
     updateOn: projectId
       ? [
           {
-            contract: ContractName.FundingCycles,
+            contract: ContractName.Juicer,
             eventName: 'Reconfigure',
+            topics: [[], projectId.toHexString()],
+          },
+          {
+            contract: ContractName.Juicer,
+            eventName: 'Pay',
+            topics: [[], projectId.toHexString()],
+          },
+          {
+            contract: ContractName.Juicer,
+            eventName: 'Tap',
             topics: [[], projectId.toHexString()],
           },
         ]
@@ -103,11 +106,6 @@ export default function Dashboard() {
     )
   }
 
-  const tabPaneStyle: CSSProperties = {
-    paddingTop: padding.app,
-    paddingBottom: 60,
-  }
-
   if (!projectId) return null
 
   return (
@@ -118,39 +116,6 @@ export default function Dashboard() {
         project={project}
         fundingCycle={fundingCycle}
       />
-
-      <div style={{ marginTop: 80 }}>
-        <Row gutter={40}>
-          <Col xs={24} md={12}>
-            <Tabs
-              defaultActiveKey="upcoming"
-              size="large"
-              tabBarStyle={{
-                fontWeight: 600,
-                marginBottom: 0,
-                paddingTop: 0,
-                paddingBottom: 0,
-              }}
-              style={{ overflow: 'visible' }}
-            >
-              <Tabs.TabPane tab="Upcoming" key="upcoming" style={tabPaneStyle}>
-                <QueuedFundingCycle
-                  isOwner={isOwner}
-                  projectId={projectId}
-                  currentCycle={fundingCycle}
-                />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="History" key="history" style={tabPaneStyle}>
-                <FundingHistory startId={fundingCycle?.previous} />
-              </Tabs.TabPane>
-            </Tabs>
-          </Col>
-
-          <Col xs={24} md={12}>
-            <PayEvents projectId={projectId} />
-          </Col>
-        </Row>
-      </div>
     </div>
   )
 }

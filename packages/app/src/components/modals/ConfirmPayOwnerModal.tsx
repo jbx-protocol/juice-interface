@@ -3,11 +3,12 @@ import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useWeth } from 'hooks/Weth'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
-import { formatWad, parsePerMille } from 'utils/formatCurrency'
+import { currencyName } from 'utils/currency'
+import { formattedNum, formatWad } from 'utils/formatCurrency'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
 export default function ConfirmPayOwnerModal({
@@ -15,7 +16,7 @@ export default function ConfirmPayOwnerModal({
   project,
   fundingCycle,
   visible,
-  usdAmount,
+  weiAmount,
   onSuccess,
   onCancel,
 }: {
@@ -23,18 +24,18 @@ export default function ConfirmPayOwnerModal({
   project: ProjectIdentifier
   fundingCycle: FundingCycle | undefined
   visible?: boolean
-  usdAmount: number | undefined
+  weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
 
-  const weth = useWeth()
-
   const converter = useCurrencyConverter()
 
-  const weiAmount = converter.usdToWei(usdAmount)
+  const usdAmount = converter.weiToUsd(weiAmount)
+
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
   async function pay() {
     if (!contracts || !projectId || !transactor) return
@@ -46,11 +47,12 @@ export default function ConfirmPayOwnerModal({
       'pay',
       [
         projectId.toHexString(),
-        weiAmount?.toHexString(),
         userAddress,
         form.getFieldValue('note') || '',
+        false,
       ],
       {
+        value: weiAmount?.toHexString(),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
         },
@@ -58,17 +60,10 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const receivedTickets = weightedRate(
-    fundingCycle,
-    weiAmount,
-    parsePerMille('100').sub(fundingCycle?.reserved ?? '0'),
-  )
-
-  const ownerTickets = weightedRate(
-    fundingCycle,
-    weiAmount,
-    fundingCycle?.reserved,
-  )
+  const currencyWad =
+    fundingCycle?.currency === 0 ? weiAmount : converter.weiToUsd(weiAmount)
+  const receivedTickets = weightedRate(fundingCycle, currencyWad, 'payer')
+  const ownerTickets = weightedRate(fundingCycle, currencyWad, 'reserved')
 
   return (
     <Modal
@@ -82,13 +77,14 @@ export default function ConfirmPayOwnerModal({
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Descriptions column={1} bordered>
-          <Descriptions.Item label="Pay amount">
-            {usdAmount} USD ({formatWad(weiAmount)} {weth?.symbol})
+          <Descriptions.Item label="Pay amount" className="content-right">
+            {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
+            {currencyName(0)})
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets for you">
+          <Descriptions.Item label="Tickets for you" className="content-right">
             {formatWad(receivedTickets)}
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets for owner">
+          <Descriptions.Item label="Tickets reserved" className="content-right">
             {formatWad(ownerTickets)}
           </Descriptions.Item>
         </Descriptions>

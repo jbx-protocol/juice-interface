@@ -599,7 +599,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "claimableAmount",
+    "name": "claimableOverflow",
     "outputs": [
       {
         "internalType": "uint256",

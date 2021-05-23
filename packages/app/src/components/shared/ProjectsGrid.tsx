@@ -1,6 +1,7 @@
 import { Col, ColProps, Row } from 'antd'
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import { ProjectIdentifier } from 'models/project-identifier'
+import { useContext } from 'react'
 
 import ProjectLogo from './ProjectLogo'
 
@@ -9,13 +10,15 @@ export default function ProjectsGrid({
 }: {
   projects: ProjectIdentifier[] | undefined
 }) {
+  const { colors, radii } = useContext(ThemeContext).theme
+
   const projectCard = (project: ProjectIdentifier) => (
     <div
       style={{
         display: 'flex',
         alignItems: 'center',
         padding: 20,
-        borderRadius: 12,
+        borderRadius: radii.lg,
         cursor: 'pointer',
         overflow: 'hidden',
       }}
@@ -28,20 +31,22 @@ export default function ProjectsGrid({
       </div>
 
       <div style={{ whiteSpace: 'break-spaces', minWidth: 0 }}>
-        <h2 style={{ color: colors.bodyPrimary }}>{project.name}</h2>
+        <h2 style={{ color: colors.text.primary }}>{project.name}</h2>
         <span
           style={{
             fontWeight: 500,
-            color: colors.bodySecondary,
+            color: colors.text.secondary,
             marginRight: 10,
             display: 'inline-block',
           }}
         >
           @{project.handle}
         </span>
-        {project?.link ? (
-          <span style={{ color: colors.cta }}>{project.link}</span>
-        ) : null}
+        {project.link && (
+          <span style={{ color: colors.text.action.primary }}>
+            {project.link}
+          </span>
+        )}
       </div>
     </div>
   )
@@ -56,15 +61,16 @@ export default function ProjectsGrid({
 
   return (
     <div>
-      {projects?.map((project, i) =>
-        i % 2 === 0 ? (
-          <Row gutter={gutter} key={project.handle}>
-            <Col {...colProps}>{projectCard(project)}</Col>
-            {i + 1 < projects.length ? (
-              <Col {...colProps}>{projectCard(projects[i + 1])}</Col>
-            ) : null}
-          </Row>
-        ) : null,
+      {projects?.map(
+        (project, i) =>
+          i % 2 === 0 && (
+            <Row gutter={gutter} key={project.handle}>
+              <Col {...colProps}>{projectCard(project)}</Col>
+              {i + 1 < projects.length && (
+                <Col {...colProps}>{projectCard(projects[i + 1])}</Col>
+              )}
+            </Row>
+          ),
       )}
     </div>
   )

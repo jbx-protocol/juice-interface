@@ -1,18 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
-
-import "@openzeppelin/contracts/math/SafeMath.sol";
+pragma solidity >=0.8.0;
 
 import "./libraries/FundingCycle.sol";
 import "./interfaces/IFundingCycles.sol";
+import "./interfaces/IPrices.sol";
 import "./abstract/Administered.sol";
 
 /** 
   @notice An immutable contract to manage funding cycle configurations.
 */
 contract FundingCycles is Administered, IFundingCycles {
-    using SafeMath for uint256;
     using FundingCycle for FundingCycle.Data;
 
     // --- private properties --- //
@@ -21,6 +18,9 @@ contract FundingCycles is Administered, IFundingCycles {
     mapping(uint256 => FundingCycle.Data) private fundingCycles;
 
     // --- public properties --- //
+
+    // The starting weight for each project's first funding cycle.
+    uint256 public constant override BASE_WEIGHT = 1E22;
 
     /// @notice The latest FundingCycle ID for each project id.
     mapping(uint256 => uint256) public override latestId;
@@ -60,14 +60,30 @@ contract FundingCycles is Administered, IFundingCycles {
         override
         returns (FundingCycle.Data memory)
     {
-        FundingCycle.Data memory _sFundingCycle = _standby(_projectId);
-        FundingCycle.Data memory _aFundingCycle = _active(_projectId);
+        // Get a reference to the standby funding cycle.
+        FundingCycle.Data memory _standbyFundingCycle = _standby(_projectId);
 
-        // If there are both active and standby funding cycle, the standby fundingCycle must be queued.
-        if (_sFundingCycle.id > 0 && _aFundingCycle.id > 0)
-            return _sFundingCycle;
-        require(_aFundingCycle.id > 0, "FundingCycle::getQueued: NOT_FOUND");
-        return _aFundingCycle._nextUp();
+        // If it exists, return it.
+        if (_standbyFundingCycle.id > 0) return _standbyFundingCycle;
+
+        // Get a reference to the active funding cycle.
+        FundingCycle.Data memory _activeFundingCycle = _active(_projectId);
+
+        // If it exists, return its next up.
+        if (_activeFundingCycle.id > 0) return _activeFundingCycle._nextUp();
+
+        // Get the latest funding cycle.
+        FundingCycle.Data memory _latestFundingCycle =
+            fundingCycles[latestId[_projectId]];
+
+        // A funding cycle must exist.
+        require(
+            _latestFundingCycle.id > 0,
+            "FundingCycle::getQueued: NOT_FOUND"
+        );
+
+        // Return the second next up.
+        return _latestFundingCycle._nextUp()._nextUp();
     }
 
     /**
@@ -91,8 +107,8 @@ contract FundingCycles is Administered, IFundingCycles {
         if (fundingCycle.id > 0) return fundingCycle;
         // No active funding cycle found, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
-        // Funding cycle if exists, has been in standby for enough time to become eligible.
-        if (fundingCycle.id > 0 && block.timestamp > fundingCycle.eligibleAfter)
+        // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
+        if (fundingCycle.id > 0 && fundingCycle._isConfigurationApproved())
             return fundingCycle;
         // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
         // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
@@ -115,19 +131,19 @@ contract FundingCycles is Administered, IFundingCycles {
         @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
         sets the properties of the funding cycle that will take effect once the current one expires.
         @dev The msg.sender is the project of the funding cycle.
-        @param _projectId The ID of the project being configured. Send 0 to configure a new project.
-        @param _target The cashflow target to set.
-        @param _currency The currency of the target.
-        @param _duration The duration to set, measured in seconds.
-        @param _discountRate A number from 95-100 indicating how valuable a contribution to the current funding cycle is 
-        compared to the project's previous funding cycle.
-        If it's 100, each funding cycle will have equal weight.
-        If it's 95, each Money pool will be 95% as valuable as the previous Money pool's weight.
-        @param _bondingCurveRate The rate that describes the bonding curve at which overflow can be claimed.
-        @param _reserved The percentage of this funding cycle's overflow to reserve for the project.
-        @param _reconfigurationDelay The number of seconds that must pass for this configuration to become active.
-        @param _fee The fee that this configuration incures.
-        @return fundingCycle The funding cycle that was successfully configured.
+        @param _projectId The ID of the project being reconfigured. 
+        @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
+        @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+        @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        If it's 1000, each funding stage will have equal weight.
+        If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+        If the number is 0, an non-recurring funding stage will get made.
+        @param _fee The fee that this configuration will incure when tapping.
+        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @param _metadata Data to store with the funding cycle. 
+        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
+        @return The funding cycle that was successfully configured.
     */
     function configure(
         uint256 _projectId,
@@ -135,91 +151,64 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        uint256 _bondingCurveRate,
-        uint256 _reserved,
-        uint256 _reconfigurationDelay,
-        uint256 _fee
-    )
-        external
-        override
-        onlyAdmin
-        returns (FundingCycle.Data memory fundingCycle)
-    {
+        uint256 _fee,
+        IFundingCycleBallot _ballot,
+        uint256 _metadata,
+        bool _configureActiveFundingCycle
+    ) external override onlyAdmin returns (FundingCycle.Data memory) {
+        // Target must be greater than 0.
+        require(_target > 0, "FundingCycles::reconfigure: BAD_TARGET");
+
+        // Duration must be greater than 0.
+        require(_duration > 0, "FundingCycles::reconfigure: BAD_DURATION");
+
         // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
         FundingCycle.Data storage _fundingCycle =
-            _ensureConfigurable(_projectId, _reconfigurationDelay == 0);
+            _ensureConfigurable(_projectId, _configureActiveFundingCycle);
+
+        // The `discountRate` token must be between 0% and 100%.
+        require(
+            _discountRate >= 0 && _discountRate <= 1000,
+            "FundingCycles::deploy: BAD_DISCOUNT_RATE"
+        );
 
         // Set the properties of the funding cycle.
         _fundingCycle.target = _target;
-        _fundingCycle.duration = _duration;
-        _fundingCycle.currency = _currency;
-        _fundingCycle.discountRate = _discountRate;
-        _fundingCycle.bondingCurveRate = _bondingCurveRate;
-        _fundingCycle.reserved = _reserved;
-        _fundingCycle.fee = _fee;
-        _fundingCycle.configured = block.timestamp;
-        _fundingCycle.eligibleAfter = block.timestamp.add(
-            _reconfigurationDelay
-        );
+        _fundingCycle.duration = uint32(_duration);
+        _fundingCycle.currency = uint8(_currency);
+        _fundingCycle.discountRate = uint16(_discountRate);
+        _fundingCycle.metadata = _metadata;
+        _fundingCycle.fee = uint16(_fee);
+        _fundingCycle.configured = uint48(block.timestamp);
+        _fundingCycle.ballot = _ballot;
+
+        // If there isn't a current ballot inherited, set the current ballot to the provided one.
+        if (_fundingCycle.currentBallot == IFundingCycleBallot(address(0)))
+            _fundingCycle.currentBallot = _ballot;
 
         // Return the funding cycle.
-        fundingCycle = _fundingCycle;
+        return _fundingCycle;
     }
 
     /** 
       @notice Tracks a project tapping its funds.
       @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
-      @param _currency The currency of the amount.
-      @param _currentOverflow The current amount of overflow the project has.
-      @param _ethPrice The current price of ETH.
-      @return id The ID of the funding cycle that was tapped.
-      @return convertedEthAmount The amount of eth tapped.
-      @return feeAmount The amount of eth that should be charged as a fee.
+        @return fundingCycle The funding cycle that was successfully tapped.
     */
-    function tap(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _currency,
-        uint256 _currentOverflow,
-        uint256 _ethPrice
-    )
+    function tap(uint256 _projectId, uint256 _amount)
         external
         override
         onlyAdmin
-        returns (
-            uint256 id,
-            uint256 convertedEthAmount,
-            uint256 feeAmount
-        )
+        returns (FundingCycle.Data memory)
     {
         // Get a reference to the funding cycle being tapped.
         FundingCycle.Data storage _fundingCycle = _ensureActive(_projectId);
 
-        require(
-            _currency == _fundingCycle.currency,
-            "FundingCycle::tap: UNEXPECTED_CURRENCY"
-        );
-
         // Tap the amount.
-        convertedEthAmount = _fundingCycle._tap(
-            _amount,
-            _ethPrice,
-            // The funding cycle can tap from the project's overflow.
-            _currentOverflow
-        );
+        _fundingCycle._tap(_amount);
 
-        // The amount that should be charged as a fee for tapping.
-        feeAmount = convertedEthAmount.sub(
-            FullMath.mulDiv(
-                convertedEthAmount,
-                1000,
-                _fundingCycle.fee.add(1000)
-            )
-        );
-
-        // Return the ID of the funding cycle that was tapped.
-        id = _fundingCycle.id;
+        return _fundingCycle;
     }
 
     // --- private transactions --- //
@@ -256,7 +245,7 @@ contract FundingCycles is Administered, IFundingCycles {
         fundingCycle = _aFundingCycle.id > 0
             ? _init(
                 _projectId,
-                _aFundingCycle.start.add(_aFundingCycle.duration),
+                uint256(_aFundingCycle.start) + _aFundingCycle.duration,
                 fundingCycle
             )
             : _init(_projectId, block.timestamp, fundingCycle);
@@ -277,8 +266,11 @@ contract FundingCycles is Administered, IFundingCycles {
         // No active funding cycle found, check if there is a standby funding cycle.
         fundingCycle = _standby(_projectId);
         // Funding cycle if exists, has been in standby for enough time to become eligible.
-        if (fundingCycle.id > 0 && block.timestamp > fundingCycle.eligibleAfter)
-            return fundingCycle;
+        if (
+            fundingCycle.id > 0 &&
+            // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
+            fundingCycle._isConfigurationApproved()
+        ) return fundingCycle;
         // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
         // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
         fundingCycle = fundingCycles[
@@ -313,18 +305,15 @@ contract FundingCycles is Administered, IFundingCycles {
         count++;
         newFundingCycle = fundingCycles[count];
         newFundingCycle.id = count;
-        newFundingCycle.start = _start;
-        newFundingCycle.tappedTotal = 0;
-        newFundingCycle.tappedTarget = 0;
+        newFundingCycle.start = uint48(_start);
         latestId[_projectId] = count;
 
         if (_latestFundingCycle.id > 0) {
             newFundingCycle._basedOn(_latestFundingCycle);
         } else {
             newFundingCycle.projectId = _projectId;
-            newFundingCycle.weight = 10E28;
+            newFundingCycle.weight = BASE_WEIGHT;
             newFundingCycle.number = 1;
-            newFundingCycle.previous = 0;
         }
     }
 

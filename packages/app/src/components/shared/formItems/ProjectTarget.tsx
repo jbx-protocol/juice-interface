@@ -22,9 +22,9 @@ export default function ProjectDuration({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The money you need to make it happen."
+      extra="The money you need to run your project for one funding cycle."
       name={name}
-      label={hideLabel ? undefined : 'Operating cost'}
+      label={hideLabel ? undefined : 'Funding target'}
       {...formItemProps}
     >
       <BudgetTargetInput

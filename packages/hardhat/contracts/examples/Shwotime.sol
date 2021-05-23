@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
+pragma solidity >=0.8.0;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "prb-math/contracts/PRBMathCommon.sol";
 
 import "../abstract/JuiceProject.sol";
-import "../libraries/FullMath.sol";
 
 /** 
   @dev 
@@ -16,7 +14,6 @@ import "../libraries/FullMath.sol";
   Not reliable for situations where networks dont entirely overlap.
 */
 contract Shwotime is JuiceProject {
-    using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     struct Tix {
@@ -39,11 +36,11 @@ contract Shwotime is JuiceProject {
     uint256 public fee;
 
     constructor(
-        IJuicer _juicer,
+        IJuiceTerminal _juiceTerminal,
+        uint256 _projectId,
         IERC20 _dai,
-        uint256 _fee,
-        address _pm
-    ) JuiceProject(_juicer, _pm) {
+        uint256 _fee
+    ) JuiceProject(_juiceTerminal, _projectId) {
         dai = _dai;
         fee = _fee;
     }
@@ -142,11 +139,10 @@ contract Shwotime is JuiceProject {
             "Shwotime::collect: TOO_SOON"
         );
 
-        uint256 _total = _tickets.price.mul(_tickets.sold);
-        uint256 _collectable =
-            FullMath.mulDiv(_total, uint256(1000).sub(fee), 1000);
+        uint256 _total = _tickets.price * _tickets.sold;
+        uint256 _collectable = PRBMathCommon.mulDiv(_total, 1000 - fee, 1000);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
-        takeFee(_total.sub(_collectable), msg.sender, _note);
+        takeFee(_total - _collectable, msg.sender, _note);
     }
 }

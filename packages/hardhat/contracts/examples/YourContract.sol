@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
+pragma solidity >=0.8.0;
 
 import "../abstract/JuiceProject.sol";
 
 /// @dev This contract is an example of how you can use Juice to fund your own project.
 contract YourContract is JuiceProject {
-    constructor(IJuicer _juicer, address _pm) JuiceProject(_juicer, _pm) {}
+    constructor(IJuiceTerminal _juicer, uint256 _projectId)
+        JuiceProject(_juicer, _projectId)
+    {}
 }

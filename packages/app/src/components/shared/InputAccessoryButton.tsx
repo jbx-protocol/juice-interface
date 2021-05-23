@@ -1,5 +1,6 @@
-import { colors } from 'constants/styles/colors'
 import { CaretDownOutlined } from '@ant-design/icons'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export default function InputAccessoryButton({
   content,
@@ -12,25 +13,27 @@ export default function InputAccessoryButton({
   onClick?: VoidFunction
   placement?: 'prefix' | 'suffix'
 }) {
+  const { colors, radii } = useContext(ThemeContext).theme
+
   return content ? (
     <div
       style={{
         cursor: 'pointer',
-        color: colors.cta,
-        background: colors.ctaHint,
+        color: colors.text.action.primary,
+        background: colors.background.action.secondary,
         fontWeight: 500,
         whiteSpace: 'nowrap',
         padding: '1px 6px',
         marginLeft: placement === 'suffix' ? 8 : 0,
         marginRight: placement === 'prefix' ? 8 : 0,
-        borderRadius: 4,
+        borderRadius: radii.sm,
       }}
       onClick={onClick}
     >
       {content}
-      {withArrow ? (
+      {withArrow && (
         <CaretDownOutlined style={{ fontSize: 10, marginLeft: 4 }} />
-      ) : null}
+      )}
     </div>
   ) : null
 }

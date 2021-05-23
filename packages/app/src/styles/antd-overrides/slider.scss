@@ -1,0 +1,32 @@
+.ant-slider {
+  .ant-slider-rail {
+    background: var(--background-action-secondary);
+  }
+  .ant-slider-track {
+    background: var(--background-action-primary);
+  }
+
+  .ant-slider-handle {
+    background: var(--background-action-highlight);
+    border-color: var(--stroke-action-highlight);
+  }
+
+  &:hover {
+    .ant-slider-rail {
+      background: var(--background-action-secondary);
+    }
+    .ant-slider-track {
+      background: var(--background-action-primary);
+    }
+
+    .ant-slider-handle {
+      background: var(--background-action-highlight) !important;
+      border-color: var(--stroke-action-highlight) !important;
+      box-shadow: 0 0 0 5px var(--background-action-secondary);
+    }
+  }
+
+  .ant-slider-handle:focus {
+    box-shadow: 0 0 0 5px var(--background-action-secondary);
+  }
+}

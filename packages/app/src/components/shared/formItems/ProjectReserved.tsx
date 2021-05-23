@@ -16,7 +16,7 @@ export default function ProjectReserved({
     <Form.Item
       extra="This rate deterimes how you'll be allocated some of your project's own Tickets whenever someone pays you. For example, a 5% rate means you'll receive 5% of the total Tickets distributed for each payment made to your project – the rest will go to the payer."
       name={name}
-      label={hideLabel ? undefined : 'Reserved Tickets'}
+      label={hideLabel ? undefined : 'Reserved tickets'}
       {...formItemProps}
     >
       <NumberSlider value={value} suffix="%" onChange={onChange} />

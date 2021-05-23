@@ -1,0 +1,37 @@
+.ant-collapse {
+  background: var(--background-l0);
+  border-color: var(--stroke-secondary);
+
+  .ant-collapse-item {
+    border-color: var(--stroke-secondary);
+
+    .ant-collapse-header {
+      font-weight: 500;
+      color: var(--text-header);
+    }
+  }
+
+  .ant-collapse-content,
+  .ant-collapse-content-box {
+    background-color: transparent;
+    border: none;
+    color: var(--text-primary);
+  }
+}
+
+.ant-collapse.minimal {
+  .ant-collapse-content-box {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .ant-collapse-header {
+    padding-right: 0;
+    padding-left: 24px;
+    color: var(--text-primary);
+
+    .ant-collapse-arrow {
+      left: 0;
+    }
+  }
+}

@@ -1,14 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import Loading from 'components/shared/Loading'
+import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatWad } from 'utils/formatCurrency'
 
-import { CardSection } from '../shared/CardSection'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function FundingHistory({
@@ -18,6 +19,9 @@ export default function FundingHistory({
 }) {
   const [fundingCycles, setFundingCycles] = useState<FundingCycle[]>([])
   const [cycleNumbers, setCycleNumbers] = useState<BigNumber[]>([])
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   if (startId?.gt(0) && !cycleNumbers.length) setCycleNumbers([startId])
 
@@ -54,8 +58,18 @@ export default function FundingHistory({
   const fundingCycleElems = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       {fundingCycles.length ? (
-        fundingCycles.map(cycle => (
-          <div key={cycle.id.toString()} style={{ padding: 20 }}>
+        fundingCycles.map((cycle, i) => (
+          <div
+            key={cycle.id.toString()}
+            style={
+              i < fundingCycles.length - 1
+                ? {
+                    paddingBottom: 20,
+                    borderBottom: '1px solid ' + colors.stroke.tertiary,
+                  }
+                : {}
+            }
+          >
             <div
               style={{
                 display: 'flex',
@@ -63,29 +77,30 @@ export default function FundingHistory({
                 justifyContent: 'space-between',
               }}
             >
-              <h2>#{cycle.id.toString()}</h2>
+              <h3>#{cycle.number.toString()}</h3>
               <div>
-                <span style={{ fontSize: '1rem' }}>
-                  <CurrencySymbol currency="0" />
-                  {formatWad(cycle.tappedTotal)}
+                <span style={{ fontSize: '.8rem' }}>
+                  <CurrencySymbol currency={cycle.currency} />
+                  {formatWad(cycle.tapped)}/{formatWad(cycle.target)}
                 </span>{' '}
                 withdrawn
               </div>
             </div>
+
             <FundingCycleDetails fundingCycle={cycle} />
           </div>
         ))
       ) : (
-        <div style={{ padding: 25 }}>No previous funding cycles</div>
+        <div>No previous funding cycles</div>
       )}
     </Space>
   )
 
   return (
-    <CardSection>
+    <div>
       {fundingCycleElems}
 
-      {allCyclesLoaded ? null : <div style={{ padding: 25 }}>Loading...</div>}
-    </CardSection>
+      {allCyclesLoaded ? null : <Loading />}
+    </div>
   )
 }

@@ -1,4 +1,5 @@
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export default function ProjectLogo({
   uri,
@@ -9,6 +10,9 @@ export default function ProjectLogo({
   name: string | undefined
   size?: number
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const _size = size ?? 80
 
   return (
@@ -20,8 +24,8 @@ export default function ProjectLogo({
         overflow: 'hidden',
         height: _size,
         width: _size,
-        borderRadius: 20,
-        background: uri ? undefined : '#ffffff10',
+        borderRadius: _size / 4,
+        background: uri ? undefined : colors.background.l1,
       }}
     >
       {uri ? (

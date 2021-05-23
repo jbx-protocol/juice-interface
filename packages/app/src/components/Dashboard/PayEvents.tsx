@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { ContractName } from 'models/contract-name'
-import { colors } from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useEventListener from 'hooks/EventListener'
+import { ContractName } from 'models/contract-name'
 import { PayEvent } from 'models/events/pay-event'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatCurrency'
@@ -17,8 +16,7 @@ export default function PayEvents({
   projectId: BigNumber | undefined
 }) {
   const { signingProvider } = useContext(UserContext)
-
-  const converter = useCurrencyConverter()
+  const { colors } = useContext(ThemeContext).theme
 
   const events = useEventListener<PayEvent>({
     contractName: ContractName.Juicer,
@@ -30,7 +28,7 @@ export default function PayEvents({
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
-    color: colors.grape,
+    color: colors.text.tertiary,
   }
 
   const contentLineHeight = 1.5
@@ -43,7 +41,7 @@ export default function PayEvents({
             style={{
               marginBottom: 20,
               paddingBottom: 20,
-              borderBottom: '1px solid ' + colors.grapeHint,
+              borderBottom: '1px solid ' + colors.stroke.tertiary,
             }}
             key={i}
           >
@@ -60,23 +58,12 @@ export default function PayEvents({
                   style={{
                     lineHeight: contentLineHeight,
                     fontSize: '1rem',
-                    fontWeight: 600,
                     marginRight: 10,
-                    color: colors.bodyPrimary,
+                    color: colors.text.primary,
                   }}
                 >
-                  <CurrencySymbol currency={event.currency} />
-                  {event.currency === '0' ? (
-                    formatWad(event.amount)
-                  ) : (
-                    <span>
-                      {converter.weiToUsd(event.amount)?.toString()}{' '}
-                      <span style={{ fontSize: '.8rem', fontWeight: 400 }}>
-                        <CurrencySymbol currency="0" />
-                        {formatWad(event.amount)}
-                      </span>
-                    </span>
-                  )}
+                  <CurrencySymbol currency={0} />
+                  {formatWad(event.amount)}
                 </div>
               </div>
 
@@ -85,6 +72,7 @@ export default function PayEvents({
                   style={{
                     ...smallHeaderStyle,
                     textAlign: 'right',
+                    color: colors.text.secondary,
                   }}
                 >
                   {formatDate(event.timestamp * 1000)}
@@ -92,29 +80,29 @@ export default function PayEvents({
                 <div
                   style={{
                     ...smallHeaderStyle,
-                    color: colors.bodySecondary,
+                    color: colors.text.secondary,
                     marginTop: '.3rem',
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {event.payer}
+                  {event.operator}
                 </div>
               </div>
             </div>
 
-            {event.note ? (
-              <div style={{ color: colors.bodySecondary, marginTop: 5 }}>
+            {event.note && (
+              <div style={{ color: colors.text.secondary, marginTop: 5 }}>
                 "{event.note}"
               </div>
-            ) : null}
+            )}
           </div>
         ))
       ) : (
         <div
           style={{
-            color: colors.bodySecondary,
+            color: colors.text.secondary,
             paddingTop: 20,
-            borderTop: '1px solid ' + colors.grapeHint,
+            borderTop: '1px solid ' + colors.stroke.tertiary,
           }}
         >
           No activity yet

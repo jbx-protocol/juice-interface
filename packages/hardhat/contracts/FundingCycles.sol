@@ -60,14 +60,21 @@ contract FundingCycles is Administered, IFundingCycles {
         override
         returns (FundingCycle.Data memory)
     {
-        FundingCycle.Data memory _sFundingCycle = _standby(_projectId);
-        FundingCycle.Data memory _aFundingCycle = _active(_projectId);
+        // Get a reference to the standby funding cycle.
+        FundingCycle.Data memory _standbyFundingCycle = _standby(_projectId);
 
-        // If there are both active and standby funding cycle, the standby fundingCycle must be queued.
-        if (_sFundingCycle.id > 0 && _aFundingCycle.id > 0)
-            return _sFundingCycle;
-        require(_aFundingCycle.id > 0, "FundingCycle::getQueued: NOT_FOUND");
-        return _aFundingCycle._nextUp();
+        // If it exists, return it.
+        if (_standbyFundingCycle.id > 0) return _standbyFundingCycle;
+
+        // Get the latest funding cycle and return what would be next up.
+        FundingCycle.Data memory _latestFundingCycle =
+            fundingCycles[latestId[_projectId]];
+
+        require(
+            _latestFundingCycle.id > 0,
+            "FundingCycle::getQueued: NOT_FOUND"
+        );
+        return _latestFundingCycle._nextUp();
     }
 
     /**

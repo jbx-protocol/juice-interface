@@ -131,7 +131,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     console.log("⚡️ Configuring governance's budget");
 
-    const duration = 2592000; // 30 days;
+    const duration = 60; // 2592000; // 30 days;
     const discountRate = 970;
 
     await attachedJuicer.deploy(

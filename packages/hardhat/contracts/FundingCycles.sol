@@ -66,15 +66,24 @@ contract FundingCycles is Administered, IFundingCycles {
         // If it exists, return it.
         if (_standbyFundingCycle.id > 0) return _standbyFundingCycle;
 
-        // Get the latest funding cycle and return what would be next up.
+        // Get a reference to the active funding cycle.
+        FundingCycle.Data memory _activeFundingCycle = _active(_projectId);
+
+        // If it exists, return its next up.
+        if (_activeFundingCycle.id > 0) return _activeFundingCycle._nextUp();
+
+        // Get the latest funding cycle.
         FundingCycle.Data memory _latestFundingCycle =
             fundingCycles[latestId[_projectId]];
 
+        // A funding cycle must exist.
         require(
             _latestFundingCycle.id > 0,
             "FundingCycle::getQueued: NOT_FOUND"
         );
-        return _latestFundingCycle._nextUp();
+
+        // Return the second next up.
+        return _latestFundingCycle._nextUp()._nextUp();
     }
 
     /**

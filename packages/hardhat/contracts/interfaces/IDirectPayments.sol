@@ -24,16 +24,13 @@ interface IDirectPayments {
 
     function operatorStore() external returns (IOperatorStore);
 
-    function deployAddress(
-        uint256 _projectId,
-        IJuiceTerminal _juiceTerminal,
-        string memory _note
-    ) external;
+    function deployAddress(uint256 _projectId, string memory _note) external;
 
     function setJuiceTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external;
 
-    function setBeneficiary(address _beneficiary) external;
-
-    function setPreferClaimedTickets(bool _preference) external;
+    function setPayerPreferences(
+        address _beneficiary,
+        bool _preferClaimedTickets
+    ) external;
 }

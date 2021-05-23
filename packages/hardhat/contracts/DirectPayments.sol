@@ -51,27 +51,17 @@ contract DirectPayments is IDirectPayments {
         return addresses[_projectId];
     }
 
+    function pay() external {}
+
     /** 
-      @notice Allows a project to deploy a new direct payment address.
+      @notice Allows anyone to deploy a new direct payment address for a project.
       @param _projectId The ID of the project to deploy a direct payment address for.
-      @param _juiceTerminal The terminal to use for the direct payment. This can be updated later.
       @param _note The note to use for payments made through the new direct payment address.
     */
-    function deployAddress(
-        uint256 _projectId,
-        IJuiceTerminal _juiceTerminal,
-        string memory _note
-    ) external override {
-        // Set the terminal for the project if it's not already set.
-        if (juiceTerminals[_projectId] == IJuiceTerminal(address(0)))
-            juiceTerminals[_projectId] = _juiceTerminal;
-
-        // The specified juice terminal must match the one stored.
-        require(
-            juiceTerminals[_projectId] == _juiceTerminal,
-            "DirectPayment::deployAddress: WRONG_TERMINAL"
-        );
-
+    function deployAddress(uint256 _projectId, string memory _note)
+        external
+        override
+    {
         // Deploy the contract and push it to the list.
         addresses[_projectId].push(
             new DirectPaymentAddress(this, _projectId, _note)
@@ -116,19 +106,17 @@ contract DirectPayments is IDirectPayments {
     }
 
     /** 
-      @notice Allows any address to pre set the beneficiary of their payments to any direct payment address.
+      @notice Allows any address to pre set the beneficiary of their payments to any direct payment address,
+      @notice any any address to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
       @param _beneficiary The beneficiary to set.
+      @param _preferClaimedTickets The preference to set.
     */
-    function setBeneficiary(address _beneficiary) external override {
+    function setPayerPreferences(
+        address _beneficiary,
+        bool _preferClaimedTickets
+    ) external override {
         beneficiaries[msg.sender] = _beneficiary;
-    }
-
-    /** 
-      @notice Allows any address to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
-      @param _preference The preference to set.
-    */
-    function setPreferClaimedTickets(bool _preference) external override {
-        preferConvertedTickets[msg.sender] = _preference;
+        preferConvertedTickets[msg.sender] = _preferClaimedTickets;
     }
 }
 

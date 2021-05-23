@@ -706,47 +706,6 @@ contract Juicer is IJuicer, ReentrancyGuard {
         );
     }
 
-    function _pay(
-        uint256 _projectId,
-        uint256 _amount,
-        address _beneficiary,
-        string memory _note,
-        bool _preferConvertedTickets
-    ) private returns (uint256) {
-        // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _fundingCycle =
-            fundingCycles.getCurrent(_projectId);
-
-        // Add to the raw balance of governance's project.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
-
-        // Print governance tickets for the project owner.
-        tickets.print(
-            _beneficiary,
-            _projectId,
-            _fundingCycle._weighted(
-                PRBMathUD60x18.mul(
-                    _amount,
-                    prices.getETHPrice(_fundingCycle.currency)
-                ),
-                // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-            ),
-            _preferConvertedTickets
-        );
-
-        emit Pay(
-            _fundingCycle.id,
-            _projectId,
-            _beneficiary,
-            _amount,
-            _note,
-            msg.sender
-        );
-
-        return _fundingCycle.id;
-    }
-
     /**
         @notice Addresses can redeem their Tickets to claim the project's overflowed ETH.
         @param _account The account to redeem tickets for.
@@ -1138,7 +1097,74 @@ contract Juicer is IJuicer, ReentrancyGuard {
         emit AcceptGovernance(_pendingGovernance);
     }
 
+    // If funds are sent to this contract directly, fund governance.
+    receive() external payable {
+        // If a contract sent ETH, don't add to the project.
+        // This allows the vault to send ETH back to this contract.
+        if (Address.isContract(msg.sender)) return;
+
+        // Save gas if the admin is using this juice terminal.
+        if (JuiceProject(governance).juiceTerminal() == this) {
+            _pay(
+                JuiceProject(governance).projectId(),
+                msg.value,
+                msg.sender,
+                "Direct payment to Juicer",
+                directPayments.preferConvertedTickets(msg.sender)
+            );
+        } else {
+            JuiceProject(governance).pay{value: msg.value}(
+                msg.sender,
+                "Direct payment to Juicer"
+            );
+        }
+    }
+
     // --- private transactions --- //
+
+    /** 
+      @notice See the documentation for 'pay'.
+    */
+    function _pay(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        string memory _note,
+        bool _preferConvertedTickets
+    ) private returns (uint256) {
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
+
+        // Add to the raw balance of governance's project.
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
+
+        // Print governance tickets for the project owner.
+        tickets.print(
+            _beneficiary,
+            _projectId,
+            _fundingCycle._weighted(
+                PRBMathUD60x18.mul(
+                    _amount,
+                    prices.getETHPrice(_fundingCycle.currency)
+                ),
+                // The reserved rate is stored in bytes 25-30 of the metadata property.
+                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
+            ),
+            _preferConvertedTickets
+        );
+
+        emit Pay(
+            _fundingCycle.id,
+            _projectId,
+            _beneficiary,
+            _amount,
+            _note,
+            msg.sender
+        );
+
+        return _fundingCycle.id;
+    }
 
     /** 
       @notice Makes sure the specified amount is in the possession of this contract.
@@ -1196,54 +1222,5 @@ contract Juicer is IJuicer, ReentrancyGuard {
         packed |= uint256(_metadata.reservedRate) << 24;
         // reconfiguration bonding curve rate in bytes 41-56 bytes.
         packed |= uint256(_metadata.reconfigurationBondingCurveRate) << 40;
-    }
-
-    // If funds are sent to this contract directly, fund governance.
-    receive() external payable {
-        // If a contract sent ETH, don't add to the project.
-        // This allows the vault to send ETH back to this contract.
-        if (Address.isContract(msg.sender)) return;
-
-        // Save gas if the admin is using this juice terminal.
-        if (JuiceProject(governance).juiceTerminal() == this) {
-            uint256 _govProjectId = JuiceProject(governance).projectId();
-            // Get a reference to the current funding cycle for the project.
-            FundingCycle.Data memory _govFundingCycle =
-                fundingCycles.getCurrent(_govProjectId);
-
-            // Add to the raw balance of governance's project.
-            rawBalanceOf[_govProjectId] =
-                rawBalanceOf[_govProjectId] +
-                msg.value;
-
-            // Print governance tickets for the project owner.
-            tickets.print(
-                msg.sender,
-                _govProjectId,
-                _govFundingCycle._weighted(
-                    PRBMathUD60x18.mul(
-                        msg.value,
-                        prices.getETHPrice(_govFundingCycle.currency)
-                    ),
-                    // The reserved rate is stored in bytes 25-30 of the metadata property.
-                    1000 - uint256(uint16(_govFundingCycle.metadata >> 24))
-                ),
-                false
-            );
-
-            emit Pay(
-                _govFundingCycle.id,
-                _govProjectId,
-                msg.sender,
-                msg.value,
-                "Direct payment to Juicer",
-                msg.sender
-            );
-        } else {
-            JuiceProject(governance).pay{value: msg.value}(
-                msg.sender,
-                "Direct payment to Juicer"
-            );
-        }
     }
 }

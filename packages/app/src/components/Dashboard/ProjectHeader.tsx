@@ -5,7 +5,7 @@ import EditProjectModal from 'components/modals/EditProjectModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectIdentifier } from 'models/project-identifier'
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 
 export default function ProjectHeader({
   project,

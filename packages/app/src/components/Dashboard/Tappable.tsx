@@ -55,7 +55,6 @@ export default function Tappable({
       [
         projectId.toHexString(),
         parseWad(tapAmount).toHexString(),
-        parseWad(tapAmount).toHexString(),
         minAmount?.toHexString(),
       ],
       {

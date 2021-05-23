@@ -5,7 +5,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
-import { CSSProperties, useMemo } from 'react'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import FundingCycles from './FundingCycles'

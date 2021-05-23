@@ -5,10 +5,10 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
 
-  &:hover {
-    opacity: .8;
-  }
+.ant-menu-item:hover {
+  opacity: 0.7;
 }
 
 .ant-layout-header {

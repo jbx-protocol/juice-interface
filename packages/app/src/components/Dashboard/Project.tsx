@@ -5,13 +5,19 @@ import EditProjectModal from 'components/modals/EditProjectModal'
 import { CardSection } from 'components/shared/CardSection'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
+import useContractReader from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
+import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
-import Funding from './Funding'
+import Funding from './FundingCyclePreview'
+import Paid from './Paid'
 import Pay from './Pay'
 import Rewards from './Rewards'
+import Tappable from './Tappable'
 
 export default function Project({
   project,
@@ -34,6 +40,64 @@ export default function Project({
   ] = useState<boolean>(false)
 
   const { colors } = useContext(ThemeContext).theme
+
+  const converter = useCurrencyConverter()
+
+  const balance = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'balanceOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [[], projectId.toHexString()],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
+
+  const balanceInCurrency = useMemo(
+    () =>
+      balance && converter.wadToCurrency(balance, fundingCycle?.currency, 0),
+    [fundingCycle?.currency, balance, converter],
+  )
+
+  const totalOverflow = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'currentOverflowOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [[], projectId.toHexString()],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
 
   if (!projectId || !project) return null
 
@@ -70,12 +134,12 @@ export default function Project({
 
           <h3>
             <Space size="middle">
-              {project?.handle ? (
+              {project?.handle && (
                 <span style={{ color: colors.text.secondary }}>
                   @{project.handle}
                 </span>
-              ) : null}
-              {project?.link ? (
+              )}
+              {project?.link && (
                 <a
                   style={{ fontWeight: 400 }}
                   href={project.link}
@@ -84,7 +148,7 @@ export default function Project({
                 >
                   {project.link}
                 </a>
-              ) : null}
+              )}
             </Space>
           </h3>
         </div>
@@ -95,25 +159,35 @@ export default function Project({
             marginLeft: 20,
           }}
         >
-          {isOwner ? (
+          {isOwner && (
             <Button
               onClick={() => setEditProjectModalVisible(true)}
               icon={<SettingOutlined />}
               type="text"
             ></Button>
-          ) : null}
+          )}
         </div>
       </div>
 
-      <Row gutter={gutter}>
+      <Row gutter={gutter} style={{ marginTop: gutter }}>
         <Col xs={24} md={12}>
           <CardSection padded>
-            <Funding
-              projectId={projectId}
-              fundingCycle={fundingCycle}
-              showDetail={showCurrentDetail}
-              isOwner={isOwner}
-            />
+            <Space direction="vertical" style={{ width: '100%' }} size="large">
+              <Paid
+                projectId={projectId}
+                fundingCycle={fundingCycle}
+                balanceInCurrency={balanceInCurrency}
+              />
+              <Tappable
+                projectId={projectId}
+                fundingCycle={fundingCycle}
+                balanceInCurrency={balanceInCurrency}
+              />
+              <Funding
+                fundingCycle={fundingCycle}
+                showDetail={showCurrentDetail}
+              />
+            </Space>
           </CardSection>
         </Col>
 
@@ -128,6 +202,7 @@ export default function Project({
             <Rewards
               projectId={projectId}
               currentCycle={fundingCycle}
+              totalOverflow={totalOverflow}
               isOwner={isOwner}
             />
           </div>

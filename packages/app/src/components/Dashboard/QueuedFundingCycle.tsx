@@ -42,7 +42,7 @@ export default function QueuedFundingCycle({
 
   return (
     <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
-      {isOwner ? (
+      {isOwner && (
         <div>
           <Button onClick={() => setReconfigureModalVisible(true)}>
             Reconfigure funding
@@ -54,7 +54,7 @@ export default function QueuedFundingCycle({
             projectId={projectId}
           />
         </div>
-      ) : null}
+      )}
       <CardSection padded>
         {queuedCycle ? (
           <FundingCycleDetails fundingCycle={queuedCycle} />

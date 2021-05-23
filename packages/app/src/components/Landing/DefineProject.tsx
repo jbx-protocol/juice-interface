@@ -149,7 +149,7 @@ export default function DefineProject() {
               currency={editingBudget?.currency}
             />
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
-            {isRecurring ? (
+            {isRecurring && (
               <span>
                 every{' '}
                 {bold(
@@ -158,7 +158,7 @@ export default function DefineProject() {
                 )}{' '}
                 days
               </span>
-            ) : null}{' '}
+            )}{' '}
             to work. All extra money received is overflow.
             <br />
             <br />

@@ -31,9 +31,9 @@ export default function InputAccessoryButton({
       onClick={onClick}
     >
       {content}
-      {withArrow ? (
+      {withArrow && (
         <CaretDownOutlined style={{ fontSize: 10, marginLeft: 4 }} />
-      ) : null}
+      )}
     </div>
   ) : null
 }

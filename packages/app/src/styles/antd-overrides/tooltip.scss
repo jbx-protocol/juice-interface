@@ -1,8 +1,12 @@
 .ant-tooltip-inner {
   color: var(--text-primary);
-  background: var(--background-l0);
   border-radius: var(--radius-md);
+  background: var(--background-l0);
   padding: 12px 16px;
   box-shadow: 0 4px 12px #00000064;
-  font-size: .85rem;
+  font-size: 0.85rem;
+}
+
+.ant-tooltip-arrow-content {
+  background: var(--background-l0);
 }

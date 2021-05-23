@@ -16,6 +16,7 @@ import {
   useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
+import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 import { normalizeHandle } from 'utils/formatHandle'

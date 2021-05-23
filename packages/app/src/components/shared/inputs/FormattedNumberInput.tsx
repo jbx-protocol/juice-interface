@@ -106,7 +106,7 @@ export default function FormattedNumberInput({
           fontSize: '.8rem',
         }}
       >
-        {accessory ? <div id={accessoryId}>{accessory}</div> : null}
+        {accessory && <div id={accessoryId}>{accessory}</div>}
       </div>
     </div>
   )

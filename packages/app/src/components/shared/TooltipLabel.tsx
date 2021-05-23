@@ -17,13 +17,13 @@ export default function TooltipLabel({
   const { colors } = useContext(ThemeContext).theme
 
   return (
-    <span>
-      <span style={{ ...style, marginRight: 5 }}>{label}</span>
-      {tip ? (
+    <span style={style}>
+      <span style={{ marginRight: 5 }}>{label}</span>
+      {tip && (
         <Tooltip title={tip} placement={placement}>
           <InfoCircleOutlined style={{ color: colors.icon.secondary }} />
         </Tooltip>
-      ) : null}
+      )}
     </span>
   )
 }

@@ -58,7 +58,6 @@ export default function PayEvents({
                   style={{
                     lineHeight: contentLineHeight,
                     fontSize: '1rem',
-                    fontWeight: 600,
                     marginRight: 10,
                     color: colors.text.primary,
                   }}
@@ -91,11 +90,11 @@ export default function PayEvents({
               </div>
             </div>
 
-            {event.note ? (
+            {event.note && (
               <div style={{ color: colors.text.secondary, marginTop: 5 }}>
                 "{event.note}"
               </div>
-            ) : null}
+            )}
           </div>
         ))
       ) : (

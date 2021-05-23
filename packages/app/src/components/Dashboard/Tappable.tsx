@@ -1,0 +1,156 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { Button, Input, Modal, Space } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import TooltipLabel from 'components/shared/TooltipLabel'
+import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { FundingCycle } from 'models/funding-cycle'
+import React, { useContext, useState } from 'react'
+import { currencyName } from 'utils/currency'
+import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
+import { smallHeaderStyle } from './styles'
+
+export default function Tappable({
+  fundingCycle,
+  projectId,
+  balanceInCurrency,
+}: {
+  fundingCycle: FundingCycle | undefined
+  projectId: BigNumber
+  balanceInCurrency: BigNumber | undefined
+}) {
+  const { transactor, contracts, onNeedProvider } = useContext(UserContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  const [tapAmount, setTapAmount] = useState<string>()
+  const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
+  const [loadingWithdraw, setLoadingWithdraw] = useState<boolean>()
+
+  const converter = useCurrencyConverter()
+
+  function tap() {
+    if (!transactor || !contracts?.Juicer || !fundingCycle)
+      return onNeedProvider()
+
+    setLoadingWithdraw(true)
+
+    if (!tapAmount) {
+      setLoadingWithdraw(false)
+      return
+    }
+
+    // Arbitrary discrete value (wei) subtracted
+    const minAmount =
+      fundingCycle.currency === 1
+        ? converter.usdToWei(tapAmount)
+        : parseWad(tapAmount)?.sub(1e12)
+
+    transactor(
+      contracts.Juicer,
+      'tap',
+      [
+        projectId.toHexString(),
+        parseWad(tapAmount).toHexString(),
+        minAmount?.toHexString(),
+      ],
+      {
+        onDone: () => setLoadingWithdraw(false),
+      },
+    )
+  }
+
+  if (!fundingCycle) return null
+
+  const untapped = fundingCycle.target.sub(fundingCycle.tapped)
+
+  const withdrawable = balanceInCurrency?.gt(untapped)
+    ? untapped
+    : balanceInCurrency
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <span style={{ fontSize: '1rem' }}>
+            <CurrencySymbol currency={fundingCycle.currency} />
+            {formatWad(withdrawable) || '0'}{' '}
+          </span>
+          <TooltipLabel
+            style={smallHeaderStyle(colors)}
+            label="AVAILABLE"
+            tip="The funds this project can withdraw for this funding cycle. They won't roll over to the next funding cycle, so they should be withdrawn before this one ends."
+          />
+        </div>
+        <Button
+          type="ghost"
+          size="small"
+          loading={loadingWithdraw}
+          onClick={() => setWithdrawModalVisible(true)}
+        >
+          Withdraw
+        </Button>
+      </div>
+      <div style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}>
+        <CurrencySymbol currency={fundingCycle.currency} />
+        {formatWad(fundingCycle.tapped) || '0'}/{formatWad(fundingCycle.target)}{' '}
+        withdrawn
+      </div>
+
+      <Modal
+        title="Withdraw funds"
+        visible={withdrawModalVisible}
+        onOk={() => {
+          tap()
+          setWithdrawModalVisible(false)
+        }}
+        onCancel={() => {
+          setTapAmount(undefined)
+          setWithdrawModalVisible(false)
+        }}
+        okText="Withdraw"
+        width={540}
+      >
+        <div style={{ marginBottom: 10 }}>
+          Withdraw up to: <CurrencySymbol currency={fundingCycle.currency} />
+          {formatWad(withdrawable)}
+        </div>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Input
+            name="withdrawable"
+            placeholder="0"
+            suffix={
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ marginRight: 8 }}>
+                  {currencyName(fundingCycle.currency)}
+                </span>
+                <InputAccessoryButton
+                  content="MAX"
+                  onClick={() => setTapAmount(fromWad(withdrawable))}
+                />
+              </div>
+            }
+            type="number"
+            value={tapAmount}
+            max={fromWad(withdrawable)}
+            onChange={e => setTapAmount(e.target.value)}
+          />
+          {fundingCycle.currency === 1 && (
+            <div style={{ textAlign: 'right' }}>
+              {formatWad(converter.usdToWei(tapAmount)) || '--'}{' '}
+              <CurrencySymbol currency={0} />
+            </div>
+          )}
+        </Space>
+      </Modal>
+    </div>
+  )
+}

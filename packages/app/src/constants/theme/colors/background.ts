@@ -7,7 +7,7 @@ export const backgroundColors: Record<
   SemanticColors['background']
 > = {
   [ThemeOption.light]: {
-    l0: '#fff',
+    l0: '#fbf9f6',
     l1: '#e7e3dc',
     l2: '#f3f1ec',
     disabled: '#00000018',

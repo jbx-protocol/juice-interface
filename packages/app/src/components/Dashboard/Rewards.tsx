@@ -1,41 +1,36 @@
+import { SwapOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
-import { SwapOutlined } from '@ant-design/icons'
 import Modal from 'antd/lib/modal/Modal'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import Loading from 'components/shared/Loading'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import {
-  formattedNum,
-  formatWad,
-  fromWad,
-  parseWad,
-} from 'utils/formatCurrency'
+import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
-import Loading from 'components/shared/Loading'
 
 export default function Rewards({
   projectId,
   currentCycle,
+  totalOverflow,
   isOwner,
 }: {
   projectId: BigNumber | undefined
   currentCycle: FundingCycle | undefined
+  totalOverflow: BigNumber | undefined
   isOwner: boolean | undefined
 }) {
   const { contracts, transactor, userAddress, onNeedProvider } = useContext(
@@ -52,8 +47,6 @@ export default function Rewards({
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingPrint, setLoadingPrint] = useState<boolean>()
   const [loadingConvert, setLoadingConvert] = useState<boolean>()
-
-  const converter = useCurrencyConverter()
 
   const metadata = decodeFCMetadata(currentCycle?.metadata)
 
@@ -145,30 +138,6 @@ export default function Rewards({
         },
       ],
       [ticketsUpdateOn],
-    ),
-  })
-  const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: ContractName.Juicer,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId],
     ),
   })
   const claimableOverflow = useContractReader<BigNumber>({
@@ -283,7 +252,7 @@ export default function Rewards({
 
   return (
     <Space direction="vertical" size="large">
-      <Statistic
+      {/* <Statistic
         title={
           <TooltipLabel
             label="Overflow"
@@ -317,7 +286,7 @@ export default function Rewards({
             </div>
           )
         }
-      />
+      /> */}
 
       <Statistic
         title={
@@ -339,6 +308,35 @@ export default function Rewards({
             <Descriptions.Item
               label="Total supply"
               children={<div>{formatWad(totalSupply)}</div>}
+            />
+            <Descriptions.Item
+              label={
+                <TooltipLabel
+                  label="Reserved"
+                  tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
+                  style={{ marginRight: 14 }}
+                />
+              }
+              children={
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <div>{formatWad(reservedTickets) || 0}</div>
+                  <Button
+                    loading={loadingPrint}
+                    size="small"
+                    onClick={print}
+                    disabled={!reservedTickets?.gt(0)}
+                  >
+                    Print
+                  </Button>
+                </div>
+              }
             />
             <Descriptions.Item
               label="Your balance"
@@ -397,41 +395,11 @@ export default function Rewards({
                 </div>
               }
             />
-            <Descriptions.Item
-              label={
-                <TooltipLabel
-                  label="Reserved"
-                  tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
-                />
-              }
-              children={
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <div>{formatWad(reservedTickets) || 0}</div>
-                  <Button
-                    loading={loadingPrint}
-                    size="small"
-                    onClick={print}
-                    disabled={!reservedTickets?.gt(0)}
-                  >
-                    Print
-                  </Button>
-                </div>
-              }
-            />
           </Descriptions>
         )}
       />
 
-      {!ticketsIssued && isOwner ? (
-        <IssueTickets projectId={projectId} />
-      ) : null}
+      {!ticketsIssued && isOwner && <IssueTickets projectId={projectId} />}
 
       <Modal
         title={`Redeem ${ticketSymbol ?? 'Tickets'}`}

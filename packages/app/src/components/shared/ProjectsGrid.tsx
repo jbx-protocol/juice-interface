@@ -42,11 +42,11 @@ export default function ProjectsGrid({
         >
           @{project.handle}
         </span>
-        {project?.link ? (
+        {project.link && (
           <span style={{ color: colors.text.action.primary }}>
             {project.link}
           </span>
-        ) : null}
+        )}
       </div>
     </div>
   )
@@ -61,15 +61,16 @@ export default function ProjectsGrid({
 
   return (
     <div>
-      {projects?.map((project, i) =>
-        i % 2 === 0 ? (
-          <Row gutter={gutter} key={project.handle}>
-            <Col {...colProps}>{projectCard(project)}</Col>
-            {i + 1 < projects.length ? (
-              <Col {...colProps}>{projectCard(projects[i + 1])}</Col>
-            ) : null}
-          </Row>
-        ) : null,
+      {projects?.map(
+        (project, i) =>
+          i % 2 === 0 && (
+            <Row gutter={gutter} key={project.handle}>
+              <Col {...colProps}>{projectCard(project)}</Col>
+              {i + 1 < projects.length && (
+                <Col {...colProps}>{projectCard(projects[i + 1])}</Col>
+              )}
+            </Row>
+          ),
       )}
     </div>
   )

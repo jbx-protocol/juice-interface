@@ -47,7 +47,7 @@ export default function Pay({
       weightedRate(
         fundingCycle,
         fundingCycle?.currency === 0 ? wei : converter.weiToUsd(wei),
-        'payer'
+        'payer',
       ),
     )
 
@@ -78,7 +78,7 @@ export default function Pay({
               }
             />
 
-            <div>
+            <div style={{ fontSize: '.7rem' }}>
               Receive{' '}
               {payAmount && weiPayAmt?.gt(0) ? (
                 formatReceivedTickets(weiPayAmt) + ' Tickets'
@@ -104,12 +104,12 @@ export default function Pay({
             >
               Pay project
             </Button>
-            {payAs === 1 ? (
-              <div>
+            {payAs === 1 && (
+              <div style={{ fontSize: '.7rem' }}>
                 Paid as <CurrencySymbol currency={0} />
                 {formatWad(weiPayAmt) || '0'}
               </div>
-            ) : null}
+            )}
           </div>
         </div>
       </div>

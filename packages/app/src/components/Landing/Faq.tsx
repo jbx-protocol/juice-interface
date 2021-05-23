@@ -33,7 +33,7 @@ const QAs: {
     q: `Why should I want to own a project's Tickets?`,
     a: [
       `Tickets can be redeemed for a portion of a project's overflow, letting you benefit from the project's up-side.`,
-      `If you earned a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases.`,
+      `If you were distributed a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases.`,
     ],
   },
   {

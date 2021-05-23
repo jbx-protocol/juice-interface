@@ -257,7 +257,7 @@ export default function Rewards({
           title={
             <TooltipLabel
               label="Tickets"
-              tip="Tickets are earned by paying a project, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
+              tip="Tickets are distributed when a project is paid, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
               style={{
                 fontWeight:
                   forThemeOption &&

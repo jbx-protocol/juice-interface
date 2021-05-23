@@ -166,7 +166,7 @@ export default function DefineProject() {
             pay {bold(editingProject?.name, 'your project')}.
             <br />
             <br />
-            Tickets can be exchanged for overflow.
+            Tickets can be redeemed for overflow.
           </div>
         </Col>
       </Row>

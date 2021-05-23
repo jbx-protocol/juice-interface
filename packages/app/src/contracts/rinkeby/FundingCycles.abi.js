@@ -5,6 +5,19 @@ module.exports = [
     "type": "constructor"
   },
   {
+    "inputs": [],
+    "name": "BASE_WEIGHT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -46,29 +59,69 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_bondingCurveRate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_reserved",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_reconfigurationDelay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_fee",
         "type": "uint256"
+      },
+      {
+        "internalType": "contract IFundingCycleBallot",
+        "name": "_ballot",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_metadata",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_configureActiveFundingCycle",
+        "type": "bool"
       }
     ],
     "name": "configure",
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "currentBallot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "currency",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "fee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "discountRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "duration",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint48",
+            "name": "start",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "configured",
+            "type": "uint48"
+          },
           {
             "internalType": "uint256",
             "name": "id",
@@ -96,37 +149,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
+            "name": "tapped",
             "type": "uint256"
           },
           {
@@ -136,27 +159,12 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
+            "name": "metadata",
             "type": "uint256"
           }
         ],
         "internalType": "struct FundingCycle.Data",
-        "name": "fundingCycle",
+        "name": "",
         "type": "tuple"
       }
     ],
@@ -189,6 +197,46 @@ module.exports = [
       {
         "components": [
           {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "currentBallot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "currency",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "fee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "discountRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "duration",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint48",
+            "name": "start",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "configured",
+            "type": "uint48"
+          },
+          {
             "internalType": "uint256",
             "name": "id",
             "type": "uint256"
@@ -215,37 +263,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
+            "name": "tapped",
             "type": "uint256"
           },
           {
@@ -255,22 +273,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
+            "name": "metadata",
             "type": "uint256"
           }
         ],
@@ -295,6 +298,46 @@ module.exports = [
       {
         "components": [
           {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "currentBallot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "currency",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "fee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "discountRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "duration",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint48",
+            "name": "start",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "configured",
+            "type": "uint48"
+          },
+          {
             "internalType": "uint256",
             "name": "id",
             "type": "uint256"
@@ -321,37 +364,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
+            "name": "tapped",
             "type": "uint256"
           },
           {
@@ -361,22 +374,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
+            "name": "metadata",
             "type": "uint256"
           }
         ],
@@ -401,6 +399,46 @@ module.exports = [
       {
         "components": [
           {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "currentBallot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "currency",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "fee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "discountRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "duration",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint48",
+            "name": "start",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "configured",
+            "type": "uint48"
+          },
+          {
             "internalType": "uint256",
             "name": "id",
             "type": "uint256"
@@ -427,37 +465,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "currency",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "start",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTarget",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tappedTotal",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reserved",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fee",
+            "name": "tapped",
             "type": "uint256"
           },
           {
@@ -467,22 +475,7 @@ module.exports = [
           },
           {
             "internalType": "uint256",
-            "name": "discountRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "configured",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eligibleAfter",
+            "name": "metadata",
             "type": "uint256"
           }
         ],
@@ -582,39 +575,96 @@ module.exports = [
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currentOverflow",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_ethPrice",
-        "type": "uint256"
       }
     ],
     "name": "tap",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "convertedEthAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "feeAmount",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "currentBallot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "currency",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "fee",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "discountRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "duration",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint48",
+            "name": "start",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "configured",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previous",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "metadata",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycle.Data",
+        "name": "",
+        "type": "tuple"
       }
     ],
     "stateMutability": "nonpayable",

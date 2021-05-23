@@ -43,17 +43,18 @@ export default function Tappable({
       return
     }
 
-    // Arbitrary discrete value (wei) subtracted
+    // Arbitrary value subtracted
     const minAmount =
       fundingCycle.currency === 1
         ? converter.usdToWei(tapAmount)
-        : parseWad(tapAmount)?.sub(1e12)
+        : parseWad(tapAmount)
 
     transactor(
       contracts.Juicer,
       'tap',
       [
         projectId.toHexString(),
+        parseWad(tapAmount).toHexString(),
         parseWad(tapAmount).toHexString(),
         minAmount?.toHexString(),
       ],
@@ -73,7 +74,13 @@ export default function Tappable({
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
         <div>
           <span style={{ fontSize: '1rem' }}>
             <CurrencySymbol currency={fundingCycle.currency} />
@@ -115,9 +122,11 @@ export default function Tappable({
         width={540}
       >
         <div style={{ marginBottom: 10 }}>
-          Withdraw up to: <CurrencySymbol currency={fundingCycle.currency} />
+          Available to withdraw:{' '}
+          <CurrencySymbol currency={fundingCycle.currency} />
           {formatWad(withdrawable)}
         </div>
+        <p>Funds will be withdrawn according to this project's mods.</p>
         <Space direction="vertical" style={{ width: '100%' }}>
           <Input
             name="withdrawable"
@@ -145,7 +154,7 @@ export default function Tappable({
           />
           {fundingCycle.currency === 1 && (
             <div style={{ textAlign: 'right' }}>
-              {formatWad(converter.usdToWei(tapAmount)) || '--'}{' '}
+              {formatWad(converter.usdToWei(tapAmount)) || 0}{' '}
               <CurrencySymbol currency={0} />
             </div>
           )}

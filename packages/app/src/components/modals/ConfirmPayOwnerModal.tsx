@@ -7,12 +7,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
-import {
-  formattedNum,
-  formatWad,
-  parsePerMille,
-  parseWad,
-} from 'utils/formatCurrency'
+import { formattedNum, formatWad } from 'utils/formatCurrency'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
@@ -89,10 +84,7 @@ export default function ConfirmPayOwnerModal({
           <Descriptions.Item label="Tickets for you" className="content-right">
             {formatWad(receivedTickets)}
           </Descriptions.Item>
-          <Descriptions.Item
-            label="Tickets reserved"
-            className="content-right"
-          >
+          <Descriptions.Item label="Tickets reserved" className="content-right">
             {formatWad(ownerTickets)}
           </Descriptions.Item>
         </Descriptions>

@@ -55,62 +55,60 @@ export default function Pay({
 
   return (
     <div>
-      <div>
-        <div
-          style={{
-            display: 'flex',
-            width: '100%',
-          }}
-        >
-          <div style={{ flex: 1, marginRight: 10 }}>
-            <FormattedNumberInput
-              placeholder="0"
-              disabled={fundingCycle?.configured === 0}
-              onChange={val => setPayAmount(val)}
-              value={payAmount}
-              min={0}
-              accessory={
-                <InputAccessoryButton
-                  withArrow={true}
-                  content={currencyName(payAs)}
-                  onClick={() => setPayAs(payAs === 0 ? 1 : 0)}
-                />
-              }
-            />
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+        }}
+      >
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <FormattedNumberInput
+            placeholder="0"
+            disabled={fundingCycle?.configured === 0}
+            onChange={val => setPayAmount(val)}
+            value={payAmount}
+            min={0}
+            accessory={
+              <InputAccessoryButton
+                withArrow={true}
+                content={currencyName(payAs)}
+                onClick={() => setPayAs(payAs === 0 ? 1 : 0)}
+              />
+            }
+          />
 
-            <div style={{ fontSize: '.7rem' }}>
-              Receive{' '}
-              {payAmount && weiPayAmt?.gt(0) ? (
-                formatReceivedTickets(weiPayAmt) + ' Tickets'
-              ) : (
-                <span>
-                  {formatReceivedTickets(
-                    (payAs === 0 ? parseWad('1') : converter.usdToWei('1')) ??
-                      BigNumber.from(0),
-                  )}{' '}
-                  tickets/
-                  <CurrencySymbol currency={payAs} />
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div style={{ textAlign: 'center', minWidth: 150 }}>
-            <Button
-              style={{ width: '100%' }}
-              type="primary"
-              disabled={fundingCycle?.configured === 0}
-              onClick={weiPayAmt ? pay : undefined}
-            >
-              Pay project
-            </Button>
-            {payAs === 1 && (
-              <div style={{ fontSize: '.7rem' }}>
-                Paid as <CurrencySymbol currency={0} />
-                {formatWad(weiPayAmt) || '0'}
-              </div>
+          <div style={{ fontSize: '.7rem' }}>
+            Receive{' '}
+            {payAmount && weiPayAmt?.gt(0) ? (
+              formatReceivedTickets(weiPayAmt) + ' Tickets'
+            ) : (
+              <span>
+                {formatReceivedTickets(
+                  (payAs === 0 ? parseWad('1') : converter.usdToWei('1')) ??
+                    BigNumber.from(0),
+                )}{' '}
+                tickets/
+                <CurrencySymbol currency={payAs} />
+              </span>
             )}
           </div>
+        </div>
+
+        <div style={{ textAlign: 'center', minWidth: 150 }}>
+          <Button
+            style={{ width: '100%' }}
+            type="primary"
+            disabled={fundingCycle?.configured === 0}
+            onClick={weiPayAmt ? pay : undefined}
+          >
+            Pay project
+          </Button>
+          {payAs === 1 && (
+            <div style={{ fontSize: '.7rem' }}>
+              Paid as <CurrencySymbol currency={0} />
+              {formatWad(weiPayAmt) || '0'}
+            </div>
+          )}
         </div>
       </div>
 

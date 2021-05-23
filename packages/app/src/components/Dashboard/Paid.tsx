@@ -7,7 +7,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import React, { useContext, useMemo } from 'react'
+import React, { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatCurrency'
 
@@ -76,41 +76,76 @@ export default function Paid({
     paidInCurrency?.toString() ?? '1',
   )
 
+  const primaryTextStyle: CSSProperties = {
+    fontWeight: 500,
+    fontSize: '1.2rem',
+  }
+
+  const subTextStyle: CSSProperties = {
+    color: colors.text.tertiary,
+    fontSize: '0.8rem',
+  }
+
   if (!fundingCycle) return null
 
   return (
     <div>
-      <div>
-        <TooltipLabel
-          style={smallHeaderStyle(colors)}
-          label="PAID"
-          tip="The total paid to the project in this funding cycle, plus any overflow carried over from the previous funding cycle."
-        />
-        <div
-          style={{
-            fontSize: '1.4rem',
-            fontWeight: 500,
-            color: colors.text.brand.primary,
-          }}
-        >
-          <CurrencySymbol currency={fundingCycle.currency} />
-          {fundingCycle.currency === 1 ? (
-            <span>
-              {formatWad(paidInCurrency)}{' '}
-              <span
-                style={{
-                  fontSize: 'initial',
-                  color: colors.text.tertiary,
-                }}
-              >
-                <CurrencySymbol currency={0} />
-                {formatWad(converter.usdToWei(fromWad(paidInCurrency)))}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <div style={smallHeaderStyle(colors)}>
+            <TooltipLabel
+              label="PAID"
+              tip="The total paid to the project in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
+            />
+          </div>
+          <div
+            style={{
+              ...primaryTextStyle,
+              color: colors.text.brand.primary,
+            }}
+          >
+            <CurrencySymbol currency={fundingCycle.currency} />
+            {fundingCycle.currency === 1 ? (
+              <span>
+                {formatWad(paidInCurrency)}{' '}
+                <span style={subTextStyle}>
+                  <CurrencySymbol currency={0} />
+                  {formatWad(converter.usdToWei(fromWad(paidInCurrency)))}
+                </span>
               </span>
-            </span>
-          ) : (
-            formatWad(paidInCurrency)
-          )}
+            ) : (
+              formatWad(paidInCurrency)
+            )}
+          </div>
         </div>
+
+        {totalOverflow?.gt(0) && (
+          <div style={{ fontWeight: 500, textAlign: 'right' }}>
+            <div style={smallHeaderStyle(colors)}>
+              <TooltipLabel
+                label="OVERFLOW"
+                tip="The amount paid to the project, minus the current funding cycle's target. Overflow can be claimed by ticket holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
+              />
+            </div>
+            {fundingCycle.currency === 1 ? (
+              <span>
+                <span style={subTextStyle}>
+                  <CurrencySymbol currency={0} />
+                  {formatWad(totalOverflow ?? 0)}
+                </span>{' '}
+                <span style={primaryTextStyle}>
+                  <CurrencySymbol currency={1} />
+                  {formattedNum(converter.weiToUsd(totalOverflow))}
+                </span>
+              </span>
+            ) : (
+              <span>
+                <CurrencySymbol currency={0} />
+                {formatWad(totalOverflow ?? 0)}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {totalOverflow?.gt(0) ? (
@@ -153,55 +188,17 @@ export default function Paid({
         />
       )}
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontSize: '1rem',
-          marginTop: 4,
-        }}
-      >
-        <div style={{ fontWeight: 500 }}>
+      <div style={{ marginTop: 4 }}>
+        <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
           <CurrencySymbol currency={fundingCycle.currency} />
           {formatWad(fundingCycle.target)}{' '}
-          <div style={smallHeaderStyle(colors)}>
-            <TooltipLabel
-              label="TARGET"
-              tip="The maximum amount this project can withdraw in the current funding cycle."
-            />
-          </div>
+        </span>
+        <div style={smallHeaderStyle(colors)}>
+          <TooltipLabel
+            label="TARGET"
+            tip="The maximum amount this project can withdraw during this funding cycle."
+          />
         </div>
-
-        {totalOverflow?.gt(0) && (
-          <div style={{ fontWeight: 500, textAlign: 'right' }}>
-            {fundingCycle.currency === 1 ? (
-              <span>
-                <span
-                  style={{ color: colors.text.tertiary, fontSize: '0.8rem' }}
-                >
-                  <CurrencySymbol currency={0} />
-                  {formatWad(totalOverflow ?? 0)}
-                </span>{' '}
-                <span>
-                  <CurrencySymbol currency={1} />
-                  {formattedNum(converter.weiToUsd(totalOverflow))}
-                </span>
-              </span>
-            ) : (
-              <span>
-                <CurrencySymbol currency={0} />
-                {formatWad(totalOverflow ?? 0)}
-              </span>
-            )}
-
-            <div style={smallHeaderStyle(colors)}>
-              <TooltipLabel
-                label="OVERFLOW"
-                tip="The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders."
-              />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

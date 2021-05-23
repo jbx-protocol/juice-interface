@@ -1,6 +1,8 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
+import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 
 import FundingCycleDetails from './FundingCycleDetails'
@@ -12,6 +14,10 @@ export default function FundingCyclePreview({
   fundingCycle: FundingCycle | undefined
   showDetail?: boolean
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   if (!fundingCycle) return null
 
   const isRecurring = fundingCycle.discountRate > 0
@@ -20,13 +26,13 @@ export default function FundingCyclePreview({
   const secondsLeft = fundingCycle.start + fundingCycle.duration - now
   const isEnded = secondsLeft <= 0
 
-  let header: string
+  let headerText: string
 
   if (isRecurring) {
-    header = isEnded
-      ? 'Funding cycle ended'
-      : 'Funding cycle ends in ' + detailedTimeString(secondsLeft)
-  } else header = detailedTimeString(secondsLeft) + ' left'
+    headerText = isEnded
+      ? `ended`
+      : `ends in ${detailedTimeString(secondsLeft)}`
+  } else headerText = detailedTimeString(secondsLeft) + ' left'
 
   return (
     <div>
@@ -43,7 +49,19 @@ export default function FundingCyclePreview({
         <CollapsePanel
           key={'0'}
           style={{ border: 'none', padding: 0 }}
-          header={header}
+          header={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                color: colors.text.secondary,
+              }}
+            >
+              <span>Funding cycle #{fundingCycle.number.toString()}</span>
+              {headerText}
+            </div>
+          }
         >
           <FundingCycleDetails fundingCycle={fundingCycle} />
         </CollapsePanel>

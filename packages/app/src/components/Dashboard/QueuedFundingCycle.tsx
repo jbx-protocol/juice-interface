@@ -15,7 +15,7 @@ export default function QueuedFundingCycle({
   currentCycle,
 }: {
   projectId: BigNumber
-  isOwner: boolean
+  isOwner?: boolean
   currentCycle: FundingCycle | undefined
 }) {
   const [
@@ -41,27 +41,26 @@ export default function QueuedFundingCycle({
   const spacing = 30
 
   return (
-    <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
-      {isOwner && (
-        <div>
-          <Button onClick={() => setReconfigureModalVisible(true)}>
-            Reconfigure funding
+    <div>
+      <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
+        {isOwner && (
+          <Button onClick={() => setReconfigureModalVisible(true)} size="small">
+            Reconfigure
           </Button>
-          <ReconfigureBudgetModal
-            visible={reconfigureModalVisible}
-            onDone={() => setReconfigureModalVisible(false)}
-            fundingCycle={queuedCycle ?? currentCycle}
-            projectId={projectId}
-          />
-        </div>
-      )}
-      <CardSection padded>
+        )}
         {queuedCycle ? (
           <FundingCycleDetails fundingCycle={queuedCycle} />
         ) : (
-          <div style={{ padding: 25 }}>No upcoming funding cycle</div>
+          <div>No upcoming funding cycle</div>
         )}
-      </CardSection>
-    </Space>
+      </Space>
+
+      <ReconfigureBudgetModal
+        visible={reconfigureModalVisible}
+        onDone={() => setReconfigureModalVisible(false)}
+        fundingCycle={queuedCycle ?? currentCycle}
+        projectId={projectId}
+      />
+    </div>
   )
 }

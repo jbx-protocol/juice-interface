@@ -1,6 +1,7 @@
 import { Descriptions } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FundingCycle } from 'models/funding-cycle'
-import { fromPerMille } from 'utils/formatCurrency'
+import { formatWad, fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
@@ -27,6 +28,11 @@ export default function FundingCycleDetails({
 
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
 
+      <Descriptions.Item label={<TooltipLabel label="Target" />}>
+        <CurrencySymbol currency={fundingCycle.currency} />
+        {formatWad(fundingCycle.target)}
+      </Descriptions.Item>
+
       <Descriptions.Item
         label={
           <TooltipLabel
@@ -48,10 +54,6 @@ export default function FundingCycleDetails({
         }
       >
         {fromPerMille(fundingCycle.discountRate)} %
-      </Descriptions.Item>
-
-      <Descriptions.Item label="Term">
-        {fundingCycle.number.toString()}
       </Descriptions.Item>
 
       <Descriptions.Item

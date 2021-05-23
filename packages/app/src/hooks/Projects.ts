@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractName } from 'models/contract-name'
 import { ProjectIdentifier } from 'models/project-identifier'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 

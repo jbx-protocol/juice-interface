@@ -251,155 +251,121 @@ export default function Rewards({
     : undefined
 
   return (
-    <Space direction="vertical" size="large">
-      {/* <Statistic
-        title={
-          <TooltipLabel
-            label="Overflow"
-            tip="The amount paid to the project, minus the amount the project can withdraw in this funding cycle. Can be claimed by ticket holders."
-            style={{
-              fontWeight:
-                forThemeOption &&
-                forThemeOption({
-                  [ThemeOption.light]: 600,
-                  [ThemeOption.dark]: 400,
-                }),
-            }}
-          />
-        }
-        valueRender={() =>
-          currentCycle?.currency === 1 ? (
-            <div>
-              <span>
-                <CurrencySymbol currency={1} />
-                {formattedNum(converter.weiToUsd(totalOverflow))}{' '}
-              </span>
-              <span style={{ opacity: 0.6, fontSize: '0.8rem' }}>
-                <CurrencySymbol currency={0} />
-                {formatWad(totalOverflow ?? 0)}
-              </span>
-            </div>
-          ) : (
-            <div>
-              <CurrencySymbol currency={0} />
-              {formatWad(totalOverflow ?? 0)}
-            </div>
-          )
-        }
-      /> */}
-
-      <Statistic
-        title={
-          <TooltipLabel
-            label="Tickets"
-            tip="Tickets are earned by paying a project, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
-            style={{
-              fontWeight:
-                forThemeOption &&
-                forThemeOption({
-                  [ThemeOption.light]: 600,
-                  [ThemeOption.dark]: 400,
-                }),
-            }}
-          />
-        }
-        valueRender={() => (
-          <Descriptions layout="horizontal" column={1}>
-            <Descriptions.Item
-              label="Total supply"
-              children={<div>{formatWad(totalSupply)}</div>}
+    <div>
+      <Space direction="vertical" size="large">
+        <Statistic
+          title={
+            <TooltipLabel
+              label="Tickets"
+              tip="Tickets are earned by paying a project, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
+              style={{
+                fontWeight:
+                  forThemeOption &&
+                  forThemeOption({
+                    [ThemeOption.light]: 600,
+                    [ThemeOption.dark]: 400,
+                  }),
+              }}
             />
-            <Descriptions.Item
-              label={
-                <TooltipLabel
-                  label="Reserved"
-                  tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
-                  style={{ marginRight: 14 }}
-                />
-              }
-              children={
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <div>{formatWad(reservedTickets) || 0}</div>
-                  <Button
-                    loading={loadingPrint}
-                    size="small"
-                    onClick={print}
-                    disabled={!reservedTickets?.gt(0)}
+          }
+          valueRender={() => (
+            <Descriptions layout="horizontal" column={1}>
+              <Descriptions.Item
+                label="Total supply"
+                children={<div>{formatWad(totalSupply)}</div>}
+              />
+              <Descriptions.Item
+                label={
+                  <TooltipLabel
+                    label="Reserved"
+                    tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
+                    style={{ marginRight: 14 }}
+                  />
+                }
+                children={
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
                   >
-                    Print
-                  </Button>
-                </div>
-              }
-            />
-            <Descriptions.Item
-              label="Your balance"
-              children={
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <div>
-                    {(iouBalance?.gt(0) || ticketsIssued === false) && (
-                      <div>
-                        {formatWad(iouBalance ?? 0)}{' '}
-                        {ticketsIssued && iouBalance?.gt(0) && (
-                          <Tooltip title={'Convert to ' + ticketSymbol}>
-                            {loadingConvert ? (
-                              <Loading />
-                            ) : (
-                              <SwapOutlined
-                                onClick={convert}
-                                style={{ color: colors.icon.action.primary }}
-                              />
-                            )}
-                          </Tooltip>
-                        )}
-                      </div>
-                    )}
-                    {ticketsIssued && (
-                      <div>
-                        {formatWad(ticketsBalance ?? 0)}{' '}
-                        <span>{ticketSymbol}</span>
-                      </div>
-                    )}
-                  </div>
-                  <Space>
-                    <div
-                      style={{
-                        fontSize: '.8rem',
-                        color: colors.text.secondary,
-                        fontWeight: 500,
-                      }}
-                    >
-                      {share ?? 0}%
-                    </div>
+                    <div>{formatWad(reservedTickets) || 0}</div>
                     <Button
-                      loading={loadingRedeem}
+                      loading={loadingPrint}
                       size="small"
-                      onClick={() => setRedeemModalVisible(true)}
+                      onClick={print}
+                      disabled={!reservedTickets?.gt(0)}
                     >
-                      Redeem
+                      Print
                     </Button>
-                  </Space>
-                </div>
-              }
-            />
-          </Descriptions>
-        )}
-      />
+                  </div>
+                }
+              />
+              <Descriptions.Item
+                label="Your balance"
+                children={
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <div>
+                      {(iouBalance?.gt(0) || ticketsIssued === false) && (
+                        <div>
+                          {formatWad(iouBalance ?? 0)}{' '}
+                          {ticketsIssued && iouBalance?.gt(0) && (
+                            <Tooltip title={'Convert to ' + ticketSymbol}>
+                              {loadingConvert ? (
+                                <Loading />
+                              ) : (
+                                <SwapOutlined
+                                  onClick={convert}
+                                  style={{ color: colors.icon.action.primary }}
+                                />
+                              )}
+                            </Tooltip>
+                          )}
+                        </div>
+                      )}
+                      {ticketsIssued && (
+                        <div>
+                          {formatWad(ticketsBalance ?? 0)}{' '}
+                          <span>{ticketSymbol}</span>
+                        </div>
+                      )}
+                    </div>
+                    <Space>
+                      <div
+                        style={{
+                          fontSize: '.8rem',
+                          color: colors.text.secondary,
+                          fontWeight: 500,
+                        }}
+                      >
+                        {share ?? 0}%
+                      </div>
+                      <Button
+                        loading={loadingRedeem}
+                        size="small"
+                        onClick={() => setRedeemModalVisible(true)}
+                      >
+                        Redeem
+                      </Button>
+                    </Space>
+                  </div>
+                }
+              />
+            </Descriptions>
+          )}
+        />
 
-      {!ticketsIssued && isOwner && <IssueTickets projectId={projectId} />}
+        {!ticketsIssued && isOwner && <IssueTickets projectId={projectId} />}
+      </Space>
 
       <Modal
         title={`Redeem ${ticketSymbol ?? 'Tickets'}`}
@@ -450,6 +416,6 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
-    </Space>
+    </div>
   )
 }

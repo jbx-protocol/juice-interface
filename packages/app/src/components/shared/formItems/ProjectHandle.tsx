@@ -3,7 +3,7 @@ import { Form, Input } from 'antd'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -13,8 +13,16 @@ export default function ProjectHandle({
   hideLabel,
   formItemProps,
   onValueChange,
-}: { onValueChange: (val: string) => void } & FormItemExt) {
+  value,
+}: {
+  onValueChange: (val: string) => void
+  value?: string
+} & FormItemExt) {
   const [inputContents, setInputContents] = useState<string>()
+
+  useEffect(() => {
+    setInputContents(value)
+  }, [value])
 
   // InputContents pattern allows checking if handle exists while typing
   const handleExists = useContractReader<boolean>({
@@ -49,9 +57,11 @@ export default function ProjectHandle({
       status={handleExists ? 'warning' : undefined}
       {...formItemProps}
       rules={[{ validator: checkHandle }, ...(formItemProps?.rules ?? [])]}
+      validateTrigger={false}
     >
       <Input
         id="testinput"
+        value={inputContents}
         prefix="@"
         suffix={handleExists ? 'Handle taken' : ''}
         className="err-suffix"

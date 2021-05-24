@@ -1,5 +1,6 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 export type ProjectFormFields = {
@@ -16,6 +17,8 @@ export default function ProjectForm({
   form: FormInstance<ProjectFormFields>
   onSave: VoidFunction
 }) {
+  const [handle, setHandle] = useState<string>()
+
   return (
     <Space direction="vertical" size="large">
       <h1>Project info</h1>
@@ -26,12 +29,16 @@ export default function ProjectForm({
           formItemProps={{
             rules: [{ required: true }],
           }}
-          onChange={name =>
-            name && form.setFieldsValue({ handle: normalizeHandle(name) })
-          }
+          onChange={name => {
+            const val = name ? normalizeHandle(name) : ''
+            // Use `handle` state to enable ProjectHandle to validate while typing
+            setHandle(val)
+            form.setFieldsValue({ handle: val })
+          }}
         />
         <FormItems.ProjectHandle
           name="handle"
+          value={handle}
           onValueChange={val => form.setFieldsValue({ handle: val })}
           formItemProps={{
             rules: [{ required: true }],

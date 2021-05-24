@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import React, { useContext, useState } from 'react'
@@ -31,6 +32,7 @@ export default function FundingCycles({
 
   const {
     theme: { colors },
+    forThemeOption,
   } = useContext(ThemeContext)
 
   const tab = (option: TabOption) => (
@@ -97,7 +99,12 @@ export default function FundingCycles({
         <TooltipLabel
           style={{
             color: colors.text.header,
-            fontWeight: 600,
+            fontWeight:
+              forThemeOption &&
+              forThemeOption({
+                [ThemeOption.light]: 600,
+                [ThemeOption.dark]: 400,
+              }),
           }}
           label="Funding cycle"
           tip="A project's lifetime is defined in funding cycles. Each funding cycle has a duration and funding target. During each cycle, a project can withdraw no more than the target—any extra funds paid is overflow."

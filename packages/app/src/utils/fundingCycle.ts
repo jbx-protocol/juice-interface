@@ -1,5 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { FCMetadata } from 'models/funding-cycle'
+import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+
+import { EditingFundingCycle } from './serializers'
 
 // packed `metadata` format:  0bRRRRRRRRRRRRRRRRrrrrrrrrrrrrrrrrBBBBBBBBBBBBBBBBVVVVVVVV
 // V: version (bits 0-8)
@@ -36,3 +38,6 @@ export const encodeFCMetadata = (
     .or(BigNumber.from(bondingCurveRate).shl(8))
     .or(BigNumber.from(reserved).shl(24))
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(40))
+
+export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
+  fundingCycle.discountRate > 0

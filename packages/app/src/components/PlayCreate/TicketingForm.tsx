@@ -9,9 +9,11 @@ export type TicketingFormFields = {
 
 export default function FundingDetails({
   form,
+  cycleIsRecurring,
   onSave,
 }: {
   form: FormInstance<TicketingFormFields>
+  cycleIsRecurring: boolean
   onSave: VoidFunction
 }) {
   return (
@@ -26,20 +28,24 @@ export default function FundingDetails({
             form.setFieldsValue({ reserved: val?.toString() })
           }
         />
-        <FormItems.ProjectDiscountRate
-          name="discountRate"
-          value={form.getFieldValue('discountRate')}
-          onChange={(val?: number) =>
-            form.setFieldsValue({ discountRate: val?.toString() })
-          }
-        />
-        <FormItems.ProjectBondingCurveRate
-          name="bondingCurveRate"
-          value={form.getFieldValue('bondingCurveRate')}
-          onChange={(val?: number) =>
-            form.setFieldsValue({ bondingCurveRate: val?.toString() })
-          }
-        />
+        {cycleIsRecurring && (
+          <FormItems.ProjectDiscountRate
+            name="discountRate"
+            value={form.getFieldValue('discountRate')}
+            onChange={(val?: number) =>
+              form.setFieldsValue({ discountRate: val?.toString() })
+            }
+          />
+        )}
+        {cycleIsRecurring && (
+          <FormItems.ProjectBondingCurveRate
+            name="bondingCurveRate"
+            value={form.getFieldValue('bondingCurveRate')}
+            onChange={(val?: number) =>
+              form.setFieldsValue({ bondingCurveRate: val?.toString() })
+            }
+          />
+        )}
         <Form.Item>
           <Button
             htmlType="submit"

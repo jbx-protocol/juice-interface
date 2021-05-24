@@ -18,6 +18,7 @@ export type EditingProjectState = {
 }
 
 const defaultDiscountRate = 97
+const defaultBondingCurveRate = 500
 
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
@@ -41,7 +42,7 @@ export const editingProjectSlice = createSlice({
       weight: BigNumber.from(0),
       fee: 15,
       reserved: 50,
-      bondingCurveRate: 500,
+      bondingCurveRate: defaultBondingCurveRate,
       discountRate: parsePerMille(defaultDiscountRate.toString()).toNumber(),
       configured: 0,
       ballot: constants.AddressZero,
@@ -160,6 +161,9 @@ export const editingProjectSlice = createSlice({
       fundingCycle: {
         ...state.fundingCycle,
         discountRate: action.payload ? defaultDiscountRate.toString() : '0',
+        bondingCurveRate: action.payload
+          ? defaultBondingCurveRate.toString()
+          : '0',
       },
     }),
   },

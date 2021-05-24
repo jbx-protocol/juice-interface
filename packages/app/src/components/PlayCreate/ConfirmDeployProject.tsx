@@ -16,6 +16,8 @@ import {
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
+import { isRecurring } from '../../utils/fundingCycle'
+
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
@@ -65,21 +67,25 @@ export default function ConfirmDeployProject() {
       </Space>
       <Statistic title="Link" value={orEmpty(editingProject?.link)} />
       <Space size="large" align="end">
-        <Statistic
-          title="Discount rate"
-          value={fromPerMille(editingFC?.discountRate)}
-          suffix="%"
-        />
+        {editingFC && isRecurring(editingFC) && (
+          <Statistic
+            title="Discount rate"
+            value={fromPerMille(editingFC?.discountRate)}
+            suffix="%"
+          />
+        )}
         <Statistic
           title="Reserved tickets"
           value={fromPerMille(editingFC?.reserved)}
           suffix="%"
         />
-        <Statistic
-          title="Bonding curve rate"
-          value={fromPerMille(editingFC?.bondingCurveRate)}
-          suffix="%"
-        />
+        {editingFC && isRecurring(editingFC) && (
+          <Statistic
+            title="Bonding curve rate"
+            value={fromPerMille(editingFC?.bondingCurveRate)}
+            suffix="%"
+          />
+        )}
       </Space>
     </Space>
   )

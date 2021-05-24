@@ -23,6 +23,7 @@ import { encodeFCMetadata } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 
 import { FundingCycle } from '../../models/funding-cycle'
+import { isRecurring } from '../../utils/fundingCycle'
 import BudgetInfo, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
@@ -100,6 +101,9 @@ export default function PlayCreate() {
     if (fields?.duration && fields?.target) {
       incrementStep(1)
     }
+
+    // Ticketing form depends on budget recurring/one-time
+    resetTicketingForm()
   }
 
   const onProjectFormSaved = () => {
@@ -302,6 +306,7 @@ export default function PlayCreate() {
       >
         <TicketingForm
           form={ticketingForm}
+          cycleIsRecurring={isRecurring(fundingCycle)}
           onSave={async () => {
             await ticketingForm.validateFields()
             onTicketingFormSaved()

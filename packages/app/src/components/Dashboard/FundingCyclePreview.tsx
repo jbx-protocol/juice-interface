@@ -4,6 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
+import { isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 
@@ -20,15 +21,13 @@ export default function FundingCyclePreview({
 
   if (!fundingCycle) return null
 
-  const isRecurring = fundingCycle.discountRate > 0
-
   const now = Math.round(new Date().valueOf() / 1000)
   const secondsLeft = fundingCycle.start + fundingCycle.duration - now
   const isEnded = secondsLeft <= 0
 
   let headerText: string
 
-  if (isRecurring) {
+  if (isRecurring(fundingCycle)) {
     headerText = isEnded
       ? `ended`
       : `ends in ${detailedTimeString(secondsLeft)}`

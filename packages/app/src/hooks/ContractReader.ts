@@ -2,11 +2,9 @@ import { Contract, EventFilter } from '@ethersproject/contracts'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
-import { useContext } from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 
-import { useContractLoader } from './ContractLoader'
 import { UserContext } from '../contexts/userContext'
 
 export type ContractUpdateOn = {
@@ -45,8 +43,7 @@ export default function useContractReader<V>({
     [valueDidChange],
   )
 
-  const { network } = useContext(UserContext)
-  const contracts = useContractLoader(provider, network)
+  const { contracts } = useContext(UserContext)
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {

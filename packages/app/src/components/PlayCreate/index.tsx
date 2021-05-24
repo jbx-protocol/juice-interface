@@ -4,7 +4,8 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { layouts } from 'constants/styles/layouts'
-import { SECONDS_MULTIPLIER } from 'constants/units'
+import { SECONDS_IN_DAY } from 'constants/units'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -13,6 +14,8 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
@@ -26,14 +29,8 @@ import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function PlayCreate() {
-  const {
-    transactor,
-    contracts,
-    onNeedProvider,
-    userAddress,
-    network,
-    adminFeePercent,
-  } = useContext(UserContext)
+  const { transactor, contracts, userAddress } = useContext(UserContext)
+  const { onNeedProvider, signerNetwork } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
@@ -60,6 +57,10 @@ export default function PlayCreate() {
   )
   const creatingProject = useAppSelector(state => state.editingProject.loading)
   const dispatch = useAppDispatch()
+  const adminFeePercent = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'fee',
+  })
 
   const incrementStep = (num: number) =>
     num > currentStep ? setCurrentStep(num) : null
@@ -67,7 +68,7 @@ export default function PlayCreate() {
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
       target: fromWad(editingFC?.target) ?? '0',
-      duration: (editingFC?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
+      duration: (editingFC?.duration / SECONDS_IN_DAY).toString() ?? '0',
       currency: editingFC?.currency ?? 0,
     })
 
@@ -91,7 +92,7 @@ export default function PlayCreate() {
     dispatch(editingProjectActions.setTarget(fields.target))
     dispatch(
       editingProjectActions.setDuration(
-        (parseInt(fields.duration) * SECONDS_MULTIPLIER).toString(),
+        (parseInt(fields.duration) * SECONDS_IN_DAY).toString(),
       ),
     )
     dispatch(editingProjectActions.setCurrency(fields.currency))
@@ -311,7 +312,7 @@ export default function PlayCreate() {
 
       <Modal
         visible={deployProjectModalVisible}
-        okText={'Deploy on ' + network}
+        okText={'Deploy on ' + signerNetwork}
         onOk={deployProject}
         confirmLoading={creatingProject}
         width={600}

@@ -1,25 +1,26 @@
-import { JsonRpcProvider, Listener } from '@ethersproject/providers'
+import { Listener } from '@ethersproject/providers'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { ContractName } from 'models/contract-name'
 import { useEffect, useMemo, useState } from 'react'
 
+import { useReadProvider } from './ReadProvider'
+
 export default function useEventListener<E>({
   contractName,
   eventName,
-  provider,
   startBlock,
   topics,
   includeHistory,
 }: {
   contractName?: ContractName
   eventName?: string
-  provider?: JsonRpcProvider
   startBlock?: number
   topics?: (any | any[])[]
   includeHistory?: boolean
 }) {
-  const contracts = useContractLoader(provider)
+  const contracts = useContractLoader()
 
+  const provider = useReadProvider()
   const [events, setEvents] = useState<(E & { timestamp: number })[]>([])
   const [shouldGetHistory, setShouldGetHistory] = useState<boolean>(
     !!includeHistory,

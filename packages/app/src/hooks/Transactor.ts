@@ -2,16 +2,13 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
-import {
-  JsonRpcProvider,
-  JsonRpcSigner,
-  TransactionRequest,
-  Web3Provider,
-} from '@ethersproject/providers'
+import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import { notification } from 'antd'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
+
+import { NetworkContext } from '../contexts/networkContext'
 
 export type TransactorCallback = (
   e?: TransactionEvent,
@@ -35,12 +32,12 @@ export type Transactor = (
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
 export function useTransactor({
-  provider,
   gasPrice,
 }: {
-  provider?: Web3Provider | JsonRpcProvider
   gasPrice?: BigNumber
 }): Transactor | undefined {
+  const { signingProvider: provider } = useContext(NetworkContext)
+
   return useCallback(
     async (
       contract: Contract,

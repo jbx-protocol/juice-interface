@@ -1,11 +1,12 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import { useContext } from 'react'
+import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import {
   formattedNum,
   formatWad,
@@ -16,12 +17,14 @@ import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
 export default function ConfirmDeployProject() {
-  const { adminFeePercent } = useContext(UserContext)
-
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
+  const adminFeePercent = useContractReader<BigNumber>({
+    contract: ContractName.Juicer,
+    functionName: 'fee',
+  })
 
   const formattedTargetWithFee = () => {
     if (adminFeePercent === undefined) return

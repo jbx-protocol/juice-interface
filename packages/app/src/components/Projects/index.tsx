@@ -1,5 +1,4 @@
 import { Input, Select, Space } from 'antd'
-import { Option } from 'antd/lib/mentions'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
@@ -71,9 +70,9 @@ export default function Projects() {
             }}
             style={{ width: 160 }}
           >
-            <Option value="all">All projects</Option>
-            <Option value="user">Your projects</Option>
-            <Option value="address">By owner</Option>
+            <Select.Option value="all">All projects</Select.Option>
+            <Select.Option value="user">Your projects</Select.Option>
+            <Select.Option value="address">By owner</Select.Option>
           </Select>
           {showAddressInput && (
             <Input

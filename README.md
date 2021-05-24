@@ -86,9 +86,7 @@ REACT_APP_INFURA_ID=
 
 The frontend has three different providers that provide different levels of access to different chains:
 
-`mainnetProvider`: (read only) [Infura](https://infura.io/) connection to main [Ethereum](https://ethereum.org/developers/) network (and contracts already deployed like [DAI](https://etherscan.io/address/0x6b175474e89094c44da98b954eedeac495271d0f#code) or [Uniswap](https://etherscan.io/address/0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667)).
-
-`readProvider`: used to read from _your_ contracts (`.env` file points you at testnet or mainnet)
+`readProvider`: used to read from contracts on network of injected provider (`.env` file points you at testnet or mainnet)
 
 `signingProvider`: your personal [MetaMask](https://metamask.io/download.html), [WalletConnect](https://walletconnect.org/apps) via [Argent](https://www.argent.xyz/), or other injected wallet (generates [burner-provider](https://www.npmjs.com/package/burner-provider) on page load). Used to sign transactions.
 

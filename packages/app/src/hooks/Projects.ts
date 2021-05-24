@@ -33,9 +33,7 @@ export function useProjects() {
     contract: ContractName.Projects,
     functionName: 'totalSupply',
     valueDidChange: bigNumbersDiff,
-    callback: useCallback(_supply => {
-      if (_supply !== undefined) reset()
-    }, []),
+    callback: reset,
   })
 
   useContractReader<BigNumber>({

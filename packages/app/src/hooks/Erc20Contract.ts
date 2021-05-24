@@ -1,13 +1,17 @@
 import { isAddress } from '@ethersproject/address'
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { NetworkContext } from 'contexts/networkContext'
 import erc20Abi from 'erc-20-abi'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 
-export function useErc20Contract(
-  address: string | undefined,
-  provider: JsonRpcProvider | undefined,
-) {
+import { useReadProvider } from './ReadProvider'
+
+export function useErc20Contract(address: string | undefined) {
+  const { signingProvider } = useContext(NetworkContext)
+  const readProvider = useReadProvider()
+
+  const provider = signingProvider ?? readProvider
+
   return useMemo(
     () =>
       address && isAddress(address)

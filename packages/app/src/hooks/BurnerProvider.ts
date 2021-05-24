@@ -1,20 +1,11 @@
 import { Web3Provider } from '@ethersproject/providers'
 import BurnerProvider from 'burner-provider'
-import { UserContext } from 'contexts/userContext'
+import { NETWORKS_BY_NAME } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
-import { useContext, useMemo } from 'react'
-import { useReadProvider } from 'utils/providers'
+import { useMemo } from 'react'
 
-export function useSigningProvider(injectedProvider?: Web3Provider) {
-  const { network } = useContext(UserContext)
-
-  const readProvider = useReadProvider(network)
-
+export function useBurnerProvider(network?: NetworkName) {
   return useMemo(() => {
-    if (injectedProvider) {
-      console.log('🦊 Using injected provider')
-      return injectedProvider
-    }
     if (
       process.env.NODE_ENV === 'production' ||
       (process.env.REACT_APP_INFURA_DEV_NETWORK &&
@@ -48,22 +39,15 @@ export function useSigningProvider(injectedProvider?: Web3Provider) {
     }
 
     console.log('🔥 Using burner provider', burnerConfig)
-    if (readProvider.connection && readProvider.connection.url) {
-      burnerConfig.rpcUrl = readProvider.connection.url
-      return new Web3Provider(new BurnerProvider(burnerConfig))
-    } else {
-      // eslint-disable-next-line no-underscore-dangle
-      const networkName = readProvider._network && readProvider._network.name
-      if (!process.env.REACT_APP_INFURA_ID) {
-        console.log(
-          'Missing env.REACT_APP_INFURA_ID! Cant create burner provider',
-        )
-        return undefined
-      }
-      burnerConfig.rpcUrl = `https://${networkName || 'mainnet'}.infura.io/v3/${
-        process.env.REACT_APP_INFURA_ID
-      }`
-      return new Web3Provider(new BurnerProvider(burnerConfig))
+    // eslint-disable-next-line no-underscore-dangle
+    if (!process.env.REACT_APP_INFURA_ID) {
+      console.log(
+        'Missing env.REACT_APP_INFURA_ID! Cant create burner provider',
+      )
+      return undefined
     }
-  }, [injectedProvider, network])
+    burnerConfig.rpcUrl =
+      NETWORKS_BY_NAME[network || NetworkName.localhost].rpcUrl
+    return new Web3Provider(new BurnerProvider(burnerConfig))
+  }, [network])
 }

@@ -1,5 +1,6 @@
 import { Button, Col, Popover, Row, Tag } from 'antd'
 import { SUPPORTED_NETWORKS } from 'constants/supportedNetworks'
+import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
 import { NetworkName } from 'models/network-name'
 import { useContext } from 'react'
@@ -10,7 +11,8 @@ import Balance from './Balance'
 import Wallet from './Wallet'
 
 export default function Account() {
-  const { onNeedProvider, userAddress, network } = useContext(UserContext)
+  const { userAddress } = useContext(UserContext)
+  const { onNeedProvider, signerNetwork } = useContext(NetworkContext)
 
   useDeepCompareEffect(() => {
     if (web3Modal.cachedProvider && onNeedProvider) {
@@ -26,9 +28,9 @@ export default function Account() {
   }
 
   const switchNetworkTag =
-    !network ||
-    network === NetworkName.localhost ||
-    (network && SUPPORTED_NETWORKS.includes(network)) ? null : (
+    !signerNetwork ||
+    signerNetwork === NetworkName.localhost ||
+    (signerNetwork && SUPPORTED_NETWORKS.includes(signerNetwork)) ? null : (
       <Popover
         title="Juice works on:"
         content={
@@ -39,19 +41,23 @@ export default function Account() {
           </div>
         }
       >
-        <Tag color="red">Network not supported</Tag>
+        <Tag color="red">{signerNetwork} not supported</Tag>
       </Popover>
     )
 
   return (
     <div>
       <Row gutter={10} align="middle" style={{ justifyContent: 'flex-end' }}>
-        <Col>
-          <Balance userAddress={userAddress} />
-        </Col>
-        <Col>
-          <Wallet userAddress={userAddress}></Wallet>
-        </Col>
+        {userAddress && (
+          <Col>
+            <Balance userAddress={userAddress} />
+          </Col>
+        )}
+        {userAddress && (
+          <Col>
+            <Wallet userAddress={userAddress}></Wallet>
+          </Col>
+        )}
         <Col>
           {switchNetworkTag}
           {web3Modal?.cachedProvider ? (

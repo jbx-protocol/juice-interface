@@ -8,11 +8,17 @@ import { Provider } from 'react-redux'
 
 import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
+import Network from 'Network'
+import User from 'User'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Network>
+        <User>
+          <App />
+        </User>
+      </Network>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

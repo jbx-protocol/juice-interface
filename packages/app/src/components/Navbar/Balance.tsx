@@ -1,15 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther } from '@ethersproject/units'
 import EthPrice from 'components/Dashboard/EthPrice'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { useEtherPrice } from 'hooks/EtherPrice'
 import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatCurrency'
 
-export default function Balance({ userAddress }: { userAddress?: string }) {
-  const { signingProvider } = useContext(UserContext)
+export default function Balance({ userAddress }: { userAddress: string }) {
+  const { signingProvider } = useContext(NetworkContext)
   const [dollarMode, setDollarMode] = useState(false)
   const [balance, setBalance] = useState<BigNumber>()
   const {
@@ -37,8 +36,6 @@ export default function Balance({ userAddress }: { userAddress?: string }) {
     usdPerEth && dollarMode
       ? `$${balance ? formatWad(balance.mul(usdPerEth).toString()) : '--'}`
       : `${parseFloat(formatWad(balance) ?? '0').toFixed(4)}ETH`
-
-  if (!userAddress) return null
 
   return (
     <div

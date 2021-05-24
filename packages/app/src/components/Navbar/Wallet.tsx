@@ -2,7 +2,7 @@ import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
-export default function Wallet({ userAddress }: { userAddress?: string }) {
+export default function Wallet({ userAddress }: { userAddress: string }) {
   const { colors } = useContext(ThemeContext).theme
 
   const shortened =
@@ -12,7 +12,7 @@ export default function Wallet({ userAddress }: { userAddress?: string }) {
 
   const height = 30
 
-  return userAddress ? (
+  return (
     <span
       style={{
         height,
@@ -27,5 +27,5 @@ export default function Wallet({ userAddress }: { userAddress?: string }) {
     >
       <Tooltip title={userAddress}>{shortened}</Tooltip>
     </span>
-  ) : null
+  )
 }

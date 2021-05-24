@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import useEventListener from 'hooks/EventListener'
 import { ContractName } from 'models/contract-name'
 import { PayEvent } from 'models/events/pay-event'
@@ -15,14 +14,12 @@ export default function PayEvents({
 }: {
   projectId: BigNumber | undefined
 }) {
-  const { signingProvider } = useContext(UserContext)
   const { colors } = useContext(ThemeContext).theme
 
   const events = useEventListener<PayEvent>({
     contractName: ContractName.Juicer,
     eventName: 'Pay',
     topics: projectId ? [undefined, toUint256(projectId)] : undefined,
-    provider: signingProvider,
     includeHistory: true,
   })
 

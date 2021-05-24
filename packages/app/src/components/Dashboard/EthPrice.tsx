@@ -7,7 +7,7 @@ export default function EthPrice() {
   return (
     <div>
       <CurrencySymbol currency={1} />
-      {price}/{currencyName(0)}
+      {price?.toFixed(2)}/{currencyName(0)}
     </div>
   )
 }

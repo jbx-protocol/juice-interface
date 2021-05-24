@@ -1,24 +1,24 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { NETWORKS } from 'constants/networks'
+import { NetworkContext } from 'contexts/networkContext'
+import { useReadProvider } from 'hooks/ReadProvider'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
-import { useReadProvider } from 'utils/providers'
 
-export function useContractLoader(
-  provider?: JsonRpcProvider,
-  network?: NetworkName,
-) {
+export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
 
-  const readProvider = useReadProvider(network)
+  const { signingProvider } = useContext(NetworkContext)
+
+  const readProvider = useReadProvider()
 
   useDeepCompareEffect(() => {
     async function loadContracts() {
-      const _provider = provider ?? readProvider
+      const _provider = signingProvider ?? readProvider
 
       await _provider.ready
 
@@ -29,8 +29,10 @@ export function useContractLoader(
       try {
         const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
 
-        // TODO how to automatically use signer if not using burner?
-        const signerOrProvider = provider?.getSigner() ?? readProvider
+        // Contracts can be used read-only without a signer, but require a signer to create transactions.
+        const signerOrProvider = signingProvider
+          ? signingProvider.getSigner()
+          : readProvider
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
@@ -51,7 +53,7 @@ export function useContractLoader(
     }
 
     loadContracts()
-  }, [provider, setContracts])
+  }, [readProvider, signingProvider, setContracts])
 
   return contracts
 }

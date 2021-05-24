@@ -8,7 +8,6 @@ import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatCurrency'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
 export default function ConfirmPayOwnerModal({
@@ -34,8 +33,6 @@ export default function ConfirmPayOwnerModal({
   const converter = useCurrencyConverter()
 
   const usdAmount = converter.weiToUsd(weiAmount)
-
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
   async function pay() {
     if (!contracts || !projectId || !transactor) return

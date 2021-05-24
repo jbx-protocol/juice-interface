@@ -6,6 +6,7 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import Loading from 'components/shared/Loading'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -17,7 +18,6 @@ import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
 import { decodeFCMetadata } from 'utils/fundingCycle'
-import { useReadProvider } from 'utils/providers'
 
 import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
@@ -33,13 +33,9 @@ export default function Rewards({
   totalOverflow: BigNumber | undefined
   isOwner: boolean | undefined
 }) {
-  const {
-    contracts,
-    transactor,
-    userAddress,
-    onNeedProvider,
-    network,
-  } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { onNeedProvider } = useContext(NetworkContext)
+  const { userAddress } = useContext(UserContext)
 
   const {
     theme: { colors },
@@ -93,8 +89,7 @@ export default function Rewards({
       [],
     ),
   })
-  const readProvider = useReadProvider(network)
-  const ticketContract = useErc20Contract(ticketAddress, readProvider)
+  const ticketContract = useErc20Contract(ticketAddress)
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',

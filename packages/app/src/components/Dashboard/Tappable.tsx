@@ -3,13 +3,15 @@ import { Button, Input, Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { FundingCycle } from 'models/funding-cycle'
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
+
 import { smallHeaderStyle } from './styles'
 
 export default function Tappable({
@@ -21,7 +23,8 @@ export default function Tappable({
   projectId: BigNumber
   balanceInCurrency: BigNumber | undefined
 }) {
-  const { transactor, contracts, onNeedProvider } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
+  const { onNeedProvider } = useContext(NetworkContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)

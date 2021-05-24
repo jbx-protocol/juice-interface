@@ -1,11 +1,9 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { UserContext } from 'contexts/userContext'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
-
-import { UserContext } from '../contexts/userContext'
 
 export type ContractUpdateOn = {
   contract?: ContractConfig
@@ -23,7 +21,6 @@ export default function useContractReader<V>({
   formatter,
   callback,
   valueDidChange,
-  provider,
 }: {
   contract?: ContractConfig
   functionName?: string
@@ -32,9 +29,10 @@ export default function useContractReader<V>({
   formatter?: (val?: any) => V | undefined
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
-  provider?: JsonRpcProvider
 }): V | undefined {
   const [value, setValue] = useState<V | undefined>()
+
+  const { contracts } = useContext(UserContext)
 
   const _formatter = useCallback(formatter ?? ((val: any) => val), [formatter])
   const _callback = useCallback(callback ?? ((val: any) => {}), [callback])
@@ -42,8 +40,6 @@ export default function useContractReader<V>({
     valueDidChange ?? ((a?: any, b?: any) => a !== b),
     [valueDidChange],
   )
-
-  const { contracts } = useContext(UserContext)
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {
@@ -70,7 +66,14 @@ export default function useContractReader<V>({
           _callback(newValue)
         }
       } catch (err) {
-        console.log('📕 Read error >', functionName, { args }, { err })
+        console.log(
+          '📕 Read error >',
+          functionName,
+          { args },
+          { err },
+          { contract: readContract.address },
+          contracts,
+        )
         const newValue = _formatter(undefined)
         setValue(newValue)
         _callback(undefined)

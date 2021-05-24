@@ -3,7 +3,6 @@ import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeOption } from 'constants/theme/theme-option'
-import { SECONDS_MULTIPLIER } from 'constants/units'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -16,6 +15,8 @@ import { useContext, useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { formatWad, fromWad } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
+
+import { SECONDS_IN_DAY } from '../../constants/units'
 
 type FormFields = {
   name: string
@@ -40,8 +41,7 @@ export default function DefineProject() {
       form.setFieldsValue({
         name: editingProject?.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
-        duration:
-          (editingBudget?.duration / SECONDS_MULTIPLIER).toString() ?? '0',
+        duration: (editingBudget?.duration / SECONDS_IN_DAY).toString() ?? '0',
         currency: editingBudget?.currency ?? 0,
       }),
     [],
@@ -62,7 +62,7 @@ export default function DefineProject() {
     if (fields.duration !== undefined)
       dispatch(
         editingProjectActions.setDuration(
-          (parseFloat(fields.duration || '0') * SECONDS_MULTIPLIER).toString(),
+          (parseFloat(fields.duration || '0') * SECONDS_IN_DAY).toString(),
         ),
       )
     if (fields.currency !== undefined)
@@ -153,7 +153,7 @@ export default function DefineProject() {
               <span>
                 every{' '}
                 {bold(
-                  (editingBudget?.duration / SECONDS_MULTIPLIER).toString(),
+                  (editingBudget?.duration / SECONDS_IN_DAY).toString(),
                   '0',
                 )}{' '}
                 days

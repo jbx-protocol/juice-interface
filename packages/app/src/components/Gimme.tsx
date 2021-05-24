@@ -2,13 +2,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther, parseEther } from '@ethersproject/units'
 import { Button } from 'antd'
 import { padding } from 'constants/styles/padding'
+import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
 import { useContext, useEffect, useState } from 'react'
 
 export default function Gimme() {
-  const { userAddress, contracts, transactor, signingProvider } = useContext(
-    UserContext,
-  )
+  const { userAddress, contracts, transactor } = useContext(UserContext)
+  const { signingProvider } = useContext(NetworkContext)
   const [balance, setBalance] = useState<BigNumber>()
 
   const [gimmeAmount, setGimmeAmount] = useState<string>('2')

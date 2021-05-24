@@ -98,14 +98,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     if (ethUsdAddr) {
       console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
-      await attachedGovernance.addPriceFeed(
-        fundingCycles.address,
-        ethUsdAddr,
-        1,
-        {
-          gasLimit: blockGasLimit
-        }
-      );
+      await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
+        gasLimit: blockGasLimit
+      });
     }
 
     console.log("⚡️ Setting governance's Juice terminal");
@@ -140,7 +135,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "juice",
       "https://medmunch.com/wp-content/uploads/2020/04/Mango-Juice.jpg",
       "https://juice.work",
-      "0x3635C9ADC5DEA00000",
+      "0x21E19E0C9BAB2400000",
       1,
       duration,
       discountRate,

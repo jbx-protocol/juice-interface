@@ -9,6 +9,12 @@ import "./interfaces/IPrices.sol";
   @notice An immutable contract to manage price feeds.
 */
 contract Prices is IPrices, Ownable {
+    // The number to multiply each price feed by to get to the target decimals.
+    mapping(uint256 => uint256) private feedDecimalAdjuster;
+
+    // The number of decimals the price feed results have.
+    uint256 public constant override decimals = 18;
+
     /// @notice The available price feeds that can be used to get the price of ETH.
     mapping(uint256 => AggregatorV3Interface) public override feeds;
 
@@ -33,7 +39,8 @@ contract Prices is IPrices, Ownable {
         //     "BudgetStore::getETHPrice NOT_FOUND"
         // );
         (, int256 _price, , , ) = _feed.latestRoundData();
-        return uint256(_price);
+
+        return uint256(_price) * feedDecimalAdjuster[_currency];
     }
 
     /** 
@@ -46,7 +53,23 @@ contract Prices is IPrices, Ownable {
         override
         onlyOwner
     {
+        // Feed cant be the zero address.
+        require(
+            _feed != AggregatorV3Interface(address(0)),
+            "Prices::addFeed: ZERO_ADDRESS"
+        );
+
+        // Get a reference to the number of decimals the feed uses.
+        uint256 _decimals = _feed.decimals();
+
+        // Decimals should be less than or equal to the target number of decimals.
+        require(_decimals <= decimals, "Prices::addFeed: BAD_DECIMALS");
+
+        // Set the feed.
         feeds[_currency] = _feed;
+
+        // Set the number of decimals for the currency.
+        feedDecimalAdjuster[_currency] = 10**(decimals - _decimals);
 
         emit AddFeed(_currency, _feed);
     }

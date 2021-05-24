@@ -96,6 +96,14 @@ interface IJuicer {
         address caller
     );
 
+    event PrintInitialTickets(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        address indexed beneficiary,
+        uint256 amount,
+        address caller
+    );
+
     event AddToMigrationAllowList(address allowed);
 
     event Deposit(uint256 amount);
@@ -150,6 +158,27 @@ interface IJuicer {
 
     function fee() external view returns (uint256);
 
+    function deploy(
+        address _owner,
+        string memory _name,
+        string memory _handle,
+        string memory _logoUri,
+        string memory _link,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        uint256 _discountRate,
+        FundingCycleMetadata memory _metadata,
+        IFundingCycleBallot _ballot
+    ) external;
+
+    function printInitialTickets(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        bool _preferConvertedTickets
+    ) external;
+
     function reconfigure(
         uint256 _projectId,
         uint256 _target,
@@ -167,20 +196,6 @@ interface IJuicer {
     ) external;
 
     function migrate(uint256 _projectId, IJuiceTerminal _to) external;
-
-    function deploy(
-        address _owner,
-        string memory _name,
-        string memory _handle,
-        string memory _logoUri,
-        string memory _link,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
-        IFundingCycleBallot _ballot
-    ) external;
 
     function claimableOverflow(
         address _account,

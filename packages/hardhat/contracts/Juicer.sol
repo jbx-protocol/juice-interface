@@ -423,6 +423,67 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         );
     }
 
+    /** 
+      @notice Allows a project to print an initial batch of tickets for a specified beneficiary.
+      @dev This can only be done if the ticket supply is zero.
+      @param _projectId The ID of the project to premine tickets for.
+      @param _amount The amount to base the ticket premine off of. Measured in the project's current funding cycle's currency.
+      @param _beneficiary The address to send the printed tickets to.
+    */
+    function printInitialTickets(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        bool _preferConvertedTickets
+    ) external override nonReentrant {
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
+        // Only a msg.sender or a specified operator can print initial tickets.
+        require(
+            _owner == msg.sender ||
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.PrintInitialTickets
+                ),
+            "Juicer::printInitialTickets: UNAUTHORIZED"
+        );
+
+        // Make sure there is 0 total supply.
+        require(
+            tickets.totalSupply(_projectId) == 0,
+            "Juicer::printInitialTickets: NON_ZERO_SUPPLY"
+        );
+
+        // Get the current funding cycle to read the weight and currency from.
+        FundingCycle.Data memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
+
+        // Print the project's tickets for the beneficiary.
+        tickets.print(
+            _beneficiary,
+            _projectId,
+            _fundingCycle._weighted(
+                PRBMathUD60x18.mul(
+                    _amount,
+                    prices.getETHPrice(_fundingCycle.currency)
+                ),
+                1000
+            ),
+            _preferConvertedTickets
+        );
+
+        emit PrintInitialTickets(
+            _fundingCycle.id,
+            _fundingCycle.projectId,
+            _beneficiary,
+            _amount,
+            msg.sender
+        );
+    }
+
     /**
         @notice Reconfigures the properties of the current funding stage if the project hasn't distributed tickets yet, or
         sets the properties of the proposed funding stage that will take effect once the current one expires.
@@ -1137,10 +1198,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
-        // Add to the raw balance of governance's project.
+        // Add to the raw balance of the project.
         rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
 
-        // Print governance tickets for the project owner.
+        // Print the project's tickets for the beneficiary.
         tickets.print(
             _beneficiary,
             _projectId,

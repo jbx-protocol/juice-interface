@@ -15,7 +15,8 @@ export default function ProjectDiscountRate({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="Discount rate allows you to reward early adopters and investors of your project. For each funding cycle, the ratio of tickets rewarded per amount paid is the ratio from the previous funding cycle multiplied by this amount."
+      extra="The discount rate determines how you'll reward earlier adopters and investors of your project.
+      For example, if this is set to 97%, then someone who pays 100 towards the next funding cycle will only receive 97% the amount of Tickets received by someone who paid 100 towards this funding cycle."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}

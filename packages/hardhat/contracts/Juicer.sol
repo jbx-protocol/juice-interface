@@ -270,6 +270,13 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         if (_reservedTicketAmount > 0)
             _totalSupply = _totalSupply + _reservedTicketAmount;
 
+        // Get a reference to the base proportion.
+        uint256 _base =
+            PRBMathCommon.mulDiv(_currentOverflow, _count, _totalSupply);
+
+        // If there funding cycle isn't recurring return the base proportion.
+        if (_fundingCycle.discountRate == 0) return _base;
+
         // // Get a reference to the queued funding cycle for the project.
         FundingCycle.Data memory _queuedCycle =
             fundingCycles.getQueued(_projectId);
@@ -285,7 +292,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
         return
             PRBMathCommon.mulDiv(
-                PRBMathCommon.mulDiv(_currentOverflow, _count, _totalSupply),
+                _base,
                 _bondingCurveRate +
                     PRBMathCommon.mulDiv(
                         _count,

@@ -8,7 +8,7 @@ export const mainnetProvider = new JsonRpcProvider(
 )
 
 const defaultReadNetworkRpcUrl = (process.env.NODE_ENV === 'production'
-  ? NETWORKS_BY_NAME.rinkeby
+  ? NETWORKS_BY_NAME.kovan
   : NETWORKS_BY_NAME[
       (process.env.REACT_APP_INFURA_DEV_NETWORK as NetworkName) ??
         NetworkName.localhost

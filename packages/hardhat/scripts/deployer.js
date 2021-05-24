@@ -127,20 +127,20 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     console.log("⚡️ Configuring governance's budget");
 
     const duration = 2592000; // 30 days;
-    const discountRate = 970;
+    const discountRate = 950;
 
     await attachedJuicer.deploy(
       governance.address,
       "Juice",
       "juice",
       "https://medmunch.com/wp-content/uploads/2020/04/Mango-Juice.jpg",
-      "https://juice.work",
+      "https://juice.work/info/1.txt",
       "0x21E19E0C9BAB2400000",
       1,
       duration,
       discountRate,
       {
-        bondingCurveRate: 690,
+        bondingCurveRate: 700,
         reservedRate: 50,
         reconfigurationBondingCurveRate: 1000
       },

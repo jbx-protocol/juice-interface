@@ -1,0 +1,69 @@
+Name: Juice
+Handle: @juice
+Website: http://juice.work
+Twitter: @juicedotwork
+
+
+
+Purpose
+---------
+Juice develops the Juice protocol, and supports projects that are powered by Juice.
+
+
+
+Revenue plan
+---------
+5% of all the $ETH that projects powered by Juice bring in will run through our Juice project
+
+
+
+Funding target
+---------
+$150k / 90 days
+
+
+
+Expenses
+---------
+$30k / month | staff 
+3 founding/core contributors (twitter: @me_jango, @peripheralist, & @nMieos) 
+
+$60k | growth 
+allows us to pay other contributors from the community (@sageKellyn, @nervetrip, ...), and to give grants to projects that're powered by Juice.  
+
+
+
+Reserve rate
+---------
+95%
+
+
+
+Discount rate
+---------
+95%
+
+
+
+Bonding curve
+---------
+70%
+
+
+
+Product Roadmap
+---------
+- Build L2 Juice terminals so projects can get paid on L2s. 
+- Design FundingCycleBallots so that projects can choose to hand off reconfiguration decisions to their ticket holders, etc.
+- Build mods for all kinds of things. 
+
+Check the project's Github and get on our Discord if you want to contribute.
+
+
+https://github.com/juice-work/juicehouse
+https://discord.gg/6jXrJSyDFf
+
+
+🧃⚡️
+
+Published: May 24, 2021

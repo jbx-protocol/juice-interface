@@ -21,7 +21,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
   const governance = await deploy("Governance", [1]);
 
-  const directPayments = await deploy("DirectPayments", [
+  const juiceTerminalDirectory = await deploy("JuiceTerminalDirectory", [
     projects.address,
     operatorStore.address
   ]);
@@ -33,13 +33,16 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
     modStore.address,
     prices.address,
-    directPayments.address,
+    juiceTerminalDirectory.address,
     governance.address
   ]);
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 
-  await deploy("DirectPayments", [projects.address, operatorStore.address]);
+  await deploy("JuiceTerminalDirectory", [
+    projects.address,
+    operatorStore.address
+  ]);
 
   const blockGasLimit = 9000000;
 
@@ -134,7 +137,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       "Juice",
       "juice",
       "https://medmunch.com/wp-content/uploads/2020/04/Mango-Juice.jpg",
-      "https://juice.work/info/1.txt",
+      "http://juice.work/info/1.txt",
       "0x21E19E0C9BAB2400000",
       1,
       duration,
@@ -174,7 +177,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   return {
     operatorStore,
     modStore,
-    directPayments,
+    juiceTerminalDirectory,
     governance,
     prices,
     projects,

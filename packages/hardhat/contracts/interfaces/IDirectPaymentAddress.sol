@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./IDirectPayments.sol";
+import "./IJuiceTerminalDirectory.sol";
 import "./IJuiceTerminal.sol";
 
 interface IDirectPaymentAddress {
-    function directPayments() external returns (IDirectPayments);
+    function juiceTerminalDirectory()
+        external
+        returns (IJuiceTerminalDirectory);
 
     function projectId() external returns (uint256);
 

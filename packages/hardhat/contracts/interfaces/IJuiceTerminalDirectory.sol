@@ -5,13 +5,13 @@ import "./IDirectPaymentAddress.sol";
 import "./IJuiceTerminal.sol";
 import "./IProjects.sol";
 
-interface IDirectPayments {
+interface IJuiceTerminalDirectory {
     function allAddresses(uint256 _projectId)
         external
         view
         returns (IDirectPaymentAddress[] memory);
 
-    function juiceTerminals(uint256 _projectId)
+    function terminals(uint256 _projectId)
         external
         view
         returns (IJuiceTerminal);
@@ -26,7 +26,7 @@ interface IDirectPayments {
 
     function deployAddress(uint256 _projectId, string memory _note) external;
 
-    function setJuiceTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
+    function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external;
 
     function setPayerPreferences(

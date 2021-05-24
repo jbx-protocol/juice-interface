@@ -9,7 +9,7 @@ import "./IYielder.sol";
 import "./IProjects.sol";
 import "./IModStore.sol";
 import "./IJuiceTerminal.sol";
-import "./IDirectPayments.sol";
+import "./IJuiceTerminalDirectory.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
@@ -18,7 +18,7 @@ struct FundingCycleMetadata {
     uint16 reconfigurationBondingCurveRate;
 }
 
-interface IFundingCyclesController {
+interface IJuicer {
     event Reconfigure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
@@ -42,27 +42,6 @@ interface IFundingCyclesController {
         uint256 govFeeAmount,
         address caller
     );
-
-    function fee() external view returns (uint256);
-
-    function reconfigure(
-        uint256 _projectId,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
-        IFundingCycleBallot _ballot
-    ) external returns (uint256 fundingCycleId);
-
-    function tap(
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _minReturnedEth
-    ) external;
-}
-
-interface ITicketsController {
     event Redeem(
         address indexed holder,
         address indexed beneficiary,
@@ -72,26 +51,6 @@ interface ITicketsController {
         address caller
     );
 
-    function claimableOverflow(
-        address _account,
-        uint256 _amount,
-        uint256 _projectId
-    ) external view returns (uint256);
-
-    function redeem(
-        address _account,
-        uint256 _projectId,
-        uint256 _amount,
-        uint256 _minReturnedETH,
-        address payable _beneficiary
-    ) external returns (uint256 returnAmount);
-}
-
-interface IJuicer is
-    IFundingCyclesController,
-    ITicketsController,
-    IJuiceTerminal
-{
     event PrintReserveTickets(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
@@ -161,7 +120,10 @@ interface IJuicer is
 
     function prices() external view returns (IPrices);
 
-    function directPayments() external view returns (IDirectPayments);
+    function terminalDirectory()
+        external
+        view
+        returns (IJuiceTerminalDirectory);
 
     function yielder() external view returns (IYielder);
 
@@ -186,6 +148,24 @@ interface IJuicer is
         view
         returns (uint256 amountWithoutYield, uint256 amountWithYield);
 
+    function fee() external view returns (uint256);
+
+    function reconfigure(
+        uint256 _projectId,
+        uint256 _target,
+        uint256 _currency,
+        uint256 _duration,
+        uint256 _discountRate,
+        FundingCycleMetadata memory _metadata,
+        IFundingCycleBallot _ballot
+    ) external returns (uint256 fundingCycleId);
+
+    function tap(
+        uint256 _projectId,
+        uint256 _amount,
+        uint256 _minReturnedEth
+    ) external;
+
     function migrate(uint256 _projectId, IJuiceTerminal _to) external;
 
     function deploy(
@@ -201,6 +181,20 @@ interface IJuicer is
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
     ) external;
+
+    function claimableOverflow(
+        address _account,
+        uint256 _amount,
+        uint256 _projectId
+    ) external view returns (uint256);
+
+    function redeem(
+        address _account,
+        uint256 _projectId,
+        uint256 _amount,
+        uint256 _minReturnedETH,
+        address payable _beneficiary
+    ) external returns (uint256 returnAmount);
 
     function printReservedTickets(uint256 _projectId)
         external

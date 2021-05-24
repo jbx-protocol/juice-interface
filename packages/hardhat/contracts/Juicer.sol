@@ -45,7 +45,7 @@ import "./libraries/Operations.sol";
 // ─██████████████──███████████████──██████████──██████████████──██████████████──██████──██████████─
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
-contract Juicer is IJuicer, ReentrancyGuard {
+contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     using FundingCycle for FundingCycle.Data;
 
     modifier onlyGov() {
@@ -98,7 +98,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
     IPrices public immutable override prices;
 
     /// @notice The direct deposit terminals.
-    IDirectPayments public immutable override directPayments;
+    IJuiceTerminalDirectory public immutable override terminalDirectory;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
@@ -305,6 +305,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
       @param _operatorStore A contract storing operator assignments.
       @param _modStore A storage for a project's mods.
       @param _prices A price feed contract to use.
+      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
     */
     constructor(
         IProjects _projects,
@@ -313,7 +314,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         IOperatorStore _operatorStore,
         IModStore _modStore,
         IPrices _prices,
-        IDirectPayments _directPayments,
+        IJuiceTerminalDirectory _terminalDirectory,
         address payable _governance
     ) {
         require(
@@ -323,7 +324,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 _operatorStore != IOperatorStore(address(0)) &&
                 _modStore != IModStore(address(0)) &&
                 _prices != IPrices(address(0)) &&
-                _directPayments != IDirectPayments(address(0)) &&
+                _terminalDirectory != IJuiceTerminalDirectory(address(0)) &&
                 _governance != address(address(0)),
             "Juicer: ZERO_ADDRESS"
         );
@@ -333,7 +334,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         operatorStore = _operatorStore;
         modStore = _modStore;
         prices = _prices;
-        directPayments = _directPayments;
+        terminalDirectory = _terminalDirectory;
         governance = _governance;
     }
 
@@ -402,7 +403,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         tickets.initialize(address(this), _fundingCycle.projectId);
 
         // Register this Juicer in the directory.
-        directPayments.setJuiceTerminal(_fundingCycle.projectId, this);
+        terminalDirectory.setTerminal(_fundingCycle.projectId, this);
 
         emit Deploy(
             _fundingCycle.projectId,
@@ -646,7 +647,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
             } else if (_mod.projectId != 0) {
                 // Get a reference to the Juice terminal being used.
                 IJuiceTerminal _terminal =
-                    directPayments.juiceTerminals(_mod.projectId);
+                    terminalDirectory.terminals(_mod.projectId);
 
                 // The project must have a juice terminal to send funds to.
                 require(
@@ -967,7 +968,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
         tickets.removeController(address(this), _projectId);
 
         // Switch the direct payment terminal.
-        directPayments.setJuiceTerminal(_projectId, _to);
+        terminalDirectory.setTerminal(_projectId, _to);
 
         emit Migrate(_projectId, _to, _balanceOf, msg.sender);
     }
@@ -1110,7 +1111,7 @@ contract Juicer is IJuicer, ReentrancyGuard {
                 msg.value,
                 msg.sender,
                 "Direct payment to Juicer",
-                directPayments.preferConvertedTickets(msg.sender)
+                terminalDirectory.preferConvertedTickets(msg.sender)
             );
         } else {
             JuiceProject(governance).pay{value: msg.value}(

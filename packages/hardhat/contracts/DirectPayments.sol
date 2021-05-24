@@ -3,18 +3,18 @@ pragma solidity >=0.8.0;
 
 import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IDirectPayments.sol";
+import "./interfaces/IJuiceTerminalDirectory.sol";
 import "./interfaces/IProjects.sol";
 import "./interfaces/IDirectPaymentAddress.sol";
 import "./libraries/Operations.sol";
 
 // Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
-contract DirectPayments is IDirectPayments {
+contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
     // A list of contracts for each project ID that can receive funds directly.
     mapping(uint256 => IDirectPaymentAddress[]) private addresses;
 
     // For each project ID, the juice terminal that the direct payment addresses are proxies for.
-    mapping(uint256 => IJuiceTerminal) public override juiceTerminals;
+    mapping(uint256 => IJuiceTerminal) public override terminals;
 
     // For each address, the address that will be used as the beneficiary of direct payments made.
     mapping(address => address) public override beneficiaries;
@@ -73,12 +73,12 @@ contract DirectPayments is IDirectPayments {
       @param _projectId The ID of the project to set a new terminal for.
       @param _juiceTerminal The new terminal to set.
     */
-    function setJuiceTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
+    function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external
         override
     {
         // Get a reference to the current terminal being used.
-        IJuiceTerminal _currentTerminal = juiceTerminals[_projectId];
+        IJuiceTerminal _currentTerminal = terminals[_projectId];
 
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -102,7 +102,7 @@ contract DirectPayments is IDirectPayments {
         );
 
         // Set the new terminal.
-        juiceTerminals[_projectId] = _juiceTerminal;
+        terminals[_projectId] = _juiceTerminal;
     }
 
     /** 
@@ -121,31 +121,31 @@ contract DirectPayments is IDirectPayments {
 }
 
 contract DirectPaymentAddress is IDirectPaymentAddress {
-    /// @notice The direct payment contract to use with this address.
-    IDirectPayments public override directPayments;
+    /// @notice The directory to use when resolving which terminal to send the payment to.
+    IJuiceTerminalDirectory public override juiceTerminalDirectory;
     /// @notice The project ID to pay when this contract receives funds.
     uint256 public override projectId;
     /// @notice The note to use when this contract receives funds.
     string public override note;
 
     constructor(
-        IDirectPayments _directPayments,
+        IJuiceTerminalDirectory _juiceTerminalDirectory,
         uint256 _projectId,
         string memory _note
     ) {
-        directPayments = _directPayments;
+        juiceTerminalDirectory = _juiceTerminalDirectory;
         projectId = _projectId;
         note = _note;
     }
 
     // Receive funds and make a payment.
     receive() external payable {
-        address _beneficiary = directPayments.beneficiaries(msg.sender);
-        directPayments.juiceTerminals(projectId).pay{value: msg.value}(
+        address _beneficiary = juiceTerminalDirectory.beneficiaries(msg.sender);
+        juiceTerminalDirectory.terminals(projectId).pay{value: msg.value}(
             projectId,
             _beneficiary != address(0) ? _beneficiary : msg.sender,
             note,
-            directPayments.preferConvertedTickets(msg.sender)
+            juiceTerminalDirectory.preferConvertedTickets(msg.sender)
         );
     }
 }

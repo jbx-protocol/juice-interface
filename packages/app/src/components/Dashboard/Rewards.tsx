@@ -33,9 +33,13 @@ export default function Rewards({
   totalOverflow: BigNumber | undefined
   isOwner: boolean | undefined
 }) {
-  const { contracts, transactor, userAddress, onNeedProvider } = useContext(
-    UserContext,
-  )
+  const {
+    contracts,
+    transactor,
+    userAddress,
+    onNeedProvider,
+    network,
+  } = useContext(UserContext)
 
   const {
     theme: { colors },
@@ -89,7 +93,7 @@ export default function Rewards({
       [],
     ),
   })
-  const readProvider = useReadProvider()
+  const readProvider = useReadProvider(network)
   const ticketContract = useErc20Contract(ticketAddress, readProvider)
   const ticketSymbol = useContractReader<string>({
     contract: ticketContract,

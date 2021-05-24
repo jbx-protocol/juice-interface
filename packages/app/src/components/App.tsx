@@ -49,7 +49,7 @@ function App() {
 
   const userAddress = useProviderAddress(signingProvider)
 
-  const contracts = useContractLoader(signingProvider)
+  const contracts = useContractLoader(signingProvider, network)
 
   const gasPrice = useGasPrice('average')
 

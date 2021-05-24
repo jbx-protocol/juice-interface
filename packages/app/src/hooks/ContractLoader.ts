@@ -8,10 +8,13 @@ import { useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useReadProvider } from 'utils/providers'
 
-export function useContractLoader(provider?: JsonRpcProvider) {
+export function useContractLoader(
+  provider?: JsonRpcProvider,
+  network?: NetworkName,
+) {
   const [contracts, setContracts] = useState<Contracts>()
 
-  const readProvider = useReadProvider()
+  const readProvider = useReadProvider(network)
 
   useDeepCompareEffect(() => {
     async function loadContracts() {

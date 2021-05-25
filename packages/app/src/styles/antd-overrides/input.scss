@@ -147,3 +147,19 @@ input:-webkit-autofill-selected {
 .ant-upload-list-text {
   color: var(--text-secondary);
 }
+
+.ant-upload-list-item:hover {
+  .ant-upload-list-item-info {
+    background: transparent;
+  }
+}
+
+.ant-upload-text-icon > span {
+  color: var(--icon-secondary) !important;
+}
+
+.ant-upload-list-item-card-actions {
+  .anticon {
+    color: var(--text-secondary);
+  }
+}

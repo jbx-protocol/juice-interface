@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext, useEffect, useState } from 'react'
 
@@ -28,15 +29,18 @@ export default function EditProjectModal({
   const { transactor, contracts } = useContext(UserContext)
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<EditProjectFormFields>()
+  const metadata = useProjectMetadata(project?.link)
+
+  // TODO update edit project with new logo/metadata uploading pattern
 
   useEffect(() => {
     if (!project) return
 
     form.setFieldsValue({
-      name: project.name,
+      name: metadata?.name,
       handle: project.handle,
-      link: project.link,
-      logoUri: project.logoUri,
+      link: metadata?.infoUri,
+      logoUri: metadata?.logoUri,
     })
   }, [project, form])
 

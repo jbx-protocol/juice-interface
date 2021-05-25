@@ -1,14 +1,14 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import IpfsUploader from 'components/shared/inputs/IpfsUploader'
-import UploadFile from 'components/shared/inputs/IpfsUploader'
+import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
-import { urlForIpfsHash } from '../../utils/ipfs'
+import { ipfsCidUrl } from 'utils/ipfs'
+import { IPFS_TAGS } from '../../utils/ipfs'
 
 export type ProjectFormFields = {
   name: string
-  link: string
+  infoUri: string
   handle: string
   logoUri: string
 }
@@ -48,13 +48,13 @@ export default function ProjectForm({
             dependencies: ['name'],
           }}
         />
-        <FormItems.ProjectLink name="link" />
+        <FormItems.ProjectLink name="infoUri" />
         <Form.Item name="logoUri" label="Logo (optional)">
-          <IpfsUploader
-            initialValue={form.getFieldValue('logoUri')}
-            onSuccess={hash =>
-              form.setFieldsValue({ logoUri: urlForIpfsHash(hash) })
-            }
+          <ImageUploader
+            initialPreview={form.getFieldValue('logoUri')}
+            onSuccess={cid => form.setFieldsValue({ logoUri: ipfsCidUrl(cid) })}
+            metadata={{ tag: IPFS_TAGS.LOGO }}
+            maxSize={1000000}
           />
         </Form.Item>
         <Form.Item>

@@ -32,7 +32,8 @@ export default function ProjectLogo({
         <img
           style={{
             maxHeight: '100%',
-            objectFit: 'fill',
+            minWidth: '100%',
+            objectFit: 'cover',
             objectPosition: 'center',
           }}
           src={uri}

@@ -85,7 +85,7 @@ export default function FormattedNumberInput({
         }
         parser={(val?: string) =>
           parseFloat(
-            (val ?? '0')
+            (val !== undefined ? val : '0')
               .replace(new RegExp(thousandsSeparator, 'g'), '')
               .replace(_prefix, '')
               .replace(_suffix, '')

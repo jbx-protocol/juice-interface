@@ -39,7 +39,7 @@ export default function DefineProject() {
   useEffect(
     () =>
       form.setFieldsValue({
-        name: editingProject?.name ?? '',
+        name: editingProject?.metadata.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
         duration: (editingBudget?.duration / SECONDS_IN_DAY).toString() ?? '0',
         currency: editingBudget?.currency ?? 0,
@@ -143,7 +143,7 @@ export default function DefineProject() {
                 }),
             }}
           >
-            {bold(editingProject?.name, 'Your project')} needs{' '}
+            {bold(editingProject?.metadata.name, 'Your project')} needs{' '}
             <CurrencySymbol
               style={{ color: colors.text.primary, fontWeight: 600 }}
               currency={editingBudget?.currency}
@@ -163,7 +163,7 @@ export default function DefineProject() {
             <br />
             <br />
             Users, patrons, and investors get Tickets alongside you when they
-            pay {bold(editingProject?.name, 'your project')}.
+            pay {bold(editingProject?.metadata.name, 'your project')}.
             <br />
             <br />
             Tickets can be redeemed for overflow.

@@ -13,10 +13,9 @@ import {
   fromPerMille,
   fromWad,
 } from 'utils/formatCurrency'
+import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
-
-import { isRecurring } from '../../utils/fundingCycle'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
@@ -48,7 +47,7 @@ export default function ConfirmDeployProject() {
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
       <Space size="large">
-        <Statistic title="Name" value={orEmpty(editingProject?.name)} />
+        <Statistic title="Name" value={orEmpty(editingProject?.metadata.name)} />
         <Statistic
           title="Handle"
           value={'@' + orEmpty(editingProject?.handle)}

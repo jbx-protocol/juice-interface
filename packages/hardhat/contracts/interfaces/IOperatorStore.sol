@@ -2,28 +2,28 @@
 pragma solidity >=0.8.0;
 
 interface IOperatorStore {
-    event AddOperator(
+    event AddPermission(
         address indexed account,
         uint256 indexed projectId,
         address indexed operator,
-        uint256[] _permissionIndexes
+        uint256[] _indexes
     );
 
-    event AddOperators(
+    event AddPermissions(
         address indexed account,
         uint256[] indexed projectIds,
         address[] indexed operators,
-        uint256[][] _permissionIndexes
+        uint256[][] _indexes
     );
 
-    event RemoveOperator(
+    event RemovePermission(
         address indexed account,
         uint256 indexed projectId,
         address indexed operator,
         address caller
     );
 
-    event RemoveOperators(
+    event RemovePermissions(
         address indexed account,
         uint256[] indexed projectId,
         address[] indexed operators,
@@ -55,7 +55,7 @@ interface IOperatorStore {
         address _account,
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexes
+        uint256[] memory _indexes
     ) external view returns (bool);
 
     function setPackedPermissions(
@@ -64,29 +64,29 @@ interface IOperatorStore {
         uint256 _packedPermissions
     ) external;
 
-    function addOperator(
+    function addPermission(
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexe
+        uint256[] memory _indexes
     ) external;
 
-    function addOperators(
+    function addPermissions(
         uint256[] memory _projectIds,
         address[] memory _operators,
-        uint256[][] memory _permissionIndexes
+        uint256[][] memory _indexes
     ) external;
 
-    function removeOperator(
+    function removePermission(
         address _account,
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexes
+        uint256[] memory _indexes
     ) external;
 
-    function removeOperators(
+    function removePermissions(
         address _account,
         uint256[] memory _projectIds,
         address[] memory _operator,
-        uint256[][] memory _permissionIndexes
+        uint256[][] memory _indexes
     ) external;
 }

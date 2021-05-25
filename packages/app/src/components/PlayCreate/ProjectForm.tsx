@@ -1,7 +1,10 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import IpfsUploader from 'components/shared/inputs/IpfsUploader'
+import UploadFile from 'components/shared/inputs/IpfsUploader'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
+import { urlForIpfsHash } from '../../utils/ipfs'
 
 export type ProjectFormFields = {
   name: string
@@ -46,7 +49,14 @@ export default function ProjectForm({
           }}
         />
         <FormItems.ProjectLink name="link" />
-        <FormItems.ProjectLogoUri name="logoUri" />
+        <Form.Item name="logoUri" label="Logo (optional)">
+          <IpfsUploader
+            initialValue={form.getFieldValue('logoUri')}
+            onSuccess={hash =>
+              form.setFieldsValue({ logoUri: urlForIpfsHash(hash) })
+            }
+          />
+        </Form.Item>
         <Form.Item>
           <Button
             htmlType="submit"

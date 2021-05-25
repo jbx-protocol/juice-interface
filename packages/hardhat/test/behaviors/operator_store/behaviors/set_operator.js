@@ -102,10 +102,10 @@ module.exports = () => {
     });
     describe("Update", () => {
       before(async () => {
-          const tx = await contract
-            .connect(caller)
-            .setOperator(projectId, operator.address, permissionIndexes2);
-          await tx.wait();
+        const tx = await contract
+          .connect(caller)
+          .setOperator(projectId, operator.address, permissionIndexes2);
+        await tx.wait();
       });
       describe("permissions(...)", () => {
         it("Should have stored the updated packed permissions", async () => {
@@ -117,12 +117,10 @@ module.exports = () => {
           );
 
           // Calculate expected packed value.
-          const expectedPackedPermissions = 
-            permissionIndexes2
-            .reduce(
-              (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
-              ethers.BigNumber.from(0)
-            );
+          const expectedPackedPermissions = permissionIndexes2.reduce(
+            (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
+            ethers.BigNumber.from(0)
+          );
 
           // Expect the packed values to match.
           expect(storedPackedPermissions).to.equal(expectedPackedPermissions);
@@ -174,10 +172,10 @@ module.exports = () => {
     });
     describe("Clear", () => {
       before(async () => {
-          const tx = await contract
-            .connect(caller)
-            .setOperator(projectId, operator.address, []);
-          await tx.wait();
+        const tx = await contract
+          .connect(caller)
+          .setOperator(projectId, operator.address, []);
+        await tx.wait();
       });
       describe("permissions(...)", () => {
         it("Should have stored the nullified packed permissions", async () => {
@@ -234,10 +232,8 @@ module.exports = () => {
   describe("Failure cases", () => {
     it("Should revert if the index is greater than 255.", async () => {
       await expect(
-        contract
-          .connect(caller)
-          .setOperator(projectId, operator.address, [256])
-      ).to.be.reverted;
+        contract.connect(caller).setOperator(projectId, operator.address, [256])
+      ).to.be.revertedWith("OperatorStore::_packedPermissions: BAD_INDEX");
     });
   });
 };

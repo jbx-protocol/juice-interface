@@ -53,7 +53,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         _;
     }
 
-    // --- private properties --- //
+    // --- private stored properties --- //
 
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(address => bool) private migrationContractIsAllowed;
@@ -68,7 +68,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     // The largest uint256 that can fit in an int256;
     uint256 public constant LARGEST_SIGNED_INT = 2**255 - 1;
 
-    // --- public properties --- //
+    // --- public stored properties --- //
 
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 1000.
     uint256 public override fee = 50;

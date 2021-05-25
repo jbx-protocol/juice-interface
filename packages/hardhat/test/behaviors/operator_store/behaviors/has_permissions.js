@@ -56,7 +56,7 @@ module.exports = () => {
               .hasPermissions(caller.address, projectId, operator.address, [
                 256
               ])
-          ).to.be.reverted;
+          ).to.be.revertedWith("OperatorStore::hasPermissions: BAD_INDEX");
         });
       });
     });

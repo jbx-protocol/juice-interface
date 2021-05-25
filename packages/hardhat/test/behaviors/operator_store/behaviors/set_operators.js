@@ -23,18 +23,11 @@ module.exports = () => {
     const contractArtifacts = await ethers.getContractFactory(contractName);
     contract = await contractArtifacts.deploy();
     await contract.deployTransaction.wait();
-
-    // Set an operator with some permissions ahead of the tests.
-    const tx = await contract
-      .connect(caller)
-      .setOperator(projectId1, operator1.address, permissionIndexes2);
-
-    await tx.wait();
   });
   describe("Success cases", () => {
-    describe("Set and update", () => {
+    describe("Set", () => {
       describe("setOperators(...)", () => {
-        it("Should set and update operators correctly and emit events", async () => {
+        it("Should set operators correctly and emit events", async () => {
           const tx = await contract
             .connect(caller)
             .setOperators(
@@ -277,7 +270,7 @@ module.exports = () => {
               [operator1.address, operator2.address],
               [permissionIndexes1, permissionIndexes2]
             )
-        ).to.be.reverted;
+        ).to.be.revertedWith("OperatorStore::setOperators: BAD_ARGS");
         await expect(
           contract
             .connect(caller)
@@ -286,7 +279,7 @@ module.exports = () => {
               [operator1.address, operator2.address],
               [permissionIndexes1]
             )
-        ).to.be.reverted;
+        ).to.be.revertedWith("OperatorStore::setOperators: BAD_ARGS");
       });
     });
     it("Should revert if the index is greater than 255.", async () => {
@@ -298,7 +291,7 @@ module.exports = () => {
             [operator1.address, operator2.address],
             [permissionIndexes1, [256]]
           )
-      ).to.be.reverted;
+      ).to.be.revertedWith("OperatorStore::_packedPermissions: BAD_INDEX");
     });
   });
 };

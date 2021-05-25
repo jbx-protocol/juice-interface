@@ -54,7 +54,7 @@ module.exports = () => {
             contract
               .connect(caller)
               .hasPermission(caller.address, projectId, operator.address, 256)
-          ).to.be.reverted;
+          ).to.be.revertedWith("OperatorStore::hasPermission: BAD_INDEX");
         });
       });
     });

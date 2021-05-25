@@ -142,3 +142,8 @@ input:-webkit-autofill-selected {
     background-color: var(--background-l2);
   }
 }
+
+.ant-upload-list,
+.ant-upload-list-text {
+  color: var(--text-secondary);
+}

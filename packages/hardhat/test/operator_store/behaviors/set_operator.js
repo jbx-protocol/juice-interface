@@ -22,34 +22,27 @@ module.exports = () => {
     contract = await contractArtifacts.deploy();
     await contract.deployTransaction.wait();
   });
-  describe("Add  permissions", () => {
-    describe("Success cases", () => {
-      describe("addPermissionsToOperator(...)", () => {
-        it("Should add an operator correctly and emit events.", async () => {
+  describe("Success cases", () => {
+    describe("Set", () => {
+      describe("setOperator(...)", () => {
+        it("Should set an operator correctly and emit events.", async () => {
           const tx = await contract
             .connect(caller)
-            .addPermissionsToOperator(
-              projectId,
-              operator.address,
-              permissionIndexes1
-            );
+            .setOperator(projectId, operator.address, permissionIndexes1);
           const receipt = await tx.wait();
 
           expect(receipt.confirmations).to.equal(1);
 
           // Verify events
-          expect(receipt.events).to.have.lengthOf(2);
+          expect(receipt.events).to.have.lengthOf(1);
+
           expect(receipt.events[0])
             .to.have.property("event")
-            .that.equals("SetPackedPermissions");
-
-          expect(receipt.events[1])
-            .to.have.property("event")
-            .that.equals("AddPermissionsToOperator");
+            .that.equals("SetOperator");
         });
       });
       describe("permissions(...)", () => {
-        it("Should have stored the correct packed permissions.", async () => {
+        it("Should have stored the correct packed permissions for the operator.", async () => {
           // Get the stored packed permissions value.
           const storedPackedPermissions = await contract.permissions(
             caller.address,
@@ -68,7 +61,7 @@ module.exports = () => {
         });
       });
       describe("hasPermission(...) & hasPermissions(...)", () => {
-        it("Should report as having the correct permissions.", async () => {
+        it("Should report operator as having the correct permissions.", async () => {
           const confirmedStoredHasPermissions = [];
 
           // The operator should only have the permissions specified.
@@ -107,16 +100,12 @@ module.exports = () => {
         });
       });
     });
-    describe("Add updated permissions", () => {
+    describe("Update", () => {
       before(async () => {
-        const tx = await contract
-          .connect(caller)
-          .addPermissionsToOperator(
-            projectId,
-            operator.address,
-            permissionIndexes2
-          );
-        await tx.wait();
+          const tx = await contract
+            .connect(caller)
+            .setOperator(projectId, operator.address, permissionIndexes2);
+          await tx.wait();
       });
       describe("permissions(...)", () => {
         it("Should have stored the updated packed permissions", async () => {
@@ -128,12 +117,8 @@ module.exports = () => {
           );
 
           // Calculate expected packed value.
-          const expectedPackedPermissions = [
-            ...permissionIndexes1,
-            ...permissionIndexes2
-          ]
-            // get unique values only.
-            .filter((v, i, a) => a.indexOf(v) === i)
+          const expectedPackedPermissions = 
+            permissionIndexes2
             .reduce(
               (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
               ethers.BigNumber.from(0)
@@ -155,7 +140,7 @@ module.exports = () => {
               ...unusedPermissions
             ].map(async i => {
               // Get the stored packed permissions value.
-              const storedHasPermission1 = await contract.hasPermission(
+              const storedHasPermission = await contract.hasPermission(
                 caller.address,
                 projectId,
                 operator.address,
@@ -163,8 +148,8 @@ module.exports = () => {
               );
 
               // Expect the permission state to match.
-              expect(storedHasPermission1).to.be.equal(
-                [...permissionIndexes1, ...permissionIndexes2].includes(i)
+              expect(storedHasPermission).to.be.equal(
+                permissionIndexes2.includes(i)
               );
 
               // Make sure that checking for multiple permissions works.
@@ -177,7 +162,7 @@ module.exports = () => {
 
               // Expect the permissions state to match.
               expect(storedHasPermissions).to.be.equal(
-                [...permissionIndexes1, ...permissionIndexes2].includes(i)
+                permissionIndexes2.includes(i)
               );
 
               // Add the the array if the permissions match.
@@ -187,14 +172,72 @@ module.exports = () => {
         });
       });
     });
-    describe("Failure cases", () => {
-      it("Should revert if the index is greater than 255.", async () => {
-        await expect(
-          contract
+    describe("Clear", () => {
+      before(async () => {
+          const tx = await contract
             .connect(caller)
-            .addPermissionsToOperator(projectId, operator.address, [256])
-        ).to.be.reverted;
+            .setOperator(projectId, operator.address, []);
+          await tx.wait();
       });
+      describe("permissions(...)", () => {
+        it("Should have stored the nullified packed permissions", async () => {
+          // Get the stored packed permissions value for operator1.
+          const storedPackedPermissions = await contract.permissions(
+            caller.address,
+            projectId,
+            operator.address
+          );
+
+          // Expect 0.
+          const expectedPackedPermissions = 0;
+
+          // Expect the packed values to match.
+          expect(storedPackedPermissions).to.equal(expectedPackedPermissions);
+        });
+      });
+      describe("hasPermission(...) & hasPermissions(...)", () => {
+        it("Should report as having the no permissions", async () => {
+          // The operator should only have the permissions specified.
+          await Promise.all(
+            [
+              ...permissionIndexes1,
+              ...permissionIndexes2,
+              ...unusedPermissions
+            ].map(async i => {
+              // Get the stored packed permissions value.
+              const storedHasPermission = await contract.hasPermission(
+                caller.address,
+                projectId,
+                operator.address,
+                i
+              );
+
+              // Expect the permission state to always be false.
+              expect(storedHasPermission).to.be.equal(false);
+
+              // Make sure that checking for multiple permissions works.
+              const storedHasPermissions = await contract.hasPermissions(
+                caller.address,
+                projectId,
+                operator.address,
+                [i]
+              );
+
+              // Expect the permission state to always be false.
+              expect(storedHasPermissions).to.be.equal(false);
+            })
+          );
+        });
+      });
+    });
+  });
+  describe("Failure cases", () => {
+    it("Should revert if the index is greater than 255.", async () => {
+      await expect(
+        contract
+          .connect(caller)
+          .setOperator(projectId, operator.address, [256])
+      ).to.be.reverted;
     });
   });
 };

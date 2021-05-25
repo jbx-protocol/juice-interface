@@ -104,31 +104,25 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         return this.onERC721Received.selector;
     }
 
-    function addPermissionsToOperators(
+    function setOperator(
         IOperatorStore _operatorStore,
-        uint256[] memory _projectIds,
-        address[] memory _operators,
-        uint256[][] memory _indexes
+        uint256 _projectId,
+        address _operator,
+        uint256[] memory _permissionIndexes
     ) external onlyOwner {
-        _operatorStore.addPermissionsToOperators(
-            _projectIds,
-            _operators,
-            _indexes
-        );
+        _operatorStore.setOperator(_projectId, _operator, _permissionIndexes);
     }
 
-    function removePermissionsFromOperators(
+    function setOperators(
         IOperatorStore _operatorStore,
-        address _account,
         uint256[] memory _projectIds,
         address[] memory _operators,
-        uint256[][] memory _indexes
+        uint256[][] memory _permissionIndexes
     ) external onlyOwner {
-        _operatorStore.removePermissionsFromOperators(
-            _account,
+        _operatorStore.setOperators(
             _projectIds,
             _operators,
-            _indexes
+            _permissionIndexes
         );
     }
 }

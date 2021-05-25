@@ -12,6 +12,8 @@ let operator;
 
 const contractName = "OperatorStore";
 
+const permissionIndex = 42;
+
 module.exports = () => {
   before(async () => {
     [caller, operator] = await ethers.getSigners();
@@ -28,6 +30,21 @@ module.exports = () => {
               .connect(caller)
               .hasPermission(caller.address, projectId, operator.address, 0);
             expect(flag).to.equal(false);
+          });
+          it("Should return true if the operator does have permission.", async () => {
+            const tx = await contract
+              .connect(caller)
+              .setOperator(projectId, operator.address, [permissionIndex]);
+            await tx.wait();
+            const flag = await contract
+              .connect(caller)
+              .hasPermission(
+                caller.address,
+                projectId,
+                operator.address,
+                permissionIndex
+              );
+            expect(flag).to.equal(true);
           });
         });
       });

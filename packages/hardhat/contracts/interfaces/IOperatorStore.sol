@@ -2,39 +2,12 @@
 pragma solidity >=0.8.0;
 
 interface IOperatorStore {
-    event AddPermissionsToOperator(
+    event SetOperator(
         address indexed account,
         uint256 indexed projectId,
         address indexed operator,
-        uint256[] indexes
-    );
-
-    event AddPermissionsToOperators(
-        address indexed account,
-        uint256[] indexed projectIds,
-        address[] indexed operators,
-        uint256[][] indexes
-    );
-
-    event RemovePermissionsFromOperator(
-        address indexed account,
-        uint256 indexed projectId,
-        address indexed operator,
-        address caller
-    );
-
-    event RemovePermissionsFromOperators(
-        address indexed account,
-        uint256[] indexed projectId,
-        address[] indexed operators,
-        address caller
-    );
-
-    event SetPackedPermissions(
-        address indexed account,
-        uint256 indexed projectId,
-        address indexed operator,
-        uint256 packedPermission,
+        uint256[] permissionIndexes,
+        uint256 packed,
         address caller
     );
 
@@ -55,38 +28,18 @@ interface IOperatorStore {
         address _account,
         uint256 _projectId,
         address _operator,
-        uint256[] memory _indexes
+        uint256[] memory _permissionIndexes
     ) external view returns (bool);
 
-    function setPackedPermissions(
+    function setOperator(
         uint256 _projectId,
         address _operator,
-        uint256 _packedPermissions
+        uint256[] memory _permissionIndexes
     ) external;
 
-    function addPermissionsToOperator(
-        uint256 _projectId,
-        address _operator,
-        uint256[] memory _indexes
-    ) external;
-
-    function addPermissionsToOperators(
+    function setOperators(
         uint256[] memory _projectIds,
         address[] memory _operators,
-        uint256[][] memory _indexes
-    ) external;
-
-    function removePermissionsFromOperator(
-        address _account,
-        uint256 _projectId,
-        address _operator,
-        uint256[] memory _indexes
-    ) external;
-
-    function removePermissionsFromOperators(
-        address _account,
-        uint256[] memory _projectIds,
-        address[] memory _operator,
-        uint256[][] memory _indexes
+        uint256[][] memory _permissionIndexes
     ) external;
 }

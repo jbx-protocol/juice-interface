@@ -169,6 +169,7 @@ a:focus {
 a[disabled] {
   color: rgba(0, 0, 0, 0.25);
   cursor: not-allowed;
+  pointer-events: none;
 }
 pre,
 code,
@@ -212,6 +213,9 @@ caption {
   color: rgba(0, 0, 0, 0.45);
   text-align: left;
   caption-side: bottom;
+}
+th {
+  text-align: inherit;
 }
 input,
 button,
@@ -1416,7 +1420,7 @@ html {
   margin-left: -4px;
   padding-left: 4px;
   overflow: auto;
-  background-color: transparent;
+  background-color: #fff;
 }
 .ant-anchor-ink {
   position: absolute;
@@ -1729,11 +1733,6 @@ html {
   transform: translate(50%, -50%);
   transform-origin: 100% 0%;
 }
-.ant-badge-count.anticon-spin,
-.ant-badge-dot.anticon-spin,
-.ant-badge .ant-scroll-number-custom-component.anticon-spin {
-  animation: antBadgeLoadingCircle 1s infinite linear;
-}
 .ant-badge-status {
   line-height: inherit;
   vertical-align: baseline;
@@ -1914,15 +1913,6 @@ html {
   100% {
     transform: scale(0);
     opacity: 0;
-  }
-}
-@keyframes antBadgeLoadingCircle {
-  0% {
-    transform-origin: 50%;
-  }
-  100% {
-    transform: translate(50%, -50%) rotate(360deg);
-    transform-origin: 50%;
   }
 }
 .ant-ribbon-wrapper {
@@ -4034,7 +4024,7 @@ html {
   content: '\a0';
 }
 a.ant-btn {
-  padding-top: 0.01px !important;
+  padding-top: 0.1px;
   line-height: 30px;
 }
 a.ant-btn-lg {
@@ -5269,12 +5259,6 @@ a.ant-btn-sm {
   align-items: baseline;
   line-height: unset;
   cursor: pointer;
-}
-.ant-checkbox-wrapper::after {
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  content: '\a0';
 }
 .ant-checkbox-wrapper.ant-checkbox-wrapper-disabled {
   cursor: not-allowed;
@@ -7604,8 +7588,6 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-form-item .ant-cascader-picker {
   width: 100%;
 }
-.ant-form-item .ant-picker-calendar-year-select,
-.ant-form-item .ant-picker-calendar-month-select,
 .ant-form-item .ant-input-group .ant-select,
 .ant-form-item .ant-input-group .ant-cascader-picker {
   width: auto;
@@ -7868,18 +7850,15 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   outline: 0;
   box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.2);
 }
-.ant-form-item-has-warning .ant-input-disabled,
-.ant-form-item-has-warning .ant-input-disabled:hover {
+.ant-form-item-has-warning .ant-input-disabled {
   background-color: #f5f5f5;
   border-color: #d9d9d9;
 }
-.ant-form-item-has-warning .ant-input-affix-wrapper-disabled,
-.ant-form-item-has-warning .ant-input-affix-wrapper-disabled:hover {
+.ant-form-item-has-warning .ant-input-affix-wrapper-disabled {
   background-color: #f5f5f5;
   border-color: #d9d9d9;
 }
-.ant-form-item-has-warning .ant-input-affix-wrapper-disabled input:focus,
-.ant-form-item-has-warning .ant-input-affix-wrapper-disabled:hover input:focus {
+.ant-form-item-has-warning .ant-input-affix-wrapper-disabled input:focus {
   box-shadow: none !important;
 }
 .ant-form-item-has-warning .ant-calendar-picker-open .ant-calendar-picker-input {
@@ -7957,18 +7936,15 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   outline: 0;
   box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
 }
-.ant-form-item-has-error .ant-input-disabled,
-.ant-form-item-has-error .ant-input-disabled:hover {
+.ant-form-item-has-error .ant-input-disabled {
   background-color: #f5f5f5;
   border-color: #d9d9d9;
 }
-.ant-form-item-has-error .ant-input-affix-wrapper-disabled,
-.ant-form-item-has-error .ant-input-affix-wrapper-disabled:hover {
+.ant-form-item-has-error .ant-input-affix-wrapper-disabled {
   background-color: #f5f5f5;
   border-color: #d9d9d9;
 }
-.ant-form-item-has-error .ant-input-affix-wrapper-disabled input:focus,
-.ant-form-item-has-error .ant-input-affix-wrapper-disabled:hover input:focus {
+.ant-form-item-has-error .ant-input-affix-wrapper-disabled input:focus {
   box-shadow: none !important;
 }
 .ant-form-item-has-error .ant-calendar-picker-open .ant-calendar-picker-input {
@@ -15948,7 +15924,6 @@ textarea.ant-mentions {
   height: 40px;
   line-height: 40px;
 }
-.ant-menu-vertical .ant-menu-item-group-list .ant-menu-submenu-title,
 .ant-menu-vertical .ant-menu-submenu-title {
   padding-right: 34px;
 }
@@ -15965,11 +15940,10 @@ textarea.ant-mentions {
 .ant-menu-inline .ant-menu-submenu-title {
   width: calc(100% + 1px);
 }
-.ant-menu-inline .ant-menu-item-group-list .ant-menu-submenu-title,
 .ant-menu-inline .ant-menu-submenu-title {
   padding-right: 34px;
 }
-.ant-menu-inline-collapsed:not(.ant-layout-sider-children > ul) {
+.ant-menu-inline-collapsed {
   width: 80px;
 }
 .ant-menu-inline-collapsed > .ant-menu-item,
@@ -16569,7 +16543,7 @@ textarea.ant-mentions {
   border-top: 1px solid #f0f0f0;
   border-radius: 0 0 2px 2px;
 }
-.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+.ant-modal-footer .ant-btn + .ant-btn {
   margin-bottom: 0;
   margin-left: 8px;
 }
@@ -17021,8 +16995,7 @@ textarea.ant-mentions {
   border: none;
 }
 .ant-page-header-footer .ant-tabs .ant-tabs-tab {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 0;
   font-size: 16px;
 }
 .ant-page-header-compact .ant-page-header-heading {
@@ -18002,12 +17975,6 @@ textarea.ant-pagination-options-quick-jumper input {
   margin-right: 8px;
   cursor: pointer;
 }
-.ant-radio-wrapper::after {
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  content: '\a0';
-}
 .ant-radio {
   box-sizing: border-box;
   margin: 0;
@@ -18067,7 +18034,7 @@ textarea.ant-pagination-options-quick-jumper input {
   position: absolute;
   top: 3px;
   left: 3px;
-  display: block;
+  display: table;
   width: 8px;
   height: 8px;
   background-color: #1890ff;
@@ -18328,19 +18295,17 @@ span.ant-radio + * {
   display: inline-block;
   color: inherit;
   cursor: pointer;
+  transition: all 0.3s;
 }
 .ant-rate-star:not(:last-child) {
   margin-right: 8px;
 }
-.ant-rate-star > div {
-  transition: all 0.3s;
+.ant-rate-star > div:focus {
+  outline: 0;
 }
 .ant-rate-star > div:hover,
-.ant-rate-star > div:focus-visible {
+.ant-rate-star > div:focus {
   transform: scale(1.1);
-}
-.ant-rate-star > div:focus:not(:focus-visible) {
-  outline: 0;
 }
 .ant-rate-star-first,
 .ant-rate-star-second {
@@ -20521,9 +20486,6 @@ span.ant-radio + * {
   right: -2px;
   left: auto;
 }
-.ant-steps-rtl.ant-steps-with-progress.ant-steps-horizontal.ant-steps-label-horizontal .ant-steps-item:first-child.ant-steps-item-active {
-  padding-right: 4px;
-}
 .ant-steps-with-progress .ant-steps-item {
   padding-top: 4px;
 }
@@ -20531,7 +20493,6 @@ span.ant-radio + * {
   top: 4px !important;
 }
 .ant-steps-with-progress.ant-steps-horizontal .ant-steps-item:first-child {
-  padding-bottom: 4px;
   padding-left: 4px;
 }
 .ant-steps-with-progress .ant-steps-item-icon {
@@ -20953,11 +20914,6 @@ span.ant-radio + * {
 }
 .ant-table-pagination {
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 8px;
-}
-.ant-table-pagination > * {
-  flex: none;
 }
 .ant-table-pagination-left {
   justify-content: flex-start;
@@ -21110,11 +21066,8 @@ td.ant-table-column-sort {
   background-color: inherit;
   border-top: 1px solid #f0f0f0;
 }
-.ant-table-selection-col {
+.ant-table .ant-table-selection-col {
   width: 32px;
-}
-.ant-table-bordered .ant-table-selection-col {
-  width: 50px;
 }
 table tr th.ant-table-selection-column,
 table tr td.ant-table-selection-column {
@@ -21176,6 +21129,7 @@ table tr td.ant-table-selection-column .ant-radio-wrapper {
   border-radius: 2px;
   outline: none;
   transform: scale(0.94117647);
+  transform-origin: bottom;
   transition: all 0.3s;
   user-select: none;
 }
@@ -21697,7 +21651,6 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-tabs-right > .ant-tabs-nav .ant-tabs-nav-operations,
 .ant-tabs-left > div > .ant-tabs-nav .ant-tabs-nav-operations,
 .ant-tabs-right > div > .ant-tabs-nav .ant-tabs-nav-operations {
-  flex: 1 0 auto;
   flex-direction: column;
 }
 .ant-tabs-left > .ant-tabs-nav .ant-tabs-ink-bar,
@@ -22962,12 +22915,16 @@ span.ant-transfer-list-search-action {
 .ant-transfer-list-footer {
   border-top: 1px solid #f0f0f0;
 }
+.ant-transfer-list-checkbox .ant-checkbox {
+  top: 0;
+}
 .ant-transfer-operation {
   display: flex;
   flex: none;
   flex-direction: column;
   align-self: center;
   margin: 0 8px;
+  overflow: hidden;
   vertical-align: middle;
 }
 .ant-transfer-operation .ant-btn {
@@ -23200,12 +23157,6 @@ span.ant-transfer-list-search-action {
   align-items: baseline;
   line-height: unset;
   cursor: pointer;
-}
-.ant-tree-checkbox-wrapper::after {
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  content: '\a0';
 }
 .ant-tree-checkbox-wrapper.ant-tree-checkbox-wrapper-disabled {
   cursor: not-allowed;
@@ -23623,12 +23574,6 @@ span.ant-transfer-list-search-action {
   align-items: baseline;
   line-height: unset;
   cursor: pointer;
-}
-.ant-select-tree-checkbox-wrapper::after {
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  content: '\a0';
 }
 .ant-select-tree-checkbox-wrapper.ant-select-tree-checkbox-wrapper-disabled {
   cursor: not-allowed;

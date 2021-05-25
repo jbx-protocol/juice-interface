@@ -1,17 +1,11 @@
-const shouldBehaveLikeAddPermissionToOperator = require("./add_permissions_to_operators");
-const shouldBehaveLikeAddPermissionsToOperators = require("./add_permissions_to_operators");
-const shouldBehaveLikeRemovePermissionsFromOperator = require("./remove_permissions_from_operator");
-const shouldBehaveLikeRemovePermissionsFromOperators = require("./remove_permissions_from_operators");
-const shouldBehaveLikeSetPackedPermissions = require("./set_packed_permissions");
-const shouldBehaveLikeHasPermission = require("./has_permission");
-const shouldBehaveLikeHasPermissions = require("./has_permissions");
+const hasPermission = require("./has_permission");
+const hasPermissions = require("./has_permissions");
+const setOperator = require("./set_operator");
+const setOperators = require("./set_operators");
 
 module.exports = {
-  shouldBehaveLikeAddPermissionToOperator,
-  shouldBehaveLikeAddPermissionsToOperators,
-  shouldBehaveLikeRemovePermissionsFromOperator,
-  shouldBehaveLikeRemovePermissionsFromOperators,
-  shouldBehaveLikeSetPackedPermissions,
-  shouldBehaveLikeHasPermission,
-  shouldBehaveLikeHasPermissions
+  hasPermission,
+  hasPermissions,
+  setOperator,
+  setOperators
 };

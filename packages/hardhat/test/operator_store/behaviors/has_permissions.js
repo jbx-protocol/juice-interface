@@ -12,6 +12,8 @@ let operator;
 
 const contractName = "OperatorStore";
 
+const permissionIndexes = [7, 42];
+
 module.exports = () => {
   before(async () => {
     [caller, operator] = await ethers.getSigners();
@@ -22,11 +24,26 @@ module.exports = () => {
   describe("Check to see if an operator has permissions", () => {
     describe("Success cases", () => {
       describe("hasPermissions(...)", () => {
-        it("Should return false if the operator doesn't have permission.", async () => {
+        it("Should return false if the operator doesn't have permissions.", async () => {
           const flag = await contract
             .connect(caller)
             .hasPermissions(caller.address, projectId, operator.address, [0]);
           expect(flag).to.equal(false);
+        });
+        it("Should return true if the operator does have permissions.", async () => {
+          const tx = await contract
+            .connect(caller)
+            .setOperator(projectId, operator.address, permissionIndexes);
+          await tx.wait();
+          const flag = await contract
+            .connect(caller)
+            .hasPermissions(
+              caller.address,
+              projectId,
+              operator.address,
+              permissionIndexes
+            );
+          expect(flag).to.equal(true);
         });
       });
     });

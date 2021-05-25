@@ -1,5 +1,5 @@
-const shouldBehaveLikeOperatorStore = require("./operator_store");
+const shouldBehaveLike = require("./behaviors");
 
 describe("Juice", () => {
-  describe("OperatorStore", shouldBehaveLikeOperatorStore);
+  describe("OperatorStore", shouldBehaveLike.operatorStore);
 });

@@ -26,9 +26,10 @@ module.exports = () => {
     describe("setPackedPermissions(...)", () => {
       it("Should set permissions correctly.", async () => {
         // Pack the permissions
-        const packedPermissions = permissionIndexes1.reduce((sum, i) => {
-          return sum.add(ethers.BigNumber.from(2).pow(i));
-        }, ethers.BigNumber.from(0));
+        const packedPermissions = permissionIndexes1.reduce(
+          (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
+          ethers.BigNumber.from(0)
+        );
         const tx = await contract
           .connect(caller)
           .setPackedPermissions(
@@ -37,6 +38,8 @@ module.exports = () => {
             packedPermissions
           );
         const receipt = await tx.wait();
+        expect(receipt.confirmations).to.equal(1);
+
         // Verify events
         expect(receipt.events).to.have.lengthOf(1);
         expect(receipt.events[0])

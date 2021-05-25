@@ -2,28 +2,28 @@
 pragma solidity >=0.8.0;
 
 interface IOperatorStore {
-    event AddPermission(
+    event AddPermissionsToOperator(
         address indexed account,
         uint256 indexed projectId,
         address indexed operator,
-        uint256[] _indexes
+        uint256[] indexes
     );
 
-    event AddPermissions(
+    event AddPermissionsToOperators(
         address indexed account,
         uint256[] indexed projectIds,
         address[] indexed operators,
-        uint256[][] _indexes
+        uint256[][] indexes
     );
 
-    event RemovePermission(
+    event RemovePermissionsFromOperator(
         address indexed account,
         uint256 indexed projectId,
         address indexed operator,
         address caller
     );
 
-    event RemovePermissions(
+    event RemovePermissionsFromOperators(
         address indexed account,
         uint256[] indexed projectId,
         address[] indexed operators,
@@ -64,26 +64,26 @@ interface IOperatorStore {
         uint256 _packedPermissions
     ) external;
 
-    function addPermission(
+    function addPermissionsToOperator(
         uint256 _projectId,
         address _operator,
         uint256[] memory _indexes
     ) external;
 
-    function addPermissions(
+    function addPermissionsToOperators(
         uint256[] memory _projectIds,
         address[] memory _operators,
         uint256[][] memory _indexes
     ) external;
 
-    function removePermission(
+    function removePermissionsFromOperator(
         address _account,
         uint256 _projectId,
         address _operator,
         uint256[] memory _indexes
     ) external;
 
-    function removePermissions(
+    function removePermissionsFromOperators(
         address _account,
         uint256[] memory _projectIds,
         address[] memory _operator,

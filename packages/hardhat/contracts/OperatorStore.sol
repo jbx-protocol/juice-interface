@@ -82,7 +82,7 @@ contract OperatorStore is IOperatorStore {
       @param _operator The operator to give permission to.
       @param _indexes An array of indexes of permissions to allow.
     */
-    function addPermission(
+    function addPermissionsToOperator(
         uint256 _projectId,
         address _operator,
         uint256[] memory _indexes
@@ -97,7 +97,12 @@ contract OperatorStore is IOperatorStore {
                 true
             )
         );
-        emit AddPermission(msg.sender, _projectId, _operator, _indexes);
+        emit AddPermissionsToOperator(
+            msg.sender,
+            _projectId,
+            _operator,
+            _indexes
+        );
     }
 
     /** 
@@ -106,7 +111,7 @@ contract OperatorStore is IOperatorStore {
       @param _operators The operators to give permission to.
       @param _indexes The level of power each operator should have.
     */
-    function addPermissions(
+    function addPermissionsToOperators(
         uint256[] memory _projectIds,
         address[] memory _operators,
         uint256[][] memory _indexes
@@ -115,7 +120,7 @@ contract OperatorStore is IOperatorStore {
         require(
             _operators.length == _indexes.length &&
                 _operators.length == _projectIds.length,
-            "OperatorStore::addPermissions: BAD_ARGS"
+            "OperatorStore::addPermissionsToOperators: BAD_ARGS"
         );
         for (uint256 _i = 0; _i < _operators.length; _i++)
             _setPackedPermissions(
@@ -129,7 +134,12 @@ contract OperatorStore is IOperatorStore {
                 )
             );
 
-        emit AddPermissions(msg.sender, _projectIds, _operators, _indexes);
+        emit AddPermissionsToOperators(
+            msg.sender,
+            _projectIds,
+            _operators,
+            _indexes
+        );
     }
 
     /** 
@@ -139,7 +149,7 @@ contract OperatorStore is IOperatorStore {
       @param _operator The operator to remove permission from.
       @param _indexes The permissions to remove.
     */
-    function removePermission(
+    function removePermissionsFromOperator(
         address _account,
         uint256 _projectId,
         address _operator,
@@ -150,7 +160,7 @@ contract OperatorStore is IOperatorStore {
             msg.sender == _account ||
                 (_operator == msg.sender &&
                     permissions[_account][_projectId][msg.sender] > 0),
-            "Juicer::removePermission: UNAUTHORIZED"
+            "Juicer::removePermissionsFromOperator: UNAUTHORIZED"
         );
 
         // Set the operator to level 0.
@@ -165,7 +175,12 @@ contract OperatorStore is IOperatorStore {
             )
         );
 
-        emit RemovePermission(_account, _projectId, _operator, msg.sender);
+        emit RemovePermissionsFromOperator(
+            _account,
+            _projectId,
+            _operator,
+            msg.sender
+        );
     }
 
     /** 
@@ -175,7 +190,7 @@ contract OperatorStore is IOperatorStore {
       @param _operators The operator to remove permission from.
       @param _indexes The permissions to remove from each operator.
     */
-    function removePermissions(
+    function removePermissionsFromOperators(
         address _account,
         uint256[] memory _projectIds,
         address[] memory _operators,
@@ -185,7 +200,7 @@ contract OperatorStore is IOperatorStore {
         require(
             _operators.length == _projectIds.length &&
                 _operators.length == _indexes.length,
-            "OperatorStore::removePermissions: BAD_ARGS"
+            "OperatorStore::removePermissionsFromOperators: BAD_ARGS"
         );
 
         // Set the operator to level 0.
@@ -196,7 +211,7 @@ contract OperatorStore is IOperatorStore {
                     msg.sender == _operators[_i] &&
                         (permissions[_account][_projectIds[_i]][msg.sender] >
                             0),
-                    "Juicer::removePermissions: UNAUTHORIZED"
+                    "Juicer::removePermissionsFromOperators: UNAUTHORIZED"
                 );
             }
             _setPackedPermissions(
@@ -211,7 +226,12 @@ contract OperatorStore is IOperatorStore {
             );
         }
 
-        emit RemovePermissions(_account, _projectIds, _operators, msg.sender);
+        emit RemovePermissionsFromOperators(
+            _account,
+            _projectIds,
+            _operators,
+            msg.sender
+        );
     }
 
     /** 

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Drawer, Steps } from 'antd'
+import { Button, Drawer, notification, Steps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
@@ -16,14 +16,15 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { ProjectMetadata } from 'models/project-metadata'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerMille, fromWad } from 'utils/formatCurrency'
-import { encodeFCMetadata } from 'utils/fundingCycle'
+import { encodeFCMetadata, isRecurring } from 'utils/fundingCycle'
+import { IPFS_TAGS, ipfsCidUrl, uploadFile } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
 import { FundingCycle } from '../../models/funding-cycle'
-import { isRecurring } from '../../utils/fundingCycle'
 import BudgetInfo, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
@@ -49,6 +50,7 @@ export default function PlayCreate() {
     deployProjectModalVisible,
     setDeployProjectModalVisible,
   ] = useState<boolean>(false)
+  const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [budgetForm] = useForm<BudgetFormFields>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -56,8 +58,8 @@ export default function PlayCreate() {
   const editingProject = useAppSelector(
     state => state.editingProject.projectIdentifier,
   )
-  const creatingProject = useAppSelector(state => state.editingProject.loading)
   const dispatch = useAppDispatch()
+
   const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'fee',
@@ -75,10 +77,10 @@ export default function PlayCreate() {
 
   const resetProjectForm = () =>
     projectForm.setFieldsValue({
-      name: editingProject?.name ?? '',
-      link: editingProject?.link ?? '',
+      name: editingProject?.metadata.name ?? '',
+      infoUri: editingProject?.link ?? '',
       handle: editingProject?.handle ?? '',
-      logoUri: editingProject?.logoUri ?? '',
+      logoUri: editingProject?.metadata.logoUri ?? '',
     })
 
   const resetTicketingForm = () =>
@@ -93,7 +95,7 @@ export default function PlayCreate() {
     dispatch(editingProjectActions.setTarget(fields.target))
     dispatch(
       editingProjectActions.setDuration(
-        (parseInt(fields.duration) * SECONDS_IN_DAY).toString(),
+        (parseFloat(fields.duration) * SECONDS_IN_DAY).toString(),
       ),
     )
     dispatch(editingProjectActions.setCurrency(fields.currency))
@@ -109,7 +111,7 @@ export default function PlayCreate() {
   const onProjectFormSaved = () => {
     const fields = projectForm.getFieldsValue(true)
     dispatch(editingProjectActions.setName(fields.name))
-    dispatch(editingProjectActions.setLink(fields.link))
+    dispatch(editingProjectActions.setInfoUri(fields.infoUri))
     dispatch(editingProjectActions.setHandle(fields.handle))
     dispatch(editingProjectActions.setLogoUri(fields.logoUri))
 
@@ -126,7 +128,11 @@ export default function PlayCreate() {
   }
 
   useEffect(() => {
-    if (editingProject.name && editingFC?.duration && editingFC?.target) {
+    if (
+      editingProject.metadata.name &&
+      editingFC?.duration &&
+      editingFC?.target
+    ) {
       setCurrentStep(1)
     }
 
@@ -135,12 +141,41 @@ export default function PlayCreate() {
     resetTicketingForm()
   }, [])
 
-  function deployProject() {
+  async function deployProject() {
     if (!transactor || !contracts) return onNeedProvider()
 
     if (!adminFeePercent || !editingFC) return
 
-    dispatch(editingProjectActions.setLoading(true))
+    setLoadingCreate(true)
+
+    const metadata: ProjectMetadata = {
+      name: editingProject.metadata.name,
+      logoUri: editingProject.metadata.logoUri,
+      infoUri: editingProject.metadata.infoUri,
+    }
+
+    const now = new Date().valueOf()
+
+    const uploadedMetadata = await uploadFile(
+      new File([JSON.stringify(metadata)], 'juice-project-metadata.json', {
+        lastModified: now,
+      }),
+      {
+        metadata: { tag: IPFS_TAGS.METADATA },
+      },
+    )
+
+    if (!uploadedMetadata.success) {
+      notification.error({
+        key: now.toString(),
+        message: 'Failed to upload project metadata',
+        description: uploadedMetadata.err,
+        duration: 0,
+      })
+
+      setLoadingCreate(false)
+      return
+    }
 
     const fee = feeForAmount(editingFC.target, adminFeePercent)
 
@@ -153,10 +188,10 @@ export default function PlayCreate() {
       'deploy',
       [
         userAddress,
-        editingProject.name,
+        '<deprecated_name>', // Can remove
         editingProject.handle,
-        editingProject.logoUri,
-        editingProject.link || '',
+        '<deprecated_logoUri>', // Can remove
+        ipfsCidUrl(uploadedMetadata.cid),
         targetWithFee,
         BigNumber.from(editingFC.currency).toHexString(),
         BigNumber.from(editingFC.duration).toHexString(),
@@ -171,7 +206,7 @@ export default function PlayCreate() {
         constants.AddressZero,
       ],
       {
-        onDone: () => dispatch(editingProjectActions.setLoading(false)),
+        onDone: () => setLoadingCreate(false),
         onConfirmed: () => {
           setDeployProjectModalVisible(false)
           window.location.hash = '/p/' + editingProject.handle
@@ -319,7 +354,7 @@ export default function PlayCreate() {
         visible={deployProjectModalVisible}
         okText={'Deploy on ' + signerNetwork}
         onOk={deployProject}
-        confirmLoading={creatingProject}
+        confirmLoading={loadingCreate}
         width={600}
         onCancel={() => setDeployProjectModalVisible(false)}
       >

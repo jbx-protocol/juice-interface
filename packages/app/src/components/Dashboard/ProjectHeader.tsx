@@ -2,17 +2,21 @@ import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
+import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useState } from 'react'
+
+import { useProjectMetadata } from '../../hooks/ProjectMetadata'
 
 export default function ProjectHeader({
   project,
   projectId,
   isOwner,
 }: {
-  project: ProjectIdentifier
+  project: ProjectIdentifier & { metadata?: ProjectMetadata }
   projectId: BigNumber
   isOwner?: boolean
 }) {
@@ -27,6 +31,10 @@ export default function ProjectHeader({
 
   const headerHeight = 80
 
+  const metadata = useProjectMetadata(project.link)
+
+  const _metadata = project.metadata ?? metadata
+
   return (
     <div>
       <div
@@ -37,8 +45,8 @@ export default function ProjectHeader({
       >
         <div style={{ marginRight: 20 }}>
           <ProjectLogo
-            uri={project?.logoUri}
-            name={project?.name}
+            uri={_metadata?.logoUri}
+            name={_metadata?.name}
             size={headerHeight}
           />
         </div>
@@ -48,10 +56,12 @@ export default function ProjectHeader({
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: project.name ? colors.text.primary : colors.text.secondary,
+              color: _metadata?.name
+                ? colors.text.primary
+                : colors.text.secondary,
             }}
           >
-            {project.name ? project.name : 'Untitled project'}
+            {_metadata?.name ?? 'Untitled project'}
           </h1>
 
           <h3>
@@ -61,14 +71,14 @@ export default function ProjectHeader({
                   @{project.handle}
                 </span>
               )}
-              {project?.link && (
+              {_metadata?.infoUri && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={project.link}
+                  href={_metadata?.infoUri}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {project.link}
+                  {_metadata?.infoUri}
                 </a>
               )}
             </Space>

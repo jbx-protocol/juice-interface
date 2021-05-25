@@ -1,6 +1,6 @@
 export interface ProjectIdentifier {
-  name: string
+  // name: string
   handle: string
   link: string
-  logoUri: string
+  // logoUri: string
 }

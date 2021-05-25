@@ -4,6 +4,7 @@ import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 import { parsePerMille, parseWad } from 'utils/formatCurrency'
 import {
   EditingFundingCycle,
@@ -11,10 +12,13 @@ import {
   serializeFundingCycle,
 } from 'utils/serializers'
 
+export type EditingProjectIdentifier = ProjectIdentifier & {
+  metadata: ProjectMetadata
+}
+
 export type EditingProjectState = {
-  projectIdentifier: ProjectIdentifier
+  projectIdentifier: EditingProjectIdentifier
   fundingCycle: SerializedFundingCycle
-  loading: boolean
 }
 
 const defaultDiscountRate = 97
@@ -24,10 +28,12 @@ export const editingProjectSlice = createSlice({
   name: 'editingProject',
   initialState: {
     projectIdentifier: {
-      name: '',
-      link: '',
+      metadata: {
+        name: '',
+        infoUri: '',
+        logoUri: '',
+      },
       handle: '',
-      logoUri: '',
     },
     fundingCycle: serializeFundingCycle({
       id: BigNumber.from(1),
@@ -47,12 +53,11 @@ export const editingProjectSlice = createSlice({
       configured: 0,
       ballot: constants.AddressZero,
     }),
-    loading: false,
   } as EditingProjectState,
   reducers: {
     setProjectIdentifier: (
       state,
-      action: PayloadAction<ProjectIdentifier>,
+      action: PayloadAction<EditingProjectIdentifier>,
     ) => ({
       ...state,
       projectIdentifier: action.payload,
@@ -61,14 +66,30 @@ export const editingProjectSlice = createSlice({
       ...state,
       projectIdentifier: {
         ...state.projectIdentifier,
-        name: action.payload,
+        metadata: {
+          ...state.projectIdentifier.metadata,
+          name: action.payload,
+        },
       },
     }),
-    setLink: (state, action: PayloadAction<string>) => ({
+    setInfoUri: (state, action: PayloadAction<string>) => ({
       ...state,
       projectIdentifier: {
         ...state.projectIdentifier,
-        link: action.payload,
+        metadata: {
+          ...state.projectIdentifier.metadata,
+          infoUri: action.payload,
+        },
+      },
+    }),
+    setLogoUri: (state, action: PayloadAction<string>) => ({
+      ...state,
+      projectIdentifier: {
+        ...state.projectIdentifier,
+        metadata: {
+          ...state.projectIdentifier.metadata,
+          logoUri: action.payload,
+        },
       },
     }),
     setHandle: (state, action: PayloadAction<string>) => ({
@@ -76,13 +97,6 @@ export const editingProjectSlice = createSlice({
       projectIdentifier: {
         ...state.projectIdentifier,
         handle: action.payload,
-      },
-    }),
-    setLogoUri: (state, action: PayloadAction<string>) => ({
-      ...state,
-      projectIdentifier: {
-        ...state.projectIdentifier,
-        logoUri: action.payload,
       },
     }),
     setFundingCycle: (state, action: PayloadAction<EditingFundingCycle>) => ({
@@ -151,10 +165,6 @@ export const editingProjectSlice = createSlice({
         ...state.fundingCycle,
         currency: action.payload.toString(),
       },
-    }),
-    setLoading: (state, action: PayloadAction<boolean>) => ({
-      ...state,
-      loading: action.payload,
     }),
     setIsRecurring: (state, action: PayloadAction<boolean>) => ({
       ...state,

@@ -69,7 +69,7 @@ export default function ProjectCard({
               @{project.handle}
             </div>
 
-            {metadata.logoUri && (
+            {metadata.infoUri && (
               <div
                 style={{
                   color: colors.text.action.primary,
@@ -77,7 +77,7 @@ export default function ProjectCard({
                   textOverflow: 'ellipsis',
                 }}
               >
-                {metadata.logoUri}
+                {metadata.infoUri}
               </div>
             )}
           </div>

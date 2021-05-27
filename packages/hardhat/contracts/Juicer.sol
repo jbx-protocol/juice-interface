@@ -287,9 +287,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _fundingCycle.ballot.isPending(
                     _queuedCycle.id,
                     _queuedCycle.configuration
-                )
-                ? // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-                uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
+                ) // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+                ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
                 : uint256(uint16(_fundingCycle.metadata >> 8));
 
         // The bonding curve formula.
@@ -399,7 +398,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _projectId = projects.create(_owner, _handle, _link);
 
         // Configure the funding cycle.
-        FundingCycle.Data memory _fundingCycle =
+        uint256 _fundingCycleId =
             fundingCycles.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
                 _projectId,
@@ -414,15 +413,15 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             );
 
         // Allow this contract to print and redeem tickets.
-        tickets.initialize(address(this), _fundingCycle.projectId);
+        tickets.initialize(address(this), _projectId);
 
         // Register this Juicer in the directory.
-        terminalDirectory.setTerminal(_fundingCycle.projectId, this);
+        terminalDirectory.setTerminal(_projectId, this);
 
         emit Deploy(
             _projectId,
             _owner,
-            _fundingCycle.id,
+            _fundingCycleId,
             _name,
             _handle,
             _logoUri,
@@ -530,7 +529,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _discountRate,
         FundingCycleMetadata memory _metadata,
         IFundingCycleBallot _ballot
-    ) external override returns (uint256) {
+    ) external override returns (uint256 fundingCycleId) {
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
@@ -551,23 +550,22 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
 
         // Configure the funding stage's state.
-        FundingCycle.Data memory _fundingCycle =
-            fundingCycles.configure(
-                _projectId,
-                _target,
-                _currency,
-                _duration,
-                _discountRate,
-                fee,
-                _ballot,
-                _validateAndPackFundingCycleMetadata(_metadata),
-                // If no tickets are currently issued, the active funding cycle can be configured.
-                _totalTicketSupply == 0
-            );
+        fundingCycleId = fundingCycles.configure(
+            _projectId,
+            _target,
+            _currency,
+            _duration,
+            _discountRate,
+            fee,
+            _ballot,
+            _validateAndPackFundingCycleMetadata(_metadata),
+            // If no tickets are currently issued, the active funding cycle can be configured.
+            _totalTicketSupply == 0
+        );
 
         emit Reconfigure(
-            _fundingCycle.id,
-            _fundingCycle.projectId,
+            fundingCycleId,
+            _projectId,
             _target,
             _currency,
             _duration,
@@ -576,8 +574,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _ballot,
             msg.sender
         );
-
-        return _fundingCycle.id;
     }
 
     /**

@@ -17,31 +17,20 @@ contract FundingCycleBallot is IFundingCycleBallot {
     // --- external views --- //
 
     /**
-      @notice Whether or not a reconfiguration of a particular funding cycle is currently approved.
-      @param _configured The configuration of the funding cycle to check the approval of.
-      @return Whether or not the funding cycle reconfiguration is currently approved.
+      @notice The approval state of a particular funding cycle.
+      @param _configured The configuration of the funding cycle to check the state of.
+      @return The state of the provided ballot.
    */
-    function isApproved(uint256, uint256 _configured)
+    function state(uint256, uint256 _configured)
         external
         view
         override
-        returns (bool)
+        returns (BallotState)
     {
-        return block.timestamp > _configured + reconfigurationDelay;
-    }
-
-    /**
-      @notice Whether or not a reconfiguration of a particular funding cycle is currently pending approval.
-      @param _configured The configuration of the funding cycle to check the pending state of.
-      @return Whether or not the funding cycle reconfiguration is currently pending approval.
-   */
-    function isPending(uint256, uint256 _configured)
-        external
-        view
-        override
-        returns (bool)
-    {
-        return block.timestamp <= _configured + reconfigurationDelay;
+        return
+            block.timestamp > _configured + reconfigurationDelay
+                ? BallotState.Approved
+                : BallotState.Active;
     }
 
     // --- external transactions --- //

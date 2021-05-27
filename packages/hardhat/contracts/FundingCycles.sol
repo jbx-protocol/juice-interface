@@ -13,7 +13,7 @@ import "./abstract/Administered.sol";
 contract FundingCycles is Administered, IFundingCycles {
     // --- private properties --- //
 
-    mapping(uint256 => uint256) private packedCustomParams;
+    mapping(uint256 => uint256) private packedConfigurationProperties;
     mapping(uint256 => uint256) private packedIntrinsicProperties;
     mapping(uint256 => uint256) private metadata;
     mapping(uint256 => uint256) private targetAmounts;
@@ -132,7 +132,7 @@ contract FundingCycles is Administered, IFundingCycles {
                 _isConfigurationApproved(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.previous,
-                    _standbyFundingCycle.configuration
+                    _standbyFundingCycle.configured
                 )
             ) return _standbyFundingCycle;
             _fundingCycleId = _standbyFundingCycle.previous;
@@ -183,24 +183,29 @@ contract FundingCycles is Administered, IFundingCycles {
             return BallotState.Standby;
 
         // Get the packed custom params of the previous funding cycle.
-        uint256 _packedPreviousCustomParams = packedCustomParams[_previous];
+        uint256 _packedPreviousConfigurationProperties =
+            packedConfigurationProperties[_previous];
 
         // The ballot is packed in bits 0-159
         IFundingCycleBallot _ballot =
-            IFundingCycleBallot(address(uint160(_packedPreviousCustomParams)));
+            IFundingCycleBallot(
+                address(uint160(_packedPreviousConfigurationProperties))
+            );
 
         // If the previous funding cycle has no ballot, the current one cant be pending approval.
         if (_ballot == IFundingCycleBallot(address(0)))
             return BallotState.Standby;
 
         // Get the packed custom params of the current funding cycle.
-        uint256 _packedCustomParams = packedCustomParams[_fundingCycleId];
+        uint256 _packedConfigurationProperties =
+            packedConfigurationProperties[_fundingCycleId];
 
-        // The configuration is packed in bits 161-208
-        uint256 _configuration = uint256(uint48(_packedCustomParams >> 160));
+        // The configured is packed in bits 161-208
+        uint256 _configured =
+            uint256(uint48(_packedConfigurationProperties >> 160));
 
         // Ask the previous funding cycle's ballot if the current funding cycle is pending.
-        return _ballot.state(_fundingCycleId, _configuration);
+        return _ballot.state(_fundingCycleId, _configured);
     }
 
     // --- external transactions --- //
@@ -254,7 +259,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _configureActiveFundingCycle
         );
 
-        _packAndSaveCustomParams(
+        _packAndSaveConfigurationProperties(
             fundingCycleId,
             block.timestamp,
             _ballot,
@@ -365,7 +370,7 @@ contract FundingCycles is Administered, IFundingCycles {
                 _isConfigurationApproved(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.previous,
-                    _standbyFundingCycle.configuration
+                    _standbyFundingCycle.configured
                 )
             ) return fundingCycleId;
             fundingCycleId = _standbyFundingCycle.previous;
@@ -428,9 +433,9 @@ contract FundingCycles is Administered, IFundingCycles {
             _previous = _latestFundingCycle.id;
 
             if (_copy) {
-                packedCustomParams[count] = packedCustomParams[
-                    _latestFundingCycleId
-                ];
+                packedConfigurationProperties[
+                    count
+                ] = packedConfigurationProperties[_latestFundingCycleId];
                 metadata[count] = metadata[_latestFundingCycleId];
                 targetAmounts[count] = targetAmounts[_latestFundingCycleId];
             }
@@ -520,7 +525,7 @@ contract FundingCycles is Administered, IFundingCycles {
                 _fundingCycle.projectId,
                 _fundingCycle.number + 1,
                 _fundingCycle.id,
-                _fundingCycle.configuration,
+                _fundingCycle.configured,
                 PRBMathCommon.mulDiv(
                     _fundingCycle.weight,
                     _fundingCycle.discountRate,
@@ -565,9 +570,9 @@ contract FundingCycles is Administered, IFundingCycles {
         packedIntrinsicProperties[_fundingCycleId] = packed;
     }
 
-    function _packAndSaveCustomParams(
+    function _packAndSaveConfigurationProperties(
         uint256 _fundingCycleId,
-        uint256 _configuration,
+        uint256 _configured,
         IFundingCycleBallot _ballot,
         uint256 _duration,
         uint256 _currency,
@@ -576,8 +581,8 @@ contract FundingCycles is Administered, IFundingCycles {
     ) private {
         // ballot in first 160 bytes.
         uint256 packed = uint160(address(_ballot));
-        // configuration in bytes 161-208 bytes.
-        packed |= _configuration << 160;
+        // configured in bytes 161-208 bytes.
+        packed |= _configured << 160;
         // duration in bytes 209-232 bytes.
         packed |= _duration << 208;
         // previous in bytes 233-240 bytes.
@@ -587,7 +592,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // discountRate in bytes 249-256 bytes.
         packed |= _discountRate << 248;
 
-        packedCustomParams[_fundingCycleId] = packed;
+        packedConfigurationProperties[_fundingCycleId] = packed;
     }
 
     // /**
@@ -602,7 +607,11 @@ contract FundingCycles is Administered, IFundingCycles {
     ) private view returns (bool) {
         IFundingCycleBallot _ballot =
             IFundingCycleBallot(
-                address(uint160(packedCustomParams[_ballotFundingCycleId]))
+                address(
+                    uint160(
+                        packedConfigurationProperties[_ballotFundingCycleId]
+                    )
+                )
             );
         return
             _ballot == IFundingCycleBallot(address(0)) ||
@@ -612,7 +621,7 @@ contract FundingCycles is Administered, IFundingCycles {
     function _getStruct(
         uint256 _fundingCycleId,
         bool _includeIntrinsicProperties,
-        bool _includeCustomParams,
+        bool _includeConfigurationProperties,
         bool _includeAmounts,
         bool _includeMetadata
     ) private view returns (FundingCycle memory _fundingCycle) {
@@ -635,21 +644,26 @@ contract FundingCycles is Administered, IFundingCycles {
                 uint48(_packedIntrinsicProperties >> 208)
             );
         }
-        if (_includeCustomParams) {
-            uint256 _packedCustomParams = packedCustomParams[_fundingCycleId];
+        if (_includeConfigurationProperties) {
+            uint256 _packedConfigurationProperties =
+                packedConfigurationProperties[_fundingCycleId];
             _fundingCycle.ballot = IFundingCycleBallot(
-                address(uint160(_packedCustomParams))
+                address(uint160(_packedConfigurationProperties))
             );
-            _fundingCycle.configuration = uint256(
-                uint48(_packedCustomParams >> 160)
+            _fundingCycle.configured = uint256(
+                uint48(_packedConfigurationProperties >> 160)
             );
             _fundingCycle.duration = uint256(
-                uint24(_packedCustomParams >> 208)
+                uint24(_packedConfigurationProperties >> 208)
             );
-            _fundingCycle.currency = uint256(uint8(_packedCustomParams >> 232));
-            _fundingCycle.fee = uint256(uint8(_packedCustomParams >> 240));
+            _fundingCycle.currency = uint256(
+                uint8(_packedConfigurationProperties >> 232)
+            );
+            _fundingCycle.fee = uint256(
+                uint8(_packedConfigurationProperties >> 240)
+            );
             _fundingCycle.discountRate = uint256(
-                uint8(_packedCustomParams >> 248)
+                uint8(_packedConfigurationProperties >> 248)
             );
         }
         if (_includeAmounts) {

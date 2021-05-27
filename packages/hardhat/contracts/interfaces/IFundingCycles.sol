@@ -15,7 +15,7 @@ struct FundingCycle {
     // The ID of the project's funding cycle that came before this one. 0 if none.
     uint256 previous;
     // The time when this funding cycle was last configured.
-    uint256 configuration;
+    uint256 configured;
     // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
     uint256 weight;
     // The ballot contract to use to determine a subsequent funding cycle's reconfiguration status.

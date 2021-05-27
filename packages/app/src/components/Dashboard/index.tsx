@@ -56,17 +56,14 @@ export default function Dashboard() {
     contract: ContractName.Projects,
     functionName: 'getInfo',
     args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: useCallback(
-      (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
-      [],
-    ),
+    valueDidChange: useCallback((a, b) => !deepEqProjectIdentifiers(a, b), []),
   })
 
   const fundingCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
     functionName: 'getCurrent',
     args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: (a, b) => !deepEqFundingCycles(a, b),
+    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
     updateOn: projectId
       ? [
           {

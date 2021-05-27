@@ -161,24 +161,24 @@ contract FundingCycles is Administered, IFundingCycles {
 
     constructor() {}
 
-    /**
-        @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
-        sets the properties of the funding cycle that will take effect once the current one expires.
-        @dev The msg.sender is the project of the funding cycle.
-        @param _projectId The ID of the project being reconfigured. 
-        @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
-        @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-        @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
-        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-        If it's 1000, each funding stage will have equal weight.
-        If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
-        If the number is 0, an non-recurring funding stage will get made.
-        @param _fee The fee that this configuration will incure when tapping.
-        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _metadata Data to store with the funding cycle. 
-        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
-        @return The funding cycle that was successfully configured.
-    */
+    // /**
+    //     @notice Configures the sustainability target and duration of the sender's current funding cycle if it hasn't yet received sustainments, or
+    //     sets the properties of the funding cycle that will take effect once the current one expires.
+    //     @dev The msg.sender is the project of the funding cycle.
+    //     @param _projectId The ID of the project being reconfigured.
+    //     @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
+    //     @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+    //     @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+    //     @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+    //     If it's 1000, each funding stage will have equal weight.
+    //     If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+    //     If the number is 0, an non-recurring funding stage will get made.
+    //     @param _fee The fee that this configuration will incure when tapping.
+    //     @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+    //     @param _metadata Data to store with the funding cycle.
+    //     @param _configureActiveFundingCycle If the active funding cycle should be configurable.
+    //     @return The funding cycle that was successfully configured.
+    // */
     function configure(
         uint256 _projectId,
         uint256 _target,
@@ -189,7 +189,7 @@ contract FundingCycles is Administered, IFundingCycles {
         IFundingCycleBallot _ballot,
         uint256 _metadata,
         bool _configureActiveFundingCycle
-    ) external override onlyAdmin returns (FundingCycle.Data memory) {
+    ) external override onlyAdmin returns (uint256 fundingCycleId) {
         // Target must be greater than 0.
         require(_target > 0, "FundingCycles::reconfigure: BAD_TARGET");
 
@@ -203,11 +203,13 @@ contract FundingCycles is Administered, IFundingCycles {
         );
 
         // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
-        uint256 _fundingCycleId =
-            _ensureConfigurable(_projectId, _configureActiveFundingCycle);
+        fundingCycleId = _ensureConfigurable(
+            _projectId,
+            _configureActiveFundingCycle
+        );
 
         _packAndSaveCustomParams(
-            _fundingCycleId,
+            fundingCycleId,
             block.timestamp,
             _ballot,
             _duration,
@@ -216,11 +218,8 @@ contract FundingCycles is Administered, IFundingCycles {
             _discountRate
         );
 
-        targetAmounts[_fundingCycleId] = _target;
-        metadata[_fundingCycleId] = _metadata;
-
-        // Return the funding cycle.
-        return _getStruct(_fundingCycleId, true, true, true, true);
+        targetAmounts[fundingCycleId] = _target;
+        metadata[fundingCycleId] = _metadata;
     }
 
     /** 

@@ -360,8 +360,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     */
     function deploy(
         address _owner,
-        string calldata _handle,
-        string calldata _link,
+        bytes32 _handle,
+        bytes32 _link,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,

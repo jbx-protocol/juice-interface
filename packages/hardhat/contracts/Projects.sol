@@ -20,10 +20,10 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     // --- public properties --- //
 
     /// @notice The project that each unique handle represents.
-    mapping(bytes => uint256) public override handleResolver;
+    mapping(bytes32 => uint256) public override handleResolver;
 
     /// @notice Handles that have been transfered to the specified address.
-    mapping(bytes => address) public override transferedHandles;
+    mapping(bytes32 => address) public override transferedHandles;
 
     /// @notice A contract sotring operator assignments.
     IOperatorStore public immutable override operatorStore;
@@ -78,24 +78,24 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     */
     function create(
         address _owner,
-        string calldata _handle,
-        string calldata _link
+        bytes32 _handle,
+        bytes32 _link
     ) external override onlyAdmin returns (uint256 id) {
         // Handle must exist.
-        require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
+        require(_handle.length > 0, "Projects::create: EMPTY_HANDLE");
 
         // Handle must be unique.
         require(
-            handleResolver[bytes(_handle)] == 0 &&
-                (transferedHandles[bytes(_handle)] == address(0) ||
-                    transferedHandles[bytes(_handle)] == msg.sender),
-            "Projects::setInfo: HANDLE_TAKEN"
+            handleResolver[_handle] == 0 &&
+                (transferedHandles[_handle] == address(0) ||
+                    transferedHandles[_handle] == msg.sender),
+            "Projects::create: HANDLE_TAKEN"
         );
 
         projectId++;
         _safeMint(_owner, projectId);
         info[projectId] = Info(_handle, _link);
-        handleResolver[bytes(_handle)] = projectId;
+        handleResolver[_handle] = projectId;
         return projectId;
     }
 
@@ -107,8 +107,8 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     */
     function setInfo(
         uint256 _projectId,
-        string calldata _handle,
-        string calldata _link
+        bytes32 _handle,
+        bytes32 _link
     ) external override {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
@@ -126,14 +126,14 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         );
 
         // Handle must exist.
-        require(bytes(_handle).length > 0, "Projects::setInfo: EMPTY_HANDLE");
+        require(_handle.length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
         // Handle must be unique.
         require(
-            (handleResolver[bytes(_handle)] == 0 ||
-                handleResolver[bytes(_handle)] == _projectId) &&
-                (transferedHandles[bytes(_handle)] == address(0) ||
-                    transferedHandles[bytes(_handle)] == msg.sender),
+            (handleResolver[_handle] == 0 ||
+                handleResolver[_handle] == _projectId) &&
+                (transferedHandles[_handle] == address(0) ||
+                    transferedHandles[_handle] == msg.sender),
             "Projects::setInfo: HANDLE_TAKEN"
         );
 
@@ -141,9 +141,9 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         Info storage _info = info[_projectId];
 
         // If the handle is changing, register the change in the resolver.
-        if (keccak256(bytes(_info.handle)) == keccak256(bytes(_handle))) {
-            handleResolver[bytes(_info.handle)] = 0;
-            handleResolver[bytes(_handle)] = _projectId;
+        if (_info.handle == _handle) {
+            handleResolver[_info.handle] = 0;
+            handleResolver[_handle] = _projectId;
         }
 
         // Set the new identifier.
@@ -162,8 +162,8 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     function transferHandle(
         uint256 _projectId,
         address _to,
-        string calldata _newHandle
-    ) external override returns (string memory _handle) {
+        bytes32 _newHandle
+    ) external override returns (bytes32 _handle) {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
 
@@ -181,12 +181,12 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
             "Projects::transferHandle: UNAUTHORIZED"
         );
         require(
-            bytes(_newHandle).length > 0,
+            _newHandle.length > 0,
             "Projects::transferHandle: EMPTY_HANDLE"
         );
 
         require(
-            handleResolver[bytes(_newHandle)] == 0,
+            handleResolver[_newHandle] == 0,
             "Projects::transferHandle: HANDLE_TAKEN"
         );
 
@@ -195,13 +195,13 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         _handle = _info.handle;
 
         // If the handle is changing, register the change in the resolver.
-        handleResolver[bytes(_newHandle)] = _projectId;
+        handleResolver[_newHandle] = _projectId;
 
         // Remove the resolver for the transfered handle.
-        handleResolver[bytes(_handle)] = 0;
+        handleResolver[_handle] = 0;
 
         // Transfer the current handle.
-        transferedHandles[bytes(_handle)] = _to;
+        transferedHandles[_handle] = _to;
 
         // Set the new handle.
         _info.handle = _newHandle;
@@ -216,7 +216,7 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
       @param _projectId The ID of the project to use the claimed handle.
     */
     function claimHandle(
-        string calldata _handle,
+        bytes32 _handle,
         address _for,
         uint256 _projectId
     ) external override {
@@ -256,12 +256,12 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
 
         // The handle must have been transfered to the specified address.
         require(
-            transferedHandles[bytes(_handle)] == _for,
+            transferedHandles[_handle] == _for,
             "Projects::claimHandle: UNAUTHORIZED"
         );
 
         // Register the change in the resolver.
-        handleResolver[bytes(_handle)] = _projectId;
+        handleResolver[_handle] = _projectId;
 
         // If needed, clear the old handle and set the new one.
         Info storage _info = info[_projectId];

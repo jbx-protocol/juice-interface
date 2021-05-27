@@ -1213,16 +1213,16 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
-        // Add to the raw balance of the project.
-        // TODO raw balance cant be `amount` because that's in `currency`. Needs to be in ETH.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
-
         // Get a reference to the amount of ETH the supplied amount is worth.
         uint256 _ethAmount =
             PRBMathUD60x18.mul(
                 _amount,
                 prices.getETHPrice(_fundingCycle.currency)
             );
+
+        // Add to the raw balance of the project.
+        // TODO raw balance cant be `amount` because that's in `currency`. Needs to be in ETH.
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _ethAmount;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =

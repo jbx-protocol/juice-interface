@@ -76,5 +76,8 @@
   "devDependencies": {
     "husky": "^4.3.7",
     "pretty-quick": "^3.1.0"
+  },
+  "dependencies": {
+    "bip39": "^3.0.4"
   }
 }

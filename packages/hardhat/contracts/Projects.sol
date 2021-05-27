@@ -72,17 +72,13 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     /**
         @notice Create a new project.
         @param _owner The owner of the project.
-        @param _name A name of the project.
         @param _handle A unique handle for the project.
-        @param _logoUri A uri to an image representing the project.
         @param _link A link to more info about the project.
         @return id The new project's ID.
     */
     function create(
         address _owner,
-        string memory _name,
         string memory _handle,
-        string memory _logoUri,
         string memory _link
     ) external override onlyAdmin returns (uint256 id) {
         // Handle must exist.
@@ -95,9 +91,10 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
                     transferedHandles[bytes(_handle)] == msg.sender),
             "Projects::setInfo: HANDLE_TAKEN"
         );
+
         projectId++;
         _safeMint(_owner, projectId);
-        info[projectId] = Info(_name, _handle, _logoUri, _link);
+        info[projectId] = Info(_handle, _link);
         handleResolver[bytes(_handle)] = projectId;
         return projectId;
     }
@@ -105,16 +102,12 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     /**
       @notice Allows a project owner to set the project's name and handle.
       @param _projectId The ID of the project.
-      @param _name The new name for the project.
       @param _handle The new unique handle for the project.
-      @param _logoUri The new uri to an image representing the project.
       @param _link A link to more info about the project.
     */
     function setInfo(
         uint256 _projectId,
-        string memory _name,
         string memory _handle,
-        string memory _logoUri,
         string memory _link
     ) external override {
         // Get a reference to the project owner.
@@ -154,12 +147,10 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         }
 
         // Set the new identifier.
-        _info.name = _name;
         _info.handle = _handle;
-        _info.logoUri = _logoUri;
         _info.link = _link;
 
-        emit SetInfo(_projectId, _name, _handle, _logoUri, _link, msg.sender);
+        emit SetInfo(_projectId, _handle, _link, msg.sender);
     }
 
     /**

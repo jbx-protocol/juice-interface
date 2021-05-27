@@ -70,8 +70,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
     // --- public stored properties --- //
 
-    /// @notice The percent fee the Juice project takes from tapped amounts. Out of 1000.
-    uint256 public override fee = 50;
+    /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
+    uint256 public override fee = 10;
 
     /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
     address payable public override governance;
@@ -186,8 +186,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         return
             PRBMathCommon.mulDiv(
                 _unprocessedTicketBalanceOf,
-                1000,
-                1000 - _reservedRate
+                200,
+                200 - _reservedRate
             ) - _unprocessedTicketBalanceOf;
     }
 
@@ -300,10 +300,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _bondingCurveRate +
                     PRBMathCommon.mulDiv(
                         _count,
-                        1000 - _bondingCurveRate,
+                        200 - _bondingCurveRate,
                         _totalSupply
                     ),
-                1000
+                200
             );
     }
 
@@ -357,15 +357,15 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
         @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
-        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-        If it's 1000, each funding stage will have equal weight.
-        If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+        @param _discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        If it's 200, each funding stage will have equal weight.
+        If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
         @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
-        @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
+        @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
         The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
         where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
+        @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
     */
     function deploy(
@@ -503,15 +503,15 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
         @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
-        @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-        If it's 1000, each funding stage will have equal weight.
-        If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+        @param _discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+        If it's 200, each funding stage will have equal weight.
+        If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
         If the number is 0, an non-recurring funding stage will get made.
         @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
-        @dev _bondingCurveRate The rate from 0-1000 at which a project's Tickets can be redeemed for surplus.
+        @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
         The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
         where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        @dev _reservedRate A number from 0-1000 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
+        @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @return fundingCycleId The id of the funding cycle that was successfully configured.
     */
@@ -658,8 +658,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _tappedETHAmount -
                 PRBMathCommon.mulDiv(
                     _tappedETHAmount,
-                    1000,
-                    uint256(_fundingCycle.fee) + 1000
+                    200,
+                    _fundingCycle.fee + 200
                 );
 
         // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
@@ -702,7 +702,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             PaymentMod memory _mod = _mods[_i];
             // The amount to send towards mods.
             uint256 _modCut =
-                PRBMathCommon.mulDiv(_transferAmount, _mod.percent, 1000);
+                PRBMathCommon.mulDiv(_transferAmount, _mod.percent, 200);
 
             // Transfer ETH to the mod.
             // If there's an allocator set, transfer to its `allocate` function.
@@ -914,7 +914,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             TicketMod memory _mod = _mods[_i];
 
             // The amount to send towards mods.
-            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 1000);
+            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 200);
 
             // Print tickets for the mod.
             tickets.print(
@@ -1116,10 +1116,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
     /** 
       @notice Allow the admin to change the fee. 
-      @param _fee The new fee percent. Out of 1000.
+      @param _fee The new fee percent. Out of 200.
     */
     function setFee(uint256 _fee) external override onlyGov {
-        require(_fee <= 1000, "Juicer::setFee: BAD_FEE");
+        require(_fee <= 200, "Juicer::setFee: BAD_FEE");
 
         // Set the fee.
         fee = _fee;
@@ -1207,47 +1207,20 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
-        // Get a reference to the amount of ETH the supplied amount is worth.
-        uint256 _currencyAmount =
-            PRBMathUD60x18.mul(
-                _amount,
-                prices.getETHPrice(_fundingCycle.currency)
-            );
-
         // Add to the raw balance of the project.
         rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_currencyAmount, _fundingCycle.weight);
+            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
 
         // Only print the tickets that are unreserved.
         uint256 _unreservedWeightedAmount =
             PRBMathCommon.mulDiv(
                 _weightedAmount,
                 // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24)),
-                1000
-            );
-
-        // Get a reference to the amount of ETH the supplied amount is worth.
-        uint256 _ethAmount =
-            PRBMathUD60x18.mul(
-                _amount,
-                prices.getETHPrice(_fundingCycle.currency)
-            );
-
-        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
-        uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
-
-        // Only print the tickets that are unreserved.
-        uint256 _unreservedWeightedAmount =
-            PRBMathCommon.mulDiv(
-                _weightedAmount,
-                // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24)),
-                1000
+                200 - uint256(uint16(_fundingCycle.metadata >> 24)),
+                200
             );
 
         // Print the project's tickets for the beneficiary.
@@ -1299,22 +1272,21 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     function _validateAndPackFundingCycleMetadata(
         FundingCycleMetadata memory _metadata
     ) private pure returns (uint256 packed) {
-        // The bonding curve rate must be between 0 and 1000.
+        // The bonding curve rate must be between 0 and 200.
         require(
-            _metadata.bondingCurveRate > 0 &&
-                _metadata.bondingCurveRate <= 1000,
+            _metadata.bondingCurveRate > 0 && _metadata.bondingCurveRate <= 200,
             "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
         );
 
-        // The reserved project ticket rate must be less than or equal to 1000.
+        // The reserved project ticket rate must be less than or equal to 200.
         require(
-            _metadata.reservedRate <= 1000,
+            _metadata.reservedRate <= 200,
             "FundingCycles::_validateData: BAD_RESERVED_RATE"
         );
 
-        // The reconfiguration bonding curve rate must be less than or equal to 1000.
+        // The reconfiguration bonding curve rate must be less than or equal to 200.
         require(
-            _metadata.reconfigurationBondingCurveRate <= 1000,
+            _metadata.reconfigurationBondingCurveRate <= 200,
             "FundingCycles::_validateData: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
         );
 

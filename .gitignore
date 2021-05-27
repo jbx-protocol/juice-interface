@@ -5,6 +5,7 @@ packages/hardhat/*.txt
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
+**/yarn.lock
 packages/hardhat/artifacts
 packages/app/src/contracts/temp
 packages/app/src/contracts/local

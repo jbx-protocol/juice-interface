@@ -14,13 +14,18 @@ contract FundingCycles is Administered, IFundingCycles {
 
     // --- private properties --- //
 
+    mapping(uint256 => uint256) private packedCustomParams;
+    mapping(uint256 => uint256) private packedIntrinsicProperties;
+    mapping(uint256 => uint256) private metadata;
+    mapping(uint256 => uint256) private targetAmounts;
+    mapping(uint256 => uint256) private tappedAmounts;
+
     // The official record of all funding cycles ever created.
-    mapping(uint256 => FundingCycle.Data) private fundingCycles;
 
     // --- public properties --- //
 
     // The starting weight for each project's first funding cycle.
-    uint256 public constant override BASE_WEIGHT = 1E22;
+    uint256 public constant override BASE_WEIGHT = 1E19;
 
     /// @notice The latest FundingCycle ID for each project id.
     mapping(uint256 => uint256) public override latestId;
@@ -46,7 +51,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _fundingCycleId > 0 && _fundingCycleId <= count,
             "FundingCycle::get: NOT_FOUND"
         );
-        return fundingCycles[_fundingCycleId];
+        return _getStruct(_fundingCycleId, true, true, true, true);
     }
 
     /**
@@ -61,29 +66,38 @@ contract FundingCycles is Administered, IFundingCycles {
         returns (FundingCycle.Data memory)
     {
         // Get a reference to the standby funding cycle.
-        FundingCycle.Data memory _standbyFundingCycle = _standby(_projectId);
+        uint256 _standbyFundingCycleId = _standby(_projectId);
 
         // If it exists, return it.
-        if (_standbyFundingCycle.id > 0) return _standbyFundingCycle;
+        if (_standbyFundingCycleId > 0)
+            return _getStruct(_standbyFundingCycleId, true, true, true, true);
 
         // Get a reference to the active funding cycle.
-        FundingCycle.Data memory _activeFundingCycle = _active(_projectId);
+        uint256 _activeFundingCycleId = _active(_projectId);
 
         // If it exists, return its next up.
-        if (_activeFundingCycle.id > 0) return _activeFundingCycle._nextUp();
+        if (_activeFundingCycleId > 0)
+            return
+                _mockFundingCycleAfter(
+                    _getStruct(_activeFundingCycleId, true, true, true, true)
+                );
 
         // Get the latest funding cycle.
-        FundingCycle.Data memory _latestFundingCycle =
-            fundingCycles[latestId[_projectId]];
+        uint256 _latestFundingCycleId = latestId[_projectId];
 
         // A funding cycle must exist.
         require(
-            _latestFundingCycle.id > 0,
+            _latestFundingCycleId > 0,
             "FundingCycle::getQueued: NOT_FOUND"
         );
 
         // Return the second next up.
-        return _latestFundingCycle._nextUp()._nextUp();
+        return
+            _mockFundingCycleAfter(
+                _mockFundingCycleAfter(
+                    _getStruct(_latestFundingCycleId, true, true, true, true)
+                )
+            );
     }
 
     /**
@@ -103,24 +117,44 @@ contract FundingCycles is Administered, IFundingCycles {
             "FundingCycle::getCurrent: NOT_FOUND"
         );
         // Check if there is an active funding cycle.
-        fundingCycle = _active(_projectId);
-        if (fundingCycle.id > 0) return fundingCycle;
+        uint256 _fundingCycleId = _active(_projectId);
+
+        if (_fundingCycleId > 0)
+            return _getStruct(_fundingCycleId, true, true, true, true);
+
         // No active funding cycle found, check if there is a standby funding cycle.
-        fundingCycle = _standby(_projectId);
+        _fundingCycleId = _standby(_projectId);
+
         // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
-        if (fundingCycle.id > 0 && fundingCycle._isConfigurationApproved())
-            return fundingCycle;
-        // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-        // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
-        fundingCycle = fundingCycles[
-            fundingCycle.id > 0 ? fundingCycle.previous : latestId[_projectId]
-        ];
+        if (_fundingCycleId > 0) {
+            FundingCycle.Data memory _standbyFundingCycle =
+                _getStruct(_fundingCycleId, true, false, false, false);
+            if (
+                _isConfigurationApproved(
+                    _standbyFundingCycle.id,
+                    _standbyFundingCycle.previous,
+                    _standbyFundingCycle.configuration
+                )
+            ) return _standbyFundingCycle;
+            _fundingCycleId = _standbyFundingCycle.previous;
+        } else {
+            // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+            // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
+            _fundingCycleId = latestId[_projectId];
+        }
+
+        require(_fundingCycleId > 0, "FundingCycle::getCurrent: NOT_FOUND");
+
+        FundingCycle.Data memory _fundingCycle =
+            _getStruct(_fundingCycleId, true, true, true, true);
+
         // Funding cycles with a discountRate of 0 are non-recurring.
         require(
-            fundingCycle.id > 0 && fundingCycle.discountRate > 0,
-            "FundingCycle::getCurrent: NOT_FOUND"
+            _fundingCycle.discountRate > 0,
+            "FundingCycle::getCurrent: NON_RECURRING"
         );
-        return fundingCycle._nextUp();
+
+        return _mockFundingCycleAfter(_fundingCycle);
     }
 
     // --- external transactions --- //
@@ -162,32 +196,31 @@ contract FundingCycles is Administered, IFundingCycles {
         // Duration must be greater than 0.
         require(_duration > 0, "FundingCycles::reconfigure: BAD_DURATION");
 
-        // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
-        FundingCycle.Data storage _fundingCycle =
-            _ensureConfigurable(_projectId, _configureActiveFundingCycle);
-
         // The `discountRate` token must be between 0% and 100%.
         require(
             _discountRate >= 0 && _discountRate <= 1000,
             "FundingCycles::deploy: BAD_DISCOUNT_RATE"
         );
 
-        // Set the properties of the funding cycle.
-        _fundingCycle.target = _target;
-        _fundingCycle.duration = uint32(_duration);
-        _fundingCycle.currency = uint8(_currency);
-        _fundingCycle.discountRate = uint16(_discountRate);
-        _fundingCycle.metadata = _metadata;
-        _fundingCycle.fee = uint16(_fee);
-        _fundingCycle.configured = uint48(block.timestamp);
-        _fundingCycle.ballot = _ballot;
+        // Return's the project's editable funding cycle. Creates one if one doesn't already exists.
+        uint256 _fundingCycleId =
+            _ensureConfigurable(_projectId, _configureActiveFundingCycle);
 
-        // If there isn't a current ballot inherited, set the current ballot to the provided one.
-        if (_fundingCycle.currentBallot == IFundingCycleBallot(address(0)))
-            _fundingCycle.currentBallot = _ballot;
+        _packAndSaveCustomParams(
+            _fundingCycleId,
+            block.timestamp,
+            _ballot,
+            _duration,
+            _currency,
+            _fee,
+            _discountRate
+        );
+
+        targetAmounts[_fundingCycleId] = _target;
+        metadata[_fundingCycleId] = _metadata;
 
         // Return the funding cycle.
-        return _fundingCycle;
+        return _getStruct(_fundingCycleId, true, true, true, true);
     }
 
     /** 
@@ -203,159 +236,380 @@ contract FundingCycles is Administered, IFundingCycles {
         returns (FundingCycle.Data memory)
     {
         // Get a reference to the funding cycle being tapped.
-        FundingCycle.Data storage _fundingCycle = _ensureActive(_projectId);
+        uint256 _fundingCycleId = _ensureActive(_projectId);
+        uint256 _tappedAmount = tappedAmounts[_fundingCycleId];
 
-        // Tap the amount.
-        _fundingCycle._tap(_amount);
+        // Amount must be within what is still tappable.
+        require(
+            _amount <= targetAmounts[_fundingCycleId] - _tappedAmount,
+            "FundingCycles::tap: INSUFFICIENT_FUNDS"
+        );
 
-        return _fundingCycle;
+        // Add the amount to the funding cycle's tapped amount.
+        tappedAmounts[_fundingCycleId] = _tappedAmount + _amount;
+
+        return _getStruct(_fundingCycleId, true, true, true, true);
     }
 
-    // --- private transactions --- //
+    // --- private helper functions --- //
 
-    /**
-        @notice Returns the configurable funding cycle for this project if it exists, otherwise making one appropriately.
-        @param _projectId The ID of the project to which the funding cycle being looked for belongs.
-        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
-        @return fundingCycle The resulting funding cycle.
-    */
+    // /**
+    //     @notice Returns the configurable funding cycle for this project if it exists, otherwise making one appropriately.
+    //     @param _projectId The ID of the project to which the funding cycle being looked for belongs.
+    //     @param _configureActiveFundingCycle If the active funding cycle should be configurable.
+    //     @return fundingCycle The resulting funding cycle.
+    // */
     function _ensureConfigurable(
         uint256 _projectId,
         bool _configureActiveFundingCycle
-    ) private returns (FundingCycle.Data storage fundingCycle) {
+    ) private returns (uint256 fundingCycleId) {
         // Cannot update active funding cycle, check if there is a standby funding cycle.
-        fundingCycle = _standby(_projectId);
-        if (fundingCycle.id > 0) return fundingCycle;
+        fundingCycleId = _standby(_projectId);
+        if (fundingCycleId > 0) return fundingCycleId;
         // Get the latest funding cycle.
-        fundingCycle = fundingCycles[latestId[_projectId]];
+        fundingCycleId = latestId[_projectId];
+
         // If there's an active funding cycle, its end time should correspond to the start time of the new funding cycle.
-        FundingCycle.Data storage _aFundingCycle = _active(_projectId);
+        uint256 _aFundingCycleId = _active(_projectId);
 
         // Return the active funding cycle if allowed.
-        if (_aFundingCycle.id > 0 && _configureActiveFundingCycle)
-            return _aFundingCycle;
+        if (_aFundingCycleId > 0 && _configureActiveFundingCycle)
+            return _aFundingCycleId;
 
-        // Make sure the funding cycle is recurring.
-        require(
-            _aFundingCycle.id == 0 || _aFundingCycle.discountRate > 0,
-            "FundingCycle::_configureActiveFundingCycle: NON_RECURRING"
-        );
-
-        //Base a new funding cycle on the latest funding cycle if one exists.
-        fundingCycle = _aFundingCycle.id > 0
-            ? _init(
-                _projectId,
-                uint256(_aFundingCycle.start) + _aFundingCycle.duration,
-                fundingCycle
-            )
-            : _init(_projectId, block.timestamp, fundingCycle);
-    }
-
-    /**
-        @notice Returns the active funding cycle for this project if it exists, otherwise activating one appropriately.
-        @param _projectId The ID of the project to which the funding cycle being looked for belongs.
-        @return fundingCycle The resulting funding cycle.
-    */
-    function _ensureActive(uint256 _projectId)
-        private
-        returns (FundingCycle.Data storage fundingCycle)
-    {
-        // Check if there is an active funding cycle.
-        fundingCycle = _active(_projectId);
-        if (fundingCycle.id > 0) return fundingCycle;
-        // No active funding cycle found, check if there is a standby funding cycle.
-        fundingCycle = _standby(_projectId);
-        // Funding cycle if exists, has been in standby for enough time to become eligible.
-        if (
-            fundingCycle.id > 0 &&
-            // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
-            fundingCycle._isConfigurationApproved()
-        ) return fundingCycle;
-        // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-        // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
-        fundingCycle = fundingCycles[
-            fundingCycle.id > 0 ? fundingCycle.previous : latestId[_projectId]
-        ];
-        // Funding cycles with a discountRate of 0 are non-recurring.
-        require(
-            fundingCycle.id > 0 && fundingCycle.discountRate > 0,
-            "FundingCycle::_ensureActive: NOT_FOUND"
-        );
-        // Use a start date that's a multiple of the duration.
-        // This creates the effect that there have been scheduled funding cycles ever since the `latest`, even if `latest` is a long time in the past.
-        fundingCycle = _init(
-            _projectId,
-            fundingCycle._determineNextStart(),
-            fundingCycle
-        );
-    }
-
-    /**
-        @notice Initializes a funding cycle to be sustained for the sending address.
-        @param _projectId The ID of the project to which the funding cycle being initialized belongs.
-        @param _start The start time for the new funding cycle.
-        @param _latestFundingCycle The latest funding cycle for the project.
-        @return newFundingCycle The initialized funding cycle.
-    */
-    function _init(
-        uint256 _projectId,
-        uint256 _start,
-        FundingCycle.Data storage _latestFundingCycle
-    ) private returns (FundingCycle.Data storage newFundingCycle) {
-        count++;
-        newFundingCycle = fundingCycles[count];
-        newFundingCycle.id = count;
-        newFundingCycle.start = uint48(_start);
-        latestId[_projectId] = count;
-
-        if (_latestFundingCycle.id > 0) {
-            newFundingCycle._basedOn(_latestFundingCycle);
+        if (_aFundingCycleId == 0) {
+            //Base a new funding cycle on the latest funding cycle if one exists.
+            fundingCycleId = _init(_projectId, block.timestamp, fundingCycleId);
         } else {
-            newFundingCycle.projectId = _projectId;
-            newFundingCycle.weight = BASE_WEIGHT;
-            newFundingCycle.number = 1;
+            FundingCycle.Data memory _aFundingCycle =
+                _getStruct(_aFundingCycleId, true, true, false, false);
+
+            // Make sure the funding cycle is recurring.
+            require(
+                _aFundingCycle.discountRate > 0,
+                "FundingCycle::_configureActiveFundingCycle: NON_RECURRING"
+            );
+            //Base a new funding cycle on the latest funding cycle if one exists.
+            fundingCycleId = _init(
+                _projectId,
+                _aFundingCycle.start + _aFundingCycle.duration,
+                fundingCycleId
+            );
         }
     }
 
-    /**
-        @notice An project's funding cycle that hasn't yet started.
-        @param _projectId The ID of project to which the funding cycle being looked for belongs.
-        @return fundingCycle The standby funding cycle.
-    */
+    // /**
+    //     @notice Returns the active funding cycle for this project if it exists, otherwise activating one appropriately.
+    //     @param _projectId The ID of the project to which the funding cycle being looked for belongs.
+    //     @return fundingCycle The resulting funding cycle.
+    // */
+    function _ensureActive(uint256 _projectId)
+        private
+        returns (uint256 fundingCycleId)
+    {
+        // Check if there is an active funding cycle.
+        fundingCycleId = _active(_projectId);
+        if (fundingCycleId > 0) return fundingCycleId;
+
+        // No active funding cycle found, check if there is a standby funding cycle.
+        fundingCycleId = _standby(_projectId);
+
+        // Funding cycle if exists, has been in standby for enough time to become eligible.
+        if (fundingCycleId > 0) {
+            FundingCycle.Data memory _standbyFundingCycle =
+                _getStruct(fundingCycleId, true, false, false, false);
+            if (
+                _isConfigurationApproved(
+                    _standbyFundingCycle.id,
+                    _standbyFundingCycle.previous,
+                    _standbyFundingCycle.configuration
+                )
+            ) return fundingCycleId;
+            fundingCycleId = _standbyFundingCycle.previous;
+        } else {
+            // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+            // Use the standby funding cycle's previous funding cycle if it exists but doesn't meet activation criteria.
+            fundingCycleId = latestId[_projectId];
+        }
+
+        require(fundingCycleId > 0, "FundingCycle::_ensureActive: NOT_FOUND");
+
+        FundingCycle.Data memory _fundingCycle =
+            _getStruct(fundingCycleId, true, true, true, true);
+
+        // Funding cycles with a discountRate of 0 are non-recurring.
+        require(
+            _fundingCycle.discountRate > 0,
+            "FundingCycle::_ensureActive: NON_RECURRING"
+        );
+
+        // Use a start date that's a multiple of the duration.
+        // This creates the effect that there have been scheduled funding cycles ever since the `latest`, even if `latest` is a long time in the past.
+        fundingCycleId = _init(
+            _projectId,
+            _fundingCycle._determineNextStart(),
+            fundingCycleId
+        );
+    }
+
+    // /**
+    //     @notice Initializes a funding cycle to be sustained for the sending address.
+    //     @param _projectId The ID of the project to which the funding cycle being initialized belongs.
+    //     @param _start The start time for the new funding cycle.
+    //     @param _latestFundingCycle The latest funding cycle for the project.
+    //     @return newFundingCycle The initialized funding cycle.
+    // */
+    function _init(
+        uint256 _projectId,
+        uint256 _start,
+        uint256 _latestFundingCycleId
+    ) private returns (uint256 newFundingCycleId) {
+        count++;
+        latestId[_projectId] = count;
+
+        uint256 _weight;
+        uint256 _number;
+        uint256 _previous;
+        if (_latestFundingCycleId > 0) {
+            FundingCycle.Data memory _latestFundingCycle =
+                _getStruct(_latestFundingCycleId, true, true, false, false);
+
+            _weight = PRBMathCommon.mulDiv(
+                _latestFundingCycle.weight,
+                _latestFundingCycle.discountRate,
+                1000
+            );
+            _number = _latestFundingCycle.number + 1;
+            _previous = _latestFundingCycle.id;
+
+            packedCustomParams[count] = packedCustomParams[
+                _latestFundingCycleId
+            ];
+            metadata[count] = metadata[_latestFundingCycleId];
+            targetAmounts[count] = targetAmounts[_latestFundingCycleId];
+        } else {
+            _weight = BASE_WEIGHT;
+            _number = 1;
+            _previous = 0;
+        }
+        _packAndSaveIntrinsicProperties(
+            count,
+            _projectId,
+            _weight,
+            _number,
+            _previous,
+            _start
+        );
+
+        return count;
+    }
+
+    // /**
+    //     @notice An project's funding cycle that hasn't yet started.
+    //     @param _projectId The ID of project to which the funding cycle being looked for belongs.
+    //     @return fundingCycle The standby funding cycle.
+    // */
     function _standby(uint256 _projectId)
         private
         view
-        returns (FundingCycle.Data storage fundingCycle)
+        returns (uint256 fundingCycleId)
     {
-        fundingCycle = fundingCycles[latestId[_projectId]];
-        if (fundingCycle.id == 0) return fundingCycles[0];
-        // There is no upcoming funding cycle if the latest funding cycle is not upcoming
-        if (fundingCycle._state() != FundingCycle.State.Standby)
-            return fundingCycles[0];
+        fundingCycleId = latestId[_projectId];
+        if (fundingCycleId == 0) return 0;
+
+        FundingCycle.Data memory _fundingCycle =
+            _getStruct(fundingCycleId, true, false, false, false);
+
+        // There is no upcoming funding cycle if the latest funding cycle has already started.
+        if (block.timestamp >= uint256(_fundingCycle.start)) return 0;
     }
 
-    /**
-        @notice The funding cycle for a project that has started and hasn't yet expired.
-        @param _projectId The ID of the project to which the funding cycle being looked for belongs.
-        @return fundingCycle active funding cycle.
-    */
+    // /**
+    //     @notice The funding cycle for a project that has started and hasn't yet expired.
+    //     @param _projectId The ID of the project to which the funding cycle being looked for belongs.
+    //     @return fundingCycle active funding cycle.
+    // */
     function _active(uint256 _projectId)
         private
         view
-        returns (FundingCycle.Data storage fundingCycle)
+        returns (uint256 fundingCycleId)
     {
-        fundingCycle = fundingCycles[latestId[_projectId]];
-        if (fundingCycle.id == 0) return fundingCycles[0];
+        // Get a reference to the latest.
+        fundingCycleId = latestId[_projectId];
+
+        FundingCycle.Data memory _fundingCycle =
+            _getStruct(fundingCycleId, true, true, false, false);
+
+        // If the latest funding cycle doesn't exist, or if its expired, return the 0th empty cycle.
+        if (
+            fundingCycleId == 0 ||
+            block.timestamp >
+            uint256(_fundingCycle.start) + _fundingCycle.duration
+        ) return 0;
+
         // An Active funding cycle must be either the latest funding cycle or the
         // one immediately before it.
-        if (fundingCycle._state() == FundingCycle.State.Active)
-            return fundingCycle;
-        fundingCycle = fundingCycles[fundingCycle.previous];
-
-        // Return the 0th empty cycle if the previous doesn't exist or if its not active.
         if (
-            fundingCycle.id == 0 ||
-            fundingCycle._state() != FundingCycle.State.Active
-        ) fundingCycle = fundingCycles[0];
+            block.timestamp >= uint256(_fundingCycle.start) ||
+            // The first funding cycle on local can be in the future for some reason.
+            uint256(_fundingCycle.previous) == 0
+        ) return fundingCycleId;
+
+        fundingCycleId = _fundingCycle.previous;
+    }
+
+    /** 
+        @notice A view of the funding cycle that would be created after this one if the project doesn't make a reconfiguration.
+        @param _fundingCycle The funding cycle to make the calculation for.
+        @return The next funding cycle, with an ID set to 0.
+    */
+    function _mockFundingCycleAfter(FundingCycle.Data memory _fundingCycle)
+        internal
+        view
+        returns (FundingCycle.Data memory)
+    {
+        return
+            FundingCycle.Data(
+                0,
+                _fundingCycle.projectId,
+                _fundingCycle.number + 1,
+                _fundingCycle.id,
+                _fundingCycle.configuration,
+                PRBMathCommon.mulDiv(
+                    _fundingCycle.weight,
+                    _fundingCycle.discountRate,
+                    1000
+                ),
+                _fundingCycle.ballot,
+                _fundingCycle._determineNextStart(),
+                _fundingCycle.duration,
+                _fundingCycle.target,
+                _fundingCycle.currency,
+                _fundingCycle.fee,
+                _fundingCycle.discountRate,
+                0,
+                _fundingCycle.metadata
+            );
+    }
+
+    // /**
+    //   @notice Validate and pack the funding cycle metadata.
+    //   @param _metadata The metadata to validate and pack.
+    //   @return packed The packed uint256 of all metadata params. The first 8 bytes specify the version.
+    //  */
+    function _packAndSaveIntrinsicProperties(
+        uint256 _fundingCycleId,
+        uint256 _projectId,
+        uint256 _weight,
+        uint256 _number,
+        uint256 _previous,
+        uint256 _start
+    ) private {
+        // weight in first 64 bytes.
+        uint256 packed = _weight;
+        // projectId in bytes 65-112 bytes.
+        packed |= _projectId << 64;
+        // number in bytes 113-160 bytes.
+        packed |= _number << 112;
+        // previous in bytes 161-208 bytes.
+        packed |= _previous << 160;
+        // start in bytes 209-256 bytes.
+        packed |= _start << 208;
+
+        packedIntrinsicProperties[_fundingCycleId] = packed;
+    }
+
+    function _packAndSaveCustomParams(
+        uint256 _fundingCycleId,
+        uint256 _configuration,
+        IFundingCycleBallot _ballot,
+        uint256 _duration,
+        uint256 _currency,
+        uint256 _fee,
+        uint256 _discountRate
+    ) private {
+        // ballot in first 160 bytes.
+        uint256 packed = uint160(address(_ballot));
+        // configuration in bytes 161-208 bytes.
+        packed |= _configuration << 160;
+        // duration in bytes 209-232 bytes.
+        packed |= _duration << 208;
+        // previous in bytes 233-240 bytes.
+        packed |= _currency << 232;
+        // fee in bytes 241-248 bytes.
+        packed |= _fee << 240;
+        // discountRate in bytes 249-256 bytes.
+        packed |= _discountRate << 248;
+
+        packedCustomParams[_fundingCycleId] = packed;
+    }
+
+    // /**
+    //     @notice Whether a funding cycle configuration is currently approved.
+    //     @param _fundingCycle The funding cycle configuration to check the approval of.
+    //     @return Whether the funding cycle's configuration is approved.
+    // */
+    function _isConfigurationApproved(
+        uint256 _id,
+        uint256 _ballotFundingCycleId,
+        uint256 _configuration
+    ) private view returns (bool) {
+        IFundingCycleBallot _ballot =
+            IFundingCycleBallot(
+                address(uint160(packedCustomParams[_ballotFundingCycleId]))
+            );
+        return
+            _ballot == IFundingCycleBallot(address(0)) ||
+            _ballot.isApproved(_id, _configuration);
+    }
+
+    function _getStruct(
+        uint256 _fundingCycleId,
+        bool _includeIntrinsicProperties,
+        bool _includeCustomParams,
+        bool _includeAmounts,
+        bool _includeMetadata
+    ) private view returns (FundingCycle.Data memory _fundingCycle) {
+        _fundingCycle.id = _fundingCycleId;
+        if (_includeIntrinsicProperties) {
+            uint256 _packedIntrinsicProperties =
+                packedIntrinsicProperties[_fundingCycleId];
+
+            _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
+            _fundingCycle.projectId = uint256(
+                uint48(_packedIntrinsicProperties >> 64)
+            );
+            _fundingCycle.number = uint256(
+                uint48(_packedIntrinsicProperties >> 112)
+            );
+            _fundingCycle.previous = uint256(
+                uint48(_packedIntrinsicProperties >> 160)
+            );
+            _fundingCycle.start = uint256(
+                uint48(_packedIntrinsicProperties >> 208)
+            );
+        }
+        if (_includeCustomParams) {
+            uint256 _packedCustomParams = packedCustomParams[_fundingCycleId];
+            _fundingCycle.ballot = IFundingCycleBallot(
+                address(uint160(_packedCustomParams))
+            );
+            _fundingCycle.configuration = uint256(
+                uint48(_packedCustomParams >> 160)
+            );
+            _fundingCycle.duration = uint256(
+                uint24(_packedCustomParams >> 208)
+            );
+            _fundingCycle.currency = uint256(uint8(_packedCustomParams >> 232));
+            _fundingCycle.fee = uint256(uint8(_packedCustomParams >> 240));
+            _fundingCycle.discountRate = uint256(
+                uint8(_packedCustomParams >> 248)
+            );
+        }
+        if (_includeAmounts) {
+            _fundingCycle.target = targetAmounts[_fundingCycleId];
+            _fundingCycle.tapped = tappedAmounts[_fundingCycleId];
+        }
+        if (_includeMetadata)
+            _fundingCycle.metadata = metadata[_fundingCycleId];
     }
 }

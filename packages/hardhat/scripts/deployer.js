@@ -130,7 +130,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     console.log("⚡️ Configuring governance's budget");
 
     const duration = 2592000; // 30 days;
-    const discountRate = 950;
+    const discountRate = 190;
 
     await attachedJuicer.deploy(
       governance.address,
@@ -143,9 +143,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       duration,
       discountRate,
       {
-        bondingCurveRate: 700,
-        reservedRate: 50,
-        reconfigurationBondingCurveRate: 1000
+        bondingCurveRate: 140,
+        reservedRate: 100,
+        reconfigurationBondingCurveRate: 200
       },
       ballot.address,
       {

@@ -283,7 +283,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
         // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
-            _queuedCycle._isConfigurationPending() // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+            _queuedCycle._isConfigurationPending(_fundingCycle.ballot) // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
                 ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
                 : uint256(uint16(_fundingCycle.metadata >> 8));
 
@@ -391,11 +391,13 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             "Juicer::deploy: UNAUTHORIZED"
         );
 
+        uint256 _projectId = projects.create(_owner, _handle, _link);
+
         // Configure the funding cycle.
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
-                projects.create(_owner, _name, _handle, _logoUri, _link),
+                _projectId,
                 _target,
                 _currency,
                 _duration,
@@ -413,7 +415,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         terminalDirectory.setTerminal(_fundingCycle.projectId, this);
 
         emit Deploy(
-            _fundingCycle.projectId,
+            _projectId,
             _owner,
             _fundingCycle.id,
             _name,
@@ -468,17 +470,22 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
+        // Get a reference to the amount of ETH the supplied amount is worth.
+        uint256 _ethAmount =
+            PRBMathUD60x18.mul(
+                _amount,
+                prices.getETHPrice(_fundingCycle.currency)
+            );
+
+        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
+        uint256 _weightedAmount =
+            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
+
         // Print the project's tickets for the beneficiary.
         tickets.print(
             _beneficiary,
             _projectId,
-            _fundingCycle._weighted(
-                PRBMathUD60x18.mul(
-                    _amount,
-                    prices.getETHPrice(_fundingCycle.currency)
-                ),
-                1000
-            ),
+            _weightedAmount,
             _preferConvertedTickets
         );
 
@@ -1166,28 +1173,28 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         emit AcceptGovernance(_pendingGovernance);
     }
 
-    // If funds are sent to this contract directly, fund governance.
-    receive() external payable {
-        // If a contract sent ETH, don't add to the project.
-        // This allows the vault to send ETH back to this contract.
-        if (Address.isContract(msg.sender)) return;
+    // // If funds are sent to this contract directly, fund governance.
+    // receive() external payable {
+    //     // If a contract sent ETH, don't add to the project.
+    //     // This allows the vault to send ETH back to this contract.
+    //     if (Address.isContract(msg.sender)) return;
 
-        // Save gas if the admin is using this juice terminal.
-        if (JuiceProject(governance).juiceTerminal() == this) {
-            _pay(
-                JuiceProject(governance).projectId(),
-                msg.value,
-                msg.sender,
-                "Direct payment to Juicer",
-                terminalDirectory.preferConvertedTickets(msg.sender)
-            );
-        } else {
-            JuiceProject(governance).pay{value: msg.value}(
-                msg.sender,
-                "Direct payment to Juicer"
-            );
-        }
-    }
+    //     // Save gas if the admin is using this juice terminal.
+    //     if (JuiceProject(governance).juiceTerminal() == this) {
+    //         _pay(
+    //             JuiceProject(governance).projectId(),
+    //             msg.value,
+    //             msg.sender,
+    //             "Direct payment to Juicer",
+    //             terminalDirectory.preferConvertedTickets(msg.sender)
+    //         );
+    //     } else {
+    //         JuiceProject(governance).pay{value: msg.value}(
+    //             msg.sender,
+    //             "Direct payment to Juicer"
+    //         );
+    //     }
+    // }
 
     // --- private transactions --- //
 
@@ -1208,18 +1215,31 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Add to the raw balance of the project.
         rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
 
+        // Get a reference to the amount of ETH the supplied amount is worth.
+        uint256 _ethAmount =
+            PRBMathUD60x18.mul(
+                _amount,
+                prices.getETHPrice(_fundingCycle.currency)
+            );
+
+        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
+        uint256 _weightedAmount =
+            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
+
+        // Only print the tickets that are unreserved.
+        uint256 _unreservedWeightedAmount =
+            PRBMathCommon.mulDiv(
+                _weightedAmount,
+                // The reserved rate is stored in bytes 25-30 of the metadata property.
+                1000 - uint256(uint16(_fundingCycle.metadata >> 24)),
+                1000
+            );
+
         // Print the project's tickets for the beneficiary.
         tickets.print(
             _beneficiary,
             _projectId,
-            _fundingCycle._weighted(
-                PRBMathUD60x18.mul(
-                    _amount,
-                    prices.getETHPrice(_fundingCycle.currency)
-                ),
-                // The reserved rate is stored in bytes 25-30 of the metadata property.
-                1000 - uint256(uint16(_fundingCycle.metadata >> 24))
-            ),
+            _unreservedWeightedAmount,
             _preferConvertedTickets
         );
 

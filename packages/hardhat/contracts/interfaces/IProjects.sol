@@ -7,17 +7,13 @@ import "./IOperatorStore.sol";
 
 interface IProjects is IERC721 {
     struct Info {
-        string name;
         string handle;
-        string logoUri;
         string link;
     }
 
     event SetInfo(
         uint256 indexed projectId,
         string handle,
-        string name,
-        string logoUri,
         string link,
         address caller
     );
@@ -56,17 +52,13 @@ interface IProjects is IERC721 {
 
     function create(
         address _owner,
-        string memory _name,
         string memory _handle,
-        string memory logoUri,
         string memory link
     ) external returns (uint256 id);
 
     function setInfo(
         uint256 _projectId,
-        string memory _name,
         string memory _handle,
-        string memory logoUri,
         string memory link
     ) external;
 

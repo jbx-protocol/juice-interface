@@ -188,9 +188,7 @@ export default function PlayCreate() {
       'deploy',
       [
         userAddress,
-        '<deprecated_name>', // Can remove
         editingProject.handle,
-        '<deprecated_logoUri>', // Can remove
         ipfsCidUrl(uploadedMetadata.cid),
         targetWithFee,
         BigNumber.from(editingFC.currency).toHexString(),

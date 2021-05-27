@@ -78,8 +78,8 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     */
     function create(
         address _owner,
-        string memory _handle,
-        string memory _link
+        string calldata _handle,
+        string calldata _link
     ) external override onlyAdmin returns (uint256 id) {
         // Handle must exist.
         require(bytes(_handle).length > 0, "Projects::create: EMPTY_HANDLE");
@@ -107,8 +107,8 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     */
     function setInfo(
         uint256 _projectId,
-        string memory _handle,
-        string memory _link
+        string calldata _handle,
+        string calldata _link
     ) external override {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);

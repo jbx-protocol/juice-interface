@@ -58,7 +58,7 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
       @param _projectId The ID of the project to deploy a direct payment address for.
       @param _note The note to use for payments made through the new direct payment address.
     */
-    function deployAddress(uint256 _projectId, string memory _note)
+    function deployAddress(uint256 _projectId, string calldata _note)
         external
         override
     {

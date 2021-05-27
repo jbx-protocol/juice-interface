@@ -55,7 +55,7 @@ contract OperatorStore is IOperatorStore {
         );
         return
             ((permissions[_account][_projectId][_operator] >>
-                _permissionIndex) & uint256(1)) == 1;
+                _permissionIndex) & 1) == 1;
     }
 
     /** 
@@ -73,7 +73,7 @@ contract OperatorStore is IOperatorStore {
         address _account,
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexes
+        uint256[] calldata _permissionIndexes
     ) external view override returns (bool) {
         for (uint256 _i = 0; _i < _permissionIndexes.length; _i++) {
             uint256 _permissionIndex = _permissionIndexes[_i];
@@ -85,7 +85,7 @@ contract OperatorStore is IOperatorStore {
 
             if (
                 ((permissions[_account][_projectId][_operator] >>
-                    _permissionIndex) & uint256(1)) == 0
+                    _permissionIndex) & 1) == 0
             ) return false;
         }
         return true;
@@ -104,7 +104,7 @@ contract OperatorStore is IOperatorStore {
     function setOperator(
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexes
+        uint256[] calldata _permissionIndexes
     ) external override {
         // Pack the indexes into a uint256.
         uint256 _packed = _packedPermissions(_permissionIndexes);
@@ -131,9 +131,9 @@ contract OperatorStore is IOperatorStore {
       @param _permissionIndexes The level of power each operator should have.
     */
     function setOperators(
-        uint256[] memory _projectIds,
-        address[] memory _operators,
-        uint256[][] memory _permissionIndexes
+        uint256[] calldata _projectIds,
+        address[] calldata _operators,
+        uint256[][] calldata _permissionIndexes
     ) external override {
         // There should be a level for each operator provided.
         require(
@@ -167,7 +167,7 @@ contract OperatorStore is IOperatorStore {
 
       @return packed The packed result.
     */
-    function _packedPermissions(uint256[] memory _indexes)
+    function _packedPermissions(uint256[] calldata _indexes)
         private
         pure
         returns (uint256 packed)

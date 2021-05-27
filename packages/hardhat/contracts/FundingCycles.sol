@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./libraries/FundingCycle.sol";
+import "prb-math/contracts/PRBMathCommon.sol";
+
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/Administered.sol";
@@ -10,8 +11,6 @@ import "./abstract/Administered.sol";
   @notice An immutable contract to manage funding cycle configurations.
 */
 contract FundingCycles is Administered, IFundingCycles {
-    using FundingCycle for FundingCycle.Data;
-
     // --- private properties --- //
 
     mapping(uint256 => uint256) private packedCustomParams;
@@ -45,7 +44,7 @@ contract FundingCycles is Administered, IFundingCycles {
         external
         view
         override
-        returns (FundingCycle.Data memory)
+        returns (FundingCycle memory)
     {
         require(
             _fundingCycleId > 0 && _fundingCycleId <= count,
@@ -63,7 +62,7 @@ contract FundingCycles is Administered, IFundingCycles {
         external
         view
         override
-        returns (FundingCycle.Data memory)
+        returns (FundingCycle memory)
     {
         // Get a reference to the standby funding cycle.
         uint256 _standbyFundingCycleId = _standby(_projectId);
@@ -110,7 +109,7 @@ contract FundingCycles is Administered, IFundingCycles {
         external
         view
         override
-        returns (FundingCycle.Data memory fundingCycle)
+        returns (FundingCycle memory fundingCycle)
     {
         require(
             latestId[_projectId] > 0,
@@ -127,7 +126,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         // Funding cycle if exists, has been approved by the previous funding cycle's ballot.
         if (_fundingCycleId > 0) {
-            FundingCycle.Data memory _standbyFundingCycle =
+            FundingCycle memory _standbyFundingCycle =
                 _getStruct(_fundingCycleId, true, false, false, false);
             if (
                 _isConfigurationApproved(
@@ -145,7 +144,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         require(_fundingCycleId > 0, "FundingCycle::getCurrent: NOT_FOUND");
 
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             _getStruct(_fundingCycleId, true, true, true, true);
 
         // Funding cycles with a discountRate of 0 are non-recurring.
@@ -177,7 +176,7 @@ contract FundingCycles is Administered, IFundingCycles {
     //     @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
     //     @param _metadata Data to store with the funding cycle.
     //     @param _configureActiveFundingCycle If the active funding cycle should be configurable.
-    //     @return The funding cycle that was successfully configured.
+    //     @return The ID of the funding cycle that was successfully configured.
     // */
     function configure(
         uint256 _projectId,
@@ -226,28 +225,26 @@ contract FundingCycles is Administered, IFundingCycles {
       @notice Tracks a project tapping its funds.
       @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
-        @return fundingCycle The funding cycle that was successfully tapped.
+      @return fundingCycleId The ID of the funding cycle that was successfully configured.
     */
     function tap(uint256 _projectId, uint256 _amount)
         external
         override
         onlyAdmin
-        returns (FundingCycle.Data memory)
+        returns (uint256 fundingCycleId)
     {
         // Get a reference to the funding cycle being tapped.
-        uint256 _fundingCycleId = _ensureActive(_projectId);
-        uint256 _tappedAmount = tappedAmounts[_fundingCycleId];
+        fundingCycleId = _ensureActive(_projectId);
+        uint256 _tappedAmount = tappedAmounts[fundingCycleId];
 
         // Amount must be within what is still tappable.
         require(
-            _amount <= targetAmounts[_fundingCycleId] - _tappedAmount,
+            _amount <= targetAmounts[fundingCycleId] - _tappedAmount,
             "FundingCycles::tap: INSUFFICIENT_FUNDS"
         );
 
         // Add the amount to the funding cycle's tapped amount.
-        tappedAmounts[_fundingCycleId] = _tappedAmount + _amount;
-
-        return _getStruct(_fundingCycleId, true, true, true, true);
+        tappedAmounts[fundingCycleId] = _tappedAmount + _amount;
     }
 
     // --- private helper functions --- //
@@ -279,7 +276,7 @@ contract FundingCycles is Administered, IFundingCycles {
             //Base a new funding cycle on the latest funding cycle if one exists.
             fundingCycleId = _init(_projectId, block.timestamp, 0, false);
         } else {
-            FundingCycle.Data memory _aFundingCycle =
+            FundingCycle memory _aFundingCycle =
                 _getStruct(_aFundingCycleId, true, true, false, false);
 
             // Make sure the funding cycle is recurring.
@@ -315,7 +312,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         // Funding cycle if exists, has been in standby for enough time to become eligible.
         if (fundingCycleId > 0) {
-            FundingCycle.Data memory _standbyFundingCycle =
+            FundingCycle memory _standbyFundingCycle =
                 _getStruct(fundingCycleId, true, false, false, false);
             if (
                 _isConfigurationApproved(
@@ -333,7 +330,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         require(fundingCycleId > 0, "FundingCycle::_ensureActive: NOT_FOUND");
 
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             _getStruct(fundingCycleId, true, true, true, true);
 
         // Funding cycles with a discountRate of 0 are non-recurring.
@@ -346,7 +343,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // This creates the effect that there have been scheduled funding cycles ever since the `latest`, even if `latest` is a long time in the past.
         fundingCycleId = _init(
             _projectId,
-            _fundingCycle._determineNextStart(),
+            _determineNextStart(_fundingCycle),
             fundingCycleId,
             true
         );
@@ -372,7 +369,7 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _number;
         uint256 _previous;
         if (_latestFundingCycleId > 0) {
-            FundingCycle.Data memory _latestFundingCycle =
+            FundingCycle memory _latestFundingCycle =
                 _getStruct(_latestFundingCycleId, true, true, false, false);
 
             _weight = PRBMathCommon.mulDiv(
@@ -420,7 +417,7 @@ contract FundingCycles is Administered, IFundingCycles {
         fundingCycleId = latestId[_projectId];
         if (fundingCycleId == 0) return 0;
 
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             _getStruct(fundingCycleId, true, false, false, false);
 
         // There is no upcoming funding cycle if the latest funding cycle has already started.
@@ -440,7 +437,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get a reference to the latest.
         fundingCycleId = latestId[_projectId];
 
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             _getStruct(fundingCycleId, true, true, false, false);
 
         // If the latest funding cycle doesn't exist, or if its expired, return the 0th empty cycle.
@@ -465,13 +462,13 @@ contract FundingCycles is Administered, IFundingCycles {
         @param _fundingCycle The funding cycle to make the calculation for.
         @return The next funding cycle, with an ID set to 0.
     */
-    function _mockFundingCycleAfter(FundingCycle.Data memory _fundingCycle)
+    function _mockFundingCycleAfter(FundingCycle memory _fundingCycle)
         internal
         view
-        returns (FundingCycle.Data memory)
+        returns (FundingCycle memory)
     {
         return
-            FundingCycle.Data(
+            FundingCycle(
                 0,
                 _fundingCycle.projectId,
                 _fundingCycle.number + 1,
@@ -483,7 +480,7 @@ contract FundingCycles is Administered, IFundingCycles {
                     200
                 ),
                 _fundingCycle.ballot,
-                _fundingCycle._determineNextStart(),
+                _determineNextStart(_fundingCycle),
                 _fundingCycle.duration,
                 _fundingCycle.target,
                 _fundingCycle.currency,
@@ -571,7 +568,7 @@ contract FundingCycles is Administered, IFundingCycles {
         bool _includeCustomParams,
         bool _includeAmounts,
         bool _includeMetadata
-    ) private view returns (FundingCycle.Data memory _fundingCycle) {
+    ) private view returns (FundingCycle memory _fundingCycle) {
         _fundingCycle.id = _fundingCycleId;
         if (_includeIntrinsicProperties) {
             uint256 _packedIntrinsicProperties =
@@ -614,5 +611,24 @@ contract FundingCycles is Administered, IFundingCycles {
         }
         if (_includeMetadata)
             _fundingCycle.metadata = metadata[_fundingCycleId];
+    }
+
+    /** 
+        @notice The date that is the nearest multiple of duration from oldEnd.
+        @param _fundingCycle The funding cycle to make the calculation for.
+        @return start The date.
+    */
+    function _determineNextStart(FundingCycle memory _fundingCycle)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 _end = _fundingCycle.start + _fundingCycle.duration;
+        // Use the old end if the current time is still within the duration.
+        if (block.timestamp < _end + _fundingCycle.duration) return _end;
+        // Otherwise, use the closest multiple of the duration from the old end.
+        uint256 _distanceToStart =
+            (block.timestamp - _end) % _fundingCycle.duration;
+        return block.timestamp - _distanceToStart;
     }
 }

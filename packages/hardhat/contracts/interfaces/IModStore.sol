@@ -18,7 +18,7 @@ interface IModAllocator {
         uint256 _projectId,
         uint256 _forProjectId,
         address _beneficiary,
-        string memory _note
+        string calldata _note
     ) external payable;
 }
 
@@ -57,17 +57,6 @@ interface IModStore {
         external
         view
         returns (TicketMod[] memory);
-
-    function setMods(
-        uint256 _projectId,
-        ModKind[] memory _kinds,
-        address payable[] memory _beneficiaries,
-        uint256[] memory _percents,
-        IModAllocator[] memory _allocators,
-        uint256[] memory _forProjectIds,
-        string[] memory notes,
-        bool[] memory _preferConvertedTickets
-    ) external;
 
     function setPaymentMods(
         uint256 _projectId,

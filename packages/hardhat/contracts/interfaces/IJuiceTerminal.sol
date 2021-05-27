@@ -20,7 +20,7 @@ interface IJuiceTerminal {
     function pay(
         uint256 _projectId,
         address _beneficiary,
-        string memory _note,
+        string calldata _note,
         bool _preferConvertedTickets
     ) external payable returns (uint256 fundingCycleId);
 

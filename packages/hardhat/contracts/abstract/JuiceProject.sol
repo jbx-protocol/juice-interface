@@ -47,7 +47,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @param _beneficiary The address who will receive tickets from this fee.
       @param _note A note that will be included in the published event.
     */
-    function pay(address _beneficiary, string memory _note) external payable {
+    function pay(address _beneficiary, string calldata _note) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
         juiceTerminal.pay{value: msg.value}(
             projectId,
@@ -99,7 +99,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         address,
         address,
         uint256,
-        bytes memory
+        bytes calldata
     ) public pure override returns (bytes4) {
         return this.onERC721Received.selector;
     }
@@ -108,16 +108,16 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         IOperatorStore _operatorStore,
         uint256 _projectId,
         address _operator,
-        uint256[] memory _permissionIndexes
+        uint256[] calldata _permissionIndexes
     ) external onlyOwner {
         _operatorStore.setOperator(_projectId, _operator, _permissionIndexes);
     }
 
     function setOperators(
         IOperatorStore _operatorStore,
-        uint256[] memory _projectIds,
-        address[] memory _operators,
-        uint256[][] memory _permissionIndexes
+        uint256[] calldata _projectIds,
+        address[] calldata _operators,
+        uint256[][] calldata _permissionIndexes
     ) external onlyOwner {
         _operatorStore.setOperators(
             _projectIds,

@@ -46,8 +46,6 @@ import "./libraries/Operations.sol";
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
 contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
-    using FundingCycle for FundingCycle.Data;
-
     modifier onlyGov() {
         require(msg.sender == governance, "Juicer: UNAUTHORIZED");
         _;
@@ -203,14 +201,11 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         returns (uint256 overflow)
     {
         // Get a reference to the project's current funding cycle.
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
         // Get a reference to the amount still tappable in the current funding cycle.
         uint256 _limit = _fundingCycle.target - _fundingCycle.tapped;
-
-        // Get the current balance of the project with yield.
-        uint256 _balanceOf = balanceOf(_projectId);
 
         // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
         uint256 _ethLimit =
@@ -220,6 +215,9 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                     _limit,
                     prices.getETHPrice(_fundingCycle.currency)
                 );
+
+        // Get the current balance of the project with yield.
+        uint256 _balanceOf = balanceOf(_projectId);
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
         return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
@@ -246,7 +244,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         );
 
         // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
         // Get the amount of current overflow.
@@ -278,8 +276,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         if (_fundingCycle.discountRate == 0) return _base;
 
         // // Get a reference to the queued funding cycle for the project.
-        FundingCycle.Data memory _queuedCycle =
-            fundingCycles.getQueued(_projectId);
+        FundingCycle memory _queuedCycle = fundingCycles.getQueued(_projectId);
 
         // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
@@ -434,7 +431,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
       @notice Allows a project to print an initial batch of tickets for a specified beneficiary.
       @dev This can only be done if the ticket supply is zero.
       @param _projectId The ID of the project to premine tickets for.
-      @param _amount The amount to base the ticket premine off of. Measured in the project's current funding cycle's currency.
+      @param _amount The amount to base the ticket premine off of. Measured in ETH.
       @param _beneficiary The address to send the printed tickets to.
     */
     function printInitialTickets(
@@ -465,19 +462,12 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         );
 
         // Get the current funding cycle to read the weight and currency from.
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
-
-        // Get a reference to the amount of ETH the supplied amount is worth.
-        uint256 _ethAmount =
-            PRBMathUD60x18.mul(
-                _amount,
-                prices.getETHPrice(_fundingCycle.currency)
-            );
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
+            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
 
         // Print the project's tickets for the beneficiary.
         tickets.print(
@@ -614,8 +604,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _minReturnedETH
     ) external override nonReentrant {
         // The ID of the funding cycle that was tapped.
-        FundingCycle.Data memory _fundingCycle =
-            fundingCycles.tap(_projectId, _amount);
+        uint256 _fundingCycleId = fundingCycles.tap(_projectId, _amount);
+
+        // Get a reference to the funding cycle.
+        FundingCycle memory _fundingCycle = fundingCycles.get(_fundingCycleId);
 
         // Get the price of ETH.
         uint256 _ethPrice = prices.getETHPrice(_fundingCycle.currency);
@@ -892,7 +884,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         returns (uint256 amount)
     {
         // Get the current funding cycle to read the reserved rate from.
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
         // Get a reference to the number of tickets that need to be printed.
@@ -1204,7 +1196,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         bool _preferConvertedTickets
     ) private returns (uint256) {
         // Get a reference to the current funding cycle for the project.
-        FundingCycle.Data memory _fundingCycle =
+        FundingCycle memory _fundingCycle =
             fundingCycles.getCurrent(_projectId);
 
         // Add to the raw balance of the project.
@@ -1291,7 +1283,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         );
 
         // version 0 in the first 8 bytes.
-        packed = uint256(0);
+        packed = 0;
         // bonding curve in bytes 9-24.
         packed |= uint256(_metadata.bondingCurveRate) << 8;
         // reserved rate in bytes 25-40 bytes.

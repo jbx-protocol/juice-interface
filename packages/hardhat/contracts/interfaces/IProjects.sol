@@ -35,11 +35,11 @@ interface IProjects is IERC721 {
 
     function operatorStore() external view returns (IOperatorStore);
 
-    function handleResolver(bytes memory _handle)
+    function handleResolver(bytes calldata _handle)
         external
         returns (uint256 projectId);
 
-    function transferedHandles(bytes memory _handle)
+    function transferedHandles(bytes calldata _handle)
         external
         returns (address receiver);
 
@@ -52,24 +52,24 @@ interface IProjects is IERC721 {
 
     function create(
         address _owner,
-        string memory _handle,
-        string memory link
+        string calldata _handle,
+        string calldata link
     ) external returns (uint256 id);
 
     function setInfo(
         uint256 _projectId,
-        string memory _handle,
-        string memory link
+        string calldata _handle,
+        string calldata link
     ) external;
 
     function transferHandle(
         uint256 _projectId,
         address _to,
-        string memory _newHandle
+        string calldata _newHandle
     ) external returns (string memory _handle);
 
     function claimHandle(
-        string memory _handle,
+        string calldata _handle,
         address _for,
         uint256 _projectId
     ) external;

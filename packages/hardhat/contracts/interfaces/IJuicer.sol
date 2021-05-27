@@ -158,13 +158,13 @@ interface IJuicer {
 
     function deploy(
         address _owner,
-        string memory _handle,
-        string memory _link,
+        string calldata _handle,
+        string calldata _link,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
+        FundingCycleMetadata calldata _metadata,
         IFundingCycleBallot _ballot
     ) external;
 

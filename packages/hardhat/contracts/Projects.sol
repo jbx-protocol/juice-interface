@@ -162,7 +162,7 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     function transferHandle(
         uint256 _projectId,
         address _to,
-        string memory _newHandle
+        string calldata _newHandle
     ) external override returns (string memory _handle) {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
@@ -216,7 +216,7 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
       @param _projectId The ID of the project to use the claimed handle.
     */
     function claimHandle(
-        string memory _handle,
+        string calldata _handle,
         address _for,
         uint256 _projectId
     ) external override {

@@ -80,7 +80,7 @@ contract Governance is JuiceProject {
         IProjects _projects,
         uint256 _projectId,
         address _to,
-        string memory _newHandle
+        string calldata _newHandle
     ) external onlyOwner {
         _projects.transferHandle(_projectId, _to, _newHandle);
     }

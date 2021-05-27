@@ -105,8 +105,8 @@ interface ITickets {
 
     function issue(
         uint256 _projectId,
-        string memory _name,
-        string memory _symbol
+        string calldata _name,
+        string calldata _symbol
     ) external;
 
     function print(

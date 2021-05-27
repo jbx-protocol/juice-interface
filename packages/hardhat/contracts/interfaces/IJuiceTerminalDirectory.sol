@@ -24,7 +24,7 @@ interface IJuiceTerminalDirectory {
 
     function operatorStore() external returns (IOperatorStore);
 
-    function deployAddress(uint256 _projectId, string memory _note) external;
+    function deployAddress(uint256 _projectId, string calldata _note) external;
 
     function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external;

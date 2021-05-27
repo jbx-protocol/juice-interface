@@ -61,18 +61,4 @@ library FundingCycle {
         uint256 _distanceToStart = (block.timestamp - _end) % _self.duration;
         return block.timestamp - _distanceToStart;
     }
-
-    /** 
-        @notice Whether a funding cycle configuration is currently pending approval.
-        @param _self The funding cycle configuration to check the pending status of.
-        @return Whether the funding cycle's configuration is pending approved.
-    */
-    function _isConfigurationPending(
-        Data memory _self,
-        IFundingCycleBallot _ballot
-    ) internal view returns (bool) {
-        return
-            _ballot != IFundingCycleBallot(address(0)) &&
-            _ballot.isPending(_self.id, _self.configuration);
-    }
 }

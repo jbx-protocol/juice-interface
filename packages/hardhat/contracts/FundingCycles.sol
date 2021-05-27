@@ -278,7 +278,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         if (_aFundingCycleId == 0) {
             //Base a new funding cycle on the latest funding cycle if one exists.
-            fundingCycleId = _init(_projectId, block.timestamp, fundingCycleId);
+            fundingCycleId = _init(_projectId, block.timestamp, 0, false);
         } else {
             FundingCycle.Data memory _aFundingCycle =
                 _getStruct(_aFundingCycleId, true, true, false, false);
@@ -292,7 +292,8 @@ contract FundingCycles is Administered, IFundingCycles {
             fundingCycleId = _init(
                 _projectId,
                 _aFundingCycle.start + _aFundingCycle.duration,
-                fundingCycleId
+                fundingCycleId,
+                false
             );
         }
     }
@@ -347,7 +348,8 @@ contract FundingCycles is Administered, IFundingCycles {
         fundingCycleId = _init(
             _projectId,
             _fundingCycle._determineNextStart(),
-            fundingCycleId
+            fundingCycleId,
+            true
         );
     }
 
@@ -361,7 +363,8 @@ contract FundingCycles is Administered, IFundingCycles {
     function _init(
         uint256 _projectId,
         uint256 _start,
-        uint256 _latestFundingCycleId
+        uint256 _latestFundingCycleId,
+        bool _copy
     ) private returns (uint256 newFundingCycleId) {
         count++;
         latestId[_projectId] = count;
@@ -381,11 +384,13 @@ contract FundingCycles is Administered, IFundingCycles {
             _number = _latestFundingCycle.number + 1;
             _previous = _latestFundingCycle.id;
 
-            packedCustomParams[count] = packedCustomParams[
-                _latestFundingCycleId
-            ];
-            metadata[count] = metadata[_latestFundingCycleId];
-            targetAmounts[count] = targetAmounts[_latestFundingCycleId];
+            if (_copy) {
+                packedCustomParams[count] = packedCustomParams[
+                    _latestFundingCycleId
+                ];
+                metadata[count] = metadata[_latestFundingCycleId];
+                targetAmounts[count] = targetAmounts[_latestFundingCycleId];
+            }
         } else {
             _weight = BASE_WEIGHT;
             _number = 1;
@@ -420,7 +425,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _getStruct(fundingCycleId, true, false, false, false);
 
         // There is no upcoming funding cycle if the latest funding cycle has already started.
-        if (block.timestamp >= uint256(_fundingCycle.start)) return 0;
+        if (block.timestamp >= _fundingCycle.start) return 0;
     }
 
     // /**
@@ -442,16 +447,15 @@ contract FundingCycles is Administered, IFundingCycles {
         // If the latest funding cycle doesn't exist, or if its expired, return the 0th empty cycle.
         if (
             fundingCycleId == 0 ||
-            block.timestamp >
-            uint256(_fundingCycle.start) + _fundingCycle.duration
+            block.timestamp > _fundingCycle.start + _fundingCycle.duration
         ) return 0;
 
         // An Active funding cycle must be either the latest funding cycle or the
         // one immediately before it.
         if (
-            block.timestamp >= uint256(_fundingCycle.start) ||
+            block.timestamp >= _fundingCycle.start ||
             // The first funding cycle on local can be in the future for some reason.
-            uint256(_fundingCycle.previous) == 0
+            _fundingCycle.previous == 0
         ) return fundingCycleId;
 
         fundingCycleId = _fundingCycle.previous;

@@ -8,7 +8,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
-import { formattedNum, formatWad } from 'utils/formatCurrency'
+import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
 export default function ConfirmPayOwnerModal({

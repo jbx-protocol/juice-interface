@@ -1,8 +1,8 @@
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FundingCycle } from 'models/funding-cycle'
-import { formatWad, fromPerMille } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
+import { formatWad, fromPermille } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import TooltipLabel from '../shared/TooltipLabel'
@@ -41,7 +41,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerMille(metadata?.reserved)}%
+        {fromPermille(metadata?.reserved)}%
       </Descriptions.Item>
 
       <Descriptions.Item
@@ -53,7 +53,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerMille(fundingCycle.discountRate)} %
+        {fromPermille(fundingCycle.discountRate)} %
       </Descriptions.Item>
 
       <Descriptions.Item
@@ -64,7 +64,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerMille(metadata?.bondingCurveRate)}%
+        {fromPermille(metadata?.bondingCurveRate)}%
       </Descriptions.Item>
     </Descriptions>
   )

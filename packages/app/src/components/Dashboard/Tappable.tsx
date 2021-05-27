@@ -10,7 +10,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
-import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
 

@@ -13,8 +13,8 @@ import {
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { formatWad, fromWad } from 'utils/formatCurrency'
 import { normalizeHandle } from 'utils/formatHandle'
+import { formatWad, fromWad } from 'utils/formatNumber'
 
 import { SECONDS_IN_DAY } from '../../constants/units'
 

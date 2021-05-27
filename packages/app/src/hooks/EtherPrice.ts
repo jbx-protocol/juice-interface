@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractName } from 'models/contract-name'
 import { useCallback, useState } from 'react'
-import { fromWad } from 'utils/formatCurrency'
+import { fromWad } from 'utils/formatNumber'
 
 import useContractReader from './ContractReader'
 

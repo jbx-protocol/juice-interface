@@ -6,13 +6,13 @@ import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useEffect, useState } from 'react'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 import {
-  fromPerMille,
+  fromPermille,
   fromWad,
-  parsePerMille,
+  parsePermille,
   parseWad,
-} from 'utils/formatCurrency'
+} from 'utils/formatNumber'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 export type ReconfigureBudgetFormFields = {
   target: string
@@ -48,9 +48,9 @@ export default function ReconfigureBudgetModal({
       duration: fundingCycle.duration.toString(),
       target: fromWad(fundingCycle.target),
       currency: fundingCycle.currency,
-      discountRate: fromPerMille(fundingCycle.discountRate),
-      reserved: fromPerMille(metadata.reserved),
-      bondingCurveRate: fromPerMille(metadata.bondingCurveRate),
+      discountRate: fromPermille(fundingCycle.discountRate),
+      reserved: fromPermille(metadata.reserved),
+      bondingCurveRate: fromPermille(metadata.bondingCurveRate),
     })
 
     setIsRecurring(fundingCycle.discountRate !== 0)
@@ -77,9 +77,9 @@ export default function ReconfigureBudgetModal({
         parseWad(fields.target)?.toHexString(),
         BigNumber.from(fields.currency).toHexString(),
         BigNumber.from(fields.duration).toHexString(),
-        parsePerMille(fields.discountRate).toHexString(),
-        parsePerMille(fields.bondingCurveRate).toHexString(),
-        parsePerMille(fields.reserved).toHexString(),
+        parsePermille(fields.discountRate).toHexString(),
+        parsePermille(fields.bondingCurveRate).toHexString(),
+        parsePermille(fields.reserved).toHexString(),
         fundingCycle.ballot,
       ],
       {

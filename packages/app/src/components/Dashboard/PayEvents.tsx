@@ -5,9 +5,8 @@ import useEventListener from 'hooks/EventListener'
 import { ContractName } from 'models/contract-name'
 import { PayEvent } from 'models/events/pay-event'
 import { CSSProperties, useContext } from 'react'
-import { formatWad } from 'utils/formatCurrency'
 import { formatDate } from 'utils/formatDate'
-import { toUint256 } from 'utils/formatNumber'
+import { formatWad, toUint256 } from 'utils/formatNumber'
 
 export default function PayEvents({
   projectId,

@@ -134,8 +134,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 
     await attachedJuicer.deploy(
       governance.address,
-      "juice",
-      "https://gateway.pinata.cloud/ipfs/QmSFLBMjeuHLo5hrh7oGRNYNVasCN66LYEELrDyLV8qTQt",
+      utils.formatBytes32String("juice"),
+      "QmSFLBMjeuHLo5hrh7oGRNYNVasCN66LYEELrDyLV8qTQt",
       "0x21E19E0C9BAB2400000",
       1,
       duration,

@@ -343,7 +343,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @notice Deploys a project. This will mint an ERC-721 into the `_owner`'s account and configure a first funding cycle.
         @param _owner The address that will own the project.
         @param _handle The project's unique handle.
-        @param _link A link to information about the project and this funding stage. Must return a JSON file with properties `name`, `logoUri`, and `infoUri`.
+        @param _uri A link to information about the project and this funding stage. Must return a JSON file with properties `name`, `logoUri`, and `infoUri`.
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
         @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
@@ -361,7 +361,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     function deploy(
         address _owner,
         bytes32 _handle,
-        bytes32 _link,
+        string calldata _uri,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
@@ -381,7 +381,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             "Juicer::deploy: UNAUTHORIZED"
         );
 
-        uint256 _projectId = projects.create(_owner, _handle, _link);
+        uint256 _projectId = projects.create(_owner, _handle, _uri);
 
         // Configure the funding cycle.
         uint256 _fundingCycleId =
@@ -409,7 +409,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _owner,
             _fundingCycleId,
             _handle,
-            _link,
+            _uri,
             _target,
             _currency,
             _duration,

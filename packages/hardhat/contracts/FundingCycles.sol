@@ -129,11 +129,11 @@ contract FundingCycles is Administered, IFundingCycles {
             FundingCycle memory _standbyFundingCycle =
                 _getStruct(_fundingCycleId, true, false, false, false);
             if (
-                _isConfigurationApproved(
+                _ballotState(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.previous,
                     _standbyFundingCycle.configured
-                )
+                ) == BallotState.Approved
             ) return _standbyFundingCycle;
             _fundingCycleId = _standbyFundingCycle.previous;
         } else {
@@ -173,39 +173,22 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get the latest funding cycle's packed intrinsic properties.
         uint256 _packedIntrinsicProperties =
             packedIntrinsicProperties[_fundingCycleId];
-        // The number is packed in bits 161-208
+        // The previous is packed in bits 161-208
         uint256 _previous = uint256(uint48(_packedIntrinsicProperties >> 160));
         // The start is packed in bits 208-256
         uint256 _start = uint256(uint48(_packedIntrinsicProperties >> 208));
 
-        // If the latest funding cycle is the first, or if it has already started, it can't be pending approval.
+        // If the latest funding cycle is the first, or if it has already started, it must be approved.
         if (_previous == 0 || _start < block.timestamp)
-            return BallotState.Standby;
-
-        // Get the packed custom params of the previous funding cycle.
-        uint256 _packedPreviousConfigurationProperties =
-            packedConfigurationProperties[_previous];
-
-        // The ballot is packed in bits 0-159
-        IFundingCycleBallot _ballot =
-            IFundingCycleBallot(
-                address(uint160(_packedPreviousConfigurationProperties))
-            );
-
-        // If the previous funding cycle has no ballot, the current one cant be pending approval.
-        if (_ballot == IFundingCycleBallot(address(0)))
-            return BallotState.Standby;
-
-        // Get the packed custom params of the current funding cycle.
-        uint256 _packedConfigurationProperties =
-            packedConfigurationProperties[_fundingCycleId];
+            return BallotState.Approved;
 
         // The configured is packed in bits 161-208
         uint256 _configured =
-            uint256(uint48(_packedConfigurationProperties >> 160));
+            uint256(
+                uint48(packedConfigurationProperties[_fundingCycleId] >> 160)
+            );
 
-        // Ask the previous funding cycle's ballot if the current funding cycle is pending.
-        return _ballot.state(_fundingCycleId, _configured);
+        return _ballotState(_fundingCycleId, _previous, _configured);
     }
 
     // --- external transactions --- //
@@ -367,11 +350,11 @@ contract FundingCycles is Administered, IFundingCycles {
             FundingCycle memory _standbyFundingCycle =
                 _getStruct(fundingCycleId, true, false, false, false);
             if (
-                _isConfigurationApproved(
+                _ballotState(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.previous,
                     _standbyFundingCycle.configured
-                )
+                ) == BallotState.Approved
             ) return fundingCycleId;
             fundingCycleId = _standbyFundingCycle.previous;
         } else {
@@ -600,11 +583,14 @@ contract FundingCycles is Administered, IFundingCycles {
     //     @param _fundingCycle The funding cycle configuration to check the approval of.
     //     @return Whether the funding cycle's configuration is approved.
     // */
-    function _isConfigurationApproved(
+    function _ballotState(
         uint256 _id,
         uint256 _ballotFundingCycleId,
         uint256 _configuration
-    ) private view returns (bool) {
+    ) private view returns (BallotState) {
+        // If there is no ballot funding cycle, the id is auto approved.
+        if (_ballotFundingCycleId == 0) return BallotState.Approved;
+
         IFundingCycleBallot _ballot =
             IFundingCycleBallot(
                 address(
@@ -613,9 +599,12 @@ contract FundingCycles is Administered, IFundingCycles {
                     )
                 )
             );
+
+        // If there is no ballot, the id is auto approved.
         return
-            _ballot == IFundingCycleBallot(address(0)) ||
-            _ballot.state(_id, _configuration) == BallotState.Approved;
+            _ballot == IFundingCycleBallot(address(0))
+                ? BallotState.Approved
+                : _ballot.state(_id, _configuration);
     }
 
     function _getStruct(

@@ -1,8 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { fromWad, parsePerMille, parseWad } from 'utils/formatCurrency'
+import {
+  fromPermille,
+  fromWad,
+  parsePermille,
+  parseWad,
+} from 'utils/formatNumber'
 
 import { FundingCycle } from '../models/funding-cycle'
-import { fromPerMille } from './formatCurrency'
 
 export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
   reserved: number
@@ -23,11 +27,11 @@ export const serializeFundingCycle = (
   start: fc.start.toString(),
   duration: fc.duration.toString(),
   tapped: fromWad(fc.tapped),
-  reserved: fromPerMille(fc.reserved),
+  reserved: fromPermille(fc.reserved),
   weight: fromWad(fc.weight),
-  fee: fromPerMille(fc.fee),
-  bondingCurveRate: fromPerMille(fc.bondingCurveRate),
-  discountRate: fromPerMille(fc.discountRate),
+  fee: fromPermille(fc.fee),
+  bondingCurveRate: fromPermille(fc.bondingCurveRate),
+  discountRate: fromPermille(fc.discountRate),
   configured: fc.configured.toString(),
   ballot: fc.ballot,
 })
@@ -48,10 +52,10 @@ export const deserializeFundingCycle = (
         duration: parseInt(fc.duration),
         tapped: parseWad(fc.tapped),
         weight: parseWad(fc.weight),
-        fee: parsePerMille(fc.fee).toNumber(),
-        reserved: parsePerMille(fc.reserved).toNumber(),
-        bondingCurveRate: parsePerMille(fc.bondingCurveRate).toNumber(),
-        discountRate: parsePerMille(fc.discountRate).toNumber(),
+        fee: parsePermille(fc.fee).toNumber(),
+        reserved: parsePermille(fc.reserved).toNumber(),
+        bondingCurveRate: parsePermille(fc.bondingCurveRate).toNumber(),
+        discountRate: parsePermille(fc.discountRate).toNumber(),
         configured: parseInt(fc.configured),
         ballot: fc.ballot,
       }

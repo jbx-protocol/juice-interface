@@ -11,7 +11,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
-import { formatWad, parseWad } from 'utils/formatCurrency'
+import { formatWad, parseWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'

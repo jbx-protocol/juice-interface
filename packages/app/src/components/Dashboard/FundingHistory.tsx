@@ -8,7 +8,7 @@ import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
-import { formatWad } from 'utils/formatCurrency'
+import { formatWad } from 'utils/formatNumber'
 
 import FundingCycleDetails from './FundingCycleDetails'
 

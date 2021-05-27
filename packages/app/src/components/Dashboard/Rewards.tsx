@@ -16,7 +16,7 @@ import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad, fromWad, parseWad } from 'utils/formatCurrency'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import TooltipLabel from '../shared/TooltipLabel'

@@ -9,7 +9,7 @@ import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import React, { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatCurrency'
+import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
 

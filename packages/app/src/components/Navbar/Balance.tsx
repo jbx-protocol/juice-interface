@@ -5,7 +5,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useEtherPrice } from 'hooks/EtherPrice'
 import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/formatCurrency'
+import { formatWad } from 'utils/formatNumber'
 
 export default function Balance({ userAddress }: { userAddress: string }) {
   const { signingProvider } = useContext(NetworkContext)

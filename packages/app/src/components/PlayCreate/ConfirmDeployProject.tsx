@@ -10,9 +10,9 @@ import { ContractName } from 'models/contract-name'
 import {
   formattedNum,
   formatWad,
-  fromPerMille,
+  fromPermille,
   fromWad,
-} from 'utils/formatCurrency'
+} from 'utils/formatNumber'
 import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
@@ -47,7 +47,10 @@ export default function ConfirmDeployProject() {
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
       <Space size="large">
-        <Statistic title="Name" value={orEmpty(editingProject?.metadata.name)} />
+        <Statistic
+          title="Name"
+          value={orEmpty(editingProject?.metadata.name)}
+        />
         <Statistic
           title="Handle"
           value={'@' + orEmpty(editingProject?.handle)}
@@ -69,19 +72,19 @@ export default function ConfirmDeployProject() {
         {editingFC && isRecurring(editingFC) && (
           <Statistic
             title="Discount rate"
-            value={fromPerMille(editingFC?.discountRate)}
+            value={fromPermille(editingFC?.discountRate)}
             suffix="%"
           />
         )}
         <Statistic
           title="Reserved tickets"
-          value={fromPerMille(editingFC?.reserved)}
+          value={fromPermille(editingFC?.reserved)}
           suffix="%"
         />
         {editingFC && isRecurring(editingFC) && (
           <Statistic
             title="Bonding curve rate"
-            value={fromPerMille(editingFC?.bondingCurveRate)}
+            value={fromPermille(editingFC?.bondingCurveRate)}
             suffix="%"
           />
         )}

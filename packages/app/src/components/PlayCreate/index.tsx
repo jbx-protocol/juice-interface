@@ -19,11 +19,10 @@ import { ContractName } from 'models/contract-name'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad, parsePerbicent } from 'utils/formatNumber'
 import { encodeFCMetadata, isRecurring } from 'utils/fundingCycle'
-import { IPFS_TAGS, ipfsCidUrl, uploadFile } from 'utils/ipfs'
+import { ipfsCidUrl, IPFS_TAGS, uploadFile } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
-
 import { FundingCycle } from '../../models/funding-cycle'
 import { fromPerbicent } from '../../utils/formatNumber'
 import BudgetInfo, { BudgetFormFields } from './BudgetForm'
@@ -200,7 +199,7 @@ export default function PlayCreate() {
           bondingCurveRate: BigNumber.from(
             editingFC.bondingCurveRate,
           ).toHexString(),
-          reconfigurationBondingCurveRate: BigNumber.from(1000).toHexString(),
+          reconfigurationBondingCurveRate: parsePerbicent('100').toHexString(),
         },
         constants.AddressZero,
       ],

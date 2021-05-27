@@ -13,8 +13,6 @@ packages/app/src/contracts/localhost
 packages/app/src/styles/antd.css
 packages/hardhat/cache
 
-packages/app/src/styles/antd.css
-
 docker/**/data
 
 packages/subgraph/config/config.json

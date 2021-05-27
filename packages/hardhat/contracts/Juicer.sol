@@ -1231,6 +1231,26 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 1000
             );
 
+        // Get a reference to the amount of ETH the supplied amount is worth.
+        uint256 _ethAmount =
+            PRBMathUD60x18.mul(
+                _amount,
+                prices.getETHPrice(_fundingCycle.currency)
+            );
+
+        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
+        uint256 _weightedAmount =
+            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
+
+        // Only print the tickets that are unreserved.
+        uint256 _unreservedWeightedAmount =
+            PRBMathCommon.mulDiv(
+                _weightedAmount,
+                // The reserved rate is stored in bytes 25-30 of the metadata property.
+                1000 - uint256(uint16(_fundingCycle.metadata >> 24)),
+                1000
+            );
+
         // Print the project's tickets for the beneficiary.
         tickets.print(
             _beneficiary,

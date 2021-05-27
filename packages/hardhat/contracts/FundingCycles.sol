@@ -169,9 +169,9 @@ contract FundingCycles is Administered, IFundingCycles {
     //     @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
     //     @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
     //     @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
-    //     @param _discountRate A number from 0-1000 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-    //     If it's 1000, each funding stage will have equal weight.
-    //     If the number is 900, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+    //     @param _discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+    //     If it's 200, each funding stage will have equal weight.
+    //     If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
     //     If the number is 0, an non-recurring funding stage will get made.
     //     @param _fee The fee that this configuration will incure when tapping.
     //     @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
@@ -198,7 +198,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         // The `discountRate` token must be between 0% and 100%.
         require(
-            _discountRate >= 0 && _discountRate <= 1000,
+            _discountRate >= 0 && _discountRate <= 200,
             "FundingCycles::deploy: BAD_DISCOUNT_RATE"
         );
 
@@ -378,7 +378,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _weight = PRBMathCommon.mulDiv(
                 _latestFundingCycle.weight,
                 _latestFundingCycle.discountRate,
-                1000
+                200
             );
             _number = _latestFundingCycle.number + 1;
             _previous = _latestFundingCycle.id;
@@ -480,7 +480,7 @@ contract FundingCycles is Administered, IFundingCycles {
                 PRBMathCommon.mulDiv(
                     _fundingCycle.weight,
                     _fundingCycle.discountRate,
-                    1000
+                    200
                 ),
                 _fundingCycle.ballot,
                 _fundingCycle._determineNextStart(),

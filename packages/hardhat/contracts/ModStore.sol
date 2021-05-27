@@ -60,7 +60,7 @@ contract ModStore is IModStore {
       @param _projectId The project to add a mod to.
       @param _kinds The kinds of your mods. This can be either TapAmount or ReservedTickets
       @param _beneficiaries The addresses being funded from your tapped amount.
-      @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 1000.
+      @param _percents The percents of your target amount to send to the beneficiary of this mod. Out of 200.
       @param _allocators The contract to send payments to that is in charge of allocating on the project's behalf. Ignored for Tickets kind.
       @param _forProjectIds The IDs of the Juice project forward to the allocator, or to send payments to on Juice if there is no allocator and no project ID.
       @param _notes The notes to forward to the allocator, or use in the payment to a Juice project.
@@ -122,7 +122,7 @@ contract ModStore is IModStore {
         for (uint256 _i = 0; _i < _beneficiaries.length; _i++) {
             // Either the amount or the percent must be specified.
             require(
-                _percents[_i] > 0 && _percents[_i] <= 1000,
+                _percents[_i] > 0 && _percents[_i] <= 200,
                 "ModStore::setMods: BAD_PERCENT"
             );
 
@@ -157,9 +157,9 @@ contract ModStore is IModStore {
             }
         }
 
-        // The total percent should be less than 1000.
+        // The total percent should be less than 200.
         require(
-            _paymentModPercentTotal <= 1000 && _ticketModPercentTotal <= 1000,
+            _paymentModPercentTotal <= 200 && _ticketModPercentTotal <= 200,
             "ModStore::setMods: BAD_PERCENTS"
         );
 
@@ -224,9 +224,9 @@ contract ModStore is IModStore {
         uint256 _paymentModPercentTotal = 0;
 
         for (uint256 _i = 0; _i < _beneficiaries.length; _i++) {
-            // The percent should be less than 1000.
+            // The percent should be less than 200.
             require(
-                _percents[_i] > 0 && _percents[_i] <= 1000,
+                _percents[_i] > 0 && _percents[_i] <= 200,
                 "ModStore::setPaymentMods: BAD_PERCENT"
             );
 
@@ -245,9 +245,9 @@ contract ModStore is IModStore {
             _paymentModPercentTotal = _paymentModPercentTotal + _percents[_i];
         }
 
-        // The total percent should be less than 1000.
+        // The total percent should be less than 200.
         require(
-            _paymentModPercentTotal <= 1000,
+            _paymentModPercentTotal <= 200,
             "ModStore::setPaymentMods: BAD_PERCENTS"
         );
 
@@ -298,9 +298,9 @@ contract ModStore is IModStore {
         uint256 _ticketModPercentTotal = 0;
 
         for (uint256 _i = 0; _i < _beneficiaries.length; _i++) {
-            // The percent should be less than 1000.
+            // The percent should be less than 200.
             require(
-                _percents[_i] > 0 && _percents[_i] <= 1000,
+                _percents[_i] > 0 && _percents[_i] <= 200,
                 "ModStore::setTicketMods: BAD_PERCENT"
             );
 
@@ -316,9 +316,9 @@ contract ModStore is IModStore {
             _ticketModPercentTotal = _ticketModPercentTotal + _percents[_i];
         }
 
-        // The total percent should be less than 1000.
+        // The total percent should be less than 200.
         require(
-            _ticketModPercentTotal <= 1000,
+            _ticketModPercentTotal <= 200,
             "ModStore::setTicketMods: BAD_PERCENTS"
         );
 

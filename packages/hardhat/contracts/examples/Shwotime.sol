@@ -140,7 +140,7 @@ contract Shwotime is JuiceProject {
         );
 
         uint256 _total = _tickets.price * _tickets.sold;
-        uint256 _collectable = PRBMathCommon.mulDiv(_total, 1000 - fee, 1000);
+        uint256 _collectable = PRBMathCommon.mulDiv(_total, 200 - fee, 200);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juice.
         takeFee(_total - _collectable, msg.sender, _note);

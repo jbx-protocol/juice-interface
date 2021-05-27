@@ -2,45 +2,36 @@
 pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
+// ERC721URIStorage,
 contract Projects is ERC721Enumerable, IProjects, Administered {
     // --- private properties --- //
 
     // A running count of project IDs.
-    uint256 private projectId = 0;
+    uint256 private count = 0;
 
-    // The info for each project.
-    mapping(uint256 => Info) private info;
+    // Optional mapping for project URIs
+    mapping(uint256 => string) private projectURIs;
 
     // --- public properties --- //
 
     /// @notice The project that each unique handle represents.
     mapping(bytes32 => uint256) public override handleResolver;
 
+    /// @notice The project that each unique handle represents.
+    mapping(uint256 => bytes32) public override reverseHandleLookup;
+
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes32 => address) public override transferedHandles;
 
     /// @notice A contract sotring operator assignments.
     IOperatorStore public immutable override operatorStore;
-
-    /**
-        @notice Get the info for a project.
-        @param _projectId The ID of the project.
-        @return _info The info.
-    */
-    function getInfo(uint256 _projectId)
-        external
-        view
-        override
-        returns (Info memory)
-    {
-        return info[_projectId];
-    }
 
     function getAllProjectInfo(address _owner)
         external
@@ -50,8 +41,37 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     {
         uint256 _balance = balanceOf(_owner);
         infos = new Info[](_balance);
-        for (uint256 _i = 0; _i < _balance; _i++)
-            infos[_i] = info[tokenOfOwnerByIndex(_owner, _i)];
+        for (uint256 _i = 0; _i < _balance; _i++) {
+            uint256 _projectId = tokenOfOwnerByIndex(_owner, _i);
+            infos[_i] = Info(
+                reverseHandleLookup[_projectId],
+                tokenURI(_projectId)
+            );
+        }
+    }
+
+    /**
+     * @dev See {IERC721Metadata-tokenURI}.
+     */
+    function projectURI(uint256 _projectId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        require(_exists(_projectId), "Projects::projectURI: NOT_FOUND");
+
+        string memory _projectURI = projectURIs[_projectId];
+        string memory base = _baseURI();
+
+        // If there is no base URI, return the token URI.
+        if (bytes(base).length == 0) return _projectURI;
+
+        // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
+        if (bytes(_projectURI).length > 0)
+            return string(abi.encodePacked(base, _projectURI));
+
+        return super.tokenURI(_projectId);
     }
 
     constructor(IOperatorStore _operatorStore)
@@ -73,13 +93,13 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         @notice Create a new project.
         @param _owner The owner of the project.
         @param _handle A unique handle for the project.
-        @param _link A link to more info about the project.
+        @param _uri An ipfs uri to more info about the project. Dont include the leading ipfs://
         @return id The new project's ID.
     */
     function create(
         address _owner,
         bytes32 _handle,
-        bytes32 _link
+        string calldata _uri
     ) external override onlyAdmin returns (uint256 id) {
         // Handle must exist.
         require(_handle.length > 0, "Projects::create: EMPTY_HANDLE");
@@ -92,24 +112,20 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
             "Projects::create: HANDLE_TAKEN"
         );
 
-        projectId++;
-        _safeMint(_owner, projectId);
-        info[projectId] = Info(_handle, _link);
-        handleResolver[_handle] = projectId;
-        return projectId;
+        count++;
+        _safeMint(_owner, count);
+        projectURIs[count] = _uri;
+        reverseHandleLookup[count] = _handle;
+        handleResolver[_handle] = count;
+        return count;
     }
 
     /**
-      @notice Allows a project owner to set the project's name and handle.
+      @notice Allows a project owner to set the project's handle.
       @param _projectId The ID of the project.
       @param _handle The new unique handle for the project.
-      @param _link A link to more info about the project.
     */
-    function setInfo(
-        uint256 _projectId,
-        bytes32 _handle,
-        bytes32 _link
-    ) external override {
+    function setHandle(uint256 _projectId, bytes32 _handle) external override {
         // Get a reference to the project owner.
         address _owner = ownerOf(_projectId);
 
@@ -137,20 +153,43 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
             "Projects::setInfo: HANDLE_TAKEN"
         );
 
-        // If needed, clear the old handle and set the new one.
-        Info storage _info = info[_projectId];
-
         // If the handle is changing, register the change in the resolver.
-        if (_info.handle == _handle) {
-            handleResolver[_info.handle] = 0;
-            handleResolver[_handle] = _projectId;
-        }
+        handleResolver[reverseHandleLookup[_projectId]] = 0;
 
-        // Set the new identifier.
-        _info.handle = _handle;
-        _info.link = _link;
+        handleResolver[_handle] = _projectId;
+        reverseHandleLookup[_projectId] = _handle;
 
-        emit SetInfo(_projectId, _handle, _link, msg.sender);
+        emit SetHandle(_projectId, _handle, msg.sender);
+    }
+
+    /**
+      @notice Allows a project owner to set the project's uri.
+      @param _projectId The ID of the project.
+      @param _uri An ipfs:// link to more info about the project. Don't include the leading ipfs://
+    */
+    function setUri(uint256 _projectId, string calldata _uri)
+        external
+        override
+    {
+        // Get a reference to the project owner.
+        address _owner = ownerOf(_projectId);
+
+        // Only a project owner or a specified operator can change its info.
+        require(
+            msg.sender == _owner ||
+                operatorStore.hasPermission(
+                    _owner,
+                    _projectId,
+                    msg.sender,
+                    Operations.SetInfo
+                ),
+            "Projects::setInfo: UNAUTHORIZED"
+        );
+
+        // Set the new uri.
+        projectURIs[_projectId] = _uri;
+
+        emit SetUri(_projectId, _uri, msg.sender);
     }
 
     /**
@@ -190,21 +229,18 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
             "Projects::transferHandle: HANDLE_TAKEN"
         );
 
-        // If needed, clear the old handle and set the new one.
-        Info storage _info = info[_projectId];
-        _handle = _info.handle;
-
-        // If the handle is changing, register the change in the resolver.
-        handleResolver[_newHandle] = _projectId;
+        // Get a reference to the project's currency handle.
+        _handle = reverseHandleLookup[_projectId];
 
         // Remove the resolver for the transfered handle.
         handleResolver[_handle] = 0;
 
+        // If the handle is changing, register the change in the resolver.
+        handleResolver[_newHandle] = _projectId;
+        reverseHandleLookup[_projectId] = _newHandle;
+
         // Transfer the current handle.
         transferedHandles[_handle] = _to;
-
-        // Set the new handle.
-        _info.handle = _newHandle;
 
         emit TransferHandle(_projectId, _to, _handle, _newHandle, msg.sender);
     }
@@ -263,12 +299,13 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         // Register the change in the resolver.
         handleResolver[_handle] = _projectId;
 
-        // If needed, clear the old handle and set the new one.
-        Info storage _info = info[_projectId];
-
         // Set the new handle.
-        _info.handle = _handle;
+        reverseHandleLookup[_projectId] = _handle;
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
+    }
+
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://";
     }
 }

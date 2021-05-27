@@ -8,7 +8,7 @@ import { SECONDS_IN_DAY } from 'constants/units'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
-import { constants } from 'ethers'
+import { constants, utils } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -188,7 +188,7 @@ export default function PlayCreate() {
       'deploy',
       [
         userAddress,
-        editingProject.handle,
+        utils.formatBytes32String(editingProject.handle),
         ipfsCidUrl(uploadedMetadata.cid),
         targetWithFee,
         BigNumber.from(editingFC.currency).toHexString(),

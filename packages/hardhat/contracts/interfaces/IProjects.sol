@@ -8,15 +8,12 @@ import "./IOperatorStore.sol";
 interface IProjects is IERC721 {
     struct Info {
         bytes32 handle;
-        bytes32 link;
+        string uri;
     }
 
-    event SetInfo(
-        uint256 indexed projectId,
-        bytes32 handle,
-        bytes32 link,
-        address caller
-    );
+    event SetHandle(uint256 indexed projectId, bytes32 handle, address caller);
+
+    event SetUri(uint256 indexed projectId, string uri, address caller);
 
     event TransferHandle(
         uint256 indexed projectId,
@@ -35,15 +32,22 @@ interface IProjects is IERC721 {
 
     function operatorStore() external view returns (IOperatorStore);
 
+    function projectURI(uint256 _projectId)
+        external
+        view
+        returns (string memory);
+
     function handleResolver(bytes32 _handle)
         external
         returns (uint256 projectId);
 
+    function reverseHandleLookup(uint256 _projectId)
+        external
+        returns (bytes32 handle);
+
     function transferedHandles(bytes32 _handle)
         external
         returns (address receiver);
-
-    function getInfo(uint256 _projectId) external view returns (Info memory);
 
     function getAllProjectInfo(address _owner)
         external
@@ -53,14 +57,12 @@ interface IProjects is IERC721 {
     function create(
         address _owner,
         bytes32 _handle,
-        bytes32 _link
+        string calldata _uri
     ) external returns (uint256 id);
 
-    function setInfo(
-        uint256 _projectId,
-        bytes32 _handle,
-        bytes32 _link
-    ) external;
+    function setHandle(uint256 _projectId, bytes32 _handle) external;
+
+    function setUri(uint256 _projectId, string calldata _uri) external;
 
     function transferHandle(
         uint256 _projectId,

@@ -83,8 +83,8 @@ interface IJuicer {
         uint256 indexed projectId,
         address indexed owner,
         uint256 fundingCycleId,
-        string handle,
-        string link,
+        bytes32 handle,
+        bytes32 link,
         uint256 target,
         uint256 currency,
         uint256 duration,
@@ -158,8 +158,8 @@ interface IJuicer {
 
     function deploy(
         address _owner,
-        string calldata _handle,
-        string calldata _link,
+        bytes32 _handle,
+        bytes32 _link,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,

@@ -283,8 +283,13 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
         // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
-            _queuedCycle._isConfigurationPending(_fundingCycle.ballot) // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-                ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
+            _fundingCycle.ballot != IFundingCycleBallot(address(0)) &&
+                _fundingCycle.ballot.isPending(
+                    _queuedCycle.id,
+                    _queuedCycle.configuration
+                )
+                ? // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+                uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
                 : uint256(uint16(_fundingCycle.metadata >> 8));
 
         // The bonding curve formula.

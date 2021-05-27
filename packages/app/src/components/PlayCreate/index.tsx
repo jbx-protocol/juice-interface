@@ -19,12 +19,13 @@ import { ContractName } from 'models/contract-name'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromPermille, fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
 import { encodeFCMetadata, isRecurring } from 'utils/fundingCycle'
 import { IPFS_TAGS, ipfsCidUrl, uploadFile } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
 import { FundingCycle } from '../../models/funding-cycle'
+import { fromPerbicent } from '../../utils/formatNumber'
 import BudgetInfo, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
@@ -85,9 +86,9 @@ export default function PlayCreate() {
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
-      discountRate: fromPermille(editingFC?.discountRate),
-      reserved: fromPermille(editingFC?.reserved),
-      bondingCurveRate: fromPermille(editingFC?.bondingCurveRate),
+      discountRate: fromPerbicent(editingFC?.discountRate),
+      reserved: fromPerbicent(editingFC?.reserved),
+      bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
     })
 
   const onBudgetFormSaved = () => {

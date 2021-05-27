@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
-  fromPermille,
+  fromPerbicent,
   fromWad,
-  parsePermille,
+  parsePerbicent,
   parseWad,
 } from 'utils/formatNumber'
 
@@ -27,11 +27,11 @@ export const serializeFundingCycle = (
   start: fc.start.toString(),
   duration: fc.duration.toString(),
   tapped: fromWad(fc.tapped),
-  reserved: fromPermille(fc.reserved),
+  reserved: fromPerbicent(fc.reserved),
   weight: fromWad(fc.weight),
-  fee: fromPermille(fc.fee),
-  bondingCurveRate: fromPermille(fc.bondingCurveRate),
-  discountRate: fromPermille(fc.discountRate),
+  fee: fromPerbicent(fc.fee),
+  bondingCurveRate: fromPerbicent(fc.bondingCurveRate),
+  discountRate: fromPerbicent(fc.discountRate),
   configured: fc.configured.toString(),
   ballot: fc.ballot,
 })
@@ -52,10 +52,10 @@ export const deserializeFundingCycle = (
         duration: parseInt(fc.duration),
         tapped: parseWad(fc.tapped),
         weight: parseWad(fc.weight),
-        fee: parsePermille(fc.fee).toNumber(),
-        reserved: parsePermille(fc.reserved).toNumber(),
-        bondingCurveRate: parsePermille(fc.bondingCurveRate).toNumber(),
-        discountRate: parsePermille(fc.discountRate).toNumber(),
+        fee: parsePerbicent(fc.fee).toNumber(),
+        reserved: parsePerbicent(fc.reserved).toNumber(),
+        bondingCurveRate: parsePerbicent(fc.bondingCurveRate).toNumber(),
+        discountRate: parsePerbicent(fc.discountRate).toNumber(),
         configured: parseInt(fc.configured),
         ballot: fc.ballot,
       }

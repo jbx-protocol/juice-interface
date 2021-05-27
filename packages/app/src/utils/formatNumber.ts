@@ -5,24 +5,29 @@ const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
+// Wad: x/1e18
 export const parseWad = (amt?: string | number) =>
   parseUnits(amt?.toString() || '0', wadPrecision)
-
-export const parsePermille = (amt?: string) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
-
 export const fromWad = (amt?: BigNumberish) => {
   const result = formatUnits(amt ?? '0', wadPrecision)
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
 }
-
 export const formatWad = (amt?: BigNumberish) =>
   amt !== undefined && amt !== null ? formattedNum(fromWad(amt)) : undefined
 
+// Permille: x/1000
+export const parsePermille = (amt?: string) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
 export const fromPermille = (amt?: BigNumberish) =>
   amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
+
+// Permille: x/200
+export const parsePerbicent = (amt?: string) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 2) : 0)
+export const fromPerbicent = (amt?: BigNumberish) =>
+  amt ? (BigNumber.from(amt).toNumber() / 2).toString() : '0'
 
 export const fracDiv = (quotient: string, dividend: string) => {
   return parseFloat(quotient) / parseFloat(dividend)

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 
-import { parsePermille } from './formatCurrency'
+import { parsePerbicent } from './formatNumber'
 import { decodeFCMetadata } from './fundingCycle'
 
 export const weightedRate = (
@@ -19,7 +19,7 @@ export const weightedRate = (
     .mul(
       output === 'reserved'
         ? reserved
-        : parsePermille('100').sub(reserved ?? 0),
+        : parsePerbicent('100').sub(reserved ?? 0),
     )
     .div(1000)
 }

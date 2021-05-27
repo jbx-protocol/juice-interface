@@ -60,6 +60,11 @@ interface IFundingCycles {
         view
         returns (FundingCycle memory);
 
+    function currentBallotState(uint256 _projectId)
+        external
+        view
+        returns (BallotState);
+
     function configure(
         uint256 _projectId,
         uint256 _target,

@@ -243,10 +243,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
         );
 
-        // Get a reference to the current funding cycle for the project.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrent(_projectId);
-
         // Get the amount of current overflow.
         uint256 _currentOverflow = currentOverflowOf(_projectId);
 
@@ -255,6 +251,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
         // Get the total number of tickets in circulation.
         uint256 _totalSupply = tickets.totalSupply(_projectId);
+
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
 
         // Get the number of reserved tickets the project has.
         uint256 _reservedTicketAmount =
@@ -275,16 +275,9 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // If there funding cycle isn't recurring return the base proportion.
         if (_fundingCycle.discountRate == 0) return _base;
 
-        // // Get a reference to the queued funding cycle for the project.
-        FundingCycle memory _queuedCycle = fundingCycles.getQueued(_projectId);
-
-        // // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
+        // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
-            _fundingCycle.ballot != IFundingCycleBallot(address(0)) &&
-                _fundingCycle.ballot.isPending(
-                    _queuedCycle.id,
-                    _queuedCycle.configuration
-                ) // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
+            fundingCycles.currentBallotState(_projectId) == BallotState.Active // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
                 ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 9-25 of the data property after.
                 : uint256(uint16(_fundingCycle.metadata >> 8));
 

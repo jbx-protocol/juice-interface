@@ -156,6 +156,53 @@ contract FundingCycles is Administered, IFundingCycles {
         return _mockFundingCycleAfter(_fundingCycle);
     }
 
+    /** 
+      @notice Checks whether a project has a pending reconfiguration.
+      @param _projectId The ID of the project to check for a pending reconfiguration.
+      @return Whether or not the project has a pending approval.
+    */
+    function currentBallotState(uint256 _projectId)
+        external
+        view
+        override
+        returns (BallotState)
+    {
+        // Get a reference to the latest funding cycle.
+        uint256 _fundingCycleId = latestId[_projectId];
+
+        // Get the latest funding cycle's packed intrinsic properties.
+        uint256 _packedIntrinsicProperties =
+            packedIntrinsicProperties[_fundingCycleId];
+        // The number is packed in bits 161-208
+        uint256 _previous = uint256(uint48(_packedIntrinsicProperties >> 160));
+        // The start is packed in bits 208-256
+        uint256 _start = uint256(uint48(_packedIntrinsicProperties >> 208));
+
+        // If the latest funding cycle is the first, or if it has already started, it can't be pending approval.
+        if (_previous == 0 || _start < block.timestamp)
+            return BallotState.Standby;
+
+        // Get the packed custom params of the previous funding cycle.
+        uint256 _packedPreviousCustomParams = packedCustomParams[_previous];
+
+        // The ballot is packed in bits 0-159
+        IFundingCycleBallot _ballot =
+            IFundingCycleBallot(address(uint160(_packedPreviousCustomParams)));
+
+        // If the previous funding cycle has no ballot, the current one cant be pending approval.
+        if (_ballot == IFundingCycleBallot(address(0)))
+            return BallotState.Standby;
+
+        // Get the packed custom params of the current funding cycle.
+        uint256 _packedCustomParams = packedCustomParams[_fundingCycleId];
+
+        // The configuration is packed in bits 161-208
+        uint256 _configuration = uint256(uint48(_packedCustomParams >> 160));
+
+        // Ask the previous funding cycle's ballot if the current funding cycle is pending.
+        return _ballot.state(_fundingCycleId, _configuration);
+    }
+
     // --- external transactions --- //
 
     constructor() {}
@@ -559,7 +606,7 @@ contract FundingCycles is Administered, IFundingCycles {
             );
         return
             _ballot == IFundingCycleBallot(address(0)) ||
-            _ballot.isApproved(_id, _configuration);
+            _ballot.state(_id, _configuration) == BallotState.Approved;
     }
 
     function _getStruct(

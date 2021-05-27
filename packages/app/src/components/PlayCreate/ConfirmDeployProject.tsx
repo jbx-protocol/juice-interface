@@ -7,15 +7,12 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import {
-  formattedNum,
-  formatWad,
-  fromPermille,
-  fromWad,
-} from 'utils/formatNumber'
+import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
 import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
+
+import { fromPerbicent } from '../../utils/formatNumber'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
@@ -72,19 +69,19 @@ export default function ConfirmDeployProject() {
         {editingFC && isRecurring(editingFC) && (
           <Statistic
             title="Discount rate"
-            value={fromPermille(editingFC?.discountRate)}
+            value={fromPerbicent(editingFC?.discountRate)}
             suffix="%"
           />
         )}
         <Statistic
           title="Reserved tickets"
-          value={fromPermille(editingFC?.reserved)}
+          value={fromPerbicent(editingFC?.reserved)}
           suffix="%"
         />
         {editingFC && isRecurring(editingFC) && (
           <Statistic
             title="Bonding curve rate"
-            value={fromPermille(editingFC?.bondingCurveRate)}
+            value={fromPerbicent(editingFC?.bondingCurveRate)}
             suffix="%"
           />
         )}

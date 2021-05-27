@@ -5,7 +5,7 @@ import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { ProjectIdentifier } from 'models/project-identifier'
 import { ProjectMetadata } from 'models/project-metadata'
-import { parsePermille, parseWad } from 'utils/formatNumber'
+import { parsePerbicent, parseWad } from 'utils/formatNumber'
 import {
   EditingFundingCycle,
   SerializedFundingCycle,
@@ -21,8 +21,8 @@ export type EditingProjectState = {
   fundingCycle: SerializedFundingCycle
 }
 
-const defaultDiscountRate = 97
-const defaultBondingCurveRate = 500
+const defaultDiscountRate = parsePerbicent('97')
+const defaultBondingCurveRate = parsePerbicent('50')
 
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
@@ -48,8 +48,8 @@ export const editingProjectSlice = createSlice({
       weight: BigNumber.from(0),
       fee: 15,
       reserved: 50,
-      bondingCurveRate: defaultBondingCurveRate,
-      discountRate: parsePermille(defaultDiscountRate.toString()).toNumber(),
+      bondingCurveRate: defaultBondingCurveRate.toNumber(),
+      discountRate: defaultDiscountRate.toNumber(),
       configured: 0,
       ballot: constants.AddressZero,
     }),

@@ -348,10 +348,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     /**
         @notice Deploys a project. This will mint an ERC-721 into the `_owner`'s account and configure a first funding cycle.
         @param _owner The address that will own the project.
-        @param _name The project's name.
         @param _handle The project's unique handle.
-        @param _logoUri The URI pointing to the project's logo.
-        @param _link A link to information about the project and this funding stage.
+        @param _link A link to information about the project and this funding stage. Must return a JSON file with properties `name`, `logoUri`, and `infoUri`.
         @param _target The amount that the project wants to receive in this funding stage. Sent as a wad.
         @param _currency The currency of the `target`. Send 0 for ETH or 1 for USD.
         @param _duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
@@ -368,15 +366,13 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     */
     function deploy(
         address _owner,
-        string memory _name,
-        string memory _handle,
-        string memory _logoUri,
-        string memory _link,
+        string calldata _handle,
+        string calldata _link,
         uint256 _target,
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
+        FundingCycleMetadata calldata _metadata,
         IFundingCycleBallot _ballot
     ) external override {
         // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
@@ -395,7 +391,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycle.Data memory _fundingCycle =
             fundingCycles.configure(
                 // Create the project and mint an ERC-721 for the `_owner`.
-                projects.create(_owner, _name, _handle, _logoUri, _link),
+                projects.create(_owner, _handle, _link),
                 _target,
                 _currency,
                 _duration,
@@ -416,9 +412,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _fundingCycle.projectId,
             _owner,
             _fundingCycle.id,
-            _name,
             _handle,
-            _logoUri,
             _link,
             _target,
             _currency,
@@ -516,7 +510,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _currency,
         uint256 _duration,
         uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
+        FundingCycleMetadata calldata _metadata,
         IFundingCycleBallot _ballot
     ) external override returns (uint256) {
         // Get a reference to the project owner.
@@ -581,7 +575,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     function pay(
         uint256 _projectId,
         address _beneficiary,
-        string memory _note,
+        string calldata _note,
         bool _preferConvertedTickets
     ) external payable override returns (uint256) {
         // Positive payments only.

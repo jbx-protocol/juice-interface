@@ -1208,19 +1208,18 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             fundingCycles.getCurrent(_projectId);
 
         // Get a reference to the amount of ETH the supplied amount is worth.
-        uint256 _ethAmount =
+        uint256 _currencyAmount =
             PRBMathUD60x18.mul(
                 _amount,
                 prices.getETHPrice(_fundingCycle.currency)
             );
 
         // Add to the raw balance of the project.
-        // TODO raw balance cant be `amount` because that's in `currency`. Needs to be in ETH.
-        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _ethAmount;
+        rawBalanceOf[_projectId] = rawBalanceOf[_projectId] + _amount;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_ethAmount, _fundingCycle.weight);
+            PRBMathUD60x18.mul(_currencyAmount, _fundingCycle.weight);
 
         // Only print the tickets that are unreserved.
         uint256 _unreservedWeightedAmount =

@@ -112,7 +112,6 @@ export function useTransactor({
           await result.wait()
         }
         console.log('RESULT:', result)
-        // console.log("Notify", notify);
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
         const isNotifyNetwork =

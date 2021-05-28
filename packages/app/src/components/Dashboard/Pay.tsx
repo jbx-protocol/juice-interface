@@ -8,7 +8,7 @@ import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, parseWad } from 'utils/formatNumber'
@@ -18,12 +18,12 @@ import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay({
   fundingCycle,
-  project,
   projectId,
+  metadata,
 }: {
   fundingCycle: FundingCycle | undefined
-  project: ProjectIdentifier | undefined
   projectId: BigNumber | undefined
+  metadata: ProjectMetadata
 }) {
   const [payAs, setPayAs] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
@@ -53,7 +53,7 @@ export default function Pay({
       ),
     )
 
-  if (!fundingCycle || !projectId || !project) return null
+  if (!fundingCycle || !projectId) return null
 
   return (
     <div>
@@ -116,7 +116,7 @@ export default function Pay({
 
       <ConfirmPayOwnerModal
         fundingCycle={fundingCycle}
-        project={project}
+        metadata={metadata}
         projectId={projectId}
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}

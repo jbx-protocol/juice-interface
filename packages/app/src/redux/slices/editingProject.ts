@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { ProjectIdentifier } from 'models/project-identifier'
 import { ProjectMetadata } from 'models/project-metadata'
 import { parsePerbicent, parseWad } from 'utils/formatNumber'
 import {
@@ -12,12 +11,13 @@ import {
   serializeFundingCycle,
 } from 'utils/serializers'
 
-export type EditingProjectIdentifier = ProjectIdentifier & {
+type EditingProjectInfo = {
   metadata: ProjectMetadata
+  handle: string
 }
 
 export type EditingProjectState = {
-  projectIdentifier: EditingProjectIdentifier
+  info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
 }
 
@@ -27,7 +27,7 @@ const defaultBondingCurveRate = parsePerbicent('50')
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
   initialState: {
-    projectIdentifier: {
+    info: {
       metadata: {
         name: '',
         infoUri: '',
@@ -55,47 +55,44 @@ export const editingProjectSlice = createSlice({
     }),
   } as EditingProjectState,
   reducers: {
-    setProjectIdentifier: (
-      state,
-      action: PayloadAction<EditingProjectIdentifier>,
-    ) => ({
+    setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
       ...state,
-      projectIdentifier: action.payload,
+      info: action.payload,
     }),
     setName: (state, action: PayloadAction<string>) => ({
       ...state,
-      projectIdentifier: {
-        ...state.projectIdentifier,
+      info: {
+        ...state.info,
         metadata: {
-          ...state.projectIdentifier.metadata,
+          ...state.info.metadata,
           name: action.payload,
         },
       },
     }),
     setInfoUri: (state, action: PayloadAction<string>) => ({
       ...state,
-      projectIdentifier: {
-        ...state.projectIdentifier,
+      info: {
+        ...state.info,
         metadata: {
-          ...state.projectIdentifier.metadata,
+          ...state.info.metadata,
           infoUri: action.payload,
         },
       },
     }),
     setLogoUri: (state, action: PayloadAction<string>) => ({
       ...state,
-      projectIdentifier: {
-        ...state.projectIdentifier,
+      info: {
+        ...state.info,
         metadata: {
-          ...state.projectIdentifier.metadata,
+          ...state.info.metadata,
           logoUri: action.payload,
         },
       },
     }),
     setHandle: (state, action: PayloadAction<string>) => ({
       ...state,
-      projectIdentifier: {
-        ...state.projectIdentifier,
+      info: {
+        ...state.info,
         handle: action.payload,
       },
     }),

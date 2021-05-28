@@ -1,12 +1,12 @@
 import { Col, ColProps, Row } from 'antd'
-import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 
 import ProjectCard from './ProjectCard'
 
 export default function ProjectsGrid({
   projects,
 }: {
-  projects: ProjectIdentifier[] | undefined
+  projects: { metadata: ProjectMetadata; handle: string }[]
 }) {
   const gutter = 20
 
@@ -23,11 +23,17 @@ export default function ProjectsGrid({
           i % 2 === 0 && (
             <Row gutter={gutter} key={project.handle}>
               <Col {...colProps}>
-                <ProjectCard project={project} />
+                <ProjectCard
+                  metadata={project.metadata}
+                  handle={project.handle}
+                />
               </Col>
               {i + 1 < projects.length && (
                 <Col {...colProps}>
-                  <ProjectCard project={projects[i + 1]} />
+                  <ProjectCard
+                    metadata={projects[i + 1].metadata}
+                    handle={projects[i + 1].handle}
+                  />
                 </Col>
               )}
             </Row>

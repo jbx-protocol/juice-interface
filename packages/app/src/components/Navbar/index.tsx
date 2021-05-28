@@ -67,9 +67,10 @@ export default function Navbar() {
             />
           </a>
         </Menu.Item>
-        <Menu.Item key="projects">
+        {/* <Menu.Item key="projects">
           {menuItem('Projects', '/#/projects')}
-        </Menu.Item>
+        </Menu.Item> */}
+        <Menu.Item key="juice">{menuItem('Juice', '/#/p/juice')}</Menu.Item>
         {
           <Menu.Item key="faq">
             {menuItem('FAQ', undefined, () => {

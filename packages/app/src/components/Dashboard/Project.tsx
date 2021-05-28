@@ -4,8 +4,8 @@ import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { ProjectIdentifier } from 'models/project-identifier'
-import { CSSProperties, useContext, useMemo } from 'react'
+import { ProjectMetadata } from 'models/project-metadata'
+import { CSSProperties, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import FundingCycles from './FundingCycles'
@@ -16,14 +16,16 @@ import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
 
 export default function Project({
-  project,
+  handle,
+  metadata,
   projectId,
   fundingCycle,
   showCurrentDetail,
   style,
   isOwner,
 }: {
-  project: ProjectIdentifier | undefined
+  handle: string
+  metadata: ProjectMetadata
   projectId: BigNumber
   isOwner: boolean
   fundingCycle: FundingCycle | undefined
@@ -88,14 +90,15 @@ export default function Project({
     ),
   })
 
-  if (!projectId || !project) return null
+  if (!projectId || !metadata) return null
 
   const gutter = 40
 
   return (
     <div style={style}>
       <ProjectHeader
-        project={project}
+        handle={handle}
+        metadata={metadata}
         projectId={projectId}
         isOwner={isOwner}
       />
@@ -110,9 +113,9 @@ export default function Project({
         </Col>
         <Col xs={24} md={12}>
           <Pay
+            metadata={metadata}
             fundingCycle={fundingCycle}
             projectId={projectId}
-            project={project}
           />
         </Col>
       </Row>

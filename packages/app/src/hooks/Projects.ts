@@ -1,23 +1,22 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ContractName } from 'models/contract-name'
-import { ProjectIdentifier } from 'models/project-identifier'
 import { useCallback, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 
 import useContractReader from './ContractReader'
 
+// TODO
 export function useProjects() {
   const [loadingIndex, setLoadingIndex] = useState<BigNumber>()
   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
-  const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
+  // const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
 
-  function upsertProject(project: ProjectIdentifier) {
-    setProjects({
-      ...projects,
-      [project.handle]: project,
-    })
-  }
+  // function upsertProject(project: ProjectIdentifier) {
+  //   setProjects({
+  //     ...projects,
+  //     [project.handle]: project,
+  //   })
+  // }
 
   function upsertProjectId(id: BigNumber) {
     setProjectIds([...projectIds, id])
@@ -26,7 +25,7 @@ export function useProjects() {
   function reset() {
     setLoadingIndex(BigNumber.from(0))
     setProjectIds([])
-    setProjects(undefined)
+    // setProjects(undefined)
   }
 
   const supply = useContractReader<BigNumber>({
@@ -58,22 +57,22 @@ export function useProjects() {
 
   const id = loadingIndex ? projectIds[loadingIndex.toNumber()] : undefined
 
-  useContractReader<ProjectIdentifier>({
-    contract: ContractName.Projects,
-    functionName: 'getInfo',
-    args: id ? [id.toHexString()] : null,
-    valueDidChange: useCallback(
-      (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
-      [],
-    ),
-    callback: useCallback(
-      (project?: ProjectIdentifier) => {
-        if (!project) return
-        upsertProject(project)
-      },
-      [id],
-    ),
-  })
+  // useContractReader<ProjectIdentifier>({
+  //   contract: ContractName.Projects,
+  //   functionName: 'getInfo',
+  //   args: id ? [id.toHexString()] : null,
+  //   valueDidChange: useCallback(
+  //     (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
+  //     [],
+  //   ),
+  //   callback: useCallback(
+  //     (project?: ProjectIdentifier) => {
+  //       if (!project) return
+  //       upsertProject(project)
+  //     },
+  //     [id],
+  //   ),
+  // })
 
-  return projects
+  // return projects
 }

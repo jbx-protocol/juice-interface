@@ -74,9 +74,8 @@ export default function useContractReader<V>({
           { contract: readContract.address },
           contracts,
         )
-        const newValue = _formatter(undefined)
-        setValue(newValue)
-        _callback(undefined)
+        setValue(_formatter(undefined))
+        _callback(_formatter(undefined))
       }
     }
 

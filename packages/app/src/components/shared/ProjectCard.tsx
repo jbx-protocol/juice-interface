@@ -1,22 +1,20 @@
-import { Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { ProjectIdentifier } from 'models/project-identifier'
-import React, { useContext } from 'react'
+import { ProjectMetadata } from 'models/project-metadata'
+import { useContext } from 'react'
 
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
 export default function ProjectCard({
-  project,
+  handle,
+  metadata,
 }: {
-  project: ProjectIdentifier
+  handle: string
+  metadata: ProjectMetadata
 }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-
-  const metadata = useProjectMetadata(project.link)
 
   return (
     <div
@@ -27,8 +25,8 @@ export default function ProjectCard({
         overflow: 'hidden',
       }}
       className="clickable-border"
-      key={project.handle}
-      onClick={() => (window.location.hash = '/p/' + project.handle)}
+      key={handle}
+      onClick={() => (window.location.hash = '/p/' + handle)}
     >
       {metadata ? (
         <div
@@ -66,7 +64,7 @@ export default function ProjectCard({
                 textOverflow: 'ellipsis',
               }}
             >
-              @{project.handle}
+              @{handle}
             </div>
 
             {metadata.infoUri && (
@@ -91,7 +89,7 @@ export default function ProjectCard({
             alignItems: 'center',
           }}
         >
-          {project.handle} <Loading />
+          {handle} <Loading />
         </div>
       )}
     </div>

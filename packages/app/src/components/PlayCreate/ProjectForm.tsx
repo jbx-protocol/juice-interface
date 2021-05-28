@@ -1,16 +1,14 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
-import { ipfsCidUrl } from 'utils/ipfs'
-import { IPFS_TAGS } from '../../utils/ipfs'
+import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
 export type ProjectFormFields = {
   name: string
-  infoUri: string
+  infoUrl: string
   handle: string
-  logoUri: string
+  logoUrl: string
 }
 
 export default function ProjectForm({
@@ -48,15 +46,17 @@ export default function ProjectForm({
             dependencies: ['name'],
           }}
         />
-        <FormItems.ProjectLink name="infoUri" />
-        <Form.Item name="logoUri" label="Logo (optional)">
-          <ImageUploader
-            initialPreview={form.getFieldValue('logoUri')}
-            onSuccess={cid => form.setFieldsValue({ logoUri: ipfsCidUrl(cid) })}
-            metadata={{ tag: IPFS_TAGS.LOGO }}
-            maxSize={1000000}
-          />
-        </Form.Item>
+        <FormItems.ProjectLink name="infoUrl" />
+        <FormItems.ProjectLogoUrl
+          name="logoUrl"
+          initialUrl={form.getFieldValue('logoUrl')}
+          onSuccess={logoUrl => {
+            form.setFieldsValue({ logoUrl })
+            // Unpin previous file
+            const prevUrl = form.getFieldValue('logoUrl')
+            if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
+          }}
+        />
         <Form.Item>
           <Button
             htmlType="submit"

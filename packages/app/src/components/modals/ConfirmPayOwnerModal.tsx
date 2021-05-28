@@ -3,9 +3,8 @@ import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { FundingCycle } from 'models/funding-cycle'
-import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
@@ -13,7 +12,7 @@ import { weightedRate } from 'utils/math'
 
 export default function ConfirmPayOwnerModal({
   projectId,
-  project,
+  metadata,
   fundingCycle,
   visible,
   weiAmount,
@@ -21,7 +20,7 @@ export default function ConfirmPayOwnerModal({
   onCancel,
 }: {
   projectId: BigNumber
-  project: ProjectIdentifier
+  metadata: ProjectMetadata
   fundingCycle: FundingCycle | undefined
   visible?: boolean
   weiAmount: BigNumber | undefined
@@ -29,7 +28,6 @@ export default function ConfirmPayOwnerModal({
   onCancel?: VoidFunction
 }) {
   const [form] = useForm<{ note: string }>()
-  const metadata = useProjectMetadata(project.link)
   const { contracts, transactor, userAddress } = useContext(UserContext)
 
   const converter = useCurrencyConverter()

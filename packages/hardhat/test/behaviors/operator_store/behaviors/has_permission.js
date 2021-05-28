@@ -1,60 +1,144 @@
-const { ethers } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
 
 use(solidity);
 
-const projectId = 0;
+const tests = {
+  success: [
+    {
+      it: "has permission, account is sender",
+      fn: ({ deployer, addrs }) => ({
+        set: {
+          sender: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndexes: [42, 41, 40]
+        },
+        check: {
+          sender: deployer,
+          account: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndex: 42
+        },
+        result: true
+      })
+    },
+    {
+      it: "has permission, account is not sender",
+      fn: ({ deployer, addrs }) => ({
+        set: {
+          sender: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndexes: [7]
+        },
+        check: {
+          sender: addrs[1],
+          account: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndex: 7
+        },
+        result: true
+      })
+    },
+    {
+      it: "doesnt have permission, indexes differ",
+      fn: ({ deployer, addrs }) => ({
+        set: {
+          sender: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndexes: [1, 2, 3]
+        },
+        check: {
+          sender: deployer,
+          account: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndex: 42
+        },
+        result: false
+      })
+    },
+    {
+      it: "doesnt have permission, projectId differs",
+      fn: ({ deployer, addrs }) => ({
+        set: {
+          sender: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndexes: [42]
+        },
+        check: {
+          sender: deployer,
+          account: deployer,
+          projectId: 0,
+          operator: addrs[0],
+          permissionIndex: 42
+        },
+        result: false
+      })
+    }
+  ],
+  failure: [
+    {
+      it: "index out of bounds",
+      fn: ({ deployer, addrs }) => ({
+        check: {
+          sender: deployer,
+          account: deployer,
+          projectId: 0,
+          operator: addrs[0],
+          permissionIndex: 256
+        },
+        revert: "OperatorStore::hasPermission: INDEX_OUT_OF_BOUNDS"
+      })
+    }
+  ]
+};
 
-let contract;
-let caller;
-let operator;
-
-const contractName = "OperatorStore";
-
-const permissionIndex = 42;
-
-module.exports = () => {
-  before(async () => {
-    [caller, operator] = await ethers.getSigners();
-    const contractArtifacts = await ethers.getContractFactory(contractName);
-    contract = await contractArtifacts.deploy();
-    await contract.deployTransaction.wait();
-  });
-  describe("Check to see if an operator has a permission", () => {
-    describe("hasPermissions(...)", () => {
-      describe("Success cases", () => {
-        describe("hasPermissions(...)", () => {
-          it("Should return false if the operator doesn't have permission.", async () => {
-            const flag = await contract
-              .connect(caller)
-              .hasPermission(caller.address, projectId, operator.address, 0);
-            expect(flag).to.equal(false);
-          });
-          it("Should return true if the operator does have permission.", async () => {
-            const tx = await contract
-              .connect(caller)
-              .setOperator(projectId, operator.address, [permissionIndex]);
-            await tx.wait();
-            const flag = await contract
-              .connect(caller)
-              .hasPermission(
-                caller.address,
-                projectId,
-                operator.address,
-                permissionIndex
-              );
-            expect(flag).to.equal(true);
-          });
+module.exports = function() {
+  describe("Check to see if an operator has a permission", function() {
+    describe("Success cases", function() {
+      tests.success.forEach(function(successTest) {
+        it(successTest.it, async function() {
+          const { set, check, result } = successTest.fn(this);
+          const tx = await this.contract
+            .connect(set.sender)
+            .setOperator(
+              set.projectId,
+              set.operator.address,
+              set.permissionIndexes
+            );
+          await tx.wait();
+          const flag = await this.contract
+            .connect(check.sender)
+            .hasPermission(
+              check.account.address,
+              check.projectId,
+              check.operator.address,
+              check.permissionIndex
+            );
+          expect(flag).to.equal(result);
         });
       });
-      describe("Failure cases", () => {
-        it("Should revert if the index is greater than 255.", async () => {
+    });
+    describe("Failure cases", function() {
+      tests.failure.forEach(function(failureTest) {
+        it(failureTest.it, async function() {
+          const { check, revert } = failureTest.fn(this);
           await expect(
-            contract
-              .connect(caller)
-              .hasPermission(caller.address, projectId, operator.address, 256)
-          ).to.be.revertedWith("OperatorStore::hasPermission: BAD_INDEX");
+            this.contract
+              .connect(check.sender)
+              .hasPermission(
+                check.account.address,
+                check.projectId,
+                check.operator.address,
+                check.permissionIndex
+              )
+          ).to.be.revertedWith(revert);
         });
       });
     });

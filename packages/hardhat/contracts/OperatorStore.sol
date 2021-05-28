@@ -51,7 +51,7 @@ contract OperatorStore is IOperatorStore {
     ) external view override returns (bool) {
         require(
             _permissionIndex <= 255,
-            "OperatorStore::hasPermission: BAD_INDEX"
+            "OperatorStore::hasPermission: INDEX_OUT_OF_BOUNDS"
         );
         return
             ((permissions[_account][_projectId][_operator] >>
@@ -80,7 +80,7 @@ contract OperatorStore is IOperatorStore {
 
             require(
                 _permissionIndex <= 255,
-                "OperatorStore::hasPermissions: BAD_INDEX"
+                "OperatorStore::hasPermissions: INDEX_OUT_OF_BOUNDS"
             );
 
             if (
@@ -176,7 +176,7 @@ contract OperatorStore is IOperatorStore {
             uint256 _permissionIndex = _indexes[_i];
             require(
                 _permissionIndex <= 255,
-                "OperatorStore::_packedPermissions: BAD_INDEX"
+                "OperatorStore::_packedPermissions: INDEX_OUT_OF_BOUNDS"
             );
             // Turn the bit at the index on.
             packed |= 1 << _permissionIndex;

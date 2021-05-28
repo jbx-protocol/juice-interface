@@ -16,10 +16,10 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
     // A running count of project IDs.
     uint256 private count = 0;
 
-    // Optional mapping for project URIs
-    mapping(uint256 => string) private projectURIs;
-
     // --- public properties --- //
+
+    // Optional mapping for project URIs
+    mapping(uint256 => string) public override uri;
 
     /// @notice The project that each unique handle represents.
     mapping(bytes32 => uint256) public override handleResolver;
@@ -48,30 +48,6 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
                 tokenURI(_projectId)
             );
         }
-    }
-
-    /**
-     * @dev See {IERC721Metadata-tokenURI}.
-     */
-    function projectURI(uint256 _projectId)
-        public
-        view
-        override
-        returns (string memory)
-    {
-        require(_exists(_projectId), "Projects::projectURI: NOT_FOUND");
-
-        string memory _projectURI = projectURIs[_projectId];
-        string memory base = _baseURI();
-
-        // If there is no base URI, return the token URI.
-        if (bytes(base).length == 0) return _projectURI;
-
-        // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
-        if (bytes(_projectURI).length > 0)
-            return string(abi.encodePacked(base, _projectURI));
-
-        return super.tokenURI(_projectId);
     }
 
     constructor(IOperatorStore _operatorStore)
@@ -114,7 +90,7 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
 
         count++;
         _safeMint(_owner, count);
-        projectURIs[count] = _uri;
+        uri[count] = _uri;
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
         return count;
@@ -187,7 +163,7 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         );
 
         // Set the new uri.
-        projectURIs[_projectId] = _uri;
+        uri[_projectId] = _uri;
 
         emit SetUri(_projectId, _uri, msg.sender);
     }
@@ -303,9 +279,5 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         reverseHandleLookup[_projectId] = _handle;
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
-    }
-
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://";
     }
 }

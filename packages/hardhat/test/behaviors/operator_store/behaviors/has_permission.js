@@ -12,7 +12,7 @@ const tests = {
           sender: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [42, 41, 40]
+          permissionIndexes: [42, 41, 255]
         },
         check: {
           sender: deployer,
@@ -41,6 +41,19 @@ const tests = {
           permissionIndex: 7
         },
         result: true
+      })
+    },
+    {
+      it: "doesnt have permission, never set",
+      fn: ({ deployer, addrs }) => ({
+        check: {
+          sender: deployer,
+          account: deployer,
+          projectId: 1,
+          operator: addrs[0],
+          permissionIndex: 42
+        },
+        result: false
       })
     },
     {
@@ -105,14 +118,16 @@ module.exports = function() {
       tests.success.forEach(function(successTest) {
         it(successTest.it, async function() {
           const { set, check, result } = successTest.fn(this);
-          const tx = await this.contract
-            .connect(set.sender)
-            .setOperator(
-              set.projectId,
-              set.operator.address,
-              set.permissionIndexes
-            );
-          await tx.wait();
+          if (set) {
+            const tx = await this.contract
+              .connect(set.sender)
+              .setOperator(
+                set.projectId,
+                set.operator.address,
+                set.permissionIndexes
+              );
+            await tx.wait();
+          }
           const flag = await this.contract
             .connect(check.sender)
             .hasPermission(

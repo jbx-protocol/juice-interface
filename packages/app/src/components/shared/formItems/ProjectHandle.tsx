@@ -28,17 +28,9 @@ export default function ProjectHandle({
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,
     functionName: 'handleResolver',
-    args: useMemo(() => {
-      if (!inputContents) return null
-
-      let bytes = utils.formatBytes32String(inputContents.toLowerCase())
-
-      while (bytes.length > 0 && bytes.charAt(bytes.length - 1) === '0') {
-        bytes = bytes.substring(0, bytes.length - 2)
-      }
-
-      return [bytes]
-    }, [inputContents]),
+    args: inputContents
+      ? [utils.formatBytes32String(normalizeHandle(inputContents))]
+      : null,
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 

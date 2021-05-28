@@ -2,21 +2,19 @@ import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
-import Loading from 'components/shared/Loading'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
-import { ProjectIdentifier } from 'models/project-identifier'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 
-import { useProjectMetadata } from '../../hooks/ProjectMetadata'
-
 export default function ProjectHeader({
-  project,
+  handle,
+  metadata,
   projectId,
   isOwner,
 }: {
-  project: ProjectIdentifier & { metadata?: ProjectMetadata }
+  handle: string
+  metadata: ProjectMetadata
   projectId: BigNumber
   isOwner?: boolean
 }) {
@@ -31,10 +29,6 @@ export default function ProjectHeader({
 
   const headerHeight = 80
 
-  const metadata = useProjectMetadata(project.link)
-
-  const _metadata = project.metadata ?? metadata
-
   return (
     <div>
       <div
@@ -45,8 +39,8 @@ export default function ProjectHeader({
       >
         <div style={{ marginRight: 20 }}>
           <ProjectLogo
-            uri={_metadata?.logoUri}
-            name={_metadata?.name}
+            uri={metadata.logoUri}
+            name={metadata.name}
             size={headerHeight}
           />
         </div>
@@ -56,29 +50,27 @@ export default function ProjectHeader({
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: _metadata?.name
+              color: metadata.name
                 ? colors.text.primary
                 : colors.text.secondary,
             }}
           >
-            {_metadata?.name ?? 'Untitled project'}
+            {metadata.name ?? 'Untitled project'}
           </h1>
 
           <h3>
             <Space size="middle">
-              {project?.handle && (
-                <span style={{ color: colors.text.secondary }}>
-                  @{project.handle}
-                </span>
+              {handle && (
+                <span style={{ color: colors.text.secondary }}>@{handle}</span>
               )}
-              {_metadata?.infoUri && (
+              {metadata?.infoUri && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={_metadata?.infoUri}
+                  href={metadata?.infoUri}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {_metadata?.infoUri}
+                  {metadata.infoUri}
                 </a>
               )}
             </Space>
@@ -104,7 +96,8 @@ export default function ProjectHeader({
       <EditProjectModal
         visible={editProjectModalVisible}
         projectId={projectId}
-        project={project}
+        metadata={metadata}
+        handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}
       />

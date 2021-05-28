@@ -4,13 +4,12 @@ import { padding } from 'constants/styles/padding'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { ProjectIdentifier } from 'models/project-identifier'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
-import { deepEqProjectIdentifiers } from 'utils/deepEqProjectIdentifiers'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import Loading from '../shared/Loading'
@@ -26,20 +25,7 @@ export default function Dashboard() {
   const projectId = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'handleResolver',
-    args: useMemo(() => {
-      if (!handle) return null
-
-      let bytes = utils.formatBytes32String(normalizeHandle(handle))
-
-      // Trim trailing zeros
-      while (bytes.length && bytes.charAt(bytes.length - 1) === '0') {
-        bytes = bytes.substring(0, bytes.length - 1)
-      }
-      // Bytes must have even length
-      if (bytes.length % 2 === 1) bytes += '0'
-
-      return [bytes]
-    }, [handle]),
+    args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
     callback: useCallback(
       (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
       [setProjectExists],
@@ -50,13 +36,6 @@ export default function Dashboard() {
     contract: ContractName.Projects,
     functionName: 'ownerOf',
     args: projectId ? [projectId.toHexString()] : null,
-  })
-
-  const project = useContractReader<ProjectIdentifier>({
-    contract: ContractName.Projects,
-    functionName: 'getInfo',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: useCallback((a, b) => !deepEqProjectIdentifiers(a, b), []),
   })
 
   const fundingCycle = useContractReader<FundingCycle>({
@@ -85,6 +64,8 @@ export default function Dashboard() {
       : undefined,
   })
 
+  const metadata = useProjectMetadata(projectId)
+
   const isOwner = userAddress === owner
 
   if (projectExists === undefined) return <Loading />
@@ -103,14 +84,15 @@ export default function Dashboard() {
     )
   }
 
-  if (!projectId) return null
+  if (!projectId || !handle || !metadata) return null
 
   return (
     <div style={layouts.maxWidth}>
       <Project
+        handle={handle}
+        metadata={metadata}
         isOwner={isOwner}
         projectId={projectId}
-        project={project}
         fundingCycle={fundingCycle}
       />
     </div>

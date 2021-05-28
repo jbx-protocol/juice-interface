@@ -16,9 +16,7 @@ import { fromPerbicent } from '../../utils/formatNumber'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
-  const editingProject = useAppSelector(
-    state => state.editingProject.projectIdentifier,
-  )
+  const editingProject = useAppSelector(state => state.editingProject.info)
   const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'fee',
@@ -64,7 +62,10 @@ export default function ConfirmDeployProject() {
           valueRender={() => formattedTargetWithFee()}
         />
       </Space>
-      <Statistic title="Link" value={orEmpty(editingProject?.link)} />
+      <Statistic
+        title="Link"
+        value={orEmpty(editingProject?.metadata.infoUri)}
+      />
       <Space size="large" align="end">
         {editingFC && isRecurring(editingFC) && (
           <Statistic

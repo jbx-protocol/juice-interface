@@ -30,9 +30,7 @@ export default function DefineProject() {
   const colors = theme.colors
   const [form] = useForm<FormFields>()
   const editingBudget = useEditingFundingCycleSelector()
-  const editingProject = useAppSelector(
-    state => state.editingProject.projectIdentifier,
-  )
+  const editingProject = useAppSelector(state => state.editingProject.info)
   const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
 

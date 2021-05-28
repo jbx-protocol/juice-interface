@@ -3,7 +3,7 @@ import ProjectDiscountRate from './ProjectDiscountRate'
 import ProjectDuration from './ProjectDuration'
 import ProjectHandle from './ProjectHandle'
 import ProjectLink from './ProjectLink'
-import ProjectLogoUri from './ProjectLogoUri'
+import ProjectLogoUrl from './ProjectLogoUrl'
 import ProjectName from './ProjectName'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
@@ -14,7 +14,7 @@ export const FormItems = {
   ProjectDuration,
   ProjectHandle,
   ProjectLink,
-  ProjectLogoUri,
+  ProjectLogoUrl,
   ProjectDiscountRate,
   ProjectReserved,
   ProjectBondingCurveRate,

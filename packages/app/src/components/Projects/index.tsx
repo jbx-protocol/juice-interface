@@ -1,13 +1,7 @@
 import { Input, Select, Space } from 'antd'
-import Loading from 'components/shared/Loading'
-import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
-import useContractReader from 'hooks/ContractReader'
 import { useProjects } from 'hooks/Projects'
-import { ContractName } from 'models/contract-name'
-import { ProjectIdentifier } from 'models/project-identifier'
-import { useCallback } from 'react'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
@@ -32,16 +26,17 @@ export default function Projects() {
 
   const allProjects = useProjects()
 
-  const projectsForOwner = useContractReader<ProjectIdentifier[]>({
-    contract: ContractName.Projects,
-    functionName: 'getAllProjectInfo',
-    args: owner ? [owner] : null,
-    formatter: useCallback(val => val ?? {}, []),
-  })
+  // TODO
+  // const projectsForOwner = useContractReader<ProjectIdentifier[]>({
+  //   contract: ContractName.Projects,
+  //   functionName: 'getAllProjectInfo',
+  //   args: owner ? [owner] : null,
+  //   formatter: useCallback(val => val ?? {}, []),
+  // })
 
-  const projects = owner ? projectsForOwner : allProjects
+  // const projects = owner ? projectsForOwner : allProjects
 
-  if (!selectOption || !projects) return <Loading />
+  // if (!selectOption || !projects) return <Loading />
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -87,13 +82,14 @@ export default function Projects() {
         </Space>
       </div>
 
-      {Object.values(projects).length ? (
+      {/* TODO */}
+      {/* {Object.values(projects).length ? (
         <ProjectsGrid projects={Object.values(projects)} />
       ) : (
         <div style={{ padding: 40, textAlign: 'center' }}>
           No projects owned by {owner}
         </div>
-      )}
+      )} */}
     </div>
   )
 }

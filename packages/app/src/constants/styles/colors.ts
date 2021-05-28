@@ -14,7 +14,7 @@ export const lightColors = {
   ctaHint: '#18b4c722',
   green: 'green',
   red: 'tomato',
-  yellow: 'yellow',
+  yellow: '#d8aa01',
 }
 
 export const darkColors = {

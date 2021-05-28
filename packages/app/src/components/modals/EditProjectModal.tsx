@@ -1,26 +1,37 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form, Input, Modal } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { ProjectIdentifier } from 'models/project-identifier'
+import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
+import {
+  cidFromUrl,
+  editMetadataForCid,
+  logoNameForHandle,
+  metadataNameForHandle,
+  unpinFileByName,
+  uploadProjectMetadata,
+} from 'utils/ipfs'
 
 export type EditProjectFormFields = {
   name: string
-  link: string
-  handle: string
-  logoUri: string
+  infoUrl: string
+  // handle: string
+  logoUrl: string
 }
 
+// TODO edit handle
 export default function EditProjectModal({
-  project,
+  handle,
+  metadata,
   projectId,
   visible,
   onSuccess,
   onCancel,
 }: {
-  project: ProjectIdentifier | undefined
+  handle: string
+  metadata: ProjectMetadata
   projectId: BigNumber
   visible?: boolean
   onSuccess?: VoidFunction
@@ -29,42 +40,72 @@ export default function EditProjectModal({
   const { transactor, contracts } = useContext(UserContext)
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<EditProjectFormFields>()
-  const metadata = useProjectMetadata(project?.link)
-
-  // TODO update edit project with new logo/metadata uploading pattern
 
   useEffect(() => {
-    if (!project) return
+    if (!metadata) return
 
     form.setFieldsValue({
       name: metadata?.name,
-      handle: project.handle,
-      link: metadata?.infoUri,
-      logoUri: metadata?.logoUri,
+      // handle: handle,
+      infoUrl: metadata?.infoUri,
+      logoUrl: metadata?.logoUri,
     })
-  }, [project, form])
+  }, [
+    // handle,
+    form,
+    metadata,
+  ])
 
-  async function setIdentifiers() {
-    if (!transactor || !contracts?.Juicer || !project) return
+  async function setUri() {
+    if (!transactor || !contracts?.Juicer) return
+    // if (!transactor || !contracts?.Juicer || !handle) return
 
     setLoading(true)
 
     const fields = form.getFieldsValue(true)
 
+    const uploadedMetadata = await uploadProjectMetadata({
+      name: fields.name,
+      logoUri: fields.logoUrl,
+      infoUri: fields.infoUrl,
+    })
+
+    if (!uploadedMetadata?.success) {
+      setLoading(false)
+      return
+    }
+
     transactor(
       contracts.Projects,
-      'setIdentifiers',
+      'setUri',
       [
         projectId.toString(),
-        fields.name,
-        fields.handle,
-        fields.logoUri,
-        fields.link,
+        // fields.handle,
+        uploadedMetadata.cid,
       ],
       {
         onDone: () => setLoading(false),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
+
+          // Remove previous metadata file
+          unpinFileByName(metadataNameForHandle(handle))
+
+          // Set name for new metadata file
+          editMetadataForCid(uploadedMetadata.cid, {
+            name: metadataNameForHandle(handle),
+          })
+
+          // If logo changed
+          if (metadata?.logoUri !== fields.logoUrl) {
+            // Remove previous logo file
+            unpinFileByName(logoNameForHandle(handle))
+
+            // Set name for new logo file
+            editMetadataForCid(cidFromUrl(fields.logoUrl), {
+              name: logoNameForHandle(handle),
+            })
+          }
         },
       },
     )
@@ -75,55 +116,28 @@ export default function EditProjectModal({
       title="Edit project"
       visible={visible}
       okText="Save changes"
-      onOk={setIdentifiers}
+      onOk={setUri}
       onCancel={onCancel}
       confirmLoading={loading}
       width={600}
     >
       <Form form={form} layout="vertical">
-        <Form.Item
-          extra="How your project is identified on-chain"
+        <FormItems.ProjectName
           name="name"
-          label="Name"
-          rules={[{ required: true }]}
-        >
-          <Input
-            placeholder="Peach's Juice Stand"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
-        <Form.Item label="Handle" name="handle" rules={[{ required: true }]}>
-          <Input
-            prefix="@"
-            placeholder="yourProject"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
-        <Form.Item
-          name="link"
-          label="Link (optional)"
-          extra="Add a URL that points to where someone could find more information about
-        your project."
-        >
-          <Input
-            placeholder="http://your-project.com"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
-        <Form.Item
-          name="logoUri"
-          label="Logo URL (optional)"
-          extra="The URL of your logo hosted somewhere on the internet."
-        >
-          <Input
-            placeholder="http://ipfs.your-host.io/your-logo.jpg"
-            type="string"
-            autoComplete="off"
-          />
-        </Form.Item>
+          formItemProps={{ rules: [{ required: true }] }}
+        />
+        {/* <FormItems.ProjectHandle
+          name="handle"
+          value={form.getFieldValue('handle')}
+          onValueChange={val => form.setFieldsValue({ handle: val })}
+          formItemProps={{ rules: [{ required: true }] }}
+        /> */}
+        <FormItems.ProjectLink name="infoUrl" />
+        <FormItems.ProjectLogoUrl
+          name="logoUrl"
+          initialUrl={form.getFieldValue('logoUrl')}
+          onSuccess={logoUrl => form.setFieldsValue({ logoUrl })}
+        />
       </Form>
     </Modal>
   )

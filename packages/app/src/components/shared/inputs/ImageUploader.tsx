@@ -1,36 +1,48 @@
 import { CloseCircleFilled } from '@ant-design/icons'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
-import { uploadFile, ipfsCidUrl } from 'utils/ipfs'
+import { useContext, useLayoutEffect, useState } from 'react'
+import {
+  cidFromUrl,
+  ipfsCidUrl,
+  pinFileToIpfs,
+  unpinIpfsFileByCid,
+} from 'utils/ipfs'
 
 export default function ImageUploader({
-  initialPreview,
+  initialUrl,
   onSuccess,
   maxSize,
   metadata,
 }: {
-  initialPreview?: string
+  initialUrl?: string
   metadata?: Record<string | number, any>
-  onSuccess?: (hash: string) => void
+  onSuccess?: (url?: string) => void
   maxSize?: number // KB
 }) {
-  const [ipfsHash, setIpfsHash] = useState<string>()
+  const [url, setUrl] = useState<string>()
   const [loadingUpload, setLoadingUpload] = useState<boolean>()
 
   const { theme } = useContext(ThemeContext)
 
-  const fileUrl = ipfsCidUrl(ipfsHash) || initialPreview
+  const setValue = (cid?: string) => {
+    const newUrl = cid ? ipfsCidUrl(cid) : undefined
+    setUrl(newUrl)
+    onSuccess && onSuccess(newUrl)
+  }
+
+  useLayoutEffect(() => setUrl(initialUrl), [initialUrl])
 
   return (
     <Row
       style={{
         color: theme.colors.text.secondary,
       }}
+      gutter={30}
     >
       <Col xs={24} md={8}>
         <Space align="start">
-          {fileUrl && (
+          {url && (
             <img
               style={{
                 maxHeight: 80,
@@ -39,33 +51,32 @@ export default function ImageUploader({
                 objectPosition: 'center',
                 borderRadius: theme.radii.md,
               }}
-              src={fileUrl}
+              src={url}
             />
           )}
 
-          {ipfsHash ? (
+          {url ? (
             <Button
               icon={<CloseCircleFilled />}
               type="text"
-              onClick={() => setIpfsHash(undefined)}
-            ></Button>
+              onClick={() => setValue()}
+            />
           ) : (
             <Upload
               accept="image/png, image/jpeg, image/jpg, image/gif"
               beforeUpload={file => {
-                console.log('before', file)
                 if (maxSize !== undefined && file.size > maxSize * 1000) {
                   message.error('File must be less than ' + maxSize + 'KB')
                   return Upload.LIST_IGNORE
                 }
               }}
               customRequest={req =>
-                uploadFile(req.file, {
+                pinFileToIpfs(req.file, {
+                  metadata,
                   beforeUpload: () => setLoadingUpload(true),
                   onSuccess: cid => {
+                    setValue(cid)
                     setLoadingUpload(false)
-                    onSuccess && onSuccess(cid)
-                    setIpfsHash(cid)
                   },
                 }).then(res => {
                   if (res.success) {
@@ -81,7 +92,7 @@ export default function ImageUploader({
       </Col>
 
       <Col xs={24} md={16}>
-        {ipfsHash && (
+        {url?.length ? (
           <Space
             style={{
               fontSize: '.7rem',
@@ -90,19 +101,14 @@ export default function ImageUploader({
             }}
             direction="vertical"
           >
-            <div>IPFS hash: {ipfsHash}</div>
             <span>
               Uploaded to:{' '}
-              <a
-                href={ipfsCidUrl(ipfsHash)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {ipfsCidUrl(ipfsHash)}
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url}
               </a>
             </span>
           </Space>
-        )}
+        ) : null}
       </Col>
     </Row>
   )

@@ -4,7 +4,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      it: "set operator, no previously set value",
+      description: "set operator, no previously set value",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectId: 1,
@@ -15,7 +15,7 @@ const tests = {
       })
     },
     {
-      it: "set operator, overriding previously set value",
+      description: "set operator, overriding previously set value",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectId: 1,
@@ -27,7 +27,7 @@ const tests = {
       })
     },
     {
-      it: "set operator, clearing any previously set value",
+      description: "set operator, clearing any previously set value",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectId: 1,
@@ -41,7 +41,7 @@ const tests = {
   ],
   failure: [
     {
-      it: "index out of bounds",
+      description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectId: 0,
@@ -56,7 +56,7 @@ const tests = {
 module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
-      it(successTest.it, async function() {
+      it(successTest.description, async function() {
         const {
           sender,
           projectId,
@@ -104,7 +104,7 @@ module.exports = function() {
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
-      it(failureTest.it, async function() {
+      it(failureTest.description, async function() {
         const {
           sender,
           projectId,

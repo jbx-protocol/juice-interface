@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      it: "has permission, account is sender",
+      description: "has permission, account is sender",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -22,7 +22,7 @@ const tests = {
       })
     },
     {
-      it: "has permission, account is not sender",
+      description: "has permission, account is not sender",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -41,7 +41,7 @@ const tests = {
       })
     },
     {
-      it: "doesnt have permission, never set",
+      description: "doesnt have permission, never set",
       fn: ({ deployer, addrs }) => ({
         check: {
           sender: deployer,
@@ -54,7 +54,7 @@ const tests = {
       })
     },
     {
-      it: "doesnt have permission, indexes differ",
+      description: "doesnt have permission, indexes differ",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -73,7 +73,7 @@ const tests = {
       })
     },
     {
-      it: "doesnt have permission, projectId differs",
+      description: "doesnt have permission, projectId differs",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -94,7 +94,7 @@ const tests = {
   ],
   failure: [
     {
-      it: "index out of bounds",
+      description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         check: {
           sender: deployer,
@@ -112,7 +112,7 @@ const tests = {
 module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
-      it(successTest.it, async function() {
+      it(successTest.description, async function() {
         const { set, check, result } = successTest.fn(this);
         if (set) {
           await this.contract
@@ -137,7 +137,7 @@ module.exports = function() {
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
-      it(failureTest.it, async function() {
+      it(failureTest.description, async function() {
         const { check, revert } = failureTest.fn(this);
         await expect(
           this.contract

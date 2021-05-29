@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "has permissions, account is sender",
+      it: "has permission, account is sender",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -16,64 +16,45 @@ const tests = {
           account: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [42, 41]
+          permissionIndex: 42
         },
         result: true
       })
     },
     {
-      description: "has permissions, account is not sender",
+      it: "has permission, account is not sender",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [7, 8, 9]
+          permissionIndexes: [7]
         },
         check: {
           sender: addrs[1],
           account: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [7]
+          permissionIndex: 7
         },
         result: true
       })
     },
     {
-      description: "doesnt have permissions, never set",
+      it: "doesnt have permission, never set",
       fn: ({ deployer, addrs }) => ({
         check: {
           sender: deployer,
           account: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [42]
+          permissionIndex: 42
         },
         result: false
       })
     },
     {
-      description: "doesnt have permission, all indexes differ",
-      fn: ({ deployer, addrs }) => ({
-        set: {
-          sender: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [1, 2, 3]
-        },
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [42]
-        },
-        result: false
-      })
-    },
-    {
-      description: "doesnt have permission, some indexes differ",
+      it: "doesnt have permission, indexes differ",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -86,13 +67,13 @@ const tests = {
           account: deployer,
           projectId: 1,
           operator: addrs[0],
-          permissionIndexes: [1, 42]
+          permissionIndex: 42
         },
         result: false
       })
     },
     {
-      description: "doesnt have permissions, projectId differs",
+      it: "doesnt have permission, projectId differs",
       fn: ({ deployer, addrs }) => ({
         set: {
           sender: deployer,
@@ -105,7 +86,7 @@ const tests = {
           account: deployer,
           projectId: 0,
           operator: addrs[0],
-          permissionIndexes: [42]
+          permissionIndex: 42
         },
         result: false
       })
@@ -113,16 +94,16 @@ const tests = {
   ],
   failure: [
     {
-      description: "index out of bounds",
+      it: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         check: {
           sender: deployer,
           account: deployer,
           projectId: 0,
           operator: addrs[0],
-          permissionIndexes: [256]
+          permissionIndex: 256
         },
-        revert: "OperatorStore::hasPermissions: INDEX_OUT_OF_BOUNDS"
+        revert: "OperatorStore::hasPermission: INDEX_OUT_OF_BOUNDS"
       })
     }
   ]
@@ -131,7 +112,7 @@ const tests = {
 module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
-      it(successTest.description, async function() {
+      it(successTest.it, async function() {
         const { set, check, result } = successTest.fn(this);
         if (set) {
           await this.contract
@@ -144,11 +125,11 @@ module.exports = function() {
         }
         const flag = await this.contract
           .connect(check.sender)
-          .hasPermissions(
+          .hasPermission(
             check.account.address,
             check.projectId,
             check.operator.address,
-            check.permissionIndexes
+            check.permissionIndex
           );
         expect(flag).to.equal(result);
       });
@@ -156,16 +137,16 @@ module.exports = function() {
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
-      it(failureTest.description, async function() {
+      it(failureTest.it, async function() {
         const { check, revert } = failureTest.fn(this);
         await expect(
           this.contract
             .connect(check.sender)
-            .hasPermissions(
+            .hasPermission(
               check.account.address,
               check.projectId,
               check.operator.address,
-              check.permissionIndexes
+              check.permissionIndex
             )
         ).to.be.revertedWith(revert);
       });

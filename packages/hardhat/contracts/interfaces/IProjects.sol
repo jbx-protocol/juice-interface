@@ -11,6 +11,13 @@ interface IProjects is IERC721 {
         string uri;
     }
 
+    event Create(
+        uint256 indexed projectId,
+        bytes32 handle,
+        string uri,
+        address caller
+    );
+
     event SetHandle(uint256 indexed projectId, bytes32 handle, address caller);
 
     event SetUri(uint256 indexed projectId, string uri, address caller);

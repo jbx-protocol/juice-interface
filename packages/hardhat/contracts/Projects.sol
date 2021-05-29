@@ -91,6 +91,9 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         uri[count] = _uri;
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
+
+        emit Create(count, _handle, _uri, msg.sender);
+
         return count;
     }
 

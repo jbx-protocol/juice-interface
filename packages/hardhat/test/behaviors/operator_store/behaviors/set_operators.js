@@ -4,7 +4,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      it: "set operators, no previously set values",
+      description: "set operators, no previously set values",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [1, 2],
@@ -22,7 +22,7 @@ const tests = {
       })
     },
     {
-      it: "set operators, overriding previously set values",
+      description: "set operators, overriding previously set values",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [1, 1],
@@ -35,7 +35,7 @@ const tests = {
       })
     },
     {
-      it: "set operators, clearing any previously set values",
+      description: "set operators, clearing any previously set values",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [0, 1],
@@ -48,7 +48,7 @@ const tests = {
       })
     },
     {
-      it:
+      description:
         "set operators, with the same operator used for two different projects",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
@@ -67,7 +67,8 @@ const tests = {
       })
     },
     {
-      it: "set operators, with the same operator used for the same project",
+      description:
+        "set operators, with the same operator used for the same project",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [0, 0],
@@ -87,7 +88,7 @@ const tests = {
   ],
   failure: [
     {
-      it: "not enough projects specified",
+      description: "not enough projects specified",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [1],
@@ -106,7 +107,7 @@ const tests = {
       })
     },
     {
-      it: "not enough permission indexes specified",
+      description: "not enough permission indexes specified",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [1, 2],
@@ -119,7 +120,7 @@ const tests = {
       })
     },
     {
-      it: "index out of bounds",
+      description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
         projectIds: [1, 2],
@@ -143,7 +144,7 @@ const tests = {
 module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
-      it(successTest.it, async function() {
+      it(successTest.description, async function() {
         const {
           sender,
           projectIds,
@@ -211,7 +212,7 @@ module.exports = function() {
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
-      it(failureTest.it, async function() {
+      it(failureTest.description, async function() {
         const {
           sender,
           projectIds,

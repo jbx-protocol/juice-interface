@@ -10,7 +10,7 @@ import "./interfaces/IPrices.sol";
 */
 contract Prices is IPrices, Ownable {
     // The number to multiply each price feed by to get to the target decimals.
-    mapping(uint256 => uint256) private feedDecimalAdjuster;
+    mapping(uint256 => uint256) public override feedDecimalAdjuster;
 
     // The number of decimals the price feed results have.
     uint256 public constant override decimals = 18;
@@ -53,11 +53,8 @@ contract Prices is IPrices, Ownable {
         override
         onlyOwner
     {
-        // Feed cant be the zero address.
-        require(
-            _feed != AggregatorV3Interface(address(0)),
-            "Prices::addFeed: ZERO_ADDRESS"
-        );
+        // The 0 currency is reserved for ETH.
+        require(_currency > 0, "Prices::addFeed: RESERVED");
 
         // Get a reference to the number of decimals the feed uses.
         uint256 _decimals = _feed.decimals();

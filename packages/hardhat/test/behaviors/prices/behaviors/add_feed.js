@@ -1,11 +1,6 @@
 const { ethers } = require("hardhat");
 const { expect } = require("chai");
 
-const { deployMockContract } = require("@ethereum-waffle/mock-contract");
-const AggregatorV3Interface = require("@chainlink/contracts/abi/v0.6/AggregatorV3Interface.json");
-
-let mockAggregatorV3InterfaceContract;
-
 const tests = {
   success: [
     {
@@ -58,29 +53,24 @@ const tests = {
 
 module.exports = function() {
   describe("Success cases", function() {
-    before(async function() {
-      // Deploy a mock of the price feed oracle contract.
-      mockAggregatorV3InterfaceContract = await deployMockContract(
-        this.deployer,
-        AggregatorV3Interface.compilerOutput.abi
-      );
-    });
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
         const { sender, currency, decimals } = successTest.fn(this);
 
         // Set the mock to the return the specified number of decimals.
-        await mockAggregatorV3InterfaceContract.mock.decimals.returns(decimals);
+        await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
+          decimals
+        );
 
         // Execute the transaction.
         const tx = await this.contract
           .connect(sender)
-          .addFeed(mockAggregatorV3InterfaceContract.address, currency);
+          .addFeed(this.mockAggregatorV3InterfaceContract.address, currency);
 
         // Expect an event to have been emitted.
         expect(tx)
           .to.emit(this.contract, "AddFeed")
-          .withArgs(currency, mockAggregatorV3InterfaceContract.address);
+          .withArgs(currency, this.mockAggregatorV3InterfaceContract.address);
 
         // Get a reference to the target number of decimals.
         const targetDecimals = await this.contract.targetDecimals();
@@ -101,7 +91,9 @@ module.exports = function() {
         const storedFeed = await this.contract.feeds(currency);
 
         // Expect the stored feed values to match.
-        expect(storedFeed).to.equal(mockAggregatorV3InterfaceContract.address);
+        expect(storedFeed).to.equal(
+          this.mockAggregatorV3InterfaceContract.address
+        );
       });
     });
   });
@@ -110,12 +102,14 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const { sender, currency, decimals, revert } = failureTest.fn(this);
 
-        await mockAggregatorV3InterfaceContract.mock.decimals.returns(decimals);
+        await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
+          decimals
+        );
 
         await expect(
           this.contract
             .connect(sender)
-            .addFeed(mockAggregatorV3InterfaceContract.address, currency)
+            .addFeed(this.mockAggregatorV3InterfaceContract.address, currency)
         ).to.be.revertedWith(revert);
       });
     });

@@ -1,297 +1,232 @@
 const { ethers } = require("hardhat");
-const { use, expect } = require("chai");
-const { solidity } = require("ethereum-waffle");
+const { expect } = require("chai");
 
-use(solidity);
+const tests = {
+  success: [
+    {
+      it: "set operators, no previously set values",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 2],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ],
+          expect: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ]
+        }
+      })
+    },
+    {
+      it: "set operators, overriding previously set values",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 1],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          pre: [[33], [23]],
+          set: [[42, 41, 255], [3]],
+          expect: [[42, 41, 255], [3]]
+        }
+      })
+    },
+    {
+      it: "set operators, clearing any previously set values",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [0, 1],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          pre: [[33], [33]],
+          set: [[], []],
+          expect: [[], []]
+        }
+      })
+    },
+    {
+      it:
+        "set operators, with the same operator used for two different projects",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [0, 1],
+        operators: [addrs[0], addrs[0]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ],
+          expect: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ]
+        }
+      })
+    },
+    {
+      it: "set operators, with the same operator used for the same project",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [0, 0],
+        operators: [addrs[0], addrs[0]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ],
+          expect: [
+            [4, 255, 3],
+            [4, 255, 3]
+          ]
+        }
+      })
+    }
+  ],
+  failure: [
+    {
+      it: "not enough projects specified",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ],
+          expect: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ]
+        },
+        revert: "OperatorStore::setOperators: BAD_ARGS"
+      })
+    },
+    {
+      it: "not enough permission indexes specified",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 2],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [[42, 41, 255]],
+          expect: [[42, 41, 255]]
+        },
+        revert: "OperatorStore::setOperators: BAD_ARGS"
+      })
+    },
+    {
+      it: "index out of bounds",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 2],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 256],
+            [4, 255, 3]
+          ],
+          expect: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ]
+        },
+        revert: "OperatorStore::_packedPermissions: INDEX_OUT_OF_BOUNDS"
+      })
+    }
+  ]
+};
 
-const projectId1 = 0;
-const projectId2 = 1;
-const permissionIndexes1 = [0, 7, 77];
-const permissionIndexes2 = [1, 7, 58];
-const unusedPermissions = [2, 4, 5, 23, 59, 88, 92, 224, 249, 255];
+module.exports = function() {
+  describe("Success cases", function() {
+    tests.success.forEach(function(successTest) {
+      it(successTest.it, async function() {
+        const {
+          sender,
+          projectIds,
+          operators,
+          permissionIndexes
+        } = successTest.fn(this);
 
-let contract;
-let caller;
-let operator1;
-let operator2;
-
-const contractName = "OperatorStore";
-
-module.exports = () => {
-  before(async () => {
-    [caller, operator1, operator2] = await ethers.getSigners();
-    const contractArtifacts = await ethers.getContractFactory(contractName);
-    contract = await contractArtifacts.deploy();
-    await contract.deployTransaction.wait();
-  });
-  describe("Success cases", () => {
-    describe("Set", () => {
-      describe("setOperators(...)", () => {
-        it("Should set operators correctly and emit events", async () => {
-          const tx = await contract
-            .connect(caller)
-            .setOperators(
-              [projectId1, projectId2],
-              [operator1.address, operator2.address],
-              [permissionIndexes1, permissionIndexes2]
-            );
-          const receipt = await tx.wait();
-          expect(receipt.confirmations).to.equal(1);
-          // Verify events
-          expect(receipt.events).to.have.lengthOf(2);
-
-          expect(receipt.events[0])
-            .to.have.property("event")
-            .that.equals("SetOperator");
-
-          expect(receipt.events[1])
-            .to.have.property("event")
-            .that.equals("SetOperator");
-        });
-      });
-      describe("permissions(...)", () => {
-        it("Should have stored the correct packed permissions", async () => {
-          // Get the stored packed permissions value for operator1.
-          const storedPackedPermissions1 = await contract.permissions(
-            caller.address,
-            projectId1,
-            operator1.address
+        if (permissionIndexes.pre) {
+          await this.contract.connect(sender).setOperators(
+            projectIds,
+            operators.map(o => o.address),
+            permissionIndexes.pre
           );
+        }
 
-          // Get the stored packed permissions value for operator2.
-          const storedPackedPermissions2 = await contract.permissions(
-            caller.address,
-            projectId2,
-            operator2.address
-          );
-
-          // Calculate expected packed value.
-          const expectedPackedPermissions1 = permissionIndexes1.reduce(
+        // Calculate packed value.
+        const expectedPackedPermissions = permissionIndexes.expect.map(p =>
+          p.reduce(
             (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
             ethers.BigNumber.from(0)
-          );
-
-          // Calculate expected packed value.
-          const expectedPackedPermissions2 = permissionIndexes2.reduce(
-            (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
-            ethers.BigNumber.from(0)
-          );
-
-          // Expect the packed values to match.
-          expect(storedPackedPermissions1).to.equal(expectedPackedPermissions1);
-          expect(storedPackedPermissions2).to.equal(expectedPackedPermissions2);
-        });
-      });
-      describe("hasPermission(...) & hasPermissions(...)", () => {
-        it("Should report as having the correct permissions", async () => {
-          const confirmedStoredHasPermissions1 = [];
-          const confirmedStoredHasPermissions2 = [];
-
-          // The operator should only have the permissions specified.
-          await Promise.all(
-            [
-              ...permissionIndexes1,
-              ...permissionIndexes2,
-              ...unusedPermissions
-            ].map(async i => {
-              // Get the stored packed permissions value.
-              const storedHasPermission1 = await contract.hasPermission(
-                caller.address,
-                projectId1,
-                operator1.address,
-                i
-              );
-              const storedHasPermission2 = await contract.hasPermission(
-                caller.address,
-                projectId2,
-                operator2.address,
-                i
-              );
-
-              // Expect the permission state to match.
-              expect(storedHasPermission1).to.be.equal(
-                permissionIndexes1.includes(i)
-              );
-              expect(storedHasPermission2).to.be.equal(
-                permissionIndexes2.includes(i)
-              );
-
-              // Make sure that checking for multiple permissions works.
-              const storedHasPermissions1 = await contract.hasPermissions(
-                caller.address,
-                projectId1,
-                operator1.address,
-                [...confirmedStoredHasPermissions1, i]
-              );
-              const storedHasPermissions2 = await contract.hasPermissions(
-                caller.address,
-                projectId2,
-                operator2.address,
-                [...confirmedStoredHasPermissions2, i]
-              );
-
-              // Expect the permissions state to match.
-              expect(storedHasPermissions1).to.be.equal(
-                permissionIndexes1.includes(i)
-              );
-              expect(storedHasPermissions2).to.be.equal(
-                permissionIndexes2.includes(i)
-              );
-
-              // Add the the array if the permissions match.
-              if (storedHasPermissions1) confirmedStoredHasPermissions1.push(i);
-              if (storedHasPermissions2) confirmedStoredHasPermissions2.push(i);
-            })
-          );
-        });
-      });
-    });
-    describe("Clear and update", () => {
-      describe("setOperators(...)", () => {
-        it("Should clear and update operator permissions correctly and emit events", async () => {
-          const tx = await contract
-            .connect(caller)
-            .setOperators(
-              [projectId1, projectId2],
-              [operator1.address, operator2.address],
-              [[], permissionIndexes1]
-            );
-          const receipt = await tx.wait();
-          expect(receipt.confirmations).to.equal(1);
-          // Verify events
-          expect(receipt.events).to.have.lengthOf(2);
-
-          expect(receipt.events[0])
-            .to.have.property("event")
-            .that.equals("SetOperator");
-
-          expect(receipt.events[1])
-            .to.have.property("event")
-            .that.equals("SetOperator");
-        });
-      });
-      describe("permissions(...)", () => {
-        it("Should have stored the nullified and updated packed permissions", async () => {
-          // Get the stored packed permissions value for operator1.
-          const storedPackedPermissions1 = await contract.permissions(
-            caller.address,
-            projectId1,
-            operator1.address
-          );
-
-          // Get the stored packed permissions value for operator2.
-          const storedPackedPermissions2 = await contract.permissions(
-            caller.address,
-            projectId2,
-            operator2.address
-          );
-
-          // Calculate expected packed value.
-          const expectedPackedPermissions1 = 0;
-
-          // Calculate expected packed value.
-          const expectedPackedPermissions2 = permissionIndexes1.reduce(
-            (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
-            ethers.BigNumber.from(0)
-          );
-
-          // Expect the packed values to match.
-          expect(storedPackedPermissions1).to.equal(expectedPackedPermissions1);
-          expect(storedPackedPermissions2).to.equal(expectedPackedPermissions2);
-        });
-      });
-      describe("hasPermission(...) & hasPermissions(...)", () => {
-        it("Should report as having the correct nullified and updated permissions", async () => {
-          const confirmedStoredHasPermissions = [];
-
-          // The operator should only have the permissions specified.
-          await Promise.all(
-            [
-              ...permissionIndexes1,
-              ...permissionIndexes2,
-              ...unusedPermissions
-            ].map(async i => {
-              // Get the stored packed permissions value.
-              const storedHasPermission1 = await contract.hasPermission(
-                caller.address,
-                projectId1,
-                operator1.address,
-                i
-              );
-              const storedHasPermission2 = await contract.hasPermission(
-                caller.address,
-                projectId2,
-                operator2.address,
-                i
-              );
-
-              // Expect the permission state to match.
-              expect(storedHasPermission1).to.be.equal(false);
-              expect(storedHasPermission2).to.be.equal(
-                permissionIndexes1.includes(i)
-              );
-
-              // Make sure that checking for multiple permissions works.
-              const storedHasPermissions1 = await contract.hasPermissions(
-                caller.address,
-                projectId1,
-                operator1.address,
-                [i]
-              );
-              const storedHasPermissions2 = await contract.hasPermissions(
-                caller.address,
-                projectId2,
-                operator2.address,
-                [...confirmedStoredHasPermissions, i]
-              );
-
-              // Expect the permissions state to match.
-              expect(storedHasPermissions1).to.be.equal(false);
-              expect(storedHasPermissions2).to.be.equal(
-                permissionIndexes1.includes(i)
-              );
-
-              // Add the the array if the permissions match.
-              if (storedHasPermissions2) confirmedStoredHasPermissions.push(i);
-            })
-          );
-        });
-      });
-    });
-  });
-  describe("Failure cases", () => {
-    describe("setOperators(...)", () => {
-      it("Should revert if param lengths dont match up", async () => {
-        await expect(
-          contract
-            .connect(caller)
-            .setOperators(
-              [projectId1],
-              [operator1.address, operator2.address],
-              [permissionIndexes1, permissionIndexes2]
-            )
-        ).to.be.revertedWith("OperatorStore::setOperators: BAD_ARGS");
-        await expect(
-          contract
-            .connect(caller)
-            .setOperators(
-              [projectId1, projectId2],
-              [operator1.address, operator2.address],
-              [permissionIndexes1]
-            )
-        ).to.be.revertedWith("OperatorStore::setOperators: BAD_ARGS");
-      });
-    });
-    it("Should revert if the index is greater than 255.", async () => {
-      await expect(
-        contract
-          .connect(caller)
-          .setOperators(
-            [projectId1, projectId2],
-            [operator1.address, operator2.address],
-            [permissionIndexes1, [256]]
           )
-      ).to.be.revertedWith("OperatorStore::_packedPermissions: BAD_INDEX");
+        );
+
+        await expect(
+          this.contract.connect(sender).setOperators(
+            projectIds,
+            operators.map(o => o.address),
+            permissionIndexes.set
+          )
+        )
+          .to.emit(this.contract, "SetOperator")
+          .withArgs(
+            sender.address,
+            projectIds[0],
+            operators[0].address,
+            permissionIndexes.expect[0],
+            expectedPackedPermissions[0]
+          )
+          .and.to.emit(this.contract, "SetOperator")
+          .withArgs(
+            sender.address,
+            projectIds[1],
+            operators[1].address,
+            permissionIndexes.expect[1],
+            expectedPackedPermissions[1]
+          );
+
+        // Get the stored packed permissions value.
+        const storedPackedPermissions0 = await this.contract.permissions(
+          sender.address,
+          projectIds[0],
+          operators[0].address
+        );
+        const storedPackedPermissions1 = await this.contract.permissions(
+          sender.address,
+          projectIds[1],
+          operators[1].address
+        );
+
+        // Expect the packed values to match.
+        expect(storedPackedPermissions0).to.equal(expectedPackedPermissions[0]);
+        expect(storedPackedPermissions1).to.equal(expectedPackedPermissions[1]);
+      });
+    });
+  });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.it, async function() {
+        const {
+          sender,
+          projectIds,
+          operators,
+          permissionIndexes,
+          revert
+        } = failureTest.fn(this);
+        await expect(
+          this.contract.connect(sender).setOperators(
+            projectIds,
+            operators.map(o => o.address),
+            permissionIndexes.set
+          )
+        ).to.be.revertedWith(revert);
+      });
     });
   });
 };

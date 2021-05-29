@@ -41,6 +41,8 @@ interface IModStore {
 
     function setPaymentModsPermissionIndex() external view returns (uint256);
 
+    function setTicketModsPermissionIndex() external view returns (uint256);
+
     function paymentMods(uint256 _projectId)
         external
         view

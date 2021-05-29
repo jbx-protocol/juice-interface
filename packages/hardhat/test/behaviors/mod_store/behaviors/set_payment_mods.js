@@ -22,6 +22,24 @@ const tests = {
       })
     },
     {
+      description: "set one payment mod, beneficiary is different from caller",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        mods: [
+          {
+            allocator: ethers.constants.AddressZero,
+            projectId: 1,
+            beneficiary: addrs[0].address,
+            percent: 200,
+            note: "sup",
+            preferConverted: false
+          }
+        ]
+      })
+    },
+    {
       description: "set many payment mods, called by owner",
       fn: ({ deployer, modAllocator }) => ({
         caller: deployer,
@@ -189,25 +207,6 @@ const tests = {
         revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
       })
     }
-    // {
-    //   description: "unauthorized",
-    //   fn: ({ deployer }) => ({
-    //     caller: deployer,
-    //     projectOwner: deployer.address,
-    //     projectId: 1,
-    //     mods: [
-    //       {
-    //         allocator: ethers.constants.AddressZero,
-    //         projectId: 1,
-    //         beneficiary: deployer.address,
-    //         percent: 100,
-    //         note: "sup",
-    //         preferConverted: false
-    //       }
-    //     ]
-    //   }),
-    //   revert: "Juicer::setPaymentMods: UNAUTHORIZED"
-    // }
   ]
 };
 
@@ -283,19 +282,15 @@ module.exports = function() {
           revert
         } = failureTest.fn(this);
 
-        // Set the Projects mock to return the projectOwner.
         await this.projects.mock.ownerOf
           .withArgs(projectId)
           .returns(projectOwner);
 
-        // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the payment mods on an owner's behalf.
           const permissionIndex = await this.contract
             .connect(caller)
             .setPaymentModsPermissionIndex();
 
-          // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
             .withArgs(projectOwner, projectId, caller.address, permissionIndex)
             .returns(permissionFlag);

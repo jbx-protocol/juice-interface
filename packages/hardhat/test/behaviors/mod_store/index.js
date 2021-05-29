@@ -19,5 +19,5 @@ module.exports = function() {
 
   // Test each function.
   describe("setPaymentMods(...)", shouldBehaveLike.setPaymentMods);
-  // describe("setTicketMods(...)", shouldBehaveLike.setTicketMods);
+  describe("setTicketMods(...)", shouldBehaveLike.setTicketMods);
 };

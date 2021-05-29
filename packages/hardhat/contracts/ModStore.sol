@@ -32,6 +32,10 @@ contract ModStore is IModStore {
     uint256 public immutable override setPaymentModsPermissionIndex =
         Operations.SetPaymentMods;
 
+    /// @notice the permision index required to set ticket mods on an owners behalf.
+    uint256 public immutable override setTicketModsPermissionIndex =
+        Operations.SetTicketMods;
+
     // --- public views --- //
 
     /**
@@ -167,7 +171,7 @@ contract ModStore is IModStore {
                     _owner,
                     _projectId,
                     msg.sender,
-                    Operations.SetTicketMods
+                    setTicketModsPermissionIndex
                 ),
             "ModStore::setTicketMods: UNAUTHORIZED"
         );
@@ -185,7 +189,7 @@ contract ModStore is IModStore {
             // The percent should be less than 200.
             require(
                 _mods[_i].percent > 0 && _mods[_i].percent <= 200,
-                "ModStore::setTicketMods: BAD_PERCENT"
+                "ModStore::setTicketMods: BAD_MOD_PERCENT"
             );
 
             // The beneficiary shouldn't be the zero address.
@@ -204,7 +208,7 @@ contract ModStore is IModStore {
         // The total percent should be less than 200.
         require(
             _ticketModPercentTotal <= 200,
-            "ModStore::setTicketMods: BAD_PERCENTS"
+            "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
         );
 
         emit SetTicketMods(_projectId, _mods, msg.sender);

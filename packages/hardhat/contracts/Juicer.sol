@@ -677,9 +677,9 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Get a reference to the leftover transfer amount after all mods have been paid.
         uint256 _leftoverTransferAmount = _transferAmount;
 
-        // The total amount sent to mods.
+        // Get a reference to the project's payment mods.
         PaymentMod[] memory _mods =
-            modStore.allPaymentMods(_fundingCycle.projectId);
+            modStore.paymentMods(_fundingCycle.projectId);
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
@@ -890,8 +890,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
         uint256 _leftoverTicketAmount = amount;
 
-        // Get a reference to all ticket mods.
-        TicketMod[] memory _mods = modStore.allTicketMods(_projectId);
+        // Get a reference to the project's ticket mods.
+        TicketMod[] memory _mods = modStore.ticketMods(_projectId);
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {

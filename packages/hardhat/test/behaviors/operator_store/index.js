@@ -1,4 +1,3 @@
-const { ethers } = require("hardhat");
 const shouldBehaveLike = require("./behaviors");
 
 const contractName = "OperatorStore";
@@ -6,8 +5,8 @@ const contractName = "OperatorStore";
 module.exports = function() {
   // Before the tests, deploy the contract.
   before(async function() {
-    const contractArtifacts = await ethers.getContractFactory(contractName);
-    this.contract = await contractArtifacts.deploy();
+    // Deploy the contract.
+    this.contract = await this.deployContract(contractName);
   });
 
   // Test each function.

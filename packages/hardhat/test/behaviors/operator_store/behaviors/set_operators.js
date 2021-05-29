@@ -84,6 +84,18 @@ const tests = {
           ]
         }
       })
+    },
+    {
+      description: "set only one operator",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1],
+        operators: [addrs[0]],
+        permissionIndexes: {
+          set: [[42, 41, 255]],
+          expect: [[42, 41, 255]]
+        }
+      })
     }
   ],
   failure: [
@@ -107,6 +119,25 @@ const tests = {
       })
     },
     {
+      description: "too many projects specified",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 2, 3],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ],
+          expect: [
+            [42, 41, 255],
+            [4, 255, 3]
+          ]
+        },
+        revert: "OperatorStore::setOperators: BAD_ARGS"
+      })
+    },
+    {
       description: "not enough permission indexes specified",
       fn: ({ deployer, addrs }) => ({
         sender: deployer,
@@ -115,6 +146,27 @@ const tests = {
         permissionIndexes: {
           set: [[42, 41, 255]],
           expect: [[42, 41, 255]]
+        },
+        revert: "OperatorStore::setOperators: BAD_ARGS"
+      })
+    },
+    {
+      description: "too many permission indexes specified",
+      fn: ({ deployer, addrs }) => ({
+        sender: deployer,
+        projectIds: [1, 2],
+        operators: [addrs[0], addrs[1]],
+        permissionIndexes: {
+          set: [
+            [42, 41, 255],
+            [42, 41, 255],
+            [42, 41, 255]
+          ],
+          expect: [
+            [42, 41, 255],
+            [42, 41, 255],
+            [42, 41, 255]
+          ]
         },
         revert: "OperatorStore::setOperators: BAD_ARGS"
       })
@@ -152,6 +204,7 @@ module.exports = function() {
           permissionIndexes
         } = successTest.fn(this);
 
+        // If specified, pre-set an operator before the rest of the test.
         if (permissionIndexes.pre) {
           await this.contract.connect(sender).setOperators(
             projectIds,
@@ -160,53 +213,45 @@ module.exports = function() {
           );
         }
 
-        // Calculate packed value.
-        const expectedPackedPermissions = permissionIndexes.expect.map(p =>
-          p.reduce(
-            (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
-            ethers.BigNumber.from(0)
-          )
+        // Execute the transaction
+        const tx = await this.contract.connect(sender).setOperators(
+          projectIds,
+          operators.map(o => o.address),
+          permissionIndexes.set
         );
 
-        await expect(
-          this.contract.connect(sender).setOperators(
-            projectIds,
-            operators.map(o => o.address),
-            permissionIndexes.set
-          )
-        )
-          .to.emit(this.contract, "SetOperator")
-          .withArgs(
-            sender.address,
-            projectIds[0],
-            operators[0].address,
-            permissionIndexes.expect[0],
-            expectedPackedPermissions[0]
-          )
-          .and.to.emit(this.contract, "SetOperator")
-          .withArgs(
-            sender.address,
-            projectIds[1],
-            operators[1].address,
-            permissionIndexes.expect[1],
-            expectedPackedPermissions[1]
-          );
+        // For each operator...
+        await Promise.all(
+          operators.map(async (operator, i) => {
+            // Calculate the expected packed values once the permissions are set.
+            const expectedPackedPermissions = permissionIndexes.expect[
+              i
+            ].reduce(
+              (sum, index) => sum.add(ethers.BigNumber.from(2).pow(index)),
+              ethers.BigNumber.from(0)
+            );
 
-        // Get the stored packed permissions value.
-        const storedPackedPermissions0 = await this.contract.permissions(
-          sender.address,
-          projectIds[0],
-          operators[0].address
-        );
-        const storedPackedPermissions1 = await this.contract.permissions(
-          sender.address,
-          projectIds[1],
-          operators[1].address
-        );
+            // Expect an event to be emitted.
+            expect(tx)
+              .to.emit(this.contract, "SetOperator")
+              .withArgs(
+                sender.address,
+                projectIds[i],
+                operator.address,
+                permissionIndexes.expect[i],
+                expectedPackedPermissions
+              );
 
-        // Expect the packed values to match.
-        expect(storedPackedPermissions0).to.equal(expectedPackedPermissions[0]);
-        expect(storedPackedPermissions1).to.equal(expectedPackedPermissions[1]);
+            // Get the stored packed permissions values.
+            const storedPackedPermissions = await this.contract.permissions(
+              sender.address,
+              projectIds[i],
+              operator.address
+            );
+            // Expect the packed values to match.
+            expect(storedPackedPermissions).to.equal(expectedPackedPermissions);
+          })
+        );
       });
     });
   });

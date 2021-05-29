@@ -1,1 +1,1 @@
-module.exports = ["YearnYielder", "Ticket"];
+module.exports = ["ETHUSDPriceFeed", "YearnYielder", "Ticket"];

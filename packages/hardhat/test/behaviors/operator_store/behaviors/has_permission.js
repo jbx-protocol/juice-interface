@@ -114,6 +114,8 @@ module.exports = function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
         const { set, check, result } = successTest.fn(this);
+
+        // If specified, set an operator before the rest of the test.
         if (set) {
           await this.contract
             .connect(set.sender)
@@ -123,6 +125,8 @@ module.exports = function() {
               set.permissionIndexes
             );
         }
+
+        // Check for permissions.
         const flag = await this.contract
           .connect(check.sender)
           .hasPermission(
@@ -131,6 +135,7 @@ module.exports = function() {
             check.operator.address,
             check.permissionIndex
           );
+
         expect(flag).to.equal(result);
       });
     });

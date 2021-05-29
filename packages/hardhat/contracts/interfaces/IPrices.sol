@@ -8,7 +8,7 @@ interface IPrices {
 
     function feedDecimalAdjuster(uint256 _currency) external returns (uint256);
 
-    function decimals() external returns (uint256);
+    function targetDecimals() external returns (uint256);
 
     function feeds(uint256 _currency) external returns (AggregatorV3Interface);
 

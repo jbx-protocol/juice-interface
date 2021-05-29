@@ -1,109 +1,45 @@
+const { ethers } = require("hardhat");
 const { expect } = require("chai");
 
 const tests = {
   success: [
     {
-      it: "has permission, account is sender",
-      fn: ({ deployer, addrs }) => ({
-        set: {
-          sender: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [42, 41, 255]
-        },
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndex: 42
-        },
-        result: true
+      description: "check ETH price, non-zero currency, 18 decimals",
+      fn: ({ deployer }) => ({
+        sender: deployer,
+        currency: 1,
+        decimals: 18,
+        price: 400
       })
     },
     {
-      it: "has permission, account is not sender",
-      fn: ({ deployer, addrs }) => ({
-        set: {
-          sender: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [7]
-        },
-        check: {
-          sender: addrs[1],
-          account: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndex: 7
-        },
-        result: true
+      description: "check ETH price, non-zero currency, 0 decimals",
+      fn: ({ deployer }) => ({
+        sender: deployer,
+        currency: 1,
+        decimals: 0,
+        price: 400
       })
     },
     {
-      it: "doesnt have permission, never set",
-      fn: ({ deployer, addrs }) => ({
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndex: 42
-        },
-        result: false
-      })
-    },
-    {
-      it: "doesnt have permission, indexes differ",
-      fn: ({ deployer, addrs }) => ({
-        set: {
-          sender: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [1, 2, 3]
-        },
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndex: 42
-        },
-        result: false
-      })
-    },
-    {
-      it: "doesnt have permission, projectId differs",
-      fn: ({ deployer, addrs }) => ({
-        set: {
-          sender: deployer,
-          projectId: 1,
-          operator: addrs[0],
-          permissionIndexes: [42]
-        },
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 0,
-          operator: addrs[0],
-          permissionIndex: 42
-        },
-        result: false
+      description: "check ETH price, zero currency, 0 decimals",
+      fn: ({ deployer }) => ({
+        sender: deployer,
+        currency: 0,
+        price: 1
       })
     }
   ],
   failure: [
     {
-      it: "index out of bounds",
-      fn: ({ deployer, addrs }) => ({
-        check: {
-          sender: deployer,
-          account: deployer,
-          projectId: 0,
-          operator: addrs[0],
-          permissionIndex: 256
-        },
-        revert: "OperatorStore::hasPermission: INDEX_OUT_OF_BOUNDS"
+      description: "currency feed not found",
+      fn: ({ deployer }) => ({
+        sender: deployer,
+        addCurrency: 1,
+        getCurrency: 2,
+        decimals: 18,
+        price: 400,
+        revert: "Prices::getETHPrice: NOT_FOUND"
       })
     }
   ]
@@ -112,42 +48,80 @@ const tests = {
 module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
-      it(successTest.it, async function() {
-        const { set, check, result } = successTest.fn(this);
-        if (set) {
-          await this.contract
-            .connect(set.sender)
-            .setOperator(
-              set.projectId,
-              set.operator.address,
-              set.permissionIndexes
-            );
-        }
-        const flag = await this.contract
-          .connect(check.sender)
-          .hasPermission(
-            check.account.address,
-            check.projectId,
-            check.operator.address,
-            check.permissionIndex
+      it(successTest.description, async function() {
+        const { sender, currency, decimals, price } = successTest.fn(this);
+
+        // If the currency is 0, mocks or a feed aren't needed.
+        if (currency > 0) {
+          // Set the mock to the return the specified number of decimals.
+          await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
+            decimals
           );
-        expect(flag).to.equal(result);
+          // Set the mock to return the specified price.
+          await this.mockAggregatorV3InterfaceContract.mock.latestRoundData.returns(
+            0,
+            price,
+            0,
+            0,
+            0
+          );
+
+          // Add price feed.
+          await this.contract
+            .connect(sender)
+            .addFeed(this.mockAggregatorV3InterfaceContract.address, currency);
+        }
+
+        // Check for the price.
+        const resultingPrice = await this.contract
+          .connect(sender)
+          .getETHPrice(currency);
+
+        // Get a reference to the target number of decimals.
+        const targetDecimals = await this.contract.targetDecimals();
+
+        // Get a reference to the expected price value.
+        const expectedPrice = ethers.BigNumber.from(price).mul(
+          ethers.BigNumber.from(10).pow(
+            currency === 0 ? targetDecimals : targetDecimals - decimals
+          )
+        );
+
+        // Expect the stored price value to match the expected value.
+        expect(resultingPrice).to.equal(expectedPrice);
       });
     });
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
-      it(failureTest.it, async function() {
-        const { check, revert } = failureTest.fn(this);
+      it(failureTest.description, async function() {
+        const {
+          sender,
+          addCurrency,
+          getCurrency,
+          decimals,
+          price,
+          revert
+        } = failureTest.fn(this);
+
+        await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
+          decimals
+        );
+
+        await this.mockAggregatorV3InterfaceContract.mock.latestRoundData.returns(
+          0,
+          price,
+          0,
+          0,
+          0
+        );
+
+        await this.contract
+          .connect(sender)
+          .addFeed(this.mockAggregatorV3InterfaceContract.address, addCurrency);
+
         await expect(
-          this.contract
-            .connect(check.sender)
-            .hasPermission(
-              check.account.address,
-              check.projectId,
-              check.operator.address,
-              check.permissionIndex
-            )
+          this.contract.connect(sender).getETHPrice(getCurrency)
         ).to.be.revertedWith(revert);
       });
     });

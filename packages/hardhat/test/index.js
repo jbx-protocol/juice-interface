@@ -7,7 +7,7 @@ const snapshot = () => ethers.provider.send("evm_snapshot", []);
 const restore = id => ethers.provider.send("evm_revert", [id]);
 
 describe("Juice", async function() {
-  // Bind a reference to the deployer address, and an array of other addresses to `this`.
+  // Bind a reference to the deployer address and an array of other addresses to `this`.
   before(async function() {
     [this.deployer, ...this.addrs] = await ethers.getSigners();
   });

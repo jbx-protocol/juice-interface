@@ -1,7 +1,4 @@
-const { use, expect } = require("chai");
-const { solidity } = require("ethereum-waffle");
-
-use(solidity);
+const { expect } = require("chai");
 
 const tests = {
   success: [
@@ -113,48 +110,45 @@ const tests = {
 };
 
 module.exports = function() {
-  describe("Check to see if an operator has a permission", function() {
-    describe("Success cases", function() {
-      tests.success.forEach(function(successTest) {
-        it(successTest.it, async function() {
-          const { set, check, result } = successTest.fn(this);
-          if (set) {
-            const tx = await this.contract
-              .connect(set.sender)
-              .setOperator(
-                set.projectId,
-                set.operator.address,
-                set.permissionIndexes
-              );
-            await tx.wait();
-          }
-          const flag = await this.contract
+  describe("Success cases", function() {
+    tests.success.forEach(function(successTest) {
+      it(successTest.it, async function() {
+        const { set, check, result } = successTest.fn(this);
+        if (set) {
+          await this.contract
+            .connect(set.sender)
+            .setOperator(
+              set.projectId,
+              set.operator.address,
+              set.permissionIndexes
+            );
+        }
+        const flag = await this.contract
+          .connect(check.sender)
+          .hasPermission(
+            check.account.address,
+            check.projectId,
+            check.operator.address,
+            check.permissionIndex
+          );
+        expect(flag).to.equal(result);
+      });
+    });
+  });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.it, async function() {
+        const { check, revert } = failureTest.fn(this);
+        await expect(
+          this.contract
             .connect(check.sender)
             .hasPermission(
               check.account.address,
               check.projectId,
               check.operator.address,
               check.permissionIndex
-            );
-          expect(flag).to.equal(result);
-        });
-      });
-    });
-    describe("Failure cases", function() {
-      tests.failure.forEach(function(failureTest) {
-        it(failureTest.it, async function() {
-          const { check, revert } = failureTest.fn(this);
-          await expect(
-            this.contract
-              .connect(check.sender)
-              .hasPermission(
-                check.account.address,
-                check.projectId,
-                check.operator.address,
-                check.permissionIndex
-              )
-          ).to.be.revertedWith(revert);
-        });
+            )
+        ).to.be.revertedWith(revert);
       });
     });
   });

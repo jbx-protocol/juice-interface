@@ -9,8 +9,8 @@ module.exports = function() {
     this.contract = await contractArtifacts.deploy();
     await this.contract.deployTransaction.wait();
   });
-  // describe("Set operator", shouldBehaveLike.setOperator);
-  // describe("Set operators", shouldBehaveLike.setOperators);
-  describe("Has permission", shouldBehaveLike.hasPermission);
-  describe("Has permissions", shouldBehaveLike.hasPermissions);
+  describe("setOperator(...)", shouldBehaveLike.setOperator);
+  describe("setOperators(...)", shouldBehaveLike.setOperators);
+  describe("hasPermission(...)", shouldBehaveLike.hasPermission);
+  describe("hasPermissions(...)", shouldBehaveLike.hasPermissions);
 };

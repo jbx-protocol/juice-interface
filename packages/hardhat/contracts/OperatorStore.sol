@@ -117,8 +117,7 @@ contract OperatorStore is IOperatorStore {
             _projectId,
             _operator,
             _permissionIndexes,
-            _packed,
-            msg.sender
+            _packed
         );
     }
 
@@ -151,8 +150,7 @@ contract OperatorStore is IOperatorStore {
                 _projectIds[_i],
                 _operators[_i],
                 _permissionIndexes[_i],
-                _packed,
-                msg.sender
+                _packed
             );
         }
     }

@@ -7,8 +7,7 @@ interface IOperatorStore {
         uint256 indexed projectId,
         address indexed operator,
         uint256[] permissionIndexes,
-        uint256 packed,
-        address caller
+        uint256 packed
     );
 
     function permissions(

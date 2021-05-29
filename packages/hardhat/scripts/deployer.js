@@ -99,9 +99,16 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       gasLimit: blockGasLimit
     });
 
+    // Add a production price feed if there is a reference to one.
     if (ethUsdAddr) {
       console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
       await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
+        gasLimit: blockGasLimit
+      });
+      // Otherwise deploy a static local price feed.
+    } else {
+      const feed = await deploy("ETHUSDPriceFeed", []);
+      await attachedGovernance.addPriceFeed(prices.address, feed.address, 1, {
         gasLimit: blockGasLimit
       });
     }

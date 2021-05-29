@@ -64,23 +64,26 @@ module.exports = function() {
           permissionIndexes
         } = successTest.fn(this);
 
+        // If specified, pre-set an operator before the rest of the test.
         if (permissionIndexes.pre) {
           await this.contract
             .connect(sender)
             .setOperator(projectId, operator.address, permissionIndexes.pre);
         }
 
-        // Calculate packed value.
+        // Calculate the expected packed value once the permissions are set.
         const expectedPackedPermissions = permissionIndexes.set.reduce(
           (sum, i) => sum.add(ethers.BigNumber.from(2).pow(i)),
           ethers.BigNumber.from(0)
         );
 
-        await expect(
-          this.contract
-            .connect(sender)
-            .setOperator(projectId, operator.address, permissionIndexes.set)
-        )
+        // Execute the transaction.
+        const tx = await this.contract
+          .connect(sender)
+          .setOperator(projectId, operator.address, permissionIndexes.set);
+
+        // Expect an event to have been emitted.
+        await expect(tx)
           .to.emit(this.contract, "SetOperator")
           .withArgs(
             sender.address,

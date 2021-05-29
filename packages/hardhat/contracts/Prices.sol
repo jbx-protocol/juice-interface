@@ -6,14 +6,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IPrices.sol";
 
 /** 
-  @notice An immutable contract to manage price feeds.
+  @notice Manage and normalizes ETH price feeds.
 */
 contract Prices is IPrices, Ownable {
     // The number to multiply each price feed by to get to the target decimals.
     mapping(uint256 => uint256) public override feedDecimalAdjuster;
 
-    // The number of decimals the price feed results have.
-    uint256 public constant override decimals = 18;
+    // The target number of decimals the price feed results have.
+    uint256 public constant override targetDecimals = 18;
 
     /// @notice The available price feeds that can be used to get the price of ETH.
     mapping(uint256 => AggregatorV3Interface) public override feeds;
@@ -21,7 +21,7 @@ contract Prices is IPrices, Ownable {
     /** 
       @notice Gets the current price of ETH for the provided currency.
       @param _currency The currency to get a price for.
-      @return price The price of ETH.
+      @return price The price of ETH with 18 decimals.
     */
     function getETHPrice(uint256 _currency)
         external
@@ -30,16 +30,21 @@ contract Prices is IPrices, Ownable {
         returns (uint256)
     {
         // The 0 currency is ETH itself.
-        if (_currency == 0) return 1E18;
+        if (_currency == 0) return 10**targetDecimals;
+
+        // Get a reference to the feed.
         AggregatorV3Interface _feed = feeds[_currency];
-        //TODO temp
-        if (_feed == AggregatorV3Interface(address(0))) return 1600E18;
-        // require(
-        //     _priceFeed != AggregatorV3Interface(0),
-        //     "BudgetStore::getETHPrice NOT_FOUND"
-        // );
+
+        // Feed must exist.
+        require(
+            _feed != AggregatorV3Interface(address(0)),
+            "Prices::getETHPrice: NOT_FOUND"
+        );
+
+        // Get the lateset round information. Only need the price is needed.
         (, int256 _price, , , ) = _feed.latestRoundData();
 
+        // Multiply the price by the decimal adjuster to get the normalized result.
         return uint256(_price) * feedDecimalAdjuster[_currency];
     }
 
@@ -60,13 +65,13 @@ contract Prices is IPrices, Ownable {
         uint256 _decimals = _feed.decimals();
 
         // Decimals should be less than or equal to the target number of decimals.
-        require(_decimals <= decimals, "Prices::addFeed: BAD_DECIMALS");
+        require(_decimals <= targetDecimals, "Prices::addFeed: BAD_DECIMALS");
 
         // Set the feed.
         feeds[_currency] = _feed;
 
-        // Set the number of decimals for the currency.
-        feedDecimalAdjuster[_currency] = 10**(decimals - _decimals);
+        // Set the decimal adjuster for the currency.
+        feedDecimalAdjuster[_currency] = 10**(targetDecimals - _decimals);
 
         emit AddFeed(_currency, _feed);
     }

@@ -22,7 +22,7 @@ const tests = {
       })
     },
     {
-      description: "check ETH price, zero currency, 0 decimals",
+      description: "check ETH price, zero currency",
       fn: ({ deployer }) => ({
         sender: deployer,
         currency: 0,
@@ -35,8 +35,7 @@ const tests = {
       description: "currency feed not found",
       fn: ({ deployer }) => ({
         sender: deployer,
-        addCurrency: 1,
-        getCurrency: 2,
+        currency: 1,
         decimals: 18,
         price: 400,
         revert: "Prices::getETHPrice: NOT_FOUND"
@@ -95,18 +94,7 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const {
-          sender,
-          addCurrency,
-          getCurrency,
-          decimals,
-          price,
-          revert
-        } = failureTest.fn(this);
-
-        await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
-          decimals
-        );
+        const { sender, currency, price, revert } = failureTest.fn(this);
 
         await this.mockAggregatorV3InterfaceContract.mock.latestRoundData.returns(
           0,
@@ -116,12 +104,8 @@ module.exports = function() {
           0
         );
 
-        await this.contract
-          .connect(sender)
-          .addFeed(this.mockAggregatorV3InterfaceContract.address, addCurrency);
-
         await expect(
-          this.contract.connect(sender).getETHPrice(getCurrency)
+          this.contract.connect(sender).getETHPrice(currency)
         ).to.be.revertedWith(revert);
       });
     });

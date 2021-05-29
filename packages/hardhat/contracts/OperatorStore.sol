@@ -19,13 +19,15 @@ import "./interfaces/IOperatorStore.sol";
 contract OperatorStore is IOperatorStore {
     // --- public stored properties --- //
 
-    /// @notice
-    /// The permissions that an operator has to operate on a specific project ID owned by an account.
-    ///
-    /// @dev
-    /// An account can give an operator permissions that only pertain to a specific project they own.
-    /// Since there is no project with an ID of 0, accounts can use the 0 project ID to give an operators
-    /// permissions to operator on their personal behalf.
+    /** 
+      @notice
+      The permissions that an operator has to operate on a specific project ID owned by an account.
+      
+      @dev
+      An account can give an operator permissions that only pertain to a specific project they own.
+      Since there is no project with an ID of 0, accounts can use the 0 project ID to give an operators
+      permissions to operator on their personal behalf.
+    */
     mapping(address => mapping(uint256 => mapping(address => uint256)))
         public
         override permissions;

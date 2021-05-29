@@ -6,7 +6,7 @@ const tests = {
     {
       description: "add feed, 18 decimals",
       fn: ({ deployer }) => ({
-        caller: deployer,
+        sender: deployer,
         currency: 1,
         decimals: 18
       })
@@ -14,7 +14,7 @@ const tests = {
     {
       description: "add feed, 0 decimals",
       fn: ({ deployer }) => ({
-        caller: deployer,
+        sender: deployer,
         currency: 1,
         decimals: 0
       })
@@ -24,7 +24,7 @@ const tests = {
     {
       description: "not owner",
       fn: ({ addrs }) => ({
-        caller: addrs[0],
+        sender: addrs[0],
         currency: 1,
         decimals: 18,
         revert: "Ownable: caller is not the owner"
@@ -33,7 +33,7 @@ const tests = {
     {
       description: "reserved currency",
       fn: ({ deployer }) => ({
-        caller: deployer,
+        sender: deployer,
         currency: 0,
         decimals: 18,
         revert: "Prices::addFeed: RESERVED"
@@ -42,7 +42,7 @@ const tests = {
     {
       description: "over 18 decimals",
       fn: ({ deployer }) => ({
-        caller: deployer,
+        sender: deployer,
         currency: 1,
         decimals: 19,
         revert: "Prices::addFeed: BAD_DECIMALS"
@@ -55,14 +55,14 @@ module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
-        const { caller, currency, decimals } = successTest.fn(this);
+        const { sender, currency, decimals } = successTest.fn(this);
 
         // Set the mock to the return the specified number of decimals.
         await this.aggregatorV3Contract.mock.decimals.returns(decimals);
 
         // Execute the transaction.
         const tx = await this.contract
-          .connect(caller)
+          .connect(sender)
           .addFeed(this.aggregatorV3Contract.address, currency);
 
         // Expect an event to have been emitted.
@@ -96,13 +96,13 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { caller, currency, decimals, revert } = failureTest.fn(this);
+        const { sender, currency, decimals, revert } = failureTest.fn(this);
 
         await this.aggregatorV3Contract.mock.decimals.returns(decimals);
 
         await expect(
           this.contract
-            .connect(caller)
+            .connect(sender)
             .addFeed(this.aggregatorV3Contract.address, currency)
         ).to.be.revertedWith(revert);
       });

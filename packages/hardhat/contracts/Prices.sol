@@ -9,18 +9,27 @@ import "./interfaces/IPrices.sol";
   @notice Manage and normalizes ETH price feeds.
 */
 contract Prices is IPrices, Ownable {
-    // The number to multiply each price feed by to get to the target decimals.
-    mapping(uint256 => uint256) public override feedDecimalAdjuster;
+    // --- public constant stored properties --- //
 
-    // The target number of decimals the price feed results have.
+    /// @notice The target number of decimals the price feed results have.
     uint256 public constant override targetDecimals = 18;
+
+    // --- public stored properties --- //
+
+    /// @notice The number to multiply each price feed by to get to the target decimals.
+    mapping(uint256 => uint256) public override feedDecimalAdjuster;
 
     /// @notice The available price feeds that can be used to get the price of ETH.
     mapping(uint256 => AggregatorV3Interface) public override feeds;
 
+    // --- public views --- //
+
     /** 
-      @notice Gets the current price of ETH for the provided currency.
+      @notice 
+      Gets the current price of ETH for the provided currency.
+      
       @param _currency The currency to get a price for.
+      
       @return price The price of ETH with 18 decimals.
     */
     function getETHPrice(uint256 _currency)
@@ -48,8 +57,12 @@ contract Prices is IPrices, Ownable {
         return uint256(_price) * feedDecimalAdjuster[_currency];
     }
 
+    // --- external transactions --- //
+
     /** 
-      @notice Add a price feed for the price of ETH.
+      @notice 
+      Add a price feed for the price of ETH.
+
       @param _feed The price feed being added.
       @param _currency The currency that the price feed is for.
     */

@@ -6,7 +6,7 @@ const tests = {
     {
       description: "check ETH price, non-zero currency, 18 decimals",
       fn: ({ deployer }) => ({
-        sender: deployer,
+        caller: deployer,
         currency: 1,
         decimals: 18,
         price: 400
@@ -15,7 +15,7 @@ const tests = {
     {
       description: "check ETH price, non-zero currency, 0 decimals",
       fn: ({ deployer }) => ({
-        sender: deployer,
+        caller: deployer,
         currency: 1,
         decimals: 0,
         price: 400
@@ -24,7 +24,7 @@ const tests = {
     {
       description: "check ETH price, zero currency",
       fn: ({ deployer }) => ({
-        sender: deployer,
+        caller: deployer,
         currency: 0,
         price: 1
       })
@@ -34,7 +34,7 @@ const tests = {
     {
       description: "currency feed not found",
       fn: ({ deployer }) => ({
-        sender: deployer,
+        caller: deployer,
         currency: 1,
         decimals: 18,
         price: 400,
@@ -48,16 +48,14 @@ module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
-        const { sender, currency, decimals, price } = successTest.fn(this);
+        const { caller, currency, decimals, price } = successTest.fn(this);
 
         // If the currency is 0, mocks or a feed aren't needed.
         if (currency > 0) {
           // Set the mock to the return the specified number of decimals.
-          await this.mockAggregatorV3InterfaceContract.mock.decimals.returns(
-            decimals
-          );
+          await this.aggregatorV3Contract.mock.decimals.returns(decimals);
           // Set the mock to return the specified price.
-          await this.mockAggregatorV3InterfaceContract.mock.latestRoundData.returns(
+          await this.aggregatorV3Contract.mock.latestRoundData.returns(
             0,
             price,
             0,
@@ -67,13 +65,13 @@ module.exports = function() {
 
           // Add price feed.
           await this.contract
-            .connect(sender)
-            .addFeed(this.mockAggregatorV3InterfaceContract.address, currency);
+            .connect(caller)
+            .addFeed(this.aggregatorV3Contract.address, currency);
         }
 
         // Check for the price.
         const resultingPrice = await this.contract
-          .connect(sender)
+          .connect(caller)
           .getETHPrice(currency);
 
         // Get a reference to the target number of decimals.
@@ -94,9 +92,9 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { sender, currency, price, revert } = failureTest.fn(this);
+        const { caller, currency, price, revert } = failureTest.fn(this);
 
-        await this.mockAggregatorV3InterfaceContract.mock.latestRoundData.returns(
+        await this.aggregatorV3Contract.mock.latestRoundData.returns(
           0,
           price,
           0,
@@ -105,7 +103,7 @@ module.exports = function() {
         );
 
         await expect(
-          this.contract.connect(sender).getETHPrice(currency)
+          this.contract.connect(caller).getETHPrice(currency)
         ).to.be.revertedWith(revert);
       });
     });

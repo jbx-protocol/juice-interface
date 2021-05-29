@@ -3,16 +3,16 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "has permissions, account is sender",
+      description: "has permissions, account is caller",
       fn: ({ deployer, addrs }) => ({
         set: {
-          sender: deployer,
+          caller: deployer,
           projectId: 1,
           operator: addrs[0],
           permissionIndexes: [42, 41, 255]
         },
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 1,
           operator: addrs[0],
@@ -22,16 +22,16 @@ const tests = {
       })
     },
     {
-      description: "has permissions, account is not sender",
+      description: "has permissions, account is not caller",
       fn: ({ deployer, addrs }) => ({
         set: {
-          sender: deployer,
+          caller: deployer,
           projectId: 1,
           operator: addrs[0],
           permissionIndexes: [7, 8, 9]
         },
         check: {
-          sender: addrs[1],
+          caller: addrs[1],
           account: deployer,
           projectId: 1,
           operator: addrs[0],
@@ -44,7 +44,7 @@ const tests = {
       description: "doesnt have permissions, never set",
       fn: ({ deployer, addrs }) => ({
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 1,
           operator: addrs[0],
@@ -57,13 +57,13 @@ const tests = {
       description: "doesnt have permission, all indexes differ",
       fn: ({ deployer, addrs }) => ({
         set: {
-          sender: deployer,
+          caller: deployer,
           projectId: 1,
           operator: addrs[0],
           permissionIndexes: [1, 2, 3]
         },
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 1,
           operator: addrs[0],
@@ -76,13 +76,13 @@ const tests = {
       description: "doesnt have permission, some indexes differ",
       fn: ({ deployer, addrs }) => ({
         set: {
-          sender: deployer,
+          caller: deployer,
           projectId: 1,
           operator: addrs[0],
           permissionIndexes: [1, 2, 3]
         },
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 1,
           operator: addrs[0],
@@ -95,13 +95,13 @@ const tests = {
       description: "doesnt have permissions, projectId differs",
       fn: ({ deployer, addrs }) => ({
         set: {
-          sender: deployer,
+          caller: deployer,
           projectId: 1,
           operator: addrs[0],
           permissionIndexes: [42]
         },
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 0,
           operator: addrs[0],
@@ -116,7 +116,7 @@ const tests = {
       description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         check: {
-          sender: deployer,
+          caller: deployer,
           account: deployer,
           projectId: 0,
           operator: addrs[0],
@@ -137,7 +137,7 @@ module.exports = function() {
         // If specified, set an operator before the rest of the test.
         if (set) {
           await this.contract
-            .connect(set.sender)
+            .connect(set.caller)
             .setOperator(
               set.projectId,
               set.operator.address,
@@ -147,7 +147,7 @@ module.exports = function() {
 
         // Check for permissions.
         const flag = await this.contract
-          .connect(check.sender)
+          .connect(check.caller)
           .hasPermissions(
             check.account.address,
             check.projectId,
@@ -164,7 +164,7 @@ module.exports = function() {
         const { check, revert } = failureTest.fn(this);
         await expect(
           this.contract
-            .connect(check.sender)
+            .connect(check.caller)
             .hasPermissions(
               check.account.address,
               check.projectId,

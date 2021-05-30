@@ -9,6 +9,6 @@ contract ModAllocator is IModAllocator {
         uint256 _projectId,
         uint256 _forProjectId,
         address _beneficiary,
-        string calldata _note
+        string calldata _memo
     ) external payable override {}
 }

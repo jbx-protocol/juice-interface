@@ -66,7 +66,7 @@ module.exports = function() {
           .addFeed(this.aggregatorV3Contract.address, currency);
 
         // Expect an event to have been emitted.
-        expect(tx)
+        await expect(tx)
           .to.emit(this.contract, "AddFeed")
           .withArgs(currency, this.aggregatorV3Contract.address);
 

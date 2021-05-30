@@ -126,7 +126,7 @@ const tests = {
             preferConverted: false
           }
         ],
-        revert: "ModStore::setTicketMods: BAD_MOD_PERCENT"
+        revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
       })
     },
     {
@@ -212,10 +212,14 @@ module.exports = function() {
         // Get the stored ticket mods value.
         const storedTicketMods = await this.contract.ticketMods(projectId);
 
-        // Expect an event to have been emitted.
-        expect(tx)
-          .to.emit(this.contract, "SetTicketMods")
-          .withArgs(projectId, storedTicketMods, caller.address);
+        // Expect an event to have been emitted for each mod.
+        await Promise.all(
+          storedTicketMods.map(mod =>
+            expect(tx)
+              .to.emit(this.contract, "SetTicketMod")
+              .withArgs(projectId, mod, caller.address)
+          )
+        );
 
         // Expect there to be the same number of stored mods.
         expect(mods.length).equal(storedTicketMods.length);

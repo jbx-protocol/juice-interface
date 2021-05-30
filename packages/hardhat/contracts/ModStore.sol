@@ -119,10 +119,21 @@ contract ModStore is IModStore {
         uint256 _paymentModPercentTotal = 0;
 
         for (uint256 _i = 0; _i < _mods.length; _i++) {
-            // The percent should be less than 200.
+            // The percent should be greater than 0.
             require(
-                _mods[_i].percent > 0 && _mods[_i].percent <= 200,
+                _mods[_i].percent > 0,
                 "ModStore::setPaymentMods: BAD_MOD_PERCENT"
+            );
+
+            // Add to the total percents.
+            _paymentModPercentTotal =
+                _paymentModPercentTotal +
+                _mods[_i].percent;
+
+            // The total percent should be less than 200.
+            require(
+                _paymentModPercentTotal <= 200,
+                "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
             );
 
             // The allocator and the beneficiary shouldn't both be the zero address.
@@ -135,19 +146,8 @@ contract ModStore is IModStore {
             // Push the new mod into the project's list of mods.
             _paymentMods[_projectId].push(_mods[_i]);
 
-            // Add to the total percents.
-            _paymentModPercentTotal =
-                _paymentModPercentTotal +
-                _mods[_i].percent;
+            emit SetPaymentMod(_projectId, _mods[_i], msg.sender);
         }
-
-        // The total percent should be less than 200.
-        require(
-            _paymentModPercentTotal <= 200,
-            "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
-        );
-
-        emit SetPaymentMods(_projectId, _mods, msg.sender);
     }
 
     /** 
@@ -186,10 +186,18 @@ contract ModStore is IModStore {
         uint256 _ticketModPercentTotal = 0;
 
         for (uint256 _i = 0; _i < _mods.length; _i++) {
-            // The percent should be less than 200.
+            // The percent should be greater than 0.
             require(
-                _mods[_i].percent > 0 && _mods[_i].percent <= 200,
+                _mods[_i].percent > 0,
                 "ModStore::setTicketMods: BAD_MOD_PERCENT"
+            );
+
+            // Add to the total percents.
+            _ticketModPercentTotal = _ticketModPercentTotal + _mods[_i].percent;
+            // The total percent should be less than 200.
+            require(
+                _ticketModPercentTotal <= 200,
+                "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
             );
 
             // The beneficiary shouldn't be the zero address.
@@ -201,16 +209,7 @@ contract ModStore is IModStore {
             // Push the new mod into the project's list of mods.
             _ticketMods[_projectId].push(_mods[_i]);
 
-            // Add to the total percents.
-            _ticketModPercentTotal = _ticketModPercentTotal + _mods[_i].percent;
+            emit SetTicketMod(_projectId, _mods[_i], msg.sender);
         }
-
-        // The total percent should be less than 200.
-        require(
-            _ticketModPercentTotal <= 200,
-            "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
-        );
-
-        emit SetTicketMods(_projectId, _mods, msg.sender);
     }
 }

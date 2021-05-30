@@ -16,7 +16,7 @@ interface ITickets {
         uint256 projectId,
         address holder,
         uint256 amount,
-        ITicket ticket,
+        bool convertedTickets,
         bool preferConvertedTickets,
         address controller
     );
@@ -86,10 +86,12 @@ interface ITickets {
         view
         returns (uint256);
 
-    function IOU(address _holder, uint256 _projectId)
+    function IOUBalance(address _holder, uint256 _projectId)
         external
         view
         returns (uint256);
+
+    function IOUTotalSupply(uint256 _projectId) external view returns (uint256);
 
     function isController(uint256 _projectId, address _controller)
         external

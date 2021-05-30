@@ -45,14 +45,14 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     /** 
       @notice Make a payment to this project.
       @param _beneficiary The address who will receive tickets from this fee.
-      @param _note A note that will be included in the published event.
+      @param _memo A memo that will be included in the published event.
     */
-    function pay(address _beneficiary, string calldata _note) external payable {
+    function pay(address _beneficiary, string calldata _memo) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
         juiceTerminal.pay{value: msg.value}(
             projectId,
             _beneficiary,
-            _note,
+            _memo,
             false
         );
     }
@@ -61,18 +61,18 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @notice Take a fee for this project from this contract.
       @param _amount The payment amount.
       @param _beneficiary The address who will receive tickets from this fee.
-      @param _note A note that will be included in the published event.
+      @param _memo A memo that will be included in the published event.
     */
     function takeFee(
         uint256 _amount,
         address _beneficiary,
-        string memory _note
+        string memory _memo
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
         juiceTerminal.pay{value: _amount}(
             projectId,
             _beneficiary,
-            _note,
+            _memo,
             false
         );
     }

@@ -769,6 +769,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the ETH to.
+        @param _preferConverted If the preference is to redeem tickets that have been converted to ERC-20s.
         @return amount The amount of ETH that the tickets were redeemed for.
     */
     function redeem(
@@ -776,7 +777,8 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _projectId,
         uint256 _count,
         uint256 _minReturnedETH,
-        address payable _beneficiary
+        address payable _beneficiary,
+        bool _preferConverted
     ) external override nonReentrant returns (uint256 amount) {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
@@ -830,7 +832,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the account's wallet.
-        tickets.redeem(_account, _projectId, _count);
+        tickets.redeem(_account, _projectId, _count, _preferConverted);
 
         // Transfer funds to the specified address.
         Address.sendValue(_beneficiary, amount);

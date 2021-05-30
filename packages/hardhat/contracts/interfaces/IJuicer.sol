@@ -204,7 +204,8 @@ interface IJuicer {
         uint256 _projectId,
         uint256 _amount,
         uint256 _minReturnedETH,
-        address payable _beneficiary
+        address payable _beneficiary,
+        bool _preferConverted
     ) external returns (uint256 returnAmount);
 
     function printReservedTickets(uint256 _projectId)

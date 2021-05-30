@@ -25,7 +25,8 @@ interface ITickets {
         uint256 projectId,
         address holder,
         uint256 amount,
-        uint256 IOU,
+        uint256 IOUs,
+        bool preferConverted,
         address controller
     );
 
@@ -81,6 +82,8 @@ interface ITickets {
 
     function tickets(uint256 _projectId) external view returns (ITicket);
 
+    function issuePermissionIndex() external view returns (uint256);
+
     function locked(address _holder, uint256 _projectId)
         external
         view
@@ -121,7 +124,8 @@ interface ITickets {
     function redeem(
         address _holder,
         uint256 _projectId,
-        uint256 _amount
+        uint256 _amount,
+        bool _preferConverted
     ) external;
 
     function convert(address _holder, uint256 _projectId) external;

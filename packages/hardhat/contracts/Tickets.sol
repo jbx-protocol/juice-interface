@@ -10,19 +10,24 @@ import "./abstract/Administered.sol";
 import "./Ticket.sol";
 
 /** 
-  @notice An immutable contract to manage Ticket states.
+  @notice 
+  Manage Ticket printing, redemption, and account balances.
+
+  @dev
+  Tickets can be either represented internally, or as ERC-20s.
+  This contract manages these two representations and the conversion between the two.
 */
 contract Tickets is Administered, ITickets {
-    // The total supply of 1155 tickets for each project.
-    mapping(uint256 => uint256) private IOUTotalSupply;
-
     // --- public properties --- //
 
     // Each project's ERC20 Ticket tokens.
     mapping(uint256 => ITicket) public override tickets;
 
     // Each holder's balance of IOU Tickets for each project.
-    mapping(address => mapping(uint256 => uint256)) public override IOU;
+    mapping(address => mapping(uint256 => uint256)) public override IOUBalance;
+
+    // The total supply of 1155 tickets for each project.
+    mapping(uint256 => uint256) public override IOUTotalSupply;
 
     // The amount of each holders tickets that are locked.
     mapping(address => mapping(uint256 => uint256)) public override locked;
@@ -78,7 +83,7 @@ contract Tickets is Administered, ITickets {
         override
         returns (uint256 balance)
     {
-        balance = IOU[_holder][_projectId];
+        balance = IOUBalance[_holder][_projectId];
         ITicket _ticket = tickets[_projectId];
         if (_ticket != ITicket(address(0)))
             balance = balance + _ticket.balanceOf(_holder);
@@ -143,15 +148,24 @@ contract Tickets is Administered, ITickets {
             "Tickets::print: UNAUTHORIZED"
         );
 
+        // An amount must be specified.
+        require(_amount > 0, "Tickets::print: NO_OP");
+
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        if (_preferConvertedTickets && _ticket != ITicket(address(0))) {
+        // If there exists ERC-20 tickets and the caller prefers these converted tickets.
+        bool _shouldConvertTickets =
+            _preferConvertedTickets && _ticket != ITicket(address(0));
+
+        if (_shouldConvertTickets) {
             // Print the equivalent amount of ERC20s.
             _ticket.print(_holder, _amount);
         } else {
             // Add to the IOU balance and total supply.
-            IOU[_holder][_projectId] = IOU[_holder][_projectId] + _amount;
+            IOUBalance[_holder][_projectId] =
+                IOUBalance[_holder][_projectId] +
+                _amount;
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] + _amount;
         }
 
@@ -159,7 +173,7 @@ contract Tickets is Administered, ITickets {
             _projectId,
             _holder,
             _amount,
-            _ticket,
+            _shouldConvertTickets,
             _preferConvertedTickets,
             msg.sender
         );
@@ -187,12 +201,14 @@ contract Tickets is Administered, ITickets {
 
         // Get a reference to the IOU amount.
         uint256 _unlockedIOU =
-            IOU[_holder][_projectId] - locked[_holder][_projectId];
+            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
 
         // Redeem only IOUs if there are enough available and they aren't locked.
         if (_unlockedIOU >= _amount) {
             // Reduce the holders balance and the total supply.
-            IOU[_holder][_projectId] = IOU[_holder][_projectId] - _amount;
+            IOUBalance[_holder][_projectId] =
+                IOUBalance[_holder][_projectId] -
+                _amount;
             IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
         } else {
             // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
@@ -202,7 +218,7 @@ contract Tickets is Administered, ITickets {
             );
             if (_unlockedIOU > 0) {
                 // Reduce the holders balance and the total supply.
-                IOU[_holder][_projectId] = 0;
+                IOUBalance[_holder][_projectId] = 0;
                 IOUTotalSupply[_projectId] =
                     IOUTotalSupply[_projectId] -
                     _unlockedIOU;
@@ -256,13 +272,13 @@ contract Tickets is Administered, ITickets {
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
-            IOU[_holder][_projectId] - locked[_holder][_projectId];
+            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
 
         // If there are no IOUs, there's nothing to convert.
         if (_unlockedIOUs == 0) return;
 
         // Set the IOUs to the locked amount.
-        IOU[_holder][_projectId] = locked[_holder][_projectId];
+        IOUBalance[_holder][_projectId] = locked[_holder][_projectId];
 
         // Print the equivalent amount of ERC20s.
         _ticket.print(_holder, _unlockedIOUs);
@@ -341,7 +357,8 @@ contract Tickets is Administered, ITickets {
     ) external override onlyAdmin {
         // The holder must have enough tickets to lock.
         require(
-            IOU[_holder][_projectId] - locked[_holder][_projectId] >= _amount,
+            IOUBalance[_holder][_projectId] - locked[_holder][_projectId] >=
+                _amount,
             "Tickets::lock: INSUFFICIENT_TICKETS"
         );
 
@@ -407,7 +424,7 @@ contract Tickets is Administered, ITickets {
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
-            IOU[_holder][_projectId] - locked[_holder][_projectId];
+            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
 
         // There must be enough unlocked IOUs to transfer.
         require(
@@ -416,10 +433,12 @@ contract Tickets is Administered, ITickets {
         );
 
         // Subtract from the holder.
-        IOU[_holder][_projectId] = _unlockedIOUs - _amount;
+        IOUBalance[_holder][_projectId] = _unlockedIOUs - _amount;
 
         // Add the tickets to the recipient.
-        IOU[_recipient][_projectId] = IOU[_recipient][_projectId] + _amount;
+        IOUBalance[_recipient][_projectId] =
+            IOUBalance[_recipient][_projectId] +
+            _amount;
 
         emit Transfer(_holder, _projectId, _recipient, _amount, msg.sender);
     }

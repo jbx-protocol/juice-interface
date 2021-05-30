@@ -559,14 +559,14 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @dev The msg.value is the amount of the contribution in ETH. Sent as a wad.
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
-        @param _note A note that will be included in the published event.
+        @param _memo A memo that will be included in the published event.
       @param _preferConvertedTickets Whether ERC20's should be claimed automatically if they have been issued.
         @return _fundingCycleId The ID of the funding stage that the payment was made during.
     */
     function pay(
         uint256 _projectId,
         address _beneficiary,
-        string calldata _note,
+        string calldata _memo,
         bool _preferConvertedTickets
     ) external payable override returns (uint256) {
         // Positive payments only.
@@ -580,7 +580,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _projectId,
                 msg.value,
                 _beneficiary,
-                _note,
+                _memo,
                 _preferConvertedTickets
             );
     }
@@ -1185,7 +1185,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
-        string memory _note,
+        string memory _memo,
         bool _preferConvertedTickets
     ) private returns (uint256) {
         // Get a reference to the current funding cycle for the project.
@@ -1221,7 +1221,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _projectId,
             _beneficiary,
             _amount,
-            _note,
+            _memo,
             msg.sender
         );
 

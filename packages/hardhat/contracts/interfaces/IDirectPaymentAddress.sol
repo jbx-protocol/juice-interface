@@ -11,5 +11,5 @@ interface IDirectPaymentAddress {
 
     function projectId() external returns (uint256);
 
-    function note() external returns (string memory);
+    function memo() external returns (string memory);
 }

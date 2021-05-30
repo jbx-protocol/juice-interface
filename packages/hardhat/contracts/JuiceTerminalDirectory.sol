@@ -5,13 +5,14 @@ import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IJuiceTerminalDirectory.sol";
 import "./interfaces/IProjects.sol";
-import "./interfaces/IDirectPaymentAddress.sol";
 import "./libraries/Operations.sol";
+
+import "./DirectPaymentAddress.sol";
 
 // Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
 contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
     // A list of contracts for each project ID that can receive funds directly.
-    mapping(uint256 => IDirectPaymentAddress[]) private addresses;
+    mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
 
     // For each project ID, the juice terminal that the direct payment addresses are proxies for.
     mapping(uint256 => IJuiceTerminal) public override terminals;
@@ -42,29 +43,27 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
       @param _projectId The ID of the project to get direct payment addresses for.
       @return A list of direct payment addresses for the specified project ID.
     */
-    function allAddresses(uint256 _projectId)
+    function addresses(uint256 _projectId)
         external
         view
         override
         returns (IDirectPaymentAddress[] memory)
     {
-        return addresses[_projectId];
+        return _addresses[_projectId];
     }
-
-    function pay() external {}
 
     /** 
       @notice Allows anyone to deploy a new direct payment address for a project.
       @param _projectId The ID of the project to deploy a direct payment address for.
-      @param _note The note to use for payments made through the new direct payment address.
+      @param _memo The note to use for payments made through the new direct payment address.
     */
-    function deployAddress(uint256 _projectId, string calldata _note)
+    function deployAddress(uint256 _projectId, string calldata _memo)
         external
         override
     {
         // Deploy the contract and push it to the list.
-        addresses[_projectId].push(
-            new DirectPaymentAddress(this, _projectId, _note)
+        _addresses[_projectId].push(
+            new DirectPaymentAddress(this, _projectId, _memo)
         );
     }
 
@@ -117,35 +116,5 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
     ) external override {
         beneficiaries[msg.sender] = _beneficiary;
         preferConvertedTickets[msg.sender] = _preferClaimedTickets;
-    }
-}
-
-contract DirectPaymentAddress is IDirectPaymentAddress {
-    /// @notice The directory to use when resolving which terminal to send the payment to.
-    IJuiceTerminalDirectory public override juiceTerminalDirectory;
-    /// @notice The project ID to pay when this contract receives funds.
-    uint256 public override projectId;
-    /// @notice The note to use when this contract receives funds.
-    string public override note;
-
-    constructor(
-        IJuiceTerminalDirectory _juiceTerminalDirectory,
-        uint256 _projectId,
-        string memory _note
-    ) {
-        juiceTerminalDirectory = _juiceTerminalDirectory;
-        projectId = _projectId;
-        note = _note;
-    }
-
-    // Receive funds and make a payment.
-    receive() external payable {
-        address _beneficiary = juiceTerminalDirectory.beneficiaries(msg.sender);
-        juiceTerminalDirectory.terminals(projectId).pay{value: msg.value}(
-            projectId,
-            _beneficiary != address(0) ? _beneficiary : msg.sender,
-            note,
-            juiceTerminalDirectory.preferConvertedTickets(msg.sender)
-        );
     }
 }

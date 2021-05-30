@@ -4,69 +4,57 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "set one payment mod, called by owner, max percent",
+      description: "set one ticket mod, called by owner, max percent",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 200,
-            note: "sup",
             preferConverted: false
           }
         ]
       })
     },
     {
-      description: "set one payment mod, beneficiary is different from caller",
+      description: "set one ticket mod, beneficiary is different from caller",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: addrs[0].address,
             percent: 200,
-            note: "sup",
             preferConverted: false
           }
         ]
       })
     },
     {
-      description: "set many payment mods, called by owner",
-      fn: ({ deployer, modAllocator }) => ({
+      description: "set many ticket mods, called by owner",
+      fn: ({ deployer }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 100,
-            note: "sup",
             preferConverted: false
           },
           {
-            allocator: modAllocator.address,
-            projectId: 2,
-            beneficiary: ethers.constants.AddressZero,
+            beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferConverted: false
           }
         ]
       })
     },
     {
-      description: "set one payment mod, called by operator",
+      description: "set one ticket mod, called by operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectOwner: addrs[0].address,
@@ -74,11 +62,8 @@ const tests = {
         permissionFlag: true,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 100,
-            note: "sup",
             preferConverted: false
           }
         ]
@@ -94,7 +79,7 @@ const tests = {
         projectId: 1,
         mods: [],
         permissionFlag: false,
-        revert: "ModStore::setPaymentMods: UNAUTHORIZED"
+        revert: "ModStore::setTicketMods: UNAUTHORIZED"
       })
     },
     {
@@ -104,26 +89,23 @@ const tests = {
         projectOwner: deployer.address,
         projectId: 1,
         mods: [],
-        revert: "ModStore::setPaymentMods: NO_OP"
+        revert: "ModStore::setTicketMods: NO_OP"
       })
     },
     {
-      description: "no allocator or beneficiary",
+      description: "no beneficiary",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
-            note: "sup",
             preferConverted: false
           }
         ],
-        revert: "ModStore::setPaymentMods: ZERO_ADDRESS"
+        revert: "ModStore::setTicketMods: ZERO_ADDRESS"
       })
     },
     {
@@ -134,23 +116,17 @@ const tests = {
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 210,
-            note: "sup",
             preferConverted: false
           },
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferConverted: false
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+        revert: "ModStore::setTicketMods: BAD_MOD_PERCENT"
       })
     },
     {
@@ -161,23 +137,17 @@ const tests = {
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 0,
-            note: "sup",
             preferConverted: false
           },
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferConverted: false
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_MOD_PERCENT"
+        revert: "ModStore::setTicketMods: BAD_MOD_PERCENT"
       })
     },
     {
@@ -188,23 +158,17 @@ const tests = {
         projectId: 1,
         mods: [
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 1,
             beneficiary: deployer.address,
             percent: 180,
-            note: "sup",
             preferConverted: false
           },
           {
-            allocator: ethers.constants.AddressZero,
-            projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferConverted: false
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+        revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
       })
     }
   ]
@@ -229,10 +193,10 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the payment mods on an owner's behalf.
+          // Get the permission index needed to set the ticket mods on an owner's behalf.
           const permissionIndex = await this.contract
             .connect(caller)
-            .setPaymentModsPermissionIndex();
+            .setTicketModsPermissionIndex();
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
@@ -243,33 +207,26 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setPaymentMods(projectId, mods);
+          .setTicketMods(projectId, mods);
 
-        // Get the stored payment mods value.
-        const storedProjectMods = await this.contract.paymentMods(projectId);
+        // Get the stored ticket mods value.
+        const storedTicketMods = await this.contract.ticketMods(projectId);
 
-        // Expect an event to have been emitted for each mod.
-        await Promise.all(
-          storedProjectMods.map(mod =>
-            expect(tx)
-              .to.emit(this.contract, "SetPaymentMod")
-              .withArgs(projectId, mod, caller.address)
-          )
-        );
+        // Expect an event to have been emitted.
+        await expect(tx)
+          .to.emit(this.contract, "SetTicketMods")
+          .withArgs(projectId, storedTicketMods, caller.address);
 
         // Expect there to be the same number of stored mods.
-        expect(mods.length).equal(storedProjectMods.length);
+        expect(mods.length).equal(storedTicketMods.length);
 
         // Expect the stored mods values to match.
         mods.forEach((mod, i) => {
-          expect(storedProjectMods[i].allocator).to.equal(mod.allocator);
-          expect(storedProjectMods[i].beneficiary).to.equal(mod.beneficiary);
-          expect(storedProjectMods[i].percent).to.equal(mod.percent);
-          expect(storedProjectMods[i].preferConverted).to.equal(
+          expect(storedTicketMods[i].beneficiary).to.equal(mod.beneficiary);
+          expect(storedTicketMods[i].percent).to.equal(mod.percent);
+          expect(storedTicketMods[i].preferConverted).to.equal(
             mod.preferConverted
           );
-          expect(storedProjectMods[i].projectId).to.equal(mod.projectId);
-          expect(storedProjectMods[i].note).to.equal(mod.note);
         });
       });
     });
@@ -293,7 +250,7 @@ module.exports = function() {
         if (permissionFlag !== undefined) {
           const permissionIndex = await this.contract
             .connect(caller)
-            .setPaymentModsPermissionIndex();
+            .setTicketModsPermissionIndex();
 
           await this.operatorStore.mock.hasPermission
             .withArgs(projectOwner, projectId, caller.address, permissionIndex)
@@ -301,7 +258,7 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).setPaymentMods(projectId, mods)
+          this.contract.connect(caller).setTicketMods(projectId, mods)
         ).to.be.revertedWith(revert);
       });
     });

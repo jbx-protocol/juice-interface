@@ -6,7 +6,7 @@ import "./IJuiceTerminal.sol";
 import "./IProjects.sol";
 
 interface IJuiceTerminalDirectory {
-    function allAddresses(uint256 _projectId)
+    function addresses(uint256 _projectId)
         external
         view
         returns (IDirectPaymentAddress[] memory);
@@ -24,7 +24,7 @@ interface IJuiceTerminalDirectory {
 
     function operatorStore() external returns (IOperatorStore);
 
-    function deployAddress(uint256 _projectId, string calldata _note) external;
+    function deployAddress(uint256 _projectId, string calldata _memo) external;
 
     function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
         external;

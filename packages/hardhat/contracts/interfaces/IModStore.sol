@@ -23,15 +23,15 @@ struct TicketMod {
 interface IModStore {
     enum ModKind {Payment, Ticket, Both}
 
-    event SetPaymentMods(
+    event SetPaymentMod(
         uint256 indexed projectId,
-        PaymentMod[] mods,
+        PaymentMod mods,
         address caller
     );
 
-    event SetTicketMods(
+    event SetTicketMod(
         uint256 indexed projectId,
-        TicketMod[] mods,
+        TicketMod mods,
         address caller
     );
 

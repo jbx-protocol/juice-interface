@@ -2,11 +2,8 @@
 pragma solidity >=0.8.0;
 
 import "./libraries/Operations.sol";
-
 import "./interfaces/ITickets.sol";
-
 import "./abstract/Administered.sol";
-
 import "./Ticket.sol";
 
 /** 
@@ -40,6 +37,9 @@ contract Tickets is Administered, ITickets {
 
     /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
+
+    /// @notice the permision index required to issue tickets on an owners behalf.
+    uint256 public immutable override issuePermissionIndex = Operations.Issue;
 
     // --- external transactions --- //
 
@@ -111,7 +111,7 @@ contract Tickets is Administered, ITickets {
                     _owner,
                     _projectId,
                     msg.sender,
-                    Operations.Issue
+                    issuePermissionIndex
                 ),
             "Tickets::issue: UNAUTHORIZED"
         );
@@ -184,11 +184,13 @@ contract Tickets is Administered, ITickets {
       @param _holder The address redeeming tickets.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _amount The amount of tickets being redeemed.
+      @param _preferConverted If the preference is to redeem tickets that have been converted to ERC-20s.
     */
     function redeem(
         address _holder,
         uint256 _projectId,
-        uint256 _amount
+        uint256 _amount,
+        bool _preferConverted
     ) external override {
         // The redeemer must be a controller.
         require(
@@ -200,45 +202,63 @@ contract Tickets is Administered, ITickets {
         ITicket _ticket = tickets[_projectId];
 
         // Get a reference to the IOU amount.
-        uint256 _unlockedIOU =
+        uint256 _unlockedIOUBalance =
             IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
 
-        // Redeem only IOUs if there are enough available and they aren't locked.
-        if (_unlockedIOU >= _amount) {
+        // Get a reference to the number of tickets there are.
+        uint256 _balanceOf =
+            _ticket == ITicket(address(0)) ? 0 : _ticket.balanceOf(_holder);
+
+        // There must be enough tickets.
+        // Prevent potential overflow by not relying on addition.
+        require(
+            (_amount < _balanceOf && _amount < _unlockedIOUBalance) ||
+                (_amount >= _balanceOf &&
+                    _unlockedIOUBalance >= _amount - _balanceOf) ||
+                (_amount >= _unlockedIOUBalance &&
+                    _balanceOf >= _amount - _unlockedIOUBalance),
+            "Tickets::redeem: INSUFICIENT_FUNDS"
+        );
+
+        // The amount of tickets to redeem.
+        uint256 _ticketsToRedeem;
+
+        // If there's no balance, redeem no tickets
+        if (_balanceOf == 0) {
+            _ticketsToRedeem = 0;
+            // If prefer converted, redeem tickets before redeeming IOUs.
+        } else if (_preferConverted) {
+            _ticketsToRedeem = _balanceOf >= _amount ? _amount : _balanceOf;
+            // Otherwise, redeem IOUs before redeeming tickets.
+        } else {
+            _ticketsToRedeem = _unlockedIOUBalance >= _amount
+                ? 0
+                : _amount - _unlockedIOUBalance;
+        }
+
+        // The amount of IOUs to redeem.
+        uint256 _IOUsToRedeem = _amount - _ticketsToRedeem;
+
+        // Redeem the tickets and IOUs.
+        if (_ticketsToRedeem > 0) _ticket.redeem(_holder, _ticketsToRedeem);
+        if (_IOUsToRedeem > 0) {
             // Reduce the holders balance and the total supply.
             IOUBalance[_holder][_projectId] =
                 IOUBalance[_holder][_projectId] -
-                _amount;
-            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
-        } else {
-            // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
-            require(
-                _ticket != ITicket(address(0)),
-                "Tickets::redeem: INSUFICIENT_FUNDS"
-            );
-            if (_unlockedIOU > 0) {
-                // Reduce the holders balance and the total supply.
-                IOUBalance[_holder][_projectId] = 0;
-                IOUTotalSupply[_projectId] =
-                    IOUTotalSupply[_projectId] -
-                    _unlockedIOU;
-                // If there aren't enough IOUs, redeem all remaining IOUs, and use ERC20s for the difference.
-                uint256 _difference = _amount - _unlockedIOU;
-                require(
-                    _ticket.balanceOf(_holder) >= _difference,
-                    "Tickets::redeem: INSUFICIENT_FUNDS"
-                );
-                _ticket.redeem(_holder, _difference);
-            } else {
-                require(
-                    _ticket.balanceOf(_holder) >= _amount,
-                    "Tickets::redeem: INSUFICIENT_FUNDS"
-                );
-                _ticket.redeem(_holder, _amount);
-            }
+                _IOUsToRedeem;
+            IOUTotalSupply[_projectId] =
+                IOUTotalSupply[_projectId] -
+                _IOUsToRedeem;
         }
 
-        emit Redeem(_projectId, _holder, _amount, _unlockedIOU, msg.sender);
+        emit Redeem(
+            _projectId,
+            _holder,
+            _amount,
+            _unlockedIOUBalance,
+            _preferConverted,
+            msg.sender
+        );
     }
 
     /**

@@ -17,6 +17,7 @@ module.exports = function() {
   });
 
   // Test each function.
+  describe("issue(...)", shouldBehaveLike.issue);
   describe("print(...)", shouldBehaveLike.print);
-  // describe("setTicketMods(...)", shouldBehaveLike.setTicketMods);
+  describe("redeem(...)", shouldBehaveLike.redeem);
 };

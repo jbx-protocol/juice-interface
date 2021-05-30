@@ -161,7 +161,7 @@ module.exports = function() {
             caller
           ).balanceOf(holder);
 
-          // Expect the stored balance to equal.
+          // Expect the stored balance to equal the expected value.
           expect(storedTicketBalance).to.equal(expectedBalance);
 
           // Get the stored ticket total supply.
@@ -169,7 +169,7 @@ module.exports = function() {
             caller
           ).totalSupply();
 
-          // Expect the stored total supply to equal.
+          // Expect the stored total supply to equal the expected value.
           expect(storedTicketTotalSupply).to.equal(expectedTotalSupply);
         } else {
           // Get the stored project IOU balance for the holder.
@@ -177,15 +177,15 @@ module.exports = function() {
             .connect(caller)
             .IOUBalance(holder, projectId);
 
-          // Expect the stored balance to equal.
+          // Expect the stored IOU balance to equal the expected value.
           expect(storedIOUBalance).to.equal(expectedBalance);
 
-          // Get the stored project IOU balance for the holder.
+          // Get the stored project IOU total supply for the holder.
           const storedIOUTotalSupply = await this.contract
             .connect(caller)
             .IOUTotalSupply(projectId);
 
-          // Expect the stored total supply to equal.
+          // Expect the stored IOU total supply to equal the expected value.
           expect(storedIOUTotalSupply).to.equal(expectedTotalSupply);
         }
       });

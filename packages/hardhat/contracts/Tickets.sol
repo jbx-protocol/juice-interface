@@ -97,6 +97,22 @@ contract Tickets is Administered, ITickets {
             balance = balance + _ticket.balanceOf(_holder);
     }
 
+    /** 
+      @notice Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
+      @param _controller The controller to add.
+      @param _projectId The ID of the project that will be controlled.
+    */
+    function initialize(address _controller, uint256 _projectId)
+        external
+        override
+        onlyAdmin
+    {
+        // The the controller status.
+        isController[_projectId][_controller] = true;
+
+        emit Initialize(_controller, _projectId, msg.sender);
+    }
+
     /**
         @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
         @dev Deploys an owner's Ticket ERC-20 token contract.
@@ -329,22 +345,6 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
-      @param _controller The controller to add.
-      @param _projectId The ID of the project that will be controlled.
-    */
-    function initialize(address _controller, uint256 _projectId)
-        external
-        override
-        onlyAdmin
-    {
-        // The the controller status.
-        isController[_projectId][_controller] = true;
-
-        emit Initialize(_controller, _projectId, msg.sender);
-    }
-
-    /** 
       @notice Adds a controller that can print and redeem tickets on a project's behalf.
       @param _controller The controller to add.
       @param _projectId The ID of the project that will be controlled.
@@ -356,7 +356,7 @@ contract Tickets is Administered, ITickets {
         // The message sender must already be a controller of the project, or it must be the admin.
         require(
             isController[_projectId][msg.sender],
-            "Tickets::addAdmin: UNAUTHORIZED"
+            "Tickets::addController: UNAUTHORIZED"
         );
 
         // The the controller status.
@@ -377,7 +377,7 @@ contract Tickets is Administered, ITickets {
         // The message sender must already be a controller of the project, or it must be the admin.
         require(
             isController[_projectId][msg.sender],
-            "Tickets::addAdmin: UNAUTHORIZED"
+            "Tickets::removeController: UNAUTHORIZED"
         );
 
         // The the controller status.
@@ -397,11 +397,14 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         uint256 _amount
     ) external override onlyAdmin {
+        // Amount must be greater than 0.
+        require(_amount > 0, "Tickets::lock: NO_OP");
+
         // The holder must have enough tickets to lock.
         require(
             IOUBalance[_holder][_projectId] - locked[_holder][_projectId] >=
                 _amount,
-            "Tickets::lock: INSUFFICIENT_TICKETS"
+            "Tickets::lock: INSUFFICIENT_FUNDS"
         );
 
         // Update the lock.
@@ -421,10 +424,13 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         uint256 _amount
     ) external override onlyAdmin {
+        // Amount must be greater than 0.
+        require(_amount > 0, "Tickets::unlock: NO_OP");
+
         // There must be enough locked tickets to unlock.
         require(
             locked[_holder][_projectId] >= _amount,
-            "Tickets::lock: INSUFFICIENT_TICKETS"
+            "Tickets::unlock: INSUFFICIENT_FUNDS"
         );
 
         // Update the lock.

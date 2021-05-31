@@ -19,5 +19,7 @@ module.exports = function() {
   // Test each function.
   describe("issue(...)", shouldBehaveLike.issue);
   describe("print(...)", shouldBehaveLike.print);
+  describe("convert(...)", shouldBehaveLike.convert);
+  describe("transfer(...)", shouldBehaveLike.transfer);
   describe("redeem(...)", shouldBehaveLike.redeem);
 };

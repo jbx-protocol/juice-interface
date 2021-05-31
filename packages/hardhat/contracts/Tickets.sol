@@ -38,8 +38,16 @@ contract Tickets is Administered, ITickets {
     /// @notice A contract storing operator assignments.
     IOperatorStore public immutable override operatorStore;
 
-    /// @notice the permision index required to issue tickets on an owners behalf.
+    /// @notice The permision index required to issue tickets on an owners behalf.
     uint256 public immutable override issuePermissionIndex = Operations.Issue;
+
+    /// @notice The permision index required to converting tickets on a holders behalf.
+    uint256 public immutable override convertPermissionIndex =
+        Operations.Convert;
+
+    /// @notice The permision index required to transfer tickets on a holders behalf.
+    uint256 public immutable override transferPermissionIndex =
+        Operations.Transfer;
 
     // --- external transactions --- //
 
@@ -170,8 +178,8 @@ contract Tickets is Administered, ITickets {
         }
 
         emit Print(
-            _projectId,
             _holder,
+            _projectId,
             _amount,
             _shouldConvertTickets,
             _preferConvertedTickets,
@@ -252,8 +260,8 @@ contract Tickets is Administered, ITickets {
         }
 
         emit Redeem(
-            _projectId,
             _holder,
+            _projectId,
             _amount,
             _unlockedIOUBalance,
             _preferConverted,
@@ -265,11 +273,17 @@ contract Tickets is Administered, ITickets {
       @notice Converts to  ERC20 tickets from IOUs.
       @param _holder The owner of the tickets to convert.
       @param _projectId The ID of the project whos tickets are being converted.
+      @param _amount The amount of tickets to convert.
      */
-    function convert(address _holder, uint256 _projectId) external override {
+    function convert(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external override {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
+        // Tickets must have been issued.
         require(_ticket != ITicket(address(0)), "Tickets:convert: NOT_FOUND");
 
         // Only an account or a specified operator can convert its tickets.
@@ -287,23 +301,31 @@ contract Tickets is Administered, ITickets {
                     msg.sender,
                     Operations.Convert
                 ),
-            "Juicer::convert: UNAUTHORIZED"
+            "Tickets::convert: UNAUTHORIZED"
         );
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
             IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
 
-        // If there are no IOUs, there's nothing to convert.
-        if (_unlockedIOUs == 0) return;
+        // There must be enough unlocked IOUs to convert.
+        require(
+            _unlockedIOUs >= _amount,
+            "Tickets::convert: INSUFFICIENT_FUNDS"
+        );
 
-        // Set the IOUs to the locked amount.
-        IOUBalance[_holder][_projectId] = locked[_holder][_projectId];
+        // Subtract the converted amount from the holder's balance.
+        IOUBalance[_holder][_projectId] =
+            IOUBalance[_holder][_projectId] -
+            _amount;
+
+        // Subtract the converted amount from the project's total supply.
+        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
 
         // Print the equivalent amount of ERC20s.
-        _ticket.print(_holder, _unlockedIOUs);
+        _ticket.print(_holder, _amount);
 
-        emit Convert(_holder, _projectId, _unlockedIOUs, msg.sender);
+        emit Convert(_holder, _projectId, _amount, msg.sender);
     }
 
     /** 
@@ -431,16 +453,20 @@ contract Tickets is Administered, ITickets {
                     _holder,
                     0,
                     msg.sender,
-                    Operations.Transfer
+                    transferPermissionIndex
                 ) ||
                 operatorStore.hasPermission(
                     _holder,
                     _projectId,
                     msg.sender,
-                    Operations.Transfer
+                    transferPermissionIndex
                 ),
-            "Juicer::transfer: UNAUTHORIZED"
+            "Tickets::transfer: UNAUTHORIZED"
         );
+
+        require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
+
+        require(_holder != _recipient, "Tickets::transfer: IDENTITY");
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
@@ -453,7 +479,9 @@ contract Tickets is Administered, ITickets {
         );
 
         // Subtract from the holder.
-        IOUBalance[_holder][_projectId] = _unlockedIOUs - _amount;
+        IOUBalance[_holder][_projectId] =
+            IOUBalance[_holder][_projectId] -
+            _amount;
 
         // Add the tickets to the recipient.
         IOUBalance[_recipient][_projectId] =

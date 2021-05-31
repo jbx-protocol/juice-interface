@@ -1,4 +1,6 @@
-const { ethers } = require("hardhat");
+const {
+  ethers: { BigNumber, constants, getContractFactory }
+} = require("hardhat");
 const { expect } = require("chai");
 
 const tests = {
@@ -10,7 +12,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 50,
+        amount: BigNumber.from(50),
         preferConverted: false,
         withERC20: false
       })
@@ -22,7 +24,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 50,
+        amount: BigNumber.from(50),
         preferConverted: true,
         withERC20: true
       })
@@ -34,7 +36,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 50,
+        amount: BigNumber.from(50),
         preferConverted: true,
         withERC20: false
       })
@@ -46,7 +48,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 50,
+        amount: BigNumber.from(50),
         preferConverted: false,
         withERC20: true
       })
@@ -58,7 +60,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: ethers.constants.MaxUint256,
+        amount: constants.MaxUint256,
         preferConverted: false,
         withERC20: false
       })
@@ -72,7 +74,7 @@ const tests = {
         controller: addrs[0].address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 50,
+        amount: BigNumber.from(50),
         preferConverted: false,
         withERC20: false,
         revert: "Tickets::print: UNAUTHORIZED"
@@ -85,7 +87,7 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
-        amount: 0,
+        amount: BigNumber.from(0),
         preferConverted: false,
         withERC20: false,
         revert: "Tickets::print: NO_OP"
@@ -133,8 +135,8 @@ module.exports = function() {
         await expect(tx)
           .to.emit(this.contract, "Print")
           .withArgs(
-            projectId,
             holder,
+            projectId,
             amount,
             withERC20 && preferConverted,
             preferConverted,
@@ -153,7 +155,7 @@ module.exports = function() {
             .tickets(projectId);
 
           // Attach the address to the Ticket contract.
-          const TicketFactory = await ethers.getContractFactory("Ticket");
+          const TicketFactory = await getContractFactory("Ticket");
           const StoredTicket = await TicketFactory.attach(storedTicketAddress);
 
           // Get the stored ticket balance for the holder.

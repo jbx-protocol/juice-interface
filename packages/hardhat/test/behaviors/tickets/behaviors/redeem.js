@@ -119,6 +119,23 @@ const tests = {
       })
     },
     {
+      description:
+        "redeems mix of IOUs and ERC-20 tickets, max uints including locked",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        controller: deployer.address,
+        projectId: 1,
+        holder: addrs[0].address,
+        amount: constants.MaxUint256,
+        preferConverted: false,
+        setup: {
+          IOUBalance: constants.MaxUint256,
+          erc20Balance: constants.MaxUint256,
+          lockedAmount: constants.MaxUint256
+        }
+      })
+    },
+    {
       description: "redeems mix of IOUs and ERC-20 tickets, some locked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
@@ -315,8 +332,8 @@ module.exports = function() {
         await expect(tx)
           .to.emit(this.contract, "Redeem")
           .withArgs(
-            projectId,
             holder,
+            projectId,
             amount,
             IOUBalance.sub
               ? IOUBalance.sub(lockedAmount)
@@ -328,10 +345,14 @@ module.exports = function() {
         // The expected total IOU supply.
         let expectedIOUTotalSupply;
         if (preferConverted && erc20Balance > 0) {
-          expectedIOUTotalSupply =
-            IOUBalance - (amount > erc20Balance ? amount - erc20Balance : 0);
+          expectedIOUTotalSupply = IOUBalance.sub(
+            amount > erc20Balance ? amount.sub(erc20Balance) : BigNumber.from(0)
+          );
         } else {
-          expectedIOUTotalSupply = Math.max(IOUBalance - amount, lockedAmount);
+          expectedIOUTotalSupply =
+            IOUBalance.sub(amount) > lockedAmount
+              ? IOUBalance.sub(amount)
+              : lockedAmount;
         }
 
         // Get the stored IOU supply.

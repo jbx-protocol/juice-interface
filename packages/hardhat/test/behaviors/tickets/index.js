@@ -17,9 +17,16 @@ module.exports = function() {
   });
 
   // Test each function.
+  describe("initialize(...)", shouldBehaveLike.initialize);
   describe("issue(...)", shouldBehaveLike.issue);
   describe("print(...)", shouldBehaveLike.print);
   describe("convert(...)", shouldBehaveLike.convert);
   describe("transfer(...)", shouldBehaveLike.transfer);
   describe("redeem(...)", shouldBehaveLike.redeem);
+  describe("addController(...)", shouldBehaveLike.addController);
+  describe("removeController(...)", shouldBehaveLike.removeController);
+  describe("lock(...)", shouldBehaveLike.lock);
+  describe("unlock(...)", shouldBehaveLike.unlock);
+  describe("totalBalanceOf(...)", shouldBehaveLike.totalBalanceOf);
+  describe("totalSupply(...)", shouldBehaveLike.totalSupply);
 };

@@ -3,23 +3,42 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Juice
-    network: localhost
+    name: Juicer
+    network: mainnet
     source:
-      address: "{{JuiceAddress}}"
-      abi: Juice
+      address: "{{JuicerAddress}}"
+      abi: Juicer
       startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Purpose
-        - Sender
+        - Project
       abis:
-        - name: Juice
-          file: ./abis/Juice.json
+        - name: Juicer
+          file: ./abis/Juicer.json
       eventHandlers:
-        - event: SetPurpose(address,string)
-          handler: handleSetPurpose
+        - event: Deploy(indexed uint256,indexed address,uint256,bytes32,string,uint256,uint256,uint256,uint256,(uint16,uint16,uint16),address,address)
+          handler: handleDeploy
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: Projects
+    network: mainnet
+    source:
+      address: "{{ProjectsAddress}}"
+      abi: Projects
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Project
+      abis:
+        - name: Projects
+          file: ./abis/Projects.json
+      eventHandlers:
+        - event: SetHandle(indexed uint256,bytes32,address)
+          handler: handleSetHandle
       file: ./src/mapping.ts

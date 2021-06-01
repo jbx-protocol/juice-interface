@@ -1,20 +1,17 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { ProjectMetadata } from 'models/project-metadata'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { ProjectInfo } from 'models/project-info'
 import { useContext } from 'react'
 
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
-export default function ProjectCard({
-  handle,
-  metadata,
-}: {
-  handle: string
-  metadata: ProjectMetadata
-}) {
+export default function ProjectCard({ project }: { project: ProjectInfo }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
+
+  const metadata = useProjectMetadata(project.uri)
 
   return (
     <div
@@ -25,8 +22,8 @@ export default function ProjectCard({
         overflow: 'hidden',
       }}
       className="clickable-border"
-      key={handle}
-      onClick={() => (window.location.hash = '/p/' + handle)}
+      key={project?.handle}
+      onClick={() => (window.location.hash = '/p/' + project.handle)}
     >
       {metadata ? (
         <div
@@ -64,7 +61,7 @@ export default function ProjectCard({
                 textOverflow: 'ellipsis',
               }}
             >
-              @{handle}
+              @{project.handle}
             </div>
 
             {metadata.infoUri && (
@@ -89,7 +86,7 @@ export default function ProjectCard({
             alignItems: 'center',
           }}
         >
-          {handle} <Loading />
+          {project.handle} <Loading />
         </div>
       )}
     </div>

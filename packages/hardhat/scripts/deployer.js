@@ -173,8 +173,8 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   }
 
   console.log(
-    " 💾  Artifacts (address, abi, and args) saved to: ",
-    chalk.blue("packages/hardhat/artifacts/"),
+    "💾 Artifacts (address, abi, and args) saved to:",
+    chalk.yellow("packages/hardhat/artifacts/"),
     "\n\n"
   );
 
@@ -192,7 +192,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 };
 
 const deploy = async (contractName, _args) => {
-  console.log(` 🛰  Deploying: ${contractName}`);
+  console.log(`🛰  Deploying: ${contractName}...`);
 
   const contractArgs = _args || [];
   const contractArtifacts = await ethers.getContractFactory(contractName);
@@ -203,7 +203,7 @@ const deploy = async (contractName, _args) => {
   fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
 
   console.log(
-    " 📄",
+    "  ",
     chalk.cyan(contractName),
     "deployed to:",
     chalk.magenta(deployed.address)

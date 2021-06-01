@@ -2,23 +2,43 @@
   {
     "inputs": [
       {
-        "internalType": "contract IBudgetStore",
-        "name": "_budgetStore",
+        "internalType": "contract IProjects",
+        "name": "_projects",
         "type": "address"
       },
       {
-        "internalType": "contract ITicketStore",
-        "name": "_ticketStore",
+        "internalType": "contract IFundingCycles",
+        "name": "_fundingCycles",
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "_fee",
-        "type": "uint256"
+        "internalType": "contract ITickets",
+        "name": "_tickets",
+        "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "_dai",
+        "internalType": "contract IOperatorStore",
+        "name": "_operatorStore",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IModStore",
+        "name": "_modStore",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IPrices",
+        "name": "_prices",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "_governance",
         "type": "address"
       }
     ],
@@ -29,9 +49,73 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "governance",
+        "type": "address"
+      }
+    ],
+    "name": "AcceptGovernance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "AddToBalance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "allowed",
+        "type": "address"
+      }
+    ],
+    "name": "AddToMigrationAllowList",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "governance",
+        "type": "address"
+      }
+    ],
+    "name": "AppointGovernance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
         "type": "uint256"
       },
       {
@@ -41,9 +125,33 @@
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "handle",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "target",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
         "type": "uint256"
       },
       {
@@ -54,15 +162,291 @@
       },
       {
         "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "want",
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "bondingCurveRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reservedRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint16"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct FundingCycleMetadata",
+        "name": "metadata",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IFundingCycleBallot",
+        "name": "ballot",
         "type": "address"
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "Deploy",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IJuiceTerminal",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "Migrate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "total",
+        "type": "uint256"
+      }
+    ],
+    "name": "ModDistribution",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
-        "name": "link",
+        "name": "note",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "Pay",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "PrintInitialTickets",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beneficiaryTicketAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "PrintReserveTickets",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -71,82 +455,42 @@
         "type": "uint256"
       },
       {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "bondingCurveRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reservedRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint16"
+          }
+        ],
         "indexed": false,
-        "internalType": "uint256",
-        "name": "o",
-        "type": "uint256"
+        "internalType": "struct FundingCycleMetadata",
+        "name": "metadata",
+        "type": "tuple"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "b",
-        "type": "uint256"
+        "internalType": "contract IFundingCycleBallot",
+        "name": "ballot",
+        "type": "address"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "bAddress",
+        "name": "caller",
         "type": "address"
       }
     ],
-    "name": "ConfigureBudget",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      }
-    ],
-    "name": "DistributeReserves",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "symbol",
-        "type": "string"
-      }
-    ],
-    "name": "IssueTickets",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      }
-    ],
-    "name": "Migrate",
+    "name": "Reconfigure",
     "type": "event"
   },
   {
@@ -160,15 +504,15 @@
       },
       {
         "indexed": true,
-        "internalType": "contract IERC20",
-        "name": "tickets",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "beneficiary",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -184,8 +528,8 @@
       },
       {
         "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "returnToken",
+        "internalType": "address",
+        "name": "caller",
         "type": "address"
       }
     ],
@@ -196,43 +540,13 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "budgetId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "sustainer",
-        "type": "address"
-      },
-      {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
       }
     ],
-    "name": "SustainBudget",
+    "name": "SetFee",
     "type": "event"
   },
   {
@@ -240,36 +554,25 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "swappedAmount",
-        "type": "uint256"
       }
     ],
-    "name": "Swap",
+    "name": "SetTargetLocalETH",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "contract IYielder",
+        "name": "newYielder",
+        "type": "address"
+      }
+    ],
+    "name": "SetYielder",
     "type": "event"
   },
   {
@@ -278,14 +581,14 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "budgetId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -301,17 +604,41 @@
       },
       {
         "indexed": false,
-        "internalType": "contract IERC20",
-        "name": "want",
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "transferAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "beneficiaryTransferAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "govFeeAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
         "type": "address"
       }
     ],
-    "name": "TapBudget",
+    "name": "Tap",
     "type": "event"
   },
   {
     "inputs": [],
-    "name": "STANDBY_PERIOD",
+    "name": "LARGEST_SIGNED_INT",
     "outputs": [
       {
         "internalType": "uint256",
@@ -320,6 +647,26 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "acceptGovernance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
+    "name": "addToBalance",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -330,59 +677,51 @@
         "type": "address"
       }
     ],
-    "name": "addToMigrationAllowList",
+    "name": "allowMigration",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "_pendingGovernance",
+        "type": "address"
+      }
+    ],
+    "name": "appointGovernance",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "budgetStore",
-    "outputs": [
-      {
-        "internalType": "contract IBudgetStore",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "claim",
+    "name": "balance",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "amountWithoutYield",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountWithYield",
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       }
     ],
-    "name": "claimable",
+    "name": "balanceOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -395,9 +734,77 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "address",
+        "name": "_account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_count",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimableOverflow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
+    "name": "currentOverflowOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "overflow",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_handle",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
+      },
       {
         "internalType": "uint256",
         "name": "_target",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_currency",
         "type": "uint256"
       },
       {
@@ -406,64 +813,46 @@
         "type": "uint256"
       },
       {
-        "internalType": "string",
-        "name": "_link",
-        "type": "string"
-      },
-      {
         "internalType": "uint256",
         "name": "_discountRate",
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_o",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "bondingCurveRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reservedRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct FundingCycleMetadata",
+        "name": "_metadata",
+        "type": "tuple"
       },
       {
-        "internalType": "uint256",
-        "name": "_b",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_bAddress",
+        "internalType": "contract IFundingCycleBallot",
+        "name": "_ballot",
         "type": "address"
       }
     ],
-    "name": "configureBudget",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "name": "deploy",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "dai",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_issuer",
-        "type": "address"
-      }
-    ],
-    "name": "distributeReserves",
+    "name": "deposit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -482,29 +871,26 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "fundingCycles",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "_issuer",
+        "internalType": "contract IFundingCycles",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "getDistributableReserves",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "governance",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "issuerTickets",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "adminFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "beneficiaryDonations",
-        "type": "uint256"
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -513,25 +899,12 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
-      }
-    ],
-    "name": "issueTickets",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
+        "internalType": "contract IJuiceTerminal",
         "name": "_to",
         "type": "address"
       }
@@ -542,11 +915,97 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "modStore",
+    "outputs": [
+      {
+        "internalType": "contract IModStore",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "operatorStore",
+    "outputs": [
+      {
+        "internalType": "contract IOperatorStore",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
-        "name": "_owner",
+        "name": "_beneficiary",
         "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_memo",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferConvertedTickets",
+        "type": "bool"
+      }
+    ],
+    "name": "pay",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pendingGovernance",
+    "outputs": [
+      {
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "prices",
+    "outputs": [
+      {
+        "internalType": "contract IPrices",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -557,13 +1016,110 @@
         "internalType": "address",
         "name": "_beneficiary",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferConvertedTickets",
+        "type": "bool"
       }
     ],
-    "name": "payOwner",
+    "name": "printInitialTickets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
+    "name": "printReservedTickets",
     "outputs": [
       {
         "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "projects",
+    "outputs": [
+      {
+        "internalType": "contract IProjects",
         "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_target",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_currency",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_discountRate",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "bondingCurveRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reservedRate",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct FundingCycleMetadata",
+        "name": "_metadata",
+        "type": "tuple"
+      },
+      {
+        "internalType": "contract IFundingCycleBallot",
+        "name": "_ballot",
+        "type": "address"
+      }
+    ],
+    "name": "reconfigure",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "fundingCycleId",
         "type": "uint256"
       }
     ],
@@ -574,21 +1130,26 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_issuer",
+        "name": "_account",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_projectId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_minReturn",
+        "name": "_count",
         "type": "uint256"
       },
       {
-        "internalType": "address",
+        "internalType": "uint256",
+        "name": "_minReturnedETH",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"
       }
@@ -597,7 +1158,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "returnAmount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -607,12 +1168,36 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_admin",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_reservedRate",
+        "type": "uint256"
       }
     ],
-    "name": "setAdmin",
+    "name": "reservedTicketAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -621,7 +1206,33 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_budgetId",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTargetLocalETH",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IYielder",
+        "name": "_yielder",
+        "type": "address"
+      }
+    ],
+    "name": "setYielder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
         "type": "uint256"
       },
       {
@@ -630,22 +1241,61 @@
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "_beneficiary",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_minReturnedETH",
+        "type": "uint256"
       }
     ],
-    "name": "tapBudget",
+    "name": "tap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "ticketStore",
+    "name": "targetLocalETH",
     "outputs": [
       {
-        "internalType": "contract ITicketStore",
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
+      {
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tickets",
+    "outputs": [
+      {
+        "internalType": "contract ITickets",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "yielder",
+    "outputs": [
+      {
+        "internalType": "contract IYielder",
         "name": "",
         "type": "address"
       }

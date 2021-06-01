@@ -1,4 +1,4 @@
-import { Input, Select, Space } from 'antd'
+import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
 import { useProjects } from 'hooks/Projects'
@@ -24,7 +24,7 @@ export default function Projects() {
     window.location.hash = addr ? '/projects/' + addr : '/projects'
   }
 
-  const allProjects = useProjects()
+  const projects = useProjects({})
 
   // TODO
   // const projectsForOwner = useContractReader<ProjectIdentifier[]>({
@@ -49,7 +49,7 @@ export default function Projects() {
         }}
       >
         <h1>Projects on Juice</h1>
-        <Space>
+        {/* <Space>
           <Select
             value={selectOption}
             onChange={val => {
@@ -79,17 +79,16 @@ export default function Projects() {
               }}
             />
           )}
-        </Space>
+        </Space> */}
       </div>
 
-      {/* TODO */}
-      {/* {Object.values(projects).length ? (
-        <ProjectsGrid projects={Object.values(projects)} />
+      {projects.length ? (
+        <ProjectsGrid projects={projects} />
       ) : (
         <div style={{ padding: 40, textAlign: 'center' }}>
           No projects owned by {owner}
         </div>
-      )} */}
+      )}
     </div>
   )
 }

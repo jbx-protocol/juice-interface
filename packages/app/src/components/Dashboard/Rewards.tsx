@@ -175,7 +175,10 @@ export default function Rewards({
   const totalSupply = ticketSupply?.add(reservedTickets ?? 0)
 
   const share = totalSupply?.gt(0)
-    ? totalBalance?.mul(100).div(totalSupply).toString()
+    ? totalBalance
+        ?.mul(100)
+        .div(totalSupply)
+        .toString()
     : '0'
 
   function convert() {
@@ -235,6 +238,7 @@ export default function Rewards({
         redeemWad.toHexString(),
         minAmount,
         userAddress,
+        false, // TODO preferconverted
       ],
       {
         onConfirmed: () => setRedeemAmount(undefined),

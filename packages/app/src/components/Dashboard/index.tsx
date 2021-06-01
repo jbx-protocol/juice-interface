@@ -11,6 +11,7 @@ import { useCallback, useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
+import { ipfsCidUrl } from 'utils/ipfs'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
@@ -64,7 +65,13 @@ export default function Dashboard() {
       : undefined,
   })
 
-  const metadata = useProjectMetadata(projectId)
+  const uri = useContractReader<string>({
+    contract: ContractName.Projects,
+    functionName: 'uri',
+    args: projectId ? [projectId.toHexString()] : null,
+  })
+
+  const metadata = useProjectMetadata(uri)
 
   const isOwner = userAddress === owner
 

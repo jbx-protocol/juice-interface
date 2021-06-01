@@ -46,7 +46,11 @@ Run `yarn account` to create a local deployer wallet private key. To send ETH to
 
 ## Deploying contracts
 
-Contracts are located in `packages/hardhat/contracts`. Each time contracts are deployed, artifacts are copied to `packages/app/src/contracts` where they're used by the frontend. 
+Contracts are located in `packages/hardhat/contracts`. 
+
+Each time contracts are deployed, artifacts are copied to:
+- `packages/app/src/contracts` where they're used by the frontend
+- `packages/subgraph/abis` where they're used to generate Graph templates
 
 The frontend connects to whichever chain its provider (i.e. Metamask) is using to, and reads the corresponding contract artifacts for that chain. Connecting to a chain that Juice contracts have not been deployed to will cause the app to fail.
 
@@ -94,9 +98,21 @@ The frontend has three different providers that provide different levels of acce
 
 ## Deploying frontend
 
-Deployment is managed via a CI workflow defined in `.github/workflows/main.yaml`, which runs for all commits to the `main` branch and depends on github secrets `GCP_PROD_SA_KEY` and `INFURA_ID`.
+`yarn ipfs` to build and deploy frontend to IPFS.
 
-The react app is packaged and published to the (juice.work/web-production Google Cloud App Engine)[https://console.cloud.google.com/appengine?project=web-production-294102&serviceId=default]. Once new versions have been published, they must be manually promoted in App Engine before they become live.# juicehouse
+## Graph
+
+Juice uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. ***Production deployment is still WIP.***
+
+### Running locally
+Install Docker.
+
+1. Make sure local chain is running.
+2. In a new terminal window: `yarn graph-run-node` to start Docker Graph node. 
+- Node is ready when terminal output reads:
+> `INFO Starting GraphQL WebSocket server at: ws://localhost:8001, component: SubscriptionServer`
+3. In another terminal window: `yarn graph-create-local` to create subgraph and add to local node. (Only needs to be run once per local graph node. `yarn graph-remove-local` to remove the subgraph.)
+4. `yarn graph-ship-local` while the node is running to ship changes to subgraph template, mappings, and schema defined in packages/subgraph/src.
 
 ## Theme
 

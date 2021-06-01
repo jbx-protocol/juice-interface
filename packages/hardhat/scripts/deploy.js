@@ -2,16 +2,18 @@
 const weth = require("../constants/weth");
 const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 const deployer = require("./deployer");
+const publish = require("./publish");
 
 const main = async () => {
   const wethAddr = weth(process.env.HARDHAT_NETWORK);
   const ethUsdAddr = ethUsdPriceFeed(process.env.HARDHAT_NETWORK);
   await deployer(wethAddr, ethUsdAddr);
+  await publish();
 };
 
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error);
     process.exit(1);
   });

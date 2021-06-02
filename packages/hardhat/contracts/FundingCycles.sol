@@ -265,18 +265,24 @@ contract FundingCycles is Administered, IFundingCycles {
         bool _configureActiveFundingCycle
     ) external override onlyAdmin returns (uint256 fundingCycleId) {
         // Target must be greater than 0.
-        require(_target > 0, "FundingCycles::reconfigure: BAD_TARGET");
+        require(_target > 0, "FundingCycles::configure: BAD_TARGET");
 
-        // Duration must be greater than 0, and must fit in a uint48.
+        // Duration must be greater than 0, and must fit in a uint24.
         require(
-            _duration > 0 && _duration <= type(uint48).max,
-            "FundingCycles::reconfigure: BAD_DURATION"
+            _duration > 0 && _duration <= type(uint24).max,
+            "FundingCycles::configure: BAD_DURATION"
         );
 
         // Discount rate token must be less than or equal to 100%.
         require(
             _discountRate <= 200,
-            "FundingCycles::deploy: BAD_DISCOUNT_RATE"
+            "FundingCycles::configure: BAD_DISCOUNT_RATE"
+        );
+
+        // Currency must fit into a uint8.
+        require(
+            _currency <= type(uint8).max,
+            "FundingCycles::configure: BAD_CURRENCY"
         );
 
         // Fee must be less than or equal to 100%.
@@ -838,7 +844,7 @@ contract FundingCycles is Administered, IFundingCycles {
         view
         returns (uint256)
     {
-        // The end of the specified funding cycle.
+        // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
 
@@ -868,20 +874,22 @@ contract FundingCycles is Administered, IFundingCycles {
         view
         returns (uint256)
     {
-        // The end of the specified funding cycle.
-        // The start timestamp is inclusive of the duration, so subtract 1 for the inclusive end of the funding cycle
+        // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
 
         // The number of times to apply the discount rate.
         uint256 _discountMultiple;
+        // Only add one if the current time is before or equal to the next immediate start.
         if (_nextImmediateStart >= block.timestamp) {
             _discountMultiple = 1;
         } else {
             uint256 _timeSinceImmediateStart =
                 block.timestamp - _nextImmediateStart;
             _discountMultiple =
+                // Add at least 2.
                 2 +
+                // Add additionally depending on how many cycles have passed.
                 (_timeSinceImmediateStart / _fundingCycle.duration);
         }
 
@@ -896,7 +904,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
     /** 
         @notice 
-        The number of next funding cycles given the specified funding cycle.
+        The number of next funding cycle given the specified funding cycle.
 
         @param _fundingCycle The funding cycle to make the calculation for.
 
@@ -907,11 +915,11 @@ contract FundingCycles is Administered, IFundingCycles {
         view
         returns (uint256)
     {
-        // The end of the specified funding cycle.
+        // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
 
-        // If there are funding cycles between the specified one and the next one, take those into account.
+        // Only add one if the current time is before or equal to the next immediate start.
         if (_nextImmediateStart >= block.timestamp) {
             return _fundingCycle.number + 1;
         } else {
@@ -919,7 +927,9 @@ contract FundingCycles is Administered, IFundingCycles {
                 block.timestamp - _nextImmediateStart;
             return
                 _fundingCycle.number +
+                // Add at least 2.
                 2 +
+                // Add additionally depending on how many cycles have passed.
                 (_timeSinceImmediateStart / _fundingCycle.duration);
         }
     }

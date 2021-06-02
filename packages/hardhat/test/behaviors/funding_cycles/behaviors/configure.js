@@ -1,5 +1,5 @@
 const {
-  ethers: { BigNumber }
+  ethers: { BigNumber, constants }
 } = require("hardhat");
 const { expect } = require("chai");
 
@@ -231,17 +231,178 @@ const tests = {
           expectedWeightFactor: 5
         };
       }
+    },
+    {
+      description:
+        "reconfigure, during first funding cycle, configuring the active cycle",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          ballot: ballot.address,
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: true,
+          setup: {
+            preconfigure: {
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            fastforward: preconfigureDuration.sub(2),
+            expectedConfiguredNumber: 1
+          }
+        };
+      }
+    },
+    {
+      description:
+        "reconfigure, immediately after the first funding cycle, ignoring the option to configure the active one",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          ballot: ballot.address,
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: true,
+          setup: {
+            preconfigure: {
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            fastforward: preconfigureDuration
+          },
+          expectedConfiguredNumber: 2,
+          expectedStartTimeDistance: preconfigureDuration,
+          expectedWeightFactor: 1
+        };
+      }
+    },
+    {
+      description: "reconfigure, first funding cycle, max values",
+      fn: ({ deployer, ballot }) => {
+        return {
+          caller: deployer,
+          projectId: 1,
+          target: constants.MaxUint256,
+          currency: BigNumber.from(2)
+            .pow(8)
+            .sub(1),
+          duration: BigNumber.from(2)
+            .pow(24)
+            .sub(1),
+          discountRate: BigNumber.from(200),
+          fee: BigNumber.from(200),
+          ballot: ballot.address,
+          metadata: constants.MaxUint256,
+          configureActiveFundingCycle: false
+        };
+      }
     }
   ],
   failure: [
     {
-      description: "index out of bounds",
-      fn: ({ deployer, addrs }) => ({
+      description: "target is 0",
+      fn: ({ deployer, ballot }) => ({
         caller: deployer,
-        projectId: 0,
-        operator: addrs[0],
-        permissionIndexes: [256],
-        revert: "OperatorStore::_packedPermissions: INDEX_OUT_OF_BOUNDS"
+        projectId: 1,
+        target: BigNumber.from(0),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(80),
+        discountRate: BigNumber.from(180),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: "FundingCycles::configure: BAD_TARGET"
+      })
+    },
+    {
+      description: "duration is 0",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: BigNumber.from(10),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(0),
+        discountRate: BigNumber.from(180),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: "FundingCycles::configure: BAD_DURATION"
+      })
+    },
+    {
+      description: "duration more than the max allowed",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: BigNumber.from(10),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(2).pow(24),
+        discountRate: BigNumber.from(180),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: "FundingCycles::configure: BAD_DURATION"
+      })
+    },
+    {
+      description: "discount rate over 100%",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: BigNumber.from(10),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(100),
+        discountRate: BigNumber.from(201),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: "FundingCycles::configure: BAD_DISCOUNT_RATE"
+      })
+    },
+    {
+      description: "currency over max allowed",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: BigNumber.from(10),
+        currency: BigNumber.from(2).pow(8),
+        duration: BigNumber.from(100),
+        discountRate: BigNumber.from(80),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: "FundingCycles::configure: BAD_CURRENCY"
       })
     }
   ]
@@ -314,11 +475,39 @@ module.exports = function() {
         // Get a reference to the base weight.
         const baseWeight = await this.contract.BASE_WEIGHT();
 
+        let expectedWeight = baseWeight;
+
+        // Multiply the discount the amount of times specified.
+        if (expectedWeightFactor) {
+          for (let i = 0; i < expectedWeightFactor; i += 1) {
+            expectedWeight = expectedWeight
+              .mul(preconfigure.discountRate)
+              .div(200);
+          }
+        }
+
+        const expectedConfiguredIndex =
+          preconfigure &&
+          (preconfigure.duration <= fastforward || !configureActiveFundingCycle)
+            ? 2
+            : 1;
+
+        // Get the time when the configured funding cycle starts.
+        let expectedStart;
+        if (preconfigure) {
+          expectedStart =
+            expectedConfiguredIndex === 1
+              ? expectedPreconfigureStart
+              : expectedPreconfigureStart.add(expectedStartTimeDistance);
+        } else {
+          expectedStart = now;
+        }
+
         // Expect two events to have been emitted.
         await expect(tx)
           .to.emit(this.contract, "Configure")
           .withArgs(
-            preconfigure ? 2 : 1,
+            expectedConfiguredIndex,
             projectId,
             now,
             target,
@@ -330,47 +519,37 @@ module.exports = function() {
             caller.address
           );
 
-        let expectedWeight = baseWeight;
-        if (expectedWeightFactor) {
-          for (let i = 0; i < expectedWeightFactor; i += 1) {
-            expectedWeight = expectedWeight
-              .mul(preconfigure.discountRate)
-              .div(200);
-          }
+        // Expect an Init event if not configuring the same funding cycle again.
+        if (expectedConfiguredIndex > 1) {
+          await expect(tx)
+            .to.emit(this.contract, "Init")
+            .withArgs(
+              expectedConfiguredIndex,
+              projectId,
+              preconfigure ? expectedConfiguredNumber : 1,
+              expectedConfiguredIndex - 1,
+              expectedWeight,
+              expectedStart
+            );
         }
 
-        await expect(tx)
-          .to.emit(this.contract, "Init")
-          .withArgs(
-            preconfigure ? 2 : 1,
-            projectId,
-            preconfigure ? expectedConfiguredNumber : 1,
-            preconfigure ? 1 : 0,
-            expectedWeight,
-            preconfigure
-              ? expectedPreconfigureStart.add(expectedStartTimeDistance)
-              : now
-          );
-
-        // Get a reference to the base weight.
+        // Get a reference to the funding cycle that was stored.
         const storedFundingCycle = await this.contract.get(
-          preconfigure ? 2 : 1
+          expectedConfiguredIndex
         );
 
         // Expect the stored values to match what's expected.
-        expect(storedFundingCycle.id).to.equal(preconfigure ? 2 : 1);
+        expect(storedFundingCycle.id).to.equal(expectedConfiguredIndex);
         expect(storedFundingCycle.projectId).to.equal(projectId);
         expect(storedFundingCycle.number).to.equal(
-          preconfigure ? expectedConfiguredNumber : 1
+          expectedConfiguredIndex > 1 ? expectedConfiguredNumber : 1
         );
-        expect(storedFundingCycle.previous).to.equal(preconfigure ? 1 : 0);
+        expect(storedFundingCycle.previous).to.equal(
+          expectedConfiguredIndex - 1
+        );
         expect(storedFundingCycle.weight).to.equal(expectedWeight);
         expect(storedFundingCycle.ballot).to.equal(ballot);
-        expect(storedFundingCycle.start).to.equal(
-          preconfigure
-            ? expectedPreconfigureStart.add(expectedStartTimeDistance)
-            : now
-        );
+        expect(storedFundingCycle.start).to.equal(expectedStart);
         expect(storedFundingCycle.configured).to.equal(now);
         expect(storedFundingCycle.duration).to.equal(duration);
         expect(storedFundingCycle.target).to.equal(target);
@@ -382,22 +561,41 @@ module.exports = function() {
       });
     });
   });
-  // describe("Failure cases", function() {
-  //   tests.failure.forEach(function(failureTest) {
-  //     it(failureTest.description, async function() {
-  //       const {
-  //         caller,
-  //         projectId,
-  //         operator,
-  //         permissionIndexes,
-  //         revert
-  //       } = failureTest.fn(this);
-  //       await expect(
-  //         this.contract
-  //           .connect(caller)
-  //           .setOperator(projectId, operator.address, permissionIndexes)
-  //       ).to.be.revertedWith(revert);
-  //     });
-  //   });
-  // });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const {
+          caller,
+          projectId,
+          target,
+          currency,
+          duration,
+          discountRate,
+          fee,
+          ballot,
+          metadata,
+          configureActiveFundingCycle,
+          revert
+        } = failureTest.fn(this);
+        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
+        await this.contract.connect(caller).setOwnership(caller.address);
+
+        await expect(
+          this.contract
+            .connect(caller)
+            .configure(
+              projectId,
+              target,
+              currency,
+              duration,
+              discountRate,
+              fee,
+              ballot,
+              metadata,
+              configureActiveFundingCycle
+            )
+        ).to.be.revertedWith(revert);
+      });
+    });
+  });
 };

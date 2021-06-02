@@ -1,20 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
-contract Projects is ERC721Enumerable, IProjects, Administered {
-    // --- private properties --- //
+contract Projects is ERC721, IProjects, Administered {
+    // --- public properties --- //
 
     // A running count of project IDs.
-    uint256 private count = 0;
-
-    // --- public properties --- //
+    uint256 public override count = 0;
 
     // Optional mapping for project URIs
     mapping(uint256 => string) public override uri;
@@ -30,23 +28,6 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
 
     /// @notice A contract sotring operator assignments.
     IOperatorStore public immutable override operatorStore;
-
-    function getAllProjectInfo(address _owner)
-        external
-        view
-        override
-        returns (Info[] memory infos)
-    {
-        uint256 _balance = balanceOf(_owner);
-        infos = new Info[](_balance);
-        for (uint256 _i = 0; _i < _balance; _i++) {
-            uint256 _projectId = tokenOfOwnerByIndex(_owner, _i);
-            infos[_i] = Info(
-                reverseHandleLookup[_projectId],
-                tokenURI(_projectId)
-            );
-        }
-    }
 
     constructor(IOperatorStore _operatorStore)
         ERC721("Juice project", "JUICE PROJECT")
@@ -74,7 +55,13 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
         address _owner,
         bytes32 _handle,
         string calldata _uri
-    ) external override onlyAdmin returns (uint256 id) {
+    )
+        external
+        override
+        //TODO might not have to be only admin.
+        onlyAdmin
+        returns (uint256 id)
+    {
         // Handle must exist.
         require(_handle.length > 0, "Projects::create: EMPTY_HANDLE");
 
@@ -88,9 +75,12 @@ contract Projects is ERC721Enumerable, IProjects, Administered {
 
         count++;
         _safeMint(_owner, count);
-        uri[count] = _uri;
+
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
+
+        // Set the URI if one was provided.
+        if (bytes(_uri).length > 0) uri[count] = _uri;
 
         emit Create(count, _handle, _uri, msg.sender);
 

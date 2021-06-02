@@ -37,6 +37,8 @@ interface IProjects is IERC721 {
         address caller
     );
 
+    function count() external view returns (uint256);
+
     function operatorStore() external view returns (IOperatorStore);
 
     function handleResolver(bytes32 _handle)
@@ -52,11 +54,6 @@ interface IProjects is IERC721 {
         returns (address receiver);
 
     function uri(uint256 _projectId) external view returns (string memory);
-
-    function getAllProjectInfo(address _owner)
-        external
-        view
-        returns (Info[] memory);
 
     function create(
         address _owner,

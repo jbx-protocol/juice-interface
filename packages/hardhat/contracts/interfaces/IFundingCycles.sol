@@ -60,6 +60,15 @@ interface IFundingCycles {
         address caller
     );
 
+    event Init(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        uint256 number,
+        uint256 previous,
+        uint256 weight,
+        uint256 start
+    );
+
     function packedConfigurationProperties(uint256 _projectId)
         external
         view

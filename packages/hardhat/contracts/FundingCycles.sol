@@ -516,8 +516,7 @@ contract FundingCycles is Administered, IFundingCycles {
         if (_baseFundingCycle.id > 0) {
             _start = _determineNextStart(_baseFundingCycle);
             _weight = _determineNextWeight(_baseFundingCycle);
-
-            _number = _baseFundingCycle.number + 1;
+            _number = _determineNextNumber(_baseFundingCycle);
             _previous = _baseFundingCycle.id;
 
             // Copy if needed.
@@ -544,6 +543,8 @@ contract FundingCycles is Administered, IFundingCycles {
             _previous,
             _start
         );
+
+        emit Init(count, _projectId, _number, _previous, _weight, _start);
 
         return count;
     }
@@ -598,7 +599,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // If the latest funding cycle doesn't exist, or if its expired, return an undefined funding cycle.
         if (
             fundingCycleId == 0 ||
-            block.timestamp > _fundingCycle.start + _fundingCycle.duration
+            block.timestamp >= _fundingCycle.start + _fundingCycle.duration
         ) return 0;
 
         // An Active funding cycle must be either the latest funding cycle or the
@@ -838,22 +839,28 @@ contract FundingCycles is Administered, IFundingCycles {
         returns (uint256)
     {
         // The end of the specified funding cycle.
-        uint256 _end = _fundingCycle.start + _fundingCycle.duration;
+        uint256 _nextImmediateStart =
+            _fundingCycle.start + _fundingCycle.duration;
 
-        // Use the old end if the current time is still within the duration.
-        if (block.timestamp < _end + _fundingCycle.duration) return _end;
+        // If the next immediate start is now or in the future, return it.
+        if (_nextImmediateStart >= block.timestamp) return _nextImmediateStart;
 
         // Otherwise, use the closest multiple of the duration from the old end.
-        uint256 _distanceToStart =
-            (block.timestamp - _end) % _fundingCycle.duration;
+        uint256 _timeToImmediateStartMultiple =
+            (block.timestamp - _nextImmediateStart) % _fundingCycle.duration;
 
-        return block.timestamp - _distanceToStart;
+        return
+            block.timestamp -
+            _timeToImmediateStartMultiple +
+            _fundingCycle.duration;
     }
 
     /** 
         @notice 
         The accumulated weight change since the specified funding cycle.
+
         @param _fundingCycle The funding cycle to make the calculation for.
+
         @return start The next weight.
     */
     function _determineNextWeight(FundingCycle memory _fundingCycle)
@@ -862,15 +869,20 @@ contract FundingCycles is Administered, IFundingCycles {
         returns (uint256)
     {
         // The end of the specified funding cycle.
-        uint256 _end = _fundingCycle.start + _fundingCycle.duration;
+        // The start timestamp is inclusive of the duration, so subtract 1 for the inclusive end of the funding cycle
+        uint256 _nextImmediateStart =
+            _fundingCycle.start + _fundingCycle.duration;
 
         // The number of times to apply the discount rate.
         uint256 _discountMultiple;
-        if (_end >= block.timestamp) {
+        if (_nextImmediateStart >= block.timestamp) {
             _discountMultiple = 1;
         } else {
-            uint256 _timeSinceEnd = block.timestamp - _end;
-            _discountMultiple = 1 + (_timeSinceEnd / _fundingCycle.duration);
+            uint256 _timeSinceImmediateStart =
+                block.timestamp - _nextImmediateStart;
+            _discountMultiple =
+                2 +
+                (_timeSinceImmediateStart / _fundingCycle.duration);
         }
 
         // Base the new weight on the specified funding cycle's weight.
@@ -880,5 +892,35 @@ contract FundingCycles is Administered, IFundingCycles {
                 _fundingCycle.discountRate**_discountMultiple,
                 200**_discountMultiple
             );
+    }
+
+    /** 
+        @notice 
+        The number of next funding cycles given the specified funding cycle.
+
+        @param _fundingCycle The funding cycle to make the calculation for.
+
+        @return start The next number.
+    */
+    function _determineNextNumber(FundingCycle memory _fundingCycle)
+        internal
+        view
+        returns (uint256)
+    {
+        // The end of the specified funding cycle.
+        uint256 _nextImmediateStart =
+            _fundingCycle.start + _fundingCycle.duration;
+
+        // If there are funding cycles between the specified one and the next one, take those into account.
+        if (_nextImmediateStart >= block.timestamp) {
+            return _fundingCycle.number + 1;
+        } else {
+            uint256 _timeSinceImmediateStart =
+                block.timestamp - _nextImmediateStart;
+            return
+                _fundingCycle.number +
+                2 +
+                (_timeSinceImmediateStart / _fundingCycle.duration);
+        }
     }
 }

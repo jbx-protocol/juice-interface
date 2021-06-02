@@ -401,23 +401,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Allow this contract to print and redeem tickets.
         tickets.initialize(address(this), _projectId);
 
-        // Register this Juicer in the directory.
+        // Set this Juicer as the project's terminal in the directory.
         terminalDirectory.setTerminal(_projectId, this);
 
-        emit Deploy(
-            _projectId,
-            _owner,
-            _fundingCycleId,
-            _handle,
-            _uri,
-            _target,
-            _currency,
-            _duration,
-            _discountRate,
-            _metadata,
-            _ballot,
-            msg.sender
-        );
+        emit Deploy(_projectId, _fundingCycleId, msg.sender);
     }
 
     /** 
@@ -1282,10 +1269,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // version 0 in the first 8 bytes.
         packed = 0;
         // bonding curve in bytes 9-24.
-        packed |= uint256(_metadata.bondingCurveRate) << 8;
+        packed |= _metadata.bondingCurveRate << 8;
         // reserved rate in bytes 25-40 bytes.
-        packed |= uint256(_metadata.reservedRate) << 24;
+        packed |= _metadata.reservedRate << 24;
         // reconfiguration bonding curve rate in bytes 41-56 bytes.
-        packed |= uint256(_metadata.reconfigurationBondingCurveRate) << 40;
+        packed |= _metadata.reconfigurationBondingCurveRate << 40;
     }
 }

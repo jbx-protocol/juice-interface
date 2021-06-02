@@ -13,9 +13,9 @@ import "./IJuiceTerminalDirectory.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
-    uint16 bondingCurveRate;
-    uint16 reservedRate;
-    uint16 reconfigurationBondingCurveRate;
+    uint256 bondingCurveRate;
+    uint256 reservedRate;
+    uint256 reconfigurationBondingCurveRate;
 }
 
 interface IJuicer {
@@ -81,16 +81,7 @@ interface IJuicer {
 
     event Deploy(
         uint256 indexed projectId,
-        address indexed owner,
         uint256 fundingCycleId,
-        bytes32 handle,
-        string uri,
-        uint256 target,
-        uint256 currency,
-        uint256 duration,
-        uint256 discountRate,
-        FundingCycleMetadata metadata,
-        IFundingCycleBallot ballot,
         address caller
     );
 

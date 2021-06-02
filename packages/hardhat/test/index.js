@@ -10,7 +10,7 @@ let snapshotId;
 const snapshot = () => ethers.provider.send("evm_snapshot", []);
 const restore = id => ethers.provider.send("evm_revert", [id]);
 const fastforward = async seconds => {
-  await ethers.provider.send("evm_increaseTime", [seconds]);
+  await ethers.provider.send("evm_increaseTime", [seconds.toNumber()]);
   // await ethers.provider.send("evm_mine");
 };
 const getTimestamp = async () => {

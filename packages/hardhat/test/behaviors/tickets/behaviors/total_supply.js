@@ -28,7 +28,7 @@ const tests = {
       })
     },
     {
-      description: "total balance of, IOUs and ERC20s",
+      description: "total supply, IOUs and ERC20s",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -54,7 +54,7 @@ const tests = {
       })
     },
     {
-      description: "total balance of, IOUs and ERC20s with some transfered",
+      description: "total supply, IOUs and ERC20s with some transfered",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,

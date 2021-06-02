@@ -605,7 +605,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Get the price of ETH.
         uint256 _ethPrice = prices.getETHPrice(_fundingCycle.currency);
 
-        // Get a reference to this project's current balance, included any earned yield.
+        // Get a reference to this project's current balance, including any earned yield.
         uint256 _balanceOf = balanceOf(_fundingCycle.projectId);
 
         // The amount of ETH that is being tapped.
@@ -851,6 +851,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             "Juicer::redeem: INT_LIMIT_REACHED"
         );
 
+        //TODO shouldnt change state at the end.
         // Set the tracker.
         processedTicketTracker[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
             ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
@@ -940,6 +941,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             "Juicer::printReservedTickets: INT_LIMIT_REACHED"
         );
 
+        //TODO shouldnt change state at the end.
         // Set the tracker.
         processedTicketTracker[_projectId] = int256(
             tickets.totalSupply(_projectId)

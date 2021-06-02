@@ -39,7 +39,44 @@ struct FundingCycle {
 }
 
 interface IFundingCycles {
-    function latestId(uint256 _project) external view returns (uint256);
+    event Configure(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        uint256 reconfigured,
+        uint256 target,
+        uint256 currency,
+        uint256 duration,
+        uint256 discountRate,
+        uint256 metadata,
+        IFundingCycleBallot ballot,
+        address caller
+    );
+
+    event Tap(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        uint256 amount,
+        uint256 newTappedAmount,
+        address caller
+    );
+
+    function packedConfigurationProperties(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function packedIntrinsicProperties(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
+    function metadata(uint256 _projectId) external view returns (uint256);
+
+    function targetAmounts(uint256 _projectId) external view returns (uint256);
+
+    function tappedAmounts(uint256 _projectId) external view returns (uint256);
+
+    function latestId(uint256 _projectId) external view returns (uint256);
 
     function count() external view returns (uint256);
 

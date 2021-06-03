@@ -3,11 +3,13 @@ const {
 } = require("hardhat");
 const { expect } = require("chai");
 
+const nullBallot = constants.AddressZero;
+
 const tests = {
   success: [
     {
       description: "reconfigure, first funding cycle",
-      fn: ({ deployer, ballot }) => ({
+      fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         // these configuration numbers aren't special.
@@ -16,7 +18,6 @@ const tests = {
         duration: BigNumber.from(80),
         discountRate: BigNumber.from(180),
         fee: BigNumber.from(42),
-        ballot: ballot.address,
         metadata: BigNumber.from(92),
         configureActiveFundingCycle: false
       })
@@ -35,7 +36,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -50,6 +50,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.sub(2)
           },
           expectedConfiguredNumber: 2,
@@ -71,7 +72,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -85,6 +85,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.sub(1)
           },
           expectedConfiguredNumber: 2,
@@ -106,7 +107,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -120,6 +120,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration
           },
           expectedConfiguredNumber: 2,
@@ -141,7 +142,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -155,6 +155,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.add(1)
           },
           expectedConfiguredNumber: 3,
@@ -176,7 +177,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -190,6 +190,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.add(preconfigureDuration)
           },
           expectedConfiguredNumber: 4,
@@ -211,7 +212,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: false,
           setup: {
@@ -225,6 +225,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.mul(4)
           },
           expectedConfiguredNumber: 6,
@@ -247,7 +248,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: true,
           setup: {
@@ -261,6 +261,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration.sub(2),
             expectedConfiguredNumber: 1
           }
@@ -281,7 +282,6 @@ const tests = {
           duration: BigNumber.from(80),
           discountRate: BigNumber.from(180),
           fee: BigNumber.from(42),
-          ballot: ballot.address,
           metadata: BigNumber.from(92),
           configureActiveFundingCycle: true,
           setup: {
@@ -295,6 +295,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
+            ballot: { duration: 0 },
             fastforward: preconfigureDuration
           },
           expectedConfiguredNumber: 2,
@@ -435,10 +436,9 @@ module.exports = function() {
           duration,
           discountRate,
           fee,
-          ballot,
           metadata,
           configureActiveFundingCycle,
-          setup: { preconfigure, fastforward } = {},
+          setup: { preconfigure, ballot, fastforward } = {},
           expectedConfiguredNumber,
           expectedStartTimeDistance,
           expectedWeightFactor
@@ -447,8 +447,13 @@ module.exports = function() {
         // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
         await this.contract.connect(caller).setOwnership(caller.address);
 
+        // If a ballot was provided, mock the ballot contract with the provided properties.
+        if (ballot) await this.ballot.mock.duration.returns(ballot.duration);
+
+        let preconfigureBlock;
+
         if (preconfigure) {
-          await this.contract
+          const tx = await this.contract
             .connect(caller)
             .configure(
               projectId,
@@ -461,10 +466,13 @@ module.exports = function() {
               preconfigure.metadata,
               preconfigure.configureActiveFundingCycle
             );
+          preconfigureBlock = tx.blockNumber;
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
-        const expectedPreconfigureStart = await this.getTimestamp();
+        const expectedPreconfigureStart = await this.getTimestamp(
+          preconfigureBlock
+        );
 
         // Fast forward the clock if needed.
         if (fastforward) await this.fastforward(fastforward);
@@ -479,13 +487,13 @@ module.exports = function() {
             duration,
             discountRate,
             fee,
-            ballot,
+            nullBallot,
             metadata,
             configureActiveFundingCycle
           );
 
         // Get the current timestamp after the transaction.
-        const now = await this.getTimestamp();
+        const now = await this.getTimestamp(tx.blockNumber);
 
         // Get a reference to the base weight.
         const baseWeight = await this.contract.BASE_WEIGHT();
@@ -530,7 +538,7 @@ module.exports = function() {
             duration,
             discountRate,
             metadata,
-            ballot,
+            nullBallot,
             caller.address
           );
 
@@ -559,11 +567,11 @@ module.exports = function() {
         expect(storedFundingCycle.number).to.equal(
           expectedConfiguredIndex > 1 ? expectedConfiguredNumber : 1
         );
-        expect(storedFundingCycle.previous).to.equal(
+        expect(storedFundingCycle.basedOn).to.equal(
           expectedConfiguredIndex - 1
         );
         expect(storedFundingCycle.weight).to.equal(expectedWeight);
-        expect(storedFundingCycle.ballot).to.equal(ballot);
+        expect(storedFundingCycle.ballot).to.equal(nullBallot);
         expect(storedFundingCycle.start).to.equal(expectedStart);
         expect(storedFundingCycle.configured).to.equal(now);
         expect(storedFundingCycle.duration).to.equal(duration);

@@ -150,7 +150,7 @@ contract FundingCycles is Administered, IFundingCycles {
         _fundingCycleId = _standby(_projectId);
 
         // If a standy funding cycle exists,
-        // check to see if it has been approved by the previous funding cycle's ballot.
+        // check to see if it has been approved by the base funding cycle's ballot.
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _standbyFundingCycle =
@@ -161,13 +161,13 @@ contract FundingCycles is Administered, IFundingCycles {
                 _ballotState(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.configured,
-                    _standbyFundingCycle.previous
+                    _standbyFundingCycle.basedOn
                 ) == BallotState.Approved
             ) return _standbyFundingCycle;
 
-            // If it hasn't been approved, set the ID to be the previous funding cycle,
+            // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
-            _fundingCycleId = _standbyFundingCycle.previous;
+            _fundingCycleId = _standbyFundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
@@ -220,15 +220,14 @@ contract FundingCycles is Administered, IFundingCycles {
             _getStruct(_fundingCycleId, true, true, false, false);
 
         // If the latest funding cycle is the first, or if it has already started, it must be approved.
-        if (
-            _fundingCycle.previous == 0 || block.timestamp > _fundingCycle.start
-        ) return BallotState.Approved;
+        if (_fundingCycle.basedOn == 0 || block.timestamp > _fundingCycle.start)
+            return BallotState.Approved;
 
         return
             _ballotState(
                 _fundingCycleId,
                 _fundingCycle.configured,
-                _fundingCycle.previous
+                _fundingCycle.basedOn
             );
     }
 
@@ -288,14 +287,15 @@ contract FundingCycles is Administered, IFundingCycles {
         // Fee must be less than or equal to 100%.
         assert(_fee <= 200);
 
+        // Set the configuration timestamp to now.
+        uint256 _configured = block.timestamp;
+
         // Gets the ID of the funding cycle to reconfigure.
         fundingCycleId = _configurable(
             _projectId,
+            _configured,
             _configureActiveFundingCycle
         );
-
-        // Set the configuration timestamp to now.
-        uint256 _configured = block.timestamp;
 
         // Save the configuration efficiently.
         _packAndStoreConfigurationProperties(
@@ -378,12 +378,14 @@ contract FundingCycles is Administered, IFundingCycles {
         otherwise creates one.
 
         @param _projectId The ID of the project being looked through.
+        @param _configured The time at which the configuration is occuring.
         @param _configureActiveFundingCycle If the active funding cycle should be configurable. Otherwise the next funding cycle will be used.
 
         @return fundingCycleId The ID of the configurable funding cycle.
     */
     function _configurable(
         uint256 _projectId,
+        uint256 _configured,
         bool _configureActiveFundingCycle
     ) private returns (uint256 fundingCycleId) {
         // Get the standby funding cycle's ID.
@@ -405,6 +407,9 @@ contract FundingCycles is Administered, IFundingCycles {
         // Determine which funding cycle to base the configurable one on.
         FundingCycle memory _fundingCycle;
 
+        // Determine if the configurable funding cycle can only take effect on or after a certain date.
+        uint256 _mustStartOnOrAfter;
+
         // If there is a funding cycle, base the next funding cycle on it.
         if (fundingCycleId > 0) {
             // Base off of the active funding cycle if it exists.
@@ -423,10 +428,20 @@ contract FundingCycles is Administered, IFundingCycles {
                 _fundingCycle.discountRate > 0,
                 "FundingCycle::_configureActiveFundingCycle: NON_RECURRING"
             );
+
+            // The ballot must have ended.
+            _mustStartOnOrAfter =
+                _configured +
+                IFundingCycleBallot(_fundingCycle.ballot).duration();
         }
 
         // Return the newly initialized configurable funding cycle.
-        fundingCycleId = _init(_projectId, _fundingCycle, false);
+        fundingCycleId = _init(
+            _projectId,
+            _fundingCycle,
+            _mustStartOnOrAfter,
+            false
+        );
     }
 
     /**
@@ -452,7 +467,7 @@ contract FundingCycles is Administered, IFundingCycles {
         fundingCycleId = _standby(_projectId);
 
         // If the ID of a standy funding cycle exists,
-        // check to see if it has been approved by the previous funding cycle's ballot.
+        // check to see if it has been approved by the based funding cycle's ballot.
         if (fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _standbyFundingCycle =
@@ -463,13 +478,13 @@ contract FundingCycles is Administered, IFundingCycles {
                 _ballotState(
                     _standbyFundingCycle.id,
                     _standbyFundingCycle.configured,
-                    _standbyFundingCycle.previous
+                    _standbyFundingCycle.basedOn
                 ) == BallotState.Approved
             ) return fundingCycleId;
 
-            // If it hasn't been approved, set the ID to be the previous funding cycle,
+            // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
-            fundingCycleId = _standbyFundingCycle.previous;
+            fundingCycleId = _standbyFundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
@@ -490,7 +505,7 @@ contract FundingCycles is Administered, IFundingCycles {
         );
 
         // Return the tappable funding cycle.
-        fundingCycleId = _init(_projectId, _fundingCycle, true);
+        fundingCycleId = _init(_projectId, _fundingCycle, 0, true);
     }
 
     /**
@@ -499,6 +514,7 @@ contract FundingCycles is Administered, IFundingCycles {
 
         @param _projectId The ID of the project to which the funding cycle being initialized belongs.
         @param _baseFundingCycle The funding cycle to base the initialized one on.
+        @param _mustStartOnOrAfter The time before which the initialized funding cycle can't start.
         @param _copy If non-intrinsic properties should be copied from the base funding cycle.
 
         @return newFundingCycleId The ID of the initialized funding cycle.
@@ -506,6 +522,7 @@ contract FundingCycles is Administered, IFundingCycles {
     function _init(
         uint256 _projectId,
         FundingCycle memory _baseFundingCycle,
+        uint256 _mustStartOnOrAfter,
         bool _copy
     ) private returns (uint256 newFundingCycleId) {
         // Increment the count of funding cycles.
@@ -518,12 +535,13 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _start;
         uint256 _weight;
         uint256 _number;
-        uint256 _previous;
+        uint256 _basedOn;
+
         if (_baseFundingCycle.id > 0) {
-            _start = _determineNextStart(_baseFundingCycle);
-            _weight = _determineNextWeight(_baseFundingCycle);
-            _number = _determineNextNumber(_baseFundingCycle);
-            _previous = _baseFundingCycle.id;
+            _start = _deriveStart(_baseFundingCycle, _mustStartOnOrAfter);
+            _weight = _deriveWeight(_baseFundingCycle, _start);
+            _number = _deriveNumber(_baseFundingCycle, _start);
+            _basedOn = _baseFundingCycle.id;
 
             // Copy if needed.
             if (_copy) {
@@ -536,7 +554,7 @@ contract FundingCycles is Administered, IFundingCycles {
         } else {
             _weight = BASE_WEIGHT;
             _number = 1;
-            _previous = 0;
+            _basedOn = 0;
             _start = block.timestamp;
         }
 
@@ -546,11 +564,11 @@ contract FundingCycles is Administered, IFundingCycles {
             _projectId,
             _weight,
             _number,
-            _previous,
+            _basedOn,
             _start
         );
 
-        emit Init(count, _projectId, _number, _previous, _weight, _start);
+        emit Init(count, _projectId, _number, _basedOn, _weight, _start);
 
         return count;
     }
@@ -614,11 +632,11 @@ contract FundingCycles is Administered, IFundingCycles {
             block.timestamp >= _fundingCycle.start ||
             // The first funding cycle when running on local can be in the future for some reason.
             // This will have no effect in production.
-            _fundingCycle.previous == 0
+            _fundingCycle.basedOn == 0
         ) return fundingCycleId;
 
         // Return the funding cycle immediately before the latest.
-        fundingCycleId = _fundingCycle.previous;
+        fundingCycleId = _fundingCycle.basedOn;
     }
 
     /** 
@@ -634,16 +652,17 @@ contract FundingCycles is Administered, IFundingCycles {
         view
         returns (FundingCycle memory)
     {
+        uint256 _start = _deriveStart(_fundingCycle, 0);
         return
             FundingCycle(
                 0,
                 _fundingCycle.projectId,
-                _fundingCycle.number + 1,
+                _deriveNumber(_fundingCycle, _start),
                 _fundingCycle.id,
                 _fundingCycle.configured,
-                _determineNextWeight(_fundingCycle),
+                _deriveWeight(_fundingCycle, _start),
                 _fundingCycle.ballot,
-                _determineNextStart(_fundingCycle),
+                _start,
                 _fundingCycle.duration,
                 _fundingCycle.target,
                 _fundingCycle.currency,
@@ -656,13 +675,13 @@ contract FundingCycles is Administered, IFundingCycles {
 
     /**
       @notice 
-      Efficiently stores a funding cycles provided intrinsic properties.
+      Efficiently stores a funding cycle's provided intrinsic properties.
 
       @param _fundingCycleId The ID of the funding cycle to pack and store.
       @param _projectId The ID of the project to which the funding cycle belongs.
       @param _weight The weight of the funding cycle.
       @param _number The number of the funding cycle.
-      @param _previous The ID of the previous funding cycle.
+      @param _basedOn The ID of the based funding cycle.
       @param _start The start time of this funding cycle.
 
      */
@@ -671,7 +690,7 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _projectId,
         uint256 _weight,
         uint256 _number,
-        uint256 _previous,
+        uint256 _basedOn,
         uint256 _start
     ) private {
         // weight in first 64 bytes.
@@ -680,8 +699,8 @@ contract FundingCycles is Administered, IFundingCycles {
         packed |= _projectId << 64;
         // number in bytes 113-160 bytes.
         packed |= _number << 112;
-        // previous in bytes 161-208 bytes.
-        packed |= _previous << 160;
+        // basedOn in bytes 161-208 bytes.
+        packed |= _basedOn << 160;
         // start in bytes 209-256 bytes.
         packed |= _start << 208;
 
@@ -699,7 +718,7 @@ contract FundingCycles is Administered, IFundingCycles {
       @param _duration The duration of the funding cycle.
       @param _currency The currency of the funding cycle.
       @param _fee The fee of the funding cycle.
-      @param _discountRate The discount rate of the previous funding cycle.
+      @param _discountRate The discount rate of the based funding cycle.
      */
     function _packAndStoreConfigurationProperties(
         uint256 _fundingCycleId,
@@ -716,7 +735,7 @@ contract FundingCycles is Administered, IFundingCycles {
         packed |= _configured << 160;
         // duration in bytes 209-232 bytes.
         packed |= _duration << 208;
-        // previous in bytes 233-240 bytes.
+        // basedOn in bytes 233-240 bytes.
         packed |= _currency << 232;
         // fee in bytes 241-248 bytes.
         packed |= _fee << 240;
@@ -795,7 +814,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _fundingCycle.number = uint256(
                 uint48(_packedIntrinsicProperties >> 112)
             );
-            _fundingCycle.previous = uint256(
+            _fundingCycle.basedOn = uint256(
                 uint48(_packedIntrinsicProperties >> 160)
             );
             _fundingCycle.start = uint256(
@@ -836,62 +855,55 @@ contract FundingCycles is Administered, IFundingCycles {
         The date that is the nearest multiple of the specified funding cycle's duration from its end.
 
         @param _fundingCycle The funding cycle to make the calculation for.
+        @param _mustStartOnOrAfter A date that the derived start must be on or come after.
 
-        @return start The next start time.
+        @return result start The next start time.
     */
-    function _determineNextStart(FundingCycle memory _fundingCycle)
-        internal
-        view
-        returns (uint256)
-    {
+    function _deriveStart(
+        FundingCycle memory _fundingCycle,
+        uint256 _mustStartOnOrAfter
+    ) internal view returns (uint256 result) {
         // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
 
         // If the next immediate start is now or in the future, return it.
-        if (_nextImmediateStart >= block.timestamp) return _nextImmediateStart;
+        if (
+            _nextImmediateStart >= block.timestamp &&
+            _nextImmediateStart >= _mustStartOnOrAfter
+        ) return _nextImmediateStart;
 
         // Otherwise, use the closest multiple of the duration from the old end.
         uint256 _timeToImmediateStartMultiple =
             (block.timestamp - _nextImmediateStart) % _fundingCycle.duration;
 
-        return
+        result =
             block.timestamp -
             _timeToImmediateStartMultiple +
             _fundingCycle.duration;
+
+        // Add increments of duration as necessary to satisfy the threshold.
+        while (_mustStartOnOrAfter > result)
+            result = result + _fundingCycle.duration;
     }
 
     /** 
         @notice 
         The accumulated weight change since the specified funding cycle.
 
-        @param _fundingCycle The funding cycle to make the calculation for.
+        @param _fundingCycle The funding cycle to make the calculation with.
+        @param _start The start time to derive a weight for.
 
         @return start The next weight.
     */
-    function _determineNextWeight(FundingCycle memory _fundingCycle)
+    function _deriveWeight(FundingCycle memory _fundingCycle, uint256 _start)
         internal
-        view
+        pure
         returns (uint256)
     {
-        // The time when the funding cycle immediately after the specified funding cycle starts.
-        uint256 _nextImmediateStart =
-            _fundingCycle.start + _fundingCycle.duration;
-
         // The number of times to apply the discount rate.
-        uint256 _discountMultiple;
-        // Only add one if the current time is before or equal to the next immediate start.
-        if (_nextImmediateStart >= block.timestamp) {
-            _discountMultiple = 1;
-        } else {
-            uint256 _timeSinceImmediateStart =
-                block.timestamp - _nextImmediateStart;
-            _discountMultiple =
-                // Add at least 2.
-                2 +
-                // Add additionally depending on how many cycles have passed.
-                (_timeSinceImmediateStart / _fundingCycle.duration);
-        }
+        uint256 _discountMultiple =
+            (_start - _fundingCycle.start) / _fundingCycle.duration;
 
         // Base the new weight on the specified funding cycle's weight.
         return
@@ -906,31 +918,18 @@ contract FundingCycles is Administered, IFundingCycles {
         @notice 
         The number of next funding cycle given the specified funding cycle.
 
-        @param _fundingCycle The funding cycle to make the calculation for.
+        @param _fundingCycle The funding cycle to make the calculation with.
+        @param _start The start time to derive a number for.
 
         @return start The next number.
     */
-    function _determineNextNumber(FundingCycle memory _fundingCycle)
+    function _deriveNumber(FundingCycle memory _fundingCycle, uint256 _start)
         internal
-        view
+        pure
         returns (uint256)
     {
-        // The time when the funding cycle immediately after the specified funding cycle starts.
-        uint256 _nextImmediateStart =
-            _fundingCycle.start + _fundingCycle.duration;
-
-        // Only add one if the current time is before or equal to the next immediate start.
-        if (_nextImmediateStart >= block.timestamp) {
-            return _fundingCycle.number + 1;
-        } else {
-            uint256 _timeSinceImmediateStart =
-                block.timestamp - _nextImmediateStart;
-            return
-                _fundingCycle.number +
-                // Add at least 2.
-                2 +
-                // Add additionally depending on how many cycles have passed.
-                (_timeSinceImmediateStart / _fundingCycle.duration);
-        }
+        return
+            _fundingCycle.number +
+            ((_start - _fundingCycle.start) / _fundingCycle.duration);
     }
 }

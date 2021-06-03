@@ -1137,29 +1137,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         emit AcceptGovernance(_pendingGovernance);
     }
 
-    // // If funds are sent to this contract directly, fund governance.
-    // receive() external payable {
-    //     // If a contract sent ETH, don't add to the project.
-    //     // This allows the vault to send ETH back to this contract.
-    //     if (Address.isContract(msg.sender)) return;
-
-    //     // Save gas if the admin is using this juice terminal.
-    //     if (JuiceProject(governance).juiceTerminal() == this) {
-    //         _pay(
-    //             JuiceProject(governance).projectId(),
-    //             msg.value,
-    //             msg.sender,
-    //             "Direct payment to Juicer",
-    //             terminalDirectory.preferConvertedTickets(msg.sender)
-    //         );
-    //     } else {
-    //         JuiceProject(governance).pay{value: msg.value}(
-    //             msg.sender,
-    //             "Direct payment to Juicer"
-    //         );
-    //     }
-    // }
-
     // --- private transactions --- //
 
     /** 

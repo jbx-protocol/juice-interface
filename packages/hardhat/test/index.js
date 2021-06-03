@@ -13,9 +13,10 @@ const fastforward = async seconds => {
   await ethers.provider.send("evm_increaseTime", [seconds.toNumber()]);
   // await ethers.provider.send("evm_mine");
 };
-const getTimestamp = async () => {
-  const block = await ethers.provider.getBlock("latest");
-  return ethers.BigNumber.from(block.timestamp);
+const getTimestamp = async block => {
+  return ethers.BigNumber.from(
+    (await ethers.provider.getBlock(block || "latest")).timestamp
+  );
 };
 
 describe("Juice", async function() {

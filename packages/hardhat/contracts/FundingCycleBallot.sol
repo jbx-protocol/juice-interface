@@ -16,6 +16,15 @@ contract FundingCycleBallot is IFundingCycleBallot {
 
     // --- external views --- //
 
+    /** 
+      @notice The time that this ballot is active for.
+      @dev A ballot should not be considered final until the duration has passed.
+      @return The durection in seconds.
+    */
+    function duration() external pure override returns (uint256) {
+        return reconfigurationDelay;
+    }
+
     /**
       @notice The approval state of a particular funding cycle.
       @param _configured The configuration of the funding cycle to check the state of.

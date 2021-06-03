@@ -6,6 +6,8 @@ import "./IJuicer.sol";
 enum BallotState {Approved, Active, Failed, Standby}
 
 interface IFundingCycleBallot {
+    function duration() external view returns (uint256);
+
     function state(uint256 _fundingCycleId, uint256 _configured)
         external
         view

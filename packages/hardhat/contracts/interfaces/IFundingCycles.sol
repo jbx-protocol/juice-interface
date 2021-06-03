@@ -12,8 +12,8 @@ struct FundingCycle {
     uint256 projectId;
     // The number of this funding cycle for the project.
     uint256 number;
-    // The ID of the project's funding cycle that came before this one. 0 if none.
-    uint256 previous;
+    // The ID of a previous funding cycle that this one is based on.
+    uint256 basedOn;
     // The time when this funding cycle was last configured.
     uint256 configured;
     // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.

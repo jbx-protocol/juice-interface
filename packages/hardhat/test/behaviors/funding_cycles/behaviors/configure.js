@@ -19,7 +19,12 @@ const tests = {
         discountRate: BigNumber.from(180),
         fee: BigNumber.from(42),
         metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false
+        configureActiveFundingCycle: false,
+        expectation: {
+          configuredNumber: 1,
+          configuredId: 1,
+          basedOn: 0
+        }
       })
     },
     {
@@ -53,9 +58,13 @@ const tests = {
             ballot: { duration: 0 },
             fastforward: preconfigureDuration.sub(2)
           },
-          expectedConfiguredNumber: 2,
-          expectedStartTimeDistance: preconfigureDuration,
-          expectedWeightFactor: 1
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1,
+            weightFactor: 1
+          }
         };
       }
     },
@@ -86,11 +95,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration.sub(1)
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.sub(1)
+              }
+            ]
           },
-          expectedConfiguredNumber: 2,
-          expectedStartTimeDistance: preconfigureDuration,
-          expectedWeightFactor: 1
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1,
+            weightFactor: 1
+          }
         };
       }
     },
@@ -121,11 +139,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration
+              }
+            ]
           },
-          expectedConfiguredNumber: 2,
-          expectedStartTimeDistance: preconfigureDuration,
-          expectedWeightFactor: 1
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1,
+            weightFactor: 1
+          }
         };
       }
     },
@@ -156,11 +183,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration.add(1)
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.add(1)
+              }
+            ]
           },
-          expectedConfiguredNumber: 3,
-          expectedStartTimeDistance: preconfigureDuration.mul(2),
-          expectedWeightFactor: 2
+          expectation: {
+            configuredNumber: 3,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration.mul(2),
+            basedOn: 1,
+            weightFactor: 2
+          }
         };
       }
     },
@@ -191,11 +227,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration.add(preconfigureDuration)
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.add(preconfigureDuration)
+              }
+            ]
           },
-          expectedConfiguredNumber: 4,
-          expectedStartTimeDistance: preconfigureDuration.mul(3),
-          expectedWeightFactor: 3
+          expectation: {
+            configuredNumber: 4,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration.mul(3),
+            basedOn: 1,
+            weightFactor: 3
+          }
         };
       }
     },
@@ -226,11 +271,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration.mul(4)
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.mul(4)
+              }
+            ]
           },
-          expectedConfiguredNumber: 6,
-          expectedStartTimeDistance: preconfigureDuration.mul(5),
-          expectedWeightFactor: 5
+          expectation: {
+            configuredNumber: 6,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration.mul(5),
+            basedOn: 1,
+            weightFactor: 5
+          }
         };
       }
     },
@@ -262,8 +316,17 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration.sub(2),
-            expectedConfiguredNumber: 1
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.sub(2)
+              }
+            ]
+          },
+          expectation: {
+            configuredNumber: 1,
+            configuredId: 1,
+            basedOn: 0
           }
         };
       }
@@ -296,11 +359,20 @@ const tests = {
               configureActiveFundingCycle: false
             },
             ballot: { duration: 0 },
-            fastforward: preconfigureDuration
+            ops: [
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration
+              }
+            ]
           },
-          expectedConfiguredNumber: 2,
-          expectedStartTimeDistance: preconfigureDuration,
-          expectedWeightFactor: 1
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1,
+            weightFactor: 1
+          }
         };
       }
     },
@@ -320,8 +392,87 @@ const tests = {
         fee: BigNumber.from(200),
         ballot: ballot.address,
         metadata: constants.MaxUint256,
-        configureActiveFundingCycle: false
+        configureActiveFundingCycle: false,
+        expectation: {
+          configuredNumber: 1,
+          configuredId: 1,
+          basedOn: 0
+        }
       })
+    },
+    {
+      description: "reconfigure, chaos",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: false,
+          setup: {
+            preconfigure: {
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            ballot: { duration: 0 },
+            ops: [
+              // Add another configuration for a different project.
+              {
+                type: "configure",
+                projectId: 1234,
+                target: BigNumber.from(140),
+                currency: BigNumber.from(1),
+                duration: BigNumber.from(293),
+                discountRate: BigNumber.from(93),
+                fee: BigNumber.from(30),
+                ballot: nullBallot,
+                metadata: BigNumber.from(5),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.div(2)
+              },
+              // Add another configuration for a different project.
+              {
+                type: "configure",
+                projectId: 2345,
+                target: BigNumber.from(140),
+                currency: BigNumber.from(1),
+                duration: BigNumber.from(293),
+                discountRate: BigNumber.from(193),
+                fee: BigNumber.from(30),
+                ballot: nullBallot,
+                metadata: BigNumber.from(5),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "fastforward",
+                seconds: preconfigureDuration.div(2).sub(1)
+              }
+            ]
+          },
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 4,
+            weightFactor: 1,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1
+          }
+        };
+      }
     }
   ],
   failure: [
@@ -438,10 +589,8 @@ module.exports = function() {
           fee,
           metadata,
           configureActiveFundingCycle,
-          setup: { preconfigure, ballot, fastforward } = {},
-          expectedConfiguredNumber,
-          expectedStartTimeDistance,
-          expectedWeightFactor
+          setup: { preconfigure, ballot, ops = [] } = {},
+          expectation
         } = successTest.fn(this);
 
         // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
@@ -450,7 +599,7 @@ module.exports = function() {
         // If a ballot was provided, mock the ballot contract with the provided properties.
         if (ballot) await this.ballot.mock.duration.returns(ballot.duration);
 
-        let preconfigureBlock;
+        let preconfigureBlockNumber;
 
         if (preconfigure) {
           const tx = await this.contract
@@ -466,16 +615,43 @@ module.exports = function() {
               preconfigure.metadata,
               preconfigure.configureActiveFundingCycle
             );
-          preconfigureBlock = tx.blockNumber;
+          preconfigureBlockNumber = tx.blockNumber;
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
         const expectedPreconfigureStart = await this.getTimestamp(
-          preconfigureBlock
+          preconfigureBlockNumber
         );
 
-        // Fast forward the clock if needed.
-        if (fastforward) await this.fastforward(fastforward);
+        // Do any other specified operations.
+        for (let i = 0; i < ops.length; i += 1) {
+          const op = ops[i];
+          switch (op.type) {
+            case "configure":
+              // eslint-disable-next-line no-await-in-loop
+              await this.contract
+                .connect(caller)
+                .configure(
+                  op.projectId,
+                  op.target,
+                  op.currency,
+                  op.duration,
+                  op.discountRate,
+                  op.fee,
+                  op.ballot,
+                  op.metadata,
+                  op.configureActiveFundingCycle
+                );
+              break;
+            case "fastforward":
+              // Fast forward the clock if needed.
+              // eslint-disable-next-line no-await-in-loop
+              await this.fastforward(op.seconds);
+              break;
+            default:
+              break;
+          }
+        }
 
         // Execute the transaction.
         const tx = await this.contract
@@ -501,27 +677,20 @@ module.exports = function() {
         let expectedWeight = baseWeight;
 
         // Multiply the discount the amount of times specified.
-        if (expectedWeightFactor) {
-          for (let i = 0; i < expectedWeightFactor; i += 1) {
+        if (expectation.weightFactor) {
+          for (let i = 0; i < expectation.weightFactor; i += 1) {
             expectedWeight = expectedWeight
               .mul(preconfigure.discountRate)
               .div(200);
           }
         }
 
-        const expectedConfiguredIndex =
-          preconfigure &&
-          (preconfigure.duration <= fastforward || !configureActiveFundingCycle)
-            ? 2
-            : 1;
-
         // Get the time when the configured funding cycle starts.
         let expectedStart;
         if (preconfigure) {
-          expectedStart =
-            expectedConfiguredIndex === 1
-              ? expectedPreconfigureStart
-              : expectedPreconfigureStart.add(expectedStartTimeDistance);
+          expectedStart = !expectation.startTimeDistance
+            ? expectedPreconfigureStart
+            : expectedPreconfigureStart.add(expectation.startTimeDistance);
         } else {
           expectedStart = now;
         }
@@ -530,7 +699,7 @@ module.exports = function() {
         await expect(tx)
           .to.emit(this.contract, "Configure")
           .withArgs(
-            expectedConfiguredIndex,
+            expectation.configuredId,
             projectId,
             now,
             target,
@@ -543,14 +712,14 @@ module.exports = function() {
           );
 
         // Expect an Init event if not configuring the same funding cycle again.
-        if (expectedConfiguredIndex > 1) {
+        if (expectation.configuredId > 1) {
           await expect(tx)
             .to.emit(this.contract, "Init")
             .withArgs(
-              expectedConfiguredIndex,
+              expectation.configuredId,
               projectId,
-              preconfigure ? expectedConfiguredNumber : 1,
-              expectedConfiguredIndex - 1,
+              expectation.configuredNumber,
+              expectation.basedOn,
               expectedWeight,
               expectedStart
             );
@@ -558,18 +727,16 @@ module.exports = function() {
 
         // Get a reference to the funding cycle that was stored.
         const storedFundingCycle = await this.contract.get(
-          expectedConfiguredIndex
+          expectation.configuredId
         );
 
         // Expect the stored values to match what's expected.
-        expect(storedFundingCycle.id).to.equal(expectedConfiguredIndex);
+        expect(storedFundingCycle.id).to.equal(expectation.configuredId);
         expect(storedFundingCycle.projectId).to.equal(projectId);
         expect(storedFundingCycle.number).to.equal(
-          expectedConfiguredIndex > 1 ? expectedConfiguredNumber : 1
+          expectation.configuredNumber
         );
-        expect(storedFundingCycle.basedOn).to.equal(
-          expectedConfiguredIndex - 1
-        );
+        expect(storedFundingCycle.basedOn).to.equal(expectation.basedOn);
         expect(storedFundingCycle.weight).to.equal(expectedWeight);
         expect(storedFundingCycle.ballot).to.equal(nullBallot);
         expect(storedFundingCycle.start).to.equal(expectedStart);

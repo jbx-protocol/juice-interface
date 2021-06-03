@@ -63,9 +63,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     // still need to have reserves printed against them.
     mapping(uint256 => int256) private processedTicketTracker;
 
-    // The largest uint256 that can fit in an int256;
-    uint256 public constant LARGEST_SIGNED_INT = 2**255 - 1;
-
     // --- public stored properties --- //
 
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
@@ -815,6 +812,16 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _balanceWithYield
             );
 
+        // Get a reference to the processed ticket tracker for the project.
+        int256 _processedTicketTracker = processedTicketTracker[_projectId];
+
+        // Set the tracker.
+        processedTicketTracker[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
+            ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
+            : _processedTicketTracker < int256(_count)
+            ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
+            : _processedTicketTracker - int256(_count);
+
         // Make sure the amount being claimed is in the posession of this contract and not in the vault.
         _ensureAvailability(amount);
 
@@ -824,9 +831,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Transfer funds to the specified address.
         Address.sendValue(_beneficiary, amount);
 
-        // Get a reference to the processed ticket tracker for the project.
-        int256 _processedTicketTracker = processedTicketTracker[_projectId];
-
         // Safely subtract the count from the processed ticket tracker.
         // Subtract from processed tickets so that the difference between whats been processed and the
         // total supply remains the same.
@@ -834,17 +838,9 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // the processedTicketTracker of the project will be positive. Otherwise it will be negative.
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
-            _count <= LARGEST_SIGNED_INT,
+            _count <= uint256(type(int256).max),
             "Juicer::redeem: INT_LIMIT_REACHED"
         );
-
-        //TODO shouldnt change state at the end.
-        // Set the tracker.
-        processedTicketTracker[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
-            ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
-            : _processedTicketTracker < int256(_count)
-            ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
-            : _processedTicketTracker - int256(_count);
 
         emit Redeem(
             _account,
@@ -876,6 +872,18 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             // The reserved rate is in bits 25-30 of the metadata.
             uint256(uint16(_fundingCycle.metadata >> 24))
         );
+
+        // Get a reference to new total supply of tickets.
+        uint256 _totalTickets = tickets.totalSupply(_projectId) + amount;
+
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _totalTickets <= uint256(type(int256).max),
+            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
+        );
+
+        // Set the tracker to be the new total supply.
+        processedTicketTracker[_projectId] = int256(_totalTickets);
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
         uint256 _leftoverTicketAmount = amount;
@@ -918,21 +926,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         // Mint any remaining reserved tickets to the beneficiary.
         if (_leftoverTicketAmount > 0)
             tickets.print(_owner, _projectId, _leftoverTicketAmount, false);
-
-        // Get a reference to the total supply of tickets.
-        uint256 _totalTickets = tickets.totalSupply(_projectId);
-
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _totalTickets <= LARGEST_SIGNED_INT,
-            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
-        );
-
-        //TODO shouldnt change state at the end.
-        // Set the tracker.
-        processedTicketTracker[_projectId] = int256(
-            tickets.totalSupply(_projectId)
-        );
 
         emit PrintReserveTickets(
             _fundingCycle.id,

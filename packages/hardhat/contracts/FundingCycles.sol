@@ -8,7 +8,7 @@ import "./interfaces/IPrices.sol";
 import "./abstract/Administered.sol";
 
 /** 
-  @notice Manage funding cycle configurations and scheduling.
+  @notice Manage funding cycle configurations, accounting, and scheduling.
 */
 contract FundingCycles is Administered, IFundingCycles {
     // --- public properties --- //
@@ -378,7 +378,7 @@ contract FundingCycles is Administered, IFundingCycles {
         otherwise creates one.
 
         @param _projectId The ID of the project being looked through.
-        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
+        @param _configureActiveFundingCycle If the active funding cycle should be configurable. Otherwise the next funding cycle will be used.
 
         @return fundingCycleId The ID of the configurable funding cycle.
     */
@@ -477,7 +477,7 @@ contract FundingCycles is Administered, IFundingCycles {
         }
 
         // The funding cycle cant be 0.
-        require(fundingCycleId > 0, "FundingCycle::_ensureActive: NOT_FOUND");
+        require(fundingCycleId > 0, "FundingCycle::_tappable: NOT_FOUND");
 
         // Get the properties of the funding cycle.
         FundingCycle memory _fundingCycle =
@@ -486,7 +486,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
             _fundingCycle.discountRate > 0,
-            "FundingCycle::_ensureActive: NON_RECURRING"
+            "FundingCycle::_tappable: NON_RECURRING"
         );
 
         // Return the tappable funding cycle.

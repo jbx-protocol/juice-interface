@@ -13,5 +13,6 @@ module.exports = function() {
   });
 
   // Test each function.
-  describe("configure(...)", shouldBehaveLike.configure);
+  // describe("configure(...)", shouldBehaveLike.configure);
+  describe("tap(...)", shouldBehaveLike.tap);
 };

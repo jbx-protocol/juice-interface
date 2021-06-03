@@ -7,20 +7,19 @@ const tests = {
   success: [
     {
       description: "reconfigure, first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          ballot: ballot.address,
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false
-        };
-      }
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        // these configuration numbers aren't special.
+        target: BigNumber.from(120),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(80),
+        discountRate: BigNumber.from(180),
+        fee: BigNumber.from(42),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false
+      })
     },
     {
       description: "reconfigure, during first funding cycle",
@@ -30,6 +29,7 @@ const tests = {
         return {
           caller: deployer,
           projectId: 1,
+          // these configuration numbers aren't special.
           target: BigNumber.from(120),
           currency: BigNumber.from(1),
           duration: BigNumber.from(80),
@@ -40,6 +40,7 @@ const tests = {
           configureActiveFundingCycle: false,
           setup: {
             preconfigure: {
+              // these configuration numbers aren't special.
               target: BigNumber.from(240),
               currency: BigNumber.from(0),
               duration: preconfigureDuration,
@@ -304,24 +305,22 @@ const tests = {
     },
     {
       description: "reconfigure, first funding cycle, max values",
-      fn: ({ deployer, ballot }) => {
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: constants.MaxUint256,
-          currency: BigNumber.from(2)
-            .pow(8)
-            .sub(1),
-          duration: BigNumber.from(2)
-            .pow(24)
-            .sub(1),
-          discountRate: BigNumber.from(200),
-          fee: BigNumber.from(200),
-          ballot: ballot.address,
-          metadata: constants.MaxUint256,
-          configureActiveFundingCycle: false
-        };
-      }
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: constants.MaxUint256,
+        currency: BigNumber.from(2)
+          .pow(8)
+          .sub(1),
+        duration: BigNumber.from(2)
+          .pow(24)
+          .sub(1),
+        discountRate: BigNumber.from(200),
+        fee: BigNumber.from(200),
+        ballot: ballot.address,
+        metadata: constants.MaxUint256,
+        configureActiveFundingCycle: false
+      })
     }
   ],
   failure: [
@@ -403,6 +402,22 @@ const tests = {
         metadata: BigNumber.from(92),
         configureActiveFundingCycle: false,
         revert: "FundingCycles::configure: BAD_CURRENCY"
+      })
+    },
+    {
+      description: "fee over 100%",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        target: BigNumber.from(10),
+        currency: BigNumber.from(2).pow(8),
+        duration: BigNumber.from(100),
+        discountRate: BigNumber.from(80),
+        fee: BigNumber.from(201),
+        ballot: ballot.address,
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false,
+        revert: ""
       })
     }
   ]

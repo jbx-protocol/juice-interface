@@ -9,13 +9,17 @@ const shouldBehaveLike = require("./behaviors");
 let snapshotId;
 const snapshot = () => ethers.provider.send("evm_snapshot", []);
 const restore = id => ethers.provider.send("evm_revert", [id]);
-const fastforward = seconds =>
-  ethers.provider.send("evm_increaseTime", [seconds.toNumber()]);
+const fastforward = async seconds => {
+  await ethers.provider.send("evm_increaseTime", [seconds.toNumber()]);
+  await ethers.provider.send("evm_mine");
+};
 const getTimestamp = async block => {
   return ethers.BigNumber.from(
     (await ethers.provider.getBlock(block || "latest")).timestamp
   );
 };
+const setTimestamp = timestamp =>
+  ethers.provider.send("evm_setNextBlockTimestamp", [timestamp]);
 
 describe("Juice", async function() {
   before(async function() {
@@ -25,6 +29,7 @@ describe("Juice", async function() {
     // Bind the ability to manipulate time to `this`.
     this.fastforward = fastforward;
     this.getTimestamp = getTimestamp;
+    this.setTimestamp = setTimestamp;
 
     // Bind a reference to a function that can deploy mock contracts from an abi.
     this.deployMockContract = abi => deployMockContract(this.deployer, abi);
@@ -54,14 +59,14 @@ describe("Juice", async function() {
   });
 
   // Test each contract.
-  // describe("OperatorStore", shouldBehaveLike.operatorStore);
-  // describe("Prices", shouldBehaveLike.prices);
-  describe("FundingCycles", shouldBehaveLike.fundingCycles);
+  describe("OperatorStore", shouldBehaveLike.operatorStore);
+  describe("Prices", shouldBehaveLike.prices);
+  describe.only("FundingCycles", shouldBehaveLike.fundingCycles);
 
   // Depends on OperatorStore and Projects.
-  // describe("ModStore", shouldBehaveLike.modStore);
+  describe("ModStore", shouldBehaveLike.modStore);
   // Depends on OperatorStore and Projects.
-  // describe("Tickets", shouldBehaveLike.tickets);
+  describe("Tickets", shouldBehaveLike.tickets);
 
   // After each test, restore the contract state.
   afterEach(async function() {

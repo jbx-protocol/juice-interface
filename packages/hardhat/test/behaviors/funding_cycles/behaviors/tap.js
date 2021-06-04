@@ -390,6 +390,118 @@ const tests = {
           }
         };
       }
+    },
+    {
+      description: "taps, first configuration, with failed ballot",
+      fn: ({ deployer, ballot }) => {
+        const fundingCycleDuration = BigNumber.from(80);
+        return {
+          caller: deployer,
+          projectId: 1,
+          amount: BigNumber.from(120),
+          expectation: {
+            tappedId: 1,
+            newTappedAmount: BigNumber.from(120)
+          },
+          setup: {
+            ops: [
+              {
+                type: "configure",
+                projectId: 1,
+                target: BigNumber.from(120),
+                currency: BigNumber.from(1),
+                duration: fundingCycleDuration,
+                discountRate: BigNumber.from(180),
+                fee: BigNumber.from(42),
+                ballot: {
+                  address: ballot.address,
+                  duration: BigNumber.from(0)
+                },
+                metadata: BigNumber.from(92),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "configure",
+                projectId: 1,
+                // these configuration numbers aren't special.
+                target: BigNumber.from(100),
+                currency: BigNumber.from(1),
+                duration: BigNumber.from(80),
+                discountRate: BigNumber.from(180),
+                fee: BigNumber.from(42),
+                ballot: {
+                  address: ballot.address,
+                  duration: BigNumber.from(0),
+                  state: BigNumber.from(2),
+                  fundingCycleId: 2
+                },
+                metadata: BigNumber.from(92),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "fastforward",
+                seconds: fundingCycleDuration
+              }
+            ]
+          }
+        };
+      }
+    },
+    {
+      description: "taps, first configuration, with standby ballot",
+      fn: ({ deployer, ballot }) => {
+        const fundingCycleDuration = BigNumber.from(80);
+        return {
+          caller: deployer,
+          projectId: 1,
+          amount: BigNumber.from(120),
+          expectation: {
+            tappedId: 1,
+            newTappedAmount: BigNumber.from(120)
+          },
+          setup: {
+            ops: [
+              {
+                type: "configure",
+                projectId: 1,
+                target: BigNumber.from(120),
+                currency: BigNumber.from(1),
+                duration: fundingCycleDuration,
+                discountRate: BigNumber.from(180),
+                fee: BigNumber.from(42),
+                ballot: {
+                  address: ballot.address,
+                  duration: BigNumber.from(0)
+                },
+                metadata: BigNumber.from(92),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "configure",
+                projectId: 1,
+                // these configuration numbers aren't special.
+                target: BigNumber.from(100),
+                currency: BigNumber.from(1),
+                duration: BigNumber.from(80),
+                discountRate: BigNumber.from(180),
+                fee: BigNumber.from(42),
+                ballot: {
+                  address: ballot.address,
+                  duration: BigNumber.from(0),
+                  state: BigNumber.from(3),
+                  fundingCycleId: 2
+                },
+                metadata: BigNumber.from(92),
+                configureActiveFundingCycle: false
+              },
+              {
+                type: "fastforward",
+                seconds: fundingCycleDuration
+              }
+            ]
+          }
+        };
+      }
     }
     // {
     //   description:

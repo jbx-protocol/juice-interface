@@ -626,13 +626,20 @@ contract FundingCycles is Administered, IFundingCycles {
             block.timestamp >= _fundingCycle.start + _fundingCycle.duration
         ) return 0;
 
+        // The first funding cycle when running on local can be in the future for some reason.
+        // This will have no effect in production.
+        if (_fundingCycle.basedOn == 0) return fundingCycleId;
+
         // An Active funding cycle must be either the latest funding cycle or the
         // one immediately before it.
         if (
-            block.timestamp >= _fundingCycle.start ||
-            // The first funding cycle when running on local can be in the future for some reason.
-            // This will have no effect in production.
-            _fundingCycle.basedOn == 0
+            block.timestamp >= _fundingCycle.start &&
+            _ballotState(
+                _fundingCycle.id,
+                _fundingCycle.configured,
+                _fundingCycle.basedOn
+            ) ==
+            BallotState.Approved
         ) return fundingCycleId;
 
         // Return the funding cycle immediately before the latest.

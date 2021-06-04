@@ -4,7 +4,7 @@ const {
 const { expect } = require("chai");
 
 /** 
-  These tests rely on time manipulation quite a bit, which is hard to do precisely. 
+  These tests rely on time manipulation quite a bit, which as far as i understand is hard to do precisely. 
   Ideally, the tests could mock the block.timestamp to preset numbers, but instead 
   they rely on 'fastforwarding' the time between operations. Fastforwarding creates a
   high probability that the subsequent operation will fall on a block with the intended timestamp,
@@ -65,7 +65,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             fastforward: preconfigureDuration.sub(2)
           },
           expectation: {
@@ -104,7 +104,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -148,7 +148,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -192,7 +192,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -236,7 +236,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -280,7 +280,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -325,7 +325,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -368,7 +368,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               {
                 type: "fastforward",
@@ -437,7 +437,7 @@ const tests = {
               metadata: BigNumber.from(3),
               configureActiveFundingCycle: false
             },
-            ballot: { duration: 0 },
+            ballot: { duration: BigNumber.from(0) },
             ops: [
               // Add another configuration for a different project.
               {
@@ -481,6 +481,131 @@ const tests = {
             weightFactor: 1,
             startTimeDistance: preconfigureDuration,
             basedOn: 1
+          }
+        };
+      }
+    },
+    {
+      description: "reconfigure, ballot duration just less than duration",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          // these configuration numbers aren't special.
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: false,
+          setup: {
+            preconfigure: {
+              // these configuration numbers aren't special.
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            ballot: { duration: preconfigureDuration.sub(1) },
+            fastforward: preconfigureDuration.sub(2)
+          },
+          expectation: {
+            configuredNumber: 2,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration,
+            basedOn: 1,
+            weightFactor: 1
+          }
+        };
+      }
+    },
+    {
+      description:
+        "reconfigure, ballot duration same as funding cycle duration",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          // these configuration numbers aren't special.
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: false,
+          setup: {
+            preconfigure: {
+              // these configuration numbers aren't special.
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            ballot: { duration: preconfigureDuration },
+            fastforward: preconfigureDuration.sub(2)
+          },
+          expectation: {
+            configuredNumber: 3,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration.mul(2),
+            basedOn: 1,
+            weightFactor: 2
+          }
+        };
+      }
+    },
+    {
+      description:
+        "reconfigure, ballot duration just over the funding cycle duration",
+      fn: ({ deployer, ballot }) => {
+        const preconfigureDuration = BigNumber.from(40);
+        const preconfigureDiscountRate = BigNumber.from(120);
+        return {
+          caller: deployer,
+          projectId: 1,
+          // these configuration numbers aren't special.
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: false,
+          setup: {
+            preconfigure: {
+              // these configuration numbers aren't special.
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: preconfigureDuration,
+              discountRate: preconfigureDiscountRate,
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            ballot: { duration: preconfigureDuration.add(1) },
+            fastforward: preconfigureDuration.sub(2)
+          },
+          expectation: {
+            configuredNumber: 3,
+            configuredId: 2,
+            startTimeDistance: preconfigureDuration.mul(2),
+            basedOn: 1,
+            weightFactor: 2
           }
         };
       }
@@ -681,6 +806,7 @@ module.exports = function() {
             metadata,
             configureActiveFundingCycle
           );
+
         // Get the current timestamp after the transaction.
         const now = await this.getTimestamp(tx.blockNumber);
 

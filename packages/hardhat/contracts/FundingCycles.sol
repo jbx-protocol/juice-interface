@@ -867,19 +867,23 @@ contract FundingCycles is Administered, IFundingCycles {
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
 
+        // It must start on or after the current block.
+        _mustStartOnOrAfter = block.timestamp > _mustStartOnOrAfter
+            ? block.timestamp
+            : _mustStartOnOrAfter;
+
         // If the next immediate start is now or in the future, return it.
-        if (
-            _nextImmediateStart >= block.timestamp &&
-            _nextImmediateStart >= _mustStartOnOrAfter
-        ) return _nextImmediateStart;
+        if (_nextImmediateStart >= _mustStartOnOrAfter)
+            return _nextImmediateStart;
 
         // Otherwise, use the closest multiple of the duration from the old end.
-        uint256 _timeToImmediateStartMultiple =
-            (block.timestamp - _nextImmediateStart) % _fundingCycle.duration;
+        uint256 _timeFromImmediateStartMultiple =
+            (_mustStartOnOrAfter - _nextImmediateStart) %
+                _fundingCycle.duration;
 
         result =
-            block.timestamp -
-            _timeToImmediateStartMultiple +
+            _mustStartOnOrAfter -
+            _timeFromImmediateStartMultiple +
             _fundingCycle.duration;
 
         // Add increments of duration as necessary to satisfy the threshold.

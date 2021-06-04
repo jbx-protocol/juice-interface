@@ -3,6 +3,16 @@ const {
 } = require("hardhat");
 const { expect } = require("chai");
 
+/** 
+  These tests rely on time manipulation quite a bit, which is hard to do precisely. 
+  Ideally, the tests could mock the block.timestamp to preset numbers, but instead 
+  they rely on 'fastforwarding' the time between operations. Fastforwarding creates a
+  high probability that the subsequent operation will fall on a block with the intended timestamp,
+  but there's a small chance that there's an off-by-one error. 
+
+  If anyone has ideas on how to mitigate this, please let me know.
+*/
+
 const nullBallot = constants.AddressZero;
 
 const tests = {
@@ -401,7 +411,8 @@ const tests = {
       })
     },
     {
-      description: "reconfigure, chaos",
+      description:
+        "reconfigure, adding other projects' funding cycles throughout",
       fn: ({ deployer, ballot }) => {
         const preconfigureDuration = BigNumber.from(40);
         const preconfigureDiscountRate = BigNumber.from(120);
@@ -443,7 +454,7 @@ const tests = {
               },
               {
                 type: "fastforward",
-                seconds: preconfigureDuration.div(2)
+                seconds: preconfigureDuration.div(2).sub(1)
               },
               // Add another configuration for a different project.
               {
@@ -627,7 +638,7 @@ module.exports = function() {
         for (let i = 0; i < ops.length; i += 1) {
           const op = ops[i];
           switch (op.type) {
-            case "configure":
+            case "configure": {
               // eslint-disable-next-line no-await-in-loop
               await this.contract
                 .connect(caller)
@@ -642,11 +653,14 @@ module.exports = function() {
                   op.metadata,
                   op.configureActiveFundingCycle
                 );
+
               break;
+            }
             case "fastforward":
               // Fast forward the clock if needed.
+              // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
               // eslint-disable-next-line no-await-in-loop
-              await this.fastforward(op.seconds);
+              await this.fastforward(op.seconds.sub(1));
               break;
             default:
               break;
@@ -667,7 +681,6 @@ module.exports = function() {
             metadata,
             configureActiveFundingCycle
           );
-
         // Get the current timestamp after the transaction.
         const now = await this.getTimestamp(tx.blockNumber);
 

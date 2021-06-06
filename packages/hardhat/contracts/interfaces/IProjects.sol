@@ -13,6 +13,7 @@ interface IProjects is IERC721 {
 
     event Create(
         uint256 indexed projectId,
+        address indexed owner,
         bytes32 handle,
         string uri,
         address caller

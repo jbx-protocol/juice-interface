@@ -426,7 +426,7 @@ contract FundingCycles is Administered, IFundingCycles {
             // Make sure the funding cycle is recurring.
             require(
                 _fundingCycle.discountRate > 0,
-                "FundingCycle::_configureActiveFundingCycle: NON_RECURRING"
+                "FundingCycles::_configurable: NON_RECURRING"
             );
 
             // The ballot must have ended.
@@ -492,7 +492,7 @@ contract FundingCycles is Administered, IFundingCycles {
         }
 
         // The funding cycle cant be 0.
-        require(fundingCycleId > 0, "FundingCycle::_tappable: NOT_FOUND");
+        require(fundingCycleId > 0, "FundingCycles::_tappable: NOT_FOUND");
 
         // Get the properties of the funding cycle.
         FundingCycle memory _fundingCycle =
@@ -501,7 +501,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
             _fundingCycle.discountRate > 0,
-            "FundingCycle::_tappable: NON_RECURRING"
+            "FundingCycles::_tappable: NON_RECURRING"
         );
 
         // Return the tappable funding cycle.
@@ -888,6 +888,10 @@ contract FundingCycles is Administered, IFundingCycles {
             (_mustStartOnOrAfter - _nextImmediateStart) %
                 _fundingCycle.duration;
 
+        // If the minimum start date is possible, use it.
+        if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
+
+        // Otherwise use an increment of the duration from the most recent start.
         result =
             _mustStartOnOrAfter -
             _timeFromImmediateStartMultiple +

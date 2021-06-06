@@ -1,37 +1,26 @@
 import axios, { AxiosResponse } from 'axios'
 import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
+import { formatGraphQuery } from 'utils/graph'
 
 import { ProjectInfo } from '../models/project-info'
 
 export function useProjects({
-  count,
+  pageNumber,
   id,
   handle,
   owner,
-  createdAt,
   uri,
 }: {
-  count?: number
+  pageNumber?: number
   id?: string
   handle?: string
   owner?: string
-  createdAt?: number
   uri?: string
 }) {
   const [projects, setProjects] = useState<ProjectInfo[]>([])
 
-  const query = `{
-    projects(first: 20) {
-      id
-      handle
-      owner
-      createdAt
-      uri
-    }
-  }`
-
-  console.log('useprojects')
+  const pageSize = 50
 
   const formatProject = (project: {
     id: string
@@ -48,86 +37,24 @@ export function useProjects({
     axios
       .post(
         'http://localhost:8000/subgraphs/name/juice-local',
-        JSON.stringify({ query }),
+        {
+          query: formatGraphQuery({
+            entity: 'project',
+            keys: ['handle', 'owner', 'createdAt', 'uri'],
+            first: pageSize,
+            skip: pageNumber ? pageNumber * pageSize : undefined,
+            orderDirection: 'desc',
+            orderBy: 'createdAt',
+            where: owner ? { key: 'owner_contains', value: owner } : undefined,
+          }),
+        },
         { headers: { 'Content-Type': 'application/json' } },
       )
-      .then((res: AxiosResponse<{ data: { projects: ProjectInfo[] } }>) => {
-        console.log('useprojects2', res.data.data.projects)
-        setProjects(res.data.data.projects.map(p => formatProject(p)))
-      })
+      .then((res: AxiosResponse<{ data: { projects: ProjectInfo[] } }>) =>
+        setProjects(res.data?.data?.projects?.map(p => formatProject(p)) ?? []),
+      )
       .catch(err => console.log('Error getting projects', err))
-  }, [count, id, handle, owner, createdAt, uri])
+  }, [pageNumber, id, handle, owner, uri])
 
   return projects
 }
-
-// export function useProjects() {
-//   const [loadingIndex, setLoadingIndex] = useState<BigNumber>()
-//   const [projectIds, setProjectIds] = useState<BigNumber[]>([])
-//   const [projects, setProjects] = useState<Record<string, ProjectIdentifier>>()
-
-//   function upsertProject(project: ProjectIdentifier) {
-//     setProjects({
-//       ...projects,
-//       [project.handle]: project,
-//     })
-//   }
-
-//   function upsertProjectId(id: BigNumber) {
-//     setProjectIds([...projectIds, id])
-//   }
-
-//   function reset() {
-//     setLoadingIndex(BigNumber.from(0))
-//     setProjectIds([])
-//     setProjects(undefined)
-//   }
-
-//   const supply = useContractReader<BigNumber>({
-//     contract: ContractName.Projects,
-//     functionName: 'totalSupply',
-//     valueDidChange: bigNumbersDiff,
-//     callback: reset,
-//   })
-
-//   useContractReader<BigNumber>({
-//     contract: ContractName.Projects,
-//     functionName: 'tokenByIndex',
-//     args: loadingIndex ? [loadingIndex.toHexString()] : null,
-//     valueDidChange: bigNumbersDiff,
-//     callback: useCallback(
-//       projectId => {
-//         if (
-//           projectId &&
-//           !projectIds.map(t => t.toString()).includes(projectId.toString())
-//         ) {
-//           upsertProjectId(projectId)
-//           if (loadingIndex?.add(1).lt(supply ?? 0))
-//             setLoadingIndex(loadingIndex?.add(1))
-//         }
-//       },
-//       [projectIds, loadingIndex],
-//     ),
-//   })
-
-//   const id = loadingIndex ? projectIds[loadingIndex.toNumber()] : undefined
-
-//   useContractReader<ProjectIdentifier>({
-//     contract: ContractName.Projects,
-//     functionName: 'getInfo',
-//     args: id ? [id.toHexString()] : null,
-//     valueDidChange: useCallback(
-//       (oldVal, newVal) => !deepEqProjectIdentifiers(oldVal, newVal),
-//       [],
-//     ),
-//     callback: useCallback(
-//       (project?: ProjectIdentifier) => {
-//         if (!project) return
-//         upsertProject(project)
-//       },
-//       [id],
-//     ),
-//   })
-
-//   return projects
-// }

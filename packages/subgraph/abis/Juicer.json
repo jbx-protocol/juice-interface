@@ -119,81 +119,10 @@
         "type": "uint256"
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
         "indexed": false,
         "internalType": "uint256",
         "name": "fundingCycleId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes32",
-        "name": "handle",
-        "type": "bytes32"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "uri",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currency",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint16",
-            "name": "bondingCurveRate",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "reservedRate",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "reconfigurationBondingCurveRate",
-            "type": "uint16"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct FundingCycleMetadata",
-        "name": "metadata",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IFundingCycleBallot",
-        "name": "ballot",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -457,19 +386,19 @@
       {
         "components": [
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "bondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reservedRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reconfigurationBondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           }
         ],
         "indexed": false,
@@ -635,19 +564,6 @@
     ],
     "name": "Tap",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "LARGEST_SIGNED_INT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [],
@@ -820,19 +736,19 @@
       {
         "components": [
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "bondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reservedRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reconfigurationBondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           }
         ],
         "internalType": "struct FundingCycleMetadata",
@@ -1090,19 +1006,19 @@
       {
         "components": [
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "bondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reservedRate",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "reconfigurationBondingCurveRate",
-            "type": "uint16"
+            "type": "uint256"
           }
         ],
         "internalType": "struct FundingCycleMetadata",
@@ -1152,6 +1068,11 @@
         "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferConverted",
+        "type": "bool"
       }
     ],
     "name": "redeem",

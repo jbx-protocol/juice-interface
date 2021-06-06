@@ -103,7 +103,7 @@ export default function Rewards({
   })
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.Tickets,
-    functionName: 'IOU',
+    functionName: 'IOUBalance',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,

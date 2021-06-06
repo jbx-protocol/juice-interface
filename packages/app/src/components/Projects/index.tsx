@@ -1,9 +1,12 @@
+import { Button, Input, Select, Space } from 'antd'
+import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
 import { UserContext } from 'contexts/userContext'
 import { useProjects } from 'hooks/Projects'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 type SelectOption = 'all' | 'user' | 'address'
 
@@ -24,19 +27,9 @@ export default function Projects() {
     window.location.hash = addr ? '/projects/' + addr : '/projects'
   }
 
-  const projects = useProjects({})
+  const projects = useProjects({ owner })
 
-  // TODO
-  // const projectsForOwner = useContractReader<ProjectIdentifier[]>({
-  //   contract: ContractName.Projects,
-  //   functionName: 'getAllProjectInfo',
-  //   args: owner ? [owner] : null,
-  //   formatter: useCallback(val => val ?? {}, []),
-  // })
-
-  // const projects = owner ? projectsForOwner : allProjects
-
-  // if (!selectOption || !projects) return <Loading />
+  if (!projects) return <Loading />
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -45,21 +38,23 @@ export default function Projects() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
-          marginBottom: 40,
         }}
       >
         <h1>Projects on Juice</h1>
-        {/* <Space>
+        <Space>
           <Select
             value={selectOption}
             onChange={val => {
-              setShowAddressInput(val === 'address')
               switch (val) {
                 case 'all':
                   goToOwner('')
                   break
                 case 'user':
                   userAddress && goToOwner(userAddress)
+                  break
+                case 'address':
+                  setShowAddressInput(true)
+                  setSelectOption('address')
                   break
               }
             }}
@@ -79,7 +74,13 @@ export default function Projects() {
               }}
             />
           )}
-        </Space> */}
+        </Space>
+      </div>
+
+      <div style={{ marginBottom: 40 }}>
+        <Button onClick={() => (window.location.hash = 'create')} size="small">
+          Create a project
+        </Button>
       </div>
 
       {projects.length ? (

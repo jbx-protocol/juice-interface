@@ -3,26 +3,6 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Juicer
-    network: mainnet
-    source:
-      address: "{{JuicerAddress}}"
-      abi: Juicer
-      startBlock: 1
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Project
-      abis:
-        - name: Juicer
-          file: ./abis/Juicer.json
-      eventHandlers:
-        - event: Deploy(indexed uint256,indexed address,uint256,bytes32,string,uint256,uint256,uint256,uint256,(uint16,uint16,uint16),address,address)
-          handler: handleDeploy
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
     name: Projects
     network: mainnet
     source:
@@ -39,6 +19,10 @@ dataSources:
         - name: Projects
           file: ./abis/Projects.json
       eventHandlers:
+        - event: Create(indexed uint256,indexed address,bytes32,string,address)
+          handler: handleProjectCreate
         - event: SetHandle(indexed uint256,bytes32,address)
           handler: handleSetHandle
+        - event: SetUri(indexed uint256,string,address)
+          handler: handleSetUri
       file: ./src/mapping.ts

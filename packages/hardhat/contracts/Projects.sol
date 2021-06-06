@@ -82,7 +82,7 @@ contract Projects is ERC721, IProjects, Administered {
         // Set the URI if one was provided.
         if (bytes(_uri).length > 0) uri[count] = _uri;
 
-        emit Create(count, _handle, _uri, msg.sender);
+        emit Create(count, _owner, _handle, _uri, msg.sender);
 
         return count;
     }

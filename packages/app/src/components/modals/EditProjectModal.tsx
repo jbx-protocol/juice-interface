@@ -78,11 +78,7 @@ export default function EditProjectModal({
     transactor(
       contracts.Projects,
       'setUri',
-      [
-        projectId.toString(),
-        // fields.handle,
-        uploadedMetadata.cid,
-      ],
+      [projectId.toHexString(), uploadedMetadata.cid],
       {
         onDone: () => setLoading(false),
         onConfirmed: () => {

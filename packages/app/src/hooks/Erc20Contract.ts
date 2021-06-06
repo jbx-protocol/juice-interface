@@ -2,6 +2,7 @@ import { isAddress } from '@ethersproject/address'
 import { Contract } from '@ethersproject/contracts'
 import { NetworkContext } from 'contexts/networkContext'
 import erc20Abi from 'erc-20-abi'
+import { constants } from 'ethers'
 import { useContext, useMemo } from 'react'
 
 import { useReadProvider } from './ReadProvider'
@@ -14,7 +15,7 @@ export function useErc20Contract(address: string | undefined) {
 
   return useMemo(
     () =>
-      address && isAddress(address)
+      address && isAddress(address) && address !== constants.AddressZero
         ? new Contract(address, erc20Abi, provider?.getSigner() ?? provider)
         : undefined,
     [address, provider],

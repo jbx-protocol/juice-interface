@@ -71,9 +71,7 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration,
-            basedOn: 1,
-            weightFactor: 1
+            basedOn: 1
           }
         };
       }
@@ -115,9 +113,7 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration,
-            basedOn: 1,
-            weightFactor: 1
+            basedOn: 1
           }
         };
       }
@@ -159,9 +155,7 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration,
-            basedOn: 1,
-            weightFactor: 1
+            basedOn: 1
           }
         };
       }
@@ -203,9 +197,7 @@ const tests = {
           expectation: {
             configuredNumber: 3,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration.mul(2),
-            basedOn: 1,
-            weightFactor: 2
+            basedOn: 1
           }
         };
       }
@@ -240,16 +232,14 @@ const tests = {
             ops: [
               {
                 type: "fastforward",
-                seconds: preconfigureDuration.add(preconfigureDuration)
+                seconds: preconfigureDuration.mul(2)
               }
             ]
           },
           expectation: {
-            configuredNumber: 4,
+            configuredNumber: 3,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration.mul(3),
-            basedOn: 1,
-            weightFactor: 3
+            basedOn: 1
           }
         };
       }
@@ -289,11 +279,9 @@ const tests = {
             ]
           },
           expectation: {
-            configuredNumber: 6,
+            configuredNumber: 5,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration.mul(5),
-            basedOn: 1,
-            weightFactor: 5
+            basedOn: 1
           }
         };
       }
@@ -379,9 +367,7 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration,
-            basedOn: 1,
-            weightFactor: 1
+            basedOn: 1
           }
         };
       }
@@ -478,8 +464,6 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 4,
-            weightFactor: 1,
-            startTimeDistance: preconfigureDuration,
             basedOn: 1
           }
         };
@@ -519,9 +503,7 @@ const tests = {
           expectation: {
             configuredNumber: 2,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration,
-            basedOn: 1,
-            weightFactor: 1
+            basedOn: 1
           }
         };
       }
@@ -561,9 +543,7 @@ const tests = {
           expectation: {
             configuredNumber: 3,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration.mul(2),
-            basedOn: 1,
-            weightFactor: 2
+            basedOn: 1
           }
         };
       }
@@ -603,9 +583,7 @@ const tests = {
           expectation: {
             configuredNumber: 3,
             configuredId: 2,
-            startTimeDistance: preconfigureDuration.mul(2),
-            basedOn: 1,
-            weightFactor: 2
+            basedOn: 1
           }
         };
       }
@@ -707,6 +685,39 @@ const tests = {
         configureActiveFundingCycle: false,
         revert: ""
       })
+    },
+    {
+      description: "non recurring",
+      fn: ({ deployer, ballot }) => {
+        return {
+          caller: deployer,
+          projectId: 1,
+          // these configuration numbers aren't special.
+          target: BigNumber.from(120),
+          currency: BigNumber.from(1),
+          duration: BigNumber.from(80),
+          discountRate: BigNumber.from(180),
+          fee: BigNumber.from(42),
+          ballot: nullBallot,
+          metadata: BigNumber.from(92),
+          configureActiveFundingCycle: false,
+          setup: {
+            preconfigure: {
+              // these configuration numbers aren't special.
+              target: BigNumber.from(240),
+              currency: BigNumber.from(0),
+              duration: BigNumber.from(40),
+              discountRate: BigNumber.from(0),
+              fee: BigNumber.from(40),
+              ballot: ballot.address,
+              metadata: BigNumber.from(3),
+              configureActiveFundingCycle: false
+            },
+            ballot: { duration: BigNumber.from(0) }
+          },
+          revert: "FundingCycles::_configurable: NON_RECURRING"
+        };
+      }
     }
   ]
 };
@@ -810,30 +821,6 @@ module.exports = function() {
         // Get the current timestamp after the transaction.
         const now = await this.getTimestamp(tx.blockNumber);
 
-        // Get a reference to the base weight.
-        const baseWeight = await this.contract.BASE_WEIGHT();
-
-        let expectedWeight = baseWeight;
-
-        // Multiply the discount the amount of times specified.
-        if (expectation.weightFactor) {
-          for (let i = 0; i < expectation.weightFactor; i += 1) {
-            expectedWeight = expectedWeight
-              .mul(preconfigure.discountRate)
-              .div(200);
-          }
-        }
-
-        // Get the time when the configured funding cycle starts.
-        let expectedStart;
-        if (preconfigure) {
-          expectedStart = !expectation.startTimeDistance
-            ? expectedPreconfigureStart
-            : expectedPreconfigureStart.add(expectation.startTimeDistance);
-        } else {
-          expectedStart = now;
-        }
-
         // Expect two events to have been emitted.
         await expect(tx)
           .to.emit(this.contract, "Configure")
@@ -849,6 +836,28 @@ module.exports = function() {
             nullBallot,
             caller.address
           );
+
+        // Get a reference to the base weight.
+        const baseWeight = await this.contract.BASE_WEIGHT();
+
+        let expectedWeight = baseWeight;
+
+        // Multiply the discount the amount of times specified.
+        for (let i = 0; i < expectation.configuredNumber - 1; i += 1) {
+          expectedWeight = expectedWeight
+            .mul(preconfigure.discountRate)
+            .div(200);
+        }
+
+        // Get the time when the configured funding cycle starts.
+        let expectedStart;
+        if (preconfigure) {
+          expectedStart = expectedPreconfigureStart.add(
+            preconfigure.duration.mul(expectation.configuredNumber - 1)
+          );
+        } else {
+          expectedStart = now;
+        }
 
         // Expect an Init event if not configuring the same funding cycle again.
         if (expectation.configuredId > 1) {
@@ -904,10 +913,27 @@ module.exports = function() {
           ballot,
           metadata,
           configureActiveFundingCycle,
+          setup: { preconfigure } = {},
           revert
         } = failureTest.fn(this);
         // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
         await this.contract.connect(caller).setOwnership(caller.address);
+
+        if (preconfigure) {
+          await this.contract
+            .connect(caller)
+            .configure(
+              projectId,
+              preconfigure.target,
+              preconfigure.currency,
+              preconfigure.duration,
+              preconfigure.discountRate,
+              preconfigure.fee,
+              preconfigure.ballot,
+              preconfigure.metadata,
+              preconfigure.configureActiveFundingCycle
+            );
+        }
 
         await expect(
           this.contract

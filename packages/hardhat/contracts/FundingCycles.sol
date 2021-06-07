@@ -663,7 +663,7 @@ contract FundingCycles is Administered, IFundingCycles {
     */
     function _mockFundingCycleAfter(FundingCycle memory _fundingCycle)
         internal
-        view
+        pure
         returns (FundingCycle memory)
     {
         uint256 _start = _deriveStart(_fundingCycle, 0);
@@ -876,7 +876,7 @@ contract FundingCycles is Administered, IFundingCycles {
     function _deriveStart(
         FundingCycle memory _fundingCycle,
         uint256 _mustStartOnOrAfter
-    ) internal view returns (uint256 result) {
+    ) internal pure returns (uint256 result) {
         // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;

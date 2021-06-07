@@ -16,9 +16,7 @@ const getTimestamp = async block => {
     (await ethers.provider.getBlock(block || "latest")).timestamp
   );
 };
-const setTimestamp = timestamp =>
-  ethers.provider.send("evm_setNextBlockTimestamp", [timestamp]);
-
+const mineBlock = () => ethers.provider.send("evm_mine");
 const setTimeMark = async blockNumber => {
   timeMark = await getTimestamp(blockNumber);
 };
@@ -44,7 +42,7 @@ describe("Juice", async function() {
     // Bind the ability to manipulate time to `this`.
     this.fastforward = fastforward;
     this.getTimestamp = getTimestamp;
-    this.setTimestamp = setTimestamp;
+    this.mineBlock = mineBlock;
     this.setTimeMark = setTimeMark;
 
     // Bind a reference to a function that can deploy mock contracts from an abi.

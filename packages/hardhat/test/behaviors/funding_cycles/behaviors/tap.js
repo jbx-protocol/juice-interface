@@ -3,6 +3,16 @@ const {
 } = require("hardhat");
 const { expect } = require("chai");
 
+/** 
+  These tests rely on time manipulation quite a bit, which as far as i understand is hard to do precisely. 
+  Ideally, the tests could mock the block.timestamp to preset numbers, but instead 
+  they rely on 'fastforwarding' the time between operations. Fastforwarding creates a
+  high probability that the subsequent operation will fall on a block with the intended timestamp,
+  but there's a small chance that there's an off-by-one error. 
+
+  If anyone has ideas on how to mitigate this, please let me know.
+*/
+
 const tests = {
   success: [
     {
@@ -627,6 +637,37 @@ const tests = {
           ops: []
         }
       })
+    },
+    {
+      description: "taps, first configuration, max uints",
+      fn: ({ deployer, ballot }) => ({
+        caller: deployer,
+        projectId: 1,
+        amount: constants.MaxUint256,
+        expectation: {
+          tappedId: 1,
+          tappedNumber: 1,
+          initNumber: 1,
+          basedOn: 0,
+          newTappedAmount: constants.MaxUint256
+        },
+        setup: {
+          preconfigure: {
+            target: constants.MaxUint256,
+            currency: BigNumber.from(1),
+            duration: BigNumber.from(80),
+            discountRate: BigNumber.from(180),
+            fee: BigNumber.from(42),
+            ballot: {
+              address: ballot.address,
+              duration: BigNumber.from(0)
+            },
+            metadata: BigNumber.from(92),
+            configureActiveFundingCycle: false
+          },
+          ops: []
+        }
+      })
     }
   ],
   failure: [
@@ -735,6 +776,7 @@ module.exports = function() {
               preconfigure.configureActiveFundingCycle
             );
           preconfigureBlockNumber = tx.blockNumber;
+          await this.setTimeMark(tx.blockNumber);
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
@@ -873,7 +915,7 @@ module.exports = function() {
         await this.contract.connect(caller).setOwnership(caller.address);
 
         if (preconfigure) {
-          await this.contract
+          const tx = await this.contract
             .connect(caller)
             .configure(
               projectId,
@@ -886,6 +928,7 @@ module.exports = function() {
               preconfigure.metadata,
               preconfigure.configureActiveFundingCycle
             );
+          await this.setTimeMark(tx.blockNumber);
         }
 
         if (fastforward) {

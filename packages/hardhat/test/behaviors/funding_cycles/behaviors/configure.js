@@ -15,380 +15,195 @@ const { expect } = require("chai");
 
 const nullBallot = constants.AddressZero;
 
+const testTemplate = ({
+  op = {},
+  setup = {},
+  preconfigure = {},
+  fastforward,
+  ops = [],
+  expectation = {},
+  revert
+}) => ({ deployer, ballot }) => ({
+  caller: deployer,
+  projectId: 1,
+  target: BigNumber.from(120),
+  currency: BigNumber.from(1),
+  duration: BigNumber.from(80),
+  discountRate: BigNumber.from(180),
+  fee: BigNumber.from(42),
+  metadata: BigNumber.from(92),
+  configureActiveFundingCycle: false,
+  setup: {
+    preconfigure: {
+      target: BigNumber.from(240),
+      currency: BigNumber.from(0),
+      duration: BigNumber.from(100),
+      discountRate: BigNumber.from(120),
+      fee: BigNumber.from(40),
+      metadata: BigNumber.from(3),
+      configureActiveFundingCycle: false,
+      ...preconfigure,
+      ballot: {
+        address: ballot.address,
+        duration: BigNumber.from(0),
+        ...preconfigure.ballot
+      }
+    },
+    ops: [
+      ...ops,
+      ...(fastforward
+        ? [
+            {
+              type: "fastforward",
+              seconds: fastforward
+            }
+          ]
+        : [])
+    ],
+    ...setup
+  },
+  expectation: {
+    configuredNumber: 2,
+    configuredId: 2,
+    basedOn: 1,
+    ...expectation
+  },
+  ...op,
+  revert
+});
+
 const tests = {
   success: [
     {
-      description: "reconfigure, first funding cycle",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectId: 1,
-        // these configuration numbers aren't special.
-        target: BigNumber.from(120),
-        currency: BigNumber.from(1),
-        duration: BigNumber.from(80),
-        discountRate: BigNumber.from(180),
-        fee: BigNumber.from(42),
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      description: "first funding cycle",
+      fn: testTemplate({
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         expectation: {
           configuredNumber: 1,
           configuredId: 1,
+          initId: 1,
           basedOn: 0
         }
       })
     },
     {
-      description: "reconfigure, during first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          // these configuration numbers aren't special.
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              // these configuration numbers aren't special.
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            fastforward: preconfigureDuration.sub(2)
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "during first funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to a time well within the preconfigured duration.
+        fastforward: BigNumber.from(24),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description: "reconfigure, at the end of first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.sub(1)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "at the end of first funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to the last second of the preconfigured duration.
+        fastforward: BigNumber.from(41),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description: "reconfigure, immediately after the first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "immediately after the first funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to the first second of the cycle after the preconfigured one.
+        fastforward: BigNumber.from(42),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description: "reconfigure, shortly after the first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.add(1)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 3,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "within the second funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to a second with the cycle after the preconfigured one.
+        fastforward: BigNumber.from(43),
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description: "reconfigure, a few cycles after the first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.mul(2)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 3,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "a few cycles after the first funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward a multiple of the duration.
+        fastforward: BigNumber.from(84),
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description: "reconfigure, many cycles after the first funding cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.mul(4)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 5,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+      description: "many cycles after the first funding cycle",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward many multiples of the duration.
+        fastforward: BigNumber.from(168),
+        expectation: {
+          configuredNumber: 5,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
-      description:
-        "reconfigure, during first funding cycle, configuring the active cycle",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: true,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.sub(2)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 1,
-            configuredId: 1,
-            basedOn: 0
-          }
-        };
-      }
-    },
-    {
-      description:
-        "reconfigure, immediately after the first funding cycle, ignoring the option to configure the active one",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: true,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
-    },
-    {
-      description: "reconfigure, first funding cycle, max values",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: constants.MaxUint256,
-        currency: BigNumber.from(2)
-          .pow(8)
-          .sub(1),
-        duration: BigNumber.from(2)
-          .pow(24)
-          .sub(1),
-        discountRate: BigNumber.from(200),
-        fee: BigNumber.from(200),
-        ballot: ballot.address,
-        metadata: constants.MaxUint256,
-        configureActiveFundingCycle: false,
+      description: "during first funding cycle, configuring the active cycle",
+      fn: testTemplate({
+        op: {
+          // Allow the active funding cycle to be reconfigured.
+          configureActiveFundingCycle: true
+        },
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward within the preconfigured duration.
+        fastforward: BigNumber.from(40),
         expectation: {
           configuredNumber: 1,
           configuredId: 1,
@@ -398,326 +213,299 @@ const tests = {
     },
     {
       description:
-        "reconfigure, adding other projects' funding cycles throughout",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) },
-            ops: [
-              // Add another configuration for a different project.
-              {
-                type: "configure",
-                projectId: 1234,
-                target: BigNumber.from(140),
-                currency: BigNumber.from(1),
-                duration: BigNumber.from(293),
-                discountRate: BigNumber.from(93),
-                fee: BigNumber.from(30),
-                ballot: nullBallot,
-                metadata: BigNumber.from(5),
-                configureActiveFundingCycle: false
-              },
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.div(2).sub(1)
-              },
-              // Add another configuration for a different project.
-              {
-                type: "configure",
-                projectId: 2345,
-                target: BigNumber.from(140),
-                currency: BigNumber.from(1),
-                duration: BigNumber.from(293),
-                discountRate: BigNumber.from(193),
-                fee: BigNumber.from(30),
-                ballot: nullBallot,
-                metadata: BigNumber.from(5),
-                configureActiveFundingCycle: false
-              },
-              {
-                type: "fastforward",
-                seconds: preconfigureDuration.div(2).sub(1)
-              }
-            ]
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 4,
-            basedOn: 1
-          }
-        };
-      }
-    },
-    {
-      description: "reconfigure, ballot duration just less than duration",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          // these configuration numbers aren't special.
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              // these configuration numbers aren't special.
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: preconfigureDuration.sub(1) },
-            fastforward: preconfigureDuration.sub(2)
-          },
-          expectation: {
-            configuredNumber: 2,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+        "immediately after the first funding cycle, ignoring the option to configure the active one",
+      fn: testTemplate({
+        op: {
+          // Allow the active funding cycle to be reconfigured. This shouldn't do anything.
+          configureActiveFundingCycle: true
+        },
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to the first second after the preconfigured cycle.
+        fastforward: BigNumber.from(42),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
     },
     {
       description:
-        "reconfigure, ballot duration same as funding cycle duration",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          // these configuration numbers aren't special.
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              // these configuration numbers aren't special.
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: preconfigureDuration },
-            fastforward: preconfigureDuration.sub(2)
-          },
-          expectation: {
-            configuredNumber: 3,
-            configuredId: 2,
-            basedOn: 1
-          }
-        };
-      }
+        "shortly after the first funding cycle, configuring the active cycle",
+      fn: testTemplate({
+        op: {
+          // Allow the active funding cycle to be reconfigured.
+          configureActiveFundingCycle: true
+        },
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        // Fast forward to the first second after the preconfigured cycle.
+        fastforward: BigNumber.from(43),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "first funding cycle, max values",
+      fn: testTemplate({
+        op: {
+          target: constants.MaxUint256,
+          currency: BigNumber.from(2)
+            .pow(8)
+            .sub(1),
+          duration: BigNumber.from(2)
+            .pow(24)
+            .sub(1),
+          discountRate: BigNumber.from(200),
+          fee: BigNumber.from(200),
+          metadata: constants.MaxUint256
+        },
+        setup: {
+          // No preconfiguration
+          preconfigure: null
+        },
+        expectation: {
+          configuredNumber: 1,
+          configuredId: 1,
+          basedOn: 0
+        }
+      })
     },
     {
       description:
-        "reconfigure, ballot duration just over the funding cycle duration",
-      fn: ({ deployer, ballot }) => {
-        const preconfigureDuration = BigNumber.from(40);
-        const preconfigureDiscountRate = BigNumber.from(120);
-        return {
-          caller: deployer,
-          projectId: 1,
-          // these configuration numbers aren't special.
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              // these configuration numbers aren't special.
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: preconfigureDuration,
-              discountRate: preconfigureDiscountRate,
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: preconfigureDuration.add(1) },
-            fastforward: preconfigureDuration.sub(2)
-          },
-          expectation: {
-            configuredNumber: 3,
-            configuredId: 2,
-            basedOn: 1
+        "ballot duration from current time is before preconfigured duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(30)
           }
-        };
-      }
+        },
+        // Fast forward to the time before when the ballot would equal the preconfigured duration.
+        fastforward: BigNumber.from(10),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description:
+        "ballot duration from current time is preconfigured duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(30)
+          }
+        },
+        // Fast forward to the time where the ballot would equal the preconfigured duration,
+        // which is the first second where the proposed configuration could start.
+        fastforward: BigNumber.from(12),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "ballot duration just less than duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(41)
+          }
+        },
+        // Fast forward to the second before the ballot duration expires.
+        fastforward: BigNumber.from(39),
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "ballot duration same as funding cycle duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42),
+          ballot: {
+            // Set the ballot duration to the same as the configuration duration.
+            duration: BigNumber.from(42)
+          }
+        },
+        // Fast forward to a few seconds before the ballot duration expires.
+        fastforward: BigNumber.from(40),
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "ballot duration just over the funding cycle duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42),
+          ballot: {
+            // Set the ballot duration longer than the configuration duration.
+            duration: BigNumber.from(43)
+          }
+        },
+        // Fast forward to a few seconds before the ballot duration expires.
+        fastforward: BigNumber.from(40),
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "override a pending reconfiguration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        ops: [
+          // Add a reconfiguration to the same project.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(293),
+            discountRate: BigNumber.from(93),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            ballot: nullBallot,
+            configureActiveFundingCycle: false
+          }
+        ],
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          basedOn: 1
+        }
+      })
     }
   ],
   failure: [
     {
       description: "target is 0",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(0),
-        currency: BigNumber.from(1),
-        duration: BigNumber.from(80),
-        discountRate: BigNumber.from(180),
-        fee: BigNumber.from(42),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          target: BigNumber.from(0)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: "FundingCycles::configure: BAD_TARGET"
       })
     },
     {
       description: "duration is 0",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(10),
-        currency: BigNumber.from(1),
-        duration: BigNumber.from(0),
-        discountRate: BigNumber.from(180),
-        fee: BigNumber.from(42),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          duration: BigNumber.from(0)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: "FundingCycles::configure: BAD_DURATION"
       })
     },
     {
       description: "duration more than the max allowed",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(10),
-        currency: BigNumber.from(1),
-        duration: BigNumber.from(2).pow(24),
-        discountRate: BigNumber.from(180),
-        fee: BigNumber.from(42),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          duration: BigNumber.from(2).pow(24)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: "FundingCycles::configure: BAD_DURATION"
       })
     },
     {
       description: "discount rate over 100%",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(10),
-        currency: BigNumber.from(1),
-        duration: BigNumber.from(100),
-        discountRate: BigNumber.from(201),
-        fee: BigNumber.from(42),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          discountRate: BigNumber.from(201)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: "FundingCycles::configure: BAD_DISCOUNT_RATE"
       })
     },
     {
       description: "currency over max allowed",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(10),
-        currency: BigNumber.from(2).pow(8),
-        duration: BigNumber.from(100),
-        discountRate: BigNumber.from(80),
-        fee: BigNumber.from(42),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          currency: BigNumber.from(2).pow(8)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: "FundingCycles::configure: BAD_CURRENCY"
       })
     },
     {
       description: "fee over 100%",
-      fn: ({ deployer, ballot }) => ({
-        caller: deployer,
-        projectId: 1,
-        target: BigNumber.from(10),
-        currency: BigNumber.from(2).pow(8),
-        duration: BigNumber.from(100),
-        discountRate: BigNumber.from(80),
-        fee: BigNumber.from(201),
-        ballot: ballot.address,
-        metadata: BigNumber.from(92),
-        configureActiveFundingCycle: false,
+      fn: testTemplate({
+        op: {
+          fee: BigNumber.from(201)
+        },
+        setup: {
+          // no preconfiguration
+          preconfigure: null
+        },
         revert: ""
       })
     },
     {
       description: "non recurring",
-      fn: ({ deployer, ballot }) => {
-        return {
-          caller: deployer,
-          projectId: 1,
-          // these configuration numbers aren't special.
-          target: BigNumber.from(120),
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(80),
-          discountRate: BigNumber.from(180),
-          fee: BigNumber.from(42),
-          ballot: nullBallot,
-          metadata: BigNumber.from(92),
-          configureActiveFundingCycle: false,
-          setup: {
-            preconfigure: {
-              // these configuration numbers aren't special.
-              target: BigNumber.from(240),
-              currency: BigNumber.from(0),
-              duration: BigNumber.from(40),
-              discountRate: BigNumber.from(0),
-              fee: BigNumber.from(40),
-              ballot: ballot.address,
-              metadata: BigNumber.from(3),
-              configureActiveFundingCycle: false
-            },
-            ballot: { duration: BigNumber.from(0) }
-          },
-          revert: "FundingCycles::_configurable: NON_RECURRING"
-        };
-      }
+      fn: testTemplate({
+        preconfigure: {
+          discountRate: BigNumber.from(0)
+        },
+        revert: "FundingCycles::_configurable: NON_RECURRING"
+      })
     }
   ]
 };
@@ -736,19 +524,19 @@ module.exports = function() {
           fee,
           metadata,
           configureActiveFundingCycle,
-          setup: { preconfigure, ballot, ops = [] } = {},
+          setup: { preconfigure, ops = [] } = {},
           expectation
         } = successTest.fn(this);
 
         // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
         await this.contract.connect(caller).setOwnership(caller.address);
 
-        // If a ballot was provided, mock the ballot contract with the provided properties.
-        if (ballot) await this.ballot.mock.duration.returns(ballot.duration);
-
         let preconfigureBlockNumber;
 
         if (preconfigure) {
+          // If a ballot was provided, mock the ballot contract with the provided properties.
+          await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
+
           const tx = await this.contract
             .connect(caller)
             .configure(
@@ -758,11 +546,12 @@ module.exports = function() {
               preconfigure.duration,
               preconfigure.discountRate,
               preconfigure.fee,
-              preconfigure.ballot,
+              preconfigure.ballot.address,
               preconfigure.metadata,
               preconfigure.configureActiveFundingCycle
             );
           preconfigureBlockNumber = tx.blockNumber;
+          await this.setTimeMark(tx.blockNumber);
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
@@ -860,7 +649,7 @@ module.exports = function() {
         }
 
         // Expect an Init event if not configuring the same funding cycle again.
-        if (expectation.configuredId > 1) {
+        if (expectation.initId) {
           await expect(tx)
             .to.emit(this.contract, "Init")
             .withArgs(
@@ -910,7 +699,6 @@ module.exports = function() {
           duration,
           discountRate,
           fee,
-          ballot,
           metadata,
           configureActiveFundingCycle,
           setup: { preconfigure } = {},
@@ -929,7 +717,7 @@ module.exports = function() {
               preconfigure.duration,
               preconfigure.discountRate,
               preconfigure.fee,
-              preconfigure.ballot,
+              preconfigure.ballot.address,
               preconfigure.metadata,
               preconfigure.configureActiveFundingCycle
             );
@@ -945,7 +733,7 @@ module.exports = function() {
               duration,
               discountRate,
               fee,
-              ballot,
+              nullBallot,
               metadata,
               configureActiveFundingCycle
             )

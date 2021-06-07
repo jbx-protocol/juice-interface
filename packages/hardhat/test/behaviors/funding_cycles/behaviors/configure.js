@@ -62,12 +62,7 @@ const testTemplate = ({
     ],
     ...setup
   },
-  expectation: {
-    configuredNumber: 2,
-    configuredId: 2,
-    basedOn: 1,
-    ...expectation
-  },
+  expectation,
   ...op,
   revert
 });

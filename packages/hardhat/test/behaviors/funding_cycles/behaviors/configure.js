@@ -402,10 +402,64 @@ const tests = {
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
-            ballot: nullBallot,
             configureActiveFundingCycle: false
           }
         ],
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "override a failed reconfiguration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(42)
+        },
+        ops: [
+          // Add a reconfiguration to the same project that will expire before the duration.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(293),
+            discountRate: BigNumber.from(93),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false,
+            ballot: {
+              // Set the ballot duration shorter than the configuration duration.
+              duration: BigNumber.from(10)
+            }
+          },
+          {
+            type: "fastforward",
+            // Fast forward past the expired configuration.
+            seconds: BigNumber.from(10)
+          },
+          // Add another reconfiguration
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(293),
+            discountRate: BigNumber.from(93),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false,
+            ballot: {
+              // Set the ballot duration shorter than the configuration duration.
+              duration: BigNumber.from(10)
+            }
+          }
+        ],
+        // Fast forward a little bit more.
+        fastforward: BigNumber.from(15),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -546,6 +600,12 @@ module.exports = function() {
               preconfigure.configureActiveFundingCycle
             );
           preconfigureBlockNumber = tx.blockNumber;
+
+          if (preconfigure.ballot.duration !== undefined)
+            await this.ballot.mock.duration.returns(
+              preconfigure.ballot.duration
+            );
+
           await this.setTimeMark(tx.blockNumber);
         }
 
@@ -569,10 +629,14 @@ module.exports = function() {
                   op.duration,
                   op.discountRate,
                   op.fee,
-                  op.ballot,
+                  this.ballot.address,
                   op.metadata,
                   op.configureActiveFundingCycle
                 );
+
+              if (op.ballot)
+                // eslint-disable-next-line no-await-in-loop
+                await this.ballot.mock.duration.returns(op.ballot.duration);
 
               break;
             }

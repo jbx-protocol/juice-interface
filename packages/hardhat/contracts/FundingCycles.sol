@@ -89,7 +89,7 @@ contract FundingCycles is Administered, IFundingCycles {
         if (_standbyFundingCycleId > 0)
             return _getStruct(_standbyFundingCycleId, true, true, true, true);
 
-        // Get a reference to the active funding cycle.
+        // Get a reference to the eligible funding cycle.
         uint256 _eligibleFundingCycleId = _eligible(_projectId);
 
         // If it exists, mock up what its next up funding cycle would be like.
@@ -149,21 +149,21 @@ contract FundingCycles is Administered, IFundingCycles {
         // check to see if it has been approved by the base funding cycle's ballot.
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
-            FundingCycle memory _standbyFundingCycle =
+            FundingCycle memory _eligibleFundingCycle =
                 _getStruct(_fundingCycleId, true, true, false, false);
 
             // Check to see if the correct ballot is approved for this funding cycle.
             if (
                 _ballotState(
-                    _standbyFundingCycle.id,
-                    _standbyFundingCycle.configured,
-                    _standbyFundingCycle.basedOn
+                    _eligibleFundingCycle.id,
+                    _eligibleFundingCycle.configured,
+                    _eligibleFundingCycle.basedOn
                 ) == BallotState.Approved
-            ) return _standbyFundingCycle;
+            ) return _eligibleFundingCycle;
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
-            _fundingCycleId = _standbyFundingCycle.basedOn;
+            _fundingCycleId = _eligibleFundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
@@ -393,8 +393,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get the active funding cycle's ID.
         uint256 _eligibleFundingCycleId = _eligible(_projectId);
 
-        // If the ID of a funding cycle exists,
-        // check to see if it has been approved by the based funding cycle's ballot.
+        // If the ID of an eligible funding cycle exists, and active funding cycles are configurable, return it.
         if (_eligibleFundingCycleId > 0 && _configureActiveFundingCycle)
             return _eligibleFundingCycleId;
 
@@ -412,9 +411,6 @@ contract FundingCycles is Administered, IFundingCycles {
             // Base off of the active funding cycle if it exists.
             _fundingCycle = _getStruct(
                 fundingCycleId,
-                // _eligibleFundingCycleId > 0
-                //     ? _eligibleFundingCycleId
-                //     : fundingCycleId,
                 true,
                 true,
                 false,
@@ -471,11 +467,11 @@ contract FundingCycles is Administered, IFundingCycles {
         // Check for the ID of an eligible funding cycle.
         fundingCycleId = _eligible(_projectId);
 
-        // No active funding cycle found, check for the ID of a standby funding cycle.
-        // If this one exists, it will become active one it has been tapped.
+        // No eligible funding cycle found, check for the ID of a standby funding cycle.
+        // If this one exists, it will become eligible one it has started.
         if (fundingCycleId == 0) fundingCycleId = _standby(_projectId);
 
-        // If the ID of a funding cycle exists,
+        // If the ID of an eligible funding cycle exists,
         // check to see if it has been approved by the based funding cycle's ballot.
         if (fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
@@ -491,12 +487,12 @@ contract FundingCycles is Administered, IFundingCycles {
                 ) == BallotState.Approved
             ) return fundingCycleId;
 
-            // If it hasn't been approved, set the ID to be the based funding cycle,
+            // If it hasn't been approved, set the ID to be the base funding cycle,
             // which carries the last approved configuration.
             fundingCycleId = _eligibleFundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+            // which carries the last approved configuration.
             fundingCycleId = latestId[_projectId];
         }
 

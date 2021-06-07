@@ -429,10 +429,24 @@ contract FundingCycles is Administered, IFundingCycles {
                 "FundingCycles::_configurable: NON_RECURRING"
             );
 
-            // The ballot must have ended.
-            _mustStartOnOrAfter =
-                _configured +
-                IFundingCycleBallot(_fundingCycle.ballot).duration();
+            if (_configureActiveFundingCycle) {
+                // Set to the start time of the current active start time.
+                uint256 _timeFromStartMultiple =
+                    (block.timestamp - _fundingCycle.start) %
+                        _fundingCycle.duration;
+                _mustStartOnOrAfter = block.timestamp - _timeFromStartMultiple;
+            } else {
+                // The ballot must have ended.
+                uint256 _ballotExpiration =
+                    _configured +
+                        IFundingCycleBallot(_fundingCycle.ballot).duration();
+
+                _mustStartOnOrAfter = block.timestamp > _ballotExpiration
+                    ? block.timestamp
+                    : _ballotExpiration;
+            }
+        } else {
+            _mustStartOnOrAfter = block.timestamp;
         }
 
         // Return the newly initialized configurable funding cycle.
@@ -505,7 +519,12 @@ contract FundingCycles is Administered, IFundingCycles {
         );
 
         // Return the tappable funding cycle.
-        fundingCycleId = _init(_projectId, _fundingCycle, 0, true);
+        fundingCycleId = _init(
+            _projectId,
+            _fundingCycle,
+            block.timestamp,
+            true
+        );
     }
 
     /**
@@ -873,11 +892,6 @@ contract FundingCycles is Administered, IFundingCycles {
         // The time when the funding cycle immediately after the specified funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + _fundingCycle.duration;
-
-        // It must start on or after the current block.
-        _mustStartOnOrAfter = block.timestamp > _mustStartOnOrAfter
-            ? block.timestamp
-            : _mustStartOnOrAfter;
 
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)

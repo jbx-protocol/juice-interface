@@ -229,7 +229,7 @@ export default function Landing() {
             {bigHeader('How it works')}
             <Row gutter={60}>
               {fourthCol('Do work 💅', [
-                `Deploy a Juice contract that says how much cashflow you and your
+                `Deploy a Juice project that says how much cashflow you and your
                 team want/need in order to absolutely crush what you do.`,
                 <br></br>,
                 <br></br>,

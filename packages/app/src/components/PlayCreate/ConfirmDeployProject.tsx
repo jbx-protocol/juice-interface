@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { SECONDS_IN_DAY } from 'constants/units'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -57,7 +58,7 @@ export default function ConfirmDeployProject() {
       <Space size="large">
         <Statistic
           title="Duration"
-          value={formattedNum(editingFC?.duration)}
+          value={formattedNum(editingFC?.duration / SECONDS_IN_DAY)}
           suffix="days"
         />
         <Statistic

@@ -41,7 +41,7 @@ export default function Account() {
           </div>
         }
       >
-        <Tag color="red">{signerNetwork} not supported</Tag>
+        <Tag color="red">{signerNetwork} not yet supported</Tag>
       </Popover>
     )
 

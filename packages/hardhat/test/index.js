@@ -78,7 +78,7 @@ describe("Juice", async function() {
   // Test each contract.
   describe("OperatorStore", shouldBehaveLike.operatorStore);
   describe("Prices", shouldBehaveLike.prices);
-  describe.only("FundingCycles", shouldBehaveLike.fundingCycles);
+  describe("FundingCycles", shouldBehaveLike.fundingCycles);
 
   // Depends on OperatorStore and Projects.
   describe("ModStore", shouldBehaveLike.modStore);

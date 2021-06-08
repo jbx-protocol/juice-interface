@@ -3,16 +3,6 @@ const {
 } = require("hardhat");
 const { expect } = require("chai");
 
-/** 
-  These tests rely on time manipulation quite a bit, which as far as i understand is hard to do precisely. 
-  Ideally, the tests could mock the block.timestamp to preset numbers, but instead 
-  they rely on 'fastforwarding' the time between operations. Fastforwarding creates a
-  high probability that the subsequent operation will fall on a block with the intended timestamp,
-  but there's a small chance that there's an off-by-one error. 
-
-  If anyone has ideas on how to mitigate this, please let me know.
-*/
-
 const testTemplate = ({
   op = {},
   setup = {},

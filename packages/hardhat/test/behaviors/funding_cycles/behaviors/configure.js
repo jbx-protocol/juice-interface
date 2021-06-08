@@ -13,8 +13,6 @@ const { expect } = require("chai");
   If anyone has ideas on how to mitigate this, please let me know.
 */
 
-const nullBallot = constants.AddressZero;
-
 const testTemplate = ({
   op = {},
   setup = {},
@@ -661,7 +659,7 @@ module.exports = function() {
             duration,
             discountRate,
             fee,
-            nullBallot,
+            this.ballot.address,
             metadata,
             configureActiveFundingCycle
           );
@@ -681,7 +679,7 @@ module.exports = function() {
             duration,
             discountRate,
             metadata,
-            nullBallot,
+            this.ballot.address,
             caller.address
           );
 
@@ -734,7 +732,7 @@ module.exports = function() {
         );
         expect(storedFundingCycle.basedOn).to.equal(expectation.basedOn);
         expect(storedFundingCycle.weight).to.equal(expectedWeight);
-        expect(storedFundingCycle.ballot).to.equal(nullBallot);
+        expect(storedFundingCycle.ballot).to.equal(this.ballot.address);
         expect(storedFundingCycle.start).to.equal(expectedStart);
         expect(storedFundingCycle.configured).to.equal(now);
         expect(storedFundingCycle.duration).to.equal(duration);
@@ -792,7 +790,7 @@ module.exports = function() {
               duration,
               discountRate,
               fee,
-              nullBallot,
+              this.ballot.address,
               metadata,
               configureActiveFundingCycle
             )

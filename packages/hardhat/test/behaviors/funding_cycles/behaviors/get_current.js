@@ -13,8 +13,6 @@ const { expect } = require("chai");
   If anyone has ideas on how to mitigate this, please let me know.
 */
 
-const nullBallot = constants.AddressZero;
-
 const testTemplate = ({
   op = {},
   setup = {},

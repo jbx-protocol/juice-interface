@@ -68,6 +68,20 @@ const tests = {
   ],
   failure: [
     {
+      description: "overflow",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        controller: deployer.address,
+        projectId: 1,
+        holder: addrs[0].address,
+        amount: constants.MaxUint256,
+        preferConverted: false,
+        withERC20: false,
+        setup: { IOUBalance: BigNumber.from(1) },
+        revert: ""
+      })
+    },
+    {
       description: "unauthorized",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
@@ -203,10 +217,17 @@ module.exports = function() {
           holder,
           amount,
           preferConverted,
+          setup: { IOUBalance = 0 } = {},
           revert
         } = failureTest.fn(this);
         await this.contract.connect(caller).setOwnership(caller.address);
         await this.contract.connect(caller).initialize(controller, projectId);
+
+        if (IOUBalance > 0) {
+          await this.contract
+            .connect(caller)
+            .print(holder, projectId, IOUBalance, false);
+        }
 
         await expect(
           this.contract

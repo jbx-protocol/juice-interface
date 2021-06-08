@@ -766,43 +766,6 @@ contract FundingCycles is Administered, IFundingCycles {
 
     /**
         @notice 
-        A funding cycle configuration's currency status.
-
-        @param _id The ID of the funding cycle configuration to check the status of.
-        @param _configuration The timestamp of when the configuration took place.
-        @param _ballotFundingCycleId The ID of the funding cycle which is configured with the ballot that should be used.
-
-        @return The funding cycle's configuration status.
-    */
-    function _ballotState(
-        uint256 _id,
-        uint256 _configuration,
-        uint256 _ballotFundingCycleId
-    ) private view returns (BallotState) {
-        // If there is no ballot funding cycle, auto approve.
-        if (_ballotFundingCycleId == 0) return BallotState.Approved;
-
-        // Get a reference to the ballot to use.
-        // The ballot is stored in bits 0-159 of the packed configuration properties.
-        IFundingCycleBallot _ballot =
-            IFundingCycleBallot(
-                address(
-                    uint160(
-                        packedConfigurationProperties[_ballotFundingCycleId]
-                    )
-                )
-            );
-
-        // If there is no ballot, the ID is auto approved.
-        // Otherwise, return the ballot's state.
-        return
-            _ballot == IFundingCycleBallot(address(0))
-                ? BallotState.Approved
-                : _ballot.state(_id, _configuration);
-    }
-
-    /**
-        @notice 
         Unpack a funding cycle's packed stored values into an easy-to-work-with funding cycle struct.
 
         @param _id The ID of the funding cycle to get a struct of.
@@ -991,5 +954,42 @@ contract FundingCycles is Administered, IFundingCycles {
                 _fundingCycle.configured,
                 _fundingCycle.basedOn
             ) == BallotState.Approved;
+    }
+
+    /**
+        @notice 
+        A funding cycle configuration's currency status.
+
+        @param _id The ID of the funding cycle configuration to check the status of.
+        @param _configuration The timestamp of when the configuration took place.
+        @param _ballotFundingCycleId The ID of the funding cycle which is configured with the ballot that should be used.
+
+        @return The funding cycle's configuration status.
+    */
+    function _ballotState(
+        uint256 _id,
+        uint256 _configuration,
+        uint256 _ballotFundingCycleId
+    ) private view returns (BallotState) {
+        // If there is no ballot funding cycle, auto approve.
+        if (_ballotFundingCycleId == 0) return BallotState.Approved;
+
+        // Get a reference to the ballot to use.
+        // The ballot is stored in bits 0-159 of the packed configuration properties.
+        IFundingCycleBallot _ballot =
+            IFundingCycleBallot(
+                address(
+                    uint160(
+                        packedConfigurationProperties[_ballotFundingCycleId]
+                    )
+                )
+            );
+
+        // If there is no ballot, the ID is auto approved.
+        // Otherwise, return the ballot's state.
+        return
+            _ballot == IFundingCycleBallot(address(0))
+                ? BallotState.Approved
+                : _ballot.state(_id, _configuration);
     }
 }

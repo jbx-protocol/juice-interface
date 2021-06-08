@@ -6,72 +6,43 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "converts IOU tickets, called by holder",
+      description: "called by holder",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0)
+          erc20Balance: BigNumber.from(50)
         }
       })
     },
     {
-      description: "converts IOU tickets, with leftovers",
+      description: "with leftovers",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(150),
-          lockedAmount: BigNumber.from(0)
+          erc20Balance: BigNumber.from(150)
         }
       })
     },
     {
-      description: "converts IOU tickets, with leftover sand lock",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectId: 1,
-        holder: deployer.address,
-        amount: BigNumber.from(50),
-        setup: {
-          IOUBalance: BigNumber.from(150),
-          lockedAmount: BigNumber.from(50)
-        }
-      })
-    },
-    {
-      description: "converts IOU tickets, uses all tickets up to lock",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectId: 1,
-        holder: deployer.address,
-        amount: BigNumber.from(50),
-        setup: {
-          IOUBalance: BigNumber.from(150),
-          lockedAmount: BigNumber.from(100)
-        }
-      })
-    },
-    {
-      description: "converts IOU tickets, max uints",
+      description: "max uints",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         holder: deployer.address,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
-          lockedAmount: 0
+          erc20Balance: constants.MaxUint256
         }
       })
     },
     {
-      description: "converts IOU tickets, called by personal operator",
+      description: "called by personal operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         personalOperator: true,
@@ -79,11 +50,11 @@ const tests = {
         holder: addrs[0].address,
         amount: BigNumber.from(50),
         permissionFlag: true,
-        setup: { IOUBalance: BigNumber.from(50) }
+        setup: { erc20Balance: BigNumber.from(50) }
       })
     },
     {
-      description: "converts IOU tickets, called by non personal operator",
+      description: "called by non personal operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         personalOperator: false,
@@ -91,11 +62,26 @@ const tests = {
         holder: addrs[0].address,
         amount: BigNumber.from(50),
         permissionFlag: true,
-        setup: { IOUBalance: BigNumber.from(50) }
+        setup: { erc20Balance: BigNumber.from(50) }
       })
     }
   ],
   failure: [
+    {
+      description: "overflow",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectId: 1,
+        holder: deployer.address,
+        amount: BigNumber.from(2),
+        setup: {
+          IOUBalance: constants.MaxUint256.sub(1),
+          erc20Balance: BigNumber.from(2),
+          issue: true
+        },
+        revert: ""
+      })
+    },
     {
       description: "tickets not yet issued",
       fn: ({ deployer }) => ({
@@ -104,11 +90,10 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0),
+          erc20Balance: BigNumber.from(50),
           issue: false
         },
-        revert: "Tickets:convert: NOT_FOUND"
+        revert: "Tickets::stake: NOT_FOUND"
       })
     },
     {
@@ -120,11 +105,10 @@ const tests = {
         amount: BigNumber.from(50),
         permissionFlag: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0),
+          erc20Balance: BigNumber.from(50),
           issue: true
         },
-        revert: "Tickets::convert: UNAUTHORIZED"
+        revert: "Tickets::stake: UNAUTHORIZED"
       })
     },
     {
@@ -135,41 +119,10 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(500),
         setup: {
-          IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0),
+          erc20Balance: BigNumber.from(50),
           issue: true
         },
-        revert: "Tickets::convert: INSUFFICIENT_FUNDS"
-      })
-    },
-    {
-      description: "insufficient balance due to lock",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectId: 1,
-        holder: deployer.address,
-        amount: BigNumber.from(10),
-        setup: {
-          IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(47),
-          issue: true
-        },
-        revert: "Tickets::convert: INSUFFICIENT_FUNDS"
-      })
-    },
-    {
-      description: "insufficient balance due to lock, max uints",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectId: 1,
-        holder: deployer.address,
-        amount: constants.MaxUint256,
-        setup: {
-          IOUBalance: constants.MaxUint256,
-          lockedAmount: constants.MaxUint256,
-          issue: true
-        },
-        revert: "Tickets::convert: INSUFFICIENT_FUNDS"
+        revert: "Tickets::stake: INSUFFICIENT_FUNDS"
       })
     }
   ]
@@ -186,7 +139,7 @@ module.exports = function() {
           holder,
           amount,
           permissionFlag,
-          setup: { IOUBalance, lockedAmount }
+          setup: { erc20Balance }
         } = successTest.fn(this);
 
         // Initialize the project's tickets to set the specified controller.
@@ -196,7 +149,7 @@ module.exports = function() {
           .connect(caller)
           .initialize(caller.address, projectId);
 
-        // Issue ERC-20s if needed.
+        // Issue ERC-20s.
         // Must make the caller the project owner in order to issue.
         await this.projects.mock.ownerOf
           .withArgs(projectId)
@@ -210,7 +163,7 @@ module.exports = function() {
           // Get the permission index needed to set the payment mods on an owner's behalf.
           const permissionIndex = await this.contract
             .connect(caller)
-            .convertPermissionIndex();
+            .stakePermissionIndex();
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
@@ -229,31 +182,21 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        if (erc20Balance > 0) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
-        }
-        if (lockedAmount > 0) {
-          // Lock the specified amount of tickets.
-          await this.contract
-            .connect(caller)
-            .lock(holder, projectId, lockedAmount);
+            .print(holder, projectId, erc20Balance, true);
         }
 
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .convert(holder, projectId, amount);
+          .stake(holder, projectId, amount);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "Convert")
+          .to.emit(this.contract, "Stake")
           .withArgs(holder, projectId, amount, caller.address);
-
-        // The expected balance is the previous balance minus the amount converted.
-        const expectedIOUBalance = IOUBalance.sub(amount);
 
         // Get the stored project IOU balance for the holder.
         const storedIOUBalance = await this.contract
@@ -261,10 +204,10 @@ module.exports = function() {
           .IOUBalance(holder, projectId);
 
         // Expect the stored IOU balance to equal the expected value.
-        expect(storedIOUBalance).to.equal(expectedIOUBalance);
+        expect(storedIOUBalance).to.equal(amount);
 
         // The expected total supply is the same as the balance.
-        const expectedIOUTotalSupply = expectedIOUBalance;
+        const expectedIOUTotalSupply = amount;
 
         // Get the stored project IOU total supply for the holder.
         const storedIOUTotalSupply = await this.contract
@@ -289,7 +232,7 @@ module.exports = function() {
         ).balanceOf(holder);
 
         // There should now be a balance of tickets for the holder.
-        expect(storedTicketBalance).to.equal(amount);
+        expect(storedTicketBalance).to.equal(erc20Balance.sub(amount));
       });
     });
   });
@@ -303,7 +246,7 @@ module.exports = function() {
           holder,
           amount,
           permissionFlag,
-          setup: { IOUBalance, lockedAmount, issue },
+          setup: { IOUBalance = BigNumber.from(0), erc20Balance, issue },
           revert
         } = failureTest.fn(this);
 
@@ -332,7 +275,7 @@ module.exports = function() {
           // Get the permission index needed to set the payment mods on an owner's behalf.
           const permissionIndex = await this.contract
             .connect(caller)
-            .convertPermissionIndex();
+            .stakePermissionIndex();
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
@@ -351,22 +294,20 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        if (IOUBalance > 0) {
           await this.contract
             .connect(caller)
             .print(holder, projectId, IOUBalance, false);
         }
-        if (lockedAmount > 0) {
-          // Lock the specified amount of tickets.
+        if (erc20Balance) {
           await this.contract
             .connect(caller)
-            .lock(holder, projectId, lockedAmount);
+            .print(holder, projectId, erc20Balance, true);
         }
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).convert(holder, projectId, amount)
+          this.contract.connect(caller).stake(holder, projectId, amount)
         ).to.be.revertedWith(revert);
       });
     });

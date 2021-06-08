@@ -11,9 +11,10 @@ library Operations {
     uint256 public constant TransferHandle = 6;
     uint256 public constant ClaimHandle = 7;
     uint256 public constant Issue = 8;
-    uint256 public constant Convert = 9;
-    uint256 public constant Transfer = 10;
-    uint256 public constant SetPaymentMods = 11;
-    uint256 public constant SetTicketMods = 12;
-    uint256 public constant SetTerminal = 13;
+    uint256 public constant Stake = 9;
+    uint256 public constant Unstake = 10;
+    uint256 public constant Transfer = 11;
+    uint256 public constant SetPaymentMods = 12;
+    uint256 public constant SetTicketMods = 13;
+    uint256 public constant SetTerminal = 14;
 }

@@ -41,9 +41,12 @@ contract Tickets is Administered, ITickets {
     /// @notice The permision index required to issue tickets on an owners behalf.
     uint256 public immutable override issuePermissionIndex = Operations.Issue;
 
-    /// @notice The permision index required to converting tickets on a holders behalf.
-    uint256 public immutable override convertPermissionIndex =
-        Operations.Convert;
+    /// @notice The permision index required to stake tickets on a holders behalf.
+    uint256 public immutable override stakePermissionIndex = Operations.Stake;
+
+    /// @notice The permision index required to unstake tickets on a holders behalf.
+    uint256 public immutable override unstakePermissionIndex =
+        Operations.Unstake;
 
     /// @notice The permision index required to transfer tickets on a holders behalf.
     uint256 public immutable override transferPermissionIndex =
@@ -61,7 +64,11 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice The total supply of tickets for each project, including IOU and ERC20 tickets.
+      @notice 
+      The total supply of tickets for each project, including IOU and ERC20 tickets.
+
+      @param _projectId The ID of the project to get the total supply of.
+
       @return supply The total supply.
     */
     function totalSupply(uint256 _projectId)
@@ -80,9 +87,12 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice The total balance of tickets a holder has for a specified project, including IOU and ERC20 tickets.
+      @notice 
+      The total balance of tickets a holder has for a specified project, including IOU and ERC20 tickets.
+
       @param _holder The ticket holder to get a balance for.
       @param _projectId The project to get the `_hodler`s balance of.
+
       @return balance The balance.
     */
     function totalBalanceOf(address _holder, uint256 _projectId)
@@ -98,7 +108,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
+      @notice 
+      Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
+
       @param _controller The controller to add.
       @param _projectId The ID of the project that will be controlled.
     */
@@ -114,8 +126,12 @@ contract Tickets is Administered, ITickets {
     }
 
     /**
-        @notice Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
-        @dev Deploys an owner's Ticket ERC-20 token contract.
+        @notice 
+        Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
+
+        @dev 
+        Deploys an owner's Ticket ERC-20 token contract.
+
         @param _projectId The ID of the project being issued tickets.
         @param _name The ERC-20's name. " Juice ticket" will be appended.
         @param _symbol The ERC-20's symbol. "j" will be prepended.
@@ -154,7 +170,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Print new tickets.
+      @notice 
+      Print new tickets.
+
       @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
@@ -204,7 +222,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Redeems tickets.
+      @notice 
+      Redeems tickets.
+
       @param _holder The address redeeming tickets.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _amount The amount of tickets being redeemed.
@@ -286,12 +306,14 @@ contract Tickets is Administered, ITickets {
     }
 
     /**
-      @notice Converts to  ERC20 tickets from IOUs.
-      @param _holder The owner of the tickets to convert.
-      @param _projectId The ID of the project whos tickets are being converted.
-      @param _amount The amount of tickets to convert.
+      @notice 
+      Stakes ERC20 tickets by burning their supply and creating IOU tickets.
+
+      @param _holder The owner of the tickets to stake.
+      @param _projectId The ID of the project whos tickets are being staked.
+      @param _amount The amount of tickets to stake.
      */
-    function convert(
+    function stake(
         address _holder,
         uint256 _projectId,
         uint256 _amount
@@ -300,24 +322,81 @@ contract Tickets is Administered, ITickets {
         ITicket _ticket = tickets[_projectId];
 
         // Tickets must have been issued.
-        require(_ticket != ITicket(address(0)), "Tickets:convert: NOT_FOUND");
+        require(_ticket != ITicket(address(0)), "Tickets::stake: NOT_FOUND");
 
-        // Only an account or a specified operator can convert its tickets.
+        // Only an account or a specified operator can stake its tickets.
         require(
             msg.sender == _holder ||
                 operatorStore.hasPermission(
                     _holder,
                     0,
                     msg.sender,
-                    Operations.Convert
+                    stakePermissionIndex
                 ) ||
                 operatorStore.hasPermission(
                     _holder,
                     _projectId,
                     msg.sender,
-                    Operations.Convert
+                    stakePermissionIndex
                 ),
-            "Tickets::convert: UNAUTHORIZED"
+            "Tickets::stake: UNAUTHORIZED"
+        );
+
+        // Get a reference to the holder's current balance.
+        uint256 _balanceOf = _ticket.balanceOf(_holder);
+
+        // There must be enough balance to convert.
+        require(_balanceOf >= _amount, "Tickets::stake: INSUFFICIENT_FUNDS");
+
+        // Redeem the equivalent amount of ERC20s.
+        _ticket.redeem(_holder, _amount);
+
+        // Add the staked amount from the holder's balance.
+        IOUBalance[_holder][_projectId] =
+            IOUBalance[_holder][_projectId] +
+            _amount;
+
+        // Add the staked amount from the project's total supply.
+        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] + _amount;
+
+        emit Stake(_holder, _projectId, _amount, msg.sender);
+    }
+
+    /**
+      @notice 
+      Converts to ERC20 tickets from IOUs.
+
+      @param _holder The owner of the tickets to convert.
+      @param _projectId The ID of the project whos tickets are being converted.
+      @param _amount The amount of tickets to convert.
+     */
+    function unstake(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external override {
+        // Get a reference to the project's ERC20 tickets.
+        ITicket _ticket = tickets[_projectId];
+
+        // Tickets must have been issued.
+        require(_ticket != ITicket(address(0)), "Tickets::unstake: NOT_FOUND");
+
+        // Only an account or a specified operator can unstake its tickets.
+        require(
+            msg.sender == _holder ||
+                operatorStore.hasPermission(
+                    _holder,
+                    0,
+                    msg.sender,
+                    unstakePermissionIndex
+                ) ||
+                operatorStore.hasPermission(
+                    _holder,
+                    _projectId,
+                    msg.sender,
+                    unstakePermissionIndex
+                ),
+            "Tickets::unstake: UNAUTHORIZED"
         );
 
         // Get a reference to the amount of unlockedIOUs.
@@ -327,25 +406,27 @@ contract Tickets is Administered, ITickets {
         // There must be enough unlocked IOUs to convert.
         require(
             _unlockedIOUs >= _amount,
-            "Tickets::convert: INSUFFICIENT_FUNDS"
+            "Tickets::unstake: INSUFFICIENT_FUNDS"
         );
 
-        // Subtract the converted amount from the holder's balance.
+        // Subtract the unstaked amount from the holder's balance.
         IOUBalance[_holder][_projectId] =
             IOUBalance[_holder][_projectId] -
             _amount;
 
-        // Subtract the converted amount from the project's total supply.
+        // Subtract the unstaked amount from the project's total supply.
         IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
 
         // Print the equivalent amount of ERC20s.
         _ticket.print(_holder, _amount);
 
-        emit Convert(_holder, _projectId, _amount, msg.sender);
+        emit Unstake(_holder, _projectId, _amount, msg.sender);
     }
 
     /** 
-      @notice Adds a controller that can print and redeem tickets on a project's behalf.
+      @notice 
+      Adds a controller that can print and redeem tickets on a project's behalf.
+
       @param _controller The controller to add.
       @param _projectId The ID of the project that will be controlled.
     */
@@ -366,7 +447,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Removes a controller.
+      @notice 
+      Removes a controller.
+
       @param _controller The controller to remove.
       @param _projectId The ID of the project that will no longer be controlled.
     */
@@ -387,7 +470,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Lock a project's tickets, preventing them from being redeemed and from converting to ERC20s.
+      @notice 
+      Lock a project's tickets, preventing them from being redeemed and from converting to ERC20s.
+
       @param _holder The holder to lock tickets from.
       @param _projectId The ID of the project whos tickets are being locked.
       @param _amount The amount of tickets to lock.
@@ -414,7 +499,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Unlock a project's tickets.
+      @notice 
+      Unlock a project's tickets.
+
       @param _holder The holder to unlock tickets from.
       @param _projectId The ID of the project whos tickets are being unlocked.
       @param _amount The amount of tickets to unlock.
@@ -440,7 +527,9 @@ contract Tickets is Administered, ITickets {
     }
 
     /** 
-      @notice Allows a ticket holder to transfer its tickets to another account, without converting to ERC-20s.
+      @notice 
+      Allows a ticket holder to transfer its tickets to another account, without converting to ERC-20s.
+
       @param _holder The holder to transfer tickets from.
       @param _projectId The ID of the project whos tickets are being transfered.
       @param _amount The amount of tickets to transfer.

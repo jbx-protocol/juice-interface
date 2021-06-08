@@ -1,5 +1,6 @@
 const print = require("./print");
-const convert = require("./convert");
+const unstake = require("./unstake");
+const stake = require("./stake");
 const issue = require("./issue");
 const transfer = require("./transfer");
 const redeem = require("./redeem");
@@ -14,7 +15,8 @@ const totalSupply = require("./total_supply");
 
 module.exports = {
   print,
-  convert,
+  unstake,
+  stake,
   issue,
   transfer,
   setTicketMods,

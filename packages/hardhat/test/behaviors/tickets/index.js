@@ -20,7 +20,8 @@ module.exports = function() {
   describe("initialize(...)", shouldBehaveLike.initialize);
   describe("issue(...)", shouldBehaveLike.issue);
   describe("print(...)", shouldBehaveLike.print);
-  describe("convert(...)", shouldBehaveLike.convert);
+  describe("unstake(...)", shouldBehaveLike.unstake);
+  describe("stake(...)", shouldBehaveLike.stake);
   describe("transfer(...)", shouldBehaveLike.transfer);
   describe("redeem(...)", shouldBehaveLike.redeem);
   describe("addController(...)", shouldBehaveLike.addController);

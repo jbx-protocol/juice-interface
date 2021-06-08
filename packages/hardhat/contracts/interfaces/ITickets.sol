@@ -30,7 +30,14 @@ interface ITickets {
         address controller
     );
 
-    event Convert(
+    event Stake(
+        address indexed holder,
+        uint256 indexed projectId,
+        uint256 amount,
+        address caller
+    );
+
+    event Unstake(
         address indexed holder,
         uint256 indexed projectId,
         uint256 amount,
@@ -84,7 +91,9 @@ interface ITickets {
 
     function issuePermissionIndex() external view returns (uint256);
 
-    function convertPermissionIndex() external view returns (uint256);
+    function stakePermissionIndex() external view returns (uint256);
+
+    function unstakePermissionIndex() external view returns (uint256);
 
     function transferPermissionIndex() external view returns (uint256);
 
@@ -132,7 +141,13 @@ interface ITickets {
         bool _preferConverted
     ) external;
 
-    function convert(
+    function stake(
+        address _holder,
+        uint256 _projectId,
+        uint256 _amount
+    ) external;
+
+    function unstake(
         address _holder,
         uint256 _projectId,
         uint256 _amount

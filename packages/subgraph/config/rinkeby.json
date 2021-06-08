@@ -1,15 +1,15 @@
 {
   "Network": "rinkeby",
   "AbisDir": "rinkeby",
-  "StartBlock": 8728897,
-  "FundingCycleBallotAddress": "0xa57FaE07F3380c8075D10615e266f4B8B898EfC5",
-  "FundingCyclesAddress": "0x3a0f2Fd1607fC5039bBEf6d8fAb610a048Da0467",
-  "GovernanceAddress": "0xbC4FF363AcA2Fde390d2Bc12131658D616985e8d",
-  "JuiceTerminalDirectoryAddress": "0x4714dD04bCb2Ecaadc4f54B16E9Bf17296baf24C",
-  "JuicerAddress": "0x3a14a72363D9BF351b73EBaB0a6F2Fc6d2ab1e4a",
-  "ModStoreAddress": "0xD86bc9B448d9d1dC8e36D01d92A20D510e83cd73",
-  "OperatorStoreAddress": "0x68ccCDfEf6a944e5EC18d8583D8BaBaDE7A5C4C0",
-  "PricesAddress": "0xf6ea79DCF3c5C778dA4384df23fc0503908d868C",
-  "ProjectsAddress": "0xE6Aa17f338A1268042eefCFfd194a61d033b9722",
-  "TicketsAddress": "0xcd71f86C37F441f77336Cb96b417be06d2CFE97D"
+  "StartBlock": 8730246,
+  "FundingCycleBallotAddress": "0xB99CABE531ec6f284a5BC6B9Af7Fd919e3d4A53b",
+  "FundingCyclesAddress": "0xBa2446374c15eb1439dD0f520Bcb82B217fd1281",
+  "GovernanceAddress": "0x41879d0681b0dCDD7405eC3601Fa0F053aDd502e",
+  "JuiceTerminalDirectoryAddress": "0xDDa31b15DC9aA6e797cC73507121989223F685BD",
+  "JuicerAddress": "0xD7d114188498746D36bE59a45D2F564bb13A0F9C",
+  "ModStoreAddress": "0xf3d646E2D4e8fAEe4F46ab224C9FCD60e428A46D",
+  "OperatorStoreAddress": "0x7222D579b77431985b79E39C290C773f4d689E32",
+  "PricesAddress": "0x333aF62AC5e8c1405414abbA757cfE8cd390dc83",
+  "ProjectsAddress": "0xe9c43e5bcBdf2822e0b9c9BdE66440CADd49Eff5",
+  "TicketsAddress": "0x17249007d92A10049E4A622615037391F37f4363"
 }

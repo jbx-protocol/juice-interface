@@ -6,12 +6,7 @@ import { useMemo } from 'react'
 
 export function useBurnerProvider(network?: NetworkName) {
   return useMemo(() => {
-    if (
-      process.env.NODE_ENV === 'production' ||
-      (process.env.REACT_APP_INFURA_DEV_NETWORK &&
-        process.env.REACT_APP_INFURA_DEV_NETWORK !== NetworkName.localhost)
-    )
-      return
+    if (process.env.REACT_APP_INFURA_NETWORK !== NetworkName.localhost) return
 
     let burnerConfig: {
       privateKey?: string

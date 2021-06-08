@@ -101,9 +101,4 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 )
 
 export const readNetwork =
-  NETWORKS_BY_NAME[
-    process.env.NODE_ENV === 'production'
-      ? NetworkName.kovan
-      : (process.env.REACT_APP_INFURA_DEV_NETWORK as NetworkName) ??
-        NetworkName.localhost
-  ]
+  NETWORKS_BY_NAME[process.env.REACT_APP_INFURA_NETWORK as NetworkName]

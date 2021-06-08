@@ -135,7 +135,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // The project must have funding cycles.
         require(
             latestId[_projectId] > 0,
-            "FundingCycle::getCurrent: NOT_FOUND"
+            "FundingCycles::getCurrent: NOT_FOUND"
         );
 
         // Check for an active funding cycle.
@@ -171,7 +171,7 @@ contract FundingCycles is Administered, IFundingCycles {
         }
 
         // The funding cycle cant be 0.
-        require(_fundingCycleId > 0, "FundingCycle::getCurrent: NOT_FOUND");
+        require(_fundingCycleId > 0, "FundingCycles::getCurrent: NOT_FOUND");
 
         // Get the properties of the funding cycle.
         FundingCycle memory _fundingCycle =
@@ -180,7 +180,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
             _fundingCycle.discountRate > 0,
-            "FundingCycle::getCurrent: NON_RECURRING"
+            "FundingCycles::getCurrent: NON_RECURRING"
         );
 
         // Return a mock of what the next funding cycle would be like,
@@ -659,10 +659,10 @@ contract FundingCycles is Administered, IFundingCycles {
     */
     function _mockFundingCycleAfter(FundingCycle memory _fundingCycle)
         internal
-        pure
+        view
         returns (FundingCycle memory)
     {
-        uint256 _start = _deriveStart(_fundingCycle, 0);
+        uint256 _start = _deriveStart(_fundingCycle, block.timestamp);
         return
             FundingCycle(
                 0,

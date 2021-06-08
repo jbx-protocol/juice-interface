@@ -16,5 +16,6 @@ module.exports = function() {
   describe("configure(...)", shouldBehaveLike.configure);
   describe("tap(...)", shouldBehaveLike.tap);
   describe("getCurrent(...)", shouldBehaveLike.getCurrent);
-  describe.only("getQueued(...)", shouldBehaveLike.getQueued);
+  describe("getQueued(...)", shouldBehaveLike.getQueued);
+  describe.only("currentBallotState(...)", shouldBehaveLike.currentBallotState);
 };

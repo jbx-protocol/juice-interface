@@ -221,7 +221,7 @@ contract FundingCycles is Administered, IFundingCycles {
         // The project must have funding cycles.
         require(
             latestId[_projectId] > 0,
-            "FundingCycle::getCurrent: NOT_FOUND"
+            "FundingCycles::currentBallotState: NOT_FOUND"
         );
 
         // Get a reference to the latest funding cycle ID.
@@ -232,8 +232,7 @@ contract FundingCycles is Administered, IFundingCycles {
             _getStruct(_fundingCycleId, true, true, false, false);
 
         // If the latest funding cycle is the first, or if it has already started, it must be approved.
-        if (_fundingCycle.basedOn == 0 || block.timestamp > _fundingCycle.start)
-            return BallotState.Approved;
+        if (_fundingCycle.basedOn == 0) return BallotState.Standby;
 
         return
             _ballotState(

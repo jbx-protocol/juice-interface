@@ -294,15 +294,20 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
+        // These were sporadically given a "run out of gas" error, so the limit was icreased.
         if (IOUBalance > 0) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, IOUBalance, false, {
+              gasLimit: 100000
+            });
         }
         if (erc20Balance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, erc20Balance, true);
+            .print(holder, projectId, erc20Balance, true, {
+              gasLimit: 100000
+            });
         }
 
         // Execute the transaction.

@@ -614,36 +614,7 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const {
-          caller,
-          projectId,
-          setup: { preconfigure } = {},
-          revert
-        } = failureTest.fn(this);
-        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-
-        if (preconfigure) {
-          // If a ballot was provided, mock the ballot contract with the provided properties.
-          await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
-
-          const tx = await this.contract
-            .connect(caller)
-            .configure(
-              projectId,
-              preconfigure.target,
-              preconfigure.currency,
-              preconfigure.duration,
-              preconfigure.discountRate,
-              preconfigure.fee,
-              this.ballot.address,
-              preconfigure.metadata,
-              preconfigure.configureActiveFundingCycle
-            );
-
-          await this.setTimeMark(tx.blockNumber);
-        }
-
+        const { caller, projectId, revert } = failureTest.fn(this);
         await expect(
           this.contract.connect(caller).currentBallotState(projectId)
         ).to.be.revertedWith(revert);

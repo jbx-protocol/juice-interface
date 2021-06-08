@@ -468,6 +468,13 @@ const tests = {
   ],
   failure: [
     {
+      description: "unauthorized",
+      fn: testTemplate({
+        setup: { preconfigure: null, setOwner: false },
+        revert: "Administrated: UNAUTHORIZED"
+      })
+    },
+    {
       description: "target is 0",
       fn: testTemplate({
         op: {
@@ -758,11 +765,13 @@ module.exports = function() {
           fee,
           metadata,
           configureActiveFundingCycle,
-          setup: { preconfigure } = {},
+          setup: { setOwner = true, preconfigure } = {},
           revert
         } = failureTest.fn(this);
-        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
+        if (setOwner) {
+          // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
+          await this.contract.connect(caller).setOwnership(caller.address);
+        }
 
         if (preconfigure) {
           await this.contract

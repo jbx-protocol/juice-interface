@@ -64,8 +64,8 @@ const tests = {
       description: "first funding cycle",
       fn: testTemplate({
         expectation: {
-          id: 1,
-          number: 1
+          id: 0,
+          number: 2
         }
       })
     },
@@ -91,8 +91,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(78),
         expectation: {
-          number: 1,
-          id: 1
+          number: 2,
+          id: 2
         }
       })
     },
@@ -123,8 +123,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(79),
         expectation: {
-          number: 1,
-          id: 1
+          number: 2,
+          id: 2
         }
       })
     },
@@ -155,8 +155,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(80),
         expectation: {
-          number: 2,
-          id: 2
+          number: 3,
+          id: 0
         }
       })
     },
@@ -187,8 +187,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(81),
         expectation: {
-          number: 2,
-          id: 2
+          number: 3,
+          id: 0
         }
       })
     },
@@ -219,8 +219,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(80),
         expectation: {
-          number: 2,
-          id: 2
+          number: 3,
+          id: 0
         }
       })
     },
@@ -251,7 +251,7 @@ const tests = {
         ],
         fastforward: BigNumber.from(320),
         expectation: {
-          number: 5,
+          number: 6,
           id: 0
         }
       })
@@ -283,8 +283,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(78),
         expectation: {
-          number: 1,
-          id: 1
+          number: 2,
+          id: 0
         }
       })
     },
@@ -317,8 +317,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(80),
         expectation: {
-          number: 2,
-          id: 2
+          number: 3,
+          id: 0
         }
       })
     },
@@ -339,8 +339,8 @@ const tests = {
         },
         fastforward: BigNumber.from(80),
         expectation: {
-          number: 1,
-          id: 1
+          number: 2,
+          id: 0
         }
       })
     },
@@ -393,8 +393,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(30),
         expectation: {
-          number: 1,
-          id: 1
+          number: 2,
+          id: 0
         }
       })
     },
@@ -427,7 +427,7 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          number: 3,
+          number: 4,
           id: 0
         }
       })
@@ -461,7 +461,7 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          number: 3,
+          number: 4,
           id: 0
         }
       })
@@ -495,21 +495,8 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          number: 3,
+          number: 4,
           id: 0
-        }
-      })
-    },
-    {
-      description: "first configuration, discount rate 0",
-      fn: testTemplate({
-        preconfigure: {
-          target: BigNumber.from(140),
-          discountRate: BigNumber.from(0)
-        },
-        expectation: {
-          number: 1,
-          id: 1
         }
       })
     }
@@ -522,7 +509,7 @@ const tests = {
           // No preconfigure
           preconfigure: null
         },
-        revert: "FundingCycles::getCurrent: NOT_FOUND"
+        revert: "FundingCycles::getQueued: NOT_FOUND"
       })
     },
     {
@@ -621,13 +608,13 @@ module.exports = function() {
         }
 
         // Execute the transaction.
-        const storedCurrentFundingCycle = await this.contract.getCurrent(
+        const storedQueuedFundingCycle = await this.contract.getQueued(
           projectId
         );
 
         // Expect the stored values to match what's expected.
-        expect(storedCurrentFundingCycle.id).to.equal(expectation.id);
-        expect(storedCurrentFundingCycle.number).to.equal(expectation.number);
+        expect(storedQueuedFundingCycle.id).to.equal(expectation.id);
+        expect(storedQueuedFundingCycle.number).to.equal(expectation.number);
       });
     });
   });
@@ -708,7 +695,7 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).getCurrent(projectId)
+          this.contract.connect(caller).getQueued(projectId)
         ).to.be.revertedWith(revert);
       });
     });

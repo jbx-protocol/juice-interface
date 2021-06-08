@@ -108,13 +108,8 @@ contract FundingCycles is Administered, IFundingCycles {
                 _getStruct(_eligibleFundingCycleId, true, true, false, false);
 
             // Check to see if the correct ballot is approved for this funding cycle.
-            if (
-                _ballotState(
-                    _eligibleFundingCycle.id,
-                    _eligibleFundingCycle.configured,
-                    _eligibleFundingCycle.basedOn
-                ) == BallotState.Approved
-            ) return _mockFundingCycleAfter(_eligibleFundingCycle);
+            if (_isApproved(_eligibleFundingCycle))
+                return _mockFundingCycleAfter(_eligibleFundingCycle);
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
@@ -176,13 +171,8 @@ contract FundingCycles is Administered, IFundingCycles {
                 _getStruct(_fundingCycleId, true, true, false, false);
 
             // Check to see if the correct ballot is approved for this funding cycle.
-            if (
-                _ballotState(
-                    _eligibleFundingCycle.id,
-                    _eligibleFundingCycle.configured,
-                    _eligibleFundingCycle.basedOn
-                ) == BallotState.Approved
-            ) return _eligibleFundingCycle;
+            if (_isApproved(_eligibleFundingCycle))
+                return _eligibleFundingCycle;
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
@@ -259,7 +249,7 @@ contract FundingCycles is Administered, IFundingCycles {
         @param _fee The fee that this configuration will incure when tapping.
         @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @param _metadata Data to store associated to this funding cycle configuration.
-        @param _configureActiveFundingCycle If the active funding cycle should be configurable.
+        @param _configureActiveFundingCycle If a funding cycle that has already started should be configurable.
 
         @return fundingCycleId The ID of the funding cycle that the configuration will take effect during.
     */
@@ -408,9 +398,12 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get the active funding cycle's ID.
         uint256 _eligibleFundingCycleId = _eligible(_projectId);
 
-        // If the ID of an eligible funding cycle exists, and active funding cycles are configurable, return it.
-        if (_eligibleFundingCycleId > 0 && _configureActiveFundingCycle)
-            return _eligibleFundingCycleId;
+        // If the ID of an eligible funding cycle exists, it's approved, and active funding cycles are configurable, and its approved, return it.
+        if (
+            _eligibleFundingCycleId > 0 &&
+            _configureActiveFundingCycle &&
+            _isIdApproved(_eligibleFundingCycleId)
+        ) return _eligibleFundingCycleId;
 
         // Get the ID of the latest funding cycle which has the latest reconfiguration.
         fundingCycleId = latestId[_projectId];
@@ -489,18 +482,12 @@ contract FundingCycles is Administered, IFundingCycles {
         // If the ID of an eligible funding cycle exists,
         // check to see if it has been approved by the based funding cycle's ballot.
         if (fundingCycleId > 0) {
-            // Get the necessary properties for the standby funding cycle.
+            // Get the necessary properties for the funding cycle.
             FundingCycle memory _eligibleFundingCycle =
                 _getStruct(fundingCycleId, true, true, false, false);
 
-            // Check to see if the correct ballot is approved for this funding cycle.
-            if (
-                _ballotState(
-                    _eligibleFundingCycle.id,
-                    _eligibleFundingCycle.configured,
-                    _eligibleFundingCycle.basedOn
-                ) == BallotState.Approved
-            ) return fundingCycleId;
+            // Check to see if the cycle is approved. If so, return it.
+            if (_isApproved(_eligibleFundingCycle)) return fundingCycleId;
 
             // If it hasn't been approved, set the ID to be the base funding cycle,
             // which carries the last approved configuration.
@@ -965,5 +952,44 @@ contract FundingCycles is Administered, IFundingCycles {
         return
             _fundingCycle.number +
             ((_start - _fundingCycle.start) / _fundingCycle.duration);
+    }
+
+    /** 
+      @notice 
+      Checks to see if the funding cycle of the provided ID is approved according to the correct ballot.
+
+      @param _fundingCycleId The ID of the funding cycle to get an approval flag for.
+
+      @return The approval flag.
+    */
+    function _isIdApproved(uint256 _fundingCycleId)
+        private
+        view
+        returns (bool)
+    {
+        FundingCycle memory _fundingCycle =
+            _getStruct(_fundingCycleId, true, true, false, false);
+        return _isApproved(_fundingCycle);
+    }
+
+    /** 
+      @notice 
+      Checks to see if the provided funding cycle is approved according to the correct ballot.
+
+      @param _fundingCycle The ID of the funding cycle to get an approval flag for.
+
+      @return The approval flag.
+    */
+    function _isApproved(FundingCycle memory _fundingCycle)
+        private
+        view
+        returns (bool)
+    {
+        return
+            _ballotState(
+                _fundingCycle.id,
+                _fundingCycle.configured,
+                _fundingCycle.basedOn
+            ) == BallotState.Approved;
     }
 }

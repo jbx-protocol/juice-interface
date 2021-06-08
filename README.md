@@ -58,22 +58,22 @@ The frontend connects to whichever chain its provider (i.e. Metamask) is using t
 ### deploy to local chain
 
 ```bash
-yarn deploy
+yarn deploy-local
 ```
 
-### deploy to ropsten
+### deploy public chain ropsten
 
 ```bash
-yarn deploy-ropsten
+yarn deploy-rinkeby
 ```
 
-### deploy to mainnet
+```bash
+yarn deploy-kovan
+```
 
 ```bash
 yarn deploy-mainnet
 ```
-
----
 
 ## Frontend .env
 
@@ -81,9 +81,11 @@ Create new `packages/app/.env`, reference `packages/app/.example.env`
 
 ```bash
 REACT_APP_INFURA_ID=
+REACT_APP_INFURA_NETWORK= # defaults to localhost in development mode
 ```
 
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
+`REACT_APP_INFURA_NETWORK`: Network name (kovan, rinkeby, mainnet, localhost).
 
 ---
 
@@ -99,7 +101,12 @@ The frontend has three different providers that provide different levels of acce
 
 ## Deploying frontend
 
-`yarn ipfs` to build and deploy frontend to IPFS.
+To build and deploy frontend to IPFS:
+
+- `yarn ipfs-kovan`
+- `yarn ipfs-ropsten`
+
+> Note: For any network, you'll need to define a .<network>.env before deploying
 
 ## Graph
 

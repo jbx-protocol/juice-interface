@@ -1,8 +1,7 @@
-import { Button, Col, Popover, Row, Tag } from 'antd'
-import { SUPPORTED_NETWORKS } from 'constants/supportedNetworks'
+import { Button, Col, Row, Tag } from 'antd'
+import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
-import { NetworkName } from 'models/network-name'
 import { useContext } from 'react'
 import { web3Modal } from 'utils/web3Modal'
 
@@ -20,23 +19,12 @@ export default function Account() {
     }, 1)
   }
 
+  const networkName = readNetwork.name
+
   const switchNetworkTag =
-    !signerNetwork ||
-    signerNetwork === NetworkName.localhost ||
-    (signerNetwork && SUPPORTED_NETWORKS.includes(signerNetwork)) ? null : (
-      <Popover
-        title="Juice works on:"
-        content={
-          <div>
-            {SUPPORTED_NETWORKS.map(network => (
-              <div key={network}>{network}</div>
-            ))}
-          </div>
-        }
-      >
-        <Tag color="red">{signerNetwork} not yet supported</Tag>
-      </Popover>
-    )
+    signerNetwork && signerNetwork !== networkName ? (
+      <Tag color="red">Switch to {networkName}</Tag>
+    ) : null
 
   return (
     <div>

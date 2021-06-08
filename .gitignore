@@ -32,6 +32,8 @@ dist
 # misc
 .DS_Store
 .env*
+.rinkeby.env
+.kovan.env
 .eslintcache*
 
 # debug

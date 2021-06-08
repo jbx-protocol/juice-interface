@@ -32,34 +32,6 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IOperatorStore",
-        "name": "_operatorStore",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_projectIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_operators",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[][]",
-        "name": "_permissionIndexes",
-        "type": "uint256[][]"
-      }
-    ],
-    "name": "addOperators",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IPrices",
         "name": "_prices",
         "type": "address"
@@ -203,7 +175,7 @@ module.exports = [
       },
       {
         "internalType": "string",
-        "name": "_note",
+        "name": "_memo",
         "type": "string"
       }
     ],
@@ -223,39 +195,6 @@ module.exports = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IOperatorStore",
-        "name": "_operatorStore",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_projectIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_operators",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[][]",
-        "name": "_permissionIndexes",
-        "type": "uint256[][]"
-      }
-    ],
-    "name": "removeOperators",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -310,6 +249,62 @@ module.exports = [
       }
     ],
     "name": "setJuiceTerminal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IOperatorStore",
+        "name": "_operatorStore",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_permissionIndexes",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setOperator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IOperatorStore",
+        "name": "_operatorStore",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_projectIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_operators",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[][]",
+        "name": "_permissionIndexes",
+        "type": "uint256[][]"
+      }
+    ],
+    "name": "setOperators",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -381,9 +376,9 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_newHandle",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "name": "transferHandle",

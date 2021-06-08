@@ -6,7 +6,6 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import Loading from 'components/shared/Loading'
 import { ThemeOption } from 'constants/theme/theme-option'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -34,7 +33,6 @@ export default function Rewards({
   isOwner: boolean | undefined
 }) {
   const { contracts, transactor } = useContext(UserContext)
-  const { onNeedProvider } = useContext(NetworkContext)
   const { userAddress } = useContext(UserContext)
 
   const {
@@ -182,9 +180,7 @@ export default function Rewards({
     : '0'
 
   function convert() {
-    if (!transactor || !contracts || !userAddress) return onNeedProvider()
-
-    if (!projectId) return
+    if (!transactor || !contracts || !userAddress || !projectId) return
 
     setLoadingConvert(true)
 
@@ -199,9 +195,7 @@ export default function Rewards({
   }
 
   function print() {
-    if (!transactor || !contracts) return onNeedProvider()
-
-    if (!projectId) return
+    if (!transactor || !contracts || !projectId) return
 
     setLoadingPrint(true)
 
@@ -216,9 +210,7 @@ export default function Rewards({
   }
 
   function redeem() {
-    if (!transactor || !contracts) return onNeedProvider()
-
-    if (!claimableOverflow) return
+    if (!transactor || !contracts || !claimableOverflow) return
 
     setLoadingRedeem(true)
 

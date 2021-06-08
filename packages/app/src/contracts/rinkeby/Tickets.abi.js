@@ -46,7 +46,7 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "account",
+        "name": "holder",
         "type": "address"
       },
       {
@@ -137,7 +137,7 @@ module.exports = [
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "projectId",
         "type": "uint256"
@@ -162,16 +162,16 @@ module.exports = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "holder",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -181,9 +181,9 @@ module.exports = [
       },
       {
         "indexed": false,
-        "internalType": "contract ITicket",
-        "name": "ticket",
-        "type": "address"
+        "internalType": "bool",
+        "name": "convertedTickets",
+        "type": "bool"
       },
       {
         "indexed": false,
@@ -205,16 +205,16 @@ module.exports = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "holder",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -225,8 +225,14 @@ module.exports = [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "IOU",
+        "name": "IOUs",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "preferConverted",
+        "type": "bool"
       },
       {
         "indexed": false,
@@ -310,7 +316,7 @@ module.exports = [
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "projectId",
         "type": "uint256"
@@ -344,7 +350,26 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "IOU",
+    "name": "IOUBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "IOUTotalSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -397,11 +422,29 @@ module.exports = [
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
     "name": "convert",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "convertPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -486,6 +529,19 @@ module.exports = [
     "name": "issue",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "issuePermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -618,6 +674,11 @@ module.exports = [
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferConverted",
+        "type": "bool"
       }
     ],
     "name": "redeem",
@@ -757,6 +818,19 @@ module.exports = [
     "name": "transfer",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "transferPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

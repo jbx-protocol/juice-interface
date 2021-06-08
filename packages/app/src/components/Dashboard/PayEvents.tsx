@@ -28,7 +28,6 @@ export default function PayEvents({
   }
 
   const contentLineHeight = 1.5
-
   return (
     <div>
       {events?.length ? (

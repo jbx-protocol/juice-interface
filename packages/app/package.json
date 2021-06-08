@@ -26,7 +26,7 @@
     "typescript": "^4.0.3",
     "use-deep-compare-effect": "^1.6.1",
     "web-vitals": "^0.2.4",
-    "web3modal": "^1.9.2"
+    "web3modal": "^1.9.3"
   },
   "scripts": {
     "compile-styles": "lessc ./src/styles/antd.less ./src/styles/antd.css --js",

@@ -5,10 +5,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ @peripheralist/juice",
     "create-local": "graph create --node http://localhost:8020/ juice-local",
     "remove-local": "graph remove --node http://localhost:8020/ juice-local",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juice-local"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juice-local",
+    "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ @peripheralist/juice-rinkeby"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.20.0",

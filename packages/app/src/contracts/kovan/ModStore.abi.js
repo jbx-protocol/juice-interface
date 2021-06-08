@@ -32,38 +32,44 @@ module.exports = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
-            "name": "projectId",
-            "type": "uint256"
-          },
-          {
             "internalType": "address payable",
             "name": "beneficiary",
             "type": "address"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint8",
             "name": "percent",
-            "type": "uint16"
-          },
-          {
-            "internalType": "string",
-            "name": "note",
-            "type": "string"
+            "type": "uint8"
           },
           {
             "internalType": "bool",
             "name": "preferConverted",
             "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "note",
+            "type": "string"
           }
         ],
         "indexed": false,
-        "internalType": "struct PaymentMod[]",
+        "internalType": "struct PaymentMod",
         "name": "mods",
-        "type": "tuple[]"
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
       }
     ],
-    "name": "SetPaymentMods",
+    "name": "SetPaymentMod",
     "type": "event"
   },
   {
@@ -83,9 +89,9 @@ module.exports = [
             "type": "address"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint8",
             "name": "percent",
-            "type": "uint16"
+            "type": "uint8"
           },
           {
             "internalType": "bool",
@@ -94,100 +100,19 @@ module.exports = [
           }
         ],
         "indexed": false,
-        "internalType": "struct TicketMod[]",
+        "internalType": "struct TicketMod",
         "name": "mods",
-        "type": "tuple[]"
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
       }
     ],
-    "name": "SetTicketMods",
+    "name": "SetTicketMod",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "allPaymentMods",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "contract IModAllocator",
-            "name": "allocator",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "projectId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address payable",
-            "name": "beneficiary",
-            "type": "address"
-          },
-          {
-            "internalType": "uint16",
-            "name": "percent",
-            "type": "uint16"
-          },
-          {
-            "internalType": "string",
-            "name": "note",
-            "type": "string"
-          },
-          {
-            "internalType": "bool",
-            "name": "preferConverted",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct PaymentMod[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "allTicketMods",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address payable",
-            "name": "beneficiary",
-            "type": "address"
-          },
-          {
-            "internalType": "uint16",
-            "name": "percent",
-            "type": "uint16"
-          },
-          {
-            "internalType": "bool",
-            "name": "preferConverted",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct TicketMod[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [],
@@ -197,6 +122,57 @@ module.exports = [
         "internalType": "contract IOperatorStore",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
+    "name": "paymentMods",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "preferConverted",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "note",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "",
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
@@ -223,82 +199,41 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "enum IModStore.ModKind[]",
-        "name": "_kinds",
-        "type": "uint8[]"
-      },
-      {
-        "internalType": "address payable[]",
-        "name": "_beneficiaries",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_percents",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "contract IModAllocator[]",
-        "name": "_allocators",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_forProjectIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "string[]",
-        "name": "_notes",
-        "type": "string[]"
-      },
-      {
-        "internalType": "bool[]",
-        "name": "_preferConvertedTickets",
-        "type": "bool[]"
-      }
-    ],
-    "name": "setMods",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IModAllocator[]",
-        "name": "_allocators",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_forProjectIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address payable[]",
-        "name": "_beneficiaries",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_percents",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "string[]",
-        "name": "_notes",
-        "type": "string[]"
-      },
-      {
-        "internalType": "bool[]",
-        "name": "_preferConvertedTickets",
-        "type": "bool[]"
+        "components": [
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "preferConverted",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "note",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "_mods",
+        "type": "tuple[]"
       }
     ],
     "name": "setPaymentMods",
@@ -307,6 +242,19 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "setPaymentModsPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -314,24 +262,80 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "address payable[]",
-        "name": "_beneficiaries",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_percents",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "bool[]",
-        "name": "_preferConvertedTickets",
-        "type": "bool[]"
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "preferConverted",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "_mods",
+        "type": "tuple[]"
       }
     ],
     "name": "setTicketMods",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "setTicketModsPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ticketMods",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "preferConverted",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ];

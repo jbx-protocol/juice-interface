@@ -1,9 +1,8 @@
 import { Listener } from '@ethersproject/providers'
+import { readProvider } from 'constants/readProvider'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { ContractName } from 'models/contract-name'
 import { useEffect, useMemo, useState } from 'react'
-
-import { useReadProvider } from './ReadProvider'
 
 export default function useEventListener<E>({
   contractName,
@@ -19,12 +18,11 @@ export default function useEventListener<E>({
   includeHistory?: boolean
 }) {
   const contracts = useContractLoader()
-
-  const provider = useReadProvider()
   const [events, setEvents] = useState<(E & { timestamp: number })[]>([])
   const [shouldGetHistory, setShouldGetHistory] = useState<boolean>(
     !!includeHistory,
   )
+  const provider = readProvider
 
   const contract = contracts && contractName && contracts[contractName]
 

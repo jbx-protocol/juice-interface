@@ -4,7 +4,6 @@ import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
 import { NetworkName } from 'models/network-name'
 import { useContext } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
 import { web3Modal } from 'utils/web3Modal'
 
 import Balance from './Balance'
@@ -13,12 +12,6 @@ import Wallet from './Wallet'
 export default function Account() {
   const { userAddress } = useContext(UserContext)
   const { onNeedProvider, signerNetwork } = useContext(NetworkContext)
-
-  useDeepCompareEffect(() => {
-    if (web3Modal.cachedProvider && onNeedProvider) {
-      onNeedProvider()
-    }
-  }, [onNeedProvider])
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider()
@@ -60,10 +53,10 @@ export default function Account() {
         )}
         <Col>
           {switchNetworkTag}
-          {web3Modal?.cachedProvider ? (
-            <Button onClick={logoutOfWeb3Modal}>Logout</Button>
-          ) : (
+          {onNeedProvider ? (
             <Button onClick={onNeedProvider}>Connect</Button>
+          ) : (
+            <Button onClick={logoutOfWeb3Modal}>Logout</Button>
           )}
         </Col>
       </Row>

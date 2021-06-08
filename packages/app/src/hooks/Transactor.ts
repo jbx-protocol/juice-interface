@@ -36,7 +36,9 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider } = useContext(NetworkContext)
+  const { signingProvider: provider, onNeedProvider } = useContext(
+    NetworkContext,
+  )
 
   return useCallback(
     async (
@@ -45,6 +47,12 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
+      if (onNeedProvider) {
+        await onNeedProvider()
+        if (options?.onDone) options.onDone()
+        return false
+      }
+
       if (!provider) return false
 
       const signer = provider.getSigner()
@@ -147,6 +155,6 @@ export function useTransactor({
         return false
       }
     },
-    [provider, gasPrice],
+    [provider, gasPrice, onNeedProvider],
   )
 }

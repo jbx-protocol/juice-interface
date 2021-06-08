@@ -56,8 +56,14 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "decimals",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "feedDecimalAdjuster",
     "outputs": [
       {
         "internalType": "uint256",
@@ -124,6 +130,19 @@ module.exports = [
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "targetDecimals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

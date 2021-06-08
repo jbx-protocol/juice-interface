@@ -12,8 +12,9 @@ export default function Network({ children }: { children: ChildElems }) {
   const [network, setNetwork] = useState<NetworkName>()
 
   const loadWeb3Modal = useCallback(async () => {
-    const provider = await web3Modal.connect()
-    setInjectedProvider(new Web3Provider(provider))
+    const library = await web3Modal.connect()
+    const provider = new Web3Provider(library)
+    setInjectedProvider(provider)
   }, [setInjectedProvider])
 
   const burnerProvider = useBurnerProvider(NetworkName.localhost)
@@ -33,12 +34,16 @@ export default function Network({ children }: { children: ChildElems }) {
     getNetwork()
   }, [signingProvider, setNetwork])
 
+  useEffect(() => {
+    if (web3Modal.cachedProvider) loadWeb3Modal()
+  }, [loadWeb3Modal, web3Modal.cachedProvider])
+
   return (
     <NetworkContext.Provider
       value={{
         signerNetwork: network,
         signingProvider,
-        onNeedProvider: loadWeb3Modal,
+        onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
       }}
     >
       {children}

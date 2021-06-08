@@ -94,4 +94,8 @@ button {
   transition: background-color 100ms ease-in, background 100ms ease-in;
 }
 
+.web3modal-modal-lightbox {
+  z-index: 9999 !important;
+}
+
 @import 'antd-overrides/index.scss';

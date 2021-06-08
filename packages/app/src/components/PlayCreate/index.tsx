@@ -37,7 +37,7 @@ import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function PlayCreate() {
   const { transactor, contracts, userAddress } = useContext(UserContext)
-  const { onNeedProvider, signerNetwork } = useContext(NetworkContext)
+  const { signerNetwork } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
@@ -142,9 +142,7 @@ export default function PlayCreate() {
   }, [])
 
   async function deployProject() {
-    if (!transactor || !contracts) return onNeedProvider()
-
-    if (!adminFeePercent || !editingFC) return
+    if (!transactor || !contracts || !adminFeePercent || !editingFC) return
 
     setLoadingCreate(true)
 
@@ -342,7 +340,7 @@ export default function PlayCreate() {
 
       <Modal
         visible={deployProjectModalVisible}
-        okText={'Deploy on ' + signerNetwork}
+        okText={signerNetwork ? 'Deploy on ' + signerNetwork : 'Deploy'}
         onOk={deployProject}
         confirmLoading={loadingCreate}
         width={600}

@@ -3,7 +3,6 @@ import { Button } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
@@ -30,7 +29,6 @@ export default function Pay({
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
   const { contracts, transactor } = useContext(UserContext)
-  const { onNeedProvider } = useContext(NetworkContext)
 
   const converter = useCurrencyConverter()
 
@@ -38,8 +36,7 @@ export default function Pay({
     payAs === 1 ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
   function pay() {
-    if (!transactor || !contracts) return onNeedProvider()
-    if (!weiPayAmt) return
+    if (!transactor || !contracts || !weiPayAmt) return
 
     setPayModalVisible(true)
   }

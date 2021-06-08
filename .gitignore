@@ -15,7 +15,7 @@ packages/hardhat/cache
 
 docker/**/data
 
-packages/subgraph/config/config.json
+packages/subgraph/config/localhost
 
 # dependencies
 /node_modules

@@ -40,15 +40,16 @@ yarn start
 
 > ✨ The [HardHat network](https://hardhat.org/hardhat-network/) provides _stack traces_ and _console.log_ debugging for our contracts ✨
 
-Run `yarn account` to create a local deployer wallet private key. To send ETH to generated wallet on a local chain, run  `# yarn send --from <address or account index> --to <receiver address> --amount <ETH amount>`
+Run `yarn account` to create a local deployer wallet private key. To send ETH to generated wallet on a local chain, run `# yarn send --from <address or account index> --to <receiver address> --amount <ETH amount>`
 
 ---
 
 ## Deploying contracts
 
-Contracts are located in `packages/hardhat/contracts`. 
+Contracts are located in `packages/hardhat/contracts`.
 
 Each time contracts are deployed, artifacts are copied to:
+
 - `packages/app/src/contracts` where they're used by the frontend
 - `packages/subgraph/abis` where they're used to generate Graph templates
 
@@ -102,17 +103,33 @@ The frontend has three different providers that provide different levels of acce
 
 ## Graph
 
-Juice uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. ***Production deployment is still WIP.***
+Juice uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. **_Production deployment is still WIP._**
 
 ### Running locally
+
 Install Docker.
 
 1. Make sure local chain is running.
-2. In a new terminal window: `yarn graph-run-node` to start Docker Graph node. 
+2. In a new terminal window: `yarn graph-run-node` to start Docker Graph node.
+
 - Node is ready when terminal output reads:
-> `INFO Starting GraphQL WebSocket server at: ws://localhost:8001, component: SubscriptionServer`
+  > `INFO Starting GraphQL WebSocket server at: ws://localhost:8001, component: SubscriptionServer`
+
 3. In another terminal window: `yarn graph-create-local` to create subgraph and add to local node. (Only needs to be run once per local graph node. `yarn graph-remove-local` to remove the subgraph.)
 4. `yarn graph-ship-local` while the node is running to ship changes to subgraph template, mappings, and schema defined in packages/subgraph/src.
+
+### Deploying to public networks
+
+Make sure contracts for the intended network have been deployed:
+
+- Abi artifacts exist in packages/subgraph/abis/\<network>
+- Config file packages/subgraph/config/\<network>.json exists
+
+Then deploy subgraph:
+
+Rinkeby: `yarn graph-ship-rinkeby`
+
+Kovan: `yarn graph-ship-kovan`
 
 ## Theme
 

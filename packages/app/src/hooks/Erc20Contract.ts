@@ -1,15 +1,13 @@
 import { isAddress } from '@ethersproject/address'
 import { Contract } from '@ethersproject/contracts'
+import { readProvider } from 'constants/readProvider'
 import { NetworkContext } from 'contexts/networkContext'
 import erc20Abi from 'erc-20-abi'
 import { constants } from 'ethers'
 import { useContext, useMemo } from 'react'
 
-import { useReadProvider } from './ReadProvider'
-
 export function useErc20Contract(address: string | undefined) {
   const { signingProvider } = useContext(NetworkContext)
-  const readProvider = useReadProvider()
 
   const provider = signingProvider ?? readProvider
 

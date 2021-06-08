@@ -1,0 +1,15 @@
+{
+  "Network": "kovan",
+  "AbisDir": "kovan",
+  "StartBlock": 25348334,
+  "FundingCycleBallotAddress": "0x8065a37C30630dacD5683e05c56589990033Adf4",
+  "FundingCyclesAddress": "0xeF68892a64804884f3BfA30bAA6Ec8c8e592e1B3",
+  "GovernanceAddress": "0xF21D1F8e54E24C62aACD06fb7468E0Aa04A89ED6",
+  "JuiceTerminalDirectoryAddress": "0x37590e00D3e7740F7C534892b44D834a50d6c7b1",
+  "JuicerAddress": "0x542F8a0d64fd61f2668b62E65A444B5Bbd95403D",
+  "ModStoreAddress": "0x083B71676d4Ee7D5AE570e9913Eaa6b9Dc1FAB42",
+  "OperatorStoreAddress": "0x1ce40e5b06d74918C0147825D205E865a583E443",
+  "PricesAddress": "0xcEaC2B57ea1409c79590dcd863A7A95b44584922",
+  "ProjectsAddress": "0xE56B43280bE28D237EA43a44628c93F744906CA8",
+  "TicketsAddress": "0x82eA74e92e9b3f4f1c2594301DC8603898Bc0992"
+}

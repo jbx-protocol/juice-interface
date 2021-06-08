@@ -1,0 +1,15 @@
+{
+  "Network": "mainnet",
+  "AbisDir": "localhost",
+  "StartBlock": 2044,
+  "FundingCycleBallotAddress": "0x6b165dE91F825584117c23f79F634849aCff4f68",
+  "FundingCyclesAddress": "0x52b6622fa8057b2180E0E87B0da9E3a30093751d",
+  "GovernanceAddress": "0x981E895CBA9dA29927838A9feB699AB255999933",
+  "JuiceTerminalDirectoryAddress": "0x69B9aE74db4e9dF49cBb925eb96f86B4904ab275",
+  "JuicerAddress": "0xC2100780F828810bAaeCD3039111006E12B26CF8",
+  "ModStoreAddress": "0x11e73abC581190B9fe31B804a5877aB5C2754C64",
+  "OperatorStoreAddress": "0xf16bA2643D03f9f3d6b1e8B66327eC5Fc9b69862",
+  "PricesAddress": "0x8fe7274F9968f496B6B8B9C19d07234AcBFdF18E",
+  "ProjectsAddress": "0x60B6Fdb142AFfc43520027efC852C8418a2c436a",
+  "TicketsAddress": "0x59DF6E82EDFAa5759E1ab08b6A8fA8dac30c13C0"
+}

@@ -3,7 +3,6 @@ import { Button, Input, Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -24,7 +23,6 @@ export default function Tappable({
   balanceInCurrency: BigNumber | undefined
 }) {
   const { transactor, contracts } = useContext(UserContext)
-  const { onNeedProvider } = useContext(NetworkContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -36,8 +34,7 @@ export default function Tappable({
   const converter = useCurrencyConverter()
 
   function tap() {
-    if (!transactor || !contracts?.Juicer || !fundingCycle)
-      return onNeedProvider()
+    if (!transactor || !contracts?.Juicer || !fundingCycle) return
 
     setLoadingWithdraw(true)
 

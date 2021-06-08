@@ -82,6 +82,12 @@ contract FundingCycles is Administered, IFundingCycles {
         override
         returns (FundingCycle memory)
     {
+        // The project must have funding cycles.
+        require(
+            latestId[_projectId] > 0,
+            "FundingCycles::getQueued: NOT_FOUND"
+        );
+
         // Get a reference to the standby funding cycle.
         uint256 _standbyFundingCycleId = _standby(_projectId);
 
@@ -92,15 +98,32 @@ contract FundingCycles is Administered, IFundingCycles {
         // Get a reference to the eligible funding cycle.
         uint256 _eligibleFundingCycleId = _eligible(_projectId);
 
-        // If it exists, mock up what its next up funding cycle would be like.
-        if (_eligibleFundingCycleId > 0)
-            return
-                _mockFundingCycleAfter(
-                    _getStruct(_eligibleFundingCycleId, true, true, true, true)
-                );
+        uint256 _fundingCycleId;
 
-        // Get the ID of the latest funding cycle which has the latest reconfiguration.
-        uint256 _fundingCycleId = latestId[_projectId];
+        // If an eligible funding cycle exists,
+        // check to see if it has been approved by the base funding cycle's ballot.
+        if (_eligibleFundingCycleId > 0) {
+            // Get the necessary properties for the standby funding cycle.
+            FundingCycle memory _eligibleFundingCycle =
+                _getStruct(_eligibleFundingCycleId, true, true, false, false);
+
+            // Check to see if the correct ballot is approved for this funding cycle.
+            if (
+                _ballotState(
+                    _eligibleFundingCycle.id,
+                    _eligibleFundingCycle.configured,
+                    _eligibleFundingCycle.basedOn
+                ) == BallotState.Approved
+            ) return _mockFundingCycleAfter(_eligibleFundingCycle);
+
+            // If it hasn't been approved, set the ID to be the based funding cycle,
+            // which carries the last approved configuration.
+            _fundingCycleId = _eligibleFundingCycle.basedOn;
+        } else {
+            // No upcoming funding cycle found that is eligible to become active,
+            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+            _fundingCycleId = latestId[_projectId];
+        }
 
         // A funding cycle must exist.
         require(_fundingCycleId > 0, "FundingCycle::getQueued: NOT_FOUND");
@@ -173,19 +196,12 @@ contract FundingCycles is Administered, IFundingCycles {
         // The funding cycle cant be 0.
         require(_fundingCycleId > 0, "FundingCycles::getCurrent: NOT_FOUND");
 
-        // Get the properties of the funding cycle.
-        FundingCycle memory _fundingCycle =
-            _getStruct(_fundingCycleId, true, true, true, true);
-
-        // Funding cycles with a discount rate of 0 are non-recurring.
-        require(
-            _fundingCycle.discountRate > 0,
-            "FundingCycles::getCurrent: NON_RECURRING"
-        );
-
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
-        return _mockFundingCycleAfter(_fundingCycle);
+        return
+            _mockFundingCycleAfter(
+                _getStruct(_fundingCycleId, true, true, true, true)
+            );
     }
 
     /** 
@@ -662,6 +678,12 @@ contract FundingCycles is Administered, IFundingCycles {
         view
         returns (FundingCycle memory)
     {
+        // Can't mock a non recurring funding cycle.
+        require(
+            _fundingCycle.discountRate > 0,
+            "FundingCycles::_mockFundingCycleAfter: NON_RECURRING"
+        );
+
         uint256 _start = _deriveStart(_fundingCycle, block.timestamp);
         return
             FundingCycle(

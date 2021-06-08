@@ -7,11 +7,10 @@ import useContractReader from 'hooks/ContractReader'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
-import { ipfsCidUrl } from 'utils/ipfs'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
@@ -44,25 +43,29 @@ export default function Dashboard() {
     functionName: 'getCurrent',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
-    updateOn: projectId
-      ? [
-          {
-            contract: ContractName.Juicer,
-            eventName: 'Reconfigure',
-            topics: [[], projectId.toHexString()],
-          },
-          {
-            contract: ContractName.Juicer,
-            eventName: 'Pay',
-            topics: [[], projectId.toHexString()],
-          },
-          {
-            contract: ContractName.Juicer,
-            eventName: 'Tap',
-            topics: [[], projectId.toHexString()],
-          },
-        ]
-      : undefined,
+    updateOn: useMemo(
+      () =>
+        projectId
+          ? [
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Reconfigure',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.Juicer,
+                eventName: 'Tap',
+                topics: [[], projectId.toHexString()],
+              },
+            ]
+          : undefined,
+      [],
+    ),
   })
 
   const uri = useContractReader<string>({

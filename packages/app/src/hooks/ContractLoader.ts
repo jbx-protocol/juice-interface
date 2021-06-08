@@ -1,38 +1,27 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { NETWORKS } from 'constants/networks'
+import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
 import { NetworkContext } from 'contexts/networkContext'
-import { useReadProvider } from 'hooks/ReadProvider'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
-import { useContext, useState } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
+import { useContext, useEffect, useState } from 'react'
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
 
   const { signingProvider } = useContext(NetworkContext)
 
-  const readProvider = useReadProvider()
-
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     async function loadContracts() {
-      const _provider = signingProvider ?? readProvider
-
-      await _provider.ready
-
-      let network = NETWORKS[_provider.network.chainId]?.name
-
-      if (!network) return
-
       try {
+        const network = readNetwork.name
+
         const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
 
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signingProvider
-          ? signingProvider.getSigner()
-          : readProvider
+        const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
         const newContracts = contractList.reduce(
           (accumulator, contractName) => ({
@@ -53,7 +42,7 @@ export function useContractLoader() {
     }
 
     loadContracts()
-  }, [readProvider, signingProvider, setContracts])
+  }, [signingProvider, setContracts])
 
   return contracts
 }
@@ -61,10 +50,10 @@ export function useContractLoader() {
 const loadContract = (
   contractName: ContractName,
   network: NetworkName,
-  signer: JsonRpcSigner | JsonRpcProvider,
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract =>
   new Contract(
     require(`../contracts/${network}/${contractName}.address.js`),
     require(`../contracts/${network}/${contractName}.abi.js`),
-    signer,
+    signerOrProvider,
   )

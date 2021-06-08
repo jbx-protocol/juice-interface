@@ -100,12 +100,10 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   {} as Record<NetworkName, NetworkInfo>,
 )
 
-export const defaultProductionNetwork = NetworkName.kovan
-
-export const defaultReadNetworkRpcUrl = (process.env.NODE_ENV === 'production'
-  ? NETWORKS_BY_NAME[defaultProductionNetwork]
-  : NETWORKS_BY_NAME[
-      (process.env.REACT_APP_INFURA_DEV_NETWORK as NetworkName) ??
+export const readNetwork =
+  NETWORKS_BY_NAME[
+    process.env.NODE_ENV === 'production'
+      ? NetworkName.kovan
+      : (process.env.REACT_APP_INFURA_DEV_NETWORK as NetworkName) ??
         NetworkName.localhost
-    ]
-).rpcUrl
+  ]

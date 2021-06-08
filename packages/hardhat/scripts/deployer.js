@@ -1,7 +1,6 @@
 /* eslint no-use-before-define: "warn" */
 const fs = require("fs");
 const chalk = require("chalk");
-const { ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
 
@@ -67,41 +66,50 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     );
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
-    console.log("⚡️ Setting the projects owner");
+    const callContractIcon = "🛰  ";
+    console.log(callContractIcon + "Setting the projects owner");
     await attachedProjects.setOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
-    console.log("⚡️ Setting the fundingCycles owner");
+    console.log(callContractIcon + "Setting the fundingCycles owner");
     await attachedFundingCycles.setOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
-    console.log("⚡️ Setting the tickets owner");
+    console.log(callContractIcon + "Setting the tickets owner");
     await attachedTickets.setOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
-    console.log("⚡️ Setting the prices owner");
+    console.log(callContractIcon + "Setting the prices owner");
     await attachedPrices.transferOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
 
-    console.log("⚡️ Granting the juicer admin privileges over the projects");
+    console.log(
+      callContractIcon +
+        "Granting the juicer admin privileges over the projects"
+    );
     await attachedGovernance.grantAdmin(projects.address, juicer.address, {
       gasLimit: blockGasLimit
     });
     console.log(
-      "⚡️ Granting the juicer admin privileges over the funding cycles"
+      callContractIcon +
+        "Granting the juicer admin privileges over the funding cycles"
     );
     await attachedGovernance.grantAdmin(fundingCycles.address, juicer.address, {
       gasLimit: blockGasLimit
     });
-    console.log("⚡️ Granting the juicer admin privileges over the tickets");
+    console.log(
+      callContractIcon + "Granting the juicer admin privileges over the tickets"
+    );
     await attachedGovernance.grantAdmin(tickets.address, juicer.address, {
       gasLimit: blockGasLimit
     });
 
     // Add a production price feed if there is a reference to one.
     if (ethUsdAddr) {
-      console.log("⚡️ Adding ETH/USD price feed to the funding cycles");
+      console.log(
+        callContractIcon + "Adding ETH/USD price feed to the funding cycles"
+      );
       await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
         gasLimit: blockGasLimit
       });
@@ -113,7 +121,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       });
     }
 
-    console.log("⚡️ Setting governance's Juice terminal");
+    console.log(callContractIcon + "Setting governance's Juice terminal");
     await attachedGovernance.setJuiceTerminal(juicer.address, {
       gasLimit: blockGasLimit
     });
@@ -123,7 +131,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     //   gasLimit: blockGasLimit
     // });
 
-    console.log("⚡️ Set the deployer as an operator of governance");
+    console.log(
+      callContractIcon + "Set the deployer as an operator of governance"
+    );
     await attachedGovernance.setOperator(
       operatorStore.address,
       0,
@@ -134,7 +144,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       }
     );
 
-    console.log("⚡️ Configuring governance's budget");
+    console.log(callContractIcon + "Configuring governance's budget");
 
     const duration = 2592000; // 30 days;
     const discountRate = 190;
@@ -158,7 +168,9 @@ module.exports = async (wethAddr, ethUsdAddr) => {
       }
     );
 
-    console.log("⚡️ Remove the deployer as an operator of governance");
+    console.log(
+      callContractIcon + "Remove the deployer as an operator of governance"
+    );
     await attachedGovernance.setOperator(
       operatorStore.address,
       0,
@@ -172,10 +184,18 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     console.log("Failed to set up environment: ", e);
   }
 
+  console.log("\n");
+
   console.log(
-    "💾 Artifacts (address, abi, and args) saved to:",
+    "⚡️ All contract artifacts saved to:",
     chalk.yellow("packages/hardhat/artifacts/"),
-    "\n\n"
+    "\n"
+  );
+
+  console.log(
+    chalk.green(" ✔ Deployed for network:"),
+    process.env.HARDHAT_NETWORK,
+    "\n"
   );
 
   return {
@@ -192,7 +212,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
 };
 
 const deploy = async (contractName, _args) => {
-  console.log(`🛰  Deploying: ${contractName}...`);
+  console.log("🚀", chalk.cyan(contractName), "deploying...");
 
   const contractArgs = _args || [];
   const contractArtifacts = await ethers.getContractFactory(contractName);
@@ -203,9 +223,8 @@ const deploy = async (contractName, _args) => {
   fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
 
   console.log(
-    "  ",
-    chalk.cyan(contractName),
-    "deployed to:",
+    chalk.green("   Done!"),
+    "Deployed at:",
     chalk.magenta(deployed.address)
   );
 

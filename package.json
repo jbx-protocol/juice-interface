@@ -43,14 +43,19 @@
     "flatten": "cd packages/hardhat && npx hardhat flatten",
     "graph-run-node": "cd docker/graph-node && docker-compose up",
     "graph-remove-node": "cd docker/graph-node && docker-compose down",
-    "graph-prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph-prepare-local": "mustache packages/subgraph/config/localhost.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph-prepare-rinkeby": "mustache packages/subgraph/config/rinkeby.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph-prepare-kovan": "mustache packages/subgraph/config/kovan.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
     "graph-codegen": "yarn workspace @juice.work/subgraph graph codegen",
     "graph-build": "yarn workspace @juice.work/subgraph graph build",
     "graph-create-local": "yarn workspace @juice.work/subgraph graph create --node http://localhost:8020/ juice-local",
     "graph-remove-local": "yarn workspace @juice.work/subgraph graph remove --node http://localhost:8020/ juice-local",
     "graph-deploy-local": "yarn workspace @juice.work/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juice-local",
-    "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
-    "deploy-and-graph": "yarn deploy && yarn graph-ship-local"
+    "graph-deploy-rinkeby": "yarn workspace @juice.work/subgraph graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ peripheralist/juice-rinkeby",
+    "graph-deploy-kovan": "yarn workspace @juice.work/subgraph graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ peripheralist/juice-kovan",
+    "graph-ship-local": "yarn graph-prepare-local && yarn graph-codegen && yarn graph-deploy-local",
+    "graph-ship-rinkeby": "yarn graph-prepare-rinkeby && yarn graph-codegen && yarn graph-deploy-rinkeby",
+    "graph-ship-kovan": "yarn graph-prepare-kovan && yarn graph-codegen && yarn graph-deploy-kovan"
   },
   "husky": {
     "hooks": {

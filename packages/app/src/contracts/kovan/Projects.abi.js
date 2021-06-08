@@ -77,9 +77,9 @@ module.exports = [
       },
       {
         "indexed": false,
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "handle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "indexed": false,
@@ -101,27 +101,21 @@ module.exports = [
         "type": "uint256"
       },
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
         "indexed": false,
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "handle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "logoUri",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "link",
+        "name": "uri",
         "type": "string"
       },
       {
@@ -131,7 +125,57 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "SetInfo",
+    "name": "Create",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "handle",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "SetHandle",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "SetUri",
     "type": "event"
   },
   {
@@ -176,15 +220,15 @@ module.exports = [
       },
       {
         "indexed": false,
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "handle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "indexed": false,
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "newHandle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "indexed": false,
@@ -249,9 +293,9 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_handle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "internalType": "address",
@@ -270,6 +314,19 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "count",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -277,23 +334,13 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_handle",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "internalType": "string",
-        "name": "_logoUri",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_link",
+        "name": "_uri",
         "type": "string"
       }
     ],
@@ -330,47 +377,6 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "getAllProjectInfo",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "handle",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "logoUri",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          }
-        ],
-        "internalType": "struct IProjects.Info[]",
-        "name": "infos",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
@@ -390,50 +396,9 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getInfo",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "handle",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "logoUri",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "link",
-            "type": "string"
-          }
-        ],
-        "internalType": "struct IProjects.Info",
+        "internalType": "bytes32",
         "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
+        "type": "bytes32"
       }
     ],
     "name": "handleResolver",
@@ -551,6 +516,25 @@ module.exports = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "reverseHandleLookup",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "account",
         "type": "address"
@@ -638,27 +622,12 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_handle",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_logoUri",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_link",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
-    "name": "setInfo",
+    "name": "setHandle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -672,6 +641,24 @@ module.exports = [
       }
     ],
     "name": "setOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
+      }
+    ],
+    "name": "setUri",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -712,49 +699,6 @@ module.exports = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenByIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenOfOwnerByIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
       }
@@ -765,19 +709,6 @@ module.exports = [
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -819,17 +750,17 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_newHandle",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "name": "transferHandle",
     "outputs": [
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_handle",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "stateMutability": "nonpayable",
@@ -838,9 +769,9 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "bytes",
+        "internalType": "bytes32",
         "name": "",
-        "type": "bytes"
+        "type": "bytes32"
       }
     ],
     "name": "transferedHandles",
@@ -849,6 +780,25 @@ module.exports = [
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "uri",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",

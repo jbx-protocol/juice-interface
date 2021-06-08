@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Projects
-    network: mainnet
+    network: "{{Network}}"
     source:
       address: "{{ProjectsAddress}}"
       abi: Projects
-      startBlock: 1
+      startBlock: 0{{StartBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -17,7 +17,7 @@ dataSources:
         - Project
       abis:
         - name: Projects
-          file: ./abis/Projects.json
+          file: ./abis/{{AbisDir}}/Projects.json
       eventHandlers:
         - event: Create(indexed uint256,indexed address,bytes32,string,address)
           handler: handleProjectCreate

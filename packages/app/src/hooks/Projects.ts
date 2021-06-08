@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
+import { readNetwork } from 'constants/networks'
+import { SUBGRAPHS } from 'constants/subgraphs'
 import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
 import { formatGraphQuery } from 'utils/graph'
@@ -18,7 +20,7 @@ export function useProjects({
   owner?: string
   uri?: string
 }) {
-  const [projects, setProjects] = useState<ProjectInfo[]>([])
+  const [projects, setProjects] = useState<ProjectInfo[]>()
 
   const pageSize = 50
 
@@ -33,10 +35,14 @@ export function useProjects({
     handle: utils.parseBytes32String(project.handle),
   })
 
+  const apiUrl = SUBGRAPHS[readNetwork.name]
+
   useEffect(() => {
+    if (!apiUrl) return
+
     axios
       .post(
-        'http://localhost:8000/subgraphs/name/juice-local',
+        apiUrl,
         {
           query: formatGraphQuery({
             entity: 'project',

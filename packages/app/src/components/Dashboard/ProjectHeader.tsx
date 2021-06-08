@@ -18,10 +18,9 @@ export default function ProjectHeader({
   projectId: BigNumber
   isOwner?: boolean
 }) {
-  const [
-    editProjectModalVisible,
-    setEditProjectModalVisible,
-  ] = useState<boolean>(false)
+  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
+    boolean
+  >(false)
 
   const {
     theme: { colors },

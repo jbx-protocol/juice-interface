@@ -6,10 +6,13 @@ import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useEffect, useState } from 'react'
-import { fromWad, parsePerbicent, parseWad } from 'utils/formatNumber'
+import {
+  fromPerbicent,
+  fromWad,
+  parsePerbicent,
+  parseWad,
+} from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
-
-import { fromPerbicent } from '../../utils/formatNumber'
 
 export type ReconfigureBudgetFormFields = {
   target: string

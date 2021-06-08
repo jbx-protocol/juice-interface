@@ -3,6 +3,7 @@ import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
+import { ContractName } from 'models/contract-name'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
 import {

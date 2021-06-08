@@ -1,21 +1,55 @@
 const fs = require("fs");
 const chalk = require("chalk");
 const bre = require("hardhat");
-
-const publishDir = "../app/src/contracts/" + process.env.HARDHAT_NETWORK || "";
-const graphDir = "../subgraph";
-
 const skipContracts = require("../constants/skip-publish");
 
-module.exports = () =>
-  publish()
+const network = process.env.HARDHAT_NETWORK || "";
+const publishDir = "../app/src/contracts/" + network;
+const graphDir = "../subgraph";
+const configFileName = network + ".json";
+const graphConfigPath = `${graphDir}/config/${configFileName}`;
+
+let graphConfig;
+
+module.exports = startBlock =>
+  publish(startBlock)
     .then(() => process.exit(0))
     .catch(error => {
       console.error(error);
       process.exit(1);
     });
 
-async function publish() {
+async function publish(startBlock) {
+  console.log(
+    "Publishing artifacts to app and hardhat directories for network:",
+    chalk.bold(process.env.HARDHAT_NETWORK),
+    "...",
+    "\n"
+  );
+
+  try {
+    if (fs.existsSync(graphConfigPath)) {
+      graphConfig = fs.readFileSync(graphConfigPath).toString();
+    } else {
+      graphConfig = "{}";
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  console.log(
+    "🗺  Creating subgraph config at",
+    chalk.yellow(graphConfigPath),
+    "\n"
+  );
+
+  graphConfig = JSON.parse(graphConfig);
+
+  // local subgraph requires network name of 'mainnet'
+  graphConfig.Network = network === "localhost" ? "mainnet" : network;
+  graphConfig.AbisDir = network;
+  graphConfig.StartBlock = parseInt(startBlock);
+
   if (!fs.existsSync(publishDir)) {
     fs.mkdirSync(publishDir);
   }
@@ -24,15 +58,15 @@ async function publish() {
     if (file.indexOf(".sol") >= 0) {
       const contractName = file.replace(".sol", "");
       // Add contract to list if publishing is successful
-      if (publishContract(contractName)) {
-        finalContractList.push(contractName);
-      }
+      if (publishContract(contractName)) finalContractList.push(contractName);
     }
   });
   fs.writeFileSync(
     `${publishDir}/contracts.js`,
     `module.exports = ${JSON.stringify(finalContractList)};`
   );
+
+  console.log(chalk.green(" ✔ Published for network:"), network, "\n");
 }
 
 function publishContract(contractName) {
@@ -42,9 +76,9 @@ function publishContract(contractName) {
   }
 
   console.log(
-    "📚 Publishing",
+    "⚡️ Saving",
     chalk.cyan(contractName),
-    "to",
+    "artifacts to",
     chalk.yellow(publishDir)
   );
 
@@ -58,19 +92,7 @@ function publishContract(contractName) {
       .readFileSync(`${bre.config.paths.artifacts}/${contractName}.address`)
       .toString();
     contract = JSON.parse(contract);
-    const graphConfigPath = `${graphDir}/config/config.json`;
-    let graphConfig;
-    try {
-      if (fs.existsSync(graphConfigPath)) {
-        graphConfig = fs.readFileSync(graphConfigPath).toString();
-      } else {
-        graphConfig = "{}";
-      }
-    } catch (e) {
-      console.log(e);
-    }
 
-    graphConfig = JSON.parse(graphConfig);
     graphConfig[contractName + "Address"] = address;
 
     fs.writeFileSync(
@@ -86,14 +108,14 @@ function publishContract(contractName) {
       `module.exports = "${contract.bytecode}";`
     );
 
-    const folderPath = graphConfigPath.replace("/config.json", "");
+    const folderPath = graphConfigPath.replace(configFileName, "");
     if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
     fs.writeFileSync(graphConfigPath, JSON.stringify(graphConfig, null, 2));
 
-    fs.writeFileSync(
-      `${graphDir}/abis/${contractName}.json`,
-      JSON.stringify(contract.abi, null, 2)
-    );
+    const configDir = `${graphDir}/abis/${network}`;
+    const configFilePath = `${configDir}/${contractName}.json`;
+    if (!fs.existsSync(configDir)) fs.mkdirSync(configDir);
+    fs.writeFileSync(configFilePath, JSON.stringify(contract.abi, null, 2));
 
     return true;
   } catch (e) {

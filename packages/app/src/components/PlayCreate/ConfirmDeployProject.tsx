@@ -7,12 +7,15 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fromPerbicent,
+  fromWad,
+} from 'utils/formatNumber'
 import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
-
-import { fromPerbicent } from '../../utils/formatNumber'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()

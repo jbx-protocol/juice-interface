@@ -83,6 +83,13 @@ const QAs: {
     ],
   },
   {
+    q: 'What are the risks?',
+    a: [
+      `Juice is experimental software. Although the founding contributors have done their part to shape the smart contracts up for public use, there still may be bugs.`,
+      `Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juice with caution.`
+    ],
+  },
+  {
     q: 'Will it work on L2s?',
     a: [
       `Yes, but the core Juice contracts will first be deployed to Ethereum Mainnet.`, 

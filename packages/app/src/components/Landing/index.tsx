@@ -125,7 +125,7 @@ export default function Landing() {
 
                 <div className="hide-mobile">
                   <Button type="primary" onClick={scrollToCreate} size="large">
-                    Get started
+                    Play with it
                   </Button>
                 </div>
               </div>

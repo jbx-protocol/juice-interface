@@ -101,12 +101,29 @@ The frontend has three different providers that provide different levels of acce
 
 ## Deploying frontend
 
-To build and deploy frontend to IPFS:
+Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juice-kovan).
 
-- `yarn ipfs-kovan`
-- `yarn ipfs-ropsten`
+[kovan.juice.work](kovan.juice.work) deploys from `remote/prod/kovan`.
+[rinkeby.juice.work](rinkeby.juice.work) deploys from `remote/prod/rinkeby`.
 
-> Note: For any network, you'll need to define a .<network>.env before deploying
+Automatic deployment does not:
+
+- deploy contracts
+- ship subgraph updates
+
+### Suggested deployment flow:
+
+If only shipping frontend changes:
+
+1. Merge latest into `main`
+2. Rebase `main` into `prod/<network>`
+
+If contracts or subgraphs have changed:
+
+1. Merge latest into `main`
+2. Rebase `main` into `prod/<network>` locally
+3. Deploy contracts & ship subgraph updates for `<network>`
+4. Push `prod/<network>`
 
 ## Graph
 

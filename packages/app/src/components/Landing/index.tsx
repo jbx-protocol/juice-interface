@@ -16,7 +16,7 @@ export default function Landing() {
   const bigHeader = (text: string) => (
     <h1
       style={{
-        fontSize: '3.2rem',
+        fontSize: '3.4rem',
         fontWeight: 600,
         lineHeight: 1.2,
         margin: 0,
@@ -32,8 +32,8 @@ export default function Landing() {
 
   const listData = [
     'Indie artists, devs, journalists, & researchers',
-    'Ethereum protocols & communities',
-    'Public goods',
+    'Ethereum protocols, DAOs, & communities',
+    'Public goods and services',
     'Open source businesses',
     'Any project with predictable costs that gets paid digitally',
   ]
@@ -83,7 +83,7 @@ export default function Landing() {
                 }}
               >
                 {/* {bigHeader('Fund your project on the open internet')} */}
-                {bigHeader('The business model of the future')}
+                {bigHeader('Rethink how you make money')}
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
                     People say up front how much cashflow they need in order

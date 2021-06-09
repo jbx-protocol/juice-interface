@@ -19,21 +19,21 @@ const QAs: {
   {
     q: `What does Juice cost?`,
     a: [
-      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at http://juice.work/p/juice.`,
-      `5% of all money made using Juice is sent to help pay for Juice itself. In exchange, you get the opportunity to benefit from the overflow that the ecosystem accumulates over time.`,
+      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at http://juice.work/juice.`,
+      `5% of all money made by projects using Juice is sent to help pay for Juice itself. In exchange projects get tickets, which represent the opportunity to benefit from the overflow that the ecosystem accumulates over time.`,
     ],
   },
   {
     q: 'What are tickets?',
     a: [
-      `Each project has its own ERC-1155 tickets, and everyone who funds a project earns a portion of them in return. Once a project is earning more than its target, tickets can be redeemed for a portion of the overflow.`,
+      `Each project has its own tickets which can be represented as ERC-20s. Everyone who funds a project gets a newly minted supply of tickets in return. Once a project is earning more than its target, tickets can be redeemed for a portion of the overflow.`,
     ],
   },
   {
     q: `Why should I want to own a project's Tickets?`,
     a: [
-      `Tickets can be redeemed for a portion of a project's overflow, letting you benefit from the project's up-side.`,
-      `If you were distributed a project's tickets at a discounted rate a while ago, the tickets will accumulate value over time as the project's overflow increases.`,
+      `Tickets can be redeemed for a portion of a project's overflow, letting you benefit from the project's success. After all, you helped it get there!`,
+      `Juice also has built-in mechanisms to reward earlier adopters of your project, as well as giving your ticket hodlers a more-generous portion of your overflow.`,
     ],
   },
   {
@@ -46,34 +46,24 @@ const QAs: {
   {
     q: `What's a bonding curve?`,
     a: [
-      `A bonding curve keeps tickets from being redeemable exploitatively.`,
-      `Those who commit to waiting longer than others to redeem tickets will benefit the most from a project's overflow.`,
+      `A bonding curve rewards people who wait longer to redeem your tickets for overflow.`,
+      `For example: with a bonding curve of 70%, redeeming 10% of the ticket supply at any given time will claim around 7% of the total overflow.`,
+      `The rest is left to share between ticket hodlers.`
     ],
   },
   {
     q: 'Does a project benefit from its own overflow?',
     a: [
-      `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of minted tickets is instead transferred back to the project.`,
-      `Holding these tickets entitles a project to a portion of its own overflow, which can create an incentive for the project owner to continue growing a project past its target.`,
+      `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of tickets is instead printed for the project.`,
+      `Holding these tickets entitles a project to a portion of its own overflow.`,
     ],
   },
   {
     q: "Can I change my project's contract after it's been created?",
     a: [
-      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended. A minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives Ticket holders time to react to the decision.`,
-    ],
-  },
-  {
-    q: `Does putting a cap on profit remove incentive for project creators to innovate?`,
-    a: [
-      `If a maintainer team neglects a project or moves it in a direction that doesn’t work for the market, it could be forked by the community or simply given up by its users.`,
-      "On the other hand, projects with a clear drive and sense of direction can propose ambitious budgets with their community's backing that allows them to charge forward, in the name of greater overflow for everyone over time.",
-    ],
-  },
-  {
-    q: `Can’t I still rake in unlimited profit if I set my budget target to a bajillion?`,
-    a: [
-      `Sure, although open source projects can always be forked. Or if the market prefers to support projects with more realistic budgets, yours might get outcompeted.`,
+      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended.`,
+      `For now, a minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives Ticket holders time to react to the decision.`,
+      `Anyone can deploy and use another governance smart contract to override this scheme.`
     ],
   },
   {

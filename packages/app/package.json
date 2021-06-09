@@ -17,7 +17,6 @@
     "env-cmd": "^10.1.0",
     "erc-20-abi": "^1.0.0",
     "ethers": "^5.1.0",
-    "ipfs-deploy": "^8.0.1",
     "node-sass": "4.14.1",
     "react": "^17",
     "react-dom": "^17.0.1",
@@ -34,9 +33,7 @@
     "start": "yarn compile-styles && react-scripts start",
     "build": "yarn compile-styles && react-scripts build",
     "test": "yarn compile-styles && react-scripts test",
-    "eject": "react-scripts eject",
-    "ipfs:rinkeby": "env-cmd -f ./.rinkeby.env yarn build && ipfs-deploy ./build",
-    "ipfs:kovan": "env-cmd -f ./.kovan.env yarn build && ipfs-deploy ./build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

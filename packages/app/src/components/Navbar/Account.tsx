@@ -1,5 +1,4 @@
-import { Button, Col, Row, Tag } from 'antd'
-import { readNetwork } from 'constants/networks'
+import { Button, Col, Row } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
 import { UserContext } from 'contexts/userContext'
 import { useContext } from 'react'
@@ -10,7 +9,7 @@ import Wallet from './Wallet'
 
 export default function Account() {
   const { userAddress } = useContext(UserContext)
-  const { onNeedProvider, signerNetwork } = useContext(NetworkContext)
+  const { onNeedProvider } = useContext(NetworkContext)
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider()
@@ -18,13 +17,6 @@ export default function Account() {
       window.location.reload()
     }, 1)
   }
-
-  const networkName = readNetwork.name
-
-  const switchNetworkTag =
-    signerNetwork && signerNetwork !== networkName ? (
-      <Tag color="red">Switch to {networkName}</Tag>
-    ) : null
 
   return (
     <div>
@@ -40,7 +32,6 @@ export default function Account() {
           </Col>
         )}
         <Col>
-          {switchNetworkTag}
           {onNeedProvider ? (
             <Button onClick={onNeedProvider}>Connect</Button>
           ) : (

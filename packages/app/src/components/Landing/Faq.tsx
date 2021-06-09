@@ -67,6 +67,29 @@ const QAs: {
     ],
   },
   {
+    q: 'Why Ethereum?',
+    a: [
+      `Ethereum provides a public ecosystem where internet apps like Juice can run publically, permissionlessly, trustlessly, and unstoppably.`,
+      `This means that anyone can see the code that they're using, anyone can use the code without asking for permission, no one can mess with the code, and no one can take down the code.`,
+      `People using Juice on both sides of the marketplace are therefor interacting with each other through a publically owned piece of software, not through a private corporate service that brokers the exchange.`
+    ],
+  },
+  {
+    q: 'How decentralized is Juice?',
+    a: [
+      `At the start, the Juice governance smart contract can take decisive decisions regarding the future of the Juice project, and the fate of the funds that it manages.`,
+      `Power over the governance smart contract is initially held by Juice's founding contributors. If the project gains traction and a community forms around it,`,
+      `the intent is to reduce the capabilities of governance and transfer the power to a community of token holders.`
+    ],
+  },
+  {
+    q: 'Will it work on L2s?',
+    a: [
+      `Yes, but the core Juice contracts will first be deployed to Ethereum Mainnet.`, 
+      `The founding contributors will then be working on L2 payment terminals for Juice projects.`,
+    ],
+  },
+  {
     q: `Do I have to make my project open source in order to use Juice as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',

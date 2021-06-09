@@ -35,7 +35,7 @@ export default function Landing() {
     'Ethereum protocols & communities',
     'Public goods',
     'Open source businesses',
-    'Just about any project with predictable costs',
+    'Any project with predictable costs, that get paid digitally',
   ]
 
   const section: CSSProperties = {
@@ -86,10 +86,13 @@ export default function Landing() {
                 {bigHeader('The business model of the future')}
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    Projects say up front how much cashflow they need in order
+                    People say up front how much cashflow they need in order
                     to crush what they do. Once they're earning more than that,
                     the $ETH overflow can be claimed by their users, patrons, &
                     investors alongside them.{' '}
+                  </p>
+                  <p>
+                    Powered entirely by public smart contracts on Ethereum.
                   </p>
                 </div>
 
@@ -183,16 +186,13 @@ export default function Landing() {
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting community-owned online
+                    With Juice, we end up getting creator-lead and community-owned online
                     creations that automatically reward the people who help them
                     succeed. Projects are created and maintained by motivated
                     punks getting transparently paid what they ask for, and
                     funded by a community of users, patrons, and investors who
                     have the opportunity to capitalize on the overflow they help
                     create.
-                  </p>
-                  <p className="ol">
-                    Plus, Juice runs on Juice itself, so its owned by us all.
                   </p>
                 </div>
               </div>

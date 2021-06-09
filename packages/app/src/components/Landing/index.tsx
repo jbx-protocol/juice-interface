@@ -35,7 +35,7 @@ export default function Landing() {
     'Ethereum protocols & communities',
     'Public goods',
     'Open source businesses',
-    'Any project with predictable costs, that get paid digitally',
+    'Any project with predictable costs that gets paid digitally',
   ]
 
   const section: CSSProperties = {

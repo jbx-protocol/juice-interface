@@ -19,7 +19,7 @@ const QAs: {
   {
     q: `What does Juice cost?`,
     a: [
-      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at http://juice.work/juice.`,
+      `Juice is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at http://juice.work/#/juice.`,
       `5% of all money made by projects using Juice is sent to help pay for Juice itself. In exchange projects get tickets, which represent the opportunity to benefit from the overflow that the ecosystem accumulates over time.`,
     ],
   },

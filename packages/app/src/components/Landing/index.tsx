@@ -88,9 +88,9 @@ export default function Landing() {
                     On Juice, people say up front how much cashflow they need in order
                     to crush what they do. Once they're earning more than that,
                     the $ETH overflow can be claimed by their users, patrons, &
-                    investors alongside them.{' '}
+                    investors alongside them.
                   </p>
-                  <p>
+                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
                     Powered entirely by public smart contracts on Ethereum.
                   </p>
                 </div>

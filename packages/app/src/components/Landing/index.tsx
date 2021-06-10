@@ -82,11 +82,10 @@ export default function Landing() {
                   paddingBottom: 60,
                 }}
               >
-                {/* {bigHeader('Fund your project on the open internet')} */}
-                {bigHeader('Rethink how you make money')}
+                {bigHeader('A business model for the open internet')}
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    People say up front how much cashflow they need in order
+                    On Juice, people say up front how much cashflow they need in order
                     to crush what they do. Once they're earning more than that,
                     the $ETH overflow can be claimed by their users, patrons, &
                     investors alongside them.{' '}

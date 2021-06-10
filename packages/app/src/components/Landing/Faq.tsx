@@ -69,9 +69,9 @@ const QAs: {
   {
     q: 'Why Ethereum?',
     a: [
-      `Ethereum provides a public ecosystem where internet apps like Juice can run publically, permissionlessly, trustlessly, and unstoppably.`,
+      `Ethereum provides a public ecosystem where internet apps like Juice can run permissionlessly, trustlessly, and unstoppably.`,
       `This means that anyone can see the code that they're using, anyone can use the code without asking for permission, no one can mess with the code, and no one can take down the code.`,
-      `People using Juice on both sides of the marketplace are therefor interacting with each other through a publically owned piece of software, not through a private corporate service that brokers the exchange.`
+      `People using Juice on both sides of the marketplace are therefor interacting with each other through public infrastructure, not through a private corporate service that brokers the exchange.`
     ],
   },
   {
@@ -85,7 +85,7 @@ const QAs: {
   {
     q: 'What are the risks?',
     a: [
-      `Juice is experimental software. Although the founding contributors have done their part to shape the smart contracts up for public use, there still may be bugs.`,
+      `Juice is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use, there still may be bugs.`,
       `Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juice with caution.`
     ],
   },

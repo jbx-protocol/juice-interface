@@ -12,6 +12,7 @@ import { currencyName } from 'utils/currency'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function Tappable({
   fundingCycle,
@@ -44,10 +45,9 @@ export default function Tappable({
     }
 
     // Arbitrary value subtracted
-    const minAmount =
-      fundingCycle.currency === 1
-        ? converter.usdToWei(tapAmount)
-        : parseWad(tapAmount)
+    const minAmount = fundingCycle.currency.eq(1)
+      ? converter.usdToWei(tapAmount)
+      : parseWad(tapAmount)
 
     transactor(
       contracts.Juicer,
@@ -82,7 +82,9 @@ export default function Tappable({
       >
         <div>
           <span style={{ fontSize: '1rem' }}>
-            <CurrencySymbol currency={fundingCycle.currency} />
+            <CurrencySymbol
+              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+            />
             {formatWad(withdrawable) || '0'}{' '}
           </span>
           <TooltipLabel
@@ -101,7 +103,9 @@ export default function Tappable({
         </Button>
       </div>
       <div style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}>
-        <CurrencySymbol currency={fundingCycle.currency} />
+        <CurrencySymbol
+          currency={fundingCycle.currency.toNumber() as CurrencyOption}
+        />
         {formatWad(fundingCycle.tapped) || '0'}/{formatWad(fundingCycle.target)}{' '}
         withdrawn
       </div>
@@ -122,7 +126,9 @@ export default function Tappable({
       >
         <div style={{ marginBottom: 10 }}>
           Available to withdraw:{' '}
-          <CurrencySymbol currency={fundingCycle.currency} />
+          <CurrencySymbol
+            currency={fundingCycle.currency.toNumber() as CurrencyOption}
+          />
           {formatWad(withdrawable)}
         </div>
         <p>Funds will be withdrawn according to this project's mods.</p>
@@ -138,7 +144,9 @@ export default function Tappable({
                 }}
               >
                 <span style={{ marginRight: 8 }}>
-                  {currencyName(fundingCycle.currency)}
+                  {currencyName(
+                    fundingCycle.currency.toNumber() as CurrencyOption,
+                  )}
                 </span>
                 <InputAccessoryButton
                   content="MAX"
@@ -151,7 +159,7 @@ export default function Tappable({
             max={fromWad(withdrawable)}
             onChange={e => setTapAmount(e.target.value)}
           />
-          {fundingCycle.currency === 1 && (
+          {fundingCycle.currency.eq(1) && (
             <div style={{ textAlign: 'right' }}>
               {formatWad(converter.usdToWei(tapAmount)) || 0}{' '}
               <CurrencySymbol currency={0} />

@@ -12,6 +12,7 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function Paid({
   projectId,
@@ -56,7 +57,11 @@ export default function Paid({
   const overflowInCurrency = useMemo(
     () =>
       totalOverflow &&
-      converter.wadToCurrency(totalOverflow, fundingCycle?.currency, 0),
+      converter.wadToCurrency(
+        totalOverflow,
+        fundingCycle?.currency.toNumber() as CurrencyOption,
+        0,
+      ),
     [fundingCycle?.currency, totalOverflow, converter],
   )
 
@@ -104,8 +109,10 @@ export default function Paid({
               color: colors.text.brand.primary,
             }}
           >
-            <CurrencySymbol currency={fundingCycle.currency} />
-            {fundingCycle.currency === 1 ? (
+            <CurrencySymbol
+              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+            />
+            {fundingCycle.currency.eq(1) ? (
               <span>
                 {formatWad(paidInCurrency)}{' '}
                 <span style={subTextStyle}>
@@ -127,7 +134,7 @@ export default function Paid({
                 tip="The amount paid to the project, minus the current funding cycle's target. Overflow can be claimed by ticket holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
               />
             </div>
-            {fundingCycle.currency === 1 ? (
+            {fundingCycle.currency.eq(1) ? (
               <span>
                 <span style={subTextStyle}>
                   <CurrencySymbol currency={0} />
@@ -190,7 +197,9 @@ export default function Paid({
 
       <div style={{ marginTop: 4 }}>
         <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
-          <CurrencySymbol currency={fundingCycle.currency} />
+          <CurrencySymbol
+            currency={fundingCycle.currency.toNumber() as CurrencyOption}
+          />
           {formatWad(fundingCycle.target)}{' '}
         </span>
         <div style={smallHeaderStyle(colors)}>

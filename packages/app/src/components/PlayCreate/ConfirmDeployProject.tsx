@@ -17,6 +17,7 @@ import {
 import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
@@ -35,7 +36,9 @@ export default function ConfirmDeployProject() {
 
     return (
       <span>
-        <CurrencySymbol currency={editingFC?.currency} />
+        <CurrencySymbol
+          currency={editingFC?.currency.toNumber() as CurrencyOption}
+        />
         {formattedNum(targetAmount)} (+
         {formatWad(feeForAmount(editingFC?.target, adminFeePercent))})
       </span>
@@ -58,7 +61,7 @@ export default function ConfirmDeployProject() {
       <Space size="large">
         <Statistic
           title="Duration"
-          value={formattedNum(editingFC?.duration / SECONDS_IN_DAY)}
+          value={formattedNum(editingFC?.duration.div(SECONDS_IN_DAY))}
           suffix="days"
         />
         <Statistic

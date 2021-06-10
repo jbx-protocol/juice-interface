@@ -40,4 +40,4 @@ export const encodeFCMetadata = (
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(40))
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
-  fundingCycle.discountRate > 0
+  fundingCycle.discountRate.gt(0)

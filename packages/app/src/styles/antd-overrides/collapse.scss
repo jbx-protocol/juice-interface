@@ -26,9 +26,12 @@
   }
 
   .ant-collapse-header {
+    display: flex;
+    align-items: center;
     padding-right: 0;
-    padding-left: 24px;
+    padding-left: 0;
     color: var(--text-primary);
+    width: 100%;
 
     .ant-collapse-arrow {
       left: 0;

@@ -22,8 +22,8 @@ export default function FundingCyclePreview({
   if (!fundingCycle) return null
 
   const now = Math.round(new Date().valueOf() / 1000)
-  const secondsLeft = fundingCycle.start + fundingCycle.duration - now
-  const isEnded = secondsLeft <= 0
+  const secondsLeft = fundingCycle.start.add(fundingCycle.duration).sub(now)
+  const isEnded = secondsLeft.lte(0)
 
   let headerText: string
 
@@ -52,6 +52,7 @@ export default function FundingCyclePreview({
             <div
               style={{
                 display: 'flex',
+                width: '100%',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
                 color: colors.text.secondary,

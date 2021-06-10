@@ -57,8 +57,9 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const currencyWad =
-    fundingCycle?.currency === 0 ? weiAmount : converter.weiToUsd(weiAmount)
+  const currencyWad = fundingCycle?.currency.eq(0)
+    ? weiAmount
+    : converter.weiToUsd(weiAmount)
   const receivedTickets = weightedRate(fundingCycle, currencyWad, 'payer')
   const ownerTickets = weightedRate(fundingCycle, currencyWad, 'reserved')
 

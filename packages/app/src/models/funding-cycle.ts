@@ -6,14 +6,14 @@ export interface FundingCycle {
   number: BigNumber
   previous: BigNumber
   target: BigNumber
-  currency: 0 | 1 // 0 ETH, 1 USD
-  start: number
-  duration: number
+  currency: BigNumber // 0 ETH, 1 USD
+  start: BigNumber
+  duration: BigNumber
   tapped: BigNumber
-  fee: number
+  fee: BigNumber
   weight: BigNumber
-  discountRate: number
-  configured: number
+  discountRate: BigNumber
+  configured: BigNumber
   ballot: string
   metadata: BigNumber // encoded FundingCycleData
 }

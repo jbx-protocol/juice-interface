@@ -39,8 +39,8 @@ export default function DefineProject() {
       form.setFieldsValue({
         name: editingProject?.metadata.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
-        duration: (editingBudget?.duration / SECONDS_IN_DAY).toString() ?? '0',
-        currency: editingBudget?.currency ?? 0,
+        duration: editingBudget?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
+        currency: (editingBudget?.currency.toNumber() as CurrencyOption) ?? 0,
       }),
     [],
   )
@@ -144,14 +144,14 @@ export default function DefineProject() {
             {bold(editingProject?.metadata.name, 'Your project')} needs{' '}
             <CurrencySymbol
               style={{ color: colors.text.primary, fontWeight: 600 }}
-              currency={editingBudget?.currency}
+              currency={editingBudget?.currency.toNumber() as CurrencyOption}
             />
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
             {isRecurring && (
               <span>
                 every{' '}
                 {bold(
-                  (editingBudget?.duration / SECONDS_IN_DAY).toString(),
+                  editingBudget?.duration.div(SECONDS_IN_DAY).toString(),
                   '0',
                 )}{' '}
                 days

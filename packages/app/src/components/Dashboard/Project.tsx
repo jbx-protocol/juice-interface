@@ -14,6 +14,7 @@ import Pay from './Pay'
 import PayEvents from './PayEvents'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function Project({
   handle,
@@ -61,7 +62,12 @@ export default function Project({
 
   const balanceInCurrency = useMemo(
     () =>
-      balance && converter.wadToCurrency(balance, fundingCycle?.currency, 0),
+      balance &&
+      converter.wadToCurrency(
+        balance,
+        fundingCycle?.currency.toNumber() as CurrencyOption,
+        0,
+      ),
     [fundingCycle?.currency, balance, converter],
   )
 

@@ -16,6 +16,7 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
@@ -29,11 +30,11 @@ import {
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
-import { FundingCycle } from '../../models/funding-cycle'
 import BudgetInfo, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function PlayCreate() {
   const { transactor, contracts, userAddress } = useContext(UserContext)
@@ -71,8 +72,8 @@ export default function PlayCreate() {
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
       target: fromWad(editingFC?.target) ?? '0',
-      duration: (editingFC?.duration / SECONDS_IN_DAY).toString() ?? '0',
-      currency: editingFC?.currency ?? 0,
+      duration: editingFC?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
+      currency: (editingFC?.currency.toNumber() as CurrencyOption) ?? 0,
     })
 
   const resetProjectForm = () =>

@@ -47,13 +47,13 @@ export default function ReconfigureBudgetModal({
     form.setFieldsValue({
       duration: fundingCycle.duration.toString(),
       target: fromWad(fundingCycle.target),
-      currency: fundingCycle.currency,
+      currency: fundingCycle.currency.toNumber() as CurrencyOption,
       discountRate: fromPerbicent(fundingCycle.discountRate),
       reserved: fromPerbicent(metadata.reserved),
       bondingCurveRate: fromPerbicent(metadata.bondingCurveRate),
     })
 
-    setIsRecurring(fundingCycle.discountRate !== 0)
+    setIsRecurring(!fundingCycle.discountRate.eq(0))
   }, [fundingCycle, form])
 
   if (!transactor || !contracts) return null

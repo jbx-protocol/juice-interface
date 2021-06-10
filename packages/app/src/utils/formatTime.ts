@@ -1,12 +1,17 @@
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { SECONDS_IN_DAY } from 'constants/units'
 
-export function secsToDays(secs?: number) {
-  if (!secs || secs <= 0) return 0
+export function secsToDays(secs?: BigNumberish) {
+  if (!secs || BigNumber.from(secs).lte(0)) return 0
 
-  return parseFloat((secs / SECONDS_IN_DAY).toString())
+  return parseFloat(
+    BigNumber.from(secs)
+      .div(SECONDS_IN_DAY)
+      .toString(),
+  )
 }
 
-export function detailedTimeString(secs?: number) {
+export function detailedTimeString(secs?: BigNumberish) {
   const days = secsToDays(secs)
   const hours = days && (days % 1) * 24
   const minutes = hours && (hours % 1) * 60

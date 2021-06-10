@@ -45,7 +45,7 @@ export default function Pay({
     formatWad(
       weightedRate(
         fundingCycle,
-        fundingCycle?.currency === 0 ? wei : converter.weiToUsd(wei),
+        fundingCycle?.currency.eq(0) ? wei : converter.weiToUsd(wei),
         'payer',
       ),
     )
@@ -63,7 +63,7 @@ export default function Pay({
         <div style={{ flex: 1, marginRight: 10 }}>
           <FormattedNumberInput
             placeholder="0"
-            disabled={fundingCycle?.configured === 0}
+            disabled={fundingCycle?.configured.eq(0)}
             onChange={val => setPayAmount(val)}
             value={payAmount}
             min={0}
@@ -97,7 +97,7 @@ export default function Pay({
           <Button
             style={{ width: '100%' }}
             type="primary"
-            disabled={fundingCycle?.configured === 0}
+            disabled={fundingCycle?.configured.eq(0)}
             onClick={weiPayAmt ? pay : undefined}
           >
             Pay project

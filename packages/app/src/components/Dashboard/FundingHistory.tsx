@@ -11,6 +11,7 @@ import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatWad } from 'utils/formatNumber'
 
 import FundingCycleDetails from './FundingCycleDetails'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function FundingHistory({
   startId,
@@ -80,7 +81,9 @@ export default function FundingHistory({
               <h3>#{cycle.number.toString()}</h3>
               <div>
                 <span style={{ fontSize: '.8rem' }}>
-                  <CurrencySymbol currency={cycle.currency} />
+                  <CurrencySymbol
+                    currency={cycle.currency.toNumber() as CurrencyOption}
+                  />
                   {formatWad(cycle.tapped)}/{formatWad(cycle.target)}
                 </span>{' '}
                 withdrawn

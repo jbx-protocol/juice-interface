@@ -7,6 +7,7 @@ import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import { fromPerbicent } from '../../utils/formatNumber'
 import TooltipLabel from '../shared/TooltipLabel'
+import { CurrencyOption } from 'models/currency-option'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -15,13 +16,15 @@ export default function FundingCycleDetails({
 }) {
   if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(fundingCycle.start * 1000)
+  const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
 
   const formattedEndTime = formatDate(
-    (fundingCycle.start + fundingCycle.duration) * 1000,
+    fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
 
   const metadata = decodeFCMetadata(fundingCycle.metadata)
+
+  console.log('fc', fundingCycle, fundingCycle.target.toString())
 
   return (
     <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
@@ -30,7 +33,9 @@ export default function FundingCycleDetails({
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
 
       <Descriptions.Item label={<TooltipLabel label="Target" />}>
-        <CurrencySymbol currency={fundingCycle.currency} />
+        <CurrencySymbol
+          currency={fundingCycle.currency.toNumber() as CurrencyOption}
+        />
         {formatWad(fundingCycle.target)}
       </Descriptions.Item>
 

@@ -38,6 +38,12 @@ interface IProjects is IERC721 {
         address caller
     );
 
+    event TransferController(
+        address indexed controller,
+        uint256 indexed projectId,
+        address caller
+    );
+
     function count() external view returns (uint256);
 
     function operatorStore() external view returns (IOperatorStore);
@@ -54,7 +60,11 @@ interface IProjects is IERC721 {
         external
         returns (address receiver);
 
+    function controller(uint256 _projectId) external view returns (address);
+
     function uri(uint256 _projectId) external view returns (string memory);
+
+    function exists(uint256 _projectId) external view returns (bool);
 
     function create(
         address _owner,
@@ -77,4 +87,7 @@ interface IProjects is IERC721 {
         address _for,
         uint256 _projectId
     ) external;
+
+    function transferController(address _controller, uint256 _projectId)
+        external;
 }

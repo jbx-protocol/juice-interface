@@ -3,15 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "initialize, with caller as controller",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        controller: deployer.address,
-        projectId: 1
-      })
-    },
-    {
-      description: "initialize, with other controller",
+      description: "transfer controller",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: addrs[0].address,
@@ -27,7 +19,17 @@ const tests = {
         controller: deployer.address,
         projectId: 1,
         setup: { setOwner: false },
-        revert: "Administrated: UNAUTHORIZED"
+        revert: "Tickets::transferController: UNAUTHORIZED"
+      })
+    },
+    {
+      description: "self transfer",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        controller: deployer.address,
+        projectId: 1,
+        setup: { setOwner: true },
+        revert: "Tickets::transferController: NO_OP"
       })
     }
   ]
@@ -39,24 +41,32 @@ module.exports = function() {
       it(successTest.description, async function() {
         const { caller, controller, projectId } = successTest.fn(this);
 
+        // Initialize the project's tickets to set the specified controller.
         // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
         await this.contract.connect(caller).setOwnership(caller.address);
+
+        // Mock the project to exist.
+        await this.projects.mock.exists.withArgs(projectId).returns(true);
+
+        await this.contract
+          .connect(caller)
+          .initialize(caller.address, projectId);
 
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .initialize(controller, projectId);
+          .transferController(controller, projectId);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "Initialize")
+          .to.emit(this.contract, "TransferController")
           .withArgs(controller, projectId, caller.address);
 
-        const storedIsController = await this.contract
+        const storedController = await this.contract
           .connect(caller)
-          .isController(projectId, controller);
+          .controllers(projectId);
 
-        expect(storedIsController).to.equal(true);
+        expect(storedController).to.equal(controller);
       });
     });
   });
@@ -72,13 +82,22 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         if (setOwner) {
+          // Initialize the project's tickets to set the specified controller.
           // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
           await this.contract.connect(caller).setOwnership(caller.address);
+
+          // Mock the project to exist.
+          await this.projects.mock.exists.withArgs(projectId).returns(true);
+          await this.contract
+            .connect(caller)
+            .initialize(caller.address, projectId);
         }
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).initialize(controller, projectId)
+          this.contract
+            .connect(caller)
+            .transferController(controller, projectId)
         ).to.be.revertedWith(revert);
       });
     });

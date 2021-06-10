@@ -104,12 +104,10 @@ module.exports = function() {
           balances
         } = successTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (issue) {
           // Issue tickets.

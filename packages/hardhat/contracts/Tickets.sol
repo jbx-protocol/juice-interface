@@ -3,7 +3,8 @@ pragma solidity >=0.8.0;
 
 import "./libraries/Operations.sol";
 import "./interfaces/ITickets.sol";
-import "./abstract/Administered.sol";
+import "./abstract/Operatable.sol";
+import "./abstract/Controlled.sol";
 import "./Ticket.sol";
 
 /** 
@@ -14,7 +15,7 @@ import "./Ticket.sol";
   Tickets can be either represented internally, or as ERC-20s.
   This contract manages these two representations and the conversion between the two.
 */
-contract Tickets is Administered, ITickets {
+contract Tickets is Controlled, Operatable, ITickets {
     // --- public properties --- //
 
     // Each project's ERC20 Ticket tokens.
@@ -29,14 +30,10 @@ contract Tickets is Administered, ITickets {
     // The amount of each holders tickets that are locked.
     mapping(address => mapping(uint256 => uint256)) public override locked;
 
-    // Each project's controller addresses.
-    mapping(uint256 => mapping(address => bool)) public override isController;
-
-    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
-    IProjects public immutable override projects;
-
-    /// @notice A contract storing operator assignments.
-    IOperatorStore public immutable override operatorStore;
+    // The amount of each holders tickets that are locked by each address.
+    mapping(address => mapping(address => mapping(uint256 => uint256)))
+        public
+        override lockedBy;
 
     /// @notice The permision index required to issue tickets on an owners behalf.
     uint256 public immutable override issuePermissionIndex = Operations.Issue;
@@ -52,16 +49,10 @@ contract Tickets is Administered, ITickets {
     uint256 public immutable override transferPermissionIndex =
         Operations.Transfer;
 
-    // --- external transactions --- //
+    /// @notice The permision index required to lock tickets on a holders behalf.
+    uint256 public immutable override lockPermissionIndex = Operations.Lock;
 
-    /** 
-      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
-      @param _operatorStore A contract storing operator assignments.
-    */
-    constructor(IProjects _projects, IOperatorStore _operatorStore) {
-        projects = _projects;
-        operatorStore = _operatorStore;
-    }
+    // --- external views --- //
 
     /** 
       @notice 
@@ -107,23 +98,16 @@ contract Tickets is Administered, ITickets {
             balance = balance + _ticket.balanceOf(_holder);
     }
 
+    // --- external transactions --- //
+
     /** 
-      @notice 
-      Initialied tickets by setting the first controller that can print and redeem tickets on a project's behalf.
-
-      @param _controller The controller to add.
-      @param _projectId The ID of the project that will be controlled.
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+      @param _operatorStore A contract storing operator assignments.
     */
-    function initialize(address _controller, uint256 _projectId)
-        external
-        override
-        onlyAdmin
-    {
-        // The the controller status.
-        isController[_projectId][_controller] = true;
-
-        emit Initialize(_controller, _projectId, msg.sender);
-    }
+    constructor(IProjects _projects, IOperatorStore _operatorStore)
+        Controlled(_projects)
+        Operatable(_operatorStore)
+    {}
 
     /**
         @notice 
@@ -140,22 +124,16 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         string calldata _name,
         string calldata _symbol
-    ) external override {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can tap its funds.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    issuePermissionIndex
-                ),
-            "Tickets::issue: UNAUTHORIZED"
-        );
-
+    )
+        external
+        override
+        requirePermission(
+            projects.ownerOf(_projectId),
+            issuePermissionIndex,
+            _projectId,
+            false
+        )
+    {
         // Only one ERC20 ticket can be issued.
         require(
             tickets[_projectId] == ITicket(address(0)),
@@ -184,9 +162,9 @@ contract Tickets is Administered, ITickets {
         uint256 _amount,
         bool _preferConvertedTickets
     ) external override {
-        // The printer must be a controller.
+        // The printer must be the controller.
         require(
-            isController[_projectId][msg.sender],
+            projects.controller(_projectId) == msg.sender,
             "Tickets::print: UNAUTHORIZED"
         );
 
@@ -236,9 +214,9 @@ contract Tickets is Administered, ITickets {
         uint256 _amount,
         bool _preferConverted
     ) external override {
-        // The redeemer must be a controller.
+        // The redeemer must be the controller.
         require(
-            isController[_projectId][msg.sender],
+            projects.controller(_projectId) == msg.sender,
             "Tickets::redeem: UNAUTHORIZED"
         );
 
@@ -317,30 +295,16 @@ contract Tickets is Administered, ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount
-    ) external override {
+    )
+        external
+        override
+        requirePermission(_holder, stakePermissionIndex, _projectId, true)
+    {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
         // Tickets must have been issued.
         require(_ticket != ITicket(address(0)), "Tickets::stake: NOT_FOUND");
-
-        // Only an account or a specified operator can stake its tickets.
-        require(
-            msg.sender == _holder ||
-                operatorStore.hasPermission(
-                    _holder,
-                    0,
-                    msg.sender,
-                    stakePermissionIndex
-                ) ||
-                operatorStore.hasPermission(
-                    _holder,
-                    _projectId,
-                    msg.sender,
-                    stakePermissionIndex
-                ),
-            "Tickets::stake: UNAUTHORIZED"
-        );
 
         // Get a reference to the holder's current balance.
         uint256 _balanceOf = _ticket.balanceOf(_holder);
@@ -374,30 +338,16 @@ contract Tickets is Administered, ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount
-    ) external override {
+    )
+        external
+        override
+        requirePermission(_holder, unstakePermissionIndex, _projectId, true)
+    {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
         // Tickets must have been issued.
         require(_ticket != ITicket(address(0)), "Tickets::unstake: NOT_FOUND");
-
-        // Only an account or a specified operator can unstake its tickets.
-        require(
-            msg.sender == _holder ||
-                operatorStore.hasPermission(
-                    _holder,
-                    0,
-                    msg.sender,
-                    unstakePermissionIndex
-                ) ||
-                operatorStore.hasPermission(
-                    _holder,
-                    _projectId,
-                    msg.sender,
-                    unstakePermissionIndex
-                ),
-            "Tickets::unstake: UNAUTHORIZED"
-        );
 
         // Get a reference to the amount of unlockedIOUs.
         uint256 _unlockedIOUs =
@@ -425,52 +375,6 @@ contract Tickets is Administered, ITickets {
 
     /** 
       @notice 
-      Adds a controller that can print and redeem tickets on a project's behalf.
-
-      @param _controller The controller to add.
-      @param _projectId The ID of the project that will be controlled.
-    */
-    function addController(address _controller, uint256 _projectId)
-        external
-        override
-    {
-        // The message sender must already be a controller of the project, or it must be the admin.
-        require(
-            isController[_projectId][msg.sender],
-            "Tickets::addController: UNAUTHORIZED"
-        );
-
-        // The the controller status.
-        isController[_projectId][_controller] = true;
-
-        emit AddController(_controller, _projectId, msg.sender);
-    }
-
-    /** 
-      @notice 
-      Removes a controller.
-
-      @param _controller The controller to remove.
-      @param _projectId The ID of the project that will no longer be controlled.
-    */
-    function removeController(address _controller, uint256 _projectId)
-        external
-        override
-    {
-        // The message sender must already be a controller of the project, or it must be the admin.
-        require(
-            isController[_projectId][msg.sender],
-            "Tickets::removeController: UNAUTHORIZED"
-        );
-
-        // The the controller status.
-        isController[_projectId][_controller] = false;
-
-        emit RemoveController(_controller, _projectId, msg.sender);
-    }
-
-    /** 
-      @notice 
       Lock a project's tickets, preventing them from being redeemed and from converting to ERC20s.
 
       @param _holder The holder to lock tickets from.
@@ -481,7 +385,11 @@ contract Tickets is Administered, ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount
-    ) external override onlyAdmin {
+    )
+        external
+        override
+        requirePermission(_holder, lockPermissionIndex, _projectId, true)
+    {
         // Amount must be greater than 0.
         require(_amount > 0, "Tickets::lock: NO_OP");
 
@@ -494,6 +402,9 @@ contract Tickets is Administered, ITickets {
 
         // Update the lock.
         locked[_holder][_projectId] = locked[_holder][_projectId] + _amount;
+        lockedBy[msg.sender][_holder][_projectId] =
+            lockedBy[msg.sender][_holder][_projectId] +
+            _amount;
 
         emit Lock(_holder, _projectId, _amount, msg.sender);
     }
@@ -501,6 +412,9 @@ contract Tickets is Administered, ITickets {
     /** 
       @notice 
       Unlock a project's tickets.
+
+      @dev
+      The address that locked the tickets must be the address that unlocks the tickets.
 
       @param _holder The holder to unlock tickets from.
       @param _projectId The ID of the project whos tickets are being unlocked.
@@ -510,18 +424,21 @@ contract Tickets is Administered, ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount
-    ) external override onlyAdmin {
+    ) external override {
         // Amount must be greater than 0.
         require(_amount > 0, "Tickets::unlock: NO_OP");
 
         // There must be enough locked tickets to unlock.
         require(
-            locked[_holder][_projectId] >= _amount,
+            lockedBy[msg.sender][_holder][_projectId] >= _amount,
             "Tickets::unlock: INSUFFICIENT_FUNDS"
         );
 
         // Update the lock.
         locked[_holder][_projectId] = locked[_holder][_projectId] - _amount;
+        lockedBy[msg.sender][_holder][_projectId] =
+            lockedBy[msg.sender][_holder][_projectId] -
+            _amount;
 
         emit Unlock(_holder, _projectId, _amount, msg.sender);
     }
@@ -540,25 +457,11 @@ contract Tickets is Administered, ITickets {
         uint256 _projectId,
         uint256 _amount,
         address _recipient
-    ) external override {
-        // Only an account or a specified operator can transfer its tickets.
-        require(
-            msg.sender == _holder ||
-                operatorStore.hasPermission(
-                    _holder,
-                    0,
-                    msg.sender,
-                    transferPermissionIndex
-                ) ||
-                operatorStore.hasPermission(
-                    _holder,
-                    _projectId,
-                    msg.sender,
-                    transferPermissionIndex
-                ),
-            "Tickets::transfer: UNAUTHORIZED"
-        );
-
+    )
+        external
+        override
+        requirePermission(_holder, transferPermissionIndex, _projectId, true)
+    {
         require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
 
         require(_holder != _recipient, "Tickets::transfer: IDENTITY");

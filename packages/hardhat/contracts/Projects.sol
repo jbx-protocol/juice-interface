@@ -2,13 +2,13 @@
 pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./abstract/Administered.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
-contract Projects is ERC721, IProjects, Administered {
+contract Projects is ERC721, IProjects, Ownable {
     // --- public properties --- //
 
     // A running count of project IDs.
@@ -26,6 +26,9 @@ contract Projects is ERC721, IProjects, Administered {
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes32 => address) public override transferedHandles;
 
+    // Each project's controller addresses.
+    mapping(uint256 => address) public override controller;
+
     /// @notice A contract sotring operator assignments.
     IOperatorStore public immutable override operatorStore;
 
@@ -40,7 +43,7 @@ contract Projects is ERC721, IProjects, Administered {
       @param _projectId The project to check the existence of.
       @return If the project exists.
     */
-    function exists(uint256 _projectId) external view returns (bool) {
+    function exists(uint256 _projectId) external view override returns (bool) {
         return _exists(_projectId);
     }
 
@@ -55,13 +58,7 @@ contract Projects is ERC721, IProjects, Administered {
         address _owner,
         bytes32 _handle,
         string calldata _uri
-    )
-        external
-        override
-        //TODO might not have to be only admin.
-        onlyAdmin
-        returns (uint256 id)
-    {
+    ) external override returns (uint256 id) {
         // Handle must exist.
         require(_handle.length > 0, "Projects::create: EMPTY_HANDLE");
 
@@ -78,6 +75,9 @@ contract Projects is ERC721, IProjects, Administered {
 
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
+
+        // Set the sender as the controller.
+        controller[count] = msg.sender;
 
         // Set the URI if one was provided.
         if (bytes(_uri).length > 0) uri[count] = _uri;
@@ -182,8 +182,8 @@ contract Projects is ERC721, IProjects, Administered {
                     msg.sender,
                     Operations.TransferHandle
                 ) ||
-                // The contract's owner can transfer a handle also.s
-                msg.sender == owner,
+                // The contract's owner can transfer a handle also.
+                msg.sender == owner(),
             "Projects::transferHandle: UNAUTHORIZED"
         );
         require(
@@ -270,5 +270,34 @@ contract Projects is ERC721, IProjects, Administered {
         reverseHandleLookup[_projectId] = _handle;
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
+    }
+
+    /** 
+      @notice 
+      Transfers the power that can print and redeem tickets on a project's behalf.
+
+      @param _controller The controller to transfer to.
+      @param _projectId The ID of the project that will be controlled.
+    */
+    function transferController(address _controller, uint256 _projectId)
+        external
+        override
+    {
+        // The message sender must already be a controller of the project.
+        require(
+            controller[_projectId] == msg.sender,
+            "Tickets::transferController: UNAUTHORIZED"
+        );
+
+        // Nothing to do if transfering to the same controller.
+        require(
+            _controller != msg.sender,
+            "Tickets::transferController: NO_OP"
+        );
+
+        // Set the controller status.
+        controller[_projectId] = _controller;
+
+        emit TransferController(_controller, _projectId, msg.sender);
     }
 }

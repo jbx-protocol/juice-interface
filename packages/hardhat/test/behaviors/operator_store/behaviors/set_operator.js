@@ -7,7 +7,7 @@ const tests = {
       description: "set operator, no previously set value",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectId: 1,
+        domain: 1,
         operator: addrs[0],
         permissionIndexes: {
           set: [42, 41, 255]
@@ -18,7 +18,7 @@ const tests = {
       description: "set operator, overriding previously set value",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectId: 1,
+        domain: 1,
         operator: addrs[0],
         permissionIndexes: {
           pre: [33],
@@ -30,7 +30,7 @@ const tests = {
       description: "set operator, clearing any previously set value",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectId: 1,
+        domain: 1,
         operator: addrs[0],
         permissionIndexes: {
           pre: [33],
@@ -44,7 +44,7 @@ const tests = {
       description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectId: 0,
+        domain: 0,
         operator: addrs[0],
         permissionIndexes: [256],
         revert: "OperatorStore::_packedPermissions: INDEX_OUT_OF_BOUNDS"
@@ -57,18 +57,15 @@ module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
-        const {
-          caller,
-          projectId,
-          operator,
-          permissionIndexes
-        } = successTest.fn(this);
+        const { caller, domain, operator, permissionIndexes } = successTest.fn(
+          this
+        );
 
         // If specified, pre-set an operator before the rest of the test.
         if (permissionIndexes.pre) {
           await this.contract
             .connect(caller)
-            .setOperator(projectId, operator.address, permissionIndexes.pre);
+            .setOperator(domain, operator.address, permissionIndexes.pre);
         }
 
         // Calculate the expected packed value once the permissions are set.
@@ -80,14 +77,14 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setOperator(projectId, operator.address, permissionIndexes.set);
+          .setOperator(domain, operator.address, permissionIndexes.set);
 
         // Expect an event to have been emitted.
         await expect(tx)
           .to.emit(this.contract, "SetOperator")
           .withArgs(
             caller.address,
-            projectId,
+            domain,
             operator.address,
             permissionIndexes.set,
             expectedPackedPermissions
@@ -96,7 +93,7 @@ module.exports = function() {
         // Get the stored packed permissions value.
         const storedPackedPermissions = await this.contract.permissions(
           caller.address,
-          projectId,
+          domain,
           operator.address
         );
 
@@ -110,7 +107,7 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
-          projectId,
+          domain,
           operator,
           permissionIndexes,
           revert
@@ -118,7 +115,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .setOperator(projectId, operator.address, permissionIndexes)
+            .setOperator(domain, operator.address, permissionIndexes)
         ).to.be.revertedWith(revert);
       });
     });

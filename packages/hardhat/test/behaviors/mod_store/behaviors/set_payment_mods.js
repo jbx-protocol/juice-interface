@@ -94,7 +94,7 @@ const tests = {
         projectId: 1,
         mods: [],
         permissionFlag: false,
-        revert: "ModStore::setPaymentMods: UNAUTHORIZED"
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {

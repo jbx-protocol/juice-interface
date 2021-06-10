@@ -30,7 +30,7 @@ const tests = {
         projectOwner: addrs[0].address,
         projectId: 1,
         permissionFlag: false,
-        revert: "Tickets::issue: UNAUTHORIZED"
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {

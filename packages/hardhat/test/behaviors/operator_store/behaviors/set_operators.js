@@ -7,7 +7,7 @@ const tests = {
       description: "set operators, no previously set values",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 2],
+        domains: [1, 2],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [
@@ -25,7 +25,7 @@ const tests = {
       description: "set operators, overriding previously set values",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 1],
+        domains: [1, 1],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           pre: [[33], [23]],
@@ -38,7 +38,7 @@ const tests = {
       description: "set operators, clearing any previously set values",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [0, 1],
+        domains: [0, 1],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           pre: [[33], [33]],
@@ -52,7 +52,7 @@ const tests = {
         "set operators, with the same operator used for two different projects",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [0, 1],
+        domains: [0, 1],
         operators: [addrs[0], addrs[0]],
         permissionIndexes: {
           set: [
@@ -71,7 +71,7 @@ const tests = {
         "set operators, with the same operator used for the same project",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [0, 0],
+        domains: [0, 0],
         operators: [addrs[0], addrs[0]],
         permissionIndexes: {
           set: [
@@ -89,7 +89,7 @@ const tests = {
       description: "set only one operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1],
+        domains: [1],
         operators: [addrs[0]],
         permissionIndexes: {
           set: [[42, 41, 255]],
@@ -103,7 +103,7 @@ const tests = {
       description: "not enough projects specified",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1],
+        domains: [1],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [
@@ -122,7 +122,7 @@ const tests = {
       description: "too many projects specified",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 2, 3],
+        domains: [1, 2, 3],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [
@@ -141,7 +141,7 @@ const tests = {
       description: "not enough permission indexes specified",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 2],
+        domains: [1, 2],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [[42, 41, 255]],
@@ -154,7 +154,7 @@ const tests = {
       description: "too many permission indexes specified",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 2],
+        domains: [1, 2],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [
@@ -175,7 +175,7 @@ const tests = {
       description: "index out of bounds",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        projectIds: [1, 2],
+        domains: [1, 2],
         operators: [addrs[0], addrs[1]],
         permissionIndexes: {
           set: [
@@ -199,7 +199,7 @@ module.exports = function() {
       it(successTest.description, async function() {
         const {
           caller,
-          projectIds,
+          domains,
           operators,
           permissionIndexes
         } = successTest.fn(this);
@@ -207,7 +207,7 @@ module.exports = function() {
         // If specified, pre-set an operator before the rest of the test.
         if (permissionIndexes.pre) {
           await this.contract.connect(caller).setOperators(
-            projectIds,
+            domains,
             operators.map(o => o.address),
             permissionIndexes.pre
           );
@@ -215,7 +215,7 @@ module.exports = function() {
 
         // Execute the transaction
         const tx = await this.contract.connect(caller).setOperators(
-          projectIds,
+          domains,
           operators.map(o => o.address),
           permissionIndexes.set
         );
@@ -236,7 +236,7 @@ module.exports = function() {
               .to.emit(this.contract, "SetOperator")
               .withArgs(
                 caller.address,
-                projectIds[i],
+                domains[i],
                 operator.address,
                 permissionIndexes.expect[i],
                 expectedPackedPermissions
@@ -245,7 +245,7 @@ module.exports = function() {
             // Get the stored packed permissions values.
             const storedPackedPermissions = await this.contract.permissions(
               caller.address,
-              projectIds[i],
+              domains[i],
               operator.address
             );
             // Expect the packed values to match.
@@ -260,14 +260,14 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
-          projectIds,
+          domains,
           operators,
           permissionIndexes,
           revert
         } = failureTest.fn(this);
         await expect(
           this.contract.connect(caller).setOperators(
-            projectIds,
+            domains,
             operators.map(o => o.address),
             permissionIndexes.set
           )

@@ -79,7 +79,7 @@ const tests = {
         projectId: 1,
         mods: [],
         permissionFlag: false,
-        revert: "ModStore::setTicketMods: UNAUTHORIZED"
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {

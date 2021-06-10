@@ -6,7 +6,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "lock, with nothing pre locked",
+      description: "with nothing pre locked",
       fn: ({ deployer }) => ({
         caller: deployer,
         holder: deployer.address,
@@ -19,7 +19,7 @@ const tests = {
       })
     },
     {
-      description: "lock, with some pre locked",
+      description: "with some pre locked",
       fn: ({ deployer }) => ({
         caller: deployer,
         holder: deployer.address,
@@ -32,7 +32,7 @@ const tests = {
       })
     },
     {
-      description: "lock, with max uints",
+      description: "with max uints",
       fn: ({ deployer }) => ({
         caller: deployer,
         holder: deployer.address,
@@ -43,18 +43,52 @@ const tests = {
           lockedAmount: BigNumber.from(0)
         }
       })
+    },
+    {
+      description: "called by personal operator",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        projectId: 1,
+        holder: addrs[0].address,
+        amount: BigNumber.from(50),
+        setup: {
+          personalOperator: true,
+          permissionFlag: true,
+          IOUBalance: BigNumber.from(50),
+          lockedAmount: BigNumber.from(0)
+        }
+      })
+    },
+    {
+      description: "called by project operator",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        projectId: 1,
+        holder: addrs[0].address,
+        amount: BigNumber.from(50),
+        setup: {
+          permissionFlag: true,
+          personalOperator: false,
+          IOUBalance: BigNumber.from(50),
+          lockedAmount: BigNumber.from(0)
+        }
+      })
     }
   ],
   failure: [
     {
       description: "unauthorized",
-      fn: ({ deployer }) => ({
+      fn: ({ deployer, addrs }) => ({
         caller: deployer,
-        holder: deployer.address,
+        holder: addrs[0].address,
         projectId: 1,
         amount: BigNumber.from(10),
-        setup: { setOwner: false },
-        revert: "Administrated: UNAUTHORIZED"
+        setup: {
+          permissionFlag: false,
+          IOUBalance: BigNumber.from(50),
+          lockedAmount: BigNumber.from(0)
+        },
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {
@@ -129,14 +163,40 @@ module.exports = function() {
           holder,
           projectId,
           amount,
-          setup: { IOUBalance, lockedAmount }
+          setup: { permissionFlag, personalOperator, IOUBalance, lockedAmount }
         } = successTest.fn(this);
-        // Initialize the project's tickets to be able to print as part of setup.
-        // Initial and lock must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
+
+        // If a permission flag is specified, set the mock to return it.
+        if (permissionFlag !== undefined) {
+          // Get the permission index needed to set the payment mods on an owner's behalf.
+          const permissionIndex = await this.contract
+            .connect(caller)
+            .lockPermissionIndex();
+
+          // Set the Operator store to return the permission flag.
+          // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? projectId : 0,
+              caller.address,
+              permissionIndex
+            )
+            .returns(false);
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? 0 : projectId,
+              caller.address,
+              permissionIndex
+            )
+            .returns(permissionFlag);
+        }
 
         // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
         if (IOUBalance) {
@@ -182,29 +242,56 @@ module.exports = function() {
           holder,
           amount,
           projectId,
-          setup: { setOwner, IOUBalance, lockedAmount },
+          setup: { permissionFlag, personalOperator, IOUBalance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
-        if (setOwner) {
-          // Initialize the project's tickets to be able to print as part of setup.
-          // Initial and lock must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-          await this.contract.connect(caller).setOwnership(caller.address);
-        }
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
+
+        // Get the permission index needed to set the payment mods on an owner's behalf.
+        const permissionIndex = await this.contract
+          .connect(caller)
+          .lockPermissionIndex();
+
         // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
         if (IOUBalance) {
-          await this.contract
-            .connect(caller)
-            .initialize(caller.address, projectId);
           await this.contract
             .connect(caller)
             .print(holder, projectId, IOUBalance, false);
         }
         if (lockedAmount > 0) {
+          await this.operatorStore.mock.hasPermission
+            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
             .connect(caller)
             .lock(holder, projectId, lockedAmount);
+        }
+
+        // If a permission flag is specified, set the mock to return it.
+        if (permissionFlag !== undefined) {
+          // Set the Operator store to return the permission flag.
+          // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? projectId : 0,
+              caller.address,
+              permissionIndex
+            )
+            .returns(false);
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? 0 : projectId,
+              caller.address,
+              permissionIndex
+            )
+            .returns(permissionFlag);
         }
 
         // Execute the transaction.

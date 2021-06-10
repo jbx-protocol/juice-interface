@@ -116,7 +116,6 @@ module.exports = function() {
       it(successTest.description, async function() {
         const {
           caller,
-          controller,
           projectId,
           holder,
           amount,
@@ -124,10 +123,10 @@ module.exports = function() {
           withERC20
         } = successTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract.connect(caller).initialize(controller, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // Issue ERC-20s if needed.
         if (withERC20) {
@@ -220,8 +219,10 @@ module.exports = function() {
           setup: { IOUBalance = 0 } = {},
           revert
         } = failureTest.fn(this);
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract.connect(caller).initialize(controller, projectId);
+        // Mock the controller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(controller);
 
         if (IOUBalance > 0) {
           await this.contract

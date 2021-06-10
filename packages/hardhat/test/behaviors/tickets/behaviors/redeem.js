@@ -281,7 +281,6 @@ module.exports = function() {
       it(successTest.description, async function() {
         const {
           caller,
-          controller,
           projectId,
           holder,
           amount,
@@ -289,10 +288,10 @@ module.exports = function() {
           setup: { IOUBalance, erc20Balance, lockedAmount }
         } = successTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract.connect(caller).initialize(controller, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
         if (IOUBalance > 0) {
@@ -317,6 +316,13 @@ module.exports = function() {
             .print(holder, projectId, erc20Balance, true);
         }
         if (lockedAmount > 0) {
+          // Get the permission index needed to set the payment mods on an owner's behalf.
+          const permissionIndex = await this.contract
+            .connect(caller)
+            .lockPermissionIndex();
+          await this.operatorStore.mock.hasPermission
+            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
             .connect(caller)
@@ -435,14 +441,10 @@ module.exports = function() {
           revert
         } = failureTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        // The caller needs to be a controller to run the setup code.
-        // It will transfer this power to the specified controller after setup.
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Caller must the controller to setup.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
         if (IOUBalance > 0) {
@@ -467,21 +469,23 @@ module.exports = function() {
             .print(holder, projectId, erc20Balance, true);
         }
         if (lockedAmount > 0) {
+          // Get the permission index needed to set the payment mods on an owner's behalf.
+          const permissionIndex = await this.contract
+            .connect(caller)
+            .lockPermissionIndex();
+          await this.operatorStore.mock.hasPermission
+            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
             .connect(caller)
             .lock(holder, projectId, lockedAmount);
         }
 
-        // If the controller is different from the caller, resign control and add to the controller.
-        if (controller !== caller.address) {
-          await this.contract
-            .connect(caller)
-            .addController(controller, projectId);
-          await this.contract
-            .connect(caller)
-            .removeController(caller.address, projectId);
-        }
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(controller);
 
         // Execute the transaction.
         await expect(

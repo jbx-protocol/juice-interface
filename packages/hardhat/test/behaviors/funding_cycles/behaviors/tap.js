@@ -23,6 +23,7 @@ const testTemplate = ({
   revert
 }) => ({ deployer }) => ({
   caller: deployer,
+  controller: deployer.address,
   projectId: 1,
   amount: BigNumber.from(20),
   setup: {
@@ -429,9 +430,14 @@ const tests = {
   failure: [
     {
       description: "unauthorized",
-      fn: testTemplate({
-        setup: { preconfigure: null, setOwner: false },
-        revert: "Administrated: UNAUTHORIZED"
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        controller: addrs[0].address,
+        setup: { preconfigure: null },
+        revert: "Controlled: UNAUTHORIZED",
+        // below values copied from template
+        projectId: 1,
+        amount: BigNumber.from(20)
       })
     },
     {
@@ -505,8 +511,10 @@ module.exports = function() {
           expectation
         } = successTest.fn(this);
 
-        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         let preconfigureBlockNumber;
 
@@ -654,16 +662,17 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
+          controller,
           projectId,
           amount,
-          setup: { setOwner = true, preconfigure, ops },
+          setup: { preconfigure, ops = [] },
           revert
         } = failureTest.fn(this);
 
-        if (setOwner) {
-          // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-          await this.contract.connect(caller).setOwnership(caller.address);
-        }
+        // Mock the caller to be the project's controller for setup.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (preconfigure) {
           const tx = await this.contract
@@ -698,6 +707,11 @@ module.exports = function() {
               break;
           }
         }
+
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(controller);
 
         await expect(
           this.contract.connect(caller).tap(projectId, amount)

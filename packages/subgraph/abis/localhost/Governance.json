@@ -89,24 +89,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IAdministered",
-        "name": "_contract",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "grantAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "juiceTerminal",
     "outputs": [
@@ -200,24 +182,6 @@
   {
     "inputs": [],
     "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IAdministered",
-        "name": "_contract",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_oldAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "revokeAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

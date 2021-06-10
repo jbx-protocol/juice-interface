@@ -44,23 +44,6 @@ interface ITickets {
         address caller
     );
 
-    event Initialize(
-        address indexed controller,
-        uint256 indexed projectId,
-        address caller
-    );
-
-    event AddController(
-        address indexed controller,
-        uint256 indexed projectId,
-        address caller
-    );
-    event RemoveController(
-        address indexed controller,
-        uint256 indexed projectId,
-        address caller
-    );
-
     event Lock(
         address indexed holder,
         uint256 indexed projectId,
@@ -83,10 +66,6 @@ interface ITickets {
         address caller
     );
 
-    function operatorStore() external view returns (IOperatorStore);
-
-    function projects() external view returns (IProjects);
-
     function tickets(uint256 _projectId) external view returns (ITicket);
 
     function issuePermissionIndex() external view returns (uint256);
@@ -97,10 +76,18 @@ interface ITickets {
 
     function transferPermissionIndex() external view returns (uint256);
 
+    function lockPermissionIndex() external view returns (uint256);
+
     function locked(address _holder, uint256 _projectId)
         external
         view
         returns (uint256);
+
+    function lockedBy(
+        address _operator,
+        address _holder,
+        uint256 _projectId
+    ) external view returns (uint256);
 
     function IOUBalance(address _holder, uint256 _projectId)
         external
@@ -108,11 +95,6 @@ interface ITickets {
         returns (uint256);
 
     function IOUTotalSupply(uint256 _projectId) external view returns (uint256);
-
-    function isController(uint256 _projectId, address _controller)
-        external
-        view
-        returns (bool);
 
     function totalSupply(uint256 _projectId) external view returns (uint256);
 
@@ -152,12 +134,6 @@ interface ITickets {
         uint256 _projectId,
         uint256 _amount
     ) external;
-
-    function initialize(address _controller, uint256 _projectId) external;
-
-    function addController(address _controller, uint256 _projectId) external;
-
-    function removeController(address _controller, uint256 _projectId) external;
 
     function lock(
         address _holder,

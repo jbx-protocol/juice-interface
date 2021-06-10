@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/JuiceProject.sol";
@@ -11,30 +10,6 @@ contract Governance is JuiceProject {
     constructor(uint256 _projectId)
         JuiceProject(IJuiceTerminal(address(0)), _projectId)
     {}
-
-    /** 
-      @notice Grants the admin role for a contract that this Admin contract controls.
-      @param _contract The contract that is being given access to.
-      @param _newAdmin The address that is being given the admin role.
-    */
-    function grantAdmin(IAdministered _contract, address _newAdmin)
-        external
-        onlyOwner
-    {
-        _contract.appointAdmin(_newAdmin);
-    }
-
-    /** 
-      @notice Revokes the admin role for a contract that this Admin contract controls.
-      @param _contract The contract that is having access to revoked.
-      @param _oldAdmin The address that is having the admin role revoked.
-    */
-    function revokeAdmin(IAdministered _contract, address _oldAdmin)
-        external
-        onlyOwner
-    {
-        _contract.revokeAdmin(_oldAdmin);
-    }
 
     /** 
       @notice Gives Ticket holders within one Juicer access to migrate to another Juicer.

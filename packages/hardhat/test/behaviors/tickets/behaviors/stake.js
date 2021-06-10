@@ -108,7 +108,7 @@ const tests = {
           erc20Balance: BigNumber.from(50),
           issue: true
         },
-        revert: "Tickets::stake: UNAUTHORIZED"
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {
@@ -142,12 +142,10 @@ module.exports = function() {
           setup: { erc20Balance }
         } = successTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // Issue ERC-20s.
         // Must make the caller the project owner in order to issue.
@@ -173,12 +171,7 @@ module.exports = function() {
               .returns(false);
           }
           await this.operatorStore.mock.hasPermission
-            .withArgs(
-              holder,
-              personalOperator ? 0 : projectId,
-              caller.address,
-              permissionIndex
-            )
+            .withArgs(holder, projectId, caller.address, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -250,12 +243,10 @@ module.exports = function() {
           revert
         } = failureTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // Issue ERC-20s if needed.
         // Must make the caller the project owner in order to issue.

@@ -7,14 +7,14 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         set: {
           caller: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndexes: [42, 41, 255]
         },
         check: {
           caller: deployer,
           account: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndex: 42
         },
@@ -26,14 +26,14 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         set: {
           caller: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndexes: [7]
         },
         check: {
           caller: addrs[1],
           account: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndex: 7
         },
@@ -46,7 +46,7 @@ const tests = {
         check: {
           caller: deployer,
           account: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndex: 42
         },
@@ -58,14 +58,14 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         set: {
           caller: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndexes: [1, 2, 3]
         },
         check: {
           caller: deployer,
           account: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndex: 42
         },
@@ -73,18 +73,18 @@ const tests = {
       })
     },
     {
-      description: "doesnt have permission, projectId differs",
+      description: "doesnt have permission, domain differs",
       fn: ({ deployer, addrs }) => ({
         set: {
           caller: deployer,
-          projectId: 1,
+          domain: 1,
           operator: addrs[0],
           permissionIndexes: [42]
         },
         check: {
           caller: deployer,
           account: deployer,
-          projectId: 0,
+          domain: 0,
           operator: addrs[0],
           permissionIndex: 42
         },
@@ -99,7 +99,7 @@ const tests = {
         check: {
           caller: deployer,
           account: deployer,
-          projectId: 0,
+          domain: 0,
           operator: addrs[0],
           permissionIndex: 256
         },
@@ -120,7 +120,7 @@ module.exports = function() {
           await this.contract
             .connect(set.caller)
             .setOperator(
-              set.projectId,
+              set.domain,
               set.operator.address,
               set.permissionIndexes
             );
@@ -131,7 +131,7 @@ module.exports = function() {
           .connect(check.caller)
           .hasPermission(
             check.account.address,
-            check.projectId,
+            check.domain,
             check.operator.address,
             check.permissionIndex
           );
@@ -149,7 +149,7 @@ module.exports = function() {
             .connect(check.caller)
             .hasPermission(
               check.account.address,
-              check.projectId,
+              check.domain,
               check.operator.address,
               check.permissionIndex
             )

@@ -24,12 +24,12 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
-        personalOperator: true,
         holder: addrs[0].address,
         recipient: addrs[1].address,
         amount: BigNumber.from(50),
-        permissionFlag: true,
         setup: {
+          personalOperator: true,
+          permissionFlag: true,
           IOUBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
@@ -40,12 +40,12 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
-        personalOperator: false,
         holder: addrs[0].address,
         recipient: addrs[1].address,
         amount: BigNumber.from(50),
-        permissionFlag: true,
         setup: {
+          personalOperator: false,
+          permissionFlag: true,
           IOUBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
@@ -89,12 +89,12 @@ const tests = {
         holder: addrs[0].address,
         recipient: addrs[1].address,
         amount: BigNumber.from(50),
-        permissionFlag: false,
         setup: {
+          permissionFlag: false,
           IOUBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::transfer: UNAUTHORIZED"
+        revert: "Operatable: UNAUTHORIZED"
       })
     },
     {
@@ -181,21 +181,17 @@ module.exports = function() {
       it(successTest.description, async function() {
         const {
           caller,
-          personalOperator,
           projectId,
           holder,
           amount,
           recipient,
-          permissionFlag,
-          setup: { IOUBalance, lockedAmount }
+          setup: { IOUBalance, lockedAmount, personalOperator, permissionFlag }
         } = successTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
@@ -206,11 +202,14 @@ module.exports = function() {
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
-          if (!personalOperator) {
-            await this.operatorStore.mock.hasPermission
-              .withArgs(holder, 0, caller.address, permissionIndex)
-              .returns(false);
-          }
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? projectId : 0,
+              caller.address,
+              permissionIndex
+            )
+            .returns(false);
           await this.operatorStore.mock.hasPermission
             .withArgs(
               holder,
@@ -278,17 +277,14 @@ module.exports = function() {
           holder,
           amount,
           recipient,
-          permissionFlag,
-          setup: { IOUBalance, lockedAmount },
+          setup: { permissionFlag, IOUBalance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
-        // Initialize the project's tickets to set the specified controller.
-        // Initialize must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
@@ -299,11 +295,15 @@ module.exports = function() {
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
-          if (!personalOperator) {
-            await this.operatorStore.mock.hasPermission
-              .withArgs(holder, 0, caller.address, permissionIndex)
-              .returns(false);
-          }
+          await this.operatorStore.mock.hasPermission
+            .withArgs(
+              holder,
+              personalOperator ? projectId : 0,
+              caller.address,
+              permissionIndex
+            )
+            .returns(false);
+
           await this.operatorStore.mock.hasPermission
             .withArgs(
               holder,

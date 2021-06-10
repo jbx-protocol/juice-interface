@@ -47,17 +47,6 @@ const tests = {
   ],
   failure: [
     {
-      description: "unauthorized",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        holder: deployer.address,
-        projectId: 1,
-        amount: BigNumber.from(10),
-        setup: { setOwner: false },
-        revert: "Administrated: UNAUTHORIZED"
-      })
-    },
-    {
       description: "insufficient funds, none locked",
       fn: ({ deployer }) => ({
         caller: deployer,
@@ -82,7 +71,8 @@ const tests = {
         setup: {
           setOwner: true,
           IOUBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(40)
+          lockedAmount: BigNumber.from(40),
+          lockedBy: deployer
         },
         revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
       })
@@ -97,7 +87,8 @@ const tests = {
         setup: {
           setOwner: true,
           IOUBalance: constants.MaxUint256,
-          lockedAmount: constants.MaxUint256.sub(BigNumber.from(1))
+          lockedAmount: constants.MaxUint256.sub(BigNumber.from(1)),
+          lockedBy: deployer
         },
         revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
       })
@@ -111,10 +102,26 @@ const tests = {
         amount: BigNumber.from(0),
         setup: {
           setOwner: true,
-          IOUBalance: constants.MaxUint256,
-          lockedAmount: constants.MaxUint256
+          IOUBalance: BigNumber.from(50),
+          lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::unlock: NO_OP"
+      })
+    },
+    {
+      description: "unlocked by wrong operator",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        unlocker: addrs[0],
+        holder: deployer.address,
+        projectId: 1,
+        amount: BigNumber.from(40),
+        setup: {
+          setOwner: true,
+          IOUBalance: BigNumber.from(50),
+          lockedAmount: BigNumber.from(40)
+        },
+        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
       })
     }
   ]
@@ -131,18 +138,14 @@ module.exports = function() {
           amount,
           setup: { IOUBalance, lockedAmount }
         } = successTest.fn(this);
-        // Initialize the project's tickets to be able to print as part of setup.
-        // Initial and lock must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
-        await this.contract
-          .connect(caller)
-          .initialize(caller.address, projectId);
+
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (IOUBalance > 0) {
           // Add to the ticket balance so that they can be locked.
-          await this.contract
-            .connect(caller)
-            .initialize(caller.address, projectId);
           await this.contract
             .connect(caller)
             .print(holder, projectId, IOUBalance, false);
@@ -182,24 +185,20 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
+          unlocker,
           holder,
           amount,
           projectId,
-          setup: { setOwner, IOUBalance, lockedAmount },
+          setup: { IOUBalance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
-        if (setOwner) {
-          // Initialize the project's tickets to be able to print as part of setup.
-          // Initial and lock must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-          await this.contract.connect(caller).setOwnership(caller.address);
-        }
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (IOUBalance > 0) {
-          // Add to the ticket balance so that they can be locked.
-          await this.contract
-            .connect(caller)
-            .initialize(caller.address, projectId);
           await this.contract
             .connect(caller)
             .print(holder, projectId, IOUBalance, false);
@@ -213,7 +212,9 @@ module.exports = function() {
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).unlock(holder, projectId, amount)
+          this.contract
+            .connect(unlocker || caller)
+            .unlock(holder, projectId, amount)
         ).to.be.revertedWith(revert);
       });
     });

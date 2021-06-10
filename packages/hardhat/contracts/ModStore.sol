@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import "./interfaces/IModStore.sol";
 import "./libraries/Operations.sol";
+import "./abstract/Operatable.sol";
 
 /**
   @notice
@@ -11,7 +12,7 @@ import "./libraries/Operations.sol";
   @dev
   Mods can be used to distribute a percentage of payments or tickets to preconfigured beneficiaries.
 */
-contract ModStore is IModStore {
+contract ModStore is IModStore, Operatable {
     // --- private stored properties --- //
 
     // All payment mods for each project ID.
@@ -24,9 +25,6 @@ contract ModStore is IModStore {
 
     /// @notice The contract storing project information.
     IProjects public immutable override projects;
-
-    /// @notice A contract storing operator assignments.
-    IOperatorStore public immutable override operatorStore;
 
     /// @notice the permision index required to set payment mods on an owners behalf.
     uint256 public immutable override setPaymentModsPermissionIndex =
@@ -78,9 +76,10 @@ contract ModStore is IModStore {
       @param _projects The contract storing project information
       @param _operatorStore A contract storing operator assignments.
     */
-    constructor(IProjects _projects, IOperatorStore _operatorStore) {
+    constructor(IProjects _projects, IOperatorStore _operatorStore)
+        Operatable(_operatorStore)
+    {
         projects = _projects;
-        operatorStore = _operatorStore;
     }
 
     /** 
@@ -93,22 +92,13 @@ contract ModStore is IModStore {
     function setPaymentMods(uint256 _projectId, PaymentMod[] memory _mods)
         external
         override
+        requirePermission(
+            projects.ownerOf(_projectId),
+            setPaymentModsPermissionIndex,
+            _projectId,
+            false
+        )
     {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only the project owner, or a delegated operator of level 2 or higher, can add a mod.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    setPaymentModsPermissionIndex
-                ),
-            "ModStore::setPaymentMods: UNAUTHORIZED"
-        );
-
         // There must be something to do.
         require(_mods.length > 0, "ModStore::setPaymentMods: NO_OP");
 
@@ -160,22 +150,13 @@ contract ModStore is IModStore {
     function setTicketMods(uint256 _projectId, TicketMod[] memory _mods)
         external
         override
+        requirePermission(
+            projects.ownerOf(_projectId),
+            setTicketModsPermissionIndex,
+            _projectId,
+            false
+        )
     {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only the project owner or a delegated operator can add a mod.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    setTicketModsPermissionIndex
-                ),
-            "ModStore::setTicketMods: UNAUTHORIZED"
-        );
-
         // There must be something to do.
         require(_mods.length > 0, "ModStore::setTicketMods: NO_OP");
 

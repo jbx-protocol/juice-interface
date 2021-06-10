@@ -13,6 +13,7 @@ const testTemplate = ({
   revert
 }) => ({ deployer, ballot }) => ({
   caller: deployer,
+  controller: deployer.address,
   projectId: 1,
   target: BigNumber.from(120),
   currency: BigNumber.from(1),
@@ -459,9 +460,20 @@ const tests = {
   failure: [
     {
       description: "unauthorized",
-      fn: testTemplate({
-        setup: { preconfigure: null, setOwner: false },
-        revert: "Administrated: UNAUTHORIZED"
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        controller: addrs[0].address,
+        setup: { preconfigure: null },
+        revert: "Controlled: UNAUTHORIZED",
+        // below values copied from the template
+        projectId: 1,
+        target: BigNumber.from(120),
+        currency: BigNumber.from(1),
+        duration: BigNumber.from(80),
+        discountRate: BigNumber.from(180),
+        fee: BigNumber.from(42),
+        metadata: BigNumber.from(92),
+        configureActiveFundingCycle: false
       })
     },
     {
@@ -572,8 +584,10 @@ module.exports = function() {
           expectation
         } = successTest.fn(this);
 
-        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         let preconfigureBlockNumber;
 
@@ -747,6 +761,7 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
+          controller,
           projectId,
           target,
           currency,
@@ -755,13 +770,14 @@ module.exports = function() {
           fee,
           metadata,
           configureActiveFundingCycle,
-          setup: { setOwner = true, preconfigure } = {},
+          setup: { preconfigure } = {},
           revert
         } = failureTest.fn(this);
-        if (setOwner) {
-          // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-          await this.contract.connect(caller).setOwnership(caller.address);
-        }
+
+        // Mock the caller to be the project's controller for setup.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (preconfigure) {
           await this.contract
@@ -778,6 +794,10 @@ module.exports = function() {
               preconfigure.configureActiveFundingCycle
             );
         }
+
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(controller);
 
         await expect(
           this.contract

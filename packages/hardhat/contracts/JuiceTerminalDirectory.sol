@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./interfaces/IAdministered.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IJuiceTerminalDirectory.sol";
 import "./interfaces/IProjects.sol";

@@ -395,9 +395,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 true
             );
 
-        // Allow this contract to print and redeem tickets.
-        tickets.initialize(address(this), _projectId);
-
         // Set this Juicer as the project's terminal in the directory.
         terminalDirectory.setTerminal(_projectId, this);
 
@@ -1003,8 +1000,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         _to.addToBalance{value: _balanceOf}(_projectId);
 
         // Transfer the power to print and redeem tickets to the new contract.
-        tickets.addController(address(_to), _projectId);
-        tickets.removeController(address(this), _projectId);
+        projects.transferController(address(_to), _projectId);
 
         // Switch the direct payment terminal.
         terminalDirectory.setTerminal(_projectId, _to);

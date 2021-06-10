@@ -526,8 +526,10 @@ module.exports = function() {
           expectation
         } = successTest.fn(this);
 
-        // Reconfigure must be called by an admin, so first set the owner of the contract, which make the caller an admin.
-        await this.contract.connect(caller).setOwnership(caller.address);
+        // Mock the caller to be the project's controller.
+        await this.projects.mock.controller
+          .withArgs(projectId)
+          .returns(caller.address);
 
         if (preconfigure) {
           // If a ballot was provided, mock the ballot contract with the provided properties.
@@ -555,6 +557,14 @@ module.exports = function() {
           const op = ops[i];
           switch (op.type) {
             case "configure": {
+              // Mock the project's controller status if needed.
+              if (op.projectId !== projectId) {
+                // Mock the caller to be the project's controller.
+                // eslint-disable-next-line no-await-in-loop
+                await this.projects.mock.controller
+                  .withArgs(op.projectId)
+                  .returns(caller.address);
+              }
               // eslint-disable-next-line no-await-in-loop
               const tx = await this.contract
                 .connect(caller)

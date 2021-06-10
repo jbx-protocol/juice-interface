@@ -8,7 +8,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
-  const fundingCycles = await deploy("FundingCycles");
+  const fundingCycles = await deploy("FundingCycles", [projects.address]);
   const tickets = await deploy("Tickets", [
     projects.address,
     operatorStore.address
@@ -67,41 +67,12 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     const attachedJuicer = await JuicerFactory.attach(juicer.address);
 
     const callContractIcon = "🛰  ";
-    console.log(callContractIcon + "Setting the projects owner");
-    await attachedProjects.setOwnership(governance.address, {
-      gasLimit: blockGasLimit
-    });
-    console.log(callContractIcon + "Setting the fundingCycles owner");
-    await attachedFundingCycles.setOwnership(governance.address, {
-      gasLimit: blockGasLimit
-    });
-    console.log(callContractIcon + "Setting the tickets owner");
-    await attachedTickets.setOwnership(governance.address, {
-      gasLimit: blockGasLimit
-    });
     console.log(callContractIcon + "Setting the prices owner");
     await attachedPrices.transferOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
-
-    console.log(
-      callContractIcon +
-        "Granting the juicer admin privileges over the projects"
-    );
-    await attachedGovernance.grantAdmin(projects.address, juicer.address, {
-      gasLimit: blockGasLimit
-    });
-    console.log(
-      callContractIcon +
-        "Granting the juicer admin privileges over the funding cycles"
-    );
-    await attachedGovernance.grantAdmin(fundingCycles.address, juicer.address, {
-      gasLimit: blockGasLimit
-    });
-    console.log(
-      callContractIcon + "Granting the juicer admin privileges over the tickets"
-    );
-    await attachedGovernance.grantAdmin(tickets.address, juicer.address, {
+    console.log(callContractIcon + "Transfering ownership over projects");
+    await attachedProjects.transferOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
 

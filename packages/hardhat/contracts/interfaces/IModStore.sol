@@ -37,8 +37,6 @@ interface IModStore {
 
     function projects() external view returns (IProjects);
 
-    function operatorStore() external view returns (IOperatorStore);
-
     function setPaymentModsPermissionIndex() external view returns (uint256);
 
     function setTicketModsPermissionIndex() external view returns (uint256);

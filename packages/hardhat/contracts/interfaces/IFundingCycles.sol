@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0;
 
 import "./IPrices.sol";
+import "./IProjects.sol";
 import "./IFundingCycleBallot.sol";
 
 /// @notice The funding cycle structure represents a project stewarded by an address, and accounts for which addresses have helped sustain the project.

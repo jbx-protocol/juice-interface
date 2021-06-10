@@ -5,12 +5,12 @@ import "prb-math/contracts/PRBMathCommon.sol";
 
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
-import "./abstract/Administered.sol";
+import "./abstract/Controlled.sol";
 
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
-contract FundingCycles is Administered, IFundingCycles {
+contract FundingCycles is Controlled, IFundingCycles {
     // --- public properties --- //
 
     /// @notice Stores the reconfiguration properties of each funding cycle,
@@ -234,6 +234,11 @@ contract FundingCycles is Administered, IFundingCycles {
 
     // --- external transactions --- //
 
+    /** 
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+    */
+    constructor(IProjects _projects) Controlled(_projects) {}
+
     /**
         @notice 
         Configures the next eligible funding for the specified project.
@@ -263,7 +268,12 @@ contract FundingCycles is Administered, IFundingCycles {
         IFundingCycleBallot _ballot,
         uint256 _metadata,
         bool _configureActiveFundingCycle
-    ) external override onlyAdmin returns (uint256 fundingCycleId) {
+    )
+        external
+        override
+        onlyController(_projectId)
+        returns (uint256 fundingCycleId)
+    {
         // Target must be greater than 0.
         require(_target > 0, "FundingCycles::configure: BAD_TARGET");
 
@@ -341,7 +351,7 @@ contract FundingCycles is Administered, IFundingCycles {
     function tap(uint256 _projectId, uint256 _amount)
         external
         override
-        onlyAdmin
+        onlyController(_projectId)
         returns (uint256 fundingCycleId)
     {
         // Get a reference to the funding cycle being tapped.

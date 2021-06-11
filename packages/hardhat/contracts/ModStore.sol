@@ -94,8 +94,8 @@ contract ModStore is IModStore, Operatable {
         override
         requirePermission(
             projects.ownerOf(_projectId),
-            setPaymentModsPermissionIndex,
             _projectId,
+            setPaymentModsPermissionIndex,
             false
         )
     {
@@ -152,8 +152,8 @@ contract ModStore is IModStore, Operatable {
         override
         requirePermission(
             projects.ownerOf(_projectId),
-            setTicketModsPermissionIndex,
             _projectId,
+            setTicketModsPermissionIndex,
             false
         )
     {

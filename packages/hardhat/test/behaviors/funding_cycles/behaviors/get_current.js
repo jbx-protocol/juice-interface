@@ -551,7 +551,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -587,7 +587,7 @@ module.exports = function() {
               if (op.projectId !== projectId) {
                 // Mock the caller to be the project's controller.
                 // eslint-disable-next-line no-await-in-loop
-                await this.projects.mock.controller
+                await this.juiceTerminalDirectory.mock.terminals
                   .withArgs(op.projectId)
                   .returns(caller.address);
               }
@@ -652,7 +652,7 @@ module.exports = function() {
 
         if (preconfigure) {
           // Mock the caller to be the project's controller.
-          await this.projects.mock.controller
+          await this.juiceTerminalDirectory.mock.terminals
             .withArgs(projectId)
             .returns(caller.address);
 

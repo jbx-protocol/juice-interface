@@ -17,7 +17,7 @@ interface ITickets {
         uint256 indexed projectId,
         uint256 amount,
         bool convertedTickets,
-        bool preferConvertedTickets,
+        bool preferUnstakedTickets,
         address controller
     );
 
@@ -25,8 +25,8 @@ interface ITickets {
         address indexed holder,
         uint256 indexed projectId,
         uint256 amount,
-        uint256 IOUs,
-        bool preferConverted,
+        uint256 stakedTickets,
+        bool preferUnstaked,
         address controller
     );
 
@@ -68,6 +68,8 @@ interface ITickets {
 
     function tickets(uint256 _projectId) external view returns (ITicket);
 
+    function projects() external view returns (IProjects);
+
     function issuePermissionIndex() external view returns (uint256);
 
     function stakePermissionIndex() external view returns (uint256);
@@ -89,16 +91,19 @@ interface ITickets {
         uint256 _projectId
     ) external view returns (uint256);
 
-    function IOUBalance(address _holder, uint256 _projectId)
+    function stakedBalanceOf(address _holder, uint256 _projectId)
         external
         view
         returns (uint256);
 
-    function IOUTotalSupply(uint256 _projectId) external view returns (uint256);
+    function stakedTotalSupply(uint256 _projectId)
+        external
+        view
+        returns (uint256);
 
     function totalSupply(uint256 _projectId) external view returns (uint256);
 
-    function totalBalanceOf(address _holder, uint256 _projectId)
+    function balanceOf(address _holder, uint256 _projectId)
         external
         view
         returns (uint256 _result);
@@ -113,14 +118,14 @@ interface ITickets {
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferConvertedTickets
+        bool _preferUnstakedTickets
     ) external;
 
     function redeem(
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferConverted
+        bool _preferUnstaked
     ) external;
 
     function stake(

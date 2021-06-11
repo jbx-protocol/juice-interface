@@ -9,7 +9,7 @@ struct PaymentMod {
     IModAllocator allocator;
     address payable beneficiary;
     uint8 percent;
-    bool preferConverted;
+    bool preferUnstaked;
     uint256 projectId;
     string note;
 }
@@ -17,7 +17,7 @@ struct PaymentMod {
 struct TicketMod {
     address payable beneficiary;
     uint8 percent;
-    bool preferConverted;
+    bool preferUnstaked;
 }
 
 interface IModStore {

@@ -13,7 +13,7 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 200,
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -28,7 +28,7 @@ const tests = {
           {
             beneficiary: addrs[0].address,
             percent: 200,
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -43,12 +43,12 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 100,
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -64,7 +64,7 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 100,
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -102,7 +102,7 @@ const tests = {
           {
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setTicketMods: ZERO_ADDRESS"
@@ -118,12 +118,12 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 210,
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
@@ -139,12 +139,12 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 0,
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setTicketMods: BAD_MOD_PERCENT"
@@ -160,12 +160,12 @@ const tests = {
           {
             beneficiary: deployer.address,
             percent: 180,
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
@@ -228,8 +228,8 @@ module.exports = function() {
         mods.forEach((mod, i) => {
           expect(storedTicketMods[i].beneficiary).to.equal(mod.beneficiary);
           expect(storedTicketMods[i].percent).to.equal(mod.percent);
-          expect(storedTicketMods[i].preferConverted).to.equal(
-            mod.preferConverted
+          expect(storedTicketMods[i].preferUnstaked).to.equal(
+            mod.preferUnstaked
           );
         });
       });

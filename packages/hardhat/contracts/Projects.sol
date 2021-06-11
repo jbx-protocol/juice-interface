@@ -4,11 +4,12 @@ pragma solidity >=0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "./abstract/Operatable.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 // Stores project ownership and identifying information.
-contract Projects is ERC721, IProjects, Ownable {
+contract Projects is ERC721, IProjects, Ownable, Operatable {
     // --- public properties --- //
 
     // A running count of project IDs.
@@ -26,17 +27,21 @@ contract Projects is ERC721, IProjects, Ownable {
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes32 => address) public override transferedHandles;
 
-    // Each project's controller addresses.
-    mapping(uint256 => address) public override controller;
+    /// @notice The permision index required to set a project's handle on an owners behalf.
+    uint256 public immutable override setHandlePermissionIndex =
+        Operations.SetHandle;
 
-    /// @notice A contract sotring operator assignments.
-    IOperatorStore public immutable override operatorStore;
+    /// @notice The permision index required to set a project's uri on an owners behalf.
+    uint256 public immutable override setUriPermissionIndex = Operations.SetUri;
+
+    /// @notice The permision index required to set a project's uri on an owners behalf.
+    uint256 public immutable override claimHandlePermissionIndex =
+        Operations.ClaimHandle;
 
     constructor(IOperatorStore _operatorStore)
         ERC721("Juice project", "JUICE PROJECT")
-    {
-        operatorStore = _operatorStore;
-    }
+        Operatable(_operatorStore)
+    {}
 
     /** 
       @notice Whether the specified project exists.
@@ -76,9 +81,6 @@ contract Projects is ERC721, IProjects, Ownable {
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
 
-        // Set the sender as the controller.
-        controller[count] = msg.sender;
-
         // Set the URI if one was provided.
         if (bytes(_uri).length > 0) uri[count] = _uri;
 
@@ -92,22 +94,16 @@ contract Projects is ERC721, IProjects, Ownable {
       @param _projectId The ID of the project.
       @param _handle The new unique handle for the project.
     */
-    function setHandle(uint256 _projectId, bytes32 _handle) external override {
-        // Get a reference to the project owner.
-        address _owner = ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can change its info.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.SetInfo
-                ),
-            "Projects::setInfo: UNAUTHORIZED"
-        );
-
+    function setHandle(uint256 _projectId, bytes32 _handle)
+        external
+        override
+        requirePermission(
+            ownerOf(_projectId),
+            _projectId,
+            setHandlePermissionIndex,
+            false
+        )
+    {
         // Handle must exist.
         require(_handle.length > 0, "Projects::setInfo: EMPTY_HANDLE");
 
@@ -137,22 +133,13 @@ contract Projects is ERC721, IProjects, Ownable {
     function setUri(uint256 _projectId, string calldata _uri)
         external
         override
+        requirePermission(
+            ownerOf(_projectId),
+            _projectId,
+            setUriPermissionIndex,
+            false
+        )
     {
-        // Get a reference to the project owner.
-        address _owner = ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can change its info.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.SetInfo
-                ),
-            "Projects::setInfo: UNAUTHORIZED"
-        );
-
         // Set the new uri.
         uri[_projectId] = _uri;
 
@@ -169,23 +156,17 @@ contract Projects is ERC721, IProjects, Ownable {
         uint256 _projectId,
         address _to,
         bytes32 _newHandle
-    ) external override returns (bytes32 _handle) {
-        // Get a reference to the project owner.
-        address _owner = ownerOf(_projectId);
-
-        // Only a project owner or a specified operator can transfer its handle.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.TransferHandle
-                ) ||
-                // The contract's owner can transfer a handle also.
-                msg.sender == owner(),
-            "Projects::transferHandle: UNAUTHORIZED"
-        );
+    )
+        external
+        override
+        requirePermission(
+            ownerOf(_projectId),
+            _projectId,
+            setHandlePermissionIndex,
+            false
+        )
+        returns (bytes32 _handle)
+    {
         require(
             _newHandle.length > 0,
             "Projects::transferHandle: EMPTY_HANDLE"
@@ -222,41 +203,17 @@ contract Projects is ERC721, IProjects, Ownable {
         bytes32 _handle,
         address _for,
         uint256 _projectId
-    ) external override {
-        // Only an account or a specified operator of level 2 or higher can claim a handle.
-        require(
-            msg.sender == _for ||
-                // Allow personal operators (setting projectId to 0), or operators of the specified project.
-                operatorStore.hasPermission(
-                    _for,
-                    _projectId,
-                    msg.sender,
-                    Operations.ClaimHandle
-                ) ||
-                operatorStore.hasPermission(
-                    _for,
-                    0,
-                    msg.sender,
-                    Operations.ClaimHandle
-                ),
-            "Projects::transferHandle: UNAUTHORIZED"
-        );
-
-        // Get a reference to the project owner.
-        address _owner = ownerOf(_projectId);
-
-        // Only a project owner or a specified operator of level 2 or higher can set its handle.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.ClaimHandle
-                ),
-            "Projects::transferHandle: UNAUTHORIZED"
-        );
-
+    )
+        external
+        override
+        requirePermission(_for, _projectId, claimHandlePermissionIndex, true)
+        requirePermission(
+            ownerOf(_projectId),
+            _projectId,
+            claimHandlePermissionIndex,
+            false
+        )
+    {
         // The handle must have been transfered to the specified address.
         require(
             transferedHandles[_handle] == _for,
@@ -270,34 +227,5 @@ contract Projects is ERC721, IProjects, Ownable {
         reverseHandleLookup[_projectId] = _handle;
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
-    }
-
-    /** 
-      @notice 
-      Transfers the power that can print and redeem tickets on a project's behalf.
-
-      @param _controller The controller to transfer to.
-      @param _projectId The ID of the project that will be controlled.
-    */
-    function transferController(address _controller, uint256 _projectId)
-        external
-        override
-    {
-        // The message sender must already be a controller of the project.
-        require(
-            controller[_projectId] == msg.sender,
-            "Tickets::transferController: UNAUTHORIZED"
-        );
-
-        // Nothing to do if transfering to the same controller.
-        require(
-            _controller != msg.sender,
-            "Tickets::transferController: NO_OP"
-        );
-
-        // Set the controller status.
-        controller[_projectId] = _controller;
-
-        emit TransferController(_controller, _projectId, msg.sender);
     }
 }

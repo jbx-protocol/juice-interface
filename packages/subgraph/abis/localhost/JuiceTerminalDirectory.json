@@ -92,7 +92,7 @@
         "type": "address"
       }
     ],
-    "name": "preferConvertedTickets",
+    "name": "preferUnstakedTickets",
     "outputs": [
       {
         "internalType": "bool",

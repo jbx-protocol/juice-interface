@@ -16,7 +16,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 200,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -34,7 +34,7 @@ const tests = {
             beneficiary: addrs[0].address,
             percent: 200,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -52,7 +52,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 100,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             allocator: modAllocator.address,
@@ -60,7 +60,7 @@ const tests = {
             beneficiary: ethers.constants.AddressZero,
             percent: 50,
             note: "",
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -79,7 +79,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 100,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           }
         ]
       })
@@ -120,7 +120,7 @@ const tests = {
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setPaymentMods: ZERO_ADDRESS"
@@ -139,7 +139,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 210,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -147,7 +147,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
@@ -166,7 +166,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 0,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -174,7 +174,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_MOD_PERCENT"
@@ -193,7 +193,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 180,
             note: "sup",
-            preferConverted: false
+            preferUnstaked: false
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -201,7 +201,7 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferConverted: false
+            preferUnstaked: false
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
@@ -265,8 +265,8 @@ module.exports = function() {
           expect(storedProjectMods[i].allocator).to.equal(mod.allocator);
           expect(storedProjectMods[i].beneficiary).to.equal(mod.beneficiary);
           expect(storedProjectMods[i].percent).to.equal(mod.percent);
-          expect(storedProjectMods[i].preferConverted).to.equal(
-            mod.preferConverted
+          expect(storedProjectMods[i].preferUnstaked).to.equal(
+            mod.preferUnstaked
           );
           expect(storedProjectMods[i].projectId).to.equal(mod.projectId);
           expect(storedProjectMods[i].note).to.equal(mod.note);

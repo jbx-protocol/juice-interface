@@ -38,15 +38,13 @@ interface IProjects is IERC721 {
         address caller
     );
 
-    event TransferController(
-        address indexed controller,
-        uint256 indexed projectId,
-        address caller
-    );
-
     function count() external view returns (uint256);
 
-    function operatorStore() external view returns (IOperatorStore);
+    function setHandlePermissionIndex() external view returns (uint256);
+
+    function setUriPermissionIndex() external view returns (uint256);
+
+    function claimHandlePermissionIndex() external view returns (uint256);
 
     function handleResolver(bytes32 _handle)
         external
@@ -59,8 +57,6 @@ interface IProjects is IERC721 {
     function transferedHandles(bytes32 _handle)
         external
         returns (address receiver);
-
-    function controller(uint256 _projectId) external view returns (address);
 
     function uri(uint256 _projectId) external view returns (string memory);
 
@@ -87,7 +83,4 @@ interface IProjects is IERC721 {
         address _for,
         uint256 _projectId
     ) external;
-
-    function transferController(address _controller, uint256 _projectId)
-        external;
 }

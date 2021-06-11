@@ -13,7 +13,7 @@ const tests = {
         projectId: 1,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(50)
         }
       })
@@ -26,7 +26,7 @@ const tests = {
         projectId: 1,
         amount: BigNumber.from(40),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(50)
         }
       })
@@ -39,7 +39,7 @@ const tests = {
         projectId: 1,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         }
       })
@@ -55,7 +55,7 @@ const tests = {
         amount: BigNumber.from(50),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
@@ -70,7 +70,7 @@ const tests = {
         amount: BigNumber.from(50),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40),
           lockedBy: deployer
         },
@@ -86,7 +86,7 @@ const tests = {
         amount: constants.MaxUint256,
         setup: {
           setOwner: true,
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256.sub(BigNumber.from(1)),
           lockedBy: deployer
         },
@@ -102,7 +102,7 @@ const tests = {
         amount: BigNumber.from(0),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::unlock: NO_OP"
@@ -118,7 +118,7 @@ const tests = {
         amount: BigNumber.from(40),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40)
         },
         revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
@@ -136,19 +136,19 @@ module.exports = function() {
           holder,
           projectId,
           amount,
-          setup: { IOUBalance, lockedAmount }
+          setup: { stakedBalance, lockedAmount }
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
-        if (IOUBalance > 0) {
+        if (stakedBalance > 0) {
           // Add to the ticket balance so that they can be locked.
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.
@@ -189,19 +189,19 @@ module.exports = function() {
           holder,
           amount,
           projectId,
-          setup: { IOUBalance, lockedAmount },
+          setup: { stakedBalance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
-        if (IOUBalance > 0) {
+        if (stakedBalance > 0) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.

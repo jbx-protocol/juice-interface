@@ -8,11 +8,15 @@ module.exports = function() {
     // Deploy mock dependency contracts.
     this.projects = await this.deployMockLocalContract("Projects");
     this.operatorStore = await this.deployMockLocalContract("OperatorStore");
+    this.juiceTerminalDirectory = await this.deployMockLocalContract(
+      "JuiceTerminalDirectory"
+    );
 
     // Deploy the contract.
     this.contract = await this.deployContract(contractName, [
       this.projects.address,
-      this.operatorStore.address
+      this.operatorStore.address,
+      this.juiceTerminalDirectory.address
     ]);
   });
 
@@ -26,6 +30,6 @@ module.exports = function() {
   // describe("transferController(...)", shouldBehaveLike.transferController);
   describe("lock(...)", shouldBehaveLike.lock);
   describe("unlock(...)", shouldBehaveLike.unlock);
-  describe("totalBalanceOf(...)", shouldBehaveLike.totalBalanceOf);
+  describe("balanceOf(...)", shouldBehaveLike.balanceOf);
   describe("totalSupply(...)", shouldBehaveLike.totalSupply);
 };

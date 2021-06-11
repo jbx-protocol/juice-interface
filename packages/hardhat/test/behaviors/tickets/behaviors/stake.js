@@ -75,7 +75,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(2),
         setup: {
-          IOUBalance: constants.MaxUint256.sub(1),
+          stakedBalance: constants.MaxUint256.sub(1),
           erc20Balance: BigNumber.from(2),
           issue: true
         },
@@ -143,7 +143,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -191,24 +191,24 @@ module.exports = function() {
           .to.emit(this.contract, "Stake")
           .withArgs(holder, projectId, amount, caller.address);
 
-        // Get the stored project IOU balance for the holder.
-        const storedIOUBalance = await this.contract
+        // Get the stored project's staked balance for the holder.
+        const storedStakedBalance = await this.contract
           .connect(caller)
-          .IOUBalance(holder, projectId);
+          .stakedBalanceOf(holder, projectId);
 
-        // Expect the stored IOU balance to equal the expected value.
-        expect(storedIOUBalance).to.equal(amount);
+        // Expect the stored staked balance to equal the expected value.
+        expect(storedStakedBalance).to.equal(amount);
 
         // The expected total supply is the same as the balance.
-        const expectedIOUTotalSupply = amount;
+        const expectedStakedTotalSupply = amount;
 
-        // Get the stored project IOU total supply for the holder.
-        const storedIOUTotalSupply = await this.contract
+        // Get the stored project's staked total supply for the holder.
+        const storedStakedTotalSupply = await this.contract
           .connect(caller)
-          .IOUTotalSupply(projectId);
+          .stakedTotalSupply(projectId);
 
-        // Expect the stored IOU total supply to equal the expected value.
-        expect(storedIOUTotalSupply).to.equal(expectedIOUTotalSupply);
+        // Expect the stored staked total supply to equal the expected value.
+        expect(storedStakedTotalSupply).to.equal(expectedStakedTotalSupply);
 
         // Get the stored ticket for the project.
         const storedTicketAddress = await this.contract
@@ -239,12 +239,12 @@ module.exports = function() {
           holder,
           amount,
           permissionFlag,
-          setup: { IOUBalance = BigNumber.from(0), erc20Balance, issue },
+          setup: { stakedBalance = BigNumber.from(0), erc20Balance, issue },
           revert
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -286,10 +286,10 @@ module.exports = function() {
         }
 
         // These were sporadically given a "run out of gas" error, so the limit was icreased.
-        if (IOUBalance > 0) {
+        if (stakedBalance > 0) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false, {
+            .print(holder, projectId, stakedBalance, false, {
               gasLimit: 100000
             });
         }

@@ -6,7 +6,7 @@ const transfer = require("./transfer");
 const redeem = require("./redeem");
 const lock = require("./lock");
 const unlock = require("./unlock");
-const totalBalanceOf = require("./total_balance_of");
+const balanceOf = require("./balance_of");
 const totalSupply = require("./total_supply");
 
 module.exports = {
@@ -18,6 +18,6 @@ module.exports = {
   redeem,
   lock,
   unlock,
-  totalBalanceOf,
+  balanceOf,
   totalSupply
 };

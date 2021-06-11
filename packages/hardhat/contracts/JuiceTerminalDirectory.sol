@@ -20,7 +20,7 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
     mapping(address => address) public override beneficiaries;
 
     // For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
-    mapping(address => bool) public override preferConvertedTickets;
+    mapping(address => bool) public override preferUnstakedTickets;
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
@@ -78,24 +78,12 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
         // Get a reference to the current terminal being used.
         IJuiceTerminal _currentTerminal = terminals[_projectId];
 
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
+        // If the terminal is already set, nothing to do.
+        if (_currentTerminal == _juiceTerminal) return;
 
-        // Allow the current terminal to set a new terminal with implicit authorization from the owner.
-        // If theres not a terminal currently set but the project has an owner, the terminal can set itself.
-        // Only a project owner or a specified operator of level 2 or greater can tap its funds.
         require(
-            (msg.sender == address(_juiceTerminal) &&
-                _owner != address(0) &&
-                _currentTerminal == IJuiceTerminal(address(0))) ||
-                msg.sender == address(_currentTerminal) ||
-                msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.SetTerminal
-                ),
+            _currentTerminal == IJuiceTerminal(address(0)) ||
+                msg.sender == address(_currentTerminal),
             "Juicer::setJuiceTerminal: UNAUTHORIZED"
         );
 
@@ -114,6 +102,6 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
         bool _preferClaimedTickets
     ) external override {
         beneficiaries[msg.sender] = _beneficiary;
-        preferConvertedTickets[msg.sender] = _preferClaimedTickets;
+        preferUnstakedTickets[msg.sender] = _preferClaimedTickets;
     }
 }

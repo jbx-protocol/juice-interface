@@ -7,14 +7,14 @@ const {
 const tests = {
   success: [
     {
-      description: "total balance of, just IOUs",
+      description: "total balance of, just staked tickets",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         issue: false,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           }
@@ -28,14 +28,14 @@ const tests = {
       })
     },
     {
-      description: "total balance of, IOUs and ERC20s",
+      description: "total balance of, staked and unstaked tickets",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         issue: true,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           },
@@ -54,14 +54,15 @@ const tests = {
       })
     },
     {
-      description: "total balance of, IOUs and ERC20s with some transfered",
+      description:
+        "total balance of, staked and unstaked tickets with some transfered",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
         issue: true,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           },
@@ -105,7 +106,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -123,7 +124,7 @@ module.exports = function() {
         await Promise.all(
           print.map(async p => {
             switch (p.type) {
-              case "IOU":
+              case "staked":
                 // Print tickets to make up the balance.
                 await this.contract
                   .connect(caller)
@@ -157,7 +158,7 @@ module.exports = function() {
             // Execute the transaction.
             const storedBalanceOf = await this.contract
               .connect(caller)
-              .totalBalanceOf(balance.holder, projectId);
+              .balanceOf(balance.holder, projectId);
 
             // The expected should match what's stored.
             expect(storedBalanceOf).to.equal(balance.expected);

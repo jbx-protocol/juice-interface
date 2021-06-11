@@ -13,7 +13,7 @@ const tests = {
         projectId: 1,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -26,7 +26,7 @@ const tests = {
         projectId: 1,
         amount: BigNumber.from(40),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(10)
         }
       })
@@ -39,7 +39,7 @@ const tests = {
         projectId: 1,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -54,7 +54,7 @@ const tests = {
         setup: {
           personalOperator: true,
           permissionFlag: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -69,7 +69,7 @@ const tests = {
         setup: {
           permissionFlag: true,
           personalOperator: false,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -85,7 +85,7 @@ const tests = {
         amount: BigNumber.from(10),
         setup: {
           permissionFlag: false,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Operatable: UNAUTHORIZED"
@@ -100,7 +100,7 @@ const tests = {
         amount: BigNumber.from(50),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(40),
+          stakedBalance: BigNumber.from(40),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::lock: INSUFFICIENT_FUNDS"
@@ -115,7 +115,7 @@ const tests = {
         amount: BigNumber.from(50),
         setup: {
           setOwner: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(10)
         },
         revert: "Tickets::lock: INSUFFICIENT_FUNDS"
@@ -130,7 +130,7 @@ const tests = {
         amount: constants.MaxUint256,
         setup: {
           setOwner: true,
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
         revert: "Tickets::lock: INSUFFICIENT_FUNDS"
@@ -145,7 +145,7 @@ const tests = {
         amount: BigNumber.from(0),
         setup: {
           setOwner: true,
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
         revert: "Tickets::lock: NO_OP"
@@ -163,11 +163,16 @@ module.exports = function() {
           holder,
           projectId,
           amount,
-          setup: { permissionFlag, personalOperator, IOUBalance, lockedAmount }
+          setup: {
+            permissionFlag,
+            personalOperator,
+            stakedBalance,
+            lockedAmount
+          }
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -198,11 +203,11 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be a staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.
@@ -242,12 +247,17 @@ module.exports = function() {
           holder,
           amount,
           projectId,
-          setup: { permissionFlag, personalOperator, IOUBalance, lockedAmount },
+          setup: {
+            permissionFlag,
+            personalOperator,
+            stakedBalance,
+            lockedAmount
+          },
           revert
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -256,11 +266,11 @@ module.exports = function() {
           .connect(caller)
           .lockPermissionIndex();
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           await this.operatorStore.mock.hasPermission

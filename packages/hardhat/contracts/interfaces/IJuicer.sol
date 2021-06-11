@@ -113,8 +113,6 @@ interface IJuicer {
 
     function tickets() external view returns (ITickets);
 
-    function operatorStore() external view returns (IOperatorStore);
-
     function prices() external view returns (IPrices);
 
     function terminalDirectory()
@@ -127,6 +125,17 @@ interface IJuicer {
     function modStore() external view returns (IModStore);
 
     function targetLocalETH() external view returns (uint256);
+
+    function redeemPermissionIndex() external view returns (uint256);
+
+    function migratePermissionIndex() external view returns (uint256);
+
+    function configurePermissionIndex() external view returns (uint256);
+
+    function printInitialTicketsPermissionIndex()
+        external
+        view
+        returns (uint256);
 
     function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
         external
@@ -163,7 +172,7 @@ interface IJuicer {
         uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
-        bool _preferConvertedTickets
+        bool _preferUnstakedTickets
     ) external;
 
     function reconfigure(
@@ -196,7 +205,7 @@ interface IJuicer {
         uint256 _amount,
         uint256 _minReturnedETH,
         address payable _beneficiary,
-        bool _preferConverted
+        bool _preferUnstaked
     ) external returns (uint256 returnAmount);
 
     function printReservedTickets(uint256 _projectId)

@@ -6,14 +6,14 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "prints IOU tickets",
+      description: "prints staked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: false
       })
     },
@@ -25,43 +25,43 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: true,
+        preferUnstaked: true,
         withERC20: true
       })
     },
     {
-      description: "prints IOU tickets if no ERC20 issued",
+      description: "prints staked tickets if no ERC20 issued",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: true,
+        preferUnstaked: true,
         withERC20: false
       })
     },
     {
-      description: "prints IOU tickets if ERC20 issued but not prefered",
+      description: "prints staked tickets if ERC20 issued but not prefered",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: true
       })
     },
     {
-      description: "prints IOU tickets, max uint",
+      description: "prints staked tickets, max uint",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: constants.MaxUint256,
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: false
       })
     }
@@ -75,9 +75,9 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: constants.MaxUint256,
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: false,
-        setup: { IOUBalance: BigNumber.from(1) },
+        setup: { stakedBalance: BigNumber.from(1) },
         revert: ""
       })
     },
@@ -89,9 +89,9 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: false,
-        revert: "Tickets::print: UNAUTHORIZED"
+        revert: "JuiceTerminalUtility: UNAUTHORIZED"
       })
     },
     {
@@ -102,7 +102,7 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(0),
-        preferConverted: false,
+        preferUnstaked: false,
         withERC20: false,
         revert: "Tickets::print: NO_OP"
       })
@@ -119,12 +119,12 @@ module.exports = function() {
           projectId,
           holder,
           amount,
-          preferConverted,
+          preferUnstaked,
           withERC20
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -142,7 +142,7 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .print(holder, projectId, amount, preferConverted);
+          .print(holder, projectId, amount, preferUnstaked);
 
         // Expect an event to have been emitted.
         await expect(tx)
@@ -151,8 +151,8 @@ module.exports = function() {
             holder,
             projectId,
             amount,
-            withERC20 && preferConverted,
-            preferConverted,
+            withERC20 && preferUnstaked,
+            preferUnstaked,
             caller.address
           );
 
@@ -161,7 +161,7 @@ module.exports = function() {
         // The expected total supply is the amount printed.
         const expectedTotalSupply = amount;
 
-        if (withERC20 && preferConverted) {
+        if (withERC20 && preferUnstaked) {
           // Get the stored ticket for the project.
           const storedTicketAddress = await this.contract
             .connect(caller)
@@ -187,21 +187,21 @@ module.exports = function() {
           // Expect the stored total supply to equal the expected value.
           expect(storedTicketTotalSupply).to.equal(expectedTotalSupply);
         } else {
-          // Get the stored project IOU balance for the holder.
-          const storedIOUBalance = await this.contract
+          // Get the stored project staked balance for the holder.
+          const storedStakedBalance = await this.contract
             .connect(caller)
-            .IOUBalance(holder, projectId);
+            .stakedBalanceOf(holder, projectId);
 
-          // Expect the stored IOU balance to equal the expected value.
-          expect(storedIOUBalance).to.equal(expectedBalance);
+          // Expect the stored staked balance to equal the expected value.
+          expect(storedStakedBalance).to.equal(expectedBalance);
 
-          // Get the stored project IOU total supply for the holder.
-          const storedIOUTotalSupply = await this.contract
+          // Get the stored project staked total supply for the holder.
+          const storedStakedTotalSupply = await this.contract
             .connect(caller)
-            .IOUTotalSupply(projectId);
+            .stakedTotalSupply(projectId);
 
-          // Expect the stored IOU total supply to equal the expected value.
-          expect(storedIOUTotalSupply).to.equal(expectedTotalSupply);
+          // Expect the stored staked total supply to equal the expected value.
+          expect(storedStakedTotalSupply).to.equal(expectedTotalSupply);
         }
       });
     });
@@ -215,25 +215,25 @@ module.exports = function() {
           projectId,
           holder,
           amount,
-          preferConverted,
-          setup: { IOUBalance = 0 } = {},
+          preferUnstaked,
+          setup: { stakedBalance = 0 } = {},
           revert
         } = failureTest.fn(this);
         // Mock the controller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(controller);
 
-        if (IOUBalance > 0) {
+        if (stakedBalance > 0) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
 
         await expect(
           this.contract
             .connect(caller)
-            .print(holder, projectId, amount, preferConverted)
+            .print(holder, projectId, amount, preferUnstaked)
         ).to.be.revertedWith(revert);
       });
     });

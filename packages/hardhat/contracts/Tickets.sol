@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import "./libraries/Operations.sol";
 import "./interfaces/ITickets.sol";
 import "./abstract/Operatable.sol";
-import "./abstract/Controlled.sol";
+import "./abstract/JuiceTerminalUtility.sol";
 import "./Ticket.sol";
 
 /** 
@@ -12,20 +12,25 @@ import "./Ticket.sol";
   Manage Ticket printing, redemption, and account balances.
 
   @dev
-  Tickets can be either represented internally, or as ERC-20s.
+  Tickets can be either represented internally staked, or as unstaked ERC-20s.
   This contract manages these two representations and the conversion between the two.
+
+  The total supply of a project's tickets and the balance of each account 
+  must thus be calculated in this contract.
 */
-contract Tickets is Controlled, Operatable, ITickets {
+contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
     // --- public properties --- //
 
     // Each project's ERC20 Ticket tokens.
     mapping(uint256 => ITicket) public override tickets;
 
-    // Each holder's balance of IOU Tickets for each project.
-    mapping(address => mapping(uint256 => uint256)) public override IOUBalance;
+    // Each holder's balance of staked Tickets for each project.
+    mapping(address => mapping(uint256 => uint256))
+        public
+        override stakedBalanceOf;
 
     // The total supply of 1155 tickets for each project.
-    mapping(uint256 => uint256) public override IOUTotalSupply;
+    mapping(uint256 => uint256) public override stakedTotalSupply;
 
     // The amount of each holders tickets that are locked.
     mapping(address => mapping(uint256 => uint256)) public override locked;
@@ -34,6 +39,9 @@ contract Tickets is Controlled, Operatable, ITickets {
     mapping(address => mapping(address => mapping(uint256 => uint256)))
         public
         override lockedBy;
+
+    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
+    IProjects public immutable override projects;
 
     /// @notice The permision index required to issue tickets on an owners behalf.
     uint256 public immutable override issuePermissionIndex = Operations.Issue;
@@ -56,7 +64,7 @@ contract Tickets is Controlled, Operatable, ITickets {
 
     /** 
       @notice 
-      The total supply of tickets for each project, including IOU and ERC20 tickets.
+      The total supply of tickets for each project, including staked and unstaked tickets.
 
       @param _projectId The ID of the project to get the total supply of.
 
@@ -68,10 +76,7 @@ contract Tickets is Controlled, Operatable, ITickets {
         override
         returns (uint256 supply)
     {
-        // Get the IOU supply.
-        supply = IOUTotalSupply[_projectId];
-
-        // Add the ERC20 supply if it's been issued.
+        supply = stakedTotalSupply[_projectId];
         ITicket _ticket = tickets[_projectId];
         if (_ticket != ITicket(address(0)))
             supply = supply + _ticket.totalSupply();
@@ -79,20 +84,20 @@ contract Tickets is Controlled, Operatable, ITickets {
 
     /** 
       @notice 
-      The total balance of tickets a holder has for a specified project, including IOU and ERC20 tickets.
+      The total balance of tickets a holder has for a specified project, including staked and unstaked tickets.
 
       @param _holder The ticket holder to get a balance for.
       @param _projectId The project to get the `_hodler`s balance of.
 
       @return balance The balance.
     */
-    function totalBalanceOf(address _holder, uint256 _projectId)
+    function balanceOf(address _holder, uint256 _projectId)
         external
         view
         override
         returns (uint256 balance)
     {
-        balance = IOUBalance[_holder][_projectId];
+        balance = stakedBalanceOf[_holder][_projectId];
         ITicket _ticket = tickets[_projectId];
         if (_ticket != ITicket(address(0)))
             balance = balance + _ticket.balanceOf(_holder);
@@ -104,14 +109,17 @@ contract Tickets is Controlled, Operatable, ITickets {
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _operatorStore A contract storing operator assignments.
     */
-    constructor(IProjects _projects, IOperatorStore _operatorStore)
-        Controlled(_projects)
-        Operatable(_operatorStore)
-    {}
+    constructor(
+        IProjects _projects,
+        IOperatorStore _operatorStore,
+        IJuiceTerminalDirectory _terminalDirectory
+    ) Operatable(_operatorStore) JuiceTerminalUtility(_terminalDirectory) {
+        projects = _projects;
+    }
 
     /**
         @notice 
-        Issues an owner's Tickets that'll be handed out by their budgets in exchange for payments.
+        Issues an owner's ERC-20 Tickets that'll be used when unstaking tickets.
 
         @dev 
         Deploys an owner's Ticket ERC-20 token contract.
@@ -129,8 +137,8 @@ contract Tickets is Controlled, Operatable, ITickets {
         override
         requirePermission(
             projects.ownerOf(_projectId),
-            issuePermissionIndex,
             _projectId,
+            issuePermissionIndex,
             false
         )
     {
@@ -154,47 +162,43 @@ contract Tickets is Controlled, Operatable, ITickets {
       @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
-      @param _preferConvertedTickets Whether ERC20's should be converted automatically if they have been issued.
+      @param _preferUnstakedTickets Whether ERC20's should be converted automatically if they have been issued.
     */
     function print(
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferConvertedTickets
-    ) external override {
-        // The printer must be the controller.
-        require(
-            projects.controller(_projectId) == msg.sender,
-            "Tickets::print: UNAUTHORIZED"
-        );
-
+        bool _preferUnstakedTickets
+    ) external override onlyJuiceTerminal(_projectId) {
         // An amount must be specified.
         require(_amount > 0, "Tickets::print: NO_OP");
 
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        // If there exists ERC-20 tickets and the caller prefers these converted tickets.
-        bool _shouldConvertTickets =
-            _preferConvertedTickets && _ticket != ITicket(address(0));
+        // If there exists ERC-20 tickets and the caller prefers these unstaked tickets.
+        bool _shouldUnstakeTickets =
+            _preferUnstakedTickets && _ticket != ITicket(address(0));
 
-        if (_shouldConvertTickets) {
+        if (_shouldUnstakeTickets) {
             // Print the equivalent amount of ERC20s.
             _ticket.print(_holder, _amount);
         } else {
-            // Add to the IOU balance and total supply.
-            IOUBalance[_holder][_projectId] =
-                IOUBalance[_holder][_projectId] +
+            // Add to the staked balance and total supply.
+            stakedBalanceOf[_holder][_projectId] =
+                stakedBalanceOf[_holder][_projectId] +
                 _amount;
-            IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] + _amount;
+            stakedTotalSupply[_projectId] =
+                stakedTotalSupply[_projectId] +
+                _amount;
         }
 
         emit Print(
             _holder,
             _projectId,
             _amount,
-            _shouldConvertTickets,
-            _preferConvertedTickets,
+            _shouldUnstakeTickets,
+            _preferUnstakedTickets,
             msg.sender
         );
     }
@@ -206,86 +210,84 @@ contract Tickets is Controlled, Operatable, ITickets {
       @param _holder The address redeeming tickets.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _amount The amount of tickets being redeemed.
-      @param _preferConverted If the preference is to redeem tickets that have been converted to ERC-20s.
+      @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
     */
     function redeem(
         address _holder,
         uint256 _projectId,
         uint256 _amount,
-        bool _preferConverted
-    ) external override {
-        // The redeemer must be the controller.
-        require(
-            projects.controller(_projectId) == msg.sender,
-            "Tickets::redeem: UNAUTHORIZED"
-        );
-
+        bool _preferUnstaked
+    ) external override onlyJuiceTerminal(_projectId) {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 
-        // Get a reference to the IOU amount.
-        uint256 _unlockedIOUBalance =
-            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
+        // Get a reference to the staked amount.
+        uint256 _unlockedStakedBalance =
+            stakedBalanceOf[_holder][_projectId] - locked[_holder][_projectId];
 
         // Get a reference to the number of tickets there are.
-        uint256 _balanceOf =
+        uint256 _unstakedBalanceOf =
             _ticket == ITicket(address(0)) ? 0 : _ticket.balanceOf(_holder);
 
         // There must be enough tickets.
         // Prevent potential overflow by not relying on addition.
         require(
-            (_amount < _balanceOf && _amount < _unlockedIOUBalance) ||
-                (_amount >= _balanceOf &&
-                    _unlockedIOUBalance >= _amount - _balanceOf) ||
-                (_amount >= _unlockedIOUBalance &&
-                    _balanceOf >= _amount - _unlockedIOUBalance),
+            (_amount < _unstakedBalanceOf &&
+                _amount < _unlockedStakedBalance) ||
+                (_amount >= _unstakedBalanceOf &&
+                    _unlockedStakedBalance >= _amount - _unstakedBalanceOf) ||
+                (_amount >= _unlockedStakedBalance &&
+                    _unstakedBalanceOf >= _amount - _unlockedStakedBalance),
             "Tickets::redeem: INSUFICIENT_FUNDS"
         );
 
         // The amount of tickets to redeem.
-        uint256 _ticketsToRedeem;
+        uint256 _unstakedTicketsToRedeem;
 
         // If there's no balance, redeem no tickets
-        if (_balanceOf == 0) {
-            _ticketsToRedeem = 0;
-            // If prefer converted, redeem tickets before redeeming IOUs.
-        } else if (_preferConverted) {
-            _ticketsToRedeem = _balanceOf >= _amount ? _amount : _balanceOf;
-            // Otherwise, redeem IOUs before redeeming tickets.
+        if (_unstakedBalanceOf == 0) {
+            _unstakedTicketsToRedeem = 0;
+            // If prefer converted, redeem tickets before redeeming staked tickets.
+        } else if (_preferUnstaked) {
+            _unstakedTicketsToRedeem = _unstakedBalanceOf >= _amount
+                ? _amount
+                : _unstakedBalanceOf;
+            // Otherwise, redeem staked tickets before unstaked tickets.
         } else {
-            _ticketsToRedeem = _unlockedIOUBalance >= _amount
+            _unstakedTicketsToRedeem = _unlockedStakedBalance >= _amount
                 ? 0
-                : _amount - _unlockedIOUBalance;
+                : _amount - _unlockedStakedBalance;
         }
 
-        // The amount of IOUs to redeem.
-        uint256 _IOUsToRedeem = _amount - _ticketsToRedeem;
+        // The amount of staked tickets to redeem.
+        uint256 _stakedTicketsToRedeem = _amount - _unstakedTicketsToRedeem;
 
-        // Redeem the tickets and IOUs.
-        if (_ticketsToRedeem > 0) _ticket.redeem(_holder, _ticketsToRedeem);
-        if (_IOUsToRedeem > 0) {
+        // Redeem the tickets.
+        if (_unstakedTicketsToRedeem > 0)
+            _ticket.redeem(_holder, _unstakedTicketsToRedeem);
+        if (_stakedTicketsToRedeem > 0) {
             // Reduce the holders balance and the total supply.
-            IOUBalance[_holder][_projectId] =
-                IOUBalance[_holder][_projectId] -
-                _IOUsToRedeem;
-            IOUTotalSupply[_projectId] =
-                IOUTotalSupply[_projectId] -
-                _IOUsToRedeem;
+            stakedBalanceOf[_holder][_projectId] =
+                stakedBalanceOf[_holder][_projectId] -
+                _stakedTicketsToRedeem;
+            stakedTotalSupply[_projectId] =
+                stakedTotalSupply[_projectId] -
+                _stakedTicketsToRedeem;
         }
 
         emit Redeem(
             _holder,
             _projectId,
             _amount,
-            _unlockedIOUBalance,
-            _preferConverted,
+            _unlockedStakedBalance,
+            _preferUnstaked,
             msg.sender
         );
     }
 
     /**
       @notice 
-      Stakes ERC20 tickets by burning their supply and creating IOU tickets.
+      Stakes ERC20 tickets by burning their supply and creating an internal staked version.
 
       @param _holder The owner of the tickets to stake.
       @param _projectId The ID of the project whos tickets are being staked.
@@ -298,7 +300,7 @@ contract Tickets is Controlled, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, stakePermissionIndex, _projectId, true)
+        requirePermission(_holder, _projectId, stakePermissionIndex, true)
     {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
@@ -307,32 +309,35 @@ contract Tickets is Controlled, Operatable, ITickets {
         require(_ticket != ITicket(address(0)), "Tickets::stake: NOT_FOUND");
 
         // Get a reference to the holder's current balance.
-        uint256 _balanceOf = _ticket.balanceOf(_holder);
+        uint256 _unstakedBalanceOf = _ticket.balanceOf(_holder);
 
-        // There must be enough balance to convert.
-        require(_balanceOf >= _amount, "Tickets::stake: INSUFFICIENT_FUNDS");
+        // There must be enough balance to stake.
+        require(
+            _unstakedBalanceOf >= _amount,
+            "Tickets::stake: INSUFFICIENT_FUNDS"
+        );
 
         // Redeem the equivalent amount of ERC20s.
         _ticket.redeem(_holder, _amount);
 
         // Add the staked amount from the holder's balance.
-        IOUBalance[_holder][_projectId] =
-            IOUBalance[_holder][_projectId] +
+        stakedBalanceOf[_holder][_projectId] =
+            stakedBalanceOf[_holder][_projectId] +
             _amount;
 
         // Add the staked amount from the project's total supply.
-        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] + _amount;
+        stakedTotalSupply[_projectId] = stakedTotalSupply[_projectId] + _amount;
 
         emit Stake(_holder, _projectId, _amount, msg.sender);
     }
 
     /**
       @notice 
-      Converts to ERC20 tickets from IOUs.
+      Unstakes internal tickets by creating and distributing ERC20 tickets.
 
-      @param _holder The owner of the tickets to convert.
-      @param _projectId The ID of the project whos tickets are being converted.
-      @param _amount The amount of tickets to convert.
+      @param _holder The owner of the tickets to unstake.
+      @param _projectId The ID of the project whos tickets are being unstaked.
+      @param _amount The amount of tickets to unstake.
      */
     function unstake(
         address _holder,
@@ -341,7 +346,7 @@ contract Tickets is Controlled, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, unstakePermissionIndex, _projectId, true)
+        requirePermission(_holder, _projectId, unstakePermissionIndex, true)
     {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
@@ -349,23 +354,23 @@ contract Tickets is Controlled, Operatable, ITickets {
         // Tickets must have been issued.
         require(_ticket != ITicket(address(0)), "Tickets::unstake: NOT_FOUND");
 
-        // Get a reference to the amount of unlockedIOUs.
-        uint256 _unlockedIOUs =
-            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
+        // Get a reference to the amount of unstaked tickets.
+        uint256 _unlockedStakedTickets =
+            stakedBalanceOf[_holder][_projectId] - locked[_holder][_projectId];
 
-        // There must be enough unlocked IOUs to convert.
+        // There must be enough unlocked staked tickets to unstake.
         require(
-            _unlockedIOUs >= _amount,
+            _unlockedStakedTickets >= _amount,
             "Tickets::unstake: INSUFFICIENT_FUNDS"
         );
 
         // Subtract the unstaked amount from the holder's balance.
-        IOUBalance[_holder][_projectId] =
-            IOUBalance[_holder][_projectId] -
+        stakedBalanceOf[_holder][_projectId] =
+            stakedBalanceOf[_holder][_projectId] -
             _amount;
 
         // Subtract the unstaked amount from the project's total supply.
-        IOUTotalSupply[_projectId] = IOUTotalSupply[_projectId] - _amount;
+        stakedTotalSupply[_projectId] = stakedTotalSupply[_projectId] - _amount;
 
         // Print the equivalent amount of ERC20s.
         _ticket.print(_holder, _amount);
@@ -388,14 +393,15 @@ contract Tickets is Controlled, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, lockPermissionIndex, _projectId, true)
+        requirePermission(_holder, _projectId, lockPermissionIndex, true)
     {
         // Amount must be greater than 0.
         require(_amount > 0, "Tickets::lock: NO_OP");
 
         // The holder must have enough tickets to lock.
         require(
-            IOUBalance[_holder][_projectId] - locked[_holder][_projectId] >=
+            stakedBalanceOf[_holder][_projectId] -
+                locked[_holder][_projectId] >=
                 _amount,
             "Tickets::lock: INSUFFICIENT_FUNDS"
         );
@@ -445,7 +451,7 @@ contract Tickets is Controlled, Operatable, ITickets {
 
     /** 
       @notice 
-      Allows a ticket holder to transfer its tickets to another account, without converting to ERC-20s.
+      Allows a ticket holder to transfer its tickets to another account, without unstaking to ERC-20s.
 
       @param _holder The holder to transfer tickets from.
       @param _projectId The ID of the project whos tickets are being transfered.
@@ -460,30 +466,30 @@ contract Tickets is Controlled, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, transferPermissionIndex, _projectId, true)
+        requirePermission(_holder, _projectId, transferPermissionIndex, true)
     {
         require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
 
         require(_holder != _recipient, "Tickets::transfer: IDENTITY");
 
-        // Get a reference to the amount of unlockedIOUs.
-        uint256 _unlockedIOUs =
-            IOUBalance[_holder][_projectId] - locked[_holder][_projectId];
+        // Get a reference to the amount of unlocked staked tickets.
+        uint256 _unlockedStakedTickets =
+            stakedBalanceOf[_holder][_projectId] - locked[_holder][_projectId];
 
-        // There must be enough unlocked IOUs to transfer.
+        // There must be enough unlocked staked tickets to transfer.
         require(
-            _amount <= _unlockedIOUs,
+            _amount <= _unlockedStakedTickets,
             "Tickets::transfer: INSUFFICIENT_FUNDS"
         );
 
         // Subtract from the holder.
-        IOUBalance[_holder][_projectId] =
-            IOUBalance[_holder][_projectId] -
+        stakedBalanceOf[_holder][_projectId] =
+            stakedBalanceOf[_holder][_projectId] -
             _amount;
 
         // Add the tickets to the recipient.
-        IOUBalance[_recipient][_projectId] =
-            IOUBalance[_recipient][_projectId] +
+        stakedBalanceOf[_recipient][_projectId] =
+            stakedBalanceOf[_recipient][_projectId] +
             _amount;
 
         emit Transfer(_holder, _projectId, _recipient, _amount, msg.sender);

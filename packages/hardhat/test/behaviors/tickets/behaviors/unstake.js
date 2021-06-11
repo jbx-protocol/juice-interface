@@ -13,7 +13,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -26,7 +26,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(150),
+          stakedBalance: BigNumber.from(150),
           lockedAmount: BigNumber.from(0)
         }
       })
@@ -39,7 +39,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(150),
+          stakedBalance: BigNumber.from(150),
           lockedAmount: BigNumber.from(50)
         }
       })
@@ -52,7 +52,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(150),
+          stakedBalance: BigNumber.from(150),
           lockedAmount: BigNumber.from(100)
         }
       })
@@ -65,7 +65,7 @@ const tests = {
         holder: deployer.address,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: 0
         }
       })
@@ -79,7 +79,7 @@ const tests = {
         holder: addrs[0].address,
         amount: BigNumber.from(50),
         permissionFlag: true,
-        setup: { IOUBalance: BigNumber.from(50) }
+        setup: { stakedBalance: BigNumber.from(50) }
       })
     },
     {
@@ -91,7 +91,7 @@ const tests = {
         holder: addrs[0].address,
         amount: BigNumber.from(50),
         permissionFlag: true,
-        setup: { IOUBalance: BigNumber.from(50) }
+        setup: { stakedBalance: BigNumber.from(50) }
       })
     }
   ],
@@ -104,7 +104,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(2),
         setup: {
-          IOUBalance: BigNumber.from(2),
+          stakedBalance: BigNumber.from(2),
           erc20Balance: constants.MaxUint256.sub(1),
           issue: true
         },
@@ -119,7 +119,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0),
           issue: false
         },
@@ -135,7 +135,7 @@ const tests = {
         amount: BigNumber.from(50),
         permissionFlag: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0),
           issue: true
         },
@@ -150,7 +150,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(500),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0),
           issue: true
         },
@@ -165,7 +165,7 @@ const tests = {
         holder: deployer.address,
         amount: BigNumber.from(10),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(47),
           issue: true
         },
@@ -180,7 +180,7 @@ const tests = {
         holder: deployer.address,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256,
           issue: true
         },
@@ -201,11 +201,11 @@ module.exports = function() {
           holder,
           amount,
           permissionFlag,
-          setup: { IOUBalance, lockedAmount }
+          setup: { stakedBalance, lockedAmount }
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -237,11 +237,11 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.
@@ -261,26 +261,26 @@ module.exports = function() {
           .withArgs(holder, projectId, amount, caller.address);
 
         // The expected balance is the previous balance minus the amount unstaked.
-        const expectedIOUBalance = IOUBalance.sub(amount);
+        const expectedStakedBalance = stakedBalance.sub(amount);
 
-        // Get the stored project IOU balance for the holder.
-        const storedIOUBalance = await this.contract
+        // Get the stored project staked balance for the holder.
+        const storedStakedBalance = await this.contract
           .connect(caller)
-          .IOUBalance(holder, projectId);
+          .stakedBalanceOf(holder, projectId);
 
-        // Expect the stored IOU balance to equal the expected value.
-        expect(storedIOUBalance).to.equal(expectedIOUBalance);
+        // Expect the stored staked balance to equal the expected value.
+        expect(storedStakedBalance).to.equal(expectedStakedBalance);
 
         // The expected total supply is the same as the balance.
-        const expectedIOUTotalSupply = expectedIOUBalance;
+        const expectedStakedTotalSupply = expectedStakedBalance;
 
-        // Get the stored project IOU total supply for the holder.
-        const storedIOUTotalSupply = await this.contract
+        // Get the stored project staked total supply for the holder.
+        const storedStakedTotalSupply = await this.contract
           .connect(caller)
-          .IOUTotalSupply(projectId);
+          .stakedTotalSupply(projectId);
 
-        // Expect the stored IOU total supply to equal the expected value.
-        expect(storedIOUTotalSupply).to.equal(expectedIOUTotalSupply);
+        // Expect the stored staked total supply to equal the expected value.
+        expect(storedStakedTotalSupply).to.equal(expectedStakedTotalSupply);
 
         // Get the stored ticket for the project.
         const storedTicketAddress = await this.contract
@@ -311,12 +311,12 @@ module.exports = function() {
           holder,
           amount,
           permissionFlag,
-          setup: { IOUBalance, erc20Balance = 0, lockedAmount, issue },
+          setup: { stakedBalance, erc20Balance = 0, lockedAmount, issue },
           revert
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -357,11 +357,11 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (erc20Balance > 0) {
           await this.contract

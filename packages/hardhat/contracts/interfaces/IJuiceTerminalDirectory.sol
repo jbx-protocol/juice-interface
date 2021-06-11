@@ -18,7 +18,7 @@ interface IJuiceTerminalDirectory {
 
     function beneficiaries(address account) external returns (address);
 
-    function preferConvertedTickets(address account) external returns (bool);
+    function preferUnstakedTickets(address account) external returns (bool);
 
     function projects() external returns (IProjects);
 

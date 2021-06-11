@@ -434,7 +434,7 @@ const tests = {
         caller: deployer,
         controller: addrs[0].address,
         setup: { preconfigure: null },
-        revert: "Controlled: UNAUTHORIZED",
+        revert: "JuiceTerminalUtility: UNAUTHORIZED",
         // below values copied from template
         projectId: 1,
         amount: BigNumber.from(20)
@@ -512,7 +512,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -670,7 +670,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller for setup.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -709,7 +709,7 @@ module.exports = function() {
         }
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(controller);
 

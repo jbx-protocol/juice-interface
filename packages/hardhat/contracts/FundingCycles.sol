@@ -5,12 +5,12 @@ import "prb-math/contracts/PRBMathCommon.sol";
 
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
-import "./abstract/Controlled.sol";
+import "./abstract/JuiceTerminalUtility.sol";
 
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
-contract FundingCycles is Controlled, IFundingCycles {
+contract FundingCycles is JuiceTerminalUtility, IFundingCycles {
     // --- public properties --- //
 
     /// @notice Stores the reconfiguration properties of each funding cycle,
@@ -235,9 +235,11 @@ contract FundingCycles is Controlled, IFundingCycles {
     // --- external transactions --- //
 
     /** 
-      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
     */
-    constructor(IProjects _projects) Controlled(_projects) {}
+    constructor(IJuiceTerminalDirectory _terminalDirectory)
+        JuiceTerminalUtility(_terminalDirectory)
+    {}
 
     /**
         @notice 
@@ -271,7 +273,7 @@ contract FundingCycles is Controlled, IFundingCycles {
     )
         external
         override
-        onlyController(_projectId)
+        onlyJuiceTerminal(_projectId)
         returns (uint256 fundingCycleId)
     {
         // Target must be greater than 0.
@@ -351,7 +353,7 @@ contract FundingCycles is Controlled, IFundingCycles {
     function tap(uint256 _projectId, uint256 _amount)
         external
         override
-        onlyController(_projectId)
+        onlyJuiceTerminal(_projectId)
         returns (uint256 fundingCycleId)
     {
         // Get a reference to the funding cycle being tapped.

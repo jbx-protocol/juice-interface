@@ -29,7 +29,7 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
             projectId,
             _beneficiary != address(0) ? _beneficiary : msg.sender,
             memo,
-            juiceTerminalDirectory.preferConvertedTickets(msg.sender)
+            juiceTerminalDirectory.preferUnstakedTickets(msg.sender)
         );
     }
 }

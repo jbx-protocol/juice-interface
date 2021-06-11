@@ -7,19 +7,19 @@ const {
 const tests = {
   success: [
     {
-      description: "total supply, just IOUs",
+      description: "total supply, just staked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
         issue: false,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           },
           {
-            type: "IOU",
+            type: "staked",
             holder: addrs[0].address,
             amount: BigNumber.from(50)
           }
@@ -28,14 +28,14 @@ const tests = {
       })
     },
     {
-      description: "total supply, IOUs and ERC20s",
+      description: "total supply, staked and unstaked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
         issue: true,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           },
@@ -54,14 +54,15 @@ const tests = {
       })
     },
     {
-      description: "total supply, IOUs and ERC20s with some transfered",
+      description:
+        "total supply, staked and unstaked tickets with some transfered",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
         issue: true,
         print: [
           {
-            type: "IOU",
+            type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
           },
@@ -96,7 +97,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -114,7 +115,7 @@ module.exports = function() {
         await Promise.all(
           print.map(async p => {
             switch (p.type) {
-              case "IOU":
+              case "staked":
                 // Print tickets to make up the balance.
                 await this.contract
                   .connect(caller)

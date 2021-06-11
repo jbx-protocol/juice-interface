@@ -6,7 +6,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "transfers IOU tickets, called by holder",
+      description: "called by holder",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -14,13 +14,13 @@ const tests = {
         recipient: addrs[0].address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "transfers IOU tickets, called by personal operator",
+      description: "called by personal operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -30,13 +30,13 @@ const tests = {
         setup: {
           personalOperator: true,
           permissionFlag: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "transfers IOU tickets, called by project operator",
+      description: "called by project operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -46,13 +46,13 @@ const tests = {
         setup: {
           personalOperator: false,
           permissionFlag: true,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "transfers IOU tickets, with locked amount",
+      description: "with locked amount",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -60,13 +60,13 @@ const tests = {
         recipient: addrs[0].address,
         amount: BigNumber.from(10),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40)
         }
       })
     },
     {
-      description: "transfers IOU tickets, with max uints",
+      description: "with max uints",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -74,7 +74,7 @@ const tests = {
         recipient: addrs[0].address,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: 0
         }
       })
@@ -91,7 +91,7 @@ const tests = {
         amount: BigNumber.from(50),
         setup: {
           permissionFlag: false,
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Operatable: UNAUTHORIZED"
@@ -106,7 +106,7 @@ const tests = {
         recipient: constants.AddressZero,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::transfer: ZERO_ADDRESS"
@@ -121,7 +121,7 @@ const tests = {
         recipient: deployer.address,
         amount: BigNumber.from(50),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::transfer: IDENTITY"
@@ -136,7 +136,7 @@ const tests = {
         recipient: addrs[0].address,
         amount: BigNumber.from(51),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
         revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
@@ -151,7 +151,7 @@ const tests = {
         recipient: addrs[0].address,
         amount: BigNumber.from(20),
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40)
         },
         revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
@@ -166,7 +166,7 @@ const tests = {
         recipient: addrs[0].address,
         amount: constants.MaxUint256,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
         revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
@@ -185,11 +185,16 @@ module.exports = function() {
           holder,
           amount,
           recipient,
-          setup: { IOUBalance, lockedAmount, personalOperator, permissionFlag }
+          setup: {
+            stakedBalance,
+            lockedAmount,
+            personalOperator,
+            permissionFlag
+          }
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -220,11 +225,11 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.
@@ -244,26 +249,28 @@ module.exports = function() {
           .withArgs(holder, projectId, recipient, amount, caller.address);
 
         // The expected sender balance is the previous balance minus the amount transfered.
-        const expectedSenderIOUBalance = IOUBalance.sub(amount);
+        const expectedSenderStakedBalance = stakedBalance.sub(amount);
 
-        // Get the stored project IOU balance for the holder.
-        const storedSenderIOUBalance = await this.contract
+        // Get the stored project's staked balance for the holder.
+        const storedSenderStakedBalance = await this.contract
           .connect(caller)
-          .IOUBalance(holder, projectId);
+          .stakedBalanceOf(holder, projectId);
 
-        // Expect the stored IOU balance to equal the expected value.
-        expect(storedSenderIOUBalance).to.equal(expectedSenderIOUBalance);
+        // Expect the stored project's staked balance to equal the expected value.
+        expect(storedSenderStakedBalance).to.equal(expectedSenderStakedBalance);
 
         // The expected reciever balance is the transfered amount.
-        const expectedRecipientIOUBalance = amount;
+        const expectedRecipientStakedBalance = amount;
 
-        // Get the stored project IOU balance for the receiver.
-        const storedRecipientIOUBalance = await this.contract
+        // Get the stored project's staked balance for the receiver.
+        const storedRecipientStakedBalance = await this.contract
           .connect(caller)
-          .IOUBalance(recipient, projectId);
+          .stakedBalanceOf(recipient, projectId);
 
-        // Expect the stored IOU balance to equal the expected value.
-        expect(storedRecipientIOUBalance).to.equal(expectedRecipientIOUBalance);
+        // Expect the stored staked balance to equal the expected value.
+        expect(storedRecipientStakedBalance).to.equal(
+          expectedRecipientStakedBalance
+        );
       });
     });
   });
@@ -277,12 +284,12 @@ module.exports = function() {
           holder,
           amount,
           recipient,
-          setup: { permissionFlag, IOUBalance, lockedAmount },
+          setup: { permissionFlag, stakedBalance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -314,11 +321,11 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance) {
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         if (lockedAmount > 0) {
           // Lock the specified amount of tickets.

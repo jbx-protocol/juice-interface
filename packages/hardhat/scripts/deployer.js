@@ -8,10 +8,17 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
-  const fundingCycles = await deploy("FundingCycles", [projects.address]);
-  const tickets = await deploy("Tickets", [
+  const juiceTerminalDirectory = await deploy("JuiceTerminalDirectory", [
     projects.address,
     operatorStore.address
+  ]);
+  const fundingCycles = await deploy("FundingCycles", [
+    juiceTerminalDirectory.address
+  ]);
+  const tickets = await deploy("Tickets", [
+    projects.address,
+    operatorStore.address,
+    juiceTerminalDirectory.address
   ]);
   const modStore = await deploy("ModStore", [
     projects.address,
@@ -19,11 +26,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   ]);
 
   const governance = await deploy("Governance", [1]);
-
-  const juiceTerminalDirectory = await deploy("JuiceTerminalDirectory", [
-    projects.address,
-    operatorStore.address
-  ]);
 
   const juicer = await deploy("Juicer", [
     projects.address,

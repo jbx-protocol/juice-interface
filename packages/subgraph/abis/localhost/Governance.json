@@ -325,34 +325,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract IProjects",
-        "name": "_projects",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_newHandle",
-        "type": "bytes32"
-      }
-    ],
-    "name": "transferHandle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "newOwner",
         "type": "address"

@@ -9,6 +9,7 @@ import "prb-math/contracts/PRBMathUD60x18.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./abstract/JuiceProject.sol";
+import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
@@ -45,7 +46,7 @@ import "./libraries/Operations.sol";
 // ─██████████████──███████████████──██████████──██████████████──██████████████──██████──██████████─
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
-contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
+contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
     modifier onlyGov() {
         require(msg.sender == governance, "Juicer: UNAUTHORIZED");
         _;
@@ -83,9 +84,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     /// @notice The contract that manages Ticket printing and redeeming.
     ITickets public immutable override tickets;
 
-    /// @notice A contract storing operator assignments.
-    IOperatorStore public immutable override operatorStore;
-
     /// @notice The contract that stores mods for each project.
     IModStore public immutable override modStore;
 
@@ -100,6 +98,21 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
     /// @notice The target amount of ETH to keep in this contract instead of depositing.
     uint256 public override targetLocalETH = 1000 * (10**18);
+
+    /// @notice The permision index required to redeem tickets on a holders behalf.
+    uint256 public immutable override redeemPermissionIndex = Operations.Redeem;
+
+    /// @notice The permision index required to migrate funds on a holders behalf.
+    uint256 public immutable override migratePermissionIndex =
+        Operations.Migrate;
+
+    /// @notice The permision index required to configure funding cycles on a holders behalf.
+    uint256 public immutable override configurePermissionIndex =
+        Operations.Configure;
+
+    /// @notice The permision index required to print initial tickets on a holders behalf.
+    uint256 public immutable override printInitialTicketsPermissionIndex =
+        Operations.PrintInitialTickets;
 
     // --- public views --- //
 
@@ -236,7 +249,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     ) public view override returns (uint256) {
         // The holder must have the specified number of the project's tickets.
         require(
-            tickets.totalBalanceOf(_account, _projectId) >= _count,
+            tickets.balanceOf(_account, _projectId) >= _count,
             "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
         );
 
@@ -314,12 +327,11 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         IPrices _prices,
         IJuiceTerminalDirectory _terminalDirectory,
         address payable _governance
-    ) {
+    ) Operatable(_operatorStore) {
         require(
             _projects != IProjects(address(0)) &&
                 _fundingCycles != IFundingCycles(address(0)) &&
                 _tickets != ITickets(address(0)) &&
-                _operatorStore != IOperatorStore(address(0)) &&
                 _modStore != IModStore(address(0)) &&
                 _prices != IPrices(address(0)) &&
                 _terminalDirectory != IJuiceTerminalDirectory(address(0)) &&
@@ -329,7 +341,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         projects = _projects;
         fundingCycles = _fundingCycles;
         tickets = _tickets;
-        operatorStore = _operatorStore;
         modStore = _modStore;
         prices = _prices;
         terminalDirectory = _terminalDirectory;
@@ -366,19 +377,10 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         FundingCycleMetadata calldata _metadata,
         IFundingCycleBallot _ballot
     ) external override {
-        // Only a msg.sender or a specified operator of level 4 or higher can deploy its project.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    0,
-                    msg.sender,
-                    Operations.Deploy
-                ),
-            "Juicer::deploy: UNAUTHORIZED"
-        );
-
         uint256 _projectId = projects.create(_owner, _handle, _uri);
+
+        // Set this Juicer as the project's terminal in the directory.
+        terminalDirectory.setTerminal(_projectId, this);
 
         // Configure the funding cycle.
         uint256 _fundingCycleId =
@@ -395,69 +397,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 true
             );
 
-        // Set this Juicer as the project's terminal in the directory.
-        terminalDirectory.setTerminal(_projectId, this);
-
         emit Deploy(_projectId, _fundingCycleId, msg.sender);
-    }
-
-    /** 
-      @notice Allows a project to print an initial batch of tickets for a specified beneficiary.
-      @dev This can only be done if the ticket supply is zero.
-      @param _projectId The ID of the project to premine tickets for.
-      @param _amount The amount to base the ticket premine off of. Measured in ETH.
-      @param _beneficiary The address to send the printed tickets to.
-    */
-    function printInitialTickets(
-        uint256 _projectId,
-        uint256 _amount,
-        address _beneficiary,
-        bool _preferConvertedTickets
-    ) external override nonReentrant {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a msg.sender or a specified operator can print initial tickets.
-        require(
-            _owner == msg.sender ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.PrintInitialTickets
-                ),
-            "Juicer::printInitialTickets: UNAUTHORIZED"
-        );
-
-        // Make sure there is 0 total supply.
-        require(
-            tickets.totalSupply(_projectId) == 0,
-            "Juicer::printInitialTickets: NON_ZERO_SUPPLY"
-        );
-
-        // Get the current funding cycle to read the weight and currency from.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrent(_projectId);
-
-        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
-        uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
-
-        // Print the project's tickets for the beneficiary.
-        tickets.print(
-            _beneficiary,
-            _projectId,
-            _weightedAmount,
-            _preferConvertedTickets
-        );
-
-        emit PrintInitialTickets(
-            _fundingCycle.id,
-            _fundingCycle.projectId,
-            _beneficiary,
-            _amount,
-            msg.sender
-        );
     }
 
     /**
@@ -487,25 +427,28 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _discountRate,
         FundingCycleMetadata calldata _metadata,
         IFundingCycleBallot _ballot
-    ) external override returns (uint256 fundingCycleId) {
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only a msg.sender or a specified operator of level 3 or higher can reconfigure its funding cycles.
-        require(
-            _owner == msg.sender ||
-                // Allow level 3 operators.
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.Reconfigure
-                ),
-            "Juicer::reconfigure: UNAUTHORIZED"
-        );
-
+    )
+        external
+        override
+        requirePermission(
+            projects.ownerOf(_projectId),
+            _projectId,
+            configurePermissionIndex,
+            false
+        )
+        returns (uint256 fundingCycleId)
+    {
         // Get a reference to the amount of tickets.
         uint256 _totalTicketSupply = tickets.totalSupply(_projectId);
+
+        // Validate and pack the metadata.
+        uint256 _packedMetadata =
+            _validateAndPackFundingCycleMetadata(_metadata);
+
+        // Set the terminal if needed.
+        // Must do this before the call to the funding cycle.
+        if (_totalTicketSupply == 0)
+            terminalDirectory.setTerminal(_projectId, this);
 
         // Configure the funding stage's state.
         fundingCycleId = fundingCycles.configure(
@@ -516,7 +459,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _discountRate,
             fee,
             _ballot,
-            _validateAndPackFundingCycleMetadata(_metadata),
+            _packedMetadata,
             // If no tickets are currently issued, the active funding cycle can be configured.
             _totalTicketSupply == 0
         );
@@ -534,6 +477,60 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         );
     }
 
+    /** 
+      @notice Allows a project to print an initial batch of tickets for a specified beneficiary.
+      @dev This can only be done if the ticket supply is zero.
+      @param _projectId The ID of the project to premine tickets for.
+      @param _amount The amount to base the ticket premine off of. Measured in ETH.
+      @param _beneficiary The address to send the printed tickets to.
+    */
+    function printInitialTickets(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        bool _preferUnstakedTickets
+    )
+        external
+        override
+        nonReentrant
+        requirePermission(
+            projects.ownerOf(_projectId),
+            _projectId,
+            printInitialTicketsPermissionIndex,
+            false
+        )
+    {
+        // Make sure there is 0 total supply.
+        require(
+            tickets.totalSupply(_projectId) == 0,
+            "Juicer::printInitialTickets: NON_ZERO_SUPPLY"
+        );
+
+        // Get the current funding cycle to read the weight and currency from.
+        FundingCycle memory _fundingCycle =
+            fundingCycles.getCurrent(_projectId);
+
+        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
+        uint256 _weightedAmount =
+            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
+
+        // Print the project's tickets for the beneficiary.
+        tickets.print(
+            _beneficiary,
+            _projectId,
+            _weightedAmount,
+            _preferUnstakedTickets
+        );
+
+        emit PrintInitialTickets(
+            _fundingCycle.id,
+            _fundingCycle.projectId,
+            _beneficiary,
+            _amount,
+            msg.sender
+        );
+    }
+
     /**
         @notice Contribute ETH to a project.
         @dev Mints the project's tickets proportional to the amount of the contribution.
@@ -541,14 +538,14 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _memo A memo that will be included in the published event.
-      @param _preferConvertedTickets Whether ERC20's should be claimed automatically if they have been issued.
+      @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
         @return _fundingCycleId The ID of the funding stage that the payment was made during.
     */
     function pay(
         uint256 _projectId,
         address _beneficiary,
         string calldata _memo,
-        bool _preferConvertedTickets
+        bool _preferUnstakedTickets
     ) external payable override returns (uint256) {
         // Positive payments only.
         require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
@@ -562,7 +559,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 msg.value,
                 _beneficiary,
                 _memo,
-                _preferConvertedTickets
+                _preferUnstakedTickets
             );
     }
 
@@ -698,14 +695,14 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                         _modCut,
                         _mod.beneficiary,
                         _mod.note,
-                        _mod.preferConverted
+                        _mod.preferUnstaked
                     );
                 } else {
                     _terminal.pay{value: _modCut}(
                         _mod.projectId,
                         _mod.beneficiary,
                         _mod.note,
-                        _mod.preferConverted
+                        _mod.preferUnstaked
                     );
                 }
                 // Otherwise, send the funds directly to the beneficiary.
@@ -750,7 +747,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _count The number of Tickets to redeem.
         @param _minReturnedETH The minimum amount of ETH expected in return.
         @param _beneficiary The address to send the ETH to.
-        @param _preferConverted If the preference is to redeem tickets that have been converted to ERC-20s.
+        @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
         @return amount The amount of ETH that the tickets were redeemed for.
     */
     function redeem(
@@ -759,29 +756,16 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _count,
         uint256 _minReturnedETH,
         address payable _beneficiary,
-        bool _preferConverted
-    ) external override nonReentrant returns (uint256 amount) {
+        bool _preferUnstaked
+    )
+        external
+        override
+        nonReentrant
+        requirePermission(_account, _projectId, redeemPermissionIndex, true)
+        returns (uint256 amount)
+    {
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
-
-        // Only a msg.sender or a specified operator of level 2 or greater can redeem its tickets.
-        require(
-            msg.sender == _account ||
-                // Allow personal operators (setting projectId to 0), or operators of the specified project.
-                operatorStore.hasPermission(
-                    _account,
-                    0,
-                    msg.sender,
-                    Operations.Redeem
-                ) ||
-                operatorStore.hasPermission(
-                    _account,
-                    _projectId,
-                    msg.sender,
-                    Operations.Redeem
-                ),
-            "Juicer::redeem: UNAUTHORIZED"
-        );
 
         // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
         amount = claimableOverflow(_account, _projectId, _count);
@@ -823,7 +807,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         _ensureAvailability(amount);
 
         // Redeem the tickets, which removes and burns them from the account's wallet.
-        tickets.redeem(_account, _projectId, _count, _preferConverted);
+        tickets.redeem(_account, _projectId, _count, _preferUnstaked);
 
         // Transfer funds to the specified address.
         Address.sendValue(_beneficiary, amount);
@@ -901,7 +885,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _mod.beneficiary,
                 _projectId,
                 _modCut,
-                _mod.preferConverted
+                _mod.preferUnstaked
             );
 
             // Subtract from the amount to be sent to the beneficiary.
@@ -964,27 +948,18 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
     function migrate(uint256 _projectId, IJuiceTerminal _to)
         external
         override
+        requirePermission(
+            projects.ownerOf(_projectId),
+            _projectId,
+            migratePermissionIndex,
+            false
+        )
         nonReentrant
     {
         // The migration destination must be allowed.
         require(
             migrationContractIsAllowed[address(_to)],
-            "Juicer::migrate: BAD_DESTINATION"
-        );
-
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Only the project owner, or a delegated operator of level 5, can migrate its funds.
-        require(
-            msg.sender == _owner ||
-                operatorStore.hasPermission(
-                    _owner,
-                    _projectId,
-                    msg.sender,
-                    Operations.Migrate
-                ),
-            "Juicer::migrate: UNAUTHORIZED"
+            "Juicer::migrate: NOT_ALLOWED"
         );
 
         // Get a reference to this project's current balance, included any earned yield.
@@ -998,9 +973,6 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
 
         // Move the funds to the new contract.
         _to.addToBalance{value: _balanceOf}(_projectId);
-
-        // Transfer the power to print and redeem tickets to the new contract.
-        projects.transferController(address(_to), _projectId);
 
         // Switch the direct payment terminal.
         terminalDirectory.setTerminal(_projectId, _to);
@@ -1143,7 +1115,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
         uint256 _amount,
         address _beneficiary,
         string memory _memo,
-        bool _preferConvertedTickets
+        bool _preferUnstakedTickets
     ) private returns (uint256) {
         // Get a reference to the current funding cycle for the project.
         FundingCycle memory _fundingCycle =
@@ -1170,7 +1142,7 @@ contract Juicer is IJuicer, IJuiceTerminal, ReentrancyGuard {
             _beneficiary,
             _projectId,
             _unreservedWeightedAmount,
-            _preferConvertedTickets
+            _preferUnstakedTickets
         );
 
         emit Pay(

@@ -6,8 +6,8 @@ import "./../interfaces/IOperatable.sol";
 abstract contract Operatable is IOperatable {
     modifier requirePermission(
         address _account,
-        uint256 _index,
         uint256 _domain,
+        uint256 _index,
         bool _alsoAllowOpenDomainOperator
     ) {
         require(

@@ -7,16 +7,16 @@ const {
 const tests = {
   success: [
     {
-      description: "redeems IOU tickets",
+      description: "redeems staked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         }
@@ -30,41 +30,42 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(0),
+          stakedBalance: BigNumber.from(0),
           erc20Balance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "redeems mix of IOUs and ERC-20 tickets",
+      description: "redeems mix of staked and unstaked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(20),
+          stakedBalance: BigNumber.from(20),
           erc20Balance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "redeems mix of IOUs and ERC-20 tickets, prefering ERC-20s",
+      description:
+        "redeems mix of staked and unstaked tickets, prefering ERC-20s",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: true,
+        preferUnstaked: true,
         setup: {
-          IOUBalance: BigNumber.from(20),
+          stakedBalance: BigNumber.from(20),
           erc20Balance: BigNumber.from(40),
           lockedAmount: BigNumber.from(0)
         }
@@ -78,41 +79,41 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: true,
+        preferUnstaked: true,
         setup: {
-          IOUBalance: BigNumber.from(20),
+          stakedBalance: BigNumber.from(20),
           erc20Balance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "redeems only IOUs, prefering ERC-20s",
+      description: "redeems only staked tickets, prefering unstaked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: true,
+        preferUnstaked: true,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         }
       })
     },
     {
-      description: "redeems mix of IOUs and ERC-20 tickets, max uints",
+      description: "redeems mix of staked and unstaked tickets, max uints",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: constants.MaxUint256,
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           erc20Balance: constants.MaxUint256,
           lockedAmount: 0
         }
@@ -120,32 +121,32 @@ const tests = {
     },
     {
       description:
-        "redeems mix of IOUs and ERC-20 tickets, max uints including locked",
+        "redeems mix of staked and unstaked tickets, max uints including locked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: constants.MaxUint256,
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: constants.MaxUint256,
+          stakedBalance: constants.MaxUint256,
           erc20Balance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         }
       })
     },
     {
-      description: "redeems mix of IOUs and ERC-20 tickets, some locked",
+      description: "redeems mix of staked and unstaked tickets, some locked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(20),
+          stakedBalance: BigNumber.from(20),
           erc20Balance: BigNumber.from(50),
           lockedAmount: BigNumber.from(20)
         }
@@ -161,43 +162,26 @@ const tests = {
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::redeem: UNAUTHORIZED"
+        revert: "JuiceTerminalUtility: UNAUTHORIZED"
       })
     },
     {
-      description: "insufficient funds with no IOUs or ERC-20s",
+      description: "insufficient funds with no staked or unstaked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(0),
-          erc20Balance: BigNumber.from(0),
-          lockedAmount: BigNumber.from(0)
-        },
-        revert: "Tickets::redeem: INSUFICIENT_FUNDS"
-      })
-    },
-    {
-      description: "insufficient funds with IOUs but no ERC-20s",
-      fn: ({ deployer, addrs }) => ({
-        caller: deployer,
-        controller: deployer.address,
-        projectId: 1,
-        holder: addrs[0].address,
-        amount: BigNumber.from(50),
-        preferConverted: false,
-        setup: {
-          IOUBalance: BigNumber.from(30),
+          stakedBalance: BigNumber.from(0),
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         },
@@ -205,16 +189,34 @@ const tests = {
       })
     },
     {
-      description: "insufficient funds with IOUs but not enough ERC-20s",
+      description: "insufficient funds with staked but no unstaked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(30),
+          stakedBalance: BigNumber.from(30),
+          erc20Balance: BigNumber.from(0),
+          lockedAmount: BigNumber.from(0)
+        },
+        revert: "Tickets::redeem: INSUFICIENT_FUNDS"
+      })
+    },
+    {
+      description:
+        "insufficient funds with staked tickets but not enough unstaked tickets",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        controller: deployer.address,
+        projectId: 1,
+        holder: addrs[0].address,
+        amount: BigNumber.from(50),
+        preferUnstaked: false,
+        setup: {
+          stakedBalance: BigNumber.from(30),
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(0)
         },
@@ -222,16 +224,17 @@ const tests = {
       })
     },
     {
-      description: "insufficient funds with no IOUs and not enough ERC-20s",
+      description:
+        "insufficient funds with no staked tickets and not enough unstaked tickets",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(0),
+          stakedBalance: BigNumber.from(0),
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(0)
         },
@@ -239,16 +242,16 @@ const tests = {
       })
     },
     {
-      description: "insufficient funds with IOUs but locked",
+      description: "insufficient funds with staked tickets but locked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(20)
         },
@@ -256,16 +259,17 @@ const tests = {
       })
     },
     {
-      description: "insufficient funds with IOUs and ERC20s but locked",
+      description:
+        "insufficient funds with staked and unstaked tickets but locked",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         controller: deployer.address,
         projectId: 1,
         holder: addrs[0].address,
         amount: BigNumber.from(50),
-        preferConverted: false,
+        preferUnstaked: false,
         setup: {
-          IOUBalance: BigNumber.from(50),
+          stakedBalance: BigNumber.from(50),
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(20)
         },
@@ -284,21 +288,21 @@ module.exports = function() {
           projectId,
           holder,
           amount,
-          preferConverted,
-          setup: { IOUBalance, erc20Balance, lockedAmount }
+          preferUnstaked,
+          setup: { stakedBalance, erc20Balance, lockedAmount }
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance > 0) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance > 0) {
           // Print tickets to make up the balance.
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         // Add to the erc20 balance if needed.
         if (erc20Balance > 0) {
@@ -332,7 +336,7 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .redeem(holder, projectId, amount, preferConverted);
+          .redeem(holder, projectId, amount, preferUnstaked);
 
         // Expect an event to have been emitted.
         await expect(tx)
@@ -341,44 +345,44 @@ module.exports = function() {
             holder,
             projectId,
             amount,
-            IOUBalance.sub
-              ? IOUBalance.sub(lockedAmount)
-              : IOUBalance - lockedAmount,
-            preferConverted,
+            stakedBalance.sub
+              ? stakedBalance.sub(lockedAmount)
+              : stakedBalance - lockedAmount,
+            preferUnstaked,
             caller.address
           );
 
-        // The expected total IOU supply.
-        let expectedIOUTotalSupply;
-        if (preferConverted && erc20Balance > 0) {
-          expectedIOUTotalSupply = IOUBalance.sub(
+        // The expected total staked supply.
+        let expectedStakedTotalSupply;
+        if (preferUnstaked && erc20Balance > 0) {
+          expectedStakedTotalSupply = stakedBalance.sub(
             amount > erc20Balance ? amount.sub(erc20Balance) : BigNumber.from(0)
           );
         } else {
-          expectedIOUTotalSupply =
-            IOUBalance.sub(amount) > lockedAmount
-              ? IOUBalance.sub(amount)
+          expectedStakedTotalSupply =
+            stakedBalance.sub(amount) > lockedAmount
+              ? stakedBalance.sub(amount)
               : lockedAmount;
         }
 
-        // Get the stored IOU supply.
-        const storedIOUTotalSupply = await this.contract
+        // Get the stored staked supply.
+        const storedStakedTotalSupply = await this.contract
           .connect(caller)
-          .IOUTotalSupply(projectId);
+          .stakedTotalSupply(projectId);
 
         // The expected should match what's stored.
-        expect(storedIOUTotalSupply).to.equal(expectedIOUTotalSupply);
+        expect(storedStakedTotalSupply).to.equal(expectedStakedTotalSupply);
 
         // The expected balance of the holder.
-        const expectedIOUBalance = expectedIOUTotalSupply;
+        const expectedStakedBalance = expectedStakedTotalSupply;
 
-        // Get the stored IOU supply.
-        const storedIOUBalance = await this.contract
+        // Get the stored staked supply.
+        const storedStakedBalance = await this.contract
           .connect(caller)
-          .IOUBalance(holder, projectId);
+          .stakedBalanceOf(holder, projectId);
 
         // The expected should match what's stored.
-        expect(storedIOUBalance).to.equal(expectedIOUBalance);
+        expect(storedStakedBalance).to.equal(expectedStakedBalance);
 
         // Get the stored lcoked amount.
         const storedLocked = await this.contract
@@ -403,13 +407,13 @@ module.exports = function() {
           ).balanceOf(holder);
 
           let expectedTicketBalance;
-          if (preferConverted) {
+          if (preferUnstaked) {
             expectedTicketBalance =
               erc20Balance > amount ? erc20Balance.sub(amount) : 0;
           } else {
             expectedTicketBalance = erc20Balance.sub(
-              amount > IOUBalance.sub(lockedAmount)
-                ? amount.sub(IOUBalance.sub(lockedAmount))
+              amount > stakedBalance.sub(lockedAmount)
+                ? amount.sub(stakedBalance.sub(lockedAmount))
                 : 0
             );
           }
@@ -436,22 +440,22 @@ module.exports = function() {
           projectId,
           holder,
           amount,
-          preferConverted,
-          setup: { IOUBalance, erc20Balance, lockedAmount },
+          preferUnstaked,
+          setup: { stakedBalance, erc20Balance, lockedAmount },
           revert
         } = failureTest.fn(this);
 
         // Caller must the controller to setup.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
-        // If there should be an IOU balance set up, print the necessary tickets before issuing a ticket.
-        if (IOUBalance > 0) {
+        // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
+        if (stakedBalance > 0) {
           // Print tickets to make up the balance.
           await this.contract
             .connect(caller)
-            .print(holder, projectId, IOUBalance, false);
+            .print(holder, projectId, stakedBalance, false);
         }
         // Add to the erc20 balance if needed.
         if (erc20Balance > 0) {
@@ -483,7 +487,7 @@ module.exports = function() {
         }
 
         // Mock the caller to be the project's controller.
-        await this.projects.mock.controller
+        await this.juiceTerminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(controller);
 
@@ -491,7 +495,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .redeem(holder, projectId, amount, preferConverted)
+            .redeem(holder, projectId, amount, preferUnstaked)
         ).to.be.revertedWith(revert);
       });
     });

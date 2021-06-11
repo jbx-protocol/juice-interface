@@ -10,6 +10,11 @@
         "internalType": "contract IOperatorStore",
         "name": "_operatorStore",
         "type": "address"
+      },
+      {
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -107,7 +112,7 @@
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "preferConvertedTickets",
+        "name": "preferUnstakedTickets",
         "type": "bool"
       },
       {
@@ -144,13 +149,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "IOUs",
+        "name": "stakedTickets",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "preferConverted",
+        "name": "preferUnstaked",
         "type": "bool"
       },
       {
@@ -297,39 +302,20 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_holder",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_projectId",
         "type": "uint256"
       }
     ],
-    "name": "IOUBalance",
+    "name": "balanceOf",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "IOUTotalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
+        "name": "balance",
         "type": "uint256"
       }
     ],
@@ -493,7 +479,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_preferConvertedTickets",
+        "name": "_preferUnstakedTickets",
         "type": "bool"
       }
     ],
@@ -534,7 +520,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_preferConverted",
+        "name": "_preferUnstaked",
         "type": "bool"
       }
     ],
@@ -582,6 +568,62 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakedBalanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakedTotalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
+      {
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -593,30 +635,6 @@
         "internalType": "contract ITicket",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_holder",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "totalBalanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",

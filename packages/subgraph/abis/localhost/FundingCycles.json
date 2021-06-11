@@ -2,8 +2,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract IProjects",
-        "name": "_projects",
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "_terminalDirectory",
         "type": "address"
       }
     ],
@@ -626,19 +626,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "projects",
-    "outputs": [
-      {
-        "internalType": "contract IProjects",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -695,6 +682,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
+      {
+        "internalType": "contract IJuiceTerminalDirectory",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",

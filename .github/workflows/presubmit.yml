@@ -1,12 +1,13 @@
-name: 🍹 Juice Presubmit
+name: 🍹 Contract Tests
 on:
   push:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  test-contracts:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +33,7 @@ jobs:
         id: cache-node-modules
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ./packages/hardhat/node_modules
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-

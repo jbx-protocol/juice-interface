@@ -1,7 +1,4 @@
 const { ethers } = require("hardhat");
-const shouldBehaveLike = require("./behaviors");
-
-const contractName = "FundingCycles";
 
 /** 
   These tests rely on time manipulation quite a bit, which as far as i understand is hard to do precisely. 
@@ -10,8 +7,18 @@ const contractName = "FundingCycles";
   high probability that the subsequent operation will fall on a block with the intended timestamp,
   but there's a small chance that there's an off-by-one error. 
 
+  As a result, tests that depend on the exact time are flaky 10% of the time.
+  This is ok. There are tests for either side of the exact time that are included.
+
   If anyone has ideas on how to mitigate this, please let me know.
+
+  NOTE: Considering removing these tests from the corpus all together.
 */
+process.env.INCLUDE_TIME_EDGE_CASE_TEST = false;
+
+const shouldBehaveLike = require("./behaviors");
+
+const contractName = "FundingCycles";
 
 let timeMark;
 const getTimestamp = async block => {

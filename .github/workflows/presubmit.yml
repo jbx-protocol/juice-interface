@@ -33,7 +33,9 @@ jobs:
         id: cache-node-modules
         uses: actions/cache@v2
         with:
-          path: ./packages/hardhat/node_modules
+          path: |
+            ./node_modules
+            ./packages/hardhat/node_modules
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-nodemodules-

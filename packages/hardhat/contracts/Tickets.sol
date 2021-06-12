@@ -19,7 +19,7 @@ import "./Ticket.sol";
   must thus be calculated in this contract.
 */
 contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
-    // --- public properties --- //
+    // --- public stored properties --- //
 
     // Each project's ERC20 Ticket tokens.
     mapping(uint256 => ITicket) public override tickets;

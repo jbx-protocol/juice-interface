@@ -8,14 +8,20 @@ import "./abstract/Operatable.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
-// Stores project ownership and identifying information.
-contract Projects is ERC721, IProjects, Ownable, Operatable {
-    // --- public properties --- //
+/** 
+  @notice 
+  Stores project ownership and identifying information.
 
-    // A running count of project IDs.
+  @dev
+  Projects are represented as ERC-721's.
+*/
+contract Projects is ERC721, IProjects, Ownable, Operatable {
+    // --- public stored properties --- //
+
+    /// @notice A running count of project IDs.
     uint256 public override count = 0;
 
-    // Optional mapping for project URIs
+    /// @notice Optional mapping for project URIs
     mapping(uint256 => string) public override uri;
 
     /// @notice The project that each unique handle represents.
@@ -34,29 +40,42 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     /// @notice The permision index required to set a project's uri on an owners behalf.
     uint256 public immutable override setUriPermissionIndex = Operations.SetUri;
 
-    /// @notice The permision index required to set a project's uri on an owners behalf.
+    /// @notice The permision index required to claim a project's handle on an owners behalf.
     uint256 public immutable override claimHandlePermissionIndex =
         Operations.ClaimHandle;
 
-    constructor(IOperatorStore _operatorStore)
-        ERC721("Juice project", "JUICE PROJECT")
-        Operatable(_operatorStore)
-    {}
+    // --- external views --- //
 
     /** 
-      @notice Whether the specified project exists.
+      @notice 
+      Whether the specified project exists.
+
       @param _projectId The project to check the existence of.
-      @return If the project exists.
+
+      @return A flag indicating if the project exists.
     */
     function exists(uint256 _projectId) external view override returns (bool) {
         return _exists(_projectId);
     }
 
+    // --- external transactions --- //
+
+    /** 
+      @param _operatorStore A contract storing operator assignments.
+    */
+    constructor(IOperatorStore _operatorStore)
+        ERC721("Juice project", "JUICE PROJECT")
+        Operatable(_operatorStore)
+    {}
+
     /**
-        @notice Create a new project.
+        @notice 
+        Create a new project.
+
         @param _owner The owner of the project.
         @param _handle A unique handle for the project.
         @param _uri An ipfs uri to more info about the project. Dont include the leading ipfs://
+
         @return id The new project's ID.
     */
     function create(
@@ -65,19 +84,22 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         string calldata _uri
     ) external override returns (uint256 id) {
         // Handle must exist.
-        require(_handle.length > 0, "Projects::create: EMPTY_HANDLE");
+        require(_handle != bytes32(0), "Projects::create: EMPTY_HANDLE");
 
         // Handle must be unique.
         require(
             handleResolver[_handle] == 0 &&
-                (transferedHandles[_handle] == address(0) ||
-                    transferedHandles[_handle] == msg.sender),
+                transferedHandles[_handle] == address(0),
             "Projects::create: HANDLE_TAKEN"
         );
 
+        // Increment the count, which will be used as the ID.
         count++;
+
+        // Mint the project.
         _safeMint(_owner, count);
 
+        // Set the handle stored values.
         reverseHandleLookup[count] = _handle;
         handleResolver[_handle] = count;
 
@@ -90,7 +112,9 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     }
 
     /**
-      @notice Allows a project owner to set the project's handle.
+      @notice 
+      Allows a project owner to set the project's handle.
+
       @param _projectId The ID of the project.
       @param _handle The new unique handle for the project.
     */
@@ -105,15 +129,13 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         )
     {
         // Handle must exist.
-        require(_handle.length > 0, "Projects::setInfo: EMPTY_HANDLE");
+        require(_handle != bytes32(0), "Projects::setHandle: EMPTY_HANDLE");
 
         // Handle must be unique.
         require(
-            (handleResolver[_handle] == 0 ||
-                handleResolver[_handle] == _projectId) &&
-                (transferedHandles[_handle] == address(0) ||
-                    transferedHandles[_handle] == msg.sender),
-            "Projects::setInfo: HANDLE_TAKEN"
+            handleResolver[_handle] == 0 &&
+                transferedHandles[_handle] == address(0),
+            "Projects::setHandle: HANDLE_TAKEN"
         );
 
         // If the handle is changing, register the change in the resolver.
@@ -126,9 +148,11 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     }
 
     /**
-      @notice Allows a project owner to set the project's uri.
+      @notice 
+      Allows a project owner to set the project's uri.
+
       @param _projectId The ID of the project.
-      @param _uri An ipfs:// link to more info about the project. Don't include the leading ipfs://
+      @param _uri An ipfs CDN to more info about the project. Don't include the leading ipfs://
     */
     function setUri(uint256 _projectId, string calldata _uri)
         external
@@ -147,7 +171,9 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     }
 
     /**
-      @notice Allows a project owner to transfer its handle to another address.
+      @notice 
+      Allows a project owner to transfer its handle to another address.
+
       @param _projectId The ID of the project to transfer the handle from.
       @param _to The address that can now reallocate the handle.
       @param _newHandle The new unique handle for the project that will replace the transfered one.
@@ -168,12 +194,13 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         returns (bytes32 _handle)
     {
         require(
-            _newHandle.length > 0,
+            _newHandle != bytes32(0),
             "Projects::transferHandle: EMPTY_HANDLE"
         );
 
         require(
-            handleResolver[_newHandle] == 0,
+            handleResolver[_newHandle] == 0 &&
+                transferedHandles[_handle] == address(0),
             "Projects::transferHandle: HANDLE_TAKEN"
         );
 
@@ -194,7 +221,9 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     }
 
     /**
-      @notice Allows an address to claim and handle that has been transfered to them and apply it to a project of theirs.
+      @notice 
+      Allows an address to claim and handle that has been transfered to them and apply it to a project of theirs.
+
       @param _handle The handle being claimed.
       @param _for The address that the handle has been transfered to.
       @param _projectId The ID of the project to use the claimed handle.
@@ -217,7 +246,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         // The handle must have been transfered to the specified address.
         require(
             transferedHandles[_handle] == _for,
-            "Projects::claimHandle: UNAUTHORIZED"
+            "Projects::claimHandle: NOT_FOUND"
         );
 
         // Register the change in the resolver.

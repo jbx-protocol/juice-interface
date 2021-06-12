@@ -22,7 +22,7 @@ contract Prices is IPrices, Ownable {
     /// @notice The available price feeds that can be used to get the price of ETH.
     mapping(uint256 => AggregatorV3Interface) public override feeds;
 
-    // --- public views --- //
+    // --- external views --- //
 
     /** 
       @notice 

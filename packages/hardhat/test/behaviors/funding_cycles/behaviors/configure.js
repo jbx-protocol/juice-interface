@@ -107,23 +107,27 @@ const tests = {
         }
       })
     },
-    {
-      description: "immediately after the first funding cycle",
-      fn: testTemplate({
-        preconfigure: {
-          // Preconfigure the duration.
-          duration: BigNumber.from(42)
-        },
-        // Fast forward to the first second of the cycle after the preconfigured one.
-        fastforward: BigNumber.from(42),
-        expectation: {
-          configuredNumber: 2,
-          configuredId: 2,
-          initId: 2,
-          basedOn: 1
-        }
-      })
-    },
+    ...(process.env.INCLUDE_TIME_EDGE_CASE_TEST
+      ? [
+          {
+            description: "immediately after the first funding cycle",
+            fn: testTemplate({
+              preconfigure: {
+                // Preconfigure the duration.
+                duration: BigNumber.from(42)
+              },
+              // Fast forward to the first second of the cycle after the preconfigured one.
+              fastforward: BigNumber.from(42),
+              expectation: {
+                configuredNumber: 2,
+                configuredId: 2,
+                initId: 2,
+                basedOn: 1
+              }
+            })
+          }
+        ]
+      : []),
     {
       description: "within the second funding cycle",
       fn: testTemplate({
@@ -149,9 +153,9 @@ const tests = {
           duration: BigNumber.from(42)
         },
         // Fast forward a multiple of the duration.
-        fastforward: BigNumber.from(84),
+        fastforward: BigNumber.from(85),
         expectation: {
-          configuredNumber: 3,
+          configuredNumber: 4,
           configuredId: 2,
           initId: 2,
           basedOn: 1
@@ -166,9 +170,9 @@ const tests = {
           duration: BigNumber.from(42)
         },
         // Fast forward many multiples of the duration.
-        fastforward: BigNumber.from(168),
+        fastforward: BigNumber.from(169),
         expectation: {
-          configuredNumber: 5,
+          configuredNumber: 6,
           configuredId: 2,
           initId: 2,
           basedOn: 1
@@ -287,29 +291,33 @@ const tests = {
         }
       })
     },
-    {
-      description:
-        "ballot duration from current time is preconfigured duration",
-      fn: testTemplate({
-        preconfigure: {
-          // Preconfigure the duration.
-          duration: BigNumber.from(42),
-          ballot: {
-            // Set the ballot duration shorter than the configuration duration.
-            duration: BigNumber.from(30)
+    ...(process.env.INCLUDE_TIME_EDGE_CASE_TEST
+      ? [
+          {
+            description:
+              "ballot duration from current time is preconfigured duration",
+            fn: testTemplate({
+              preconfigure: {
+                // Preconfigure the duration.
+                duration: BigNumber.from(42),
+                ballot: {
+                  // Set the ballot duration shorter than the configuration duration.
+                  duration: BigNumber.from(30)
+                }
+              },
+              // Fast forward to the time where the ballot would equal the preconfigured duration,
+              // which is the first second where the proposed configuration could start.
+              fastforward: BigNumber.from(12),
+              expectation: {
+                configuredNumber: 2,
+                configuredId: 2,
+                initId: 2,
+                basedOn: 1
+              }
+            })
           }
-        },
-        // Fast forward to the time where the ballot would equal the preconfigured duration,
-        // which is the first second where the proposed configuration could start.
-        fastforward: BigNumber.from(12),
-        expectation: {
-          configuredNumber: 2,
-          configuredId: 2,
-          initId: 2,
-          basedOn: 1
-        }
-      })
-    },
+        ]
+      : []),
     {
       description: "ballot duration just less than duration",
       fn: testTemplate({

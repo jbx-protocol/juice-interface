@@ -349,11 +349,11 @@ const tests = {
           duration: BigNumber.from(42)
         },
         // Fast forward multiples of the duration.
-        fastforward: BigNumber.from(126),
+        fastforward: BigNumber.from(127),
         expectation: {
           tappedId: 2,
-          tappedNumber: 4,
-          initNumber: 4,
+          tappedNumber: 5,
+          initNumber: 5,
           basedOn: 1,
           newTappedAmount: BigNumber.from(120)
         }

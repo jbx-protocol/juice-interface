@@ -14,6 +14,7 @@ describe("Juice", async function() {
   before(async function() {
     // These tests that depend on the exact time are flaky 10% of the time.
     // This is ok. There are tests for either side of the exact time that are included.
+    // NOTE: Considering removing these tests from the corpus all together.
     process.env.INCLUDE_TIME_EDGE_CASE_TEST = false;
 
     // Bind a reference to the deployer address and an array of other addresses to `this`.

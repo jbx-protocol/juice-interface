@@ -249,7 +249,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(320),
+        fastforward: BigNumber.from(319),
         expectation: {
           number: 6,
           id: 0

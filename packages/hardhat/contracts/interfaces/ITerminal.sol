@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-interface IJuiceTerminal {
+interface ITerminal {
     event Pay(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,

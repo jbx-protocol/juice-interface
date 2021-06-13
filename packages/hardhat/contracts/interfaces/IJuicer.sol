@@ -8,8 +8,8 @@ import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
 import "./IModStore.sol";
-import "./IJuiceTerminal.sol";
-import "./IJuiceTerminalDirectory.sol";
+import "./ITerminal.sol";
+import "./ITerminalDirectory.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
@@ -74,7 +74,7 @@ interface IJuicer {
 
     event Migrate(
         uint256 indexed projectId,
-        IJuiceTerminal indexed to,
+        ITerminal indexed to,
         uint256 _amount,
         address caller
     );
@@ -115,10 +115,7 @@ interface IJuicer {
 
     function prices() external view returns (IPrices);
 
-    function terminalDirectory()
-        external
-        view
-        returns (IJuiceTerminalDirectory);
+    function terminalDirectory() external view returns (ITerminalDirectory);
 
     function yielder() external view returns (IYielder);
 
@@ -191,7 +188,7 @@ interface IJuicer {
         uint256 _minReturnedEth
     ) external;
 
-    function migrate(uint256 _projectId, IJuiceTerminal _to) external;
+    function migrate(uint256 _projectId, ITerminal _to) external;
 
     function claimableOverflow(
         address _account,

@@ -9,7 +9,7 @@ module.exports = function() {
     this.projects = await this.deployMockLocalContract("Projects");
     this.operatorStore = await this.deployMockLocalContract("OperatorStore");
     this.juiceTerminalDirectory = await this.deployMockLocalContract(
-      "JuiceTerminalDirectory"
+      "TerminalDirectory"
     );
 
     // Deploy the contract.

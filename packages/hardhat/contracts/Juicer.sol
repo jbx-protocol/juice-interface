@@ -46,7 +46,7 @@ import "./libraries/Operations.sol";
 // ─██████████████──███████████████──██████████──██████████████──██████████████──██████──██████████─
 // ───────────────────────────────────────────────────────────────────────────────────────────
 
-contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
+contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     modifier onlyGov() {
         require(msg.sender == governance, "Juicer: UNAUTHORIZED");
         _;
@@ -91,7 +91,7 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
     IPrices public immutable override prices;
 
     /// @notice The direct deposit terminals.
-    IJuiceTerminalDirectory public immutable override terminalDirectory;
+    ITerminalDirectory public immutable override terminalDirectory;
 
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
@@ -325,7 +325,7 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
         IOperatorStore _operatorStore,
         IModStore _modStore,
         IPrices _prices,
-        IJuiceTerminalDirectory _terminalDirectory,
+        ITerminalDirectory _terminalDirectory,
         address payable _governance
     ) Operatable(_operatorStore) {
         require(
@@ -334,7 +334,7 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
                 _tickets != ITickets(address(0)) &&
                 _modStore != IModStore(address(0)) &&
                 _prices != IPrices(address(0)) &&
-                _terminalDirectory != IJuiceTerminalDirectory(address(0)) &&
+                _terminalDirectory != ITerminalDirectory(address(0)) &&
                 _governance != address(address(0)),
             "Juicer: ZERO_ADDRESS"
         );
@@ -631,7 +631,7 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
             payable(projects.ownerOf(_fundingCycle.projectId));
 
         // When processing the admin fee, save gas if the admin is using this juice terminal.
-        if (JuiceProject(governance).juiceTerminal() == this) {
+        if (JuiceProject(governance).terminal() == this) {
             _pay(
                 JuiceProject(governance).projectId(),
                 _govFeeAmount,
@@ -679,12 +679,12 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
                 // Otherwise, if a project is specified, pay its Juice project.
             } else if (_mod.projectId != 0) {
                 // Get a reference to the Juice terminal being used.
-                IJuiceTerminal _terminal =
+                ITerminal _terminal =
                     terminalDirectory.terminals(_mod.projectId);
 
                 // The project must have a juice terminal to send funds to.
                 require(
-                    _terminal != IJuiceTerminal(address(0)),
+                    _terminal != ITerminal(address(0)),
                     "Juicer::tap: BAD_MOD"
                 );
 
@@ -945,7 +945,7 @@ contract Juicer is Operatable, IJuicer, IJuiceTerminal, ReentrancyGuard {
         @param _projectId The ID of the project being migrated.
         @param _to The contract that will gain the project's funds.
     */
-    function migrate(uint256 _projectId, IJuiceTerminal _to)
+    function migrate(uint256 _projectId, ITerminal _to)
         external
         override
         requirePermission(

@@ -13,25 +13,25 @@ import "./../interfaces/IJuicer.sol";
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is IERC721Receiver, Ownable {
-    IJuiceTerminal public juiceTerminal;
+    ITerminal public terminal;
     uint256 public projectId;
 
-    constructor(IJuiceTerminal _juiceTerminal, uint256 _projectId) {
-        juiceTerminal = _juiceTerminal;
+    constructor(ITerminal _terminal, uint256 _projectId) {
+        terminal = _terminal;
         projectId = _projectId;
     }
 
     receive() external payable {
         require(projectId != 0, "JuiceProject: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: msg.value}(projectId, msg.sender, "", false);
+        terminal.pay{value: msg.value}(projectId, msg.sender, "", false);
     }
 
     /** 
       @notice Sets the contract where fees are sent.
       @param _to The new terminal to send fees to.
     */
-    function setJuiceTerminal(IJuiceTerminal _to) external onlyOwner {
-        juiceTerminal = _to;
+    function setTerminal(ITerminal _to) external onlyOwner {
+        terminal = _to;
     }
 
     /** 
@@ -49,12 +49,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     */
     function pay(address _beneficiary, string calldata _memo) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: msg.value}(
-            projectId,
-            _beneficiary,
-            _memo,
-            false
-        );
+        terminal.pay{value: msg.value}(projectId, _beneficiary, _memo, false);
     }
 
     /** 
@@ -69,12 +64,7 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         string memory _memo
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
-        juiceTerminal.pay{value: _amount}(
-            projectId,
-            _beneficiary,
-            _memo,
-            false
-        );
+        terminal.pay{value: _amount}(projectId, _beneficiary, _memo, false);
     }
 
     /** 

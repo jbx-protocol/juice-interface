@@ -434,7 +434,7 @@ const tests = {
         caller: deployer,
         controller: addrs[0].address,
         setup: { preconfigure: null },
-        revert: "JuiceTerminalUtility: UNAUTHORIZED",
+        revert: "TerminalUtility: UNAUTHORIZED",
         // below values copied from template
         projectId: 1,
         amount: BigNumber.from(20)

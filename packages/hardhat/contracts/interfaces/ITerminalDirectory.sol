@@ -2,19 +2,16 @@
 pragma solidity >=0.8.0;
 
 import "./IDirectPaymentAddress.sol";
-import "./IJuiceTerminal.sol";
+import "./ITerminal.sol";
 import "./IProjects.sol";
 
-interface IJuiceTerminalDirectory {
+interface ITerminalDirectory {
     function addresses(uint256 _projectId)
         external
         view
         returns (IDirectPaymentAddress[] memory);
 
-    function terminals(uint256 _projectId)
-        external
-        view
-        returns (IJuiceTerminal);
+    function terminals(uint256 _projectId) external view returns (ITerminal);
 
     function beneficiaries(address account) external returns (address);
 
@@ -26,8 +23,7 @@ interface IJuiceTerminalDirectory {
 
     function deployAddress(uint256 _projectId, string calldata _memo) external;
 
-    function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
-        external;
+    function setTerminal(uint256 _projectId, ITerminal _terminal) external;
 
     function setPayerPreferences(
         address _beneficiary,

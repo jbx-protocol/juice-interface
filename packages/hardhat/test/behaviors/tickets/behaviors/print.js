@@ -91,7 +91,7 @@ const tests = {
         amount: BigNumber.from(50),
         preferUnstaked: false,
         withERC20: false,
-        revert: "JuiceTerminalUtility: UNAUTHORIZED"
+        revert: "TerminalUtility: UNAUTHORIZED"
       })
     },
     {

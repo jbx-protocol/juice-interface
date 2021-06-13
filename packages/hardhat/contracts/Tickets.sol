@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import "./libraries/Operations.sol";
 import "./interfaces/ITickets.sol";
 import "./abstract/Operatable.sol";
-import "./abstract/JuiceTerminalUtility.sol";
+import "./abstract/TerminalUtility.sol";
 import "./Ticket.sol";
 
 /** 
@@ -18,7 +18,7 @@ import "./Ticket.sol";
   The total supply of a project's tickets and the balance of each account 
   must thus be calculated in this contract.
 */
-contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
+contract Tickets is TerminalUtility, Operatable, ITickets {
     // --- public stored properties --- //
 
     // Each project's ERC20 Ticket tokens.
@@ -112,8 +112,8 @@ contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
     constructor(
         IProjects _projects,
         IOperatorStore _operatorStore,
-        IJuiceTerminalDirectory _terminalDirectory
-    ) Operatable(_operatorStore) JuiceTerminalUtility(_terminalDirectory) {
+        ITerminalDirectory _terminalDirectory
+    ) Operatable(_operatorStore) TerminalUtility(_terminalDirectory) {
         projects = _projects;
     }
 
@@ -169,7 +169,7 @@ contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
         uint256 _projectId,
         uint256 _amount,
         bool _preferUnstakedTickets
-    ) external override onlyJuiceTerminal(_projectId) {
+    ) external override onlyTerminal(_projectId) {
         // An amount must be specified.
         require(_amount > 0, "Tickets::print: NO_OP");
 
@@ -217,7 +217,7 @@ contract Tickets is JuiceTerminalUtility, Operatable, ITickets {
         uint256 _projectId,
         uint256 _amount,
         bool _preferUnstaked
-    ) external override onlyJuiceTerminal(_projectId) {
+    ) external override onlyTerminal(_projectId) {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
 

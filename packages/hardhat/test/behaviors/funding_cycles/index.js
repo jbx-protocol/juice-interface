@@ -49,7 +49,7 @@ module.exports = function() {
     // Deploy mock dependency contracts.
     this.ballot = await this.deployMockLocalContract("FundingCycleBallot");
     this.juiceTerminalDirectory = await this.deployMockLocalContract(
-      "JuiceTerminalDirectory"
+      "TerminalDirectory"
     );
 
     // Deploy the contract.

@@ -5,12 +5,12 @@ import "prb-math/contracts/PRBMathCommon.sol";
 
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
-import "./abstract/JuiceTerminalUtility.sol";
+import "./abstract/TerminalUtility.sol";
 
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
-contract FundingCycles is JuiceTerminalUtility, IFundingCycles {
+contract FundingCycles is TerminalUtility, IFundingCycles {
     // --- public properties --- //
 
     /// @notice Stores the reconfiguration properties of each funding cycle,
@@ -237,8 +237,8 @@ contract FundingCycles is JuiceTerminalUtility, IFundingCycles {
     /** 
       @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
     */
-    constructor(IJuiceTerminalDirectory _terminalDirectory)
-        JuiceTerminalUtility(_terminalDirectory)
+    constructor(ITerminalDirectory _terminalDirectory)
+        TerminalUtility(_terminalDirectory)
     {}
 
     /**
@@ -273,7 +273,7 @@ contract FundingCycles is JuiceTerminalUtility, IFundingCycles {
     )
         external
         override
-        onlyJuiceTerminal(_projectId)
+        onlyTerminal(_projectId)
         returns (uint256 fundingCycleId)
     {
         // Target must be greater than 0.
@@ -353,7 +353,7 @@ contract FundingCycles is JuiceTerminalUtility, IFundingCycles {
     function tap(uint256 _projectId, uint256 _amount)
         external
         override
-        onlyJuiceTerminal(_projectId)
+        onlyTerminal(_projectId)
         returns (uint256 fundingCycleId)
     {
         // Get a reference to the funding cycle being tapped.

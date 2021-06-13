@@ -168,7 +168,7 @@ const tests = {
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "JuiceTerminalUtility: UNAUTHORIZED"
+        revert: "TerminalUtility: UNAUTHORIZED"
       })
     },
     {

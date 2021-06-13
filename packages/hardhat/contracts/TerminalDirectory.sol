@@ -2,19 +2,19 @@
 pragma solidity >=0.8.0;
 
 import "./interfaces/IJuicer.sol";
-import "./interfaces/IJuiceTerminalDirectory.sol";
+import "./interfaces/ITerminalDirectory.sol";
 import "./interfaces/IProjects.sol";
 import "./libraries/Operations.sol";
 
 import "./DirectPaymentAddress.sol";
 
 // Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
-contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
+contract TerminalDirectory is ITerminalDirectory {
     // A list of contracts for each project ID that can receive funds directly.
     mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
 
     // For each project ID, the juice terminal that the direct payment addresses are proxies for.
-    mapping(uint256 => IJuiceTerminal) public override terminals;
+    mapping(uint256 => ITerminal) public override terminals;
 
     // For each address, the address that will be used as the beneficiary of direct payments made.
     mapping(address => address) public override beneficiaries;
@@ -69,26 +69,26 @@ contract JuiceTerminalDirectory is IJuiceTerminalDirectory {
     /** 
       @notice Update the juice terminal that payments to direct payment addresses will be forwarded for the specified project ID.
       @param _projectId The ID of the project to set a new terminal for.
-      @param _juiceTerminal The new terminal to set.
+      @param _terminal The new terminal to set.
     */
-    function setTerminal(uint256 _projectId, IJuiceTerminal _juiceTerminal)
+    function setTerminal(uint256 _projectId, ITerminal _terminal)
         external
         override
     {
         // Get a reference to the current terminal being used.
-        IJuiceTerminal _currentTerminal = terminals[_projectId];
+        ITerminal _currentTerminal = terminals[_projectId];
 
         // If the terminal is already set, nothing to do.
-        if (_currentTerminal == _juiceTerminal) return;
+        if (_currentTerminal == _terminal) return;
 
         require(
-            _currentTerminal == IJuiceTerminal(address(0)) ||
+            _currentTerminal == ITerminal(address(0)) ||
                 msg.sender == address(_currentTerminal),
-            "Juicer::setJuiceTerminal: UNAUTHORIZED"
+            "Juicer::setTerminal: UNAUTHORIZED"
         );
 
         // Set the new terminal.
-        terminals[_projectId] = _juiceTerminal;
+        terminals[_projectId] = _terminal;
     }
 
     /** 

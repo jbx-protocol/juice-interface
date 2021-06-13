@@ -43,7 +43,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           },
           {
@@ -95,7 +95,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           }
         ],
@@ -156,7 +156,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           },
           {
@@ -217,7 +217,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           },
           {
@@ -275,7 +275,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           }
         ],
@@ -326,7 +326,7 @@ module.exports = [
           },
           {
             "internalType": "bool",
-            "name": "preferConverted",
+            "name": "preferUnstaked",
             "type": "bool"
           }
         ],

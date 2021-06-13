@@ -16,7 +16,7 @@ export default function Landing() {
   const bigHeader = (text: string) => (
     <h1
       style={{
-        fontSize: '3.4rem',
+        fontSize: '3.2rem',
         fontWeight: 600,
         lineHeight: 1.2,
         margin: 0,

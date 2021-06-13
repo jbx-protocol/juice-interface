@@ -32,7 +32,7 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "_terminalDirectory",
         "type": "address"
       },
@@ -158,7 +158,7 @@ module.exports = [
       },
       {
         "indexed": true,
-        "internalType": "contract IJuiceTerminal",
+        "internalType": "contract ITerminal",
         "name": "to",
         "type": "address"
       },
@@ -678,6 +678,19 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "configurePermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -820,7 +833,7 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "contract IJuiceTerminal",
+        "internalType": "contract ITerminal",
         "name": "_to",
         "type": "address"
       }
@@ -828,6 +841,19 @@ module.exports = [
     "name": "migrate",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "migratePermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -875,7 +901,7 @@ module.exports = [
       },
       {
         "internalType": "bool",
-        "name": "_preferConvertedTickets",
+        "name": "_preferUnstakedTickets",
         "type": "bool"
       }
     ],
@@ -935,13 +961,26 @@ module.exports = [
       },
       {
         "internalType": "bool",
-        "name": "_preferConvertedTickets",
+        "name": "_preferUnstakedTickets",
         "type": "bool"
       }
     ],
     "name": "printInitialTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "printInitialTicketsPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1071,7 +1110,7 @@ module.exports = [
       },
       {
         "internalType": "bool",
-        "name": "_preferConverted",
+        "name": "_preferUnstaked",
         "type": "bool"
       }
     ],
@@ -1084,6 +1123,19 @@ module.exports = [
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "redeemPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1190,7 +1242,7 @@ module.exports = [
     "name": "terminalDirectory",
     "outputs": [
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "",
         "type": "address"
       }

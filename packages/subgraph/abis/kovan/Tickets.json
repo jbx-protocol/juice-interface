@@ -10,60 +10,15 @@
         "internalType": "contract IOperatorStore",
         "name": "_operatorStore",
         "type": "address"
+      },
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "controller",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "AddController",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "controller",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "Initialize",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -157,7 +112,7 @@
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "preferConvertedTickets",
+        "name": "preferUnstakedTickets",
         "type": "bool"
       },
       {
@@ -194,13 +149,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "IOUs",
+        "name": "stakedTickets",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "preferConverted",
+        "name": "preferUnstaked",
         "type": "bool"
       },
       {
@@ -211,31 +166,6 @@
       }
     ],
     "name": "Redeem",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "controller",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "RemoveController",
     "type": "event"
   },
   {
@@ -372,50 +302,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "IOUBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "IOUTotalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_controller",
+        "name": "_holder",
         "type": "address"
       },
       {
@@ -424,80 +311,12 @@
         "type": "uint256"
       }
     ],
-    "name": "addController",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "appointAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_controller",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "isAdmin",
+    "name": "balanceOf",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
-        "name": "",
+        "name": "balance",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "isController",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -563,6 +382,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "lockPermissionIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -587,13 +419,29 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "operatorStore",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "contract IOperatorStore",
+        "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "lockedBy",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -601,10 +449,10 @@
   },
   {
     "inputs": [],
-    "name": "owner",
+    "name": "operatorStore",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract IOperatorStore",
         "name": "",
         "type": "address"
       }
@@ -631,7 +479,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_preferConvertedTickets",
+        "name": "_preferUnstakedTickets",
         "type": "bool"
       }
     ],
@@ -672,55 +520,11 @@
       },
       {
         "internalType": "bool",
-        "name": "_preferConverted",
+        "name": "_preferUnstaked",
         "type": "bool"
       }
     ],
     "name": "redeem",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_controller",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "removeController",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "revokeAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "setOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -764,6 +568,62 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakedBalanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakedTotalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -775,30 +635,6 @@
         "internalType": "contract ITicket",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_holder",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      }
-    ],
-    "name": "totalBalanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",

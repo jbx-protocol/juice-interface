@@ -11,7 +11,7 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "projectId",
+        "name": "domain",
         "type": "uint256"
       },
       {
@@ -45,7 +45,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_projectId",
+        "name": "_domain",
         "type": "uint256"
       },
       {
@@ -79,7 +79,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_projectId",
+        "name": "_domain",
         "type": "uint256"
       },
       {
@@ -137,7 +137,7 @@ module.exports = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_projectId",
+        "name": "_domain",
         "type": "uint256"
       },
       {
@@ -160,7 +160,7 @@ module.exports = [
     "inputs": [
       {
         "internalType": "uint256[]",
-        "name": "_projectIds",
+        "name": "_domains",
         "type": "uint256[]"
       },
       {

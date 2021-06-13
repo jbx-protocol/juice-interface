@@ -1039,7 +1039,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @param _yielder The new yielder.
     */
     function setYielder(IYielder _yielder) external override onlyGov {
-        // If there is already an yielder, withdraw all funds and move them to the new yielder.
+        // The yielder can only be set once. This is for security reasons.
         require(
             yielder == IYielder(address(0)),
             "Juicer::setYielder: ALREADY_SET"
@@ -1056,6 +1056,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @param _fee The new fee percent. Out of 200.
     */
     function setFee(uint256 _fee) external override onlyGov {
+        // Fee must be under 100%.
         require(_fee <= 200, "Juicer::setFee: BAD_FEE");
 
         // Set the fee.

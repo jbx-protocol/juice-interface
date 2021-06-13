@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./../interfaces/IJuicer.sol";
 
@@ -21,9 +22,18 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         projectId = _projectId;
     }
 
-    receive() external payable {
-        require(projectId != 0, "JuiceProject: PROJECT_NOT_FOUND");
-        terminal.pay{value: msg.value}(projectId, msg.sender, "", false);
+    receive() external payable {}
+
+    /** 
+      @notice Withdraws funds stored in this contract.
+      @param _beneficiary The address to send the funds to.
+      @param _amount The amount to send.
+    */
+    function withdraw(address payable _beneficiary, uint256 _amount)
+        external
+        onlyOwner
+    {
+        Address.sendValue(_beneficiary, _amount);
     }
 
     /** 

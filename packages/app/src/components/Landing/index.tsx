@@ -82,7 +82,7 @@ export default function Landing() {
                   paddingBottom: 60,
                 }}
               >
-                {bigHeader('A business model for the open internet')}
+                {bigHeader('A business model for the people')}
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
                     On Juice, people say up front how much cashflow they need in order

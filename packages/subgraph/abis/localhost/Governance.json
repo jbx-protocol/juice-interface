@@ -89,19 +89,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "juiceTerminal",
-    "outputs": [
-      {
-        "internalType": "contract IJuiceTerminal",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -207,19 +194,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract IJuiceTerminal",
-        "name": "_to",
-        "type": "address"
-      }
-    ],
-    "name": "setJuiceTerminal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IOperatorStore",
         "name": "_operatorStore",
         "type": "address"
@@ -307,6 +281,19 @@
   {
     "inputs": [
       {
+        "internalType": "contract ITerminal",
+        "name": "_to",
+        "type": "address"
+      }
+    ],
+    "name": "setTerminal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "contract IJuicer",
         "name": "_juicer",
         "type": "address"
@@ -320,6 +307,19 @@
     "name": "setYielder",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "terminal",
+    "outputs": [
+      {
+        "internalType": "contract ITerminal",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

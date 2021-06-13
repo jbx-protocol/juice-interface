@@ -8,17 +8,17 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
-  const juiceTerminalDirectory = await deploy("JuiceTerminalDirectory", [
+  const terminalDirectory = await deploy("TerminalDirectory", [
     projects.address,
     operatorStore.address
   ]);
   const fundingCycles = await deploy("FundingCycles", [
-    juiceTerminalDirectory.address
+    terminalDirectory.address
   ]);
   const tickets = await deploy("Tickets", [
     projects.address,
     operatorStore.address,
-    juiceTerminalDirectory.address
+    terminalDirectory.address
   ]);
   const modStore = await deploy("ModStore", [
     projects.address,
@@ -34,34 +34,21 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     operatorStore.address,
     modStore.address,
     prices.address,
-    juiceTerminalDirectory.address,
+    terminalDirectory.address,
     governance.address
   ]);
 
   const ballot = await deploy("FundingCycleBallot", [juicer.address]);
 
-  await deploy("JuiceTerminalDirectory", [
-    projects.address,
-    operatorStore.address
-  ]);
-
   const blockGasLimit = 9000000;
 
   try {
     const ProjectsFactory = await ethers.getContractFactory("Projects");
-    const FundingCyclesFactory = await ethers.getContractFactory(
-      "FundingCycles"
-    );
-    const TicketsFactory = await ethers.getContractFactory("Tickets");
     const PricesFactory = await ethers.getContractFactory("Prices");
     const GovernanceFactory = await ethers.getContractFactory("Governance");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
     const attachedProjects = await ProjectsFactory.attach(projects.address);
-    const attachedFundingCycles = await FundingCyclesFactory.attach(
-      fundingCycles.address
-    );
-    const attachedTickets = await TicketsFactory.attach(tickets.address);
     const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedGovernance = await GovernanceFactory.attach(
       governance.address
@@ -95,7 +82,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     }
 
     console.log(callContractIcon + "Setting governance's Juice terminal");
-    await attachedGovernance.setJuiceTerminal(juicer.address, {
+    await attachedGovernance.setTerminal(juicer.address, {
       gasLimit: blockGasLimit
     });
 
@@ -103,19 +90,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
     // await attachedJuicer.transferOwnership(admin.address, {
     //   gasLimit: blockGasLimit
     // });
-
-    console.log(
-      callContractIcon + "Set the deployer as an operator of governance"
-    );
-    await attachedGovernance.setOperator(
-      operatorStore.address,
-      0,
-      governance.signer.address,
-      [0],
-      {
-        gasLimit: blockGasLimit
-      }
-    );
 
     console.log(callContractIcon + "Configuring governance's budget");
 
@@ -136,19 +110,6 @@ module.exports = async (wethAddr, ethUsdAddr) => {
         reconfigurationBondingCurveRate: 200
       },
       ballot.address,
-      {
-        gasLimit: blockGasLimit
-      }
-    );
-
-    console.log(
-      callContractIcon + "Remove the deployer as an operator of governance"
-    );
-    await attachedGovernance.setOperator(
-      operatorStore.address,
-      0,
-      governance.signer.address,
-      [],
       {
         gasLimit: blockGasLimit
       }
@@ -174,7 +135,7 @@ module.exports = async (wethAddr, ethUsdAddr) => {
   return {
     operatorStore,
     modStore,
-    juiceTerminalDirectory,
+    terminalDirectory,
     governance,
     prices,
     projects,

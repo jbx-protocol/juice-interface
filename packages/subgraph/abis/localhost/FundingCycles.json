@@ -2,7 +2,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "_terminalDirectory",
         "type": "address"
       }
@@ -692,7 +692,7 @@
     "name": "terminalDirectory",
     "outputs": [
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "",
         "type": "address"
       }

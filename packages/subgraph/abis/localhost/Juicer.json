@@ -32,7 +32,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "_terminalDirectory",
         "type": "address"
       },
@@ -158,7 +158,7 @@
       },
       {
         "indexed": true,
-        "internalType": "contract IJuiceTerminal",
+        "internalType": "contract ITerminal",
         "name": "to",
         "type": "address"
       },
@@ -833,7 +833,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "contract IJuiceTerminal",
+        "internalType": "contract ITerminal",
         "name": "_to",
         "type": "address"
       }
@@ -1242,7 +1242,7 @@
     "name": "terminalDirectory",
     "outputs": [
       {
-        "internalType": "contract IJuiceTerminalDirectory",
+        "internalType": "contract ITerminalDirectory",
         "name": "",
         "type": "address"
       }

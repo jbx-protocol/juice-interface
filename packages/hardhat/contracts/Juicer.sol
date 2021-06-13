@@ -1035,15 +1035,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /** 
       @notice Allow the admin to change the yielder. 
-      @dev All funds will be migrated from the old yielder to the new one.
+      @dev The yielder can only be set once.
       @param _yielder The new yielder.
     */
     function setYielder(IYielder _yielder) external override onlyGov {
         // If there is already an yielder, withdraw all funds and move them to the new yielder.
-        if (yielder != IYielder(address(0)))
-            _yielder.deposit{
-                value: yielder.withdrawAll(payable(address(this)))
-            }();
+        require(
+            yielder == IYielder(address(0)),
+            "Juicer::setYielder: ALREADY_SET"
+        );
 
         // Set the yielder.
         yielder = _yielder;

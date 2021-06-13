@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const { utils } = require("ethers");
 const R = require("ramda");
 
-module.exports = async (wethAddr, ethUsdAddr) => {
+module.exports = async ethUsdAddr => {
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);

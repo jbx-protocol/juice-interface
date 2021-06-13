@@ -78,9 +78,8 @@ const QAs: {
   {
     q: 'How decentralized is Juice?',
     a: [
-      `At the start, the Juice governance smart contract can take decisive decisions regarding the future of the Juice project, and the fate of the funds that it manages.`,
-      `Power over the governance smart contract is initially held by Juice's founding contributors. If the project gains traction and a community forms around it,`,
-      `the intent is to reduce the capabilities of governance and transfer the power to a community of token holders.`
+      `Juice is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which have drastic consequences for users. The Juice governance smart contract can adjust these levers.`,
+      `At the start, power over the governance smart contract is initially held by Juice's founding contributors. The intent is to soon transfer the power to a community of token holders.`
     ],
   },
   {

@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./interfaces/IJuicer.sol";
+import "./interfaces/ITerminal.sol";
 import "./interfaces/ITerminalDirectory.sol";
 import "./interfaces/IProjects.sol";
-import "./libraries/Operations.sol";
 
 import "./DirectPaymentAddress.sol";
 

@@ -4,8 +4,9 @@ const tests = {
   success: [
     {
       description: "sets preferences",
-      fn: ({ deployer }) => ({
-        caller: deployer
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        newGovernance: addrs[0].address
       })
     }
   ],
@@ -14,6 +15,7 @@ const tests = {
       description: "unauthorized",
       fn: ({ addrs }) => ({
         caller: addrs[0].address,
+        newGovernance: addrs[0].address,
         revert: "Ownable: caller is not the owner"
       })
     }
@@ -24,7 +26,7 @@ module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
-        const { caller } = successTest.fn(this);
+        const { caller, newGovernance } = successTest.fn(this);
 
         const operatorStore = await this.deployMockLocalContract(
           "OperatorStore"
@@ -52,16 +54,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
-        const to = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -71,19 +64,19 @@ module.exports = function() {
           terminalDirectory.address
         ]);
 
-        await from.mock.allowMigration.withArgs(to.address).returns();
+        await juicer.mock.appointGovernance.withArgs(newGovernance).returns();
 
         // Execute the transaction.
         await this.contract
           .connect(caller)
-          .allowMigration(from.address, to.address);
+          .appointGovernance(juicer.address, newGovernance);
       });
     });
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { caller, revert } = failureTest.fn(this);
+        const { caller, newGovernance, revert } = failureTest.fn(this);
 
         const operatorStore = await this.deployMockLocalContract(
           "OperatorStore"
@@ -111,16 +104,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
-        const to = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -132,7 +116,9 @@ module.exports = function() {
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).allowMigration(from.address, to.address)
+          this.contract
+            .connect(caller)
+            .appointGovernance(juicer.address, newGovernance)
         ).to.be.revertedWith(revert);
       });
     });

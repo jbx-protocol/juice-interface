@@ -56,25 +56,24 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
       @notice Make a payment to this project.
       @param _beneficiary The address who will receive tickets from this fee.
       @param _memo A memo that will be included in the published event.
+      @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
     */
-    function pay(address _beneficiary, string calldata _memo) external payable {
-        require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
-        terminal.pay{value: msg.value}(projectId, _beneficiary, _memo, false);
-    }
-
-    /** 
-      @notice Take a fee for this project from this contract.
-      @param _amount The payment amount.
-      @param _beneficiary The address who will receive tickets from this fee.
-      @param _memo A memo that will be included in the published event.
-    */
-    function takeFee(
-        uint256 _amount,
+    function pay(
         address _beneficiary,
-        string memory _memo
-    ) internal {
-        require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
-        terminal.pay{value: _amount}(projectId, _beneficiary, _memo, false);
+        string calldata _memo,
+        bool _preferUnstakedTickets
+    ) external payable {
+        require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
+        require(
+            terminal != ITerminal(address(0)),
+            "JuiceProject::pay: TERMINAL_NOT_FOUND"
+        );
+        terminal.pay{value: msg.value}(
+            projectId,
+            _beneficiary,
+            _memo,
+            _preferUnstakedTickets
+        );
     }
 
     /** 
@@ -83,13 +82,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         @param _projects The projects contract.
         @param _newOwner The new project owner.
         @param _projectId The ID of the project to transfer ownership of.
+        @param _data Arbitrary data to include in the transaction.
     */
     function transferProjectOwnership(
         IProjects _projects,
         address _newOwner,
-        uint256 _projectId
+        uint256 _projectId,
+        bytes calldata _data
     ) external onlyOwner {
-        _projects.safeTransferFrom(address(this), _newOwner, _projectId);
+        _projects.safeTransferFrom(address(this), _newOwner, _projectId, _data);
     }
 
     /** 
@@ -123,6 +124,32 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
             _projectIds,
             _operators,
             _permissionIndexes
+        );
+    }
+
+    /** 
+      @notice Take a fee for this project from this contract.
+      @param _amount The payment amount.
+      @param _beneficiary The address who will receive tickets from this fee.
+      @param _memo A memo that will be included in the published event.
+      @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
+    */
+    function _takeFee(
+        uint256 _amount,
+        address _beneficiary,
+        string calldata _memo,
+        bool _preferUnstakedTickets
+    ) internal {
+        require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
+        require(
+            terminal != ITerminal(address(0)),
+            "JuiceProject::takeFee: TERMINAL_NOT_FOUND"
+        );
+        terminal.pay{value: _amount}(
+            projectId,
+            _beneficiary,
+            _memo,
+            _preferUnstakedTickets
         );
     }
 }

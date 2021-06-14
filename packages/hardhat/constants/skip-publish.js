@@ -1,6 +1,7 @@
 module.exports = [
   "ModAllocator",
-  "ETHUSDPriceFeed",
+  "ExampleETHUSDPriceFeed",
+  "ExampleJuiceProject",
   "YearnYielder",
   "Ticket",
   "DirectPaymentAddress"

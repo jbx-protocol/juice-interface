@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 // A static price feed contract to use locally.
-contract ETHUSDPriceFeed is AggregatorV3Interface {
+contract ExampleETHUSDPriceFeed is AggregatorV3Interface {
     function decimals() external pure override returns (uint8) {
         return 18;
     }

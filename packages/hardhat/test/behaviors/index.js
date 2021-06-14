@@ -7,6 +7,7 @@ const fundingCycles = require("./funding_cycles");
 const directPaymentAddress = require("./direct_payment_address");
 const terminalDirectory = require("./terminal_directory");
 const governance = require("./governance");
+const juiceProject = require("./juice_project");
 
 module.exports = {
   operatorStore,
@@ -17,5 +18,6 @@ module.exports = {
   fundingCycles,
   directPaymentAddress,
   terminalDirectory,
-  governance
+  governance,
+  juiceProject
 };

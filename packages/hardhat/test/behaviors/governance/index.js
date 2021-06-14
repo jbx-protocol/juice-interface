@@ -13,4 +13,9 @@ module.exports = function() {
 
   // Test each function.
   describe("allowMigration(...)", shouldBehaveLike.allowMigration);
+  describe("setYielder(...)", shouldBehaveLike.setYielder);
+  describe("addPriceFeed(...)", shouldBehaveLike.addPriceFeed);
+  describe("setTargetLocalEth(...)", shouldBehaveLike.setTargetLocalEth);
+  describe("setFee(...)", shouldBehaveLike.setFee);
+  describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
 };

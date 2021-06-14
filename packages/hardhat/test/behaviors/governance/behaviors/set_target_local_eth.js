@@ -52,7 +52,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -61,22 +61,14 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const amount = 1;
 
-        await from.mock.allowMigration.withArgs(to.address).returns();
+        await juicer.mock.setTargetLocalETH.withArgs(amount).returns();
 
         // Execute the transaction.
         await this.contract
           .connect(caller)
-          .allowMigration(from.address, to.address);
+          .setTargetLocalETH(juicer.address, amount);
       });
     });
   });
@@ -111,7 +103,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -120,19 +112,13 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const amount = 1;
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).allowMigration(from.address, to.address)
+          this.contract
+            .connect(caller)
+            .setTargetLocalETH(juicer.address, amount)
         ).to.be.revertedWith(revert);
       });
     });

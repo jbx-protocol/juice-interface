@@ -542,7 +542,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to transfer the newly minted Tickets to. 
         @param _memo A memo that will be included in the published event.
-      @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
+        @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
         @return _fundingCycleId The ID of the funding stage that the payment was made during.
     */
     function pay(
@@ -646,7 +646,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         } else {
             JuiceProject(governance).pay{value: _govFeeAmount}(
                 _projectOwner,
-                "Juice fee"
+                "Juice fee",
+                false
             );
         }
 

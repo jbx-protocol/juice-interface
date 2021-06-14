@@ -74,7 +74,7 @@ module.exports = async ethUsdAddr => {
       });
       // Otherwise deploy a static local price feed.
     } else {
-      const feed = await deploy("ETHUSDPriceFeed", []);
+      const feed = await deploy("ExampleETHUSDPriceFeed", []);
       await attachedGovernance.addPriceFeed(prices.address, feed.address, 1, {
         gasLimit: blockGasLimit
       });

@@ -52,7 +52,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -61,22 +61,14 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const yielder = await this.deployMockLocalContract("YearnYielder");
 
-        await from.mock.allowMigration.withArgs(to.address).returns();
+        await juicer.mock.setYielder.withArgs(yielder.address).returns();
 
         // Execute the transaction.
         await this.contract
           .connect(caller)
-          .allowMigration(from.address, to.address);
+          .setYielder(juicer.address, yielder.address);
       });
     });
   });
@@ -111,7 +103,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
           tickets.address,
@@ -120,19 +112,13 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          tickets.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const yielder = await this.deployMockLocalContract("YearnYielder");
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).allowMigration(from.address, to.address)
+          this.contract
+            .connect(caller)
+            .setYielder(juicer.address, yielder.address)
         ).to.be.revertedWith(revert);
       });
     });

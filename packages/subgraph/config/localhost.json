@@ -1,16 +1,16 @@
 {
   "Network": "mainnet",
   "AbisDir": "localhost",
-  "StartBlock": 3,
-  "FundingCycleBallotAddress": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
-  "FundingCyclesAddress": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
-  "GovernanceAddress": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+  "StartBlock": 164,
+  "FundingCycleBallotAddress": "0xA56F946D6398Dd7d9D4D9B337Cf9E0F68982ca5B",
+  "FundingCyclesAddress": "0x74Cf9087AD26D541930BaC724B7ab21bA8F00a27",
+  "GovernanceAddress": "0x70bDA08DBe07363968e9EE53d899dFE48560605B",
   "JuiceTerminalDirectoryAddress": "0xAA292E8611aDF267e563f334Ee42320aC96D0463",
-  "JuicerAddress": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
-  "ModStoreAddress": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-  "OperatorStoreAddress": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-  "PricesAddress": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-  "ProjectsAddress": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-  "TicketsAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
-  "TerminalDirectoryAddress": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+  "JuicerAddress": "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E",
+  "ModStoreAddress": "0xaca81583840B1bf2dDF6CDe824ada250C1936B4D",
+  "OperatorStoreAddress": "0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab",
+  "PricesAddress": "0xB2b580ce436E6F77A5713D80887e14788Ef49c9A",
+  "ProjectsAddress": "0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d",
+  "TicketsAddress": "0xefAB0Beb0A557E452b398035eA964948c750b2Fd",
+  "TerminalDirectoryAddress": "0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB"
 }

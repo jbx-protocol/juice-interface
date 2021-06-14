@@ -4,8 +4,6 @@ pragma solidity >=0.8.0;
 import "./interfaces/IDirectPaymentAddress.sol";
 import "./interfaces/ITerminalDirectory.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice
   A contract that can receive funds directly and forward to a project's current terminal.

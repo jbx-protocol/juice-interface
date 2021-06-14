@@ -146,6 +146,11 @@
         "internalType": "string",
         "name": "_memo",
         "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferUnstakedTickets",
+        "type": "bool"
       }
     ],
     "name": "pay",
@@ -351,6 +356,11 @@
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
       }
     ],
     "name": "transferProjectOwnership",

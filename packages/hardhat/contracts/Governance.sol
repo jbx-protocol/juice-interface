@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./interfaces/IJuicer.sol";
+import "./interfaces/ITerminal.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/JuiceProject.sol";
 
@@ -12,12 +12,12 @@ contract Governance is JuiceProject {
     {}
 
     /** 
-      @notice Gives Ticket holders within one Juicer access to migrate to another Juicer.
-      @param _from The juicer to allow a new migration from.
-      @param _to The juicer to allow migration to.
+      @notice Gives projects using one Juicer access to migrate to another Juicer.
+      @param _from The terminal to allow a new migration from.
+      @param _to The terminal to allow migration to.
     */
-    function allowMigration(IJuicer _from, address _to) external onlyOwner {
-        _from.allowMigration(address(_to));
+    function allowMigration(ITerminal _from, ITerminal _to) external onlyOwner {
+        _from.allowMigration(_to);
     }
 
     /**

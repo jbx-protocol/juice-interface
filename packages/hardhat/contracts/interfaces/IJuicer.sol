@@ -72,13 +72,6 @@ interface IJuicer {
 
     event AcceptGovernance(address governance);
 
-    event Migrate(
-        uint256 indexed projectId,
-        ITerminal indexed to,
-        uint256 _amount,
-        address caller
-    );
-
     event Deploy(
         uint256 indexed projectId,
         uint256 fundingCycleId,
@@ -92,8 +85,6 @@ interface IJuicer {
         uint256 amount,
         address caller
     );
-
-    event AddToMigrationAllowList(address allowed);
 
     event Deposit(uint256 amount);
 
@@ -188,8 +179,6 @@ interface IJuicer {
         uint256 _minReturnedEth
     ) external;
 
-    function migrate(uint256 _projectId, ITerminal _to) external;
-
     function claimableOverflow(
         address _account,
         uint256 _amount,
@@ -208,8 +197,6 @@ interface IJuicer {
     function printReservedTickets(uint256 _projectId)
         external
         returns (uint256 reservedTicketsToPrint);
-
-    function allowMigration(address _contract) external;
 
     function setFee(uint256 _fee) external;
 

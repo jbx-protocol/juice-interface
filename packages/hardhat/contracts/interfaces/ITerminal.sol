@@ -17,6 +17,20 @@ interface ITerminal {
         address caller
     );
 
+    event AllowMigration(ITerminal allowed);
+
+    event Migrate(
+        uint256 indexed projectId,
+        ITerminal indexed to,
+        uint256 _amount,
+        address caller
+    );
+
+    function migrationIsAllowed(ITerminal _terminal)
+        external
+        view
+        returns (bool);
+
     function pay(
         uint256 _projectId,
         address _beneficiary,
@@ -25,4 +39,8 @@ interface ITerminal {
     ) external payable returns (uint256 fundingCycleId);
 
     function addToBalance(uint256 _projectId) external payable;
+
+    function allowMigration(ITerminal _contract) external;
+
+    function migrate(uint256 _projectId, ITerminal _to) external;
 }

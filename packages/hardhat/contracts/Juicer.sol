@@ -54,9 +54,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     // --- private stored properties --- //
 
-    // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
-    mapping(address => bool) private migrationContractIsAllowed;
-
     // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
     mapping(uint256 => uint256) private rawBalanceOf;
 
@@ -98,6 +95,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /// @notice The target amount of ETH to keep in this contract instead of depositing.
     uint256 public override targetLocalETH = 1000 * (10**18);
+
+    // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
+    mapping(ITerminal => bool) public override migrationIsAllowed;
 
     /// @notice The permision index required to redeem tickets on a holders behalf.
     uint256 public immutable override redeemPermissionIndex = Operations.Redeem;
@@ -961,10 +961,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         nonReentrant
     {
         // The migration destination must be allowed.
-        require(
-            migrationContractIsAllowed[address(_to)],
-            "Juicer::migrate: NOT_ALLOWED"
-        );
+        require(migrationIsAllowed[_to], "Juicer::migrate: NOT_ALLOWED");
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _balanceOf = balanceOf(_projectId);
@@ -1010,17 +1007,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @notice Adds to the contract addresses that projects can migrate their Tickets to.
         @param _contract The contract to allow.
     */
-    function allowMigration(address _contract) external override onlyGov {
+    function allowMigration(ITerminal _contract) external override onlyGov {
         // Can't allow the zero address.
         require(
-            _contract != address(0),
+            _contract != ITerminal(address(0)),
             "Juicer::allowMigration: ZERO_ADDRESS"
         );
 
         // Set the contract as allowed
-        migrationContractIsAllowed[_contract] = true;
+        migrationIsAllowed[_contract] = true;
 
-        emit AddToMigrationAllowList(_contract);
+        emit AllowMigration(_contract);
     }
 
     /** 

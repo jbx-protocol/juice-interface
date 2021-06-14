@@ -9,8 +9,7 @@ module.exports = async ethUsdAddr => {
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
   const terminalDirectory = await deploy("TerminalDirectory", [
-    projects.address,
-    operatorStore.address
+    projects.address
   ]);
   const fundingCycles = await deploy("FundingCycles", [
     terminalDirectory.address

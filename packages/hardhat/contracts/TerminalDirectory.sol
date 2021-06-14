@@ -8,10 +8,17 @@ import "./libraries/Operations.sol";
 
 import "./DirectPaymentAddress.sol";
 
-// Allows project owners to deploy proxy contracts that can fund them when receiving funds directly.
+/**
+  @notice
+  Allows project owners to deploy proxy contracts that can pay them when receiving funds directly.
+*/
 contract TerminalDirectory is ITerminalDirectory {
+    // --- private stored properties --- //
+
     // A list of contracts for each project ID that can receive funds directly.
     mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
+
+    // --- public stored properties --- //
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
@@ -25,9 +32,14 @@ contract TerminalDirectory is ITerminalDirectory {
     /// @notice For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
     mapping(address => bool) public override preferUnstakedTickets;
 
+    // --- external views --- //
+
     /** 
-      @notice A list of all direct payment addresses for the specified project ID.
+      @notice 
+      A list of all direct payment addresses for the specified project ID.
+
       @param _projectId The ID of the project to get direct payment addresses for.
+
       @return A list of direct payment addresses for the specified project ID.
     */
     function addresses(uint256 _projectId)
@@ -47,7 +59,9 @@ contract TerminalDirectory is ITerminalDirectory {
     }
 
     /** 
-      @notice Allows anyone to deploy a new direct payment address for a project.
+      @notice 
+      Allows anyone to deploy a new direct payment address for a project.
+
       @param _projectId The ID of the project to deploy a direct payment address for.
       @param _memo The note to use for payments made through the new direct payment address.
     */
@@ -69,7 +83,9 @@ contract TerminalDirectory is ITerminalDirectory {
     }
 
     /** 
-      @notice Update the juice terminal that payments to direct payment addresses will be forwarded for the specified project ID.
+      @notice 
+      Update the juice terminal that payments to direct payment addresses will be forwarded for the specified project ID.
+
       @param _projectId The ID of the project to set a new terminal for.
       @param _terminal The new terminal to set.
     */
@@ -101,8 +117,10 @@ contract TerminalDirectory is ITerminalDirectory {
     }
 
     /** 
-      @notice Allows any address to pre set the beneficiary of their payments to any direct payment address,
-      @notice any any address to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
+      @notice 
+      Allows any address to pre set the beneficiary of their payments to any direct payment address,
+      and to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
+
       @param _beneficiary The beneficiary to set.
       @param _preferClaimedTickets The preference to set.
     */

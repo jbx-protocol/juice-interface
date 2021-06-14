@@ -4,12 +4,28 @@ pragma solidity >=0.8.0;
 import "./IDirectPaymentAddress.sol";
 import "./ITerminal.sol";
 import "./IProjects.sol";
+import "./IProjects.sol";
 
 interface ITerminalDirectory {
-    function addresses(uint256 _projectId)
-        external
-        view
-        returns (IDirectPaymentAddress[] memory);
+    event DeployAddress(
+        uint256 indexed projectId,
+        string memo,
+        address indexed caller
+    );
+
+    event SetTerminal(
+        uint256 indexed projectId,
+        ITerminal indexed terminal,
+        address caller
+    );
+
+    event SetPayerPreferences(
+        address indexed account,
+        address beneficiary,
+        bool preferClaimedTickets
+    );
+
+    function projects() external view returns (IProjects);
 
     function terminals(uint256 _projectId) external view returns (ITerminal);
 
@@ -17,9 +33,10 @@ interface ITerminalDirectory {
 
     function preferUnstakedTickets(address account) external returns (bool);
 
-    function projects() external returns (IProjects);
-
-    function operatorStore() external returns (IOperatorStore);
+    function addresses(uint256 _projectId)
+        external
+        view
+        returns (IDirectPaymentAddress[] memory);
 
     function deployAddress(uint256 _projectId, string calldata _memo) external;
 

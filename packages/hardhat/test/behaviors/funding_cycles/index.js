@@ -48,13 +48,13 @@ module.exports = function() {
   before(async function() {
     // Deploy mock dependency contracts.
     this.ballot = await this.deployMockLocalContract("FundingCycleBallot");
-    this.juiceTerminalDirectory = await this.deployMockLocalContract(
+    this.terminalDirectory = await this.deployMockLocalContract(
       "TerminalDirectory"
     );
 
     // Deploy the contract.
     this.contract = await this.deployContract(contractName, [
-      this.juiceTerminalDirectory.address
+      this.terminalDirectory.address
     ]);
 
     // Bind the ability to manipulate time to `this`.

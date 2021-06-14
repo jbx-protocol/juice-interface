@@ -5,6 +5,7 @@ const modStore = require("./mod_store");
 const tickets = require("./tickets");
 const fundingCycles = require("./funding_cycles");
 const directPaymentAddress = require("./direct_payment_address");
+const terminalDirectory = require("./terminal_directory");
 
 module.exports = {
   operatorStore,
@@ -13,5 +14,6 @@ module.exports = {
   modStore,
   tickets,
   fundingCycles,
-  directPaymentAddress
+  directPaymentAddress,
+  terminalDirectory
 };

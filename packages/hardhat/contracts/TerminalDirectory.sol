@@ -13,29 +13,17 @@ contract TerminalDirectory is ITerminalDirectory {
     // A list of contracts for each project ID that can receive funds directly.
     mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
 
-    // For each project ID, the juice terminal that the direct payment addresses are proxies for.
-    mapping(uint256 => ITerminal) public override terminals;
-
-    // For each address, the address that will be used as the beneficiary of direct payments made.
-    mapping(address => address) public override beneficiaries;
-
-    // For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
-    mapping(address => bool) public override preferUnstakedTickets;
-
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
 
-    /// @notice A contract storing operator assignments.
-    IOperatorStore public immutable override operatorStore;
+    /// @notice For each project ID, the juice terminal that the direct payment addresses are proxies for.
+    mapping(uint256 => ITerminal) public override terminals;
 
-    /** 
-      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
-      @param _operatorStore A contract storing operator assignments.
-    */
-    constructor(IProjects _projects, IOperatorStore _operatorStore) {
-        projects = _projects;
-        operatorStore = _operatorStore;
-    }
+    /// @notice For each address, the address that will be used as the beneficiary of direct payments made.
+    mapping(address => address) public override beneficiaries;
+
+    /// @notice For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
+    mapping(address => bool) public override preferUnstakedTickets;
 
     /** 
       @notice A list of all direct payment addresses for the specified project ID.
@@ -52,6 +40,13 @@ contract TerminalDirectory is ITerminalDirectory {
     }
 
     /** 
+      @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
+    */
+    constructor(IProjects _projects) {
+        projects = _projects;
+    }
+
+    /** 
       @notice Allows anyone to deploy a new direct payment address for a project.
       @param _projectId The ID of the project to deploy a direct payment address for.
       @param _memo The note to use for payments made through the new direct payment address.
@@ -60,10 +55,17 @@ contract TerminalDirectory is ITerminalDirectory {
         external
         override
     {
+        require(
+            _projectId > 0,
+            "TerminalDirectory::deployAddress: ZERO_PROJECT"
+        );
+
         // Deploy the contract and push it to the list.
         _addresses[_projectId].push(
             new DirectPaymentAddress(this, _projectId, _memo)
         );
+
+        emit DeployAddress(_projectId, _memo, msg.sender);
     }
 
     /** 
@@ -75,6 +77,11 @@ contract TerminalDirectory is ITerminalDirectory {
         external
         override
     {
+        require(
+            projects.exists(_projectId),
+            "TerminalDirectory::setTerminal: NOT_FOUND"
+        );
+
         // Get a reference to the current terminal being used.
         ITerminal _currentTerminal = terminals[_projectId];
 
@@ -84,11 +91,13 @@ contract TerminalDirectory is ITerminalDirectory {
         require(
             _currentTerminal == ITerminal(address(0)) ||
                 msg.sender == address(_currentTerminal),
-            "Juicer::setTerminal: UNAUTHORIZED"
+            "TerminalDirectory::setTerminal: UNAUTHORIZED"
         );
 
         // Set the new terminal.
         terminals[_projectId] = _terminal;
+
+        emit SetTerminal(_projectId, _terminal, msg.sender);
     }
 
     /** 
@@ -103,5 +112,11 @@ contract TerminalDirectory is ITerminalDirectory {
     ) external override {
         beneficiaries[msg.sender] = _beneficiary;
         preferUnstakedTickets[msg.sender] = _preferClaimedTickets;
+
+        emit SetPayerPreferences(
+            msg.sender,
+            _beneficiary,
+            _preferClaimedTickets
+        );
     }
 }

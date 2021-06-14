@@ -6,8 +6,9 @@ import "./ITerminal.sol";
 
 interface IDirectPaymentAddress {
     event Forward(
+        address indexed payer,
         uint256 indexed projectId,
-        address indexed beneficiary,
+        address beneficiary,
         uint256 value,
         string memo,
         bool preferUnstakedTickets

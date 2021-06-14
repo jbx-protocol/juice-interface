@@ -194,7 +194,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.juiceTerminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -289,7 +289,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.juiceTerminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminals
           .withArgs(projectId)
           .returns(caller.address);
 

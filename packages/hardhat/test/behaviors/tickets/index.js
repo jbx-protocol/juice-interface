@@ -8,7 +8,7 @@ module.exports = function() {
     // Deploy mock dependency contracts.
     this.projects = await this.deployMockLocalContract("Projects");
     this.operatorStore = await this.deployMockLocalContract("OperatorStore");
-    this.juiceTerminalDirectory = await this.deployMockLocalContract(
+    this.terminalDirectory = await this.deployMockLocalContract(
       "TerminalDirectory"
     );
 
@@ -16,7 +16,7 @@ module.exports = function() {
     this.contract = await this.deployContract(contractName, [
       this.projects.address,
       this.operatorStore.address,
-      this.juiceTerminalDirectory.address
+      this.terminalDirectory.address
     ]);
   });
 

@@ -55,6 +55,7 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
         );
 
         emit Forward(
+            msg.sender,
             projectId,
             _beneficiary,
             msg.value,

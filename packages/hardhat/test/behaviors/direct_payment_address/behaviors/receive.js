@@ -25,35 +25,6 @@ const tests = {
         value: 1
       })
     }
-  ],
-  failure: [
-    {
-      description: "not owner",
-      fn: ({ addrs }) => ({
-        caller: addrs[0],
-        currency: 1,
-        decimals: 18,
-        revert: "Ownable: caller is not the owner"
-      })
-    },
-    {
-      description: "reserved currency",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        currency: 0,
-        decimals: 18,
-        revert: "Prices::addFeed: RESERVED"
-      })
-    },
-    {
-      description: "over 18 decimals",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        currency: 1,
-        decimals: 19,
-        revert: "Prices::addFeed: BAD_DECIMALS"
-      })
-    }
   ]
 };
 
@@ -96,6 +67,7 @@ module.exports = function() {
         await expect(tx)
           .to.emit(this.contract, "Forward")
           .withArgs(
+            caller.address,
             this.projectId,
             beneficiary,
             value,

@@ -46,6 +46,7 @@ describe("Juice", async function() {
   describe("OperatorStore", shouldBehaveLike.operatorStore);
   describe("Prices", shouldBehaveLike.prices);
   describe("Projects", shouldBehaveLike.projects);
+  describe("TerminalDirectory", shouldBehaveLike.terminalDirectory);
 
   // Depends on TerminalDirectory.
   describe("FundingCycles", shouldBehaveLike.fundingCycles);

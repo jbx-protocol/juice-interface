@@ -108,6 +108,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     /** 
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _operatorStore A contract storing operator assignments.
+      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
     */
     constructor(
         IProjects _projects,

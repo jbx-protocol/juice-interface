@@ -69,10 +69,11 @@ const QAs: {
   {
     q: 'Why Ethereum?',
     a: [
-      `A mechanism like Juice where upfront financial commitments are honored over time is only guarenteed within an ecosystem like Ethereum.`,
-      `Ethereum provides a public ecosystem where internet apps like Juice can run permissionlessly, trustlessly, and unstoppably.`,
+      `A mechanism like Juice where upfront financial commitments should be honored over time is only guarenteed within an ecosystem like Ethereum.`,
+      `Ethereum provides a public environment where internet apps like Juice can run permissionlessly, trustlessly, and unstoppably.`,
       `This means that anyone can see the code that they're using, anyone can use the code without asking for permission, no one can mess with the code, and no one can take down the code.`,
-      `People using Juice on both sides of the marketplace are therefor interacting with each other through public infrastructure, not through a private corporate service that brokers the exchange.`
+      `People using Juice on both sides of the marketplace are therefor interacting with each other through public infrastructure, not through a private profit-seeking corporate service that brokers the exchange.`,
+      `Juice was built to allow public Ethereum infrastructure to thrive, while making sure the people creating and maintaining public goods get paid without the need for shady business.`
     ],
   },
   {

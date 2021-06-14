@@ -382,6 +382,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Set this Juicer as the project's terminal in the directory.
         terminalDirectory.setTerminal(_projectId, this);
 
+        // Validate and pack the metadata.
+        uint256 _packedMetadata =
+            _validateAndPackFundingCycleMetadata(_metadata);
+
         // Configure the funding cycle.
         uint256 _fundingCycleId =
             fundingCycles.configure(
@@ -393,7 +397,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _discountRate,
                 fee,
                 _ballot,
-                _validateAndPackFundingCycleMetadata(_metadata),
+                _packedMetadata,
                 true
             );
 

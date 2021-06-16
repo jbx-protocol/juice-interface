@@ -194,7 +194,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -207,17 +207,17 @@ module.exports = function() {
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? projectId : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? 0 : projectId,
-              caller.address,
               permissionIndex
             )
             .returns(permissionFlag);
@@ -287,7 +287,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -300,18 +300,18 @@ module.exports = function() {
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? projectId : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
 
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? 0 : projectId,
-              caller.address,
               permissionIndex
             )
             .returns(permissionFlag);

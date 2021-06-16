@@ -1,13 +1,13 @@
 const configure = require("./configure");
 const tap = require("./tap");
-const getCurrent = require("./get_current");
-const getQueued = require("./get_queued");
-const currentBallotState = require("./current_ballot_state");
+const getCurrentOf = require("./get_current_of");
+const getQueuedOf = require("./get_queued_of");
+const currentBallotStateOf = require("./current_ballot_state_of");
 
 module.exports = {
   configure,
   tap,
-  getCurrent,
-  getQueued,
-  currentBallotState
+  getCurrentOf,
+  getQueuedOf,
+  currentBallotStateOf
 };

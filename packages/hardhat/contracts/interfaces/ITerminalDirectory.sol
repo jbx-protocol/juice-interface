@@ -27,13 +27,15 @@ interface ITerminalDirectory {
 
     function projects() external view returns (IProjects);
 
-    function terminals(uint256 _projectId) external view returns (ITerminal);
+    function terminalOf(uint256 _projectId) external view returns (ITerminal);
 
-    function beneficiaries(address account) external returns (address);
+    function beneficiaryOf(address _account) external returns (address);
 
-    function preferUnstakedTickets(address account) external returns (bool);
+    function unstakedTicketsPreferenceOf(address _account)
+        external
+        returns (bool);
 
-    function addresses(uint256 _projectId)
+    function addressesOf(uint256 _projectId)
         external
         view
         returns (IDirectPaymentAddress[] memory);

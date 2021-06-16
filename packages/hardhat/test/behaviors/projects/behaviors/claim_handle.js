@@ -198,9 +198,9 @@ module.exports = function() {
           // Flip the opposit of what what specified in the personal permissions to false.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               transfer.to,
               transferToPersonalPermission ? 2 : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
@@ -208,9 +208,9 @@ module.exports = function() {
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               transfer.to,
               transferToPersonalPermission ? 0 : 2,
-              caller.address,
               permissionIndex
             )
             .returns(transferToPermissionFlag);
@@ -218,7 +218,7 @@ module.exports = function() {
         if (claimOntoPermissionFlag !== undefined) {
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(destination.owner, 2, caller.address, permissionIndex)
+            .withArgs(caller.address, destination.owner, 2, permissionIndex)
             .returns(claimOntoPermissionFlag);
         }
 
@@ -231,17 +231,15 @@ module.exports = function() {
           .to.emit(this.contract, "ClaimHandle")
           .withArgs(transfer.to, 2, handle, caller.address);
 
-        // Get the stored reverse handle lookup value.
-        const storedReverseHandleLookup = await this.contract.reverseHandleLookup(
-          2
-        );
+        // Get the stored handle value.
+        const storedHandle = await this.contract.handleOf(2);
 
-        // Get the stored handle resolver value.
-        const storedHandleResolver = await this.contract.handleResolver(handle);
+        // Get the stored project value.
+        const storedProject = await this.contract.projectFor(handle);
 
         // Expect the stored values to equal the set values.
-        expect(storedReverseHandleLookup).to.equal(handle);
-        expect(storedHandleResolver).to.equal(2);
+        expect(storedHandle).to.equal(handle);
+        expect(storedProject).to.equal(2);
       });
     });
   });
@@ -283,9 +281,9 @@ module.exports = function() {
           // Flip the opposit of what what specified in the personal permissions to false.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               claimFor,
               transferToPersonalPermission ? 2 : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
@@ -293,9 +291,9 @@ module.exports = function() {
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               claimFor,
               transferToPersonalPermission ? 0 : 2,
-              caller.address,
               permissionIndex
             )
             .returns(transferToPermissionFlag);
@@ -303,7 +301,7 @@ module.exports = function() {
         if (claimOntoPermissionFlag !== undefined) {
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(destination.owner, 2, caller.address, permissionIndex)
+            .withArgs(caller.address, destination.owner, 2, permissionIndex)
             .returns(claimOntoPermissionFlag);
         }
 

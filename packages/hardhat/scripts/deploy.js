@@ -65,7 +65,7 @@ const main = async () => {
   const fundingCycles = await deploy("FundingCycles", [
     terminalDirectory.address
   ]);
-  const tickets = await deploy("Tickets", [
+  const ticketBooth = await deploy("TicketBooth", [
     projects.address,
     operatorStore.address,
     terminalDirectory.address
@@ -80,7 +80,7 @@ const main = async () => {
   const juicer = await deploy("Juicer", [
     projects.address,
     fundingCycles.address,
-    tickets.address,
+    ticketBooth.address,
     operatorStore.address,
     modStore.address,
     prices.address,
@@ -143,9 +143,6 @@ const main = async () => {
 
     console.log(callContractIcon + "Configuring governance's budget");
 
-    const duration = 2592000; // 30 days;
-    const discountRate = 190;
-
     await attachedJuicer.deploy(
       governance.address,
       utils.formatBytes32String("juice"),
@@ -153,8 +150,8 @@ const main = async () => {
       {
         target: "0x21E19E0C9BAB2400000",
         currency: 1,
-        duration,
-        discountRate,
+        duration: 2592000, // 30 days
+        discountRate: 190,
         ballot: ballot.address
       },
       {

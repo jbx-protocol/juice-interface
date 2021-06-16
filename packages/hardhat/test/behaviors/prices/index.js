@@ -18,5 +18,5 @@ module.exports = function() {
 
   // Test each function.
   describe("addFeed(...)", shouldBehaveLike.addFeed);
-  describe("getETHPrice(...)", shouldBehaveLike.getETHPrice);
+  describe("getETHPriceFor(...)", shouldBehaveLike.getETHPriceFor);
 };

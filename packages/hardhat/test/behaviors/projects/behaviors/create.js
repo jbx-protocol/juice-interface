@@ -142,20 +142,18 @@ module.exports = function() {
           .to.emit(this.contract, "Create")
           .withArgs(projectId, owner, handle, uri, caller.address);
 
-        // Get the stored reverse handle lookup value.
-        const storedReverseHandleLookup = await this.contract.reverseHandleLookup(
-          projectId
-        );
+        // Get the stored handle value.
+        const storedHandle = await this.contract.handleOf(projectId);
 
-        // Get the stored handle resolver value.
-        const storedHandleResolver = await this.contract.handleResolver(handle);
+        // Get the stored project value.
+        const storedProject = await this.contract.projectFor(handle);
 
         // Get the stored uri value.
-        const storedUri = await this.contract.uri(projectId);
+        const storedUri = await this.contract.uriOf(projectId);
 
         // Expect the stored values to equal the set values.
-        expect(storedReverseHandleLookup).to.equal(handle);
-        expect(storedHandleResolver).to.equal(projectId);
+        expect(storedHandle).to.equal(handle);
+        expect(storedProject).to.equal(projectId);
         expect(storedUri).to.equal(uri);
       });
     });

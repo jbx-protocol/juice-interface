@@ -124,7 +124,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -139,28 +139,22 @@ module.exports = function() {
           .withArgs(1, to, create.handle, newHandle, caller.address);
 
         // Get the stored reverse handle lookup value.
-        const storedReverseHandleLookup = await this.contract.reverseHandleLookup(
-          1
-        );
+        const storedHandle = await this.contract.handleOf(1);
 
         // Get the stored handle resolver value.
-        const storedTransferedHandleResolver = await this.contract.handleResolver(
-          create.handle
-        );
+        const storedProject = await this.contract.projectFor(create.handle);
 
-        const storedNewHandleResolver = await this.contract.handleResolver(
-          newHandle
-        );
+        const storedNewProject = await this.contract.projectFor(newHandle);
 
-        const storedTransferedHandles = await this.contract.transferedHandles(
+        const storedTransferedAddress = await this.contract.transferAddressFor(
           create.handle
         );
 
         // Expect the stored values to equal the set values.
-        expect(storedReverseHandleLookup).to.equal(newHandle);
-        expect(storedTransferedHandleResolver).to.equal(0);
-        expect(storedNewHandleResolver).to.equal(1);
-        expect(storedTransferedHandles).to.equal(to);
+        expect(storedHandle).to.equal(newHandle);
+        expect(storedProject).to.equal(0);
+        expect(storedNewProject).to.equal(1);
+        expect(storedTransferedAddress).to.equal(to);
       });
     });
   });
@@ -189,7 +183,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 

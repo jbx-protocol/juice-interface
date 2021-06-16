@@ -70,7 +70,7 @@ module.exports = function() {
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
-            .withArgs(projectOwner, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, projectOwner, projectId, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -90,10 +90,10 @@ module.exports = function() {
         // Get the stored ticket for the project.
         const storedTicketAddress = await this.contract
           .connect(caller)
-          .tickets(projectId);
+          .ticketsOf(projectId);
 
-        // Attach the address to the Ticket contract.
-        const TicketFactory = await ethers.getContractFactory("Ticket");
+        // Attach the address to the Tickets contract.
+        const TicketFactory = await ethers.getContractFactory("Tickets");
         const StoredTicket = await TicketFactory.attach(storedTicketAddress);
 
         // Get the stored values for the issued tickets.
@@ -133,7 +133,7 @@ module.exports = function() {
           const permissionIndex = 8;
 
           await this.operatorStore.mock.hasPermission
-            .withArgs(projectOwner, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, projectOwner, projectId, permissionIndex)
             .returns(permissionFlag);
         }
 

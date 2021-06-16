@@ -116,7 +116,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -128,17 +128,15 @@ module.exports = function() {
           .to.emit(this.contract, "SetHandle")
           .withArgs(1, handle, caller.address);
 
-        // Get the stored reverse handle lookup value.
-        const storedReverseHandleLookup = await this.contract.reverseHandleLookup(
-          1
-        );
+        // Get the stored handle value.
+        const storedHandle = await this.contract.handleOf(1);
 
-        // Get the stored handle resolver value.
-        const storedHandleResolver = await this.contract.handleResolver(handle);
+        // Get the stored project value.
+        const storedProject = await this.contract.projectFor(handle);
 
         // Expect the stored values to equal the set values.
-        expect(storedReverseHandleLookup).to.equal(handle);
-        expect(storedHandleResolver).to.equal(1);
+        expect(storedHandle).to.equal(handle);
+        expect(storedProject).to.equal(1);
       });
     });
   });
@@ -166,7 +164,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 

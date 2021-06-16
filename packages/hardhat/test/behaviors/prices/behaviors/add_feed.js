@@ -86,7 +86,7 @@ module.exports = function() {
         expect(storedFeedDecimalAdjuster).to.equal(expectedFeedDecimalAdjuster);
 
         // Get the stored feed.
-        const storedFeed = await this.contract.feeds(currency);
+        const storedFeed = await this.contract.feedFor(currency);
 
         // Expect the stored feed values to match.
         expect(storedFeed).to.equal(this.aggregatorV3Contract.address);

@@ -14,7 +14,7 @@ const { expect } = require("chai");
 */
 
 const testTemplate = ({
-  set,
+  op = {},
   setup = {},
   preconfigure = {},
   fastforward,
@@ -23,7 +23,7 @@ const testTemplate = ({
   revert
 }) => ({ deployer, ballot }) => ({
   caller: deployer,
-  projectId: BigNumber.from(1),
+  projectId: 1,
   setup: {
     preconfigure: {
       target: BigNumber.from(240),
@@ -40,7 +40,6 @@ const testTemplate = ({
         ...preconfigure.ballot
       }
     },
-    set,
     ops: [
       ...ops,
       ...(fastforward
@@ -55,6 +54,7 @@ const testTemplate = ({
     ...setup
   },
   expectation,
+  ...op,
   revert
 });
 
@@ -64,7 +64,8 @@ const tests = {
       description: "first funding cycle",
       fn: testTemplate({
         expectation: {
-          state: 3
+          id: 0,
+          number: 2
         }
       })
     },
@@ -89,10 +90,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(78),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 2,
+          id: 2
         }
       })
     },
@@ -122,10 +122,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(79),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 2,
+          id: 2
         }
       })
     },
@@ -155,10 +154,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(80),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 3,
+          id: 0
         }
       })
     },
@@ -188,10 +186,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(81),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 3,
+          id: 0
         }
       })
     },
@@ -221,10 +218,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(80),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 3,
+          id: 0
         }
       })
     },
@@ -253,10 +249,10 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(320),
+        fastforward: BigNumber.from(319),
         expectation: {
-          // Should have the state of the last configured ballot.
-          state: 0
+          number: 6,
+          id: 0
         }
       })
     },
@@ -287,8 +283,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(78),
         expectation: {
-          // standby.
-          state: 3
+          number: 2,
+          id: 0
         }
       })
     },
@@ -320,10 +316,9 @@ const tests = {
           }
         ],
         fastforward: BigNumber.from(80),
-        set: 1,
         expectation: {
-          fundingCycleId: 2,
-          state: 1
+          number: 3,
+          id: 0
         }
       })
     },
@@ -344,7 +339,8 @@ const tests = {
         },
         fastforward: BigNumber.from(80),
         expectation: {
-          state: 3
+          number: 2,
+          id: 0
         }
       })
     },
@@ -397,7 +393,8 @@ const tests = {
         ],
         fastforward: BigNumber.from(30),
         expectation: {
-          state: 3
+          number: 2,
+          id: 0
         }
       })
     },
@@ -430,7 +427,8 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          state: 1
+          number: 4,
+          id: 0
         }
       })
     },
@@ -463,7 +461,8 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          state: 2
+          number: 4,
+          id: 0
         }
       })
     },
@@ -496,7 +495,8 @@ const tests = {
         // Fast forward past the full duration.
         fastforward: BigNumber.from(52),
         expectation: {
-          state: 3
+          number: 4,
+          id: 0
         }
       })
     }
@@ -509,7 +509,18 @@ const tests = {
           // No preconfigure
           preconfigure: null
         },
-        revert: "FundingCycles::currentBallotState: NOT_FOUND"
+        revert: "FundingCycles::getQueuedOf: NOT_FOUND"
+      })
+    },
+    {
+      description: "non recurring",
+      fn: testTemplate({
+        preconfigure: {
+          discountRate: BigNumber.from(0),
+          duration: BigNumber.from(42)
+        },
+        fastforward: BigNumber.from(42),
+        revert: "FundingCycles::_mockFundingCycleAfter: NON_RECURRING"
       })
     }
   ]
@@ -522,12 +533,12 @@ module.exports = function() {
         const {
           caller,
           projectId,
-          setup: { preconfigure, set, ops = [] } = {},
+          setup: { preconfigure, ops = [] } = {},
           expectation
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -552,16 +563,18 @@ module.exports = function() {
           await this.setTimeMark(tx.blockNumber);
         }
 
+        // Mock the duration as 0.
+        await this.ballot.mock.duration.returns(BigNumber.from(0));
+
         // Do any other specified operations.
         for (let i = 0; i < ops.length; i += 1) {
           const op = ops[i];
           switch (op.type) {
             case "configure": {
-              // Mock the project's controller status if needed.
               if (op.projectId !== projectId) {
                 // Mock the caller to be the project's controller.
                 // eslint-disable-next-line no-await-in-loop
-                await this.terminalDirectory.mock.terminals
+                await this.terminalDirectory.mock.terminalOf
                   .withArgs(op.projectId)
                   .returns(caller.address);
               }
@@ -603,30 +616,98 @@ module.exports = function() {
           }
         }
 
-        const storedQueued = await this.contract.getQueued(projectId);
-
-        if (expectation.fundingCycleId) {
-          await this.ballot.mock.state
-            .withArgs(expectation.fundingCycleId, storedQueued.configured)
-            .returns(set);
-        }
-
         // Execute the transaction.
-        const storedCurrentBallotState = await this.contract.currentBallotState(
+        const storedQueuedFundingCycle = await this.contract.getQueuedOf(
           projectId
         );
 
         // Expect the stored values to match what's expected.
-        expect(storedCurrentBallotState).to.equal(expectation.state);
+        expect(storedQueuedFundingCycle.id).to.equal(expectation.id);
+        expect(storedQueuedFundingCycle.number).to.equal(expectation.number);
       });
     });
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { caller, projectId, revert } = failureTest.fn(this);
+        const {
+          caller,
+          projectId,
+          setup: { preconfigure, ops } = {},
+          revert
+        } = failureTest.fn(this);
+
+        if (preconfigure) {
+          // Mock the caller to be the project's controller.
+          await this.terminalDirectory.mock.terminalOf
+            .withArgs(projectId)
+            .returns(caller.address);
+
+          // If a ballot was provided, mock the ballot contract with the provided properties.
+          await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
+
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              discountRate: preconfigure.discountRate,
+              ballot: this.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
+
+          await this.setTimeMark(tx.blockNumber);
+        }
+
+        // Do any other specified operations.
+        for (let i = 0; i < ops.length; i += 1) {
+          const op = ops[i];
+          switch (op.type) {
+            case "configure": {
+              // eslint-disable-next-line no-await-in-loop
+              const tx = await this.contract.connect(caller).configure(
+                op.projectId,
+                {
+                  target: op.target,
+                  currency: op.currency,
+                  duration: op.duration,
+                  discountRate: op.discountRate,
+                  ballot: this.ballot.address
+                },
+                op.metadata,
+                op.fee,
+                op.configureActiveFundingCycle
+              );
+              if (op.ballot) {
+                // eslint-disable-next-line no-await-in-loop
+                await this.ballot.mock.state
+                  .withArgs(
+                    op.ballot.fundingCycleId,
+                    // eslint-disable-next-line no-await-in-loop
+                    await this.getTimestamp(tx.blockNumber)
+                  )
+                  .returns(op.ballot.state);
+              }
+
+              break;
+            }
+            case "fastforward": {
+              // Fast forward the clock if needed.
+              // eslint-disable-next-line no-await-in-loop
+              await this.fastforward(op.seconds);
+              break;
+            }
+            default:
+              break;
+          }
+        }
+
         await expect(
-          this.contract.connect(caller).currentBallotState(projectId)
+          this.contract.connect(caller).getQueuedOf(projectId)
         ).to.be.revertedWith(revert);
       });
     });

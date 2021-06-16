@@ -20,7 +20,7 @@ contract Prices is IPrices, Ownable {
     mapping(uint256 => uint256) public override feedDecimalAdjuster;
 
     /// @notice The available price feeds that can be used to get the price of ETH.
-    mapping(uint256 => AggregatorV3Interface) public override feeds;
+    mapping(uint256 => AggregatorV3Interface) public override feedFor;
 
     // --- external views --- //
 
@@ -32,7 +32,7 @@ contract Prices is IPrices, Ownable {
       
       @return price The price of ETH with 18 decimals.
     */
-    function getETHPrice(uint256 _currency)
+    function getETHPriceFor(uint256 _currency)
         external
         view
         override
@@ -42,7 +42,7 @@ contract Prices is IPrices, Ownable {
         if (_currency == 0) return 10**targetDecimals;
 
         // Get a reference to the feed.
-        AggregatorV3Interface _feed = feeds[_currency];
+        AggregatorV3Interface _feed = feedFor[_currency];
 
         // Feed must exist.
         require(
@@ -81,7 +81,7 @@ contract Prices is IPrices, Ownable {
         require(_decimals <= targetDecimals, "Prices::addFeed: BAD_DECIMALS");
 
         // Set the feed.
-        feeds[_currency] = _feed;
+        feedFor[_currency] = _feed;
 
         // Set the decimal adjuster for the currency.
         feedDecimalAdjuster[_currency] = 10**(targetDecimals - _decimals);

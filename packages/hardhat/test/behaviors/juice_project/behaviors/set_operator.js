@@ -42,7 +42,7 @@ module.exports = function() {
         );
 
         await operatorStore.mock.setOperator
-          .withArgs(projectId, operator, permissionIndexes)
+          .withArgs(operator, projectId, permissionIndexes)
           .returns();
 
         // Execute the transaction.
@@ -50,8 +50,8 @@ module.exports = function() {
           .connect(caller)
           .setOperator(
             operatorStore.address,
-            projectId,
             operator,
+            projectId,
             permissionIndexes
           );
       });
@@ -73,7 +73,7 @@ module.exports = function() {
         );
 
         await operatorStore.mock.setOperator
-          .withArgs(projectId, operator, permissionIndexes)
+          .withArgs(operator, projectId, permissionIndexes)
           .returns();
 
         // Execute the transaction.
@@ -82,8 +82,8 @@ module.exports = function() {
             .connect(caller)
             .setOperator(
               operatorStore.address,
-              projectId,
               operator,
+              projectId,
               permissionIndexes
             )
         ).to.be.revertedWith(revert);

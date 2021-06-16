@@ -6,7 +6,7 @@ import "./../interfaces/ITerminalUtility.sol";
 abstract contract TerminalUtility is ITerminalUtility {
     modifier onlyTerminal(uint256 _projectId) {
         require(
-            address(terminalDirectory.terminals(_projectId)) == msg.sender,
+            address(terminalDirectory.terminalOf(_projectId)) == msg.sender,
             "TerminalUtility: UNAUTHORIZED"
         );
         _;

@@ -1,6 +1,6 @@
 const shouldBehaveLike = require("./behaviors");
 
-const contractName = "Tickets";
+const contractName = "TicketBooth";
 
 module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
@@ -27,9 +27,8 @@ module.exports = function() {
   describe("stake(...)", shouldBehaveLike.stake);
   describe("transfer(...)", shouldBehaveLike.transfer);
   describe("redeem(...)", shouldBehaveLike.redeem);
-  // describe("transferController(...)", shouldBehaveLike.transferController);
   describe("lock(...)", shouldBehaveLike.lock);
   describe("unlock(...)", shouldBehaveLike.unlock);
   describe("balanceOf(...)", shouldBehaveLike.balanceOf);
-  describe("totalSupply(...)", shouldBehaveLike.totalSupply);
+  describe("totalSupplyOf(...)", shouldBehaveLike.totalSupplyOf);
 };

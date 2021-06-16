@@ -7,8 +7,8 @@ const {
 const tests = {
   success: [
     {
-      description: "total supply, just staked tickets",
-      fn: ({ deployer, addrs }) => ({
+      description: "total balance of, just staked tickets",
+      fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         issue: false,
@@ -17,19 +17,19 @@ const tests = {
             type: "staked",
             holder: deployer.address,
             amount: BigNumber.from(50)
-          },
-          {
-            type: "staked",
-            holder: addrs[0].address,
-            amount: BigNumber.from(50)
           }
         ],
-        totalSupply: BigNumber.from(100)
+        balances: [
+          {
+            holder: deployer.address,
+            expected: BigNumber.from(50)
+          }
+        ]
       })
     },
     {
-      description: "total supply, staked and unstaked tickets",
-      fn: ({ deployer, addrs }) => ({
+      description: "total balance of, staked and unstaked tickets",
+      fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1,
         issue: true,
@@ -43,19 +43,19 @@ const tests = {
             type: "ERC20",
             holder: deployer.address,
             amount: BigNumber.from(50)
-          },
-          {
-            type: "ERC20",
-            holder: addrs[0].address,
-            amount: BigNumber.from(50)
           }
         ],
-        totalSupply: BigNumber.from(150)
+        balances: [
+          {
+            holder: deployer.address,
+            expected: BigNumber.from(100)
+          }
+        ]
       })
     },
     {
       description:
-        "total supply, staked and unstaked tickets with some transfered",
+        "total balance of, staked and unstaked tickets with some transfered",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectId: 1,
@@ -77,7 +77,16 @@ const tests = {
           amount: BigNumber.from(30),
           recipient: addrs[0].address
         },
-        totalSupply: BigNumber.from(100)
+        balances: [
+          {
+            holder: deployer.address,
+            expected: BigNumber.from(70)
+          },
+          {
+            holder: addrs[0].address,
+            expected: BigNumber.from(30)
+          }
+        ]
       })
     }
   ]
@@ -93,11 +102,11 @@ module.exports = function() {
           issue,
           print,
           transfer,
-          totalSupply
+          balances
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -144,13 +153,17 @@ module.exports = function() {
             );
         }
 
-        // Execute the transaction.
-        const storedTotalSupply = await this.contract
-          .connect(caller)
-          .totalSupply(projectId);
+        await Promise.all(
+          balances.map(async balance => {
+            // Execute the transaction.
+            const storedBalanceOf = await this.contract
+              .connect(caller)
+              .balanceOf(balance.holder, projectId);
 
-        // The expected should match what's stored.
-        expect(storedTotalSupply).to.equal(totalSupply);
+            // The expected should match what's stored.
+            expect(storedBalanceOf).to.equal(balance.expected);
+          })
+        );
       });
     });
   });

@@ -65,7 +65,7 @@ module.exports = function() {
         if (permissionIndexes.pre) {
           await this.contract
             .connect(caller)
-            .setOperator(domain, operator.address, permissionIndexes.pre);
+            .setOperator(operator.address, domain, permissionIndexes.pre);
         }
 
         // Calculate the expected packed value once the permissions are set.
@@ -77,24 +77,24 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setOperator(domain, operator.address, permissionIndexes.set);
+          .setOperator(operator.address, domain, permissionIndexes.set);
 
         // Expect an event to have been emitted.
         await expect(tx)
           .to.emit(this.contract, "SetOperator")
           .withArgs(
+            operator.address,
             caller.address,
             domain,
-            operator.address,
             permissionIndexes.set,
             expectedPackedPermissions
           );
 
         // Get the stored packed permissions value.
-        const storedPackedPermissions = await this.contract.permissions(
+        const storedPackedPermissions = await this.contract.permissionsOf(
+          operator.address,
           caller.address,
-          domain,
-          operator.address
+          domain
         );
 
         // Expect the packed values to match.
@@ -115,7 +115,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .setOperator(domain, operator.address, permissionIndexes)
+            .setOperator(operator.address, domain, permissionIndexes)
         ).to.be.revertedWith(revert);
       });
     });

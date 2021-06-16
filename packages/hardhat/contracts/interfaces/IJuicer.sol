@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "./ITickets.sol";
+import "./ITicketBooth.sol";
 import "./IFundingCycles.sol";
 import "./IYielder.sol";
 import "./IProjects.sol";
@@ -90,7 +90,7 @@ interface IJuicer {
 
     function fundingCycles() external view returns (IFundingCycles);
 
-    function tickets() external view returns (ITickets);
+    function ticketBooth() external view returns (ITicketBooth);
 
     function prices() external view returns (IPrices);
 
@@ -102,7 +102,7 @@ interface IJuicer {
 
     function targetLocalETH() external view returns (uint256);
 
-    function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
+    function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
         external
         view
         returns (uint256);
@@ -113,6 +113,12 @@ interface IJuicer {
         external
         view
         returns (uint256);
+
+    function claimableOverflowOf(
+        address _account,
+        uint256 _amount,
+        uint256 _projectId
+    ) external view returns (uint256);
 
     function balance()
         external
@@ -152,12 +158,6 @@ interface IJuicer {
         uint256 _amount,
         uint256 _minReturnedEth
     ) external;
-
-    function claimableOverflow(
-        address _account,
-        uint256 _amount,
-        uint256 _projectId
-    ) external view returns (uint256);
 
     function redeem(
         address _account,

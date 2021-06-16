@@ -140,7 +140,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -170,7 +170,7 @@ module.exports = function() {
         // Get a reference to the stored amount locked.
         const storedLocked = await this.contract
           .connect(caller)
-          .locked(holder, projectId);
+          .lockedBalanceOf(holder, projectId);
 
         // The expected locked is the previous locked plus the amount just locked.
         const expectedLocked = lockedAmount.sub(amount);
@@ -194,7 +194,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 

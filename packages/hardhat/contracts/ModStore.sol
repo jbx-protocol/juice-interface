@@ -17,10 +17,10 @@ contract ModStore is IModStore, Operatable {
     // --- private stored properties --- //
 
     // All payment mods for each project ID's configurations.
-    mapping(uint256 => mapping(uint256 => PaymentMod[])) private _paymentMods;
+    mapping(uint256 => mapping(uint256 => PaymentMod[])) private _paymentModsOf;
 
     // All ticket mods for each project ID's configurations.
-    mapping(uint256 => mapping(uint256 => TicketMod[])) private _ticketMods;
+    mapping(uint256 => mapping(uint256 => TicketMod[])) private _ticketModsOf;
 
     // --- public immutable stored properties --- //
 
@@ -38,13 +38,13 @@ contract ModStore is IModStore, Operatable {
 
       @return An array of all mods for the project.
      */
-    function paymentMods(uint256 _projectId, uint256 _configuration)
+    function paymentModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         override
         returns (PaymentMod[] memory)
     {
-        return _paymentMods[_projectId][_configuration];
+        return _paymentModsOf[_projectId][_configuration];
     }
 
     /**
@@ -56,13 +56,13 @@ contract ModStore is IModStore, Operatable {
 
       @return An array of all mods for the project.
      */
-    function ticketMods(uint256 _projectId, uint256 _configuration)
+    function ticketModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         override
         returns (TicketMod[] memory)
     {
-        return _ticketMods[_projectId][_configuration];
+        return _ticketModsOf[_projectId][_configuration];
     }
 
     // --- external transactions --- //
@@ -104,7 +104,7 @@ contract ModStore is IModStore, Operatable {
 
         // Get a reference to the project's payment mods.
         PaymentMod[] memory _currentMods =
-            _paymentMods[_projectId][_configuration];
+            _paymentModsOf[_projectId][_configuration];
 
         // Check to see if all locked Mods are included.
         for (uint256 _i = 0; _i < _currentMods.length; _i++) {
@@ -129,7 +129,7 @@ contract ModStore is IModStore, Operatable {
         }
 
         // Delete from storage so mods can be repopulated.
-        delete _paymentMods[_projectId][_configuration];
+        delete _paymentModsOf[_projectId][_configuration];
 
         // Add up all the percents to make sure they cumulative are under 100%.
         uint256 _paymentModPercentTotal = 0;
@@ -160,7 +160,7 @@ contract ModStore is IModStore, Operatable {
             );
 
             // Push the new mod into the project's list of mods.
-            _paymentMods[_projectId][_configuration].push(_mods[_i]);
+            _paymentModsOf[_projectId][_configuration].push(_mods[_i]);
 
             emit SetPaymentMod(
                 _projectId,
@@ -198,7 +198,7 @@ contract ModStore is IModStore, Operatable {
 
         // Get a reference to the project's ticket mods.
         TicketMod[] memory _projectTicketMods =
-            _ticketMods[_projectId][_configuration];
+            _ticketModsOf[_projectId][_configuration];
 
         // Check to see if all locked Mods are included.
         for (uint256 _i = 0; _i < _projectTicketMods.length; _i++) {
@@ -222,7 +222,7 @@ contract ModStore is IModStore, Operatable {
             }
         }
         // Delete from storage so mods can be repopulated.
-        delete _ticketMods[_projectId][_configuration];
+        delete _ticketModsOf[_projectId][_configuration];
 
         // Add up all the percents to make sure they cumulative are under 100%.
         uint256 _ticketModPercentTotal = 0;
@@ -249,7 +249,7 @@ contract ModStore is IModStore, Operatable {
             );
 
             // Push the new mod into the project's list of mods.
-            _ticketMods[_projectId][_configuration].push(_mods[_i]);
+            _ticketModsOf[_projectId][_configuration].push(_mods[_i]);
 
             emit SetTicketMod(
                 _projectId,

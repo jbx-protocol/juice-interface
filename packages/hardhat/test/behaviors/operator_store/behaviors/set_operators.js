@@ -207,16 +207,16 @@ module.exports = function() {
         // If specified, pre-set an operator before the rest of the test.
         if (permissionIndexes.pre) {
           await this.contract.connect(caller).setOperators(
-            domains,
             operators.map(o => o.address),
+            domains,
             permissionIndexes.pre
           );
         }
 
         // Execute the transaction
         const tx = await this.contract.connect(caller).setOperators(
-          domains,
           operators.map(o => o.address),
+          domains,
           permissionIndexes.set
         );
 
@@ -235,18 +235,18 @@ module.exports = function() {
             expect(tx)
               .to.emit(this.contract, "SetOperator")
               .withArgs(
+                operator.address,
                 caller.address,
                 domains[i],
-                operator.address,
                 permissionIndexes.expect[i],
                 expectedPackedPermissions
               );
 
             // Get the stored packed permissions values.
-            const storedPackedPermissions = await this.contract.permissions(
+            const storedPackedPermissions = await this.contract.permissionsOf(
+              operator.address,
               caller.address,
-              domains[i],
-              operator.address
+              domains[i]
             );
             // Expect the packed values to match.
             expect(storedPackedPermissions).to.equal(expectedPackedPermissions);
@@ -267,8 +267,8 @@ module.exports = function() {
         } = failureTest.fn(this);
         await expect(
           this.contract.connect(caller).setOperators(
-            domains,
             operators.map(o => o.address),
+            domains,
             permissionIndexes.set
           )
         ).to.be.revertedWith(revert);

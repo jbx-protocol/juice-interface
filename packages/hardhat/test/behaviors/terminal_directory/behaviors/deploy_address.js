@@ -111,7 +111,7 @@ module.exports = function() {
           })
         );
 
-        // Attach the address to the Ticket contract.
+        // Attach the address to the Tickets contract.
         const DirectPaymentAddressFactory = await ethers.getContractFactory(
           "DirectPaymentAddress"
         );
@@ -120,7 +120,7 @@ module.exports = function() {
           // Get the stored addresses for the project.
           const storedAddresses = await this.contract
             .connect(caller)
-            .addresses(expectation.projectId);
+            .addressesOf(expectation.projectId);
           storedAddresses.forEach(async (address, i) => {
             const StoredDirectPaymentAddress = await DirectPaymentAddressFactory.attach(
               address

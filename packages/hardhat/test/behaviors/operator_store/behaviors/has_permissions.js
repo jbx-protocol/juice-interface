@@ -139,8 +139,8 @@ module.exports = function() {
           await this.contract
             .connect(set.caller)
             .setOperator(
-              set.domain,
               set.operator.address,
+              set.domain,
               set.permissionIndexes
             );
         }
@@ -149,9 +149,9 @@ module.exports = function() {
         const flag = await this.contract
           .connect(check.caller)
           .hasPermissions(
+            check.operator.address,
             check.account.address,
             check.domain,
-            check.operator.address,
             check.permissionIndexes
           );
         expect(flag).to.equal(result);
@@ -166,9 +166,9 @@ module.exports = function() {
           this.contract
             .connect(check.caller)
             .hasPermissions(
+              check.operator.address,
               check.account.address,
               check.domain,
-              check.operator.address,
               check.permissionIndexes
             )
         ).to.be.revertedWith(revert);

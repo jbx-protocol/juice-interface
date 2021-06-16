@@ -522,7 +522,7 @@ const tests = {
           // No preconfigure
           preconfigure: null
         },
-        revert: "FundingCycles::getCurrent: NOT_FOUND"
+        revert: "FundingCycles::getCurrentOf: NOT_FOUND"
       })
     },
     {
@@ -551,7 +551,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -587,7 +587,7 @@ module.exports = function() {
               if (op.projectId !== projectId) {
                 // Mock the caller to be the project's controller.
                 // eslint-disable-next-line no-await-in-loop
-                await this.terminalDirectory.mock.terminals
+                await this.terminalDirectory.mock.terminalOf
                   .withArgs(op.projectId)
                   .returns(caller.address);
               }
@@ -630,7 +630,7 @@ module.exports = function() {
         }
 
         // Execute the transaction.
-        const storedCurrentFundingCycle = await this.contract.getCurrent(
+        const storedCurrentFundingCycle = await this.contract.getCurrentOf(
           projectId
         );
 
@@ -652,7 +652,7 @@ module.exports = function() {
 
         if (preconfigure) {
           // Mock the caller to be the project's controller.
-          await this.terminalDirectory.mock.terminals
+          await this.terminalDirectory.mock.terminalOf
             .withArgs(projectId)
             .returns(caller.address);
 
@@ -720,7 +720,7 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).getCurrent(projectId)
+          this.contract.connect(caller).getCurrentOf(projectId)
         ).to.be.revertedWith(revert);
       });
     });

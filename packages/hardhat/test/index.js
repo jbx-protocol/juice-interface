@@ -90,7 +90,7 @@ describe("Juice", async function() {
   // Depends on OperatorStore and Projects.
   describe("ModStore", shouldBehaveLike.modStore);
   // Depends on OperatorStore and Projects.
-  describe("Tickets", shouldBehaveLike.tickets);
+  describe("TicketBooth", shouldBehaveLike.ticketBooth);
 
   // After each test, restore the contract state.
   afterEach(async function() {

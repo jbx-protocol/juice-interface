@@ -9,13 +9,15 @@ import "./interfaces/ITerminalDirectory.sol";
   A contract that can receive funds directly and forward to a project's current terminal.
 */
 contract DirectPaymentAddress is IDirectPaymentAddress {
-    // --- public stored properties --- //
+    // --- public immutable stored properties --- //
 
     /// @notice The directory to use when resolving which terminal to send the payment to.
-    ITerminalDirectory public override terminalDirectory;
+    ITerminalDirectory public immutable override terminalDirectory;
 
     /// @notice The ID of the project to pay when this contract receives funds.
-    uint256 public override projectId;
+    uint256 public immutable override projectId;
+
+    // --- public stored properties --- //
 
     /// @notice The memo to use when this contract forwards a payment to a terminal.
     string public override memo;
@@ -41,15 +43,15 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
     receive() external payable {
         // Check to see if the sender has configured a beneficiary.
         address _storedBeneficiary =
-            terminalDirectory.beneficiaries(msg.sender);
+            terminalDirectory.beneficiaryOf(msg.sender);
         // If no beneficiary is configured, use the sender's address.
         address _beneficiary =
             _storedBeneficiary != address(0) ? _storedBeneficiary : msg.sender;
 
         bool _preferUnstakedTickets =
-            terminalDirectory.preferUnstakedTickets(msg.sender);
+            terminalDirectory.unstakedTicketsPreferenceOf(msg.sender);
 
-        terminalDirectory.terminals(projectId).pay{value: msg.value}(
+        terminalDirectory.terminalOf(projectId).pay{value: msg.value}(
             projectId,
             _beneficiary,
             memo,

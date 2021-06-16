@@ -47,13 +47,13 @@ module.exports = function() {
             preferUnstakedTickets
           )
           .returns(1);
-        await this.terminalDirectory.mock.preferUnstakedTickets
+        await this.terminalDirectory.mock.unstakedTicketsPreferenceOf
           .withArgs(caller.address)
           .returns(preferUnstakedTickets);
-        await this.terminalDirectory.mock.beneficiaries
+        await this.terminalDirectory.mock.beneficiaryOf
           .withArgs(caller.address)
           .returns(beneficiary || constants.AddressZero);
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(this.projectId)
           .returns(this.juicer.address);
 

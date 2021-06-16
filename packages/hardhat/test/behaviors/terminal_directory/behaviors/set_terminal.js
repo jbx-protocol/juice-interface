@@ -89,7 +89,7 @@ module.exports = function() {
         // Get the stored ticket for the project.
         const storedTerminal = await this.contract
           .connect(caller)
-          .terminals(projectId);
+          .terminalOf(projectId);
 
         expect(storedTerminal).to.equal(mockTerminalDirectory.address);
       });

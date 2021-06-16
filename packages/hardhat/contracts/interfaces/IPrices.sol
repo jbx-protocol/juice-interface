@@ -10,9 +10,11 @@ interface IPrices {
 
     function targetDecimals() external returns (uint256);
 
-    function feeds(uint256 _currency) external returns (AggregatorV3Interface);
+    function feedFor(uint256 _currency)
+        external
+        returns (AggregatorV3Interface);
 
-    function getETHPrice(uint256 _currency) external view returns (uint256);
+    function getETHPriceFor(uint256 _currency) external view returns (uint256);
 
     function addFeed(AggregatorV3Interface _priceFeed, uint256 _currency)
         external;

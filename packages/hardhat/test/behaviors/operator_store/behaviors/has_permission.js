@@ -120,8 +120,8 @@ module.exports = function() {
           await this.contract
             .connect(set.caller)
             .setOperator(
-              set.domain,
               set.operator.address,
+              set.domain,
               set.permissionIndexes
             );
         }
@@ -130,9 +130,9 @@ module.exports = function() {
         const flag = await this.contract
           .connect(check.caller)
           .hasPermission(
+            check.operator.address,
             check.account.address,
             check.domain,
-            check.operator.address,
             check.permissionIndex
           );
 
@@ -148,9 +148,9 @@ module.exports = function() {
           this.contract
             .connect(check.caller)
             .hasPermission(
+              check.operator.address,
               check.account.address,
               check.domain,
-              check.operator.address,
               check.permissionIndex
             )
         ).to.be.revertedWith(revert);

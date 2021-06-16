@@ -23,16 +23,16 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     uint256 public override count = 0;
 
     /// @notice Optional mapping for project URIs
-    mapping(uint256 => string) public override uri;
+    mapping(uint256 => string) public override uriOf;
+
+    /// @notice Each project's handle.
+    mapping(uint256 => bytes32) public override handleOf;
 
     /// @notice The project that each unique handle represents.
-    mapping(bytes32 => uint256) public override handleResolver;
-
-    /// @notice The project that each unique handle represents.
-    mapping(uint256 => bytes32) public override reverseHandleLookup;
+    mapping(bytes32 => uint256) public override projectFor;
 
     /// @notice Handles that have been transfered to the specified address.
-    mapping(bytes32 => address) public override transferedHandles;
+    mapping(bytes32 => address) public override transferAddressFor;
 
     // --- external views --- //
 
@@ -78,8 +78,8 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
 
         // Handle must be unique.
         require(
-            handleResolver[_handle] == 0 &&
-                transferedHandles[_handle] == address(0),
+            projectFor[_handle] == 0 &&
+                transferAddressFor[_handle] == address(0),
             "Projects::create: HANDLE_TAKEN"
         );
 
@@ -90,11 +90,11 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         _safeMint(_owner, count);
 
         // Set the handle stored values.
-        reverseHandleLookup[count] = _handle;
-        handleResolver[_handle] = count;
+        handleOf[count] = _handle;
+        projectFor[_handle] = count;
 
         // Set the URI if one was provided.
-        if (bytes(_uri).length > 0) uri[count] = _uri;
+        if (bytes(_uri).length > 0) uriOf[count] = _uri;
 
         emit Create(count, _owner, _handle, _uri, msg.sender);
 
@@ -123,16 +123,16 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
 
         // Handle must be unique.
         require(
-            handleResolver[_handle] == 0 &&
-                transferedHandles[_handle] == address(0),
+            projectFor[_handle] == 0 &&
+                transferAddressFor[_handle] == address(0),
             "Projects::setHandle: HANDLE_TAKEN"
         );
 
         // If the handle is changing, register the change in the resolver.
-        handleResolver[reverseHandleLookup[_projectId]] = 0;
+        projectFor[handleOf[_projectId]] = 0;
 
-        handleResolver[_handle] = _projectId;
-        reverseHandleLookup[_projectId] = _handle;
+        projectFor[_handle] = _projectId;
+        handleOf[_projectId] = _handle;
 
         emit SetHandle(_projectId, _handle, msg.sender);
     }
@@ -155,7 +155,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         )
     {
         // Set the new uri.
-        uri[_projectId] = _uri;
+        uriOf[_projectId] = _uri;
 
         emit SetUri(_projectId, _uri, msg.sender);
     }
@@ -189,23 +189,23 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         );
 
         require(
-            handleResolver[_newHandle] == 0 &&
-                transferedHandles[_handle] == address(0),
+            projectFor[_newHandle] == 0 &&
+                transferAddressFor[_handle] == address(0),
             "Projects::transferHandle: HANDLE_TAKEN"
         );
 
         // Get a reference to the project's currency handle.
-        _handle = reverseHandleLookup[_projectId];
+        _handle = handleOf[_projectId];
 
         // Remove the resolver for the transfered handle.
-        handleResolver[_handle] = 0;
+        projectFor[_handle] = 0;
 
         // If the handle is changing, register the change in the resolver.
-        handleResolver[_newHandle] = _projectId;
-        reverseHandleLookup[_projectId] = _newHandle;
+        projectFor[_newHandle] = _projectId;
+        handleOf[_projectId] = _newHandle;
 
         // Transfer the current handle.
-        transferedHandles[_handle] = _to;
+        transferAddressFor[_handle] = _to;
 
         emit TransferHandle(_projectId, _to, _handle, _newHandle, msg.sender);
     }
@@ -235,15 +235,18 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     {
         // The handle must have been transfered to the specified address.
         require(
-            transferedHandles[_handle] == _for,
+            transferAddressFor[_handle] == _for,
             "Projects::claimHandle: NOT_FOUND"
         );
 
         // Register the change in the resolver.
-        handleResolver[_handle] = _projectId;
+        projectFor[_handle] = _projectId;
 
         // Set the new handle.
-        reverseHandleLookup[_projectId] = _handle;
+        handleOf[_projectId] = _handle;
+
+        // Set the handle as not being transfered.
+        transferAddressFor[_handle] = address(0);
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
     }

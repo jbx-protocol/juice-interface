@@ -74,23 +74,7 @@ interface IFundingCycles {
         uint256 start
     );
 
-    function packedConfigurationProperties(uint256 _projectId)
-        external
-        view
-        returns (uint256);
-
-    function packedIntrinsicProperties(uint256 _projectId)
-        external
-        view
-        returns (uint256);
-
-    function metadata(uint256 _projectId) external view returns (uint256);
-
-    function targetAmounts(uint256 _projectId) external view returns (uint256);
-
-    function tappedAmounts(uint256 _projectId) external view returns (uint256);
-
-    function latestId(uint256 _projectId) external view returns (uint256);
+    function latestIdOf(uint256 _projectId) external view returns (uint256);
 
     function count() external view returns (uint256);
 
@@ -101,17 +85,17 @@ interface IFundingCycles {
         view
         returns (FundingCycle memory);
 
-    function getQueued(uint256 _projectId)
+    function getQueuedOf(uint256 _projectId)
         external
         view
         returns (FundingCycle memory);
 
-    function getCurrent(uint256 _projectId)
+    function getCurrentOf(uint256 _projectId)
         external
         view
         returns (FundingCycle memory);
 
-    function currentBallotState(uint256 _projectId)
+    function currentBallotStateOf(uint256 _projectId)
         external
         view
         returns (BallotState);

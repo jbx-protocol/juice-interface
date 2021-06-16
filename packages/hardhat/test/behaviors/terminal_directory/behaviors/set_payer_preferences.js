@@ -34,12 +34,12 @@ module.exports = function() {
         // Get the stored ticket for the caller.
         const storedBeneficiary = await this.contract
           .connect(caller)
-          .beneficiaries(caller.address);
+          .beneficiaryOf(caller.address);
 
         // Get the stored preference for the caller.
         const storedPreferUnstakedTickets = await this.contract
           .connect(caller)
-          .preferUnstakedTickets(caller.address);
+          .unstakedTicketsPreferenceOf(caller.address);
 
         expect(storedBeneficiary).to.equal(beneficiary);
         expect(storedPreferUnstakedTickets).to.equal(prefereClaimedTickets);

@@ -40,19 +40,15 @@ interface IProjects is IERC721 {
 
     function count() external view returns (uint256);
 
-    function handleResolver(bytes32 _handle)
-        external
-        returns (uint256 projectId);
+    function uriOf(uint256 _projectId) external view returns (string memory);
 
-    function reverseHandleLookup(uint256 _projectId)
-        external
-        returns (bytes32 handle);
+    function handleOf(uint256 _projectId) external returns (bytes32 handle);
 
-    function transferedHandles(bytes32 _handle)
+    function projectFor(bytes32 _handle) external returns (uint256 projectId);
+
+    function transferAddressFor(bytes32 _handle)
         external
         returns (address receiver);
-
-    function uri(uint256 _projectId) external view returns (string memory);
 
     function exists(uint256 _projectId) external view returns (bool);
 

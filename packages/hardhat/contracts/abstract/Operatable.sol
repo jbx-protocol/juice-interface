@@ -13,16 +13,16 @@ abstract contract Operatable is IOperatable {
         require(
             msg.sender == _account ||
                 operatorStore.hasPermission(
+                    msg.sender,
                     _account,
                     _domain,
-                    msg.sender,
                     _index
                 ) ||
                 (_alsoAllowOpenDomainOperator &&
                     operatorStore.hasPermission(
+                        msg.sender,
                         _account,
                         0,
-                        msg.sender,
                         _index
                     )),
             "Operatable: UNAUTHORIZED"

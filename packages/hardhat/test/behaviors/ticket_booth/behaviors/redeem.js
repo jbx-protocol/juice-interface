@@ -293,7 +293,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -322,7 +322,7 @@ module.exports = function() {
         if (lockedAmount > 0) {
           const permissionIndex = 12;
           await this.operatorStore.mock.hasPermission
-            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, holder, projectId, permissionIndex)
             .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
@@ -365,7 +365,7 @@ module.exports = function() {
         // Get the stored staked supply.
         const storedStakedTotalSupply = await this.contract
           .connect(caller)
-          .stakedTotalSupply(projectId);
+          .stakedTotalSupplyOf(projectId);
 
         // The expected should match what's stored.
         expect(storedStakedTotalSupply).to.equal(expectedStakedTotalSupply);
@@ -384,7 +384,7 @@ module.exports = function() {
         // Get the stored lcoked amount.
         const storedLocked = await this.contract
           .connect(caller)
-          .locked(holder, projectId);
+          .lockedBalanceOf(holder, projectId);
 
         // Locked shouldn't change.
         expect(storedLocked).to.equal(lockedAmount);
@@ -393,10 +393,10 @@ module.exports = function() {
           // Get the stored tickets.
           const storedTicketAddress = await this.contract
             .connect(caller)
-            .tickets(projectId);
+            .ticketsOf(projectId);
 
-          // Attach the address to the Ticket contract.
-          const TicketFactory = await getContractFactory("Ticket");
+          // Attach the address to the Tickets contract.
+          const TicketFactory = await getContractFactory("Tickets");
           const StoredTicket = await TicketFactory.attach(storedTicketAddress);
           // Get the stored ticket balance for the holder.
           const storedTicketBalance = await StoredTicket.connect(
@@ -443,7 +443,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Caller must the controller to setup.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -474,7 +474,7 @@ module.exports = function() {
           const permissionIndex = 12;
 
           await this.operatorStore.mock.hasPermission
-            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, holder, projectId, permissionIndex)
             .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
@@ -483,7 +483,7 @@ module.exports = function() {
         }
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(controller);
 

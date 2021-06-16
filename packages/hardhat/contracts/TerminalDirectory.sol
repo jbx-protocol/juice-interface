@@ -15,7 +15,7 @@ contract TerminalDirectory is ITerminalDirectory {
     // --- private stored properties --- //
 
     // A list of contracts for each project ID that can receive funds directly.
-    mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
+    mapping(uint256 => IDirectPaymentAddress[]) private _addressesOf;
 
     // --- public immutable stored properties --- //
 
@@ -25,13 +25,13 @@ contract TerminalDirectory is ITerminalDirectory {
     // --- public stored properties --- //
 
     /// @notice For each project ID, the juice terminal that the direct payment addresses are proxies for.
-    mapping(uint256 => ITerminal) public override terminals;
+    mapping(uint256 => ITerminal) public override terminalOf;
 
     /// @notice For each address, the address that will be used as the beneficiary of direct payments made.
-    mapping(address => address) public override beneficiaries;
+    mapping(address => address) public override beneficiaryOf;
 
     /// @notice For each address, the preference of whether ticket will be auto claimed as ERC20s when a payment is made.
-    mapping(address => bool) public override preferUnstakedTickets;
+    mapping(address => bool) public override unstakedTicketsPreferenceOf;
 
     // --- external views --- //
 
@@ -43,13 +43,13 @@ contract TerminalDirectory is ITerminalDirectory {
 
       @return A list of direct payment addresses for the specified project ID.
     */
-    function addresses(uint256 _projectId)
+    function addressesOf(uint256 _projectId)
         external
         view
         override
         returns (IDirectPaymentAddress[] memory)
     {
-        return _addresses[_projectId];
+        return _addressesOf[_projectId];
     }
 
     // --- external transactions --- //
@@ -78,7 +78,7 @@ contract TerminalDirectory is ITerminalDirectory {
         );
 
         // Deploy the contract and push it to the list.
-        _addresses[_projectId].push(
+        _addressesOf[_projectId].push(
             new DirectPaymentAddress(this, _projectId, _memo)
         );
 
@@ -102,7 +102,7 @@ contract TerminalDirectory is ITerminalDirectory {
         );
 
         // Get a reference to the current terminal being used.
-        ITerminal _currentTerminal = terminals[_projectId];
+        ITerminal _currentTerminal = terminalOf[_projectId];
 
         // If the terminal is already set, nothing to do.
         if (_currentTerminal == _terminal) return;
@@ -114,7 +114,7 @@ contract TerminalDirectory is ITerminalDirectory {
         );
 
         // Set the new terminal.
-        terminals[_projectId] = _terminal;
+        terminalOf[_projectId] = _terminal;
 
         emit SetTerminal(_projectId, _terminal, msg.sender);
     }
@@ -131,8 +131,8 @@ contract TerminalDirectory is ITerminalDirectory {
         address _beneficiary,
         bool _preferClaimedTickets
     ) external override {
-        beneficiaries[msg.sender] = _beneficiary;
-        preferUnstakedTickets[msg.sender] = _preferClaimedTickets;
+        beneficiaryOf[msg.sender] = _beneficiary;
+        unstakedTicketsPreferenceOf[msg.sender] = _preferClaimedTickets;
 
         emit SetPayerPreferences(
             msg.sender,

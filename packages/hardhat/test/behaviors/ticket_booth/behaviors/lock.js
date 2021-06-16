@@ -172,7 +172,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -185,17 +185,17 @@ module.exports = function() {
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? projectId : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? 0 : projectId,
-              caller.address,
               permissionIndex
             )
             .returns(permissionFlag);
@@ -227,7 +227,7 @@ module.exports = function() {
         // Get a reference to the stored amount locked.
         const storedLocked = await this.contract
           .connect(caller)
-          .locked(holder, projectId);
+          .lockedBalanceOf(holder, projectId);
 
         // The expected locked is the previous locked plus the amount just locked.
         const expectedLocked = lockedAmount.add(amount);
@@ -255,7 +255,7 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -270,7 +270,7 @@ module.exports = function() {
         }
         if (lockedAmount > 0) {
           await this.operatorStore.mock.hasPermission
-            .withArgs(holder, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, holder, projectId, permissionIndex)
             .returns(true);
           // Lock the specified amount of tickets.
           await this.contract
@@ -284,17 +284,17 @@ module.exports = function() {
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? projectId : 0,
-              caller.address,
               permissionIndex
             )
             .returns(false);
           await this.operatorStore.mock.hasPermission
             .withArgs(
+              caller.address,
               holder,
               personalOperator ? 0 : projectId,
-              caller.address,
               permissionIndex
             )
             .returns(permissionFlag);

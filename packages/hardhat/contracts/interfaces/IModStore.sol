@@ -39,12 +39,12 @@ interface IModStore {
 
     function projects() external view returns (IProjects);
 
-    function paymentMods(uint256 _projectId, uint256 _configuration)
+    function paymentModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         returns (PaymentMod[] memory);
 
-    function ticketMods(uint256 _projectId, uint256 _configuration)
+    function ticketModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         returns (TicketMod[] memory);

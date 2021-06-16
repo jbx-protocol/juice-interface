@@ -11,33 +11,35 @@ import "./abstract/TerminalUtility.sol";
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
 contract FundingCycles is TerminalUtility, IFundingCycles {
+    // --- private stored properties --- //
+
+    // Stores the reconfiguration properties of each funding cycle,
+    // packed into one storage slot.
+    mapping(uint256 => uint256) private _packedConfigurationPropertiesOf;
+
+    // Stores the properties added by the mechanism to manage and schedule each funding cycle,
+    // packed into one storage slot.
+    mapping(uint256 => uint256) private _packedIntrinsicPropertiesOf;
+
+    // Stores the metadata for each funding cycle,
+    // packed into one storage slot.
+    mapping(uint256 => uint256) private _metadataOf;
+
+    // Stores the amount that each funding cycle can tap funding cycle,
+    // packed into one storage slot.
+    mapping(uint256 => uint256) private _targetOf;
+
+    // Stores the amount that has been tapped within each funding cycle,
+    // packed into one storage slot.
+    mapping(uint256 => uint256) private _tappedOf;
+
     // --- public stored properties --- //
-
-    /// @notice Stores the reconfiguration properties of each funding cycle,
-    /// packed into one storage slot.
-    mapping(uint256 => uint256) public override packedConfigurationProperties;
-
-    /// @notice Stores the properties added by the mechanism to manage and schedule each funding cycle,
-    /// packed into one storage slot.
-    mapping(uint256 => uint256) public override packedIntrinsicProperties;
-
-    /// @notice Stores the metadata for each funding cycle,
-    /// packed into one storage slot.
-    mapping(uint256 => uint256) public override metadata;
-
-    /// @notice Stores the amount that each funding cycle can tap funding cycle,
-    /// packed into one storage slot.
-    mapping(uint256 => uint256) public override targetAmounts;
-
-    /// @notice Stores the amount that has been tapped within each funding cycle,
-    /// packed into one storage slot.
-    mapping(uint256 => uint256) public override tappedAmounts;
 
     /// @notice The starting weight for each project's first funding cycle.
     uint256 public constant override BASE_WEIGHT = 1E19;
 
     /// @notice The latest FundingCycle ID for each project id.
-    mapping(uint256 => uint256) public override latestId;
+    mapping(uint256 => uint256) public override latestIdOf;
 
     /// @notice The total number of funding cycles created, which is used for issuing funding cycle IDs.
     /// @dev Funding cycles have IDs > 0.
@@ -76,7 +78,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         @return _fundingCycle The queued funding cycle.
     */
-    function getQueued(uint256 _projectId)
+    function getQueuedOf(uint256 _projectId)
         external
         view
         override
@@ -84,8 +86,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     {
         // The project must have funding cycles.
         require(
-            latestId[_projectId] > 0,
-            "FundingCycles::getQueued: NOT_FOUND"
+            latestIdOf[_projectId] > 0,
+            "FundingCycles::getQueuedOf: NOT_FOUND"
         );
 
         // Get a reference to the standby funding cycle.
@@ -117,11 +119,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-            _fundingCycleId = latestId[_projectId];
+            _fundingCycleId = latestIdOf[_projectId];
         }
 
         // A funding cycle must exist.
-        require(_fundingCycleId > 0, "FundingCycle::getQueued: NOT_FOUND");
+        require(_fundingCycleId > 0, "FundingCycle::getQueuedOf: NOT_FOUND");
 
         // Return a mock of what its second next up funding cycle would be like.
         // Use second next because the next would be a mock of the current funding cycle.
@@ -144,7 +146,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         @return fundingCycle The current funding cycle.
     */
-    function getCurrent(uint256 _projectId)
+    function getCurrentOf(uint256 _projectId)
         external
         view
         override
@@ -152,8 +154,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     {
         // The project must have funding cycles.
         require(
-            latestId[_projectId] > 0,
-            "FundingCycles::getCurrent: NOT_FOUND"
+            latestIdOf[_projectId] > 0,
+            "FundingCycles::getCurrentOf: NOT_FOUND"
         );
 
         // Check for an active funding cycle.
@@ -180,11 +182,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-            _fundingCycleId = latestId[_projectId];
+            _fundingCycleId = latestIdOf[_projectId];
         }
 
         // The funding cycle cant be 0.
-        require(_fundingCycleId > 0, "FundingCycles::getCurrent: NOT_FOUND");
+        require(_fundingCycleId > 0, "FundingCycles::getCurrentOf: NOT_FOUND");
 
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
@@ -202,7 +204,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
       @return The current ballot's state.
     */
-    function currentBallotState(uint256 _projectId)
+    function currentBallotStateOf(uint256 _projectId)
         external
         view
         override
@@ -210,12 +212,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     {
         // The project must have funding cycles.
         require(
-            latestId[_projectId] > 0,
-            "FundingCycles::currentBallotState: NOT_FOUND"
+            latestIdOf[_projectId] > 0,
+            "FundingCycles::currentBallotStateOf: NOT_FOUND"
         );
 
         // Get a reference to the latest funding cycle ID.
-        uint256 _fundingCycleId = latestId[_projectId];
+        uint256 _fundingCycleId = latestIdOf[_projectId];
 
         // Get the necessary properties for the latest funding cycle.
         FundingCycle memory _fundingCycle =
@@ -321,10 +323,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
 
         // Set the target amount.
-        targetAmounts[_fundingCycleId] = _properties.target;
+        _targetOf[_fundingCycleId] = _properties.target;
 
         // Set the metadata.
-        metadata[_fundingCycleId] = _metadata;
+        _metadataOf[_fundingCycleId] = _metadata;
 
         emit Configure(
             _fundingCycleId,
@@ -357,19 +359,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 fundingCycleId = _tappable(_projectId);
 
         // Get a reference to how much has already been tapped from this funding cycle.
-        uint256 _tappedAmount = tappedAmounts[fundingCycleId];
+        uint256 _tapped = _tappedOf[fundingCycleId];
 
         // Amount must be within what is still tappable.
         require(
-            _amount <= targetAmounts[fundingCycleId] - _tappedAmount,
+            _amount <= _targetOf[fundingCycleId] - _tapped,
             "FundingCycles::tap: INSUFFICIENT_FUNDS"
         );
 
         // The new amount that has been tapped.
-        uint256 _newTappedAmount = _tappedAmount + _amount;
+        uint256 _newTappedAmount = _tapped + _amount;
 
         // Add the amount to the funding cycle's tapped amount.
-        tappedAmounts[fundingCycleId] = _newTappedAmount;
+        _tappedOf[fundingCycleId] = _newTappedAmount;
 
         emit Tap(
             fundingCycleId,
@@ -417,7 +419,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         ) return _eligibleFundingCycleId;
 
         // Get the ID of the latest funding cycle which has the latest reconfiguration.
-        fundingCycleId = latestId[_projectId];
+        fundingCycleId = latestIdOf[_projectId];
 
         // Determine which funding cycle to base the configurable one on.
         FundingCycle memory _fundingCycle;
@@ -506,7 +508,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         } else {
             // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
             // which carries the last approved configuration.
-            fundingCycleId = latestId[_projectId];
+            fundingCycleId = latestIdOf[_projectId];
         }
 
         // The funding cycle cant be 0.
@@ -552,7 +554,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         count++;
 
         // Set the project's latest funding cycle ID to the new count.
-        latestId[_projectId] = count;
+        latestIdOf[_projectId] = count;
 
         // Set the intrinsic properties depending on whether or not a base funding cycle was specified.
         uint256 _start;
@@ -568,11 +570,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Copy if needed.
             if (_copy) {
-                packedConfigurationProperties[
+                _packedConfigurationPropertiesOf[
                     count
-                ] = packedConfigurationProperties[_baseFundingCycle.id];
-                metadata[count] = metadata[_baseFundingCycle.id];
-                targetAmounts[count] = targetAmounts[_baseFundingCycle.id];
+                ] = _packedConfigurationPropertiesOf[_baseFundingCycle.id];
+                _metadataOf[count] = _metadataOf[_baseFundingCycle.id];
+                _targetOf[count] = _targetOf[_baseFundingCycle.id];
             }
         } else {
             _weight = BASE_WEIGHT;
@@ -610,7 +612,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         returns (uint256 fundingCycleId)
     {
         // Get a reference to the project's latest funding cycle.
-        fundingCycleId = latestId[_projectId];
+        fundingCycleId = latestIdOf[_projectId];
 
         // If there isn't one, theres also no standy funding cycle.
         if (fundingCycleId == 0) return 0;
@@ -637,7 +639,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         returns (uint256 fundingCycleId)
     {
         // Get a reference to the project's latest funding cycle.
-        fundingCycleId = latestId[_projectId];
+        fundingCycleId = latestIdOf[_projectId];
 
         // If the latest funding cycle doesn't exist, return an undefined funding cycle.
         if (fundingCycleId == 0) return 0;
@@ -734,7 +736,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         packed |= _start << 208;
 
         // Set in storage.
-        packedIntrinsicProperties[_fundingCycleId] = packed;
+        _packedIntrinsicPropertiesOf[_fundingCycleId] = packed;
     }
 
     /**
@@ -772,7 +774,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         packed |= _discountRate << 248;
 
         // Set in storage.
-        packedConfigurationProperties[_fundingCycleId] = packed;
+        _packedConfigurationPropertiesOf[_fundingCycleId] = packed;
     }
 
     /**
@@ -797,7 +799,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         _fundingCycle.id = _id;
 
         if (_includeIntrinsicProperties) {
-            uint256 _packedIntrinsicProperties = packedIntrinsicProperties[_id];
+            uint256 _packedIntrinsicProperties =
+                _packedIntrinsicPropertiesOf[_id];
 
             _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
             _fundingCycle.projectId = uint256(
@@ -815,7 +818,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         }
         if (_includeConfigurationProperties) {
             uint256 _packedConfigurationProperties =
-                packedConfigurationProperties[_id];
+                _packedConfigurationPropertiesOf[_id];
             _fundingCycle.ballot = IFundingCycleBallot(
                 address(uint160(_packedConfigurationProperties))
             );
@@ -836,10 +839,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             );
         }
         if (_includeAmounts) {
-            _fundingCycle.target = targetAmounts[_id];
-            _fundingCycle.tapped = tappedAmounts[_id];
+            _fundingCycle.target = _targetOf[_id];
+            _fundingCycle.tapped = _tappedOf[_id];
         }
-        if (_includeMetadata) _fundingCycle.metadata = metadata[_id];
+        if (_includeMetadata) _fundingCycle.metadata = _metadataOf[_id];
     }
 
     /** 
@@ -991,7 +994,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             IFundingCycleBallot(
                 address(
                     uint160(
-                        packedConfigurationProperties[_ballotFundingCycleId]
+                        _packedConfigurationPropertiesOf[_ballotFundingCycleId]
                     )
                 )
             );

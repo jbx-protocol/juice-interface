@@ -598,7 +598,7 @@ module.exports = function() {
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
-            .withArgs(projectOwner, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, projectOwner, projectId, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -629,7 +629,7 @@ module.exports = function() {
           .setPaymentMods(projectId, configuration, mods);
 
         // Get the stored payment mods value.
-        const storedProjectMods = await this.contract.paymentMods(
+        const storedProjectMods = await this.contract.paymentModsOf(
           projectId,
           configuration
         );
@@ -683,7 +683,7 @@ module.exports = function() {
           const permissionIndex = 13;
 
           await this.operatorStore.mock.hasPermission
-            .withArgs(projectOwner, projectId, caller.address, permissionIndex)
+            .withArgs(caller.address, projectOwner, projectId, permissionIndex)
             .returns(permissionFlag);
         }
         if (setup) {

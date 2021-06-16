@@ -124,7 +124,7 @@ module.exports = function() {
         } = successTest.fn(this);
 
         // Mock the caller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(caller.address);
 
@@ -165,10 +165,10 @@ module.exports = function() {
           // Get the stored ticket for the project.
           const storedTicketAddress = await this.contract
             .connect(caller)
-            .tickets(projectId);
+            .ticketsOf(projectId);
 
-          // Attach the address to the Ticket contract.
-          const TicketFactory = await getContractFactory("Ticket");
+          // Attach the address to the Tickets contract.
+          const TicketFactory = await getContractFactory("Tickets");
           const StoredTicket = await TicketFactory.attach(storedTicketAddress);
 
           // Get the stored ticket balance for the holder.
@@ -198,7 +198,7 @@ module.exports = function() {
           // Get the stored project staked total supply for the holder.
           const storedStakedTotalSupply = await this.contract
             .connect(caller)
-            .stakedTotalSupply(projectId);
+            .stakedTotalSupplyOf(projectId);
 
           // Expect the stored staked total supply to equal the expected value.
           expect(storedStakedTotalSupply).to.equal(expectedTotalSupply);
@@ -220,7 +220,7 @@ module.exports = function() {
           revert
         } = failureTest.fn(this);
         // Mock the controller to be the project's controller.
-        await this.terminalDirectory.mock.terminals
+        await this.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(controller);
 

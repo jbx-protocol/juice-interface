@@ -72,7 +72,7 @@ module.exports = function() {
         // Check for the price.
         const resultingPrice = await this.contract
           .connect(caller)
-          .getETHPrice(currency);
+          .getETHPriceFor(currency);
 
         // Get a reference to the target number of decimals.
         const targetDecimals = await this.contract.targetDecimals();
@@ -103,7 +103,7 @@ module.exports = function() {
         );
 
         await expect(
-          this.contract.connect(caller).getETHPrice(currency)
+          this.contract.connect(caller).getETHPriceFor(currency)
         ).to.be.revertedWith(revert);
       });
     });

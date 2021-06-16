@@ -1,7 +1,7 @@
-const getETHPrice = require("./get_eth_price");
+const getETHPriceFor = require("./get_eth_price_for");
 const addFeed = require("./add_feed");
 
 module.exports = {
-  getETHPrice,
+  getETHPriceFor,
   addFeed
 };

@@ -70,7 +70,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 
@@ -83,7 +83,7 @@ module.exports = function() {
           .withArgs(1, uri, caller.address);
 
         // Get the stored uri value.
-        const storedUri = await this.contract.uri(1);
+        const storedUri = await this.contract.uriOf(1);
 
         // Expect the stored values to equal the set values.
         expect(storedUri).to.equal(uri);
@@ -114,7 +114,7 @@ module.exports = function() {
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
-            .withArgs(create.owner, 1, caller.address, permissionIndex)
+            .withArgs(caller.address, create.owner, 1, permissionIndex)
             .returns(permissionFlag);
         }
 

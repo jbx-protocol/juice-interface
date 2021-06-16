@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
+import { ModRef } from 'models/payment-mod'
 import { ProjectMetadata } from 'models/project-metadata'
 import { parsePerbicent, parseWad } from 'utils/formatNumber'
 import {
@@ -19,6 +20,7 @@ type EditingProjectInfo = {
 export type EditingProjectState = {
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
+  mods: ModRef[]
 }
 
 const defaultDiscountRate = parsePerbicent('97')
@@ -53,6 +55,7 @@ export const editingProjectSlice = createSlice({
       configured: BigNumber.from(0),
       ballot: constants.AddressZero,
     }),
+    mods: [],
   } as EditingProjectState,
   reducers: {
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
@@ -172,6 +175,17 @@ export const editingProjectSlice = createSlice({
           ? defaultBondingCurveRate.toString()
           : '0',
       },
+    }),
+    setMods: (state, action: PayloadAction<ModRef[]>) => ({
+      ...state,
+      mods: action.payload,
+    }),
+    removeModAtIndex: (state, action: PayloadAction<number>) => ({
+      ...state,
+      mods: [
+        ...state.mods.slice(0, action.payload),
+        ...state.mods.slice(action.payload + 1),
+      ],
     }),
   },
 })

@@ -60,6 +60,7 @@ export default function PlayCreate() {
   const [ticketingForm] = useForm<TicketingFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
+  const mods = useAppSelector(state => state.editingProject.mods)
   const dispatch = useAppDispatch()
 
   const adminFeePercent = useContractReader<BigNumber>({
@@ -75,6 +76,7 @@ export default function PlayCreate() {
       target: fromWad(editingFC?.target) ?? '0',
       duration: editingFC?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
       currency: (editingFC?.currency.toNumber() as CurrencyOption) ?? 0,
+      mods,
     })
 
   const resetProjectForm = () =>

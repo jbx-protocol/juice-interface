@@ -17,6 +17,7 @@ import { normalizeHandle } from 'utils/formatHandle'
 import { formatWad, fromWad } from 'utils/formatNumber'
 
 import { SECONDS_IN_DAY } from '../../constants/units'
+import { UserContext } from '../../contexts/userContext'
 
 type FormFields = {
   name: string
@@ -27,6 +28,7 @@ type FormFields = {
 
 export default function DefineProject() {
   const { theme, forThemeOption } = useContext(ThemeContext)
+  const { userAddress } = useContext(UserContext)
   const colors = theme.colors
   const [form] = useForm<FormFields>()
   const editingBudget = useEditingFundingCycleSelector()
@@ -55,8 +57,14 @@ export default function DefineProject() {
       dispatch(editingProjectActions.setName(fields.name))
       dispatch(editingProjectActions.setHandle(normalizeHandle(fields.name)))
     }
-    if (fields.target !== undefined)
+    if (fields.target !== undefined) {
       dispatch(editingProjectActions.setTarget(fields.target))
+      dispatch(
+        editingProjectActions.setMods([
+          { address: userAddress, amount: parseInt(fields.target) },
+        ]),
+      )
+    }
     if (fields.duration !== undefined)
       dispatch(
         editingProjectActions.setDuration(
@@ -95,16 +103,28 @@ export default function DefineProject() {
             <FormItems.ProjectTarget
               name="target"
               value={form.getFieldValue('target')}
-              onValueChange={val => {
-                // TODO
+              onValueChanged={val => {
                 form.setFieldsValue({ target: val })
                 onFieldsChange({ ...form.getFieldsValue(true), target: val })
               }}
               currency={form.getFieldValue('currency')}
-              onCurrencyChange={currency => {
-                // TODO
+              onCurrencyChanged={currency => {
                 form.setFieldsValue({ currency })
                 onFieldsChange({ ...form.getFieldsValue(true), currency })
+              }}
+              mods={[
+                {
+                  address: userAddress,
+                  amount: 0,
+                },
+              ]}
+              onModsChanged={mods => {
+                const target = mods[0].amount
+                form.setFieldsValue({ target: target?.toString() })
+                onFieldsChange({
+                  ...form.getFieldsValue(true),
+                  target,
+                })
               }}
               hideLabel
             />

@@ -16,7 +16,7 @@ export default function BudgetTargetInput({
   currency: CurrencyOption
   value: string | undefined
   onValueChange: (value?: string) => void
-  onCurrencyChange: (currency: CurrencyOption) => void
+  onCurrencyChange?: (currency: CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
 }) {
@@ -32,16 +32,23 @@ export default function BudgetTargetInput({
       placeholder={placeholder}
       disabled={disabled}
       accessory={
-        <InputAccessoryButton
-          onClick={() => {
-            const newCurrency = _currency === 1 ? 0 : 1
-            setCurrency(newCurrency)
-            onCurrencyChange(newCurrency)
-          }}
-          content={<span>{currencyName(_currency)}</span>}
-          withArrow={true}
-          placement="suffix"
-        />
+        onCurrencyChange ? (
+          <InputAccessoryButton
+            onClick={() => {
+              const newCurrency = _currency === 1 ? 0 : 1
+              setCurrency(newCurrency)
+              onCurrencyChange(newCurrency)
+            }}
+            content={currencyName(_currency)}
+            withArrow={true}
+            placement="suffix"
+          />
+        ) : (
+          <InputAccessoryButton
+            content={currencyName(_currency)}
+            placement="suffix"
+          />
+        )
       }
       onChange={value => onValueChange(value?.toString())}
     />

@@ -109,14 +109,14 @@ export default function ReconfigureBudgetModal({
       width={600}
     >
       <Form form={form} layout="vertical">
-        <FormItems.ProjectTarget
+        {/* <FormItems.ProjectTarget
           name="target"
           value={form.getFieldValue('target')}
           onValueChange={val => form.setFieldsValue({ target: val })}
           currency={form.getFieldValue('currency')}
           onCurrencyChange={currency => form.setFieldsValue({ currency })}
           formItemProps={{ rules: [{ required: true }] }}
-        />
+        /> */}
         <FormItems.ProjectDuration
           name="duration"
           value={form.getFieldValue('duration')}

@@ -111,12 +111,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     function setHandle(uint256 _projectId, bytes32 _handle)
         external
         override
-        requirePermission(
-            ownerOf(_projectId),
-            _projectId,
-            Operations.SetHandle,
-            false
-        )
+        requirePermission(ownerOf(_projectId), _projectId, Operations.SetHandle)
     {
         // Handle must exist.
         require(_handle != bytes32(0), "Projects::setHandle: EMPTY_HANDLE");
@@ -147,12 +142,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     function setUri(uint256 _projectId, string calldata _uri)
         external
         override
-        requirePermission(
-            ownerOf(_projectId),
-            _projectId,
-            Operations.SetUri,
-            false
-        )
+        requirePermission(ownerOf(_projectId), _projectId, Operations.SetUri)
     {
         // Set the new uri.
         uriOf[_projectId] = _uri;
@@ -175,12 +165,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     )
         external
         override
-        requirePermission(
-            ownerOf(_projectId),
-            _projectId,
-            Operations.SetHandle,
-            false
-        )
+        requirePermission(ownerOf(_projectId), _projectId, Operations.SetHandle)
         returns (bytes32 _handle)
     {
         require(
@@ -225,12 +210,15 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     )
         external
         override
-        requirePermission(_for, _projectId, Operations.ClaimHandle, true)
+        requirePermissionAllowingWildcardDomain(
+            _for,
+            _projectId,
+            Operations.ClaimHandle
+        )
         requirePermission(
             ownerOf(_projectId),
             _projectId,
-            Operations.ClaimHandle,
-            false
+            Operations.ClaimHandle
         )
     {
         // The handle must have been transfered to the specified address.

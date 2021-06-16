@@ -249,6 +249,7 @@ const tests = {
       description: "unauthorized",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
+        controller: addrs[0].address,
         projectOwner: addrs[0].address,
         projectId: 1,
         configuration: 10,
@@ -261,6 +262,7 @@ const tests = {
       description: "no mods",
       fn: ({ deployer }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -272,6 +274,7 @@ const tests = {
       description: "locked with difference beneficiaries",
       fn: ({ deployer, addrs, testStart }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -303,6 +306,7 @@ const tests = {
       description: "locked with different percets",
       fn: ({ deployer, testStart }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -334,6 +338,7 @@ const tests = {
       description: "locked with shorter locked until values",
       fn: ({ deployer, testStart }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -365,6 +370,7 @@ const tests = {
       description: "no beneficiary",
       fn: ({ deployer }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -383,6 +389,7 @@ const tests = {
       description: "mod percent over 100%",
       fn: ({ deployer }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -407,6 +414,7 @@ const tests = {
       description: "mod percent over 100% with locked",
       fn: ({ deployer, testStart }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -444,6 +452,7 @@ const tests = {
       description: "mod percent is 0%",
       fn: ({ deployer }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -468,6 +477,7 @@ const tests = {
       description: "total percents over 100%",
       fn: ({ deployer }) => ({
         caller: deployer,
+        controller: deployer.address,
         projectOwner: deployer.address,
         projectId: 1,
         configuration: 10,
@@ -510,6 +520,11 @@ module.exports = function() {
           .withArgs(projectId)
           .returns(projectOwner);
 
+        // Mock the caller to be the project's controller for setup.
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(caller.address);
+
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           const permissionIndex = 14;
@@ -527,6 +542,10 @@ module.exports = function() {
               await this.projects.mock.ownerOf
                 .withArgs(setup.projectId)
                 .returns(projectOwner);
+              // Mock the caller to be the project's controller for setup.
+              await this.terminalDirectory.mock.terminalOf
+                .withArgs(setup.projectId)
+                .returns(caller.address);
             }
             // Execute the transaction.
             await this.contract
@@ -580,6 +599,7 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const {
           caller,
+          controller,
           projectOwner,
           projectId,
           configuration,
@@ -592,6 +612,11 @@ module.exports = function() {
         await this.projects.mock.ownerOf
           .withArgs(projectId)
           .returns(projectOwner);
+
+        // Mock the caller to be the project's controller for setup.
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(controller);
 
         if (permissionFlag !== undefined) {
           const permissionIndex = 14;

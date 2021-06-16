@@ -128,8 +128,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.Issue,
-            false
+            Operations.Issue
         )
     {
         // Only one ERC20 ticket can be issued.
@@ -291,7 +290,11 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     )
         external
         override
-        requirePermission(_holder, _projectId, Operations.Stake, true)
+        requirePermissionAllowingWildcardDomain(
+            _holder,
+            _projectId,
+            Operations.Stake
+        )
     {
         // Get a reference to the project's ERC20 tickets.
         ITickets _tickets = ticketsOf[_projectId];
@@ -339,7 +342,11 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     )
         external
         override
-        requirePermission(_holder, _projectId, Operations.Unstake, true)
+        requirePermissionAllowingWildcardDomain(
+            _holder,
+            _projectId,
+            Operations.Unstake
+        )
     {
         // Get a reference to the project's ERC20 tickets.
         ITickets _tickets = ticketsOf[_projectId];
@@ -392,7 +399,11 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     )
         external
         override
-        requirePermission(_holder, _projectId, Operations.Lock, true)
+        requirePermissionAllowingWildcardDomain(
+            _holder,
+            _projectId,
+            Operations.Lock
+        )
     {
         // Amount must be greater than 0.
         require(_amount > 0, "Tickets::lock: NO_OP");
@@ -469,7 +480,11 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     )
         external
         override
-        requirePermission(_holder, _projectId, Operations.Transfer, true)
+        requirePermissionAllowingWildcardDomain(
+            _holder,
+            _projectId,
+            Operations.Transfer
+        )
     {
         require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
 

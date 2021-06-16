@@ -454,8 +454,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.Configure,
-            false
+            Operations.Configure
         )
         returns (uint256 fundingCycleId)
     {
@@ -521,8 +520,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.PrintInitialTickets,
-            false
+            Operations.PrintInitialTickets
         )
     {
         // Make sure the project doesn't have a balance.
@@ -795,7 +793,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         external
         override
         nonReentrant
-        requirePermission(_account, _projectId, Operations.Redeem, true)
+        requirePermissionAllowingWildcardDomain(
+            _account,
+            _projectId,
+            Operations.Redeem
+        )
         returns (uint256 amount)
     {
         // Can't send claimed funds to the zero address.
@@ -992,8 +994,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.Migrate,
-            false
+            Operations.Migrate
         )
         nonReentrant
     {

@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import "./interfaces/IModStore.sol";
 import "./abstract/Operatable.sol";
+import "./abstract/TerminalUtility.sol";
 
 import "./libraries/Operations.sol";
 
@@ -13,7 +14,7 @@ import "./libraries/Operations.sol";
   @dev
   Mods can be used to distribute a percentage of payments or tickets to preconfigured beneficiaries.
 */
-contract ModStore is IModStore, Operatable {
+contract ModStore is IModStore, Operatable, TerminalUtility {
     // --- private stored properties --- //
 
     // All payment mods for each project ID's configurations.
@@ -70,10 +71,13 @@ contract ModStore is IModStore, Operatable {
     /** 
       @param _projects The contract storing project information
       @param _operatorStore A contract storing operator assignments.
+      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
     */
-    constructor(IProjects _projects, IOperatorStore _operatorStore)
-        Operatable(_operatorStore)
-    {
+    constructor(
+        IProjects _projects,
+        IOperatorStore _operatorStore,
+        ITerminalDirectory _terminalDirectory
+    ) Operatable(_operatorStore) TerminalUtility(_terminalDirectory) {
         projects = _projects;
     }
 
@@ -92,11 +96,12 @@ contract ModStore is IModStore, Operatable {
     )
         external
         override
-        requirePermission(
+        requirePermissionAcceptingAlternateAddress(
             projects.ownerOf(_projectId),
             _projectId,
             Operations.SetPaymentMods,
-            false
+            // The project's terminal can also make this call.
+            address(terminalDirectory.terminalOf(_projectId))
         )
     {
         // There must be something to do.
@@ -186,11 +191,12 @@ contract ModStore is IModStore, Operatable {
     )
         external
         override
-        requirePermission(
+        requirePermissionAcceptingAlternateAddress(
             projects.ownerOf(_projectId),
             _projectId,
             Operations.SetTicketMods,
-            false
+            // The project's terminal can also make this call.
+            address(terminalDirectory.terminalOf(_projectId))
         )
     {
         // There must be something to do.

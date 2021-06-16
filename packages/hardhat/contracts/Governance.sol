@@ -50,11 +50,11 @@ contract Governance is JuiceProject {
       @param _juicer The juicer to change the target local ETH of.
       @param _amount The new target.
     */
-    function setTargetLocalETH(IJuicer _juicer, uint256 _amount)
+    function setTargetLocalWei(IJuicer _juicer, uint256 _amount)
         external
         onlyOwner
     {
-        _juicer.setTargetLocalETH(_amount);
+        _juicer.setTargetLocalWei(_amount);
     }
 
     /** 

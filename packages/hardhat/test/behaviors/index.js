@@ -8,6 +8,7 @@ const directPaymentAddress = require("./direct_payment_address");
 const terminalDirectory = require("./terminal_directory");
 const governance = require("./governance");
 const juiceProject = require("./juice_project");
+const juicer = require("./juicer");
 
 module.exports = {
   operatorStore,
@@ -19,5 +20,6 @@ module.exports = {
   directPaymentAddress,
   terminalDirectory,
   governance,
-  juiceProject
+  juiceProject,
+  juicer
 };

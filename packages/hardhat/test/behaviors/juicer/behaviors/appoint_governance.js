@@ -1,0 +1,79 @@
+const {
+  ethers: { constants }
+} = require("hardhat");
+const { expect } = require("chai");
+
+const tests = {
+  success: [
+    {
+      description: "appoint",
+      fn: ({ addrs, governance }) => ({
+        caller: governance,
+        governance: addrs[0].address
+      })
+    }
+  ],
+  failure: [
+    {
+      description: "unauthorized",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        governance: constants.AddressZero,
+        revert: "Juicer: UNAUTHORIZED"
+      })
+    },
+    {
+      description: "zero address",
+      fn: ({ governance }) => ({
+        caller: governance,
+        governance: constants.AddressZero,
+        revert: "Juicer::appointGovernance: ZERO_ADDRESS"
+      })
+    },
+    {
+      description: "same as current",
+      fn: ({ governance }) => ({
+        caller: governance,
+        governance: governance.address,
+        revert: "Juicer::appointGovernance: NO_OP"
+      })
+    }
+  ]
+};
+
+module.exports = function() {
+  describe("Success cases", function() {
+    tests.success.forEach(function(successTest) {
+      it(successTest.description, async function() {
+        const { caller, governance } = successTest.fn(this);
+
+        // Execute the transaction.
+        const tx = await this.contract
+          .connect(caller)
+          .appointGovernance(governance);
+
+        // Expect an event to have been emitted.
+        await expect(tx)
+          .to.emit(this.contract, "AppointGovernance")
+          .withArgs(governance);
+
+        // Get the stored pending governance value.
+        const storedPendingGovernance = await this.contract.pendingGovernance();
+
+        // Expect the stored value to equal whats expected.
+        expect(storedPendingGovernance).to.equal(governance);
+      });
+    });
+  });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const { caller, governance, revert } = failureTest.fn(this);
+
+        await expect(
+          this.contract.connect(caller).appointGovernance(governance)
+        ).to.be.revertedWith(revert);
+      });
+    });
+  });
+};

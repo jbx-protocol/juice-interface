@@ -80,7 +80,7 @@ interface IJuicer {
 
     event SetFee(uint256 _amount);
 
-    event SetTargetLocalETH(uint256 amount);
+    event SetTargetLocalWei(uint256 amount);
 
     function governance() external view returns (address payable);
 
@@ -180,7 +180,7 @@ interface IJuicer {
 
     function deposit() external;
 
-    function setTargetLocalETH(uint256 _amount) external;
+    function setTargetLocalWei(uint256 _amount) external;
 
     function acceptGovernance() external;
 }

@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "allow migration",
       fn: ({ deployer }) => ({
         caller: deployer
       })
@@ -41,7 +41,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -55,7 +55,7 @@ module.exports = function() {
         const from = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -64,7 +64,7 @@ module.exports = function() {
         const to = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -100,7 +100,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -114,7 +114,7 @@ module.exports = function() {
         const from = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -123,7 +123,7 @@ module.exports = function() {
         const to = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,

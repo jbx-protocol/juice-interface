@@ -17,7 +17,7 @@ contract YearnYielder is IYielder, Ownable {
     IyVaultV2 public wethVault =
         IyVaultV2(0xa9fE4601811213c340e850ea305481afF02f5b28);
 
-    address public override weth;
+    address public weth;
 
     uint256 public override deposited = 0;
 
@@ -71,7 +71,7 @@ contract YearnYielder is IYielder, Ownable {
     }
 
     /// @dev Updates the vaults approval of the token to be the maximum value.
-    function updateApproval() public override {
+    function updateApproval() public {
         IERC20(weth).safeApprove(address(wethVault), type(uint256).max);
     }
 

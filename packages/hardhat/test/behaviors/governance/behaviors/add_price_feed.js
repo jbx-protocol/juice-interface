@@ -4,7 +4,7 @@ const AggregatorV3Interface = require("@chainlink/contracts/abi/v0.6/AggregatorV
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "adds price feed",
       fn: ({ deployer }) => ({
         caller: deployer
       })

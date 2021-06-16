@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "takes fee",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         beneficiary: addrs[0].address,
@@ -64,7 +64,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -78,7 +78,7 @@ module.exports = function() {
         const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -132,11 +132,10 @@ module.exports = function() {
             "FundingCycles",
             [terminalDirectory.address]
           );
-          const tickets = await this.deployMockLocalContract("Tickets", [
-            projects.address,
-            operatorStore.address,
-            terminalDirectory.address
-          ]);
+          const ticketBooth = await this.deployMockLocalContract(
+            "TicketBooth",
+            [projects.address, operatorStore.address, terminalDirectory.address]
+          );
           const modStore = await this.deployMockLocalContract("ModStore", [
             projects.address,
             operatorStore.address
@@ -146,7 +145,7 @@ module.exports = function() {
           const juicer = await this.deployMockLocalContract("Juicer", [
             projects.address,
             fundingCycles.address,
-            tickets.address,
+            ticketBooth.address,
             operatorStore.address,
             modStore.address,
             prices.address,

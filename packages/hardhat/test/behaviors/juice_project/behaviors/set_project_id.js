@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "sets project ID",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectId: 1234

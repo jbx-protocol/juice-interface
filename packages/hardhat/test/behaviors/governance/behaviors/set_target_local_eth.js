@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "sets target local eth",
       fn: ({ deployer }) => ({
         caller: deployer
       })
@@ -41,7 +41,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -55,7 +55,7 @@ module.exports = function() {
         const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -63,12 +63,12 @@ module.exports = function() {
         ]);
         const amount = 1;
 
-        await juicer.mock.setTargetLocalETH.withArgs(amount).returns();
+        await juicer.mock.setTargetLocalWei.withArgs(amount).returns();
 
         // Execute the transaction.
         await this.contract
           .connect(caller)
-          .setTargetLocalETH(juicer.address, amount);
+          .setTargetLocalWei(juicer.address, amount);
       });
     });
   });
@@ -92,7 +92,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -106,7 +106,7 @@ module.exports = function() {
         const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -118,7 +118,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .setTargetLocalETH(juicer.address, amount)
+            .setTargetLocalWei(juicer.address, amount)
         ).to.be.revertedWith(revert);
       });
     });

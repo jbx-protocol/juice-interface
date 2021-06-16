@@ -1056,6 +1056,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::allowMigration: ZERO_ADDRESS"
         );
 
+        // Can't migrate to this same contract
+        require(_contract != this, "Juicer::allowMigration: NO_OP");
+
         // Set the contract as allowed
         migrationIsAllowed[_contract] = true;
 
@@ -1068,14 +1071,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @param _amount The new target balance amount.
     */
-    function setTargetLocalETH(uint256 _amount) external override onlyGov {
+    function setTargetLocalWei(uint256 _amount) external override onlyGov {
         // Set the target.
         targetLocalETH = _amount;
 
         // Make sure the target is met.
         _ensureAvailability(_amount);
 
-        emit SetTargetLocalETH(_amount);
+        emit SetTargetLocalWei(_amount);
     }
 
     /** 
@@ -1131,7 +1134,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The new governance can't be the zero address.
         require(
             _pendingGovernance != address(0),
-            "Juicer::setPendingGovernance: ZERO_ADDRESS"
+            "Juicer::appointGovernance: ZERO_ADDRESS"
+        );
+        // The new governance can't be the same as the current governance.
+        require(
+            _pendingGovernance != governance,
+            "Juicer::appointGovernance: NO_OP"
         );
 
         // Set the appointed governance as pending.
@@ -1229,11 +1237,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // No need to withdraw from the yielder if the current balance is greater than the amount being ensured.
         if (_balance >= _amount) return;
 
-        // Withdraw the amount entirely from the yielder if there's no balance, otherwise withdraw the difference between the balance and the amount being ensured.
-        yielder.withdraw(
-            _balance == 0 ? _amount : _amount - _balance,
-            payable(address(this))
-        );
+        // Withdraw the difference between the balance and the amount being ensured.
+        yielder.withdraw(_amount - _balance, payable(address(this)));
     }
 
     /**

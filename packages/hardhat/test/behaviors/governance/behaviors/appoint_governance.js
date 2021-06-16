@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "sets preferences",
+      description: "appoints governance",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         newGovernance: addrs[0].address
@@ -43,7 +43,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -57,7 +57,7 @@ module.exports = function() {
         const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,
@@ -93,7 +93,7 @@ module.exports = function() {
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const tickets = await this.deployMockLocalContract("Tickets", [
+        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
           projects.address,
           operatorStore.address,
           terminalDirectory.address
@@ -107,7 +107,7 @@ module.exports = function() {
         const juicer = await this.deployMockLocalContract("Juicer", [
           projects.address,
           fundingCycles.address,
-          tickets.address,
+          ticketBooth.address,
           operatorStore.address,
           modStore.address,
           prices.address,

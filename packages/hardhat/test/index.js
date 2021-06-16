@@ -92,6 +92,9 @@ describe("Juice", async function() {
   // Depends on OperatorStore and Projects.
   describe("TicketBooth", shouldBehaveLike.ticketBooth);
 
+  // Depends on everything.
+  describe.only("Juicer", shouldBehaveLike.juicer);
+
   // After each test, restore the contract state.
   afterEach(async function() {
     await restore(snapshotId);

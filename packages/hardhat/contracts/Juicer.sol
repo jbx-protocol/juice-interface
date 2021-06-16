@@ -1255,7 +1255,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // The bonding curve rate must be between 0 and 200.
         require(
-            _metadata.bondingCurveRate > 0 && _metadata.bondingCurveRate <= 200,
+            _metadata.bondingCurveRate <= 200,
             "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
         );
 

@@ -3,12 +3,14 @@ import { FormItems } from 'components/shared/formItems'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
+import { ModRef } from 'models/payment-mod'
 import { editingProjectActions } from 'redux/slices/editingProject'
 
 export type BudgetFormFields = {
   target: string
   duration: string
   currency: CurrencyOption
+  mods: ModRef[]
 }
 
 export default function BudgetForm({
@@ -32,9 +34,11 @@ export default function BudgetForm({
             rules: [{ required: true }],
           }}
           value={form.getFieldValue('target')}
-          onValueChange={val => form.setFieldsValue({ target: val })}
+          onValueChanged={val => form.setFieldsValue({ target: val })}
           currency={form.getFieldValue('currency')}
-          onCurrencyChange={currency => form.setFieldsValue({ currency })}
+          onCurrencyChanged={currency => form.setFieldsValue({ currency })}
+          mods={form.getFieldValue('mods')}
+          onModsChanged={mods => form.setFieldsValue({ mods })}
         />
         <FormItems.ProjectDuration
           name="duration"

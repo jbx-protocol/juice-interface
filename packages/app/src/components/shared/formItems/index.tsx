@@ -1,3 +1,4 @@
+import PaymentMods from './PaymentMods'
 import ProjectBondingCurveRate from './ProjectBondingCurveRate'
 import ProjectDiscountRate from './ProjectDiscountRate'
 import ProjectDuration from './ProjectDuration'
@@ -9,6 +10,7 @@ import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 
 export const FormItems = {
+  PaymentMods,
   ProjectTarget,
   ProjectName,
   ProjectDuration,

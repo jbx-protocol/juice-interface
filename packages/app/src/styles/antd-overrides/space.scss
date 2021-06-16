@@ -1,0 +1,7 @@
+.ant-space {
+  &.flex-first {
+    > .ant-space-item:first-of-type {
+      flex: 1;
+    }
+  }
+}

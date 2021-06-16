@@ -18,9 +18,11 @@ export default function InputAccessoryButton({
   return content ? (
     <div
       style={{
-        cursor: 'pointer',
-        color: colors.text.action.primary,
-        background: colors.background.action.secondary,
+        cursor: onClick ? 'pointer' : 'default',
+        color: onClick ? colors.text.action.primary : colors.text.primary,
+        background: onClick
+          ? colors.background.action.secondary
+          : colors.background.l1,
         fontWeight: 500,
         whiteSpace: 'nowrap',
         padding: '1px 6px',

@@ -9,7 +9,7 @@ import "prb-math/contracts/PRBMathCommon.sol";
 import "./interfaces/IYielder.sol";
 import "./interfaces/IJuicer.sol";
 import "./interfaces/IyVaultV2.sol";
-import "./interfaces/WETH.sol";
+import "./interfaces/IWETH.sol";
 
 contract YearnYielder is IYielder, Ownable {
     using SafeERC20 for IERC20;
@@ -26,7 +26,7 @@ contract YearnYielder is IYielder, Ownable {
     constructor(address _weth) {
         require(wethVault.token() == _weth, "YearnYielder: INCOMPATIBLE");
         weth = _weth;
-        decimals = WETH(weth).decimals();
+        decimals = IWETH(weth).decimals();
         updateApproval();
     }
 
@@ -35,7 +35,7 @@ contract YearnYielder is IYielder, Ownable {
     }
 
     function deposit() external payable override onlyOwner {
-        WETH(weth).deposit{value: msg.value}();
+        IWETH(weth).deposit{value: msg.value}();
         wethVault.deposit(msg.value);
         deposited = deposited + msg.value;
     }
@@ -54,7 +54,7 @@ contract YearnYielder is IYielder, Ownable {
         wethVault.withdraw(_tokensToShares(_amount));
 
         // Convert weth back to eth.
-        WETH(weth).withdraw(_amount);
+        IWETH(weth).withdraw(_amount);
 
         // Move the funds to the Juicer.
         _beneficiary.transfer(_amount);

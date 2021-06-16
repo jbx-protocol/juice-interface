@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "./libraries/Operations.sol";
 import "./interfaces/ITickets.sol";
 import "./abstract/Operatable.sol";
 import "./abstract/TerminalUtility.sol";
+
+import "./libraries/Operations.sol";
+
 import "./Ticket.sol";
 
 /** 
@@ -19,6 +21,11 @@ import "./Ticket.sol";
   must thus be calculated in this contract.
 */
 contract Tickets is TerminalUtility, Operatable, ITickets {
+    // --- public immutable stored properties --- //
+
+    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
+    IProjects public immutable override projects;
+
     // --- public stored properties --- //
 
     // Each project's ERC20 Ticket tokens.
@@ -39,26 +46,6 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     mapping(address => mapping(address => mapping(uint256 => uint256)))
         public
         override lockedBy;
-
-    /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
-    IProjects public immutable override projects;
-
-    /// @notice The permision index required to issue tickets on an owners behalf.
-    uint256 public immutable override issuePermissionIndex = Operations.Issue;
-
-    /// @notice The permision index required to stake tickets on a holders behalf.
-    uint256 public immutable override stakePermissionIndex = Operations.Stake;
-
-    /// @notice The permision index required to unstake tickets on a holders behalf.
-    uint256 public immutable override unstakePermissionIndex =
-        Operations.Unstake;
-
-    /// @notice The permision index required to transfer tickets on a holders behalf.
-    uint256 public immutable override transferPermissionIndex =
-        Operations.Transfer;
-
-    /// @notice The permision index required to lock tickets on a holders behalf.
-    uint256 public immutable override lockPermissionIndex = Operations.Lock;
 
     // --- external views --- //
 
@@ -139,7 +126,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            issuePermissionIndex,
+            Operations.Issue,
             false
         )
     {
@@ -301,7 +288,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, _projectId, stakePermissionIndex, true)
+        requirePermission(_holder, _projectId, Operations.Stake, true)
     {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
@@ -347,7 +334,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, _projectId, unstakePermissionIndex, true)
+        requirePermission(_holder, _projectId, Operations.Unstake, true)
     {
         // Get a reference to the project's ERC20 tickets.
         ITicket _ticket = tickets[_projectId];
@@ -394,7 +381,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, _projectId, lockPermissionIndex, true)
+        requirePermission(_holder, _projectId, Operations.Lock, true)
     {
         // Amount must be greater than 0.
         require(_amount > 0, "Tickets::lock: NO_OP");
@@ -467,7 +454,7 @@ contract Tickets is TerminalUtility, Operatable, ITickets {
     )
         external
         override
-        requirePermission(_holder, _projectId, transferPermissionIndex, true)
+        requirePermission(_holder, _projectId, Operations.Transfer, true)
     {
         require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
 

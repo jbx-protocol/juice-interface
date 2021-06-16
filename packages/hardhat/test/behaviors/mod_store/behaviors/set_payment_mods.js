@@ -9,6 +9,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -16,7 +17,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 200,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -27,6 +29,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -34,7 +37,8 @@ const tests = {
             beneficiary: addrs[0].address,
             percent: 200,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -45,6 +49,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -52,7 +57,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 100,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             allocator: modAllocator.address,
@@ -60,7 +66,8 @@ const tests = {
             beneficiary: ethers.constants.AddressZero,
             percent: 50,
             note: "",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -71,6 +78,7 @@ const tests = {
         caller: deployer,
         projectOwner: addrs[0].address,
         projectId: 1,
+        configuration: 10,
         permissionFlag: true,
         mods: [
           {
@@ -79,7 +87,163 @@ const tests = {
             beneficiary: deployer.address,
             percent: 100,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description: "lock passed",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              allocator: ethers.constants.AddressZero,
+              projectId: 4,
+              beneficiary: deployer.address,
+              percent: 100,
+              note: "sup",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(10)
+        },
+        mods: [
+          {
+            allocator: ethers.constants.AddressZero,
+            projectId: 4,
+            beneficiary: deployer.address,
+            // different properties.
+            percent: 200,
+            note: "sup",
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description:
+        "lock and included with different unstaked preferences and note",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              allocator: ethers.constants.AddressZero,
+              projectId: 4,
+              beneficiary: deployer.address,
+              percent: 100,
+              note: "sup",
+              preferUnstaked: true,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(9)
+        },
+        mods: [
+          {
+            allocator: ethers.constants.AddressZero,
+            projectId: 4,
+            beneficiary: deployer.address,
+            percent: 100,
+            note: "wassup",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          },
+          {
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            beneficiary: deployer.address,
+            percent: 100,
+            note: "pasta",
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description: "not locked if different configuration",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 11,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              percent: 50,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            percent: 50,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ]
+      })
+    },
+    {
+      description: "not locked if different project",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 11,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              percent: 50,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            percent: 50,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
           }
         ]
       })
@@ -92,6 +256,7 @@ const tests = {
         caller: deployer,
         projectOwner: addrs[0].address,
         projectId: 1,
+        configuration: 10,
         mods: [],
         permissionFlag: false,
         revert: "Operatable: UNAUTHORIZED"
@@ -103,6 +268,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [],
         revert: "ModStore::setPaymentMods: NO_OP"
       })
@@ -113,6 +279,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -120,7 +287,8 @@ const tests = {
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setPaymentMods: ZERO_ADDRESS"
@@ -132,6 +300,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -139,7 +308,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 210,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -147,7 +317,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
@@ -159,6 +330,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -166,7 +338,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 0,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -174,7 +347,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_MOD_PERCENT"
@@ -186,6 +360,7 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             allocator: ethers.constants.AddressZero,
@@ -193,7 +368,8 @@ const tests = {
             beneficiary: deployer.address,
             percent: 180,
             note: "sup",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             allocator: ethers.constants.AddressZero,
@@ -201,10 +377,196 @@ const tests = {
             beneficiary: deployer.address,
             percent: 50,
             note: "",
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+      })
+    },
+    {
+      description: "locked with different beneficiaries",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              percent: 50,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            percent: 50,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with different percents",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              percent: 200,
+              beneficiary: deployer.address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            percent: 100,
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with different allocators",
+      fn: ({ deployer, modAllocator, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              percent: 200,
+              beneficiary: deployer.address,
+              allocator: modAllocator.address,
+              projectId: 2,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            percent: 200,
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with different project",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              percent: 200,
+              beneficiary: deployer.address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            percent: 200,
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 3,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with shorter locked until values",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              percent: 100,
+              beneficiary: deployer.address,
+              allocator: ethers.constants.AddressZero,
+              projectId: 2,
+              note: "",
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            percent: 100,
+            beneficiary: deployer.address,
+            allocator: ethers.constants.AddressZero,
+            projectId: 2,
+            note: "",
+            preferUnstaked: false,
+            lockedUntil: testStart.add(9)
+          }
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
       })
     }
   ]
@@ -218,7 +580,9 @@ module.exports = function() {
           caller,
           projectOwner,
           projectId,
+          configuration,
           mods,
+          setup,
           permissionFlag
         } = successTest.fn(this);
 
@@ -230,9 +594,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .setPaymentModsPermissionIndex();
+          const permissionIndex = 13;
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
@@ -240,20 +602,44 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
+        if (setup) {
+          if (setup.mods) {
+            if (setup.projectId !== projectId) {
+              // Set the Projects mock to return the projectOwner.
+              await this.projects.mock.ownerOf
+                .withArgs(setup.projectId)
+                .returns(projectOwner);
+            }
+            // Execute the transaction.
+            await this.contract
+              .connect(caller)
+              .setPaymentMods(setup.projectId, setup.configuration, setup.mods);
+          }
+          if (setup.fastforward) {
+            // Fast forward the clock if needed.
+            // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
+            // eslint-disable-next-line no-await-in-loop
+            await this.fastforward(setup.fastforward.sub(1));
+          }
+        }
+
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setPaymentMods(projectId, mods);
+          .setPaymentMods(projectId, configuration, mods);
 
         // Get the stored payment mods value.
-        const storedProjectMods = await this.contract.paymentMods(projectId);
+        const storedProjectMods = await this.contract.paymentMods(
+          projectId,
+          configuration
+        );
 
         // Expect an event to have been emitted for each mod.
         await Promise.all(
           storedProjectMods.map(mod =>
             expect(tx)
               .to.emit(this.contract, "SetPaymentMod")
-              .withArgs(projectId, mod, caller.address)
+              .withArgs(projectId, configuration, mod, caller.address)
           )
         );
 
@@ -270,6 +656,7 @@ module.exports = function() {
           );
           expect(storedProjectMods[i].projectId).to.equal(mod.projectId);
           expect(storedProjectMods[i].note).to.equal(mod.note);
+          expect(storedProjectMods[i].lockedUntil).to.equal(mod.lockedUntil);
         });
       });
     });
@@ -281,8 +668,10 @@ module.exports = function() {
           caller,
           projectOwner,
           projectId,
+          configuration,
           mods,
           permissionFlag,
+          setup,
           revert
         } = failureTest.fn(this);
 
@@ -291,17 +680,27 @@ module.exports = function() {
           .returns(projectOwner);
 
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .setPaymentModsPermissionIndex();
+          const permissionIndex = 13;
 
           await this.operatorStore.mock.hasPermission
             .withArgs(projectOwner, projectId, caller.address, permissionIndex)
             .returns(permissionFlag);
         }
+        if (setup) {
+          if (setup.mods) {
+            await this.contract
+              .connect(caller)
+              .setPaymentMods(setup.projectId, setup.configuration, setup.mods);
+          }
+          if (setup.fastforward) {
+            await this.fastforward(setup.fastforward.sub(1));
+          }
+        }
 
         await expect(
-          this.contract.connect(caller).setPaymentMods(projectId, mods)
+          this.contract
+            .connect(caller)
+            .setPaymentMods(projectId, configuration, mods)
         ).to.be.revertedWith(revert);
       });
     });

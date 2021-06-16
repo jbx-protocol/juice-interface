@@ -66,9 +66,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .issuePermissionIndex();
+          const permissionIndex = 8;
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
@@ -132,9 +130,7 @@ module.exports = function() {
         }
 
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .issuePermissionIndex();
+          const permissionIndex = 8;
 
           await this.operatorStore.mock.hasPermission
             .withArgs(projectOwner, projectId, caller.address, permissionIndex)

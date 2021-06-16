@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./abstract/Operatable.sol";
 import "./interfaces/IProjects.sol";
+
 import "./libraries/Operations.sol";
 
 /** 
@@ -32,17 +33,6 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
 
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes32 => address) public override transferedHandles;
-
-    /// @notice The permision index required to set a project's handle on an owners behalf.
-    uint256 public immutable override setHandlePermissionIndex =
-        Operations.SetHandle;
-
-    /// @notice The permision index required to set a project's uri on an owners behalf.
-    uint256 public immutable override setUriPermissionIndex = Operations.SetUri;
-
-    /// @notice The permision index required to claim a project's handle on an owners behalf.
-    uint256 public immutable override claimHandlePermissionIndex =
-        Operations.ClaimHandle;
 
     // --- external views --- //
 
@@ -124,7 +114,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         requirePermission(
             ownerOf(_projectId),
             _projectId,
-            setHandlePermissionIndex,
+            Operations.SetHandle,
             false
         )
     {
@@ -160,7 +150,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         requirePermission(
             ownerOf(_projectId),
             _projectId,
-            setUriPermissionIndex,
+            Operations.SetUri,
             false
         )
     {
@@ -188,7 +178,7 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         requirePermission(
             ownerOf(_projectId),
             _projectId,
-            setHandlePermissionIndex,
+            Operations.SetHandle,
             false
         )
         returns (bytes32 _handle)
@@ -235,11 +225,11 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
     )
         external
         override
-        requirePermission(_for, _projectId, claimHandlePermissionIndex, true)
+        requirePermission(_for, _projectId, Operations.ClaimHandle, true)
         requirePermission(
             ownerOf(_projectId),
             _projectId,
-            claimHandlePermissionIndex,
+            Operations.ClaimHandle,
             false
         )
     {

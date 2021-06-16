@@ -39,17 +39,21 @@ struct FundingCycle {
     uint256 metadata;
 }
 
+struct FundingCycleProperties {
+    uint256 target;
+    uint256 currency;
+    uint256 duration;
+    uint256 discountRate;
+    IFundingCycleBallot ballot;
+}
+
 interface IFundingCycles {
     event Configure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         uint256 reconfigured,
-        uint256 target,
-        uint256 currency,
-        uint256 duration,
-        uint256 discountRate,
+        FundingCycleProperties _properties,
         uint256 metadata,
-        IFundingCycleBallot ballot,
         address caller
     );
 
@@ -114,17 +118,13 @@ interface IFundingCycles {
 
     function configure(
         uint256 _projectId,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        uint256 _fee,
-        IFundingCycleBallot _ballot,
+        FundingCycleProperties calldata _properties,
         uint256 _metadata,
+        uint256 _fee,
         bool _configureActiveFundingCycle
-    ) external returns (uint256 fundingCycleId);
+    ) external returns (FundingCycle memory fundingCycle);
 
     function tap(uint256 _projectId, uint256 _amount)
         external
-        returns (uint256 fundingCycleId);
+        returns (FundingCycle memory fundingCycle);
 }

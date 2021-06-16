@@ -9,6 +9,8 @@ import "./interfaces/ITerminalDirectory.sol";
   A contract that can receive funds directly and forward to a project's current terminal.
 */
 contract DirectPaymentAddress is IDirectPaymentAddress {
+    // --- public stored properties --- //
+
     /// @notice The directory to use when resolving which terminal to send the payment to.
     ITerminalDirectory public override terminalDirectory;
 
@@ -17,6 +19,8 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
 
     /// @notice The memo to use when this contract forwards a payment to a terminal.
     string public override memo;
+
+    // --- external transactions --- //
 
     /** 
       @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.

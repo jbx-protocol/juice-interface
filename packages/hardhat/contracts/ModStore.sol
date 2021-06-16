@@ -2,8 +2,9 @@
 pragma solidity >=0.8.0;
 
 import "./interfaces/IModStore.sol";
-import "./libraries/Operations.sol";
 import "./abstract/Operatable.sol";
+
+import "./libraries/Operations.sol";
 
 /**
   @notice
@@ -15,24 +16,16 @@ import "./abstract/Operatable.sol";
 contract ModStore is IModStore, Operatable {
     // --- private stored properties --- //
 
-    // All payment mods for each project ID.
-    mapping(uint256 => PaymentMod[]) private _paymentMods;
+    // All payment mods for each project ID's configurations.
+    mapping(uint256 => mapping(uint256 => PaymentMod[])) private _paymentMods;
 
-    // All ticket mods for each project ID.
-    mapping(uint256 => TicketMod[]) private _ticketMods;
+    // All ticket mods for each project ID's configurations.
+    mapping(uint256 => mapping(uint256 => TicketMod[])) private _ticketMods;
 
     // --- public immutable stored properties --- //
 
     /// @notice The contract storing project information.
     IProjects public immutable override projects;
-
-    /// @notice the permision index required to set payment mods on an owners behalf.
-    uint256 public immutable override setPaymentModsPermissionIndex =
-        Operations.SetPaymentMods;
-
-    /// @notice the permision index required to set ticket mods on an owners behalf.
-    uint256 public immutable override setTicketModsPermissionIndex =
-        Operations.SetTicketMods;
 
     // --- public views --- //
 
@@ -41,16 +34,17 @@ contract ModStore is IModStore, Operatable {
       Get all payment mods for the specified project ID.
 
       @param _projectId The ID of the project to get mods for.
+      @param _configuration The configuration to get mods for.
 
       @return An array of all mods for the project.
      */
-    function paymentMods(uint256 _projectId)
+    function paymentMods(uint256 _projectId, uint256 _configuration)
         external
         view
         override
         returns (PaymentMod[] memory)
     {
-        return _paymentMods[_projectId];
+        return _paymentMods[_projectId][_configuration];
     }
 
     /**
@@ -58,16 +52,17 @@ contract ModStore is IModStore, Operatable {
       Get all ticket mods for the specified project ID.
 
       @param _projectId The ID of the project to get mods for.
+      @param _configuration The configuration to get mods for.
 
       @return An array of all mods for the project.
      */
-    function ticketMods(uint256 _projectId)
+    function ticketMods(uint256 _projectId, uint256 _configuration)
         external
         view
         override
         returns (TicketMod[] memory)
     {
-        return _ticketMods[_projectId];
+        return _ticketMods[_projectId][_configuration];
     }
 
     // --- external transactions --- //
@@ -87,23 +82,54 @@ contract ModStore is IModStore, Operatable {
       Adds a mod to the payment mods list.
 
       @param _projectId The project to add a mod to.
+      @param _configuration The configuration to set the mods to be active during.
       @param _mods The payment mods to set.
     */
-    function setPaymentMods(uint256 _projectId, PaymentMod[] memory _mods)
+    function setPaymentMods(
+        uint256 _projectId,
+        uint256 _configuration,
+        PaymentMod[] memory _mods
+    )
         external
         override
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            setPaymentModsPermissionIndex,
+            Operations.SetPaymentMods,
             false
         )
     {
         // There must be something to do.
         require(_mods.length > 0, "ModStore::setPaymentMods: NO_OP");
 
+        // Get a reference to the project's payment mods.
+        PaymentMod[] memory _currentMods =
+            _paymentMods[_projectId][_configuration];
+
+        // Check to see if all locked Mods are included.
+        for (uint256 _i = 0; _i < _currentMods.length; _i++) {
+            if (block.timestamp < _currentMods[_i].lockedUntil) {
+                bool _includesLocked = false;
+                for (uint256 _j = 0; _j < _mods.length; _j++) {
+                    // Check for sameness. Let the note change.
+                    if (
+                        _mods[_j].percent == _currentMods[_i].percent &&
+                        _mods[_j].beneficiary == _currentMods[_i].beneficiary &&
+                        _mods[_j].allocator == _currentMods[_i].allocator &&
+                        _mods[_j].projectId == _currentMods[_i].projectId &&
+                        // Allow lock expention.
+                        _mods[_j].lockedUntil >= _currentMods[_i].lockedUntil
+                    ) _includesLocked = true;
+                }
+                require(
+                    _includesLocked,
+                    "ModStore::setPaymentMods: SOME_LOCKED"
+                );
+            }
+        }
+
         // Delete from storage so mods can be repopulated.
-        delete _paymentMods[_projectId];
+        delete _paymentMods[_projectId][_configuration];
 
         // Add up all the percents to make sure they cumulative are under 100%.
         uint256 _paymentModPercentTotal = 0;
@@ -134,9 +160,14 @@ contract ModStore is IModStore, Operatable {
             );
 
             // Push the new mod into the project's list of mods.
-            _paymentMods[_projectId].push(_mods[_i]);
+            _paymentMods[_projectId][_configuration].push(_mods[_i]);
 
-            emit SetPaymentMod(_projectId, _mods[_i], msg.sender);
+            emit SetPaymentMod(
+                _projectId,
+                _configuration,
+                _mods[_i],
+                msg.sender
+            );
         }
     }
 
@@ -145,23 +176,53 @@ contract ModStore is IModStore, Operatable {
       Adds a mod to the ticket mods list.
 
       @param _projectId The project to add a mod to.
+      @param _configuration The configuration to set the mods to be active during.
       @param _mods The ticket mods to set.
     */
-    function setTicketMods(uint256 _projectId, TicketMod[] memory _mods)
+    function setTicketMods(
+        uint256 _projectId,
+        uint256 _configuration,
+        TicketMod[] memory _mods
+    )
         external
         override
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            setTicketModsPermissionIndex,
+            Operations.SetTicketMods,
             false
         )
     {
         // There must be something to do.
         require(_mods.length > 0, "ModStore::setTicketMods: NO_OP");
 
+        // Get a reference to the project's ticket mods.
+        TicketMod[] memory _projectTicketMods =
+            _ticketMods[_projectId][_configuration];
+
+        // Check to see if all locked Mods are included.
+        for (uint256 _i = 0; _i < _projectTicketMods.length; _i++) {
+            if (block.timestamp < _projectTicketMods[_i].lockedUntil) {
+                bool _includesLocked = false;
+                for (uint256 _j = 0; _j < _mods.length; _j++) {
+                    // Check for the same values.
+                    if (
+                        _mods[_j].percent == _projectTicketMods[_i].percent &&
+                        _mods[_j].beneficiary ==
+                        _projectTicketMods[_i].beneficiary &&
+                        // Allow lock extensions.
+                        _mods[_j].lockedUntil >=
+                        _projectTicketMods[_i].lockedUntil
+                    ) _includesLocked = true;
+                }
+                require(
+                    _includesLocked,
+                    "ModStore::setTicketMods: SOME_LOCKED"
+                );
+            }
+        }
         // Delete from storage so mods can be repopulated.
-        delete _ticketMods[_projectId];
+        delete _ticketMods[_projectId][_configuration];
 
         // Add up all the percents to make sure they cumulative are under 100%.
         uint256 _ticketModPercentTotal = 0;
@@ -188,9 +249,14 @@ contract ModStore is IModStore, Operatable {
             );
 
             // Push the new mod into the project's list of mods.
-            _ticketMods[_projectId].push(_mods[_i]);
+            _ticketMods[_projectId][_configuration].push(_mods[_i]);
 
-            emit SetTicketMod(_projectId, _mods[_i], msg.sender);
+            emit SetTicketMod(
+                _projectId,
+                _configuration,
+                _mods[_i],
+                msg.sender
+            );
         }
     }
 }

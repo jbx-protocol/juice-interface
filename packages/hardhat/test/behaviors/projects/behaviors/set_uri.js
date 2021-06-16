@@ -66,7 +66,7 @@ module.exports = function() {
             ""
           );
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract.setUriPermissionIndex();
+          const permissionIndex = 6;
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
@@ -110,7 +110,7 @@ module.exports = function() {
           );
 
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract.setUriPermissionIndex();
+          const permissionIndex = 6;
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission

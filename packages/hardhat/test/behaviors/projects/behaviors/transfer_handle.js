@@ -120,7 +120,7 @@ module.exports = function() {
           .connect(caller)
           .create(create.owner, create.handle, "");
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract.setHandlePermissionIndex();
+          const permissionIndex = 5;
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
@@ -185,7 +185,7 @@ module.exports = function() {
             .transferHandle(1, transfer.to, transfer.handle);
         }
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract.setHandlePermissionIndex();
+          const permissionIndex = 5;
 
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission

@@ -201,9 +201,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .transferPermissionIndex();
+          const permissionIndex = 11;
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
@@ -296,9 +294,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .transferPermissionIndex();
+          const permissionIndex = 11;
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.

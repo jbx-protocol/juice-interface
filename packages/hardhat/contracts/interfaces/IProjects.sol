@@ -40,12 +40,6 @@ interface IProjects is IERC721 {
 
     function count() external view returns (uint256);
 
-    function setHandlePermissionIndex() external view returns (uint256);
-
-    function setUriPermissionIndex() external view returns (uint256);
-
-    function claimHandlePermissionIndex() external view returns (uint256);
-
     function handleResolver(bytes32 _handle)
         external
         returns (uint256 projectId);

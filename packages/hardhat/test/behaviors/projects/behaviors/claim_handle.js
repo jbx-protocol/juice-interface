@@ -193,9 +193,8 @@ module.exports = function() {
           .connect(caller)
           .transferHandle(transfer.projectId, transfer.to, transfer.newHandle);
 
+        const permissionIndex = 7;
         if (transferToPermissionFlag !== undefined) {
-          const permissionIndex = await this.contract.claimHandlePermissionIndex();
-
           // Flip the opposit of what what specified in the personal permissions to false.
           await this.operatorStore.mock.hasPermission
             .withArgs(
@@ -217,8 +216,6 @@ module.exports = function() {
             .returns(transferToPermissionFlag);
         }
         if (claimOntoPermissionFlag !== undefined) {
-          const permissionIndex = await this.contract.claimHandlePermissionIndex();
-
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
             .withArgs(destination.owner, 2, caller.address, permissionIndex)
@@ -281,9 +278,8 @@ module.exports = function() {
           .connect(caller)
           .transferHandle(transfer.projectId, transfer.to, transfer.newHandle);
 
+        const permissionIndex = 7;
         if (transferToPermissionFlag !== undefined) {
-          const permissionIndex = await this.contract.claimHandlePermissionIndex();
-
           // Flip the opposit of what what specified in the personal permissions to false.
           await this.operatorStore.mock.hasPermission
             .withArgs(
@@ -305,8 +301,6 @@ module.exports = function() {
             .returns(transferToPermissionFlag);
         }
         if (claimOntoPermissionFlag !== undefined) {
-          const permissionIndex = await this.contract.claimHandlePermissionIndex();
-
           // Mock the caller to be the project's controller.
           await this.operatorStore.mock.hasPermission
             .withArgs(destination.owner, 2, caller.address, permissionIndex)

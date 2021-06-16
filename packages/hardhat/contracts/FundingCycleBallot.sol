@@ -8,11 +8,15 @@ import "./interfaces/IFundingCycleBallot.sol";
    @notice Manages votes towards approving funding cycle reconfigurations.
  */
 contract FundingCycleBallot is IFundingCycleBallot {
-    /// @notice The number of seconds that must pass for a funding cycle reconfiguration to become active.
-    uint256 public constant reconfigurationDelay = 1209600;
+    // --- public immutable stored properties --- //
 
     /// @notice The Juicer for which the budget data is being voted on.
     IJuicer public immutable juicer;
+
+    // --- public stored properties --- //
+
+    /// @notice The number of seconds that must pass for a funding cycle reconfiguration to become active.
+    uint256 public constant reconfigurationDelay = 1209600;
 
     // --- external views --- //
 

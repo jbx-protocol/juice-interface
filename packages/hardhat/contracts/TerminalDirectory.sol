@@ -17,10 +17,12 @@ contract TerminalDirectory is ITerminalDirectory {
     // A list of contracts for each project ID that can receive funds directly.
     mapping(uint256 => IDirectPaymentAddress[]) private _addresses;
 
-    // --- public stored properties --- //
+    // --- public immutable stored properties --- //
 
     /// @notice The Projects contract which mints ERC-721's that represent project ownership and transfers.
     IProjects public immutable override projects;
+
+    // --- public stored properties --- //
 
     /// @notice For each project ID, the juice terminal that the direct payment addresses are proxies for.
     mapping(uint256 => ITerminal) public override terminals;
@@ -49,6 +51,8 @@ contract TerminalDirectory is ITerminalDirectory {
     {
         return _addresses[_projectId];
     }
+
+    // --- external transactions --- //
 
     /** 
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.

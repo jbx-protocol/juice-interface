@@ -603,19 +603,19 @@ module.exports = function() {
           // If a ballot was provided, mock the ballot contract with the provided properties.
           await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
 
-          const tx = await this.contract
-            .connect(caller)
-            .configure(
-              projectId,
-              preconfigure.target,
-              preconfigure.currency,
-              preconfigure.duration,
-              preconfigure.discountRate,
-              preconfigure.fee,
-              preconfigure.ballot.address,
-              preconfigure.metadata,
-              preconfigure.configureActiveFundingCycle
-            );
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              discountRate: preconfigure.discountRate,
+              ballot: preconfigure.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
           preconfigureBlockNumber = tx.blockNumber;
 
           if (preconfigure.ballot.duration !== undefined)
@@ -637,19 +637,19 @@ module.exports = function() {
           switch (op.type) {
             case "configure": {
               // eslint-disable-next-line no-await-in-loop
-              await this.contract
-                .connect(caller)
-                .configure(
-                  op.projectId,
-                  op.target,
-                  op.currency,
-                  op.duration,
-                  op.discountRate,
-                  op.fee,
-                  this.ballot.address,
-                  op.metadata,
-                  op.configureActiveFundingCycle
-                );
+              await this.contract.connect(caller).configure(
+                op.projectId,
+                {
+                  target: op.target,
+                  currency: op.currency,
+                  duration: op.duration,
+                  discountRate: op.discountRate,
+                  ballot: this.ballot.address
+                },
+                op.metadata,
+                op.fee,
+                op.configureActiveFundingCycle
+              );
 
               if (op.ballot)
                 // eslint-disable-next-line no-await-in-loop
@@ -669,19 +669,19 @@ module.exports = function() {
         }
 
         // Execute the transaction.
-        const tx = await this.contract
-          .connect(caller)
-          .configure(
-            projectId,
+        const tx = await this.contract.connect(caller).configure(
+          projectId,
+          {
             target,
             currency,
             duration,
             discountRate,
-            fee,
-            this.ballot.address,
-            metadata,
-            configureActiveFundingCycle
-          );
+            ballot: this.ballot.address
+          },
+          metadata,
+          fee,
+          configureActiveFundingCycle
+        );
 
         // Get the current timestamp after the transaction.
         const now = await this.getTimestamp(tx.blockNumber);
@@ -693,12 +693,8 @@ module.exports = function() {
             expectation.configuredId,
             projectId,
             now,
-            target,
-            currency,
-            duration,
-            discountRate,
+            [target, currency, duration, discountRate, this.ballot.address],
             metadata,
-            this.ballot.address,
             caller.address
           );
 
@@ -788,19 +784,19 @@ module.exports = function() {
           .returns(caller.address);
 
         if (preconfigure) {
-          await this.contract
-            .connect(caller)
-            .configure(
-              projectId,
-              preconfigure.target,
-              preconfigure.currency,
-              preconfigure.duration,
-              preconfigure.discountRate,
-              preconfigure.fee,
-              preconfigure.ballot.address,
-              preconfigure.metadata,
-              preconfigure.configureActiveFundingCycle
-            );
+          await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              discountRate: preconfigure.discountRate,
+              ballot: preconfigure.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
         }
 
         await this.terminalDirectory.mock.terminals
@@ -808,19 +804,19 @@ module.exports = function() {
           .returns(controller);
 
         await expect(
-          this.contract
-            .connect(caller)
-            .configure(
-              projectId,
+          this.contract.connect(caller).configure(
+            projectId,
+            {
               target,
               currency,
               duration,
               discountRate,
-              fee,
-              this.ballot.address,
-              metadata,
-              configureActiveFundingCycle
-            )
+              ballot: this.ballot.address
+            },
+            metadata,
+            fee,
+            configureActiveFundingCycle
+          )
         ).to.be.revertedWith(revert);
       });
     });

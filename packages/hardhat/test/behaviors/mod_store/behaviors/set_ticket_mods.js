@@ -9,11 +9,13 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 200,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -24,11 +26,13 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: addrs[0].address,
             percent: 200,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -39,16 +43,19 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 100,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
       })
@@ -59,14 +66,181 @@ const tests = {
         caller: deployer,
         projectOwner: addrs[0].address,
         projectId: 1,
+        configuration: 10,
         permissionFlag: true,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 100,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ]
+      })
+    },
+    {
+      description: "lock passed",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(10)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            // different properties.
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description: "lock and included with different unstaked preferences",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 100,
+              preferUnstaked: true,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(9)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          },
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description: "lock and included with longer lock",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 100,
+              preferUnstaked: true,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(9)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(11)
+          },
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ]
+      })
+    },
+    {
+      description: "not locked with different configurations",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 11,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 200,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "not locked with different projects",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 11,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 200,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
       })
     }
   ],
@@ -77,6 +251,7 @@ const tests = {
         caller: deployer,
         projectOwner: addrs[0].address,
         projectId: 1,
+        configuration: 10,
         mods: [],
         permissionFlag: false,
         revert: "Operatable: UNAUTHORIZED"
@@ -88,8 +263,102 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [],
         revert: "ModStore::setTicketMods: NO_OP"
+      })
+    },
+    {
+      description: "locked with difference beneficiaries",
+      fn: ({ deployer, addrs, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: addrs[0].address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 200,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with different percets",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          }
+        ],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
+      })
+    },
+    {
+      description: "locked with shorter locked until values",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(8)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 200,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(9)
+          }
+        ],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
       })
     },
     {
@@ -98,11 +367,13 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setTicketMods: ZERO_ADDRESS"
@@ -114,16 +385,56 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 210,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
+          }
+        ],
+        revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
+      })
+    },
+    {
+      description: "mod percent over 100% with locked",
+      fn: ({ deployer, testStart }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        configuration: 10,
+        setup: {
+          projectId: 1,
+          configuration: 10,
+          mods: [
+            {
+              beneficiary: deployer.address,
+              percent: 200,
+              preferUnstaked: false,
+              lockedUntil: testStart.add(10)
+            }
+          ],
+          fastforward: ethers.BigNumber.from(9)
+        },
+        mods: [
+          {
+            beneficiary: deployer.address,
+            percent: 200,
+            preferUnstaked: false,
+            lockedUntil: testStart.add(10)
+          },
+          {
+            beneficiary: deployer.address,
+            percent: 100,
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
@@ -135,16 +446,19 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 0,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setTicketMods: BAD_MOD_PERCENT"
@@ -156,16 +470,19 @@ const tests = {
         caller: deployer,
         projectOwner: deployer.address,
         projectId: 1,
+        configuration: 10,
         mods: [
           {
             beneficiary: deployer.address,
             percent: 180,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           },
           {
             beneficiary: deployer.address,
             percent: 50,
-            preferUnstaked: false
+            preferUnstaked: false,
+            lockedUntil: 0
           }
         ],
         revert: "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
@@ -182,7 +499,9 @@ module.exports = function() {
           caller,
           projectOwner,
           projectId,
+          configuration,
           mods,
+          setup,
           permissionFlag
         } = successTest.fn(this);
 
@@ -193,10 +512,7 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the ticket mods on an owner's behalf.
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .setTicketModsPermissionIndex();
+          const permissionIndex = 14;
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
@@ -204,20 +520,43 @@ module.exports = function() {
             .returns(permissionFlag);
         }
 
+        if (setup) {
+          if (setup.mods) {
+            if (setup.projectId !== projectId) {
+              // Set the Projects mock to return the projectOwner.
+              await this.projects.mock.ownerOf
+                .withArgs(setup.projectId)
+                .returns(projectOwner);
+            }
+            // Execute the transaction.
+            await this.contract
+              .connect(caller)
+              .setTicketMods(setup.projectId, setup.configuration, setup.mods);
+          }
+          if (setup.fastforward) {
+            // Fast forward the clock if needed.
+            // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
+            // eslint-disable-next-line no-await-in-loop
+            await this.fastforward(setup.fastforward.sub(1));
+          }
+        }
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setTicketMods(projectId, mods);
+          .setTicketMods(projectId, configuration, mods);
 
         // Get the stored ticket mods value.
-        const storedTicketMods = await this.contract.ticketMods(projectId);
+        const storedTicketMods = await this.contract.ticketMods(
+          projectId,
+          configuration
+        );
 
         // Expect an event to have been emitted for each mod.
         await Promise.all(
           storedTicketMods.map(mod =>
             expect(tx)
               .to.emit(this.contract, "SetTicketMod")
-              .withArgs(projectId, mod, caller.address)
+              .withArgs(projectId, configuration, mod, caller.address)
           )
         );
 
@@ -231,6 +570,7 @@ module.exports = function() {
           expect(storedTicketMods[i].preferUnstaked).to.equal(
             mod.preferUnstaked
           );
+          expect(storedTicketMods[i].lockedUntil).to.equal(mod.lockedUntil);
         });
       });
     });
@@ -242,8 +582,10 @@ module.exports = function() {
           caller,
           projectOwner,
           projectId,
+          configuration,
           mods,
           permissionFlag,
+          setup,
           revert
         } = failureTest.fn(this);
 
@@ -252,17 +594,27 @@ module.exports = function() {
           .returns(projectOwner);
 
         if (permissionFlag !== undefined) {
-          const permissionIndex = await this.contract
-            .connect(caller)
-            .setTicketModsPermissionIndex();
+          const permissionIndex = 14;
 
           await this.operatorStore.mock.hasPermission
             .withArgs(projectOwner, projectId, caller.address, permissionIndex)
             .returns(permissionFlag);
         }
+        if (setup) {
+          if (setup.mods) {
+            await this.contract
+              .connect(caller)
+              .setTicketMods(setup.projectId, setup.configuration, setup.mods);
+          }
+          if (setup.fastforward) {
+            await this.fastforward(setup.fastforward.sub(1));
+          }
+        }
 
         await expect(
-          this.contract.connect(caller).setTicketMods(projectId, mods)
+          this.contract
+            .connect(caller)
+            .setTicketMods(projectId, configuration, mods)
         ).to.be.revertedWith(revert);
       });
     });

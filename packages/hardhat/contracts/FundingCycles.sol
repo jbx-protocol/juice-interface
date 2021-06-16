@@ -11,7 +11,7 @@ import "./abstract/TerminalUtility.sol";
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
 contract FundingCycles is TerminalUtility, IFundingCycles {
-    // --- public properties --- //
+    // --- public stored properties --- //
 
     /// @notice Stores the reconfiguration properties of each funding cycle,
     /// packed into one storage slot.
@@ -246,54 +246,52 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         Configures the next eligible funding for the specified project.
 
         @param _projectId The ID of the project being reconfigured.
-        @param _target The amount that the project wants to receive in each funding cycle. 18 decimals.
-        @param _currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
-        @param _duration The duration of the funding cycle for which the `_target` amount is needed. Measured in seconds.
-        @param _discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
-        If it's 200, each funding cycle will have equal weight.
-        If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
-        If the number is 0, an non-recurring funding cycle will get made.
-        @param _fee The fee that this configuration will incure when tapping.
-        @param _ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @param _properties The funding cycle configuration.
+          @dev _properties.target The amount that the project wants to receive in each funding cycle. 18 decimals.
+          @dev _properties.currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
+          @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in seconds.
+          @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
+            If it's 200, each funding cycle will have equal weight.
+            If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
+            If the number is 0, an non-recurring funding cycle will get made.
+          @dev _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @param _metadata Data to store associated to this funding cycle configuration.
+        @param _fee The fee that this configuration will incure when tapping.
         @param _configureActiveFundingCycle If a funding cycle that has already started should be configurable.
 
-        @return fundingCycleId The ID of the funding cycle that the configuration will take effect during.
+        @return fundingCycle The funding cycle that the configuration will take effect during.
     */
     function configure(
         uint256 _projectId,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        uint256 _fee,
-        IFundingCycleBallot _ballot,
+        FundingCycleProperties calldata _properties,
         uint256 _metadata,
+        uint256 _fee,
         bool _configureActiveFundingCycle
     )
         external
         override
         onlyTerminal(_projectId)
-        returns (uint256 fundingCycleId)
+        returns (FundingCycle memory fundingCycle)
     {
         // Target must be greater than 0.
-        require(_target > 0, "FundingCycles::configure: BAD_TARGET");
+        require(_properties.target > 0, "FundingCycles::configure: BAD_TARGET");
 
         // Duration must be greater than 0, and must fit in a uint24.
         require(
-            _duration > 0 && _duration <= type(uint24).max,
+            _properties.duration > 0 &&
+                _properties.duration <= type(uint24).max,
             "FundingCycles::configure: BAD_DURATION"
         );
 
         // Discount rate token must be less than or equal to 100%.
         require(
-            _discountRate <= 200,
+            _properties.discountRate <= 200,
             "FundingCycles::configure: BAD_DISCOUNT_RATE"
         );
 
         // Currency must fit into a uint8.
         require(
-            _currency <= type(uint8).max,
+            _properties.currency <= type(uint8).max,
             "FundingCycles::configure: BAD_CURRENCY"
         );
 
@@ -304,41 +302,40 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _configured = block.timestamp;
 
         // Gets the ID of the funding cycle to reconfigure.
-        fundingCycleId = _configurable(
-            _projectId,
-            _configured,
-            _configureActiveFundingCycle
-        );
+        uint256 _fundingCycleId =
+            _configurable(
+                _projectId,
+                _configured,
+                _configureActiveFundingCycle
+            );
 
         // Save the configuration efficiently.
         _packAndStoreConfigurationProperties(
-            fundingCycleId,
+            _fundingCycleId,
             _configured,
-            _ballot,
-            _duration,
-            _currency,
+            _properties.ballot,
+            _properties.duration,
+            _properties.currency,
             _fee,
-            _discountRate
+            _properties.discountRate
         );
 
         // Set the target amount.
-        targetAmounts[fundingCycleId] = _target;
+        targetAmounts[_fundingCycleId] = _properties.target;
 
         // Set the metadata.
-        metadata[fundingCycleId] = _metadata;
+        metadata[_fundingCycleId] = _metadata;
 
         emit Configure(
-            fundingCycleId,
+            _fundingCycleId,
             _projectId,
             _configured,
-            _target,
-            _currency,
-            _duration,
-            _discountRate,
+            _properties,
             _metadata,
-            _ballot,
             msg.sender
         );
+
+        return _getStruct(_fundingCycleId, true, true, true, true);
     }
 
     /** 
@@ -348,16 +345,16 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
       @param _projectId The ID of the project being tapped.
       @param _amount The amount of being tapped.
 
-      @return fundingCycleId The ID of the funding cycle that was tapped from.
+      @return fundingCycle The funding cycle that was tapped from.
     */
     function tap(uint256 _projectId, uint256 _amount)
         external
         override
         onlyTerminal(_projectId)
-        returns (uint256 fundingCycleId)
+        returns (FundingCycle memory fundingCycle)
     {
         // Get a reference to the funding cycle being tapped.
-        fundingCycleId = _tappable(_projectId);
+        uint256 fundingCycleId = _tappable(_projectId);
 
         // Get a reference to how much has already been tapped from this funding cycle.
         uint256 _tappedAmount = tappedAmounts[fundingCycleId];
@@ -381,6 +378,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _newTappedAmount,
             msg.sender
         );
+
+        return _getStruct(fundingCycleId, true, true, true, true);
     }
 
     // --- private helper functions --- //

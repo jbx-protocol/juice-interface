@@ -115,13 +115,13 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "projectId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
-        "name": "fundingCycleId",
+        "name": "projectId",
         "type": "uint256"
       },
       {
@@ -131,7 +131,7 @@
         "type": "address"
       }
     ],
-    "name": "Deploy",
+    "name": "Configure",
     "type": "event"
   },
   {
@@ -288,43 +288,6 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "PrintInitialTickets",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "count",
         "type": "uint256"
       },
@@ -350,67 +313,26 @@
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
         "name": "projectId",
         "type": "uint256"
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currency",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservedRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reconfigurationBondingCurveRate",
-            "type": "uint256"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct FundingCycleMetadata",
-        "name": "metadata",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IFundingCycleBallot",
-        "name": "ballot",
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "memo",
+        "type": "string"
       },
       {
         "indexed": false,
@@ -419,7 +341,7 @@
         "type": "address"
       }
     ],
-    "name": "Reconfigure",
+    "name": "PrintTickets",
     "type": "event"
   },
   {
@@ -678,16 +600,145 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "configurePermissionIndex",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "reservedRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycleMetadata",
+        "name": "_metadata",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "note",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "_paymentMods",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "_ticketMods",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "configure",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "fundingCycleId",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -727,35 +778,47 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "components": [
           {
             "internalType": "uint256",
-            "name": "bondingCurveRate",
+            "name": "reservedRate",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "reservedRate",
+            "name": "bondingCurveRate",
             "type": "uint256"
           },
           {
@@ -769,9 +832,73 @@
         "type": "tuple"
       },
       {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "note",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "_paymentMods",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "_ticketMods",
+        "type": "tuple[]"
       }
     ],
     "name": "deploy",
@@ -841,19 +968,6 @@
     "name": "migrate",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "migratePermissionIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -967,47 +1081,6 @@
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_beneficiary",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "_preferUnstakedTickets",
-        "type": "bool"
-      }
-    ],
-    "name": "printInitialTickets",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "printInitialTicketsPermissionIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
       }
     ],
     "name": "printReservedTickets",
@@ -1022,6 +1095,39 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_memo",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferUnstakedTickets",
+        "type": "bool"
+      }
+    ],
+    "name": "printTickets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "projects",
     "outputs": [
@@ -1032,72 +1138,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservedRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reconfigurationBondingCurveRate",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct FundingCycleMetadata",
-        "name": "_metadata",
-        "type": "tuple"
-      },
-      {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
-      }
-    ],
-    "name": "reconfigure",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1142,19 +1182,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "redeemPermissionIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

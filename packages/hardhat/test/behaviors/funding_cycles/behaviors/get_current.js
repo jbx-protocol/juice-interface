@@ -559,19 +559,19 @@ module.exports = function() {
           // If a ballot was provided, mock the ballot contract with the provided properties.
           await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
 
-          const tx = await this.contract
-            .connect(caller)
-            .configure(
-              projectId,
-              preconfigure.target,
-              preconfigure.currency,
-              preconfigure.duration,
-              preconfigure.discountRate,
-              preconfigure.fee,
-              this.ballot.address,
-              preconfigure.metadata,
-              preconfigure.configureActiveFundingCycle
-            );
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              discountRate: preconfigure.discountRate,
+              ballot: this.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
 
           await this.setTimeMark(tx.blockNumber);
         }
@@ -592,19 +592,19 @@ module.exports = function() {
                   .returns(caller.address);
               }
               // eslint-disable-next-line no-await-in-loop
-              const tx = await this.contract
-                .connect(caller)
-                .configure(
-                  op.projectId,
-                  op.target,
-                  op.currency,
-                  op.duration,
-                  op.discountRate,
-                  op.fee,
-                  this.ballot.address,
-                  op.metadata,
-                  op.configureActiveFundingCycle
-                );
+              const tx = await this.contract.connect(caller).configure(
+                op.projectId,
+                {
+                  target: op.target,
+                  currency: op.currency,
+                  duration: op.duration,
+                  discountRate: op.discountRate,
+                  ballot: this.ballot.address
+                },
+                op.metadata,
+                op.fee,
+                op.configureActiveFundingCycle
+              );
               if (op.ballot) {
                 // eslint-disable-next-line no-await-in-loop
                 await this.ballot.mock.state
@@ -659,19 +659,19 @@ module.exports = function() {
           // If a ballot was provided, mock the ballot contract with the provided properties.
           await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
 
-          const tx = await this.contract
-            .connect(caller)
-            .configure(
-              projectId,
-              preconfigure.target,
-              preconfigure.currency,
-              preconfigure.duration,
-              preconfigure.discountRate,
-              preconfigure.fee,
-              this.ballot.address,
-              preconfigure.metadata,
-              preconfigure.configureActiveFundingCycle
-            );
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              discountRate: preconfigure.discountRate,
+              ballot: this.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
 
           await this.setTimeMark(tx.blockNumber);
         }
@@ -682,19 +682,19 @@ module.exports = function() {
           switch (op.type) {
             case "configure": {
               // eslint-disable-next-line no-await-in-loop
-              const tx = await this.contract
-                .connect(caller)
-                .configure(
-                  op.projectId,
-                  op.target,
-                  op.currency,
-                  op.duration,
-                  op.discountRate,
-                  op.fee,
-                  this.ballot.address,
-                  op.metadata,
-                  op.configureActiveFundingCycle
-                );
+              const tx = await this.contract.connect(caller).configure(
+                op.projectId,
+                {
+                  target: op.target,
+                  currency: op.currency,
+                  duration: op.duration,
+                  discountRate: op.discountRate,
+                  ballot: this.ballot.address
+                },
+                op.metadata,
+                op.fee,
+                op.configureActiveFundingCycle
+              );
               if (op.ballot) {
                 // eslint-disable-next-line no-await-in-loop
                 await this.ballot.mock.state

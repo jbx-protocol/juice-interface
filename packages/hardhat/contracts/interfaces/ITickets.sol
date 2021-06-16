@@ -70,16 +70,6 @@ interface ITickets {
 
     function projects() external view returns (IProjects);
 
-    function issuePermissionIndex() external view returns (uint256);
-
-    function stakePermissionIndex() external view returns (uint256);
-
-    function unstakePermissionIndex() external view returns (uint256);
-
-    function transferPermissionIndex() external view returns (uint256);
-
-    function lockPermissionIndex() external view returns (uint256);
-
     function locked(address _holder, uint256 _projectId)
         external
         view

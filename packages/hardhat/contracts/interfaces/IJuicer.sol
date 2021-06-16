@@ -13,21 +13,15 @@ import "./ITerminalDirectory.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
-    uint256 bondingCurveRate;
     uint256 reservedRate;
+    uint256 bondingCurveRate;
     uint256 reconfigurationBondingCurveRate;
 }
 
 interface IJuicer {
-    event Reconfigure(
+    event Configure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        uint256 target,
-        uint256 currency,
-        uint256 duration,
-        uint256 discountRate,
-        FundingCycleMetadata metadata,
-        IFundingCycleBallot ballot,
         address caller
     );
 
@@ -72,17 +66,11 @@ interface IJuicer {
 
     event AcceptGovernance(address governance);
 
-    event Deploy(
-        uint256 indexed projectId,
-        uint256 fundingCycleId,
-        address caller
-    );
-
-    event PrintInitialTickets(
-        uint256 indexed fundingCycleId,
+    event PrintTickets(
         uint256 indexed projectId,
         address indexed beneficiary,
         uint256 amount,
+        string memo,
         address caller
     );
 
@@ -114,17 +102,6 @@ interface IJuicer {
 
     function targetLocalETH() external view returns (uint256);
 
-    function redeemPermissionIndex() external view returns (uint256);
-
-    function migratePermissionIndex() external view returns (uint256);
-
-    function configurePermissionIndex() external view returns (uint256);
-
-    function printInitialTicketsPermissionIndex()
-        external
-        view
-        returns (uint256);
-
     function reservedTicketAmount(uint256 _projectId, uint256 _reservedRate)
         external
         view
@@ -148,30 +125,27 @@ interface IJuicer {
         address _owner,
         bytes32 _handle,
         string calldata _uri,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
+        FundingCycleProperties calldata _properties,
         FundingCycleMetadata calldata _metadata,
-        IFundingCycleBallot _ballot
+        PaymentMod[] memory _paymentMods,
+        TicketMod[] memory _ticketMods
     ) external;
 
-    function printInitialTickets(
+    function configure(
+        uint256 _projectId,
+        FundingCycleProperties calldata _properties,
+        FundingCycleMetadata calldata _metadata,
+        PaymentMod[] memory _paymentMods,
+        TicketMod[] memory _ticketMods
+    ) external returns (uint256 fundingCycleId);
+
+    function printTickets(
         uint256 _projectId,
         uint256 _amount,
         address _beneficiary,
+        string memory _memo,
         bool _preferUnstakedTickets
     ) external;
-
-    function reconfigure(
-        uint256 _projectId,
-        uint256 _target,
-        uint256 _currency,
-        uint256 _duration,
-        uint256 _discountRate,
-        FundingCycleMetadata memory _metadata,
-        IFundingCycleBallot _ballot
-    ) external returns (uint256 fundingCycleId);
 
     function tap(
         uint256 _projectId,

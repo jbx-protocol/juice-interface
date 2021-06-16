@@ -7,6 +7,8 @@ import "./abstract/JuiceProject.sol";
 
 /// Owner should eventually change to a multisig wallet contract.
 contract Governance is JuiceProject {
+    // --- external transactions --- //
+
     constructor(uint256 _projectId)
         JuiceProject(ITerminal(address(0)), _projectId)
     {}

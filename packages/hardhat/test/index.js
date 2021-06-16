@@ -6,14 +6,42 @@ const { deployMockContract } = require("@ethereum-waffle/mock-contract");
 const shouldBehaveLike = require("./behaviors");
 
 let snapshotId;
+let timeMark;
 
 const snapshot = () => ethers.provider.send("evm_snapshot", []);
 const restore = id => ethers.provider.send("evm_revert", [id]);
+
+const getTimestamp = async block => {
+  return ethers.BigNumber.from(
+    (await ethers.provider.getBlock(block || "latest")).timestamp
+  );
+};
+const setTimeMark = async blockNumber => {
+  timeMark = await getTimestamp(blockNumber);
+};
+const fastforward = async seconds => {
+  // eslint-disable-next-line no-await-in-loop
+  const now = await getTimestamp();
+  const timeSinceTimemark = now.sub(timeMark);
+  timeMark = now;
+
+  // Subtract away any time that has already passed between the start of the test,
+  // or from the last fastforward, from the provided value.
+  await ethers.provider.send("evm_increaseTime", [
+    seconds.toNumber() - timeSinceTimemark
+  ]);
+  await ethers.provider.send("evm_mine");
+};
 
 describe("Juice", async function() {
   before(async function() {
     // Bind a reference to the deployer address and an array of other addresses to `this`.
     [this.deployer, ...this.addrs] = await ethers.getSigners();
+
+    // Bind the ability to manipulate time to `this`.
+    this.fastforward = fastforward;
+    this.getTimestamp = getTimestamp;
+    this.setTimeMark = setTimeMark;
 
     // Bind a reference to a function that can deploy mock contracts from an abi.
     this.deployMockContract = abi => deployMockContract(this.deployer, abi);
@@ -40,6 +68,11 @@ describe("Juice", async function() {
   // Before each test, take a snapshot of the contract state.
   beforeEach(async function() {
     snapshotId = await snapshot();
+    // Mark the start time of each test.
+    timeMark = await getTimestamp();
+
+    // Make the start time of the test available.
+    this.testStart = await getTimestamp();
   });
 
   // Test each contract.

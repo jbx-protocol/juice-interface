@@ -59,9 +59,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     // --- private stored properties --- //
 
-    // The current cumulative amount of tokens that a project has in this contract, without taking yield into account.
-    mapping(uint256 => uint256) private _rawBalanceOf;
-
     // The difference between the processed ticket tracker of a project and the project's ticket's total supply is the amount of tickets that
     // still need to have reserves printed against them.
     mapping(uint256 => int256) private _processedTicketTrackerOf;
@@ -88,6 +85,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     // --- public stored properties --- //
 
+    /// @notice The amount of ETH that each project is responsible for.
+    mapping(uint256 => uint256) public override balanceOf;
+
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
 
@@ -100,8 +100,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The contract that puts idle funds to work.
     IYielder public override yielder;
 
-    /// @notice The target amount of ETH to keep in this contract instead of depositing.
-    uint256 public override targetLocalETH = 1000 * (10**18);
+    /// @notice The target amount of wei to keep in this contract instead of depositing.
+    uint256 public override targetLocalWei = 1000 * (10**18);
 
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(ITerminal => bool) public override migrationIsAllowed;
@@ -112,53 +112,24 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @notice 
       Gets the total amount of funds that this Juicer is responsible for.
 
-      @return amountWithoutYield The balance of funds not including any yield.
-      @return amountWithYield The balance of funds including any yield.
+      @return withoutYield The balance of funds not including any yield.
+      @return withYield The balance of funds including any yield.
     */
     function balance()
         public
         view
         override
-        returns (uint256 amountWithoutYield, uint256 amountWithYield)
+        returns (uint256 withoutYield, uint256 withYield)
     {
         // The amount of ETH available is this contract's balance plus whatever is in the yielder.
         uint256 _amount = address(this).balance;
         if (yielder == IYielder(address(0))) {
-            amountWithoutYield = _amount;
-            amountWithYield = _amount;
+            withoutYield = _amount;
+            withYield = _amount;
         } else {
-            amountWithoutYield = _amount + yielder.deposited();
-            amountWithYield = _amount + yielder.getCurrentBalance();
+            withoutYield = _amount + yielder.deposited();
+            withYield = _amount + yielder.getCurrentBalance();
         }
-    }
-
-    /** 
-      @notice 
-      Gets the balance for a specified project that this Juicer is responsible for.
-
-      @param _projectId The ID of the project to get the balance of.
-
-      @return The balance of funds for the project including any yield.
-    */
-    function balanceOf(uint256 _projectId)
-        public
-        view
-        override
-        returns (uint256)
-    {
-        // Get a reference to the balance.
-        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
-
-        // If there is no balance, the project must not have a balance either.
-        if (_balanceWithoutYield == 0) return 0;
-
-        // The overflow is the proportion of the total available to what's claimable for the project.
-        return
-            PRBMathCommon.mulDiv(
-                _rawBalanceOf[_projectId],
-                _balanceWithYield,
-                _balanceWithoutYield
-            );
     }
 
     /** 
@@ -228,7 +199,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _limit == 0 ? 0 : PRBMathUD60x18.div(_limit, _ethPrice);
 
         // Get the current balance of the project with yield.
-        uint256 _balanceOf = balanceOf(_projectId);
+        uint256 _balanceOf = balanceOf[_projectId];
 
         // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
         return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
@@ -466,7 +437,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             terminalDirectory.setTerminal(_projectId, this);
 
         // If the project doesn't have a balance, configure the active funding cycle instead of creating a standby one.
-        bool _shouldConfigureActive = _rawBalanceOf[_projectId] == 0;
+        bool _shouldConfigureActive = balanceOf[_projectId] == 0;
 
         // Configure the funding stage's state.
         FundingCycle memory _fundingCycle =
@@ -527,7 +498,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     {
         // Make sure the project doesn't have a balance.
         require(
-            _rawBalanceOf[_projectId] == 0,
+            balanceOf[_projectId] == 0,
             "Juicer::printInitialTickets: TOO_LATE"
         );
 
@@ -604,7 +575,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             fundingCycles.tap(_projectId, _amount);
 
         // Get a reference to this project's current balance, including any earned yield.
-        uint256 _balanceOf = balanceOf(_fundingCycle.projectId);
+        uint256 _balanceOf = balanceOf[_fundingCycle.projectId];
 
         // Get the currency price of ETH.
         uint256 _ethPrice = prices.getETHPriceFor(_fundingCycle.currency);
@@ -625,23 +596,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::_processTap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 
-        // Get a reference to the raw balance of the project.
-        uint256 _rawBalance = _rawBalanceOf[_projectId];
-
-        // Remove from the balance of the project.
-        // Since the balance doesn't include any earned yield but the
-        // `_tappedETHAmount` might include earned yields,
-        // the correct proportion must be calculated.
-        _rawBalanceOf[_fundingCycle.projectId] =
-            _rawBalance -
-            PRBMathCommon.mulDiv(
-                // The the amount being tapped and used as a fee...
-                _tappedETHAmount,
-                // multiplied by the current balance without yield...
-                _rawBalance,
-                // divided by the total yielding balance of the project.
-                _balanceOf
-            );
+        // Removed the tapped funds from the project's balance.
+        balanceOf[_projectId] = _balanceOf - _tappedETHAmount;
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
         uint256 _govFeeAmount =
@@ -814,25 +770,22 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::redeem: INSUFFICIENT_FUNDS"
         );
 
-        // Get a reference to the balance.
-        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
-
-        // Remove from the raw balance of the project.
-        // Since the raw balance shouldn't include any earned yield but the `amount` does,
-        // the correct proportion must be calculated.
-        _rawBalanceOf[_projectId] =
-            _rawBalanceOf[_projectId] -
-            PRBMathCommon.mulDiv(
-                // The amount redeemed...
-                amount,
-                // multiplied by the current balance amount with no yield considerations...
-                _balanceWithoutYield,
-                // divded by the total yielding balance of the project.
-                _balanceWithYield
-            );
+        // Remove the redeemed funds from the project's balance.
+        balanceOf[_projectId] = balanceOf[_projectId] - amount;
 
         // Get a reference to the processed ticket tracker for the project.
         int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
+
+        // Safely subtract the count from the processed ticket tracker.
+        // Subtract from processed tickets so that the difference between whats been processed and the
+        // total supply remains the same.
+        // If there are at least as many processed tickets as there are tickets being redeemed,
+        // the processed ticket tracker of the project will be positive. Otherwise it will be negative.
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _count <= uint256(type(int256).max),
+            "Juicer::redeem: INT_LIMIT_REACHED"
+        );
 
         // Set the tracker.
         _processedTicketTrackerOf[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
@@ -849,17 +802,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Transfer funds to the specified address.
         Address.sendValue(_beneficiary, amount);
-
-        // Safely subtract the count from the processed ticket tracker.
-        // Subtract from processed tickets so that the difference between whats been processed and the
-        // total supply remains the same.
-        // If there are at least as many processed tickets as there are tickets being redeemed,
-        // the processed ticket tracker of the project will be positive. Otherwise it will be negative.
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _count <= uint256(type(int256).max),
-            "Juicer::redeem: INT_LIMIT_REACHED"
-        );
 
         emit Redeem(
             _account,
@@ -968,14 +910,20 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // There must be a yielder.
         require(yielder != IYielder(address(0)), "Juicer::deposit: NOT_FOUND");
 
+        // There's nothing to do if the current balance is the target.
+        require(
+            address(this).balance != targetLocalWei,
+            "Juicer::deposit: NO_OP"
+        );
+
         // Any ETH currently in posession of this contract can be deposited.
         require(
-            address(this).balance > targetLocalETH,
+            address(this).balance > targetLocalWei,
             "Juicer::deposit: INSUFFICIENT_FUNDS"
         );
 
         // Keep the target local ETH in this contract.
-        uint256 _amount = address(this).balance - targetLocalETH;
+        uint256 _amount = address(this).balance - targetLocalWei;
 
         // Deposit in the yielder.
         yielder.deposit{value: _amount}();
@@ -1000,17 +948,25 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         )
         nonReentrant
     {
+        // This Juicer must be the project's current terminal.
+        require(
+            terminalDirectory.terminalOf(_projectId) == this,
+            "Juicer::migrate: UNAUTHORIZED"
+        );
+
+        // This Juicer must be the project's current terminal.
+        // This Juicer must be the project's current terminal.
         // The migration destination must be allowed.
         require(migrationIsAllowed[_to], "Juicer::migrate: NOT_ALLOWED");
 
         // Get a reference to this project's current balance, included any earned yield.
-        uint256 _balanceOf = balanceOf(_projectId);
-
-        // Set the balance to 0.
-        _rawBalanceOf[_projectId] = 0;
+        uint256 _balanceOf = balanceOf[_projectId];
 
         // Make sure the necessary funds are in the posession of this contract.
         _ensureAvailability(_balanceOf);
+
+        // Set the balance to 0.
+        balanceOf[_projectId] = 0;
 
         // Move the funds to the new contract.
         _to.addToBalance{value: _balanceOf}(_projectId);
@@ -1028,47 +984,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @param _projectId The ID of the project to which the funds received belong.
     */
     function addToBalance(uint256 _projectId) external payable override {
-        // Get a reference to the balances.
-        // These values include the value from this transaction, so subtract
-        (
-            uint256 _originalBalanceWithoutYield,
-            uint256 _originalBalanceWithYield
-        ) = balance();
-        _originalBalanceWithoutYield = _originalBalanceWithoutYield - msg.value;
-        _originalBalanceWithYield = _originalBalanceWithYield - msg.value;
-
-        console.log(
-            "og balance without yield %d: ",
-            _originalBalanceWithoutYield
-        );
-        console.log("og balance with yield %d: ", _originalBalanceWithYield);
-        console.log("og raw balance of %d: ", _rawBalanceOf[_projectId]);
-        console.log("val %d: ", msg.value);
-
-        // Add the processed amount.
-        _rawBalanceOf[_projectId] =
-            _rawBalanceOf[_projectId] +
-            // (
-            //     _originalBalanceWithYield == _originalBalanceWithoutYield
-            //         ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
-            //         : PRBMathCommon.mulDiv(
-            //             _originalBalanceWithoutYield,
-            //             msg.value + _originalBalanceWithYield,
-            //             _originalBalanceWithYield
-            //         ) - _originalBalanceWithoutYield
-            // );
-            (
-                _originalBalanceWithYield == _originalBalanceWithoutYield
-                    ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
-                    : PRBMathCommon.mulDiv(
-                        _rawBalanceOf[_projectId],
-                        msg.value,
-                        _originalBalanceWithoutYield
-                    )
-            );
-
-        console.log("done raw balance of %d: ", _rawBalanceOf[_projectId]);
-
+        balanceOf[_projectId] = balanceOf[_projectId] + msg.value;
         emit AddToBalance(_projectId, msg.value, msg.sender);
     }
 
@@ -1096,13 +1012,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /** 
       @notice 
-      Sets the target amount of ETH to keep in this contract instead of depositing.
+      Sets the target amount of wei to keep in this contract instead of depositing.
 
       @param _amount The new target balance amount.
     */
     function setTargetLocalWei(uint256 _amount) external override onlyGov {
         // Set the target.
-        targetLocalETH = _amount;
+        targetLocalWei = _amount;
 
         // Make sure the target is met.
         _ensureAvailability(_amount);
@@ -1214,8 +1130,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
-        // Add to the raw balance of the project.
-        _rawBalanceOf[_projectId] = _rawBalanceOf[_projectId] + _amount;
+        // Add to the balance of the project.
+        balanceOf[_projectId] = balanceOf[_projectId] + _amount;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =

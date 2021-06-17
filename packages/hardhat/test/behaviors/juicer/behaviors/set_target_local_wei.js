@@ -3,6 +3,7 @@ const {
 } = require("hardhat");
 
 const { expect } = require("chai");
+const { constants } = require("ethers");
 
 const tests = {
   success: [
@@ -22,6 +23,13 @@ const tests = {
           addYielder: true,
           addToBalance: BigNumber.from(1)
         }
+      })
+    },
+    {
+      description: "set with max uint",
+      fn: ({ governance }) => ({
+        caller: governance,
+        amount: constants.MaxUint256
       })
     },
     {
@@ -86,7 +94,7 @@ module.exports = function() {
           .withArgs(amount);
 
         // Get the stored target value.
-        const storedTargetLocalWei = await this.contract.targetLocalETH();
+        const storedTargetLocalWei = await this.contract.targetLocalWei();
 
         // Expect the stored value to equal whats expected.
         expect(storedTargetLocalWei).to.equal(amount);

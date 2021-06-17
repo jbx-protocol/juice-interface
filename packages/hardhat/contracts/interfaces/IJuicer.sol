@@ -100,7 +100,7 @@ interface IJuicer {
 
     function modStore() external view returns (IModStore);
 
-    function targetLocalETH() external view returns (uint256);
+    function targetLocalWei() external view returns (uint256);
 
     function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
         external
@@ -123,7 +123,7 @@ interface IJuicer {
     function balance()
         external
         view
-        returns (uint256 amountWithoutYield, uint256 amountWithYield);
+        returns (uint256 withoutYield, uint256 withYield);
 
     function fee() external view returns (uint256);
 

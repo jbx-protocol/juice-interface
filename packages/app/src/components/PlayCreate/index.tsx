@@ -165,24 +165,17 @@ export default function PlayCreate() {
 
     const targetWithFee = editingFC.target?.add(fee).toHexString()
 
-    console.log(
-      'asdf',
-      editingFC.currency,
-      editingFC.duration,
-      editingFC.discountRate,
-    )
-
-    const properties: Record<keyof FCProperties, string> = {
+    const properties: Record<keyof FCProperties, any> = {
       target: targetWithFee,
-      currency: BigNumber.from(editingFC.currency).toHexString(),
-      duration: BigNumber.from(editingFC.duration).toHexString(),
-      discountRate: BigNumber.from(editingFC.discountRate).toHexString(),
+      currency: editingFC.currency.toNumber(),
+      duration: editingFC.duration.toNumber(),
+      discountRate: editingFC.discountRate.toNumber(),
       ballot: constants.AddressZero,
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {
-      reserved: editingFC.reserved,
       bondingCurveRate: editingFC.bondingCurveRate,
+      reservedRate: editingFC.reserved,
       reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
     }
 

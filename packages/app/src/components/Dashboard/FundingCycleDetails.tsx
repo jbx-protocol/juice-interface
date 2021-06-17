@@ -47,7 +47,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerbicent(metadata?.reserved)}%
+        {fromPerbicent(metadata?.reservedRate)}%
       </Descriptions.Item>
 
       <Descriptions.Item

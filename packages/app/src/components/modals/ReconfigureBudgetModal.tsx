@@ -51,7 +51,7 @@ export default function ReconfigureBudgetModal({
       target: fromWad(fundingCycle.target),
       currency: fundingCycle.currency.toNumber() as CurrencyOption,
       discountRate: fromPerbicent(fundingCycle.discountRate),
-      reserved: fromPerbicent(metadata.reserved),
+      reserved: fromPerbicent(metadata.reservedRate),
       bondingCurveRate: fromPerbicent(metadata.bondingCurveRate),
     })
 
@@ -80,7 +80,7 @@ export default function ReconfigureBudgetModal({
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {
-      reserved: fields.reserved,
+      reservedRate: fields.reserved,
       bondingCurveRate: fields.bondingCurveRate,
       reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
     }

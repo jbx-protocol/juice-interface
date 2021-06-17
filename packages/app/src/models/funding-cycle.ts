@@ -22,5 +22,5 @@ export interface FCMetadata {
   version: number
   bondingCurveRate: number
   reconfigurationBondingCurveRate: number
-  reserved: number
+  reservedRate: number
 }

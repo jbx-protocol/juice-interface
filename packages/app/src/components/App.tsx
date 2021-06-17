@@ -69,7 +69,9 @@ function App() {
             {supportedNetworks
               .filter(n => n !== signerNetwork)
               .map(_n => (
-                <a href={`https://${_n}.juice.work`}>{_n}.juice.work</a>
+                <a key={_n} href={`https://${_n}.juice.work`}>
+                  {_n}.juice.work
+                </a>
               ))}
           </Space>
         </div>

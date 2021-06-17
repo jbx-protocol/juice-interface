@@ -21,7 +21,7 @@ export const decodeFCMetadata = (
           .shr(8)
           .and(0b000000000000000000000000000000001111111111111111)
           .toNumber(),
-        reserved: metadata
+        reservedRate: metadata
           .shr(24)
           .and(0b00000000000000001111111111111111)
           .toNumber(),

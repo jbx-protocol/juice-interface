@@ -118,10 +118,10 @@ export default function Rewards({
     contract: ContractName.Juicer,
     functionName: 'reservedTicketAmount',
     args:
-      projectId && metadata?.reserved
+      projectId && metadata?.reservedRate
         ? [
             projectId.toHexString(),
-            BigNumber.from(metadata.reserved).toHexString(),
+            BigNumber.from(metadata.reservedRate).toHexString(),
           ]
         : null,
     valueDidChange: bigNumbersDiff,

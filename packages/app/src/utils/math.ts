@@ -10,7 +10,7 @@ export const weightedRate = (
   output: 'payer' | 'reserved',
 ) => {
   if (!fc || !wad) return
-  const reserved = decodeFCMetadata(fc.metadata)?.reserved
+  const reserved = decodeFCMetadata(fc.metadata)?.reservedRate
 
   if (!reserved) return
 

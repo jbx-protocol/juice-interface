@@ -48,8 +48,8 @@ export default function Dashboard() {
         projectId
           ? [
               {
-                contract: ContractName.Juicer,
-                eventName: 'Reconfigure',
+                contract: ContractName.FundingCycles,
+                eventName: 'Configure',
                 topics: [[], projectId.toHexString()],
               },
               {

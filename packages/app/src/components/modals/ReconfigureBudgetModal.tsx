@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
+import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { useContext, useEffect, useState } from 'react'
 import {
   fromPerbicent,
@@ -13,6 +13,8 @@ import {
   parseWad,
 } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+
+import { FCProperties } from '../../models/funding-cycle-properties'
 
 export type ReconfigureBudgetFormFields = {
   target: string
@@ -69,19 +71,24 @@ export default function ReconfigureBudgetModal({
 
     const fields = form.getFieldsValue(true)
 
+    const properties: Record<keyof FCProperties, string> = {
+      target: parseWad(fields.target)?.toHexString(),
+      currency: BigNumber.from(fields.currency).toHexString(),
+      duration: BigNumber.from(fields.duration).toHexString(),
+      discountRate: parsePerbicent(fields.discountRate).toHexString(),
+      ballot: fundingCycle.ballot,
+    }
+
+    const metadata: Omit<FCMetadata, 'version'> = {
+      reserved: fields.reserved,
+      bondingCurveRate: fields.bondingCurveRate,
+      reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
+    }
+
     transactor(
       contracts.Juicer,
-      'reconfigure',
-      [
-        projectId.toHexString(),
-        parseWad(fields.target)?.toHexString(),
-        BigNumber.from(fields.currency).toHexString(),
-        BigNumber.from(fields.duration).toHexString(),
-        parsePerbicent(fields.discountRate).toHexString(),
-        parsePerbicent(fields.bondingCurveRate).toHexString(),
-        parsePerbicent(fields.reserved).toHexString(),
-        fundingCycle.ballot,
-      ],
+      'configure',
+      [projectId.toHexString(), properties, metadata, [], []],
       {
         onDone: () => {
           setLoading(false)

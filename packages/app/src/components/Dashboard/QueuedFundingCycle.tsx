@@ -18,10 +18,9 @@ export default function QueuedFundingCycle({
   isOwner?: boolean
   currentCycle: FundingCycle | undefined
 }) {
-  const [
-    reconfigureModalVisible,
-    setReconfigureModalVisible,
-  ] = useState<boolean>(false)
+  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
+    boolean
+  >(false)
 
   const queuedCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
@@ -31,7 +30,7 @@ export default function QueuedFundingCycle({
       ? [
           {
             contract: ContractName.FundingCycles,
-            eventName: 'Reconfigure',
+            eventName: 'Configure',
             topics: [[], projectId.toHexString()],
           },
         ]

@@ -66,13 +66,13 @@ contract Projects is ERC721, IProjects, Ownable, Operatable {
         @param _handle A unique handle for the project.
         @param _uri An ipfs uri to more info about the project. Dont include the leading ipfs://
 
-        @return id The new project's ID.
+        @return The new project's ID.
     */
     function create(
         address _owner,
         bytes32 _handle,
         string calldata _uri
-    ) external override returns (uint256 id) {
+    ) external override returns (uint256) {
         // Handle must exist.
         require(_handle != bytes32(0), "Projects::create: EMPTY_HANDLE");
 

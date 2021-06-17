@@ -16,7 +16,7 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { FundingCycle } from 'models/funding-cycle'
+import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
@@ -35,6 +35,7 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 import { CurrencyOption } from 'models/currency-option'
+import { FCProperties } from '../../models/funding-cycle-properties'
 
 export default function PlayCreate() {
   const { transactor, contracts, userAddress } = useContext(UserContext)
@@ -164,6 +165,27 @@ export default function PlayCreate() {
 
     const targetWithFee = editingFC.target?.add(fee).toHexString()
 
+    console.log(
+      'asdf',
+      editingFC.currency,
+      editingFC.duration,
+      editingFC.discountRate,
+    )
+
+    const properties: Record<keyof FCProperties, string> = {
+      target: targetWithFee,
+      currency: BigNumber.from(editingFC.currency).toHexString(),
+      duration: BigNumber.from(editingFC.duration).toHexString(),
+      discountRate: BigNumber.from(editingFC.discountRate).toHexString(),
+      ballot: constants.AddressZero,
+    }
+
+    const metadata: Omit<FCMetadata, 'version'> = {
+      reserved: editingFC.reserved,
+      bondingCurveRate: editingFC.bondingCurveRate,
+      reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
+    }
+
     transactor(
       contracts.Juicer,
       'deploy',
@@ -171,18 +193,10 @@ export default function PlayCreate() {
         userAddress,
         utils.formatBytes32String(editingProject.handle),
         uploadedMetadata.cid,
-        targetWithFee,
-        BigNumber.from(editingFC.currency).toHexString(),
-        BigNumber.from(editingFC.duration).toHexString(),
-        BigNumber.from(editingFC.discountRate).toHexString(),
-        {
-          reservedRate: BigNumber.from(editingFC.reserved).toHexString(),
-          bondingCurveRate: BigNumber.from(
-            editingFC.bondingCurveRate,
-          ).toHexString(),
-          reconfigurationBondingCurveRate: parsePerbicent('100').toHexString(),
-        },
-        constants.AddressZero,
+        properties,
+        metadata,
+        [],
+        [],
       ],
       {
         onDone: () => setLoadingCreate(false),

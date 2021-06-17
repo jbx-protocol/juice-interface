@@ -44,10 +44,11 @@ module.exports = function() {
   });
 
   // Test each function.
-  describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
-  describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
-  describe("setFee(...)", shouldBehaveLike.setFee);
-  describe("setYielder(...)", shouldBehaveLike.setYielder);
-  describe("setTargetLocalWei(...)", shouldBehaveLike.setTargetLocalWei);
-  describe("allow_migration(...)", shouldBehaveLike.allowMigration);
+  // describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
+  // describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
+  // describe("setFee(...)", shouldBehaveLike.setFee);
+  // describe("setYielder(...)", shouldBehaveLike.setYielder);
+  // describe("setTargetLocalWei(...)", shouldBehaveLike.setTargetLocalWei);
+  // describe("allowMigration(...)", shouldBehaveLike.allowMigration);
+  describe("addToBalance(...)", shouldBehaveLike.addToBalance);
 };

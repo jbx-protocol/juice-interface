@@ -13,6 +13,8 @@ import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
+import "hardhat/console.sol";
+
 /**
   ───────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
@@ -1027,18 +1029,45 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     */
     function addToBalance(uint256 _projectId) external payable override {
         // Get a reference to the balances.
-        (uint256 _balanceWithoutYield, uint256 _balanceWithYield) = balance();
+        // These values include the value from this transaction, so subtract
+        (
+            uint256 _originalBalanceWithoutYield,
+            uint256 _originalBalanceWithYield
+        ) = balance();
+        _originalBalanceWithoutYield = _originalBalanceWithoutYield - msg.value;
+        _originalBalanceWithYield = _originalBalanceWithYield - msg.value;
+
+        console.log(
+            "og balance without yield %d: ",
+            _originalBalanceWithoutYield
+        );
+        console.log("og balance with yield %d: ", _originalBalanceWithYield);
+        console.log("og raw balance of %d: ", _rawBalanceOf[_projectId]);
+        console.log("val %d: ", msg.value);
 
         // Add the processed amount.
-        _rawBalanceOf[_projectId] = _rawBalanceOf[_projectId] +
-            _balanceWithYield ==
-            0
-            ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
-            : PRBMathCommon.mulDiv(
-                _balanceWithoutYield,
-                msg.value + _balanceWithYield,
-                _balanceWithYield
-            ) - _balanceWithoutYield;
+        _rawBalanceOf[_projectId] =
+            _rawBalanceOf[_projectId] +
+            // (
+            //     _originalBalanceWithYield == _originalBalanceWithoutYield
+            //         ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
+            //         : PRBMathCommon.mulDiv(
+            //             _originalBalanceWithoutYield,
+            //             msg.value + _originalBalanceWithYield,
+            //             _originalBalanceWithYield
+            //         ) - _originalBalanceWithoutYield
+            // );
+            (
+                _originalBalanceWithYield == _originalBalanceWithoutYield
+                    ? msg.value // Finds the number that increases _balanceWithoutYield the same proportion that (msg.value + _balanceWithYield) increases _balanceWithYield.
+                    : PRBMathCommon.mulDiv(
+                        _rawBalanceOf[_projectId],
+                        msg.value,
+                        _originalBalanceWithoutYield
+                    )
+            );
+
+        console.log("done raw balance of %d: ", _rawBalanceOf[_projectId]);
 
         emit AddToBalance(_projectId, msg.value, msg.sender);
     }

@@ -6,52 +6,67 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy mock dependency contracts.
-    this.operatorStore = await this.deployMockLocalContract("OperatorStore");
-    this.projects = await this.deployMockLocalContract("Projects", [
-      this.operatorStore.address
+    const operatorStore = await this.deployMockLocalContract("OperatorStore");
+    const projects = await this.deployMockLocalContract("Projects", [
+      operatorStore.address
     ]);
-    this.prices = await this.deployMockLocalContract("Prices");
-    this.terminalDirectory = await this.deployMockLocalContract(
+    const prices = await this.deployMockLocalContract("Prices");
+    const terminalDirectory = await this.deployMockLocalContract(
       "TerminalDirectory",
-      [this.projects.address]
+      [projects.address]
     );
-    this.fundingCycles = await this.deployMockLocalContract("FundingCycles", [
-      this.terminalDirectory.address
+    const fundingCycles = await this.deployMockLocalContract("FundingCycles", [
+      terminalDirectory.address
     ]);
-    this.ticketBooth = await this.deployMockLocalContract("TicketBooth", [
-      this.projects.address,
-      this.operatorStore.address,
-      this.terminalDirectory.address
+    const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
+      projects.address,
+      operatorStore.address,
+      terminalDirectory.address
     ]);
-    this.modStore = await this.deployMockLocalContract("ModStore", [
-      this.projects.address,
-      this.operatorStore.address
+    const modStore = await this.deployMockLocalContract("ModStore", [
+      projects.address,
+      operatorStore.address
     ]);
 
-    this.governance = this.addrs[9];
+    const governance = this.addrs[9];
 
-    // Deploy mock dependency contracts.
-    this.contract = await this.deployContract(contractName, [
-      this.projects.address,
-      this.fundingCycles.address,
-      this.ticketBooth.address,
-      this.operatorStore.address,
-      this.modStore.address,
-      this.prices.address,
-      this.terminalDirectory.address,
-      this.governance.address
+    this.governance = governance;
+
+    this.mockContracts = {
+      operatorStore,
+      projects,
+      prices,
+      terminalDirectory,
+      fundingCycles,
+      ticketBooth,
+      modStore
+    };
+
+    this.targetContract = await this.deployContract(contractName, [
+      projects.address,
+      fundingCycles.address,
+      ticketBooth.address,
+      operatorStore.address,
+      modStore.address,
+      prices.address,
+      terminalDirectory.address,
+      governance.address
     ]);
   });
 
   // Test each function.
-  describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
-  describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
-  describe("setFee(...)", shouldBehaveLike.setFee);
-  describe("setYielder(...)", shouldBehaveLike.setYielder);
-  describe("setTargetLocalWei(...)", shouldBehaveLike.setTargetLocalWei);
-  describe("allowMigration(...)", shouldBehaveLike.allowMigration);
-  describe("addToBalance(...)", shouldBehaveLike.addToBalance);
-  describe("migrate(...)", shouldBehaveLike.migrate);
-  describe("deposit(...)", shouldBehaveLike.deposit);
-  describe("deploy(...)", shouldBehaveLike.deploy);
+  // describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
+  // describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
+  // describe("setFee(...)", shouldBehaveLike.setFee);
+  // describe("setYielder(...)", shouldBehaveLike.setYielder);
+  // describe("setTargetLocalWei(...)", shouldBehaveLike.setTargetLocalWei);
+  // describe("allowMigration(...)", shouldBehaveLike.allowMigration);
+  // describe("addToBalance(...)", shouldBehaveLike.addToBalance);
+  // describe("migrate(...)", shouldBehaveLike.migrate);
+  // describe("deposit(...)", shouldBehaveLike.deposit);
+  // describe("deploy(...)", shouldBehaveLike.deploy);
+  // describe("configure(...)", shouldBehaveLike.configure);
+  // describe("pay(...)", shouldBehaveLike.pay);
+  // describe("printTickets(...)", shouldBehaveLike.printTickets);
+  describe("redeem(...)", shouldBehaveLike.redeem);
 };

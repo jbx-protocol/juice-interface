@@ -147,27 +147,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         override
         returns (uint256)
     {
-        // Get a reference to the processed ticket tracker for the project.
-        int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
-
-        // Get a reference to the amount of tickets that are unprocessed.
-        uint256 _unprocessedTicketBalanceOf =
-            _processedTicketTracker >= 0
-                ? ticketBooth.totalSupplyOf(_projectId) -
-                    uint256(_processedTicketTracker)
-                : ticketBooth.totalSupplyOf(_projectId) +
-                    uint256(-_processedTicketTracker);
-
-        // If there are no unprocessed tickets, return.
-        if (_unprocessedTicketBalanceOf == 0) return 0;
-
-        // If there are no unprocessed tickets, return.
         return
-            PRBMathCommon.mulDiv(
-                _unprocessedTicketBalanceOf,
-                200,
-                200 - _reservedRate
-            ) - _unprocessedTicketBalanceOf;
+            _reservedTicketAmountOf(
+                _projectId,
+                _reservedRate,
+                ticketBooth.totalSupplyOf(_projectId)
+            );
     }
 
     /** 
@@ -188,21 +173,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
-        // Get the current price of ETH.
-        uint256 _ethPrice = prices.getETHPriceFor(_fundingCycle.currency);
-
-        // Get a reference to the amount still tappable in the current funding cycle.
-        uint256 _limit = _fundingCycle.target - _fundingCycle.tapped;
-
-        // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
-        uint256 _ethLimit =
-            _limit == 0 ? 0 : PRBMathUD60x18.div(_limit, _ethPrice);
-
-        // Get the current balance of the project with yield.
-        uint256 _balanceOf = balanceOf[_projectId];
-
-        // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
-        return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
+        return _currentOverflowOf(_projectId, _fundingCycle);
     }
 
     /**
@@ -229,8 +200,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
         );
 
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle memory _fundingCycle =
+            fundingCycles.getCurrentOf(_projectId);
+
         // Get the amount of current overflow.
-        uint256 _currentOverflow = currentOverflowOf(_projectId);
+        uint256 _currentOverflow =
+            _currentOverflowOf(_projectId, _fundingCycle);
 
         // If there is no overflow, nothing is claimable.
         if (_currentOverflow == 0) return 0;
@@ -238,16 +214,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get the total number of tickets in circulation.
         uint256 _totalSupply = ticketBooth.totalSupplyOf(_projectId);
 
-        // Get a reference to the current funding cycle for the project.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
-
         // Get the number of reserved tickets the project has.
         uint256 _reservedTicketAmount =
-            reservedTicketAmountOf(
+            _reservedTicketAmountOf(
                 _projectId,
                 // The reserved rate is in bits 9-24 of the metadata.
-                uint256(uint16(_fundingCycle.metadata >> 8))
+                uint256(uint8(_fundingCycle.metadata >> 8)),
+                _totalSupply
             );
 
         // If there are reserved tickets, add them to the total supply.
@@ -264,8 +237,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
             fundingCycles.currentBallotStateOf(_projectId) == BallotState.Active // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-                ? uint256(uint16(_fundingCycle.metadata >> 40)) // The bonding curve rate is stored in bytes 25-40 of the data property after.
-                : uint256(uint16(_fundingCycle.metadata >> 24));
+                ? uint256(uint8(_fundingCycle.metadata >> 24)) // The bonding curve rate is stored in bytes 25-40 of the data property after.
+                : uint256(uint8(_fundingCycle.metadata >> 16));
 
         // The bonding curve formula.
         // https://www.desmos.com/calculator/sp9ru6zbpk
@@ -431,6 +404,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         )
         returns (uint256 fundingCycleId)
     {
+        // Make sure the metadata is validated, and pack it into a uint256.
+        uint256 _packedMetadata =
+            _validateAndPackFundingCycleMetadata(_metadata);
+
         // Set the terminal if needed.
         // Must do this before the call to configure.
         if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
@@ -444,7 +421,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             fundingCycles.configure(
                 _projectId,
                 _properties,
-                _validateAndPackFundingCycleMetadata(_metadata),
+                _packedMetadata,
                 fee,
                 _shouldConfigureActive
             );
@@ -465,6 +442,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _ticketMods
             );
 
+        // Set payment mods for the new configuration if there are any.
         return _fundingCycle.id;
     }
 
@@ -477,8 +455,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @param _projectId The ID of the project to premine tickets for.
       @param _amount The amount to base the ticket premine off of. Measured in ETH.
-      @param _memo A memo to leave with the printing.
       @param _beneficiary The address to send the printed tickets to.
+      @param _memo A memo to leave with the printing.
+      @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
     */
     function printTickets(
         uint256 _projectId,
@@ -493,13 +472,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.PrintInitialTickets
+            Operations.PrintTickets
         )
     {
         // Make sure the project doesn't have a balance.
         require(
             balanceOf[_projectId] == 0,
-            "Juicer::printInitialTickets: TOO_LATE"
+            "Juicer::printInitialTickets: ALREADY_ACTIVE"
         );
 
         // Get the current funding cycle to read the weight and currency from.
@@ -729,92 +708,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Addresses can redeem their Tickets to claim the project's overflowed ETH.
-
-        @param _account The account to redeem tickets for.
-        @param _projectId The ID of the project to which the Tickets being redeemed belong.
-        @param _count The number of Tickets to redeem.
-        @param _minReturnedETH The minimum amount of ETH expected in return.
-        @param _beneficiary The address to send the ETH to.
-        @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
-
-        @return amount The amount of ETH that the tickets were redeemed for.
-    */
-    function redeem(
-        address _account,
-        uint256 _projectId,
-        uint256 _count,
-        uint256 _minReturnedETH,
-        address payable _beneficiary,
-        bool _preferUnstaked
-    )
-        external
-        override
-        nonReentrant
-        requirePermissionAllowingWildcardDomain(
-            _account,
-            _projectId,
-            Operations.Redeem
-        )
-        returns (uint256 amount)
-    {
-        // Can't send claimed funds to the zero address.
-        require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
-
-        // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
-        amount = claimableOverflowOf(_account, _projectId, _count);
-
-        // The amount being claimed must be at least as much as was expected.
-        require(
-            amount >= _minReturnedETH,
-            "Juicer::redeem: INSUFFICIENT_FUNDS"
-        );
-
-        // Remove the redeemed funds from the project's balance.
-        balanceOf[_projectId] = balanceOf[_projectId] - amount;
-
-        // Get a reference to the processed ticket tracker for the project.
-        int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
-
-        // Safely subtract the count from the processed ticket tracker.
-        // Subtract from processed tickets so that the difference between whats been processed and the
-        // total supply remains the same.
-        // If there are at least as many processed tickets as there are tickets being redeemed,
-        // the processed ticket tracker of the project will be positive. Otherwise it will be negative.
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _count <= uint256(type(int256).max),
-            "Juicer::redeem: INT_LIMIT_REACHED"
-        );
-
-        // Set the tracker.
-        _processedTicketTrackerOf[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
-            ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
-            : _processedTicketTracker < int256(_count)
-            ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
-            : _processedTicketTracker - int256(_count);
-
-        // Make sure the amount being claimed is in the posession of this contract and not in the vault.
-        _ensureAvailability(amount);
-
-        // Redeem the tickets, which removes and burns them from the account's wallet.
-        ticketBooth.redeem(_account, _projectId, _count, _preferUnstaked);
-
-        // Transfer funds to the specified address.
-        Address.sendValue(_beneficiary, amount);
-
-        emit Redeem(
-            _account,
-            _beneficiary,
-            _projectId,
-            _count,
-            amount,
-            msg.sender
-        );
-    }
-
-    /**
-        @notice 
         Prints all reserved tickets for a project.
 
         @param _projectId The ID of the project to which the reserved tickets belong.
@@ -834,7 +727,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         amount = reservedTicketAmountOf(
             _projectId,
             // The reserved rate is in bits 9-24 of the metadata.
-            uint256(uint16(_fundingCycle.metadata >> 8))
+            uint256(uint8(_fundingCycle.metadata >> 8))
         );
 
         // Get a reference to new total supply of tickets.
@@ -898,6 +791,92 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _owner,
             amount,
             _leftoverTicketAmount,
+            msg.sender
+        );
+    }
+
+    /**
+        @notice 
+        Addresses can redeem their Tickets to claim the project's overflowed ETH.
+
+        @param _account The account to redeem tickets for.
+        @param _projectId The ID of the project to which the Tickets being redeemed belong.
+        @param _count The number of Tickets to redeem.
+        @param _minReturnedWei The minimum amount of Wei expected in return.
+        @param _beneficiary The address to send the ETH to.
+        @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
+
+        @return amount The amount of ETH that the tickets were redeemed for.
+    */
+    function redeem(
+        address _account,
+        uint256 _projectId,
+        uint256 _count,
+        uint256 _minReturnedWei,
+        address payable _beneficiary,
+        bool _preferUnstaked
+    )
+        external
+        override
+        nonReentrant
+        requirePermissionAllowingWildcardDomain(
+            _account,
+            _projectId,
+            Operations.Redeem
+        )
+        returns (uint256 amount)
+    {
+        // Can't send claimed funds to the zero address.
+        require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
+
+        // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
+        amount = claimableOverflowOf(_account, _projectId, _count);
+
+        // Nothing to do if the amount is 0.
+        require(amount > 0, "Juicer::redeem: NO_OP");
+
+        // The amount being claimed must be at least as much as was expected.
+        require(amount >= _minReturnedWei, "Juicer::redeem: INADEQUATE");
+
+        // Remove the redeemed funds from the project's balance.
+        balanceOf[_projectId] = balanceOf[_projectId] - amount;
+
+        // Get a reference to the processed ticket tracker for the project.
+        int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
+
+        // Safely subtract the count from the processed ticket tracker.
+        // Subtract from processed tickets so that the difference between whats been processed and the
+        // total supply remains the same.
+        // If there are at least as many processed tickets as there are tickets being redeemed,
+        // the processed ticket tracker of the project will be positive. Otherwise it will be negative.
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _count <= uint256(type(int256).max),
+            "Juicer::redeem: INT_LIMIT_REACHED"
+        );
+
+        // Set the tracker.
+        _processedTicketTrackerOf[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
+            ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
+            : _processedTicketTracker < int256(_count)
+            ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
+            : _processedTicketTracker - int256(_count);
+
+        // Make sure the amount being claimed is in the posession of this contract and not in the vault.
+        _ensureAvailability(amount);
+
+        // Redeem the tickets, which removes and burns them from the account's wallet.
+        ticketBooth.redeem(_account, _projectId, _count, _preferUnstaked);
+
+        // Transfer funds to the specified address.
+        Address.sendValue(_beneficiary, amount);
+
+        emit Redeem(
+            _account,
+            _beneficiary,
+            _projectId,
+            _count,
+            amount,
             msg.sender
         );
     }
@@ -1142,7 +1121,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             PRBMathCommon.mulDiv(
                 _weightedAmount,
                 // The reserved rate is stored in bytes 9-24 of the metadata property.
-                200 - uint256(uint16(_fundingCycle.metadata >> 8)),
+                200 - uint256(uint8(_fundingCycle.metadata >> 8)),
                 200
             );
 
@@ -1184,6 +1163,55 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Withdraw the difference between the balance and the amount being ensured.
         yielder.withdraw(_amount - _balance, payable(address(this)));
+    }
+
+    function _currentOverflowOf(
+        uint256 _projectId,
+        FundingCycle memory _currentFundingCycle
+    ) private view returns (uint256) {
+        // Get the current price of ETH.
+        uint256 _ethPrice =
+            prices.getETHPriceFor(_currentFundingCycle.currency);
+
+        // Get a reference to the amount still tappable in the current funding cycle.
+        uint256 _limit =
+            _currentFundingCycle.target - _currentFundingCycle.tapped;
+
+        // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
+        uint256 _ethLimit =
+            _limit == 0 ? 0 : PRBMathUD60x18.div(_limit, _ethPrice);
+
+        // Get the current balance of the project with yield.
+        uint256 _balanceOf = balanceOf[_projectId];
+
+        // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
+        return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
+    }
+
+    function _reservedTicketAmountOf(
+        uint256 _projectId,
+        uint256 _reservedRate,
+        uint256 _totalSupply
+    ) private view returns (uint256) {
+        // Get a reference to the processed ticket tracker for the project.
+        int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
+
+        // Get a reference to the amount of tickets that are unprocessed.
+        uint256 _unprocessedTicketBalanceOf =
+            _processedTicketTracker >= 0
+                ? _totalSupply - uint256(_processedTicketTracker)
+                : _totalSupply + uint256(-_processedTicketTracker);
+
+        // If there are no unprocessed tickets, return.
+        if (_unprocessedTicketBalanceOf == 0) return 0;
+
+        // If there are no unprocessed tickets, return.
+        return
+            PRBMathCommon.mulDiv(
+                _unprocessedTicketBalanceOf,
+                200,
+                200 - _reservedRate
+            ) - _unprocessedTicketBalanceOf;
     }
 
     /**

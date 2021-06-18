@@ -163,7 +163,7 @@ interface IJuicer {
         address _account,
         uint256 _projectId,
         uint256 _amount,
-        uint256 _minReturnedETH,
+        uint256 _minReturnedWei,
         address payable _beneficiary,
         bool _preferUnstaked
     ) external returns (uint256 returnAmount);

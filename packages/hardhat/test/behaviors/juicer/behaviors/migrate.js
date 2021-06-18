@@ -275,7 +275,7 @@ module.exports = function() {
           governance,
           projectId,
           terminal,
-          setup: { addYielder, addToBalance = 0, permissionFlag } = {},
+          setup: { permissionFlag, addYielder, addToBalance = 0 } = {},
           expectation: { withdraw } = {}
         } = await successTest.fn(this);
 

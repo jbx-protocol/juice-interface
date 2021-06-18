@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 library Operations {
     uint256 public constant Configure = 1;
-    uint256 public constant PrintInitialTickets = 2;
+    uint256 public constant PrintTickets = 2;
     uint256 public constant Redeem = 3;
     uint256 public constant Migrate = 4;
     uint256 public constant SetHandle = 5;

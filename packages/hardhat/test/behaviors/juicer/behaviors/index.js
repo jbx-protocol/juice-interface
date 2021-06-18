@@ -8,6 +8,10 @@ const addToBalance = require("./add_to_balance");
 const migrate = require("./migrate");
 const deposit = require("./deposit");
 const deploy = require("./deploy");
+const configure = require("./configure");
+const pay = require("./pay");
+const printTickets = require("./print_tickets");
+const redeem = require("./redeem");
 
 module.exports = {
   appointGovernance,
@@ -19,5 +23,9 @@ module.exports = {
   addToBalance,
   migrate,
   deposit,
-  deploy
+  deploy,
+  configure,
+  pay,
+  printTickets,
+  redeem
 };

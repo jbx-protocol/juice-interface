@@ -7,6 +7,7 @@ const allowMigration = require("./allow_migration");
 const addToBalance = require("./add_to_balance");
 const migrate = require("./migrate");
 const deposit = require("./deposit");
+const deploy = require("./deploy");
 
 module.exports = {
   appointGovernance,
@@ -17,5 +18,6 @@ module.exports = {
   allowMigration,
   addToBalance,
   migrate,
-  deposit
+  deposit,
+  deploy
 };

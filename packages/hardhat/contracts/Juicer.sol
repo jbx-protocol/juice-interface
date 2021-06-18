@@ -1200,28 +1200,28 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The reserved project ticket rate must be less than or equal to 200.
         require(
             _metadata.reservedRate <= 200,
-            "FundingCycles::_validateData: BAD_RESERVED_RATE"
+            "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
         );
 
         // The bonding curve rate must be between 0 and 200.
         require(
             _metadata.bondingCurveRate <= 200,
-            "FundingCycles::_validateData BAD_BONDING_CURVE_RATE"
+            "Juicer::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
         );
 
         // The reconfiguration bonding curve rate must be less than or equal to 200.
         require(
             _metadata.reconfigurationBondingCurveRate <= 200,
-            "FundingCycles::_validateData: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
+            "Juicer::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
         );
 
         // version 0 in the first 8 bytes.
         packed = 0;
-        // reserved rate in bytes 9-24.
+        // reserved rate in bytes 9-16.
         packed |= _metadata.reservedRate << 8;
-        // bonding curve in bytes 25-40 bytes.
-        packed |= _metadata.bondingCurveRate << 24;
-        // reconfiguration bonding curve rate in bytes 41-56 bytes.
-        packed |= _metadata.reconfigurationBondingCurveRate << 40;
+        // bonding curve in bytes 17-24 bytes.
+        packed |= _metadata.bondingCurveRate << 16;
+        // reconfiguration bonding curve rate in bytes 25-32 bytes.
+        packed |= _metadata.reconfigurationBondingCurveRate << 24;
     }
 }

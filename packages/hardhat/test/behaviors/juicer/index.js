@@ -53,4 +53,5 @@ module.exports = function() {
   describe("addToBalance(...)", shouldBehaveLike.addToBalance);
   describe("migrate(...)", shouldBehaveLike.migrate);
   describe("deposit(...)", shouldBehaveLike.deposit);
+  describe("deploy(...)", shouldBehaveLike.deploy);
 };

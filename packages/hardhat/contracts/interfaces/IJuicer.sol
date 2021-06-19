@@ -109,6 +109,11 @@ interface IJuicer {
 
     function balanceOf(uint256 _projectId) external view returns (uint256);
 
+    function preminedTicketCountOf(uint256 _projectId)
+        external
+        view
+        returns (uint256);
+
     function currentOverflowOf(uint256 _projectId)
         external
         view
@@ -156,6 +161,7 @@ interface IJuicer {
     function tap(
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         uint256 _minReturnedWei
     ) external;
 

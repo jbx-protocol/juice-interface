@@ -88,6 +88,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The amount of ETH that each project is responsible for.
     mapping(uint256 => uint256) public override balanceOf;
 
+    /// @notice The amount of premined tickets each project has issued.
+    mapping(uint256 => uint256) public override preminedTicketCountOf;
+
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
 
@@ -336,17 +339,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Must do this before the call to configure.
         terminalDirectory.setTerminal(_projectId, this);
 
+        // Make sure the metadata checks out. If it does, return a packed version of it.
+        uint256 _packedMetadata =
+            _validateAndPackFundingCycleMetadata(_metadata);
+
         // Configure the funding stage's state.
         FundingCycle memory _fundingCycle =
             fundingCycles.configure(
                 _projectId,
                 _properties,
-                _validateAndPackFundingCycleMetadata(_metadata),
+                _packedMetadata,
                 fee,
                 true
             );
 
-        // Set any payment mods if there are any.
+        // Set payment mods if there are any.
         if (_paymentMods.length > 0)
             modStore.setPaymentMods(
                 _projectId,
@@ -354,7 +361,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _paymentMods
             );
 
-        // Set any ticket mods if there are any.
+        // Set ticket mods if there are any.
         if (_ticketMods.length > 0)
             modStore.setTicketMods(
                 _projectId,
@@ -365,8 +372,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Reconfigures the properties of the current funding stage if the project hasn't distributed tickets yet, or
-        sets the properties of the proposed funding stage that will take effect once the current one expires.
+        Configures the properties of the current funding stage if the project hasn't distributed tickets yet, or
+        sets the properties of the proposed funding stage that will take effect once the current one expires
+        if it is approved by the current funding cycle's ballot.
 
         @param _projectId The ID of the project being reconfigured. 
         @param _properties The funding cycle configuration.
@@ -442,7 +450,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _ticketMods
             );
 
-        // Set payment mods for the new configuration if there are any.
         return _fundingCycle.id;
     }
 
@@ -475,9 +482,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             Operations.PrintTickets
         )
     {
-        // Make sure the project doesn't have a balance.
+        // Make sure the project hasnt printed tickets that werent premined.
         require(
-            balanceOf[_projectId] == 0,
+            ticketBooth.totalSupplyOf(_projectId) ==
+                preminedTicketCountOf[_projectId],
             "Juicer::printTickets: ALREADY_ACTIVE"
         );
 
@@ -488,6 +496,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =
             PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
+
+        // Set the count of premined tickets this project has printed.
+        preminedTicketCountOf[_projectId] =
+            preminedTicketCountOf[_projectId] +
+            _weightedAmount;
 
         // Print the project's tickets for the beneficiary.
         ticketBooth.print(
@@ -508,11 +521,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @dev The msg.value is the amount of the contribution in wei.
 
         @param _projectId The ID of the project being contribute to.
-        @param _beneficiary The address to transfer the newly minted Tickets to. 
+        @param _beneficiary The address to print Tickets for. 
         @param _memo A memo that will be included in the published event.
-        @param _preferUnstakedTickets Whether ERC20's should be claimed automatically if they have been issued.
+        @param _preferUnstakedTickets Whether ERC20's should be unstaked automatically if they have been issued.
 
-        @return _fundingCycleId The ID of the funding stage that the payment was made during.
+        @return _fundingCycleId The ID of the funding cycle that the payment was made during.
     */
     function pay(
         uint256 _projectId,
@@ -538,20 +551,28 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Tap into funds that have been contributed to a project's funding cycles.
+        Tap into funds that have been contributed to a project's current funding cycle.
 
         @param _projectId The ID of the project to which the funding cycle being tapped belongs.
         @param _amount The amount being tapped, in the funding cycle's currency.
+        @param _currency The expected currency being tapped.
         @param _minReturnedWei The minimum number of wei that the amount should be valued at.
     */
     function tap(
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         uint256 _minReturnedWei
     ) external override nonReentrant {
         // The ID of the funding cycle that was tapped.
         FundingCycle memory _fundingCycle =
             fundingCycles.tap(_projectId, _amount);
+
+        // Make sure the currency's match.
+        require(
+            _currency == _fundingCycle.currency,
+            "Juicer::tap: UNEXPECTED_CURRENCY"
+        );
 
         // Get a reference to this project's current balance, including any earned yield.
         uint256 _balanceOf = balanceOf[_fundingCycle.projectId];
@@ -561,28 +582,28 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Get the price of ETH.
         // The amount of ETH that is being tapped.
-        uint256 _tappedETHAmount = PRBMathUD60x18.div(_amount, _ethPrice);
+        uint256 _tappedWeiAmount = PRBMathUD60x18.div(_amount, _ethPrice);
 
         // The amount being tapped must be available.
         require(
-            _tappedETHAmount <= _balanceOf,
-            "Juicer::_processTap: INSUFFICIENT_FUNDS"
+            _tappedWeiAmount <= _balanceOf,
+            "Juicer::tap: INSUFFICIENT_FUNDS"
         );
 
         // The amount being tapped must be at least as much as was expected.
         require(
-            _minReturnedWei <= _tappedETHAmount,
+            _minReturnedWei <= _tappedWeiAmount,
             "Juicer::_processTap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 
         // Removed the tapped funds from the project's balance.
-        balanceOf[_projectId] = _balanceOf - _tappedETHAmount;
+        balanceOf[_projectId] = _balanceOf - _tappedWeiAmount;
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
         uint256 _govFeeAmount =
-            _tappedETHAmount -
+            _tappedWeiAmount -
                 PRBMathCommon.mulDiv(
-                    _tappedETHAmount,
+                    _tappedWeiAmount,
                     200,
                     _fundingCycle.fee + 200
                 );
@@ -610,7 +631,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         }
 
         // Transfer the tapped amount minus the fees.
-        uint256 _transferAmount = _tappedETHAmount - _govFeeAmount;
+        uint256 _transferAmount = _tappedWeiAmount - _govFeeAmount;
 
         // Make sure the amount being transfered is in the posession of this contract and not in the yielder.
         _ensureAvailability(_transferAmount);
@@ -884,6 +905,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /**
       @notice 
       Deposit idle funds into the yielder while keeping the specified cash on hand.
+
+      @dev 
+      The reason to keep cash on hand is to minimze gas for tapping and redeeming. 
+      There's no point in Yeraning if the gas price exceeds yield rewards.
     */
     function deposit() external override nonReentrant {
         // There must be a yielder.
@@ -895,13 +920,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::deposit: NO_OP"
         );
 
-        // Any ETH currently in posession of this contract can be deposited.
+        // Any ETH currently in posession exceeding the target local wei of this contract can be deposited.
         require(
             address(this).balance > targetLocalWei,
             "Juicer::deposit: INSUFFICIENT_FUNDS"
         );
 
-        // Keep the target local ETH in this contract.
+        // Keep the target local wei in this contract.
         uint256 _amount = address(this).balance - targetLocalWei;
 
         // Deposit in the yielder.

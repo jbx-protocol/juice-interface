@@ -6,30 +6,9 @@ const tests = {
     {
       description: "with no balance",
       fn: () => ({})
-    },
-    {
-      description: "with balance",
-      fn: () => ({
-        addToBalance: BigNumber.from(42)
-      })
     }
   ],
-  failure: [
-    {
-      description: "paid zero",
-      fn: () => ({
-        amount: BigNumber.from(0),
-        revert: "Juicer::pay: BAD_AMOUNT"
-      })
-    },
-    {
-      description: "zero address beneficiary",
-      fn: () => ({
-        beneficiary: constants.AddressZero,
-        revert: "Juicer::pay: ZERO_ADDRESS"
-      })
-    }
-  ]
+  failure: []
 };
 
 const mockFn = ({
@@ -86,67 +65,91 @@ const check = ({ condition, contract, fn, args, value }) => async () => {
   expect(storedVal).to.equal(value);
 };
 
-const ops = ({ deployer, mockContracts, targetContract }) => custom => {
+const ops = ({
+  deployer,
+  addrs,
+  mockContracts,
+  deployMockLocalContract,
+  deployContract,
+  contractName
+}) => async custom => {
   const {
     caller = deployer,
-    addToBalance = BigNumber.from(0),
-    beneficiary = deployer.address,
-    memo = "some-memo",
-    preferUnstaked = false,
+    owner = addrs[0].address,
+    addToBalance = BigNumber.from(10)
+      .pow(18)
+      .mul(42),
     amount = BigNumber.from(10)
       .pow(18)
       .mul(42),
-    weight = BigNumber.from(10)
+    ethPrice = BigNumber.from(10)
       .pow(18)
-      .mul(10),
-    unreservedWeightedAmount = BigNumber.from(10)
+      .mul(2),
+    tapped = BigNumber.from(10)
       .pow(18)
-      .mul(399),
-    reservedRate = 10,
+      .mul(21),
+    minReturnedWei = BigNumber.from(0),
     projectId = 42,
     fundingCycleId = 1,
+    currency = 1,
+    fee = 0,
+    configured = 42,
+    terminal = constants.AddressZero,
     revert
   } = {
     ...custom
   };
 
-  // Create a packed metadata value to store the reserved rate.
-  let packedMetadata = BigNumber.from(0);
-  packedMetadata = packedMetadata.add(42);
-  packedMetadata = packedMetadata.shl(8);
-  packedMetadata = packedMetadata.add(42);
-  packedMetadata = packedMetadata.shl(8);
-  packedMetadata = packedMetadata.add(reservedRate);
-  packedMetadata = packedMetadata.shl(8);
+  // Governance must be a mocked contract here.
+  const governanceProjectId = 1;
+  const governance = await deployMockLocalContract("Governance", [
+    governanceProjectId
+  ]);
+  const targetContract = await deployContract(contractName, [
+    mockContracts.projects.address,
+    mockContracts.fundingCycles.address,
+    mockContracts.ticketBooth.address,
+    mockContracts.operatorStore.address,
+    mockContracts.modStore.address,
+    mockContracts.prices.address,
+    mockContracts.terminalDirectory.address,
+    governance.address
+  ]);
 
+  const initialOwnerBalance = await deployer.provider.getBalance(owner);
   return [
     mockFn({
-      condition: !revert,
       mockContract: mockContracts.fundingCycles,
-      fn: "getCurrentOf",
-      args: [projectId],
+      fn: "tap",
+      args: [projectId, amount],
       returns: [
         {
-          configured: 0,
+          configured,
           id: fundingCycleId,
           projectId,
           number: 0,
           basedOn: 0,
-          weight,
+          weight: 0,
           ballot: constants.AddressZero,
           start: 0,
           duration: 0,
           target: 0,
-          currency: 0,
-          fee: 0,
+          currency,
+          fee,
           discountRate: 0,
           tapped: 0,
-          metadata: packedMetadata
+          metadata: 0
         }
       ]
     }),
+    mockFn({
+      mockContract: mockContracts.prices,
+      fn: "getETHPriceFor",
+      args: [currency],
+      returns: [ethPrice]
+    }),
     executeFn({
-      condition: !revert && addToBalance > 0,
+      condition: addToBalance > 0,
       caller,
       contract: targetContract,
       fn: "addToBalance",
@@ -154,27 +157,46 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       value: addToBalance
     }),
     mockFn({
-      condition: !revert,
-      mockContract: mockContracts.ticketBooth,
-      fn: "print",
-      args: [beneficiary, projectId, unreservedWeightedAmount, preferUnstaked],
+      mockContract: mockContracts.projects,
+      fn: "ownerOf",
+      args: [projectId],
+      returns: [owner]
+    }),
+    mockFn({
+      mockContract: mockContracts.modStore,
+      fn: "paymentModsOf",
+      args: [projectId, configured],
+      returns: [[]]
+    }),
+    mockFn({
+      mockContract: governance,
+      fn: "terminal",
+      args: [],
+      returns: [terminal]
+    }),
+    mockFn({
+      mockContract: governance,
+      fn: "pay",
+      args: [owner, "Juice fee", false],
       returns: []
     }),
     executeFn({
       caller,
       contract: targetContract,
-      fn: "pay",
-      args: [projectId, beneficiary, memo, preferUnstaked],
-      value: amount,
+      fn: "tap",
+      args: [projectId, amount, minReturnedWei],
       events: [
         {
-          name: "Pay",
+          name: "Tap",
           args: [
             fundingCycleId,
             projectId,
-            beneficiary,
+            owner,
             amount,
-            memo,
+            currency,
+            tapped,
+            tapped,
+            0,
             caller.address
           ]
         }
@@ -183,10 +205,10 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     }),
     check({
       condition: !revert,
-      contract: targetContract,
-      fn: "balanceOf",
-      args: [projectId],
-      value: addToBalance.add(amount)
+      contract: caller.provider,
+      fn: "getBalance",
+      args: [owner],
+      value: initialOwnerBalance.add(tapped)
     })
   ];
 };
@@ -195,7 +217,7 @@ module.exports = function() {
   describe("Success cases", function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
-        const resolvedOps = ops(this)(await successTest.fn(this));
+        const resolvedOps = await ops(this)(await successTest.fn(this));
         // eslint-disable-next-line no-restricted-syntax
         for (const op of resolvedOps) {
           // eslint-disable-next-line no-await-in-loop
@@ -207,7 +229,7 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const resolvedOps = ops(this)(await failureTest.fn(this));
+        const resolvedOps = await ops(this)(await failureTest.fn(this));
         // eslint-disable-next-line no-restricted-syntax
         for (const op of resolvedOps) {
           // eslint-disable-next-line no-await-in-loop

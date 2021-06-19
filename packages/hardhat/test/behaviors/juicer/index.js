@@ -52,6 +52,8 @@ module.exports = function() {
       terminalDirectory.address,
       governance.address
     ]);
+
+    this.contractName = contractName;
   });
 
   // Test each function.
@@ -68,5 +70,6 @@ module.exports = function() {
   // describe("configure(...)", shouldBehaveLike.configure);
   // describe("pay(...)", shouldBehaveLike.pay);
   // describe("printTickets(...)", shouldBehaveLike.printTickets);
-  describe("redeem(...)", shouldBehaveLike.redeem);
+  // describe("redeem(...)", shouldBehaveLike.redeem);
+  describe("tap(...)", shouldBehaveLike.tap);
 };

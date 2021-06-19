@@ -478,7 +478,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Make sure the project doesn't have a balance.
         require(
             balanceOf[_projectId] == 0,
-            "Juicer::printInitialTickets: ALREADY_ACTIVE"
+            "Juicer::printTickets: ALREADY_ACTIVE"
         );
 
         // Get the current funding cycle to read the weight and currency from.
@@ -542,12 +542,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         @param _projectId The ID of the project to which the funding cycle being tapped belongs.
         @param _amount The amount being tapped, in the funding cycle's currency.
-        @param _minReturnedETH The minimum number of ETH that the amount should be valued at.
+        @param _minReturnedWei The minimum number of wei that the amount should be valued at.
     */
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _minReturnedETH
+        uint256 _minReturnedWei
     ) external override nonReentrant {
         // The ID of the funding cycle that was tapped.
         FundingCycle memory _fundingCycle =
@@ -571,7 +571,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // The amount being tapped must be at least as much as was expected.
         require(
-            _minReturnedETH <= _tappedETHAmount,
+            _minReturnedWei <= _tappedETHAmount,
             "Juicer::_processTap: INSUFFICIENT_EXPECTED_AMOUNT"
         );
 

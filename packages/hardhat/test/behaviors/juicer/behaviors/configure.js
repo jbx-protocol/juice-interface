@@ -147,16 +147,11 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     addToBalance = 0,
     addTerminal,
     owner = deployer.address,
-    metadata = {
-      reservedRate: 200,
-      bondingCurveRate: 200,
-      reconfigurationBondingCurveRate: 200,
-      ...custom.metadata
-    },
     paymentMods = [],
     ticketMods = [],
     handle = utils.formatBytes32String("something"),
     uri = "some-uri",
+    metadata,
     properties = {
       target: 10,
       currency: 1,
@@ -168,7 +163,13 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     configured = 171717,
     revert
   } = {
-    ...custom
+    ...custom,
+    metadata: {
+      reservedRate: 200,
+      bondingCurveRate: 200,
+      reconfigurationBondingCurveRate: 200,
+      ...custom.metadata
+    }
   };
 
   return [

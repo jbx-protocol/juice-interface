@@ -28,7 +28,7 @@ const tests = {
       description: "with balance",
       fn: () => ({
         addToBalance: BigNumber.from(42),
-        revert: "Juicer::printInitialTickets: ALREADY_ACTIVE"
+        revert: "Juicer::printTickets: ALREADY_ACTIVE"
       })
     }
   ]
@@ -124,7 +124,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       returns: [permissionFlag || false]
     }),
     executeFn({
-      condition: !revert && addToBalance > 0,
+      condition: addToBalance > 0,
       caller,
       contract: targetContract,
       fn: "addToBalance",

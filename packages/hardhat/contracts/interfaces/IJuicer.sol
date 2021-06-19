@@ -156,7 +156,7 @@ interface IJuicer {
     function tap(
         uint256 _projectId,
         uint256 _amount,
-        uint256 _minReturnedEth
+        uint256 _minReturnedWei
     ) external;
 
     function redeem(

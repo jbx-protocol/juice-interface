@@ -24,8 +24,6 @@ export default function FundingCycleDetails({
 
   const metadata = decodeFCMetadata(fundingCycle.metadata)
 
-  console.log('fc', fundingCycle, fundingCycle.target.toString())
-
   return (
     <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
       <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>

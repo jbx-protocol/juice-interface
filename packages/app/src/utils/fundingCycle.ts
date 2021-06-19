@@ -3,29 +3,27 @@ import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 
 import { EditingFundingCycle } from './serializers'
 
-// packed `metadata` format:  0bRRRRRRRRRRRRRRRRrrrrrrrrrrrrrrrrBBBBBBBBBBBBBBBBVVVVVVVV
+// packed `metadata` format:  0bRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-8)
-// B: bondingCurveRate (bits 9-24)
-// r: reserved (bits 25-40)
-// R: reconfigurationBondingCurveRate (bits 41-56)
+// r: reserved (bits 9-16)
+// B: bondingCurveRate (bits 17-24)
+// R: reconfigurationBondingCurveRate (bits 25-32)
 
 export const decodeFCMetadata = (
   metadata?: BigNumber,
 ): FCMetadata | undefined =>
   metadata
     ? {
-        version: metadata
-          .and(0b00000000000000000000000000000000000000000000000011111111)
+        version: metadata.and(0b00000000000000000000000011111111).toNumber(),
+        reservedRate: metadata
+          .shr(8)
+          .and(0b000000000000000011111111)
           .toNumber(),
         bondingCurveRate: metadata
-          .shr(8)
-          .and(0b000000000000000000000000000000001111111111111111)
+          .shr(16)
+          .and(0b0000000011111111)
           .toNumber(),
-        reservedRate: metadata
-          .shr(24)
-          .and(0b00000000000000001111111111111111)
-          .toNumber(),
-        reconfigurationBondingCurveRate: metadata.shr(40).toNumber(),
+        reconfigurationBondingCurveRate: metadata.shr(24).toNumber(),
       }
     : undefined
 

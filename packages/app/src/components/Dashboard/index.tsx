@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   const projectId = useContractReader<BigNumber>({
     contract: ContractName.Projects,
-    functionName: 'handleResolver',
+    functionName: 'projectFor',
     args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
     callback: useCallback(
       (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
@@ -40,7 +40,7 @@ export default function Dashboard() {
 
   const fundingCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
-    functionName: 'getCurrent',
+    functionName: 'getCurrentOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
     updateOn: useMemo(
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
   const uri = useContractReader<string>({
     contract: ContractName.Projects,
-    functionName: 'uri',
+    functionName: 'uriOf',
     args: projectId ? [projectId.toHexString()] : null,
   })
 

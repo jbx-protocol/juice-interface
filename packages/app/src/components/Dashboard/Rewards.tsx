@@ -56,12 +56,12 @@ export default function Rewards({
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.Tickets,
+        contract: ContractName.TicketBooth,
         eventName: 'Redeem',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.Tickets,
+        contract: ContractName.TicketBooth,
         eventName: 'Convert',
         topics:
           userAddress && projectId
@@ -73,13 +73,13 @@ export default function Rewards({
   )
 
   const ticketAddress = useContractReader<string>({
-    contract: ContractName.Tickets,
-    functionName: 'tickets',
+    contract: ContractName.TicketBooth,
+    functionName: 'ticketsOf',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: useMemo(
       () => [
         {
-          contract: ContractName.Tickets,
+          contract: ContractName.TicketBooth,
           eventName: 'Issue',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
@@ -100,7 +100,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const iouBalance = useContractReader<BigNumber>({
-    contract: ContractName.Tickets,
+    contract: ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args:
       userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
@@ -108,7 +108,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
   const ticketSupply = useContractReader<BigNumber>({
-    contract: ContractName.Tickets,
+    contract: ContractName.TicketBooth,
     functionName: 'totalSupply',
     args: [projectId?.toHexString()],
     valueDidChange: bigNumbersDiff,
@@ -116,7 +116,7 @@ export default function Rewards({
   })
   const reservedTickets = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'reservedTicketAmount',
+    functionName: 'reservedTicketAmountOf',
     args:
       projectId && metadata?.reservedRate
         ? [
@@ -139,7 +139,7 @@ export default function Rewards({
   })
   const claimableOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'claimableOverflow',
+    functionName: 'claimableOverflowOf',
     args:
       userAddress && projectId && redeemAmount
         ? [
@@ -185,7 +185,7 @@ export default function Rewards({
     setLoadingConvert(true)
 
     transactor(
-      contracts.Tickets,
+      contracts.TicketBooth,
       'convert',
       [userAddress, projectId.toHexString()],
       {

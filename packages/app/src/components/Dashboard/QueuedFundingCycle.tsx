@@ -6,7 +6,6 @@ import { FundingCycle } from 'models/funding-cycle'
 import { useState } from 'react'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
-import { CardSection } from '../shared/CardSection'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle({
@@ -24,7 +23,7 @@ export default function QueuedFundingCycle({
 
   const queuedCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
-    functionName: 'getQueued',
+    functionName: 'getQueuedOf',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: projectId
       ? [

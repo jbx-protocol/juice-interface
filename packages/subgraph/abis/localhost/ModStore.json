@@ -10,6 +10,11 @@
         "internalType": "contract IOperatorStore",
         "name": "_operatorStore",
         "type": "address"
+      },
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -162,7 +167,7 @@
         "type": "uint256"
       }
     ],
-    "name": "paymentMods",
+    "name": "paymentModsOf",
     "outputs": [
       {
         "components": [
@@ -329,6 +334,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -341,7 +359,7 @@
         "type": "uint256"
       }
     ],
-    "name": "ticketMods",
+    "name": "ticketModsOf",
     "outputs": [
       {
         "components": [

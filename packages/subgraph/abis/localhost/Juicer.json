@@ -12,8 +12,8 @@
         "type": "address"
       },
       {
-        "internalType": "contract ITickets",
-        "name": "_tickets",
+        "internalType": "contract ITicketBooth",
+        "name": "_ticketBooth",
         "type": "address"
       },
       {
@@ -410,7 +410,7 @@
         "type": "uint256"
       }
     ],
-    "name": "SetTargetLocalETH",
+    "name": "SetTargetLocalWei",
     "type": "event"
   },
   {
@@ -539,12 +539,12 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "amountWithoutYield",
+        "name": "withoutYield",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountWithYield",
+        "name": "withYield",
         "type": "uint256"
       }
     ],
@@ -555,7 +555,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_projectId",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -588,7 +588,7 @@
         "type": "uint256"
       }
     ],
-    "name": "claimableOverflow",
+    "name": "claimableOverflowOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1159,7 +1159,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_minReturnedETH",
+        "name": "_minReturnedWei",
         "type": "uint256"
       },
       {
@@ -1197,7 +1197,7 @@
         "type": "uint256"
       }
     ],
-    "name": "reservedTicketAmount",
+    "name": "reservedTicketAmountOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1229,7 +1229,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setTargetLocalETH",
+    "name": "setTargetLocalWei",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1261,7 +1261,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_minReturnedETH",
+        "name": "_minReturnedWei",
         "type": "uint256"
       }
     ],
@@ -1272,7 +1272,7 @@
   },
   {
     "inputs": [],
-    "name": "targetLocalETH",
+    "name": "targetLocalWei",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1298,10 +1298,10 @@
   },
   {
     "inputs": [],
-    "name": "tickets",
+    "name": "ticketBooth",
     "outputs": [
       {
-        "internalType": "contract ITickets",
+        "internalType": "contract ITicketBooth",
         "name": "",
         "type": "address"
       }

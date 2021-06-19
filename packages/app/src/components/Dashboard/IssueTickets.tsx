@@ -23,7 +23,7 @@ export default function IssueTickets({
     const fields = form.getFieldsValue(true)
 
     transactor(
-      contracts.Tickets,
+      contracts.TicketBooth,
       'issue',
       [projectId.toHexString(), fields.name, fields.symbol],
       {

@@ -204,14 +204,14 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "_operator",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
       },
       {
         "internalType": "uint256[]",
@@ -232,14 +232,14 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "_projectIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "address[]",
         "name": "_operators",
         "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_projectIds",
+        "type": "uint256[]"
       },
       {
         "internalType": "uint256[][]",
@@ -278,7 +278,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setTargetLocalETH",
+    "name": "setTargetLocalWei",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

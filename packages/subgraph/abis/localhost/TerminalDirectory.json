@@ -93,7 +93,7 @@
         "type": "uint256"
       }
     ],
-    "name": "addresses",
+    "name": "addressesOf",
     "outputs": [
       {
         "internalType": "contract IDirectPaymentAddress[]",
@@ -112,7 +112,7 @@
         "type": "address"
       }
     ],
-    "name": "beneficiaries",
+    "name": "beneficiaryOf",
     "outputs": [
       {
         "internalType": "address",
@@ -139,25 +139,6 @@
     "name": "deployAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "preferUnstakedTickets",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -217,12 +198,31 @@
         "type": "uint256"
       }
     ],
-    "name": "terminals",
+    "name": "terminalOf",
     "outputs": [
       {
         "internalType": "contract ITerminal",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "unstakedTicketsPreferenceOf",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",

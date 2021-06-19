@@ -72,7 +72,8 @@ const main = async () => {
   ]);
   const modStore = await deploy("ModStore", [
     projects.address,
-    operatorStore.address
+    operatorStore.address,
+    terminalDirectory.address
   ]);
 
   const governance = await deploy("Governance", [1]);

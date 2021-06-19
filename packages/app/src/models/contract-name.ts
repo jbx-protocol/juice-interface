@@ -4,6 +4,6 @@ export enum ContractName {
   Juicer = 'Juicer',
   Prices = 'Prices',
   Projects = 'Projects',
-  Tickets = 'Tickets',
+  TicketBooth = 'TicketBooth',
   Token = 'Token',
 }

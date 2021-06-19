@@ -3,7 +3,7 @@ import { Form, Input } from 'antd'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -27,7 +27,7 @@ export default function ProjectHandle({
   // InputContents pattern allows checking if handle exists while typing
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,
-    functionName: 'handleResolver',
+    functionName: 'projectFor',
     args: inputContents
       ? [utils.formatBytes32String(normalizeHandle(inputContents))]
       : null,

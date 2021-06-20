@@ -13,6 +13,20 @@ const tests = {
         owner: addrs[0].address,
         permissionFlag: true
       })
+    },
+    {
+      description: "with preprinted amount",
+      fn: () => ({
+        prePrintAmount: BigNumber.from(10)
+          .pow(18)
+          .mul(42),
+        weightedPrePrintAmount: BigNumber.from(10)
+          .pow(18)
+          .mul(420),
+        totalSupply: BigNumber.from(10)
+          .pow(18)
+          .mul(420)
+      })
     }
   ],
   failure: [
@@ -27,7 +41,7 @@ const tests = {
     {
       description: "with balance",
       fn: () => ({
-        addToBalance: BigNumber.from(42),
+        totalSupply: BigNumber.from(42),
         revert: "Juicer::printTickets: ALREADY_ACTIVE"
       })
     }
@@ -82,24 +96,34 @@ const executeFn = ({
   );
 };
 
+const check = ({ condition, contract, fn, args, value }) => async () => {
+  if (condition !== undefined && !condition) return;
+  const storedVal = await contract[fn](...args);
+  expect(storedVal).to.equal(value);
+};
+
 const ops = ({ deployer, mockContracts, targetContract }) => custom => {
   const {
     caller = deployer,
     owner = deployer.address,
     permissionFlag = false,
-    addToBalance = BigNumber.from(0),
+    totalSupply = BigNumber.from(0),
     beneficiary = deployer.address,
     memo = "some-memo",
     preferUnstaked = false,
     amount = BigNumber.from(10)
       .pow(18)
       .mul(42),
+    prePrintAmount = BigNumber.from(0),
     weight = BigNumber.from(10)
       .pow(18)
       .mul(10),
     weightedAmount = BigNumber.from(10)
       .pow(18)
       .mul(420),
+    weightedPrePrintAmount = BigNumber.from(10)
+      .pow(18)
+      .mul(0),
     projectId = 42,
     fundingCycleId = 1,
     revert
@@ -122,14 +146,6 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
         return [caller.address, owner, projectId, expectedPermissionIndex];
       },
       returns: [permissionFlag || false]
-    }),
-    executeFn({
-      condition: addToBalance > 0,
-      caller,
-      contract: targetContract,
-      fn: "addToBalance",
-      args: [projectId],
-      value: addToBalance
     }),
     mockFn({
       condition: !revert,
@@ -156,6 +172,34 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
         }
       ]
     }),
+    // Set the total supply to 0 initially for the preprint.
+    mockFn({
+      condition: prePrintAmount > 0,
+      mockContract: mockContracts.ticketBooth,
+      fn: "totalSupplyOf",
+      args: [projectId],
+      returns: [0]
+    }),
+    mockFn({
+      condition: prePrintAmount > 0,
+      mockContract: mockContracts.ticketBooth,
+      fn: "print",
+      args: [beneficiary, projectId, weightedPrePrintAmount, preferUnstaked],
+      returns: []
+    }),
+    executeFn({
+      condition: prePrintAmount > 0,
+      caller,
+      contract: targetContract,
+      fn: "printTickets",
+      args: [projectId, prePrintAmount, beneficiary, memo, preferUnstaked]
+    }),
+    mockFn({
+      mockContract: mockContracts.ticketBooth,
+      fn: "totalSupplyOf",
+      args: [projectId],
+      returns: [totalSupply]
+    }),
     mockFn({
       condition: !revert,
       mockContract: mockContracts.ticketBooth,
@@ -175,6 +219,13 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
         }
       ],
       revert
+    }),
+    check({
+      condition: !revert,
+      contract: targetContract,
+      fn: "preminedTicketCountOf",
+      args: [projectId],
+      value: weightedPrePrintAmount.add(weightedAmount)
     })
   ];
 };

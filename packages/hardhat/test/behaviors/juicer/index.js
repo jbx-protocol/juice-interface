@@ -67,9 +67,9 @@ module.exports = function() {
   // describe("migrate(...)", shouldBehaveLike.migrate);
   // describe("deposit(...)", shouldBehaveLike.deposit);
   // describe("deploy(...)", shouldBehaveLike.deploy);
-  // describe("configure(...)", shouldBehaveLike.configure);
-  // describe("pay(...)", shouldBehaveLike.pay);
-  // describe("printTickets(...)", shouldBehaveLike.printTickets);
-  // describe("redeem(...)", shouldBehaveLike.redeem);
-  describe("tap(...)", shouldBehaveLike.tap);
+  describe("configure(...)", shouldBehaveLike.configure);
+  describe("pay(...)", shouldBehaveLike.pay);
+  describe("printTickets(...)", shouldBehaveLike.printTickets);
+  describe("redeem(...)", shouldBehaveLike.redeem);
+  // describe("tap(...)", shouldBehaveLike.tap);
 };

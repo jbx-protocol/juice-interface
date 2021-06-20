@@ -76,6 +76,8 @@ interface IJuicer {
 
     event Deposit(uint256 amount);
 
+    event EnsureTargetLocalWei(uint256 target);
+
     event SetYielder(IYielder newYielder);
 
     event SetFee(uint256 _amount);
@@ -173,6 +175,8 @@ interface IJuicer {
         address payable _beneficiary,
         bool _preferUnstaked
     ) external returns (uint256 returnAmount);
+
+    function ensureTargetLocalWei() external;
 
     function printReservedTickets(uint256 _projectId)
         external

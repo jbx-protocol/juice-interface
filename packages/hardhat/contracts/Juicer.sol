@@ -485,8 +485,16 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Make sure the project hasnt printed tickets that werent premined.
         require(
             ticketBooth.totalSupplyOf(_projectId) ==
-                preminedTicketCountOf[_projectId],
+                preminedTicketCountOf[_projectId] &&
+                // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
+                _processedTicketTrackerOf[_projectId] == 0,
             "Juicer::printTickets: ALREADY_ACTIVE"
+        );
+
+        // Can't send to the zero address.
+        require(
+            _beneficiary != address(0),
+            "Juicer::printTickets: ZERO_ADDRESS"
         );
 
         // Get the current funding cycle to read the weight and currency from.
@@ -751,6 +759,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             uint256(uint8(_fundingCycle.metadata >> 8))
         );
 
+        // Make sure there are tickets to print.
+        require(amount > 0, "Juicer::printReservedTickets: NO_OP");
+
         // Get a reference to new total supply of tickets.
         uint256 _totalTickets = ticketBooth.totalSupplyOf(_projectId) + amount;
 
@@ -979,6 +990,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         terminalDirectory.setTerminal(_projectId, _to);
 
         emit Migrate(_projectId, _to, _balanceOf, msg.sender);
+    }
+
+    /** 
+      @notice 
+      Makes sure the target local wei is in this contract.
+    */
+    function ensureTargetLocalWei() external override {
+        // Make sure the target is met.
+        _ensureAvailability(targetLocalWei);
+
+        emit EnsureTargetLocalWei(targetLocalWei);
     }
 
     /** 

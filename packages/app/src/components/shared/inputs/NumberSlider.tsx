@@ -8,6 +8,7 @@ export default function NumberSlider({
   value,
   suffix,
   onChange,
+  defaultValue,
 }: {
   min?: number
   max?: number
@@ -15,6 +16,7 @@ export default function NumberSlider({
   value?: number
   suffix?: string
   onChange?: (num: number | undefined) => void
+  defaultValue?: number
 }) {
   const [_value, setValue] = useState<number>()
 
@@ -39,6 +41,7 @@ export default function NumberSlider({
         style={{ flex: 1, marginRight: 20 }}
         value={_value}
         onChange={(val: number) => updateValue(val)}
+        defaultValue={defaultValue}
       />
       <InputNumber
         {...inputConfig}
@@ -54,6 +57,7 @@ export default function NumberSlider({
             (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
           updateValue(newVal)
         }}
+        defaultValue={defaultValue}
       />
     </div>
   )

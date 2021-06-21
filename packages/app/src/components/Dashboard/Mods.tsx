@@ -1,4 +1,4 @@
-import TooltipIcon from 'components/shared/TooltipIcon'
+import ProjectHandle from 'components/shared/ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
 import { ModRef } from 'models/mods'
 import { useContext } from 'react'
@@ -20,11 +20,15 @@ export default function Mods({ mods }: { mods: ModRef[] | undefined }) {
               alignItems: 'baseline',
             }}
           >
-            <span>{fromPerbicent(m.percent)}%:</span>
-            <span
-              style={{ fontWeight: 500, fontSize: '0.8rem', marginLeft: 20 }}
-            >
-              {m.beneficiary} {m.note ? <TooltipIcon tip={m.note} /> : null}
+            <span style={{ width: 70 }}>{fromPerbicent(m.percent)}%:</span>
+            <span style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+              {m.projectId ? (
+                <span>
+                  @<ProjectHandle projectId={m.projectId} />
+                </span>
+              ) : (
+                m.beneficiary
+              )}
             </span>
           </div>
         ))

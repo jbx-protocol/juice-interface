@@ -31,8 +31,6 @@ export default function BudgetForm({
   const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
 
-  console.log({ currency, target })
-
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setMods(initialMods)

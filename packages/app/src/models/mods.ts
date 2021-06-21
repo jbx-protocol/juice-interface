@@ -11,5 +11,5 @@ export interface ModRef {
   percent: number
   preferUnstaked?: boolean
   lockedUntil?: number
-  note?: string
+  projectId?: string
 }

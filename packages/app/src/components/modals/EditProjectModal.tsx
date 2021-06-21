@@ -3,7 +3,6 @@ import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
-import { ContractName } from 'models/contract-name'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -18,11 +17,10 @@ import {
 export type EditProjectFormFields = {
   name: string
   infoUrl: string
-  // handle: string
+  handle: string
   logoUrl: string
 }
 
-// TODO edit handle
 export default function EditProjectModal({
   handle,
   metadata,
@@ -47,19 +45,14 @@ export default function EditProjectModal({
 
     form.setFieldsValue({
       name: metadata?.name,
-      // handle: handle,
+      handle: handle,
       infoUrl: metadata?.infoUri,
       logoUrl: metadata?.logoUri,
     })
-  }, [
-    // handle,
-    form,
-    metadata,
-  ])
+  }, [handle, form, metadata])
 
   async function setUri() {
-    if (!transactor || !contracts?.Juicer) return
-    // if (!transactor || !contracts?.Juicer || !handle) return
+    if (!transactor || !contracts?.Juicer || !handle) return
 
     setLoading(true)
 
@@ -123,12 +116,12 @@ export default function EditProjectModal({
           name="name"
           formItemProps={{ rules: [{ required: true }] }}
         />
-        {/* <FormItems.ProjectHandle
+        <FormItems.ProjectHandle
           name="handle"
           value={form.getFieldValue('handle')}
           onValueChange={val => form.setFieldsValue({ handle: val })}
           formItemProps={{ rules: [{ required: true }] }}
-        /> */}
+        />
         <FormItems.ProjectLink name="infoUrl" />
         <FormItems.ProjectLogoUrl
           name="logoUrl"

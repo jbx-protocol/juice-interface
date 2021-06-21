@@ -69,7 +69,7 @@
           },
           {
             "internalType": "string",
-            "name": "note",
+            "name": "memo",
             "type": "string"
           }
         ],
@@ -203,7 +203,7 @@
           },
           {
             "internalType": "string",
-            "name": "note",
+            "name": "memo",
             "type": "string"
           }
         ],
@@ -274,7 +274,7 @@
           },
           {
             "internalType": "string",
-            "name": "note",
+            "name": "memo",
             "type": "string"
           }
         ],

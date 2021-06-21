@@ -151,6 +151,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      }
+    ],
+    "name": "EnsureTargetLocalWei",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "uint256",
         "name": "projectId",
@@ -202,23 +215,23 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "percent",
+        "name": "amount",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "modCut",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "note",
+        "type": "string"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "total",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
       }
     ],
-    "name": "ModDistribution",
+    "name": "Pay",
     "type": "event"
   },
   {
@@ -237,22 +250,53 @@
         "type": "uint256"
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "beneficiary",
-        "type": "address"
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "memo",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct PaymentMod",
+        "name": "mod",
+        "type": "tuple"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "modCut",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "note",
-        "type": "string"
       },
       {
         "indexed": false,
@@ -261,7 +305,7 @@
         "type": "address"
       }
     ],
-    "name": "Pay",
+    "name": "PaymentModDistribution",
     "type": "event"
   },
   {
@@ -488,6 +532,65 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct TicketMod",
+        "name": "mod",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "TicketModDistribution",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "acceptGovernance",
     "outputs": [],
@@ -694,7 +797,7 @@
           },
           {
             "internalType": "string",
-            "name": "note",
+            "name": "memo",
             "type": "string"
           }
         ],
@@ -865,7 +968,7 @@
           },
           {
             "internalType": "string",
-            "name": "note",
+            "name": "memo",
             "type": "string"
           }
         ],
@@ -909,6 +1012,13 @@
   {
     "inputs": [],
     "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ensureTargetLocalWei",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1057,6 +1167,25 @@
         "internalType": "address payable",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "preminedTicketCountOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1257,6 +1386,11 @@
       {
         "internalType": "uint256",
         "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_currency",
         "type": "uint256"
       },
       {

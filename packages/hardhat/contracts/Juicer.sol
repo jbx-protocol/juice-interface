@@ -749,27 +749,33 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
+        // Get a reference to new total supply of tickets before printing reserved tickets.
+        uint256 _totalPreopTickets = ticketBooth.totalSupplyOf(_projectId);
+
         // Get a reference to the number of tickets that need to be printed.
-        amount = reservedTicketAmountOf(
+        amount = _reservedTicketAmountOf(
             _projectId,
             // The reserved rate is in bits 9-24 of the metadata.
-            uint256(uint8(_fundingCycle.metadata >> 8))
+            uint256(uint8(_fundingCycle.metadata >> 8)),
+            _totalPreopTickets
         );
 
         // Make sure there are tickets to print.
         require(amount > 0, "Juicer::printReservedTickets: NO_OP");
 
-        // Get a reference to new total supply of tickets.
-        uint256 _totalTickets = ticketBooth.totalSupplyOf(_projectId) + amount;
-
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
-            _totalTickets <= uint256(type(int256).max),
+            _totalPreopTickets + amount <= uint256(type(int256).max),
             "Juicer::printReservedTickets: INT_LIMIT_REACHED"
         );
 
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
         // Set the tracker to be the new total supply.
-        _processedTicketTrackerOf[_projectId] = int256(_totalTickets);
+        _processedTicketTrackerOf[_projectId] = int256(
+            _totalPreopTickets + amount
+        );
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
         uint256 _leftoverTicketAmount = amount;
@@ -805,9 +811,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 msg.sender
             );
         }
-
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
 
         // Mint any remaining reserved tickets to the beneficiary.
         if (_leftoverTicketAmount > 0)

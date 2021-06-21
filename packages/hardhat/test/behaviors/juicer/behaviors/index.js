@@ -13,6 +13,7 @@ const pay = require("./pay");
 const printTickets = require("./print_tickets");
 const redeem = require("./redeem");
 const tap = require("./tap");
+const printReservedTickets = require("./print_reserved_tickets");
 
 module.exports = {
   appointGovernance,
@@ -29,5 +30,6 @@ module.exports = {
   pay,
   printTickets,
   redeem,
-  tap
+  tap,
+  printReservedTickets
 };

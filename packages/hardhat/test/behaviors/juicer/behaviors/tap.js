@@ -168,6 +168,23 @@ const tests = {
             .div(4)
         };
       }
+    },
+    {
+      description: "with all mods",
+      fn: async ({ addrs }) => {
+        return {
+          projectMod: {
+            allocator: constants.AddressZero,
+            projectId: 1212,
+            beneficiary: addrs[0].address,
+            percent: 200,
+            memo: "sup",
+            preferUnstaked: false,
+            lockedUntil: 0
+          },
+          leftover: BigNumber.from(0)
+        };
+      }
     }
   ],
   failure: [

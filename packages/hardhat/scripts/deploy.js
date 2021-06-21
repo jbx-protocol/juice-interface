@@ -111,10 +111,6 @@ const main = async () => {
     await attachedPrices.transferOwnership(governance.address, {
       gasLimit: blockGasLimit
     });
-    console.log(callContractIcon + "Transfering ownership over projects");
-    await attachedProjects.transferOwnership(governance.address, {
-      gasLimit: blockGasLimit
-    });
 
     // Add a production price feed if there is a reference to one.
     if (ethUsdAddr) {

@@ -1,5 +1,20 @@
 const shouldBehaveLike = require("./behaviors");
 
+const run = function(ops) {
+  return function() {
+    it("Intergated", async function() {
+      // Bind this.
+      this.ops = ops;
+      const resolvedOps = await this.ops();
+      // eslint-disable-next-line no-restricted-syntax
+      for (const op of resolvedOps) {
+        // eslint-disable-next-line no-await-in-loop
+        await op();
+      }
+    });
+  };
+};
+
 module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
@@ -53,14 +68,8 @@ module.exports = function() {
     };
   });
 
-  // Test each function.
-  // describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
-  // describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
-  // describe("setFee(...)", shouldBehaveLike.setFee);
-  // describe("allowMigration(...)", shouldBehaveLike.allowMigration);
-  // describe("addToBalance(...)", shouldBehaveLike.addToBalance);
-  // describe("migrate(...)", shouldBehaveLike.migrate);
-  // describe("deploy(...)", shouldBehaveLike.deploy);
-  describe("simpleDeploy(...)", shouldBehaveLike.simpleDeploy);
-  describe("migrate(...)", shouldBehaveLike.migrate);
+  this.shouldBehaveLike = shouldBehaveLike;
+
+  describe("simpleDeploy(...)", run(shouldBehaveLike.simpleDeploy));
+  describe("migrate(...)", run(shouldBehaveLike.migrate));
 };

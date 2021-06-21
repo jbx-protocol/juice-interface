@@ -2,7 +2,6 @@
 pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./abstract/Operatable.sol";
 import "./interfaces/IProjects.sol";
@@ -16,7 +15,7 @@ import "./libraries/Operations.sol";
   @dev
   Projects are represented as ERC-721's.
 */
-contract Projects is ERC721, IProjects, Ownable, Operatable {
+contract Projects is ERC721, IProjects, Operatable {
     // --- public stored properties --- //
 
     /// @notice A running count of project IDs.

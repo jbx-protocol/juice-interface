@@ -1,44 +1,7 @@
-const { expect } = require("chai");
 const { BigNumber, constants, utils } = require("ethers");
 
-const executeFn = ({
-  condition,
-  caller,
-  contract,
-  fn,
-  args = [],
-  value = 0,
-  events = [],
-  revert
-}) => async () => {
-  if (condition !== undefined && !condition) return;
-  const normalizedArgs = typeof args === "function" ? await args() : args;
-  const promise = contract.connect(caller)[fn](...normalizedArgs, { value });
-  if (revert) {
-    await expect(promise).to.be.revertedWith(revert);
-    return;
-  }
-  if (events.length === 0) {
-    await promise;
-    return;
-  }
-  const tx = await promise;
-  await tx.wait();
-  events.forEach(event =>
-    expect(tx)
-      .to.emit(contract, event.name)
-      .withArgs(...event.args)
-  );
-};
-
-const check = ({ condition, contract, fn, args, value }) => async () => {
-  if (condition !== undefined && !condition) return;
-  const storedVal = await contract[fn](...args);
-  expect(storedVal).to.deep.equal(value);
-};
-
-const ops = async ({ deployer, addrs, contracts, getTimestamp }) => {
-  const owner = addrs[0].address;
+module.exports = async function() {
+  const owner = this.addrs[0].address;
   const handle = "some-handle";
   const uri = "some-uri";
 
@@ -66,9 +29,9 @@ const ops = async ({ deployer, addrs, contracts, getTimestamp }) => {
   packedMetadata = packedMetadata.shl(8);
 
   return [
-    executeFn({
-      caller: deployer,
-      contract: contracts.juicer,
+    this.executeFn({
+      caller: this.deployer,
+      contract: this.contracts.juicer,
       fn: "deploy",
       args: [
         owner,
@@ -90,32 +53,32 @@ const ops = async ({ deployer, addrs, contracts, getTimestamp }) => {
         ticketMods
       ]
     }),
-    check({
-      contract: contracts.projects,
+    this.check({
+      contract: this.contracts.projects,
       fn: "handleOf",
       args: [1],
       value: utils.formatBytes32String(handle)
     }),
-    check({
-      contract: contracts.projects,
+    this.check({
+      contract: this.contracts.projects,
       fn: "projectFor",
       args: [utils.formatBytes32String(handle)],
       value: 1
     }),
-    check({
-      contract: contracts.projects,
+    this.check({
+      contract: this.contracts.projects,
       fn: "uriOf",
       args: [1],
       value: uri
     }),
-    check({
-      contract: contracts.terminalDirectory,
+    this.check({
+      contract: this.contracts.terminalDirectory,
       fn: "terminalOf",
       args: [1],
-      value: contracts.juicer.address
+      value: this.contracts.juicer.address
     }),
-    check({
-      contract: contracts.fundingCycles,
+    this.check({
+      contract: this.contracts.fundingCycles,
       fn: "get",
       args: [1],
       value: [
@@ -123,10 +86,10 @@ const ops = async ({ deployer, addrs, contracts, getTimestamp }) => {
         BigNumber.from(1),
         BigNumber.from(1),
         BigNumber.from(0),
-        (await getTimestamp()).add(1),
+        (await this.getTimestamp()).add(1),
         BigNumber.from(10).pow(19),
         constants.AddressZero,
-        (await getTimestamp()).add(1),
+        (await this.getTimestamp()).add(1),
         duration,
         target,
         currency,
@@ -137,17 +100,4 @@ const ops = async ({ deployer, addrs, contracts, getTimestamp }) => {
       ]
     })
   ];
-};
-
-module.exports = function() {
-  describe("Success cases", function() {
-    it("Intergated", async function() {
-      const resolvedOps = await ops(this);
-      // eslint-disable-next-line no-restricted-syntax
-      for (const op of resolvedOps) {
-        // eslint-disable-next-line no-await-in-loop
-        await op();
-      }
-    });
-  });
 };

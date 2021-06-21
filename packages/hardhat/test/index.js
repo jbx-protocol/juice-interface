@@ -1,4 +1,5 @@
 const { ethers, config } = require("hardhat");
+const { expect } = require("chai");
 const fs = require("fs");
 
 const { deployMockContract } = require("@ethereum-waffle/mock-contract");
@@ -33,6 +34,42 @@ const fastforward = async seconds => {
   await ethers.provider.send("evm_mine");
 };
 
+const executeFn = ({
+  condition,
+  caller,
+  contract,
+  fn,
+  args = [],
+  value = 0,
+  events = [],
+  revert
+}) => async () => {
+  if (condition !== undefined && !condition) return;
+  const normalizedArgs = typeof args === "function" ? await args() : args;
+  const promise = contract.connect(caller)[fn](...normalizedArgs, { value });
+  if (revert) {
+    await expect(promise).to.be.revertedWith(revert);
+    return;
+  }
+  if (events.length === 0) {
+    await promise;
+    return;
+  }
+  const tx = await promise;
+  await tx.wait();
+  events.forEach(event =>
+    expect(tx)
+      .to.emit(contract, event.name)
+      .withArgs(...event.args)
+  );
+};
+
+const check = ({ condition, contract, fn, args, value }) => async () => {
+  if (condition !== undefined && !condition) return;
+  const storedVal = await contract[fn](...args);
+  expect(storedVal).to.deep.equal(value);
+};
+
 describe("Juice", async function() {
   before(async function() {
     // Bind a reference to the deployer address and an array of other addresses to `this`.
@@ -63,6 +100,10 @@ describe("Juice", async function() {
       const artifacts = await ethers.getContractFactory(contractName);
       return artifacts.deploy(...args);
     };
+
+    // Bind functions to mock, execute, and check functionality.
+    this.executeFn = executeFn;
+    this.check = check;
   });
 
   // Before each test, take a snapshot of the contract state.
@@ -94,6 +135,7 @@ describe("Juice", async function() {
 
   // Depends on everything.
   // describe("Juicer", shouldBehaveLike.juicer);
+
   describe.only("Integration", shouldBehaveLike.integration);
 
   // After each test, restore the contract state.

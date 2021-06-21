@@ -7,14 +7,12 @@ interface IModAllocator {
         uint256 indexed forProjectId,
         address indexed beneficiary,
         uint256 amount,
-        string note,
         address caller
     );
 
     function allocate(
         uint256 _projectId,
         uint256 _forProjectId,
-        address _beneficiary,
-        string calldata _memo
+        address _beneficiary
     ) external payable;
 }

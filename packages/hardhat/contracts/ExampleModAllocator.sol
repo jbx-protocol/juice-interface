@@ -8,7 +8,6 @@ contract ExampleModAllocator is IModAllocator {
     function allocate(
         uint256 _projectId,
         uint256 _forProjectId,
-        address _beneficiary,
-        string calldata _memo
+        address _beneficiary
     ) external payable override {}
 }

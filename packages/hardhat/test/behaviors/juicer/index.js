@@ -60,12 +60,9 @@ module.exports = function() {
   // describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
   // describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
   // describe("setFee(...)", shouldBehaveLike.setFee);
-  // describe("setYielder(...)", shouldBehaveLike.setYielder);
-  // describe("setTargetLocalWei(...)", shouldBehaveLike.setTargetLocalWei);
   // describe("allowMigration(...)", shouldBehaveLike.allowMigration);
   // describe("addToBalance(...)", shouldBehaveLike.addToBalance);
   // describe("migrate(...)", shouldBehaveLike.migrate);
-  // describe("deposit(...)", shouldBehaveLike.deposit);
   // describe("deploy(...)", shouldBehaveLike.deploy);
   describe("configure(...)", shouldBehaveLike.configure);
   describe("pay(...)", shouldBehaveLike.pay);

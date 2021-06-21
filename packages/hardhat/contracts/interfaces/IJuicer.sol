@@ -54,13 +54,6 @@ interface IJuicer {
         address caller
     );
 
-    // event PaymentModDistribution(
-    //     uint256 indexed fundingCycleId,
-    //     uint256 indexed projectId,
-    //     PaymentMod mod,
-    //     uint256 modCut,
-    //     address caller
-    // );
     event PaymentModDistribution(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
@@ -111,11 +104,7 @@ interface IJuicer {
 
     function terminalDirectory() external view returns (ITerminalDirectory);
 
-    function yielder() external view returns (IYielder);
-
     function modStore() external view returns (IModStore);
-
-    function targetLocalWei() external view returns (uint256);
 
     function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
         external
@@ -139,11 +128,6 @@ interface IJuicer {
         uint256 _amount,
         uint256 _projectId
     ) external view returns (uint256);
-
-    function balance()
-        external
-        view
-        returns (uint256 withoutYield, uint256 withYield);
 
     function fee() external view returns (uint256);
 
@@ -189,8 +173,6 @@ interface IJuicer {
         bool _preferUnstaked
     ) external returns (uint256 returnAmount);
 
-    function ensureTargetLocalWei() external;
-
     function printReservedTickets(uint256 _projectId)
         external
         returns (uint256 reservedTicketsToPrint);
@@ -198,12 +180,6 @@ interface IJuicer {
     function setFee(uint256 _fee) external;
 
     function appointGovernance(address payable _pendingGovernance) external;
-
-    function setYielder(IYielder _yielder) external;
-
-    function deposit() external;
-
-    function setTargetLocalWei(uint256 _amount) external;
 
     function acceptGovernance() external;
 }

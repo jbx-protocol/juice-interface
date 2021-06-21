@@ -12,7 +12,6 @@ struct PaymentMod {
     address payable beneficiary;
     IModAllocator allocator;
     uint256 projectId;
-    string memo;
 }
 
 struct TicketMod {

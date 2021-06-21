@@ -37,27 +37,6 @@ contract Governance is JuiceProject {
     }
 
     /** 
-      @notice Sets a new contract that will yield returns on the juicer's funds.
-      @param _juicer The juicer to change the yielder of.
-      @param _yielder The new yielder.
-    */
-    function setYielder(IJuicer _juicer, IYielder _yielder) external onlyOwner {
-        _juicer.setYielder(_yielder);
-    }
-
-    /** 
-      @notice Sets the target amount of ETH to keep in the Juicer's contract instead of depositing.
-      @param _juicer The juicer to change the target local ETH of.
-      @param _amount The new target.
-    */
-    function setTargetLocalWei(IJuicer _juicer, uint256 _amount)
-        external
-        onlyOwner
-    {
-        _juicer.setTargetLocalWei(_amount);
-    }
-
-    /** 
       @notice Sets the fee of the Juicer.
       @param _juicer The juicer to change the fee of.
       @param _fee The new fee.

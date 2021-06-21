@@ -648,16 +648,16 @@ module.exports = function() {
       });
     });
   });
-  // describe("Failure cases", function() {
-  //   tests.failure.forEach(function(failureTest) {
-  //     it(failureTest.description, async function() {
-  //       const resolvedOps = await ops(this)(await failureTest.fn(this));
-  //       // eslint-disable-next-line no-restricted-syntax
-  //       for (const op of resolvedOps) {
-  //         // eslint-disable-next-line no-await-in-loop
-  //         await op();
-  //       }
-  //     });
-  //   });
-  // });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const resolvedOps = await ops(this)(await failureTest.fn(this));
+        // eslint-disable-next-line no-restricted-syntax
+        for (const op of resolvedOps) {
+          // eslint-disable-next-line no-await-in-loop
+          await op();
+        }
+      });
+    });
+  });
 };

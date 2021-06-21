@@ -676,7 +676,6 @@ module.exports = function() {
             mod.preferUnstaked
           );
           expect(storedProjectMods[i].projectId).to.equal(mod.projectId);
-          expect(storedProjectMods[i].note).to.equal(mod.note);
           expect(storedProjectMods[i].lockedUntil).to.equal(mod.lockedUntil);
         });
       });

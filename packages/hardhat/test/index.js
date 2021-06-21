@@ -93,7 +93,8 @@ describe("Juice", async function() {
   describe("TicketBooth", shouldBehaveLike.ticketBooth);
 
   // Depends on everything.
-  describe.only("Juicer", shouldBehaveLike.juicer);
+  // describe("Juicer", shouldBehaveLike.juicer);
+  describe.only("Integration", shouldBehaveLike.integration);
 
   // After each test, restore the contract state.
   afterEach(async function() {

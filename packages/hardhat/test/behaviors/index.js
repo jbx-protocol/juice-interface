@@ -9,6 +9,7 @@ const terminalDirectory = require("./terminal_directory");
 const governance = require("./governance");
 const juiceProject = require("./juice_project");
 const juicer = require("./juicer");
+const integration = require("./integration");
 
 module.exports = {
   operatorStore,
@@ -21,5 +22,6 @@ module.exports = {
   terminalDirectory,
   governance,
   juiceProject,
-  juicer
+  juicer,
+  integration
 };

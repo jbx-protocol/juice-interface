@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { Tooltip, TooltipProps } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 export default function TooltipIcon({
   tip,

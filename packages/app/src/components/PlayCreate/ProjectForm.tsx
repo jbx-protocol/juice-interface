@@ -41,6 +41,7 @@ export default function ProjectForm({
           name="handle"
           value={handle}
           onValueChange={val => form.setFieldsValue({ handle: val })}
+          requireState="notExist"
           formItemProps={{
             rules: [{ required: true }],
             dependencies: ['name'],

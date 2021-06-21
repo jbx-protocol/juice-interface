@@ -54,13 +54,26 @@ interface IJuicer {
         address caller
     );
 
-    event ModDistribution(
+    // event PaymentModDistribution(
+    //     uint256 indexed fundingCycleId,
+    //     uint256 indexed projectId,
+    //     PaymentMod mod,
+    //     uint256 modCut,
+    //     address caller
+    // );
+    event PaymentModDistribution(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        address indexed beneficiary,
-        uint256 percent,
+        PaymentMod mod,
         uint256 modCut,
-        uint256 total
+        address caller
+    );
+    event TicketModDistribution(
+        uint256 indexed fundingCycleId,
+        uint256 indexed projectId,
+        TicketMod mod,
+        uint256 modCut,
+        address caller
     );
     event AppointGovernance(address governance);
 

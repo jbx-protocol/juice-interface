@@ -11,7 +11,9 @@ module.exports = function() {
     this.terminalDirectory = await this.deployMockLocalContract(
       "TerminalDirectory"
     );
-    this.modAllocator = await this.deployMockLocalContract("ModAllocator");
+    this.modAllocator = await this.deployMockLocalContract(
+      "ExampleModAllocator"
+    );
 
     // Deploy the contract.
     this.contract = await this.deployContract(contractName, [

@@ -599,13 +599,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         );
 
         // The amount being tapped must be at least as much as was expected.
-        require(
-            _minReturnedWei <= _tappedWeiAmount,
-            "Juicer::_processTap: INSUFFICIENT_EXPECTED_AMOUNT"
-        );
+        require(_minReturnedWei <= _tappedWeiAmount, "Juicer::tap: INADEQUATE");
 
         // Removed the tapped funds from the project's balance.
         balanceOf[_projectId] = _balanceOf - _tappedWeiAmount;
+
+        // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
+        // and receive any extra tapped funds not allocated to mods.
+        address payable _projectOwner =
+            payable(projects.ownerOf(_fundingCycle.projectId));
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
         uint256 _govFeeAmount =
@@ -616,28 +618,24 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     _fundingCycle.fee + 200
                 );
 
-        // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
-        // and receive any extra tapped funds not allocated to mods.
-        address payable _projectOwner =
-            payable(projects.ownerOf(_fundingCycle.projectId));
-
-        // When processing the admin fee, save gas if the admin is using this juice terminal.
-        if (JuiceProject(governance).terminal() == this) {
-            _pay(
-                JuiceProject(governance).projectId(),
-                _govFeeAmount,
-                _projectOwner,
-                "Juice fee",
-                false
-            );
-        } else {
-            JuiceProject(governance).pay{value: _govFeeAmount}(
-                _projectOwner,
-                "Juice fee",
-                false
-            );
+        if (_govFeeAmount > 0) {
+            // When processing the admin fee, save gas if the admin is using this juice terminal.
+            if (JuiceProject(governance).terminal() == this) {
+                _pay(
+                    JuiceProject(governance).projectId(),
+                    _govFeeAmount,
+                    _projectOwner,
+                    "Juice fee",
+                    false
+                );
+            } else {
+                JuiceProject(governance).pay{value: _govFeeAmount}(
+                    _projectOwner,
+                    "Juice fee",
+                    false
+                );
+            }
         }
-
         // Transfer the tapped amount minus the fees.
         uint256 _transferAmount = _tappedWeiAmount - _govFeeAmount;
 
@@ -669,7 +667,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     _fundingCycle.projectId,
                     _mod.projectId,
                     _mod.beneficiary,
-                    _mod.note
+                    _mod.memo
                 );
                 // Otherwise, if a project is specified, pay its Juice project.
             } else if (_mod.projectId != 0) {
@@ -689,14 +687,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         _mod.projectId,
                         _modCut,
                         _mod.beneficiary,
-                        _mod.note,
+                        _mod.memo,
                         _mod.preferUnstaked
                     );
                 } else {
                     _terminal.pay{value: _modCut}(
                         _mod.projectId,
                         _mod.beneficiary,
-                        _mod.note,
+                        _mod.memo,
                         _mod.preferUnstaked
                     );
                 }
@@ -708,13 +706,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Subtract from the amount to be sent to the beneficiary.
             _leftoverTransferAmount = _leftoverTransferAmount - _modCut;
 
-            emit ModDistribution(
+            emit PaymentModDistribution(
                 _fundingCycle.id,
                 _fundingCycle.projectId,
-                _mod.beneficiary,
-                _mod.percent,
+                _mod,
                 _modCut,
-                _transferAmount
+                msg.sender
             );
         }
 
@@ -800,13 +797,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Subtract from the amount to be sent to the beneficiary.
             _leftoverTicketAmount = _leftoverTicketAmount - _modCut;
 
-            emit ModDistribution(
+            emit TicketModDistribution(
                 _fundingCycle.id,
                 _projectId,
-                _mod.beneficiary,
-                _mod.percent,
+                _mod,
                 _modCut,
-                amount
+                msg.sender
             );
         }
 

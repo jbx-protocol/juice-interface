@@ -30,9 +30,10 @@ const tests = {
             percent: 200,
             lockedUntil: 1000,
             beneficiary: constants.AddressZero,
-            allocator: (await deployMockLocalContract("ModAllocator")).address,
+            allocator: (await deployMockLocalContract("ExampleModAllocator"))
+              .address,
             projectId: 1,
-            note: "banana"
+            memo: "banana"
           }
         ],
         ticketMods: [

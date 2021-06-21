@@ -69,7 +69,7 @@ export default function FundingCyclePreview({
         >
           <FundingCycleDetails fundingCycle={fundingCycle} />
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-            Beneficiary wallets:
+            Auto payouts:
           </h4>
           <Mods mods={paymentMods} />
         </CollapsePanel>

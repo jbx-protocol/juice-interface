@@ -23,7 +23,7 @@ export default function Mods({ mods }: { mods: ModRef[] | undefined }) {
             }}
           >
             <span style={{ minWidth: 70 }}>{fromPerbicent(m.percent)}%:</span>
-            <span style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+            <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
               {m.projectId && BigNumber.from(m.projectId).gt(0) ? (
                 <span>
                   <div>

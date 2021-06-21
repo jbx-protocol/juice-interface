@@ -68,8 +68,7 @@ module.exports = function() {
     };
   });
 
-  this.shouldBehaveLike = shouldBehaveLike;
-
   describe("simpleDeploy(...)", run(shouldBehaveLike.simpleDeploy));
   describe("migrate(...)", run(shouldBehaveLike.migrate));
+  describe.only("paymentMods(...)", run(shouldBehaveLike.paymentMods));
 };

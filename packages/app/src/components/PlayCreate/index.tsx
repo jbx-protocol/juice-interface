@@ -190,7 +190,7 @@ export default function PlayCreate() {
           percent: BigNumber.from(m.percent).toHexString(),
           lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
           beneficiary: m.beneficiary || constants.AddressZero,
-          projectId: m.projectId,
+          projectId: m.projectId || BigNumber.from(0).toHexString(),
           allocator: constants.AddressZero,
         })),
         [],

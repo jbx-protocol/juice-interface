@@ -149,7 +149,7 @@ export default function ProjectMods({
                       setEditingModIndex(index)
                     }}
                   >
-                    {mod.beneficiary} {parseFloat(fromPerbicent(mod.percent))}
+                    {mod.beneficiary}
                   </span>
                   <Button
                     type="text"
@@ -165,6 +165,29 @@ export default function ProjectMods({
               </Col>
             </Row>
           )}
+
+          {mod.projectId ? (
+            <Row>
+              <Col span={4}>
+                <label>Beneficiary</label>
+              </Col>
+              <Col span={20}>
+                <span
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    setEditingModType('project')
+                    form.setFieldsValue({
+                      ...mod,
+                      percent: parseFloat(fromPerbicent(mod.percent)),
+                    })
+                    setEditingModIndex(index)
+                  }}
+                >
+                  {mod.beneficiary}
+                </span>
+              </Col>
+            </Row>
+          ) : null}
 
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={4}>
@@ -253,8 +276,6 @@ export default function ProjectMods({
     form.resetFields()
   }
 
-  console.log('mods', mods)
-
   return (
     <Form.Item
       extra="Commit portions of your project's funding to other Ethereum wallets or Juice projects. Use this to pay contributors, charities, other projects you depend on, or anyone else. Payouts will be distributed automatically anytime a withdrawal is made from your project."
@@ -342,15 +363,9 @@ export default function ProjectMods({
               rules={[
                 {
                   validator: (rule, value) => {
-                    if (
-                      mods.some(m => m.beneficiary === value) &&
-                      editingModIndex !== undefined &&
-                      mods[editingModIndex].beneficiary !== value
-                    )
-                      return Promise.reject('Address already added.')
-
                     if (!utils.isAddress(value))
                       return Promise.reject('Not a valid ETH address.')
+
                     return Promise.resolve()
                   },
                 },
@@ -362,9 +377,19 @@ export default function ProjectMods({
             <FormItems.ProjectHandle
               name="project"
               requireState="exists"
+              formItemProps={{ label: 'Project handle' }}
               onValueChange={handle => form.setFieldsValue({ handle })}
             ></FormItems.ProjectHandle>
           )}
+          {editingModType === 'project' ? (
+            <Form.Item
+              name="beneficiary"
+              label="Beneficiary"
+              extra="The address that should receive the tickets printed from paying this project."
+            >
+              <Input placeholder={constants.AddressZero} />
+            </Form.Item>
+          ) : null}
           <Form.Item name="percent" label="Percent">
             <NumberSlider
               onChange={percent => form.setFieldsValue({ percent })}

@@ -268,48 +268,12 @@
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTargetLocalWei",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract ITerminal",
         "name": "_to",
         "type": "address"
       }
     ],
     "name": "setTerminal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IYielder",
-        "name": "_yielder",
-        "type": "address"
-      }
-    ],
-    "name": "setYielder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

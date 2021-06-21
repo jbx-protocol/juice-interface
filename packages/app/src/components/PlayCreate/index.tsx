@@ -16,8 +16,10 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { ModRef } from 'models/mods'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
 import { encodeFCMetadata, isRecurring } from 'utils/fundingCycle'
@@ -30,12 +32,11 @@ import {
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
-import BudgetInfo, { BudgetFormFields } from './BudgetForm'
+import { FCProperties } from '../../models/funding-cycle-properties'
+import BudgetForm, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
-import { CurrencyOption } from 'models/currency-option'
-import { FCProperties } from '../../models/funding-cycle-properties'
 
 export default function PlayCreate() {
   const { transactor, contracts, userAddress } = useContext(UserContext)
@@ -60,7 +61,9 @@ export default function PlayCreate() {
   const [ticketingForm] = useForm<TicketingFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const mods = useAppSelector(state => state.editingProject.mods)
+  const editingPaymentMods = useAppSelector(
+    state => state.editingProject.paymentMods,
+  )
   const dispatch = useAppDispatch()
 
   const adminFeePercent = useContractReader<BigNumber>({
@@ -73,10 +76,7 @@ export default function PlayCreate() {
 
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
-      target: fromWad(editingFC?.target) ?? '0',
       duration: editingFC?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
-      currency: (editingFC?.currency.toNumber() as CurrencyOption) ?? 0,
-      mods,
     })
 
   const resetProjectForm = () =>
@@ -94,19 +94,22 @@ export default function PlayCreate() {
       bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
     })
 
-  const onBudgetFormSaved = () => {
+  const onBudgetFormSaved = (
+    currency: CurrencyOption,
+    mods: ModRef[],
+    target: number,
+  ) => {
     const fields = budgetForm.getFieldsValue(true)
-    dispatch(editingProjectActions.setTarget(fields.target))
+    dispatch(editingProjectActions.setTarget(target.toString()))
     dispatch(
       editingProjectActions.setDuration(
         (parseFloat(fields.duration) * SECONDS_IN_DAY).toString(),
       ),
     )
-    dispatch(editingProjectActions.setCurrency(fields.currency))
+    dispatch(editingProjectActions.setCurrency(currency))
+    dispatch(editingProjectActions.setPaymentMods(mods))
 
-    if (fields?.duration && fields?.target) {
-      incrementStep(1)
-    }
+    if (fields?.duration && target && mods.length) incrementStep(1)
 
     // Ticketing form depends on budget recurring/one-time
     resetTicketingForm()
@@ -131,15 +134,7 @@ export default function PlayCreate() {
     incrementStep(3)
   }
 
-  useEffect(() => {
-    if (
-      editingProject.metadata.name &&
-      editingFC?.duration &&
-      editingFC?.target
-    ) {
-      setCurrentStep(1)
-    }
-
+  useLayoutEffect(() => {
     resetBudgetForm()
     resetProjectForm()
     resetTicketingForm()
@@ -190,7 +185,15 @@ export default function PlayCreate() {
         uploadedMetadata.cid,
         properties,
         metadata,
-        [],
+        editingPaymentMods.map(m => ({
+          preferUnstaked: !!m.preferUnstaked,
+          percent: BigNumber.from(m.percent).toHexString(),
+          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
+          beneficiary: m.beneficiary,
+          note: m.note,
+          projectId: BigNumber.from(0).toHexString(),
+          allocator: constants.AddressZero,
+        })),
         [],
       ],
       {
@@ -282,6 +285,7 @@ export default function PlayCreate() {
           isOwner={false}
           showCurrentDetail={currentStep > 2}
           fundingCycle={fundingCycle}
+          paymentMods={editingPaymentMods}
           metadata={editingProject.metadata}
           handle={editingProject.handle}
           projectId={BigNumber.from(0)}
@@ -296,12 +300,16 @@ export default function PlayCreate() {
           resetBudgetForm()
           setBudgetFormModalVisible(false)
         }}
+        destroyOnClose
       >
-        <BudgetInfo
+        <BudgetForm
           form={budgetForm}
-          onSave={async () => {
+          initialMods={editingPaymentMods}
+          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+          initialTarget={parseFloat(fromWad(editingFC.target))}
+          onSave={async (currency, mods, target) => {
             await budgetForm.validateFields()
-            onBudgetFormSaved()
+            onBudgetFormSaved(currency, mods, target)
             setBudgetFormModalVisible(false)
           }}
         />

@@ -7,6 +7,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
+import { ModRef } from 'models/mods'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -74,6 +75,14 @@ export default function Dashboard() {
     args: projectId ? [projectId.toHexString()] : null,
   })
 
+  const paymentMods = useContractReader<ModRef[]>({
+    contract: ContractName.ModStore,
+    functionName: 'paymentModsOf',
+    args: projectId
+      ? [projectId.toHexString(), fundingCycle?.configured]
+      : null,
+  })
+
   const metadata = useProjectMetadata(uri)
 
   const isOwner = userAddress === owner
@@ -104,6 +113,7 @@ export default function Dashboard() {
         isOwner={isOwner}
         projectId={projectId}
         fundingCycle={fundingCycle}
+        paymentMods={paymentMods}
       />
     </div>
   )

@@ -3,7 +3,9 @@ import { Col, Row } from 'antd'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
+import { ModRef } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
 import { CSSProperties, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -14,13 +16,13 @@ import Pay from './Pay'
 import PayEvents from './PayEvents'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
-import { CurrencyOption } from 'models/currency-option'
 
 export default function Project({
   handle,
   metadata,
   projectId,
   fundingCycle,
+  paymentMods,
   showCurrentDetail,
   style,
   isOwner,
@@ -30,6 +32,7 @@ export default function Project({
   projectId: BigNumber
   isOwner: boolean
   fundingCycle: FundingCycle | undefined
+  paymentMods: ModRef[] | undefined
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
@@ -131,6 +134,7 @@ export default function Project({
           <FundingCycles
             projectId={projectId}
             fundingCycle={fundingCycle}
+            paymentMods={paymentMods}
             isOwner={isOwner}
             balanceInCurrency={balanceInCurrency}
             showCurrentDetail={showCurrentDetail}

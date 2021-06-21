@@ -5,6 +5,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
+import { ModRef } from 'models/mods'
 import React, { useContext, useState } from 'react'
 
 import FundingCyclePreview from './FundingCyclePreview'
@@ -17,12 +18,14 @@ type TabOption = 'current' | 'upcoming' | 'history'
 export default function FundingCycles({
   projectId,
   fundingCycle,
+  paymentMods,
   balanceInCurrency,
   showCurrentDetail,
   isOwner,
 }: {
   projectId: BigNumber
   fundingCycle: FundingCycle | undefined
+  paymentMods: ModRef[] | undefined
   balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
   isOwner?: boolean
@@ -68,6 +71,7 @@ export default function FundingCycles({
             <FundingCyclePreview
               fundingCycle={fundingCycle}
               showDetail={showCurrentDetail}
+              paymentMods={paymentMods}
             />
           </Space>
         </div>

@@ -9,14 +9,20 @@ export class CurrencyUtils {
   weiPerUsd: number | undefined = undefined
 
   constructor(usdPerEth: number | undefined) {
-    if (usdPerEth === undefined) return
+    if (!usdPerEth) {
+      console.info(
+        'Failed to construct CurrencyUtils, received a usdPerEth value of',
+        usdPerEth,
+      )
+      return
+    }
 
     this.usdPerEth = usdPerEth
     this.weiPerUsd = Math.round((1 / usdPerEth) * 1e18)
   }
 
   weiToUsd = (wei: BigNumberish | undefined) => {
-    if (!wei || this.weiPerUsd === undefined) return
+    if (!wei || !this.weiPerUsd) return BigNumber.from(0)
 
     try {
       return BigNumber.from(wei).div(this.weiPerUsd)
@@ -26,8 +32,7 @@ export class CurrencyUtils {
   }
 
   usdToWei = (amount: number | string | undefined, precision = 8) => {
-    if (amount === undefined || this.usdPerEth === undefined) return
-    if (amount === '') return
+    if (!amount || !this.usdPerEth) return BigNumber.from(0)
 
     try {
       return parseWad(

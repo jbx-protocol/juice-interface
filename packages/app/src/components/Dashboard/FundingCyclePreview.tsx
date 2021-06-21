@@ -2,17 +2,21 @@ import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
+import { ModRef } from 'models/mods'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
+import Mods from './Mods'
 
 export default function FundingCyclePreview({
   fundingCycle,
+  paymentMods,
   showDetail,
 }: {
   fundingCycle: FundingCycle | undefined
+  paymentMods: ModRef[] | undefined
   showDetail?: boolean
 }) {
   const {
@@ -64,6 +68,10 @@ export default function FundingCyclePreview({
           }
         >
           <FundingCycleDetails fundingCycle={fundingCycle} />
+          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+            Beneficiary wallets:
+          </h4>
+          <Mods mods={paymentMods} />
         </CollapsePanel>
       </Collapse>
     </div>

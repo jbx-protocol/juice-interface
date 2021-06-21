@@ -4,6 +4,6 @@ module.exports = [
   "ExampleJuiceProject",
   "ExampleYielder",
   "YearnYielder",
-  "Ticket",
+  "Tickets",
   "DirectPaymentAddress"
 ];

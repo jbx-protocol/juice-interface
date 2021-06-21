@@ -4,7 +4,7 @@ import { Form, Input } from 'antd'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -31,13 +31,21 @@ export default function ProjectHandle({
     setInputContents(value)
   }, [value])
 
+  const handle = useMemo(() => {
+    if (!inputContents) return
+
+    try {
+      return utils.formatBytes32String(normalizeHandle(inputContents))
+    } catch (e) {
+      console.log('Error formatting handle', inputContents, e)
+    }
+  }, [inputContents])
+
   // InputContents pattern allows checking if handle exists while typing
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
-    args: inputContents
-      ? [utils.formatBytes32String(normalizeHandle(inputContents))]
-      : null,
+    args: handle ? [handle] : null,
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 
@@ -64,7 +72,7 @@ export default function ProjectHandle({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Unique handle'}
+      label={hideLabel ? undefined : formItemProps?.label ?? 'Unique handle'}
       status={
         (handleExists && requireState === 'notExist') ||
         (!handleExists && requireState === 'exists')

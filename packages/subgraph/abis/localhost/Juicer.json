@@ -280,11 +280,6 @@
             "internalType": "uint256",
             "name": "projectId",
             "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "memo",
-            "type": "string"
           }
         ],
         "indexed": false,
@@ -637,24 +632,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "balance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "withoutYield",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "withYield",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -794,11 +771,6 @@
             "internalType": "uint256",
             "name": "projectId",
             "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "memo",
-            "type": "string"
           }
         ],
         "internalType": "struct PaymentMod[]",
@@ -965,11 +937,6 @@
             "internalType": "uint256",
             "name": "projectId",
             "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "memo",
-            "type": "string"
           }
         ],
         "internalType": "struct PaymentMod[]",
@@ -1005,20 +972,6 @@
       }
     ],
     "name": "deploy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "deposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ensureTargetLocalWei",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1354,32 +1307,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTargetLocalWei",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IYielder",
-        "name": "_yielder",
-        "type": "address"
-      }
-    ],
-    "name": "setYielder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
       },
@@ -1406,19 +1333,6 @@
   },
   {
     "inputs": [],
-    "name": "targetLocalWei",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "terminalDirectory",
     "outputs": [
       {
@@ -1436,19 +1350,6 @@
     "outputs": [
       {
         "internalType": "contract ITicketBooth",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "yielder",
-    "outputs": [
-      {
-        "internalType": "contract IYielder",
         "name": "",
         "type": "address"
       }

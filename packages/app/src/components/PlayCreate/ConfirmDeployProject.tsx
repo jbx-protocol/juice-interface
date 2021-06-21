@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
+import Mods from 'components/Dashboard/Mods'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { SECONDS_IN_DAY } from 'constants/units'
 import {
@@ -8,6 +9,7 @@ import {
 } from 'hooks/AppSelector'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
 import {
   formattedNum,
   formatWad,
@@ -17,11 +19,11 @@ import {
 import { isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
-import { CurrencyOption } from 'models/currency-option'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
+  const paymentMods = useAppSelector(state => state.editingProject.paymentMods)
   const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'fee',
@@ -94,6 +96,10 @@ export default function ConfirmDeployProject() {
           />
         )}
       </Space>
+      <Statistic
+        title="Receiver wallets"
+        valueRender={() => <Mods mods={paymentMods} />}
+      />
     </Space>
   )
 }

@@ -1,13 +1,18 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { ModRef } from 'models/payment-mod'
+import { ModRef } from 'models/mods'
 import { useContext } from 'react'
+import { parsePerbicent } from 'utils/formatNumber'
 
-export default function ModsShares({ shares }: { shares: ModRef[] }) {
+export default function ModsShares({ mods }: { mods: ModRef[] }) {
   const {
-    theme: { radii, colors },
+    theme: { colors },
   } = useContext(ThemeContext)
 
-  const total = shares.reduce((acc, curr) => acc + (curr?.amount ?? 0), 0)
+  const total = mods.reduce(
+    (acc, curr) =>
+      acc + parsePerbicent(curr?.percent.toString() ?? '0').toNumber(),
+    0,
+  )
 
   const barHeight = 4
 
@@ -17,20 +22,21 @@ export default function ModsShares({ shares }: { shares: ModRef[] }) {
         style={{
           display: 'flex',
           alignItems: 'end',
-          borderRadius: barHeight / 2,
+          paddingTop: 10,
+          paddingBottom: 10,
         }}
       >
-        {shares
-          .sort((a, b) => (a?.amount ?? 0 < (b?.amount ?? 0) ? 1 : -1))
-          .map(share => (
-            <div
-              key={share.address}
-              style={{
-                width: share?.amount ?? 0 / total + '%',
-                height: barHeight,
-              }}
-            ></div>
-          ))}
+        {mods.map(mod => (
+          <div
+            key={mod.beneficiary}
+            style={{
+              width: (mod?.percent ?? 0 / total) + '%',
+              height: barHeight,
+              background: colors.background.brand.primary,
+              borderRadius: barHeight / 2,
+            }}
+          ></div>
+        ))}
       </div>
     </div>
   )

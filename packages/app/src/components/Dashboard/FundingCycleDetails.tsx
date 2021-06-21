@@ -30,7 +30,7 @@ export default function FundingCycleDetails({
 
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
 
-      <Descriptions.Item label={<TooltipLabel label="Target" />}>
+      <Descriptions.Item label="Target">
         <CurrencySymbol
           currency={fundingCycle.currency.toNumber() as CurrencyOption}
         />
@@ -57,7 +57,7 @@ export default function FundingCycleDetails({
           />
         }
       >
-        {fromPerbicent(fundingCycle.discountRate)} %
+        {fromPerbicent(fundingCycle.discountRate)}%
       </Descriptions.Item>
 
       <Descriptions.Item

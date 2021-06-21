@@ -3,45 +3,48 @@ import { FormItems } from 'components/shared/formItems'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { ModRef } from 'models/payment-mod'
+import { ModRef } from 'models/mods'
+import { useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 
 export type BudgetFormFields = {
-  target: string
   duration: string
-  currency: CurrencyOption
-  mods: ModRef[]
 }
 
 export default function BudgetForm({
   form,
+  initialCurrency,
+  initialMods,
+  initialTarget,
   onSave,
 }: {
   form: FormInstance<BudgetFormFields>
-  onSave: VoidFunction
+  initialCurrency: CurrencyOption
+  initialMods: ModRef[]
+  initialTarget: number
+  onSave: (currency: CurrencyOption, mods: ModRef[], target: number) => void
 }) {
+  // State objects avoid antd form input dependency rerendering issues
+  const [currency, setCurrency] = useState<CurrencyOption>(0)
+  const [mods, setMods] = useState<ModRef[]>([])
+  const [target, setTarget] = useState<number>(0)
   const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
+
+  console.log({ currency, target })
+
+  useLayoutEffect(() => {
+    setCurrency(initialCurrency)
+    setMods(initialMods)
+    setTarget(initialTarget)
+  }, [])
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>Funding specs</h1>
 
       <Form form={form} layout="vertical">
-        <FormItems.ProjectTarget
-          name="target"
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
-          value={form.getFieldValue('target')}
-          onValueChanged={val => form.setFieldsValue({ target: val })}
-          currency={form.getFieldValue('currency')}
-          onCurrencyChanged={currency => form.setFieldsValue({ currency })}
-          mods={form.getFieldValue('mods')}
-          onModsChanged={mods => form.setFieldsValue({ mods })}
-        />
         <FormItems.ProjectDuration
-          name="duration"
           value={form.getFieldValue('duration')}
           isRecurring={isRecurring}
           onToggleRecurring={() =>
@@ -51,8 +54,29 @@ export default function BudgetForm({
             rules: [{ required: true }],
           }}
         />
+        <FormItems.ProjectTarget
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
+          value={target.toString()}
+          onValueChange={val => setTarget(parseFloat(val || '0'))}
+          currency={currency}
+          onCurrencyChange={setCurrency}
+        />
+        <FormItems.ProjectMods
+          name="mods"
+          target={target}
+          currency={currency}
+          mods={mods}
+          onModsChanged={setMods}
+        />
         <Form.Item>
-          <Button htmlType="submit" type="primary" onClick={onSave}>
+          <Button
+            style={{ marginTop: 20 }}
+            htmlType="submit"
+            type="primary"
+            onClick={() => onSave(currency, mods, target)}
+          >
             Save
           </Button>
         </Form.Item>

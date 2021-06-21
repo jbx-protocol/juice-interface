@@ -2,8 +2,11 @@ import { Button, Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
+import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { SECONDS_IN_DAY } from 'constants/units'
 import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -15,9 +18,6 @@ import { useContext, useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { normalizeHandle } from 'utils/formatHandle'
 import { formatWad, fromWad } from 'utils/formatNumber'
-
-import { SECONDS_IN_DAY } from '../../constants/units'
-import { UserContext } from '../../contexts/userContext'
 
 type FormFields = {
   name: string
@@ -59,20 +59,17 @@ export default function DefineProject() {
     }
     if (fields.target !== undefined) {
       dispatch(editingProjectActions.setTarget(fields.target))
-      dispatch(
-        editingProjectActions.setMods([
-          { address: userAddress, amount: parseInt(fields.target) },
-        ]),
-      )
     }
-    if (fields.duration !== undefined)
+    if (fields.duration !== undefined) {
       dispatch(
         editingProjectActions.setDuration(
           (parseFloat(fields.duration || '0') * SECONDS_IN_DAY).toString(),
         ),
       )
-    if (fields.currency !== undefined)
+    }
+    if (fields.currency !== undefined) {
       dispatch(editingProjectActions.setCurrency(fields.currency))
+    }
   }
 
   const bold = (text?: string, placeholder?: string) =>
@@ -100,7 +97,25 @@ export default function DefineProject() {
         <Col xs={24} lg={10}>
           <Form form={form} layout="vertical" onValuesChange={onFieldsChange}>
             <FormItems.ProjectName name="name" hideLabel />
-            <FormItems.ProjectTarget
+            <Form.Item
+              name="target"
+              extra="The amount of funding your project needs per funding cycle to keep going."
+            >
+              <BudgetTargetInput
+                value={form.getFieldValue('target')}
+                onValueChange={val => {
+                  form.setFieldsValue({ target: val })
+                  onFieldsChange({ ...form.getFieldsValue(true), target: val })
+                }}
+                currency={form.getFieldValue('currency')}
+                onCurrencyChange={currency => {
+                  form.setFieldsValue({ currency })
+                  onFieldsChange({ ...form.getFieldsValue(true), currency })
+                }}
+                placeholder="0"
+              />
+            </Form.Item>
+            {/* <FormItems.ProjectTarget
               name="target"
               value={form.getFieldValue('target')}
               onValueChanged={val => {
@@ -115,7 +130,7 @@ export default function DefineProject() {
               mods={[
                 {
                   address: userAddress,
-                  amount: 0,
+                  amount: '0',
                 },
               ]}
               onModsChanged={mods => {
@@ -127,7 +142,7 @@ export default function DefineProject() {
                 })
               }}
               hideLabel
-            />
+            /> */}
             <FormItems.ProjectDuration
               name="duration"
               value={form.getFieldValue('duration')}

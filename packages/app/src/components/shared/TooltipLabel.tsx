@@ -1,7 +1,8 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
-import { Tooltip, TooltipProps } from 'antd'
+import { TooltipProps } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
+
+import TooltipIcon from './TooltipIcon'
 
 export default function TooltipLabel({
   label,
@@ -18,12 +19,8 @@ export default function TooltipLabel({
 
   return (
     <span style={style}>
-      <span style={{ marginRight: 5 }}>{label}</span>
-      {tip && (
-        <Tooltip title={tip} placement={placement}>
-          <InfoCircleOutlined style={{ color: colors.icon.secondary }} />
-        </Tooltip>
-      )}
+      <span style={{ marginRight: tip ? 5 : 0 }}>{label}</span>
+      {tip && <TooltipIcon tip={tip} placement={placement} />}
     </span>
   )
 }

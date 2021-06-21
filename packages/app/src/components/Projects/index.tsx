@@ -29,8 +29,6 @@ export default function Projects() {
 
   const projects = useProjects({ owner })
 
-  if (!projects) return <Loading />
-
   return (
     <div style={{ ...layouts.maxWidth }}>
       <div
@@ -83,7 +81,9 @@ export default function Projects() {
         </Button>
       </div>
 
-      {projects.length ? (
+      {!projects ? (
+        <Loading />
+      ) : projects.length ? (
         <ProjectsGrid projects={projects} />
       ) : (
         <div style={{ padding: 40, textAlign: 'center' }}>

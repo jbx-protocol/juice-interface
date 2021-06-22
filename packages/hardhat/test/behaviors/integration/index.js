@@ -70,5 +70,6 @@ module.exports = function() {
 
   describe("simpleDeploy(...)", run(shouldBehaveLike.simpleDeploy));
   describe("migrate(...)", run(shouldBehaveLike.migrate));
-  describe.only("paymentMods(...)", run(shouldBehaveLike.paymentMods));
+  describe("basic paymentMods(...)", run(shouldBehaveLike.paymentModsBasic));
+  describe.only("full paymentMods(...)", run(shouldBehaveLike.paymentModsFull));
 };

@@ -37,6 +37,9 @@ module.exports = async function() {
     .mul(200);
 
   const amountToTap = paymentValue;
+  const expectedAmountToTap = amountToTap
+    .mul(200)
+    .div((await this.contracts.juicer.fee()).add(200));
 
   //   let packedMetadata = BigNumber.from(0);
   //   packedMetadata = packedMetadata.add(reconfigurationBondingCurveRate);
@@ -48,7 +51,7 @@ module.exports = async function() {
 
   return [
     /** 
-      Tap funds for the project with payment mod.
+      Set terminal.
     */
     this.executeFn({
       caller: this.deployer,
@@ -128,7 +131,7 @@ module.exports = async function() {
       fn: "getBalance",
       args: [beneficiary],
       value: (await this.deployer.provider.getBalance(beneficiary)).add(
-        amountToTap.mul(percent).div(200)
+        expectedAmountToTap.mul(percent).div(200)
       )
     })
     // /**

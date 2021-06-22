@@ -1,5 +1,11 @@
-const { utils } = require("ethers");
+/** 
+  Projects that are relying on a terminal to receive payments and manage their funds 
+  can migrate to new terminals, according to the following rules:
 
+   - Governance must first allow migration to the new terminal.
+   - The old terminal can no longer receive funds or print tickets.
+   - All funds will migrate to the new terminal for users to tap and redeem tickets on.
+*/
 module.exports = async ({
   deployer,
   addrs,
@@ -9,8 +15,13 @@ module.exports = async ({
   checkFn,
   deployContractFn,
   randomBigNumberFn,
-  randomAddressFn,
-  getBalanceFn
+  stringToBytesFn,
+  normalizedPercentFn,
+  getBalanceFn,
+  percentageFn,
+  verifyBalanceFn,
+  changeInBalanceFn,
+  randomAddressFn
 }) => {
   // The owner of the project that will migrate.
   const owner = addrs[0];
@@ -18,10 +29,38 @@ module.exports = async ({
   // An account that will be used to make payments.
   const payer = addrs[1];
 
+  // An account that will be distributed tickets in the first terminal, that will redeem in the second terminal.
+  const ticketBeneficiary = addrs[2];
+
+  // An address that will be the beneficiary of funds when redeeming tickets.
+  const redeemBeneficiary = addrs[3];
+
   // Cant pay entire balance because some is needed for gas.
   const paymentValue = randomBigNumberFn({
     max: (await getBalanceFn(payer.address)).div(2)
   });
+
+  // The project's funding cycle target will be half of the payment value.
+  const target = paymentValue.div(2);
+
+  // The currency will be 0, which corresponds to ETH.
+  const currency = 0;
+
+  // Set a percentage of tickets to reserve for the project owner.
+  const reservedRate = 10;
+
+  // The amount of tickets that are expected to be printed in exchange of a payment of `paymentValue`
+  // that are not be reserved.
+  const expectedBeneficiaryTicketAmount = percentageFn({
+    value: paymentValue.mul(constants.InitialWeightMultiplier),
+    percent: 100 - reservedRate
+  });
+
+  // The percent, out of `constants.MaxPercent`, that will be charged as a fee.
+  const fee = await contracts.juicer.fee();
+
+  // Since the governance project was created before this test, the created project ID should be 2.
+  const expectedProjectId = 2;
 
   // The juicer that will be migrated to.
   const secondJuicer = await deployContractFn("Juicer", [
@@ -37,7 +76,7 @@ module.exports = async ({
 
   return [
     /** 
-      Deploy a project for the owner. Expect the project's ID to be 2.
+      Deploy a project for the owner.
     */
     () =>
       executeFn({
@@ -46,17 +85,17 @@ module.exports = async ({
         fn: "deploy",
         args: [
           owner.address,
-          utils.formatBytes32String("some-handle"),
+          stringToBytesFn("some-unique-handle"),
           "",
           {
-            target: randomBigNumberFn(),
-            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
-            duration: randomBigNumberFn({ max: constants.MaxUint24 }),
+            target,
+            currency,
+            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint24 }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
           {
-            reservedRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            reservedRate: normalizedPercentFn(reservedRate),
             bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
@@ -73,7 +112,7 @@ module.exports = async ({
       checkFn({
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
-        args: [2],
+        args: [expectedProjectId],
         expect: contracts.juicer.address
       }),
     /**
@@ -84,7 +123,7 @@ module.exports = async ({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
-        args: [2, randomAddressFn(), "", false],
+        args: [expectedProjectId, ticketBeneficiary.address, "", false],
         value: paymentValue
       }),
     /**
@@ -98,6 +137,35 @@ module.exports = async ({
         expect: paymentValue
       }),
     /**
+      Make sure tickets can be redeemed successfully in this Juicer.
+    */
+    async () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.juicer,
+        fn: "redeem",
+        // Redeem half as many tickets as are available. The rest will be redeemed later.
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          expectedBeneficiaryTicketAmount.div(2),
+          0, // must be lower than the expected amount of ETH that is being claimed.
+          redeemBeneficiary.address,
+          false // doesnt matter
+        ]
+      }),
+    /**
+      Make sure funds can be tapped successfully in this Juicer.
+    */
+    async () =>
+      executeFn({
+        caller: payer,
+        contract: contracts.juicer,
+        fn: "tap",
+        // Tap half as much as is available. The rest will be tapped later.
+        args: [expectedProjectId, target.div(2), currency, target.div(2)]
+      }),
+    /**
       Migrating to a new juicer shouldn't work because it hasn't been allowed yet.
     */
     () =>
@@ -105,7 +173,7 @@ module.exports = async ({
         caller: owner,
         contract: contracts.juicer,
         fn: "migrate",
-        args: [2, secondJuicer.address],
+        args: [expectedProjectId, secondJuicer.address],
         revert: "Juicer::migrate: NOT_ALLOWED"
       }),
     /**
@@ -126,7 +194,7 @@ module.exports = async ({
         caller: addrs[2],
         contract: contracts.juicer,
         fn: "migrate",
-        args: [2, secondJuicer.address],
+        args: [expectedProjectId, secondJuicer.address],
         revert: "Operatable: UNAUTHORIZED"
       }),
     /**
@@ -137,27 +205,33 @@ module.exports = async ({
         caller: owner,
         contract: contracts.juicer,
         fn: "migrate",
-        args: [2, secondJuicer.address]
+        args: [expectedProjectId, secondJuicer.address]
       }),
     /**
-      There should no longer be a balance in the old juicer.
+      The only balance that should be left in the old juicer is the admin fee
+      incurred while tapping.
     */
     () =>
-      checkFn({
-        contract: deployer.provider,
-        fn: "getBalance",
-        args: [contracts.juicer.address],
-        expect: 0
+      verifyBalanceFn({
+        address: contracts.juicer.address,
+        // Take the fee from the amount that was tapped.
+        expect: target
+          .div(2)
+          .mul(constants.MaxPercent)
+          .div(constants.MaxPercent.add(fee))
       }),
     /**
-      The balance should be entirely in the new Juicer.
+      The rest of the balance should be entirely in the new Juicer.
     */
-    () =>
+    async () =>
       checkFn({
         contract: deployer.provider,
         fn: "getBalance",
         args: [secondJuicer.address],
+        // The balance should be the amount paid minute the amount tapped and the amount claimed from redeeming tickets.
         expect: paymentValue
+          .sub(target.div(2))
+          .sub(await changeInBalanceFn(redeemBeneficiary.address))
       }),
     /**
       The terminal should have been updated to the new juicer in the directory.
@@ -166,7 +240,7 @@ module.exports = async ({
       checkFn({
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
-        args: [2],
+        args: [expectedProjectId],
         expect: secondJuicer.address
       }),
     /**
@@ -177,9 +251,38 @@ module.exports = async ({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
-        args: [2, randomAddressFn(), "", false],
+        args: [expectedProjectId, randomAddressFn(), "", false],
         value: paymentValue,
         revert: "TerminalUtility: UNAUTHORIZED"
+      }),
+    /**
+      Make sure tickets can be redeemed successfully in the new Juicer.
+    */
+    async () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: secondJuicer,
+        fn: "redeem",
+        // Redeem half as many tickets as are available. The rest will be redeemed later.
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          expectedBeneficiaryTicketAmount.div(2),
+          0, // must be lower than the expected amount of ETH that is being claimed.
+          randomAddressFn(),
+          false // doesnt matter
+        ]
+      }),
+    /**
+      Make sure funds can be tapped successfully in the new Juicer.
+    */
+    async () =>
+      executeFn({
+        caller: payer,
+        contract: secondJuicer,
+        fn: "tap",
+        // Tap half as much as is available. The rest will be tapped later.
+        args: [expectedProjectId, target.div(2), currency, target.div(2)]
       }),
     /**
       Payments to the new Juicer should be accepted.
@@ -189,7 +292,7 @@ module.exports = async ({
         caller: deployer,
         contract: secondJuicer,
         fn: "pay",
-        args: [2, randomAddressFn(), "", false],
+        args: [expectedProjectId, randomAddressFn(), "", false],
         value: paymentValue
       })
   ];

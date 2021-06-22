@@ -4,7 +4,6 @@ const fs = require("fs");
 
 const { deployMockContract } = require("@ethereum-waffle/mock-contract");
 
-const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
@@ -149,36 +148,47 @@ describe("Juice", async function() {
         .to.deep.equal(expect);
     };
 
-    // Binds a function that gets the balance of an addres
+    // Binds a function that gets the balance of an address.
     this.getBalanceFn = address => ethers.provider.getBalance(address);
+
+    // Binds a function that gets the balance of an address as its changed during the current test.
+    this.changeInBalanceFn = async address =>
+      (await ethers.provider.getBalance(address)).sub(
+        initialBalances[address] || 0
+      );
 
     // Bind some constants.
 
     this.constants = {
       AddressZero: ethers.constants.AddressZero,
       MaxUint256: ethers.constants.MaxUint256,
-      MaxInt256: BigNumber.from(2)
+      MaxInt256: ethers.BigNumber.from(2)
         .pow(255)
         .sub(1),
-      MaxUint24: BigNumber.from(2)
+      MaxUint24: ethers.BigNumber.from(2)
         .pow(24)
         .sub(1),
-      MaxUint8: BigNumber.from(2)
+      MaxUint8: ethers.BigNumber.from(2)
         .pow(8)
         .sub(1),
-      MaxPercent: BigNumber.from(200)
+      MaxPercent: ethers.BigNumber.from(200)
     };
 
     // Bind function that gets a random big number.
     this.randomBigNumberFn = ({
-      min = BigNumber.from(0),
-      max = this.constants.MaxUint256
-    } = {}) =>
-      max
-        .sub(min)
-        .add(min)
-        .div(10)
-        .mul(BigNumber.from(Math.floor(Math.random() * 10)));
+      min = ethers.BigNumber.from(0),
+      max = this.constants.MaxUint256,
+      fidelity = 10000000
+    } = {}) => {
+      const base = max.sub(min).add(min);
+      return base.gt(fidelity)
+        ? base
+            .div(fidelity)
+            .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
+        : base
+            .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
+            .div(fidelity);
+    };
 
     // Bind a function that gets a random address.
     this.randomAddressFn = () =>
@@ -189,9 +199,21 @@ describe("Juice", async function() {
 
     // Bind a function to create a value padding by 18 zeros.
     this.e18Fn = value =>
-      BigNumber.from(10)
+      ethers.BigNumber.from(10)
         .pow(18)
         .mul(value);
+
+    // Bind the big number utils.
+    this.BigNumber = ethers.BigNumber;
+
+    // Bind a function that turns a string into bytes.
+    this.stringToBytesFn = ethers.utils.formatBytes32String;
+
+    // Bind a function to get a normalized percent.
+    this.normalizedPercentFn = percent =>
+      ethers.BigNumber.from(percent)
+        .mul(this.constants.MaxPercent)
+        .div(100);
   });
 
   // Before each test, take a snapshot of the contract state.

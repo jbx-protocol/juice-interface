@@ -96,6 +96,12 @@ module.exports = function() {
       modStore,
       juicer
     };
+
+    // Bind the standard weight multiplier to the constants.
+    // This is used to determine how many tickets get printed per value contributed during a first funding cycle.
+    this.constants.InitialWeightMultiplier = (
+      await fundingCycles.BASE_WEIGHT()
+    ).div(BigNumber.from(10).pow(18));
   });
 
   // it("Simple deployment of a project", run(workflows.simpleDeploy));

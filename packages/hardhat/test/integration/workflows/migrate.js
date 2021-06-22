@@ -12,13 +12,18 @@ module.exports = async ({
   randomAddressFn,
   getBalanceFn
 }) => {
+  // The owner of the project that will migrate.
   const owner = addrs[0];
+
+  // An account that will be used to make payments.
   const payer = addrs[1];
+
   // Cant pay entire balance because some is needed for gas.
   const paymentValue = randomBigNumberFn({
     max: (await getBalanceFn(payer.address)).div(2)
   });
 
+  // The juicer that will be migrated to.
   const secondJuicer = await deployContractFn("Juicer", [
     contracts.projects.address,
     contracts.fundingCycles.address,
@@ -32,7 +37,7 @@ module.exports = async ({
 
   return [
     /** 
-      Deploy a project. Expect the project's ID to be 2.
+      Deploy a project for the owner. Expect the project's ID to be 2.
     */
     () =>
       executeFn({
@@ -76,11 +81,10 @@ module.exports = async ({
     */
     async () =>
       executeFn({
-        caller: deployer,
+        caller: payer,
         contract: contracts.juicer,
         fn: "pay",
         args: [2, randomAddressFn(), "", false],
-        // Can't send entire balance because gas is needed.
         value: paymentValue
       }),
     /**
@@ -115,7 +119,7 @@ module.exports = async ({
         args: [contracts.juicer.address, secondJuicer.address]
       }),
     /**
-      Migrate to the new juicer called by a different address shouldn't be allowed.
+      Migrating to the new juicer called by a different address shouldn't be allowed.
     */
     () =>
       executeFn({
@@ -156,7 +160,7 @@ module.exports = async ({
         expect: paymentValue
       }),
     /**
-      The terminal should be updated to the new juicer in the directory.
+      The terminal should have been updated to the new juicer in the directory.
     */
     () =>
       checkFn({

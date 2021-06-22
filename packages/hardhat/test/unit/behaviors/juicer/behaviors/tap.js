@@ -353,9 +353,9 @@ const ops = ({
   }
 
   // Governance must be a mocked contract here.
-  const governanceProjectId = 1;
   const governance = await deployMockLocalContract("Governance", [
-    governanceProjectId
+    govProjectId,
+    mockContracts.terminalDirectory.address
   ]);
   const targetContract = await deployContract(contractName, [
     mockContracts.projects.address,
@@ -423,60 +423,65 @@ const ops = ({
       ? [
           mockFn({
             mockContract: governance,
-            fn: "terminal",
+            fn: "projectId",
             args: [],
+            returns: [govProjectId]
+          }),
+          mockFn({
+            mockContract: mockContracts.terminalDirectory,
+            fn: "terminalOf",
+            args: [govProjectId],
             returns: [
               govUsesSameTerminal
                 ? targetContract.address
                 : constants.AddressZero
             ]
           }),
-          mockFn({
-            condition: !govUsesSameTerminal,
-            mockContract: governance,
-            fn: "pay",
-            args: [owner, "Juice fee", false],
-            returns: []
-          }),
-          mockFn({
-            condition: govUsesSameTerminal,
-            mockContract: governance,
-            fn: "projectId",
-            args: [],
-            returns: [govProjectId]
-          }),
-          mockFn({
-            condition: govUsesSameTerminal,
-            mockContract: mockContracts.fundingCycles,
-            fn: "getCurrentOf",
-            args: [govProjectId],
-            returns: [
-              {
-                metadata: 0,
-                configured: 0,
-                id: 0,
-                projectId: 0,
-                number: 0,
-                basedOn: 0,
-                weight: 0,
-                ballot: constants.AddressZero,
-                start: 0,
-                duration: 0,
-                target: 0,
-                currency: 0,
-                fee,
-                discountRate: 0,
-                tapped: 0
-              }
-            ]
-          }),
-          mockFn({
-            condition: govUsesSameTerminal,
-            mockContract: mockContracts.ticketBooth,
-            fn: "print",
-            args: [owner, govProjectId, 0, false],
-            returns: []
-          })
+          ...(!govUsesSameTerminal
+            ? [
+                mockFn({
+                  mockContract: governance,
+                  fn: "pay",
+                  args: [owner, "Juice fee", false],
+                  returns: []
+                })
+              ]
+            : []),
+          ...(govUsesSameTerminal
+            ? [
+                mockFn({
+                  mockContract: mockContracts.fundingCycles,
+                  fn: "getCurrentOf",
+                  args: [govProjectId],
+                  returns: [
+                    {
+                      metadata: 0,
+                      configured: 0,
+                      id: 0,
+                      projectId: 0,
+                      number: 0,
+                      basedOn: 0,
+                      weight: 0,
+                      ballot: constants.AddressZero,
+                      start: 0,
+                      duration: 0,
+                      target: 0,
+                      currency: 0,
+                      fee,
+                      discountRate: 0,
+                      tapped: 0
+                    }
+                  ]
+                }),
+                mockFn({
+                  condition: govUsesSameTerminal,
+                  mockContract: mockContracts.ticketBooth,
+                  fn: "print",
+                  args: [owner, govProjectId, 0, false],
+                  returns: []
+                })
+              ]
+            : [])
         ]
       : []),
     mockFn({

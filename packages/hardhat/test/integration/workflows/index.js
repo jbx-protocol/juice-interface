@@ -1,11 +1,11 @@
 const simpleDeploy = require("./simple_deploy");
 const migrate = require("./migrate");
-const paymentModsBasic = require("./payment_mods_basic");
-const paymentModsFull = require("./payment_mods_full");
+const payoutToPaymentMods = require("./payout_to_payment_mods");
+const printReservedTickets = require("./print_reserved_tickets");
 
 module.exports = {
   simpleDeploy,
   migrate,
-  paymentModsBasic,
-  paymentModsFull
+  payoutToPaymentMods,
+  printReservedTickets
 };

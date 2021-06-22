@@ -1,4 +1,7 @@
 const { expect } = require("chai");
+const {
+  ethers: { constants }
+} = require("hardhat");
 
 const tests = {
   success: [
@@ -85,7 +88,9 @@ module.exports = function() {
           terminalDirectory.address
         ]);
 
-        await this.contract.connect(caller).setTerminal(juicer.address);
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(this.projectId)
+          .returns(juicer.address);
 
         await juicer.mock.pay
           .withArgs(this.projectId, beneficiary, memo, preferUnstakedTickets)
@@ -152,10 +157,16 @@ module.exports = function() {
             terminalDirectory.address
           ]);
 
-          await this.contract.connect(caller).setTerminal(juicer.address);
+          await this.terminalDirectory.mock.terminalOf
+            .withArgs(this.projectId)
+            .returns(juicer.address);
           await juicer.mock.pay
             .withArgs(this.projectId, beneficiary, memo, preferUnstakedTickets)
             .returns(0);
+        } else {
+          await this.terminalDirectory.mock.terminalOf
+            .withArgs(this.projectId)
+            .returns(constants.AddressZero);
         }
 
         if (zeroProject) {

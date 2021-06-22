@@ -2,8 +2,6 @@ const { BigNumber, constants, utils } = require("ethers");
 
 module.exports = async function() {
   const owner = this.deployer.address;
-  const handle = "some-handle";
-  const uri = "some-uri";
   const mod1 = {
     preferUnstaked: false,
     percent: 100,
@@ -52,16 +50,7 @@ module.exports = async function() {
 
   return [
     /** 
-      Set terminal.
-    */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.governance,
-      fn: "setTerminal",
-      args: [this.contracts.juicer.address]
-    }),
-    /** 
-      Deploy first project with a payment mod. Expect the project's ID to be 1.
+      Deploy first project with a payment mod. Expect the project's ID to be 2.
     */
     this.executeFn({
       caller: this.deployer,
@@ -69,8 +58,8 @@ module.exports = async function() {
       fn: "deploy",
       args: [
         owner,
-        utils.formatBytes32String(handle),
-        uri,
+        utils.formatBytes32String("some-handle"),
+        "",
         {
           target,
           currency,
@@ -90,39 +79,40 @@ module.exports = async function() {
     /** 
       Check that the payment mod got set.
     */
-    this.checkFn({
-      contract: this.contracts.modStore,
-      fn: "paymentModsOf",
-      args: [1, (await this.getTimestamp()).add(2)],
-      expect: [
-        [
-          mod1.preferUnstaked,
-          mod1.percent,
-          mod1.lockedUntil,
-          mod1.beneficiary,
-          mod1.allocator,
-          mod1.projectId
-        ],
-        [
-          mod2.preferUnstaked,
-          mod2.percent,
-          mod2.lockedUntil,
-          mod2.beneficiary,
-          mod2.allocator,
-          mod2.projectId
-        ],
-        [
-          mod3.preferUnstaked,
-          mod3.percent,
-          mod3.lockedUntil,
-          mod3.beneficiary,
-          mod3.allocator,
-          mod3.projectId
+    () =>
+      this.checkFn({
+        contract: this.contracts.modStore,
+        fn: "paymentModsOf",
+        args: [2, this.getTimeMark()],
+        expect: [
+          [
+            mod1.preferUnstaked,
+            mod1.percent,
+            mod1.lockedUntil,
+            mod1.beneficiary,
+            mod1.allocator,
+            mod1.projectId
+          ],
+          [
+            mod2.preferUnstaked,
+            mod2.percent,
+            mod2.lockedUntil,
+            mod2.beneficiary,
+            mod2.allocator,
+            mod2.projectId
+          ],
+          [
+            mod3.preferUnstaked,
+            mod3.percent,
+            mod3.lockedUntil,
+            mod3.beneficiary,
+            mod3.allocator,
+            mod3.projectId
+          ]
         ]
-      ]
-    }),
+      }),
     /** 
-      Deploy second project with a payment mod. Expect the project's ID to be 2.
+      Deploy second project with a payment mod. Expect the project's ID to be 3.
     */
     this.executeFn({
       caller: this.deployer,
@@ -130,8 +120,8 @@ module.exports = async function() {
       fn: "deploy",
       args: [
         owner,
-        utils.formatBytes32String(handle + "2"),
-        uri,
+        utils.formatBytes32String("some-other-handle"),
+        "",
         {
           target,
           currency,
@@ -155,7 +145,7 @@ module.exports = async function() {
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "pay",
-      args: [1, this.addrs[2].address, "", false],
+      args: [2, this.addrs[2].address, "", false],
       value: paymentValue
     }),
     /** 
@@ -164,7 +154,7 @@ module.exports = async function() {
     this.checkFn({
       contract: this.contracts.juicer,
       fn: "balanceOf",
-      args: [2],
+      args: [3],
       expect: BigNumber.from(0)
     }),
     /** 
@@ -174,7 +164,7 @@ module.exports = async function() {
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "tap",
-      args: [1, amountToTap, currency, amountToTap]
+      args: [2, amountToTap, currency, amountToTap]
     }),
     /** 
       Check that payment mod beneficiary has expected funds.
@@ -189,7 +179,7 @@ module.exports = async function() {
     this.checkFn({
       contract: this.contracts.juicer,
       fn: "balanceOf",
-      args: [2],
+      args: [3],
       expect: expectedAmountToTap.mul(mod2.percent).div(200)
     }),
     /** 
@@ -198,7 +188,7 @@ module.exports = async function() {
     this.checkFn({
       contract: this.contracts.ticketBooth,
       fn: "balanceOf",
-      args: [mod2.beneficiary, 2],
+      args: [mod2.beneficiary, 3],
       expect: expectedAmountToTap
         .mul(mod2.percent)
         .div(200)

@@ -587,7 +587,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         if (_govFeeAmount > 0) {
             // When processing the admin fee, save gas if the admin is using this juice terminal.
-            if (JuiceProject(governance).terminal() == this) {
+            if (
+                terminalDirectory.terminalOf(
+                    JuiceProject(governance).projectId()
+                ) == this
+            ) {
                 _pay(
                     JuiceProject(governance).projectId(),
                     _govFeeAmount,

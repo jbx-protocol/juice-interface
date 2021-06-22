@@ -27,7 +27,7 @@ module.exports = async function() {
 
   return [
     /** 
-      Deploy a project. Expect the project's ID to be 1.
+      Deploy a project. Expect the project's ID to be 2.
     */
     this.executeFn({
       caller: this.deployer,
@@ -53,26 +53,26 @@ module.exports = async function() {
         ticketMods
       ]
     }),
-    /** 
+    /**
       Check that the terminal got set.
     */
     this.checkFn({
       contract: this.contracts.terminalDirectory,
       fn: "terminalOf",
-      args: [1],
+      args: [2],
       expect: this.contracts.juicer.address
     }),
-    /** 
+    /**
       Make a payment to the project.
     */
     this.executeFn({
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "pay",
-      args: [1, this.addrs[2].address, "", false],
+      args: [2, this.addrs[2].address, "", false],
       value: paymentValue
     }),
-    /** 
+    /**
       The project's balance should match the payment just made.
     */
     this.checkFn({
@@ -81,17 +81,17 @@ module.exports = async function() {
       args: [this.contracts.juicer.address],
       expect: paymentValue
     }),
-    /** 
+    /**
       Migrating to a new juicer shouldn't work because it hasn't been allowed yet.
     */
     this.executeFn({
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "migrate",
-      args: [1, secondJuicer.address],
+      args: [2, secondJuicer.address],
       revert: "Juicer::migrate: NOT_ALLOWED"
     }),
-    /** 
+    /**
       Allow a migration to the new juicer.
     */
     this.executeFn({
@@ -100,16 +100,16 @@ module.exports = async function() {
       fn: "allowMigration",
       args: [this.contracts.juicer.address, secondJuicer.address]
     }),
-    /** 
+    /**
       Migrate to the new juicer.
     */
     this.executeFn({
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "migrate",
-      args: [1, secondJuicer.address]
+      args: [2, secondJuicer.address]
     }),
-    /** 
+    /**
       There should no longer be a balance in the old juicer.
     */
     this.checkFn({
@@ -118,7 +118,7 @@ module.exports = async function() {
       args: [this.contracts.juicer.address],
       expect: 0
     }),
-    /** 
+    /**
       The balance should be entirely in the new Juicer.
     */
     this.checkFn({
@@ -127,34 +127,34 @@ module.exports = async function() {
       args: [secondJuicer.address],
       expect: paymentValue
     }),
-    /** 
+    /**
       The terminal should be updated to the new juicer in the directory.
     */
     this.checkFn({
       contract: this.contracts.terminalDirectory,
       fn: "terminalOf",
-      args: [1],
+      args: [2],
       expect: secondJuicer.address
     }),
-    /** 
+    /**
       Payments to the old Juicer should no longer be accepter.
     */
     this.executeFn({
       caller: this.deployer,
       contract: this.contracts.juicer,
       fn: "pay",
-      args: [1, this.addrs[2].address, "", false],
+      args: [2, this.addrs[2].address, "", false],
       value: paymentValue,
       revert: "TerminalUtility: UNAUTHORIZED"
     }),
-    /** 
+    /**
       Payments to the new Juicer should be accepted.
     */
     this.executeFn({
       caller: this.deployer,
       contract: secondJuicer,
       fn: "pay",
-      args: [1, this.addrs[2].address, "", false],
+      args: [2, this.addrs[2].address, "", false],
       value: paymentValue
     })
   ];

@@ -9,8 +9,8 @@ import "./abstract/JuiceProject.sol";
 contract Governance is JuiceProject {
     // --- external transactions --- //
 
-    constructor(uint256 _projectId)
-        JuiceProject(ITerminal(address(0)), _projectId)
+    constructor(uint256 _projectId, ITerminalDirectory _terminalDirectory)
+        JuiceProject(_projectId, _terminalDirectory)
     {}
 
     /** 

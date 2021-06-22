@@ -36,11 +36,11 @@ contract Shwotime is JuiceProject {
     uint256 public fee;
 
     constructor(
-        ITerminal _terminal,
         uint256 _projectId,
+        ITerminalDirectory _terminalDirectory,
         IERC20 _dai,
         uint256 _fee
-    ) JuiceProject(_terminal, _projectId) {
+    ) JuiceProject(_projectId, _terminalDirectory) {
         dai = _dai;
         fee = _fee;
     }

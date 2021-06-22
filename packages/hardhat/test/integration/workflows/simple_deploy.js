@@ -28,6 +28,9 @@ module.exports = async function() {
   packedMetadata = packedMetadata.add(reservedRate);
   packedMetadata = packedMetadata.shl(8);
 
+  const expectedFundingCycleId = BigNumber.from(2);
+  const expectedProjectId = BigNumber.from(2);
+
   return [
     this.executeFn({
       caller: this.deployer,
@@ -53,51 +56,53 @@ module.exports = async function() {
         ticketMods
       ]
     }),
+    // Run this at execution time to get correct timestamps.
+    async () =>
+      this.checkFn({
+        contract: this.contracts.fundingCycles,
+        fn: "get",
+        args: [2],
+        expect: [
+          expectedFundingCycleId,
+          expectedProjectId,
+          BigNumber.from(1),
+          BigNumber.from(0),
+          this.getTimeMark(),
+          BigNumber.from(10).pow(19),
+          constants.AddressZero,
+          this.getTimeMark(),
+          duration,
+          target,
+          currency,
+          BigNumber.from(10),
+          discountRate,
+          BigNumber.from(0),
+          packedMetadata
+        ]
+      }),
     this.checkFn({
       contract: this.contracts.projects,
       fn: "handleOf",
-      args: [1],
+      args: [2],
       expect: utils.formatBytes32String(handle)
     }),
     this.checkFn({
       contract: this.contracts.projects,
       fn: "projectFor",
       args: [utils.formatBytes32String(handle)],
-      expect: 1
+      expect: 2
     }),
     this.checkFn({
       contract: this.contracts.projects,
       fn: "uriOf",
-      args: [1],
+      args: [2],
       expect: uri
     }),
     this.checkFn({
       contract: this.contracts.terminalDirectory,
       fn: "terminalOf",
-      args: [1],
+      args: [2],
       expect: this.contracts.juicer.address
-    }),
-    this.checkFn({
-      contract: this.contracts.fundingCycles,
-      fn: "get",
-      args: [1],
-      expect: [
-        BigNumber.from(1),
-        BigNumber.from(1),
-        BigNumber.from(1),
-        BigNumber.from(0),
-        (await this.getTimestamp()).add(1),
-        BigNumber.from(10).pow(19),
-        constants.AddressZero,
-        (await this.getTimestamp()).add(1),
-        duration,
-        target,
-        currency,
-        BigNumber.from(10),
-        discountRate,
-        BigNumber.from(0),
-        packedMetadata
-      ]
     })
   ];
 };

@@ -19,5 +19,5 @@ module.exports = function() {
   describe("TicketBooth", shouldBehaveLike.ticketBooth);
 
   // Depends on everything.
-  // describe("Juicer", shouldBehaveLike.juicer);
+  describe("Juicer", shouldBehaveLike.juicer);
 };

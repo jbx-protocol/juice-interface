@@ -37,6 +37,9 @@ describe("Juice", async function() {
       timeMark = await this.getTimestamp(blockNumber);
     };
 
+    // Binds the ability to get the latest time mark.
+    this.getTimeMark = () => timeMark;
+
     // Binds a function that fastforward a certain amount from the beginning of the test, or from the latest time mark if one is set.
     this.fastforward = async seconds => {
       const now = await this.getTimestamp();
@@ -185,7 +188,7 @@ describe("Juice", async function() {
   });
 
   // Run the tests.
-  // describe("Unit", unit);
+  describe("Unit", unit);
   describe("Integration", integration);
 
   // After each test, restore the contract state.

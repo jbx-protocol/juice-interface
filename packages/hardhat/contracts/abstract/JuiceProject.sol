@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./../interfaces/IJuicer.sol";
 
+import "hardhat/console.sol";
+
 /** 
   @notice A contract that inherits from JuiceProject can use Juice as a business-model-as-a-service.
   @dev The owner of the contract makes admin decisions such as:
@@ -14,12 +16,19 @@ import "./../interfaces/IJuicer.sol";
     - Should this project's Tickets be migrated to a new Juicer. 
 */
 abstract contract JuiceProject is IERC721Receiver, Ownable {
-    ITerminal public terminal;
+    /// @notice The direct deposit terminals.
+    ITerminalDirectory public immutable terminalDirectory;
+
+    /// @notice The ID of the project that should be used to forward this contract's received payments.
     uint256 public projectId;
 
-    constructor(ITerminal _terminal, uint256 _projectId) {
-        terminal = _terminal;
+    /** 
+      @param _projectId The ID of the project that should be used to forward this contract's received payments.
+      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
+    */
+    constructor(uint256 _projectId, ITerminalDirectory _terminalDirectory) {
         projectId = _projectId;
+        terminalDirectory = _terminalDirectory;
     }
 
     receive() external payable {}
@@ -34,14 +43,6 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         onlyOwner
     {
         Address.sendValue(_beneficiary, _amount);
-    }
-
-    /** 
-      @notice Sets the contract where fees are sent.
-      @param _to The new terminal to send fees to.
-    */
-    function setTerminal(ITerminal _to) external onlyOwner {
-        terminal = _to;
     }
 
     /** 
@@ -64,11 +65,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         bool _preferUnstakedTickets
     ) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
+
+        // Find the terminal for this contract's project.
+        ITerminal _terminal = terminalDirectory.terminalOf(projectId);
+
         require(
-            terminal != ITerminal(address(0)),
+            _terminal != ITerminal(address(0)),
             "JuiceProject::pay: TERMINAL_NOT_FOUND"
         );
-        terminal.pay{value: msg.value}(
+        _terminal.pay{value: msg.value}(
             projectId,
             _beneficiary,
             _memo,
@@ -141,11 +146,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         bool _preferUnstakedTickets
     ) internal {
         require(projectId != 0, "JuiceProject::takeFee: PROJECT_NOT_FOUND");
+        // Find the terminal for this contract's project.
+        ITerminal _terminal = terminalDirectory.terminalOf(projectId);
+
         require(
-            terminal != ITerminal(address(0)),
+            _terminal != ITerminal(address(0)),
             "JuiceProject::takeFee: TERMINAL_NOT_FOUND"
         );
-        terminal.pay{value: _amount}(
+
+        _terminal.pay{value: _amount}(
             projectId,
             _beneficiary,
             _memo,

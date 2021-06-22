@@ -485,19 +485,6 @@ const tests = {
       })
     },
     {
-      description: "target is 0",
-      fn: testTemplate({
-        op: {
-          target: BigNumber.from(0)
-        },
-        setup: {
-          // no preconfiguration
-          preconfigure: null
-        },
-        revert: "FundingCycles::configure: BAD_TARGET"
-      })
-    },
-    {
       description: "duration is 0",
       fn: testTemplate({
         op: {

@@ -275,9 +275,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         onlyTerminal(_projectId)
         returns (FundingCycle memory fundingCycle)
     {
-        // Target must be greater than 0.
-        require(_properties.target > 0, "FundingCycles::configure: BAD_TARGET");
-
         // Duration must be greater than 0, and must fit in a uint24.
         require(
             _properties.duration > 0 &&

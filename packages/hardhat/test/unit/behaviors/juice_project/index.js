@@ -1,7 +1,3 @@
-const {
-  ethers: { constants }
-} = require("hardhat");
-
 const shouldBehaveLike = require("./behaviors");
 
 const contractName = "ExampleJuiceProject";
@@ -11,10 +7,14 @@ module.exports = function() {
   before(async function() {
     this.projectId = 1;
 
+    this.terminalDirectory = await this.deployMockLocalContract(
+      "TerminalDirectory"
+    );
+
     // Deploy the contract.
     this.contract = await this.deployContract(contractName, [
-      constants.AddressZero,
-      this.projectId
+      this.projectId,
+      this.terminalDirectory.address
     ]);
   });
 
@@ -28,6 +28,5 @@ module.exports = function() {
   describe("pay(...)", shouldBehaveLike.pay);
   describe("takeFee(...)", shouldBehaveLike.takeFee);
   describe("setProjectId(...)", shouldBehaveLike.setProjectId);
-  describe("setTerminal(...)", shouldBehaveLike.setTerminal);
   describe("withdraw(...)", shouldBehaveLike.withdraw);
 };

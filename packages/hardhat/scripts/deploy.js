@@ -76,7 +76,7 @@ const main = async () => {
     terminalDirectory.address
   ]);
 
-  const governance = await deploy("Governance", [1]);
+  const governance = await deploy("Governance", [1, terminalDirectory.address]);
 
   const juicer = await deploy("Juicer", [
     projects.address,
@@ -94,12 +94,10 @@ const main = async () => {
   const blockGasLimit = 9000000;
 
   try {
-    const ProjectsFactory = await ethers.getContractFactory("Projects");
     const PricesFactory = await ethers.getContractFactory("Prices");
     const GovernanceFactory = await ethers.getContractFactory("Governance");
     const JuicerFactory = await ethers.getContractFactory("Juicer");
 
-    const attachedProjects = await ProjectsFactory.attach(projects.address);
     const attachedPrices = await PricesFactory.attach(prices.address);
     const attachedGovernance = await GovernanceFactory.attach(
       governance.address
@@ -127,11 +125,6 @@ const main = async () => {
         gasLimit: blockGasLimit
       });
     }
-
-    console.log(callContractIcon + "Setting governance's Juice terminal");
-    await attachedGovernance.setTerminal(juicer.address, {
-      gasLimit: blockGasLimit
-    });
 
     // TODO set the owner of the admin contract.
     // await attachedJuicer.transferOwnership(admin.address, {

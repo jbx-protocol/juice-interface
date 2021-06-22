@@ -1,3 +1,4 @@
+const { BigNumber, constants, utils } = require("ethers");
 const workflows = require("./workflows");
 
 const run = function(ops) {
@@ -40,7 +41,10 @@ module.exports = function() {
       terminalDirectory.address
     ]);
 
-    const governance = await this.deployContract("Governance", [1]);
+    const governance = await this.deployContract("Governance", [
+      1,
+      terminalDirectory.address
+    ]);
 
     const juicer = await this.deployContract("Juicer", [
       projects.address,
@@ -52,6 +56,34 @@ module.exports = function() {
       terminalDirectory.address,
       governance.address
     ]);
+
+    /** 
+      Deploy the governance contract's project.
+    */
+    await this.executeFn({
+      caller: this.deployer,
+      contract: juicer,
+      fn: "deploy",
+      args: [
+        this.deployer.address,
+        utils.formatBytes32String("juice"),
+        "",
+        {
+          target: 0,
+          currency: 0,
+          duration: BigNumber.from(10000),
+          discountRate: BigNumber.from(180),
+          ballot: constants.AddressZero
+        },
+        {
+          reservedRate: 0,
+          bondingCurveRate: 0,
+          reconfigurationBondingCurveRate: 0
+        },
+        [],
+        []
+      ]
+    })();
 
     this.contracts = {
       governance,
@@ -68,6 +100,6 @@ module.exports = function() {
 
   it("Simple deployment of a project", run(workflows.simpleDeploy));
   it("Migrate from one Terminal to another", run(workflows.migrate));
-  it("Payout to a mod", run(workflows.paymentModsBasic));
-  it("Payout to a set of mods", run(workflows.paymentModsFull));
+  it("Payout to payout mods", run(workflows.payoutToPaymentMods));
+  // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

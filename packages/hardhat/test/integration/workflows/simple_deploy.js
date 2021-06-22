@@ -53,35 +53,35 @@ module.exports = async function() {
         ticketMods
       ]
     }),
-    this.check({
+    this.checkFn({
       contract: this.contracts.projects,
       fn: "handleOf",
       args: [1],
-      value: utils.formatBytes32String(handle)
+      expect: utils.formatBytes32String(handle)
     }),
-    this.check({
+    this.checkFn({
       contract: this.contracts.projects,
       fn: "projectFor",
       args: [utils.formatBytes32String(handle)],
-      value: 1
+      expect: 1
     }),
-    this.check({
+    this.checkFn({
       contract: this.contracts.projects,
       fn: "uriOf",
       args: [1],
-      value: uri
+      expect: uri
     }),
-    this.check({
+    this.checkFn({
       contract: this.contracts.terminalDirectory,
       fn: "terminalOf",
       args: [1],
-      value: this.contracts.juicer.address
+      expect: this.contracts.juicer.address
     }),
-    this.check({
+    this.checkFn({
       contract: this.contracts.fundingCycles,
       fn: "get",
       args: [1],
-      value: [
+      expect: [
         BigNumber.from(1),
         BigNumber.from(1),
         BigNumber.from(1),

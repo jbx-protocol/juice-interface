@@ -1,17 +1,15 @@
 const workflows = require("./workflows");
 
 const run = function(ops) {
-  return function() {
-    it("Intergated", async function() {
-      // Bind this.
-      this.ops = ops;
-      const resolvedOps = await this.ops();
-      // eslint-disable-next-line no-restricted-syntax
-      for (const op of resolvedOps) {
-        // eslint-disable-next-line no-await-in-loop
-        await op();
-      }
-    });
+  return async function() {
+    // Bind this.
+    this.ops = ops;
+    const resolvedOps = await this.ops();
+    // eslint-disable-next-line no-restricted-syntax
+    for (const op of resolvedOps) {
+      // eslint-disable-next-line no-await-in-loop
+      await op();
+    }
   };
 };
 
@@ -68,8 +66,8 @@ module.exports = function() {
     };
   });
 
-  describe("simpleDeploy(...)", run(workflows.simpleDeploy));
-  describe("migrate(...)", run(workflows.migrate));
-  describe("basic paymentMods(...)", run(workflows.paymentModsBasic));
-  describe("full paymentMods(...)", run(workflows.paymentModsFull));
+  it("Simple deployment of a project", run(workflows.simpleDeploy));
+  it("Migrate from one Terminal to another", run(workflows.migrate));
+  it("Payout to a mod", run(workflows.paymentModsBasic));
+  it("Payout to a set of mods", run(workflows.paymentModsFull));
 };

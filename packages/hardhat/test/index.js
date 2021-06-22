@@ -123,6 +123,9 @@ describe("Juice", async function() {
       // Wait for a block to get mined.
       await tx.wait();
 
+      // Set the time mark of this function.
+      await this.setTimeMark(tx.blockNumber);
+
       // Return if there are no events.
       if (events.length === 0) return;
 
@@ -138,13 +141,15 @@ describe("Juice", async function() {
     // Bind a function that checks if a contract getter equals an expected value.
     this.checkFn = ({ contract, fn, args, expect }) => async () => {
       const storedVal = await contract[fn](...args);
-      expect(storedVal).to.deep.equal(expect);
+      chai.expect(storedVal).to.deep.equal(expect);
     };
 
     // Binds a function that makes sure the provided address has the balance
-    this.verifyBalanceFn = async ({ address, expect }) => async () => {
-      const storedVal = await this.provider.getBalance(address);
-      expect(storedVal).to.deep.equal(expect + initialBalances[address] || 0);
+    this.verifyBalanceFn = ({ address, expect }) => async () => {
+      const storedVal = await ethers.provider.getBalance(address);
+      chai
+        .expect(storedVal.sub(initialBalances[address] || 0))
+        .to.deep.equal(expect);
     };
 
     // Bind randomness functions.
@@ -172,7 +177,7 @@ describe("Juice", async function() {
     // Set initial balances.
     await Promise.all(
       this.addrs.map(async addr => {
-        initialBalances[addr.address] = await this.deployer.provider.getBalance(
+        initialBalances[addr.address] = await ethers.provider.getBalance(
           addr.address
         );
       })
@@ -180,8 +185,8 @@ describe("Juice", async function() {
   });
 
   // Run the tests.
-  describe("Unit", unit);
-  // describe("Integration", integration);
+  // describe("Unit", unit);
+  describe("Integration", integration);
 
   // After each test, restore the contract state.
   afterEach(async function() {

@@ -36,13 +36,6 @@ module.exports = async function() {
     .pow(18)
     .mul(1000);
   const currency = BigNumber.from(0);
-  const duration = BigNumber.from(10000);
-  const discountRate = BigNumber.from(180);
-  const ballot = constants.AddressZero;
-
-  const reservedRate = 0;
-  const bondingCurveRate = 0;
-  const reconfigurationBondingCurveRate = 0;
 
   const paymentValue = BigNumber.from(10)
     .pow(18)
@@ -56,14 +49,6 @@ module.exports = async function() {
   const weightMultiplier = (
     await this.contracts.fundingCycles.BASE_WEIGHT()
   ).div(BigNumber.from(10).pow(18));
-
-  //   let packedMetadata = BigNumber.from(0);
-  //   packedMetadata = packedMetadata.add(reconfigurationBondingCurveRate);
-  //   packedMetadata = packedMetadata.shl(8);
-  //   packedMetadata = packedMetadata.add(bondingCurveRate);
-  //   packedMetadata = packedMetadata.shl(8);
-  //   packedMetadata = packedMetadata.add(reservedRate);
-  //   packedMetadata = packedMetadata.shl(8);
 
   return [
     /** 
@@ -89,14 +74,14 @@ module.exports = async function() {
         {
           target,
           currency,
-          duration,
-          discountRate,
-          ballot
+          duration: BigNumber.from(10000),
+          discountRate: BigNumber.from(180),
+          ballot: constants.AddressZero
         },
         {
-          reservedRate,
-          bondingCurveRate,
-          reconfigurationBondingCurveRate
+          reservedRate: 0,
+          bondingCurveRate: 0,
+          reconfigurationBondingCurveRate: 0
         },
         paymentMods,
         ticketMods
@@ -105,11 +90,11 @@ module.exports = async function() {
     /** 
       Check that the payment mod got set.
     */
-    this.check({
+    this.checkFn({
       contract: this.contracts.modStore,
       fn: "paymentModsOf",
       args: [1, (await this.getTimestamp()).add(2)],
-      value: [
+      expect: [
         [
           mod1.preferUnstaked,
           mod1.percent,
@@ -150,14 +135,14 @@ module.exports = async function() {
         {
           target,
           currency,
-          duration,
-          discountRate,
-          ballot
+          duration: BigNumber.from(10000),
+          discountRate: BigNumber.from(180),
+          ballot: constants.AddressZero
         },
         {
-          reservedRate,
-          bondingCurveRate,
-          reconfigurationBondingCurveRate
+          reservedRate: 0,
+          bondingCurveRate: 0,
+          reconfigurationBondingCurveRate: 0
         },
         [],
         []
@@ -176,11 +161,11 @@ module.exports = async function() {
     /** 
       Check that second project has no balance.
     */
-    this.check({
+    this.checkFn({
       contract: this.contracts.juicer,
       fn: "balanceOf",
       args: [2],
-      value: BigNumber.from(0)
+      expect: BigNumber.from(0)
     }),
     /** 
       Tap funds for the project with payment mod.
@@ -194,31 +179,27 @@ module.exports = async function() {
     /** 
       Check that payment mod beneficiary has expected funds.
     */
-    this.check({
-      contract: this.deployer.provider,
-      fn: "getBalance",
-      args: [mod1.beneficiary],
-      value: (await this.deployer.provider.getBalance(mod1.beneficiary)).add(
-        expectedAmountToTap.mul(mod1.percent).div(200)
-      )
+    this.verifyBalanceFn({
+      address: mod1.beneficiary,
+      expect: expectedAmountToTap.mul(mod1.percent).div(200)
     }),
     /** 
       Check that second project now has a balance.
     */
-    this.check({
+    this.checkFn({
       contract: this.contracts.juicer,
       fn: "balanceOf",
       args: [2],
-      value: expectedAmountToTap.mul(mod2.percent).div(200)
+      expect: expectedAmountToTap.mul(mod2.percent).div(200)
     }),
     /** 
       Check that beneficiary of the mod got tickets of project with ID 2. 
     */
-    this.check({
+    this.checkFn({
       contract: this.contracts.ticketBooth,
       fn: "balanceOf",
       args: [mod2.beneficiary, 2],
-      value: expectedAmountToTap
+      expect: expectedAmountToTap
         .mul(mod2.percent)
         .div(200)
         .mul(weightMultiplier)
@@ -226,13 +207,9 @@ module.exports = async function() {
     /** 
       Check that mod's allocator got paid.
     */
-    this.check({
-      contract: this.deployer.provider,
-      fn: "getBalance",
-      args: [mod3.allocator],
-      value: (await this.deployer.provider.getBalance(mod3.allocator)).add(
-        expectedAmountToTap.mul(mod3.percent).div(200)
-      )
+    this.verifyBalanceFn({
+      address: mod3.allocator,
+      expect: expectedAmountToTap.mul(mod3.percent).div(200)
     })
   ];
 };

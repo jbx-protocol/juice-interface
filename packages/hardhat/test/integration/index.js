@@ -1,4 +1,4 @@
-const shouldBehaveLike = require("./behaviors");
+const workflows = require("./workflows");
 
 const run = function(ops) {
   return function() {
@@ -68,8 +68,8 @@ module.exports = function() {
     };
   });
 
-  describe("simpleDeploy(...)", run(shouldBehaveLike.simpleDeploy));
-  describe("migrate(...)", run(shouldBehaveLike.migrate));
-  describe("basic paymentMods(...)", run(shouldBehaveLike.paymentModsBasic));
-  describe.only("full paymentMods(...)", run(shouldBehaveLike.paymentModsFull));
+  describe("simpleDeploy(...)", run(workflows.simpleDeploy));
+  describe("migrate(...)", run(workflows.migrate));
+  describe("basic paymentMods(...)", run(workflows.paymentModsBasic));
+  describe("full paymentMods(...)", run(workflows.paymentModsFull));
 };

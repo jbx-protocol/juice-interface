@@ -4,20 +4,17 @@ const fs = require("fs");
 
 const { deployMockContract } = require("@ethereum-waffle/mock-contract");
 
+const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
 let snapshotId;
-let timeMark;
 
-const snapshot = () => ethers.provider.send("evm_snapshot", []);
-const restore = id => ethers.provider.send("evm_revert", [id]);
+const snapshotFn = () => ethers.provider.send("evm_snapshot", []);
+const restoreFn = id => ethers.provider.send("evm_revert", [id]);
 
 // Save the initial balances for each address.
 const initialBalances = {};
-
-// A seed that gets incremented as random numbers are created.
-let randomnessSeed = 0;
 
 describe("Juice", async function() {
   before(async function() {
@@ -26,25 +23,22 @@ describe("Juice", async function() {
 
     // Bind the ability to manipulate time to `this`.
     // Bind a function that gets the current block's timestamp.
-    this.getTimestamp = async block => {
+    this.getTimestampFn = async block => {
       return ethers.BigNumber.from(
         (await ethers.provider.getBlock(block || "latest")).timestamp
       );
     };
 
     // Binds a function that sets a time mark that is taken into account while fastforward.
-    this.setTimeMark = async blockNumber => {
-      timeMark = await this.getTimestamp(blockNumber);
+    this.setTimeMarkFn = async blockNumber => {
+      this.timeMark = await this.getTimestampFn(blockNumber);
     };
 
-    // Binds the ability to get the latest time mark.
-    this.getTimeMark = () => timeMark;
-
     // Binds a function that fastforward a certain amount from the beginning of the test, or from the latest time mark if one is set.
-    this.fastforward = async seconds => {
-      const now = await this.getTimestamp();
-      const timeSinceTimemark = now.sub(timeMark);
-      timeMark = now;
+    this.fastforwardFn = async seconds => {
+      const now = await this.getTimestampFn();
+      const timeSinceTimemark = now.sub(this.timeMark);
+      this.timeMark = now;
 
       // Subtract away any time that has already passed between the start of the test,
       // or from the last fastforward, from the provided value.
@@ -56,10 +50,10 @@ describe("Juice", async function() {
     };
 
     // Bind a reference to a function that can deploy mock contracts from an abi.
-    this.deployMockContract = abi => deployMockContract(this.deployer, abi);
+    this.deployMockContractFn = abi => deployMockContract(this.deployer, abi);
 
     // Bind a reference to a function that can deploy mock local contracts from names.
-    this.deployMockLocalContract = async mockContractName => {
+    this.deployMockLocalContractFn = async mockContractName => {
       // Deploy mock contracts.
       const mockArtifacts = fs
         .readFileSync(
@@ -67,11 +61,11 @@ describe("Juice", async function() {
         )
         .toString();
 
-      return this.deployMockContract(JSON.parse(mockArtifacts).abi);
+      return this.deployMockContractFn(JSON.parse(mockArtifacts).abi);
     };
 
     // Bind a reference to a function that can deploy a contract on the local network.
-    this.deployContract = async (contractName, args = []) => {
+    this.deployContractFn = async (contractName, args = []) => {
       const artifacts = await ethers.getContractFactory(contractName);
       return artifacts.deploy(...args);
     };
@@ -97,7 +91,7 @@ describe("Juice", async function() {
     };
 
     // Bind a function that executes a transaction on a contract.
-    this.executeFn = ({
+    this.executeFn = async ({
       caller,
       contract,
       fn,
@@ -105,7 +99,7 @@ describe("Juice", async function() {
       value = 0,
       events = [],
       revert
-    }) => async () => {
+    }) => {
       // Args can be either a function or an array.
       const normalizedArgs = typeof args === "function" ? await args() : args;
 
@@ -127,7 +121,7 @@ describe("Juice", async function() {
       await tx.wait();
 
       // Set the time mark of this function.
-      await this.setTimeMark(tx.blockNumber);
+      await this.setTimeMarkFn(tx.blockNumber);
 
       // Return if there are no events.
       if (events.length === 0) return;
@@ -142,7 +136,7 @@ describe("Juice", async function() {
     };
 
     // Bind a function that checks if a contract getter equals an expected value.
-    this.checkFn = ({ contract, fn, args, expect }) => async () => {
+    this.checkFn = async ({ contract, fn, args, expect }) => {
       const storedVal = await contract[fn](...args);
       chai.expect(storedVal).to.deep.equal(expect);
     };
@@ -155,27 +149,60 @@ describe("Juice", async function() {
         .to.deep.equal(expect);
     };
 
-    // Bind randomness functions.
+    // Binds a function that gets the balance of an addres
+    this.getBalanceFn = address => ethers.provider.getBalance(address);
 
-    // Randomness functions.
-    this.randomBytes = ({ lower, upper }) =>
-      // eslint-disable-next-line no-plusplus
-      ethers.testcases.randomBytes(randomnessSeed++, lower, upper);
+    // Bind some constants.
 
-    this.randomNumber = ({ lower, upper }) =>
-      // eslint-disable-next-line no-plusplus
-      ethers.testcases.randomNumber(randomnessSeed++, lower, upper);
+    this.constants = {
+      AddressZero: ethers.constants.AddressZero,
+      MaxUint256: ethers.constants.MaxUint256,
+      MaxInt256: BigNumber.from(2)
+        .pow(255)
+        .sub(1),
+      MaxUint24: BigNumber.from(2)
+        .pow(24)
+        .sub(1),
+      MaxUint8: BigNumber.from(2)
+        .pow(8)
+        .sub(1),
+      MaxPercent: BigNumber.from(200)
+    };
+
+    // Bind function that gets a random big number.
+    this.randomBigNumberFn = ({
+      min = BigNumber.from(0),
+      max = this.constants.MaxUint256
+    } = {}) =>
+      max
+        .sub(min)
+        .add(min)
+        .div(10)
+        .mul(BigNumber.from(Math.floor(Math.random() * 10)));
+
+    // Bind a function that gets a random address.
+    this.randomAddressFn = () =>
+      this.addrs[Math.floor(Math.random() * 9)].address;
+
+    this.percentageFn = ({ value, percent }) =>
+      value.mul(percent).div(this.constants.MaxPercent);
+
+    // Bind a function to create a value padding by 18 zeros.
+    this.e18Fn = value =>
+      BigNumber.from(10)
+        .pow(18)
+        .mul(value);
   });
 
   // Before each test, take a snapshot of the contract state.
   beforeEach(async function() {
-    snapshotId = await snapshot();
+    snapshotId = await snapshotFn();
 
     // Mark the start time of each test.
-    timeMark = await this.getTimestamp();
+    this.timeMark = await this.getTimestampFn();
 
     // Make the start time of the test available.
-    this.testStart = await this.getTimestamp();
+    this.testStart = await this.getTimestampFn();
 
     // Set initial balances.
     await Promise.all(
@@ -188,11 +215,11 @@ describe("Juice", async function() {
   });
 
   // Run the tests.
-  describe("Unit", unit);
+  // describe("Unit", unit);
   describe("Integration", integration);
 
   // After each test, restore the contract state.
   afterEach(async function() {
-    await restore(snapshotId);
+    await restoreFn(snapshotId);
   });
 });

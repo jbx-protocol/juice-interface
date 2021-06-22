@@ -1,161 +1,192 @@
-const { BigNumber, constants, utils } = require("ethers");
+const { utils } = require("ethers");
 
-module.exports = async function() {
-  const owner = this.deployer.address;
+module.exports = async ({
+  deployer,
+  addrs,
+  constants,
+  contracts,
+  executeFn,
+  checkFn,
+  deployContractFn,
+  randomBigNumberFn,
+  randomAddressFn,
+  getBalanceFn
+}) => {
+  const owner = addrs[0];
+  const payer = addrs[1];
+  // Cant pay entire balance because some is needed for gas.
+  const paymentValue = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(2)
+  });
 
-  const paymentMods = [];
-  const ticketMods = [];
-
-  const target = BigNumber.from(10)
-    .pow(18)
-    .mul(1000);
-
-  const paymentValue = BigNumber.from(10)
-    .pow(18)
-    .mul(200);
-
-  const secondJuicer = await this.deployContract("Juicer", [
-    this.contracts.projects.address,
-    this.contracts.fundingCycles.address,
-    this.contracts.ticketBooth.address,
-    this.contracts.operatorStore.address,
-    this.contracts.modStore.address,
-    this.contracts.prices.address,
-    this.contracts.terminalDirectory.address,
-    this.contracts.governance.address
+  const secondJuicer = await deployContractFn("Juicer", [
+    contracts.projects.address,
+    contracts.fundingCycles.address,
+    contracts.ticketBooth.address,
+    contracts.operatorStore.address,
+    contracts.modStore.address,
+    contracts.prices.address,
+    contracts.terminalDirectory.address,
+    contracts.governance.address
   ]);
 
   return [
     /** 
       Deploy a project. Expect the project's ID to be 2.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "deploy",
-      args: [
-        owner,
-        utils.formatBytes32String("some-handle"),
-        "some-uri",
-        {
-          target,
-          currency: BigNumber.from(1),
-          duration: BigNumber.from(10000),
-          discountRate: BigNumber.from(180),
-          ballot: constants.AddressZero
-        },
-        {
-          reservedRate: 20,
-          bondingCurveRate: 140,
-          reconfigurationBondingCurveRate: 140
-        },
-        paymentMods,
-        ticketMods
-      ]
-    }),
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.juicer,
+        fn: "deploy",
+        args: [
+          owner.address,
+          utils.formatBytes32String("some-handle"),
+          "",
+          {
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
+            duration: randomBigNumberFn({ max: constants.MaxUint24 }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            ballot: constants.AddressZero
+          },
+          {
+            reservedRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
+          },
+          [],
+          []
+        ]
+      }),
     /**
       Check that the terminal got set.
     */
-    this.checkFn({
-      contract: this.contracts.terminalDirectory,
-      fn: "terminalOf",
-      args: [2],
-      expect: this.contracts.juicer.address
-    }),
+    () =>
+      checkFn({
+        contract: contracts.terminalDirectory,
+        fn: "terminalOf",
+        args: [2],
+        expect: contracts.juicer.address
+      }),
     /**
       Make a payment to the project.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "pay",
-      args: [2, this.addrs[2].address, "", false],
-      value: paymentValue
-    }),
+    async () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.juicer,
+        fn: "pay",
+        args: [2, randomAddressFn(), "", false],
+        // Can't send entire balance because gas is needed.
+        value: paymentValue
+      }),
     /**
       The project's balance should match the payment just made.
     */
-    this.checkFn({
-      contract: this.deployer.provider,
-      fn: "getBalance",
-      args: [this.contracts.juicer.address],
-      expect: paymentValue
-    }),
+    () =>
+      checkFn({
+        contract: deployer.provider,
+        fn: "getBalance",
+        args: [contracts.juicer.address],
+        expect: paymentValue
+      }),
     /**
       Migrating to a new juicer shouldn't work because it hasn't been allowed yet.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "migrate",
-      args: [2, secondJuicer.address],
-      revert: "Juicer::migrate: NOT_ALLOWED"
-    }),
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "migrate",
+        args: [2, secondJuicer.address],
+        revert: "Juicer::migrate: NOT_ALLOWED"
+      }),
     /**
       Allow a migration to the new juicer.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.governance,
-      fn: "allowMigration",
-      args: [this.contracts.juicer.address, secondJuicer.address]
-    }),
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.governance,
+        fn: "allowMigration",
+        args: [contracts.juicer.address, secondJuicer.address]
+      }),
+    /**
+      Migrate to the new juicer called by a different address shouldn't be allowed.
+    */
+    () =>
+      executeFn({
+        caller: addrs[2],
+        contract: contracts.juicer,
+        fn: "migrate",
+        args: [2, secondJuicer.address],
+        revert: "Operatable: UNAUTHORIZED"
+      }),
     /**
       Migrate to the new juicer.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "migrate",
-      args: [2, secondJuicer.address]
-    }),
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "migrate",
+        args: [2, secondJuicer.address]
+      }),
     /**
       There should no longer be a balance in the old juicer.
     */
-    this.checkFn({
-      contract: this.deployer.provider,
-      fn: "getBalance",
-      args: [this.contracts.juicer.address],
-      expect: 0
-    }),
+    () =>
+      checkFn({
+        contract: deployer.provider,
+        fn: "getBalance",
+        args: [contracts.juicer.address],
+        expect: 0
+      }),
     /**
       The balance should be entirely in the new Juicer.
     */
-    this.checkFn({
-      contract: this.deployer.provider,
-      fn: "getBalance",
-      args: [secondJuicer.address],
-      expect: paymentValue
-    }),
+    () =>
+      checkFn({
+        contract: deployer.provider,
+        fn: "getBalance",
+        args: [secondJuicer.address],
+        expect: paymentValue
+      }),
     /**
       The terminal should be updated to the new juicer in the directory.
     */
-    this.checkFn({
-      contract: this.contracts.terminalDirectory,
-      fn: "terminalOf",
-      args: [2],
-      expect: secondJuicer.address
-    }),
+    () =>
+      checkFn({
+        contract: contracts.terminalDirectory,
+        fn: "terminalOf",
+        args: [2],
+        expect: secondJuicer.address
+      }),
     /**
       Payments to the old Juicer should no longer be accepter.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "pay",
-      args: [2, this.addrs[2].address, "", false],
-      value: paymentValue,
-      revert: "TerminalUtility: UNAUTHORIZED"
-    }),
+    () =>
+      executeFn({
+        caller: payer,
+        contract: contracts.juicer,
+        fn: "pay",
+        args: [2, randomAddressFn(), "", false],
+        value: paymentValue,
+        revert: "TerminalUtility: UNAUTHORIZED"
+      }),
     /**
       Payments to the new Juicer should be accepted.
     */
-    this.executeFn({
-      caller: this.deployer,
-      contract: secondJuicer,
-      fn: "pay",
-      args: [2, this.addrs[2].address, "", false],
-      value: paymentValue
-    })
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: secondJuicer,
+        fn: "pay",
+        args: [2, randomAddressFn(), "", false],
+        value: paymentValue
+      })
   ];
 };

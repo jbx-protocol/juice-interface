@@ -1,7 +1,7 @@
 const { BigNumber, constants, utils } = require("ethers");
 
-module.exports = async function() {
-  const owner = this.addrs[0].address;
+module.exports = async ({ deployer, addrs, contracts, executeFn, checkFn }) => {
+  const owner = addrs[0].address;
   const handle = "some-handle";
   const uri = "some-uri";
 
@@ -32,34 +32,35 @@ module.exports = async function() {
   const expectedProjectId = BigNumber.from(2);
 
   return [
-    this.executeFn({
-      caller: this.deployer,
-      contract: this.contracts.juicer,
-      fn: "deploy",
-      args: [
-        owner,
-        utils.formatBytes32String(handle),
-        uri,
-        {
-          target,
-          currency,
-          duration,
-          discountRate,
-          ballot
-        },
-        {
-          reservedRate,
-          bondingCurveRate,
-          reconfigurationBondingCurveRate
-        },
-        paymentMods,
-        ticketMods
-      ]
-    }),
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.juicer,
+        fn: "deploy",
+        args: [
+          owner,
+          utils.formatBytes32String(handle),
+          uri,
+          {
+            target,
+            currency,
+            duration,
+            discountRate,
+            ballot
+          },
+          {
+            reservedRate,
+            bondingCurveRate,
+            reconfigurationBondingCurveRate
+          },
+          paymentMods,
+          ticketMods
+        ]
+      }),
     // Run this at execution time to get correct timestamps.
-    async () =>
-      this.checkFn({
-        contract: this.contracts.fundingCycles,
+    ({ timeMark }) =>
+      checkFn({
+        contract: contracts.fundingCycles,
         fn: "get",
         args: [2],
         expect: [
@@ -67,10 +68,10 @@ module.exports = async function() {
           expectedProjectId,
           BigNumber.from(1),
           BigNumber.from(0),
-          this.getTimeMark(),
+          timeMark,
           BigNumber.from(10).pow(19),
           constants.AddressZero,
-          this.getTimeMark(),
+          timeMark,
           duration,
           target,
           currency,
@@ -80,29 +81,33 @@ module.exports = async function() {
           packedMetadata
         ]
       }),
-    this.checkFn({
-      contract: this.contracts.projects,
-      fn: "handleOf",
-      args: [2],
-      expect: utils.formatBytes32String(handle)
-    }),
-    this.checkFn({
-      contract: this.contracts.projects,
-      fn: "projectFor",
-      args: [utils.formatBytes32String(handle)],
-      expect: 2
-    }),
-    this.checkFn({
-      contract: this.contracts.projects,
-      fn: "uriOf",
-      args: [2],
-      expect: uri
-    }),
-    this.checkFn({
-      contract: this.contracts.terminalDirectory,
-      fn: "terminalOf",
-      args: [2],
-      expect: this.contracts.juicer.address
-    })
+    () =>
+      checkFn({
+        contract: contracts.projects,
+        fn: "handleOf",
+        args: [2],
+        expect: utils.formatBytes32String(handle)
+      }),
+    () =>
+      checkFn({
+        contract: contracts.projects,
+        fn: "projectFor",
+        args: [utils.formatBytes32String(handle)],
+        expect: 2
+      }),
+    () =>
+      checkFn({
+        contract: contracts.projects,
+        fn: "uriOf",
+        args: [2],
+        expect: uri
+      }),
+    () =>
+      checkFn({
+        contract: contracts.terminalDirectory,
+        fn: "terminalOf",
+        args: [2],
+        expect: contracts.juicer.address
+      })
   ];
 };

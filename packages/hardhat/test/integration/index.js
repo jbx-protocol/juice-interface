@@ -5,11 +5,11 @@ const run = function(ops) {
   return async function() {
     // Bind this.
     this.ops = ops;
-    const resolvedOps = await this.ops();
+    const resolvedOps = await this.ops(this);
     // eslint-disable-next-line no-restricted-syntax
     for (const op of resolvedOps) {
       // eslint-disable-next-line no-await-in-loop
-      await op();
+      await op(this);
     }
   };
 };
@@ -17,36 +17,36 @@ const run = function(ops) {
 module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
-    const operatorStore = await this.deployContract("OperatorStore");
-    const projects = await this.deployContract("Projects", [
+    const operatorStore = await this.deployContractFn("OperatorStore");
+    const projects = await this.deployContractFn("Projects", [
       operatorStore.address
     ]);
-    const prices = await this.deployContract("Prices");
-    const terminalDirectory = await this.deployContract("TerminalDirectory", [
+    const prices = await this.deployContractFn("Prices");
+    const terminalDirectory = await this.deployContractFn("TerminalDirectory", [
       projects.address
     ]);
-    const fundingCycles = await this.deployContract("FundingCycles", [
+    const fundingCycles = await this.deployContractFn("FundingCycles", [
       terminalDirectory.address
     ]);
 
-    const ticketBooth = await this.deployContract("TicketBooth", [
+    const ticketBooth = await this.deployContractFn("TicketBooth", [
       projects.address,
       operatorStore.address,
       terminalDirectory.address
     ]);
 
-    const modStore = await this.deployContract("ModStore", [
+    const modStore = await this.deployContractFn("ModStore", [
       projects.address,
       operatorStore.address,
       terminalDirectory.address
     ]);
 
-    const governance = await this.deployContract("Governance", [
+    const governance = await this.deployContractFn("Governance", [
       1,
       terminalDirectory.address
     ]);
 
-    const juicer = await this.deployContract("Juicer", [
+    const juicer = await this.deployContractFn("Juicer", [
       projects.address,
       fundingCycles.address,
       ticketBooth.address,
@@ -83,7 +83,7 @@ module.exports = function() {
         [],
         []
       ]
-    })();
+    });
 
     this.contracts = {
       governance,
@@ -98,8 +98,8 @@ module.exports = function() {
     };
   });
 
-  it("Simple deployment of a project", run(workflows.simpleDeploy));
+  // it("Simple deployment of a project", run(workflows.simpleDeploy));
   it("Migrate from one Terminal to another", run(workflows.migrate));
-  it("Payout to payout mods", run(workflows.payoutToPaymentMods));
+  // it("Payout to payout mods", run(workflows.payoutToPaymentMods));
   // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

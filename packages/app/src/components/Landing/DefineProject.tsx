@@ -2,11 +2,9 @@ import { Button, Col, Form, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
-import BudgetTargetInput from 'components/shared/inputs/BudgetTargetInput'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { SECONDS_IN_DAY } from 'constants/units'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -27,9 +25,10 @@ type FormFields = {
 }
 
 export default function DefineProject() {
-  const { theme, forThemeOption } = useContext(ThemeContext)
-  const { userAddress } = useContext(UserContext)
-  const colors = theme.colors
+  const {
+    theme: { colors },
+    forThemeOption,
+  } = useContext(ThemeContext)
   const [form] = useForm<FormFields>()
   const editingBudget = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
@@ -97,52 +96,24 @@ export default function DefineProject() {
         <Col xs={24} lg={10}>
           <Form form={form} layout="vertical" onValuesChange={onFieldsChange}>
             <FormItems.ProjectName name="name" hideLabel />
-            <Form.Item
-              name="target"
-              extra="The amount of funding your project needs per funding cycle to keep going."
-            >
-              <BudgetTargetInput
-                value={form.getFieldValue('target')}
-                onValueChange={val => {
-                  form.setFieldsValue({ target: val })
-                  onFieldsChange({ ...form.getFieldsValue(true), target: val })
-                }}
-                currency={form.getFieldValue('currency')}
-                onCurrencyChange={currency => {
-                  form.setFieldsValue({ currency })
-                  onFieldsChange({ ...form.getFieldsValue(true), currency })
-                }}
-                placeholder="0"
-              />
-            </Form.Item>
-            {/* <FormItems.ProjectTarget
+            <FormItems.ProjectTarget
               name="target"
               value={form.getFieldValue('target')}
-              onValueChanged={val => {
+              onValueChange={val => {
                 form.setFieldsValue({ target: val })
                 onFieldsChange({ ...form.getFieldsValue(true), target: val })
               }}
               currency={form.getFieldValue('currency')}
-              onCurrencyChanged={currency => {
+              onCurrencyChange={currency => {
                 form.setFieldsValue({ currency })
                 onFieldsChange({ ...form.getFieldsValue(true), currency })
               }}
-              mods={[
-                {
-                  address: userAddress,
-                  amount: '0',
-                },
-              ]}
-              onModsChanged={mods => {
-                const target = mods[0].amount
-                form.setFieldsValue({ target: target?.toString() })
-                onFieldsChange({
-                  ...form.getFieldsValue(true),
-                  target,
-                })
+              formItemProps={{
+                extra:
+                  'The amount of funding your project needs per funding cycle to keep going.',
               }}
               hideLabel
-            /> */}
+            />
             <FormItems.ProjectDuration
               name="duration"
               value={form.getFieldValue('duration')}

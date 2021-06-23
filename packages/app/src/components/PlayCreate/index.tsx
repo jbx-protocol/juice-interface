@@ -109,7 +109,7 @@ export default function PlayCreate() {
     dispatch(editingProjectActions.setCurrency(currency))
     dispatch(editingProjectActions.setPaymentMods(mods))
 
-    if (fields?.duration && target && mods.length) incrementStep(1)
+    if (fields?.duration && target) incrementStep(1)
 
     // Ticketing form depends on budget recurring/one-time
     resetTicketingForm()
@@ -186,7 +186,7 @@ export default function PlayCreate() {
         properties,
         metadata,
         editingPaymentMods.map(m => ({
-          preferUnstaked: !!m.preferUnstaked,
+          preferUnstaked: false,
           percent: BigNumber.from(m.percent).toHexString(),
           lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
           beneficiary: m.beneficiary || constants.AddressZero,

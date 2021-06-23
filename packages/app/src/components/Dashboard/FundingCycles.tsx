@@ -72,6 +72,8 @@ export default function FundingCycles({
               fundingCycle={fundingCycle}
               showDetail={showCurrentDetail}
               paymentMods={paymentMods}
+              projectId={projectId}
+              isOwner={isOwner}
             />
           </Space>
         </div>

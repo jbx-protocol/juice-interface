@@ -1,5 +1,15 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { Button, Col, Form, Input, Modal, Row, Select, Space } from 'antd'
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Space,
+} from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
@@ -7,7 +17,9 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
+import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
+import { formatDate } from 'utils/formatDate'
 import { formattedNum, fromPerbicent, parsePerbicent } from 'utils/formatNumber'
 
 import { FormItems } from '.'
@@ -28,14 +40,15 @@ export default function ProjectMods({
   formItemProps,
 }: {
   target: number
-  mods: ModRef[]
-  onModsChanged: (mods: ModRef[]) => void
+  mods: (ModRef & { handle?: string })[]
+  onModsChanged: (mods: (ModRef & { handle?: string })[]) => void
   currency: CurrencyOption
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
     beneficiary: string
     percent: number
+    lockedUntil: moment.Moment
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
@@ -47,13 +60,13 @@ export default function ProjectMods({
     functionName: 'projectFor',
     args: projectHandle ? [utils.formatBytes32String(projectHandle)] : null,
     callback: useCallback(
-      (id?: BigNumber) => {
+      (projectId?: BigNumber) => {
         onModsChanged(
           mods.map((m, i) =>
             i === settingHandleIndex
               ? {
                   ...m,
-                  projectId: id?.toHexString(),
+                  projectId,
                 }
               : m,
           ),
@@ -66,7 +79,7 @@ export default function ProjectMods({
   })
 
   const {
-    theme: { colors },
+    theme: { colors, radii },
   } = useContext(ThemeContext)
 
   const gutter = 10
@@ -80,18 +93,42 @@ export default function ProjectMods({
     (mod: ModRef, index: number) => (
       <div
         style={{
-          color: colors.text.primary,
-          cursor: 'default',
+          display: 'flex',
+          padding: 10,
+          border: '1px solid ' + colors.stroke.tertiary,
+          borderRadius: radii.md,
         }}
         key={mod.beneficiary ?? '' + index}
       >
-        <Space direction="vertical" style={{ width: '100%' }}>
-          {mod.projectId ? (
+        <Space
+          direction="vertical"
+          style={{
+            width: '100%',
+            color: colors.text.primary,
+            cursor: 'pointer',
+          }}
+          onClick={() => {
+            setEditingModType(
+              BigNumber.from(mod.projectId || '0').gt(0)
+                ? 'project'
+                : 'address',
+            )
+            form.setFieldsValue({
+              ...mod,
+              percent: parseFloat(fromPerbicent(mod.percent)),
+              lockedUntil: mod.lockedUntil
+                ? moment.default(mod.lockedUntil * 1000)
+                : undefined,
+            })
+            setEditingModIndex(index)
+          }}
+        >
+          {mod.projectId?.gt(0) ? (
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={4}>
+              <Col span={5}>
                 <label>Project</label>{' '}
               </Col>
-              <Col span={20}>
+              <Col span={19}>
                 <div
                   style={{
                     display: 'flex',
@@ -99,38 +136,18 @@ export default function ProjectMods({
                     justifyContent: 'space-between',
                   }}
                 >
-                  <span
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      setEditingModType('project')
-                      form.setFieldsValue({
-                        ...mod,
-                        percent: parseFloat(fromPerbicent(mod.percent)),
-                      })
-                      setEditingModIndex(index)
-                    }}
-                  >
+                  <span style={{ cursor: 'pointer' }}>
                     @<ProjectHandle projectId={mod.projectId} />
                   </span>
-                  <Button
-                    type="text"
-                    onClick={e => {
-                      onModsChanged([
-                        ...mods.slice(0, index),
-                        ...mods.slice(index + 1),
-                      ])
-                    }}
-                    icon={<CloseCircleOutlined />}
-                  />
                 </div>
               </Col>
             </Row>
           ) : (
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={4}>
+              <Col span={5}>
                 <label>Address</label>{' '}
               </Col>
-              <Col span={20}>
+              <Col span={19}>
                 <div
                   style={{
                     display: 'flex',
@@ -138,62 +155,28 @@ export default function ProjectMods({
                     justifyContent: 'space-between',
                   }}
                 >
-                  <span
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      setEditingModType('address')
-                      form.setFieldsValue({
-                        ...mod,
-                        percent: parseFloat(fromPerbicent(mod.percent)),
-                      })
-                      setEditingModIndex(index)
-                    }}
-                  >
-                    {mod.beneficiary}
-                  </span>
-                  <Button
-                    type="text"
-                    onClick={e => {
-                      onModsChanged([
-                        ...mods.slice(0, index),
-                        ...mods.slice(index + 1),
-                      ])
-                    }}
-                    icon={<CloseCircleOutlined />}
-                  />
+                  <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
                 </div>
               </Col>
             </Row>
           )}
 
-          {mod.projectId ? (
+          {mod.projectId?.gt(0) ? (
             <Row>
-              <Col span={4}>
+              <Col span={5}>
                 <label>Beneficiary</label>
               </Col>
-              <Col span={20}>
-                <span
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    setEditingModType('project')
-                    form.setFieldsValue({
-                      ...mod,
-                      percent: parseFloat(fromPerbicent(mod.percent)),
-                    })
-                    setEditingModIndex(index)
-                  }}
-                >
-                  {mod.beneficiary}
-                </span>
+              <Col span={19}>
+                <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
               </Col>
             </Row>
           ) : null}
 
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={4}>
-              <label>Amount</label>
+            <Col span={5}>
+              <label>Percentage</label>
             </Col>
-            <Col span={20}>
+            <Col span={19}>
               <div
                 style={{
                   display: 'flex',
@@ -209,37 +192,41 @@ export default function ProjectMods({
                     maxWidth: 100,
                   }}
                 >
-                  <CurrencySymbol currency={currency} />
-                  {formattedNum(
-                    (target * parseFloat(fromPerbicent(mod.percent))) / 100,
-                  )}
-                </span>
-
-                <div style={{ flex: 1 }}>
-                  <NumberSlider
-                    value={parseFloat(fromPerbicent(mod.percent))}
-                    suffix="%"
-                    step={0.5}
-                    onChange={v =>
-                      onModsChanged(
-                        mods.map((m, i) =>
-                          i === index
-                            ? {
-                                ...m,
-                                percent: parsePerbicent(
-                                  v?.toString(),
-                                ).toNumber(),
-                              }
-                            : m,
-                        ),
+                  <Space>
+                    <span>{fromPerbicent(mod.percent)}%</span>
+                    <span>
+                      (
+                      <CurrencySymbol currency={currency} />
+                      {formattedNum(
+                        (target * parseFloat(fromPerbicent(mod.percent))) / 100,
+                      )}
                       )
-                    }
-                  />
-                </div>
+                    </span>
+                  </Space>
+                </span>
               </div>
             </Col>
           </Row>
+
+          {mod.lockedUntil ? (
+            <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+              <Col span={5}>
+                <label>Locked</label>
+              </Col>
+              <Col span={19}>
+                until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+              </Col>
+            </Row>
+          ) : null}
         </Space>
+        <Button
+          type="text"
+          onClick={e => {
+            onModsChanged([...mods.slice(0, index), ...mods.slice(index + 1)])
+            e.stopPropagation()
+          }}
+          icon={<CloseCircleOutlined />}
+        />
       </div>
     ),
     [mods, currency, target],
@@ -251,19 +238,25 @@ export default function ProjectMods({
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePerbicent(form.getFieldValue('percent')).toNumber()
+    const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
+
+    const lockedUntil = _lockedUntil
+      ? Math.round(_lockedUntil.valueOf() / 1000)
+      : undefined
+
+    const newMod = { beneficiary, percent, handle, lockedUntil }
 
     onModsChanged(
       editingModIndex !== undefined && editingModIndex < mods.length
         ? mods.map((m, i) =>
-            i === editingModIndex ? { ...m, beneficiary, percent } : m,
+            i === editingModIndex
+              ? {
+                  ...m,
+                  ...newMod,
+                }
+              : m,
           )
-        : [
-            ...mods,
-            {
-              beneficiary,
-              percent,
-            },
-          ],
+        : [...mods, newMod],
     )
 
     if (handle) {
@@ -295,16 +288,7 @@ export default function ProjectMods({
       ]}
     >
       <Space direction="vertical" style={{ width: '100%' }} size="large">
-        <Space
-          style={{ width: '100%' }}
-          direction="vertical"
-          size="small"
-          split={
-            <div
-              style={{ height: 1, background: colors.stroke.tertiary }}
-            ></div>
-          }
-        >
+        <Space style={{ width: '100%' }} direction="vertical" size="small">
           {mods.map((v, i) => modInput(v, i))}
         </Space>
         {mods.length && total > 100 ? (
@@ -369,6 +353,7 @@ export default function ProjectMods({
                     return Promise.resolve()
                   },
                 },
+                { required: true },
               ]}
             >
               <Input placeholder={constants.AddressZero} />
@@ -377,25 +362,41 @@ export default function ProjectMods({
             <FormItems.ProjectHandle
               name="project"
               requireState="exists"
-              formItemProps={{ label: 'Project handle' }}
+              formItemProps={{
+                label: 'Project handle',
+                rules: [{ required: true }],
+              }}
+              value={form.getFieldValue('handle')}
               onValueChange={handle => form.setFieldsValue({ handle })}
-            ></FormItems.ProjectHandle>
+            />
           )}
           {editingModType === 'project' ? (
             <Form.Item
               name="beneficiary"
               label="Beneficiary"
               extra="The address that should receive the tickets printed from paying this project."
+              rules={[{ required: true }]}
             >
               <Input placeholder={constants.AddressZero} />
             </Form.Item>
           ) : null}
-          <Form.Item name="percent" label="Percent">
+          <Form.Item
+            name="percent"
+            label="Percent"
+            rules={[{ required: true }]}
+          >
             <NumberSlider
               onChange={percent => form.setFieldsValue({ percent })}
               step={0.5}
               defaultValue={form.getFieldValue('percent') || 0}
             />
+          </Form.Item>
+          <Form.Item
+            name="lockedUntil"
+            label="Lock until"
+            extra="Once locked, a mod can't be edited or removed until the lock expires."
+          >
+            <DatePicker />
           </Form.Item>
         </Form>
       </Modal>

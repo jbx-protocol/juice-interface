@@ -97,8 +97,15 @@ export default function ConfirmDeployProject() {
         )}
       </Space>
       <Statistic
-        title="Receiver wallets"
-        valueRender={() => <Mods mods={paymentMods} />}
+        title="Auto payouts"
+        valueRender={() => (
+          <Mods
+            mods={paymentMods}
+            projectId={undefined}
+            fundingCycle={undefined}
+            isOwner={true}
+          />
+        )}
       />
     </Space>
   )

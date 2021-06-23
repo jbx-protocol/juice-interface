@@ -831,10 +831,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::migrate: UNAUTHORIZED"
         );
 
-        // This Juicer must be the project's current terminal.
-        // This Juicer must be the project's current terminal.
         // The migration destination must be allowed.
         require(migrationIsAllowed[_to], "Juicer::migrate: NOT_ALLOWED");
+
+        // All reserved tickets must be printed before migrating.
+        require(
+            uint256(_processedTicketTrackerOf[_projectId]) ==
+                ticketBooth.totalSupplyOf(_projectId),
+            "Juicer::Migrate: RESERVED_TICKETS_NOT_PRINTED"
+        );
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _balanceOf = balanceOf[_projectId];

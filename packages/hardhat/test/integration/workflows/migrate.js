@@ -47,14 +47,23 @@ module.exports = async ({
   const currency = 0;
 
   // Set a percentage of tickets to reserve for the project owner.
-  const reservedRate = 10;
+  const reservedRate = 10; // out of 100
 
-  // The amount of tickets that are expected to be printed in exchange of a payment of `paymentValue`
-  // that are not be reserved.
-  const expectedBeneficiaryTicketAmount = percentageFn({
-    value: paymentValue.mul(constants.InitialWeightMultiplier),
-    percent: 100 - reservedRate
+  // The amount of tickets to expect in exchange of a payment of `paymentValue`.
+  const expectedTicketAmount = paymentValue.mul(
+    constants.InitialWeightMultiplier
+  );
+
+  // The amount of tickets that are expected to be reserved for the project owner.
+  const expectedReservedTicketAmount = percentageFn({
+    expectedTicketAmount,
+    percent: reservedRate
   });
+
+  // The amount of tickets that are expected to not be reserved.
+  const expectedBeneficiaryTicketAmount = expectedTicketAmount.sub(
+    expectedReservedTicketAmount
+  );
 
   // The percent, out of `constants.MaxPercent`, that will be charged as a fee.
   const fee = await contracts.juicer.fee();
@@ -198,6 +207,27 @@ module.exports = async ({
         revert: "Operatable: UNAUTHORIZED"
       }),
     /**
+      Migrating to the new juicer before reserved tickets have been printed shouldn't be allowed.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "migrate",
+        args: [expectedProjectId, secondJuicer.address],
+        revert: "Juicer::Migrate: RESERVED_TICKETS_NOT_PRINTED"
+      }),
+    /**
+      Print reserved tickets in the original Juicer.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "printReservedTickets",
+        args: [expectedProjectId]
+      }),
+    /**
       Migrate to the new juicer.
     */
     () =>
@@ -256,9 +286,20 @@ module.exports = async ({
         revert: "TerminalUtility: UNAUTHORIZED"
       }),
     /**
+      Make sure funds can be tapped successfully in the new Juicer.
+    */
+    () =>
+      executeFn({
+        caller: payer,
+        contract: secondJuicer,
+        fn: "tap",
+        // Tap half as much as is available. The rest will be tapped later.
+        args: [expectedProjectId, target.div(2), currency, target.div(2)]
+      }),
+    /**
       Make sure tickets can be redeemed successfully in the new Juicer.
     */
-    async () =>
+    () =>
       executeFn({
         caller: ticketBeneficiary,
         contract: secondJuicer,
@@ -272,17 +313,6 @@ module.exports = async ({
           randomAddressFn(),
           false // doesnt matter
         ]
-      }),
-    /**
-      Make sure funds can be tapped successfully in the new Juicer.
-    */
-    async () =>
-      executeFn({
-        caller: payer,
-        contract: secondJuicer,
-        fn: "tap",
-        // Tap half as much as is available. The rest will be tapped later.
-        args: [expectedProjectId, target.div(2), currency, target.div(2)]
       }),
     /**
       Payments to the new Juicer should be accepted.

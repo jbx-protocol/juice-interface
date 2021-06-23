@@ -194,8 +194,7 @@ describe("Juice", async function() {
     this.randomAddressFn = () =>
       this.addrs[Math.floor(Math.random() * 9)].address;
 
-    this.percentageFn = ({ value, percent }) =>
-      value.mul(percent).div(this.constants.MaxPercent);
+    this.percentageFn = ({ value, percent }) => value.mul(percent).div(100);
 
     // Bind a function to create a value padding by 18 zeros.
     this.e18Fn = value =>

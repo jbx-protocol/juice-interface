@@ -67,7 +67,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             "FundingCycle::get: NOT_FOUND"
         );
 
-        return _getStruct(_fundingCycleId, true, true, true, true);
+        return _getStruct(_fundingCycleId);
     }
 
     /**
@@ -95,7 +95,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // If it exists, return it.
         if (_standbyFundingCycleId > 0)
-            return _getStruct(_standbyFundingCycleId, true, true, true, true);
+            return _getStruct(_standbyFundingCycleId);
 
         // Get a reference to the eligible funding cycle.
         uint256 _eligibleFundingCycleId = _eligible(_projectId);
@@ -107,7 +107,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_eligibleFundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _eligibleFundingCycle =
-                _getStruct(_eligibleFundingCycleId, true, true, false, false);
+                _getStruct(_eligibleFundingCycleId);
 
             // Check to see if the correct ballot is approved for this funding cycle.
             if (_isApproved(_eligibleFundingCycle))
@@ -129,9 +129,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Use second next because the next would be a mock of the current funding cycle.
         return
             _mockFundingCycleAfter(
-                _mockFundingCycleAfter(
-                    _getStruct(_fundingCycleId, true, true, true, true)
-                )
+                _mockFundingCycleAfter(_getStruct(_fundingCycleId))
             );
     }
 
@@ -170,7 +168,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _eligibleFundingCycle =
-                _getStruct(_fundingCycleId, true, true, false, false);
+                _getStruct(_fundingCycleId);
 
             // Check to see if the correct ballot is approved for this funding cycle.
             if (_isApproved(_eligibleFundingCycle))
@@ -190,10 +188,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
-        return
-            _mockFundingCycleAfter(
-                _getStruct(_fundingCycleId, true, true, true, true)
-            );
+        return _mockFundingCycleAfter(_getStruct(_fundingCycleId));
     }
 
     /** 
@@ -220,8 +215,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _fundingCycleId = latestIdOf[_projectId];
 
         // Get the necessary properties for the latest funding cycle.
-        FundingCycle memory _fundingCycle =
-            _getStruct(_fundingCycleId, true, true, false, false);
+        FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
 
         // If the latest funding cycle is the first, or if it has already started, it must be approved.
         if (_fundingCycle.basedOn == 0) return BallotState.Standby;
@@ -334,7 +328,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             msg.sender
         );
 
-        return _getStruct(_fundingCycleId, true, true, true, true);
+        return _getStruct(_fundingCycleId);
     }
 
     /** 
@@ -378,7 +372,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             msg.sender
         );
 
-        return _getStruct(fundingCycleId, true, true, true, true);
+        return _getStruct(fundingCycleId);
     }
 
     // --- private helper functions --- //
@@ -427,13 +421,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // If there is a funding cycle, base the next funding cycle on it.
         if (fundingCycleId > 0) {
             // Base off of the active funding cycle if it exists.
-            _fundingCycle = _getStruct(
-                fundingCycleId,
-                true,
-                true,
-                false,
-                false
-            );
+            _fundingCycle = _getStruct(fundingCycleId);
 
             // Make sure the funding cycle is recurring.
             require(
@@ -494,7 +482,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (fundingCycleId > 0) {
             // Get the necessary properties for the funding cycle.
             FundingCycle memory _eligibleFundingCycle =
-                _getStruct(fundingCycleId, true, true, false, false);
+                _getStruct(fundingCycleId);
 
             // Check to see if the cycle is approved. If so, return it.
             if (_isApproved(_eligibleFundingCycle)) return fundingCycleId;
@@ -512,8 +500,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         require(fundingCycleId > 0, "FundingCycles::_tappable: NOT_FOUND");
 
         // Get the properties of the funding cycle.
-        FundingCycle memory _fundingCycle =
-            _getStruct(fundingCycleId, true, true, true, true);
+        FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
@@ -615,8 +602,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (fundingCycleId == 0) return 0;
 
         // Get the necessary properties for the latest funding cycle.
-        FundingCycle memory _fundingCycle =
-            _getStruct(fundingCycleId, true, false, false, false);
+        FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
         // There is no upcoming funding cycle if the latest funding cycle has already started.
         if (block.timestamp >= _fundingCycle.start) return 0;
@@ -642,8 +628,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (fundingCycleId == 0) return 0;
 
         // Get the necessary properties for the latest funding cycle.
-        FundingCycle memory _fundingCycle =
-            _getStruct(fundingCycleId, true, true, false, false);
+        FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
         // If the latest is expired, return an undefined funding cycle.
         if (block.timestamp >= _fundingCycle.start + _fundingCycle.duration)
@@ -779,67 +764,54 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         Unpack a funding cycle's packed stored values into an easy-to-work-with funding cycle struct.
 
         @param _id The ID of the funding cycle to get a struct of.
-        @param _includeIntrinsicProperties Whether to unpack instrinsic properties in the struct.
-        @param _includeConfigurationProperties Whether to unpack configuration properties in the struct.
-        @param _includeAmounts Whether to include the target and tapped amounts in the struct.
-        @param _includeMetadata Whether to include the metadata in the struct.
 
         @return _fundingCycle The funding cycle struct.
     */
-    function _getStruct(
-        uint256 _id,
-        bool _includeIntrinsicProperties,
-        bool _includeConfigurationProperties,
-        bool _includeAmounts,
-        bool _includeMetadata
-    ) private view returns (FundingCycle memory _fundingCycle) {
+    function _getStruct(uint256 _id)
+        private
+        view
+        returns (FundingCycle memory _fundingCycle)
+    {
         _fundingCycle.id = _id;
 
-        if (_includeIntrinsicProperties) {
-            uint256 _packedIntrinsicProperties =
-                _packedIntrinsicPropertiesOf[_id];
+        uint256 _packedIntrinsicProperties = _packedIntrinsicPropertiesOf[_id];
 
-            _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
-            _fundingCycle.projectId = uint256(
-                uint48(_packedIntrinsicProperties >> 64)
-            );
-            _fundingCycle.number = uint256(
-                uint48(_packedIntrinsicProperties >> 112)
-            );
-            _fundingCycle.basedOn = uint256(
-                uint48(_packedIntrinsicProperties >> 160)
-            );
-            _fundingCycle.start = uint256(
-                uint48(_packedIntrinsicProperties >> 208)
-            );
-        }
-        if (_includeConfigurationProperties) {
-            uint256 _packedConfigurationProperties =
-                _packedConfigurationPropertiesOf[_id];
-            _fundingCycle.ballot = IFundingCycleBallot(
-                address(uint160(_packedConfigurationProperties))
-            );
-            _fundingCycle.configured = uint256(
-                uint48(_packedConfigurationProperties >> 160)
-            );
-            _fundingCycle.duration = uint256(
-                uint24(_packedConfigurationProperties >> 208)
-            );
-            _fundingCycle.currency = uint256(
-                uint8(_packedConfigurationProperties >> 232)
-            );
-            _fundingCycle.fee = uint256(
-                uint8(_packedConfigurationProperties >> 240)
-            );
-            _fundingCycle.discountRate = uint256(
-                uint8(_packedConfigurationProperties >> 248)
-            );
-        }
-        if (_includeAmounts) {
-            _fundingCycle.target = _targetOf[_id];
-            _fundingCycle.tapped = _tappedOf[_id];
-        }
-        if (_includeMetadata) _fundingCycle.metadata = _metadataOf[_id];
+        _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
+        _fundingCycle.projectId = uint256(
+            uint48(_packedIntrinsicProperties >> 64)
+        );
+        _fundingCycle.number = uint256(
+            uint48(_packedIntrinsicProperties >> 112)
+        );
+        _fundingCycle.basedOn = uint256(
+            uint48(_packedIntrinsicProperties >> 160)
+        );
+        _fundingCycle.start = uint256(
+            uint48(_packedIntrinsicProperties >> 208)
+        );
+        uint256 _packedConfigurationProperties =
+            _packedConfigurationPropertiesOf[_id];
+        _fundingCycle.ballot = IFundingCycleBallot(
+            address(uint160(_packedConfigurationProperties))
+        );
+        _fundingCycle.configured = uint256(
+            uint48(_packedConfigurationProperties >> 160)
+        );
+        _fundingCycle.duration = uint256(
+            uint24(_packedConfigurationProperties >> 208)
+        );
+        _fundingCycle.currency = uint256(
+            uint8(_packedConfigurationProperties >> 232)
+        );
+        _fundingCycle.fee = uint256(
+            uint8(_packedConfigurationProperties >> 240)
+        );
+        _fundingCycle.discountRate = uint256(
+            uint8(_packedConfigurationProperties >> 248)
+        );
+        _fundingCycle.target = _targetOf[_id];
+        _fundingCycle.tapped = _tappedOf[_id];
+        _fundingCycle.metadata = _metadataOf[_id];
     }
 
     /** 
@@ -941,8 +913,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         view
         returns (bool)
     {
-        FundingCycle memory _fundingCycle =
-            _getStruct(_fundingCycleId, true, true, false, false);
+        FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
         return _isApproved(_fundingCycle);
     }
 

@@ -194,6 +194,15 @@ describe("Juice", async function() {
     this.randomAddressFn = () =>
       this.addrs[Math.floor(Math.random() * 9)].address;
 
+    // Bind a function that returns either true or false randomly.
+    this.randomBoolFn = () => Math.random() > 0.5;
+
+    // Bind a function that generates a random string.
+    this.randomStringFn = (seed = 2) =>
+      Math.random()
+        .toString(36)
+        .substr(2, seed);
+
     this.percentageFn = ({ value, percent }) => value.mul(percent).div(100);
 
     // Bind a function to create a value padding by 18 zeros.

@@ -21,7 +21,9 @@ module.exports = async ({
   percentageFn,
   verifyBalanceFn,
   changeInBalanceFn,
-  randomAddressFn
+  randomAddressFn,
+  randomBoolFn,
+  randomStringFn
 }) => {
   // The owner of the project that will migrate.
   const owner = addrs[0];
@@ -56,7 +58,7 @@ module.exports = async ({
 
   // The amount of tickets that are expected to be reserved for the project owner.
   const expectedReservedTicketAmount = percentageFn({
-    expectedTicketAmount,
+    value: expectedTicketAmount,
     percent: reservedRate
   });
 
@@ -132,7 +134,12 @@ module.exports = async ({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
-        args: [expectedProjectId, ticketBeneficiary.address, "", false],
+        args: [
+          expectedProjectId,
+          ticketBeneficiary.address,
+          randomStringFn(),
+          randomBoolFn()
+        ],
         value: paymentValue
       }),
     /**
@@ -160,7 +167,7 @@ module.exports = async ({
           expectedBeneficiaryTicketAmount.div(2),
           0, // must be lower than the expected amount of ETH that is being claimed.
           redeemBeneficiary.address,
-          false // doesnt matter
+          randomBoolFn()
         ]
       }),
     /**
@@ -281,7 +288,12 @@ module.exports = async ({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
-        args: [expectedProjectId, randomAddressFn(), "", false],
+        args: [
+          expectedProjectId,
+          randomAddressFn(),
+          randomStringFn(),
+          randomBoolFn()
+        ],
         value: paymentValue,
         revert: "TerminalUtility: UNAUTHORIZED"
       }),
@@ -315,6 +327,24 @@ module.exports = async ({
         ]
       }),
     /**
+      Make sure the owner can also redeem their tickets.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: secondJuicer,
+        fn: "redeem",
+        // Redeem half as many tickets as are available. The rest will be redeemed later.
+        args: [
+          owner.address,
+          expectedProjectId,
+          expectedReservedTicketAmount,
+          0, // must be lower than the expected amount of ETH that is being claimed.
+          randomAddressFn(),
+          randomBoolFn()
+        ]
+      }),
+    /**
       Payments to the new Juicer should be accepted.
     */
     () =>
@@ -322,7 +352,12 @@ module.exports = async ({
         caller: deployer,
         contract: secondJuicer,
         fn: "pay",
-        args: [expectedProjectId, randomAddressFn(), "", false],
+        args: [
+          expectedProjectId,
+          randomAddressFn(),
+          randomStringFn(),
+          randomBoolFn()
+        ],
         value: paymentValue
       })
   ];

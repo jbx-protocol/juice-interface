@@ -106,6 +106,6 @@ module.exports = function() {
 
   // it("Simple deployment of a project", run(workflows.simpleDeploy));
   it("Migrate from one Terminal to another", run(workflows.migrate));
-  // it("Payout to payout mods", run(workflows.payoutToPaymentMods));
+  it("Payout to payout mods", run(workflows.payoutToPaymentMods));
   // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

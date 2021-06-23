@@ -1,65 +1,87 @@
-const { BigNumber, constants, utils } = require("ethers");
-
+/** 
+  Project's can set payment mods, which allow payouts to automatically
+  sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
+*/
 module.exports = async ({
   deployer,
   addrs,
+  constants,
   contracts,
   executeFn,
   checkFn,
+  BigNumber,
+  deployContractFn,
+  randomBigNumberFn,
+  stringToBytesFn,
+  normalizedPercentFn,
+  getBalanceFn,
   verifyBalanceFn,
-  deployContract
+  randomBoolFn,
+  randomStringFn,
+  randomAddressFn
 }) => {
-  const owner = deployer.address;
-  const mod1 = {
-    preferUnstaked: false,
-    percent: 100,
+  // The owner of the project with mods.
+  const owner = addrs[0];
+
+  // An account that will be used to make a payment.
+  const payer = addrs[1];
+
+  // Since the governance project was created before this test, the created project ID should be 2.
+  const expectedIdOfBaseProject = 2;
+  // The second project created will have ID 3, and will be used to route Mod payouts to.
+  const expectedIdOfModProject = 3;
+
+  // There are three types of mods.
+  // Address mods route payout directly to an address.
+  const addressMod = {
+    preferUnstaked: randomBoolFn(),
+    percent: normalizedPercentFn(50).toNumber(),
     lockedUntil: 0,
-    beneficiary: addrs[1].address,
+    beneficiary: randomAddressFn(),
     allocator: constants.AddressZero,
     projectId: BigNumber.from(0)
   };
-  const mod2 = {
-    preferUnstaked: false,
-    percent: 50,
+  // Project mods route payout directly to another project on Juicer.
+  const projectMod = {
+    preferUnstaked: randomBoolFn(),
+    percent: normalizedPercentFn(25).toNumber(),
     lockedUntil: 0,
-    beneficiary: addrs[1].address,
+    beneficiary: randomAddressFn(),
     allocator: constants.AddressZero,
-    // Use project with ID 3, which will be created.
-    projectId: BigNumber.from(3)
+    projectId: BigNumber.from(expectedIdOfModProject)
   };
-  const allocator = await deployContract("ExampleModAllocator");
-  const mod3 = {
-    preferUnstaked: false,
-    percent: 25,
+  // Allocator mods route payments directly to the specified contract that inherits from IModAllocator.
+  const allocatorMod = {
+    preferUnstaked: randomBoolFn(),
+    percent: normalizedPercentFn(20).toNumber(),
     lockedUntil: 0,
-    beneficiary: addrs[1].address,
-    allocator: allocator.address,
+    beneficiary: randomAddressFn(),
+    allocator: (await deployContractFn("ExampleModAllocator")).address,
     projectId: BigNumber.from(0)
   };
-  const paymentMods = [mod1, mod2, mod3];
-  const ticketMods = [];
 
-  const target = BigNumber.from(10)
-    .pow(18)
-    .mul(1000);
-  const currency = BigNumber.from(0);
+  // The currency will be 0, which corresponds to ETH.
+  const currency = 0;
 
-  const paymentValue = BigNumber.from(10)
-    .pow(18)
-    .mul(200);
+  // Cant pay entire balance because some is needed for gas.
+  const paymentValue = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(2)
+  });
 
-  const amountToTap = paymentValue;
-  const expectedAmountToTap = amountToTap
-    .mul(200)
-    .div((await contracts.juicer.fee()).add(200));
+  // An amount up to the amount paid can be tapped.
+  const amountToTap = randomBigNumberFn({ max: paymentValue });
 
-  const weightMultiplier = (await contracts.fundingCycles.BASE_WEIGHT()).div(
-    BigNumber.from(10).pow(18)
-  );
+  // The target must be at least the amount to tap.
+  const target = randomBigNumberFn({ min: amountToTap });
+
+  // The amount tapped takes into account any fees paid.
+  const expectedAmountTapped = amountToTap
+    .mul(constants.MaxPercent)
+    .div((await contracts.juicer.fee()).add(constants.MaxPercent));
 
   return [
     /** 
-      Deploy first project with a payment mod. Expect the project's ID to be 2.
+      Deploy first project with a payment mod.
     */
     () =>
       executeFn({
@@ -67,157 +89,187 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "deploy",
         args: [
-          owner,
-          utils.formatBytes32String("some-handle"),
-          "",
+          owner.address,
+          stringToBytesFn("some-unique-handle"),
+          randomStringFn(),
           {
             target,
             currency,
-            duration: BigNumber.from(10000),
-            discountRate: BigNumber.from(180),
+            duration: randomBigNumberFn({ min: 10, max: constants.MaxUint24 }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
           {
-            reservedRate: 0,
-            bondingCurveRate: 0,
-            reconfigurationBondingCurveRate: 0
+            reservedRate: BigNumber.from(0),
+            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
           },
-          paymentMods,
-          ticketMods
+          [addressMod, projectMod, allocatorMod],
+          []
         ]
       }),
-    /** 
-      Check that the payment mod got set.
-    */
+    /**
+        Check that the payment mod got set.
+      */
     ({ timeMark }) =>
       checkFn({
         contract: contracts.modStore,
         fn: "paymentModsOf",
-        args: [2, timeMark],
+        args: [expectedIdOfBaseProject, timeMark],
         expect: [
           [
-            mod1.preferUnstaked,
-            mod1.percent,
-            mod1.lockedUntil,
-            mod1.beneficiary,
-            mod1.allocator,
-            mod1.projectId
+            addressMod.preferUnstaked,
+            addressMod.percent,
+            addressMod.lockedUntil,
+            addressMod.beneficiary,
+            addressMod.allocator,
+            addressMod.projectId
           ],
           [
-            mod2.preferUnstaked,
-            mod2.percent,
-            mod2.lockedUntil,
-            mod2.beneficiary,
-            mod2.allocator,
-            mod2.projectId
+            projectMod.preferUnstaked,
+            projectMod.percent,
+            projectMod.lockedUntil,
+            projectMod.beneficiary,
+            projectMod.allocator,
+            projectMod.projectId
           ],
           [
-            mod3.preferUnstaked,
-            mod3.percent,
-            mod3.lockedUntil,
-            mod3.beneficiary,
-            mod3.allocator,
-            mod3.projectId
+            allocatorMod.preferUnstaked,
+            allocatorMod.percent,
+            allocatorMod.lockedUntil,
+            allocatorMod.beneficiary,
+            allocatorMod.allocator,
+            allocatorMod.projectId
           ]
         ]
       }),
-    /** 
-      Deploy second project with a payment mod. Expect the project's ID to be 3.
-    */
+    /**
+        Deploy second project that'll be sent funds my your
+        configured project prayment mod.
+      */
     () =>
       executeFn({
         caller: deployer,
         contract: contracts.juicer,
         fn: "deploy",
         args: [
-          owner,
-          utils.formatBytes32String("some-other-handle"),
-          "",
+          randomAddressFn(),
+          stringToBytesFn("stringToBytesFn"),
+          randomStringFn(),
           {
-            target,
-            currency,
-            duration: BigNumber.from(10000),
-            discountRate: BigNumber.from(180),
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
+            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint24 }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
           {
-            reservedRate: 0,
-            bondingCurveRate: 0,
-            reconfigurationBondingCurveRate: 0
+            reservedRate: BigNumber.from(0),
+            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
           },
           [],
           []
         ]
       }),
-    /** 
-      Make a payment to the project.
-    */
+    /**
+        Make a payment to the project.
+      */
     () =>
       executeFn({
-        caller: deployer,
+        caller: payer,
         contract: contracts.juicer,
         fn: "pay",
-        args: [2, addrs[2].address, "", false],
+        args: [
+          expectedIdOfBaseProject,
+          randomAddressFn(),
+          randomStringFn(),
+          randomBoolFn()
+        ],
         value: paymentValue
       }),
-    /** 
-      Check that second project has no balance.
-    */
+    /**
+        Check that second project has no balance.
+      */
     () =>
       checkFn({
         contract: contracts.juicer,
         fn: "balanceOf",
-        args: [3],
+        args: [expectedIdOfModProject],
         expect: BigNumber.from(0)
       }),
-    /** 
-      Tap funds for the project with payment mod.
-    */
+    /**
+        Tap funds for the project with payment mod.
+      */
     () =>
       executeFn({
         caller: deployer,
         contract: contracts.juicer,
         fn: "tap",
-        args: [2, amountToTap, currency, amountToTap]
-      }),
-    /** 
-      Check that payment mod beneficiary has expected funds.
-    */
-    () =>
-      verifyBalanceFn({
-        address: mod1.beneficiary,
-        expect: expectedAmountToTap.mul(mod1.percent).div(200)
+        args: [expectedIdOfBaseProject, amountToTap, currency, amountToTap]
       }),
     /**
-      Check that second project now has a balance.
-    */
+        Check that payment mod beneficiary has expected funds.
+      */
+    () =>
+      verifyBalanceFn({
+        address: addressMod.beneficiary,
+        expect: expectedAmountTapped
+          .mul(addressMod.percent)
+          .div(constants.MaxPercent)
+      }),
+    /**
+        Check that second project now has a balance.
+      */
     () =>
       checkFn({
         contract: contracts.juicer,
         fn: "balanceOf",
-        args: [3],
-        expect: expectedAmountToTap.mul(mod2.percent).div(200)
+        args: [expectedIdOfModProject],
+        expect: expectedAmountTapped
+          .mul(projectMod.percent)
+          .div(constants.MaxPercent)
       }),
     /**
-      Check that beneficiary of the mod got tickets of project with ID 3.
-    */
+        Check that beneficiary of the mod got tickets of project with ID 3.
+      */
     () =>
       checkFn({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
-        args: [mod2.beneficiary, 3],
-        expect: expectedAmountToTap
-          .mul(mod2.percent)
-          .div(200)
-          .mul(weightMultiplier)
+        args: [projectMod.beneficiary, expectedIdOfModProject],
+        expect: expectedAmountTapped
+          .mul(projectMod.percent)
+          .div(constants.MaxPercent)
+          .mul(constants.InitialWeightMultiplier)
       }),
     /**
-      Check that mod's allocator got paid.
-    */
+        Check that mod's allocator got paid.
+      */
     () =>
       verifyBalanceFn({
-        address: mod3.allocator,
-        expect: expectedAmountToTap.mul(mod3.percent).div(200)
+        address: allocatorMod.allocator,
+        expect: expectedAmountTapped
+          .mul(allocatorMod.percent)
+          .div(constants.MaxPercent)
+      }),
+    /**
+        Check that the project owner got any leftovers.
+      */
+    () =>
+      verifyBalanceFn({
+        address: owner.address,
+        expect: expectedAmountTapped
+          .mul(
+            constants.MaxPercent.sub(allocatorMod.percent)
+              .sub(projectMod.percent)
+              .sub(addressMod.percent)
+          )
+          .div(constants.MaxPercent)
       })
   ];
 };

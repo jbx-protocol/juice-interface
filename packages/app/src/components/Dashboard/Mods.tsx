@@ -1,12 +1,12 @@
 import { Button, Modal } from 'antd'
+import { LockOutlined } from '@ant-design/icons'
 import ProjectMods from 'components/shared/formItems/ProjectMods'
-import * as moment from 'moment'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import ShortAddress from 'components/shared/ShortAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants } from 'ethers'
 import { ModRef } from 'models/mods'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { fromPerbicent, fromWad } from 'utils/formatNumber'
 
 import { FundingCycle } from '../../models/funding-cycle'
@@ -30,11 +30,21 @@ export default function Mods({
   const [editingMods, setEditingMods] = useState<ModRef[]>()
   const { transactor, contracts } = useContext(UserContext)
 
+  const { editableMods, lockedMods } = useMemo(() => {
+    const now = new Date().valueOf() / 1000
+
+    return {
+      editableMods:
+        mods?.filter(m => !m.lockedUntil || m.lockedUntil < now) ?? [],
+      lockedMods: mods?.filter(m => m.lockedUntil && m.lockedUntil > now) ?? [],
+    }
+  }, [mods])
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useLayoutEffect(() => setEditingMods(mods), [])
+  useLayoutEffect(() => setEditingMods(editableMods), [])
 
   function setMods() {
     if (
@@ -54,7 +64,7 @@ export default function Mods({
       [
         projectId.toHexString(),
         fundingCycle.configured.toHexString(),
-        editingMods.map(m => ({
+        [...lockedMods, ...editingMods].map(m => ({
           preferUnstaked: false,
           percent: BigNumber.from(m.percent).toHexString(),
           lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
@@ -67,7 +77,7 @@ export default function Mods({
         onDone: () => setLoading(false),
         onConfirmed: () => {
           setModalVisible(false)
-          setEditingMods(undefined)
+          setEditingMods(editableMods)
         },
       },
     )
@@ -98,7 +108,8 @@ export default function Mods({
               )}
               {m.lockedUntil ? (
                 <div>
-                  locked until {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  <LockOutlined /> locked until{' '}
+                  {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </div>
               ) : null}
             </span>
@@ -118,23 +129,22 @@ export default function Mods({
         </div>
       ) : null}
 
-      {editingMods && fundingCycle ? (
+      {fundingCycle ? (
         <Modal
           visible={modalVisible}
           title="Edit auto payouts"
           onOk={() => setMods()}
           onCancel={() => {
-            setEditingMods(undefined)
+            setEditingMods(mods)
             setModalVisible(false)
           }}
           confirmLoading={loading}
           width={720}
-          destroyOnClose
         >
           <ProjectMods
-            name="mods"
             target={parseFloat(fromWad(fundingCycle.target))}
             mods={editingMods}
+            lockedMods={lockedMods}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
             onModsChanged={setEditingMods}
           />

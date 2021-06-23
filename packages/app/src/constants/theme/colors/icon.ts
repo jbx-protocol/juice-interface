@@ -39,7 +39,7 @@ export const iconColors: Record<ThemeOption, SemanticColors['icon']> = {
     primary: darkColors.light0,
     secondary: darkColors.light1,
     tertiary: darkColors.light2,
-    disabled: darkColors.light2 + 'dd',
+    disabled: darkColors.light2,
     success: darkColors.green,
     warn: darkColors.yellow,
     failure: darkColors.red,

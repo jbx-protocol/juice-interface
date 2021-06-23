@@ -78,9 +78,26 @@ export default function Dashboard() {
   const paymentMods = useContractReader<ModRef[]>({
     contract: ContractName.ModStore,
     functionName: 'paymentModsOf',
-    args: projectId
-      ? [projectId.toHexString(), fundingCycle?.configured]
-      : null,
+    args:
+      projectId && fundingCycle
+        ? [projectId.toHexString(), fundingCycle.configured.toHexString()]
+        : null,
+    updateOn: useMemo(
+      () =>
+        projectId && fundingCycle
+          ? [
+              {
+                contract: ContractName.ModStore,
+                eventName: 'SetPaymentMod',
+                topics: [
+                  projectId.toHexString(),
+                  fundingCycle.configured.toHexString(),
+                ],
+              },
+            ]
+          : [],
+      [projectId, fundingCycle],
+    ),
   })
 
   const metadata = useProjectMetadata(uri)

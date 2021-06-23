@@ -1,4 +1,4 @@
-import { CloseCircleOutlined } from '@ant-design/icons'
+import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import {
   Button,
   Col,
@@ -35,12 +35,14 @@ export default function ProjectMods({
   target,
   currency,
   hideLabel,
+  lockedMods,
   mods,
   onModsChanged,
   formItemProps,
 }: {
   target: number
-  mods: (ModRef & { handle?: string })[]
+  lockedMods?: (ModRef & { handle?: string })[]
+  mods: (ModRef & { handle?: string })[] | undefined
   onModsChanged: (mods: (ModRef & { handle?: string })[]) => void
   currency: CurrencyOption
 } & FormItemExt) {
@@ -53,14 +55,15 @@ export default function ProjectMods({
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
-  const [projectHandle, setProjectHandle] = useState<string>()
+  const [settingHandle, setSettingHandle] = useState<string>()
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
-    args: projectHandle ? [utils.formatBytes32String(projectHandle)] : null,
+    args: settingHandle ? [utils.formatBytes32String(settingHandle)] : null,
     callback: useCallback(
       (projectId?: BigNumber) => {
+        if (!mods) return
         onModsChanged(
           mods.map((m, i) =>
             i === settingHandleIndex
@@ -71,7 +74,7 @@ export default function ProjectMods({
               : m,
           ),
         )
-        setProjectHandle(undefined)
+        setSettingHandle(undefined)
         setSettingHandleIndex(undefined)
       },
       [form, onModsChanged, mods],
@@ -84,152 +87,171 @@ export default function ProjectMods({
 
   const gutter = 10
 
-  const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(fromPerbicent(curr.percent ?? '0')),
-    0,
-  )
-
   const modInput = useCallback(
-    (mod: ModRef, index: number) => (
-      <div
-        style={{
-          display: 'flex',
-          padding: 10,
-          border: '1px solid ' + colors.stroke.tertiary,
-          borderRadius: radii.md,
-        }}
-        key={mod.beneficiary ?? '' + index}
-      >
-        <Space
-          direction="vertical"
+    (mod: ModRef, index: number, locked?: boolean) => {
+      if (!mods) return
+
+      return (
+        <div
           style={{
-            width: '100%',
-            color: colors.text.primary,
-            cursor: 'pointer',
+            display: 'flex',
+            padding: 10,
+            border:
+              '1px solid ' +
+              (locked ? colors.stroke.disabled : colors.stroke.tertiary),
+            borderRadius: radii.md,
           }}
-          onClick={() => {
-            setEditingModType(
-              BigNumber.from(mod.projectId || '0').gt(0)
-                ? 'project'
-                : 'address',
-            )
-            form.setFieldsValue({
-              ...mod,
-              percent: parseFloat(fromPerbicent(mod.percent)),
-              lockedUntil: mod.lockedUntil
-                ? moment.default(mod.lockedUntil * 1000)
-                : undefined,
-            })
-            setEditingModIndex(index)
-          }}
+          key={mod.beneficiary ?? '' + index}
         >
-          {mod.projectId?.gt(0) ? (
+          <Space
+            direction="vertical"
+            style={{
+              width: '100%',
+              color: colors.text.primary,
+              cursor: locked ? 'default' : 'pointer',
+            }}
+            onClick={() => {
+              if (locked) return
+
+              setEditingModType(
+                BigNumber.from(mod.projectId || '0').gt(0)
+                  ? 'project'
+                  : 'address',
+              )
+              form.setFieldsValue({
+                ...mod,
+                percent: parseFloat(fromPerbicent(mod.percent)),
+                lockedUntil: mod.lockedUntil
+                  ? moment.default(mod.lockedUntil * 1000)
+                  : undefined,
+              })
+              setEditingModIndex(index)
+            }}
+          >
+            {mod.projectId?.gt(0) ? (
+              <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+                <Col span={5}>
+                  <label>Project</label>{' '}
+                </Col>
+                <Col span={19}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <span style={{ cursor: 'pointer' }}>
+                      @<ProjectHandle projectId={mod.projectId} />
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+            ) : (
+              <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+                <Col span={5}>
+                  <label>Address</label>{' '}
+                </Col>
+                <Col span={19}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
+                  </div>
+                </Col>
+              </Row>
+            )}
+
+            {mod.projectId?.gt(0) ? (
+              <Row>
+                <Col span={5}>
+                  <label>Beneficiary</label>
+                </Col>
+                <Col span={19}>
+                  <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
+                </Col>
+              </Row>
+            ) : null}
+
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
               <Col span={5}>
-                <label>Project</label>{' '}
+                <label>Percentage</label>
               </Col>
               <Col span={19}>
                 <div
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    width: '100%',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
-                  <span style={{ cursor: 'pointer' }}>
-                    @<ProjectHandle projectId={mod.projectId} />
+                  <span
+                    style={{
+                      marginRight: 10,
+                      width: 100,
+                      maxWidth: 100,
+                    }}
+                  >
+                    <Space>
+                      <span>{fromPerbicent(mod.percent)}%</span>
+                      <span>
+                        (
+                        <CurrencySymbol currency={currency} />
+                        {formattedNum(
+                          (target * parseFloat(fromPerbicent(mod.percent))) /
+                            100,
+                        )}
+                        )
+                      </span>
+                    </Space>
                   </span>
                 </div>
               </Col>
             </Row>
+
+            {mod.lockedUntil ? (
+              <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+                <Col span={5}>
+                  <label>Locked</label>
+                </Col>
+                <Col span={19}>
+                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                </Col>
+              </Row>
+            ) : null}
+          </Space>
+
+          {locked ? (
+            <LockOutlined style={{ color: colors.icon.disabled }} />
           ) : (
-            <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
-                <label>Address</label>{' '}
-              </Col>
-              <Col span={19}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
-                </div>
-              </Col>
-            </Row>
+            <Button
+              type="text"
+              onClick={e => {
+                onModsChanged([
+                  ...mods.slice(0, index),
+                  ...mods.slice(index + 1),
+                ])
+                e.stopPropagation()
+              }}
+              icon={<CloseCircleOutlined />}
+            />
           )}
-
-          {mod.projectId?.gt(0) ? (
-            <Row>
-              <Col span={5}>
-                <label>Beneficiary</label>
-              </Col>
-              <Col span={19}>
-                <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
-              </Col>
-            </Row>
-          ) : null}
-
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-            <Col span={5}>
-              <label>Percentage</label>
-            </Col>
-            <Col span={19}>
-              <div
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <span
-                  style={{
-                    marginRight: 10,
-                    width: 100,
-                    maxWidth: 100,
-                  }}
-                >
-                  <Space>
-                    <span>{fromPerbicent(mod.percent)}%</span>
-                    <span>
-                      (
-                      <CurrencySymbol currency={currency} />
-                      {formattedNum(
-                        (target * parseFloat(fromPerbicent(mod.percent))) / 100,
-                      )}
-                      )
-                    </span>
-                  </Space>
-                </span>
-              </div>
-            </Col>
-          </Row>
-
-          {mod.lockedUntil ? (
-            <Row gutter={gutter} style={{ width: '100%' }} align="middle">
-              <Col span={5}>
-                <label>Locked</label>
-              </Col>
-              <Col span={19}>
-                until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
-              </Col>
-            </Row>
-          ) : null}
-        </Space>
-        <Button
-          type="text"
-          onClick={e => {
-            onModsChanged([...mods.slice(0, index), ...mods.slice(index + 1)])
-            e.stopPropagation()
-          }}
-          icon={<CloseCircleOutlined />}
-        />
-      </div>
-    ),
+        </div>
+      )
+    },
     [mods, currency, target],
+  )
+
+  if (!mods) return null
+
+  const total = mods.reduce(
+    (acc, curr) => acc + parseFloat(fromPerbicent(curr.percent ?? '0')),
+    0,
   )
 
   const setReceiver = async () => {
@@ -244,6 +266,7 @@ export default function ProjectMods({
       ? Math.round(_lockedUntil.valueOf() / 1000)
       : undefined
 
+    // Store handle in mod object only to repopulate handle input while editing
     const newMod = { beneficiary, percent, handle, lockedUntil }
 
     onModsChanged(
@@ -260,7 +283,7 @@ export default function ProjectMods({
     )
 
     if (handle) {
-      setProjectHandle(handle)
+      setSettingHandle(handle)
       setSettingHandleIndex(editingModIndex)
     }
 
@@ -275,7 +298,6 @@ export default function ProjectMods({
       label={hideLabel ? undefined : 'Auto payouts (optional)'}
       name={name}
       {...formItemProps}
-      dependencies={['currency']}
       rules={[
         {
           validator: (rule: any, value: any) => {
@@ -288,6 +310,11 @@ export default function ProjectMods({
       ]}
     >
       <Space direction="vertical" style={{ width: '100%' }} size="large">
+        {lockedMods ? (
+          <Space style={{ width: '100%' }} direction="vertical" size="small">
+            {lockedMods.map((v, i) => modInput(v, i, true))}
+          </Space>
+        ) : null}
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {mods.map((v, i) => modInput(v, i))}
         </Space>

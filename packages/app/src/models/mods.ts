@@ -1,4 +1,5 @@
 // export interface PaymentMod {
+import { BigNumber } from '@ethersproject/bignumber'
 //   beneficiary: string
 //   percent: number
 //   preferUnstaked: boolean
@@ -11,5 +12,5 @@ export interface ModRef {
   percent: number
   preferUnstaked?: boolean
   lockedUntil?: number
-  projectId?: string
+  projectId?: BigNumber
 }

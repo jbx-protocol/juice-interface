@@ -1,0 +1,13 @@
+.ant-picker-cell-selected {
+  .ant-picker-cell-inner {
+    background: var(--background-action-primary) !important;
+  }
+}
+
+.ant-picker-today-btn {
+  color: var(--text-action-primary);
+}
+
+.ant-picker-focused {
+  border-color: var(--stroke-action-secondary);
+}

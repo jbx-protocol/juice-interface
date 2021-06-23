@@ -1,6 +1,7 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
+import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { ModRef } from 'models/mods'
 import { useContext } from 'react'
@@ -11,13 +12,17 @@ import FundingCycleDetails from './FundingCycleDetails'
 import Mods from './Mods'
 
 export default function FundingCyclePreview({
+  projectId,
   fundingCycle,
   paymentMods,
   showDetail,
+  isOwner,
 }: {
+  projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
   paymentMods: ModRef[] | undefined
   showDetail?: boolean
+  isOwner?: boolean
 }) {
   const {
     theme: { colors },
@@ -71,7 +76,12 @@ export default function FundingCyclePreview({
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             Auto payouts:
           </h4>
-          <Mods mods={paymentMods} />
+          <Mods
+            mods={paymentMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+          />
         </CollapsePanel>
       </Collapse>
     </div>

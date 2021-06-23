@@ -5,6 +5,11 @@
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
+      },
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -266,24 +271,11 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract ITerminal",
-        "name": "_to",
-        "type": "address"
-      }
-    ],
-    "name": "setTerminal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
-    "name": "terminal",
+    "name": "terminalDirectory",
     "outputs": [
       {
-        "internalType": "contract ITerminal",
+        "internalType": "contract ITerminalDirectory",
         "name": "",
         "type": "address"
       }

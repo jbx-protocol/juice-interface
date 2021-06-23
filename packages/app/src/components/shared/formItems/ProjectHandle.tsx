@@ -4,7 +4,14 @@ import { Form, Input } from 'antd'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -27,7 +34,7 @@ export default function ProjectHandle({
   } = useContext(ThemeContext)
   const [inputContents, setInputContents] = useState<string>()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setInputContents(value)
   }, [value])
 
@@ -82,6 +89,7 @@ export default function ProjectHandle({
       {...formItemProps}
       rules={[{ validator: checkHandle }, ...(formItemProps?.rules ?? [])]}
       validateTrigger={false}
+      initialValue={value}
     >
       <Input
         id="testinput"

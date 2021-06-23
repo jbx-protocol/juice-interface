@@ -1,6 +1,10 @@
 /** 
-  Project's can set payment mods, which allow payouts to automatically
-  sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
+  Anyone can tap funds on behalf of a project.
+
+  When a project is tapped, it will issue the appropriate payouts to its mods, and will send
+  any leftover funds to the project owner.
+
+  Payment mods allow payouts to automatically be sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
 */
 module.exports = async ({
   deployer,

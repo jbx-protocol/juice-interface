@@ -34,6 +34,7 @@ module.exports = async ({
 
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedIdOfBaseProject = 2;
+
   // The second project created will have ID 3, and will be used to route Mod payouts to.
   const expectedIdOfModProject = 3;
 
@@ -45,7 +46,10 @@ module.exports = async ({
     // Lock at least until the end of the tests.
     lockedUntil: (await getTimestampFn())
       .add(
-        randomBigNumberFn({ min: BigNumber.from(10), max: BigNumber.from(100) })
+        randomBigNumberFn({
+          min: BigNumber.from(1000),
+          max: BigNumber.from(100000000)
+        })
       )
       .toNumber(),
     beneficiary: randomAddressFn(),
@@ -157,8 +161,8 @@ module.exports = async ({
         ],
         revert: "ModStore::setPaymentMods: SOME_LOCKED"
       }),
-    /** 
-      Set new payment mods, making sure to include any locked mods.
+    /**
+      Overriding a locked mod with a shorter locked date shouldn't work when setting payment mods.
     */
     ({ timeMark }) =>
       executeFn({
@@ -168,7 +172,37 @@ module.exports = async ({
         args: [
           expectedIdOfBaseProject,
           timeMark,
-          [lockedAddressMod, unlockedAllocatorMod]
+          [
+            {
+              ...lockedAddressMod,
+              lockedUntil: lockedAddressMod.lockedUntil - 1
+            },
+            unlockedProjectMod,
+            unlockedAllocatorMod
+          ]
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      }),
+    /**
+      Set new payment mods, making sure to include any locked mods.
+
+      Locked mods can have their locked date extended.
+    */
+    ({ timeMark }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.modStore,
+        fn: "setPaymentMods",
+        args: [
+          expectedIdOfBaseProject,
+          timeMark,
+          [
+            {
+              ...lockedAddressMod,
+              lockedUntil: lockedAddressMod.lockedUntil + 1
+            },
+            unlockedAllocatorMod
+          ]
         ]
       }),
     /**
@@ -184,7 +218,7 @@ module.exports = async ({
           [
             lockedAddressMod.preferUnstaked,
             lockedAddressMod.percent,
-            lockedAddressMod.lockedUntil,
+            lockedAddressMod.lockedUntil + 1,
             lockedAddressMod.beneficiary,
             lockedAddressMod.allocator,
             lockedAddressMod.projectId
@@ -199,7 +233,7 @@ module.exports = async ({
           ]
         ]
       }),
-    /** 
+    /**
       Configuring a project should allow overriding locked mods for the new configuration.
     */
     () =>
@@ -240,7 +274,7 @@ module.exports = async ({
           [
             lockedAddressMod.preferUnstaked,
             lockedAddressMod.percent,
-            lockedAddressMod.lockedUntil,
+            lockedAddressMod.lockedUntil + 1,
             lockedAddressMod.beneficiary,
             lockedAddressMod.allocator,
             lockedAddressMod.projectId

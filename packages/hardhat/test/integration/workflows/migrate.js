@@ -11,6 +11,7 @@ module.exports = async ({
   addrs,
   constants,
   contracts,
+  BigNumber,
   executeFn,
   checkFn,
   deployContractFn,
@@ -38,9 +39,10 @@ module.exports = async ({
   const redeemBeneficiary = addrs[3];
 
   // Cant pay entire balance because some is needed for gas.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
-  });
+  const paymentValue = (await getBalanceFn(payer.address)).div(2);
+  // randomBigNumberFn({
+  //   max: (await getBalanceFn(payer.address)).div(2)
+  // });
 
   // The project's funding cycle target will be half of the payment value.
   const target = paymentValue.div(2);
@@ -72,6 +74,16 @@ module.exports = async ({
 
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedProjectId = 2;
+
+  // Initially tap a portion of the funding cycle's target.
+  const firstAmountToTap = target.div(
+    randomBigNumberFn({ min: BigNumber.from(2), max: BigNumber.from(10) })
+  );
+
+  // Initially redeem a portion of the tickets received.
+  const firstTicketAmountToRedeem = expectedBeneficiaryTicketAmount.div(
+    randomBigNumberFn({ min: BigNumber.from(2), max: BigNumber.from(10) })
+  );
 
   // The juicer that will be migrated to.
   const secondJuicer = await deployContractFn("Juicer", [
@@ -164,7 +176,7 @@ module.exports = async ({
         args: [
           ticketBeneficiary.address,
           expectedProjectId,
-          expectedBeneficiaryTicketAmount.div(2),
+          firstTicketAmountToRedeem,
           0, // must be lower than the expected amount of ETH that is being claimed.
           redeemBeneficiary.address,
           randomBoolFn()
@@ -179,7 +191,7 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "tap",
         // Tap half as much as is available. The rest will be tapped later.
-        args: [expectedProjectId, target.div(2), currency, target.div(2)]
+        args: [expectedProjectId, firstAmountToTap, currency, firstAmountToTap]
       }),
     /**
       Migrating to a new juicer shouldn't work because it hasn't been allowed yet.
@@ -252,22 +264,21 @@ module.exports = async ({
       verifyBalanceFn({
         address: contracts.juicer.address,
         // Take the fee from the amount that was tapped.
-        expect: target
-          .div(2)
-          .mul(constants.MaxPercent)
-          .div(constants.MaxPercent.add(fee))
+        expect: firstAmountToTap.sub(
+          firstAmountToTap
+            .mul(constants.MaxPercent)
+            .div(constants.MaxPercent.add(fee))
+        )
       }),
     /**
       The rest of the balance should be entirely in the new Juicer.
     */
     async () =>
-      checkFn({
-        contract: deployer.provider,
-        fn: "getBalance",
-        args: [secondJuicer.address],
+      verifyBalanceFn({
+        address: secondJuicer.address,
         // The balance should be the amount paid minute the amount tapped and the amount claimed from redeeming tickets.
         expect: paymentValue
-          .sub(target.div(2))
+          .sub(firstAmountToTap)
           .sub(await changeInBalanceFn(redeemBeneficiary.address))
       }),
     /**
@@ -305,8 +316,13 @@ module.exports = async ({
         caller: payer,
         contract: secondJuicer,
         fn: "tap",
-        // Tap half as much as is available. The rest will be tapped later.
-        args: [expectedProjectId, target.div(2), currency, target.div(2)]
+        // Tap the other half.
+        args: [
+          expectedProjectId,
+          target.sub(firstAmountToTap),
+          currency,
+          target.sub(firstAmountToTap)
+        ]
       }),
     /**
       Make sure tickets can be redeemed successfully in the new Juicer.
@@ -320,10 +336,10 @@ module.exports = async ({
         args: [
           ticketBeneficiary.address,
           expectedProjectId,
-          expectedBeneficiaryTicketAmount.div(2),
+          expectedBeneficiaryTicketAmount.sub(firstTicketAmountToRedeem),
           0, // must be lower than the expected amount of ETH that is being claimed.
           randomAddressFn(),
-          false // doesnt matter
+          randomBoolFn()
         ]
       }),
     /**

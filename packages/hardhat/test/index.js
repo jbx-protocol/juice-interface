@@ -141,7 +141,7 @@ describe("Juice", async function() {
     };
 
     // Binds a function that makes sure the provided address has the balance
-    this.verifyBalanceFn = ({ address, expect }) => async () => {
+    this.verifyBalanceFn = async ({ address, expect }) => {
       const storedVal = await ethers.provider.getBalance(address);
       chai
         .expect(storedVal.sub(initialBalances[address] || 0))
@@ -180,19 +180,24 @@ describe("Juice", async function() {
       max = this.constants.MaxUint256,
       fidelity = 10000000
     } = {}) => {
-      const base = max.sub(min).add(min);
-      return base.gt(fidelity)
+      const base = max.sub(min);
+      const randomInRange = base.gt(fidelity)
         ? base
             .div(fidelity)
             .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
         : base
             .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
             .div(fidelity);
+
+      return randomInRange.add(min);
     };
 
     // Bind a function that gets a random address.
-    this.randomAddressFn = () =>
-      this.addrs[Math.floor(Math.random() * 9)].address;
+    this.randomAddressFn = ({ exclude = [] } = {}) => {
+      const candidate = this.addrs[Math.floor(Math.random() * 9)].address;
+      if (exclude.includes(candidate)) return this.randomAddressFn({ exclude });
+      return candidate;
+    };
 
     // Bind a function that returns either true or false randomly.
     this.randomBoolFn = () => Math.random() > 0.5;

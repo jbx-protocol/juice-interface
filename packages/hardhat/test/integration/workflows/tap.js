@@ -41,7 +41,8 @@ module.exports = async ({
     preferUnstaked: randomBoolFn(),
     percent: normalizedPercentFn(50).toNumber(),
     lockedUntil: 0,
-    beneficiary: randomAddressFn(),
+    // Make sure the beneficiary isnt the owner or the payer.
+    beneficiary: randomAddressFn({ exclude: [owner.address, payer.address] }),
     allocator: constants.AddressZero,
     projectId: BigNumber.from(0)
   };
@@ -239,7 +240,7 @@ module.exports = async ({
           .div(constants.MaxPercent)
       }),
     /**
-        Check that beneficiary of the mod got tickets of project with ID 3.
+        Check that beneficiary of the mod got tickets.
       */
     () =>
       checkFn({
@@ -268,12 +269,21 @@ module.exports = async ({
       verifyBalanceFn({
         address: owner.address,
         expect: expectedAmountTapped
-          .mul(
-            constants.MaxPercent.sub(allocatorMod.percent)
-              .sub(projectMod.percent)
-              .sub(addressMod.percent)
+          .sub(
+            expectedAmountTapped
+              .mul(addressMod.percent)
+              .div(constants.MaxPercent)
           )
-          .div(constants.MaxPercent)
+          .sub(
+            expectedAmountTapped
+              .mul(projectMod.percent)
+              .div(constants.MaxPercent)
+          )
+          .sub(
+            expectedAmountTapped
+              .mul(allocatorMod.percent)
+              .div(constants.MaxPercent)
+          )
       })
   ];
 };

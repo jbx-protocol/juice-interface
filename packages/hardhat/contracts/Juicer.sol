@@ -320,7 +320,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 true
             );
 
-        console.log("eplo %d", _fundingCycle.configured);
         // Set payment mods if there are any.
         if (_paymentMods.length > 0)
             modStore.setPaymentMods(
@@ -402,7 +401,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _shouldConfigureActive
             );
 
-        console.log("configed %d", _fundingCycle.configured);
         // Set payment mods for the new configuration if there are any.
         if (_paymentMods.length > 0)
             modStore.setPaymentMods(

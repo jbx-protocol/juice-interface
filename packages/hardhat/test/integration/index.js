@@ -108,5 +108,6 @@ module.exports = function() {
   it("Migrate from one Terminal to another", run(workflows.migrate));
   it("Tap", run(workflows.tap));
   it("Set payout mods", run(workflows.setPaymentMods));
+  it("Redeem", run(workflows.redeem));
   // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

@@ -39,10 +39,9 @@ module.exports = async ({
   const redeemBeneficiary = addrs[3];
 
   // Cant pay entire balance because some is needed for gas.
-  const paymentValue = (await getBalanceFn(payer.address)).div(2);
-  // randomBigNumberFn({
-  //   max: (await getBalanceFn(payer.address)).div(2)
-  // });
+  const paymentValue = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(2)
+  });
 
   // The project's funding cycle target will be half of the payment value.
   const target = paymentValue.div(2);

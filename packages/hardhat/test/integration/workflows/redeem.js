@@ -49,9 +49,10 @@ module.exports = async ({
   const redeemBeneficiary4 = addrs[7];
 
   // Three payments will be made. Cant pay entire balance because some is needed for gas.
-  // 7 is arbitrary here, but it avoids off-by-one errors throughout the execution of the test.
-  // For example, replacing 7 with 9 works also, but 8 does not.
-  const paymentValue = (await getBalanceFn(payer.address)).div(7);
+  // so arbitrarily find a number less than a fourth so that all payments can be made successfully.
+  const paymentValue = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(4)
+  });
 
   // The project's funding cycle target will be a third of the payment value.
   const target = paymentValue.div(4);
@@ -125,6 +126,11 @@ module.exports = async ({
 
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedProjectId = 2;
+
+  // Due to the many division operations in this test, some resulting might be +- 1 of the value expected.
+  // It is highly unlinkely for the result to deviate more than just by 1. It does happen tho depending on
+  // what the generated random value for the `paymentValue`.
+  const tolerance = 2;
 
   return [
     /** 
@@ -215,9 +221,9 @@ module.exports = async ({
         args: [contracts.juicer.address],
         expect: paymentValue.mul(3)
       }),
-    /**
-      Make sure the first ticket beneficiary tickets can be redeemed successfully.
-    */
+    // /**
+    //   Make sure the first ticket beneficiary tickets can be redeemed successfully.
+    // */
     async () =>
       executeFn({
         caller: ticketBeneficiary1,
@@ -228,7 +234,7 @@ module.exports = async ({
           ticketBeneficiary1.address,
           expectedProjectId,
           expectedBeneficiaryTicketAmount,
-          expectedBeneficiary1RedeemAmount,
+          expectedBeneficiary1RedeemAmount.sub(tolerance),
           redeemBeneficiary1.address,
           randomBoolFn()
         ]
@@ -239,7 +245,8 @@ module.exports = async ({
     () =>
       verifyBalanceFn({
         address: redeemBeneficiary1.address,
-        expect: expectedBeneficiary1RedeemAmount
+        expect: expectedBeneficiary1RedeemAmount,
+        tolerance
       }),
     /**
       Make sure the second ticket beneficiary tickets can be redeemed successfully.
@@ -254,7 +261,7 @@ module.exports = async ({
           ticketBeneficiary2.address,
           expectedProjectId,
           expectedBeneficiaryTicketAmount,
-          expectedBeneficiary2RedeemAmount,
+          expectedBeneficiary2RedeemAmount.sub(tolerance),
           redeemBeneficiary2.address,
           randomBoolFn()
         ]
@@ -265,7 +272,8 @@ module.exports = async ({
     () =>
       verifyBalanceFn({
         address: redeemBeneficiary2.address,
-        expect: expectedBeneficiary2RedeemAmount
+        expect: expectedBeneficiary2RedeemAmount,
+        tolerance
       }),
     /**
       Make sure the third ticket beneficiary tickets can be redeemed successfully.
@@ -280,7 +288,7 @@ module.exports = async ({
           ticketBeneficiary3.address,
           expectedProjectId,
           expectedBeneficiaryTicketAmount,
-          expectedBeneficiary3RedeemAmount,
+          expectedBeneficiary3RedeemAmount.sub(tolerance),
           redeemBeneficiary3.address,
           randomBoolFn()
         ]
@@ -291,7 +299,8 @@ module.exports = async ({
     () =>
       verifyBalanceFn({
         address: redeemBeneficiary3.address,
-        expect: expectedBeneficiary3RedeemAmount
+        expect: expectedBeneficiary3RedeemAmount,
+        tolerance
       }),
     /**
       Print the reserved tickets for the owner of the project.
@@ -316,7 +325,7 @@ module.exports = async ({
           owner.address,
           expectedProjectId,
           expectedReservedTicketAmount.mul(3),
-          overflow,
+          overflow.sub(tolerance),
           redeemBeneficiary4.address,
           randomBoolFn()
         ]
@@ -327,7 +336,8 @@ module.exports = async ({
     () =>
       verifyBalanceFn({
         address: redeemBeneficiary4.address,
-        expect: overflow
+        expect: overflow,
+        tolerance
       }),
     /**
       The contract should just have the target funds in it left.
@@ -335,7 +345,8 @@ module.exports = async ({
     () =>
       verifyBalanceFn({
         address: contracts.juicer.address,
-        expect: target
+        expect: target,
+        tolerance
       })
   ];
 };

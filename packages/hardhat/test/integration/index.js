@@ -104,10 +104,10 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  it("Simple deployment of a project", run(workflows.simpleDeploy));
+  it("Simple deployment of a project", run(workflows.deploy));
+  it("Redeem tickets for overflow", run(workflows.redeem));
   it("Migrate from one Terminal to another", run(workflows.migrate));
-  it("Tap", run(workflows.tap));
+  it("Tap funds up to the configured target", run(workflows.tap));
   it("Set payout mods", run(workflows.setPaymentMods));
-  it("Redeem", run(workflows.redeem));
   // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

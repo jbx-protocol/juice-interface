@@ -135,17 +135,42 @@ describe("Juice", async function() {
     };
 
     // Bind a function that checks if a contract getter equals an expected value.
-    this.checkFn = async ({ contract, fn, args, expect }) => {
+    this.checkFn = async ({ contract, fn, args, expect, tolerance }) => {
       const storedVal = await contract[fn](...args);
-      chai.expect(storedVal).to.deep.equal(expect);
+
+      // If a tolerance is set, check to see if the expected value matches +- the tolerance.
+      if (tolerance) {
+        // eslint-disable-next-line no-unused-expressions
+        chai.expect(storedVal.gte(expect.sub(tolerance))).to.be.true;
+        // eslint-disable-next-line no-unused-expressions
+        chai.expect(storedVal.lte(expect.add(tolerance))).to.be.true;
+      } else {
+        chai.expect(storedVal).to.deep.equal(expect);
+      }
     };
 
     // Binds a function that makes sure the provided address has the balance
-    this.verifyBalanceFn = async ({ address, expect }) => {
+    this.verifyBalanceFn = async ({ address, expect, tolerance }) => {
       const storedVal = await ethers.provider.getBalance(address);
-      chai
-        .expect(storedVal.sub(initialBalances[address] || 0))
-        .to.deep.equal(expect);
+      // If a tolerance is set, check to see if the expected value matches +- the tolerance.
+      if (tolerance) {
+        // eslint-disable-next-line no-unused-expressions
+        chai.expect(
+          storedVal
+            .sub(initialBalances[address] || 0)
+            .gte(expect.sub(tolerance))
+        ).to.be.true;
+        // eslint-disable-next-line no-unused-expressions
+        chai.expect(
+          storedVal
+            .sub(initialBalances[address] || 0)
+            .lte(expect.add(tolerance))
+        ).to.be.true;
+      } else {
+        chai
+          .expect(storedVal.sub(initialBalances[address] || 0))
+          .to.deep.equal(expect);
+      }
     };
 
     // Binds a function that gets the balance of an address.

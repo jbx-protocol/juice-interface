@@ -1,5 +1,7 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { ModRef } from 'models/mods'
+import { useLayoutEffect, useState } from 'react'
 
 export type TicketingFormFields = {
   discountRate: string
@@ -7,27 +9,28 @@ export type TicketingFormFields = {
   bondingCurveRate: string
 }
 
-export default function FundingDetails({
+export default function TicketingForm({
   form,
   cycleIsRecurring,
+  initialMods,
   onSave,
 }: {
   form: FormInstance<TicketingFormFields>
   cycleIsRecurring: boolean
-  onSave: VoidFunction
+  initialMods: ModRef[]
+  onSave: (mods: ModRef[]) => void
 }) {
+  const [mods, setMods] = useState<ModRef[]>([])
+
+  useLayoutEffect(() => {
+    setMods(initialMods)
+  }, [])
+
   return (
     <Space direction="vertical" size="large">
       <h1>Ticketing</h1>
 
       <Form form={form} layout="vertical">
-        <FormItems.ProjectReserved
-          name="reserved"
-          value={form.getFieldValue('reserved')}
-          onChange={(val?: number) =>
-            form.setFieldsValue({ reserved: val?.toString() })
-          }
-        />
         {cycleIsRecurring && (
           <FormItems.ProjectDiscountRate
             name="discountRate"
@@ -46,13 +49,31 @@ export default function FundingDetails({
             }
           />
         )}
+        <FormItems.ProjectReserved
+          name="reserved"
+          value={form.getFieldValue('reserved')}
+          onChange={(val?: number) =>
+            form.setFieldsValue({ reserved: val?.toString() })
+          }
+        />
+        <FormItems.ProjectMods
+          name="ticketMods"
+          mods={mods}
+          onModsChanged={setMods}
+          addButtonText="Add a destination"
+          formItemProps={{
+            label: 'Allocate reserved tickets (optional)',
+            extra:
+              "Automatically distribute a portion of your project's reserved tickets to other projects or ETH wallet addresses. Reserved tickets will be distributed as soon as they're printed.",
+          }}
+        />
         <Form.Item>
           <Button
             htmlType="submit"
             type="primary"
             onClick={async () => {
               await form.validateFields()
-              onSave()
+              onSave(mods)
             }}
           >
             Save

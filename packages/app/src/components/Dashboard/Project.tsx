@@ -23,6 +23,7 @@ export default function Project({
   projectId,
   fundingCycle,
   paymentMods,
+  ticketMods,
   showCurrentDetail,
   style,
   isOwner,
@@ -33,6 +34,7 @@ export default function Project({
   isOwner: boolean
   fundingCycle: FundingCycle | undefined
   paymentMods: ModRef[] | undefined
+  ticketMods: ModRef[] | undefined
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {
@@ -135,6 +137,7 @@ export default function Project({
             projectId={projectId}
             fundingCycle={fundingCycle}
             paymentMods={paymentMods}
+            ticketMods={ticketMods}
             isOwner={isOwner}
             balanceInCurrency={balanceInCurrency}
             showCurrentDetail={showCurrentDetail}

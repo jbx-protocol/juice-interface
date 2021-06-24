@@ -1,4 +1,5 @@
 import { Button, Form, FormInstance, Space } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
@@ -6,6 +7,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
+import { formattedNum, fromPerbicent, fromWad } from 'utils/formatNumber'
 
 export type BudgetFormFields = {
   duration: string
@@ -29,6 +31,7 @@ export default function BudgetForm({
   const [mods, setMods] = useState<ModRef[]>([])
   const [target, setTarget] = useState<number>(0)
   const isRecurring = useEditingFundingCycleRecurringSelector()
+  // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
@@ -63,10 +66,22 @@ export default function BudgetForm({
         />
         <FormItems.ProjectMods
           name="mods"
-          target={target}
-          currency={currency}
           mods={mods}
           onModsChanged={setMods}
+          addButtonText="Add a payout"
+          formatPercent={percent => (
+            <span>
+              {currency !== undefined ? (
+                <CurrencySymbol currency={currency} />
+              ) : null}
+              {formattedNum(target * (percent / 100))}
+            </span>
+          )}
+          formItemProps={{
+            label: 'Auto payouts (optional)',
+            extra:
+              "Commit portions of your project's funding to other Ethereum wallets or Juice projects. Use this to pay contributors, charities, other projects you depend on, or anyone else. Payouts will be distributed automatically anytime a withdrawal is made from your project.",
+          }}
         />
         <Form.Item>
           <Button

@@ -19,6 +19,7 @@ export default function FundingCycles({
   projectId,
   fundingCycle,
   paymentMods,
+  ticketMods,
   balanceInCurrency,
   showCurrentDetail,
   isOwner,
@@ -26,6 +27,7 @@ export default function FundingCycles({
   projectId: BigNumber
   fundingCycle: FundingCycle | undefined
   paymentMods: ModRef[] | undefined
+  ticketMods: ModRef[] | undefined
   balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
   isOwner?: boolean
@@ -72,6 +74,7 @@ export default function FundingCycles({
               fundingCycle={fundingCycle}
               showDetail={showCurrentDetail}
               paymentMods={paymentMods}
+              ticketMods={ticketMods}
               projectId={projectId}
               isOwner={isOwner}
             />

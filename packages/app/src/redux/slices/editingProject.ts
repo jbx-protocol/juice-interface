@@ -21,6 +21,7 @@ export type EditingProjectState = {
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
   paymentMods: ModRef[]
+  ticketMods: ModRef[]
 }
 
 const defaultDiscountRate = parsePerbicent('97')
@@ -56,6 +57,7 @@ export const editingProjectSlice = createSlice({
       ballot: constants.AddressZero,
     }),
     paymentMods: [],
+    ticketMods: [],
   } as EditingProjectState,
   reducers: {
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
@@ -179,6 +181,10 @@ export const editingProjectSlice = createSlice({
     setPaymentMods: (state, action: PayloadAction<ModRef[]>) => ({
       ...state,
       paymentMods: action.payload,
+    }),
+    setTicketMods: (state, action: PayloadAction<ModRef[]>) => ({
+      ...state,
+      ticketMods: action.payload,
     }),
   },
 })

@@ -100,6 +100,31 @@ export default function Dashboard() {
     ),
   })
 
+  const ticketMods = useContractReader<ModRef[]>({
+    contract: ContractName.ModStore,
+    functionName: 'ticketModsOf',
+    args:
+      projectId && fundingCycle
+        ? [projectId.toHexString(), fundingCycle.configured.toHexString()]
+        : null,
+    updateOn: useMemo(
+      () =>
+        projectId && fundingCycle
+          ? [
+              {
+                contract: ContractName.ModStore,
+                eventName: 'SetTicketMod',
+                topics: [
+                  projectId.toHexString(),
+                  fundingCycle.configured.toHexString(),
+                ],
+              },
+            ]
+          : [],
+      [projectId, fundingCycle],
+    ),
+  })
+
   const metadata = useProjectMetadata(uri)
 
   const isOwner = userAddress === owner
@@ -131,6 +156,7 @@ export default function Dashboard() {
         projectId={projectId}
         fundingCycle={fundingCycle}
         paymentMods={paymentMods}
+        ticketMods={ticketMods}
       />
     </div>
   )

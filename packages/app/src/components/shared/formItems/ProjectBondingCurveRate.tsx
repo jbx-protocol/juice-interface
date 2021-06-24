@@ -29,11 +29,11 @@ export default function ProjectBondingCurveRate({
   const baseCurveId = 'base-curve'
 
   useLayoutEffect(() => {
-    if (calculator) return
+    if (calculator || !Desmos) return
 
     // https://www.desmos.com/api/v1.6/docs/index.html
     setCalculator(
-      Desmos?.GraphingCalculator(document.getElementById(graphContainerId), {
+      Desmos.GraphingCalculator(document.getElementById(graphContainerId), {
         keypad: false,
         expressions: false,
         settingsMenu: false,
@@ -77,9 +77,8 @@ export default function ProjectBondingCurveRate({
     calculator.removeExpressions([{ id: bondingCurveId }, { id: baseCurveId }])
     calculator.setExpression({
       id: bondingCurveId,
-      latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
-        _value / 100
-      })/${supply})`,
+      latex: `y=${overflow} * (x/${supply}) * (${_value /
+        100} + (x - x${_value / 100})/${supply})`,
       color: colors.text.brand.primary,
     })
     calculator.setExpression({

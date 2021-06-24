@@ -32,19 +32,18 @@ type ModType = 'project' | 'address'
 
 export default function ProjectMods({
   name,
-  target,
-  currency,
-  hideLabel,
   lockedMods,
   mods,
   onModsChanged,
   formItemProps,
+  addButtonText,
+  formatPercent,
 }: {
-  target: number
   lockedMods?: (ModRef & { handle?: string })[]
   mods: (ModRef & { handle?: string })[] | undefined
   onModsChanged: (mods: (ModRef & { handle?: string })[]) => void
-  currency: CurrencyOption
+  addButtonText: string
+  formatPercent?: (x: number) => JSX.Element | string
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
@@ -199,15 +198,15 @@ export default function ProjectMods({
                   >
                     <Space>
                       <span>{fromPerbicent(mod.percent)}%</span>
-                      <span>
-                        (
-                        <CurrencySymbol currency={currency} />
-                        {formattedNum(
-                          (target * parseFloat(fromPerbicent(mod.percent))) /
-                            100,
-                        )}
-                        )
-                      </span>
+                      {formatPercent ? (
+                        <span>
+                          (
+                          {formatPercent(
+                            parseFloat(fromPerbicent(mod.percent)),
+                          )}
+                          )
+                        </span>
+                      ) : null}
                     </Space>
                   </span>
                 </div>
@@ -244,7 +243,7 @@ export default function ProjectMods({
         </div>
       )
     },
-    [mods, currency, target],
+    [mods, formatPercent],
   )
 
   if (!mods) return null
@@ -294,8 +293,6 @@ export default function ProjectMods({
 
   return (
     <Form.Item
-      extra="Commit portions of your project's funding to other Ethereum wallets or Juice projects. Use this to pay contributors, charities, other projects you depend on, or anyone else. Payouts will be distributed automatically anytime a withdrawal is made from your project."
-      label={hideLabel ? undefined : 'Auto payouts (optional)'}
       name={name}
       {...formItemProps}
       rules={[
@@ -339,7 +336,7 @@ export default function ProjectMods({
           }}
           block
         >
-          Add a payout
+          {addButtonText}
         </Button>
       </Space>
 

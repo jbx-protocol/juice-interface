@@ -23,7 +23,9 @@ import { orEmpty } from 'utils/orEmpty'
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const paymentMods = useAppSelector(state => state.editingProject.paymentMods)
+  const { paymentMods, ticketMods } = useAppSelector(
+    state => state.editingProject,
+  )
   const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'fee',
@@ -101,6 +103,17 @@ export default function ConfirmDeployProject() {
         valueRender={() => (
           <Mods
             mods={paymentMods}
+            projectId={undefined}
+            fundingCycle={undefined}
+            isOwner={true}
+          />
+        )}
+      />
+      <Statistic
+        title="Reserved ticket allocations"
+        valueRender={() => (
+          <Mods
+            mods={ticketMods}
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}

@@ -1,4 +1,4 @@
-import { Collapse } from 'antd'
+import { Collapse, Space } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
@@ -15,12 +15,14 @@ export default function FundingCyclePreview({
   projectId,
   fundingCycle,
   paymentMods,
+  ticketMods,
   showDetail,
   isOwner,
 }: {
   projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
   paymentMods: ModRef[] | undefined
+  ticketMods: ModRef[] | undefined
   showDetail?: boolean
   isOwner?: boolean
 }) {
@@ -72,16 +74,37 @@ export default function FundingCyclePreview({
             </div>
           }
         >
-          <FundingCycleDetails fundingCycle={fundingCycle} />
-          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-            Auto payouts:
-          </h4>
-          <Mods
-            mods={paymentMods}
-            fundingCycle={fundingCycle}
-            projectId={projectId}
-            isOwner={isOwner}
-          />
+          <Space style={{ width: '100%' }} direction="vertical" size="large">
+            <FundingCycleDetails fundingCycle={fundingCycle} />
+
+            <div>
+              <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+                Auto payouts:
+              </h4>
+              <Mods
+                mods={paymentMods}
+                fundingCycle={fundingCycle}
+                projectId={projectId}
+                isOwner={isOwner}
+                emptyText="No payouts set"
+                editButtonText="Edit payouts"
+              />
+            </div>
+
+            <div>
+              <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+                Allocated ticket reserves:
+              </h4>
+              <Mods
+                mods={ticketMods}
+                fundingCycle={fundingCycle}
+                projectId={projectId}
+                isOwner={isOwner}
+                emptyText="No destinations set"
+                editButtonText="Allocate ticket reserves"
+              />
+            </div>
+          </Space>
         </CollapsePanel>
       </Collapse>
     </div>

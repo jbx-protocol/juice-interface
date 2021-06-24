@@ -60,10 +60,11 @@ export default function PlayCreate() {
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const editingFC = useEditingFundingCycleSelector()
-  const editingProject = useAppSelector(state => state.editingProject.info)
-  const editingPaymentMods = useAppSelector(
-    state => state.editingProject.paymentMods,
-  )
+  const {
+    info: editingProjectInfo,
+    ticketMods: editingTicketMods,
+    paymentMods: editingPaymentMods,
+  } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
   const adminFeePercent = useContractReader<BigNumber>({
@@ -81,10 +82,10 @@ export default function PlayCreate() {
 
   const resetProjectForm = () =>
     projectForm.setFieldsValue({
-      name: editingProject?.metadata.name ?? '',
-      infoUrl: editingProject?.metadata.infoUri ?? '',
-      handle: editingProject?.handle ?? '',
-      logoUrl: editingProject?.metadata.logoUri ?? '',
+      name: editingProjectInfo?.metadata.name ?? '',
+      infoUrl: editingProjectInfo?.metadata.infoUri ?? '',
+      handle: editingProjectInfo?.handle ?? '',
+      logoUrl: editingProjectInfo?.metadata.logoUri ?? '',
     })
 
   const resetTicketingForm = () =>
@@ -125,11 +126,12 @@ export default function PlayCreate() {
     incrementStep(2)
   }
 
-  const onTicketingFormSaved = () => {
+  const onTicketingFormSaved = (mods: ModRef[]) => {
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(editingProjectActions.setDiscountRate(fields.discountRate))
     dispatch(editingProjectActions.setReserved(fields.reserved))
     dispatch(editingProjectActions.setBondingCurveRate(fields.bondingCurveRate))
+    dispatch(editingProjectActions.setTicketMods(mods))
 
     incrementStep(3)
   }
@@ -146,9 +148,9 @@ export default function PlayCreate() {
     setLoadingCreate(true)
 
     const uploadedMetadata = await uploadProjectMetadata({
-      name: editingProject.metadata.name,
-      logoUri: editingProject.metadata.logoUri,
-      infoUri: editingProject.metadata.infoUri,
+      name: editingProjectInfo.metadata.name,
+      logoUri: editingProjectInfo.metadata.logoUri,
+      infoUri: editingProjectInfo.metadata.infoUri,
     })
 
     if (!uploadedMetadata.success) {
@@ -181,7 +183,7 @@ export default function PlayCreate() {
       'deploy',
       [
         userAddress,
-        utils.formatBytes32String(editingProject.handle),
+        utils.formatBytes32String(editingProjectInfo.handle),
         uploadedMetadata.cid,
         properties,
         metadata,
@@ -202,13 +204,13 @@ export default function PlayCreate() {
 
           // Add project dependency to metadata and logo files
           editMetadataForCid(uploadedMetadata.cid, {
-            name: metadataNameForHandle(editingProject.handle),
+            name: metadataNameForHandle(editingProjectInfo.handle),
           })
-          editMetadataForCid(cidFromUrl(editingProject.metadata.logoUri), {
-            name: logoNameForHandle(editingProject.handle),
+          editMetadataForCid(cidFromUrl(editingProjectInfo.metadata.logoUri), {
+            name: logoNameForHandle(editingProjectInfo.handle),
           })
 
-          window.location.hash = '/p/' + editingProject.handle
+          window.location.hash = '/p/' + editingProjectInfo.handle
         },
       },
     )
@@ -285,8 +287,9 @@ export default function PlayCreate() {
           showCurrentDetail={currentStep > 2}
           fundingCycle={fundingCycle}
           paymentMods={editingPaymentMods}
-          metadata={editingProject.metadata}
-          handle={editingProject.handle}
+          ticketMods={editingTicketMods}
+          metadata={editingProjectInfo.metadata}
+          handle={editingProjectInfo.handle}
           projectId={BigNumber.from(0)}
         />
       </div>
@@ -347,9 +350,10 @@ export default function PlayCreate() {
         <TicketingForm
           form={ticketingForm}
           cycleIsRecurring={isRecurring(fundingCycle)}
-          onSave={async () => {
+          initialMods={editingTicketMods}
+          onSave={async mods => {
             await ticketingForm.validateFields()
-            onTicketingFormSaved()
+            onTicketingFormSaved(mods)
             setTicketingFormModalVisible(false)
           }}
         />

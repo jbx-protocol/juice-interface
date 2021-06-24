@@ -19,7 +19,7 @@ export default function ProjectReserved({
       label={hideLabel ? undefined : 'Reserved tickets'}
       {...formItemProps}
     >
-      <NumberSlider value={value} suffix="%" onChange={onChange} />
+      <NumberSlider value={value} suffix="%" onChange={onChange} step={0.5} />
     </Form.Item>
   )
 }

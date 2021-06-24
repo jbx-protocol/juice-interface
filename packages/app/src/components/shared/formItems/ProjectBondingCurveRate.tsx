@@ -175,7 +175,7 @@ export default function ProjectBondingCurveRate({
       <NumberSlider
         min={0}
         max={100}
-        step={0.1}
+        step={0.5}
         value={value}
         onChange={val => {
           graphCurve(val)

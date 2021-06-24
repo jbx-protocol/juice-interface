@@ -21,7 +21,13 @@ export default function ProjectDiscountRate({
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}
     >
-      <NumberSlider min={95} value={value} suffix="%" onChange={onChange} />
+      <NumberSlider
+        min={95}
+        value={value}
+        suffix="%"
+        onChange={onChange}
+        step={0.5}
+      />
     </Form.Item>
   )
 }

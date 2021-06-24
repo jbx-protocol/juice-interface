@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SECONDS_IN_DAY } from 'constants/units'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
@@ -46,7 +45,7 @@ export const editingProjectSlice = createSlice({
       target: parseWad('10000'),
       currency: BigNumber.from(1),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-      duration: BigNumber.from(30 * SECONDS_IN_DAY),
+      duration: BigNumber.from(30),
       tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
       fee: BigNumber.from(15),

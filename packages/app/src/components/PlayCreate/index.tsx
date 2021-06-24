@@ -4,7 +4,6 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { layouts } from 'constants/styles/layouts'
-import { SECONDS_IN_DAY } from 'constants/units'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -77,7 +76,7 @@ export default function PlayCreate() {
 
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
-      duration: editingFC?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
+      duration: editingFC?.duration.toString() ?? '0',
     })
 
   const resetProjectForm = () =>
@@ -103,9 +102,7 @@ export default function PlayCreate() {
     const fields = budgetForm.getFieldsValue(true)
     dispatch(editingProjectActions.setTarget(target.toString()))
     dispatch(
-      editingProjectActions.setDuration(
-        (parseFloat(fields.duration) * SECONDS_IN_DAY).toString(),
-      ),
+      editingProjectActions.setDuration(parseFloat(fields.duration).toString()),
     )
     dispatch(editingProjectActions.setCurrency(currency))
     dispatch(editingProjectActions.setPaymentMods(mods))

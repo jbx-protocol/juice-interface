@@ -32,17 +32,20 @@ export default function FundingCyclePreview({
 
   if (!fundingCycle) return null
 
-  const now = Math.round(new Date().valueOf() / 1000)
-  const secondsLeft = fundingCycle.start.add(fundingCycle.duration).sub(now)
-  const isEnded = secondsLeft.lte(0)
+  const secsPerDay = 60 * 60 * 24
+
+  const today = Math.floor(new Date().valueOf() / 1000 / secsPerDay)
+  const daysLeft = fundingCycle.start
+    .div(secsPerDay)
+    .add(fundingCycle.duration)
+    .sub(today)
+  const isEnded = daysLeft.lte(0)
 
   let headerText: string
 
   if (isRecurring(fundingCycle)) {
-    headerText = isEnded
-      ? `ended`
-      : `ends in ${detailedTimeString(secondsLeft)}`
-  } else headerText = detailedTimeString(secondsLeft) + ' left'
+    headerText = isEnded ? `ended` : `ends in ${detailedTimeString(daysLeft)}`
+  } else headerText = detailedTimeString(daysLeft) + ' left'
 
   return (
     <div>

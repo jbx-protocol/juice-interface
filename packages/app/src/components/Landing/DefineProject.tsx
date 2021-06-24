@@ -3,7 +3,6 @@ import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeOption } from 'constants/theme/theme-option'
-import { SECONDS_IN_DAY } from 'constants/units'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -40,7 +39,7 @@ export default function DefineProject() {
       form.setFieldsValue({
         name: editingProject?.metadata.name ?? '',
         target: fromWad(editingBudget?.target) ?? '0',
-        duration: editingBudget?.duration.div(SECONDS_IN_DAY).toString() ?? '0',
+        duration: editingBudget?.duration.toString() ?? '0',
         currency: (editingBudget?.currency.toNumber() as CurrencyOption) ?? 0,
       }),
     [],
@@ -62,7 +61,7 @@ export default function DefineProject() {
     if (fields.duration !== undefined) {
       dispatch(
         editingProjectActions.setDuration(
-          (parseFloat(fields.duration || '0') * SECONDS_IN_DAY).toString(),
+          parseFloat(fields.duration || '0').toString(),
         ),
       )
     }
@@ -155,12 +154,7 @@ export default function DefineProject() {
             {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
             {isRecurring && (
               <span>
-                every{' '}
-                {bold(
-                  editingBudget?.duration.div(SECONDS_IN_DAY).toString(),
-                  '0',
-                )}{' '}
-                days
+                every {bold(editingBudget?.duration.toString(), '0')} days
               </span>
             )}{' '}
             to work. All extra money received is overflow.

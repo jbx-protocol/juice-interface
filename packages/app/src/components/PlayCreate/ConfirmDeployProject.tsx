@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import Mods from 'components/Dashboard/Mods'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { SECONDS_IN_DAY } from 'constants/units'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -65,7 +64,7 @@ export default function ConfirmDeployProject() {
       <Space size="large">
         <Statistic
           title="Duration"
-          value={formattedNum(editingFC?.duration.div(SECONDS_IN_DAY))}
+          value={formattedNum(editingFC?.duration)}
           suffix="days"
         />
         <Statistic
@@ -106,6 +105,7 @@ export default function ConfirmDeployProject() {
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}
+            emptyText="No payouts set"
           />
         )}
       />
@@ -117,6 +117,7 @@ export default function ConfirmDeployProject() {
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}
+            emptyText="No allocations set"
           />
         )}
       />

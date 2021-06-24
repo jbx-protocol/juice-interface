@@ -60,7 +60,7 @@ export default function TicketingForm({
           name="ticketMods"
           mods={mods}
           onModsChanged={setMods}
-          addButtonText="Add a destination"
+          addButtonText="Add a ticket receiver"
           formItemProps={{
             label: 'Allocate reserved tickets (optional)',
             extra:

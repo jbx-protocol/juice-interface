@@ -15,15 +15,13 @@ import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formattedNum, fromPerbicent, parsePerbicent } from 'utils/formatNumber'
+import { fromPerbicent, parsePerbicent } from 'utils/formatNumber'
 
 import { FormItems } from '.'
-import CurrencySymbol from '../CurrencySymbol'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
@@ -52,6 +50,7 @@ export default function ProjectMods({
     lockedUntil: moment.Moment
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
+  const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
@@ -112,6 +111,8 @@ export default function ProjectMods({
             onClick={() => {
               if (locked) return
 
+              const percent = parseFloat(fromPerbicent(mod.percent))
+
               setEditingModType(
                 BigNumber.from(mod.projectId || '0').gt(0)
                   ? 'project'
@@ -119,12 +120,13 @@ export default function ProjectMods({
               )
               form.setFieldsValue({
                 ...mod,
-                percent: parseFloat(fromPerbicent(mod.percent)),
+                percent,
                 lockedUntil: mod.lockedUntil
                   ? moment.default(mod.lockedUntil * 1000)
                   : undefined,
               })
               setEditingModIndex(index)
+              setEditingPercent(percent)
             }}
           >
             {mod.projectId?.gt(0) ? (
@@ -332,6 +334,7 @@ export default function ProjectMods({
           type="dashed"
           onClick={() => {
             setEditingModIndex(mods.length)
+            setEditingPercent(0)
             form.resetFields()
           }}
           block
@@ -341,7 +344,7 @@ export default function ProjectMods({
       </Space>
 
       <Modal
-        title="Add payout"
+        title={addButtonText}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         onCancel={() => {
@@ -408,17 +411,31 @@ export default function ProjectMods({
             name="percent"
             label="Percent"
             rules={[{ required: true }]}
+            shouldUpdate
           >
-            <NumberSlider
-              onChange={percent => form.setFieldsValue({ percent })}
-              step={0.5}
-              defaultValue={form.getFieldValue('percent') || 0}
-            />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span style={{ flex: 1, marginRight: 10 }}>
+                <NumberSlider
+                  onChange={percent => {
+                    form.setFieldsValue({ percent })
+                    setEditingPercent(percent)
+                  }}
+                  step={0.5}
+                  defaultValue={form.getFieldValue('percent') || 0}
+                  suffix="%"
+                />
+              </span>
+              {formatPercent ? (
+                <span style={{ color: colors.text.primary }}>
+                  {formatPercent(editingPercent ?? 0)}
+                </span>
+              ) : null}
+            </div>
           </Form.Item>
           <Form.Item
             name="lockedUntil"
             label="Lock until"
-            extra="Once locked, a mod can't be edited or removed until the lock expires."
+            extra="If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
           >
             <DatePicker />
           </Form.Item>

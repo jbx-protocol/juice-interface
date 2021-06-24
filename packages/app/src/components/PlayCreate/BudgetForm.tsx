@@ -74,7 +74,10 @@ export default function BudgetForm({
               {currency !== undefined ? (
                 <CurrencySymbol currency={currency} />
               ) : null}
-              {formattedNum(target * (percent / 100))}
+              {formattedNum(target * (percent / 100), {
+                decimals: 0,
+                padEnd: 0,
+              })}
             </span>
           )}
           formItemProps={{

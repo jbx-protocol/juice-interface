@@ -46,6 +46,7 @@ export const formattedNum = (
     thousandsSeparator?: string
     decimalSeparator?: string
     padEnd?: number
+    decimals?: number
   },
 ) => {
   const _empty = config?.empty ?? '0'
@@ -66,12 +67,17 @@ export const formattedNum = (
 
   if (str.includes(_decimalSeparator)) {
     const [integer, decimal] = str.split(_decimalSeparator)
-    return decimal === '0'
-      ? separateThousands(integer, _thousandsSeparator) || '0'
-      : [
-          separateThousands(integer, _thousandsSeparator) || '0',
-          decimal.substr(0, 6).padEnd(config?.padEnd || 2, '0'),
-        ].join(_decimalSeparator)
+    const preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
+
+    if (decimal === '0') return preDecimal
+
+    const postDecimal = decimal
+      .substr(0, config?.decimals ?? 6)
+      .padEnd(config?.padEnd ?? 2, '0')
+
+    if (!postDecimal) return preDecimal
+
+    return [preDecimal, postDecimal].join(_decimalSeparator)
   }
 
   return separateThousands(str, _thousandsSeparator)

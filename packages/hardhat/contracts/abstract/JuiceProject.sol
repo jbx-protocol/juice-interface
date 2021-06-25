@@ -7,8 +7,6 @@ import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./../interfaces/IJuicer.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice A contract that inherits from JuiceProject can use Juice as a business-model-as-a-service.
   @dev The owner of the contract makes admin decisions such as:

@@ -135,18 +135,9 @@ describe("Juice", async function() {
     };
 
     // Bind a function that checks if a contract getter equals an expected value.
-    this.checkFn = async ({ contract, fn, args, expect, tolerance }) => {
+    this.checkFn = async ({ contract, fn, args, expect }) => {
       const storedVal = await contract[fn](...args);
-
-      // If a tolerance is set, check to see if the expected value matches +- the tolerance.
-      if (tolerance) {
-        // eslint-disable-next-line no-unused-expressions
-        chai.expect(storedVal.gte(expect.sub(tolerance))).to.be.true;
-        // eslint-disable-next-line no-unused-expressions
-        chai.expect(storedVal.lte(expect.add(tolerance))).to.be.true;
-      } else {
-        chai.expect(storedVal).to.deep.equal(expect);
-      }
+      chai.expect(storedVal).to.deep.equal(expect);
     };
 
     // Binds a function that makes sure the provided address has the balance
@@ -154,6 +145,12 @@ describe("Juice", async function() {
       const storedVal = await ethers.provider.getBalance(address);
       // If a tolerance is set, check to see if the expected value matches +- the tolerance.
       if (tolerance) {
+        console.log({
+          storedVal,
+          init: initialBalances[address],
+          expect,
+          diff: storedVal.sub(initialBalances[address] || 0).sub(expect)
+        });
         // eslint-disable-next-line no-unused-expressions
         chai.expect(
           storedVal
@@ -192,6 +189,9 @@ describe("Juice", async function() {
         .sub(1),
       MaxUint24: ethers.BigNumber.from(2)
         .pow(24)
+        .sub(1),
+      MaxUint16: ethers.BigNumber.from(2)
+        .pow(16)
         .sub(1),
       MaxUint8: ethers.BigNumber.from(2)
         .pow(8)

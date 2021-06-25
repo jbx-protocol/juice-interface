@@ -6,16 +6,26 @@ const run = function(ops) {
     // Bind this.
     this.ops = ops;
     const resolvedOps = await this.ops(this);
+
     // eslint-disable-next-line no-restricted-syntax
     for (const op of resolvedOps) {
-      // eslint-disable-next-line no-await-in-loop
-      await op(this);
+      this.local = {
+        ...this.local,
+        // eslint-disable-next-line no-await-in-loop
+        ...(await op(this))
+      };
+      // // eslint-disable-next-line no-await-in-loop
+      // localData = {
+      //   ...localData,
+      //   // eslint-disable-next-line no-await-in-loop
+      //   ...(await op(localData))
+      // };
     }
   };
 };
 
 module.exports = function() {
-  // Before the tests, deploy mocked dependencies and the contract.
+  // Deploy all contracts.
   before(async function() {
     const operatorStore = await this.deployContractFn("OperatorStore");
     const projects = await this.deployContractFn("Projects", [
@@ -58,7 +68,7 @@ module.exports = function() {
     ]);
 
     /** 
-      Deploy the governance contract's project.
+      Deploy the governance contract's project. It will have an ID of 1.
     */
     await this.executeFn({
       caller: this.deployer,
@@ -85,6 +95,7 @@ module.exports = function() {
       ]
     });
 
+    // Bind the contracts to give the wokflows access to them.
     this.contracts = {
       governance,
       terminalDirectory,
@@ -104,10 +115,14 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  it("Simple deployment of a project", run(workflows.deploy));
-  it("Redeem tickets for overflow", run(workflows.redeem));
-  it("Migrate from one Terminal to another", run(workflows.migrate));
-  it("Tap funds up to the configured target", run(workflows.tap));
-  it("Set payout mods", run(workflows.setPaymentMods));
+  for (let i = 0; i < 5; i += 1) {
+    it("Deployment of a project", run(workflows.deploy));
+    it("Redeem tickets for overflow", run(workflows.redeem));
+    it("Migrate from one Terminal to another", run(workflows.migrate));
+    it("Tap funds up to the configured target", run(workflows.tap));
+  }
+  // it("Deployment of a project", run(workflows.deploy));
+  // it("Redeem tickets for overflow", run(workflows.redeem));
+  // it("Set payout mods", run(workflows.setPaymentMods));
   // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

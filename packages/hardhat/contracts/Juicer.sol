@@ -168,7 +168,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The holder must have the specified number of the project's tickets.
         require(
             ticketBooth.balanceOf(_account, _projectId) >= _count,
-            "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
+            "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
         );
 
         // Get a reference to the current funding cycle for the project.
@@ -275,7 +275,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @param _properties The funding cycle configuration.
           @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -347,7 +347,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @param _properties The funding cycle configuration.
           @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in seconds.
+          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -585,6 +585,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     _fundingCycle.fee + 200
                 );
 
+        // The amount of ETH from the _tappedAmount to pay as a fee.
         if (_govFeeAmount > 0) {
             // When processing the admin fee, save gas if the admin is using this juice terminal.
             if (
@@ -592,6 +593,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     JuiceProject(governance).projectId()
                 ) == this
             ) {
+                // When processing the admin fee, save gas if the admin is using this juice terminal.
                 _pay(
                     JuiceProject(governance).projectId(),
                     _govFeeAmount,
@@ -659,9 +661,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _totalPreopTickets
         );
 
-        // Make sure there are tickets to print.
-        require(amount > 0, "Juicer::printReservedTickets: NO_OP");
-
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
             _totalPreopTickets + amount <= uint256(type(int256).max),
@@ -675,6 +674,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         _processedTicketTrackerOf[_projectId] = int256(
             _totalPreopTickets + amount
         );
+
+        // If there's nothing to print, return.
+        if (amount == 0) return amount;
 
         // Get a reference to the leftover reserved ticket amount after printing for all mods.
         uint256 _leftoverTicketAmount = amount;
@@ -1042,7 +1044,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             PaymentMod memory _mod = _mods[_i];
             // The amount to send towards mods.
             uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
-
             // Transfer ETH to the mod.
             // If there's an allocator set, transfer to its `allocate` function.
             if (_mod.allocator != IModAllocator(address(0))) {

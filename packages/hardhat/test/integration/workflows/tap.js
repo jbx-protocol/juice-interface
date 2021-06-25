@@ -17,10 +17,10 @@ module.exports = async ({
   deployContractFn,
   randomBigNumberFn,
   stringToBytesFn,
-  normalizedPercentFn,
   getBalanceFn,
   verifyBalanceFn,
   randomBoolFn,
+  fastforwardFn,
   randomStringFn,
   randomAddressFn
 }) => {
@@ -35,11 +35,24 @@ module.exports = async ({
   // The second project created will have ID 3, and will be used to route Mod payouts to.
   const expectedIdOfModProject = 3;
 
+  const percent1 = randomBigNumberFn({
+    min: 1,
+    max: constants.MaxPercent.sub(2)
+  });
+  const percent2 = randomBigNumberFn({
+    min: 1,
+    max: constants.MaxPercent.sub(percent1).sub(1)
+  });
+  const percent3 = randomBigNumberFn({
+    min: 1,
+    max: constants.MaxPercent.sub(percent1).sub(percent2)
+  });
+
   // There are three types of mods.
   // Address mods route payout directly to an address.
   const addressMod = {
     preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(50).toNumber(),
+    percent: percent1.toNumber(),
     lockedUntil: 0,
     // Make sure the beneficiary isnt the owner or the payer.
     beneficiary: randomAddressFn({ exclude: [owner.address, payer.address] }),
@@ -49,7 +62,7 @@ module.exports = async ({
   // Project mods route payout directly to another project on Juicer.
   const projectMod = {
     preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(25).toNumber(),
+    percent: percent2.toNumber(),
     lockedUntil: 0,
     beneficiary: randomAddressFn(),
     allocator: constants.AddressZero,
@@ -58,7 +71,7 @@ module.exports = async ({
   // Allocator mods route payments directly to the specified contract that inherits from IModAllocator.
   const allocatorMod = {
     preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(20).toNumber(),
+    percent: percent3.toNumber(),
     lockedUntil: 0,
     beneficiary: randomAddressFn(),
     allocator: (await deployContractFn("ExampleModAllocator")).address,
@@ -68,21 +81,33 @@ module.exports = async ({
   // The currency will be 0, which corresponds to ETH.
   const currency = 0;
 
+  // Two payments will be made.
   // Cant pay entire balance because some is needed for gas.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
+  const paymentValue1 = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(3)
   });
 
-  // An amount up to the amount paid can be tapped.
-  const amountToTap = randomBigNumberFn({ max: paymentValue });
+  // The target must be at least the amount to tap, and at most the payment value.
+  const target = randomBigNumberFn({ min: 1, max: paymentValue1 });
 
-  // The target must be at least the amount to tap.
-  const target = randomBigNumberFn({ min: amountToTap });
+  // An amount up to the amount paid can be tapped.
+  const amountToTap = target;
+
+  // The second amount should cause overflow.
+  const paymentValue2 = randomBigNumberFn({
+    min: 1,
+    max: target
+  });
 
   // The amount tapped takes into account any fees paid.
   const expectedAmountTapped = amountToTap
     .mul(constants.MaxPercent)
     .div((await contracts.juicer.fee()).add(constants.MaxPercent));
+
+  const duration = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxUint16
+  });
 
   return [
     /** 
@@ -100,7 +125,7 @@ module.exports = async ({
           {
             target,
             currency,
-            duration: randomBigNumberFn({ min: 10, max: constants.MaxUint24 }),
+            duration,
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
@@ -166,7 +191,10 @@ module.exports = async ({
           {
             target: randomBigNumberFn(),
             currency: randomBigNumberFn({ max: constants.MaxUint8 }),
-            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint24 }),
+            duration: randomBigNumberFn({
+              min: duration.div(2),
+              max: constants.MaxUint16
+            }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
@@ -195,7 +223,7 @@ module.exports = async ({
           randomStringFn(),
           randomBoolFn()
         ],
-        value: paymentValue
+        value: paymentValue1
       }),
     /**
         Check that second project has no balance.
@@ -284,6 +312,47 @@ module.exports = async ({
               .mul(allocatorMod.percent)
               .div(constants.MaxPercent)
           )
+      }),
+    /**
+        Make another payment to the project to make sure it's got overflow.
+      */
+    () =>
+      executeFn({
+        caller: payer,
+        contract: contracts.juicer,
+        fn: "pay",
+        args: [
+          expectedIdOfBaseProject,
+          randomAddressFn(),
+          randomStringFn(),
+          randomBoolFn()
+        ],
+        value: paymentValue2
+      }),
+    /**
+        Shouldn't be able to tap excessive funds during the current funding cycle.
+      */
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedIdOfBaseProject, paymentValue2, currency, paymentValue2],
+        revert: "FundingCycles::tap: INSUFFICIENT_FUNDS"
+      }),
+    /**
+      Fast forward to the next funding cycle.
+    */
+    () => fastforwardFn(duration.mul(86400)),
+    /**
+        Tap the full target.
+    */
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedIdOfBaseProject, paymentValue2, currency, paymentValue2]
       })
   ];
 };

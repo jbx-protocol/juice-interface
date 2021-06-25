@@ -13,6 +13,9 @@ import "./abstract/TerminalUtility.sol";
 contract FundingCycles is TerminalUtility, IFundingCycles {
     // --- private stored properties --- //
 
+    // The number of seconds in a day.
+    uint256 private constant SECONDS_IN_DAY = 86400;
+
     // Stores the reconfiguration properties of each funding cycle,
     // packed into one storage slot.
     mapping(uint256 => uint256) private _packedConfigurationPropertiesOf;
@@ -245,7 +248,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         @param _properties The funding cycle configuration.
           @dev _properties.target The amount that the project wants to receive in each funding cycle. 18 decimals.
           @dev _properties.currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in seconds.
+          @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in days.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
             If it's 200, each funding cycle will have equal weight.
             If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
@@ -269,10 +272,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         onlyTerminal(_projectId)
         returns (FundingCycle memory fundingCycle)
     {
-        // Duration must be greater than 0, and must fit in a uint24.
+        // Duration must be greater than 0, and must fit in a uint16.
         require(
             _properties.duration > 0 &&
-                _properties.duration <= type(uint24).max,
+                _properties.duration <= type(uint16).max,
             "FundingCycles::configure: BAD_DURATION"
         );
 
@@ -433,7 +436,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 // Set to the start time of the current active start time.
                 uint256 _timeFromStartMultiple =
                     (block.timestamp - _fundingCycle.start) %
-                        _fundingCycle.duration;
+                        (_fundingCycle.duration * SECONDS_IN_DAY);
                 _mustStartOnOrAfter = block.timestamp - _timeFromStartMultiple;
             } else {
                 // The ballot must have ended.
@@ -631,8 +634,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
         // If the latest is expired, return an undefined funding cycle.
-        if (block.timestamp >= _fundingCycle.start + _fundingCycle.duration)
-            return 0;
+        if (
+            block.timestamp >=
+            _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
+        ) return 0;
 
         // The first funding cycle when running on local can be in the future for some reason.
         // This will have no effect in production.
@@ -746,14 +751,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 packed = uint160(address(_ballot));
         // configured in bytes 161-208 bytes.
         packed |= _configured << 160;
-        // duration in bytes 209-232 bytes.
+        // duration in bytes 209-224 bytes.
         packed |= _duration << 208;
-        // basedOn in bytes 233-240 bytes.
-        packed |= _currency << 232;
-        // fee in bytes 241-248 bytes.
-        packed |= _fee << 240;
-        // discountRate in bytes 249-256 bytes.
-        packed |= _discountRate << 248;
+        // basedOn in bytes 225-232 bytes.
+        packed |= _currency << 224;
+        // fee in bytes 233-240 bytes.
+        packed |= _fee << 232;
+        // discountRate in bytes 241-248 bytes.
+        packed |= _discountRate << 240;
+        // TODO add growth rate.
 
         // Set in storage.
         _packedConfigurationPropertiesOf[_fundingCycleId] = packed;
@@ -798,16 +804,16 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             uint48(_packedConfigurationProperties >> 160)
         );
         _fundingCycle.duration = uint256(
-            uint24(_packedConfigurationProperties >> 208)
+            uint16(_packedConfigurationProperties >> 208)
         );
         _fundingCycle.currency = uint256(
-            uint8(_packedConfigurationProperties >> 232)
+            uint8(_packedConfigurationProperties >> 224)
         );
         _fundingCycle.fee = uint256(
-            uint8(_packedConfigurationProperties >> 240)
+            uint8(_packedConfigurationProperties >> 232)
         );
         _fundingCycle.discountRate = uint256(
-            uint8(_packedConfigurationProperties >> 248)
+            uint8(_packedConfigurationProperties >> 240)
         );
         _fundingCycle.target = _targetOf[_id];
         _fundingCycle.tapped = _tappedOf[_id];
@@ -827,9 +833,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _fundingCycle,
         uint256 _mustStartOnOrAfter
     ) internal pure returns (uint256 result) {
+        // Save a reference to the duration measured in seconds.
+        uint256 _durationInSeconds = _fundingCycle.duration * SECONDS_IN_DAY;
+
         // The time when the funding cycle immediately after the specified funding cycle starts.
-        uint256 _nextImmediateStart =
-            _fundingCycle.start + _fundingCycle.duration;
+        uint256 _nextImmediateStart = _fundingCycle.start + _durationInSeconds;
 
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)
@@ -837,8 +845,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // Otherwise, use the closest multiple of the duration from the old end.
         uint256 _timeFromImmediateStartMultiple =
-            (_mustStartOnOrAfter - _nextImmediateStart) %
-                _fundingCycle.duration;
+            (_mustStartOnOrAfter - _nextImmediateStart) % _durationInSeconds;
 
         // If the minimum start date is possible, use it.
         if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
@@ -847,11 +854,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         result =
             _mustStartOnOrAfter -
             _timeFromImmediateStartMultiple +
-            _fundingCycle.duration;
+            _durationInSeconds;
 
         // Add increments of duration as necessary to satisfy the threshold.
         while (_mustStartOnOrAfter > result)
-            result = result + _fundingCycle.duration;
+            result = result + _durationInSeconds;
     }
 
     /** 
@@ -865,13 +872,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     */
     function _deriveWeight(FundingCycle memory _fundingCycle, uint256 _start)
         internal
-        pure
+        view
         returns (uint256)
     {
         // The number of times to apply the discount rate.
         uint256 _discountMultiple =
-            (_start - _fundingCycle.start) / _fundingCycle.duration;
+            (_start - _fundingCycle.start) /
+                (_fundingCycle.duration * SECONDS_IN_DAY);
 
+        // The number of times to apply the discount rate.
         // Base the new weight on the specified funding cycle's weight.
         return
             PRBMathCommon.mulDiv(
@@ -897,7 +906,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     {
         return
             _fundingCycle.number +
-            ((_start - _fundingCycle.start) / _fundingCycle.duration);
+            ((_start - _fundingCycle.start) /
+                (_fundingCycle.duration * SECONDS_IN_DAY));
     }
 
     /** 

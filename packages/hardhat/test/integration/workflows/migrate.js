@@ -17,9 +17,7 @@ module.exports = async ({
   deployContractFn,
   randomBigNumberFn,
   stringToBytesFn,
-  normalizedPercentFn,
   getBalanceFn,
-  percentageFn,
   verifyBalanceFn,
   changeInBalanceFn,
   randomAddressFn,
@@ -44,29 +42,13 @@ module.exports = async ({
   });
 
   // The project's funding cycle target will be half of the payment value.
-  const target = paymentValue.div(2);
+  const target = randomBigNumberFn({ max: paymentValue.div(2) });
 
   // The currency will be 0, which corresponds to ETH.
   const currency = 0;
 
   // Set a percentage of tickets to reserve for the project owner.
-  const reservedRate = 10; // out of 100
-
-  // The amount of tickets to expect in exchange of a payment of `paymentValue`.
-  const expectedTicketAmount = paymentValue.mul(
-    constants.InitialWeightMultiplier
-  );
-
-  // The amount of tickets that are expected to be reserved for the project owner.
-  const expectedReservedTicketAmount = percentageFn({
-    value: expectedTicketAmount,
-    percent: reservedRate
-  });
-
-  // The amount of tickets that are expected to not be reserved.
-  const expectedBeneficiaryTicketAmount = expectedTicketAmount.sub(
-    expectedReservedTicketAmount
-  );
+  const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
   // The percent, out of `constants.MaxPercent`, that will be charged as a fee.
   const fee = await contracts.juicer.fee();
@@ -75,14 +57,10 @@ module.exports = async ({
   const expectedProjectId = 2;
 
   // Initially tap a portion of the funding cycle's target.
-  const firstAmountToTap = target.div(
-    randomBigNumberFn({ min: BigNumber.from(2), max: BigNumber.from(10) })
-  );
-
-  // Initially redeem a portion of the tickets received.
-  const firstTicketAmountToRedeem = expectedBeneficiaryTicketAmount.div(
-    randomBigNumberFn({ min: BigNumber.from(2), max: BigNumber.from(10) })
-  );
+  const firstAmountToTap = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: target.sub(1)
+  });
 
   // The juicer that will be migrated to.
   const secondJuicer = await deployContractFn("Juicer", [
@@ -112,12 +90,12 @@ module.exports = async ({
           {
             target,
             currency,
-            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint24 }),
+            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint16 }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
           {
-            reservedRate: normalizedPercentFn(reservedRate),
+            reservedRate,
             bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
@@ -164,10 +142,25 @@ module.exports = async ({
         expect: paymentValue
       }),
     /**
+      Pass along a references to the amount of tickets the beneficiary received.
+    */
+    async () => ({
+      redeemableTicketsOfTicketBeneficiary: await contracts.ticketBooth.balanceOf(
+        ticketBeneficiary.address,
+        expectedProjectId
+      )
+    }),
+    /**
       Make sure tickets can be redeemed successfully in this Juicer.
     */
-    async () =>
-      executeFn({
+    async ({ local: { redeemableTicketsOfTicketBeneficiary } }) => {
+      const portionOfRedeemableTicketsOfTicketBeneficiary = redeemableTicketsOfTicketBeneficiary.sub(
+        randomBigNumberFn({
+          min: 1,
+          max: redeemableTicketsOfTicketBeneficiary.sub(1)
+        })
+      );
+      await executeFn({
         caller: ticketBeneficiary,
         contract: contracts.juicer,
         fn: "redeem",
@@ -175,12 +168,19 @@ module.exports = async ({
         args: [
           ticketBeneficiary.address,
           expectedProjectId,
-          firstTicketAmountToRedeem,
+          portionOfRedeemableTicketsOfTicketBeneficiary,
           0, // must be lower than the expected amount of ETH that is being claimed.
           redeemBeneficiary.address,
           randomBoolFn()
         ]
-      }),
+      });
+
+      return {
+        leftoverRedeemableTicketsOfTicketBeneficiary: redeemableTicketsOfTicketBeneficiary.sub(
+          portionOfRedeemableTicketsOfTicketBeneficiary
+        )
+      };
+    },
     /**
       Make sure funds can be tapped successfully in this Juicer.
     */
@@ -235,6 +235,15 @@ module.exports = async ({
         args: [expectedProjectId, secondJuicer.address],
         revert: "Juicer::Migrate: RESERVED_TICKETS_NOT_PRINTED"
       }),
+    /**
+      Pass along the number of tickets reserved for the project owner.
+    */
+    async () => ({
+      reservedTicketAmount: await contracts.juicer.reservedTicketAmountOf(
+        expectedProjectId,
+        reservedRate
+      )
+    }),
     /**
       Print reserved tickets in the original Juicer.
     */
@@ -326,7 +335,7 @@ module.exports = async ({
     /**
       Make sure tickets can be redeemed successfully in the new Juicer.
     */
-    () =>
+    ({ local: { leftoverRedeemableTicketsOfTicketBeneficiary } }) =>
       executeFn({
         caller: ticketBeneficiary,
         contract: secondJuicer,
@@ -335,7 +344,7 @@ module.exports = async ({
         args: [
           ticketBeneficiary.address,
           expectedProjectId,
-          expectedBeneficiaryTicketAmount.sub(firstTicketAmountToRedeem),
+          leftoverRedeemableTicketsOfTicketBeneficiary,
           0, // must be lower than the expected amount of ETH that is being claimed.
           randomAddressFn(),
           randomBoolFn()
@@ -344,7 +353,7 @@ module.exports = async ({
     /**
       Make sure the owner can also redeem their tickets.
     */
-    () =>
+    ({ local: { reservedTicketAmount } }) =>
       executeFn({
         caller: owner,
         contract: secondJuicer,
@@ -353,11 +362,12 @@ module.exports = async ({
         args: [
           owner.address,
           expectedProjectId,
-          expectedReservedTicketAmount,
+          reservedTicketAmount,
           0, // must be lower than the expected amount of ETH that is being claimed.
           randomAddressFn(),
           randomBoolFn()
-        ]
+        ],
+        revert: reservedRate.eq(0) && "Juicer::redeem: NO_OP"
       }),
     /**
       Payments to the new Juicer should be accepted.

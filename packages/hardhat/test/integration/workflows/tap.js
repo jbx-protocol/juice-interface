@@ -35,6 +35,7 @@ module.exports = async ({
   // The second project created will have ID 3, and will be used to route Mod payouts to.
   const expectedIdOfModProject = 3;
 
+  // The mod percents should add up to <= constants.MaxPercent.
   const percent1 = randomBigNumberFn({
     min: 1,
     max: constants.MaxPercent.sub(2)

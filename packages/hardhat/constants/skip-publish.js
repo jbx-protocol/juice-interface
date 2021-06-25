@@ -3,6 +3,7 @@ module.exports = [
   "ExampleETHUSDPriceFeed",
   "ExampleJuiceProject",
   "ExampleYielder",
+  "ExampleFailingFundingCycleBallot",
   "YearnYielder",
   "Tickets",
   "DirectPaymentAddress"

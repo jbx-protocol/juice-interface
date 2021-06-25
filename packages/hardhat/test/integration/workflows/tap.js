@@ -37,15 +37,15 @@ module.exports = async ({
 
   // The mod percents should add up to <= constants.MaxPercent.
   const percent1 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: constants.MaxPercent.sub(2)
   });
   const percent2 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: constants.MaxPercent.sub(percent1).sub(1)
   });
   const percent3 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: constants.MaxPercent.sub(percent1).sub(percent2)
   });
 
@@ -89,14 +89,17 @@ module.exports = async ({
   });
 
   // The target must be at least the amount to tap, and at most the payment value.
-  const target = randomBigNumberFn({ min: 1, max: paymentValue1 });
+  const target = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: paymentValue1
+  });
 
   // An amount up to the amount paid can be tapped.
   const amountToTap = target;
 
   // The second amount should cause overflow.
   const paymentValue2 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: target
   });
 

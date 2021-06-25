@@ -90,7 +90,10 @@ module.exports = async ({
           {
             target,
             currency,
-            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint16 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
@@ -156,7 +159,7 @@ module.exports = async ({
     async ({ local: { redeemableTicketsOfTicketBeneficiary } }) => {
       const portionOfRedeemableTicketsOfTicketBeneficiary = redeemableTicketsOfTicketBeneficiary.sub(
         randomBigNumberFn({
-          min: 1,
+          min: BigNumber.from(1),
           max: redeemableTicketsOfTicketBeneficiary.sub(1)
         })
       );
@@ -225,17 +228,6 @@ module.exports = async ({
         revert: "Operatable: UNAUTHORIZED"
       }),
     /**
-      Migrating to the new juicer before reserved tickets have been printed shouldn't be allowed.
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.juicer,
-        fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address],
-        revert: "Juicer::Migrate: RESERVED_TICKETS_NOT_PRINTED"
-      }),
-    /**
       Pass along the number of tickets reserved for the project owner.
     */
     async () => ({
@@ -245,17 +237,7 @@ module.exports = async ({
       )
     }),
     /**
-      Print reserved tickets in the original Juicer.
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.juicer,
-        fn: "printReservedTickets",
-        args: [expectedProjectId]
-      }),
-    /**
-      Migrate to the new juicer.
+      Migrate to the new juicer, which should automatically print reserved tickets for the owner.
     */
     () =>
       executeFn({

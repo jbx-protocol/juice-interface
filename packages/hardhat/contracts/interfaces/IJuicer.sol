@@ -72,10 +72,11 @@ interface IJuicer {
 
     event AcceptGovernance(address governance);
 
-    event PrintTickets(
+    event PrintPreminedTickets(
         uint256 indexed projectId,
         address indexed beneficiary,
         uint256 amount,
+        uint256 currency,
         string memo,
         address caller
     );
@@ -149,9 +150,10 @@ interface IJuicer {
         TicketMod[] memory _ticketMods
     ) external returns (uint256 fundingCycleId);
 
-    function printTickets(
+    function printPreminedTickets(
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         address _beneficiary,
         string memory _memo,
         bool _preferUnstakedTickets

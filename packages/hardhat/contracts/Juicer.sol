@@ -13,6 +13,8 @@ import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
+import "hardhat/console.sol";
+
 /**
   ───────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
@@ -143,6 +145,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the project's current funding cycle.
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
+
+        // There's no overflow if there's no funding cycle.
+        if (_fundingCycle.id == 0) return 0;
 
         return _overflowFrom(_fundingCycle);
     }
@@ -388,8 +393,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
             terminalDirectory.setTerminal(_projectId, this);
 
-        // If the project doesn't have a balance, configure the active funding cycle instead of creating a standby one.
-        bool _shouldConfigureActive = balanceOf[_projectId] == 0;
+        // If the project hasn't yet been paid, configure the active funding cycle instead of creating a standby one.
+        bool _shouldConfigureActive =
+            ticketBooth.totalSupplyOf(_projectId) ==
+                preminedTicketCountOf[_projectId] &&
+                // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
+                _processedTicketTrackerOf[_projectId] == 0;
 
         // Configure the funding stage's state.
         FundingCycle memory _fundingCycle =
@@ -422,20 +431,22 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /** 
       @notice 
-      Allows a project to print tickets for a specified beneficiary.
+      Allows a project to print tickets for a specified beneficiary before payments have been received.
 
       @dev 
       This can only be done if the project hasn't yet received a payment.
 
       @param _projectId The ID of the project to premine tickets for.
-      @param _amount The amount to base the ticket premine off of. Measured in ETH.
+      @param _amount The amount to base the ticket premine off of.
+      @param _currency The currency of the amount to base the ticket premine off of. 
       @param _beneficiary The address to send the printed tickets to.
       @param _memo A memo to leave with the printing.
       @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
     */
-    function printTickets(
+    function printPreminedTickets(
         uint256 _projectId,
         uint256 _amount,
+        uint256 _currency,
         address _beneficiary,
         string memory _memo,
         bool _preferUnstakedTickets
@@ -464,13 +475,20 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::printTickets: ZERO_ADDRESS"
         );
 
+        // Set the terminal if needed.
+        // Must do this before the call to print.
+        if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
+            terminalDirectory.setTerminal(_projectId, this);
+
         // Get the current funding cycle to read the weight and currency from.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
+        uint256 _weight = fundingCycles.BASE_WEIGHT();
+
+        // Get the currency price of ETH.
+        uint256 _ethPrice = prices.getETHPriceFor(_currency);
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
+            PRBMathUD60x18.mul(PRBMathUD60x18.div(_amount, _ethPrice), _weight);
 
         // Set the count of premined tickets this project has printed.
         preminedTicketCountOf[_projectId] =
@@ -485,7 +503,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _preferUnstakedTickets
         );
 
-        emit PrintTickets(_projectId, _beneficiary, _amount, _memo, msg.sender);
+        emit PrintPreminedTickets(
+            _projectId,
+            _beneficiary,
+            _amount,
+            _currency,
+            _memo,
+            msg.sender
+        );
     }
 
     /**
@@ -635,100 +660,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Prints all reserved tickets for a project.
-
-        @param _projectId The ID of the project to which the reserved tickets belong.
-
-        @return amount The amount of tickets that are being printed.
-    */
-    function printReservedTickets(uint256 _projectId)
-        external
-        override
-        returns (uint256 amount)
-    {
-        // Get the current funding cycle to read the reserved rate from.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
-
-        // Get a reference to new total supply of tickets before printing reserved tickets.
-        uint256 _totalPreopTickets = ticketBooth.totalSupplyOf(_projectId);
-
-        // Get a reference to the number of tickets that need to be printed.
-        amount = _reservedTicketAmountFrom(
-            _processedTicketTrackerOf[_projectId],
-            // The reserved rate is in bits 9-24 of the metadata.
-            uint256(uint8(_fundingCycle.metadata >> 8)),
-            _totalPreopTickets
-        );
-
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _totalPreopTickets + amount <= uint256(type(int256).max),
-            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
-        );
-
-        // Get a reference to the project owner.
-        address _owner = projects.ownerOf(_projectId);
-
-        // Set the tracker to be the new total supply.
-        _processedTicketTrackerOf[_projectId] = int256(
-            _totalPreopTickets + amount
-        );
-
-        // If there's nothing to print, return.
-        if (amount == 0) return amount;
-
-        // Get a reference to the leftover reserved ticket amount after printing for all mods.
-        uint256 _leftoverTicketAmount = amount;
-
-        // Get a reference to the project's ticket mods.
-        TicketMod[] memory _mods =
-            modStore.ticketModsOf(_projectId, _fundingCycle.configured);
-
-        //Transfer between all mods.
-        for (uint256 _i = 0; _i < _mods.length; _i++) {
-            // Get a reference to the mod being iterated on.
-            TicketMod memory _mod = _mods[_i];
-
-            // The amount to send towards mods.
-            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 200);
-
-            // Print tickets for the mod.
-            ticketBooth.print(
-                _mod.beneficiary,
-                _projectId,
-                _modCut,
-                _mod.preferUnstaked
-            );
-
-            // Subtract from the amount to be sent to the beneficiary.
-            _leftoverTicketAmount = _leftoverTicketAmount - _modCut;
-
-            emit TicketModDistribution(
-                _fundingCycle.id,
-                _projectId,
-                _mod,
-                _modCut,
-                msg.sender
-            );
-        }
-
-        // Mint any remaining reserved tickets to the beneficiary.
-        if (_leftoverTicketAmount > 0)
-            ticketBooth.print(_owner, _projectId, _leftoverTicketAmount, false);
-
-        emit PrintReserveTickets(
-            _fundingCycle.id,
-            _projectId,
-            _owner,
-            amount,
-            _leftoverTicketAmount,
-            msg.sender
-        );
-    }
-
-    /**
-        @notice 
         Addresses can redeem their Tickets to claim the project's overflowed ETH.
 
         @param _account The account to redeem tickets for.
@@ -837,11 +768,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         require(migrationIsAllowed[_to], "Juicer::migrate: NOT_ALLOWED");
 
         // All reserved tickets must be printed before migrating.
-        require(
-            uint256(_processedTicketTrackerOf[_projectId]) ==
-                ticketBooth.totalSupplyOf(_projectId),
-            "Juicer::Migrate: RESERVED_TICKETS_NOT_PRINTED"
-        );
+        if (
+            uint256(_processedTicketTrackerOf[_projectId]) !=
+            ticketBooth.totalSupplyOf(_projectId)
+        ) printReservedTickets(_projectId);
 
         // Get a reference to this project's current balance, included any earned yield.
         uint256 _balanceOf = balanceOf[_projectId];
@@ -956,58 +886,109 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         emit AcceptGovernance(_pendingGovernance);
     }
 
-    // --- private helper functions --- //
+    // --- public transactions --- //
 
-    /** 
-      @notice 
-      See the documentation for 'pay'.
+    /**
+        @notice 
+        Prints all reserved tickets for a project.
+
+        @param _projectId The ID of the project to which the reserved tickets belong.
+
+        @return amount The amount of tickets that are being printed.
     */
-    function _pay(
-        uint256 _projectId,
-        uint256 _amount,
-        address _beneficiary,
-        string memory _memo,
-        bool _preferUnstakedTickets
-    ) private returns (uint256) {
-        // Get a reference to the current funding cycle for the project.
+    function printReservedTickets(uint256 _projectId)
+        public
+        override
+        returns (uint256 amount)
+    {
+        // Get the current funding cycle to read the reserved rate from.
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
-        // Add to the balance of the project.
-        balanceOf[_projectId] = balanceOf[_projectId] + _amount;
+        // Get a reference to new total supply of tickets before printing reserved tickets.
+        uint256 _totalPreopTickets = ticketBooth.totalSupplyOf(_projectId);
 
-        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
-        uint256 _weightedAmount =
-            PRBMathUD60x18.mul(_amount, _fundingCycle.weight);
-
-        // Only print the tickets that are unreserved.
-        uint256 _unreservedWeightedAmount =
-            PRBMathCommon.mulDiv(
-                _weightedAmount,
-                // The reserved rate is stored in bytes 9-24 of the metadata property.
-                200 - uint256(uint8(_fundingCycle.metadata >> 8)),
-                200
+        // Get a reference to the number of tickets that need to be printed.
+        // If there's no funding cycle, there's no tickets to print.
+        amount = _fundingCycle.id == 0
+            ? 0
+            : _reservedTicketAmountFrom(
+                _processedTicketTrackerOf[_projectId],
+                // The reserved rate is in bits 9-24 of the metadata.
+                uint256(uint8(_fundingCycle.metadata >> 8)),
+                _totalPreopTickets
             );
 
-        // Print the project's tickets for the beneficiary.
-        ticketBooth.print(
-            _beneficiary,
-            _projectId,
-            _unreservedWeightedAmount,
-            _preferUnstakedTickets
+        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+        require(
+            _totalPreopTickets + amount <= uint256(type(int256).max),
+            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
         );
 
-        emit Pay(
+        // Set the tracker to be the new total supply.
+        _processedTicketTrackerOf[_projectId] = int256(
+            _totalPreopTickets + amount
+        );
+
+        // If there's no funding cycle, there's no reserved tickets to print.
+        if (_fundingCycle.id == 0) return amount;
+
+        // Get a reference to the project owner.
+        address _owner = projects.ownerOf(_projectId);
+
+        // If there's nothing to print, return.
+        if (amount == 0) return amount;
+
+        // Get a reference to the leftover reserved ticket amount after printing for all mods.
+        uint256 _leftoverTicketAmount = amount;
+
+        // Get a reference to the project's ticket mods.
+        TicketMod[] memory _mods =
+            modStore.ticketModsOf(_projectId, _fundingCycle.configured);
+
+        //Transfer between all mods.
+        for (uint256 _i = 0; _i < _mods.length; _i++) {
+            // Get a reference to the mod being iterated on.
+            TicketMod memory _mod = _mods[_i];
+
+            // The amount to send towards mods.
+            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 200);
+
+            // Print tickets for the mod.
+            ticketBooth.print(
+                _mod.beneficiary,
+                _projectId,
+                _modCut,
+                _mod.preferUnstaked
+            );
+
+            // Subtract from the amount to be sent to the beneficiary.
+            _leftoverTicketAmount = _leftoverTicketAmount - _modCut;
+
+            emit TicketModDistribution(
+                _fundingCycle.id,
+                _projectId,
+                _mod,
+                _modCut,
+                msg.sender
+            );
+        }
+
+        // Mint any remaining reserved tickets to the beneficiary.
+        if (_leftoverTicketAmount > 0)
+            ticketBooth.print(_owner, _projectId, _leftoverTicketAmount, false);
+
+        emit PrintReserveTickets(
             _fundingCycle.id,
             _projectId,
-            _beneficiary,
-            _amount,
-            _memo,
+            _owner,
+            amount,
+            _leftoverTicketAmount,
             msg.sender
         );
-
-        return _fundingCycle.id;
     }
+
+    // --- private helper functions --- //
 
     /** 
       @notice
@@ -1102,6 +1083,79 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 msg.sender
             );
         }
+    }
+
+    /** 
+      @notice 
+      See the documentation for 'pay'.
+    */
+    function _pay(
+        uint256 _projectId,
+        uint256 _amount,
+        address _beneficiary,
+        string memory _memo,
+        bool _preferUnstakedTickets
+    ) private returns (uint256) {
+        // Get a reference to the current funding cycle for the project.
+        FundingCycle memory _fundingCycle =
+            fundingCycles.getCurrentOf(_projectId);
+
+        // Use the funding cycle's weight if it exists. Otherwise use the base weight.
+        uint256 _weight =
+            _fundingCycle.id > 0
+                ? _fundingCycle.weight
+                : fundingCycles.BASE_WEIGHT();
+
+        // Add to the balance of the project.
+        balanceOf[_projectId] = balanceOf[_projectId] + _amount;
+
+        // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
+        uint256 _weightedAmount = PRBMathUD60x18.mul(_amount, _weight);
+
+        // Use the funding cycle's reserved rate if it exists. Otherwise don't set a reserved rate.
+        uint256 _reservedRate =
+            _fundingCycle.id > 0
+                ? uint256(uint8(_fundingCycle.metadata >> 8))
+                : 0;
+
+        // Only print the tickets that are unreserved.
+        uint256 _unreservedWeightedAmount =
+            PRBMathCommon.mulDiv(
+                _weightedAmount,
+                // The reserved rate is stored in bytes 9-24 of the metadata property.
+                200 - _reservedRate,
+                200
+            );
+
+        // Print the project's tickets for the beneficiary.
+        ticketBooth.print(
+            _beneficiary,
+            _projectId,
+            _unreservedWeightedAmount,
+            _preferUnstakedTickets
+        );
+
+        // If theres no funding cycle, update the tracker so that a reserve rate wont apply to the printed tickets.
+        if (_fundingCycle.id == 0) {
+            uint256 _totalSupply = ticketBooth.totalSupplyOf(_projectId);
+            // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
+            require(
+                _totalSupply <= uint256(type(int256).max),
+                "Juicer::printReservedTickets: INT_LIMIT_REACHED"
+            );
+            _processedTicketTrackerOf[_projectId] = int256(_totalSupply);
+        }
+
+        emit Pay(
+            _fundingCycle.id,
+            _projectId,
+            _beneficiary,
+            _amount,
+            _memo,
+            msg.sender
+        );
+
+        return _fundingCycle.id;
     }
 
     /** 

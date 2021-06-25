@@ -3,6 +3,7 @@ module.exports = async ({
   addrs,
   constants,
   contracts,
+  BigNumber,
   executeFn,
   checkFn,
   getBalanceFn,
@@ -49,11 +50,11 @@ module.exports = async ({
 
   // The mod percents should add up to <= constants.MaxPercent.
   const percent1 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: constants.MaxPercent.sub(2)
   });
   const percent2 = randomBigNumberFn({
-    min: 1,
+    min: BigNumber.from(1),
     max: constants.MaxPercent.sub(percent1).sub(1)
   });
 
@@ -101,11 +102,14 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          "",
+          randomStringFn(),
           {
             target,
             currency,
-            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint16 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
@@ -191,8 +195,8 @@ module.exports = async ({
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount1,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       Print the reserved tickets.
@@ -216,8 +220,8 @@ module.exports = async ({
         expect: expectedReservedTicketAmount1
           .mul(constants.MaxPercent.sub(percent1).sub(percent2))
           .div(constants.MaxPercent),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       The beneficiary of mod1 should now have the correct amount of tickets.
@@ -231,8 +235,8 @@ module.exports = async ({
         expect: expectedReservedTicketAmount1
           .mul(percent1)
           .div(constants.MaxPercent),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       The beneficiary of mod2 should now have the correct amount of tickets.
@@ -246,8 +250,8 @@ module.exports = async ({
         expect: expectedReservedTicketAmount1
           .mul(percent2)
           .div(constants.MaxPercent),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       There should no longer be reserved tickets.
@@ -286,8 +290,8 @@ module.exports = async ({
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount2,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       Redeem tickets from the beneficiary of the first payment.
@@ -321,8 +325,8 @@ module.exports = async ({
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount2,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       Redeem tickets from the beneficiary of the second payment.
@@ -356,8 +360,8 @@ module.exports = async ({
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount2,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
       }),
     /**
       Print the reserved tickets.

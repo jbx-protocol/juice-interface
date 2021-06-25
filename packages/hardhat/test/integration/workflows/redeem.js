@@ -96,11 +96,14 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          "",
+          randomStringFn(),
           {
             target,
             currency,
-            duration: randomBigNumberFn({ min: 1, max: constants.MaxUint16 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
             discountRate,
             ballot: constants.AddressZero
           },
@@ -134,7 +137,7 @@ module.exports = async ({
     /**
       Can't redeem with no overflow
     */
-    async () =>
+    () =>
       executeFn({
         caller: ticketBeneficiary1,
         contract: contracts.juicer,
@@ -446,7 +449,7 @@ module.exports = async ({
     /**
       Make sure the owner can redeem successfully.
     */
-    async ({ local: { reservedTicketAmount, claimableOverflowOfOwner } }) =>
+    ({ local: { reservedTicketAmount, claimableOverflowOfOwner } }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,

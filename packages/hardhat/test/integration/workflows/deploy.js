@@ -17,7 +17,10 @@ module.exports = async ({
   const handle = stringToBytesFn("some-unique-handle");
   const uri = randomStringFn();
   const currency = randomBigNumberFn({ max: constants.MaxUint8 });
-  const duration = randomBigNumberFn({ min: 1, max: constants.MaxUint16 });
+  const duration = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxUint16
+  });
   const discountRate = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot = constants.AddressZero;
 

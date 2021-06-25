@@ -14,12 +14,6 @@ const run = function(ops) {
         // eslint-disable-next-line no-await-in-loop
         ...(await op(this))
       };
-      // // eslint-disable-next-line no-await-in-loop
-      // localData = {
-      //   ...localData,
-      //   // eslint-disable-next-line no-await-in-loop
-      //   ...(await op(localData))
-      // };
     }
   };
 };
@@ -115,15 +109,41 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  for (let i = 0; i < 5; i += 1) {
-    // it("Deployment of a project", run(workflows.deploy));
-    // it("Redeem tickets for overflow", run(workflows.redeem));
+  for (let i = 0; i < 20; i += 1) {
+    it("Deployment of a project", run(workflows.deploy));
+    it("Redeem tickets for overflow", run(workflows.redeem));
     it("Prints reserved tickets", run(workflows.printReservedTickets));
-    // it("Migrate from one Terminal to another", run(workflows.migrate));
-    // it("Tap funds up to the configured target", run(workflows.tap));
+    it("Issues tickets and honors preference", run(workflows.issueTickets));
+    it("Reconfigures a project", run(workflows.reconfigure));
+    it(
+      "Ballot must be approved for reconfiguration to become active",
+      run(workflows.approvedBallot)
+    );
+    it(
+      "Reconfiguration that fails a ballot should be ignored",
+      run(workflows.failedBallot)
+    );
+    it("Migrate from one Terminal to another", run(workflows.migrate));
+    it("Tap funds up to the configured target", run(workflows.tap));
+    it(
+      "Set and update payout mods, honoring locked status",
+      run(workflows.setPaymentMods)
+    );
+    it(
+      "Set and update ticket mods, honoring locked status",
+      run(workflows.setTicketMods)
+    );
+    it(
+      "A new governance can be appointed and accepted",
+      run(workflows.governance)
+    );
+    it(
+      "Governance can set a new fee for future configurations",
+      run(workflows.setFee)
+    );
+    it(
+      "Projects can print premined tickets before a payment has been made to it",
+      run(workflows.printPreminedTickets)
+    );
   }
-  // it("Deployment of a project", run(workflows.deploy));
-  // it("Redeem tickets for overflow", run(workflows.redeem));
-  // it("Set payout mods", run(workflows.setPaymentMods));
-  // it("Print reserved tickets", run(workflows.printReservedTickets));
 };

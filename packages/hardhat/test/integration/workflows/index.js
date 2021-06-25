@@ -2,16 +2,32 @@ const deploy = require("./deploy");
 const migrate = require("./migrate");
 const payoutToPaymentMods = require("./tap");
 const setPaymentMods = require("./set_payment_mods");
+const setTicketMods = require("./set_ticket_mods");
 const tap = require("./tap");
 const redeem = require("./redeem");
 const printReservedTickets = require("./print_reserved_tickets");
+const issueTickets = require("./issue_tickets");
+const reconfigure = require("./reconfigure");
+const approvedBallot = require("./approved_ballot");
+const failedBallot = require("./failed_ballot");
+const governance = require("./governance");
+const setFee = require("./set_fee");
+const printPreminedTickets = require("./print_premined_tickets");
 
 module.exports = {
   deploy,
   migrate,
   payoutToPaymentMods,
   setPaymentMods,
+  setTicketMods,
   tap,
   redeem,
-  printReservedTickets
+  printReservedTickets,
+  issueTickets,
+  reconfigure,
+  approvedBallot,
+  failedBallot,
+  governance,
+  setFee,
+  printPreminedTickets
 };

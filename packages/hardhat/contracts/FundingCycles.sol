@@ -114,7 +114,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the correct ballot is approved for this funding cycle.
             if (_isApproved(_eligibleFundingCycle))
-                return _mockFundingCycleAfter(_eligibleFundingCycle);
+                return
+                    _mockFundingCycleBasedOn(
+                        _eligibleFundingCycle,
+                        block.timestamp
+                    );
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
@@ -131,8 +135,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Return a mock of what its second next up funding cycle would be like.
         // Use second next because the next would be a mock of the current funding cycle.
         return
-            _mockFundingCycleAfter(
-                _mockFundingCycleAfter(_getStruct(_fundingCycleId))
+            _mockFundingCycleBasedOn(
+                _mockFundingCycleBasedOn(
+                    _getStruct(_fundingCycleId),
+                    block.timestamp
+                ),
+                block.timestamp
             );
     }
 
@@ -154,10 +162,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         returns (FundingCycle memory fundingCycle)
     {
         // The project must have funding cycles.
-        require(
-            latestIdOf[_projectId] > 0,
-            "FundingCycles::getCurrentOf: NOT_FOUND"
-        );
+        if (latestIdOf[_projectId] == 0) return _getStruct(0);
 
         // Check for an active funding cycle.
         uint256 _fundingCycleId = _eligible(_projectId);
@@ -189,9 +194,16 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The funding cycle cant be 0.
         require(_fundingCycleId > 0, "FundingCycles::getCurrentOf: NOT_FOUND");
 
+        // The funding cycle to base a current one on.
+        FundingCycle memory _baseFundingCycle = _getStruct(_fundingCycleId);
+
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
-        return _mockFundingCycleAfter(_getStruct(_fundingCycleId));
+        return
+            _mockFundingCycleBasedOn(
+                _baseFundingCycle,
+                block.timestamp - (_baseFundingCycle.duration * SECONDS_IN_DAY)
+            );
     }
 
     /** 
@@ -441,8 +453,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             } else {
                 // The ballot must have ended.
                 uint256 _ballotExpiration =
-                    _configured +
-                        IFundingCycleBallot(_fundingCycle.ballot).duration();
+                    _fundingCycle.ballot != IFundingCycleBallot(address(0))
+                        ? _configured + _fundingCycle.ballot.duration()
+                        : 0;
 
                 _mustStartOnOrAfter = block.timestamp > _ballotExpiration
                     ? block.timestamp
@@ -647,30 +660,40 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // one immediately before it.
         if (block.timestamp >= _fundingCycle.start) return fundingCycleId;
 
+        // The base cant be expired.
+        FundingCycle memory _baseFundingCycle =
+            _getStruct(_fundingCycle.basedOn);
+
+        if (
+            block.timestamp >=
+            _baseFundingCycle.start +
+                (_baseFundingCycle.duration * SECONDS_IN_DAY)
+        ) return 0;
+
         // Return the funding cycle immediately before the latest.
         fundingCycleId = _fundingCycle.basedOn;
     }
 
     /** 
         @notice 
-        A view of the funding cycle that would be created after this one if the project doesn't make a reconfiguration.
+        A view of the funding cycle that would be created based on the provided one if the project doesn't make a reconfiguration.
 
         @param _fundingCycle The funding cycle to make the calculation for.
+        @param _mustStartOnOrAfter The mock should start at the soonest possible time after this time.
 
         @return The next funding cycle, with an ID set to 0.
     */
-    function _mockFundingCycleAfter(FundingCycle memory _fundingCycle)
-        internal
-        view
-        returns (FundingCycle memory)
-    {
+    function _mockFundingCycleBasedOn(
+        FundingCycle memory _fundingCycle,
+        uint256 _mustStartOnOrAfter
+    ) internal pure returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
         require(
             _fundingCycle.discountRate > 0,
-            "FundingCycles::_mockFundingCycleAfter: NON_RECURRING"
+            "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
         );
 
-        uint256 _start = _deriveStart(_fundingCycle, block.timestamp);
+        uint256 _start = _deriveStart(_fundingCycle, _mustStartOnOrAfter);
         return
             FundingCycle(
                 0,
@@ -872,7 +895,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     */
     function _deriveWeight(FundingCycle memory _fundingCycle, uint256 _start)
         internal
-        view
+        pure
         returns (uint256)
     {
         // The number of times to apply the discount rate.

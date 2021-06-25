@@ -1,8 +1,7 @@
 /** 
-  Project's can set payment mods, which allow payouts to automatically be
-  sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
+  Project's can set ticket mods, which allow reserved tickets to be automatically sent to an address.
 
-  A payout mod can be locked until a specified timestamp, which prevents it from being removed while
+  A ticket mod can be locked until a specified timestamp, which prevents it from being removed while
   the current funding cycle configuration is active. 
 
   If a project reconfigures its funding cycle, new mods can be set that override any locked payout mods.
@@ -16,7 +15,6 @@ module.exports = async ({
   executeFn,
   checkFn,
   BigNumber,
-  deployContractFn,
   randomBigNumberFn,
   stringToBytesFn,
   normalizedPercentFn,
@@ -35,12 +33,9 @@ module.exports = async ({
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedIdOfBaseProject = 2;
 
-  // The second project created will have ID 3, and will be used to route Mod payouts to.
-  const expectedIdOfModProject = 3;
-
-  // Payment mods can be locked.
+  // Ticket mods can be locked.
   // Make a locked mods.
-  const lockedAddressMod = {
+  const lockedMod = {
     preferUnstaked: randomBoolFn(),
     percent: normalizedPercentFn(50).toNumber(),
     // Lock at least until the end of the tests.
@@ -52,26 +47,20 @@ module.exports = async ({
         })
       )
       .toNumber(),
-    beneficiary: randomAddressFn(),
-    allocator: constants.AddressZero,
-    projectId: BigNumber.from(0)
+    beneficiary: randomAddressFn()
   };
   // Make two unlocked mods.
-  const unlockedProjectMod = {
+  const unlockedMod1 = {
     preferUnstaked: randomBoolFn(),
     percent: normalizedPercentFn(25).toNumber(),
     lockedUntil: 0,
-    beneficiary: randomAddressFn(),
-    allocator: constants.AddressZero,
-    projectId: BigNumber.from(expectedIdOfModProject)
+    beneficiary: randomAddressFn()
   };
-  const unlockedAllocatorMod = {
+  const unlockedMod2 = {
     preferUnstaked: randomBoolFn(),
     percent: normalizedPercentFn(20).toNumber(),
     lockedUntil: 0,
-    beneficiary: randomAddressFn(),
-    allocator: (await deployContractFn("ExampleModAllocator")).address,
-    projectId: BigNumber.from(0)
+    beneficiary: randomAddressFn()
   };
 
   // The currency will be 0, which corresponds to ETH.
@@ -90,7 +79,7 @@ module.exports = async ({
 
   return [
     /** 
-      Deploy first project with at least a locked payment mod.
+      Deploy first project with at least a locked ticket mod.
     */
     () =>
       executeFn({
@@ -118,76 +107,68 @@ module.exports = async ({
               max: constants.MaxPercent
             })
           },
-          [lockedAddressMod, unlockedProjectMod],
-          []
+          [],
+          [lockedMod, unlockedMod1]
         ]
       }),
     /**
-        Check that the payment mod got set.
+        Check that the ticket mods got set.
       */
     ({ timeMark }) =>
       checkFn({
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "ticketModsOf",
         args: [expectedIdOfBaseProject, timeMark],
         expect: [
           [
-            lockedAddressMod.preferUnstaked,
-            lockedAddressMod.percent,
-            lockedAddressMod.lockedUntil,
-            lockedAddressMod.beneficiary,
-            lockedAddressMod.allocator,
-            lockedAddressMod.projectId
+            lockedMod.preferUnstaked,
+            lockedMod.percent,
+            lockedMod.lockedUntil,
+            lockedMod.beneficiary
           ],
           [
-            unlockedProjectMod.preferUnstaked,
-            unlockedProjectMod.percent,
-            unlockedProjectMod.lockedUntil,
-            unlockedProjectMod.beneficiary,
-            unlockedProjectMod.allocator,
-            unlockedProjectMod.projectId
+            unlockedMod1.preferUnstaked,
+            unlockedMod1.percent,
+            unlockedMod1.lockedUntil,
+            unlockedMod1.beneficiary
           ]
         ]
       }),
-    /** 
-      Overriding a locked mod shouldn't work when setting payment mods.
+    /**
+      Overriding a locked mod shouldn't work when setting ticket mods.
     */
     ({ timeMark }) =>
       executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
-        args: [
-          expectedIdOfBaseProject,
-          timeMark,
-          [unlockedProjectMod, unlockedAllocatorMod]
-        ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        fn: "setTicketMods",
+        args: [expectedIdOfBaseProject, timeMark, [unlockedMod1, unlockedMod2]],
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
       }),
     /**
-      Overriding a locked mod with a shorter locked date shouldn't work when setting payment mods.
+      Overriding a locked mod with a shorter locked date shouldn't work when setting ticket mods.
     */
     ({ timeMark }) =>
       executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
+        fn: "setTicketMods",
         args: [
           expectedIdOfBaseProject,
           timeMark,
           [
             {
-              ...lockedAddressMod,
-              lockedUntil: lockedAddressMod.lockedUntil - 1
+              ...lockedMod,
+              lockedUntil: lockedMod.lockedUntil - 1
             },
-            unlockedProjectMod,
-            unlockedAllocatorMod
+            unlockedMod1,
+            unlockedMod2
           ]
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setTicketMods: SOME_LOCKED"
       }),
     /**
-      Set new payment mods, making sure to include any locked mods.
+      Set new ticket mods, making sure to include any locked mods.
 
       Locked mods can have their locked date extended.
     */
@@ -195,16 +176,16 @@ module.exports = async ({
       executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
+        fn: "setTicketMods",
         args: [
           expectedIdOfBaseProject,
           timeMark,
           [
             {
-              ...lockedAddressMod,
-              lockedUntil: lockedAddressMod.lockedUntil + 1
+              ...lockedMod,
+              lockedUntil: lockedMod.lockedUntil + 1
             },
-            unlockedAllocatorMod
+            unlockedMod2
           ]
         ]
       }),
@@ -214,25 +195,21 @@ module.exports = async ({
     ({ timeMark }) =>
       checkFn({
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "ticketModsOf",
         // Subtract 1 from timeMark to get the time of the configuration execution.
         args: [expectedIdOfBaseProject, timeMark.sub(1)],
         expect: [
           [
-            lockedAddressMod.preferUnstaked,
-            lockedAddressMod.percent,
-            lockedAddressMod.lockedUntil + 1,
-            lockedAddressMod.beneficiary,
-            lockedAddressMod.allocator,
-            lockedAddressMod.projectId
+            lockedMod.preferUnstaked,
+            lockedMod.percent,
+            lockedMod.lockedUntil + 1,
+            lockedMod.beneficiary
           ],
           [
-            unlockedAllocatorMod.preferUnstaked,
-            unlockedAllocatorMod.percent,
-            unlockedAllocatorMod.lockedUntil,
-            unlockedAllocatorMod.beneficiary,
-            unlockedAllocatorMod.allocator,
-            unlockedAllocatorMod.projectId
+            unlockedMod2.preferUnstaked,
+            unlockedMod2.percent,
+            unlockedMod2.lockedUntil,
+            unlockedMod2.beneficiary
           ]
         ]
       }),
@@ -263,8 +240,8 @@ module.exports = async ({
               max: constants.MaxPercent
             })
           },
-          [unlockedProjectMod],
-          []
+          [],
+          [unlockedMod1]
         ]
       }),
     /**
@@ -273,25 +250,21 @@ module.exports = async ({
     ({ timeMark }) =>
       checkFn({
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "ticketModsOf",
         // Subtract 2 from timeMark to get the time of the configuration execution.
         args: [expectedIdOfBaseProject, timeMark.sub(2)],
         expect: [
           [
-            lockedAddressMod.preferUnstaked,
-            lockedAddressMod.percent,
-            lockedAddressMod.lockedUntil + 1,
-            lockedAddressMod.beneficiary,
-            lockedAddressMod.allocator,
-            lockedAddressMod.projectId
+            lockedMod.preferUnstaked,
+            lockedMod.percent,
+            lockedMod.lockedUntil + 1,
+            lockedMod.beneficiary
           ],
           [
-            unlockedAllocatorMod.preferUnstaked,
-            unlockedAllocatorMod.percent,
-            unlockedAllocatorMod.lockedUntil,
-            unlockedAllocatorMod.beneficiary,
-            unlockedAllocatorMod.allocator,
-            unlockedAllocatorMod.projectId
+            unlockedMod2.preferUnstaked,
+            unlockedMod2.percent,
+            unlockedMod2.lockedUntil,
+            unlockedMod2.beneficiary
           ]
         ]
       }),
@@ -301,16 +274,14 @@ module.exports = async ({
     ({ timeMark }) =>
       checkFn({
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "ticketModsOf",
         args: [expectedIdOfBaseProject, timeMark],
         expect: [
           [
-            unlockedProjectMod.preferUnstaked,
-            unlockedProjectMod.percent,
-            unlockedProjectMod.lockedUntil,
-            unlockedProjectMod.beneficiary,
-            unlockedProjectMod.allocator,
-            unlockedProjectMod.projectId
+            unlockedMod1.preferUnstaked,
+            unlockedMod1.percent,
+            unlockedMod1.lockedUntil,
+            unlockedMod1.beneficiary
           ]
         ]
       })

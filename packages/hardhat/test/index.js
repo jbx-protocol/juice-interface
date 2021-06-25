@@ -135,39 +135,22 @@ describe("Juice", async function() {
     };
 
     // Bind a function that checks if a contract getter equals an expected value.
-    this.checkFn = async ({ contract, fn, args, expect }) => {
+    this.checkFn = async ({ contract, fn, args, expect, plusMinus }) => {
       const storedVal = await contract[fn](...args);
-      chai.expect(storedVal).to.deep.equal(expect);
+      if (plusMinus) {
+        chai.expect(storedVal.lte(expect.add(plusMinus))).to.equal(true);
+        chai.expect(storedVal.gte(expect.sub(plusMinus))).to.equal(true);
+      } else {
+        chai.expect(storedVal).to.deep.equal(expect);
+      }
     };
 
     // Binds a function that makes sure the provided address has the balance
-    this.verifyBalanceFn = async ({ address, expect, tolerance }) => {
+    this.verifyBalanceFn = async ({ address, expect }) => {
       const storedVal = await ethers.provider.getBalance(address);
-      // If a tolerance is set, check to see if the expected value matches +- the tolerance.
-      if (tolerance) {
-        console.log({
-          storedVal,
-          init: initialBalances[address],
-          expect,
-          diff: storedVal.sub(initialBalances[address] || 0).sub(expect)
-        });
-        // eslint-disable-next-line no-unused-expressions
-        chai.expect(
-          storedVal
-            .sub(initialBalances[address] || 0)
-            .gte(expect.sub(tolerance))
-        ).to.be.true;
-        // eslint-disable-next-line no-unused-expressions
-        chai.expect(
-          storedVal
-            .sub(initialBalances[address] || 0)
-            .lte(expect.add(tolerance))
-        ).to.be.true;
-      } else {
-        chai
-          .expect(storedVal.sub(initialBalances[address] || 0))
-          .to.deep.equal(expect);
-      }
+      chai
+        .expect(storedVal.sub(initialBalances[address] || 0))
+        .to.deep.equal(expect);
     };
 
     // Binds a function that gets the balance of an address.
@@ -178,6 +161,9 @@ describe("Juice", async function() {
       (await ethers.provider.getBalance(address)).sub(
         initialBalances[address] || 0
       );
+
+    // Binds the standard expect function.
+    this.expectFn = chai.expect;
 
     // Bind some constants.
 

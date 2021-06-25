@@ -4,7 +4,7 @@ const payoutToPaymentMods = require("./tap");
 const setPaymentMods = require("./set_payment_mods");
 const tap = require("./tap");
 const redeem = require("./redeem");
-// const printReservedTickets = require("./print_reserved_tickets");
+const printReservedTickets = require("./print_reserved_tickets");
 
 module.exports = {
   deploy,
@@ -12,6 +12,6 @@ module.exports = {
   payoutToPaymentMods,
   setPaymentMods,
   tap,
-  redeem
-  // printReservedTickets
+  redeem,
+  printReservedTickets
 };

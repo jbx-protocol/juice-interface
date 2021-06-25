@@ -61,12 +61,12 @@ module.exports = async ({
     max: (await getBalanceFn(payer.address)).div(4)
   });
 
-  // The project's funding cycle target will at most be a fourth of the payment value. Leaving plenty of overflow.
+  // The project's funding cycle target will at least by the first payment value,
+  // and at most be the minimum plus 1/4 of the value of the second and third payments. Leaving plenty of overflow.
+  // The minimum will be used to test redeeming with no overflow.
   const target = randomBigNumberFn({
-    max: paymentValue1
-      .add(paymentValue2)
-      .add(paymentValue3)
-      .div(4)
+    min: paymentValue1,
+    max: paymentValue1.add(paymentValue2.add(paymentValue3).div(4))
   });
   // The currency will be 0, which corresponds to ETH.
   const currency = 0;
@@ -132,6 +132,24 @@ module.exports = async ({
         value: paymentValue1
       }),
     /**
+      Can't redeem with no overflow
+    */
+    async () =>
+      executeFn({
+        caller: ticketBeneficiary1,
+        contract: contracts.juicer,
+        fn: "redeem",
+        args: [
+          ticketBeneficiary1.address,
+          expectedProjectId,
+          1,
+          0,
+          redeemBeneficiary4.address,
+          randomBoolFn()
+        ],
+        revert: "Juicer::redeem: NO_OP"
+      }),
+    /**
       Make another payment to the project, sending tickets to a different beneficiary.
     */
     () =>
@@ -191,7 +209,7 @@ module.exports = async ({
       )
     }),
     /**
-      Pass along a reference to the claimable overflow of the ticket beneficiary.
+      Pass along a reference to the claimable overflow of the first ticket beneficiary.
       This value will be used to make sure the call to redeem claims the corresponding amount.
     */
     async ({ local: { redeemableTicketsOfTicketBeneficiary1 } }) => ({
@@ -199,6 +217,17 @@ module.exports = async ({
         ticketBeneficiary1.address,
         expectedProjectId,
         redeemableTicketsOfTicketBeneficiary1
+      )
+    }),
+    /** 
+      Pass along a reference to what would be the claimable overflow of the third ticket beneficiary,
+      if they were to be redeemed before the first beneficiary. 
+    */
+    async ({ local: { redeemableTicketsOfTicketBeneficiary3 } }) => ({
+      claimableOverflowOfTicketBeneficiary3: await contracts.juicer.claimableOverflowOf(
+        ticketBeneficiary3.address,
+        expectedProjectId,
+        redeemableTicketsOfTicketBeneficiary3
       )
     }),
     /**
@@ -234,7 +263,45 @@ module.exports = async ({
         expect: claimableOverflowOfTicketBeneficiary1
       }),
     /**
-      Pass along a reference to the claimable overflow of the ticket beneficiary.
+      Make sure the new claimable overflow is greater than what wouldve been claimable before the first beneficiary redeemed.
+      Update the claimable value.
+    */
+    async ({
+      expectFn,
+      local: {
+        redeemableTicketsOfTicketBeneficiary3,
+        claimableOverflowOfTicketBeneficiary3
+      }
+    }) => {
+      const updatedClaimableOverflowOfTicketBeneficiary3 = await contracts.juicer.claimableOverflowOf(
+        ticketBeneficiary3.address,
+        expectedProjectId,
+        redeemableTicketsOfTicketBeneficiary3
+      );
+
+      expectFn(
+        bondingCurveRate.eq(constants.MaxPercent)
+          ? // Allow off-by-one
+            updatedClaimableOverflowOfTicketBeneficiary3.eq(
+              claimableOverflowOfTicketBeneficiary3
+            ) ||
+              updatedClaimableOverflowOfTicketBeneficiary3.gt(
+                claimableOverflowOfTicketBeneficiary3.sub(1)
+              ) ||
+              updatedClaimableOverflowOfTicketBeneficiary3.lt(
+                claimableOverflowOfTicketBeneficiary3.add(1)
+              )
+          : updatedClaimableOverflowOfTicketBeneficiary3.gt(
+              claimableOverflowOfTicketBeneficiary3
+            )
+      ).to.equal(true);
+
+      return {
+        claimableOverflowOfTicketBeneficiary3: updatedClaimableOverflowOfTicketBeneficiary3
+      };
+    },
+    /**
+      Pass along a reference to the claimable overflow of the first ticket beneficiary.
       This value will be used to make sure the call to redeem claims the corresponding amount.
     */
     async ({ local: { redeemableTicketsOfTicketBeneficiary2 } }) => ({
@@ -276,16 +343,43 @@ module.exports = async ({
         expect: claimableOverflowOfTicketBeneficiary2
       }),
     /**
-      Pass along a reference to the claimable overflow of the ticket beneficiary.
-      This value will be used to make sure the call to redeem claims the corresponding amount.
+      Make sure the new claimable overflow is greater than what wouldve been claimable before the first beneficiary redeemed.
+      Update the claimable value so it can be used to make sure the call to redeem claims the corresponding amount.
     */
-    async ({ local: { redeemableTicketsOfTicketBeneficiary3 } }) => ({
-      claimableOverflowOfTicketBeneficiary3: await contracts.juicer.claimableOverflowOf(
+    async ({
+      expectFn,
+      local: {
+        redeemableTicketsOfTicketBeneficiary3,
+        claimableOverflowOfTicketBeneficiary3
+      }
+    }) => {
+      const updatedClaimableOverflowOfTicketBeneficiary3 = await contracts.juicer.claimableOverflowOf(
         ticketBeneficiary3.address,
         expectedProjectId,
         redeemableTicketsOfTicketBeneficiary3
-      )
-    }),
+      );
+
+      expectFn(
+        bondingCurveRate.eq(constants.MaxPercent)
+          ? // Allow off-by-one
+            updatedClaimableOverflowOfTicketBeneficiary3.eq(
+              claimableOverflowOfTicketBeneficiary3
+            ) ||
+              updatedClaimableOverflowOfTicketBeneficiary3.gt(
+                claimableOverflowOfTicketBeneficiary3.sub(1)
+              ) ||
+              updatedClaimableOverflowOfTicketBeneficiary3.lt(
+                claimableOverflowOfTicketBeneficiary3.add(1)
+              )
+          : updatedClaimableOverflowOfTicketBeneficiary3.gt(
+              claimableOverflowOfTicketBeneficiary3
+            )
+      ).to.equal(true);
+
+      return {
+        claimableOverflowOfTicketBeneficiary3: updatedClaimableOverflowOfTicketBeneficiary3
+      };
+    },
     /**
       Make sure the third ticket beneficiary tickets can be redeemed successfully.
     */
@@ -334,11 +428,7 @@ module.exports = async ({
         caller: owner,
         contract: contracts.juicer,
         fn: "printReservedTickets",
-        args: [expectedProjectId],
-        // If the reserved rate is 0, expect the execution to revert.
-        revert:
-          reservedRate.eq(BigNumber.from(0)) &&
-          "Juicer::printReservedTickets: NO_OP"
+        args: [expectedProjectId]
       }),
     /**
       Pass along a reference to the claimable overflow of the owner.

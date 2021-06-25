@@ -115,9 +115,10 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 1; i += 1) {
     it("Deployment of a project", run(workflows.deploy));
     it("Redeem tickets for overflow", run(workflows.redeem));
+    it("Prints reserved tickets", run(workflows.printReservedTickets));
     it("Migrate from one Terminal to another", run(workflows.migrate));
     it("Tap funds up to the configured target", run(workflows.tap));
   }

@@ -9,7 +9,6 @@ import "./IYielder.sol";
 import "./IProjects.sol";
 import "./IModStore.sol";
 import "./ITerminal.sol";
-import "./ITerminalDirectory.sol";
 import "./IOperatorStore.sol";
 
 struct FundingCycleMetadata {
@@ -103,8 +102,6 @@ interface IJuicer {
 
     function prices() external view returns (IPrices);
 
-    function terminalDirectory() external view returns (ITerminalDirectory);
-
     function modStore() external view returns (IModStore);
 
     function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
@@ -114,7 +111,7 @@ interface IJuicer {
 
     function balanceOf(uint256 _projectId) external view returns (uint256);
 
-    function preminedTicketCountOf(uint256 _projectId)
+    function preconfigureTicketCountOf(uint256 _projectId)
         external
         view
         returns (uint256);

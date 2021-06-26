@@ -6,6 +6,7 @@ module.exports = async ({
   deployer,
   addrs,
   contracts,
+  constants,
   BigNumber,
   executeFn,
   stringToBytesFn,
@@ -32,7 +33,8 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          stringToBytesFn("some-unique-handle")
+          stringToBytesFn("some-unique-handle"),
+          constants.AddressZero
         ]
       }),
     /**

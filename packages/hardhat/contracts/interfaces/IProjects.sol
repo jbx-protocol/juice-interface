@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
+import "./ITerminal.sol";
 import "./IOperatorStore.sol";
 
 interface IProjects is IERC721 {
@@ -55,7 +56,8 @@ interface IProjects is IERC721 {
     function create(
         address _owner,
         bytes32 _handle,
-        string calldata _uri
+        string calldata _uri,
+        ITerminal _terminal
     ) external returns (uint256 id);
 
     function setHandle(uint256 _projectId, bytes32 _handle) external;

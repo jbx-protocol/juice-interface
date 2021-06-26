@@ -62,6 +62,18 @@ module.exports = async ({
     max: paymentValue2.add(paymentValue3).div(4)
   });
 
+  // The first amount of premined tickets to print. The amount is currency denominated, based on the weight of the first funding cycle.
+  const preminePrintAmount = randomBigNumberFn({
+    min: BigNumber.from(1),
+    // So arbitrary large number thats not close to the boundary
+    max: BigNumber.from(2).pow(22)
+  });
+
+  // The ticket amount is based on the initial funding cycle's weight.
+  const expectedPreminedPrintedTicketAmount = preminePrintAmount.mul(
+    constants.InitialWeightMultiplier
+  );
+
   // The mod percents should add up to <= constants.MaxPercent.
   const percent1 = randomBigNumberFn({
     min: BigNumber.from(1),
@@ -124,7 +136,8 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          randomStringFn()
+          randomStringFn(),
+          contracts.juicer.address
         ]
       }),
     /**
@@ -144,7 +157,24 @@ module.exports = async ({
         value: paymentValue1
       }),
     /**
-      A payment made towards a project before its been configured shouldn't have an effect
+      Print some premined tickets to a beneficiary.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "printPreminedTickets",
+        args: [
+          expectedProjectId,
+          preminePrintAmount,
+          currency,
+          preconfigTicketBeneficiary.address,
+          randomStringFn(),
+          randomBoolFn()
+        ]
+      }),
+    /**
+      Premines and payments made towards a project before its been configured shouldn't have an effect
       on reserved tickets.
     */
     () =>
@@ -156,7 +186,7 @@ module.exports = async ({
         expect: 0
       }),
     /**
-      The preconfig payer should have tickets with expected a reserve rate of 0.
+      The preconfig ticket beneficiary should have tickets with an expected reserve rate of 0.
     */
     () =>
       checkFn({
@@ -164,7 +194,9 @@ module.exports = async ({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [preconfigTicketBeneficiary.address, expectedProjectId],
-        expect: expectedReservedTicketAmount1
+        expect: expectedReservedTicketAmount1.add(
+          expectedPreminedPrintedTicketAmount
+        )
       }),
     /**
       Configure the projects funding cycle.
@@ -248,17 +280,6 @@ module.exports = async ({
         value: paymentValue2
       }),
     /**
-      The owner should still not have any tickets.
-    */
-    () =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "balanceOf",
-        args: [owner.address, expectedProjectId],
-        expect: 0
-      }),
-    /**
       The owner should now have printable reserved tickets.
     */
     () =>
@@ -270,6 +291,17 @@ module.exports = async ({
         expect: expectedReservedTicketAmount2,
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
+      }),
+    /**
+      The owner should still not have any tickets.
+    */
+    () =>
+      checkFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [owner.address, expectedProjectId],
+        expect: 0
       }),
     /**
       Issue the project's tickets so that the unstaked preference can be checked.

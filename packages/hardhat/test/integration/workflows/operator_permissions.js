@@ -349,6 +349,16 @@ module.exports = async ({
       domain: expectedProjectId,
       permissionIndex: 14,
       authorizedRevert: "ModStore::setTicketMods: NO_OP"
+    },
+    // The other allow cases are tested in various other integration tests.
+    {
+      contract: contracts.terminalDirectory,
+      fn: "setTerminal",
+      args: [expectedProjectId, constants.AddressZero],
+      domain: expectedProjectId,
+      permissionIndex: 15,
+      authorizedRevert: "TerminalDirectory::setTerminal: ZERO_ADDRESS",
+      revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
     }
   ];
   return [
@@ -363,7 +373,8 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          randomStringFn()
+          randomStringFn(),
+          contracts.juicer.address
         ]
       }),
     /** 
@@ -378,6 +389,7 @@ module.exports = async ({
           args,
           domain,
           authorizedRevert,
+          revert,
           permissionIndex,
           allowWildcard,
           override,
@@ -524,7 +536,7 @@ module.exports = async ({
                 contract,
                 fn,
                 args,
-                revert: "Operatable: UNAUTHORIZED"
+                revert: revert || "Operatable: UNAUTHORIZED"
               }),
             // Remove all permissions from operator for domain.
             () =>
@@ -554,7 +566,7 @@ module.exports = async ({
                 contract,
                 fn,
                 args,
-                revert: "Operatable: UNAUTHORIZED"
+                revert: revert || "Operatable: UNAUTHORIZED"
               })
           ])
         ];

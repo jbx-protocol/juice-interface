@@ -63,14 +63,16 @@ contract Projects is ERC721, IProjects, Operatable {
 
         @param _owner The owner of the project.
         @param _handle A unique handle for the project.
-        @param _uri An ipfs uri to more info about the project. Dont include the leading ipfs://
+        @param _uri An ipfs CID to more info about the project.
+        @param _terminal The terminal to set for this project so that it can start receiving payments.
 
         @return The new project's ID.
     */
     function create(
         address _owner,
         bytes32 _handle,
-        string calldata _uri
+        string calldata _uri,
+        ITerminal _terminal
     ) external override returns (uint256) {
         // Handle must exist.
         require(_handle != bytes32(0), "Projects::create: EMPTY_HANDLE");
@@ -94,6 +96,10 @@ contract Projects is ERC721, IProjects, Operatable {
 
         // Set the URI if one was provided.
         if (bytes(_uri).length > 0) uriOf[count] = _uri;
+
+        // Set the project's terminal if needed.
+        if (_terminal != ITerminal(address(0)))
+            _terminal.terminalDirectory().setTerminal(count, _terminal);
 
         emit Create(count, _owner, _handle, _uri, msg.sender);
 

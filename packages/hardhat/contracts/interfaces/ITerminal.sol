@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
+import "./ITerminalDirectory.sol";
+
 interface ITerminal {
     event Pay(
         uint256 indexed fundingCycleId,
@@ -25,6 +27,8 @@ interface ITerminal {
         uint256 _amount,
         address caller
     );
+
+    function terminalDirectory() external view returns (ITerminalDirectory);
 
     function migrationIsAllowed(ITerminal _terminal)
         external

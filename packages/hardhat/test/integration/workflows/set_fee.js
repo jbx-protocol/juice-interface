@@ -239,10 +239,10 @@ module.exports = async ({
         fn: "getQueuedOf",
         args: [expectedProjectId],
         expect: [
-          expectedFundingCycleId2,
+          BigNumber.from(0),
           expectedProjectId,
           expectedFundingCycleNumber3,
-          expectedFundingCycleId1,
+          expectedFundingCycleId2,
           timeMark,
           weight
             .mul(discountRate)

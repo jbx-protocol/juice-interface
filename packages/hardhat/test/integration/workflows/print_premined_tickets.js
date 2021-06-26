@@ -73,7 +73,8 @@ module.exports = async ({
         args: [
           owner.address,
           stringToBytesFn("some-unique-handle"),
-          randomStringFn()
+          randomStringFn(),
+          contracts.juicer.address
         ]
       }),
     /**

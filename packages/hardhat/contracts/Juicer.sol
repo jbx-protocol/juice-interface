@@ -13,8 +13,6 @@ import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
-import "hardhat/console.sol";
-
 /**
   ───────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
@@ -80,7 +78,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The prices feeds.
     IPrices public immutable override prices;
 
-    /// @notice The direct deposit terminals.
+    /// @notice The directory of terminals.
     ITerminalDirectory public immutable override terminalDirectory;
 
     // --- public stored properties --- //
@@ -88,8 +86,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The amount of ETH that each project is responsible for.
     mapping(uint256 => uint256) public override balanceOf;
 
-    /// @notice The amount of premined tickets each project has issued.
-    mapping(uint256 => uint256) public override preminedTicketCountOf;
+    /// @notice The amount of ticket printed prior to a project configuring their first funding cycle.
+    mapping(uint256 => uint256) public override preconfigureTicketCountOf;
 
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
@@ -124,7 +122,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _reservedTicketAmountFrom(
                 _processedTicketTrackerOf[_projectId],
                 _reservedRate,
-                ticketBooth.totalSupplyOf(_projectId)
+                ticketBooth.totalSupplyOf(_projectId) -
+                    preconfigureTicketCountOf[_projectId]
             );
     }
 
@@ -195,7 +194,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _processedTicketTrackerOf[_projectId],
                 // The reserved rate is in bits 9-24 of the metadata.
                 uint256(uint8(_fundingCycle.metadata >> 8)),
-                _totalSupply
+                _totalSupply - preconfigureTicketCountOf[_projectId]
             );
 
         // If there are reserved tickets, add them to the total supply.
@@ -305,7 +304,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         TicketMod[] memory _ticketMods
     ) external override {
         // Create the project for the owner.
-        uint256 _projectId = projects.create(_owner, _handle, _uri);
+        uint256 _projectId = projects.create(_owner, _handle, _uri, this);
 
         // Set this Juicer as the project's current terminal in the directory.
         // Must do this before the call to configure.
@@ -388,15 +387,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _packedMetadata =
             _validateAndPackFundingCycleMetadata(_metadata);
 
-        // Set the terminal if needed.
-        // Must do this before the call to configure.
-        if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
-            terminalDirectory.setTerminal(_projectId, this);
-
-        // If the project hasn't yet been paid, configure the active funding cycle instead of creating a standby one.
+        // If the project hasn't yet issued non-preconfiugure tickets, configure the active funding cycle instead of creating a standby one.
         bool _shouldConfigureActive =
             ticketBooth.totalSupplyOf(_projectId) ==
-                preminedTicketCountOf[_projectId] &&
+                preconfigureTicketCountOf[_projectId] &&
                 // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
                 _processedTicketTrackerOf[_projectId] == 0;
 
@@ -460,10 +454,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             Operations.PrintPreminedTickets
         )
     {
-        // Make sure the project hasnt printed tickets that werent premined.
+        // Make sure the project hasnt printed tickets that werent preconfigure.
         require(
             ticketBooth.totalSupplyOf(_projectId) ==
-                preminedTicketCountOf[_projectId] &&
+                preconfigureTicketCountOf[_projectId] &&
                 // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
                 _processedTicketTrackerOf[_projectId] == 0,
             "Juicer::printTickets: ALREADY_ACTIVE"
@@ -475,11 +469,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             "Juicer::printTickets: ZERO_ADDRESS"
         );
 
-        // Set the terminal if needed.
-        // Must do this before the call to print.
-        if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
-            terminalDirectory.setTerminal(_projectId, this);
-
         // Get the current funding cycle to read the weight and currency from.
         uint256 _weight = fundingCycles.BASE_WEIGHT();
 
@@ -490,9 +479,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _weightedAmount =
             PRBMathUD60x18.mul(PRBMathUD60x18.div(_amount, _ethPrice), _weight);
 
-        // Set the count of premined tickets this project has printed.
-        preminedTicketCountOf[_projectId] =
-            preminedTicketCountOf[_projectId] +
+        // Set the count of preconfigure tickets this project has printed.
+        preconfigureTicketCountOf[_projectId] =
+            preconfigureTicketCountOf[_projectId] +
             _weightedAmount;
 
         // Print the project's tickets for the beneficiary.
@@ -770,7 +759,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // All reserved tickets must be printed before migrating.
         if (
             uint256(_processedTicketTrackerOf[_projectId]) !=
-            ticketBooth.totalSupplyOf(_projectId)
+            ticketBooth.totalSupplyOf(_projectId) -
+                preconfigureTicketCountOf[_projectId]
         ) printReservedTickets(_projectId);
 
         // Get a reference to this project's current balance, included any earned yield.
@@ -906,7 +896,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             fundingCycles.getCurrentOf(_projectId);
 
         // Get a reference to new total supply of tickets before printing reserved tickets.
-        uint256 _totalPreopTickets = ticketBooth.totalSupplyOf(_projectId);
+        uint256 _totalEligibleTickets =
+            ticketBooth.totalSupplyOf(_projectId) -
+                preconfigureTicketCountOf[_projectId];
 
         // Get a reference to the number of tickets that need to be printed.
         // If there's no funding cycle, there's no tickets to print.
@@ -916,18 +908,18 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _processedTicketTrackerOf[_projectId],
                 // The reserved rate is in bits 9-24 of the metadata.
                 uint256(uint8(_fundingCycle.metadata >> 8)),
-                _totalPreopTickets
+                _totalEligibleTickets
             );
 
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
-            _totalPreopTickets + amount <= uint256(type(int256).max),
+            _totalEligibleTickets + amount <= uint256(type(int256).max),
             "Juicer::printReservedTickets: INT_LIMIT_REACHED"
         );
 
         // Set the tracker to be the new total supply.
         _processedTicketTrackerOf[_projectId] = int256(
-            _totalPreopTickets + amount
+            _totalEligibleTickets + amount
         );
 
         // If there's no funding cycle, there's no reserved tickets to print.
@@ -1127,11 +1119,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 200
             );
 
-        // Set the terminal if needed.
-        // Must do this before the call to print.
-        if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
-            terminalDirectory.setTerminal(_projectId, this);
-
         // Print the project's tickets for the beneficiary.
         ticketBooth.print(
             _beneficiary,
@@ -1140,16 +1127,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _preferUnstakedTickets
         );
 
-        // If theres no funding cycle, update the tracker so that a reserve rate wont apply to the printed tickets.
-        if (_fundingCycle.id == 0) {
-            uint256 _totalSupply = ticketBooth.totalSupplyOf(_projectId);
-            // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-            require(
-                _totalSupply <= uint256(type(int256).max),
-                "Juicer::printReservedTickets: INT_LIMIT_REACHED"
-            );
-            _processedTicketTrackerOf[_projectId] = int256(_totalSupply);
-        }
+        // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
+        if (_fundingCycle.id == 0)
+            // Set the count of premined tickets this project has printed.
+            preconfigureTicketCountOf[_projectId] =
+                preconfigureTicketCountOf[_projectId] +
+                _unreservedWeightedAmount;
 
         emit Pay(
             _fundingCycle.id,
@@ -1201,20 +1184,20 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @param _processedTicketTracker The tracker to make the calculation with.
       @param _reservedRate The reserved rate to use to make the calculation.
-      @param _totalSupply The total supply to make the calculation with.
+      @param _totalEligibleTickets The total amount to make the calculation with.
 
       @return amount reserved ticket amount.
     */
     function _reservedTicketAmountFrom(
         int256 _processedTicketTracker,
         uint256 _reservedRate,
-        uint256 _totalSupply
+        uint256 _totalEligibleTickets
     ) private pure returns (uint256) {
         // Get a reference to the amount of tickets that are unprocessed.
         uint256 _unprocessedTicketBalanceOf =
-            _processedTicketTracker >= 0
-                ? _totalSupply - uint256(_processedTicketTracker)
-                : _totalSupply + uint256(-_processedTicketTracker);
+            _processedTicketTracker >= 0 // preconfigure tickets shouldn't contribute to the reserved ticket amount.
+                ? _totalEligibleTickets - uint256(_processedTicketTracker)
+                : _totalEligibleTickets + uint256(-_processedTicketTracker);
 
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;

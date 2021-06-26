@@ -42,6 +42,9 @@ module.exports = async ({
   // The currency will be 0, which corresponds to ETH.
   const currency = 0;
 
+  // Use the juicer as the terminal.
+  const terminal = contracts.juicer.address;
+
   const handle = stringToBytesFn("some-unique-handle");
   const secondHandle = stringToBytesFn("some-other-unique-handle");
   const thirdHandle = stringToBytesFn("another-unique-handle");
@@ -63,9 +66,9 @@ module.exports = async ({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
-        args: [owner.address, handle, uri]
+        args: [owner.address, handle, uri, terminal]
       }),
-    /** 
+    /**
       Make sure the project's handle got saved.
     */
     () =>
@@ -75,7 +78,7 @@ module.exports = async ({
         args: [expectedProjectId],
         expect: handle
       }),
-    /** 
+    /**
       Make sure the project was saved to the handle.
     */
     () =>
@@ -85,7 +88,7 @@ module.exports = async ({
         args: [handle],
         expect: expectedProjectId
       }),
-    /** 
+    /**
       Make sure the project's uri got saved.
     */
     () =>
@@ -95,7 +98,17 @@ module.exports = async ({
         args: [expectedProjectId],
         expect: uri
       }),
-    /** 
+    /**
+      Make sure the terminal was set in the directory.
+    */
+    () =>
+      checkFn({
+        contract: contracts.terminalDirectory,
+        fn: "terminalOf",
+        args: [expectedProjectId],
+        expect: terminal
+      }),
+    /**
       Make sure someone else can't deploy a project with the same handle.
     */
     () =>
@@ -103,10 +116,15 @@ module.exports = async ({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
-        args: [secondOwner.address, handle, randomStringFn()],
+        args: [
+          secondOwner.address,
+          handle,
+          randomStringFn(),
+          constants.AddressZero
+        ],
         revert: "Projects::create: HANDLE_TAKEN"
       }),
-    /** 
+    /**
       Set a new URI.
     */
     () =>
@@ -116,7 +134,7 @@ module.exports = async ({
         fn: "setUri",
         args: [expectedProjectId, secondUri]
       }),
-    /** 
+    /**
       Make sure the new uri got saved.
     */
     () =>
@@ -126,7 +144,7 @@ module.exports = async ({
         args: [expectedProjectId],
         expect: secondUri
       }),
-    /** 
+    /**
       Set a new handle.
     */
     () =>
@@ -136,7 +154,7 @@ module.exports = async ({
         fn: "setHandle",
         args: [expectedProjectId, secondHandle]
       }),
-    /** 
+    /**
       Make sure the new handle got saved.
     */
     () =>
@@ -146,7 +164,7 @@ module.exports = async ({
         args: [expectedProjectId],
         expect: secondHandle
       }),
-    /** 
+    /**
       Make sure the project was saved to the new handle.
     */
     () =>
@@ -156,7 +174,7 @@ module.exports = async ({
         args: [secondHandle],
         expect: expectedProjectId
       }),
-    /** 
+    /**
       Make sure the old handle isn't affiliated with a project any longer.
     */
     () =>
@@ -166,7 +184,7 @@ module.exports = async ({
         args: [handle],
         expect: 0
       }),
-    /** 
+    /**
       Create another project for a different owner using the old handle.
     */
     () =>
@@ -174,9 +192,14 @@ module.exports = async ({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
-        args: [secondOwner.address, handle, randomStringFn()]
+        args: [
+          secondOwner.address,
+          handle,
+          randomStringFn(),
+          constants.AddressZero
+        ]
       }),
-    /** 
+    /**
       Make sure the other owner can't set its project's handle to the one currently in use.
     */
     () =>
@@ -187,7 +210,7 @@ module.exports = async ({
         args: [expectedSecondProjectId, secondHandle],
         revert: "Projects::setHandle: HANDLE_TAKEN"
       }),
-    /** 
+    /**
       Don't allow a handle to be transfered if the replacement is taken.
     */
     () =>
@@ -198,7 +221,7 @@ module.exports = async ({
         args: [expectedProjectId, secondOwner.address, handle],
         revert: "Projects::transferHandle: HANDLE_TAKEN"
       }),
-    /** 
+    /**
       Transfer a handle and replace it with a new one.
     */
     () =>
@@ -208,7 +231,7 @@ module.exports = async ({
         fn: "transferHandle",
         args: [expectedProjectId, secondOwner.address, thirdHandle]
       }),
-    /** 
+    /**
       Make sure the replacement handle got saved.
     */
     () =>
@@ -218,7 +241,7 @@ module.exports = async ({
         args: [expectedProjectId],
         expect: thirdHandle
       }),
-    /** 
+    /**
       Make sure the project was saved to the replacement handle.
     */
     () =>
@@ -228,7 +251,7 @@ module.exports = async ({
         args: [thirdHandle],
         expect: expectedProjectId
       }),
-    /** 
+    /**
       Make sure there is no project associated with the transfered handle.
     */
     () =>
@@ -238,7 +261,7 @@ module.exports = async ({
         args: [secondHandle],
         expect: 0
       }),
-    /** 
+    /**
       Make sure a project can't be created with the transfered handle.
     */
     () =>
@@ -246,10 +269,15 @@ module.exports = async ({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
-        args: [secondOwner.address, secondHandle, randomStringFn()],
+        args: [
+          secondOwner.address,
+          secondHandle,
+          randomStringFn(),
+          constants.AddressZero
+        ],
         revert: "Projects::create: HANDLE_TAKEN"
       }),
-    /** 
+    /**
       Make sure a project can't set its handle to the transfered handle.
     */
     () =>
@@ -281,7 +309,7 @@ module.exports = async ({
         fn: "claimHandle",
         args: [secondHandle, secondOwner.address, expectedSecondProjectId]
       }),
-    /** 
+    /**
       Make sure the claimed handle got saved.
     */
     () =>
@@ -291,7 +319,7 @@ module.exports = async ({
         args: [expectedSecondProjectId],
         expect: secondHandle
       }),
-    /** 
+    /**
       Make sure the project was saved to the claimed handle.
     */
     () =>

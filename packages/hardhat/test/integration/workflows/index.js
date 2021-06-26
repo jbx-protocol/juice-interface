@@ -19,6 +19,7 @@ const transferProjectOwnership = require("./transfer_project_ownership");
 const directPaymentAddresses = require("./direct_payment_addresses");
 const operatorPermissions = require("./operator_permissions");
 const ticketLockingAndTransfers = require("./ticket_locking_and transfers");
+const setTerminal = require("./set_terminal");
 
 module.exports = {
   deploy,
@@ -41,5 +42,6 @@ module.exports = {
   transferProjectOwnership,
   directPaymentAddresses,
   operatorPermissions,
-  ticketLockingAndTransfers
+  ticketLockingAndTransfers,
+  setTerminal
 };

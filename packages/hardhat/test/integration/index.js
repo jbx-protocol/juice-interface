@@ -27,7 +27,8 @@ module.exports = function() {
     ]);
     const prices = await this.deployContractFn("Prices");
     const terminalDirectory = await this.deployContractFn("TerminalDirectory", [
-      projects.address
+      projects.address,
+      operatorStore.address
     ]);
     const fundingCycles = await this.deployContractFn("FundingCycles", [
       terminalDirectory.address
@@ -113,16 +114,16 @@ module.exports = function() {
 
   for (let i = 0; i < 1; i += 1) {
     it(
-      "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
-      run(workflows.ticketLockingAndTransfers)
-    );
-    it(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
     );
     it(
       "Deployment of a project with funding cycles and mods included",
       run(workflows.deploy)
+    );
+    it(
+      "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
+      run(workflows.ticketLockingAndTransfers)
     );
     it("Redeem tickets for overflow", run(workflows.redeem));
     it("Prints reserved tickets", run(workflows.printReservedTickets));
@@ -173,6 +174,10 @@ module.exports = function() {
     it(
       "Direct payment addresses can be deployed to add an fundable address to a project.",
       run(workflows.directPaymentAddresses)
+    );
+    it(
+      "A project can be created without a payment terminal, and can set one after.",
+      run(workflows.setTerminal)
     );
   }
 };

@@ -122,22 +122,22 @@ contract TerminalDirectory is ITerminalDirectory {
     /** 
       @notice 
       Allows any address to pre set the beneficiary of their payments to any direct payment address,
-      and to pre set whether to prefer to auto claim ERC20 tickets when making a payment.
+      and to pre set whether to prefer to unstake tickets into ERC20's when making a payment.
 
       @param _beneficiary The beneficiary to set.
-      @param _preferClaimedTickets The preference to set.
+      @param _preferUnstakedTickets The preference to set.
     */
     function setPayerPreferences(
         address _beneficiary,
-        bool _preferClaimedTickets
+        bool _preferUnstakedTickets
     ) external override {
         beneficiaryOf[msg.sender] = _beneficiary;
-        unstakedTicketsPreferenceOf[msg.sender] = _preferClaimedTickets;
+        unstakedTicketsPreferenceOf[msg.sender] = _preferUnstakedTickets;
 
         emit SetPayerPreferences(
             msg.sender,
             _beneficiary,
-            _preferClaimedTickets
+            _preferUnstakedTickets
         );
     }
 }

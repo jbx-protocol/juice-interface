@@ -16,6 +16,7 @@ const printPreminedTickets = require("./print_premined_tickets");
 const projects = require("./projects");
 const currencyConversion = require("./currency_conversion");
 const transferProjectOwnership = require("./transfer_project_ownership");
+const directPaymentAddresses = require("./direct_payment_addresses");
 
 module.exports = {
   deploy,
@@ -35,5 +36,6 @@ module.exports = {
   setFee,
   printPreminedTickets,
   currencyConversion,
-  transferProjectOwnership
+  transferProjectOwnership,
+  directPaymentAddresses
 };

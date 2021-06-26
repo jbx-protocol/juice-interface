@@ -22,7 +22,7 @@ interface ITerminalDirectory {
     event SetPayerPreferences(
         address indexed account,
         address beneficiary,
-        bool preferClaimedTickets
+        bool preferUnstakedTickets
     );
 
     function projects() external view returns (IProjects);
@@ -46,6 +46,6 @@ interface ITerminalDirectory {
 
     function setPayerPreferences(
         address _beneficiary,
-        bool _preferClaimedTickets
+        bool _preferUnstakedTickets
     ) external;
 }

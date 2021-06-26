@@ -14,7 +14,7 @@ import "./abstract/Operatable.sol";
 import "./libraries/Operations.sol";
 
 /**
-  ───────────────────────────────────────────────────────────────────────────────────────────
+  ─────────────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
   ─────────██░░██──███░░██──██░░██──██░░░░░░██──██░░░░░░░░░░██──██░░░░░░░░░░██──██░░░░░░░░░░░░██───
   ─────────██░░██──███░░██──██░░██──████░░████──██░░██████████──██░░██████████──██░░████████░░██───
@@ -29,7 +29,7 @@ import "./libraries/Operations.sol";
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   @notice 
-  This contract manages the Juice ecosystem, and manages all funds.
+  This contract manages the Juice ecosystem, serves as a payment terminal, and custodies all funds.
 
   @dev  
   1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 

@@ -1127,6 +1127,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 200
             );
 
+        // Set the terminal if needed.
+        // Must do this before the call to print.
+        if (terminalDirectory.terminalOf(_projectId) == ITerminal(address(0)))
+            terminalDirectory.setTerminal(_projectId, this);
+
         // Print the project's tickets for the beneficiary.
         ticketBooth.print(
             _beneficiary,

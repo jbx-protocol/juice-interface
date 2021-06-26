@@ -109,7 +109,11 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  for (let i = 0; i < 20; i += 1) {
+  for (let i = 0; i < 1; i += 1) {
+    it(
+      "Projects can be created, have their URIs changed, and transfer/claim handles",
+      run(workflows.projects)
+    );
     it("Deployment of a project", run(workflows.deploy));
     it("Redeem tickets for overflow", run(workflows.redeem));
     it("Prints reserved tickets", run(workflows.printReservedTickets));

@@ -122,7 +122,7 @@ contract Projects is ERC721, IProjects, Operatable {
             "Projects::setHandle: HANDLE_TAKEN"
         );
 
-        // If the handle is changing, register the change in the resolver.
+        // Register the change in the resolver.
         projectFor[handleOf[_projectId]] = 0;
 
         projectFor[_handle] = _projectId;
@@ -225,6 +225,9 @@ contract Projects is ERC721, IProjects, Operatable {
             transferAddressFor[_handle] == _for,
             "Projects::claimHandle: NOT_FOUND"
         );
+
+        // Register the change in the resolver.
+        projectFor[handleOf[_projectId]] = 0;
 
         // Register the change in the resolver.
         projectFor[_handle] = _projectId;

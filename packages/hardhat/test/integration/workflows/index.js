@@ -13,9 +13,11 @@ const failedBallot = require("./failed_ballot");
 const governance = require("./governance");
 const setFee = require("./set_fee");
 const printPreminedTickets = require("./print_premined_tickets");
+const projects = require("./projects");
 
 module.exports = {
   deploy,
+  projects,
   migrate,
   payoutToPaymentMods,
   setPaymentMods,

@@ -22,25 +22,31 @@ module.exports = async ({
   // An account that will be used to make payments.
   const payer = addrs[1];
 
+  // An account that will be distributed tickets in the preconfig payment.
+  const preconfigTicketBeneficiary = addrs[2];
+
   // An account that will be distributed tickets in the first payment.
-  const ticketBeneficiary1 = addrs[2];
+  const ticketBeneficiary1 = addrs[3];
 
   // An account that will be distributed tickets in the second payment.
-  const ticketBeneficiary2 = addrs[3];
+  const ticketBeneficiary2 = addrs[4];
 
   // An account that will be distributed tickets in mod1.
-  const mod1Beneficiary = addrs[4];
+  const mod1Beneficiary = addrs[5];
 
   // An account that will be distributed tickets in mod2.
-  const mod2Beneficiary = addrs[5];
+  const mod2Beneficiary = addrs[6];
 
-  // Two payments will be made. Cant pay entire balance because some is needed for gas.
-  // So, arbitrarily find a number less than a third so that all payments can be made successfully.
+  // Three payments will be made. Cant pay entire balance because some is needed for gas.
+  // So, arbitrarily find a number less than 1/4 so that all payments can be made successfully.
+  const preconfigurePaymentValue = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(4)
+  });
   const paymentValue1 = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(3)
+    max: (await getBalanceFn(payer.address)).div(4)
   });
   const paymentValue2 = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(3)
+    max: (await getBalanceFn(payer.address)).div(4)
   });
 
   // The project's funding cycle target will at most be a fourth of the payment value. Leaving plenty of overflow.
@@ -78,6 +84,12 @@ module.exports = async ({
   // Set a random percentage of tickets to reserve for the project owner.
   const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
+  console.log({ reservedRate: reservedRate.toNumber() });
+
+  const expectedPreconfigReservedTicketAmount = preconfigurePaymentValue.mul(
+    constants.InitialWeightMultiplier
+  );
+
   // The expected number of reserved tickets to expect from the frist payment.
   const expectedReservedTicketAmount1 = paymentValue1
     .mul(constants.InitialWeightMultiplier)
@@ -92,17 +104,68 @@ module.exports = async ({
 
   return [
     /** 
-      Deploy a project for the owner.
+      Create a project.
+    */
+    () =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.projects,
+        fn: "create",
+        args: [
+          owner.address,
+          stringToBytesFn("some-unique-handle"),
+          randomStringFn()
+        ]
+      }),
+    /**
+      Make a payment to the project. This shouldn't create any reserved tickets since a configuration hasn't yet been made for the project.
     */
     () =>
       executeFn({
         caller: deployer,
         contract: contracts.juicer,
-        fn: "deploy",
+        fn: "pay",
         args: [
-          owner.address,
-          stringToBytesFn("some-unique-handle"),
+          expectedProjectId,
+          preconfigTicketBeneficiary.address,
           randomStringFn(),
+          randomBoolFn()
+        ],
+        value: preconfigurePaymentValue
+      }),
+    /**
+      A payment made towards a project before its been configured shouldn't have an effect
+      on reserved tickets.
+    */
+    () =>
+      checkFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "reservedTicketAmountOf",
+        args: [expectedProjectId, reservedRate],
+        expect: 0
+      }),
+    /**
+      The preconfig payer should have tickets with a reserve rate of 0.
+    */
+    () =>
+      checkFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [preconfigTicketBeneficiary.address, expectedProjectId],
+        expect: expectedPreconfigReservedTicketAmount
+      }),
+    /**
+      Configure the projects funding cycle.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "configure",
+        args: [
+          expectedProjectId,
           {
             target,
             currency,

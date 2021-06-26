@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const { deployMockContract } = require("@ethereum-waffle/mock-contract");
 
+const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
@@ -117,7 +118,12 @@ describe("Juice", async function() {
       const tx = await promise;
 
       // Wait for a block to get mined.
-      await tx.wait();
+      const receipt = await tx.wait();
+
+      // Subtract the gas spent from the signer's account.
+      initialBalances[receipt.from] = (
+        initialBalances[receipt.from] || BigNumber.from(0)
+      ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
 
       // Set the time mark of this function.
       await this.setTimeMarkFn(tx.blockNumber);
@@ -252,7 +258,7 @@ describe("Juice", async function() {
 
     // Set initial balances.
     await Promise.all(
-      this.addrs.map(async addr => {
+      [...this.addrs, this.deployer].map(async addr => {
         initialBalances[addr.address] = await ethers.provider.getBalance(
           addr.address
         );

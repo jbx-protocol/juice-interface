@@ -575,7 +575,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         );
 
         // Get a reference to this project's current balance, including any earned yield.
-        uint256 _balanceOf = balanceOf[_fundingCycle.projectId];
+        uint256 _balance = balanceOf[_fundingCycle.projectId];
 
         // Get the currency price of ETH.
         uint256 _ethPrice = prices.getETHPriceFor(_fundingCycle.currency);
@@ -586,7 +586,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // The amount being tapped must be available.
         require(
-            _tappedWeiAmount <= _balanceOf,
+            _tappedWeiAmount <= _balance,
             "Juicer::tap: INSUFFICIENT_FUNDS"
         );
 
@@ -594,7 +594,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         require(_minReturnedWei <= _tappedWeiAmount, "Juicer::tap: INADEQUATE");
 
         // Removed the tapped funds from the project's balance.
-        balanceOf[_projectId] = _balanceOf - _tappedWeiAmount;
+        balanceOf[_projectId] = _balance - _tappedWeiAmount;
 
         // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
         // and receive any extra tapped funds not allocated to mods.

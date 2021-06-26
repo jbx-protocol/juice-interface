@@ -14,6 +14,8 @@ const governance = require("./governance");
 const setFee = require("./set_fee");
 const printPreminedTickets = require("./print_premined_tickets");
 const projects = require("./projects");
+const currencyConversion = require("./currency_conversion");
+const transferProjectOwnership = require("./transfer_project_ownership");
 
 module.exports = {
   deploy,
@@ -31,5 +33,7 @@ module.exports = {
   failedBallot,
   governance,
   setFee,
-  printPreminedTickets
+  printPreminedTickets,
+  currencyConversion,
+  transferProjectOwnership
 };

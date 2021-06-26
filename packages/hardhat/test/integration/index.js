@@ -61,6 +61,8 @@ module.exports = function() {
       governance.address
     ]);
 
+    // Set governance as the prices contract owner.
+    await prices.transferOwnership(governance.address);
     /** 
       Deploy the governance contract's project. It will have an ID of 1.
     */
@@ -109,12 +111,15 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  for (let i = 0; i < 1; i += 1) {
+  for (let i = 0; i < 5; i += 1) {
     it(
-      "Projects can be created, have their URIs changed, and transfer/claim handles",
+      "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
     );
-    it("Deployment of a project", run(workflows.deploy));
+    it(
+      "Deployment of a project with funding cycles and mods included",
+      run(workflows.deploy)
+    );
     it("Redeem tickets for overflow", run(workflows.redeem));
     it("Prints reserved tickets", run(workflows.printReservedTickets));
     it("Issues tickets and honors preference", run(workflows.issueTickets));
@@ -148,6 +153,14 @@ module.exports = function() {
     it(
       "Projects can print premined tickets before a payment has been made to it",
       run(workflows.printPreminedTickets)
+    );
+    it(
+      "Currencies rates are converted to/from correctly",
+      run(workflows.currencyConversion)
+    );
+    it(
+      "Transfer ownership over a project",
+      run(workflows.transferProjectOwnership)
     );
   }
 };

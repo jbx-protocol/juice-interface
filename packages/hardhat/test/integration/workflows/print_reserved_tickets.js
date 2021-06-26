@@ -1,3 +1,11 @@
+/**
+ Projects that have configured a reserve rate will be reserved tickets each time 
+ a payment is made to it.
+
+ These reserved tickets can be printed at any time.
+
+ Any configured ticket mods will get sent some of the printing reserved tickets at this time.
+*/
 module.exports = async ({
   deployer,
   addrs,
@@ -39,19 +47,19 @@ module.exports = async ({
 
   // Three payments will be made. Cant pay entire balance because some is needed for gas.
   // So, arbitrarily find a number less than 1/4 so that all payments can be made successfully.
-  const preconfigurePaymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(4)
-  });
   const paymentValue1 = randomBigNumberFn({
     max: (await getBalanceFn(payer.address)).div(4)
   });
   const paymentValue2 = randomBigNumberFn({
     max: (await getBalanceFn(payer.address)).div(4)
   });
+  const paymentValue3 = randomBigNumberFn({
+    max: (await getBalanceFn(payer.address)).div(4)
+  });
 
   // The project's funding cycle target will at most be a fourth of the payment value. Leaving plenty of overflow.
   const target = randomBigNumberFn({
-    max: paymentValue1.add(paymentValue2).div(4)
+    max: paymentValue2.add(paymentValue3).div(4)
   });
 
   // The mod percents should add up to <= constants.MaxPercent.
@@ -64,15 +72,18 @@ module.exports = async ({
     max: constants.MaxPercent.sub(percent1).sub(1)
   });
 
+  // The preference for unstaked tickets.
+  const preferUnstaked = randomBoolFn();
+
   // Add two ticket mods.
   const mod1 = {
-    preferUnstaked: randomBoolFn(),
+    preferUnstaked,
     percent: percent1.toNumber(),
     lockedUntil: 0,
     beneficiary: mod1Beneficiary.address
   };
   const mod2 = {
-    preferUnstaked: randomBoolFn(),
+    preferUnstaked,
     percent: percent2.toNumber(),
     lockedUntil: 0,
     beneficiary: mod2Beneficiary.address
@@ -84,20 +95,19 @@ module.exports = async ({
   // Set a random percentage of tickets to reserve for the project owner.
   const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
-  console.log({ reservedRate: reservedRate.toNumber() });
-
-  const expectedPreconfigReservedTicketAmount = preconfigurePaymentValue.mul(
+  // The expected number of tickets to expect from the
+  const expectedReservedTicketAmount1 = paymentValue1.mul(
     constants.InitialWeightMultiplier
   );
 
-  // The expected number of reserved tickets to expect from the frist payment.
-  const expectedReservedTicketAmount1 = paymentValue1
+  // The expected number of reserved tickets to expect from the first payment.
+  const expectedReservedTicketAmount2 = paymentValue2
     .mul(constants.InitialWeightMultiplier)
     .mul(reservedRate)
     .div(constants.MaxPercent);
 
   // The expected number of reserved tickets to expect from the second payment.
-  const expectedReservedTicketAmount2 = paymentValue2
+  const expectedReservedTicketAmount3 = paymentValue3
     .mul(constants.InitialWeightMultiplier)
     .mul(reservedRate)
     .div(constants.MaxPercent);
@@ -131,7 +141,7 @@ module.exports = async ({
           randomStringFn(),
           randomBoolFn()
         ],
-        value: preconfigurePaymentValue
+        value: paymentValue1
       }),
     /**
       A payment made towards a project before its been configured shouldn't have an effect
@@ -146,7 +156,7 @@ module.exports = async ({
         expect: 0
       }),
     /**
-      The preconfig payer should have tickets with a reserve rate of 0.
+      The preconfig payer should have tickets with expected a reserve rate of 0.
     */
     () =>
       checkFn({
@@ -154,7 +164,7 @@ module.exports = async ({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [preconfigTicketBeneficiary.address, expectedProjectId],
-        expect: expectedPreconfigReservedTicketAmount
+        expect: expectedReservedTicketAmount1
       }),
     /**
       Configure the projects funding cycle.
@@ -235,7 +245,7 @@ module.exports = async ({
           randomStringFn(),
           randomBoolFn()
         ],
-        value: paymentValue1
+        value: paymentValue2
       }),
     /**
       The owner should still not have any tickets.
@@ -257,9 +267,19 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
-        expect: expectedReservedTicketAmount1,
+        expect: expectedReservedTicketAmount2,
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
+      }),
+    /**
+      Issue the project's tickets so that the unstaked preference can be checked.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "issue",
+        args: [expectedProjectId, randomStringFn(), randomStringFn()]
       }),
     /**
       Print the reserved tickets.
@@ -280,7 +300,7 @@ module.exports = async ({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [owner.address, expectedProjectId],
-        expect: expectedReservedTicketAmount1
+        expect: expectedReservedTicketAmount2
           .mul(constants.MaxPercent.sub(percent1).sub(percent2))
           .div(constants.MaxPercent),
         // Allow the last two significant digit to fluctuate due to division precision errors.
@@ -295,9 +315,26 @@ module.exports = async ({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [mod1Beneficiary.address, expectedProjectId],
-        expect: expectedReservedTicketAmount1
+        expect: expectedReservedTicketAmount2
           .mul(percent1)
           .div(constants.MaxPercent),
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
+      }),
+    /**
+      Check for the correct number of staked tickets.
+    */
+    () =>
+      checkFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [mod1Beneficiary.address, expectedProjectId],
+        expect: preferUnstaked
+          ? BigNumber.from(0)
+          : expectedReservedTicketAmount2
+              .mul(percent1)
+              .div(constants.MaxPercent),
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
       }),
@@ -310,9 +347,26 @@ module.exports = async ({
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [mod2Beneficiary.address, expectedProjectId],
-        expect: expectedReservedTicketAmount1
+        expect: expectedReservedTicketAmount2
           .mul(percent2)
           .div(constants.MaxPercent),
+        // Allow the last two significant digit to fluctuate due to division precision errors.
+        plusMinus: 100
+      }),
+    /**
+      Check for the correct number of staked tickets.
+    */
+    () =>
+      checkFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [mod2Beneficiary.address, expectedProjectId],
+        expect: preferUnstaked
+          ? BigNumber.from(0)
+          : expectedReservedTicketAmount2
+              .mul(percent2)
+              .div(constants.MaxPercent),
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
       }),
@@ -341,7 +395,7 @@ module.exports = async ({
           randomStringFn(),
           randomBoolFn()
         ],
-        value: paymentValue2
+        value: paymentValue3
       }),
     /**
       The owner should now have printable reserved tickets again.
@@ -352,7 +406,7 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
-        expect: expectedReservedTicketAmount2,
+        expect: expectedReservedTicketAmount3,
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
       }),
@@ -387,7 +441,7 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
-        expect: expectedReservedTicketAmount2,
+        expect: expectedReservedTicketAmount3,
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
       }),
@@ -422,7 +476,7 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "reservedTicketAmountOf",
         args: [expectedProjectId, reservedRate],
-        expect: expectedReservedTicketAmount2,
+        expect: expectedReservedTicketAmount3,
         // Allow the last two significant digit to fluctuate due to division precision errors.
         plusMinus: 100
       }),

@@ -1,3 +1,8 @@
+/** 
+  Deploying a project through the Juicer should create a project, configure a funding cycle, and set mods.
+
+  These steps can all be taken seperately without calling `deploy`.
+*/
 module.exports = async ({
   deployer,
   addrs,

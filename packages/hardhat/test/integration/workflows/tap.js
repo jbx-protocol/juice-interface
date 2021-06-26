@@ -27,8 +27,14 @@ module.exports = async ({
   // The owner of the project with mods.
   const owner = addrs[0];
 
+  // The owner of the mod project.
+  const secondOwner = addrs[1];
+
   // An account that will be used to make a payment.
-  const payer = addrs[1];
+  const payer = addrs[2];
+
+  // Governance's project ID should be 1.
+  const expectedIdOfGovernance = 1;
 
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedIdOfBaseProject = 2;
@@ -49,6 +55,9 @@ module.exports = async ({
     max: constants.MaxPercent.sub(percent1).sub(percent2)
   });
 
+  // The unstaked preference to use.
+  const preferUnstakedTickets = randomBoolFn();
+
   // There are three types of mods.
   // Address mods route payout directly to an address.
   const addressMod = {
@@ -62,7 +71,7 @@ module.exports = async ({
   };
   // Project mods route payout directly to another project on Juicer.
   const projectMod = {
-    preferUnstaked: randomBoolFn(),
+    preferUnstaked: preferUnstakedTickets,
     percent: percent2.toNumber(),
     lockedUntil: 0,
     beneficiary: randomAddressFn(),
@@ -180,8 +189,8 @@ module.exports = async ({
         ]
       }),
     /**
-        Deploy second project that'll be sent funds my your
-        configured project prayment mod.
+        Deploy second project that'll be sent funds by the
+        configured project payment mod.
       */
     () =>
       executeFn({
@@ -189,7 +198,7 @@ module.exports = async ({
         contract: contracts.juicer,
         fn: "deploy",
         args: [
-          randomAddressFn(),
+          secondOwner.address,
           stringToBytesFn("stringToBytesFn"),
           randomStringFn(),
           {
@@ -212,6 +221,16 @@ module.exports = async ({
           [],
           []
         ]
+      }),
+    /**
+      Issue the project's tickets so that the unstaked preference can be checked.
+    */
+    () =>
+      executeFn({
+        caller: secondOwner,
+        contract: contracts.ticketBooth,
+        fn: "issue",
+        args: [expectedIdOfModProject, randomStringFn(), randomStringFn()]
       }),
     /**
         Make a payment to the project.
@@ -285,6 +304,21 @@ module.exports = async ({
           .mul(constants.InitialWeightMultiplier)
       }),
     /**
+      Check for the correct number of staked tickets.
+    */
+    () =>
+      checkFn({
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [projectMod.beneficiary, expectedIdOfModProject],
+        expect: preferUnstakedTickets
+          ? BigNumber.from(0)
+          : expectedAmountTapped
+              .mul(projectMod.percent)
+              .div(constants.MaxPercent)
+              .mul(constants.InitialWeightMultiplier)
+      }),
+    /**
         Check that mod's allocator got paid.
       */
     () =>
@@ -316,6 +350,18 @@ module.exports = async ({
               .mul(allocatorMod.percent)
               .div(constants.MaxPercent)
           )
+      }),
+    /**
+      Make sure the project owner got governance's project tickets.
+    */
+    () =>
+      checkFn({
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [owner.address, expectedIdOfGovernance],
+        expect: amountToTap
+          .sub(expectedAmountTapped)
+          .mul(constants.InitialWeightMultiplier)
       }),
     /**
         Make another payment to the project to make sure it's got overflow.

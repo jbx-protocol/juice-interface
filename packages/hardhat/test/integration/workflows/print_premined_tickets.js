@@ -58,6 +58,9 @@ module.exports = async ({
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedProjectId = BigNumber.from(2);
 
+  // The unsrtaked preference to use.
+  const preferUnstakedTickets = randomBoolFn();
+
   return [
     /**
       Create a project.
@@ -87,7 +90,7 @@ module.exports = async ({
           currency,
           firstPreminePrintedTicketBeneficiary.address,
           randomStringFn(),
-          randomBoolFn()
+          preferUnstakedTickets
         ]
       }),
     /**
@@ -100,6 +103,27 @@ module.exports = async ({
         fn: "balanceOf",
         args: [firstPreminePrintedTicketBeneficiary.address, expectedProjectId],
         expect: expectedFirstPreminedPrintedTicketAmount
+      }),
+    /**
+      All the tickets should be staked.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [firstPreminePrintedTicketBeneficiary.address, expectedProjectId],
+        expect: expectedFirstPreminedPrintedTicketAmount
+      }),
+    /**
+      Issue the project's tickets so that the unstaked preference can be checked.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "issue",
+        args: [expectedProjectId, randomStringFn(), randomStringFn()]
       }),
     /**
       Configuring a funding cycle. This shouldn't affect the ability for project to keep printing premined tickets.
@@ -146,7 +170,7 @@ module.exports = async ({
           currency,
           secondPreminePrintedTicketBeneficiary.address,
           randomStringFn(),
-          randomBoolFn()
+          preferUnstakedTickets
         ]
       }),
     /**
@@ -162,6 +186,22 @@ module.exports = async ({
           expectedProjectId
         ],
         expect: expectedSecondPreminedPrintedTicketAmount
+      }),
+    /**
+      Check for the correct number of staked tickets.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [
+          secondPreminePrintedTicketBeneficiary.address,
+          expectedProjectId
+        ],
+        expect: preferUnstakedTickets
+          ? BigNumber.from(0)
+          : expectedSecondPreminedPrintedTicketAmount
       }),
     /**
       The total supply of tickets for the project should equal the total of the premined printed amounts.
@@ -206,7 +246,7 @@ module.exports = async ({
           currency,
           randomAddressFn(),
           randomStringFn(),
-          randomBoolFn()
+          preferUnstakedTickets
         ],
         revert: "Juicer::printTickets: ALREADY_ACTIVE"
       })

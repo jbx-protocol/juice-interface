@@ -17,6 +17,7 @@ const projects = require("./projects");
 const currencyConversion = require("./currency_conversion");
 const transferProjectOwnership = require("./transfer_project_ownership");
 const directPaymentAddresses = require("./direct_payment_addresses");
+const operatorPermissions = require("./operator_permissions");
 
 module.exports = {
   deploy,
@@ -37,5 +38,6 @@ module.exports = {
   printPreminedTickets,
   currencyConversion,
   transferProjectOwnership,
-  directPaymentAddresses
+  directPaymentAddresses,
+  operatorPermissions
 };

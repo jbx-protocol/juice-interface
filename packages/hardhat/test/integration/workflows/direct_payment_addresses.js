@@ -1,3 +1,6 @@
+/** 
+  Projects can deploy addresses that will forward funds received to the project's funding cycle.
+*/
 module.exports = async ({
   deployer,
   addrs,

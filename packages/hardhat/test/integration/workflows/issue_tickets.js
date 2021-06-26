@@ -1,3 +1,7 @@
+/** 
+ Projects can issue ERC-20 tickets that can be unstaked from the Juice contracts
+ and used throughout Web3.
+*/
 module.exports = async ({
   deployer,
   addrs,
@@ -44,9 +48,6 @@ module.exports = async ({
 
   // Set a random percentage of tickets to reserve for the project owner.
   const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
-
-  // Prefer tickets to be unstaked.
-  const preferUnstaked = true;
 
   // The amount of tickets that will be expected to be staked after the first payment.
   const expectedStakedBalance = paymentValue1
@@ -120,7 +121,7 @@ module.exports = async ({
           expectedProjectId,
           ticketBeneficiary.address,
           randomStringFn(),
-          preferUnstaked
+          true // prefer unstaked
         ],
         value: paymentValue1
       }),
@@ -172,7 +173,7 @@ module.exports = async ({
           expectedProjectId,
           ticketBeneficiary.address,
           randomStringFn(),
-          preferUnstaked
+          true // prefer unstaked
         ],
         value: paymentValue2
       }),

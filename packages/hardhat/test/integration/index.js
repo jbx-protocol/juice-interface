@@ -111,57 +111,61 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
   });
 
-  for (let i = 0; i < 20; i += 1) {
-    // it(
-    //   "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
-    //   run(workflows.projects)
-    // );
-    // it(
-    //   "Deployment of a project with funding cycles and mods included",
-    //   run(workflows.deploy)
-    // );
-    // it("Redeem tickets for overflow", run(workflows.redeem));
-    // it("Prints reserved tickets", run(workflows.printReservedTickets));
-    // it("Issues tickets and honors preference", run(workflows.issueTickets));
-    // it("Reconfigures a project", run(workflows.reconfigure));
-    // it(
-    //   "Ballot must be approved for reconfiguration to become active",
-    //   run(workflows.approvedBallot)
-    // );
-    // it(
-    //   "Reconfiguration that fails a ballot should be ignored",
-    //   run(workflows.failedBallot)
-    // );
-    // it("Migrate from one Terminal to another", run(workflows.migrate));
-    // it("Tap funds up to the configured target", run(workflows.tap));
-    // it(
-    //   "Set and update payout mods, honoring locked status",
-    //   run(workflows.setPaymentMods)
-    // );
-    // it(
-    //   "Set and update ticket mods, honoring locked status",
-    //   run(workflows.setTicketMods)
-    // );
-    // it(
-    //   "A new governance can be appointed and accepted",
-    //   run(workflows.governance)
-    // );
-    // it(
-    //   "Governance can set a new fee for future configurations",
-    //   run(workflows.setFee)
-    // );
-    // it(
-    //   "Projects can print premined tickets before a payment has been made to it",
-    //   run(workflows.printPreminedTickets)
-    // );
-    // it(
-    //   "Currencies rates are converted to/from correctly",
-    //   run(workflows.currencyConversion)
-    // );
-    // it(
-    //   "Transfer ownership over a project",
-    //   run(workflows.transferProjectOwnership)
-    // );
+  for (let i = 0; i < 1; i += 1) {
+    it(
+      "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
+      run(workflows.projects)
+    );
+    it(
+      "Deployment of a project with funding cycles and mods included",
+      run(workflows.deploy)
+    );
+    it("Redeem tickets for overflow", run(workflows.redeem));
+    it("Prints reserved tickets", run(workflows.printReservedTickets));
+    it("Issues tickets and honors preference", run(workflows.issueTickets));
+    it("Reconfigures a project", run(workflows.reconfigure));
+    it(
+      "Ballot must be approved for reconfiguration to become active",
+      run(workflows.approvedBallot)
+    );
+    it(
+      "Reconfiguration that fails a ballot should be ignored",
+      run(workflows.failedBallot)
+    );
+    it("Migrate from one Terminal to another", run(workflows.migrate));
+    it("Tap funds up to the configured target", run(workflows.tap));
+    it(
+      "Operators can be given permissions",
+      run(workflows.operatorPermissions)
+    );
+    it(
+      "Set and update payout mods, honoring locked status",
+      run(workflows.setPaymentMods)
+    );
+    it(
+      "Set and update ticket mods, honoring locked status",
+      run(workflows.setTicketMods)
+    );
+    it(
+      "A new governance can be appointed and accepted",
+      run(workflows.governance)
+    );
+    it(
+      "Governance can set a new fee for future configurations",
+      run(workflows.setFee)
+    );
+    it(
+      "Projects can print premined tickets before a payment has been made to it",
+      run(workflows.printPreminedTickets)
+    );
+    it(
+      "Currencies rates are converted to/from correctly",
+      run(workflows.currencyConversion)
+    );
+    it(
+      "Transfer ownership over a project",
+      run(workflows.transferProjectOwnership)
+    );
     it(
       "Direct payment addresses can be deployed to add an fundable address to a project.",
       run(workflows.directPaymentAddresses)

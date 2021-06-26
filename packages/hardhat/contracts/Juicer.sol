@@ -457,7 +457,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.PrintTickets
+            Operations.PrintPreminedTickets
         )
     {
         // Make sure the project hasnt printed tickets that werent premined.

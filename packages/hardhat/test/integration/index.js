@@ -113,6 +113,10 @@ module.exports = function() {
 
   for (let i = 0; i < 1; i += 1) {
     it(
+      "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
+      run(workflows.ticketLockingAndTransfers)
+    );
+    it(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
     );

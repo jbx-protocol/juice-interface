@@ -228,7 +228,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
                     _unlockedStakedBalance >= _amount - _unstakedBalanceOf) ||
                 (_amount >= _unlockedStakedBalance &&
                     _unstakedBalanceOf >= _amount - _unlockedStakedBalance),
-            "Tickets::redeem: INSUFICIENT_FUNDS"
+            "Tickets::redeem: INSUFFICIENT_FUNDS"
         );
 
         // The amount of tickets to redeem.

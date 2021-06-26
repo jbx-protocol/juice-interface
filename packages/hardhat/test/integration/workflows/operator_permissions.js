@@ -11,6 +11,7 @@ module.exports = async ({
   constants,
   contracts,
   executeFn,
+  checkFn,
   BigNumber,
   stringToBytesFn,
   randomStringFn
@@ -130,6 +131,14 @@ module.exports = async ({
             args: [stringToBytesFn(""), owner.address, expectedProjectId],
             revert: "Projects::claimHandle: NOT_FOUND"
           }),
+        // The operator should not have permission.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, owner.address, expectedProjectId, [7]],
+            expect: false
+          }),
         // Set the operator on the owner.
         () =>
           executeFn({
@@ -138,6 +147,22 @@ module.exports = async ({
             fn: "setOperator",
             args: [operator.address, expectedProjectId, [7]]
           }),
+        // The operator should now have permission.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, owner.address, expectedProjectId, [7]],
+            expect: true
+          }),
+        // The operator should not have permission over the claimer.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, expectedProjectId, [7]],
+            expect: false
+          }),
         // Set the operator on the claimer.
         () =>
           executeFn({
@@ -145,6 +170,14 @@ module.exports = async ({
             contract: contracts.operatorStore,
             fn: "setOperator",
             args: [operator.address, expectedProjectId, [7]]
+          }),
+        // The operator should now have permission over the claimer.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, expectedProjectId, [7]],
+            expect: true
           }),
         // The operator should have permissions.
         () =>
@@ -163,6 +196,22 @@ module.exports = async ({
             fn: "setOperator",
             args: [operator.address, expectedProjectId, []]
           }),
+        // The operator should not have permission over the claimer.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, expectedProjectId, [7]],
+            expect: false
+          }),
+        // The operator should not have permission over the claimer's wildcard.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, 0, [7]],
+            expect: false
+          }),
         // Add the permission to the wildcard domain.
         () =>
           executeFn({
@@ -170,6 +219,14 @@ module.exports = async ({
             contract: contracts.operatorStore,
             fn: "setOperator",
             args: [operator.address, 0, [7]]
+          }),
+        // The operator should now have permission over the claimer's wildcard.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, 0, [7]],
+            expect: true
           }),
         // The operator should still have permissions.
         () =>
@@ -196,6 +253,14 @@ module.exports = async ({
             contract: contracts.operatorStore,
             fn: "setOperator",
             args: [operator.address, expectedProjectId, []]
+          }),
+        // The operator should not have permission over the claimer's wildcard.
+        () =>
+          checkFn({
+            contract: contracts.operatorStore,
+            fn: "hasPermission",
+            args: [operator.address, addrs[4].address, expectedProjectId, [7]],
+            expect: false
           }),
         // Operator should no longer have permission.
         () =>
@@ -301,6 +366,9 @@ module.exports = async ({
           randomStringFn()
         ]
       }),
+    /** 
+      For each operation, test owner access, operator access, and unauthorized access.
+    */
     ...operations.reduce(
       (
         all,
@@ -320,9 +388,19 @@ module.exports = async ({
           ...all,
           ...pre,
           ...(override || [
-            /** 
-              For each operation, test owner access, operator access, and unauthorized access.
-            */
+            // Operator shouldnt have permission at first.
+            () =>
+              checkFn({
+                contract: contracts.operatorStore,
+                fn: "hasPermission",
+                args: [
+                  operator.address,
+                  owner.address,
+                  domain,
+                  [permissionIndex]
+                ],
+                expect: false
+              }),
             // The owner should be authorized.
             () =>
               executeFn({
@@ -332,13 +410,26 @@ module.exports = async ({
                 args,
                 revert: authorizedRevert
               }),
-            // The an operator on the domain.
+            // At permissions to the operator on the domain.
             () =>
               executeFn({
                 caller: owner,
                 contract: contracts.operatorStore,
                 fn: "setOperator",
                 args: [operator.address, domain, [permissionIndex]]
+              }),
+            // The operator should now have permission.
+            () =>
+              checkFn({
+                contract: contracts.operatorStore,
+                fn: "hasPermission",
+                args: [
+                  operator.address,
+                  owner.address,
+                  domain,
+                  [permissionIndex]
+                ],
+                expect: true
               }),
             // Operator should be authorized.
             () =>
@@ -352,7 +443,7 @@ module.exports = async ({
             // Check for wildcard authorization if needed.
             ...(allowWildcard
               ? [
-                  // Remove permission from domain.
+                  // Remove the operator's permission from domain.
                   () =>
                     executeFn({
                       caller: owner,
@@ -360,13 +451,39 @@ module.exports = async ({
                       fn: "setOperator",
                       args: [operator.address, domain, []]
                     }),
-                  // Add permission to wildcard.
+                  // The operator should no longer have permission over this domain.
+                  () =>
+                    checkFn({
+                      contract: contracts.operatorStore,
+                      fn: "hasPermission",
+                      args: [
+                        operator.address,
+                        owner.address,
+                        domain,
+                        [permissionIndex]
+                      ],
+                      expect: false
+                    }),
+                  // Give the operator permission over the wildcard.
                   () =>
                     executeFn({
                       caller: owner,
                       contract: contracts.operatorStore,
                       fn: "setOperator",
                       args: [operator.address, 0, [permissionIndex]]
+                    }),
+                  // The operator should now have permission over the wildcard.
+                  () =>
+                    checkFn({
+                      contract: contracts.operatorStore,
+                      fn: "hasPermission",
+                      args: [
+                        operator.address,
+                        owner.address,
+                        0,
+                        [permissionIndex]
+                      ],
+                      expect: true
                     }),
                   // Should still be authorized.
                   () =>
@@ -384,6 +501,19 @@ module.exports = async ({
                       contract: contracts.operatorStore,
                       fn: "setOperator",
                       args: [operator.address, 0, []]
+                    }),
+                  // The operator should no longer have permission over the wildcard.
+                  () =>
+                    checkFn({
+                      contract: contracts.operatorStore,
+                      fn: "hasPermission",
+                      args: [
+                        operator.address,
+                        owner.address,
+                        0,
+                        [permissionIndex]
+                      ],
+                      expect: false
                     })
                 ]
               : []),
@@ -403,6 +533,19 @@ module.exports = async ({
                 contract: contracts.operatorStore,
                 fn: "setOperator",
                 args: [operator.address, domain, []]
+              }),
+            // The operator should no longer have permission over this domain.
+            () =>
+              checkFn({
+                contract: contracts.operatorStore,
+                fn: "hasPermission",
+                args: [
+                  operator.address,
+                  owner.address,
+                  domain,
+                  [permissionIndex]
+                ],
+                expect: false
               }),
             // Operator should no longer be authorized.
             () =>

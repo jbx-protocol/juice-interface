@@ -1,6 +1,5 @@
 /** 
- Projects can issue ERC-20 tickets that can be unstaked from the Juice contracts
- and used throughout Web3.
+  Tickets can be locked, which prevent them from being redeemed, unstaked, or transfered.
 */
 module.exports = async ({
   deployer,
@@ -29,18 +28,18 @@ module.exports = async ({
   // An account that will be distributed tickets in the first payment.
   const ticketBeneficiary = addrs[2];
 
+  // An account that will be transfered tickets from the beneficiary.
+  const ticketTransferRecipient = addrs[3];
+
   // Two payments will be made. Cant pay entire balance because some is needed for gas.
   // So, arbitrarily find a number less than a third so that all payments can be made successfully.
-  const paymentValue1 = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(3)
-  });
-  const paymentValue2 = randomBigNumberFn({
+  const paymentValue = randomBigNumberFn({
     max: (await getBalanceFn(payer.address)).div(3)
   });
 
   // The project's funding cycle target will at most be a fourth of the payment value. Leaving plenty of overflow.
   const target = randomBigNumberFn({
-    max: paymentValue1.add(paymentValue2).div(4)
+    max: paymentValue.div(4)
   });
 
   // The currency will be 0, which corresponds to ETH.
@@ -50,17 +49,22 @@ module.exports = async ({
   const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
   // The amount of tickets that will be expected to be staked after the first payment.
-  const expectedStakedBalance = paymentValue1
+  const expectedStakedBalance = paymentValue
     .mul(constants.InitialWeightMultiplier)
     .mul(constants.MaxPercent.sub(reservedRate))
     .div(constants.MaxPercent);
 
-  // Total amount of tickets that will be expected to be both staked and unstaked after the second payment.
-  const expectedTotalTicketBalance = paymentValue1
-    .add(paymentValue2)
-    .mul(constants.InitialWeightMultiplier)
-    .mul(constants.MaxPercent.sub(reservedRate))
-    .div(constants.MaxPercent);
+  // Unstake a portion of the staked balance.
+  const amountToUnstake = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: expectedStakedBalance
+  });
+
+  // Transfer some of the staked tickets.
+  const amountToTransfer = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: expectedStakedBalance.sub(amountToUnstake)
+  });
 
   return [
     /** 
@@ -99,18 +103,17 @@ module.exports = async ({
         ]
       }),
     /**
-      The owner should not have issued tickets initially.
+      Issue tickets.
     */
     () =>
-      checkFn({
+      executeFn({
         caller: owner,
         contract: contracts.ticketBooth,
-        fn: "ticketsOf",
-        args: [expectedProjectId],
-        expect: constants.AddressZero
+        fn: "issue",
+        args: [expectedProjectId, randomStringFn(), randomStringFn()]
       }),
     /**
-      Make a payment to the project without first issueing tickets should print staked tickets.
+      Make a payment to the project to get some staked tickets.
     */
     () =>
       executeFn({
@@ -121,16 +124,16 @@ module.exports = async ({
           expectedProjectId,
           ticketBeneficiary.address,
           randomStringFn(),
-          true // prefer unstaked
+          false // prefer staked
         ],
-        value: paymentValue1
+        value: paymentValue
       }),
     /**
       The ticket beneficiary should have tickets.
     */
     () =>
       checkFn({
-        caller: owner,
+        caller: deployer,
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
@@ -143,7 +146,7 @@ module.exports = async ({
     */
     () =>
       checkFn({
-        caller: owner,
+        caller: deployer,
         contract: contracts.ticketBooth,
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
@@ -152,175 +155,165 @@ module.exports = async ({
         plusMinus: 10
       }),
     /**
-      Issue tickets.
+      Lock the staked tickets that wont be unstaked or transferd.
     */
     () =>
       executeFn({
-        caller: owner,
+        caller: ticketBeneficiary,
         contract: contracts.ticketBooth,
-        fn: "issue",
-        args: [expectedProjectId, randomStringFn(), randomStringFn()]
+        fn: "lock",
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          expectedStakedBalance.sub(amountToUnstake).sub(amountToTransfer)
+        ]
       }),
     /**
-      Make another payment to the project now that tickets have been issued.
+      Unstake some of the staked tickets. 
     */
     () =>
       executeFn({
-        caller: payer,
-        contract: contracts.juicer,
-        fn: "pay",
+        caller: ticketBeneficiary,
+        contract: contracts.ticketBooth,
+        fn: "unstake",
+        args: [ticketBeneficiary.address, expectedProjectId, amountToUnstake]
+      }),
+    /**
+      The balance shouldn't have changed.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [ticketBeneficiary.address, expectedProjectId],
+        expect: expectedStakedBalance,
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      The staked balance should be updated.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [ticketBeneficiary.address, expectedProjectId],
+        expect: expectedStakedBalance.sub(amountToUnstake),
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      Transfer some staked tickets to another address.
+    */
+    () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.ticketBooth,
+        fn: "transfer",
         args: [
-          expectedProjectId,
           ticketBeneficiary.address,
-          randomStringFn(),
-          true // prefer unstaked
+          expectedProjectId,
+          amountToTransfer,
+          ticketTransferRecipient.address
+        ]
+      }),
+    /**
+      The balance should be updated to reflect the transfer.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [ticketBeneficiary.address, expectedProjectId],
+        expect: expectedStakedBalance.sub(amountToTransfer),
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      The staked balance should be updated to reflect the transfer.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [ticketBeneficiary.address, expectedProjectId],
+        expect: expectedStakedBalance
+          .sub(amountToUnstake)
+          .sub(amountToTransfer),
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      The balance of the recipient should be updated to reflect the transfer.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [ticketTransferRecipient.address, expectedProjectId],
+        expect: amountToTransfer,
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      The staked balance of the recipient should be updated to reflect the transfer.
+    */
+    () =>
+      checkFn({
+        caller: deployer,
+        contract: contracts.ticketBooth,
+        fn: "stakedBalanceOf",
+        args: [ticketTransferRecipient.address, expectedProjectId],
+        expect: amountToTransfer,
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
+      }),
+    /**
+      Can't unstake any more because of the lock.
+    */
+    () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.ticketBooth,
+        fn: "unstake",
+        args: [ticketBeneficiary.address, expectedProjectId, BigNumber.from(1)],
+        revert: "Tickets::unstake: INSUFFICIENT_FUNDS"
+      }),
+    /**
+      Can't transfer any more because of the lock.
+    */
+    () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.ticketBooth,
+        fn: "transfer",
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          BigNumber.from(1),
+          ticketTransferRecipient.address
         ],
-        value: paymentValue2
+        revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
       }),
     /**
-      The ticket beneficiary should have both unstaked and staked tickets.
+      Stake the unstaked tickets. 
     */
     () =>
-      checkFn({
-        caller: owner,
+      executeFn({
+        caller: ticketBeneficiary,
         contract: contracts.ticketBooth,
-        fn: "balanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedTotalTicketBalance,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        fn: "stake",
+        args: [ticketBeneficiary.address, expectedProjectId, amountToUnstake]
       }),
     /**
-      The ticket beneficiary's tickets staked tickets should still be staked.
+      Can't redeem because of the lock.
     */
     () =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "stakedBalanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedStakedBalance,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
-      }),
-    /**
-      Redeem some of the staked tickets.
-    */
-    async () => {
-      const redeemedPortionOfStakedBalance = expectedStakedBalance.sub(
-        randomBigNumberFn({
-          min: BigNumber.from(1),
-          max: expectedStakedBalance.sub(1)
-        })
-      );
-      await executeFn({
-        caller: ticketBeneficiary,
-        contract: contracts.juicer,
-        fn: "redeem",
-        args: [
-          ticketBeneficiary.address,
-          expectedProjectId,
-          redeemedPortionOfStakedBalance,
-          0,
-          randomAddressFn(),
-          false // prefer staked
-        ]
-      });
-
-      return { redeemedPortionOfStakedBalance };
-    },
-    /**
-      The staked balance should have the redeemed portion removed.
-    */
-    ({ local: { redeemedPortionOfStakedBalance } }) =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "stakedBalanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedStakedBalance.sub(redeemedPortionOfStakedBalance),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
-      }),
-    /**
-      The total balance should have the redeemed portion removed.
-    */
-    ({ local: { redeemedPortionOfStakedBalance } }) =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "balanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedTotalTicketBalance.sub(redeemedPortionOfStakedBalance),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
-      }),
-    /**
-      Redeem some of the unstaked tickets.
-    */
-    async () => {
-      const expectedUnstakedBalance = expectedTotalTicketBalance.sub(
-        expectedStakedBalance
-      );
-      const redeemedPortionOfUnstakedBalance = expectedUnstakedBalance.sub(
-        randomBigNumberFn({
-          min: BigNumber.from(1),
-          max: expectedUnstakedBalance.sub(1)
-        })
-      );
-      await executeFn({
-        caller: ticketBeneficiary,
-        contract: contracts.juicer,
-        fn: "redeem",
-        args: [
-          ticketBeneficiary.address,
-          expectedProjectId,
-          redeemedPortionOfUnstakedBalance,
-          0,
-          randomAddressFn(),
-          true // prefer unstaked
-        ]
-      });
-
-      return { redeemedPortionOfUnstakedBalance };
-    },
-    /**
-      The staked balance should be the same as it was.
-    */
-    ({ local: { redeemedPortionOfStakedBalance } }) =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "stakedBalanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedStakedBalance.sub(redeemedPortionOfStakedBalance),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
-      }),
-    /**
-      The total balance should have both redeemed portions removed.
-    */
-    ({
-      local: {
-        redeemedPortionOfStakedBalance,
-        redeemedPortionOfUnstakedBalance
-      }
-    }) =>
-      checkFn({
-        caller: owner,
-        contract: contracts.ticketBooth,
-        fn: "balanceOf",
-        args: [ticketBeneficiary.address, expectedProjectId],
-        expect: expectedTotalTicketBalance
-          .sub(redeemedPortionOfStakedBalance)
-          .sub(redeemedPortionOfUnstakedBalance),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
-      }),
-    /**
-      Redeem the rest of the tickets.
-    */
-    async () =>
       executeFn({
         caller: ticketBeneficiary,
         contract: contracts.juicer,
@@ -328,37 +321,86 @@ module.exports = async ({
         args: [
           ticketBeneficiary.address,
           expectedProjectId,
-          // Redeem the rest of the tickets.
-          await contracts.ticketBooth.balanceOf(
-            ticketBeneficiary.address,
-            expectedProjectId
-          ),
+          // Try redeeming everything except what was transfered away.
+          expectedStakedBalance.sub(amountToTransfer),
+          0,
+          randomAddressFn(),
+          randomBoolFn()
+        ],
+        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+      }),
+    /**
+      Other operators can't unlock what was locked by the beneficiary.
+    */
+    () =>
+      executeFn({
+        caller: owner,
+        contract: contracts.ticketBooth,
+        fn: "unlock",
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          expectedStakedBalance.sub(amountToUnstake).sub(amountToTransfer)
+        ],
+        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
+      }),
+    /**
+      Unlocks the locked funds.
+    */
+    () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.ticketBooth,
+        fn: "unlock",
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          expectedStakedBalance.sub(amountToUnstake).sub(amountToTransfer)
+        ]
+      }),
+    /**
+      Redeems correctly.
+    */
+    () =>
+      executeFn({
+        caller: ticketBeneficiary,
+        contract: contracts.juicer,
+        fn: "redeem",
+        args: [
+          ticketBeneficiary.address,
+          expectedProjectId,
+          // Try redeeming everything except what was transfered away.
+          expectedStakedBalance.sub(amountToTransfer),
           0,
           randomAddressFn(),
           randomBoolFn()
         ]
       }),
     /**
-      The ticket balance of the project should now be zero.
+      The balance should be 0.
     */
     () =>
       checkFn({
-        caller: owner,
+        caller: deployer,
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
-        expect: 0
+        expect: BigNumber.from(0),
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
       }),
     /**
-      The staked ticket balance of the project should now be zero.
+      The staked balance should be zero.
     */
     () =>
       checkFn({
-        caller: owner,
+        caller: deployer,
         contract: contracts.ticketBooth,
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
-        expect: 0
+        expect: BigNumber.from(0),
+        // Allow the least significant digit to fluctuate due to division precision errors.
+        plusMinus: 10
       })
   ];
 };

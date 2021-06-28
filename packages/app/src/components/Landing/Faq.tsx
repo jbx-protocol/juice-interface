@@ -39,7 +39,7 @@ const QAs: {
   {
     q: `What's a discount rate?`,
     a: [
-      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new funding cycle, the discount rate decreases the number of tickets that are minted per payment.`,
+      `Juice projects can be created with an optional discount rate to incentivize funding the project earlier than later. With each new funding cycle, the discount rate decreases the number of tickets that are printed per payment.`,
       `For example: with a discount rate of 97%, $100 paid to a project today might mint you 100 tickets, but the same amount paid during the next funding cycle would only mint you 97.`,
     ],
   },
@@ -55,7 +55,7 @@ const QAs: {
     q: 'Does a project benefit from its own overflow?',
     a: [
       `A project can choose to reserve a percentage of overflow for itself. Instead of being distributed to paying users, this percentage of tickets is instead printed for the project.`,
-      `Holding these tickets entitles a project to a portion of its own overflow.`,
+      `Holding these tickets entitles a project to a portion of its own overflow, just like all other tickets.`,
     ],
   },
   {

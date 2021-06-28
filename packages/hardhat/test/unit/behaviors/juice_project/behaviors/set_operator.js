@@ -37,7 +37,7 @@ module.exports = function() {
           permissionIndexes
         } = successTest.fn(this);
 
-        const operatorStore = await this.deployMockLocalContract(
+        const operatorStore = await this.deployMockLocalContractFn(
           "OperatorStore"
         );
 
@@ -68,7 +68,7 @@ module.exports = function() {
           revert
         } = failureTest.fn(this);
 
-        const operatorStore = await this.deployMockLocalContract(
+        const operatorStore = await this.deployMockLocalContractFn(
           "OperatorStore"
         );
 

@@ -41,15 +41,15 @@ module.exports = function() {
         const { caller, fee } = successTest.fn(this);
 
         // Execute the transaction.
-        const tx = await this.contract.connect(caller).setFee(fee);
+        const tx = await this.targetContract.connect(caller).setFee(fee);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "SetFee")
+          .to.emit(this.targetContract, "SetFee")
           .withArgs(fee);
 
         // Get the stored fee value.
-        const storedFee = await this.contract.fee();
+        const storedFee = await this.targetContract.fee();
 
         // Expect the stored value to equal whats expected.
         expect(storedFee).to.equal(fee);
@@ -62,7 +62,7 @@ module.exports = function() {
         const { caller, fee, revert } = failureTest.fn(this);
 
         await expect(
-          this.contract.connect(caller).setFee(fee)
+          this.targetContract.connect(caller).setFee(fee)
         ).to.be.revertedWith(revert);
       });
     });

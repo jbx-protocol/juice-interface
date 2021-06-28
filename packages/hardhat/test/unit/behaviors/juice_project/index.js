@@ -7,12 +7,12 @@ module.exports = function() {
   before(async function() {
     this.projectId = 1;
 
-    this.terminalDirectory = await this.deployMockLocalContract(
+    this.terminalDirectory = await this.deployMockLocalContractFn(
       "TerminalDirectory"
     );
 
     // Deploy the contract.
-    this.contract = await this.deployContract(contractName, [
+    this.contract = await this.deployContractFn(contractName, [
       this.projectId,
       this.terminalDirectory.address
     ]);

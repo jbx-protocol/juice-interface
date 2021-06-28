@@ -13,6 +13,8 @@ import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
+import "hardhat/console.sol";
+
 /**
   ─────────────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
@@ -895,6 +897,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
+        // If there's no funding cycle, there's no reserved tickets to print.
+        if (_fundingCycle.id == 0) return 0;
+
         // Get a reference to new total supply of tickets before printing reserved tickets.
         uint256 _totalEligibleTickets =
             ticketBooth.totalSupplyOf(_projectId) -
@@ -902,14 +907,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Get a reference to the number of tickets that need to be printed.
         // If there's no funding cycle, there's no tickets to print.
-        amount = _fundingCycle.id == 0
-            ? 0
-            : _reservedTicketAmountFrom(
-                _processedTicketTrackerOf[_projectId],
-                // The reserved rate is in bits 9-24 of the metadata.
-                uint256(uint8(_fundingCycle.metadata >> 8)),
-                _totalEligibleTickets
-            );
+        amount = _reservedTicketAmountFrom(
+            _processedTicketTrackerOf[_projectId],
+            // The reserved rate is in bits 9-24 of the metadata.
+            uint256(uint8(_fundingCycle.metadata >> 8)),
+            _totalEligibleTickets
+        );
 
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
@@ -921,9 +924,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         _processedTicketTrackerOf[_projectId] = int256(
             _totalEligibleTickets + amount
         );
-
-        // If there's no funding cycle, there's no reserved tickets to print.
-        if (_fundingCycle.id == 0) return amount;
 
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
@@ -1127,6 +1127,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _preferUnstakedTickets
         );
 
+        // Print the project's tickets for the beneficiary.
         // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
         if (_fundingCycle.id == 0)
             // Set the count of premined tickets this project has printed.

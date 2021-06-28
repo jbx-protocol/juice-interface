@@ -22,7 +22,7 @@ const tests = {
     },
     {
       description: "with mods",
-      fn: async ({ deployMockLocalContract }) => ({
+      fn: async ({ deployMockLocalContractFn }) => ({
         paymentMods: [
           {
             // These values dont matter.
@@ -30,10 +30,9 @@ const tests = {
             percent: 200,
             lockedUntil: 1000,
             beneficiary: constants.AddressZero,
-            allocator: (await deployMockLocalContract("ExampleModAllocator"))
+            allocator: (await deployMockLocalContractFn("ExampleModAllocator"))
               .address,
-            projectId: 1,
-            memo: "banana"
+            projectId: 1
           }
         ],
         ticketMods: [
@@ -48,9 +47,9 @@ const tests = {
       })
     },
     {
-      description: "with a balance",
+      description: "with a ticket supply",
       fn: () => ({
-        addToBalance: 1
+        addToTicketSupply: 1
       })
     }
   ],
@@ -145,7 +144,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
   const {
     caller = deployer,
     permissionFlag = false,
-    addToBalance = 0,
+    addToTicketSupply = 0,
     addTerminal,
     owner = deployer.address,
     paymentMods = [],
@@ -189,87 +188,119 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       },
       returns: [permissionFlag || false]
     }),
-    mockFn({
-      condition: !revert,
-      mockContract: mockContracts.terminalDirectory,
-      fn: "terminalOf",
-      args: [projectId],
-      returns: [addTerminal ? constants.AddressZero : targetContract.address]
-    }),
-    mockFn({
-      condition: !revert && addTerminal,
-      mockContract: mockContracts.terminalDirectory,
-      fn: "setTerminal",
-      args: [projectId, targetContract.address]
-    }),
-    mockFn({
-      condition: !revert,
-      mockContract: mockContracts.projects,
-      fn: "create",
-      args: [owner, handle, uri],
-      returns: [projectId]
-    }),
-    executeFn({
-      condition: !revert && addToBalance > 0,
-      caller,
-      contract: targetContract,
-      fn: "addToBalance",
-      args: [projectId],
-      value: addToBalance
-    }),
-    mockFn({
-      condition: !revert,
-      mockContract: mockContracts.fundingCycles,
-      fn: "configure",
-      args: () => {
-        /**
+    ...(!revert
+      ? [
+          mockFn({
+            condition: !revert,
+            mockContract: mockContracts.terminalDirectory,
+            fn: "terminalOf",
+            args: [projectId],
+            returns: [
+              addTerminal ? constants.AddressZero : targetContract.address
+            ]
+          })
+        ]
+      : []),
+    ...(!revert && addTerminal
+      ? [
+          mockFn({
+            mockContract: mockContracts.terminalDirectory,
+            fn: "setTerminal",
+            args: [projectId, targetContract.address]
+          })
+        ]
+      : []),
+    ...(!revert
+      ? [
+          mockFn({
+            mockContract: mockContracts.projects,
+            fn: "create",
+            args: [owner, handle, uri, targetContract.address],
+            returns: [projectId]
+          })
+        ]
+      : []),
+    ...(!revert
+      ? [
+          mockFn({
+            mockContract: mockContracts.ticketBooth,
+            fn: "totalSupplyOf",
+            args: [projectId],
+            returns: [addToTicketSupply]
+          })
+        ]
+      : []),
+    ...(!revert
+      ? [
+          mockFn({
+            condition: !revert,
+            mockContract: mockContracts.fundingCycles,
+            fn: "configure",
+            args: () => {
+              /**
           Mock the funding cycle configuration.
 
           - requires calculating the expected packed metadata.
          */
-        let packedMetadata = BigNumber.from(0);
-        packedMetadata = packedMetadata.add(
-          metadata.reconfigurationBondingCurveRate
-        );
-        packedMetadata = packedMetadata.shl(8);
-        packedMetadata = packedMetadata.add(metadata.bondingCurveRate);
-        packedMetadata = packedMetadata.shl(8);
-        packedMetadata = packedMetadata.add(metadata.reservedRate);
-        packedMetadata = packedMetadata.shl(8);
-        return [projectId, properties, packedMetadata, 10, !addToBalance];
-      },
-      returns: [
-        {
-          configured,
-          id: 0,
-          projectId: 0,
-          number: 0,
-          basedOn: 0,
-          weight: 0,
-          ballot: constants.AddressZero,
-          start: 0,
-          duration: 0,
-          target: 0,
-          currency: 0,
-          fee: 0,
-          discountRate: 0,
-          tapped: 0,
-          metadata: 0
-        }
-      ]
-    }),
-    mockFn({
-      condition: !revert && paymentMods.length,
-      mockContract: mockContracts.modStore,
-      fn: "setPaymentMods",
-      args: [projectId, configured, paymentMods]
-    }),
-    mockFn({
-      condition: !revert && paymentMods.length,
-      mockContract: mockContracts.modStore,
-      fn: "setTicketMods",
-      args: [projectId, configured, paymentMods]
-    }),
+              let packedMetadata = BigNumber.from(0);
+              packedMetadata = packedMetadata.add(
+                metadata.reconfigurationBondingCurveRate
+              );
+              packedMetadata = packedMetadata.shl(8);
+              packedMetadata = packedMetadata.add(metadata.bondingCurveRate);
+              packedMetadata = packedMetadata.shl(8);
+              packedMetadata = packedMetadata.add(metadata.reservedRate);
+              packedMetadata = packedMetadata.shl(8);
+              return [
+                projectId,
+                properties,
+                packedMetadata,
+                10,
+                !addToTicketSupply
+              ];
+            },
+            returns: [
+              {
+                configured,
+                id: 0,
+                projectId: 0,
+                number: 0,
+                basedOn: 0,
+                weight: 0,
+                ballot: constants.AddressZero,
+                start: 0,
+                duration: 0,
+                target: 0,
+                currency: 0,
+                fee: 0,
+                discountRate: 0,
+                tapped: 0,
+                metadata: 0
+              }
+            ]
+          })
+        ]
+      : []),
+    ...(!revert && paymentMods.length
+      ? [
+          mockFn({
+            condition: !revert && paymentMods.length,
+            mockContract: mockContracts.modStore,
+            fn: "setPaymentMods",
+            args: [projectId, configured, paymentMods]
+          })
+        ]
+      : []),
+    ...(!revert && ticketMods.length
+      ? [
+          mockFn({
+            condition: !revert && paymentMods.length,
+            mockContract: mockContracts.modStore,
+            fn: "setTicketMods",
+            args: [projectId, configured, paymentMods]
+          })
+        ]
+      : []),
     executeFn({
       caller,
       contract: targetContract,

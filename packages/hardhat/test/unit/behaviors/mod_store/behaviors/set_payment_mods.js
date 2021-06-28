@@ -16,7 +16,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 200,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -36,7 +35,6 @@ const tests = {
             projectId: 1,
             beneficiary: addrs[0].address,
             percent: 200,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -56,7 +54,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 100,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -65,7 +62,6 @@ const tests = {
             projectId: 2,
             beneficiary: ethers.constants.AddressZero,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -86,7 +82,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 100,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -109,7 +104,6 @@ const tests = {
               projectId: 4,
               beneficiary: deployer.address,
               percent: 100,
-              note: "sup",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -123,7 +117,6 @@ const tests = {
             beneficiary: deployer.address,
             // different properties.
             percent: 200,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -131,8 +124,7 @@ const tests = {
       })
     },
     {
-      description:
-        "lock and included with different unstaked preferences and note",
+      description: "lock and included with different unstaked preferences",
       fn: ({ deployer, testStart }) => ({
         caller: deployer,
         projectOwner: deployer.address,
@@ -147,7 +139,6 @@ const tests = {
               projectId: 4,
               beneficiary: deployer.address,
               percent: 100,
-              note: "sup",
               preferUnstaked: true,
               lockedUntil: testStart.add(10)
             }
@@ -160,7 +151,6 @@ const tests = {
             projectId: 4,
             beneficiary: deployer.address,
             percent: 100,
-            note: "wassup",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           },
@@ -169,7 +159,6 @@ const tests = {
             projectId: 2,
             beneficiary: deployer.address,
             percent: 100,
-            note: "pasta",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -192,7 +181,6 @@ const tests = {
               allocator: ethers.constants.AddressZero,
               projectId: 2,
               percent: 50,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -205,7 +193,6 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 2,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -228,7 +215,6 @@ const tests = {
               allocator: ethers.constants.AddressZero,
               projectId: 2,
               percent: 50,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -241,7 +227,6 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 2,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -289,7 +274,6 @@ const tests = {
             projectId: 1,
             beneficiary: ethers.constants.AddressZero,
             percent: 100,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -311,7 +295,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 210,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -320,7 +303,6 @@ const tests = {
             projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -342,7 +324,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 0,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -351,7 +332,6 @@ const tests = {
             projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -373,7 +353,6 @@ const tests = {
             projectId: 1,
             beneficiary: deployer.address,
             percent: 180,
-            note: "sup",
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -382,7 +361,6 @@ const tests = {
             projectId: 2,
             beneficiary: deployer.address,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -407,7 +385,6 @@ const tests = {
               allocator: ethers.constants.AddressZero,
               projectId: 2,
               percent: 50,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -420,7 +397,6 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 2,
             percent: 50,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -445,7 +421,6 @@ const tests = {
               beneficiary: deployer.address,
               allocator: ethers.constants.AddressZero,
               projectId: 2,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -458,7 +433,6 @@ const tests = {
             beneficiary: deployer.address,
             allocator: ethers.constants.AddressZero,
             projectId: 2,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -483,7 +457,6 @@ const tests = {
               beneficiary: deployer.address,
               allocator: modAllocator.address,
               projectId: 2,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -496,7 +469,6 @@ const tests = {
             beneficiary: deployer.address,
             allocator: ethers.constants.AddressZero,
             projectId: 2,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -521,7 +493,6 @@ const tests = {
               beneficiary: deployer.address,
               allocator: ethers.constants.AddressZero,
               projectId: 2,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -534,7 +505,6 @@ const tests = {
             beneficiary: deployer.address,
             allocator: ethers.constants.AddressZero,
             projectId: 3,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           }
@@ -559,7 +529,6 @@ const tests = {
               beneficiary: deployer.address,
               allocator: ethers.constants.AddressZero,
               projectId: 2,
-              note: "",
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -572,7 +541,6 @@ const tests = {
             beneficiary: deployer.address,
             allocator: ethers.constants.AddressZero,
             projectId: 2,
-            note: "",
             preferUnstaked: false,
             lockedUntil: testStart.add(9)
           }
@@ -640,7 +608,7 @@ module.exports = function() {
             // Fast forward the clock if needed.
             // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
             // eslint-disable-next-line no-await-in-loop
-            await this.fastforward(setup.fastforward.sub(1));
+            await this.fastforwardFn(setup.fastforward.sub(1));
           }
         }
 
@@ -719,7 +687,7 @@ module.exports = function() {
               .setPaymentMods(setup.projectId, setup.configuration, setup.mods);
           }
           if (setup.fastforward) {
-            await this.fastforward(setup.fastforward.sub(1));
+            await this.fastforwardFn(setup.fastforward.sub(1));
           }
         }
 

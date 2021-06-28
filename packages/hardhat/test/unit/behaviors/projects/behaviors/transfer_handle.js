@@ -118,7 +118,7 @@ module.exports = function() {
         // Setup by creating a project.
         await this.contract
           .connect(caller)
-          .create(create.owner, create.handle, "");
+          .create(create.owner, create.handle, "", this.constants.AddressZero);
         if (permissionFlag !== undefined) {
           const permissionIndex = 5;
 
@@ -172,7 +172,7 @@ module.exports = function() {
         // Setup by creating a project.
         await this.contract
           .connect(caller)
-          .create(create.owner, create.handle, "");
+          .create(create.owner, create.handle, "", this.constants.AddressZero);
         if (transfer) {
           await this.contract
             .connect(caller)

@@ -17,6 +17,7 @@ interface IProjects is IERC721 {
         address indexed owner,
         bytes32 handle,
         string uri,
+        ITerminal terminal,
         address caller
     );
 

@@ -101,9 +101,9 @@ const tests = {
         mockContracts,
         governance,
         contractName,
-        deployMockLocalContract
+        deployMockLocalContractFn
       }) => {
-        const terminal = await deployMockLocalContract(contractName, [
+        const terminal = await deployMockLocalContractFn(contractName, [
           mockContracts.projects.address,
           mockContracts.fundingCycles.address,
           mockContracts.ticketBooth.address,
@@ -130,9 +130,11 @@ const tests = {
       }
     },
     {
-      description: "with mods",
-      fn: async ({ addrs, deployMockLocalContract }) => {
-        const allocator = await deployMockLocalContract("ExampleModAllocator");
+      description: "with all mods",
+      fn: async ({ addrs, deployMockLocalContractFn }) => {
+        const allocator = await deployMockLocalContractFn(
+          "ExampleModAllocator"
+        );
 
         return {
           projectMod: {
@@ -167,7 +169,7 @@ const tests = {
       }
     },
     {
-      description: "with all mods",
+      description: "with mod",
       fn: async ({ addrs }) => {
         return {
           projectMod: {
@@ -245,8 +247,8 @@ const ops = ({
   deployer,
   addrs,
   mockContracts,
-  deployMockLocalContract,
-  deployContract,
+  deployMockLocalContractFn,
+  deployContractFn,
   contractName
 }) => async custom => {
   const {
@@ -353,11 +355,11 @@ const ops = ({
   }
 
   // Governance must be a mocked contract here.
-  const governance = await deployMockLocalContract("Governance", [
+  const governance = await deployMockLocalContractFn("Governance", [
     govProjectId,
     mockContracts.terminalDirectory.address
   ]);
-  const targetContract = await deployContract(contractName, [
+  const targetContract = await deployContractFn(contractName, [
     mockContracts.projects.address,
     mockContracts.fundingCycles.address,
     mockContracts.ticketBooth.address,
@@ -399,6 +401,7 @@ const ops = ({
       args: [currency],
       returns: [ethPrice]
     }),
+    ...(addToBalance > 0 ? [] : []),
     executeFn({
       condition: addToBalance > 0,
       caller,
@@ -457,7 +460,7 @@ const ops = ({
                     {
                       metadata: 0,
                       configured: 0,
-                      id: 0,
+                      id: 1,
                       projectId: 0,
                       number: 0,
                       basedOn: 0,
@@ -511,56 +514,66 @@ const ops = ({
                 targetContract.address
             ]
           }),
-          mockFn({
-            condition: !revert && projectMod.terminal !== undefined,
-            mockContract: projectMod.terminal,
-            fn: "pay",
-            // For some reason, the bytes to string doesnt match.
-            // args: [
-            //   projectMod.projectId,
-            //   projectMod.beneficiary,
-            //   `Payment from @${handle}`,
-            //   projectMod.preferUnstaked
-            // ],
-            returns: [1]
-          }),
-          mockFn({
-            condition: projectMod.terminal === undefined,
-            mockContract: mockContracts.fundingCycles,
-            fn: "getCurrentOf",
-            args: [projectMod.projectId],
-            returns: [
-              {
-                metadata: 0,
-                configured: 0,
-                id: 0,
-                projectId: 0,
-                number: 0,
-                basedOn: 0,
-                weight: 0,
-                ballot: constants.AddressZero,
-                start: 0,
-                duration: 0,
-                target: 0,
-                currency: 0,
-                fee,
-                discountRate: 0,
-                tapped: 0
-              }
-            ]
-          }),
-          mockFn({
-            condition: projectMod.terminal === undefined,
-            mockContract: mockContracts.ticketBooth,
-            fn: "print",
-            args: [
-              projectMod.beneficiary,
-              projectMod.projectId,
-              0,
-              projectMod.preferUnstaked
-            ],
-            returns: []
-          })
+          ...(!revert && projectMod.terminal !== undefined
+            ? [
+                mockFn({
+                  mockContract: projectMod.terminal,
+                  fn: "pay",
+                  // For some reason, the bytes to string doesnt match.
+                  // args: [
+                  //   projectMod.projectId,
+                  //   projectMod.beneficiary,
+                  //   `Payment from @${handle}`,
+                  //   projectMod.preferUnstaked
+                  // ],
+                  returns: [1]
+                })
+              ]
+            : []),
+          ...(projectMod.terminal === undefined
+            ? [
+                mockFn({
+                  condition: projectMod.terminal === undefined,
+                  mockContract: mockContracts.fundingCycles,
+                  fn: "getCurrentOf",
+                  args: [projectMod.projectId],
+                  returns: [
+                    {
+                      metadata: 0,
+                      configured: 0,
+                      id: 1,
+                      projectId: 0,
+                      number: 0,
+                      basedOn: 0,
+                      weight: 0,
+                      ballot: constants.AddressZero,
+                      start: 0,
+                      duration: 0,
+                      target: 0,
+                      currency: 0,
+                      fee,
+                      discountRate: 0,
+                      tapped: 0
+                    }
+                  ]
+                })
+              ]
+            : []),
+          ...(projectMod.terminal === undefined
+            ? [
+                mockFn({
+                  mockContract: mockContracts.ticketBooth,
+                  fn: "print",
+                  args: [
+                    projectMod.beneficiary,
+                    projectMod.projectId,
+                    0,
+                    projectMod.preferUnstaked
+                  ],
+                  returns: []
+                })
+              ]
+            : [])
         ]
       : []),
     mockFn({
@@ -593,17 +606,20 @@ const ops = ({
       ],
       revert
     }),
-    check({
-      condition: !revert,
-      contract: caller.provider,
-      fn: "getBalance",
-      args: [owner],
-      value: (await caller.provider.getBalance(owner)).add(leftover)
-    }),
-    ...(projectMod && projectMod.terminal === undefined
+    ...(!revert
       ? [
           check({
             condition: !revert,
+            contract: caller.provider,
+            fn: "getBalance",
+            args: [owner],
+            value: (await caller.provider.getBalance(owner)).add(leftover)
+          })
+        ]
+      : []),
+    ...(!revert && projectMod && projectMod.terminal === undefined
+      ? [
+          check({
             contract: targetContract,
             fn: "balanceOf",
             args: [projectMod.projectId],
@@ -611,10 +627,9 @@ const ops = ({
           })
         ]
       : []),
-    ...(addressMod
+    ...(!revert && addressMod
       ? [
           check({
-            condition: !revert,
             contract: caller.provider,
             fn: "getBalance",
             args: [addressMod.beneficiary],
@@ -624,10 +639,9 @@ const ops = ({
           })
         ]
       : []),
-    ...(allocatorMod
+    ...(!revert && allocatorMod
       ? [
           check({
-            condition: !revert,
             contract: caller.provider,
             fn: "getBalance",
             args: [allocatorMod.allocator],

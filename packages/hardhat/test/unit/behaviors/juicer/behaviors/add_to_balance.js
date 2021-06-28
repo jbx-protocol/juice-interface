@@ -46,26 +46,28 @@ module.exports = function() {
           expectation: { projectBalance, totalBalanceWithoutYield } = {}
         } = await successTest.fn(this);
         if (addToBalance) {
-          await this.contract
+          await this.targetContract
             .connect(caller)
             .addToBalance(projectId, { value: addToBalance });
         }
 
         // Execute the transaction.
-        const tx = await this.contract
+        const tx = await this.targetContract
           .connect(caller)
           .addToBalance(projectId, { value: amount });
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "AddToBalance")
+          .to.emit(this.targetContract, "AddToBalance")
           .withArgs(projectId, amount, caller.address);
 
         // Get the stored balance.
-        const storedBalanceOf = await this.contract.balanceOf(projectId);
+        const storedBalanceOf = await this.targetContract.balanceOf(projectId);
 
         // Get the total stored balance.
-        const storedBalance = await this.contract.balance();
+        const storedBalance = await this.deployer.provider.getBalance(
+          this.targetContract.address
+        );
 
         // Expect the stored value to equal whats expected.
         expect(storedBalanceOf).to.equal(projectBalance);

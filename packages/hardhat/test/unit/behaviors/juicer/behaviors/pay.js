@@ -12,6 +12,15 @@ const tests = {
       fn: () => ({
         addToBalance: BigNumber.from(42)
       })
+    },
+    {
+      description: "with no funding cycle",
+      fn: () => ({
+        fundingCycleId: 0,
+        unreservedWeightedAmount: BigNumber.from(10)
+          .pow(18)
+          .mul(420)
+      })
     }
   ],
   failure: [
@@ -145,6 +154,16 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
         }
       ]
     }),
+    ...(fundingCycleId === 0
+      ? [
+          mockFn({
+            mockContract: mockContracts.fundingCycles,
+            fn: "BASE_WEIGHT",
+            args: [],
+            returns: [weight]
+          })
+        ]
+      : []),
     executeFn({
       condition: !revert && addToBalance > 0,
       caller,
@@ -187,6 +206,13 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       fn: "balanceOf",
       args: [projectId],
       value: addToBalance.add(amount)
+    }),
+    check({
+      condition: !revert,
+      contract: targetContract,
+      fn: "preconfigureTicketCountOf",
+      args: [projectId],
+      value: fundingCycleId === 0 ? unreservedWeightedAmount : 0
     })
   ];
 };

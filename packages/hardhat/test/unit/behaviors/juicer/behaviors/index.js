@@ -7,7 +7,7 @@ const migrate = require("./migrate");
 const deploy = require("./deploy");
 const configure = require("./configure");
 const pay = require("./pay");
-const printTickets = require("./print_tickets");
+const printPreminedTickets = require("./print_premined_tickets");
 const redeem = require("./redeem");
 const tap = require("./tap");
 const printReservedTickets = require("./print_reserved_tickets");
@@ -22,7 +22,7 @@ module.exports = {
   deploy,
   configure,
   pay,
-  printTickets,
+  printPreminedTickets,
   redeem,
   tap,
   printReservedTickets

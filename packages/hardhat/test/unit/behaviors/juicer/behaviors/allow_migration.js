@@ -5,27 +5,17 @@ const tests = {
   success: [
     {
       description: "set a new terminal",
-      fn: async ({
-        governance,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory
-      }) => ({
+      fn: async ({ governance, deployMockLocalContractFn, mockContracts }) => ({
         caller: governance,
         terminal: (
-          await deployMockLocalContract("Juicer", [
-            projects.address,
-            fundingCycles.address,
-            ticketBooth.address,
-            operatorStore.address,
-            modStore.address,
-            prices.address,
-            terminalDirectory.address,
+          await deployMockLocalContractFn("Juicer", [
+            mockContracts.projects.address,
+            mockContracts.fundingCycles.address,
+            mockContracts.ticketBooth.address,
+            mockContracts.operatorStore.address,
+            mockContracts.modStore.address,
+            mockContracts.prices.address,
+            mockContracts.terminalDirectory.address,
             governance.address
           ])
         ).address
@@ -35,9 +25,9 @@ const tests = {
   failure: [
     {
       description: "unauthorized",
-      fn: ({ deployer, contract }) => ({
+      fn: ({ deployer, targetContract }) => ({
         caller: deployer,
-        terminal: contract.address,
+        terminal: targetContract.address,
         revert: "Juicer: UNAUTHORIZED"
       })
     },
@@ -51,9 +41,9 @@ const tests = {
     },
     {
       description: "same as current",
-      fn: ({ governance, contract }) => ({
+      fn: ({ governance, targetContract }) => ({
         caller: governance,
-        terminal: contract.address,
+        terminal: targetContract.address,
         revert: "Juicer::allowMigration: NO_OP"
       })
     }
@@ -67,15 +57,17 @@ module.exports = function() {
         const { caller, terminal } = await successTest.fn(this);
 
         // Execute the transaction.
-        const tx = await this.contract.connect(caller).allowMigration(terminal);
+        const tx = await this.targetContract
+          .connect(caller)
+          .allowMigration(terminal);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "AllowMigration")
+          .to.emit(this.targetContract, "AllowMigration")
           .withArgs(terminal);
 
         // Get the stored allowed value.
-        const storedAllowedValue = await this.contract.migrationIsAllowed(
+        const storedAllowedValue = await this.targetContract.migrationIsAllowed(
           terminal
         );
 
@@ -90,7 +82,7 @@ module.exports = function() {
         const { caller, terminal, revert } = failureTest.fn(this);
 
         await expect(
-          this.contract.connect(caller).allowMigration(terminal)
+          this.targetContract.connect(caller).allowMigration(terminal)
         ).to.be.revertedWith(revert);
       });
     });

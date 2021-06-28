@@ -7,62 +7,50 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "migrate with no yielder, no preset balance",
+      description: "no preset balance",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance
       }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address,
+        terminal: await deployMockLocalContractFn("Juicer", [
+          mockContracts.projects.address,
+          mockContracts.fundingCycles.address,
+          mockContracts.ticketBooth.address,
+          mockContracts.operatorStore.address,
+          mockContracts.modStore.address,
+          mockContracts.prices.address,
+          mockContracts.terminalDirectory.address,
           governance.address
         ]),
         setup: {}
       })
     },
     {
-      description: "migrate with no yielder, with preset balance",
+      description: "with preset balance",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance
       }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address,
+        terminal: await deployMockLocalContractFn("Juicer", [
+          mockContracts.projects.address,
+          mockContracts.fundingCycles.address,
+          mockContracts.ticketBooth.address,
+          mockContracts.operatorStore.address,
+          mockContracts.modStore.address,
+          mockContracts.prices.address,
+          mockContracts.terminalDirectory.address,
           governance.address
         ]),
         setup: {
@@ -71,65 +59,53 @@ const tests = {
       })
     },
     {
-      description: "migrate with yielder",
+      description: "with unprinted reserved tickets",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance
       }) => ({
         caller: deployer,
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address,
+        terminal: await deployMockLocalContractFn("Juicer", [
+          mockContracts.projects.address,
+          mockContracts.fundingCycles.address,
+          mockContracts.ticketBooth.address,
+          mockContracts.operatorStore.address,
+          mockContracts.modStore.address,
+          mockContracts.prices.address,
+          mockContracts.terminalDirectory.address,
           governance.address
         ]),
         setup: {
-          addYielder: true
+          unprintedReservedTicketAmount: BigNumber.from(1)
         }
       })
     },
     {
-      description: "migrate with operator",
+      description: "with operator",
       fn: async ({
         deployer,
         addrs,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance
       }) => ({
         caller: deployer,
         projectOwner: addrs[0].address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContract("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address,
+        terminal: await deployMockLocalContractFn("Juicer", [
+          mockContracts.projects.address,
+          mockContracts.fundingCycles.address,
+          mockContracts.ticketBooth.address,
+          mockContracts.operatorStore.address,
+          mockContracts.modStore.address,
+          mockContracts.prices.address,
+          mockContracts.terminalDirectory.address,
           governance.address
         ]),
         setup: {
@@ -143,16 +119,10 @@ const tests = {
       description: "unauthorized",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance,
-        contract,
+        targetContract,
         addrs
       }) => {
         return {
@@ -160,19 +130,19 @@ const tests = {
           projectOwner: addrs[0].address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContract("Juicer", [
-            projects.address,
-            fundingCycles.address,
-            ticketBooth.address,
-            operatorStore.address,
-            modStore.address,
-            prices.address,
-            terminalDirectory.address,
+          terminal: await deployMockLocalContractFn("Juicer", [
+            mockContracts.projects.address,
+            mockContracts.fundingCycles.address,
+            mockContracts.ticketBooth.address,
+            mockContracts.operatorStore.address,
+            mockContracts.modStore.address,
+            mockContracts.prices.address,
+            mockContracts.terminalDirectory.address,
             governance.address
           ]),
           setup: {
             allowMigration: false,
-            currentTerminal: contract
+            currentTerminal: targetContract
           },
           revert: "Operatable: UNAUTHORIZED"
         };
@@ -182,14 +152,8 @@ const tests = {
       description: "unauthorized terminal",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance
       }) => {
         return {
@@ -197,26 +161,26 @@ const tests = {
           projectOwner: deployer.address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContract("Juicer", [
-            projects.address,
-            fundingCycles.address,
-            ticketBooth.address,
-            operatorStore.address,
-            modStore.address,
-            prices.address,
-            terminalDirectory.address,
+          terminal: await deployMockLocalContractFn("Juicer", [
+            mockContracts.projects.address,
+            mockContracts.fundingCycles.address,
+            mockContracts.ticketBooth.address,
+            mockContracts.operatorStore.address,
+            mockContracts.modStore.address,
+            mockContracts.prices.address,
+            mockContracts.terminalDirectory.address,
             governance.address
           ]),
           setup: {
             allowMigration: false,
-            currentTerminal: await deployMockLocalContract("Juicer", [
-              projects.address,
-              fundingCycles.address,
-              ticketBooth.address,
-              operatorStore.address,
-              modStore.address,
-              prices.address,
-              terminalDirectory.address,
+            currentTerminal: await deployMockLocalContractFn("Juicer", [
+              mockContracts.projects.address,
+              mockContracts.fundingCycles.address,
+              mockContracts.ticketBooth.address,
+              mockContracts.operatorStore.address,
+              mockContracts.modStore.address,
+              mockContracts.prices.address,
+              mockContracts.terminalDirectory.address,
               governance.address
             ])
           },
@@ -228,35 +192,29 @@ const tests = {
       description: "not allowed",
       fn: async ({
         deployer,
-        deployMockLocalContract,
-        projects,
-        prices,
-        fundingCycles,
-        ticketBooth,
-        operatorStore,
-        modStore,
-        terminalDirectory,
+        deployMockLocalContractFn,
+        mockContracts,
         governance,
-        contract
+        targetContract
       }) => {
         return {
           caller: deployer,
           projectOwner: deployer.address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContract("Juicer", [
-            projects.address,
-            fundingCycles.address,
-            ticketBooth.address,
-            operatorStore.address,
-            modStore.address,
-            prices.address,
-            terminalDirectory.address,
+          terminal: await deployMockLocalContractFn("Juicer", [
+            mockContracts.projects.address,
+            mockContracts.fundingCycles.address,
+            mockContracts.ticketBooth.address,
+            mockContracts.operatorStore.address,
+            mockContracts.modStore.address,
+            mockContracts.prices.address,
+            mockContracts.terminalDirectory.address,
             governance.address
           ]),
           setup: {
             allowMigration: false,
-            currentTerminal: contract
+            currentTerminal: targetContract
           },
           revert: "Juicer::migrate: NOT_ALLOWED"
         };
@@ -275,67 +233,92 @@ module.exports = function() {
           governance,
           projectId,
           terminal,
-          setup: { permissionFlag, addYielder, addToBalance = 0 } = {},
-          expectation: { withdraw } = {}
+          setup: {
+            unprintedReservedTicketAmount = BigNumber.from(0),
+            permissionFlag,
+            addToBalance = 0
+          } = {}
         } = await successTest.fn(this);
 
         // Mock the Operator store permissions.
         const permissionIndex = 4;
         // Mock the caller to be the project's controller.
-        await this.operatorStore.mock.hasPermission
+        await this.mockContracts.operatorStore.mock.hasPermission
           .withArgs(caller.address, projectOwner, projectId, permissionIndex)
           .returns(permissionFlag || false);
 
-        // If there's a yielder, add it and set appropriate mocks.
-        if (addYielder) {
-          const yielder = await this.deployMockLocalContract("ExampleYielder");
-          await this.contract.connect(governance).setYielder(yielder.address);
-          if (withdraw) {
-            await yielder.mock.withdraw
-              .withArgs(withdraw, this.contract.address)
-              .returns();
-          }
-          await yielder.mock.deposited.returns(0);
-          await yielder.mock.getCurrentBalance.returns(0);
-        }
-
         // Allow migration to the given terminal.
-        await this.contract
+        await this.targetContract
           .connect(governance)
           .allowMigration(terminal.address);
 
+        await this.mockFn({
+          mockContract: this.mockContracts.ticketBooth,
+          fn: "totalSupplyOf",
+          args: [projectId],
+          returns: [unprintedReservedTicketAmount]
+        });
+
         // Add to balance if needed.
         if (addToBalance)
-          await this.contract.addToBalance(projectId, { value: addToBalance });
+          await this.targetContract.addToBalance(projectId, {
+            value: addToBalance
+          });
 
         // Mock the ability to add a balance to the terminal.
         await terminal.mock.addToBalance.withArgs(projectId).returns();
 
         // Mock the terminal directory setting process.
-        await this.terminalDirectory.mock.setTerminal
+        await this.mockContracts.terminalDirectory.mock.setTerminal
           .withArgs(projectId, terminal.address)
           .returns();
-        await this.terminalDirectory.mock.terminalOf
+        await this.mockContracts.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
-          .returns(this.contract.address);
+          .returns(this.targetContract.address);
 
         // Set the project owner.
-        await this.projects.mock.ownerOf
+        await this.mockContracts.projects.mock.ownerOf
           .withArgs(projectId)
           .returns(projectOwner);
 
+        if (unprintedReservedTicketAmount.gt(0))
+          await this.mockFn({
+            mockContract: this.mockContracts.fundingCycles,
+            fn: "getCurrentOf",
+            args: [projectId],
+            returns: [
+              {
+                configured: 0,
+                id: 0,
+                projectId,
+                number: 0,
+                basedOn: 0,
+                weight: 0,
+                ballot: this.constants.AddressZero,
+                start: 0,
+                duration: 0,
+                target: 0,
+                currency: 0,
+                fee: 0,
+                discountRate: 0,
+                tapped: 0,
+                metadata: 0
+              }
+            ]
+          });
+
         // Execute the transaction.
-        const tx = await this.contract
+        const tx = await this.targetContract
           .connect(caller)
           .migrate(projectId, terminal.address);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "Migrate")
+          .to.emit(this.targetContract, "Migrate")
           .withArgs(projectId, terminal.address, addToBalance, caller.address);
 
         // Get the stored target value.
-        const storedBalance = await this.contract.balanceOf(projectId);
+        const storedBalance = await this.targetContract.balanceOf(projectId);
 
         // Expect the stored value to equal whats expected.
         expect(storedBalance).to.equal(0);
@@ -351,12 +334,7 @@ module.exports = function() {
           governance,
           projectId,
           terminal,
-          setup: {
-            allowMigration,
-            currentTerminal,
-            addYielder,
-            permissionFlag
-          } = {},
+          setup: { allowMigration, currentTerminal, permissionFlag } = {},
           revert
         } = await failureTest.fn(this);
 
@@ -364,34 +342,30 @@ module.exports = function() {
         const permissionIndex = 4;
 
         // Mock the caller to be the project's controller.
-        await this.operatorStore.mock.hasPermission
+        await this.mockContracts.operatorStore.mock.hasPermission
           .withArgs(caller.address, projectOwner, projectId, permissionIndex)
           .returns(permissionFlag || false);
 
-        // If there's a yielder, add it and set appropriate mocks.
-        if (addYielder) {
-          const yielder = await this.deployMockLocalContract("ExampleYielder");
-          await this.contract.connect(governance).setYielder(yielder.address);
-        }
-
         if (allowMigration)
           // Allow migration to the given terminal.
-          await this.contract
+          await this.targetContract
             .connect(governance)
             .allowMigration(terminal.address);
 
-        await this.terminalDirectory.mock.terminalOf
+        await this.mockContracts.terminalDirectory.mock.terminalOf
           .withArgs(projectId)
           .returns(currentTerminal.address);
 
         // Set the project owner.
-        await this.projects.mock.ownerOf
+        await this.mockContracts.projects.mock.ownerOf
           .withArgs(projectId)
           .returns(projectOwner);
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).migrate(projectId, terminal.address)
+          this.targetContract
+            .connect(caller)
+            .migrate(projectId, terminal.address)
         ).to.be.revertedWith(revert);
       });
     });

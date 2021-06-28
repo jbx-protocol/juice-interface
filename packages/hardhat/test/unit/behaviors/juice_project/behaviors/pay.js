@@ -52,33 +52,32 @@ module.exports = function() {
           preferUnstakedTickets
         } = successTest.fn(this);
 
-        const operatorStore = await this.deployMockLocalContract(
+        const operatorStore = await this.deployMockLocalContractFn(
           "OperatorStore"
         );
-        const projects = await this.deployMockLocalContract("Projects", [
+        const projects = await this.deployMockLocalContractFn("Projects", [
           operatorStore.address
         ]);
-        const prices = await this.deployMockLocalContract("Prices");
-        const terminalDirectory = await this.deployMockLocalContract(
+        const prices = await this.deployMockLocalContractFn("Prices");
+        const terminalDirectory = await this.deployMockLocalContractFn(
           "TerminalDirectory",
           [projects.address]
         );
-        const fundingCycles = await this.deployMockLocalContract(
+        const fundingCycles = await this.deployMockLocalContractFn(
           "FundingCycles",
           [terminalDirectory.address]
         );
-        const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
-          projects.address,
-          operatorStore.address,
-          terminalDirectory.address
-        ]);
-        const modStore = await this.deployMockLocalContract("ModStore", [
+        const ticketBooth = await this.deployMockLocalContractFn(
+          "TicketBooth",
+          [projects.address, operatorStore.address, terminalDirectory.address]
+        );
+        const modStore = await this.deployMockLocalContractFn("ModStore", [
           projects.address,
           operatorStore.address
         ]);
 
         // Deploy mock dependency contracts.
-        const juicer = await this.deployMockLocalContract("Juicer", [
+        const juicer = await this.deployMockLocalContractFn("Juicer", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -118,32 +117,32 @@ module.exports = function() {
         } = failureTest.fn(this);
 
         if (setTerminal) {
-          const operatorStore = await this.deployMockLocalContract(
+          const operatorStore = await this.deployMockLocalContractFn(
             "OperatorStore"
           );
-          const projects = await this.deployMockLocalContract("Projects", [
+          const projects = await this.deployMockLocalContractFn("Projects", [
             operatorStore.address
           ]);
-          const prices = await this.deployMockLocalContract("Prices");
-          const terminalDirectory = await this.deployMockLocalContract(
+          const prices = await this.deployMockLocalContractFn("Prices");
+          const terminalDirectory = await this.deployMockLocalContractFn(
             "TerminalDirectory",
             [projects.address]
           );
-          const fundingCycles = await this.deployMockLocalContract(
+          const fundingCycles = await this.deployMockLocalContractFn(
             "FundingCycles",
             [terminalDirectory.address]
           );
-          const ticketBooth = await this.deployMockLocalContract(
+          const ticketBooth = await this.deployMockLocalContractFn(
             "TicketBooth",
             [projects.address, operatorStore.address, terminalDirectory.address]
           );
-          const modStore = await this.deployMockLocalContract("ModStore", [
+          const modStore = await this.deployMockLocalContractFn("ModStore", [
             projects.address,
             operatorStore.address
           ]);
 
           // Deploy mock dependency contracts.
-          const juicer = await this.deployMockLocalContract("Juicer", [
+          const juicer = await this.deployMockLocalContractFn("Juicer", [
             projects.address,
             fundingCycles.address,
             ticketBooth.address,

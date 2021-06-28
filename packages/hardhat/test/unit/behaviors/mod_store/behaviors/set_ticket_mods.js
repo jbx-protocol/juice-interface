@@ -556,7 +556,7 @@ module.exports = function() {
             // Fast forward the clock if needed.
             // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
             // eslint-disable-next-line no-await-in-loop
-            await this.fastforward(setup.fastforward.sub(1));
+            await this.fastforwardFn(setup.fastforward.sub(1));
           }
         }
         // Execute the transaction.
@@ -632,7 +632,7 @@ module.exports = function() {
               .setTicketMods(setup.projectId, setup.configuration, setup.mods);
           }
           if (setup.fastforward) {
-            await this.fastforward(setup.fastforward.sub(1));
+            await this.fastforwardFn(setup.fastforward.sub(1));
           }
         }
 

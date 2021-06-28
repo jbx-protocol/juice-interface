@@ -33,10 +33,10 @@ module.exports = function() {
       it(successTest.description, async function() {
         const { caller, newOwner, projectId } = successTest.fn(this);
 
-        const operatorStore = await this.deployMockLocalContract(
+        const operatorStore = await this.deployMockLocalContractFn(
           "OperatorStore"
         );
-        const projects = await this.deployMockLocalContract("Projects", [
+        const projects = await this.deployMockLocalContractFn("Projects", [
           operatorStore.address
         ]);
 
@@ -63,10 +63,10 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const { caller, newOwner, projectId, revert } = failureTest.fn(this);
 
-        const operatorStore = await this.deployMockLocalContract(
+        const operatorStore = await this.deployMockLocalContractFn(
           "OperatorStore"
         );
-        const projects = await this.deployMockLocalContract("Projects", [
+        const projects = await this.deployMockLocalContractFn("Projects", [
           operatorStore.address
         ]);
 

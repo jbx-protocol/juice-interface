@@ -33,7 +33,7 @@ const tests = {
     },
     {
       description: "deposit with mods",
-      fn: async ({ deployer, deployMockLocalContract }) => ({
+      fn: async ({ deployer, deployMockLocalContractFn }) => ({
         caller: deployer,
         owner: deployer.address,
         metadata: {
@@ -48,7 +48,7 @@ const tests = {
             percent: 200,
             lockedUntil: 1000,
             beneficiary: constants.AddressZero,
-            allocator: (await deployMockLocalContract("ExampleModAllocator"))
+            allocator: (await deployMockLocalContractFn("ExampleModAllocator"))
               .address,
             projectId: 1,
             note: "banana"
@@ -152,16 +152,16 @@ module.exports = function() {
         packedMetadata = packedMetadata.shl(8);
 
         // Set a mock for creating a project.
-        await this.projects.mock.create
-          .withArgs(owner, handle, uri)
+        await this.mockContracts.projects.mock.create
+          .withArgs(owner, handle, uri, this.targetContract.address)
           .returns(projectId);
         // Set a mock for setting the terminal in the directory.
-        await this.terminalDirectory.mock.setTerminal
-          .withArgs(projectId, this.contract.address)
+        await this.mockContracts.terminalDirectory.mock.setTerminal
+          .withArgs(projectId, this.targetContract.address)
           .returns();
 
         // Set a mock for configuring a funding cycle.
-        await this.fundingCycles.mock.configure
+        await this.mockContracts.fundingCycles.mock.configure
           .withArgs(projectId, properties, packedMetadata, 10, true)
           .returns({
             configured,
@@ -183,18 +183,18 @@ module.exports = function() {
 
         if (paymentMods.length)
           // Set a mock for setting payment mods.
-          await this.modStore.mock.setPaymentMods
+          await this.mockContracts.modStore.mock.setPaymentMods
             .withArgs(projectId, configured, paymentMods)
             .returns();
 
         if (ticketMods.length)
           // Set a mock for setting ticket mods.
-          await this.modStore.mock.setTicketMods
+          await this.mockContracts.modStore.mock.setTicketMods
             .withArgs(projectId, configured, ticketMods)
             .returns();
 
         // Execute the transaction.
-        await this.contract
+        await this.targetContract
           .connect(caller)
           .deploy(
             owner,
@@ -235,16 +235,16 @@ module.exports = function() {
         packedMetadata = packedMetadata.shl(8);
 
         // Set a mock for creating a project.
-        await this.projects.mock.create
-          .withArgs(owner, handle, uri)
+        await this.mockContracts.projects.mock.create
+          .withArgs(owner, handle, uri, this.targetContract.address)
           .returns(projectId);
         // Set a mock for setting the terminal in the directory.
-        await this.terminalDirectory.mock.setTerminal
-          .withArgs(projectId, this.contract.address)
+        await this.mockContracts.terminalDirectory.mock.setTerminal
+          .withArgs(projectId, this.targetContract.address)
           .returns();
 
         // Set a mock for configuring a funding cycle.
-        await this.fundingCycles.mock.configure
+        await this.mockContracts.fundingCycles.mock.configure
           .withArgs(projectId, properties, packedMetadata, 10, true)
           .returns({
             configured,
@@ -266,7 +266,7 @@ module.exports = function() {
 
         // Execute the transaction.
         await expect(
-          this.contract
+          this.targetContract
             .connect(caller)
             .deploy(owner, handle, uri, properties, metadata, [], [])
         ).to.be.revertedWith(revert);

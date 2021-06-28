@@ -27,9 +27,9 @@ module.exports = function() {
       it(successTest.description, async function() {
         const { caller } = successTest.fn(this);
 
-        const prices = await this.deployMockLocalContract("Prices");
+        const prices = await this.deployMockLocalContractFn("Prices");
         // Deploy a mock of the price feed oracle contract.
-        const priceFeed = await this.deployMockContract(
+        const priceFeed = await this.deployMockContractFn(
           AggregatorV3Interface.compilerOutput.abi
         );
 
@@ -51,9 +51,9 @@ module.exports = function() {
       it(failureTest.description, async function() {
         const { caller, revert } = failureTest.fn(this);
 
-        const prices = await this.deployMockLocalContract("Prices");
+        const prices = await this.deployMockLocalContractFn("Prices");
         // Deploy a mock of the price feed oracle contract.
-        const priceFeed = await this.deployMockContract(
+        const priceFeed = await this.deployMockContractFn(
           AggregatorV3Interface.compilerOutput.abi
         );
 

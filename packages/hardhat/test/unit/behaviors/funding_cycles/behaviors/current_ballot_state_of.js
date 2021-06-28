@@ -28,7 +28,7 @@ const testTemplate = ({
     preconfigure: {
       target: BigNumber.from(240),
       currency: BigNumber.from(0),
-      duration: BigNumber.from(100),
+      duration: BigNumber.from(1),
       discountRate: BigNumber.from(120),
       fee: BigNumber.from(40),
       metadata: BigNumber.from(3),
@@ -72,7 +72,7 @@ const tests = {
       description: "during first funding cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -82,13 +82,13 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
-        fastforward: BigNumber.from(78),
+        fastforward: BigNumber.from(6398),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -100,7 +100,7 @@ const tests = {
       description: "at the end of first funding cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -110,7 +110,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -121,7 +121,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(79),
+        fastforward: BigNumber.from(86393),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -133,7 +133,7 @@ const tests = {
       description: "immediately at the start of the second funding cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -143,7 +143,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -154,7 +154,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(80),
+        fastforward: BigNumber.from(86400),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -166,7 +166,7 @@ const tests = {
       description: "immediately after the first funding cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -176,7 +176,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -187,7 +187,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(81),
+        fastforward: BigNumber.from(86401),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -199,7 +199,7 @@ const tests = {
       description: "shortly after the first funding cycle, approved ballot",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -209,7 +209,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -220,7 +220,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(80),
+        fastforward: BigNumber.from(86400),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -232,7 +232,7 @@ const tests = {
       description: "many cycles after the first funding cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -242,7 +242,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -253,7 +253,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(320),
+        fastforward: BigNumber.from(86400 * 4),
         expectation: {
           // Should have the state of the last configured ballot.
           state: 0
@@ -264,7 +264,7 @@ const tests = {
       description: "during first funding cycle, configuring the active cycle",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -274,7 +274,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -285,7 +285,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(78),
+        fastforward: BigNumber.from(86398),
         expectation: {
           // standby.
           state: 3
@@ -297,7 +297,7 @@ const tests = {
         "immediately after the first funding cycle, ignoring the option to configure the active one",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80),
+          duration: BigNumber.from(1),
           configureActiveFundingCycle: true
         },
         ops: [
@@ -308,7 +308,7 @@ const tests = {
             // The below properties don't affect this test.
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -319,7 +319,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(80),
+        fastforward: BigNumber.from(86400),
         set: 1,
         expectation: {
           fundingCycleId: 2,
@@ -336,7 +336,7 @@ const tests = {
             .pow(8)
             .sub(1),
           duration: BigNumber.from(2)
-            .pow(24)
+            .pow(16)
             .sub(1),
           discountRate: BigNumber.from(200),
           fee: BigNumber.from(200),
@@ -352,7 +352,7 @@ const tests = {
       description: "adding other projects' funding cycles throughout",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(80)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -362,7 +362,7 @@ const tests = {
             configureActiveFundingCycle: false,
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -374,7 +374,7 @@ const tests = {
           },
           {
             type: "fastforward",
-            seconds: BigNumber.from(35)
+            seconds: BigNumber.from(86390)
           },
           // Add another configuration for a different project.
           {
@@ -384,7 +384,7 @@ const tests = {
             configureActiveFundingCycle: false,
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -395,7 +395,7 @@ const tests = {
             }
           }
         ],
-        fastforward: BigNumber.from(30),
+        fastforward: BigNumber.from(1),
         expectation: {
           state: 3
         }
@@ -405,7 +405,7 @@ const tests = {
       description: "first configuration, with an active ballot",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -421,14 +421,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           state: 1
         }
@@ -438,7 +438,7 @@ const tests = {
       description: "first configuration, with a failed ballot",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -454,14 +454,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           state: 2
         }
@@ -471,7 +471,7 @@ const tests = {
       description: "first configuration, with a standby ballot",
       fn: testTemplate({
         preconfigure: {
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -487,14 +487,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(1),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           state: 3
         }
@@ -549,7 +549,7 @@ module.exports = function() {
             preconfigure.configureActiveFundingCycle
           );
 
-          await this.setTimeMark(tx.blockNumber);
+          await this.setTimeMarkFn(tx.blockNumber);
         }
 
         // Do any other specified operations.
@@ -585,7 +585,7 @@ module.exports = function() {
                   .withArgs(
                     op.ballot.fundingCycleId,
                     // eslint-disable-next-line no-await-in-loop
-                    await this.getTimestamp(tx.blockNumber)
+                    await this.getTimestampFn(tx.blockNumber)
                   )
                   .returns(op.ballot.state);
               }
@@ -595,7 +595,7 @@ module.exports = function() {
             case "fastforward": {
               // Fast forward the clock if needed.
               // eslint-disable-next-line no-await-in-loop
-              await this.fastforward(op.seconds);
+              await this.fastforwardFn(op.seconds);
               break;
             }
             default:

@@ -136,10 +136,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Use second next because the next would be a mock of the current funding cycle.
         return
             _mockFundingCycleBasedOn(
-                _mockFundingCycleBasedOn(
-                    _getStruct(_fundingCycleId),
-                    block.timestamp
-                ),
+                _getStruct(_fundingCycleId),
                 block.timestamp
             );
     }

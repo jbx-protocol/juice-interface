@@ -56,6 +56,12 @@ const tests = {
       fn: () => ({})
     },
     {
+      description: "ID is 0",
+      fn: () => ({
+        fundingCycleId: 0
+      })
+    },
+    {
       description: "with mod",
       fn: ({ addrs }) => ({
         mod: {
@@ -84,16 +90,15 @@ const tests = {
           .mul(2),
         expectedLeftover: BigNumber.from(0)
       })
-    }
-  ],
-  failure: [
+    },
     {
       description: "with no reserved rate",
       fn: () => ({
-        reservedRate: 0,
-        revert: "Juicer::printReservedTickets: NO_OP"
+        reservedRate: 0
       })
-    },
+    }
+  ],
+  failure: [
     {
       description: "overflow",
       fn: () => ({
@@ -167,47 +172,51 @@ const ops = ({
         }
       ]
     }),
-    mockFn({
-      mockContract: mockContracts.ticketBooth,
-      fn: "totalSupplyOf",
-      args: [projectId],
-      returns: [totalTickets]
-    }),
-    mockFn({
-      mockContract: mockContracts.projects,
-      fn: "ownerOf",
-      args: [projectId],
-      returns: [owner]
-    }),
-    mockFn({
-      mockContract: mockContracts.modStore,
-      fn: "ticketModsOf",
-      args: [projectId, configured],
-      returns: [mod ? [mod] : []]
-    }),
-    ...(mod
+    ...(projectId > 0
       ? [
           mockFn({
             mockContract: mockContracts.ticketBooth,
-            fn: "print",
-            args: [
-              mod.beneficiary,
-              projectId,
-              expectedReservedAmount.mul(mod.percent).div(200),
-              mod.preferUnstaked
-            ],
-            returns: []
-          })
-        ]
-      : []),
-    ...(expectedLeftover > 0
-      ? [
+            fn: "totalSupplyOf",
+            args: [projectId],
+            returns: [totalTickets]
+          }),
           mockFn({
-            mockContract: mockContracts.ticketBooth,
-            fn: "print",
-            args: [owner, projectId, expectedLeftover, false],
-            returns: []
-          })
+            mockContract: mockContracts.projects,
+            fn: "ownerOf",
+            args: [projectId],
+            returns: [owner]
+          }),
+          mockFn({
+            mockContract: mockContracts.modStore,
+            fn: "ticketModsOf",
+            args: [projectId, configured],
+            returns: [mod ? [mod] : []]
+          }),
+          ...(mod
+            ? [
+                mockFn({
+                  mockContract: mockContracts.ticketBooth,
+                  fn: "print",
+                  args: [
+                    mod.beneficiary,
+                    projectId,
+                    expectedReservedAmount.mul(mod.percent).div(200),
+                    mod.preferUnstaked
+                  ],
+                  returns: []
+                })
+              ]
+            : []),
+          ...(expectedLeftover > 0
+            ? [
+                mockFn({
+                  mockContract: mockContracts.ticketBooth,
+                  fn: "print",
+                  args: [owner, projectId, expectedLeftover, false],
+                  returns: []
+                })
+              ]
+            : [])
         ]
       : []),
     executeFn({
@@ -235,17 +244,21 @@ const ops = ({
               }
             ]
           : []),
-        {
-          name: "PrintReserveTickets",
-          args: [
-            fundingCycleId,
-            projectId,
-            owner,
-            expectedReservedAmount,
-            expectedLeftover,
-            caller.address
-          ]
-        }
+        ...(reservedRate > 0 && fundingCycleId > 0
+          ? [
+              {
+                name: "PrintReserveTickets",
+                args: [
+                  fundingCycleId,
+                  projectId,
+                  owner,
+                  expectedReservedAmount,
+                  expectedLeftover,
+                  caller.address
+                ]
+              }
+            ]
+          : [])
       ],
       revert
     })

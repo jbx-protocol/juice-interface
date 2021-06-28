@@ -10,6 +10,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "",
+        terminal: ethers.constants.AddressZero,
         expectation: {
           projectId: 1
         }
@@ -22,6 +23,7 @@ const tests = {
         owner: addrs[0].address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "",
+        terminal: ethers.constants.AddressZero,
         expectation: {
           projectId: 1
         }
@@ -34,6 +36,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "some-uri",
+        terminal: ethers.constants.AddressZero,
         expectation: {
           projectId: 1
         }
@@ -46,6 +49,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "some-uri",
+        terminal: ethers.constants.AddressZero,
         expectation: {
           projectId: 2
         },
@@ -53,10 +57,69 @@ const tests = {
           create: {
             owner: deployer.address,
             handle: ethers.utils.formatBytes32String("some-other-handle"),
-            uri: "some-uri"
+            uri: "some-uri",
+            terminal: ethers.constants.AddressZero
           }
         }
       })
+    },
+    {
+      description: "with terminal",
+      fn: async ({ deployer, deployMockLocalContractFn }) => {
+        // Create a mock for a juicer.
+        const operatorStore = await deployMockLocalContractFn("OperatorStore");
+        const projects = await deployMockLocalContractFn("Projects", [
+          operatorStore.address
+        ]);
+        const prices = await deployMockLocalContractFn("Prices");
+        const terminalDirectory = await deployMockLocalContractFn(
+          "TerminalDirectory",
+          [projects.address]
+        );
+        const fundingCycles = await deployMockLocalContractFn("FundingCycles", [
+          terminalDirectory.address
+        ]);
+        const ticketBooth = await deployMockLocalContractFn("TicketBooth", [
+          projects.address,
+          operatorStore.address,
+          terminalDirectory.address
+        ]);
+        const modStore = await deployMockLocalContractFn("ModStore", [
+          projects.address,
+          operatorStore.address
+        ]);
+
+        // Deploy mock dependency contracts.
+        const juicer = await deployMockLocalContractFn("Juicer", [
+          projects.address,
+          fundingCycles.address,
+          ticketBooth.address,
+          operatorStore.address,
+          modStore.address,
+          prices.address,
+          terminalDirectory.address
+        ]);
+        // make the mock terminalDirectory return a mock of the terminal directory.
+        await juicer.mock.terminalDirectory
+          .withArgs()
+          .returns(terminalDirectory.address);
+
+        // mock the set terminal function of the terminal directory.
+        await terminalDirectory.mock.setTerminal
+          .withArgs(1, juicer.address)
+          .returns();
+
+        return {
+          caller: deployer,
+          owner: deployer.address,
+          handle: ethers.utils.formatBytes32String("some-handle"),
+          uri: "",
+          terminal: juicer.address,
+          expectation: {
+            projectId: 1
+          }
+        };
+      }
     }
   ],
   failure: [
@@ -67,6 +130,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String(""),
         uri: "",
+        terminal: ethers.constants.AddressZero,
         revert: "Projects::create: EMPTY_HANDLE"
       })
     },
@@ -77,6 +141,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "some-uri",
+        terminal: ethers.constants.AddressZero,
         setup: {
           create: {
             owner: deployer.address,
@@ -94,6 +159,7 @@ const tests = {
         owner: deployer.address,
         handle: ethers.utils.formatBytes32String("some-handle"),
         uri: "some-uri",
+        terminal: ethers.constants.AddressZero,
         setup: {
           create: {
             owner: deployer.address,
@@ -121,26 +187,27 @@ module.exports = function() {
           owner,
           handle,
           uri,
+          terminal,
           setup: { create } = {},
           expectation: { projectId }
-        } = successTest.fn(this);
+        } = await successTest.fn(this);
 
         // Setup by creating a project.
         if (create) {
           await this.contract
             .connect(caller)
-            .create(create.owner, create.handle, create.uri);
+            .create(create.owner, create.handle, create.uri, create.terminal);
         }
 
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .create(owner, handle, uri);
+          .create(owner, handle, uri, terminal);
 
         // Expect an event to have been emitted.
         expect(tx)
           .to.emit(this.contract, "Create")
-          .withArgs(projectId, owner, handle, uri, caller.address);
+          .withArgs(projectId, owner, handle, uri, terminal, caller.address);
 
         // Get the stored handle value.
         const storedHandle = await this.contract.handleOf(projectId);
@@ -166,6 +233,7 @@ module.exports = function() {
           owner,
           handle,
           uri,
+          terminal,
           setup: { create, transfer } = {},
           revert
         } = failureTest.fn(this);
@@ -174,7 +242,12 @@ module.exports = function() {
         if (create) {
           await this.contract
             .connect(caller)
-            .create(create.owner, create.handle, create.uri);
+            .create(
+              create.owner,
+              create.handle,
+              create.uri,
+              this.constants.AddressZero
+            );
 
           if (transfer) {
             await this.contract
@@ -185,7 +258,7 @@ module.exports = function() {
 
         // Execute the transaction.
         await expect(
-          this.contract.connect(caller).create(owner, handle, uri)
+          this.contract.connect(caller).create(owner, handle, uri, terminal)
         ).to.be.revertedWith(revert);
       });
     });

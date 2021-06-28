@@ -8,12 +8,12 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy a mock of the price feed oracle contract.
-    this.aggregatorV3Contract = await this.deployMockContract(
+    this.aggregatorV3Contract = await this.deployMockContractFn(
       AggregatorV3Interface.compilerOutput.abi
     );
 
     // Deploy the contract.
-    this.contract = await this.deployContract(contractName);
+    this.contract = await this.deployContractFn(contractName);
   });
 
   // Test each function.

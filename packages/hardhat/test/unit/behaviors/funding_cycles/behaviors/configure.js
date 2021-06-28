@@ -17,7 +17,7 @@ const testTemplate = ({
   projectId: 1,
   target: BigNumber.from(120),
   currency: BigNumber.from(1),
-  duration: BigNumber.from(80),
+  duration: BigNumber.from(1),
   discountRate: BigNumber.from(180),
   fee: BigNumber.from(42),
   metadata: BigNumber.from(92),
@@ -26,7 +26,7 @@ const testTemplate = ({
     preconfigure: {
       target: BigNumber.from(240),
       currency: BigNumber.from(0),
-      duration: BigNumber.from(100),
+      duration: BigNumber.from(1),
       discountRate: BigNumber.from(120),
       fee: BigNumber.from(40),
       metadata: BigNumber.from(3),
@@ -78,10 +78,10 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward to a time well within the preconfigured duration.
-        fastforward: BigNumber.from(24),
+        fastforward: BigNumber.from(86390),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -95,10 +95,10 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward to the last second of the preconfigured duration.
-        fastforward: BigNumber.from(41),
+        fastforward: BigNumber.from(86399),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -107,36 +107,15 @@ const tests = {
         }
       })
     },
-    ...(process.env.INCLUDE_TIME_EDGE_CASE_TEST
-      ? [
-          {
-            description: "immediately after the first funding cycle",
-            fn: testTemplate({
-              preconfigure: {
-                // Preconfigure the duration.
-                duration: BigNumber.from(42)
-              },
-              // Fast forward to the first second of the cycle after the preconfigured one.
-              fastforward: BigNumber.from(42),
-              expectation: {
-                configuredNumber: 2,
-                configuredId: 2,
-                initId: 2,
-                basedOn: 1
-              }
-            })
-          }
-        ]
-      : []),
     {
       description: "within the second funding cycle",
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward to a second with the cycle after the preconfigured one.
-        fastforward: BigNumber.from(43),
+        fastforward: BigNumber.from(86401),
         expectation: {
           configuredNumber: 3,
           configuredId: 2,
@@ -150,10 +129,10 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward a multiple of the duration.
-        fastforward: BigNumber.from(85),
+        fastforward: BigNumber.from(86400 * 2 + 1),
         expectation: {
           configuredNumber: 4,
           configuredId: 2,
@@ -167,10 +146,10 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward many multiples of the duration.
-        fastforward: BigNumber.from(169),
+        fastforward: BigNumber.from(86400 * 4 + 1),
         expectation: {
           configuredNumber: 6,
           configuredId: 2,
@@ -188,36 +167,14 @@ const tests = {
         },
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward within the preconfigured duration.
-        fastforward: BigNumber.from(40),
+        fastforward: BigNumber.from(36390),
         expectation: {
           configuredNumber: 1,
           configuredId: 1,
           basedOn: 0
-        }
-      })
-    },
-    {
-      description:
-        "immediately after the first funding cycle, ignoring the option to configure the active one",
-      fn: testTemplate({
-        op: {
-          // Allow the active funding cycle to be reconfigured. This shouldn't do anything.
-          configureActiveFundingCycle: true
-        },
-        preconfigure: {
-          // Preconfigure the duration.
-          duration: BigNumber.from(42)
-        },
-        // Fast forward to the first second after the preconfigured cycle.
-        fastforward: BigNumber.from(42),
-        expectation: {
-          configuredNumber: 2,
-          configuredId: 2,
-          initId: 2,
-          basedOn: 1
         }
       })
     },
@@ -231,10 +188,10 @@ const tests = {
         },
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward to the first second after the preconfigured cycle.
-        fastforward: BigNumber.from(43),
+        fastforward: BigNumber.from(86401),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -252,7 +209,7 @@ const tests = {
             .pow(8)
             .sub(1),
           duration: BigNumber.from(2)
-            .pow(24)
+            .pow(16)
             .sub(1),
           discountRate: BigNumber.from(200),
           fee: BigNumber.from(200),
@@ -275,10 +232,10 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42),
+          duration: BigNumber.from(1),
           ballot: {
             // Set the ballot duration shorter than the configuration duration.
-            duration: BigNumber.from(30)
+            duration: BigNumber.from(86300)
           }
         },
         // Fast forward to the time before when the ballot would equal the preconfigured duration.
@@ -291,46 +248,42 @@ const tests = {
         }
       })
     },
-    ...(process.env.INCLUDE_TIME_EDGE_CASE_TEST
-      ? [
-          {
-            description:
-              "ballot duration from current time is preconfigured duration",
-            fn: testTemplate({
-              preconfigure: {
-                // Preconfigure the duration.
-                duration: BigNumber.from(42),
-                ballot: {
-                  // Set the ballot duration shorter than the configuration duration.
-                  duration: BigNumber.from(30)
-                }
-              },
-              // Fast forward to the time where the ballot would equal the preconfigured duration,
-              // which is the first second where the proposed configuration could start.
-              fastforward: BigNumber.from(12),
-              expectation: {
-                configuredNumber: 2,
-                configuredId: 2,
-                initId: 2,
-                basedOn: 1
-              }
-            })
+    {
+      description:
+        "ballot duration from current time is preconfigured duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(1),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(86390)
           }
-        ]
-      : []),
+        },
+        // Fast forward to the time where the ballot would equal the preconfigured duration,
+        // which is the first second where the proposed configuration could start.
+        fastforward: BigNumber.from(10),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
     {
       description: "ballot duration just less than duration",
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42),
+          duration: BigNumber.from(1),
           ballot: {
             // Set the ballot duration shorter than the configuration duration.
-            duration: BigNumber.from(41)
+            duration: BigNumber.from(86399)
           }
         },
         // Fast forward to the second before the ballot duration expires.
-        fastforward: BigNumber.from(39),
+        fastforward: BigNumber.from(86398),
         expectation: {
           configuredNumber: 3,
           configuredId: 2,
@@ -344,14 +297,14 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42),
+          duration: BigNumber.from(1),
           ballot: {
             // Set the ballot duration to the same as the configuration duration.
-            duration: BigNumber.from(42)
+            duration: BigNumber.from(86400)
           }
         },
-        // Fast forward to a few seconds before the ballot duration expires.
-        fastforward: BigNumber.from(40),
+        // Fast forward to a seconds before the ballot duration expires.
+        fastforward: BigNumber.from(86399),
         expectation: {
           configuredNumber: 3,
           configuredId: 2,
@@ -365,14 +318,14 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42),
+          duration: BigNumber.from(1),
           ballot: {
             // Set the ballot duration longer than the configuration duration.
-            duration: BigNumber.from(43)
+            duration: BigNumber.from(86401)
           }
         },
-        // Fast forward to a few seconds before the ballot duration expires.
-        fastforward: BigNumber.from(40),
+        // Fast forward to a a seconds before the funding cycle expires.
+        fastforward: BigNumber.from(86399),
         expectation: {
           configuredNumber: 3,
           configuredId: 2,
@@ -386,7 +339,7 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           // Add a reconfiguration to the same project.
@@ -395,7 +348,7 @@ const tests = {
             projectId: 1,
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
-            duration: BigNumber.from(293),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
@@ -414,7 +367,7 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           // Add a reconfiguration to the same project that will expire before the duration.
@@ -423,20 +376,20 @@ const tests = {
             projectId: 1,
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
-            duration: BigNumber.from(293),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
             configureActiveFundingCycle: false,
             ballot: {
               // Set the ballot duration shorter than the configuration duration.
-              duration: BigNumber.from(10)
+              duration: BigNumber.from(86399)
             }
           },
           {
             type: "fastforward",
             // Fast forward past the expired configuration.
-            seconds: BigNumber.from(10)
+            seconds: BigNumber.from(86399)
           },
           // Add another reconfiguration
           {
@@ -444,19 +397,19 @@ const tests = {
             projectId: 1,
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
-            duration: BigNumber.from(293),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
             configureActiveFundingCycle: false,
             ballot: {
               // Set the ballot duration shorter than the configuration duration.
-              duration: BigNumber.from(10)
+              duration: BigNumber.from(86399)
             }
           }
         ],
         // Fast forward a little bit more.
-        fastforward: BigNumber.from(15),
+        fastforward: BigNumber.from(10),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -501,7 +454,7 @@ const tests = {
       description: "duration more than the max allowed",
       fn: testTemplate({
         op: {
-          duration: BigNumber.from(2).pow(24)
+          duration: BigNumber.from(2).pow(16)
         },
         setup: {
           // no preconfiguration
@@ -610,11 +563,11 @@ module.exports = function() {
               preconfigure.ballot.duration
             );
 
-          await this.setTimeMark(tx.blockNumber);
+          await this.setTimeMarkFn(tx.blockNumber);
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
-        const expectedPreconfigureStart = await this.getTimestamp(
+        const expectedPreconfigureStart = await this.getTimestampFn(
           preconfigureBlockNumber
         );
 
@@ -648,7 +601,7 @@ module.exports = function() {
               // Fast forward the clock if needed.
               // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
               // eslint-disable-next-line no-await-in-loop
-              await this.fastforward(op.seconds.sub(1));
+              await this.fastforwardFn(op.seconds.sub(1));
               break;
             default:
               break;
@@ -671,7 +624,7 @@ module.exports = function() {
         );
 
         // Get the current timestamp after the transaction.
-        const now = await this.getTimestamp(tx.blockNumber);
+        const now = await this.getTimestampFn(tx.blockNumber);
 
         // Expect two events to have been emitted.
         await expect(tx)
@@ -701,7 +654,9 @@ module.exports = function() {
         let expectedStart;
         if (preconfigure) {
           expectedStart = expectedPreconfigureStart.add(
-            preconfigure.duration.mul(expectation.configuredNumber - 1)
+            preconfigure.duration
+              .mul(86400)
+              .mul(expectation.configuredNumber - 1)
           );
         } else {
           expectedStart = now;

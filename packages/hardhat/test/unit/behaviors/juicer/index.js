@@ -6,24 +6,25 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy mock dependency contracts.
-    const operatorStore = await this.deployMockLocalContract("OperatorStore");
-    const projects = await this.deployMockLocalContract("Projects", [
+    const operatorStore = await this.deployMockLocalContractFn("OperatorStore");
+    const projects = await this.deployMockLocalContractFn("Projects", [
       operatorStore.address
     ]);
-    const prices = await this.deployMockLocalContract("Prices");
-    const terminalDirectory = await this.deployMockLocalContract(
+    const prices = await this.deployMockLocalContractFn("Prices");
+    const terminalDirectory = await this.deployMockLocalContractFn(
       "TerminalDirectory",
-      [projects.address]
+      [projects.address, operatorStore.address]
     );
-    const fundingCycles = await this.deployMockLocalContract("FundingCycles", [
-      terminalDirectory.address
-    ]);
-    const ticketBooth = await this.deployMockLocalContract("TicketBooth", [
+    const fundingCycles = await this.deployMockLocalContractFn(
+      "FundingCycles",
+      [terminalDirectory.address]
+    );
+    const ticketBooth = await this.deployMockLocalContractFn("TicketBooth", [
       projects.address,
       operatorStore.address,
       terminalDirectory.address
     ]);
-    const modStore = await this.deployMockLocalContract("ModStore", [
+    const modStore = await this.deployMockLocalContractFn("ModStore", [
       projects.address,
       operatorStore.address
     ]);
@@ -42,7 +43,7 @@ module.exports = function() {
       modStore
     };
 
-    this.targetContract = await this.deployContract(contractName, [
+    this.targetContract = await this.deployContractFn(contractName, [
       projects.address,
       fundingCycles.address,
       ticketBooth.address,
@@ -57,16 +58,17 @@ module.exports = function() {
   });
 
   // Test each function.
-  // describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
-  // describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
-  // describe("setFee(...)", shouldBehaveLike.setFee);
-  // describe("allowMigration(...)", shouldBehaveLike.allowMigration);
-  // describe("addToBalance(...)", shouldBehaveLike.addToBalance);
-  // describe("migrate(...)", shouldBehaveLike.migrate);
-  // describe("deploy(...)", shouldBehaveLike.deploy);
+  describe("appointGovernance(...)", shouldBehaveLike.appointGovernance);
+  describe("acceptGovernance(...)", shouldBehaveLike.acceptGovernance);
+  describe("setFee(...)", shouldBehaveLike.setFee);
+  describe("allowMigration(...)", shouldBehaveLike.allowMigration);
+  describe("addToBalance(...)", shouldBehaveLike.addToBalance);
+  describe("migrate(...)", shouldBehaveLike.migrate);
+  describe("deploy(...)", shouldBehaveLike.deploy);
+
   describe("configure(...)", shouldBehaveLike.configure);
   describe("pay(...)", shouldBehaveLike.pay);
-  describe("printTickets(...)", shouldBehaveLike.printTickets);
+  describe("printPremineTickets(...)", shouldBehaveLike.printPreminedTickets);
   describe("redeem(...)", shouldBehaveLike.redeem);
   describe("tap(...)", shouldBehaveLike.tap);
   describe("printReservedTickets(...)", shouldBehaveLike.printReservedTickets);

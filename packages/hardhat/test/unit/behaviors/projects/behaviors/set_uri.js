@@ -63,7 +63,8 @@ module.exports = function() {
           .create(
             create.owner,
             ethers.utils.formatBytes32String("some-handle"),
-            ""
+            "",
+            this.constants.AddressZero
           );
         if (permissionFlag !== undefined) {
           const permissionIndex = 6;
@@ -106,7 +107,8 @@ module.exports = function() {
           .create(
             create.owner,
             ethers.utils.formatBytes32String("some-handle"),
-            ""
+            "",
+            this.constants.AddressZero
           );
 
         if (permissionFlag !== undefined) {

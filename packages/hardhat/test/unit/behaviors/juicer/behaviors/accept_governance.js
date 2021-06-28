@@ -28,20 +28,22 @@ module.exports = function() {
         const { caller, governance } = successTest.fn(this);
 
         // Appoint the governance that will accept.
-        await this.contract
+        await this.targetContract
           .connect(caller)
           .appointGovernance(governance.address);
 
         // Execute the transaction.
-        const tx = await this.contract.connect(governance).acceptGovernance();
+        const tx = await this.targetContract
+          .connect(governance)
+          .acceptGovernance();
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "AcceptGovernance")
+          .to.emit(this.targetContract, "AcceptGovernance")
           .withArgs(governance.address);
 
         // Get the stored pending governance value.
-        const storedGovernance = await this.contract.governance();
+        const storedGovernance = await this.targetContract.governance();
 
         // Expect the stored value to equal whats expected.
         expect(storedGovernance).to.equal(governance.address);
@@ -54,7 +56,7 @@ module.exports = function() {
         const { caller, revert } = failureTest.fn(this);
 
         await expect(
-          this.contract.connect(caller).acceptGovernance()
+          this.targetContract.connect(caller).acceptGovernance()
         ).to.be.revertedWith(revert);
       });
     });

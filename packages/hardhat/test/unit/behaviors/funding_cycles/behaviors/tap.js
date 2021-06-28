@@ -30,7 +30,7 @@ const testTemplate = ({
     preconfigure: {
       target: BigNumber.from(240),
       currency: BigNumber.from(0),
-      duration: BigNumber.from(100),
+      duration: BigNumber.from(1),
       discountRate: BigNumber.from(120),
       fee: BigNumber.from(40),
       metadata: BigNumber.from(3),
@@ -116,7 +116,7 @@ const tests = {
             target: BigNumber.from(150),
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -151,7 +151,7 @@ const tests = {
             target: BigNumber.from(50),
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -176,7 +176,7 @@ const tests = {
         preconfigure: {
           // Less than the amount being tapped. Should be ignored.
           target: BigNumber.from(100),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -192,14 +192,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward the full duration.
-        fastforward: BigNumber.from(42),
+        fastforward: BigNumber.from(86400),
         expectation: {
           tappedId: 2,
           tappedNumber: 2,
@@ -217,7 +217,7 @@ const tests = {
         preconfigure: {
           // Greater than the amount being tapped.
           target: BigNumber.from(140),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -233,14 +233,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           tappedId: 3,
           tappedNumber: 3,
@@ -260,7 +260,7 @@ const tests = {
         preconfigure: {
           // Greater than the amount being tapped.
           target: BigNumber.from(140),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -276,14 +276,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           tappedId: 3,
           tappedNumber: 3,
@@ -303,7 +303,7 @@ const tests = {
         preconfigure: {
           // Greater than the amount being tapped.
           target: BigNumber.from(140),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         ops: [
           {
@@ -319,14 +319,14 @@ const tests = {
             },
             // The below values dont matter.
             currency: BigNumber.from(1),
-            duration: BigNumber.from(80),
+            duration: BigNumber.from(2),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
           }
         ],
         // Fast forward past the full duration.
-        fastforward: BigNumber.from(52),
+        fastforward: BigNumber.from(86401),
         expectation: {
           tappedId: 3,
           tappedNumber: 3,
@@ -346,10 +346,10 @@ const tests = {
         preconfigure: {
           // Greater than the amount being tapped.
           target: BigNumber.from(140),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
         // Fast forward multiples of the duration.
-        fastforward: BigNumber.from(127),
+        fastforward: BigNumber.from(86400 * 3 + 1),
         expectation: {
           tappedId: 2,
           tappedNumber: 5,
@@ -455,9 +455,9 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           discountRate: BigNumber.from(0),
-          duration: BigNumber.from(42)
+          duration: BigNumber.from(1)
         },
-        fastforward: BigNumber.from(42),
+        fastforward: BigNumber.from(86401),
         revert: "FundingCycles::_tappable: NON_RECURRING"
       })
     },
@@ -533,11 +533,11 @@ module.exports = function() {
             preconfigure.configureActiveFundingCycle
           );
           preconfigureBlockNumber = tx.blockNumber;
-          await this.setTimeMark(tx.blockNumber);
+          await this.setTimeMarkFn(tx.blockNumber);
         }
 
         // Get a reference to the timestamp right after the preconfiguration occurs.
-        const expectedPreconfigureStart = await this.getTimestamp(
+        const expectedPreconfigureStart = await this.getTimestampFn(
           preconfigureBlockNumber
         );
 
@@ -570,7 +570,7 @@ module.exports = function() {
                   .withArgs(
                     op.ballot.fundingCycleId,
                     // eslint-disable-next-line no-await-in-loop
-                    await this.getTimestamp(tx.blockNumber)
+                    await this.getTimestampFn(tx.blockNumber)
                   )
                   .returns(op.ballot.state);
               }
@@ -584,7 +584,7 @@ module.exports = function() {
             case "fastforward":
               // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
               // eslint-disable-next-line no-await-in-loop
-              await this.fastforward(op.seconds.sub(1));
+              await this.fastforwardFn(op.seconds.sub(1));
               break;
             default:
               break;
@@ -594,7 +594,7 @@ module.exports = function() {
         const tx = await this.contract.connect(caller).tap(projectId, amount);
 
         // Get the current timestamp after the transaction.
-        const now = await this.getTimestamp(tx.blockNumber);
+        const now = await this.getTimestampFn(tx.blockNumber);
 
         // Expect an event to have been emitted.
         await expect(tx)
@@ -625,7 +625,7 @@ module.exports = function() {
           let expectedStart;
           if (preconfigure) {
             expectedStart = expectedPreconfigureStart.add(
-              preconfigure.duration.mul(expectation.initNumber - 1)
+              preconfigure.duration.mul(86400).mul(expectation.initNumber - 1)
             );
           } else {
             expectedStart = now;
@@ -688,7 +688,7 @@ module.exports = function() {
             preconfigure.fee,
             preconfigure.configureActiveFundingCycle
           );
-          await this.setTimeMark(tx.blockNumber);
+          await this.setTimeMarkFn(tx.blockNumber);
         }
 
         for (let i = 0; i < ops.length; i += 1) {
@@ -701,7 +701,7 @@ module.exports = function() {
             case "fastforward":
               // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
               // eslint-disable-next-line no-await-in-loop
-              await this.fastforward(op.seconds.sub(1));
+              await this.fastforwardFn(op.seconds.sub(1));
               break;
             default:
               break;

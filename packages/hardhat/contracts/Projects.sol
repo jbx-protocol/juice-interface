@@ -101,7 +101,7 @@ contract Projects is ERC721, IProjects, Operatable {
         if (_terminal != ITerminal(address(0)))
             _terminal.terminalDirectory().setTerminal(count, _terminal);
 
-        emit Create(count, _owner, _handle, _uri, msg.sender);
+        emit Create(count, _owner, _handle, _uri, _terminal, msg.sender);
 
         return count;
     }

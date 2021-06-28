@@ -3,16 +3,27 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "no terminal set yet",
+      description: "no terminal set yet, called by owner",
       fn: ({ deployer }) => ({
         caller: deployer,
+        projectOwner: deployer.address,
         projectId: 1
+      })
+    },
+    {
+      description: "no terminal set yet, called by operator",
+      fn: ({ deployer, addrs }) => ({
+        caller: addrs[0],
+        projectOwner: deployer.address,
+        projectId: 1,
+        setup: { permissionFlag: true }
       })
     },
     {
       description: "set by previous terminal",
       fn: ({ deployer }) => ({
         caller: deployer,
+        projectOwner: deployer.address,
         projectId: 1,
         setup: {
           preset: true,
@@ -29,6 +40,7 @@ const tests = {
       description: "project not found",
       fn: ({ deployer }) => ({
         caller: deployer,
+        projectOwner: deployer.address,
         projectId: 1,
         setup: { createProject: false, preset: false },
         revert: "TerminalDirectory::setTerminal: NOT_FOUND"
@@ -36,10 +48,11 @@ const tests = {
     },
     {
       description: "unauthorized",
-      fn: ({ deployer }) => ({
-        caller: deployer,
+      fn: ({ deployer, addrs }) => ({
+        caller: addrs[0],
+        projectOwner: deployer.address,
         projectId: 1,
-        setup: { createProject: true, preset: true },
+        setup: { createProject: true, preset: false },
         revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
       })
     }
@@ -51,16 +64,29 @@ module.exports = function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
         const {
+          projectOwner,
           caller,
           projectId,
-          setup: { preset } = {},
+          setup: { preset, permissionFlag } = {},
           expect: { noEvent = false } = {}
         } = successTest.fn(this);
+
+        // Set the Projects mock to return the projectOwner.
+        await this.projects.mock.ownerOf
+          .withArgs(projectId)
+          .returns(projectOwner);
+
+        // Mock the Operator store permissions.
+        const permissionIndex = 15;
+        // Mock the caller to be the project's controller.
+        await this.operatorStore.mock.hasPermission
+          .withArgs(caller.address, projectOwner, projectId, permissionIndex)
+          .returns(permissionFlag || false);
 
         // The project should exist.
         await this.projects.mock.exists.withArgs(projectId).returns(true);
 
-        const mockTerminalDirectory = await this.deployMockLocalContract(
+        const mockTerminalDirectory = await this.deployMockLocalContractFn(
           "TerminalDirectory",
           [this.projects.address]
         );
@@ -101,9 +127,22 @@ module.exports = function() {
         const {
           caller,
           projectId,
-          setup: { preset, createProject } = {},
+          projectOwner,
+          setup: { preset, createProject, permissionFlag } = {},
           revert
         } = failureTest.fn(this);
+
+        // Set the Projects mock to return the projectOwner.
+        await this.projects.mock.ownerOf
+          .withArgs(projectId)
+          .returns(projectOwner);
+
+        // Mock the Operator store permissions.
+        const permissionIndex = 15;
+        // Mock the caller to be the project's controller.
+        await this.operatorStore.mock.hasPermission
+          .withArgs(caller.address, projectOwner, projectId, permissionIndex)
+          .returns(permissionFlag || false);
 
         // The project should exist.
         await this.projects.mock.exists
@@ -111,7 +150,7 @@ module.exports = function() {
           .returns(createProject);
 
         if (preset) {
-          const presetMockTerminalDirectory = await this.deployMockLocalContract(
+          const presetMockTerminalDirectory = await this.deployMockLocalContractFn(
             "TerminalDirectory",
             [this.projects.address]
           );
@@ -120,7 +159,7 @@ module.exports = function() {
             .setTerminal(projectId, presetMockTerminalDirectory.address);
         }
 
-        const mockTerminalDirectory = await this.deployMockLocalContract(
+        const mockTerminalDirectory = await this.deployMockLocalContractFn(
           "TerminalDirectory",
           [this.projects.address]
         );

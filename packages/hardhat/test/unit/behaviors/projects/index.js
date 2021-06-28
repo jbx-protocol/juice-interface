@@ -6,10 +6,10 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy mock dependency contracts.
-    this.operatorStore = await this.deployMockLocalContract("OperatorStore");
+    this.operatorStore = await this.deployMockLocalContractFn("OperatorStore");
 
     // Deploy the contract.
-    this.contract = await this.deployContract(contractName, [
+    this.contract = await this.deployContractFn(contractName, [
       this.operatorStore.address
     ]);
   });

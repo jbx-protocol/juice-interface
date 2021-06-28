@@ -304,7 +304,7 @@ const tests = {
       fn: () => ({
         count: BigNumber.from(2),
         ticketBalance: BigNumber.from(1),
-        revert: "Juicer::claimableOverflow: INSUFFICIENT_FUNDS"
+        revert: "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
       })
     },
     {

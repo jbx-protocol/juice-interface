@@ -71,7 +71,7 @@ describe("Juice", async function() {
     };
 
     // Bind a function that mocks a contract function's execution with the provided args to return the provided values.
-    this.mockFn = ({ mockContract, fn, args, returns = [] }) => async () => {
+    this.mockFn = async ({ mockContract, fn, args, returns = [] }) => {
       // The `args` can be a function or an array.
       const normalizedArgs =
         args && typeof args === "function" ? await args() : args;
@@ -136,6 +136,46 @@ describe("Juice", async function() {
         chai
           .expect(tx)
           .to.emit(contract, event.name)
+          .withArgs(...event.args)
+      );
+    };
+
+    // Bind a function that sends funds from one address to another.
+    this.sendTransactionFn = async ({ from, to, value, revert, events }) => {
+      // Transfer the funds.
+      const promise = from.sendTransaction({
+        to,
+        value
+      });
+
+      // If a revert message is passed in, check to see if it was thrown.
+      if (revert) {
+        await chai.expect(promise).to.be.revertedWith(revert);
+        return;
+      }
+
+      // Await the promise.
+      const tx = await promise;
+
+      // Wait for a block to get mined.
+      const receipt = await tx.wait();
+
+      // Subtract the gas spent from the signer's account.
+      initialBalances[receipt.from] = (
+        initialBalances[receipt.from] || BigNumber.from(0)
+      ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
+
+      // Set the time mark of this function.
+      await this.setTimeMarkFn(tx.blockNumber);
+
+      // Return if there are no events.
+      if (events.length === 0) return;
+
+      // Check for events.
+      events.forEach(event =>
+        chai
+          .expect(tx)
+          .to.emit(event.contract, event.name)
           .withArgs(...event.args)
       );
     };
@@ -267,7 +307,7 @@ describe("Juice", async function() {
   });
 
   // Run the tests.
-  // describe("Unit", unit);
+  describe("Unit", unit);
   describe("Integration", integration);
 
   // After each test, restore the contract state.

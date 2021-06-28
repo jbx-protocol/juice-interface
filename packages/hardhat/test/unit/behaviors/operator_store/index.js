@@ -6,7 +6,7 @@ module.exports = function() {
   // Before the tests, deploy the contract.
   before(async function() {
     // Deploy the contract.
-    this.contract = await this.deployContract(contractName);
+    this.contract = await this.deployContractFn(contractName);
   });
 
   // Test each function.

@@ -181,12 +181,17 @@ module.exports = function() {
         // Setup by creating a project that the handle will be transfered from.
         await this.contract
           .connect(caller)
-          .create(source.owner, source.handle, "");
+          .create(source.owner, source.handle, "", this.constants.AddressZero);
 
         // Setup by creating another project that the handle will be transfered to.
         await this.contract
           .connect(caller)
-          .create(destination.owner, destination.handle, "");
+          .create(
+            destination.owner,
+            destination.handle,
+            "",
+            this.constants.AddressZero
+          );
 
         // Execute the transaction.
         await this.contract
@@ -264,12 +269,17 @@ module.exports = function() {
         // Setup by creating a project that the handle will be transfered from.
         await this.contract
           .connect(caller)
-          .create(source.owner, source.handle, "");
+          .create(source.owner, source.handle, "", this.constants.AddressZero);
 
         // Setup by creating another project that the handle will be transfered to.
         await this.contract
           .connect(caller)
-          .create(destination.owner, destination.handle, "");
+          .create(
+            destination.owner,
+            destination.handle,
+            "",
+            this.constants.AddressZero
+          );
 
         // Execute the transaction.
         await this.contract

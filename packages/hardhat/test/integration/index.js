@@ -79,6 +79,7 @@ module.exports = function() {
           target: 0,
           currency: 0,
           duration: BigNumber.from(10000),
+          cycleLimit: BigNumber.from(0),
           discountRate: BigNumber.from(180),
           ballot: constants.AddressZero
         },

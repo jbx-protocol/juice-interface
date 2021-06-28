@@ -18,6 +18,7 @@ const testTemplate = ({
   target: BigNumber.from(120),
   currency: BigNumber.from(1),
   duration: BigNumber.from(1),
+  cycleLimit: BigNumber.from(0),
   discountRate: BigNumber.from(180),
   fee: BigNumber.from(42),
   metadata: BigNumber.from(92),
@@ -28,6 +29,7 @@ const testTemplate = ({
       currency: BigNumber.from(0),
       duration: BigNumber.from(1),
       discountRate: BigNumber.from(120),
+      cycleLimit: BigNumber.from(0),
       fee: BigNumber.from(40),
       metadata: BigNumber.from(3),
       configureActiveFundingCycle: false,
@@ -349,6 +351,7 @@ const tests = {
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
             duration: BigNumber.from(2),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
@@ -377,6 +380,7 @@ const tests = {
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
             duration: BigNumber.from(2),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
@@ -399,6 +403,7 @@ const tests = {
             currency: BigNumber.from(2),
             duration: BigNumber.from(2),
             discountRate: BigNumber.from(93),
+            cycleLimit: BigNumber.from(0),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
             configureActiveFundingCycle: false,
@@ -431,6 +436,7 @@ const tests = {
         target: BigNumber.from(120),
         currency: BigNumber.from(1),
         duration: BigNumber.from(80),
+        cycleLimit: BigNumber.from(0),
         discountRate: BigNumber.from(180),
         fee: BigNumber.from(42),
         metadata: BigNumber.from(92),
@@ -524,6 +530,7 @@ module.exports = function() {
           target,
           currency,
           duration,
+          cycleLimit,
           discountRate,
           fee,
           metadata,
@@ -549,6 +556,7 @@ module.exports = function() {
               target: preconfigure.target,
               currency: preconfigure.currency,
               duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
               discountRate: preconfigure.discountRate,
               ballot: preconfigure.ballot.address
             },
@@ -583,6 +591,7 @@ module.exports = function() {
                   target: op.target,
                   currency: op.currency,
                   duration: op.duration,
+                  cycleLimit: op.cycleLimit,
                   discountRate: op.discountRate,
                   ballot: this.ballot.address
                 },
@@ -615,6 +624,7 @@ module.exports = function() {
             target,
             currency,
             duration,
+            cycleLimit,
             discountRate,
             ballot: this.ballot.address
           },
@@ -633,7 +643,14 @@ module.exports = function() {
             expectation.configuredId,
             projectId,
             now,
-            [target, currency, duration, discountRate, this.ballot.address],
+            [
+              target,
+              currency,
+              duration,
+              cycleLimit,
+              discountRate,
+              this.ballot.address
+            ],
             metadata,
             caller.address
           );
@@ -692,6 +709,7 @@ module.exports = function() {
         expect(storedFundingCycle.ballot).to.equal(this.ballot.address);
         expect(storedFundingCycle.start).to.equal(expectedStart);
         expect(storedFundingCycle.configured).to.equal(now);
+        expect(storedFundingCycle.cycleLimit).to.equal(0);
         expect(storedFundingCycle.duration).to.equal(duration);
         expect(storedFundingCycle.target).to.equal(target);
         expect(storedFundingCycle.currency).to.equal(currency);
@@ -712,6 +730,7 @@ module.exports = function() {
           target,
           currency,
           duration,
+          cycleLimit,
           discountRate,
           fee,
           metadata,
@@ -732,6 +751,7 @@ module.exports = function() {
               target: preconfigure.target,
               currency: preconfigure.currency,
               duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
               discountRate: preconfigure.discountRate,
               ballot: preconfigure.ballot.address
             },
@@ -752,6 +772,7 @@ module.exports = function() {
               target,
               currency,
               duration,
+              cycleLimit,
               discountRate,
               ballot: this.ballot.address
             },

@@ -65,7 +65,6 @@ module.exports = function() {
   describe("addToBalance(...)", shouldBehaveLike.addToBalance);
   describe("migrate(...)", shouldBehaveLike.migrate);
   describe("deploy(...)", shouldBehaveLike.deploy);
-
   describe("configure(...)", shouldBehaveLike.configure);
   describe("pay(...)", shouldBehaveLike.pay);
   describe("printPremineTickets(...)", shouldBehaveLike.printPreminedTickets);

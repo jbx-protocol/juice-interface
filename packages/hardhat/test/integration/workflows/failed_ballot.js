@@ -43,12 +43,14 @@ module.exports = async ({
     // The ballot duration is in seconds, but duration is in days.
     max: ballotDurationInDays.sub(1)
   });
-
   // This is how many cycles can pass while the ballot is active and waiting for approval.
   const cycleCountDuringBallot = ballotDurationInDays.div(duration1).add(1);
 
   // The target of the first funding cycle.
   const target1 = randomBigNumberFn();
+
+  // The cycle limit for the first funding cycle.
+  const cycleLimit1 = randomBigNumberFn({ max: constants.MaxUint8 });
 
   // The currency will be 0, which corresponds to ETH.
   const currency1 = BigNumber.from(0);
@@ -71,6 +73,7 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: constants.MaxUint16
   });
+  const cycleLimit2 = randomBigNumberFn({ max: constants.MaxUint8 });
   const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot2 = constants.AddressZero;
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -141,6 +144,7 @@ module.exports = async ({
             target: target1,
             currency: currency1,
             duration: duration1,
+            cycleLimit: cycleLimit1,
             discountRate: discountRate1,
             ballot: ballot.address
           },
@@ -185,6 +189,7 @@ module.exports = async ({
             target: target2,
             currency: currency2,
             duration: duration2,
+            cycleLimit: cycleLimit2,
             discountRate: discountRate2,
             ballot: ballot2
           },
@@ -211,6 +216,7 @@ module.exports = async ({
           expectedFundingCycleNumber1.add(cycleCountDuringBallot),
           expectedFundingCycleId1,
           timeMark,
+          cycleLimit2,
           weight
             .mul(discountRate1.pow(cycleCountDuringBallot))
             .div(constants.MaxPercent.pow(cycleCountDuringBallot)),
@@ -261,6 +267,7 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           firstFundingCycleBasedOn,
           originalTimeMark,
+          cycleLimit1,
           weight,
           ballot.address,
           originalTimeMark,
@@ -292,6 +299,7 @@ module.exports = async ({
           expectedFundingCycleNumber2,
           expectedFundingCycleId1,
           originalTimeMark,
+          cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
           weight.mul(discountRate1).div(constants.MaxPercent),
           ballot.address,
           // The start time should be one duration after the initial start.
@@ -323,6 +331,9 @@ module.exports = async ({
           expectedFundingCycleNumber1.add(cycleCountDuringBallot.sub(1)),
           expectedFundingCycleId1,
           originalTimeMark,
+          cycleLimit1.eq(0) || cycleCountDuringBallot.gte(cycleLimit1)
+            ? BigNumber.from(0)
+            : cycleLimit1.sub(cycleCountDuringBallot.sub(1)),
           weight
             .mul(discountRate1.pow(cycleCountDuringBallot.sub(1)))
             .div(constants.MaxPercent.pow(cycleCountDuringBallot.sub(1))),

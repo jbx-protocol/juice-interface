@@ -159,6 +159,7 @@ const ops = ({
           projectId,
           number: 0,
           basedOn: 0,
+          cycleLimit: 0,
           weight,
           ballot: constants.AddressZero,
           start: 0,

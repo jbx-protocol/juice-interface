@@ -379,6 +379,7 @@ const ops = ({
         {
           configured,
           id: fundingCycleId,
+          cycleLimit: 0,
           projectId,
           number: 0,
           basedOn: 0,
@@ -459,6 +460,7 @@ const ops = ({
                   returns: [
                     {
                       metadata: 0,
+                      cycleLimit: 0,
                       configured: 0,
                       id: 1,
                       projectId: 0,
@@ -540,6 +542,7 @@ const ops = ({
                   returns: [
                     {
                       metadata: 0,
+                      cycleLimit: 0,
                       configured: 0,
                       id: 1,
                       projectId: 0,

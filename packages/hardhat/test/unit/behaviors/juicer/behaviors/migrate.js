@@ -289,6 +289,7 @@ module.exports = function() {
             returns: [
               {
                 configured: 0,
+                cycleLimit: 0,
                 id: 0,
                 projectId,
                 number: 0,

@@ -122,6 +122,10 @@ module.exports = async ({
     max: constants.MaxUint16
   });
 
+  const cycleLimit = randomBigNumberFn({
+    max: constants.MaxUint8
+  });
+
   return [
     /** 
       Deploy first project with a payment mod.
@@ -139,6 +143,7 @@ module.exports = async ({
             target,
             currency,
             duration,
+            cycleLimit,
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },
@@ -207,6 +212,9 @@ module.exports = async ({
             duration: randomBigNumberFn({
               min: duration.div(2),
               max: constants.MaxUint16
+            }),
+            cycleLimit: randomBigNumberFn({
+              max: constants.MaxUint8
             }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero

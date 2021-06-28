@@ -135,6 +135,7 @@ module.exports = function() {
           target: 10,
           currency: 1,
           duration: 10,
+          cycleLimit: 0,
           discountRate: 10,
           ballot: constants.AddressZero
         };
@@ -165,6 +166,7 @@ module.exports = function() {
           .withArgs(projectId, properties, packedMetadata, 10, true)
           .returns({
             configured,
+            cycleLimit: 0,
             id: 0,
             projectId: 0,
             number: 0,
@@ -218,6 +220,7 @@ module.exports = function() {
           target: 10,
           currency: 1,
           duration: 10,
+          cycleLimit: 0,
           discountRate: 10,
           ballot: constants.AddressZero
         };
@@ -248,6 +251,7 @@ module.exports = function() {
           .withArgs(projectId, properties, packedMetadata, 10, true)
           .returns({
             configured,
+            cycleLimit: 0,
             id: 0,
             projectId: 0,
             number: 0,

@@ -40,6 +40,9 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: BigNumber.from(10000)
   });
+  const cycleLimit1 = randomBigNumberFn({
+    max: constants.MaxUint8
+  });
   const discountRate1 = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot1 = constants.AddressZero;
 
@@ -55,6 +58,9 @@ module.exports = async ({
   const duration2 = randomBigNumberFn({
     min: BigNumber.from(1),
     max: constants.MaxUint16
+  });
+  const cycleLimit2 = randomBigNumberFn({
+    max: constants.MaxUint8
   });
   const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot2 = constants.AddressZero;
@@ -130,6 +136,7 @@ module.exports = async ({
             target: target1,
             currency: currency1,
             duration: duration1,
+            cycleLimit: cycleLimit1,
             discountRate: discountRate1,
             ballot: ballot1
           },
@@ -156,6 +163,8 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           expectedBasedOn,
           timeMark,
+          // Cycle limit should be 0 for the first funding cycle.
+          cycleLimit1,
           weight,
           ballot1,
           timeMark,
@@ -184,6 +193,7 @@ module.exports = async ({
             target: target2,
             currency: currency2,
             duration: duration2,
+            cycleLimit: cycleLimit2,
             discountRate: discountRate2,
             ballot: ballot2
           },
@@ -210,6 +220,7 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           expectedBasedOn,
           timeMark,
+          cycleLimit2,
           weight,
           ballot2,
           // The start time should stay the same.
@@ -260,6 +271,7 @@ module.exports = async ({
             target: target1,
             currency: currency1,
             duration: duration1,
+            cycleLimit: cycleLimit1,
             discountRate: discountRate1,
             ballot: ballot1
           },
@@ -286,6 +298,7 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           expectedBasedOn,
           timeMark,
+          cycleLimit1,
           weight,
           ballot1,
           // The start time should stay the same.
@@ -332,6 +345,7 @@ module.exports = async ({
             target: target2,
             currency: currency2,
             duration: duration2,
+            cycleLimit: cycleLimit2,
             discountRate: discountRate2,
             ballot: ballot2
           },
@@ -358,6 +372,7 @@ module.exports = async ({
           expectedFundingCycleNumber2,
           expectedFundingCycleId1,
           timeMark,
+          cycleLimit2,
           weight.mul(discountRate1).div(constants.MaxPercent),
           ballot2,
           // The start time should be one duration after the initial start.
@@ -385,6 +400,7 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           expectedBasedOn,
           configuredTimeMark,
+          cycleLimit1,
           weight,
           ballot1,
           // The start time should stay the same.

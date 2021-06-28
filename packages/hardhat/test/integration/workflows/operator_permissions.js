@@ -36,6 +36,7 @@ module.exports = async ({
           target: BigNumber.from(1000),
           currency: BigNumber.from(1),
           duration: BigNumber.from(1),
+          cycleLimit: BigNumber.from(0),
           discountRate: BigNumber.from(1),
           ballot: constants.AddressZero
         },

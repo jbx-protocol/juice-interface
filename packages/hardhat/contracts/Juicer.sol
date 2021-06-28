@@ -282,6 +282,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
           @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
           @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
+          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -354,6 +355,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
           @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
           @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
+          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.

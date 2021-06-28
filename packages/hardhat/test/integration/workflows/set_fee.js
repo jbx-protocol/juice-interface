@@ -38,6 +38,9 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: BigNumber.from(10000)
   });
+  const cycleLimit = randomBigNumberFn({
+    max: constants.MaxUint8
+  });
   const discountRate = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot = constants.AddressZero;
 
@@ -105,6 +108,7 @@ module.exports = async ({
             target,
             currency,
             duration,
+            cycleLimit,
             discountRate,
             ballot
           },
@@ -131,6 +135,7 @@ module.exports = async ({
           expectedFundingCycleNumber1,
           expectedBasedOn,
           timeMark,
+          cycleLimit,
           weight,
           ballot,
           timeMark,
@@ -176,6 +181,7 @@ module.exports = async ({
           expectedFundingCycleNumber2,
           expectedFundingCycleId1,
           originalTimeMark,
+          cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
           weight.mul(discountRate).div(constants.MaxPercent),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
@@ -218,6 +224,7 @@ module.exports = async ({
             target,
             currency,
             duration,
+            cycleLimit,
             discountRate,
             ballot
           },
@@ -244,6 +251,7 @@ module.exports = async ({
           expectedFundingCycleNumber3,
           expectedFundingCycleId2,
           timeMark,
+          cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
           weight
             .mul(discountRate)
             .mul(discountRate)

@@ -156,6 +156,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       target: 10,
       currency: 1,
       duration: 10,
+      cycleLimit: 0,
       discountRate: 10,
       ballot: constants.AddressZero
     },
@@ -270,6 +271,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
                 ballot: constants.AddressZero,
                 start: 0,
                 duration: 0,
+                cycleLimit: 0,
                 target: 0,
                 currency: 0,
                 fee: 0,

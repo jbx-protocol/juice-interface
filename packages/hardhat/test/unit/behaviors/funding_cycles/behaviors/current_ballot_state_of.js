@@ -29,6 +29,7 @@ const testTemplate = ({
       target: BigNumber.from(240),
       currency: BigNumber.from(0),
       duration: BigNumber.from(1),
+      cycleLimit: BigNumber.from(0),
       discountRate: BigNumber.from(120),
       fee: BigNumber.from(40),
       metadata: BigNumber.from(3),
@@ -83,6 +84,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -111,6 +113,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -144,6 +147,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -177,6 +181,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -210,6 +215,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -243,6 +249,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -275,6 +282,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -309,6 +317,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -338,6 +347,7 @@ const tests = {
           duration: BigNumber.from(2)
             .pow(16)
             .sub(1),
+          cycleLimit: BigNumber.from(0),
           discountRate: BigNumber.from(200),
           fee: BigNumber.from(200),
           metadata: constants.MaxUint256
@@ -363,6 +373,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -385,6 +396,7 @@ const tests = {
             target: BigNumber.from(120),
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92),
@@ -422,6 +434,7 @@ const tests = {
             // The below values dont matter.
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -455,6 +468,7 @@ const tests = {
             // The below values dont matter.
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -488,6 +502,7 @@ const tests = {
             // The below values dont matter.
             currency: BigNumber.from(1),
             duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(180),
             fee: BigNumber.from(42),
             metadata: BigNumber.from(92)
@@ -541,6 +556,7 @@ module.exports = function() {
               target: preconfigure.target,
               currency: preconfigure.currency,
               duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
               discountRate: preconfigure.discountRate,
               ballot: this.ballot.address
             },
@@ -572,6 +588,7 @@ module.exports = function() {
                   target: op.target,
                   currency: op.currency,
                   duration: op.duration,
+                  cycleLimit: op.cycleLimit,
                   discountRate: op.discountRate,
                   ballot: this.ballot.address
                 },

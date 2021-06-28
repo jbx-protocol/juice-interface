@@ -137,6 +137,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       returns: [
         {
           configured: 0,
+          cycleLimit: 0,
           id: fundingCycleId,
           projectId,
           number: 0,

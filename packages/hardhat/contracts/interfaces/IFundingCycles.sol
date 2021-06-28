@@ -17,6 +17,8 @@ struct FundingCycle {
     uint256 basedOn;
     // The time when this funding cycle was last configured.
     uint256 configured;
+    // The number of cycles that this configuration should last for before going back to the last permanent.
+    uint256 cycleLimit;
     // A number determining the amount of redistribution shares this funding cycle will issue to each sustainer.
     uint256 weight;
     // The ballot contract to use to determine a subsequent funding cycle's reconfiguration status.
@@ -43,6 +45,7 @@ struct FundingCycleProperties {
     uint256 target;
     uint256 currency;
     uint256 duration;
+    uint256 cycleLimit;
     uint256 discountRate;
     IFundingCycleBallot ballot;
 }

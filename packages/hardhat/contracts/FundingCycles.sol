@@ -7,6 +7,8 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
+import "hardhat/console.sol";
+
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -258,6 +260,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
           @dev _properties.target The amount that the project wants to receive in each funding cycle. 18 decimals.
           @dev _properties.currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
           @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in days.
+          @dev _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
             If it's 200, each funding cycle will have equal weight.
             If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
@@ -286,6 +289,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _properties.duration > 0 &&
                 _properties.duration <= type(uint16).max,
             "FundingCycles::configure: BAD_DURATION"
+        );
+
+        // Currency must fit into a uint8.
+        require(
+            _properties.cycleLimit <= type(uint8).max,
+            "FundingCycles::configure: BAD_CYCLE_LIMIT"
         );
 
         // Discount rate token must be less than or equal to 100%.
@@ -318,6 +327,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         _packAndStoreConfigurationProperties(
             _fundingCycleId,
             _configured,
+            _properties.cycleLimit,
             _properties.ballot,
             _properties.duration,
             _properties.currency,
@@ -567,11 +577,28 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Copy if needed.
             if (_copy) {
-                _packedConfigurationPropertiesOf[
-                    count
-                ] = _packedConfigurationPropertiesOf[_baseFundingCycle.id];
-                _metadataOf[count] = _metadataOf[_baseFundingCycle.id];
-                _targetOf[count] = _targetOf[_baseFundingCycle.id];
+                uint256 _cycleLimit =
+                    _deriveCycleLimit(_baseFundingCycle, _start);
+                // Copy the last permenant funding cycle if there current one's limit is up.
+                FundingCycle memory _fundingCycleToCopy =
+                    _baseFundingCycle.cycleLimit > 0 && _cycleLimit == 0
+                        ? _lastPermanentCycleBefore(_baseFundingCycle)
+                        : _baseFundingCycle;
+
+                // Save the configuration efficiently.
+                _packAndStoreConfigurationProperties(
+                    count,
+                    _fundingCycleToCopy.configured,
+                    _cycleLimit,
+                    _fundingCycleToCopy.ballot,
+                    _fundingCycleToCopy.duration,
+                    _fundingCycleToCopy.currency,
+                    _fundingCycleToCopy.fee,
+                    _fundingCycleToCopy.discountRate
+                );
+
+                _metadataOf[count] = _metadataOf[_fundingCycleToCopy.id];
+                _targetOf[count] = _targetOf[_fundingCycleToCopy.id];
             }
         } else {
             _weight = BASE_WEIGHT;
@@ -683,31 +710,46 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     function _mockFundingCycleBasedOn(
         FundingCycle memory _fundingCycle,
         uint256 _mustStartOnOrAfter
-    ) internal pure returns (FundingCycle memory) {
+    ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
         require(
             _fundingCycle.discountRate > 0,
             "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
         );
 
+        // Derive what the start time should be.
         uint256 _start = _deriveStart(_fundingCycle, _mustStartOnOrAfter);
+
+        // Derive what the cycle limit should be.
+        uint256 _cycleLimit = _deriveCycleLimit(_fundingCycle, _start);
+
+        // Copy the last permenant funding cycle if there current one's limit is up.
+        FundingCycle memory _fundingCycleToCopy =
+            _fundingCycle.cycleLimit > 0 && _cycleLimit == 0
+                ? _lastPermanentCycleBefore(_fundingCycle)
+                : _fundingCycle;
+
+        // If there's no funding cycle to copy, return the empty funding cycle
+        if (_fundingCycleToCopy.id == 0) return _fundingCycleToCopy;
+
         return
             FundingCycle(
                 0,
-                _fundingCycle.projectId,
+                _fundingCycleToCopy.projectId,
                 _deriveNumber(_fundingCycle, _start),
-                _fundingCycle.id,
-                _fundingCycle.configured,
+                _fundingCycleToCopy.id,
+                _fundingCycleToCopy.configured,
+                _cycleLimit,
                 _deriveWeight(_fundingCycle, _start),
-                _fundingCycle.ballot,
+                _fundingCycleToCopy.ballot,
                 _start,
-                _fundingCycle.duration,
-                _fundingCycle.target,
-                _fundingCycle.currency,
-                _fundingCycle.fee,
-                _fundingCycle.discountRate,
+                _fundingCycleToCopy.duration,
+                _fundingCycleToCopy.target,
+                _fundingCycleToCopy.currency,
+                _fundingCycleToCopy.fee,
+                _fundingCycleToCopy.discountRate,
                 0,
-                _fundingCycle.metadata
+                _fundingCycleToCopy.metadata
             );
     }
 
@@ -752,6 +794,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
       @param _fundingCycleId The ID of the funding cycle to pack and store.
       @param _configured The timestamp of the configuration.
+      @param _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
       @param _ballot The ballot to use for future reconfiguration approvals. 
       @param _duration The duration of the funding cycle.
       @param _currency The currency of the funding cycle.
@@ -761,6 +804,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     function _packAndStoreConfigurationProperties(
         uint256 _fundingCycleId,
         uint256 _configured,
+        uint256 _cycleLimit,
         IFundingCycleBallot _ballot,
         uint256 _duration,
         uint256 _currency,
@@ -779,7 +823,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         packed |= _fee << 232;
         // discountRate in bytes 241-248 bytes.
         packed |= _discountRate << 240;
-        // TODO add growth rate.
+        // cycleLimit in bytes 249-256 bytes.
+        packed |= _cycleLimit << 248;
 
         // Set in storage.
         _packedConfigurationPropertiesOf[_fundingCycleId] = packed;
@@ -834,6 +879,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
         _fundingCycle.discountRate = uint256(
             uint8(_packedConfigurationProperties >> 240)
+        );
+        _fundingCycle.cycleLimit = uint256(
+            uint8(_packedConfigurationProperties >> 248)
         );
         _fundingCycle.target = _targetOf[_id];
         _fundingCycle.tapped = _tappedOf[_id];
@@ -931,6 +979,28 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     }
 
     /** 
+        @notice 
+        The limited number of times a funding cycle configuration can be active given the specified funding cycle.
+
+        @param _fundingCycle The funding cycle to make the calculation with.
+        @param _start The start time to derive cycles remaining for.
+
+        @return start The inclusive nunmber of cycles remaining.
+    */
+    function _deriveCycleLimit(
+        FundingCycle memory _fundingCycle,
+        uint256 _start
+    ) internal pure returns (uint256) {
+        if (_fundingCycle.cycleLimit <= 1) return 0;
+        uint256 _cycles =
+            ((_start - _fundingCycle.start) /
+                (_fundingCycle.duration * SECONDS_IN_DAY));
+
+        if (_cycles >= _fundingCycle.cycleLimit) return 0;
+        return _fundingCycle.cycleLimit - _cycles;
+    }
+
+    /** 
       @notice 
       Checks to see if the funding cycle of the provided ID is approved according to the correct ballot.
 
@@ -1003,5 +1073,27 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _ballot == IFundingCycleBallot(address(0))
                 ? BallotState.Approved
                 : _ballot.state(_id, _configuration);
+    }
+
+    /** 
+      @notice 
+      Finds the last funding cycle that was permenant in relation to the specified funding cycle.
+
+      @dev
+      Determined what the last funding cycle with a `cycleLimit` of 0 is.
+
+      @param _fundingCycle The funding cycle to find the most recent permenant cycle compared to.
+
+      @return fundingCycle The most recent permenant funding cycle.
+    */
+    function _lastPermanentCycleBefore(FundingCycle memory _fundingCycle)
+        private
+        view
+        returns (FundingCycle memory fundingCycle)
+    {
+        if (_fundingCycle.basedOn == 0) return _fundingCycle;
+        fundingCycle = _getStruct(_fundingCycle.basedOn);
+        if (fundingCycle.cycleLimit == 0) return fundingCycle;
+        return _lastPermanentCycleBefore(fundingCycle);
     }
 }

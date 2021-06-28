@@ -32,7 +32,7 @@ export default function Landing() {
 
   const listData = [
     'Indie artists, devs, journalists, & researchers',
-    'Ethereum protocols, DAOs, & communities',
+    'Ethereum protocols, NFTs, and DAOs',
     'Public goods and services',
     'Open source businesses',
     'Any project with predictable costs that gets paid digitally',

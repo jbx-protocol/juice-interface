@@ -5,6 +5,11 @@
         "internalType": "contract IProjects",
         "name": "_projects",
         "type": "address"
+      },
+      {
+        "internalType": "contract IOperatorStore",
+        "name": "_operatorStore",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -53,7 +58,7 @@
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "preferClaimedTickets",
+        "name": "preferUnstakedTickets",
         "type": "bool"
       }
     ],
@@ -143,6 +148,19 @@
   },
   {
     "inputs": [],
+    "name": "operatorStore",
+    "outputs": [
+      {
+        "internalType": "contract IOperatorStore",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "projects",
     "outputs": [
       {
@@ -163,7 +181,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_preferClaimedTickets",
+        "name": "_preferUnstakedTickets",
         "type": "bool"
       }
     ],

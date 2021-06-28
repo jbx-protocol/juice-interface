@@ -120,6 +120,12 @@
       },
       {
         "indexed": false,
+        "internalType": "contract ITerminal",
+        "name": "terminal",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "caller",
         "type": "address"
@@ -329,6 +335,11 @@
         "internalType": "string",
         "name": "_uri",
         "type": "string"
+      },
+      {
+        "internalType": "contract ITerminal",
+        "name": "_terminal",
+        "type": "address"
       }
     ],
     "name": "create",

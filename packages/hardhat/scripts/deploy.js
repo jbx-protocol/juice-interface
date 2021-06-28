@@ -60,7 +60,8 @@ const main = async () => {
   const operatorStore = await deploy("OperatorStore");
   const projects = await deploy("Projects", [operatorStore.address]);
   const terminalDirectory = await deploy("TerminalDirectory", [
-    projects.address
+    projects.address,
+    operatorStore.address
   ]);
   const fundingCycles = await deploy("FundingCycles", [
     terminalDirectory.address
@@ -89,7 +90,7 @@ const main = async () => {
     governance.address
   ]);
 
-  const ballot = await deploy("FundingCycleBallot", [juicer.address]);
+  const ballot = await deploy("FundingCycleBallot", []);
 
   const blockGasLimit = 9000000;
 
@@ -140,7 +141,7 @@ const main = async () => {
       {
         target: "0x21E19E0C9BAB2400000",
         currency: 1,
-        duration: 2592000, // 30 days
+        duration: 30, // 30 days
         discountRate: 190,
         ballot: ballot.address
       },

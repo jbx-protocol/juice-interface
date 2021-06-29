@@ -18,21 +18,6 @@ const tests = {
         projectId: 1,
         setup: { permissionFlag: true }
       })
-    },
-    {
-      description: "set by previous terminal",
-      fn: ({ deployer }) => ({
-        caller: deployer,
-        projectOwner: deployer.address,
-        projectId: 1,
-        setup: {
-          preset: true,
-          sameTerminal: true
-        },
-        expect: {
-          noEvent: true
-        }
-      })
     }
   ],
   failure: [
@@ -67,7 +52,7 @@ module.exports = function() {
           projectOwner,
           caller,
           projectId,
-          setup: { preset, permissionFlag } = {},
+          setup: { permissionFlag } = {},
           expect: { noEvent = false } = {}
         } = successTest.fn(this);
 
@@ -90,12 +75,6 @@ module.exports = function() {
           "TerminalDirectory",
           [this.projects.address]
         );
-
-        if (preset) {
-          await this.contract
-            .connect(caller)
-            .setTerminal(projectId, mockTerminalDirectory.address);
-        }
 
         // Execute the transaction.
         const tx = await this.contract

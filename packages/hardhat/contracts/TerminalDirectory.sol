@@ -116,15 +116,14 @@ contract TerminalDirectory is ITerminalDirectory, Operatable {
         require(
             (_currentTerminal == ITerminal(address(0)) &&
                 (msg.sender == address(projects) ||
-                    msg.sender == address(_terminal))) ||
-                msg.sender == address(_currentTerminal) ||
-                msg.sender == _projectOwner ||
-                operatorStore.hasPermission(
-                    msg.sender,
-                    _projectOwner,
-                    _projectId,
-                    Operations.SetTerminal
-                ),
+                    msg.sender == address(_terminal) ||
+                    msg.sender == _projectOwner ||
+                    operatorStore.hasPermission(
+                        msg.sender,
+                        _projectOwner,
+                        _projectId,
+                        Operations.SetTerminal
+                    ))) || msg.sender == address(_currentTerminal),
             "TerminalDirectory::setTerminal: UNAUTHORIZED"
         );
 

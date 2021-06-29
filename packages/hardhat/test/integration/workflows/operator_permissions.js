@@ -358,7 +358,7 @@ module.exports = async ({
       args: [expectedProjectId, constants.AddressZero],
       domain: expectedProjectId,
       permissionIndex: 15,
-      authorizedRevert: "TerminalDirectory::setTerminal: ZERO_ADDRESS",
+      authorizedRevert: "TerminalDirectory::setTerminal: UNAUTHORIZED",
       revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
     }
   ];

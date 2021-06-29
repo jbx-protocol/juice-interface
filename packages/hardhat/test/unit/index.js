@@ -9,7 +9,7 @@ module.exports = function() {
   describe("Governance", shouldBehaveLike.governance);
   describe("JuiceProject", shouldBehaveLike.juiceProject);
   // Depends on TerminalDirectory.
-  describe.only("FundingCycles", shouldBehaveLike.fundingCycles);
+  describe("FundingCycles", shouldBehaveLike.fundingCycles);
   // Depends on TerminalDirectory.
   describe("DirectPaymentAddress", shouldBehaveLike.directPaymentAddress);
   // // Depends on OperatorStore and Projects.

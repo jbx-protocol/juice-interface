@@ -34,7 +34,7 @@ module.exports = function() {
   });
 
   // Test each function.
-  describe.only("configure(...)", shouldBehaveLike.configure);
+  describe("configure(...)", shouldBehaveLike.configure);
   describe("tap(...)", shouldBehaveLike.tap);
   describe("getCurrentOf(...)", shouldBehaveLike.getCurrentOf);
   describe("getQueuedOf(...)", shouldBehaveLike.getQueuedOf);

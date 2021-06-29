@@ -577,6 +577,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                     ? _latestPermanentCycleBefore(_baseFundingCycle)
                     : _baseFundingCycle;
 
+            console.log("lp: %d", _latestPermanentFundingCycle.id);
+            console.log("base start: %d", _baseFundingCycle.start);
+
             // Derive the next start time.
             _start = _deriveStart(
                 _baseFundingCycle,
@@ -598,6 +601,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _start
             );
 
+            console.log("_baseFundingCycle: %d", _baseFundingCycle.id);
+            console.log("start: %d", _start);
+            console.log("number: %d", _number);
             _basedOn = _baseFundingCycle.id;
 
             // Derive what the cycle limit should be.
@@ -946,7 +952,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _mustStartOnOrAfter
-    ) internal pure returns (uint256 start) {
+    ) internal view returns (uint256 start) {
+        console.log("base id: %d", _baseFundingCycle.id);
+        console.log("base duration: %d", _baseFundingCycle.duration);
         // Save a reference to the duration measured in seconds.
         uint256 _durationInSeconds =
             _baseFundingCycle.duration * SECONDS_IN_DAY;
@@ -955,45 +963,64 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _nextImmediateStart =
             _baseFundingCycle.start + _durationInSeconds;
 
+        console.log("_mustStartOnOrAfter: %d", _mustStartOnOrAfter);
+        console.log("_nextImmediateStart: %d", _nextImmediateStart);
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)
             return _nextImmediateStart;
 
-        // Otherwise, use the closest multiple of the duration from the old end.
-        uint256 _timeFromImmediateStartMultiple =
-            (_mustStartOnOrAfter - _nextImmediateStart) % _durationInSeconds;
+        uint256 _cycleLimit = _baseFundingCycle.cycleLimit;
 
-        // If the minimum start date is possible, use it.
-        if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
+        uint256 _timeFromImmediateStartMultiple;
+        // Only use base
+        if (
+            _mustStartOnOrAfter <=
+            _baseFundingCycle.start + _durationInSeconds * _cycleLimit
+        ) {
+            // Otherwise, use the closest multiple of the duration from the old end.
+            _timeFromImmediateStartMultiple =
+                (_mustStartOnOrAfter - _nextImmediateStart) %
+                _durationInSeconds;
+        } else {
+            // Otherwise, use the closest multiple of the duration from the old end.
+            _timeFromImmediateStartMultiple =
+                (_mustStartOnOrAfter -
+                    (_baseFundingCycle.start +
+                        (_durationInSeconds * _cycleLimit))) %
+                (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+            // use up all base,
+            // then use up permanent
+            _durationInSeconds =
+                _latestPermanentFundingCycle.duration *
+                SECONDS_IN_DAY;
+        }
 
+        console.log(
+            "_timeFromImmediateStartMultiple %d",
+            _timeFromImmediateStartMultiple
+        );
+        // // If the minimum start date is possible, use it.
+        // if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
+
+        // console.log(
+        //     "_timeFromImmediateStartMultiple: %d",
+        //     _timeFromImmediateStartMultiple
+        // );
         // Otherwise use an increment of the duration from the most recent start.
         start =
             _mustStartOnOrAfter -
             _timeFromImmediateStartMultiple +
             _durationInSeconds;
 
+        console.log("start: %d", start);
+        console.log("_mustStartOnOrAfter: %d", _mustStartOnOrAfter);
         // Get a reference to the limit of the base funding cycle.
         // If there is a limit, the duration of the limited funding cycle should only be applied up until the limit,
         // after which the duration of the latest permanent funding cycle should be used.
-        uint256 _cycleLimit = _baseFundingCycle.cycleLimit;
 
         // Add increments of duration as necessary to satisfy the threshold.
-        while (_mustStartOnOrAfter > start) {
-            // If there's no limit, increment by a duration.
-            if (_cycleLimit > 0) {
-                // Decrement the limit;
-                _cycleLimit = _cycleLimit - 1;
-                // If the limit has been reached, use the latest permanent funding cycle's duration for the
-                // remaining of the calculation.
-                if (_cycleLimit == 0) {
-                    // If the limited cycle has expired, replace the duration is seconds with the last permanent duration.
-                    _durationInSeconds =
-                        _latestPermanentFundingCycle.duration *
-                        SECONDS_IN_DAY;
-                }
-            }
-            start = start + _durationInSeconds;
-        }
+        while (_mustStartOnOrAfter > start) start = start + _durationInSeconds;
+        console.log("post: %d", start);
     }
 
     /** 
@@ -1080,9 +1107,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal pure returns (uint256 number) {
+    ) internal view returns (uint256 number) {
         // The difference between the start of the base funding cycle and the proposed start.
         uint256 _startDistance = _start - _baseFundingCycle.start;
+
+        console.log("start: %d", _startDistance);
 
         // The number of seconds that the base funding cycle is limited to.
         uint256 _limitLength =
@@ -1091,6 +1120,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 : _baseFundingCycle.cycleLimit *
                     (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
+        console.log("limlen: %d", _limitLength);
         if (_limitLength == 0 || _limitLength > _startDistance) {
             // If there's no limit or if the limit is greater than the start distance,
             // get the result by finding the number of base cycles that fit in the start distance.
@@ -1098,6 +1128,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _baseFundingCycle.number +
                 (_startDistance /
                     (_baseFundingCycle.duration * SECONDS_IN_DAY));
+            console.log("heyo %d", number);
         } else {
             // If the time between the base start at the given start is longer than
             // the limit, first calculate the number of cycles that passed under the limit,
@@ -1107,10 +1138,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _baseFundingCycle.number +
                 (_limitLength / (_baseFundingCycle.duration * SECONDS_IN_DAY));
 
+            console.log("heyo2 %d", number);
             number =
                 number +
                 ((_startDistance - _limitLength) /
                     (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY));
+            console.log("heyo3 %d", number);
         }
     }
 

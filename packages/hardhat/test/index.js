@@ -307,7 +307,7 @@ describe("Juice", async function() {
   });
 
   // Run the tests.
-  describe("Unit", unit);
+  describe.only("Unit", unit);
   describe("Integration", integration);
 
   // After each test, restore the contract state.

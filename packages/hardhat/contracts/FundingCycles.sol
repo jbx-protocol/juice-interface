@@ -570,21 +570,47 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _basedOn;
 
         if (_baseFundingCycle.id > 0) {
-            _start = _deriveStart(_baseFundingCycle, _mustStartOnOrAfter);
-            _weight = _deriveWeight(_baseFundingCycle, _start);
-            _number = _deriveNumber(_baseFundingCycle, _start);
+            // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
+            // Otherwise, the base is already the latest permanent funding cycle.
+            FundingCycle memory _latestPermanentFundingCycle =
+                _baseFundingCycle.cycleLimit > 0
+                    ? _latestPermanentCycleBefore(_baseFundingCycle)
+                    : _baseFundingCycle;
+
+            // Derive the next start time.
+            _start = _deriveStart(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _mustStartOnOrAfter
+            );
+
+            // Derive the next weight.
+            _weight = _deriveWeight(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+
+            // Derive the next number.
+            _number = _deriveNumber(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+
             _basedOn = _baseFundingCycle.id;
+
+            // Derive what the cycle limit should be.
+            uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
+
+            // Copy the last permanent funding cycle if there bases' limit is up.
+            FundingCycle memory _fundingCycleToCopy =
+                _cycleLimit == 0
+                    ? _latestPermanentFundingCycle
+                    : _baseFundingCycle;
 
             // Copy if needed.
             if (_copy) {
-                uint256 _cycleLimit =
-                    _deriveCycleLimit(_baseFundingCycle, _start);
-                // Copy the last permenant funding cycle if there current one's limit is up.
-                FundingCycle memory _fundingCycleToCopy =
-                    _baseFundingCycle.cycleLimit > 0 && _cycleLimit == 0
-                        ? _lastPermanentCycleBefore(_baseFundingCycle)
-                        : _baseFundingCycle;
-
                 // Save the configuration efficiently.
                 _packAndStoreConfigurationProperties(
                     count,
@@ -702,45 +728,63 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         @notice 
         A view of the funding cycle that would be created based on the provided one if the project doesn't make a reconfiguration.
 
-        @param _fundingCycle The funding cycle to make the calculation for.
+        @param _baseFundingCycle The funding cycle to make the calculation for.
         @param _mustStartOnOrAfter The mock should start at the soonest possible time after this time.
 
         @return The next funding cycle, with an ID set to 0.
     */
     function _mockFundingCycleBasedOn(
-        FundingCycle memory _fundingCycle,
+        FundingCycle memory _baseFundingCycle,
         uint256 _mustStartOnOrAfter
     ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
         require(
-            _fundingCycle.discountRate > 0,
+            _baseFundingCycle.discountRate > 0,
             "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
         );
 
+        // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
+        // Otherwise, the base is already the latest permanent funding cycle.
+        FundingCycle memory _latestPermanentFundingCycle =
+            _baseFundingCycle.cycleLimit > 0
+                ? _latestPermanentCycleBefore(_baseFundingCycle)
+                : _baseFundingCycle;
+
         // Derive what the start time should be.
-        uint256 _start = _deriveStart(_fundingCycle, _mustStartOnOrAfter);
+        uint256 _start =
+            _deriveStart(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _mustStartOnOrAfter
+            );
 
         // Derive what the cycle limit should be.
-        uint256 _cycleLimit = _deriveCycleLimit(_fundingCycle, _start);
+        uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
 
-        // Copy the last permenant funding cycle if there current one's limit is up.
+        // Copy the last permanent funding cycle if there bases' limit is up.
         FundingCycle memory _fundingCycleToCopy =
-            _fundingCycle.cycleLimit > 0 && _cycleLimit == 0
-                ? _lastPermanentCycleBefore(_fundingCycle)
-                : _fundingCycle;
+            _cycleLimit == 0 ? _latestPermanentFundingCycle : _baseFundingCycle;
 
-        // If there's no funding cycle to copy, return the empty funding cycle
-        if (_fundingCycleToCopy.id == 0) return _fundingCycleToCopy;
+        // // If there's no funding cycle to copy, return the empty funding cycle
+        // if (_fundingCycleToCopy.id == 0) return _fundingCycleToCopy;
 
         return
             FundingCycle(
                 0,
                 _fundingCycleToCopy.projectId,
-                _deriveNumber(_fundingCycle, _start),
+                _deriveNumber(
+                    _baseFundingCycle,
+                    _latestPermanentFundingCycle,
+                    _start
+                ),
                 _fundingCycleToCopy.id,
                 _fundingCycleToCopy.configured,
                 _cycleLimit,
-                _deriveWeight(_fundingCycle, _start),
+                _deriveWeight(
+                    _baseFundingCycle,
+                    _latestPermanentFundingCycle,
+                    _start
+                ),
                 _fundingCycleToCopy.ballot,
                 _start,
                 _fundingCycleToCopy.duration,
@@ -892,20 +936,24 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         @notice 
         The date that is the nearest multiple of the specified funding cycle's duration from its end.
 
-        @param _fundingCycle The funding cycle to make the calculation for.
+        @param _baseFundingCycle The funding cycle to make the calculation for.
+        @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_fundingCycle` to not have a limit.
         @param _mustStartOnOrAfter A date that the derived start must be on or come after.
 
-        @return result start The next start time.
+        @return start The next start time.
     */
     function _deriveStart(
-        FundingCycle memory _fundingCycle,
+        FundingCycle memory _baseFundingCycle,
+        FundingCycle memory _latestPermanentFundingCycle,
         uint256 _mustStartOnOrAfter
-    ) internal pure returns (uint256 result) {
+    ) internal pure returns (uint256 start) {
         // Save a reference to the duration measured in seconds.
-        uint256 _durationInSeconds = _fundingCycle.duration * SECONDS_IN_DAY;
+        uint256 _durationInSeconds =
+            _baseFundingCycle.duration * SECONDS_IN_DAY;
 
         // The time when the funding cycle immediately after the specified funding cycle starts.
-        uint256 _nextImmediateStart = _fundingCycle.start + _durationInSeconds;
+        uint256 _nextImmediateStart =
+            _baseFundingCycle.start + _durationInSeconds;
 
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)
@@ -919,63 +967,151 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
 
         // Otherwise use an increment of the duration from the most recent start.
-        result =
+        start =
             _mustStartOnOrAfter -
             _timeFromImmediateStartMultiple +
             _durationInSeconds;
 
+        // Get a reference to the limit of the base funding cycle.
+        // If there is a limit, the duration of the limited funding cycle should only be applied up until the limit,
+        // after which the duration of the latest permanent funding cycle should be used.
+        uint256 _cycleLimit = _baseFundingCycle.cycleLimit;
+
         // Add increments of duration as necessary to satisfy the threshold.
-        while (_mustStartOnOrAfter > result)
-            result = result + _durationInSeconds;
+        while (_mustStartOnOrAfter > start) {
+            // If there's no limit, increment by a duration.
+            if (_cycleLimit > 0) {
+                // Decrement the limit;
+                _cycleLimit = _cycleLimit - 1;
+                // If the limit has been reached, use the latest permanent funding cycle's duration for the
+                // remaining of the calculation.
+                if (_cycleLimit == 0) {
+                    // If the limited cycle has expired, replace the duration is seconds with the last permanent duration.
+                    _durationInSeconds =
+                        _latestPermanentFundingCycle.duration *
+                        SECONDS_IN_DAY;
+                }
+            }
+            start = start + _durationInSeconds;
+        }
     }
 
     /** 
         @notice 
         The accumulated weight change since the specified funding cycle.
 
-        @param _fundingCycle The funding cycle to make the calculation with.
+        @param _baseFundingCycle The funding cycle to make the calculation with.
+        @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_fundingCycle` to not have a limit.
         @param _start The start time to derive a weight for.
 
-        @return start The next weight.
+        @return weight The next weight.
     */
-    function _deriveWeight(FundingCycle memory _fundingCycle, uint256 _start)
-        internal
-        pure
-        returns (uint256)
-    {
-        // The number of times to apply the discount rate.
-        uint256 _discountMultiple =
-            (_start - _fundingCycle.start) /
-                (_fundingCycle.duration * SECONDS_IN_DAY);
+    function _deriveWeight(
+        FundingCycle memory _baseFundingCycle,
+        FundingCycle memory _latestPermanentFundingCycle,
+        uint256 _start
+    ) internal pure returns (uint256 weight) {
+        // The difference between the start of the base funding cycle and the proposed start.
+        uint256 _startDistance = _start - _baseFundingCycle.start;
 
-        // The number of times to apply the discount rate.
-        // Base the new weight on the specified funding cycle's weight.
-        return
-            PRBMathCommon.mulDiv(
-                _fundingCycle.weight,
-                _fundingCycle.discountRate**_discountMultiple,
+        // The number of seconds that the base funding cycle is limited to.
+        uint256 _limitLength =
+            _baseFundingCycle.cycleLimit == 0
+                ? 0
+                : _baseFundingCycle.cycleLimit *
+                    (_baseFundingCycle.duration * SECONDS_IN_DAY);
+
+        if (_limitLength == 0 || _limitLength > _startDistance) {
+            // If there's no limit or if the limit is greater than the start distance,
+            // apply the discount rate of the base and find the number of
+            // base cycles fit in the start distance.
+
+            uint256 _discountMultiple =
+                _startDistance / (_baseFundingCycle.duration * SECONDS_IN_DAY);
+
+            // The number of times to apply the discount rate.
+            // Base the new weight on the specified funding cycle's weight.
+            weight = PRBMathCommon.mulDiv(
+                _baseFundingCycle.weight,
+                _baseFundingCycle.discountRate**_discountMultiple,
                 200**_discountMultiple
             );
+        } else {
+            // If the time between the base start at the given start is longer than
+            // the limit, the discount rate for the limited base has to be applied first,
+            // and then the discount rate for the last permanent should be applied to
+            // the remaining distance.
+
+            // The number of times to apply the limited discount rate (use it all up).
+            uint256 _limitedDiscountMultiple = _baseFundingCycle.cycleLimit;
+
+            // Use up the limited discount rate up until the limit.
+            weight = PRBMathCommon.mulDiv(
+                _baseFundingCycle.weight,
+                _baseFundingCycle.discountRate**_limitedDiscountMultiple,
+                200**_limitedDiscountMultiple
+            );
+
+            // The number of times to apply the latest permanent discount rate.
+            uint256 _premanentDiscountMultiple =
+                (_startDistance - _limitLength) /
+                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+
+            weight = PRBMathCommon.mulDiv(
+                weight, // base the weight on the result of the previous calculation.
+                _latestPermanentFundingCycle.discountRate **
+                    _premanentDiscountMultiple,
+                200**_premanentDiscountMultiple
+            );
+        }
     }
 
     /** 
         @notice 
         The number of next funding cycle given the specified funding cycle.
 
-        @param _fundingCycle The funding cycle to make the calculation with.
+        @param _baseFundingCycle The funding cycle to make the calculation with.
+        @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_fundingCycle` to not have a limit.
         @param _start The start time to derive a number for.
 
-        @return start The next number.
+        @return number The next number.
     */
-    function _deriveNumber(FundingCycle memory _fundingCycle, uint256 _start)
-        internal
-        pure
-        returns (uint256)
-    {
-        return
-            _fundingCycle.number +
-            ((_start - _fundingCycle.start) /
-                (_fundingCycle.duration * SECONDS_IN_DAY));
+    function _deriveNumber(
+        FundingCycle memory _baseFundingCycle,
+        FundingCycle memory _latestPermanentFundingCycle,
+        uint256 _start
+    ) internal pure returns (uint256 number) {
+        // The difference between the start of the base funding cycle and the proposed start.
+        uint256 _startDistance = _start - _baseFundingCycle.start;
+
+        // The number of seconds that the base funding cycle is limited to.
+        uint256 _limitLength =
+            _baseFundingCycle.cycleLimit == 0
+                ? 0
+                : _baseFundingCycle.cycleLimit *
+                    (_baseFundingCycle.duration * SECONDS_IN_DAY);
+
+        if (_limitLength == 0 || _limitLength > _startDistance) {
+            // If there's no limit or if the limit is greater than the start distance,
+            // get the result by finding the number of base cycles that fit in the start distance.
+            number =
+                _baseFundingCycle.number +
+                (_startDistance /
+                    (_baseFundingCycle.duration * SECONDS_IN_DAY));
+        } else {
+            // If the time between the base start at the given start is longer than
+            // the limit, first calculate the number of cycles that passed under the limit,
+            // and add any cycles that have passed of the latest permanent funding cycle afterwards.
+
+            number =
+                _baseFundingCycle.number +
+                (_limitLength / (_baseFundingCycle.duration * SECONDS_IN_DAY));
+
+            number =
+                number +
+                ((_startDistance - _limitLength) /
+                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY));
+        }
     }
 
     /** 
@@ -1077,16 +1213,17 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /** 
       @notice 
-      Finds the last funding cycle that was permenant in relation to the specified funding cycle.
+      Finds the last funding cycle that was permanent in relation to the specified funding cycle.
 
       @dev
-      Determined what the last funding cycle with a `cycleLimit` of 0 is.
+      Determined what the latest funding cycle with a `cycleLimit` of 0 is, or isn't based on any previous funding cycle.
 
-      @param _fundingCycle The funding cycle to find the most recent permenant cycle compared to.
 
-      @return fundingCycle The most recent permenant funding cycle.
+      @param _fundingCycle The funding cycle to find the most recent permanent cycle compared to.
+
+      @return fundingCycle The most recent permanent funding cycle.
     */
-    function _lastPermanentCycleBefore(FundingCycle memory _fundingCycle)
+    function _latestPermanentCycleBefore(FundingCycle memory _fundingCycle)
         private
         view
         returns (FundingCycle memory fundingCycle)
@@ -1094,6 +1231,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_fundingCycle.basedOn == 0) return _fundingCycle;
         fundingCycle = _getStruct(_fundingCycle.basedOn);
         if (fundingCycle.cycleLimit == 0) return fundingCycle;
-        return _lastPermanentCycleBefore(fundingCycle);
+        return _latestPermanentCycleBefore(fundingCycle);
     }
 }

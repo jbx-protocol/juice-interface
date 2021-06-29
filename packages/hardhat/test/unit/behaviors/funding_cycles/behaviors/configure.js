@@ -422,6 +422,82 @@ const tests = {
         }
       })
     }
+    // {
+    //   description: "within a cycle limit",
+    //   fn: testTemplate({
+    //     preconfigure: {
+    //       // Preconfigure the duration.
+    //       duration: BigNumber.from(1)
+    //     },
+    //     ops: [
+    //       // Add a reconfiguration to the same project with a cycle limit.
+    //       {
+    //         type: "configure",
+    //         projectId: 1,
+    //         target: BigNumber.from(10),
+    //         currency: BigNumber.from(2),
+    //         duration: BigNumber.from(1),
+    //         cycleLimit: BigNumber.from(1),
+    //         discountRate: BigNumber.from(20),
+    //         fee: BigNumber.from(30),
+    //         metadata: BigNumber.from(5),
+    //         configureActiveFundingCycle: false,
+    //         ballot: {
+    //           duration: BigNumber.from(0)
+    //         },
+
+    //         // The discount rate for this configuration should be used in the calculation
+    //         // because this configuration will take effect.
+    //         applyDiscountRate: 1
+    //       }
+    //     ],
+    //     // Fast forward to the cycle after the limit expires.
+    //     fastforward: BigNumber.from(86400 * 2 - 1),
+    //     expectation: {
+    //       configuredNumber: 3,
+    //       configuredId: 3,
+    //       basedOn: 2
+    //     }
+    //   })
+    // },
+    // {
+    //   description: "after a cycle limit",
+    //   fn: testTemplate({
+    //     preconfigure: {
+    //       // Preconfigure the duration.
+    //       duration: BigNumber.from(1)
+    //     },
+    //     ops: [
+    //       // Add a reconfiguration to the same project with a cycle limit.
+    //       {
+    //         type: "configure",
+    //         projectId: 1,
+    //         target: BigNumber.from(10),
+    //         currency: BigNumber.from(2),
+    //         duration: BigNumber.from(1),
+    //         cycleLimit: BigNumber.from(1),
+    //         discountRate: BigNumber.from(20),
+    //         fee: BigNumber.from(30),
+    //         metadata: BigNumber.from(5),
+    //         configureActiveFundingCycle: false,
+    //         ballot: {
+    //           duration: BigNumber.from(0)
+    //         },
+
+    //         // The discount rate for this configuration should be used in the calculation
+    //         // because this configuration will take effect.
+    //         applyDiscountRate: 1
+    //       }
+    //     ],
+    //     // Fast forward to the cycle after the limit expires.
+    //     fastforward: BigNumber.from(86400 * 2 + 2),
+    //     expectation: {
+    //       configuredNumber: 4,
+    //       configuredId: 3,
+    //       basedOn: 2
+    //     }
+    //   })
+    // }
   ],
   failure: [
     {
@@ -579,6 +655,8 @@ module.exports = function() {
           preconfigureBlockNumber
         );
 
+        const discountRatesToApply = [];
+
         // Do any other specified operations.
         for (let i = 0; i < ops.length; i += 1) {
           const op = ops[i];
@@ -604,6 +682,11 @@ module.exports = function() {
                 // eslint-disable-next-line no-await-in-loop
                 await this.ballot.mock.duration.returns(op.ballot.duration);
 
+              if (op.applyDiscountRate) {
+                for (let j = 0; j < op.applyDiscountRate; j += 1) {
+                  discountRatesToApply.push(op.discountRate);
+                }
+              }
               break;
             }
             case "fastforward":
@@ -661,10 +744,17 @@ module.exports = function() {
         let expectedWeight = baseWeight;
 
         // Multiply the discount the amount of times specified.
-        for (let i = 0; i < expectation.configuredNumber - 1; i += 1) {
+        for (
+          let i = 0;
+          i < expectation.configuredNumber - 1 - discountRatesToApply.length;
+          i += 1
+        ) {
           expectedWeight = expectedWeight
             .mul(preconfigure.discountRate)
             .div(200);
+        }
+        for (let i = 0; i < discountRatesToApply.length; i += 1) {
+          expectedWeight = expectedWeight.mul(discountRatesToApply[i]).div(200);
         }
 
         // Get the time when the configured funding cycle starts.

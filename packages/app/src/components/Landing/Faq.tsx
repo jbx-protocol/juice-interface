@@ -79,7 +79,7 @@ const QAs: {
   {
     q: 'How decentralized is Juice?',
     a: [
-      `Juice is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which have drastic consequences for users. The Juice governance smart contract can adjust these levers.`,
+      `Juice is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juice governance smart contract can adjust these levers.`,
       `At the start, power over the governance smart contract is held by Juice's founding contributors. The intent is to soon transfer the power to a community of token holders.`
     ],
   },

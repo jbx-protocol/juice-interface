@@ -514,6 +514,76 @@ const tests = {
           id: 0
         }
       })
+    },
+    {
+      description: "with a cycle limit",
+      fn: testTemplate({
+        preconfigure: {
+          duration: BigNumber.from(10)
+        },
+        ops: [
+          {
+            type: "configure",
+            projectId: 1,
+            configureActiveFundingCycle: false,
+            // Less than the amount being tapped. Should be ignored
+            target: BigNumber.from(100),
+            ballot: {
+              // This funding cycle (2) is approved.
+              fundingCycleId: 2,
+              state: BigNumber.from(0)
+            },
+            cycleLimit: BigNumber.from(5),
+            duration: BigNumber.from(1),
+            // The below values dont matter.
+            currency: BigNumber.from(1),
+            discountRate: BigNumber.from(180),
+            fee: BigNumber.from(42),
+            metadata: BigNumber.from(92)
+          }
+        ],
+        // Fast forward past the full duration.
+        fastforward: BigNumber.from(86400 * 11 + 1),
+        expectation: {
+          number: 4,
+          id: 0
+        }
+      })
+    },
+    {
+      description: "after a cycle limit",
+      fn: testTemplate({
+        preconfigure: {
+          duration: BigNumber.from(10)
+        },
+        ops: [
+          {
+            type: "configure",
+            projectId: 1,
+            configureActiveFundingCycle: false,
+            // Less than the amount being tapped. Should be ignored
+            target: BigNumber.from(100),
+            ballot: {
+              // This funding cycle (2) is approved.
+              fundingCycleId: 2,
+              state: BigNumber.from(0)
+            },
+            cycleLimit: BigNumber.from(5),
+            duration: BigNumber.from(1),
+            // The below values dont matter.
+            currency: BigNumber.from(1),
+            discountRate: BigNumber.from(180),
+            fee: BigNumber.from(42),
+            metadata: BigNumber.from(92)
+          }
+        ],
+        // Fast forward past the full duration.
+        fastforward: BigNumber.from(86400 * 17 + 10),
+        expectation: {
+          number: 8,
+          id: 0
+        }
+      })
     }
   ],
   failure: [

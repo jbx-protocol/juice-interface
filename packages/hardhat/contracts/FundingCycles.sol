@@ -116,11 +116,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the correct ballot is approved for this funding cycle.
             if (_isApproved(_eligibleFundingCycle))
-                return
-                    _mockFundingCycleBasedOn(
-                        _eligibleFundingCycle,
-                        block.timestamp
-                    );
+                return _mockFundingCycleBasedOn(_eligibleFundingCycle, false);
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
@@ -136,11 +132,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // Return a mock of what its second next up funding cycle would be like.
         // Use second next because the next would be a mock of the current funding cycle.
-        return
-            _mockFundingCycleBasedOn(
-                _getStruct(_fundingCycleId),
-                block.timestamp
-            );
+        return _mockFundingCycleBasedOn(_getStruct(_fundingCycleId), false);
     }
 
     /**
@@ -196,13 +188,23 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The funding cycle to base a current one on.
         FundingCycle memory _baseFundingCycle = _getStruct(_fundingCycleId);
 
+        console.log("sup");
+        // Time since end.
+        uint256 _latestCycleEnd =
+            _baseFundingCycle.start +
+                (_baseFundingCycle.duration *
+                    SECONDS_IN_DAY *
+                    (
+                        _baseFundingCycle.cycleLimit > 0
+                            ? _baseFundingCycle.cycleLimit
+                            : 1
+                    ));
+
+        console.log("yung %d: ", _latestCycleEnd);
+
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
-        return
-            _mockFundingCycleBasedOn(
-                _baseFundingCycle,
-                block.timestamp - (_baseFundingCycle.duration * SECONDS_IN_DAY)
-            );
+        return _mockFundingCycleBasedOn(_baseFundingCycle, true);
     }
 
     /** 
@@ -371,8 +373,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get a reference to the funding cycle being tapped.
         uint256 fundingCycleId = _tappable(_projectId);
 
+        console.log("tapped ID: %d", fundingCycleId);
         // Get a reference to how much has already been tapped from this funding cycle.
         uint256 _tapped = _tappedOf[fundingCycleId];
+        console.log("tapped: %d", _tapped);
+        console.log("target: %d", _targetOf[fundingCycleId]);
 
         // Amount must be within what is still tappable.
         require(
@@ -418,12 +423,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get the standby funding cycle's ID.
         fundingCycleId = _standby(_projectId);
 
+        console.log("standby id %d: ", fundingCycleId);
+
         // If it exists, return it.
-        if (fundingCycleId > 0) return fundingCycleId;
+        if (fundingCycleId > 0) {
+            _updateFundingCycle(fundingCycleId, _configured);
+            return fundingCycleId;
+        }
 
         // Get the active funding cycle's ID.
-        uint256 _eligibleFundingCycleId = _eligible(_projectId);
+        uint256 _eligibleFundingCycleId =
+            fundingCycleId > 0 ? fundingCycleId : _eligible(_projectId);
 
+        console.log("_eligibleFundingCycleId id %d: ", _eligibleFundingCycleId);
         // If the ID of an eligible funding cycle exists, it's approved, and active funding cycles are configurable, and its approved, return it.
         if (
             _eligibleFundingCycleId > 0 &&
@@ -481,6 +493,58 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
     }
 
+    function _updateFundingCycle(uint256 _fundingCycleId, uint256 _configured)
+        private
+    {
+        FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
+        console.log("UPDATING %d: ", _fundingCycleId);
+        console.log("START %d: ", _fundingCycle.start);
+        FundingCycle memory _baseFundingCycle =
+            _getStruct(_fundingCycle.basedOn);
+        FundingCycle memory _latestPermanentFundingCycle =
+            _baseFundingCycle.cycleLimit > 0
+                ? _latestPermanentCycleBefore(_baseFundingCycle)
+                : _baseFundingCycle;
+
+        // Get the FC.
+        // Derive the next start time.
+        uint256 _start =
+            _deriveStart(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _fundingCycle.ballot != IFundingCycleBallot(address(0))
+                    ? _configured + _fundingCycle.ballot.duration()
+                    : block.timestamp
+            );
+
+        console.log("NEW START %d: ", _start);
+        // Derive the next weight.
+        uint256 _weight =
+            _deriveWeight(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+
+        // Derive the next number.
+        uint256 _number =
+            _deriveNumber(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+        // get the previous FC. Make sure the start and weight and number get reassessed.
+        // Save the intrinsic properties efficiently.
+        _packAndStoreIntrinsicProperties(
+            _fundingCycleId,
+            _fundingCycle.projectId,
+            _weight,
+            _number,
+            _fundingCycle.basedOn,
+            _start
+        );
+    }
+
     /**
         @notice 
         Returns the one funding cycle that can be tapped at the time of the call.
@@ -496,6 +560,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Check for the ID of an eligible funding cycle.
         fundingCycleId = _eligible(_projectId);
 
+        console.log("e %d: ", fundingCycleId);
         // No eligible funding cycle found, check for the ID of a standby funding cycle.
         // If this one exists, it will become eligible one it has started.
         if (fundingCycleId == 0) fundingCycleId = _standby(_projectId);
@@ -507,8 +572,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             FundingCycle memory _eligibleFundingCycle =
                 _getStruct(fundingCycleId);
 
+            console.log("duck");
             // Check to see if the cycle is approved. If so, return it.
             if (_isApproved(_eligibleFundingCycle)) return fundingCycleId;
+            console.log("duck2");
 
             // If it hasn't been approved, set the ID to be the base funding cycle,
             // which carries the last approved configuration.
@@ -525,17 +592,30 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get the properties of the funding cycle.
         FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
+        console.log("goose: ", _fundingCycle.start);
+        console.log("b timestamp: ", block.timestamp);
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
             _fundingCycle.discountRate > 0,
             "FundingCycles::_tappable: NON_RECURRING"
         );
 
+        // The time when the funding cycle immediately after the specified funding cycle starts.
+        uint256 _nextImmediateStart =
+            _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY);
+
+        uint256 _timeFromImmediateStartMultiple =
+            (block.timestamp - _nextImmediateStart) %
+                (_fundingCycle.duration * SECONDS_IN_DAY);
+
+        console.log("soooop %d: ", _nextImmediateStart);
+        console.log("moopmeep %d: ", _timeFromImmediateStartMultiple);
+
         // Return the tappable funding cycle.
         fundingCycleId = _init(
             _projectId,
             _fundingCycle,
-            block.timestamp,
+            block.timestamp - _timeFromImmediateStartMultiple,
             true
         );
     }
@@ -579,6 +659,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             console.log("lp: %d", _latestPermanentFundingCycle.id);
             console.log("base start: %d", _baseFundingCycle.start);
+            console.log("base currency: %d", _baseFundingCycle.currency);
+            console.log("block: %d", block.timestamp);
 
             // Derive the next start time.
             _start = _deriveStart(
@@ -605,6 +687,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             console.log("start: %d", _start);
             console.log("number: %d", _number);
             _basedOn = _baseFundingCycle.id;
+            console.log("base: %d", _basedOn);
 
             // Derive what the cycle limit should be.
             uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
@@ -708,18 +791,28 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
         ) return 0;
 
+        console.log("id %d:", _fundingCycle.id);
+        console.log("dur", _fundingCycle.duration);
+        console.log("fc start", _fundingCycle.start);
+        console.log(
+            "pig %d: ",
+            _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
+        );
+        console.log("block %d: ", block.timestamp);
+
         // The first funding cycle when running on local can be in the future for some reason.
         // This will have no effect in production.
-        if (_fundingCycle.basedOn == 0) return fundingCycleId;
-
-        // An Active funding cycle must be either the latest funding cycle or the
-        // one immediately before it.
-        if (block.timestamp >= _fundingCycle.start) return fundingCycleId;
+        if (
+            _fundingCycle.basedOn == 0 || block.timestamp >= _fundingCycle.start
+        ) return fundingCycleId;
 
         // The base cant be expired.
         FundingCycle memory _baseFundingCycle =
             _getStruct(_fundingCycle.basedOn);
 
+        console.log("baz id %d:", _baseFundingCycle.id);
+        console.log("baz dur", _baseFundingCycle.duration);
+        console.log("baz start %d: ", _baseFundingCycle.start);
         if (
             block.timestamp >=
             _baseFundingCycle.start +
@@ -735,19 +828,24 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         A view of the funding cycle that would be created based on the provided one if the project doesn't make a reconfiguration.
 
         @param _baseFundingCycle The funding cycle to make the calculation for.
-        @param _mustStartOnOrAfter The mock should start at the soonest possible time after this time.
+        //param _mustStartOnOrAfter The mock should start at the soonest possible time after this time.
 
         @return The next funding cycle, with an ID set to 0.
     */
     function _mockFundingCycleBasedOn(
         FundingCycle memory _baseFundingCycle,
-        uint256 _mustStartOnOrAfter
+        bool _calc
     ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
         require(
             _baseFundingCycle.discountRate > 0,
             "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
         );
+
+        console.log("BAZZZZ %d:", _baseFundingCycle.id);
+        console.log("BAZZZZ limit %d:", _baseFundingCycle.cycleLimit);
+        console.log("BAZZZZ start %d:", _baseFundingCycle.start);
+        console.log("BAZZZZ dur %d:", _baseFundingCycle.duration);
 
         // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
         // Otherwise, the base is already the latest permanent funding cycle.
@@ -756,14 +854,41 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 ? _latestPermanentCycleBefore(_baseFundingCycle)
                 : _baseFundingCycle;
 
+        console.log("PEERRMM %d:", _latestPermanentFundingCycle.id);
+
+        uint256 _timeFromImmediateStartMultiple = 0;
+        if (_calc) {
+            _timeFromImmediateStartMultiple = (_baseFundingCycle.duration *
+                SECONDS_IN_DAY);
+            // if the cycles have expired, the must start date should
+            // be an increment of the latest from it.
+            if (_baseFundingCycle.cycleLimit > 0) {
+                uint256 _cycleEnd =
+                    _baseFundingCycle.start +
+                        (_baseFundingCycle.cycleLimit *
+                            _baseFundingCycle.duration *
+                            SECONDS_IN_DAY);
+
+                if (_cycleEnd < block.timestamp) {
+                    // how many interations of _latest have passed?
+                    // Otherwise, use the closest multiple of the duration from the old end.
+                    _timeFromImmediateStartMultiple =
+                        (block.timestamp - _cycleEnd) %
+                        (_latestPermanentFundingCycle.duration *
+                            SECONDS_IN_DAY);
+                }
+            }
+        }
+
         // Derive what the start time should be.
         uint256 _start =
             _deriveStart(
                 _baseFundingCycle,
                 _latestPermanentFundingCycle,
-                _mustStartOnOrAfter
+                block.timestamp - _timeFromImmediateStartMultiple
             );
 
+        console.log("STAR %d:", _start);
         // Derive what the cycle limit should be.
         uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
 
@@ -1007,10 +1132,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         //     _timeFromImmediateStartMultiple
         // );
         // Otherwise use an increment of the duration from the most recent start.
-        start =
-            _mustStartOnOrAfter -
-            _timeFromImmediateStartMultiple +
-            _durationInSeconds;
+        start = _mustStartOnOrAfter - _timeFromImmediateStartMultiple; // +
+        // _durationInSeconds;
 
         console.log("start: %d", start);
         console.log("_mustStartOnOrAfter: %d", _mustStartOnOrAfter);

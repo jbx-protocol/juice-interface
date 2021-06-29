@@ -370,7 +370,11 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(1)
+          duration: BigNumber.from(1),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(86390)
+          }
         },
         ops: [
           // Add a reconfiguration to the same project that will expire before the duration.
@@ -378,45 +382,90 @@ const tests = {
             type: "configure",
             projectId: 1,
             target: BigNumber.from(10),
-            currency: BigNumber.from(2),
+            currency: BigNumber.from(3),
             duration: BigNumber.from(2),
             cycleLimit: BigNumber.from(0),
             discountRate: BigNumber.from(93),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
-            configureActiveFundingCycle: false,
-            ballot: {
-              // Set the ballot duration shorter than the configuration duration.
-              duration: BigNumber.from(86399)
-            }
+            configureActiveFundingCycle: false
           },
           {
             type: "fastforward",
             // Fast forward past the expired configuration.
-            seconds: BigNumber.from(86399)
+            seconds: BigNumber.from(86395)
           },
           // Add another reconfiguration
           {
             type: "configure",
             projectId: 1,
             target: BigNumber.from(10),
-            currency: BigNumber.from(2),
+            currency: BigNumber.from(4),
             duration: BigNumber.from(2),
             discountRate: BigNumber.from(93),
             cycleLimit: BigNumber.from(0),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
-            configureActiveFundingCycle: false,
-            ballot: {
-              // Set the ballot duration shorter than the configuration duration.
-              duration: BigNumber.from(86399)
-            }
+            configureActiveFundingCycle: false
           }
         ],
         // Fast forward a little bit more.
         fastforward: BigNumber.from(10),
         expectation: {
-          configuredNumber: 2,
+          configuredNumber: 3,
+          configuredId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "override a failed reconfiguration with a longer ballot",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(1),
+          ballot: {
+            // Set the ballot duration shorter than the configuration duration.
+            duration: BigNumber.from(86397)
+          }
+        },
+        ops: [
+          // Add a reconfiguration to the same project that will expire before the duration.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(3),
+            duration: BigNumber.from(2),
+            cycleLimit: BigNumber.from(0),
+            discountRate: BigNumber.from(93),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false
+          },
+          {
+            type: "fastforward",
+            // Fast forward past the expired configuration.
+            seconds: BigNumber.from(86395)
+          },
+          // Add another reconfiguration
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(4),
+            duration: BigNumber.from(2),
+            discountRate: BigNumber.from(93),
+            cycleLimit: BigNumber.from(0),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false
+          }
+        ],
+        // Fast forward a little bit more.
+        fastforward: BigNumber.from(10),
+        expectation: {
+          configuredNumber: 4,
           configuredId: 2,
           basedOn: 1
         }
@@ -427,7 +476,7 @@ const tests = {
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
-          duration: BigNumber.from(1)
+          duration: BigNumber.from(10)
         },
         ops: [
           // Add a reconfiguration to the same project with a cycle limit.
@@ -437,7 +486,7 @@ const tests = {
             target: BigNumber.from(10),
             currency: BigNumber.from(2),
             duration: BigNumber.from(1),
-            cycleLimit: BigNumber.from(1),
+            cycleLimit: BigNumber.from(5),
             discountRate: BigNumber.from(20),
             fee: BigNumber.from(30),
             metadata: BigNumber.from(5),
@@ -449,7 +498,10 @@ const tests = {
           }
         ],
         // Fast forward to the cycle after the limit expires.
-        fastforward: BigNumber.from(86400 * 2 - 1),
+        fastforward: BigNumber.from(86400 * 11 - 1),
+        op: {
+          cycleLimit: 2
+        },
         expectation: {
           configuredNumber: 3,
           configuredId: 3,
@@ -600,6 +652,41 @@ const tests = {
     {
       description:
         "large cycle limit, many cycles later, with a way different duration",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(10)
+        },
+        ops: [
+          // Add a reconfiguration to the same project with a cycle limit.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(5),
+            discountRate: BigNumber.from(20),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false,
+            ballot: {
+              duration: BigNumber.from(0)
+            },
+            expectedCyclesUsed: 5
+          }
+        ],
+        // Fast forward to the cycle after the limit expires.
+        fastforward: BigNumber.from(86400 * 40),
+        expectation: {
+          configuredNumber: 10,
+          configuredId: 3,
+          basedOn: 2
+        }
+      })
+    },
+    {
+      description: "Reconfigure with a cycle limit within another limit",
       fn: testTemplate({
         preconfigure: {
           // Preconfigure the duration.
@@ -932,11 +1019,6 @@ module.exports = function() {
         // Get the time when the configured funding cycle starts.
         let expectedStart;
         if (preconfigure) {
-          console.log({
-            configNum: expectation.configuredNumber,
-            durToApply: durationsToApply.length
-          });
-
           expectedStart = expectedPreconfigureStart.add(
             preconfigure.duration
               .mul(86400)
@@ -979,7 +1061,7 @@ module.exports = function() {
         expect(storedFundingCycle.ballot).to.equal(this.ballot.address);
         expect(storedFundingCycle.start).to.equal(expectedStart);
         expect(storedFundingCycle.configured).to.equal(now);
-        expect(storedFundingCycle.cycleLimit).to.equal(0);
+        expect(storedFundingCycle.cycleLimit).to.equal(cycleLimit);
         expect(storedFundingCycle.duration).to.equal(duration);
         expect(storedFundingCycle.target).to.equal(target);
         expect(storedFundingCycle.currency).to.equal(currency);

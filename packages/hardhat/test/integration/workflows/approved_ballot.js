@@ -317,7 +317,7 @@ module.exports = async ({
     /**
       Fast forward to the end of ballot duration.
     */
-    () => fastforwardFn(ballotDurationInDays.mul(86400)),
+    () => fastforwardFn(ballotDurationInDays.sub(duration1).mul(86400)),
     /**
       The current funding cycle should have the reconfiguration.
     */

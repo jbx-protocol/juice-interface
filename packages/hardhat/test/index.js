@@ -38,13 +38,12 @@ describe("Juice", async function() {
     this.fastforwardFn = async seconds => {
       const now = await this.getTimestampFn();
       const timeSinceTimemark = now.sub(this.timeMark);
-      this.timeMark = now;
+      const fastforwardAmount = seconds.toNumber() - timeSinceTimemark;
+      this.timeMark = now.add(fastforwardAmount);
 
       // Subtract away any time that has already passed between the start of the test,
       // or from the last fastforward, from the provided value.
-      await ethers.provider.send("evm_increaseTime", [
-        seconds.toNumber() - timeSinceTimemark
-      ]);
+      await ethers.provider.send("evm_increaseTime", [fastforwardAmount]);
       // Mine a block.
       await ethers.provider.send("evm_mine");
     };
@@ -308,7 +307,7 @@ describe("Juice", async function() {
 
   // Run the tests.
   describe("Unit", unit);
-  describe("Integration", integration);
+  describe.only("Integration", integration);
 
   // After each test, restore the contract state.
   afterEach(async function() {

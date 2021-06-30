@@ -37,7 +37,7 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
-export default function PlayCreate() {
+export default function Create() {
   const { transactor, contracts, userAddress } = useContext(UserContext)
   const { signerNetwork } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme

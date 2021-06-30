@@ -4,7 +4,7 @@ import Landing from 'components/Landing'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import CatchallRedirect from './CatchallRedirect'
-import PlayCreate from './PlayCreate'
+import Create from './Create'
 import Projects from './Projects'
 
 export default function Router() {
@@ -15,7 +15,7 @@ export default function Router() {
           <Landing />
         </Route>
         <Route path="/create">
-          <PlayCreate />
+          <Create />
         </Route>
         <Route path="/gimme">
           <Gimme />

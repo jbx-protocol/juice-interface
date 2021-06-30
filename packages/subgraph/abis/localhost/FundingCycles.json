@@ -50,6 +50,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
           },
@@ -199,6 +204,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
           },
@@ -255,6 +265,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -387,6 +402,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "weight",
             "type": "uint256"
           },
@@ -483,6 +503,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "weight",
             "type": "uint256"
           },
@@ -575,6 +600,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -695,6 +725,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {

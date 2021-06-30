@@ -166,6 +166,7 @@ export default function PlayCreate() {
       currency: editingFC.currency.toNumber(),
       duration: editingFC.duration.toNumber(),
       discountRate: editingFC.discountRate.toNumber(),
+      cycleLimit: editingFC.cycleLimit.toNumber(),
       ballot: constants.AddressZero,
     }
 

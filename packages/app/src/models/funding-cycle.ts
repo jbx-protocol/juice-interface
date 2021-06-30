@@ -13,6 +13,7 @@ export interface FundingCycle {
   fee: BigNumber
   weight: BigNumber
   discountRate: BigNumber
+  cycleLimit: BigNumber
   configured: BigNumber
   ballot: string
   metadata: BigNumber // encoded FundingCycleData

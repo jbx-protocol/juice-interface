@@ -711,6 +711,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "discountRate",
             "type": "uint256"
           },
@@ -873,6 +878,11 @@
           {
             "internalType": "uint256",
             "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {

@@ -52,6 +52,7 @@ export const editingProjectSlice = createSlice({
       reserved: 50,
       bondingCurveRate: defaultBondingCurveRate.toNumber(),
       discountRate: defaultDiscountRate,
+      cycleLimit: BigNumber.from(0),
       configured: BigNumber.from(0),
       ballot: constants.AddressZero,
     }),

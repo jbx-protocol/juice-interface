@@ -33,6 +33,7 @@ export const serializeFundingCycle = (
   bondingCurveRate: fromPerbicent(fc.bondingCurveRate),
   discountRate: fromPerbicent(fc.discountRate),
   configured: fc.configured.toString(),
+  cycleLimit: fc.cycleLimit.toString(),
   ballot: fc.ballot,
 })
 
@@ -47,7 +48,7 @@ export const deserializeFundingCycle = (
         number: BigNumber.from(fc.number),
         previous: BigNumber.from(fc.previous),
         target: parseWad(fc.target),
-        currency: BigNumber.from(parseInt(fc.currency)),
+        currency: BigNumber.from(fc.currency),
         start: BigNumber.from(fc.start),
         duration: BigNumber.from(fc.duration),
         tapped: parseWad(fc.tapped),
@@ -56,6 +57,7 @@ export const deserializeFundingCycle = (
         reserved: parsePerbicent(fc.reserved).toNumber(),
         bondingCurveRate: parsePerbicent(fc.bondingCurveRate).toNumber(),
         discountRate: parsePerbicent(fc.discountRate),
+        cycleLimit: BigNumber.from(fc.cycleLimit),
         configured: BigNumber.from(fc.configured),
         ballot: fc.ballot,
       }

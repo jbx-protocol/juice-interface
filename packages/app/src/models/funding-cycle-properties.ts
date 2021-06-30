@@ -5,5 +5,6 @@ export interface FCProperties {
   currency: BigNumber
   duration: BigNumber
   discountRate: BigNumber
+  cycleLimit: BigNumber
   ballot: string
 }

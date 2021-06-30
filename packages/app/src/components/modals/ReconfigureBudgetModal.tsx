@@ -76,6 +76,7 @@ export default function ReconfigureBudgetModal({
       currency: BigNumber.from(fields.currency).toHexString(),
       duration: BigNumber.from(fields.duration).toHexString(),
       discountRate: parsePerbicent(fields.discountRate).toHexString(),
+      cycleLimit: BigNumber.from(0).toHexString(),
       ballot: fundingCycle.ballot,
     }
 

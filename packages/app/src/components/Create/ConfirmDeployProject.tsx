@@ -85,7 +85,7 @@ export default function ConfirmDeployProject() {
           />
         )}
         <Statistic
-          title="Reserved tickets"
+          title="Reserved tokens"
           value={fromPerbicent(editingFC?.reserved)}
           suffix="%"
         />
@@ -110,7 +110,7 @@ export default function ConfirmDeployProject() {
         )}
       />
       <Statistic
-        title="Reserved ticket allocations"
+        title="Reserved token allocations"
         valueRender={() => (
           <Mods
             mods={ticketMods}

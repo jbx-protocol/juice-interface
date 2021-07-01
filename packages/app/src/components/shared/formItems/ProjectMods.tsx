@@ -401,7 +401,7 @@ export default function ProjectMods({
             <Form.Item
               name="beneficiary"
               label="Beneficiary"
-              extra="The address that should receive the tickets printed from paying this project."
+              extra="The address that should receive the project tokens minted from paying this project."
               rules={[{ required: true }]}
             >
               <Input placeholder={constants.AddressZero} />

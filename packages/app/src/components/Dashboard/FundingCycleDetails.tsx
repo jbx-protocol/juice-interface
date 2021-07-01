@@ -41,7 +41,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Reserved"
-            tip="This project's owner can mint Tickets for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tickets were given out over the course of this budget, then the owner will be able to mint 5 Tickets for themselves once the budget expires."
+            tip="This project's owner can mint tokens for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tokens were given out over the course of this budget, then the owner will be able to mint 5 tokens for themselves once the budget expires."
           />
         }
       >
@@ -53,7 +53,7 @@ export default function FundingCycleDetails({
           <TooltipLabel
             label="Discount rate"
             tip="The rate at which payments to future
-            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of Tickets received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
+            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tokens received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
           />
         }
       >
@@ -64,7 +64,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Bonding curve"
-            tip="This rate determines the amount of overflow that each Ticket can be redeemed for at any given time. On a lower bonding curve, redeeming a ticket increases the value of each remaining ticket, creating an incentive to hodl tickets longer than others. A bonding curve of 100% means all tickets will have equal value regardless of when they are redeemed."
+            tip="This rate determines the amount of overflow that each project token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
           />
         }
       >

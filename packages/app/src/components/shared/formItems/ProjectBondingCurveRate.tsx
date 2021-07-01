@@ -143,7 +143,7 @@ export default function ProjectBondingCurveRate({
                 right: 0,
               }}
             >
-              % tickets redeemed
+              % tokens redeemed
             </div>
 
             <div
@@ -156,17 +156,17 @@ export default function ProjectBondingCurveRate({
                 width: graphSize,
               }}
             >
-              Ticket redeem value
+              Token redeem value
             </div>
           </div>
 
           <div>
-            This rate determines the amount of overflow that each Ticket can be
+            This rate determines the amount of overflow that each token can be
             redeemed for at any given time. On a lower bonding curve, redeeming
-            a ticket increases the value of each remaining ticket, creating an
-            incentive to hodl tickets longer than others. A bonding curve of
-            100% means all tickets will have equal value regardless of when they
-            are redeemed.
+            a token increases the value of each remaining token, creating an
+            incentive to hodl tokens longer than others. A bonding curve of 100%
+            means all tokens will have equal value regardless of when they are
+            redeemed.
           </div>
         </div>
       }

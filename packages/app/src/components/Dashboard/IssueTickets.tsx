@@ -39,8 +39,8 @@ export default function IssueTickets({
           Issue ERC-20 token
         </Button>
         <Tooltip
-          title="Issue an ERC-20 token to be used as this project's tickets. Once
-          issued, current ticket holders will be able to claim their existing
+          title="Issue an ERC-20 to be used as this project's token. Once
+          issued, current staked token holders will be able to claim their
           balance in the new token."
         >
           <InfoCircleOutlined style={{ color: undefined }} />
@@ -55,17 +55,17 @@ export default function IssueTickets({
         onCancel={() => setModalVisible(false)}
       >
         <p>
-          Issue an ERC-20 token to be used as this project's tickets. Once
-          issued, current ticket holders will be able to claim their existing
-          balance in the new token.
+          Issue an ERC-20 token for this project. Once issued, current staked
+          token holders will be able to claim their existing balance in the new
+          token.
         </p>
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Ticket name">
-            <Input placeholder="Project Ticket" />
+          <Form.Item name="name" label="Token name">
+            <Input placeholder="Project Token" />
           </Form.Item>
-          <Form.Item name="symbol" label="Ticket symbol">
+          <Form.Item name="symbol" label="Token symbol">
             <Input
-              placeholder="TIX"
+              placeholder="PRJ"
               onChange={e =>
                 form.setFieldsValue({ symbol: e.target.value.toUpperCase() })
               }

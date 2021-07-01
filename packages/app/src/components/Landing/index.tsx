@@ -16,7 +16,7 @@ export default function Landing() {
   const bigHeader = (text: string) => (
     <h1
       style={{
-        fontSize: '3.2rem',
+        fontSize: '2.4rem',
         fontWeight: 600,
         lineHeight: 1.2,
         margin: 0,
@@ -31,11 +31,10 @@ export default function Landing() {
   )
 
   const listData = [
-    'Indie artists, devs, journalists, & researchers',
-    'Ethereum protocols, NFTs, and DAOs',
+    'Indie artists, devs, creators',
+    'Ethereum protocols and DAOs',
     'Public goods and services',
     'Open source businesses',
-    'Any project with predictable costs that gets paid digitally',
   ]
 
   const section: CSSProperties = {
@@ -57,7 +56,7 @@ export default function Landing() {
   const fourthCol = (header: string, body: (JSX.Element | string)[]) => (
     <Col xs={24} md={12} lg={6} style={{ marginBottom: 60 }}>
       {smallHeader(header)}
-      <p style={{ marginBottom: 0 }}>
+      <p style={{ marginBottom: 0, marginTop: 5 }}>
         {body.map((b, i) => (
           <span key={i}>{b} </span>
         ))}
@@ -82,16 +81,25 @@ export default function Landing() {
                   paddingBottom: 60,
                 }}
               >
-                {bigHeader('A business model for people and projects')}
+                {bigHeader('Community funding on autopilot')}
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    On Juice, people say up front how much cashflow they need in order
-                    to crush what they do. Once they're earning more than that,
-                    the $ETH overflow can be claimed by their users, patrons, &
-                    investors alongside them.
-                  </p>
-                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    Powered entirely by public smart contracts on Ethereum.
+                    Get paid, build a community, program its spending. <br />
+                    Powered by public smart contracts on{' '}
+                    <a
+                      style={{
+                        color: colors.text.primary,
+                        fontWeight: 500,
+                        borderBottom:
+                          '1px solid ' + colors.stroke.action.primary,
+                      }}
+                      href="https://ethereum.org/en/what-is-ethereum/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Ethereum
+                    </a>
+                    .
                   </p>
                 </div>
 
@@ -104,7 +112,7 @@ export default function Landing() {
                   }}
                 >
                   <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
-                    Perfect for:
+                    Built for:
                   </p>
                   {listData.map((data, i) => (
                     <Space
@@ -123,9 +131,11 @@ export default function Landing() {
                 </div>
 
                 <div className="hide-mobile">
-                  <Button type="primary" onClick={scrollToCreate} size="large">
-                    Play with it
-                  </Button>
+                  <a href="/#/create">
+                    <Button type="primary" size="large">
+                      Design your Juicebox
+                    </Button>
+                  </a>
                 </div>
               </div>
             </Col>
@@ -134,7 +144,7 @@ export default function Landing() {
               <img
                 style={{
                   height: '75vh',
-                  maxHeight: 800,
+                  maxHeight: 440,
                   minHeight: 440,
                   maxWidth: '100%',
                   objectFit: 'contain',
@@ -153,7 +163,49 @@ export default function Landing() {
         </div>
       </section>
 
-      <section style={section} className="hide-mobile">
+      <section
+        style={{
+          ...section,
+          marginTop: 0,
+          paddingTop: 20,
+          paddingBottom: 40,
+          // background: 'rgb(57, 43, 70)',
+        }}
+      >
+        <div
+          style={{
+            ...wrapper,
+          }}
+        >
+          {/* {bigHeader('How it works')} */}
+          <Row gutter={60}>
+            {fourthCol('Programmable spending', [
+              `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
+            ])}
+            {fourthCol('ERC20 community tokens', [
+              `When someone pays your Juicebox, they earn a proportional amount of your community token. When you win, your token holders win, so they'll want you to win even more.`,
+            ])}
+            {fourthCol('Redistributable surplus', [
+              `Set a funding target to cover predictable expenses. Any extra revenue earns interest in your overflow pool, and can be claimed by community token holders.`,
+            ])}
+            {fourthCol('Transparency & accountability', [
+              `Changes to your Juicebox spending require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
+            ])}
+          </Row>
+        </div>
+        {/* <div
+            style={{
+              fontWeight: 600,
+              marginTop: 40,
+              textAlign: 'center',
+            }}
+          >
+            Create value for your community, crush your craft, make your money,
+            and lift up your people.<br></br>
+          </div> */}
+      </section>
+
+      {/* <section style={section} className="hide-mobile">
         <div
           id="create"
           style={{
@@ -166,7 +218,7 @@ export default function Landing() {
           </div>
           <DefineProject />
         </div>
-      </section>
+      </section> */}
 
       <section
         style={{
@@ -185,13 +237,13 @@ export default function Landing() {
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting creator-lead and community-owned online
-                    creations that automatically reward the people who help them
-                    succeed. Projects are created and maintained by motivated
-                    punks getting transparently paid what they ask for, and
-                    funded by a community of users, patrons, and investors who
-                    have the opportunity to capitalize on the overflow they help
-                    create.
+                    With Juice, we end up getting creator-lead and
+                    community-owned online creations that automatically reward
+                    the people who help them succeed. Projects are created and
+                    maintained by motivated punks getting transparently paid
+                    what they ask for, and funded by a community of users,
+                    patrons, and investors who have the opportunity to
+                    capitalize on the overflow they help create.
                   </p>
                 </div>
               </div>
@@ -208,82 +260,12 @@ export default function Landing() {
         </div>
       </section>
 
-      <section
-        style={{
-          ...section,
-          marginTop: 0,
-          paddingTop: 20,
-          paddingBottom: 80,
-          background: 'rgb(57, 43, 70)',
-          color: 'white',
-        }}
-      >
-        <div
-          style={{
-            ...wrapper,
-            marginTop: 80,
-          }}
-        >
-          <div style={{ display: 'grid', rowGap: 60 }}>
-            {bigHeader('How it works')}
-            <Row gutter={60}>
-              {fourthCol('Do work 💅', [
-                `Deploy a Juice project that says how much cashflow you and your
-                team want/need in order to absolutely crush what you do.`,
-                <br></br>,
-                <br></br>,
-                `Your funding cycles can be however long you want, and can be recurring.`,
-              ])}
-              {fourthCol('Get paid 💰', [
-                `People can fund your project through the Juice dashboard as a
-                patron or investor, or through your app as a paying user.`,
-                <br></br>,
-                <br></br>,
-                `For
-                example, if your users pay you a transaction fee or monthly
-                cost within your app, just route it through your Juice contract so your people can share in your success.`,
-              ])}
-              {fourthCol('Overflow ⛲️', [
-                `If money overflows, your paying contributors claim the surplus
-                alongside you, effectively pushing prices down as your community
-                grows.`,
-                <br></br>,
-                <br></br>,
-                `Early adopters get a discounted rate, and those hodlers
-                who wait longest to claim get a juicier return.`,
-                <br></br>,
-                <br></br>,
-                `While unclaimed,
-                overflow earns interest.`,
-              ])}
-              {fourthCol('Repeat 📈', [
-                `If your funding cycles are recurring, any overflow you have will be used to fund your next funding cycle.`,
-                <br></br>,
-                <br></br>,
-                `You can also reconfigure your funding needs as your project grows, and democratically involve your community in enacting these decisions along the way.  
-                `,
-              ])}
-            </Row>
-          </div>
-          <div
-            style={{
-              fontWeight: 600,
-              marginTop: 40,
-              textAlign: 'center',
-            }}
-          >
-            Create value for your community, crush your craft, make your money,
-            and lift up your people.<br></br>
-          </div>
-        </div>
-      </section>
-
       <section>
         <div
           id="faq"
           style={{
             ...wrapper,
-            paddingTop: 20,
+            paddingTop: 80,
             paddingBottom: 80,
             maxWidth: 800,
           }}

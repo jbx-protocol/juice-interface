@@ -300,7 +300,7 @@ module.exports = async ({
           expectedFundingCycleId1,
           originalTimeMark,
           // The cycle limit should be one lower than the previous.
-          cycleLimit1.sub(1),
+          cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
           weight.mul(discountRate1).div(constants.MaxPercent),
           ballot.address,
           // The start time should be one duration after the initial start.

@@ -42,7 +42,10 @@ module.exports = async ({
     max: constants.MaxCycleLimit
   });
   // dont use non recurring.
-  const discountRate = randomBigNumberFn({ min: 1, max: constants.MaxPercent });
+  const discountRate = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot = constants.AddressZero;
 
   const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
@@ -167,7 +170,7 @@ module.exports = async ({
     /**
       Fast forward to the next funding cycle that uses the same configuration.
     */
-    () => fastforwardFn(duration.mul(86400)),
+    () => fastforwardFn(duration.mul(86400).add(10)),
     /**
       If there hasn't been a reconfiguration, funding cycles should still have the original fee.
     */

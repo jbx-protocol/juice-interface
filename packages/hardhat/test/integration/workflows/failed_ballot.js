@@ -74,7 +74,10 @@ module.exports = async ({
     max: constants.MaxUint16
   });
   const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
-  const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
+  const discountRate2 = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot2 = constants.AddressZero;
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
   const bondingCurveRate2 = randomBigNumberFn({ max: constants.MaxPercent });

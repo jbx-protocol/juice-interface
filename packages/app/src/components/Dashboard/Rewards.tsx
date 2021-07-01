@@ -251,8 +251,8 @@ export default function Rewards({
         <Statistic
           title={
             <TooltipLabel
-              label="Tickets"
-              tip="Tickets are distributed when a project is paid, and can be redeemed for that project's overflow. Project's have the option of issuing their own ERC-20 token to use in place of tickets, which can then be claimed by current ticket holders. ERC-20 tokens have the same value as tickets, and don't need to be claimed to be redeemed."
+              label="Tokens"
+              tip="Project tokens are distributed when a project is paid, and can be redeemed for that project's overflow. Supporters will have their token balance tracked by Juice, and can redeem their token balance for overflow without claiming them. Once a project has issued their ERC20, token holders can claim their balance."
               style={{
                 fontWeight:
                   forThemeOption &&
@@ -273,7 +273,7 @@ export default function Rewards({
                 label={
                   <TooltipLabel
                     label="Reserved"
-                    tip="A project may reserve a percentage of tickets for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tickets transfers them to their destined wallets."
+                    tip="A project may reserve a percentage of tokens for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tokens transfers them to their destined wallets."
                     style={{ marginRight: 14 }}
                   />
                 }
@@ -363,7 +363,7 @@ export default function Rewards({
       </Space>
 
       <Modal
-        title={`Redeem ${ticketSymbol ?? 'Tickets'}`}
+        title={`Redeem ${ticketSymbol ?? 'Tokens'}`}
         visible={redeemModalVisible}
         onOk={() => {
           redeem()
@@ -380,14 +380,14 @@ export default function Rewards({
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>Balance: {formatWad(totalBalance ?? 0)} tickets</div>
           <p>
-            Tickets can be redeemed for a project's overflow according to the
+            Tokens can be redeemed for a project's overflow according to the
             bonding curve rate of the current funding cycle. For example, if the
-            rate is 70%, there's 100 ETH overflow available, and 100 Tickets in
-            circulation, 10 Tickets could be redeemed for 7 ETH.
+            rate is 70%, there's 100 ETH overflow available, and 100 tokens in
+            circulation, 10 tokens could be redeemed for 7 ETH.
           </p>
           {redeemDisabled ? (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
-              You can redeem tickets once this project has overflow.
+              You can redeem tokens once this project has overflow.
             </div>
           ) : (
             <div>

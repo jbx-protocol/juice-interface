@@ -131,7 +131,7 @@ export default function Paid({
             <div style={smallHeaderStyle(colors)}>
               <TooltipLabel
                 label="OVERFLOW"
-                tip="The amount paid to the project, minus the current funding cycle's target. Overflow can be claimed by ticket holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
+                tip="The amount paid to the project, minus the current funding cycle's target. Overflow can be claimed by project token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
               />
             </div>
             {fundingCycle.currency.eq(1) ? (

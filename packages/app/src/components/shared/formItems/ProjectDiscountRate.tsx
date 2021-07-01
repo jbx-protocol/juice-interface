@@ -16,7 +16,7 @@ export default function ProjectDiscountRate({
   return (
     <Form.Item
       extra="The discount rate determines how you'll reward earlier adopters and investors of your project.
-      For example, if this is set to 97%, then someone who pays 100 towards the next funding cycle will only receive 97% the amount of Tickets received by someone who paid 100 towards this funding cycle."
+      For example, if this is set to 97%, then someone who pays 100 towards the next funding cycle will only receive 97% the amount of tokens received by someone who paid 100 towards this funding cycle."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}

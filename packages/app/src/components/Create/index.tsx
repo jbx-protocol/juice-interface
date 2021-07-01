@@ -216,7 +216,7 @@ export default function Create() {
 
   const buildSteps = useCallback(
     (steps: { title: string; callback: VoidFunction }[]) => (
-      <Steps progressDot responsive current={currentStep}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         {steps.map((step, i) => (
           <Steps.Step
             key={step.title}
@@ -231,7 +231,14 @@ export default function Create() {
             }
           />
         ))}
-      </Steps>
+        <Button
+          onClick={() => setDeployProjectModalVisible(true)}
+          disabled={currentStep < steps.length}
+          type="primary"
+        >
+          Deploy
+        </Button>
+      </div>
     ),
     [currentStep],
   )
@@ -252,12 +259,9 @@ export default function Create() {
           ...layouts.maxWidth,
           marginTop: 20,
           marginBottom: 20,
-          borderRadius: radii.lg,
-          padding: 40,
-          border: '1px solid ' + colors.stroke.secondary,
         }}
       >
-        <h1 style={{ marginBottom: 20 }}>Deploy your project 🚀</h1>
+        <h1 style={{ marginBottom: 20 }}>Create your Juicebox 🚀</h1>
 
         {buildSteps([
           {
@@ -269,17 +273,29 @@ export default function Create() {
             callback: () => setProjectFormModalVisible(true),
           },
           {
-            title: 'Configure tickets',
+            title: 'Tokens',
             callback: () => setTicketingFormModalVisible(true),
-          },
-          {
-            title: 'Deploy',
-            callback: () => setDeployProjectModalVisible(true),
           },
         ])}
       </div>
 
-      <div style={{ ...layouts.maxWidth, paddingBottom: 180 }}>
+      <div
+        style={{
+          ...layouts.maxWidth,
+          borderRadius: radii.lg,
+          padding: 40,
+          paddingTop: 30,
+          border: '1px solid ' + colors.stroke.secondary,
+        }}
+      >
+        <h4
+          style={{
+            color: colors.text.secondary,
+            marginBottom: 30,
+          }}
+        >
+          Preview:
+        </h4>
         <Project
           isOwner={false}
           showCurrentDetail={currentStep > 2}

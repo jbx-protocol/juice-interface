@@ -96,7 +96,7 @@ export default function FundingCyclePreview({
 
             <div>
               <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-                Allocated ticket reserves:
+                Allocated token reserves:
               </h4>
               <Mods
                 mods={ticketMods}
@@ -104,7 +104,7 @@ export default function FundingCyclePreview({
                 projectId={projectId}
                 isOwner={isOwner}
                 emptyText="No destinations set"
-                editButtonText="Allocate ticket reserves"
+                editButtonText="Allocate token reserves"
               />
             </div>
           </Space>

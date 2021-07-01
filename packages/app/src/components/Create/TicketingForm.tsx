@@ -28,7 +28,7 @@ export default function TicketingForm({
 
   return (
     <Space direction="vertical" size="large">
-      <h1>Ticketing</h1>
+      <h1>Project tokens</h1>
 
       <Form form={form} layout="vertical">
         {cycleIsRecurring && (
@@ -60,11 +60,11 @@ export default function TicketingForm({
           name="ticketMods"
           mods={mods}
           onModsChanged={setMods}
-          addButtonText="Add a ticket receiver"
+          addButtonText="Add a token receiver"
           formItemProps={{
-            label: 'Allocate reserved tickets (optional)',
+            label: 'Allocate reserved tokens (optional)',
             extra:
-              "Automatically distribute a portion of your project's reserved tickets to other projects or ETH wallet addresses. Reserved tickets will be distributed as soon as they're printed.",
+              "Automatically distribute a portion of your project's reserved tokens to other projects or ETH wallet addresses. Reserved tokens will be distributed as soon as they're printed.",
           }}
         />
         <Form.Item>

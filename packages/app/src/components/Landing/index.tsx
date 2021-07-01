@@ -2,7 +2,8 @@ import { Button, Col, Row, Space } from 'antd'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
-import DefineProject from './DefineProject'
+
+import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
 
@@ -81,26 +82,32 @@ export default function Landing() {
                   paddingBottom: 60,
                 }}
               >
-                {bigHeader('Community funding on autopilot')}
-                <div>
-                  <p style={{ fontWeight: 500, fontSize: '1.14rem' }}>
-                    Get paid, build a community, program its spending. <br />
-                    Powered by public smart contracts on{' '}
-                    <a
-                      style={{
-                        color: colors.text.primary,
-                        fontWeight: 500,
-                        borderBottom:
-                          '1px solid ' + colors.stroke.action.primary,
-                      }}
-                      href="https://ethereum.org/en/what-is-ethereum/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Ethereum
-                    </a>
-                    .
-                  </p>
+                {bigHeader('Community funding for people and projects')}
+                <div
+                  style={{
+                    fontWeight: 500,
+                    fontSize: '1.14rem',
+                  }}
+                >
+                  Build a community and program it's spending. Light enough for
+                  a group of friends, powerful enough for a global network of
+                  anons.
+                  <br />
+                  <br />
+                  Powered by public smart contracts on{' '}
+                  <a
+                    style={{
+                      color: colors.text.primary,
+                      fontWeight: 500,
+                      borderBottom: '1px solid ' + colors.stroke.action.primary,
+                    }}
+                    href="https://ethereum.org/en/what-is-ethereum/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ethereum
+                  </a>
+                  .
                 </div>
 
                 <div
@@ -141,7 +148,7 @@ export default function Landing() {
             </Col>
 
             <Col xs={24} md={10}>
-              <img
+              {/* <img
                 style={{
                   height: '75vh',
                   maxHeight: 440,
@@ -157,7 +164,7 @@ export default function Landing() {
                   })
                 }
                 alt="GET JUICED"
-              />
+              /> */}
             </Col>
           </Row>
         </div>
@@ -205,6 +212,26 @@ export default function Landing() {
           </div> */}
       </section>
 
+      <section
+        style={{
+          ...section,
+          marginTop: 0,
+          paddingTop: 20,
+          paddingBottom: 40,
+          // background: 'rgb(57, 43, 70)',
+        }}
+      >
+        <div
+          style={{
+            ...wrapper,
+          }}
+        >
+          {smallHeader('Projects using Juicebox')}
+          <p>soon...</p>
+          <ProjectsGrid projects={[]} />
+        </div>
+      </section>
+
       {/* <section style={section} className="hide-mobile">
         <div
           id="create"
@@ -233,28 +260,29 @@ export default function Landing() {
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader('Should you Juice?')}
+                {bigHeader('Should you Juicebox?')}
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juice, we end up getting creator-lead and
-                    community-owned online creations that automatically reward
-                    the people who help them succeed. Projects are created and
-                    maintained by motivated punks getting transparently paid
-                    what they ask for, and funded by a community of users,
-                    patrons, and investors who have the opportunity to
-                    capitalize on the overflow they help create.
+                    With Juicebox, projects are built and maintained by
+                    motivated punks getting paid transparently, and funded by a
+                    community of users and patrons who are rewarded as the
+                    projects they support succeed.
+                  </p>
+                  <p className="ol">
+                    The future will be lead by creators, and owned by
+                    communities.
                   </p>
                 </div>
               </div>
             </Col>
 
             <Col xs={24} md={10}>
-              <img
+              {/* <img
                 style={{ maxWidth: '100%' }}
                 src="/assets/banana_dwgj.png"
                 alt="Banana chilling and saying 'DO WORK GET JUICED'"
-              />
+              /> */}
             </Col>
           </Row>
         </div>

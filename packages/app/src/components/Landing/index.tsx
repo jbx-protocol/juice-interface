@@ -148,7 +148,7 @@ export default function Landing() {
             </Col>
 
             <Col xs={24} md={10}>
-              {/* <img
+              <img
                 style={{
                   height: '75vh',
                   maxHeight: 440,
@@ -164,7 +164,7 @@ export default function Landing() {
                   })
                 }
                 alt="GET JUICED"
-              /> */}
+              />
             </Col>
           </Row>
         </div>
@@ -278,11 +278,11 @@ export default function Landing() {
             </Col>
 
             <Col xs={24} md={10}>
-              {/* <img
+              <img
                 style={{ maxWidth: '100%' }}
                 src="/assets/banana_dwgj.png"
                 alt="Banana chilling and saying 'DO WORK GET JUICED'"
-              /> */}
+              />
             </Col>
           </Row>
         </div>

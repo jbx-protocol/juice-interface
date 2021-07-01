@@ -39,7 +39,7 @@ module.exports = async ({
     max: BigNumber.from(10000)
   });
   const cycleLimit = randomBigNumberFn({
-    max: constants.MaxUint8
+    max: constants.MaxCycleLimit
   });
   // dont use non recurring.
   const discountRate = randomBigNumberFn({ min: 1, max: constants.MaxPercent });

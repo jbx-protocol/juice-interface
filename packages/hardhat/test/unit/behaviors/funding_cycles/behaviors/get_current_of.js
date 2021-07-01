@@ -728,91 +728,91 @@ module.exports = function() {
       });
     });
   });
-  // describe("Failure cases", function() {
-  //   tests.failure.forEach(function(failureTest) {
-  //     it(failureTest.description, async function() {
-  //       const {
-  //         caller,
-  //         projectId,
-  //         setup: { preconfigure, ops } = {},
-  //         revert
-  //       } = failureTest.fn(this);
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const {
+          caller,
+          projectId,
+          setup: { preconfigure, ops } = {},
+          revert
+        } = failureTest.fn(this);
 
-  //       if (preconfigure) {
-  //         // Mock the caller to be the project's controller.
-  //         await this.terminalDirectory.mock.terminalOf
-  //           .withArgs(projectId)
-  //           .returns(caller.address);
+        if (preconfigure) {
+          // Mock the caller to be the project's controller.
+          await this.terminalDirectory.mock.terminalOf
+            .withArgs(projectId)
+            .returns(caller.address);
 
-  //         // If a ballot was provided, mock the ballot contract with the provided properties.
-  //         await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
+          // If a ballot was provided, mock the ballot contract with the provided properties.
+          await this.ballot.mock.duration.returns(preconfigure.ballot.duration);
 
-  //         const tx = await this.contract.connect(caller).configure(
-  //           projectId,
-  //           {
-  //             target: preconfigure.target,
-  //             currency: preconfigure.currency,
-  //             duration: preconfigure.duration,
-  //             cycleLimit: preconfigure.cycleLimit,
-  //             discountRate: preconfigure.discountRate,
-  //             ballot: this.ballot.address
-  //           },
-  //           preconfigure.metadata,
-  //           preconfigure.fee,
-  //           preconfigure.configureActiveFundingCycle
-  //         );
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
+              discountRate: preconfigure.discountRate,
+              ballot: this.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
 
-  //         await this.setTimeMarkFn(tx.blockNumber);
-  //       }
+          await this.setTimeMarkFn(tx.blockNumber);
+        }
 
-  //       // Do any other specified operations.
-  //       for (let i = 0; i < ops.length; i += 1) {
-  //         const op = ops[i];
-  //         switch (op.type) {
-  //           case "configure": {
-  //             // eslint-disable-next-line no-await-in-loop
-  //             const tx = await this.contract.connect(caller).configure(
-  //               op.projectId,
-  //               {
-  //                 target: op.target,
-  //                 currency: op.currency,
-  //                 duration: op.duration,
-  //                 cycleLimit: op.cycleLimit,
-  //                 discountRate: op.discountRate,
-  //                 ballot: this.ballot.address
-  //               },
-  //               op.metadata,
-  //               op.fee,
-  //               op.configureActiveFundingCycle
-  //             );
-  //             if (op.ballot) {
-  //               // eslint-disable-next-line no-await-in-loop
-  //               await this.ballot.mock.state
-  //                 .withArgs(
-  //                   op.ballot.fundingCycleId,
-  //                   // eslint-disable-next-line no-await-in-loop
-  //                   await this.getTimestampFn(tx.blockNumber)
-  //                 )
-  //                 .returns(op.ballot.state);
-  //             }
+        // Do any other specified operations.
+        for (let i = 0; i < ops.length; i += 1) {
+          const op = ops[i];
+          switch (op.type) {
+            case "configure": {
+              // eslint-disable-next-line no-await-in-loop
+              const tx = await this.contract.connect(caller).configure(
+                op.projectId,
+                {
+                  target: op.target,
+                  currency: op.currency,
+                  duration: op.duration,
+                  cycleLimit: op.cycleLimit,
+                  discountRate: op.discountRate,
+                  ballot: this.ballot.address
+                },
+                op.metadata,
+                op.fee,
+                op.configureActiveFundingCycle
+              );
+              if (op.ballot) {
+                // eslint-disable-next-line no-await-in-loop
+                await this.ballot.mock.state
+                  .withArgs(
+                    op.ballot.fundingCycleId,
+                    // eslint-disable-next-line no-await-in-loop
+                    await this.getTimestampFn(tx.blockNumber)
+                  )
+                  .returns(op.ballot.state);
+              }
 
-  //             break;
-  //           }
-  //           case "fastforward": {
-  //             // Fast forward the clock if needed.
-  //             // eslint-disable-next-line no-await-in-loop
-  //             await this.fastforwardFn(op.seconds);
-  //             break;
-  //           }
-  //           default:
-  //             break;
-  //         }
-  //       }
+              break;
+            }
+            case "fastforward": {
+              // Fast forward the clock if needed.
+              // eslint-disable-next-line no-await-in-loop
+              await this.fastforwardFn(op.seconds);
+              break;
+            }
+            default:
+              break;
+          }
+        }
 
-  //       await expect(
-  //         this.contract.connect(caller).getCurrentOf(projectId)
-  //       ).to.be.revertedWith(revert);
-  //     });
-  //   });
-  // });
+        await expect(
+          this.contract.connect(caller).getCurrentOf(projectId)
+        ).to.be.revertedWith(revert);
+      });
+    });
+  });
 };

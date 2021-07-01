@@ -111,9 +111,11 @@ module.exports = function() {
     this.constants.InitialWeightMultiplier = (
       await fundingCycles.BASE_WEIGHT()
     ).div(BigNumber.from(10).pow(18));
+
+    this.constants.MaxCycleLimit = await fundingCycles.MAX_CYCLE_LIMIT();
   });
 
-  for (let i = 0; i < 1; i += 1) {
+  for (let i = 0; i < 20; i += 1) {
     it(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -173,12 +175,13 @@ module.exports = function() {
       run(workflows.transferProjectOwnership)
     );
     it(
-      "Direct payment addresses can be deployed to add an fundable address to a project.",
+      "Direct payment addresses can be deployed to add an fundable address to a project",
       run(workflows.directPaymentAddresses)
     );
     it(
-      "A project can be created without a payment terminal, and can set one after.",
+      "A project can be created without a payment terminal, and can set one after",
       run(workflows.setTerminal)
     );
+    it("A funding cycle configuration can have a limit", run(workflows.limit));
   }
 };

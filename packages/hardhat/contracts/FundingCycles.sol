@@ -7,8 +7,6 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -42,6 +40,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /// @notice The starting weight for each project's first funding cycle.
     uint256 public constant override BASE_WEIGHT = 1E19;
+
+    /// @notice The maximum value that a cycle limit can be set to.
+    uint256 public constant override MAX_CYCLE_LIMIT = 32;
 
     /// @notice The latest FundingCycle ID for each project id.
     mapping(uint256 => uint256) public override latestIdOf;
@@ -103,24 +104,21 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             return _getStruct(_standbyFundingCycleId);
 
         // Get a reference to the eligible funding cycle.
-        uint256 _eligibleFundingCycleId = _eligible(_projectId);
-
-        uint256 _fundingCycleId;
+        uint256 _fundingCycleId = _eligible(_projectId);
 
         // If an eligible funding cycle exists,
         // check to see if it has been approved by the base funding cycle's ballot.
-        if (_eligibleFundingCycleId > 0) {
+        if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
-            FundingCycle memory _eligibleFundingCycle =
-                _getStruct(_eligibleFundingCycleId);
+            FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
 
             // Check to see if the correct ballot is approved for this funding cycle.
-            if (_isApproved(_eligibleFundingCycle))
-                return _mockFundingCycleBasedOn(_eligibleFundingCycle, false);
+            if (_isApproved(_fundingCycle))
+                return _mockFundingCycleBasedOn(_fundingCycle, false);
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
-            _fundingCycleId = _eligibleFundingCycle.basedOn;
+            _fundingCycleId = _fundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
@@ -162,20 +160,24 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // If this one exists, it will become active one it has been tapped.
         if (_fundingCycleId == 0) _fundingCycleId = _standby(_projectId);
 
+        // Keep a reference to the eligible funding cycle.
+        FundingCycle memory _fundingCycle;
+
         // If a standy funding cycle exists,
         // check to see if it has been approved by the base funding cycle's ballot.
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
-            FundingCycle memory _eligibleFundingCycle =
-                _getStruct(_fundingCycleId);
+            _fundingCycle = _getStruct(_fundingCycleId);
 
-            // Check to see if the correct ballot is approved for this funding cycle.
-            if (_isApproved(_eligibleFundingCycle))
-                return _eligibleFundingCycle;
+            // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
+            if (
+                _fundingCycle.start <= block.timestamp &&
+                _isApproved(_fundingCycle)
+            ) return _fundingCycle;
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.
-            _fundingCycleId = _eligibleFundingCycle.basedOn;
+            _fundingCycleId = _fundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active,
             // so us the ID of the latest active funding cycle, which carries the last approved configuration.
@@ -186,25 +188,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         require(_fundingCycleId > 0, "FundingCycles::getCurrentOf: NOT_FOUND");
 
         // The funding cycle to base a current one on.
-        FundingCycle memory _baseFundingCycle = _getStruct(_fundingCycleId);
-
-        console.log("sup");
-        // Time since end.
-        uint256 _latestCycleEnd =
-            _baseFundingCycle.start +
-                (_baseFundingCycle.duration *
-                    SECONDS_IN_DAY *
-                    (
-                        _baseFundingCycle.cycleLimit > 0
-                            ? _baseFundingCycle.cycleLimit
-                            : 1
-                    ));
-
-        console.log("yung %d: ", _latestCycleEnd);
+        _fundingCycle = _getStruct(_fundingCycleId);
 
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
-        return _mockFundingCycleBasedOn(_baseFundingCycle, true);
+        return _mockFundingCycleBasedOn(_fundingCycle, true);
     }
 
     /** 
@@ -293,9 +281,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             "FundingCycles::configure: BAD_DURATION"
         );
 
-        // Currency must fit into a uint8.
+        // Currency must be less than 32.
         require(
-            _properties.cycleLimit <= type(uint8).max,
+            _properties.cycleLimit <= MAX_CYCLE_LIMIT,
             "FundingCycles::configure: BAD_CYCLE_LIMIT"
         );
 
@@ -373,11 +361,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get a reference to the funding cycle being tapped.
         uint256 fundingCycleId = _tappable(_projectId);
 
-        console.log("tapped ID: %d", fundingCycleId);
         // Get a reference to how much has already been tapped from this funding cycle.
         uint256 _tapped = _tappedOf[fundingCycleId];
-        console.log("tapped: %d", _tapped);
-        console.log("target: %d", _targetOf[fundingCycleId]);
 
         // Amount must be within what is still tappable.
         require(
@@ -423,25 +408,31 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get the standby funding cycle's ID.
         fundingCycleId = _standby(_projectId);
 
-        console.log("standby id %d: ", fundingCycleId);
-
-        // If it exists, return it.
+        // If it exists, make sure its updated, then return it.
         if (fundingCycleId > 0) {
-            _updateFundingCycle(fundingCycleId, _configured);
+            // Get the funding cycle that the specified one is based on.
+            FundingCycle memory _baseFundingCycle =
+                _getStruct(_getStruct(fundingCycleId).basedOn);
+
+            _updateFundingCycle(
+                fundingCycleId,
+                _baseFundingCycle,
+                // The base's ballot must have ended.
+                _getTimeAfterBallot(_baseFundingCycle, _configured),
+                false
+            );
             return fundingCycleId;
         }
 
         // Get the active funding cycle's ID.
-        uint256 _eligibleFundingCycleId =
-            fundingCycleId > 0 ? fundingCycleId : _eligible(_projectId);
+        fundingCycleId = _eligible(_projectId);
 
-        console.log("_eligibleFundingCycleId id %d: ", _eligibleFundingCycleId);
         // If the ID of an eligible funding cycle exists, it's approved, and active funding cycles are configurable, and its approved, return it.
         if (
-            _eligibleFundingCycleId > 0 &&
+            fundingCycleId > 0 &&
             _configureActiveFundingCycle &&
-            _isIdApproved(_eligibleFundingCycleId)
-        ) return _eligibleFundingCycleId;
+            _isIdApproved(fundingCycleId)
+        ) return fundingCycleId;
 
         // Get the ID of the latest funding cycle which has the latest reconfiguration.
         fundingCycleId = latestIdOf[_projectId];
@@ -471,14 +462,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _mustStartOnOrAfter = block.timestamp - _timeFromStartMultiple;
             } else {
                 // The ballot must have ended.
-                uint256 _ballotExpiration =
-                    _fundingCycle.ballot != IFundingCycleBallot(address(0))
-                        ? _configured + _fundingCycle.ballot.duration()
-                        : 0;
-
-                _mustStartOnOrAfter = block.timestamp > _ballotExpiration
-                    ? block.timestamp
-                    : _ballotExpiration;
+                _mustStartOnOrAfter = _getTimeAfterBallot(
+                    _fundingCycle,
+                    _configured
+                );
             }
         } else {
             _mustStartOnOrAfter = block.timestamp;
@@ -490,58 +477,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _fundingCycle,
             _mustStartOnOrAfter,
             false
-        );
-    }
-
-    function _updateFundingCycle(uint256 _fundingCycleId, uint256 _configured)
-        private
-    {
-        FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
-        console.log("UPDATING %d: ", _fundingCycleId);
-        console.log("START %d: ", _fundingCycle.start);
-        FundingCycle memory _baseFundingCycle =
-            _getStruct(_fundingCycle.basedOn);
-        FundingCycle memory _latestPermanentFundingCycle =
-            _baseFundingCycle.cycleLimit > 0
-                ? _latestPermanentCycleBefore(_baseFundingCycle)
-                : _baseFundingCycle;
-
-        // Get the FC.
-        // Derive the next start time.
-        uint256 _start =
-            _deriveStart(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _fundingCycle.ballot != IFundingCycleBallot(address(0))
-                    ? _configured + _fundingCycle.ballot.duration()
-                    : block.timestamp
-            );
-
-        console.log("NEW START %d: ", _start);
-        // Derive the next weight.
-        uint256 _weight =
-            _deriveWeight(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
-
-        // Derive the next number.
-        uint256 _number =
-            _deriveNumber(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
-        // get the previous FC. Make sure the start and weight and number get reassessed.
-        // Save the intrinsic properties efficiently.
-        _packAndStoreIntrinsicProperties(
-            _fundingCycleId,
-            _fundingCycle.projectId,
-            _weight,
-            _number,
-            _fundingCycle.basedOn,
-            _start
         );
     }
 
@@ -560,26 +495,25 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Check for the ID of an eligible funding cycle.
         fundingCycleId = _eligible(_projectId);
 
-        console.log("e %d: ", fundingCycleId);
         // No eligible funding cycle found, check for the ID of a standby funding cycle.
         // If this one exists, it will become eligible one it has started.
         if (fundingCycleId == 0) fundingCycleId = _standby(_projectId);
+
+        // Keep a reference to the funding cycle eligible for being tappable.
+        FundingCycle memory _fundingCycle;
 
         // If the ID of an eligible funding cycle exists,
         // check to see if it has been approved by the based funding cycle's ballot.
         if (fundingCycleId > 0) {
             // Get the necessary properties for the funding cycle.
-            FundingCycle memory _eligibleFundingCycle =
-                _getStruct(fundingCycleId);
+            _fundingCycle = _getStruct(fundingCycleId);
 
-            console.log("duck");
             // Check to see if the cycle is approved. If so, return it.
-            if (_isApproved(_eligibleFundingCycle)) return fundingCycleId;
-            console.log("duck2");
+            if (_isApproved(_fundingCycle)) return fundingCycleId;
 
             // If it hasn't been approved, set the ID to be the base funding cycle,
             // which carries the last approved configuration.
-            fundingCycleId = _eligibleFundingCycle.basedOn;
+            fundingCycleId = _fundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
             // which carries the last approved configuration.
@@ -589,27 +523,23 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The funding cycle cant be 0.
         require(fundingCycleId > 0, "FundingCycles::_tappable: NOT_FOUND");
 
-        // Get the properties of the funding cycle.
-        FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
+        // Set the eligible funding cycle.
+        _fundingCycle = _getStruct(fundingCycleId);
 
-        console.log("goose: ", _fundingCycle.start);
-        console.log("b timestamp: ", block.timestamp);
         // Funding cycles with a discount rate of 0 are non-recurring.
         require(
             _fundingCycle.discountRate > 0,
             "FundingCycles::_tappable: NON_RECURRING"
         );
 
-        // The time when the funding cycle immediately after the specified funding cycle starts.
+        // The time when the funding cycle immediately after the eligible funding cycle starts.
         uint256 _nextImmediateStart =
             _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY);
 
+        // The distance from now until the nearest past multiple of the cycle duration from its start.
         uint256 _timeFromImmediateStartMultiple =
             (block.timestamp - _nextImmediateStart) %
                 (_fundingCycle.duration * SECONDS_IN_DAY);
-
-        console.log("soooop %d: ", _nextImmediateStart);
-        console.log("moopmeep %d: ", _timeFromImmediateStartMultiple);
 
         // Return the tappable funding cycle.
         fundingCycleId = _init(
@@ -643,98 +573,40 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Set the project's latest funding cycle ID to the new count.
         latestIdOf[_projectId] = count;
 
-        // Set the intrinsic properties depending on whether or not a base funding cycle was specified.
-        uint256 _start;
-        uint256 _weight;
-        uint256 _number;
-        uint256 _basedOn;
-
-        if (_baseFundingCycle.id > 0) {
-            // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
-            // Otherwise, the base is already the latest permanent funding cycle.
-            FundingCycle memory _latestPermanentFundingCycle =
-                _baseFundingCycle.cycleLimit > 0
-                    ? _latestPermanentCycleBefore(_baseFundingCycle)
-                    : _baseFundingCycle;
-
-            console.log("lp: %d", _latestPermanentFundingCycle.id);
-            console.log("base start: %d", _baseFundingCycle.start);
-            console.log("base currency: %d", _baseFundingCycle.currency);
-            console.log("block: %d", block.timestamp);
-
-            // Derive the next start time.
-            _start = _deriveStart(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _mustStartOnOrAfter
+        // If there is no base, initialize a first cycle.
+        if (_baseFundingCycle.id == 0) {
+            // Set fresh intrinsic properties.
+            _packAndStoreIntrinsicProperties(
+                count,
+                _projectId,
+                BASE_WEIGHT,
+                1,
+                0,
+                block.timestamp
             );
-
-            // Derive the next weight.
-            _weight = _deriveWeight(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
-
-            // Derive the next number.
-            _number = _deriveNumber(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
-
-            console.log("_baseFundingCycle: %d", _baseFundingCycle.id);
-            console.log("start: %d", _start);
-            console.log("number: %d", _number);
-            _basedOn = _baseFundingCycle.id;
-            console.log("base: %d", _basedOn);
-
-            // Derive what the cycle limit should be.
-            uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
-
-            // Copy the last permanent funding cycle if there bases' limit is up.
-            FundingCycle memory _fundingCycleToCopy =
-                _cycleLimit == 0
-                    ? _latestPermanentFundingCycle
-                    : _baseFundingCycle;
-
-            // Copy if needed.
-            if (_copy) {
-                // Save the configuration efficiently.
-                _packAndStoreConfigurationProperties(
-                    count,
-                    _fundingCycleToCopy.configured,
-                    _cycleLimit,
-                    _fundingCycleToCopy.ballot,
-                    _fundingCycleToCopy.duration,
-                    _fundingCycleToCopy.currency,
-                    _fundingCycleToCopy.fee,
-                    _fundingCycleToCopy.discountRate
-                );
-
-                _metadataOf[count] = _metadataOf[_fundingCycleToCopy.id];
-                _targetOf[count] = _targetOf[_fundingCycleToCopy.id];
-            }
         } else {
-            _weight = BASE_WEIGHT;
-            _number = 1;
-            _basedOn = 0;
-            _start = block.timestamp;
+            // Update the intrinsic properties of the funding cycle being initialized.
+            _updateFundingCycle(
+                count,
+                _baseFundingCycle,
+                _mustStartOnOrAfter,
+                _copy
+            );
         }
 
-        // Save the intrinsic properties efficiently.
-        _packAndStoreIntrinsicProperties(
+        // Get a reference to the funding cycle with updated intrinsic properties.
+        FundingCycle memory _fundingCycle = _getStruct(count);
+
+        emit Init(
             count,
-            _projectId,
-            _weight,
-            _number,
-            _basedOn,
-            _start
+            _fundingCycle.projectId,
+            _fundingCycle.number,
+            _fundingCycle.basedOn,
+            _fundingCycle.weight,
+            _fundingCycle.start
         );
 
-        emit Init(count, _projectId, _number, _basedOn, _weight, _start);
-
-        return count;
+        return _fundingCycle.id;
     }
 
     /**
@@ -791,15 +663,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
         ) return 0;
 
-        console.log("id %d:", _fundingCycle.id);
-        console.log("dur", _fundingCycle.duration);
-        console.log("fc start", _fundingCycle.start);
-        console.log(
-            "pig %d: ",
-            _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
-        );
-        console.log("block %d: ", block.timestamp);
-
         // The first funding cycle when running on local can be in the future for some reason.
         // This will have no effect in production.
         if (
@@ -810,9 +673,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle =
             _getStruct(_fundingCycle.basedOn);
 
-        console.log("baz id %d:", _baseFundingCycle.id);
-        console.log("baz dur", _baseFundingCycle.duration);
-        console.log("baz start %d: ", _baseFundingCycle.start);
         if (
             block.timestamp >=
             _baseFundingCycle.start +
@@ -828,24 +688,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         A view of the funding cycle that would be created based on the provided one if the project doesn't make a reconfiguration.
 
         @param _baseFundingCycle The funding cycle to make the calculation for.
-        //param _mustStartOnOrAfter The mock should start at the soonest possible time after this time.
+        @param _allowMidCycle Allow the mocked funding cycle to already be mid cycle.
 
         @return The next funding cycle, with an ID set to 0.
     */
     function _mockFundingCycleBasedOn(
         FundingCycle memory _baseFundingCycle,
-        bool _calc
+        bool _allowMidCycle
     ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
         require(
             _baseFundingCycle.discountRate > 0,
             "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
         );
-
-        console.log("BAZZZZ %d:", _baseFundingCycle.id);
-        console.log("BAZZZZ limit %d:", _baseFundingCycle.cycleLimit);
-        console.log("BAZZZZ start %d:", _baseFundingCycle.start);
-        console.log("BAZZZZ dur %d:", _baseFundingCycle.duration);
 
         // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
         // Otherwise, the base is already the latest permanent funding cycle.
@@ -854,29 +709,31 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 ? _latestPermanentCycleBefore(_baseFundingCycle)
                 : _baseFundingCycle;
 
-        console.log("PEERRMM %d:", _latestPermanentFundingCycle.id);
+        // The distance of the current time to the start of the next possible funding cycle.
+        uint256 _rewind = 0;
 
-        uint256 _timeFromImmediateStartMultiple = 0;
-        if (_calc) {
-            _timeFromImmediateStartMultiple = (_baseFundingCycle.duration *
-                SECONDS_IN_DAY);
-            // if the cycles have expired, the must start date should
+        // Only rewind if a mid cycle mock are cycle.
+        if (_allowMidCycle) {
+            // Rewind a full cycle.
+            _rewind = _baseFundingCycle.duration * SECONDS_IN_DAY;
+
+            // If the cycles have expired, the must start date should
             // be an increment of the latest from it.
             if (_baseFundingCycle.cycleLimit > 0) {
+                // Get the end time of the last cycle.
                 uint256 _cycleEnd =
                     _baseFundingCycle.start +
                         (_baseFundingCycle.cycleLimit *
                             _baseFundingCycle.duration *
                             SECONDS_IN_DAY);
 
-                if (_cycleEnd < block.timestamp) {
-                    // how many interations of _latest have passed?
-                    // Otherwise, use the closest multiple of the duration from the old end.
-                    _timeFromImmediateStartMultiple =
+                // If the cycle end time is in the past, the mock should start at a multiple of the last
+                // permanent cycle since the cycle ended.
+                if (_cycleEnd < block.timestamp)
+                    _rewind =
                         (block.timestamp - _cycleEnd) %
                         (_latestPermanentFundingCycle.duration *
                             SECONDS_IN_DAY);
-                }
             }
         }
 
@@ -885,19 +742,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _deriveStart(
                 _baseFundingCycle,
                 _latestPermanentFundingCycle,
-                block.timestamp - _timeFromImmediateStartMultiple
+                block.timestamp - _rewind
             );
 
-        console.log("STAR %d:", _start);
         // Derive what the cycle limit should be.
         uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
 
-        // Copy the last permanent funding cycle if there bases' limit is up.
+        // Copy the last permanent funding cycle if the bases' limit is up.
         FundingCycle memory _fundingCycleToCopy =
             _cycleLimit == 0 ? _latestPermanentFundingCycle : _baseFundingCycle;
-
-        // // If there's no funding cycle to copy, return the empty funding cycle
-        // if (_fundingCycleToCopy.id == 0) return _fundingCycleToCopy;
 
         return
             FundingCycle(
@@ -926,6 +779,89 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 0,
                 _fundingCycleToCopy.metadata
             );
+    }
+
+    /** 
+      @notice
+      Updates intrinsic properties for a funding cycle given a base cycle.
+
+      @param _fundingCycleId The ID of the funding cycle to make sure is update.
+      @param _baseFundingCycle The cycle that the one being updated is based on.
+      @param _mustStartOnOrAfter The time before which the initialized funding cycle can't start.
+      @param _copy If non-intrinsic properties should be copied from the base funding cycle.
+    */
+    function _updateFundingCycle(
+        uint256 _fundingCycleId,
+        FundingCycle memory _baseFundingCycle,
+        uint256 _mustStartOnOrAfter,
+        bool _copy
+    ) private {
+        // Get the latest permanent funding cycle.
+        FundingCycle memory _latestPermanentFundingCycle =
+            _baseFundingCycle.cycleLimit > 0
+                ? _latestPermanentCycleBefore(_baseFundingCycle)
+                : _baseFundingCycle;
+
+        // Derive the correct next start time from the base.
+        uint256 _start =
+            _deriveStart(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _mustStartOnOrAfter
+            );
+
+        // Derive the correct weight.
+        uint256 _weight =
+            _deriveWeight(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+
+        // Derive the correct number.
+        uint256 _number =
+            _deriveNumber(
+                _baseFundingCycle,
+                _latestPermanentFundingCycle,
+                _start
+            );
+
+        // Copy if needed.
+        if (_copy) {
+            // Derive what the cycle limit should be.
+            uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
+
+            // Copy the last permanent funding cycle if the bases' limit is up.
+            FundingCycle memory _fundingCycleToCopy =
+                _cycleLimit == 0
+                    ? _latestPermanentFundingCycle
+                    : _baseFundingCycle;
+
+            // Save the configuration efficiently.
+            _packAndStoreConfigurationProperties(
+                _fundingCycleId,
+                _fundingCycleToCopy.configured,
+                _cycleLimit,
+                _fundingCycleToCopy.ballot,
+                _fundingCycleToCopy.duration,
+                _fundingCycleToCopy.currency,
+                _fundingCycleToCopy.fee,
+                _fundingCycleToCopy.discountRate
+            );
+
+            _metadataOf[count] = _metadataOf[_fundingCycleToCopy.id];
+            _targetOf[count] = _targetOf[_fundingCycleToCopy.id];
+        }
+
+        // Update the intrinsic properties.
+        _packAndStoreIntrinsicProperties(
+            _fundingCycleId,
+            _baseFundingCycle.projectId,
+            _weight,
+            _number,
+            _baseFundingCycle.id,
+            _start
+        );
     }
 
     /**
@@ -1077,9 +1013,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _mustStartOnOrAfter
-    ) internal view returns (uint256 start) {
-        console.log("base id: %d", _baseFundingCycle.id);
-        console.log("base duration: %d", _baseFundingCycle.duration);
+    ) internal pure returns (uint256 start) {
         // Save a reference to the duration measured in seconds.
         uint256 _durationInSeconds =
             _baseFundingCycle.duration * SECONDS_IN_DAY;
@@ -1088,8 +1022,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _nextImmediateStart =
             _baseFundingCycle.start + _durationInSeconds;
 
-        console.log("_mustStartOnOrAfter: %d", _mustStartOnOrAfter);
-        console.log("_nextImmediateStart: %d", _nextImmediateStart);
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)
             return _nextImmediateStart;
@@ -1107,43 +1039,24 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 (_mustStartOnOrAfter - _nextImmediateStart) %
                 _durationInSeconds;
         } else {
-            // Otherwise, use the closest multiple of the duration from the old end.
+            // If the cycle has ended, make the calculation with the latest permanent funding cycle.
             _timeFromImmediateStartMultiple =
                 (_mustStartOnOrAfter -
                     (_baseFundingCycle.start +
                         (_durationInSeconds * _cycleLimit))) %
                 (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
-            // use up all base,
-            // then use up permanent
+
+            // Use the duration of the permanent funding cycle from here on out.
             _durationInSeconds =
                 _latestPermanentFundingCycle.duration *
                 SECONDS_IN_DAY;
         }
 
-        console.log(
-            "_timeFromImmediateStartMultiple %d",
-            _timeFromImmediateStartMultiple
-        );
-        // // If the minimum start date is possible, use it.
-        // if (_timeFromImmediateStartMultiple == 0) return _mustStartOnOrAfter;
-
-        // console.log(
-        //     "_timeFromImmediateStartMultiple: %d",
-        //     _timeFromImmediateStartMultiple
-        // );
         // Otherwise use an increment of the duration from the most recent start.
         start = _mustStartOnOrAfter - _timeFromImmediateStartMultiple; // +
-        // _durationInSeconds;
-
-        console.log("start: %d", start);
-        console.log("_mustStartOnOrAfter: %d", _mustStartOnOrAfter);
-        // Get a reference to the limit of the base funding cycle.
-        // If there is a limit, the duration of the limited funding cycle should only be applied up until the limit,
-        // after which the duration of the latest permanent funding cycle should be used.
 
         // Add increments of duration as necessary to satisfy the threshold.
         while (_mustStartOnOrAfter > start) start = start + _durationInSeconds;
-        console.log("post: %d", start);
     }
 
     /** 
@@ -1230,11 +1143,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal view returns (uint256 number) {
+    ) internal pure returns (uint256 number) {
         // The difference between the start of the base funding cycle and the proposed start.
         uint256 _startDistance = _start - _baseFundingCycle.start;
-
-        console.log("start: %d", _startDistance);
 
         // The number of seconds that the base funding cycle is limited to.
         uint256 _limitLength =
@@ -1243,7 +1154,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 : _baseFundingCycle.cycleLimit *
                     (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
-        console.log("limlen: %d", _limitLength);
         if (_limitLength == 0 || _limitLength > _startDistance) {
             // If there's no limit or if the limit is greater than the start distance,
             // get the result by finding the number of base cycles that fit in the start distance.
@@ -1251,7 +1161,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _baseFundingCycle.number +
                 (_startDistance /
                     (_baseFundingCycle.duration * SECONDS_IN_DAY));
-            console.log("heyo %d", number);
         } else {
             // If the time between the base start at the given start is longer than
             // the limit, first calculate the number of cycles that passed under the limit,
@@ -1261,12 +1170,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _baseFundingCycle.number +
                 (_limitLength / (_baseFundingCycle.duration * SECONDS_IN_DAY));
 
-            console.log("heyo2 %d", number);
             number =
                 number +
                 ((_startDistance - _limitLength) /
                     (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY));
-            console.log("heyo3 %d", number);
         }
     }
 
@@ -1388,5 +1295,33 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         fundingCycle = _getStruct(_fundingCycle.basedOn);
         if (fundingCycle.cycleLimit == 0) return fundingCycle;
         return _latestPermanentCycleBefore(fundingCycle);
+    }
+
+    /** 
+      @notice
+      The time after the ballot of the provided funding cycle has expired.
+
+      @dev
+      If the ballot ends in the past, the current block timestamp will be returned.
+
+      @param _fundingCycle The ID funding cycle to make the caluclation the ballot of.
+      @param _from The time from which the ballot duration should be calculated.
+
+      @return The time when the ballot duration ends.
+    */
+    function _getTimeAfterBallot(
+        FundingCycle memory _fundingCycle,
+        uint256 _from
+    ) private view returns (uint256) {
+        // The ballot must have ended.
+        uint256 _ballotExpiration =
+            _fundingCycle.ballot != IFundingCycleBallot(address(0))
+                ? _from + _fundingCycle.ballot.duration()
+                : 0;
+
+        return
+            block.timestamp > _ballotExpiration
+                ? block.timestamp
+                : _ballotExpiration;
     }
 }

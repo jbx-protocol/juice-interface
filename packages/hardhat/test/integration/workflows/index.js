@@ -20,6 +20,7 @@ const directPaymentAddresses = require("./direct_payment_addresses");
 const operatorPermissions = require("./operator_permissions");
 const ticketLockingAndTransfers = require("./ticket_locking_and transfers");
 const setTerminal = require("./set_terminal");
+const limit = require("./limit");
 
 module.exports = {
   deploy,
@@ -43,5 +44,6 @@ module.exports = {
   directPaymentAddresses,
   operatorPermissions,
   ticketLockingAndTransfers,
-  setTerminal
+  setTerminal,
+  limit
 };

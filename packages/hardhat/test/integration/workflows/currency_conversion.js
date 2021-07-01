@@ -133,7 +133,7 @@ module.exports = async ({
             target: targetDenominatedInCurrency,
             currency,
             duration: randomBigNumberFn({ max: constants.MaxPercent }),
-            cycleLimit: randomBigNumberFn({ max: constants.MaxUint8 }),
+            cycleLimit: randomBigNumberFn({ max: constants.MaxCycleLimit }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
           },

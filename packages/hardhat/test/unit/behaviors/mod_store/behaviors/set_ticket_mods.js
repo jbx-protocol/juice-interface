@@ -303,7 +303,7 @@ const tests = {
       })
     },
     {
-      description: "locked with different percets",
+      description: "locked with different percents",
       fn: ({ deployer, testStart }) => ({
         caller: deployer,
         controller: deployer.address,

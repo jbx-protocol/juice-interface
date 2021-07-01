@@ -1,8 +1,5 @@
 /** 
-  A project can reconfigure its funding cycles. If no payments have been made, the current funding cycle should be configurable.
-  Otherwise, a new configuration should be made that should take effect in the subsequent funding cycle.
-
-  These tests use an empty ballot, so reconfigurations may take effect right after the current funding cycle expires.
+  A funding cycle configuration can have a limit, after which the projects reverts to the previous configuration.
 */
 module.exports = async ({
   deployer,
@@ -17,7 +14,8 @@ module.exports = async ({
   stringToBytesFn,
   randomStringFn,
   randomAddressFn,
-  randomBoolFn
+  randomBoolFn,
+  fastforwardFn
 }) => {
   // The owner of the project that will reconfigure.
   const owner = addrs[0];
@@ -40,10 +38,17 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: BigNumber.from(10000)
   });
+
   const cycleLimit1 = randomBigNumberFn({
+    min: BigNumber.from(1),
     max: constants.MaxCycleLimit
   });
-  const discountRate1 = randomBigNumberFn({ max: constants.MaxPercent });
+
+  // dont allow non recurring.
+  const discountRate1 = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot1 = constants.AddressZero;
 
   const reservedRate1 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -60,9 +65,14 @@ module.exports = async ({
     max: constants.MaxUint16
   });
   const cycleLimit2 = randomBigNumberFn({
+    min: BigNumber.from(1),
     max: constants.MaxCycleLimit
   });
-  const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
+  // dont allow non recurring.
+  const discountRate2 = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot2 = constants.AddressZero;
 
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -104,9 +114,6 @@ module.exports = async ({
   // It should be the project's first budget.
   const expectedFundingCycleNumber1 = BigNumber.from(1);
 
-  // The reconfigured funding cycle should be the second.
-  const expectedFundingCycleNumber2 = BigNumber.from(2);
-
   // Expect the funding cycle to be based on the 0th funding cycle.
   const expectedBasedOn = BigNumber.from(0);
 
@@ -122,6 +129,8 @@ module.exports = async ({
   return [
     /**
       Deploy a project.
+
+      Setting a limit on the first funding cycle shouldnt do anything.
     */
     () =>
       executeFn({
@@ -180,143 +189,7 @@ module.exports = async ({
       return { originalTimeMark: timeMark };
     },
     /**
-      Reconfiguring a project before a payment has been made should change the active funding cycle,
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.juicer,
-        fn: "configure",
-        args: [
-          expectedProjectId,
-          {
-            target: target2,
-            currency: currency2,
-            duration: duration2,
-            cycleLimit: cycleLimit2,
-            discountRate: discountRate2,
-            ballot: ballot2
-          },
-          {
-            reservedRate: reservedRate2,
-            bondingCurveRate: bondingCurveRate2,
-            reconfigurationBondingCurveRate: reconfigurationBondingCurveRate2
-          },
-          [],
-          []
-        ]
-      }),
-    /**
-      Make sure the first funding cycle got updated.
-    */
-    ({ local: { originalTimeMark }, timeMark }) =>
-      checkFn({
-        contract: contracts.fundingCycles,
-        fn: "get",
-        args: [expectedFundingCycleId1],
-        expect: [
-          expectedFundingCycleId1,
-          expectedProjectId,
-          expectedFundingCycleNumber1,
-          expectedBasedOn,
-          timeMark,
-          cycleLimit2,
-          weight,
-          ballot2,
-          // The start time should stay the same.
-          originalTimeMark,
-          duration2,
-          target2,
-          currency2,
-          fee,
-          discountRate2,
-          expectedTapped,
-          expectedPackedMetadata2
-        ]
-      }),
-    /**
-      Print some premined tickets.
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.juicer,
-        fn: "printPreminedTickets",
-        args: [
-          expectedProjectId,
-          randomBigNumberFn({
-            min: BigNumber.from(1),
-            max: BigNumber.from(2).pow(30)
-          }),
-          currency1,
-          randomAddressFn(),
-          randomStringFn(),
-          randomBoolFn()
-        ]
-      }),
-    /**
-      Reconfiguring a project after initial tickets are printed, 
-      but before a payment has been made should change the active funding cycle.
-
-      This will configure back to original properties.
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.juicer,
-        fn: "configure",
-        args: [
-          expectedProjectId,
-          {
-            target: target1,
-            currency: currency1,
-            duration: duration1,
-            cycleLimit: cycleLimit1,
-            discountRate: discountRate1,
-            ballot: ballot1
-          },
-          {
-            reservedRate: reservedRate1,
-            bondingCurveRate: bondingCurveRate1,
-            reconfigurationBondingCurveRate: reconfigurationBondingCurveRate1
-          },
-          [],
-          []
-        ]
-      }),
-    /**
-      Make sure the first funding cycle got updated.
-    */
-    async ({ local: { originalTimeMark }, timeMark }) => {
-      await checkFn({
-        contract: contracts.fundingCycles,
-        fn: "get",
-        args: [expectedFundingCycleId1],
-        expect: [
-          expectedFundingCycleId1,
-          expectedProjectId,
-          expectedFundingCycleNumber1,
-          expectedBasedOn,
-          timeMark,
-          cycleLimit1,
-          weight,
-          ballot1,
-          // The start time should stay the same.
-          originalTimeMark,
-          duration1,
-          target1,
-          currency1,
-          fee,
-          discountRate1,
-          expectedTapped,
-          expectedPackedMetadata1
-        ]
-      });
-
-      return { configuredTimeMark: timeMark };
-    },
-    /**
-      Make a payment to the project.
+      Make a payment to the project to lock it in.
     */
     () =>
       executeFn({
@@ -332,9 +205,88 @@ module.exports = async ({
         value: paymentValue
       }),
     /**
-      Reconfiguring should create a new funding cycle,
+      Fastforward to just before the limit.
     */
     () =>
+      fastforwardFn(
+        cycleLimit1
+          .mul(duration1)
+          .mul(86400)
+          .sub(2)
+      ),
+    /**
+      Make sure the same funding cycle is current.
+    */
+    async ({ local: { originalTimeMark } }) =>
+      checkFn({
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          cycleLimit1.eq(1) ? expectedFundingCycleId1 : BigNumber.from(0),
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(cycleLimit1.sub(1)),
+          cycleLimit1.eq(1) ? BigNumber.from(0) : expectedFundingCycleId1,
+          originalTimeMark,
+          // There should be one cycle limit left
+          BigNumber.from(1),
+          weight
+            .mul(discountRate1.pow(cycleLimit1.sub(1)))
+            .div(constants.MaxPercent.pow(cycleLimit1.sub(1))),
+          ballot1,
+          originalTimeMark.add(
+            cycleLimit1
+              .sub(1)
+              .mul(duration1)
+              .mul(86400)
+          ),
+          duration1,
+          target1,
+          currency1,
+          fee,
+          discountRate1,
+          expectedTapped,
+          expectedPackedMetadata1
+        ]
+      }),
+    /**
+      Fastforward to past the limit.
+    */
+    () => fastforwardFn(BigNumber.from(3)),
+    /**
+      Make sure the same funding cycle is current.
+    */
+    ({ local: { originalTimeMark } }) =>
+      checkFn({
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          BigNumber.from(0),
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(cycleLimit1),
+          expectedFundingCycleId1,
+          originalTimeMark,
+          // Cycle limit should be 0 for the first funding cycle.
+          BigNumber.from(0),
+          weight
+            .mul(discountRate1.pow(cycleLimit1))
+            .div(constants.MaxPercent.pow(cycleLimit1)),
+          ballot1,
+          originalTimeMark.add(cycleLimit1.mul(duration1).mul(86400)),
+          duration1,
+          target1,
+          currency1,
+          fee,
+          discountRate1,
+          expectedTapped,
+          expectedPackedMetadata1
+        ]
+      }),
+    /**
+      Reconfigure the project to have a limit.
+    */
+    async () =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
@@ -359,80 +311,33 @@ module.exports = async ({
         ]
       }),
     /**
-      The second funding cycle should have been configured.
+      Fastforward to just before the reconfiguration.
     */
-    ({ local: { originalTimeMark }, timeMark }) =>
-      checkFn({
-        contract: contracts.fundingCycles,
-        fn: "get",
-        args: [expectedFundingCycleId2],
-        expect: [
-          expectedFundingCycleId2,
-          expectedProjectId,
-          expectedFundingCycleNumber2,
-          expectedFundingCycleId1,
-          timeMark,
-          cycleLimit2,
-          weight.mul(discountRate1).div(constants.MaxPercent),
-          ballot2,
-          // The start time should be one duration after the initial start.
-          originalTimeMark.add(duration1.mul(86400)),
-          duration2,
-          target2,
-          currency2,
-          fee,
-          discountRate2,
-          expectedTapped,
-          expectedPackedMetadata2
-        ]
-      }),
+    async ({ timeMark }) => {
+      await fastforwardFn(duration1.mul(86400).sub(10));
+      return { configurationTimeMark: timeMark };
+    },
     /**
-      The first funding cycle should not be.
+      Make sure the same funding cycle is current.
     */
-    ({ local: { originalTimeMark, configuredTimeMark } }) =>
-      checkFn({
-        contract: contracts.fundingCycles,
-        fn: "get",
-        args: [expectedFundingCycleId1],
-        expect: [
-          expectedFundingCycleId1,
-          expectedProjectId,
-          expectedFundingCycleNumber1,
-          expectedBasedOn,
-          configuredTimeMark,
-          cycleLimit1,
-          weight,
-          ballot1,
-          // The start time should stay the same.
-          originalTimeMark,
-          duration1,
-          target1,
-          currency1,
-          fee,
-          discountRate1,
-          expectedTapped,
-          expectedPackedMetadata1
-        ]
-      }),
-    /**
-      The first funding cycle should still be the current.
-    */
-    ({ local: { originalTimeMark, configuredTimeMark } }) =>
+    ({ local: { originalTimeMark } }) =>
       checkFn({
         contract: contracts.fundingCycles,
         fn: "getCurrentOf",
         args: [expectedProjectId],
         expect: [
-          expectedFundingCycleId1,
+          BigNumber.from(0),
           expectedProjectId,
-          expectedFundingCycleNumber1,
-          expectedBasedOn,
-          configuredTimeMark,
-          cycleLimit1,
-          weight,
-          ballot1,
-          // The start time should stay the same.
+          expectedFundingCycleNumber1.add(cycleLimit1),
+          expectedFundingCycleId1,
           originalTimeMark,
+          // Cycle limit should be 0 for the first funding cycle.
+          BigNumber.from(0),
+          weight
+            .mul(discountRate1.pow(cycleLimit1))
+            .div(constants.MaxPercent.pow(cycleLimit1)),
+          ballot1,
+          originalTimeMark.add(cycleLimit1.mul(duration1).mul(86400)),
           duration1,
           target1,
           currency1,
@@ -443,24 +348,36 @@ module.exports = async ({
         ]
       }),
     /**
-      The second funding cycle should be queued.
+      Fastforward to the reconfiguration.
     */
-    ({ local: { originalTimeMark }, timeMark }) =>
+    () => fastforwardFn(BigNumber.from(20)),
+    /**
+      Make sure the configuration changed.
+    */
+    ({ local: { originalTimeMark, configurationTimeMark } }) =>
       checkFn({
         contract: contracts.fundingCycles,
-        fn: "getQueuedOf",
+        fn: "getCurrentOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId2,
           expectedProjectId,
-          expectedFundingCycleNumber2,
+          expectedFundingCycleNumber1.add(cycleLimit1).add(1),
           expectedFundingCycleId1,
-          timeMark,
+          configurationTimeMark,
           cycleLimit2,
-          weight.mul(discountRate1).div(constants.MaxPercent),
+          weight
+            .mul(discountRate1.pow(cycleLimit1))
+            .div(constants.MaxPercent.pow(cycleLimit1))
+            .mul(discountRate1)
+            .div(constants.MaxPercent),
           ballot2,
-          // The start time should be one duration after the initial start.
-          originalTimeMark.add(duration1.mul(86400)),
+          originalTimeMark.add(
+            cycleLimit1
+              .add(1)
+              .mul(duration1)
+              .mul(86400)
+          ),
           duration2,
           target2,
           currency2,
@@ -468,6 +385,107 @@ module.exports = async ({
           discountRate2,
           expectedTapped,
           expectedPackedMetadata2
+        ]
+      }),
+    /**
+      Fastforward to next funding cycle in the limit.
+     */
+    () => fastforwardFn(duration2.mul(86400)),
+    ...(cycleLimit2 > 1
+      ? [
+          /**
+            Make sure the limited configuration is still active.
+          */
+          ({ local: { originalTimeMark, configurationTimeMark } }) =>
+            checkFn({
+              contract: contracts.fundingCycles,
+              fn: "getCurrentOf",
+              args: [expectedProjectId],
+              expect: [
+                BigNumber.from(0),
+                expectedProjectId,
+                expectedFundingCycleNumber1.add(cycleLimit1).add(2),
+                expectedFundingCycleId2,
+                configurationTimeMark,
+                cycleLimit2.sub(1),
+                weight
+                  .mul(discountRate1.pow(cycleLimit1))
+                  .div(constants.MaxPercent.pow(cycleLimit1))
+                  .mul(discountRate1)
+                  .div(constants.MaxPercent)
+                  .mul(discountRate2)
+                  .div(constants.MaxPercent),
+                ballot2,
+                originalTimeMark
+                  .add(
+                    cycleLimit1
+                      .add(1)
+                      .mul(duration1)
+                      .mul(86400)
+                  )
+                  .add(duration2.mul(86400)),
+                duration2,
+                target2,
+                currency2,
+                fee,
+                discountRate2,
+                expectedTapped,
+                expectedPackedMetadata2
+              ]
+            }),
+          /**
+            Fastforward to after the limit.
+          */
+          () =>
+            fastforwardFn(
+              cycleLimit2
+                .sub(1)
+                .mul(duration2)
+                .mul(86400)
+            )
+        ]
+      : []),
+    /**
+      Make sure the permanent funding cycle is back to being the current.
+    */
+    ({ local: { originalTimeMark } }) =>
+      checkFn({
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          BigNumber.from(0),
+          expectedProjectId,
+          expectedFundingCycleNumber1
+            .add(cycleLimit1)
+            .add(cycleLimit2)
+            .add(1),
+          expectedFundingCycleId1,
+          originalTimeMark,
+          BigNumber.from(0),
+          weight
+            .mul(discountRate1.pow(cycleLimit1))
+            .div(constants.MaxPercent.pow(cycleLimit1))
+            .mul(discountRate1)
+            .div(constants.MaxPercent)
+            .mul(discountRate2.pow(cycleLimit2))
+            .div(constants.MaxPercent.pow(cycleLimit2)),
+          ballot1,
+          originalTimeMark
+            .add(
+              cycleLimit1
+                .add(1)
+                .mul(duration1)
+                .mul(86400)
+            )
+            .add(cycleLimit2.mul(duration2).mul(86400)),
+          duration1,
+          target1,
+          currency1,
+          fee,
+          discountRate1,
+          expectedTapped,
+          expectedPackedMetadata1
         ]
       })
   ];

@@ -50,7 +50,7 @@ module.exports = async ({
   const target1 = randomBigNumberFn();
 
   // The cycle limit for the first funding cycle.
-  const cycleLimit1 = randomBigNumberFn({ max: constants.MaxUint8 });
+  const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
 
   // The currency will be 0, which corresponds to ETH.
   const currency1 = BigNumber.from(0);
@@ -73,7 +73,7 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: constants.MaxUint16
   });
-  const cycleLimit2 = randomBigNumberFn({ max: constants.MaxUint8 });
+  const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
   const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot2 = constants.AddressZero;
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -316,7 +316,13 @@ module.exports = async ({
     /**
       Fast forward to the end of ballot duration.
     */
-    () => fastforwardFn(ballotDurationInDays.sub(duration1).mul(86400)),
+    () =>
+      fastforwardFn(
+        ballotDurationInDays
+          .sub(duration1)
+          .mul(86400)
+          .add(10)
+      ),
     /**
       The current funding cycle should not have the reconfiguration.
     */
@@ -331,7 +337,7 @@ module.exports = async ({
           expectedFundingCycleNumber1.add(cycleCountDuringBallot.sub(1)),
           expectedFundingCycleId1,
           originalTimeMark,
-          cycleLimit1.eq(0) || cycleCountDuringBallot.gte(cycleLimit1)
+          cycleLimit1.eq(0) || cycleCountDuringBallot.gt(cycleLimit1)
             ? BigNumber.from(0)
             : cycleLimit1.sub(cycleCountDuringBallot.sub(1)),
           weight

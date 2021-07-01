@@ -44,7 +44,7 @@ module.exports = async ({
     // The ballot duration is in seconds, but duration is in days.
     max: ballotDurationInDays.sub(1)
   });
-  const cycleLimit1 = BigNumber.from(1); // randomBigNumberFn({ max: constants.MaxUint8 });
+  const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
 
   // This is how many cycles can pass while the ballot is active and waiting for approval.
   const cycleCountDuringBallot = ballotDurationInDays.div(duration1).add(1);
@@ -73,7 +73,7 @@ module.exports = async ({
     min: BigNumber.from(1),
     max: constants.MaxUint16
   });
-  const cycleLimit2 = randomBigNumberFn({ max: constants.MaxUint8 });
+  const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
   const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
   const ballot2 = constants.AddressZero;
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -315,9 +315,16 @@ module.exports = async ({
         ]
       }),
     /**
-      Fast forward to the end of ballot duration.
+      Fast forward to the cycle that starts soonest after the ballot has expired.
     */
-    () => fastforwardFn(ballotDurationInDays.sub(duration1).mul(86400)),
+    () =>
+      fastforwardFn(
+        ballotDurationInDays
+          .div(duration1)
+          .mul(duration1)
+          .mul(86400)
+          .add(10)
+      ),
     /**
       The current funding cycle should have the reconfiguration.
     */

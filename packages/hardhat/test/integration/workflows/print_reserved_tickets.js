@@ -145,7 +145,7 @@ module.exports = async ({
     */
     () =>
       executeFn({
-        caller: deployer,
+        caller: payer,
         contract: contracts.juicer,
         fn: "pay",
         args: [
@@ -216,7 +216,7 @@ module.exports = async ({
               max: constants.MaxUint16
             }),
             cycleLimit: randomBigNumberFn({
-              max: constants.MaxUint8
+              max: constants.MaxCycleLimit
             }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero

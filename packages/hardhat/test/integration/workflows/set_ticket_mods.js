@@ -98,7 +98,7 @@ module.exports = async ({
               max: constants.MaxUint16
             }),
             cycleLimit: randomBigNumberFn({
-              max: constants.MaxUint8
+              max: constants.MaxCycleLimit
             }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero
@@ -234,7 +234,7 @@ module.exports = async ({
               max: constants.MaxUint16
             }),
             cycleLimit: randomBigNumberFn({
-              max: constants.MaxUint8
+              max: constants.MaxCycleLimit
             }),
             discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
             ballot: constants.AddressZero

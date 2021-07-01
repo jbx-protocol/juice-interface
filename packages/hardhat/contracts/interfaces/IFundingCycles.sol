@@ -83,6 +83,8 @@ interface IFundingCycles {
 
     function BASE_WEIGHT() external view returns (uint256);
 
+    function MAX_CYCLE_LIMIT() external view returns (uint256);
+
     function get(uint256 _fundingCycleId)
         external
         view

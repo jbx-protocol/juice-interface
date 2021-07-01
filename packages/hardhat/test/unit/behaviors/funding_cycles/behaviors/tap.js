@@ -937,67 +937,67 @@ module.exports = function() {
       });
     });
   });
-  // describe("Failure cases", function() {
-  //   tests.failure.forEach(function(failureTest) {
-  //     it(failureTest.description, async function() {
-  //       const {
-  //         caller,
-  //         controller,
-  //         projectId,
-  //         amount,
-  //         setup: { preconfigure, ops = [] },
-  //         revert
-  //       } = failureTest.fn(this);
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const {
+          caller,
+          controller,
+          projectId,
+          amount,
+          setup: { preconfigure, ops = [] },
+          revert
+        } = failureTest.fn(this);
 
-  //       // Mock the caller to be the project's controller for setup.
-  //       await this.terminalDirectory.mock.terminalOf
-  //         .withArgs(projectId)
-  //         .returns(caller.address);
+        // Mock the caller to be the project's controller for setup.
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(caller.address);
 
-  //       if (preconfigure) {
-  //         const tx = await this.contract.connect(caller).configure(
-  //           projectId,
-  //           {
-  //             target: preconfigure.target,
-  //             currency: preconfigure.currency,
-  //             duration: preconfigure.duration,
-  //             cycleLimit: preconfigure.cycleLimit,
-  //             discountRate: preconfigure.discountRate,
-  //             ballot: this.ballot.address
-  //           },
-  //           preconfigure.metadata,
-  //           preconfigure.fee,
-  //           preconfigure.configureActiveFundingCycle
-  //         );
-  //         await this.setTimeMarkFn(tx.blockNumber);
-  //       }
+        if (preconfigure) {
+          const tx = await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
+              discountRate: preconfigure.discountRate,
+              ballot: this.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
+          await this.setTimeMarkFn(tx.blockNumber);
+        }
 
-  //       for (let i = 0; i < ops.length; i += 1) {
-  //         const op = ops[i];
-  //         switch (op.type) {
-  //           case "tap":
-  //             // eslint-disable-next-line no-await-in-loop
-  //             await this.contract.connect(caller).tap(op.projectId, op.amount);
-  //             break;
-  //           case "fastforward":
-  //             // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
-  //             // eslint-disable-next-line no-await-in-loop
-  //             await this.fastforwardFn(op.seconds.sub(1));
-  //             break;
-  //           default:
-  //             break;
-  //         }
-  //       }
+        for (let i = 0; i < ops.length; i += 1) {
+          const op = ops[i];
+          switch (op.type) {
+            case "tap":
+              // eslint-disable-next-line no-await-in-loop
+              await this.contract.connect(caller).tap(op.projectId, op.amount);
+              break;
+            case "fastforward":
+              // Subtract 1 so that the next operations mined block is likely to fall on the intended timestamp.
+              // eslint-disable-next-line no-await-in-loop
+              await this.fastforwardFn(op.seconds.sub(1));
+              break;
+            default:
+              break;
+          }
+        }
 
-  //       // Mock the caller to be the project's controller.
-  //       await this.terminalDirectory.mock.terminalOf
-  //         .withArgs(projectId)
-  //         .returns(controller);
+        // Mock the caller to be the project's controller.
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(controller);
 
-  //       await expect(
-  //         this.contract.connect(caller).tap(projectId, amount)
-  //       ).to.be.revertedWith(revert);
-  //     });
-  //   });
-  // });
+        await expect(
+          this.contract.connect(caller).tap(projectId, amount)
+        ).to.be.revertedWith(revert);
+      });
+    });
+  });
 };

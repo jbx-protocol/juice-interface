@@ -86,7 +86,7 @@ export default function Landing() {
                 <div
                   style={{
                     fontWeight: 500,
-                    fontSize: '1.14rem',
+                    fontSize: '1rem',
                   }}
                 >
                   Build a community and program it's spending. Light enough for
@@ -151,8 +151,8 @@ export default function Landing() {
               <img
                 style={{
                   height: '75vh',
-                  maxHeight: 440,
-                  minHeight: 440,
+                  maxHeight: 500,
+                  minHeight: 400,
                   maxWidth: '100%',
                   objectFit: 'contain',
                 }}

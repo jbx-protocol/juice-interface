@@ -41,6 +41,7 @@ module.exports = async ({
   const cycleLimit = randomBigNumberFn({
     max: constants.MaxCycleLimit
   });
+
   // dont use non recurring.
   const discountRate = randomBigNumberFn({
     min: BigNumber.from(1),
@@ -250,12 +251,12 @@ module.exports = async ({
         fn: "getQueuedOf",
         args: [expectedProjectId],
         expect: [
-          BigNumber.from(0),
+          expectedFundingCycleId2,
           expectedProjectId,
           expectedFundingCycleNumber3,
-          expectedFundingCycleId2,
+          expectedFundingCycleId1,
           timeMark,
-          cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
+          cycleLimit,
           weight
             .mul(discountRate)
             .mul(discountRate)

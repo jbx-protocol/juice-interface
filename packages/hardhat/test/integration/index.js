@@ -115,7 +115,7 @@ module.exports = function() {
     this.constants.MaxCycleLimit = await fundingCycles.MAX_CYCLE_LIMIT();
   });
 
-  for (let i = 0; i < 20; i += 1) {
+  for (let i = 0; i < 50; i += 1) {
     it(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)

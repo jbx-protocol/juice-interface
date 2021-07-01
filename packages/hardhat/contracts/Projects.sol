@@ -231,6 +231,13 @@ contract Projects is ERC721, IProjects, Operatable {
             transferAddressFor[_handle] == _for,
             "Projects::claimHandle: NOT_FOUND"
         );
+        // require(
+        //     transferAddressFor[_handle] == _for ||
+        //         (challengeFor[_handle] != 0 &&
+        //             challengeFor[_handle] <
+        //             block.timestamp - ONE_YEAR_IN_SECONDS),
+        //     "Projects::claimHandle: NOT_FOUND"
+        // );
 
         // Register the change in the resolver.
         projectFor[handleOf[_projectId]] = 0;
@@ -246,4 +253,27 @@ contract Projects is ERC721, IProjects, Operatable {
 
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
     }
+
+    // function challengeHandle(bytes32 _handle) external {
+    //     require(
+    //         challengeFor[_handle] == 0,
+    //         "Projects::challenge: HANDLE_ALREADY_BEING_CHALLENGED"
+    //     );
+    //     challengeFor[_handle] = block.timestamp + YEAR_IN_SECONDS;
+
+    //     emit ChallengeHandle();
+    // }
+
+    // function renewHandle(bytes32 _projectId)
+    //     external
+    //     requirePermission(
+    //         ownerOf(_projectId),
+    //         _projectId,
+    //         Operations.RenewHandle
+    //     )
+    // {
+    //     challengeFor[_handle] = 0;
+
+    //     emit RenewHandle();
+    // }
 }

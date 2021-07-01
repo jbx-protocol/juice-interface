@@ -1092,9 +1092,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         FundingCycle memory _fundingCycle =
             fundingCycles.getCurrentOf(_projectId);
 
+        // Get a reference to the current funding cycle for the project.
         // Use the funding cycle's weight if it exists. Otherwise use the base weight.
         uint256 _weight =
-            _fundingCycle.id > 0
+            _fundingCycle.number > 0
                 ? _fundingCycle.weight
                 : fundingCycles.BASE_WEIGHT();
 
@@ -1106,7 +1107,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Use the funding cycle's reserved rate if it exists. Otherwise don't set a reserved rate.
         uint256 _reservedRate =
-            _fundingCycle.id > 0
+            _fundingCycle.number > 0
                 ? uint256(uint8(_fundingCycle.metadata >> 8))
                 : 0;
 
@@ -1129,7 +1130,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Print the project's tickets for the beneficiary.
         // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
-        if (_fundingCycle.id == 0)
+        if (_fundingCycle.number == 0)
             // Set the count of premined tickets this project has printed.
             preconfigureTicketCountOf[_projectId] =
                 preconfigureTicketCountOf[_projectId] +

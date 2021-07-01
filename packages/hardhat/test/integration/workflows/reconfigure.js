@@ -43,7 +43,11 @@ module.exports = async ({
   const cycleLimit1 = randomBigNumberFn({
     max: constants.MaxCycleLimit
   });
-  const discountRate1 = randomBigNumberFn({ max: constants.MaxPercent });
+  // Make sure its recurring.
+  const discountRate1 = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot1 = constants.AddressZero;
 
   const reservedRate1 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -62,7 +66,11 @@ module.exports = async ({
   const cycleLimit2 = randomBigNumberFn({
     max: constants.MaxCycleLimit
   });
-  const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
+  // Make sure its not recurring.
+  const discountRate2 = randomBigNumberFn({
+    min: BigNumber.from(1),
+    max: constants.MaxPercent
+  });
   const ballot2 = constants.AddressZero;
 
   const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });

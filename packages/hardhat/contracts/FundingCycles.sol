@@ -113,8 +113,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
 
             // Check to see if the correct ballot is approved for this funding cycle.
-            if (_isApproved(_fundingCycle))
-                return _mockFundingCycleBasedOn(_fundingCycle, false);
+            if (
+                // _fundingCycle.start <= block.timestamp &&
+                _isApproved(_fundingCycle)
+            ) return _mockFundingCycleBasedOn(_fundingCycle, false);
 
             // If it hasn't been approved, set the ID to be the based funding cycle,
             // which carries the last approved configuration.

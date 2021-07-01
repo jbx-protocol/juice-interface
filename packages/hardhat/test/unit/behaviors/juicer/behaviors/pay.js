@@ -16,7 +16,7 @@ const tests = {
     {
       description: "with no funding cycle",
       fn: () => ({
-        fundingCycleId: 0,
+        fundingCycleNumber: 0,
         unreservedWeightedAmount: BigNumber.from(10)
           .pow(18)
           .mul(420)
@@ -114,6 +114,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     reservedRate = 10,
     projectId = 42,
     fundingCycleId = 1,
+    fundingCycleNumber = 1,
     revert
   } = {
     ...custom
@@ -140,7 +141,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
           cycleLimit: 0,
           id: fundingCycleId,
           projectId,
-          number: 0,
+          number: fundingCycleNumber,
           basedOn: 0,
           weight,
           ballot: constants.AddressZero,
@@ -155,7 +156,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
         }
       ]
     }),
-    ...(fundingCycleId === 0
+    ...(fundingCycleNumber === 0
       ? [
           mockFn({
             mockContract: mockContracts.fundingCycles,
@@ -213,7 +214,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       contract: targetContract,
       fn: "preconfigureTicketCountOf",
       args: [projectId],
-      value: fundingCycleId === 0 ? unreservedWeightedAmount : 0
+      value: fundingCycleNumber === 0 ? unreservedWeightedAmount : 0
     })
   ];
 };

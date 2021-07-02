@@ -4,7 +4,7 @@ import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
-import { parsePerbicent, parseWad } from 'utils/formatNumber'
+import { parsePerbicent } from 'utils/formatNumber'
 import {
   EditingFundingCycle,
   SerializedFundingCycle,
@@ -42,7 +42,7 @@ export const editingProjectSlice = createSlice({
       projectId: BigNumber.from(0),
       number: BigNumber.from(1),
       previous: BigNumber.from(0),
-      target: parseWad('10000'),
+      target: constants.MaxUint256,
       currency: BigNumber.from(1),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
       duration: BigNumber.from(30),
@@ -50,8 +50,8 @@ export const editingProjectSlice = createSlice({
       weight: BigNumber.from(0),
       fee: BigNumber.from(15),
       reserved: 50,
-      bondingCurveRate: defaultBondingCurveRate.toNumber(),
-      discountRate: defaultDiscountRate,
+      bondingCurveRate: 0,
+      discountRate: BigNumber.from(0),
       cycleLimit: BigNumber.from(0),
       configured: BigNumber.from(0),
       ballot: constants.AddressZero,

@@ -64,7 +64,7 @@ export default function FundingCycles({
     case 'current':
       tabContent = (
         <div>
-          <Space direction="vertical" style={{ width: '100%' }}>
+          <Space direction="vertical" size="large" style={{ width: '100%' }}>
             <Tappable
               projectId={projectId}
               fundingCycle={fundingCycle}
@@ -116,7 +116,7 @@ export default function FundingCycles({
               }),
           }}
           label="Funding cycle"
-          tip="A project's lifetime is defined in funding cycles. Each funding cycle has a duration and funding target. During each cycle, a project can withdraw no more than the target—any extra funds paid is overflow."
+          tip="A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
         />
         <Space style={{ fontSize: '.8rem' }} size="middle">
           {tab('current')}

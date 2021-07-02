@@ -29,35 +29,39 @@ export default function ProjectBondingCurveRate({
   const baseCurveId = 'base-curve'
 
   useLayoutEffect(() => {
-    if (calculator || !Desmos) return
+    try {
+      if (calculator) return
 
-    // https://www.desmos.com/api/v1.6/docs/index.html
-    setCalculator(
-      Desmos.GraphingCalculator(document.getElementById(graphContainerId), {
-        keypad: false,
-        expressions: false,
-        settingsMenu: false,
-        zoomButtons: false,
-        expressionsTopbar: false,
-        pointsOfInterest: false,
-        trace: false,
-        border: false,
-        lockViewport: true,
-        images: false,
-        folders: false,
-        notes: false,
-        sliders: false,
-        links: false,
-        distributions: false,
-        pasteTableData: false,
-        showGrid: false,
-        showXAxis: false,
-        showYAxis: false,
-        xAxisNumbers: false,
-        yAxisNumbers: false,
-        polarNumbers: false,
-      }),
-    )
+      // https://www.desmos.com/api/v1.6/docs/index.html
+      setCalculator(
+        Desmos.GraphingCalculator(document.getElementById(graphContainerId), {
+          keypad: false,
+          expressions: false,
+          settingsMenu: false,
+          zoomButtons: false,
+          expressionsTopbar: false,
+          pointsOfInterest: false,
+          trace: false,
+          border: false,
+          lockViewport: true,
+          images: false,
+          folders: false,
+          notes: false,
+          sliders: false,
+          links: false,
+          distributions: false,
+          pasteTableData: false,
+          showGrid: false,
+          showXAxis: false,
+          showYAxis: false,
+          xAxisNumbers: false,
+          yAxisNumbers: false,
+          polarNumbers: false,
+        }),
+      )
+    } catch (e) {
+      console.log('Error setting calculator', e)
+    }
   }, [])
 
   useEffect(() => graphCurve(value), [calculator])

@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import Mods from 'components/Dashboard/Mods'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { constants } from 'ethers'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -48,6 +49,8 @@ export default function ConfirmDeployProject() {
     )
   }
 
+  const showTarget = editingFC.target.lt(constants.MaxUint256)
+
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
@@ -61,17 +64,19 @@ export default function ConfirmDeployProject() {
           value={'@' + orEmpty(editingProject?.handle)}
         />
       </Space>
-      <Space size="large">
-        <Statistic
-          title="Duration"
-          value={formattedNum(editingFC?.duration)}
-          suffix="days"
-        />
-        <Statistic
-          title="Amount (+5% admin fee)"
-          valueRender={() => formattedTargetWithFee()}
-        />
-      </Space>
+      {showTarget && (
+        <Space size="large">
+          <Statistic
+            title="Duration"
+            value={formattedNum(editingFC?.duration)}
+            suffix="days"
+          />
+          <Statistic
+            title="Amount (+5% admin fee)"
+            valueRender={() => formattedTargetWithFee()}
+          />
+        </Space>
+      )}
       <Statistic
         title="Link"
         value={orEmpty(editingProject?.metadata.infoUri)}
@@ -98,7 +103,7 @@ export default function ConfirmDeployProject() {
         )}
       </Space>
       <Statistic
-        title="Auto payouts"
+        title="Spending"
         valueRender={() => (
           <Mods
             mods={paymentMods}

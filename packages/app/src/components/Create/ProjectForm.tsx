@@ -22,7 +22,7 @@ export default function ProjectForm({
 
   return (
     <Space direction="vertical" size="large">
-      <h1>Project info</h1>
+      <h1>Identity</h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectName

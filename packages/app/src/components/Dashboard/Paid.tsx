@@ -13,6 +13,7 @@ import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
 import { CurrencyOption } from 'models/currency-option'
+import { constants } from 'ethers'
 
 export default function Paid({
   projectId,
@@ -65,6 +66,8 @@ export default function Paid({
     [fundingCycle?.currency, totalOverflow, converter],
   )
 
+  const hideTarget = fundingCycle?.target.eq(constants.MaxUint256)
+
   const paidInCurrency = balanceInCurrency?.add(fundingCycle?.tapped ?? 0)
 
   const percentPaid = useMemo(
@@ -100,7 +103,7 @@ export default function Paid({
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
               label="PAID"
-              tip="The total paid to the project in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
+              tip="The total paid to the Juicebox in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
             />
           </div>
           <div
@@ -126,12 +129,12 @@ export default function Paid({
           </div>
         </div>
 
-        {totalOverflow?.gt(0) && (
+        {totalOverflow?.gt(0) && !hideTarget && (
           <div style={{ fontWeight: 500, textAlign: 'right' }}>
             <div style={smallHeaderStyle(colors)}>
               <TooltipLabel
                 label="OVERFLOW"
-                tip="The amount paid to the project, minus the current funding cycle's target. Overflow can be claimed by project token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
+                tip="The amount paid to this Juicebox, minus the current funding cycle's target. Overflow can be claimed by token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
               />
             </div>
             {fundingCycle.currency.eq(1) ? (
@@ -195,20 +198,22 @@ export default function Paid({
         />
       )}
 
-      <div style={{ marginTop: 4 }}>
-        <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
-          <CurrencySymbol
-            currency={fundingCycle.currency.toNumber() as CurrencyOption}
-          />
-          {formatWad(fundingCycle.target)}{' '}
-        </span>
-        <div style={smallHeaderStyle(colors)}>
-          <TooltipLabel
-            label="TARGET"
-            tip="The maximum amount this project can withdraw during this funding cycle."
-          />
+      {!hideTarget && (
+        <div style={{ marginTop: 4 }}>
+          <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
+            <CurrencySymbol
+              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+            />
+            {formatWad(fundingCycle.target)}{' '}
+          </span>
+          <div style={smallHeaderStyle(colors)}>
+            <TooltipLabel
+              label="TARGET"
+              tip="The maximum amount that can be withdrawn during this funding cycle."
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

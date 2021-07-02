@@ -33,9 +33,9 @@ export const encodeFCMetadata = (
   reconfigurationBondingCurveRate: BigNumberish,
 ): BigNumber =>
   BigNumber.from(0)
-    .or(BigNumber.from(bondingCurveRate).shl(8))
-    .or(BigNumber.from(reserved).shl(24))
-    .or(BigNumber.from(reconfigurationBondingCurveRate).shl(40))
+    .or(BigNumber.from(reserved).shl(8))
+    .or(BigNumber.from(bondingCurveRate).shl(16))
+    .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.gt(0)

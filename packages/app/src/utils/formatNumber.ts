@@ -23,7 +23,7 @@ export const parsePermille = (amt?: string) =>
 export const fromPermille = (amt?: BigNumberish) =>
   amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
 
-// Permille: x/200
+// Perbicent: x/200
 export const parsePerbicent = (amt?: string) =>
   BigNumber.from(amt ? Math.floor(parseFloat(amt) * 2) : 0)
 export const fromPerbicent = (amt?: BigNumberish) =>

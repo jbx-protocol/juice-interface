@@ -535,6 +535,26 @@ module.exports = [
         overflow: paymentValue.sub(target).mul(paymentValue)
       }).lt(paymentValue);
 
+      console.log({
+        expectedClaimedAmountIsZero,
+        rate: bondingCurveRate,
+        count: ticketsToRedeem,
+        total: expectedTotalTicketBalance,
+        paymentValue,
+        rawOverflow: paymentValue.sub(target),
+        bondingWithExtra: bondingCurveFn({
+          rate: bondingCurveRate,
+          count: ticketsToRedeem,
+          total: expectedTotalTicketBalance,
+          overflow: paymentValue.sub(target).mul(paymentValue)
+        }),
+        bondingWithoutExtra: bondingCurveFn({
+          rate: bondingCurveRate,
+          count: ticketsToRedeem,
+          total: expectedTotalTicketBalance,
+          overflow: paymentValue.sub(target)
+        })
+      });
       await executeFn({
         caller: ticketBeneficiary,
         contract: contracts.juicer,

@@ -25,7 +25,7 @@ module.exports = function() {
   describe("print(...)", shouldBehaveLike.print);
   describe("unstake(...)", shouldBehaveLike.unstake);
   describe("stake(...)", shouldBehaveLike.stake);
-  describe("transfer(...)", shouldBehaveLike.transfer);
+  describe.only("transfer(...)", shouldBehaveLike.transfer);
   describe("redeem(...)", shouldBehaveLike.redeem);
   describe("lock(...)", shouldBehaveLike.lock);
   describe("unlock(...)", shouldBehaveLike.unlock);

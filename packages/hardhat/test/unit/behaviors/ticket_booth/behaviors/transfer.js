@@ -105,10 +105,6 @@ const tests = {
         holder: deployer.address,
         recipient: constants.AddressZero,
         amount: BigNumber.from(50),
-        setup: {
-          stakedBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0)
-        },
         revert: "Tickets::transfer: ZERO_ADDRESS"
       })
     },
@@ -120,11 +116,18 @@ const tests = {
         holder: deployer.address,
         recipient: deployer.address,
         amount: BigNumber.from(50),
-        setup: {
-          stakedBalance: BigNumber.from(50),
-          lockedAmount: BigNumber.from(0)
-        },
         revert: "Tickets::transfer: IDENTITY"
+      })
+    },
+    {
+      description: "zero amount",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        projectId: 1,
+        holder: deployer.address,
+        recipient: addrs[0].address,
+        amount: BigNumber.from(0),
+        revert: "Tickets::transfer: NO_OP"
       })
     },
     {
@@ -282,7 +285,7 @@ module.exports = function() {
           holder,
           amount,
           recipient,
-          setup: { permissionFlag, stakedBalance, lockedAmount },
+          setup: { permissionFlag, stakedBalance, lockedAmount } = {},
           revert
         } = failureTest.fn(this);
 

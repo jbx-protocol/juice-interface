@@ -2,7 +2,7 @@ const shouldBehaveLike = require("./behaviors");
 
 let snapshotId;
 module.exports = function() {
-  beforeEach(async () => {
+  beforeEach(async function() {
     snapshotId = await this.snapshotFn();
   });
   // // Test each contract.

@@ -486,11 +486,13 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
             Operations.Transfer
         )
     {
+        // Can't transfer to the zero address.
         require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
 
+        // An address can't transfer to itself.
         require(_holder != _recipient, "Tickets::transfer: IDENTITY");
 
-        // TODO unit test
+        // There must be an amount to transfer.
         require(_amount > 0, "Tickets::transfer: NO_OP");
 
         // Get a reference to the amount of unlocked staked tickets.

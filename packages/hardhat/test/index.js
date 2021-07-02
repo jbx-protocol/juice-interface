@@ -8,11 +8,6 @@ const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
-let snapshotId;
-
-const snapshotFn = () => ethers.provider.send("evm_snapshot", []);
-const restoreFn = id => ethers.provider.send("evm_revert", [id]);
-
 // Save the initial balances for each address.
 const initialBalances = {};
 
@@ -236,6 +231,13 @@ describe("Juice", async function() {
       max = this.constants.MaxUint256,
       fidelity = 10000000
     } = {}) => {
+      // To test an edge condition, return the min or the max more often.
+      // return the min or the max 50% of the time.
+      if (Math.random() < 0.5) {
+        // return the min 50% of the time.
+        return Math.random() < 0.5 ? min : max;
+      }
+
       const base = max.sub(min);
       const randomInRange = base.gt(fidelity)
         ? base
@@ -252,6 +254,21 @@ describe("Juice", async function() {
     this.randomAddressFn = ({ exclude = [] } = {}) => {
       const candidate = this.addrs[Math.floor(Math.random() * 9)].address;
       if (exclude.includes(candidate)) return this.randomAddressFn({ exclude });
+
+      // To test an edge condition, pick the same address more likely than not.
+      // return address0 50% of the time.
+      if (Math.random() < 0.5) return this.addrs[0].address;
+      return candidate;
+    };
+
+    // Bind a function that gets a random signed.
+    this.randomSignerFn = ({ exclude = [] } = {}) => {
+      const candidate = this.addrs[Math.floor(Math.random() * 9)];
+      if (exclude.includes(candidate.address))
+        return this.randomSignerFn({ exclude });
+      // To test an edge condition, pick the same address more likely than not.
+      // return address0 50% of the time.
+      if (Math.random() < 0.5) return this.addrs[0];
       return candidate;
     };
 
@@ -259,10 +276,14 @@ describe("Juice", async function() {
     this.randomBoolFn = () => Math.random() > 0.5;
 
     // Bind a function that generates a random string.
-    this.randomStringFn = (seed = 2) =>
-      Math.random()
+    this.randomStringFn = ({ seed = 2, exclude = [] } = {}) => {
+      const candidate = Math.random()
         .toString(36)
         .substr(2, seed);
+      if (exclude.includes(candidate))
+        return this.randomStringFn({ seed, exclude });
+      return candidate;
+    };
 
     this.percentageFn = ({ value, percent }) => value.mul(percent).div(100);
 
@@ -275,20 +296,29 @@ describe("Juice", async function() {
     // Bind the big number utils.
     this.BigNumber = ethers.BigNumber;
 
-    // Bind a function that turns a string into bytes.
-    this.stringToBytesFn = ethers.utils.formatBytes32String;
+    // Bind a function that returns a random set of bytes.
+    this.randomBytesFn = ({ seed = 2, exclude = [] } = {}) => {
+      const candidate = ethers.utils.formatBytes32String(
+        this.randomStringFn({ seed })
+      );
+      if (exclude.includes(candidate))
+        return this.randomBytesFn({ seed, exclude });
+      return candidate;
+    };
 
     // Bind a function to get a normalized percent.
     this.normalizedPercentFn = percent =>
       ethers.BigNumber.from(percent)
         .mul(this.constants.MaxPercent)
         .div(100);
+
+    // Bind functions for cleaning state.
+    this.snapshotFn = () => ethers.provider.send("evm_snapshot", []);
+    this.restoreFn = id => ethers.provider.send("evm_revert", [id]);
   });
 
   // Before each test, take a snapshot of the contract state.
   beforeEach(async function() {
-    snapshotId = await snapshotFn();
-
     // Mark the start time of each test.
     this.timeMark = await this.getTimestampFn();
 
@@ -307,10 +337,5 @@ describe("Juice", async function() {
 
   // Run the tests.
   describe("Unit", unit);
-  describe("Integration", integration);
-
-  // After each test, restore the contract state.
-  afterEach(async function() {
-    await restoreFn(snapshotId);
-  });
+  describe.only("Integration", integration);
 });

@@ -6,113 +6,96 @@
 
   A created project can make use all Juicer functionality as normal.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  contracts,
-  constants,
-  executeFn,
-  checkFn,
-  BigNumber,
-  randomBigNumberFn,
-  stringToBytesFn,
-  randomStringFn,
-  getBalanceFn,
-  randomAddressFn,
-  randomBoolFn
-}) => {
-  // The address that will own a project.
-  const owner = addrs[0];
+module.exports = [
+  {
+    description: "Create a project.",
+    fn: async ({
+      deployer,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomStringFn,
+      randomSignerFn,
+      randomBytesFn
+    }) => {
+      // The address that will own a project.
+      const owner = randomSignerFn();
 
-  // The address that will own another project.
-  const secondOwner = addrs[1];
+      // Use the juicer as the terminal.
+      const terminal = contracts.juicer.address;
 
-  // An account that will be used to make payments.
-  const payer = addrs[2];
+      const handle = randomBytesFn();
 
-  // One payment will be made. Cant pay entire balance because some is needed for gas.
-  // So, arbitrarily find a number less than 1/2 so that all payments can be made successfully.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(4)
-  });
+      const uri = randomStringFn();
 
-  // Set a target amount thats at least the payment value so that the full payment value can be tapped.
-  const target = randomBigNumberFn({ min: paymentValue });
+      // Since the governance project was created before this test, the created project ID should be 2.
+      const expectedProjectId = BigNumber.from(2);
 
-  // The currency will be 0, which corresponds to ETH.
-  const currency = 0;
-
-  // Use the juicer as the terminal.
-  const terminal = contracts.juicer.address;
-
-  const handle = stringToBytesFn("some-unique-handle");
-  const secondHandle = stringToBytesFn("some-other-unique-handle");
-  const thirdHandle = stringToBytesFn("another-unique-handle");
-  const uri = randomStringFn();
-  const secondUri = randomStringFn();
-
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedProjectId = BigNumber.from(2);
-
-  // The second project should have an incremented ID.
-  const expectedSecondProjectId = BigNumber.from(3);
-
-  return [
-    /** 
-      Create a project.
-    */
-    () =>
-      executeFn({
+      await executeFn({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
         args: [owner.address, handle, uri, terminal]
-      }),
-    /**
-      Make sure the project's handle got saved.
-    */
-    () =>
+      });
+
+      return { owner, terminal, handle, uri, expectedProjectId };
+    }
+  },
+  {
+    description: "Make sure the project's handle got saved.",
+    fn: async ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
         expect: handle
-      }),
-    /**
-      Make sure the project was saved to the handle.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the project was saved to the handle.",
+    fn: ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
         expect: expectedProjectId
-      }),
-    /**
-      Make sure the project's uri got saved.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the project's uri got saved.",
+    fn: ({ contracts, checkFn, local: { uri, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "uriOf",
         args: [expectedProjectId],
         expect: uri
-      }),
-    /**
-      Make sure the terminal was set in the directory.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the terminal was set in the directory.",
+    fn: ({ contracts, checkFn, local: { terminal, expectedProjectId } }) =>
       checkFn({
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
         expect: terminal
-      }),
-    /**
-      Make sure someone else can't deploy a project with the same handle.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description:
+      "Make sure someone else can't deploy a project with the same handle.",
+    fn: async ({
+      deployer,
+      contracts,
+      constants,
+      executeFn,
+      randomStringFn,
+      randomSignerFn,
+      local: { handle }
+    }) => {
+      // The address that will own another project.
+      const secondOwner = randomSignerFn();
+      await executeFn({
         caller: deployer,
         contract: contracts.projects,
         fn: "create",
@@ -123,71 +106,101 @@ module.exports = async ({
           constants.AddressZero
         ],
         revert: "Projects::create: HANDLE_TAKEN"
-      }),
-    /**
-      Set a new URI.
-    */
-    () =>
-      executeFn({
+      });
+
+      return { secondOwner };
+    }
+  },
+  {
+    description: "Set a new URI.",
+    fn: async ({
+      contracts,
+      executeFn,
+      randomStringFn,
+      local: { owner, expectedProjectId }
+    }) => {
+      const secondUri = randomStringFn();
+      await executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "setUri",
         args: [expectedProjectId, secondUri]
-      }),
-    /**
-      Make sure the new uri got saved.
-    */
-    () =>
+      });
+
+      return { secondUri };
+    }
+  },
+  {
+    description: "Make sure the new uri got saved.",
+    fn: ({ contracts, checkFn, local: { secondUri, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "uriOf",
         args: [expectedProjectId],
         expect: secondUri
-      }),
-    /**
-      Set a new handle.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description: "Set a new handle.",
+    fn: async ({
+      contracts,
+      executeFn,
+      randomBytesFn,
+      local: { owner, handle, expectedProjectId }
+    }) => {
+      const secondHandle = randomBytesFn({ exclude: [handle] });
+      await executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "setHandle",
         args: [expectedProjectId, secondHandle]
-      }),
-    /**
-      Make sure the new handle got saved.
-    */
-    () =>
+      });
+
+      return { secondHandle };
+    }
+  },
+  {
+    description: "Make sure the new handle got saved.",
+    fn: ({ contracts, checkFn, local: { secondHandle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
         expect: secondHandle
-      }),
-    /**
-      Make sure the project was saved to the new handle.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the project was saved to the new handle.",
+    fn: ({ contracts, checkFn, local: { secondHandle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
         expect: expectedProjectId
-      }),
-    /**
-      Make sure the old handle isn't affiliated with a project any longer.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Make sure the old handle isn't affiliated with a project any longer.",
+    fn: ({ contracts, checkFn, local: { handle } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
         expect: 0
-      }),
-    /**
-      Create another project for a different owner using the old handle.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Create another project for a different owner using the old handle.",
+    fn: ({
+      deployer,
+      contracts,
+      constants,
+      executeFn,
+      randomStringFn,
+      local: { secondOwner, handle }
+    }) =>
       executeFn({
         caller: deployer,
         contract: contracts.projects,
@@ -198,73 +211,108 @@ module.exports = async ({
           randomStringFn(),
           constants.AddressZero
         ]
-      }),
-    /**
-      Make sure the other owner can't set its project's handle to the one currently in use.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description:
+      "Make sure the other owner can't set its project's handle to the one currently in use.",
+    fn: async ({
+      contracts,
+      executeFn,
+      BigNumber,
+      local: { secondOwner, secondHandle }
+    }) => {
+      // The second project should have an incremented ID.
+      const expectedSecondProjectId = BigNumber.from(3);
+
+      await executeFn({
         caller: secondOwner,
         contract: contracts.projects,
         fn: "setHandle",
         args: [expectedSecondProjectId, secondHandle],
         revert: "Projects::setHandle: HANDLE_TAKEN"
-      }),
-    /**
-      Don't allow a handle to be transfered if the replacement is taken.
-    */
-    () =>
+      });
+
+      return { expectedSecondProjectId };
+    }
+  },
+  {
+    description:
+      "Don't allow a handle to be transfered if the replacement is taken.",
+    fn: ({
+      contracts,
+      executeFn,
+      local: { owner, secondOwner, handle, expectedProjectId }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "transferHandle",
         args: [expectedProjectId, secondOwner.address, handle],
         revert: "Projects::transferHandle: HANDLE_TAKEN"
-      }),
-    /**
-      Transfer a handle and replace it with a new one.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description: "Transfer a handle and replace it with a new one.",
+    fn: async ({
+      contracts,
+      executeFn,
+      stringToBytesFn,
+      randomBytesFn,
+      local: { owner, secondOwner, expectedProjectId, handle, secondHandle }
+    }) => {
+      const thirdHandle = randomBytesFn({ exlucde: [handle, secondHandle] });
+      await executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "transferHandle",
         args: [expectedProjectId, secondOwner.address, thirdHandle]
-      }),
-    /**
-      Make sure the replacement handle got saved.
-    */
-    () =>
+      });
+      return { thirdHandle };
+    }
+  },
+  {
+    description: "Make sure the replacement handle got saved.",
+    fn: ({ contracts, checkFn, local: { thirdHandle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
         expect: thirdHandle
-      }),
-    /**
-      Make sure the project was saved to the replacement handle.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the project was saved to the replacement handle.",
+    fn: ({ contracts, checkFn, local: { thirdHandle, expectedProjectId } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [thirdHandle],
         expect: expectedProjectId
-      }),
-    /**
-      Make sure there is no project associated with the transfered handle.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Make sure there is no project associated with the transfered handle.",
+    fn: ({ contracts, checkFn, local: { secondHandle } }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
         expect: 0
-      }),
-    /**
-      Make sure a project can't be created with the transfered handle.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Make sure a project can't be created with the transfered handle.",
+    fn: ({
+      deployer,
+      contracts,
+      constants,
+      executeFn,
+      randomStringFn,
+      local: { secondOwner, secondHandle }
+    }) =>
       executeFn({
         caller: deployer,
         contract: contracts.projects,
@@ -276,75 +324,147 @@ module.exports = async ({
           constants.AddressZero
         ],
         revert: "Projects::create: HANDLE_TAKEN"
-      }),
-    /**
-      Make sure a project can't set its handle to the transfered handle.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Make sure a project can't set its handle to the transfered handle.",
+    fn: ({
+      contracts,
+      executeFn,
+      local: { secondOwner, secondHandle, expectedSecondProjectId }
+    }) =>
       executeFn({
         caller: secondOwner,
         contract: contracts.projects,
         fn: "setHandle",
         args: [expectedSecondProjectId, secondHandle],
         revert: "Projects::setHandle: HANDLE_TAKEN"
-      }),
-    /**
-      Make sure no one else but the intended recipient can claim the transferd handle.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Make sure no one else but the intended recipient can claim the transferd handle.",
+    fn: ({
+      contracts,
+      executeFn,
+      local: { owner, secondOwner, secondHandle, expectedProjectId }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "claimHandle",
         args: [secondHandle, owner.address, expectedProjectId],
-        revert: "Projects::claimHandle: NOT_FOUND"
-      }),
-    /**
-      Make sure a transfered handle can be claimed.
-    */
-    () =>
+        revert:
+          owner.address !== secondOwner.address &&
+          "Projects::claimHandle: NOT_FOUND"
+      })
+  },
+  {
+    description:
+      "Make sure a transfered handle can be claimed if it hasn't been already.",
+    fn: ({
+      contracts,
+      executeFn,
+      local: { owner, secondOwner, secondHandle, expectedSecondProjectId }
+    }) =>
       executeFn({
         caller: secondOwner,
         contract: contracts.projects,
         fn: "claimHandle",
-        args: [secondHandle, secondOwner.address, expectedSecondProjectId]
-      }),
-    /**
-      Make sure the claimed handle got saved.
-    */
-    () =>
+        args: [secondHandle, secondOwner.address, expectedSecondProjectId],
+        revert:
+          owner.address === secondOwner.address &&
+          "Projects::claimHandle: NOT_FOUND"
+      })
+  },
+  {
+    description: "Make sure the claimed handle got saved.",
+    fn: ({
+      contracts,
+      checkFn,
+      local: {
+        owner,
+        secondOwner,
+        secondHandle,
+        expectedProjectId,
+        expectedSecondProjectId
+      }
+    }) =>
       checkFn({
         contract: contracts.projects,
         fn: "handleOf",
-        args: [expectedSecondProjectId],
+        args: [
+          owner.address === secondOwner.address
+            ? expectedProjectId
+            : expectedSecondProjectId
+        ],
         expect: secondHandle
-      }),
-    /**
-      Make sure the project was saved to the claimed handle.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Make sure the project was saved to the claimed handle.",
+    fn: ({
+      contracts,
+      checkFn,
+      local: {
+        owner,
+        secondOwner,
+        secondHandle,
+        expectedProjectId,
+        expectedSecondProjectId
+      }
+    }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
-        expect: expectedSecondProjectId
-      }),
-    /**
-      Make sure there is no project associated with old handle
-      of the project that received the claimed handle.
-    */
-    () =>
+        expect:
+          owner.address === secondOwner.address
+            ? expectedProjectId
+            : expectedSecondProjectId
+      })
+  },
+  {
+    description: "Check to see if the first handle is still set correctly.",
+    fn: ({
+      contracts,
+      checkFn,
+      local: { owner, secondOwner, handle, expectedSecondProjectId }
+    }) =>
       checkFn({
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
-        expect: 0
-      }),
-    /**
-      Make a payment to the project.
-    */
-    () =>
-      executeFn({
+        expect:
+          owner.address === secondOwner.address ? expectedSecondProjectId : 0
+      })
+  },
+  {
+    description: "Make a payment to the project.",
+    fn: async ({
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      randomStringFn,
+      getBalanceFn,
+      randomAddressFn,
+      randomBoolFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) => {
+      // An account that will be used to make payments.
+      const payer = randomSignerFn();
+
+      // One payment will be made. Cant pay entire balance because some is needed for gas.
+      // So, arbitrarily find a number less than 1/2 so that all payments can be made successfully.
+      const paymentValue = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(2)
+      });
+
+      await executeFn({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
@@ -355,19 +475,32 @@ module.exports = async ({
           randomBoolFn()
         ],
         value: paymentValue
-      }),
-    /**
-      Configure the projects funding cycle.
-    */
-    () =>
-      executeFn({
+      });
+
+      return { paymentValue };
+    }
+  },
+  {
+    description: "Configure the projects funding cycle.",
+    fn: async ({
+      contracts,
+      constants,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      local: { owner, paymentValue, expectedProjectId }
+    }) => {
+      // The currency will be 0, which corresponds to ETH.
+      const currency = 0;
+      await executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "configure",
         args: [
           expectedProjectId,
           {
-            target,
+            // Set a target amount thats at least the payment value so that the full payment value can be tapped.
+            target: randomBigNumberFn({ min: paymentValue }),
             currency,
             duration: randomBigNumberFn({
               min: BigNumber.from(1),
@@ -391,16 +524,24 @@ module.exports = async ({
           [],
           []
         ]
-      }),
-    /**
-      The owner can tap the full payment value.
-    */
-    () =>
+      });
+      return { currency };
+    }
+  },
+  {
+    description:
+      "Anyone can tap the full payment value on the project's behalf.",
+    fn: ({
+      contracts,
+      executeFn,
+      randomSignerFn,
+      local: { paymentValue, currency, expectedProjectId }
+    }) =>
       executeFn({
-        caller: payer,
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "tap",
         args: [expectedProjectId, paymentValue, currency, paymentValue]
       })
-  ];
-};
+  }
+];

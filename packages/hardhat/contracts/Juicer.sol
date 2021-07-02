@@ -1120,13 +1120,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 200
             );
 
-        // Print the project's tickets for the beneficiary.
-        ticketBooth.print(
-            _beneficiary,
-            _projectId,
-            _unreservedWeightedAmount,
-            _preferUnstakedTickets
-        );
+        if (_unreservedWeightedAmount > 0)
+            // Print the project's tickets for the beneficiary.
+            ticketBooth.print(
+                _beneficiary,
+                _projectId,
+                _unreservedWeightedAmount,
+                _preferUnstakedTickets
+            );
 
         // Print the project's tickets for the beneficiary.
         // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.

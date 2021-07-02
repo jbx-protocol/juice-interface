@@ -4,7 +4,6 @@
 */
 module.exports = async ({
   deployer,
-  addrs,
   constants,
   contracts,
   BigNumber,
@@ -15,19 +14,20 @@ module.exports = async ({
   stringToBytesFn,
   randomAddressFn,
   randomBoolFn,
-  randomStringFn
+  randomStringFn,
+  randomSignerFn
 }) => {
   // Since the governance project was created before this test, the created project ID should be 2.
   const expectedProjectId = 2;
 
   // The owner of the project that will migrate.
-  const owner = addrs[0];
+  const owner = randomSignerFn();
 
   // An account that will be used to make payments.
-  const payer = addrs[1];
+  const payer = randomSignerFn();
 
   // An account that will be distributed tickets in the first payment.
-  const ticketBeneficiary = addrs[2];
+  const ticketBeneficiary = randomSignerFn();
 
   // Two payments will be made. Cant pay entire balance because some is needed for gas.
   // So, arbitrarily find a number less than a third so that all payments can be made successfully.
@@ -216,19 +216,21 @@ module.exports = async ({
           max: expectedStakedBalance.sub(1)
         })
       );
-      await executeFn({
-        caller: ticketBeneficiary,
-        contract: contracts.juicer,
-        fn: "redeem",
-        args: [
-          ticketBeneficiary.address,
-          expectedProjectId,
-          redeemedPortionOfStakedBalance,
-          0,
-          randomAddressFn(),
-          false // prefer staked
-        ]
-      });
+      if (redeemedPortionOfStakedBalance.gt(0)) {
+        await executeFn({
+          caller: ticketBeneficiary,
+          contract: contracts.juicer,
+          fn: "redeem",
+          args: [
+            ticketBeneficiary.address,
+            expectedProjectId,
+            redeemedPortionOfStakedBalance,
+            0,
+            randomAddressFn(),
+            false // prefer staked
+          ]
+        });
+      }
 
       return { redeemedPortionOfStakedBalance };
     },
@@ -271,19 +273,20 @@ module.exports = async ({
           max: expectedUnstakedBalance.sub(1)
         })
       );
-      await executeFn({
-        caller: ticketBeneficiary,
-        contract: contracts.juicer,
-        fn: "redeem",
-        args: [
-          ticketBeneficiary.address,
-          expectedProjectId,
-          redeemedPortionOfUnstakedBalance,
-          0,
-          randomAddressFn(),
-          true // prefer unstaked
-        ]
-      });
+      if (redeemedPortionOfUnstakedBalance.gt(0))
+        await executeFn({
+          caller: ticketBeneficiary,
+          contract: contracts.juicer,
+          fn: "redeem",
+          args: [
+            ticketBeneficiary.address,
+            expectedProjectId,
+            redeemedPortionOfUnstakedBalance,
+            0,
+            randomAddressFn(),
+            true // prefer unstaked
+          ]
+        });
 
       return { redeemedPortionOfUnstakedBalance };
     },
@@ -323,24 +326,33 @@ module.exports = async ({
     /**
       Redeem the rest of the tickets.
     */
-    async () =>
-      executeFn({
-        caller: ticketBeneficiary,
-        contract: contracts.juicer,
-        fn: "redeem",
-        args: [
-          ticketBeneficiary.address,
-          expectedProjectId,
-          // Redeem the rest of the tickets.
-          await contracts.ticketBooth.balanceOf(
+    async () => {
+      const balance = await contracts.ticketBooth.balanceOf(
+        ticketBeneficiary.address,
+        expectedProjectId
+      );
+      console.log({ balance });
+
+      if (balance.gt(0)) {
+        await executeFn({
+          caller: ticketBeneficiary,
+          contract: contracts.juicer,
+          fn: "redeem",
+          args: [
             ticketBeneficiary.address,
-            expectedProjectId
-          ),
-          0,
-          randomAddressFn(),
-          randomBoolFn()
-        ]
-      }),
+            expectedProjectId,
+            // Redeem the rest of the tickets.
+            await contracts.ticketBooth.balanceOf(
+              ticketBeneficiary.address,
+              expectedProjectId
+            ),
+            0,
+            randomAddressFn(),
+            randomBoolFn()
+          ]
+        });
+      }
+    },
     /**
       The ticket balance of the project should now be zero.
     */

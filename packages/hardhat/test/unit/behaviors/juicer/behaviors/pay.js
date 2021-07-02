@@ -21,6 +21,12 @@ const tests = {
           .pow(18)
           .mul(420)
       })
+    },
+    {
+      description: "reserved rate 100%",
+      fn: () => ({
+        reservedRate: 200
+      })
     }
   ],
   failure: [

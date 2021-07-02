@@ -1,6 +1,10 @@
 const shouldBehaveLike = require("./behaviors");
 
+let snapshotId;
 module.exports = function() {
+  beforeEach(async () => {
+    snapshotId = await this.snapshotFn();
+  });
   // // Test each contract.
   describe("OperatorStore", shouldBehaveLike.operatorStore);
   describe("Prices", shouldBehaveLike.prices);
@@ -18,4 +22,9 @@ module.exports = function() {
   describe("TicketBooth", shouldBehaveLike.ticketBooth);
   // Depends on everything.
   describe("Juicer", shouldBehaveLike.juicer);
+
+  // After each test, restore the contract state.
+  afterEach(async function() {
+    await this.restoreFn(snapshotId);
+  });
 };

@@ -158,7 +158,7 @@ module.exports = function() {
       "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
       run(workflows.ticketLockingAndTransfers)
     );
-    // it("Redeem tickets for overflow", run(workflows.redeem));
+    // describe.only("Redeem tickets for overflow", run(workflows.redeem));
     // it("Prints reserved tickets", run(workflows.printReservedTickets));
     // it("Issues tickets and honors preference", run(workflows.issueTickets));
     // it("Reconfigures a project", run(workflows.reconfigure));

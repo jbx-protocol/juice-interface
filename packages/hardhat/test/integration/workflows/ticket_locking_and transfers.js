@@ -553,7 +553,9 @@ module.exports = [
             ? "Juicer::redeem: NO_OP"
             : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS",
         // Allow an expected no-op to pass through if its a result of a division rounding error.
-        lenientReverts: expectedClaimedAmountIsZero ? ["Juicer::redeem: NO_OP"] : [];
+        lenientReverts: expectedClaimedAmountIsZero
+          ? ["Juicer::redeem: NO_OP"]
+          : []
       });
 
       return { ticketsToRedeem, expectedClaimedAmountIsZero };

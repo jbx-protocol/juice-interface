@@ -92,7 +92,8 @@ describe("Juice", async function() {
       args = [],
       value = 0,
       events = [],
-      revert
+      revert,
+      lenientReverts = []
     }) => {
       // Args can be either a function or an array.
       const normalizedArgs = typeof args === "function" ? await args() : args;
@@ -104,7 +105,16 @@ describe("Juice", async function() {
 
       // If a revert message is passed in, check to see if it was thrown.
       if (revert) {
-        await chai.expect(promise).to.be.revertedWith(revert);
+        try {
+          await chai.expect(promise).to.be.revertedWith(revert);
+        } catch (e) {
+          if (
+            lenientReverts.includes(e.expected) &&
+            e.actual === "Transaction NOT reverted."
+          )
+            return;
+          throw e;
+        }
         return;
       }
 

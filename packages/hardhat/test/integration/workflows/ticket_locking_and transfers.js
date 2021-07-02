@@ -532,8 +532,8 @@ module.exports = [
         rate: bondingCurveRate,
         count: ticketsToRedeem,
         total: expectedTotalTicketBalance,
-        overflow: paymentValue.sub(target).mul(paymentValue)
-      }).lt(paymentValue);
+        overflow: paymentValue.sub(target)
+      }).eq(0);
 
       await executeFn({
         caller: ticketBeneficiary,
@@ -551,7 +551,9 @@ module.exports = [
           // No op if no tickets are being redeemed, or if there's no amount to claim.
           ticketsToRedeem.eq(0) || expectedClaimedAmountIsZero
             ? "Juicer::redeem: NO_OP"
-            : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS"
+            : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS",
+        // Allow an expected no-op to pass through if its a result of a division rounding error.
+        lenientReverts: expectedClaimedAmountIsZero ? ["Juicer::redeem: NO_OP"] : [];
       });
 
       return { ticketsToRedeem, expectedClaimedAmountIsZero };

@@ -76,9 +76,13 @@ export default function Projects() {
       </div>
 
       <div style={{ marginBottom: 40 }}>
-        <Button onClick={() => (window.location.hash = 'create')} size="small">
-          Create a project
-        </Button>
+        <a
+          // href="/#/create"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button size="small">Create a project</Button>
+        </a>
       </div>
 
       {!projects ? (

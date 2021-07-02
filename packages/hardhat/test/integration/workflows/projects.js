@@ -8,7 +8,7 @@
 */
 module.exports = [
   {
-    description: "Create a project.",
+    description: "Create a project",
     fn: async ({
       deployer,
       contracts,
@@ -41,9 +41,15 @@ module.exports = [
     }
   },
   {
-    description: "Make sure the project's handle got saved.",
-    fn: async ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
+    description: "Make sure the project's handle got saved",
+    fn: async ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { handle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
@@ -51,9 +57,15 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the project was saved to the handle.",
-    fn: ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
+    description: "Make sure the project was saved to the handle",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { handle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
@@ -61,9 +73,15 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the project's uri got saved.",
-    fn: ({ contracts, checkFn, local: { uri, expectedProjectId } }) =>
+    description: "Make sure the project's uri got saved",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { uri, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "uriOf",
         args: [expectedProjectId],
@@ -71,9 +89,15 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the terminal was set in the directory.",
-    fn: ({ contracts, checkFn, local: { terminal, expectedProjectId } }) =>
+    description: "Make sure the terminal was set in the directory",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { terminal, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
@@ -82,9 +106,8 @@ module.exports = [
   },
   {
     description:
-      "Make sure someone else can't deploy a project with the same handle.",
+      "Make sure someone else can't deploy a project with the same handle",
     fn: async ({
-      deployer,
       contracts,
       constants,
       executeFn,
@@ -95,7 +118,7 @@ module.exports = [
       // The address that will own another project.
       const secondOwner = randomSignerFn();
       await executeFn({
-        caller: deployer,
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
         args: [
@@ -111,7 +134,7 @@ module.exports = [
     }
   },
   {
-    description: "Set a new URI.",
+    description: "Set a new URI",
     fn: async ({
       contracts,
       executeFn,
@@ -130,9 +153,15 @@ module.exports = [
     }
   },
   {
-    description: "Make sure the new uri got saved.",
-    fn: ({ contracts, checkFn, local: { secondUri, expectedProjectId } }) =>
+    description: "Make sure the new uri got saved",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { secondUri, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "uriOf",
         args: [expectedProjectId],
@@ -162,9 +191,15 @@ module.exports = [
     }
   },
   {
-    description: "Make sure the new handle got saved.",
-    fn: ({ contracts, checkFn, local: { secondHandle, expectedProjectId } }) =>
+    description: "Make sure the new handle got saved",
+    fn: ({
+      contracts,
+      randomSignerFn,
+      checkFn,
+      local: { secondHandle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
@@ -172,9 +207,15 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the project was saved to the new handle.",
-    fn: ({ contracts, checkFn, local: { secondHandle, expectedProjectId } }) =>
+    description: "Make sure the project was saved to the new handle",
+    fn: ({
+      contracts,
+      randomSignerFn,
+      checkFn,
+      local: { secondHandle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
@@ -183,9 +224,10 @@ module.exports = [
   },
   {
     description:
-      "Make sure the old handle isn't affiliated with a project any longer.",
-    fn: ({ contracts, checkFn, local: { handle } }) =>
+      "Make sure the old handle isn't affiliated with a project any longer",
+    fn: ({ contracts, randomSignerFn, checkFn, local: { handle } }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
@@ -194,17 +236,17 @@ module.exports = [
   },
   {
     description:
-      "Create another project for a different owner using the old handle.",
+      "Create another project for a different owner using the old handle",
     fn: ({
-      deployer,
       contracts,
       constants,
       executeFn,
       randomStringFn,
+      randomSignerFn,
       local: { secondOwner, handle }
     }) =>
       executeFn({
-        caller: deployer,
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
         args: [
@@ -217,7 +259,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure the other owner can't set its project's handle to the one currently in use.",
+      "Make sure the other owner can't set its project's handle to the one currently in use",
     fn: async ({
       contracts,
       executeFn,
@@ -239,7 +281,7 @@ module.exports = [
   },
   {
     description:
-      "Don't allow a handle to be transfered if the replacement is taken.",
+      "Don't allow a handle to be transfered if the replacement is taken",
     fn: ({
       contracts,
       executeFn,
@@ -254,7 +296,7 @@ module.exports = [
       })
   },
   {
-    description: "Transfer a handle and replace it with a new one.",
+    description: "Transfer a handle and replace it with a new one",
     fn: async ({
       contracts,
       executeFn,
@@ -275,9 +317,15 @@ module.exports = [
     }
   },
   {
-    description: "Make sure the replacement handle got saved.",
-    fn: ({ contracts, checkFn, local: { thirdHandle, expectedProjectId } }) =>
+    description: "Make sure the replacement handle got saved",
+    fn: ({
+      contracts,
+      randomSignerFn,
+      checkFn,
+      local: { thirdHandle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
@@ -285,9 +333,15 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the project was saved to the replacement handle.",
-    fn: ({ contracts, checkFn, local: { thirdHandle, expectedProjectId } }) =>
+    description: "Make sure the project was saved to the replacement handle",
+    fn: ({
+      contracts,
+      randomSignerFn,
+      checkFn,
+      local: { thirdHandle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [thirdHandle],
@@ -296,9 +350,10 @@ module.exports = [
   },
   {
     description:
-      "Make sure there is no project associated with the transfered handle.",
-    fn: ({ contracts, checkFn, local: { secondHandle } }) =>
+      "Make sure there is no project associated with the transfered handle",
+    fn: ({ contracts, randomSignerFn, checkFn, local: { secondHandle } }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
@@ -307,7 +362,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure a project can't be created with the transfered handle.",
+      "Make sure a project can't be created with the transfered handle",
     fn: ({
       deployer,
       contracts,
@@ -331,7 +386,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure a project can't set its handle to the transfered handle.",
+      "Make sure a project can't set its handle to the transfered handle",
     fn: ({
       contracts,
       executeFn,
@@ -347,7 +402,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure no one else but the intended recipient can claim the transferd handle.",
+      "Make sure no one else but the intended recipient can claim the transferd handle",
     fn: ({
       contracts,
       executeFn,
@@ -365,7 +420,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure a transfered handle can be claimed if it hasn't been already.",
+      "Make sure a transfered handle can be claimed if it hasn't been already",
     fn: ({
       contracts,
       executeFn,
@@ -382,10 +437,11 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the claimed handle got saved.",
+    description: "Make sure the claimed handle got saved",
     fn: ({
       contracts,
       checkFn,
+      randomSignerFn,
       local: {
         owner,
         secondOwner,
@@ -395,6 +451,7 @@ module.exports = [
       }
     }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "handleOf",
         args: [
@@ -406,10 +463,11 @@ module.exports = [
       })
   },
   {
-    description: "Make sure the project was saved to the claimed handle.",
+    description: "Make sure the project was saved to the claimed handle",
     fn: ({
       contracts,
       checkFn,
+      randomSignerFn,
       local: {
         owner,
         secondOwner,
@@ -419,6 +477,7 @@ module.exports = [
       }
     }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [secondHandle],
@@ -429,13 +488,15 @@ module.exports = [
       })
   },
   {
-    description: "Check to see if the first handle is still set correctly.",
+    description: "Check to see if the first handle is still set correctly",
     fn: ({
       contracts,
       checkFn,
+      randomSignerFn,
       local: { owner, secondOwner, handle, expectedSecondProjectId }
     }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
@@ -444,7 +505,7 @@ module.exports = [
       })
   },
   {
-    description: "Make a payment to the project.",
+    description: "Make a payment to the project",
     fn: async ({
       contracts,
       executeFn,
@@ -484,7 +545,7 @@ module.exports = [
     }
   },
   {
-    description: "Configure the projects funding cycle.",
+    description: "Configure the projects funding cycle",
     fn: async ({
       contracts,
       constants,
@@ -537,7 +598,7 @@ module.exports = [
   },
   {
     description:
-      "Anyone can tap the full payment value on the project's behalf.",
+      "Anyone can tap the full payment value on the project's behalf",
     fn: ({
       contracts,
       executeFn,

@@ -490,6 +490,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
 
         require(_holder != _recipient, "Tickets::transfer: IDENTITY");
 
+        // TODO unit test
+        require(_amount > 0, "Tickets::transfer: NO_OP");
+
         // Get a reference to the amount of unlocked staked tickets.
         uint256 _unlockedStakedTickets =
             stakedBalanceOf[_holder][_projectId] -

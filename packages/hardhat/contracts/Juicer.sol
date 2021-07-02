@@ -680,6 +680,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         )
         returns (uint256 amount)
     {
+        //TODO unit test
+        require(_count > 0, "Juicer::redeem: NO_OP");
+
         // Can't send claimed funds to the zero address.
         require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
 

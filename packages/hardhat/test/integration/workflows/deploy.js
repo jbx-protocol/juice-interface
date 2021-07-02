@@ -103,6 +103,7 @@ module.exports = [
       checkFn,
       BigNumber,
       timeMark,
+      randomSignerFn,
       local: {
         expectedFundingCycleId,
         expectedProjectId,
@@ -144,6 +145,7 @@ module.exports = [
       const expectedFee = await contracts.juicer.fee();
 
       await checkFn({
+        caller: randomSignerFn(),
         contract: contracts.fundingCycles,
         fn: "get",
         args: [expectedFundingCycleId],
@@ -170,8 +172,14 @@ module.exports = [
   },
   {
     description: "Make sure the project's handle got saved",
-    fn: ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { handle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "handleOf",
         args: [expectedProjectId],
@@ -180,8 +188,14 @@ module.exports = [
   },
   {
     description: "Make sure the project was saved to the handle",
-    fn: ({ contracts, checkFn, local: { handle, expectedProjectId } }) =>
+    fn: ({
+      contracts,
+      randomSignerFn,
+      checkFn,
+      local: { handle, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "projectFor",
         args: [handle],
@@ -190,8 +204,14 @@ module.exports = [
   },
   {
     description: "Make sure the project's uri got saved",
-    fn: ({ contracts, checkFn, local: { uri, expectedProjectId } }) =>
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { uri, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "uriOf",
         args: [expectedProjectId],
@@ -201,8 +221,14 @@ module.exports = [
   {
     description:
       "Make sure the juicer got set as the project's current terminal",
-    fn: ({ contracts, checkFn, local: { terminal, expectedProjectId } }) =>
+    fn: ({
+      randomSignerFn,
+      contracts,
+      checkFn,
+      local: { terminal, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],

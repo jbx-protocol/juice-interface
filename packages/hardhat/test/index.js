@@ -175,8 +175,15 @@ describe("Juice", async function() {
     };
 
     // Bind a function that checks if a contract getter equals an expected value.
-    this.checkFn = async ({ contract, fn, args, expect, plusMinus }) => {
-      const storedVal = await contract[fn](...args);
+    this.checkFn = async ({
+      caller,
+      contract,
+      fn,
+      args,
+      expect,
+      plusMinus
+    }) => {
+      const storedVal = await contract.connect(caller)[fn](...args);
       if (plusMinus) {
         chai.expect(storedVal.lte(expect.add(plusMinus))).to.equal(true);
         chai.expect(storedVal.gte(expect.sub(plusMinus))).to.equal(true);
@@ -263,12 +270,14 @@ describe("Juice", async function() {
 
     // Bind a function that gets a random signed.
     this.randomSignerFn = ({ exclude = [] } = {}) => {
-      const candidate = this.addrs[Math.floor(Math.random() * 9)];
-      if (exclude.includes(candidate.address))
-        return this.randomSignerFn({ exclude });
       // To test an edge condition, pick the same address more likely than not.
       // return address0 50% of the time.
-      if (Math.random() < 0.5) return this.addrs[0];
+      const candidate =
+        Math.random() < 0.5
+          ? this.addrs[0]
+          : this.addrs[Math.floor(Math.random() * 9)];
+      if (exclude.includes(candidate.address))
+        return this.randomSignerFn({ exclude });
       return candidate;
     };
 

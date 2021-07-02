@@ -134,21 +134,30 @@ module.exports = function() {
       fundingCycleId = fundingCycleId.add(1);
       return fundingCycleId;
     };
+
+    this.bondingCurveFn = ({ rate, count, total, overflow }) =>
+      overflow
+        .mul(count)
+        .div(total)
+        .mul(
+          rate.add(count.mul(this.constants.MaxPercent.sub(rate)).div(total))
+        )
+        .div(this.constants.MaxPercent);
   });
 
   for (let i = 0; i < 100; i += 1) {
-    describe.only(
+    describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
     );
-    describe.only(
+    describe(
       "Deployment of a project with funding cycles and mods included",
       run(workflows.deploy)
     );
-    // it(
-    //   "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
-    //   run(workflows.ticketLockingAndTransfers)
-    // );
+    describe(
+      "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
+      run(workflows.ticketLockingAndTransfers)
+    );
     // it("Redeem tickets for overflow", run(workflows.redeem));
     // it("Prints reserved tickets", run(workflows.printReservedTickets));
     // it("Issues tickets and honors preference", run(workflows.issueTickets));

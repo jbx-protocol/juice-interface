@@ -1,13 +1,12 @@
-import { Button, Form, FormInstance, Space } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { BigNumber, constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { ModRef } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { formattedNum, fromPerbicent, fromWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 export type BudgetFormFields = {
   duration: string
@@ -16,82 +15,86 @@ export type BudgetFormFields = {
 export default function BudgetForm({
   form,
   initialCurrency,
-  initialMods,
   initialTarget,
   onSave,
 }: {
   form: FormInstance<BudgetFormFields>
   initialCurrency: CurrencyOption
-  initialMods: ModRef[]
-  initialTarget: number
-  onSave: (currency: CurrencyOption, mods: ModRef[], target: number) => void
+  initialTarget: string
+  onSave: (currency: CurrencyOption, target: string) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyOption>(0)
-  const [mods, setMods] = useState<ModRef[]>([])
-  const [target, setTarget] = useState<number>(0)
+  const [target, setTarget] = useState<string>('0')
+  const [showFundingFields, setShowFundingFields] = useState<boolean>()
   const isRecurring = useEditingFundingCycleRecurringSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
-    setMods(initialMods)
     setTarget(initialTarget)
+    setShowFundingFields(parseWad(initialTarget).lt(constants.MaxUint256))
   }, [])
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <h1>Funding specs</h1>
+      <h1>Funding</h1>
+
+      <p>
+        Set a funding target to reward your community members with your surplus
+        earnings. Whenever your project earns more than your funding target in
+        the defined duration, the extra funds are locked in an overflow pool and
+        begin earning interest. Community tokens can be exchanged by anyone for
+        a portion of funds from the overflow pool.
+      </p>
 
       <Form form={form} layout="vertical">
-        <FormItems.ProjectDuration
-          value={form.getFieldValue('duration')}
-          isRecurring={isRecurring}
-          onToggleRecurring={() =>
-            dispatch(editingProjectActions.setIsRecurring(!isRecurring))
-          }
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
-        />
-        <FormItems.ProjectTarget
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
-          value={target.toString()}
-          onValueChange={val => setTarget(parseFloat(val || '0'))}
-          currency={currency}
-          onCurrencyChange={setCurrency}
-        />
-        <FormItems.ProjectMods
-          name="mods"
-          mods={mods}
-          onModsChanged={setMods}
-          addButtonText="Add a payout"
-          formatPercent={percent => (
-            <span>
-              {currency !== undefined ? (
-                <CurrencySymbol currency={currency} />
-              ) : null}
-              {formattedNum(target * (percent / 100), {
-                decimals: 0,
-                padEnd: 0,
-              })}
-            </span>
-          )}
-          formItemProps={{
-            label: 'Auto payouts (optional)',
-            extra:
-              "Commit portions of your project's funding to other Ethereum wallets or Juice projects. Use this to pay contributors, charities, other projects you depend on, or anyone else. Payouts will be distributed automatically anytime a withdrawal is made from your project.",
-          }}
-        />
+        <Form.Item>
+          <Space>
+            <Switch
+              checked={showFundingFields}
+              onChange={checked => {
+                setTarget(
+                  checked ? '10000' : fromWad(constants.MaxUint256) || '0',
+                )
+                setCurrency(1)
+                dispatch(editingProjectActions.setIsRecurring(checked))
+                setShowFundingFields(checked)
+              }}
+            />
+            <label htmlFor="">Set a funding target</label>
+          </Space>
+        </Form.Item>
+        {showFundingFields && (
+          <FormItems.ProjectDuration
+            value={form.getFieldValue('duration')}
+            isRecurring={isRecurring}
+            onToggleRecurring={() =>
+              dispatch(editingProjectActions.setIsRecurring(!isRecurring))
+            }
+            formItemProps={{
+              rules: [{ required: true }],
+            }}
+          />
+        )}
+        {showFundingFields && (
+          <FormItems.ProjectTarget
+            formItemProps={{
+              rules: [{ required: true }],
+            }}
+            value={target.toString()}
+            onValueChange={val => setTarget(val || '0')}
+            currency={currency}
+            onCurrencyChange={setCurrency}
+          />
+        )}
         <Form.Item>
           <Button
             style={{ marginTop: 20 }}
             htmlType="submit"
             type="primary"
-            onClick={() => onSave(currency, mods, target)}
+            onClick={() => onSave(currency, target)}
           >
             Save
           </Button>

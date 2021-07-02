@@ -1,7 +1,7 @@
 import { Collapse, Space } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { ModRef } from 'models/mods'
 import { useContext } from 'react'
@@ -32,6 +32,8 @@ export default function FundingCyclePreview({
 
   if (!fundingCycle) return null
 
+  const showFundingCycle = fundingCycle.target.lt(constants.MaxUint256)
+
   const secsPerDay = 60 * 60 * 24
 
   const today = Math.floor(new Date().valueOf() / 1000 / secsPerDay)
@@ -49,67 +51,69 @@ export default function FundingCyclePreview({
 
   return (
     <div>
-      <Collapse
-        style={{
-          background: 'transparent',
-          border: 'none',
-          margin: 0,
-          padding: 0,
-        }}
-        className="minimal"
-        defaultActiveKey={showDetail ? '0' : undefined}
-      >
-        <CollapsePanel
-          key={'0'}
-          style={{ border: 'none', padding: 0 }}
-          header={
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-                color: colors.text.secondary,
-              }}
-            >
-              <span>Funding cycle #{fundingCycle.number.toString()}</span>
-              {headerText}
-            </div>
-          }
+      {showFundingCycle && (
+        <Collapse
+          style={{
+            background: 'transparent',
+            border: 'none',
+            margin: 0,
+            padding: 0,
+          }}
+          className="minimal"
+          defaultActiveKey={showDetail ? '0' : undefined}
         >
-          <Space style={{ width: '100%' }} direction="vertical" size="large">
+          <CollapsePanel
+            key={'0'}
+            style={{ border: 'none', padding: 0 }}
+            header={
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  color: colors.text.secondary,
+                }}
+              >
+                <span>Funding cycle #{fundingCycle.number.toString()}</span>
+                {headerText}
+              </div>
+            }
+          >
             <FundingCycleDetails fundingCycle={fundingCycle} />
+          </CollapsePanel>
+        </Collapse>
+      )}
 
-            <div>
-              <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-                Auto payouts:
-              </h4>
-              <Mods
-                mods={paymentMods}
-                fundingCycle={fundingCycle}
-                projectId={projectId}
-                isOwner={isOwner}
-                emptyText="No payouts set"
-                editButtonText="Edit payouts"
-              />
-            </div>
+      <Space direction="vertical" size="middle">
+        <div>
+          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+            Spending:
+          </h4>
+          <Mods
+            mods={paymentMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+            emptyText="No payouts set"
+            editButtonText="Edit payouts"
+          />
+        </div>
 
-            <div>
-              <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-                Allocated token reserves:
-              </h4>
-              <Mods
-                mods={ticketMods}
-                fundingCycle={fundingCycle}
-                projectId={projectId}
-                isOwner={isOwner}
-                emptyText="No destinations set"
-                editButtonText="Allocate token reserves"
-              />
-            </div>
-          </Space>
-        </CollapsePanel>
-      </Collapse>
+        <div>
+          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+            Allocated token reserves:
+          </h4>
+          <Mods
+            mods={ticketMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+            emptyText="No destinations set"
+            editButtonText="Allocate token reserves"
+          />
+        </div>
+      </Space>
     </div>
   )
 }

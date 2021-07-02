@@ -252,7 +252,7 @@ export default function Rewards({
           title={
             <TooltipLabel
               label="Tokens"
-              tip="Project tokens are distributed when a project is paid, and can be redeemed for that project's overflow. Supporters will have their token balance tracked by Juice, and can redeem their token balance for overflow without claiming them. Once a project has issued their ERC20, token holders can claim their balance."
+              tip="Tokens are distributed to whoever pays a Juicebox. Supporters will initially receive tokens staked in Juicebox, which can be redeemed for a Juicebox's overflow if it has set a funding target. Once a Juicebox has issued its ERC-20 tokens, token holders can withdraw their balance in ERC-20s, which can still be redeemed for overflow."
               style={{
                 fontWeight:
                   forThemeOption &&
@@ -273,7 +273,7 @@ export default function Rewards({
                 label={
                   <TooltipLabel
                     label="Reserved"
-                    tip="A project may reserve a percentage of tokens for any number of chosen addresses, which are reserved from a portion of every payment made to the project. Printing reserved tokens transfers them to their destined wallets."
+                    tip="A Juicebox may reserve a percentage of tokens minted from every payment it receives, for any number of chosen addresses. Minting reserved tokens transfers them to their destined wallets."
                     style={{ marginRight: 14 }}
                   />
                 }
@@ -293,7 +293,7 @@ export default function Rewards({
                       onClick={print}
                       disabled={!reservedTickets?.gt(0)}
                     >
-                      Print
+                      Mint
                     </Button>
                   </div>
                 }
@@ -380,14 +380,14 @@ export default function Rewards({
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>Balance: {formatWad(totalBalance ?? 0)} tickets</div>
           <p>
-            Tokens can be redeemed for a project's overflow according to the
+            Tokens can be redeemed for a Juicebox's overflow according to the
             bonding curve rate of the current funding cycle. For example, if the
             rate is 70%, there's 100 ETH overflow available, and 100 tokens in
             circulation, 10 tokens could be redeemed for 7 ETH.
           </p>
           {redeemDisabled ? (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
-              You can redeem tokens once this project has overflow.
+              You can redeem tokens once this Juicebox has overflow.
             </div>
           ) : (
             <div>

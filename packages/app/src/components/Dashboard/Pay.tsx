@@ -100,7 +100,7 @@ export default function Pay({
             disabled={fundingCycle?.configured.eq(0)}
             onClick={weiPayAmt ? pay : undefined}
           >
-            Pay project
+            Pay
           </Button>
           {payAs === 1 && (
             <div style={{ fontSize: '.7rem' }}>

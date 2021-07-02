@@ -25,7 +25,11 @@ export default function FundingCycleDetails({
   const metadata = decodeFCMetadata(fundingCycle.metadata)
 
   return (
-    <Descriptions labelStyle={{ fontWeight: 600 }} size="small" column={2}>
+    <Descriptions
+      labelStyle={{ fontWeight: 600 }}
+      size="small"
+      column={{ xl: 1, xxl: 2 }}
+    >
       <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>
 
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
@@ -41,7 +45,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Reserved"
-            tip="This project's owner can mint tokens for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tokens were given out over the course of this budget, then the owner will be able to mint 5 tokens for themselves once the budget expires."
+            tip="This Juicebox's owner can mint tokens for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tokens were given out over the course of this budget, then the owner will be able to mint 5 tokens for themselves once the budget expires."
           />
         }
       >
@@ -64,7 +68,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Bonding curve"
-            tip="This rate determines the amount of overflow that each project token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+            tip="This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
           />
         }
       >

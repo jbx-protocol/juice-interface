@@ -26,7 +26,7 @@ export default function ProjectHeader({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const headerHeight = 80
+  const headerHeight = 100
 
   return (
     <div>

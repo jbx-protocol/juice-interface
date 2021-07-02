@@ -1,9 +1,9 @@
+import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Drawer, Steps } from 'antd'
+import { Button, Drawer, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
-import { layouts } from 'constants/styles/layouts'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -30,10 +30,11 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
-
 import { FCProperties } from '../../models/funding-cycle-properties'
 import BudgetForm, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
+import IncentivesForm, { IncentivesFormFields } from './IncentivesForm'
+import PayModsForm from './PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
@@ -42,10 +43,16 @@ export default function Create() {
   const { signerNetwork } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
+    false,
+  )
   const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
     false,
   )
   const [projectFormModalVisible, setProjectFormModalVisible] = useState<
+    boolean
+  >(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
     boolean
   >(false)
   const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
@@ -71,8 +78,7 @@ export default function Create() {
     functionName: 'fee',
   })
 
-  const incrementStep = (num: number) =>
-    num > currentStep ? setCurrentStep(num) : null
+  const incrementStep = () => setCurrentStep(currentStep + 1)
 
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
@@ -89,28 +95,21 @@ export default function Create() {
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
-      discountRate: fromPerbicent(editingFC?.discountRate),
-      reserved: fromPerbicent(editingFC?.reserved),
-      bondingCurveRate: fromPerbicent(editingFC?.bondingCurveRate),
+      reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
-  const onBudgetFormSaved = (
-    currency: CurrencyOption,
-    mods: ModRef[],
-    target: number,
-  ) => {
+  const onPayModsFormSaved = (mods: ModRef[]) =>
+    dispatch(editingProjectActions.setPaymentMods(mods))
+
+  const onBudgetFormSaved = (currency: CurrencyOption, target: string) => {
     const fields = budgetForm.getFieldsValue(true)
-    dispatch(editingProjectActions.setTarget(target.toString()))
+    dispatch(editingProjectActions.setTarget(target))
     dispatch(
       editingProjectActions.setDuration(parseFloat(fields.duration).toString()),
     )
     dispatch(editingProjectActions.setCurrency(currency))
-    dispatch(editingProjectActions.setPaymentMods(mods))
 
-    if (fields?.duration && target) incrementStep(1)
-
-    // Ticketing form depends on budget recurring/one-time
-    resetTicketingForm()
+    if (fields?.duration && target) incrementStep()
   }
 
   const onProjectFormSaved = () => {
@@ -119,18 +118,22 @@ export default function Create() {
     dispatch(editingProjectActions.setInfoUri(fields.infoUrl))
     dispatch(editingProjectActions.setHandle(fields.handle))
     dispatch(editingProjectActions.setLogoUri(fields.logoUrl))
-
-    incrementStep(2)
   }
 
   const onTicketingFormSaved = (mods: ModRef[]) => {
     const fields = ticketingForm.getFieldsValue(true)
-    dispatch(editingProjectActions.setDiscountRate(fields.discountRate))
     dispatch(editingProjectActions.setReserved(fields.reserved))
-    dispatch(editingProjectActions.setBondingCurveRate(fields.bondingCurveRate))
     dispatch(editingProjectActions.setTicketMods(mods))
+  }
 
-    incrementStep(3)
+  const onIncentivesFormSaved = (
+    discountRate: number,
+    bondingCurveRate: number,
+  ) => {
+    dispatch(editingProjectActions.setDiscountRate(discountRate.toString()))
+    dispatch(
+      editingProjectActions.setBondingCurveRate(bondingCurveRate.toString()),
+    )
   }
 
   useLayoutEffect(() => {
@@ -216,21 +219,53 @@ export default function Create() {
 
   const buildSteps = useCallback(
     (steps: { title: string; callback: VoidFunction }[]) => (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        {steps.map((step, i) => (
-          <Steps.Step
-            key={step.title}
-            title={
-              <Button
-                type={currentStep === i ? 'primary' : 'default'}
-                onClick={step.callback}
-                disabled={currentStep < i}
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        {steps.map((step, i) => {
+          const disabled = currentStep < i
+          const active = currentStep === i
+
+          return (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: currentStep < i ? 'default' : 'pointer',
+                padding: 10,
+                borderRadius: radii.sm,
+                border:
+                  '1px solid ' +
+                  (active
+                    ? colors.stroke.action.primary
+                    : colors.stroke.action.secondary),
+              }}
+              onClick={disabled ? () => null : step.callback}
+            >
+              <div
+                style={{
+                  fontWeight: active ? 600 : 500,
+                  color: active
+                    ? colors.text.action.primary
+                    : disabled
+                    ? colors.text.disabled
+                    : colors.text.primary,
+                }}
               >
-                {i + 1}. {step.title}
-              </Button>
-            }
-          />
-        ))}
+                {step.title}
+              </div>
+              <div
+                style={{
+                  color: active
+                    ? colors.icon.action.primary
+                    : disabled
+                    ? colors.icon.disabled
+                    : colors.icon.primary,
+                }}
+              >
+                {currentStep > i ? <CheckCircleFilled /> : <CaretRightFilled />}
+              </div>
+            </div>
+          )
+        })}
         <Button
           onClick={() => setDeployProjectModalVisible(true)}
           disabled={currentStep < steps.length}
@@ -238,7 +273,7 @@ export default function Create() {
         >
           Deploy
         </Button>
-      </div>
+      </Space>
     ),
     [currentStep],
   )
@@ -253,49 +288,65 @@ export default function Create() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        padding: 40,
+      }}
+    >
       <div
         style={{
-          ...layouts.maxWidth,
-          marginTop: 20,
-          marginBottom: 20,
+          marginRight: 40,
+          // borderRight: '1px solid ' + colors.stroke.secondary,
+          minWidth: 300,
         }}
       >
         <h1 style={{ marginBottom: 20 }}>Create your Juicebox 🚀</h1>
 
         {buildSteps([
           {
-            title: 'Configure funding',
-            callback: () => setBudgetFormModalVisible(true),
-          },
-          {
-            title: 'Set project info',
+            title: 'Identity',
             callback: () => setProjectFormModalVisible(true),
           },
           {
-            title: 'Tokens',
+            title: 'Spending',
+            callback: () => setPayModsFormModalVisible(true),
+          },
+          {
+            title: 'Funding',
+            callback: () => setBudgetFormModalVisible(true),
+          },
+          {
+            title: 'Reserved tokens',
             callback: () => setTicketingFormModalVisible(true),
           },
+          ...(isRecurring(editingFC)
+            ? [
+                {
+                  title: 'Incentives',
+                  callback: () => setIncentivesFormModalVisible(true),
+                },
+              ]
+            : []),
         ])}
       </div>
 
       <div
         style={{
-          ...layouts.maxWidth,
-          borderRadius: radii.lg,
           padding: 40,
           paddingTop: 30,
+          borderRadius: radii.lg,
           border: '1px solid ' + colors.stroke.secondary,
         }}
       >
-        <h4
+        <h3
           style={{
-            color: colors.text.secondary,
             marginBottom: 30,
+            color: colors.text.secondary,
           }}
         >
           Preview:
-        </h4>
+        </h3>
         <Project
           isOwner={false}
           showCurrentDetail={currentStep > 2}
@@ -309,6 +360,28 @@ export default function Create() {
       </div>
 
       <Drawer
+        visible={payModsModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          setPayModsFormModalVisible(false)
+        }}
+        destroyOnClose
+      >
+        <PayModsForm
+          initialMods={editingPaymentMods}
+          currency={editingFC.currency.toNumber() as CurrencyOption}
+          target={parseFloat(fromWad(editingFC.target))}
+          onSave={async mods => {
+            await budgetForm.validateFields()
+            onPayModsFormSaved(mods)
+            setPayModsFormModalVisible(false)
+            incrementStep()
+          }}
+        />
+      </Drawer>
+
+      <Drawer
         visible={budgetFormModalVisible}
         placement="right"
         width={640}
@@ -320,13 +393,13 @@ export default function Create() {
       >
         <BudgetForm
           form={budgetForm}
-          initialMods={editingPaymentMods}
           initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
-          initialTarget={parseFloat(fromWad(editingFC.target))}
-          onSave={async (currency, mods, target) => {
+          initialTarget={fromWad(editingFC.target)}
+          onSave={async (currency, target) => {
             await budgetForm.validateFields()
-            onBudgetFormSaved(currency, mods, target)
+            onBudgetFormSaved(currency, target)
             setBudgetFormModalVisible(false)
+            incrementStep()
           }}
         />
       </Drawer>
@@ -338,7 +411,6 @@ export default function Create() {
         onClose={() => {
           resetProjectForm()
           setProjectFormModalVisible(false)
-          incrementStep(2)
         }}
       >
         <ProjectForm
@@ -347,7 +419,27 @@ export default function Create() {
             await projectForm.validateFields()
             onProjectFormSaved()
             setProjectFormModalVisible(false)
-            incrementStep(2)
+            incrementStep()
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={incentivesFormModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          setIncentivesFormModalVisible(false)
+        }}
+      >
+        <IncentivesForm
+          initialDiscountRate={editingFC.discountRate.toNumber()}
+          initialBondingCurveRate={editingFC.bondingCurveRate}
+          onSave={async (discountRate: number, bondingCurveRate: number) => {
+            await ticketingForm.validateFields()
+            onIncentivesFormSaved(discountRate, bondingCurveRate)
+            setIncentivesFormModalVisible(false)
+            incrementStep()
           }}
         />
       </Drawer>
@@ -363,12 +455,12 @@ export default function Create() {
       >
         <TicketingForm
           form={ticketingForm}
-          cycleIsRecurring={isRecurring(fundingCycle)}
           initialMods={editingTicketMods}
           onSave={async mods => {
             await ticketingForm.validateFields()
             onTicketingFormSaved(mods)
             setTicketingFormModalVisible(false)
+            incrementStep()
           }}
         />
       </Drawer>

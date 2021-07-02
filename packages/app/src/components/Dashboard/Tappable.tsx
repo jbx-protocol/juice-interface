@@ -13,6 +13,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
 import { CurrencyOption } from 'models/currency-option'
+import { constants } from 'ethers'
 
 export default function Tappable({
   fundingCycle,
@@ -91,7 +92,7 @@ export default function Tappable({
           <TooltipLabel
             style={smallHeaderStyle(colors)}
             label="AVAILABLE"
-            tip="The funds this project can withdraw for this funding cycle. They won't roll over to the next funding cycle, so they should be withdrawn before this one ends."
+            tip="The funds that can be withdrawn for this funding cycle. They won't roll over to the next funding cycle, so they should be withdrawn before this one ends."
           />
         </div>
         <Button
@@ -107,7 +108,10 @@ export default function Tappable({
         <CurrencySymbol
           currency={fundingCycle.currency.toNumber() as CurrencyOption}
         />
-        {formatWad(fundingCycle.tapped) || '0'}/{formatWad(fundingCycle.target)}{' '}
+        {formatWad(fundingCycle.tapped) || '0'}
+        {fundingCycle.target.eq(constants.MaxUint256) ? null : (
+          <span>/{formatWad(fundingCycle.target)} </span>
+        )}{' '}
         withdrawn
       </div>
 
@@ -132,7 +136,7 @@ export default function Tappable({
           />
           {formatWad(withdrawable)}
         </div>
-        <p>Funds will be withdrawn according to this project's mods.</p>
+        <p>Funds will be withdrawn according to this Juicebox's payouts.</p>
         <Space direction="vertical" style={{ width: '100%' }}>
           <Input
             name="withdrawable"

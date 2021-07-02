@@ -103,7 +103,7 @@ export default function EditProjectModal({
 
   return (
     <Modal
-      title="Edit project"
+      title="Edit Juicebox"
       visible={visible}
       okText="Save changes"
       onOk={setUri}

@@ -138,10 +138,7 @@ export default function Landing() {
                 </div>
 
                 <div className="hide-mobile">
-                  <a
-                    // href="/#/create"
-                    style={{ display: 'inline-block' }}
-                  >
+                  <a href="/#/create" style={{ display: 'inline-block' }}>
                     <Button type="primary" size="large">
                       Design your Juicebox
                     </Button>

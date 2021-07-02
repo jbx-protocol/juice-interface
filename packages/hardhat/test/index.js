@@ -276,12 +276,18 @@ describe("Juice", async function() {
     this.randomBoolFn = () => Math.random() > 0.5;
 
     // Bind a function that generates a random string.
-    this.randomStringFn = ({ seed = 2, exclude = [] } = {}) => {
-      const candidate = Math.random()
-        .toString(36)
-        .substr(2, seed);
+    this.randomStringFn = ({
+      seed = this.randomBigNumberFn(),
+      exclude = [],
+      prepend = ""
+    } = {}) => {
+      const candidate = prepend.concat(
+        Math.random()
+          .toString(36)
+          .substr(2, seed)
+      );
       if (exclude.includes(candidate))
-        return this.randomStringFn({ seed, exclude });
+        return this.randomStringFn({ seed, exclude, prepend });
       return candidate;
     };
 
@@ -297,12 +303,15 @@ describe("Juice", async function() {
     this.BigNumber = ethers.BigNumber;
 
     // Bind a function that returns a random set of bytes.
-    this.randomBytesFn = ({ seed = 2, exclude = [] } = {}) => {
+    this.randomBytesFn = ({ min, max, prepend = "", exclude = [] } = {}) => {
       const candidate = ethers.utils.formatBytes32String(
-        this.randomStringFn({ seed })
+        this.randomStringFn({
+          prepend,
+          seed: this.randomBigNumberFn({ min, max: BigNumber.from(32) })
+        })
       );
       if (exclude.includes(candidate))
-        return this.randomBytesFn({ seed, exclude });
+        return this.randomBytesFn({ exclude, min, max, prepend });
       return candidate;
     };
 

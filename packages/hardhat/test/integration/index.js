@@ -1,12 +1,17 @@
 const { BigNumber, constants, utils } = require("ethers");
 const workflows = require("./workflows");
 
-let snapshotId;
+// let snapshotId;
+// The first project ID is used for governance.
+let projectId = BigNumber.from(1);
+// The first funding cycle ID is used for governance.
+let fundingCycleId = BigNumber.from(1);
+
 const run = function(ops) {
-  return async function() {
-    before(async function() {
-      snapshotId = await this.snapshotFn();
-    });
+  return function() {
+    // before(async function() {
+    //   snapshotId = await this.snapshotFn();
+    // });
     // eslint-disable-next-line no-restricted-syntax
     for (const op of ops) {
       it(op.description, async function() {
@@ -17,9 +22,9 @@ const run = function(ops) {
         };
       });
     }
-    after(async function() {
-      await this.restoreFn(snapshotId);
-    });
+    // after(async function() {
+    //   await this.restoreFn(snapshotId);
+    // });
   };
 };
 
@@ -118,6 +123,17 @@ module.exports = function() {
     ).div(BigNumber.from(10).pow(18));
 
     this.constants.MaxCycleLimit = await fundingCycles.MAX_CYCLE_LIMIT();
+
+    // eslint-disable-next-line no-plusplus
+    this.incrementProjectIdFn = () => {
+      projectId = projectId.add(1);
+      return projectId;
+    };
+    // eslint-disable-next-line no-plusplus
+    this.incrementFundingCycleIdFn = () => {
+      fundingCycleId = fundingCycleId.add(1);
+      return fundingCycleId;
+    };
   });
 
   for (let i = 0; i < 100; i += 1) {
@@ -125,10 +141,10 @@ module.exports = function() {
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
     );
-    // it(
-    //   "Deployment of a project with funding cycles and mods included",
-    //   run(workflows.deploy)
-    // );
+    describe.only(
+      "Deployment of a project with funding cycles and mods included",
+      run(workflows.deploy)
+    );
     // it(
     //   "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
     //   run(workflows.ticketLockingAndTransfers)

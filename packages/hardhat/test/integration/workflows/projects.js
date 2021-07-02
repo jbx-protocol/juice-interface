@@ -13,10 +13,10 @@ module.exports = [
       deployer,
       contracts,
       executeFn,
-      BigNumber,
       randomStringFn,
       randomSignerFn,
-      randomBytesFn
+      randomBytesFn,
+      incrementProjectIdFn
     }) => {
       // The address that will own a project.
       const owner = randomSignerFn();
@@ -24,12 +24,11 @@ module.exports = [
       // Use the juicer as the terminal.
       const terminal = contracts.juicer.address;
 
-      const handle = randomBytesFn();
+      const expectedProjectId = incrementProjectIdFn();
+
+      const handle = randomBytesFn({ prepend: expectedProjectId.toString() });
 
       const uri = randomStringFn();
-
-      // Since the governance project was created before this test, the created project ID should be 2.
-      const expectedProjectId = BigNumber.from(2);
 
       await executeFn({
         caller: deployer,
@@ -148,7 +147,10 @@ module.exports = [
       randomBytesFn,
       local: { owner, handle, expectedProjectId }
     }) => {
-      const secondHandle = randomBytesFn({ exclude: [handle] });
+      const secondHandle = randomBytesFn({
+        prepend: expectedProjectId.toString(),
+        exclude: [handle]
+      });
       await executeFn({
         caller: owner,
         contract: contracts.projects,
@@ -219,11 +221,10 @@ module.exports = [
     fn: async ({
       contracts,
       executeFn,
-      BigNumber,
+      incrementProjectIdFn,
       local: { secondOwner, secondHandle }
     }) => {
-      // The second project should have an incremented ID.
-      const expectedSecondProjectId = BigNumber.from(3);
+      const expectedSecondProjectId = incrementProjectIdFn();
 
       await executeFn({
         caller: secondOwner,
@@ -257,11 +258,13 @@ module.exports = [
     fn: async ({
       contracts,
       executeFn,
-      stringToBytesFn,
       randomBytesFn,
       local: { owner, secondOwner, expectedProjectId, handle, secondHandle }
     }) => {
-      const thirdHandle = randomBytesFn({ exlucde: [handle, secondHandle] });
+      const thirdHandle = randomBytesFn({
+        prepend: expectedProjectId.toString(),
+        exclude: [handle, secondHandle]
+      });
       await executeFn({
         caller: owner,
         contract: contracts.projects,
@@ -488,8 +491,12 @@ module.exports = [
       executeFn,
       BigNumber,
       randomBigNumberFn,
+      incrementFundingCycleIdFn,
       local: { owner, paymentValue, expectedProjectId }
     }) => {
+      // Burn a funding cycle.
+      incrementFundingCycleIdFn();
+
       // The currency will be 0, which corresponds to ETH.
       const currency = 0;
       await executeFn({

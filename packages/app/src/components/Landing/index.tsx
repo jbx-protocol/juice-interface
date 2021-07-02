@@ -69,7 +69,7 @@ export default function Landing() {
     <div>
       <section style={section}>
         <div style={wrapper}>
-          <Row gutter={30}>
+          <Row gutter={30} align="bottom">
             <Col
               xs={24}
               md={14}
@@ -138,10 +138,22 @@ export default function Landing() {
                 </div>
 
                 <div className="hide-mobile">
-                  <a href="/#/create">
+                  <a
+                    // href="/#/create"
+                    style={{ display: 'inline-block' }}
+                  >
                     <Button type="primary" size="large">
                       Design your Juicebox
                     </Button>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        marginTop: 5,
+                        color: colors.text.primary,
+                      }}
+                    >
+                      (Launching July)
+                    </div>
                   </a>
                 </div>
               </div>
@@ -227,7 +239,7 @@ export default function Landing() {
           }}
         >
           {smallHeader('Projects using Juicebox')}
-          <p>soon...</p>
+          <p>Soon...</p>
           <ProjectsGrid projects={[]} />
         </div>
       </section>

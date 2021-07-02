@@ -24,7 +24,7 @@ const QAs: {
     ],
   },
   {
-    q: `What is overflow`,
+    q: `What is overflow?`,
     a: [
       `If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Overflow funds earn interest, and may be claimed by your community token holders by burning their tokens.`,
     ],

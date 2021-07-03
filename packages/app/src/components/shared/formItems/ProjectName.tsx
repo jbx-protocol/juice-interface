@@ -10,7 +10,6 @@ export default function ProjectName({
 }: { onChange?: (val?: string) => void } & FormItemExt) {
   return (
     <Form.Item
-      extra="The name of your Juicebox."
       name={name}
       label={hideLabel ? undefined : 'Juicebox name'}
       {...formItemProps}

@@ -1,13 +1,12 @@
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { formatDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
-import { fromPerbicent } from '../../utils/formatNumber'
 import TooltipLabel from '../shared/TooltipLabel'
-import { CurrencyOption } from 'models/currency-option'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -18,8 +17,10 @@ export default function FundingCycleDetails({
 
   const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
 
+  const secondsInDay = 24 * 60 * 60
+
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration).mul(1000),
+    fundingCycle.start.add(fundingCycle.duration.mul(secondsInDay)).mul(1000),
   )
 
   const metadata = decodeFCMetadata(fundingCycle.metadata)

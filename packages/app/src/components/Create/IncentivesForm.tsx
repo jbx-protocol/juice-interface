@@ -1,4 +1,4 @@
-import { Button, Form, FormInstance, Slider, Space, Switch } from 'antd'
+import { Button, Form, Slider, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -77,7 +77,7 @@ export default function IncentivesForm({
         <Form layout="vertical">
           <Form.Item>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h4>Fair</h4>
+              <h4>Neutral</h4>
               <h4>Growth</h4>
             </div>
             <Slider
@@ -107,19 +107,27 @@ export default function IncentivesForm({
                 }
               }}
             />
-            <div style={{ color: colors.text.primary, marginTop: 30 }}>
+            <div style={{ color: colors.text.secondary, marginTop: 30 }}>
               <p>
-                <span style={{ fontWeight: 600 }}>Fair:</span> The number of
-                tokens earned per amount paid to a Juicebox is always the same.
-                Tokens are always worth the same amount of overflow regardless
-                of when they are redeemed.
+                <span style={{ color: colors.text.primary }}>
+                  <div style={{ fontWeight: 600 }}>Neutral</div> Everyone
+                  benefits equally from paying your Juicebox or redeeming their
+                  tokens.
+                </span>{' '}
+                The number of tokens earned per amount paid is always the same.
+                When redeemed for this Juicebox's overflow, tokens are always
+                worth proportionally the same.
               </p>
               <p>
-                <span style={{ fontWeight: 600 }}>Growth:</span> Payments made
-                earlier in a Juicebox's lifetime reward the payer with more
-                tokens. Tokens redeemed first are worth less than tokens
-                redeemed last. This encourages users to fund your Juicebox
-                early, and not redeem their tokens for overflow.
+                <span style={{ color: colors.text.primary }}>
+                  <div style={{ fontWeight: 600 }}>Growth</div> Encourages
+                  supporters to fund your Juicebox earlier, and hold their
+                  tokens instead of redeem them.
+                </span>{' '}
+                Payments made sooner after a Juicebox has been created will
+                reward the payer with more tokens than if they paid the same
+                amount later. Tokens that are redeemed first are also worth
+                proportionally less than tokens that are redeemed last.
               </p>
             </div>
           </Form.Item>

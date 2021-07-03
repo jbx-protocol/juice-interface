@@ -22,7 +22,7 @@ module.exports = [
       // Get the next project ID.
       const expectedProjectId = incrementProjectIdFn();
 
-      // Burn a funding cycle id.
+      // Burn the unused funding cycle id.
       incrementFundingCycleIdFn();
 
       // The owner of the project that will migrate.
@@ -519,35 +519,22 @@ module.exports = [
       contracts,
       randomAddressFn,
       randomBoolFn,
-      BigNumber,
-      bondingCurveFn,
-      local: {
-        paymentValue,
-        target,
-        expectedProjectId,
-        ticketBeneficiary,
-        expectedStakedBalance,
-        ticketTransferRecipient,
-        amountToTransfer,
-        expectedTotalTicketBalance,
-        amountToLock,
-        bondingCurveRate
-      }
+      local: { expectedProjectId, ticketBeneficiary, amountToLock }
     }) => {
       // Try redeeming everything except what was transfered away.
-      const ticketsToRedeem = expectedStakedBalance.sub(
-        ticketBeneficiary.address !== ticketTransferRecipient.address
-          ? amountToTransfer
-          : BigNumber.from(0)
+      const ticketsToRedeem = await contracts.ticketBooth.balanceOf(
+        ticketBeneficiary.address,
+        expectedProjectId
       );
 
       // If the amount expected to be claimed is zero.
-      const expectedClaimedAmountIsZero = bondingCurveFn({
-        rate: bondingCurveRate,
-        count: ticketsToRedeem,
-        total: expectedTotalTicketBalance,
-        overflow: paymentValue.sub(target)
-      }).eq(0);
+      const expectedClaimedAmountIsZero = (
+        await contracts.juicer.claimableOverflowOf(
+          ticketBeneficiary.address,
+          expectedProjectId,
+          ticketsToRedeem
+        )
+      ).eq(0);
 
       await executeFn({
         caller: ticketBeneficiary,
@@ -565,11 +552,7 @@ module.exports = [
           // No op if no tickets are being redeemed, or if there's no amount to claim.
           ticketsToRedeem.eq(0) || expectedClaimedAmountIsZero
             ? "Juicer::redeem: NO_OP"
-            : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS",
-        // Allow an expected no-op to pass through if its a result of a division rounding error.
-        lenientReverts: expectedClaimedAmountIsZero
-          ? ["Juicer::redeem: NO_OP"]
-          : []
+            : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS"
       });
 
       return { ticketsToRedeem, expectedClaimedAmountIsZero };
@@ -668,7 +651,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
         plusMinus: {
-          amount: 10
+          amount: 100
         }
       })
   },
@@ -689,7 +672,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
         plusMinus: {
-          amount: 10
+          amount: 100
         }
       })
   }

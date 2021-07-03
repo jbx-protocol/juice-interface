@@ -92,8 +92,7 @@ describe("Juice", async function() {
       args = [],
       value = 0,
       events = [],
-      revert,
-      lenientReverts = []
+      revert
     }) => {
       // Args can be either a function or an array.
       const normalizedArgs = typeof args === "function" ? await args() : args;
@@ -105,16 +104,7 @@ describe("Juice", async function() {
 
       // If a revert message is passed in, check to see if it was thrown.
       if (revert) {
-        try {
-          await chai.expect(promise).to.be.revertedWith(revert);
-        } catch (e) {
-          if (
-            lenientReverts.includes(e.expected) &&
-            e.actual === "Transaction NOT reverted."
-          )
-            return;
-          throw e;
-        }
+        await chai.expect(promise).to.be.revertedWith(revert);
         return;
       }
 
@@ -195,11 +185,12 @@ describe("Juice", async function() {
     }) => {
       const storedVal = await contract.connect(caller)[fn](...args);
       if (plusMinus) {
-        const amount =
-          plusMinus.amount ||
-          expect.mul(plusMinus.accuracy).div(plusMinus.precision);
-        chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
-        chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
+        console.log({
+          diff: storedVal.sub(expect),
+          plusMinus: plusMinus.amount
+        });
+        chai.expect(storedVal.lte(expect.add(plusMinus.amount))).to.equal(true);
+        chai.expect(storedVal.gte(expect.sub(plusMinus.amount))).to.equal(true);
       } else {
         chai.expect(storedVal).to.deep.equal(expect);
       }
@@ -209,16 +200,12 @@ describe("Juice", async function() {
     this.verifyBalanceFn = async ({ address, expect, plusMinus }) => {
       const storedVal = await ethers.provider.getBalance(address);
       if (plusMinus) {
-        const amount =
-          plusMinus.amount ||
-          expect.add(plusMinus.precision).sub(
-            expect
-              .add(plusMinus.precision)
-              .mul(plusMinus.accuracy)
-              .div(plusMinus.precision)
-          );
-        chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
-        chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
+        console.log({
+          diff: storedVal.sub(expect),
+          plusMinus: plusMinus.amount
+        });
+        chai.expect(storedVal.lte(expect.add(plusMinus.amount))).to.equal(true);
+        chai.expect(storedVal.gte(expect.sub(plusMinus.amount))).to.equal(true);
       } else {
         chai.expect(storedVal).to.deep.equal(expect);
       }
@@ -262,11 +249,14 @@ describe("Juice", async function() {
       max = this.constants.MaxUint256,
       precision = 10000000
     } = {}) => {
-      // To test an edge condition, return the min or the max more often.
-      // return the min or the max 50% of the time.
+      // To test an edge condition, return the min or the max and the numbers around them more often.
+      // Return the min or the max or the numbers around them 50% of the time.
       if (Math.random() < 0.5) {
+        const r = Math.random();
+        if (r <= 0.25 && min.add(1).lt(max)) return min.add(1);
+        if (r >= 0.75 && max.sub(1).gt(min)) return max.sub(1);
         // return the min 50% of the time.
-        return Math.random() < 0.5 ? min : max;
+        return r < 0.5 ? min : max;
       }
 
       const base = max.sub(min);
@@ -325,14 +315,6 @@ describe("Juice", async function() {
         return this.randomStringFn({ seed, exclude, prepend });
       return candidate;
     };
-
-    this.percentageFn = ({ value, percent }) => value.mul(percent).div(100);
-
-    // Bind a function to create a value padding by 18 zeros.
-    this.e18Fn = value =>
-      ethers.BigNumber.from(10)
-        .pow(18)
-        .mul(value);
 
     // Bind the big number utils.
     this.BigNumber = ethers.BigNumber;

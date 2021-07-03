@@ -555,7 +555,7 @@ module.exports = [
       incrementFundingCycleIdFn,
       local: { owner, paymentValue, expectedProjectId }
     }) => {
-      // Burn a funding cycle.
+      // Burn the unused funding cycle.
       incrementFundingCycleIdFn();
 
       // The currency will be 0, which corresponds to ETH.

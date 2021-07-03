@@ -27,7 +27,7 @@ module.exports = [
     }) => {
       const expectedProjectId = incrementProjectIdFn();
 
-      // Burn a funding cycle id.
+      // Burn the unused funding cycle id.
       incrementFundingCycleIdFn();
 
       // The owner of the project that will migrate.
@@ -578,15 +578,18 @@ module.exports = [
   {
     description:
       "A reconfiguration should activate the reconfiguration bonding curve",
-    fn: ({
+    fn: async ({
       executeFn,
       randomBigNumberFn,
       contracts,
       constants,
       BigNumber,
+      incrementFundingCycleIdFn,
       local: { owner, expectedProjectId }
-    }) =>
-      executeFn({
+    }) => {
+      // Burn the unused funding cycle ID.
+      incrementFundingCycleIdFn();
+      await executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "configure",
@@ -619,7 +622,8 @@ module.exports = [
           [],
           []
         ]
-      })
+      });
+    }
   },
   {
     description:
@@ -837,7 +841,7 @@ module.exports = [
   {
     description: "Fast forward past to the ballot duration",
     fn: async ({ fastforwardFn, local: { ballot } }) =>
-      fastforwardFn(await ballot.duration())
+      fastforwardFn((await ballot.duration()).add(1))
   },
   {
     description:
@@ -1071,7 +1075,7 @@ module.exports = [
           .sub(expectedRedeemableTicketsOfTicketBeneficiary3),
         // Tolerate a small difference.
         plusMinus: {
-          amount: 100
+          amount: 100000
         }
       })
   },
@@ -1106,7 +1110,7 @@ module.exports = [
           .add(leftoverTicketsOfTicketBeneficiary3),
         // Tolerate a small difference.
         plusMinus: {
-          amount: 100
+          amount: 100000
         }
       })
   },

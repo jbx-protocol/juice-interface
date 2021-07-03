@@ -198,10 +198,6 @@ describe("Juice", async function() {
         const amount =
           plusMinus.amount ||
           expect.mul(plusMinus.accuracy).div(plusMinus.precision);
-        console.log({
-          diff: storedVal.sub(expect),
-          amount
-        });
         chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
         chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
       } else {
@@ -221,10 +217,6 @@ describe("Juice", async function() {
               .mul(plusMinus.accuracy)
               .div(plusMinus.precision)
           );
-        console.log({
-          diff: storedVal.sub(expect),
-          amount
-        });
         chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
         chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
       } else {

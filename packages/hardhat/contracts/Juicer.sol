@@ -112,6 +112,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @return amount overflow The current overflow of funds for the project.
     */
+    // TODO rename reservedTicketBalanceOf
     function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
         public
         view
@@ -200,6 +201,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // If there are reserved tickets, add them to the total supply.
         if (_reservedTicketAmount > 0)
             _totalSupply = _totalSupply + _reservedTicketAmount;
+
+        // If the amount being redeemed is the the total supply, return the rest of the overflow.
+        if (_count == _totalSupply) return _currentOverflow;
 
         // Get a reference to the base proportion.
         uint256 _base =

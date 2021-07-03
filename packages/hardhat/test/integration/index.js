@@ -136,6 +136,7 @@ module.exports = function() {
     };
 
     this.bondingCurveFn = ({ rate, count, total, overflow }) => {
+      if (count.eq(total)) return overflow;
       if (rate.eq(this.constants.MaxPercent))
         return overflow.mul(count).div(total);
       if (rate.eq(0))

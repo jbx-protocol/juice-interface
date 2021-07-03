@@ -174,8 +174,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       });
 
@@ -197,8 +196,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -272,8 +270,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -297,8 +294,7 @@ module.exports = [
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance.sub(amountToUnstake),
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -358,8 +354,7 @@ module.exports = [
             : BigNumber.from(0)
         ),
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -392,8 +387,7 @@ module.exports = [
               : BigNumber.from(0)
           ),
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -422,8 +416,7 @@ module.exports = [
             ? expectedStakedBalance
             : amountToTransfer,
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },
@@ -453,8 +446,7 @@ module.exports = [
             ? expectedStakedBalance.sub(amountToUnstake)
             : amountToTransfer,
         plusMinus: {
-          accuracy: 999999999999999,
-          precision: 1000000000000000
+          amount: 100
         }
       })
   },

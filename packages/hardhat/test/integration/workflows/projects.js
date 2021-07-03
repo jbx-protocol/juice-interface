@@ -522,10 +522,10 @@ module.exports = [
       const payer = randomSignerFn();
 
       // One payment will be made. Cant pay entire balance because some is needed for gas.
-      // So, arbitrarily find a number less than 1/2 so that all payments can be made successfully.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
       const paymentValue = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: (await getBalanceFn(payer.address)).div(2)
+        max: (await getBalanceFn(payer.address)).div(100)
       });
 
       await executeFn({

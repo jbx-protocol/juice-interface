@@ -195,19 +195,41 @@ describe("Juice", async function() {
     }) => {
       const storedVal = await contract.connect(caller)[fn](...args);
       if (plusMinus) {
-        chai.expect(storedVal.lte(expect.add(plusMinus))).to.equal(true);
-        chai.expect(storedVal.gte(expect.sub(plusMinus))).to.equal(true);
+        const amount =
+          plusMinus.amount ||
+          expect.mul(plusMinus.accuracy).div(plusMinus.precision);
+        console.log({
+          diff: storedVal.sub(expect),
+          amount
+        });
+        chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
+        chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
       } else {
         chai.expect(storedVal).to.deep.equal(expect);
       }
     };
 
     // Binds a function that makes sure the provided address has the balance
-    this.verifyBalanceFn = async ({ address, expect }) => {
+    this.verifyBalanceFn = async ({ address, expect, plusMinus }) => {
       const storedVal = await ethers.provider.getBalance(address);
-      chai
-        .expect(storedVal.sub(initialBalances[address] || 0))
-        .to.deep.equal(expect);
+      if (plusMinus) {
+        const amount =
+          plusMinus.amount ||
+          expect.add(plusMinus.precision).sub(
+            expect
+              .add(plusMinus.precision)
+              .mul(plusMinus.accuracy)
+              .div(plusMinus.precision)
+          );
+        console.log({
+          diff: storedVal.sub(expect),
+          amount
+        });
+        chai.expect(storedVal.lte(expect.add(amount))).to.equal(true);
+        chai.expect(storedVal.gte(expect.sub(amount))).to.equal(true);
+      } else {
+        chai.expect(storedVal).to.deep.equal(expect);
+      }
     };
 
     // Binds a function that gets the balance of an address.
@@ -246,7 +268,7 @@ describe("Juice", async function() {
     this.randomBigNumberFn = ({
       min = ethers.BigNumber.from(0),
       max = this.constants.MaxUint256,
-      fidelity = 10000000
+      precision = 10000000
     } = {}) => {
       // To test an edge condition, return the min or the max more often.
       // return the min or the max 50% of the time.
@@ -256,25 +278,27 @@ describe("Juice", async function() {
       }
 
       const base = max.sub(min);
-      const randomInRange = base.gt(fidelity)
+      const randomInRange = base.gt(precision)
         ? base
-            .div(fidelity)
-            .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
+            .div(precision)
+            .mul(ethers.BigNumber.from(Math.floor(Math.random() * precision)))
         : base
-            .mul(ethers.BigNumber.from(Math.floor(Math.random() * fidelity)))
-            .div(fidelity);
+            .mul(ethers.BigNumber.from(Math.floor(Math.random() * precision)))
+            .div(precision);
 
       return randomInRange.add(min);
     };
 
     // Bind a function that gets a random address.
     this.randomAddressFn = ({ exclude = [] } = {}) => {
-      const candidate = this.addrs[Math.floor(Math.random() * 9)].address;
-      if (exclude.includes(candidate)) return this.randomAddressFn({ exclude });
-
       // To test an edge condition, pick the same address more likely than not.
       // return address0 50% of the time.
-      if (Math.random() < 0.5) return this.addrs[0].address;
+      const candidate =
+        Math.random() < 0.5
+          ? this.addrs[0].address
+          : this.addrs[Math.floor(Math.random() * 9)].address;
+      if (exclude.includes(candidate)) return this.randomAddressFn({ exclude });
+
       return candidate;
     };
 

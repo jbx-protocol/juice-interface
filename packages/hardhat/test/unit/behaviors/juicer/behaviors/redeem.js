@@ -345,15 +345,6 @@ const tests = {
           .add(1),
         revert: "Juicer::redeem: INADEQUATE"
       })
-    },
-    {
-      description: "count too big",
-      fn: () => ({
-        count: BigNumber.from(2).pow(255),
-        ticketBalance: constants.MaxUint256,
-        ticketTotalSupply: constants.MaxUint256,
-        revert: "Juicer::redeem: INT_LIMIT_REACHED"
-      })
     }
   ]
 };

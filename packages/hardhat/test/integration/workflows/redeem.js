@@ -4,50 +4,55 @@
 
   The bonding curve rate that tunes the bonding curve formula gets configured by the project.
 */
+
 module.exports = [
   {
     description: "Deploy a project for the owner",
     fn: async ({
       executeFn,
-      addrs,
+      randomSignerFn,
       deployer,
       BigNumber,
-      stringToBytesFn,
+      randomBytesFn,
       randomStringFn,
       getBalanceFn,
       randomBigNumberFn,
       constants,
       contracts,
-      incrementProjectIdFn
+      incrementProjectIdFn,
+      incrementFundingCycleIdFn
     }) => {
       const expectedProjectId = incrementProjectIdFn();
 
+      // Burn a funding cycle id.
+      incrementFundingCycleIdFn();
+
       // The owner of the project that will migrate.
-      const owner = addrs[0];
+      const owner = randomSignerFn();
 
       // An account that will be used to make payments.
-      const payer = addrs[1];
+      const payer = randomSignerFn();
 
       // Three payments will be made. Cant pay entire balance because some is needed for gas.
-      // So, arbitrarily find a number less than a fourth so that all payments can be made successfully.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
       const paymentValue1 = randomBigNumberFn({
-        max: (await getBalanceFn(payer.address)).div(4)
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(100)
       });
 
       const paymentValue2 = randomBigNumberFn({
-        max: (await getBalanceFn(payer.address)).div(4)
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(100)
       });
 
       const paymentValue3 = randomBigNumberFn({
-        max: (await getBalanceFn(payer.address)).div(4)
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(100)
       });
 
-      // The project's funding cycle target will at least by the first payment value,
-      // and at most be the minimum plus 1/4 of the value of the second and third payments. Leaving plenty of overflow.
-      // The minimum will be used to test redeeming with no overflow.
+      // The project's funding cycle target will at most be the sum of all payments.
       const target = randomBigNumberFn({
-        min: paymentValue1,
-        max: paymentValue1.add(paymentValue2.add(paymentValue3).div(4))
+        max: paymentValue1.add(paymentValue2).add(paymentValue3)
       });
 
       // The currency will be 0, which corresponds to ETH.
@@ -60,19 +65,29 @@ module.exports = [
       const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
       // Set a random bonding curve rate if there is a discount rate. Otherwise it should be 100%.
-      const bondingCurveRate = discountRate.eq(0)
-        ? BigNumber.from(constants.MaxPercent)
-        : randomBigNumberFn({
-            max: constants.MaxPercent
-          });
+      const bondingCurveRate = BigNumber.from(0);
+      // discountRate.eq(0)
+      //   ? BigNumber.from(constants.MaxPercent)
+      //   : randomBigNumberFn({
+      //       max: constants.MaxPercent
+      //     });
 
+      console.log({
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        reservedRate,
+        bondingCurveRate
+      });
       await executeFn({
         caller: deployer,
         contract: contracts.juicer,
         fn: "deploy",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            prepend: expectedProjectId.toString()
+          }),
           randomStringFn(),
           {
             target,
@@ -104,7 +119,10 @@ module.exports = [
         reservedRate,
         bondingCurveRate,
         payer,
-        paymentValue1
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        initialContractBalance: await getBalanceFn(contracts.juicer.address)
       };
     }
   },
@@ -114,12 +132,13 @@ module.exports = [
       executeFn,
       randomBoolFn,
       randomStringFn,
-      addrs,
+      randomSignerFn,
       contracts,
-      local: { expectedProjectId, payer, paymentValue1 }
+      local: { expectedProjectId, payer, paymentValue1, owner }
     }) => {
       // An account that will be distributed tickets in the first payment.
-      const ticketBeneficiary1 = addrs[2];
+      const ticketBeneficiary1 = randomSignerFn({ exclude: [owner.address] });
+
       await executeFn({
         caller: payer,
         contract: contracts.juicer,
@@ -141,13 +160,28 @@ module.exports = [
     fn: async ({
       executeFn,
       randomBoolFn,
+      randomAddressFn,
       contracts,
-      addrs,
-      local: { expectedProjectId, ticketBeneficiary1 }
+      BigNumber,
+      constants,
+      local: {
+        expectedProjectId,
+        ticketBeneficiary1,
+        reservedRate,
+        paymentValue1
+      }
     }) => {
-      // An address that will be the beneficiary of funds when redeeming the reserved set of tickets.
-      const redeemBeneficiary4 = addrs[8];
+      const expectedTotalTicketsFromPayment1 = paymentValue1.mul(
+        constants.InitialWeightMultiplier
+      );
 
+      const expectedRedeemableTicketsOfTicketBeneficiary1 = expectedTotalTicketsFromPayment1
+        .mul(constants.MaxPercent.sub(reservedRate))
+        .div(constants.MaxPercent);
+
+      console.log({
+        expectedRedeemableTicketsOfTicketBeneficiary1
+      });
       await executeFn({
         caller: ticketBeneficiary1,
         contract: contracts.juicer,
@@ -155,30 +189,43 @@ module.exports = [
         args: [
           ticketBeneficiary1.address,
           expectedProjectId,
-          1,
+          BigNumber.from(1),
           0,
-          redeemBeneficiary4.address,
+          randomAddressFn(),
           randomBoolFn()
         ],
-        revert: "Juicer::redeem: NO_OP"
+        revert: expectedRedeemableTicketsOfTicketBeneficiary1.eq(0)
+          ? "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
+          : "Juicer::redeem: NO_OP"
       });
 
-      return { redeemBeneficiary4 };
+      return {
+        expectedTotalTicketsFromPayment1,
+        expectedRedeemableTicketsOfTicketBeneficiary1
+      };
     }
   },
   {
     description:
       "Make another payment to the project, sending tickets to a different beneficiary",
     fn: async ({
-      addrs,
+      randomSignerFn,
       executeFn,
       contracts,
       randomStringFn,
       randomBoolFn,
-      local: { payer, expectedProjectId, paymentValue2 }
+      local: {
+        payer,
+        expectedProjectId,
+        paymentValue2,
+        owner,
+        ticketBeneficiary1
+      }
     }) => {
       // An account that will be distributed tickets in the second payment.
-      const ticketBeneficiary2 = addrs[3];
+      const ticketBeneficiary2 = randomSignerFn({
+        exclude: [owner.address, ticketBeneficiary1.address]
+      });
 
       await executeFn({
         caller: payer,
@@ -202,12 +249,25 @@ module.exports = [
       executeFn,
       randomBoolFn,
       randomStringFn,
-      addrs,
+      randomSignerFn,
       contracts,
-      local: { payer, expectedProjectId, paymentValue3 }
+      local: {
+        payer,
+        expectedProjectId,
+        paymentValue3,
+        owner,
+        ticketBeneficiary1,
+        ticketBeneficiary2
+      }
     }) => {
       // An account that will be distributed tickets in the third payment.
-      const ticketBeneficiary3 = addrs[4];
+      const ticketBeneficiary3 = randomSignerFn({
+        exclude: [
+          owner.address,
+          ticketBeneficiary1.address,
+          ticketBeneficiary2.address
+        ]
+      });
 
       await executeFn({
         caller: payer,
@@ -229,78 +289,36 @@ module.exports = [
     description: "The project's balance should match the payment just made",
     fn: ({
       checkFn,
-      deployer,
       contracts,
-      local: { paymentValue1, paymentValue2, paymentValue3 }
+      randomAddressFn,
+      local: { expectedProjectId, paymentValue1, paymentValue2, paymentValue3 }
     }) =>
       checkFn({
-        contract: deployer.provider,
-        fn: "getBalance",
-        args: [contracts.juicer.address],
+        caller: randomAddressFn(),
+        contract: contracts.juicer,
+        fn: "balanceOf",
+        args: [expectedProjectId],
         expect: paymentValue1.add(paymentValue2).add(paymentValue3)
       })
   },
   {
-    description:
-      "Pass along a references to the amount of tickets the beneficiaries received",
-    fn: async ({
+    description: "The juicer should have the funds from the payments",
+    fn: ({
       contracts,
+      verifyBalanceFn,
       local: {
-        expectedProjectId,
-        ticketBeneficiary1,
-        ticketBeneficiary2,
-        ticketBeneficiary3
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        initialContractBalance
       }
-    }) => ({
-      redeemableTicketsOfTicketBeneficiary1: await contracts.ticketBooth.balanceOf(
-        ticketBeneficiary1.address,
-        expectedProjectId
-      ),
-      redeemableTicketsOfTicketBeneficiary2: await contracts.ticketBooth.balanceOf(
-        ticketBeneficiary2.address,
-        expectedProjectId
-      ),
-      redeemableTicketsOfTicketBeneficiary3: await contracts.ticketBooth.balanceOf(
-        ticketBeneficiary3.address,
-        expectedProjectId
-      )
-    })
-  },
-  {
-    description:
-      "Pass along a reference to the claimable overflow of the first ticket beneficiary",
-    fn: async ({
-      contracts,
-      local: {
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary1,
-        ticketBeneficiary1
-      }
-    }) => ({
-      claimableOverflowOfTicketBeneficiary1: await contracts.juicer.claimableOverflowOf(
-        ticketBeneficiary1.address,
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary1
-      )
-    })
-  },
-  {
-    description:
-      "Pass along a reference to what would be the claimable overflow of the third ticket beneficiary",
-    fn: async ({
-      contracts,
-      local: {
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3,
-        ticketBeneficiary3
-      }
-    }) => ({
-      claimableOverflowOfTicketBeneficiary3: await contracts.juicer.claimableOverflowOf(
-        ticketBeneficiary3.address,
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3
-      )
-    })
+    }) =>
+      verifyBalanceFn({
+        address: contracts.juicer.address,
+        expect: initialContractBalance.add(
+          paymentValue1.add(paymentValue2).add(paymentValue3)
+        )
+      })
   },
   {
     description:
@@ -309,16 +327,66 @@ module.exports = [
       randomBoolFn,
       contracts,
       executeFn,
-      addrs,
+      bondingCurveFn,
+      getBalanceFn,
+      randomAddressFn,
+      constants,
       local: {
         expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary1,
-        claimableOverflowOfTicketBeneficiary1,
-        ticketBeneficiary1
+        ticketBeneficiary1,
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        target,
+        bondingCurveRate,
+        expectedTotalTicketsFromPayment1,
+        expectedRedeemableTicketsOfTicketBeneficiary1
       }
     }) => {
       // An address that will be the beneficiary of funds when redeeming the first set of tickets.
-      const redeemBeneficiary1 = addrs[5];
+      const redeemBeneficiary1 = randomAddressFn({
+        // Can't be the ticket beneficiary because this account will spend on gas before the desired calculation is made.
+        exclude: [ticketBeneficiary1.address]
+      });
+
+      console.log({
+        redeemBeneficiary1,
+        ticketBeneficiary1: ticketBeneficiary1.address
+      });
+      const initialBalanceOfRedeemBeneficiary1 = await getBalanceFn(
+        redeemBeneficiary1
+      );
+
+      const expectedTotalTicketsFromPayment2 = paymentValue2.mul(
+        constants.InitialWeightMultiplier
+      );
+
+      const expectedTotalTicketsFromPayment3 = paymentValue3.mul(
+        constants.InitialWeightMultiplier
+      );
+
+      const expectedTotalTickets = expectedTotalTicketsFromPayment1
+        .add(expectedTotalTicketsFromPayment2)
+        .add(expectedTotalTicketsFromPayment3);
+
+      console.log("asdf", {
+        rate: bondingCurveRate,
+        count: expectedRedeemableTicketsOfTicketBeneficiary1,
+        total: expectedTotalTickets,
+        overflow: paymentValue1
+          .add(paymentValue2)
+          .add(paymentValue3)
+          .sub(target)
+      });
+      const expectedRedeemableAmountOfTicketBeneficiary1 = bondingCurveFn({
+        rate: bondingCurveRate,
+        count: expectedRedeemableTicketsOfTicketBeneficiary1,
+        total: expectedTotalTickets,
+        overflow: paymentValue1
+          .add(paymentValue2)
+          .add(paymentValue3)
+          .sub(target)
+      });
 
       await executeFn({
         caller: ticketBeneficiary1,
@@ -328,108 +396,119 @@ module.exports = [
         args: [
           ticketBeneficiary1.address,
           expectedProjectId,
-          redeemableTicketsOfTicketBeneficiary1,
-          // Don't allow subtraction from 0.
-          claimableOverflowOfTicketBeneficiary1,
-          redeemBeneficiary1.address,
+          expectedRedeemableTicketsOfTicketBeneficiary1,
+          expectedRedeemableAmountOfTicketBeneficiary1,
+          redeemBeneficiary1,
           randomBoolFn()
-        ]
+        ],
+        revert:
+          expectedRedeemableAmountOfTicketBeneficiary1.eq(0) &&
+          "Juicer::redeem: NO_OP"
       });
 
-      return { redeemBeneficiary1 };
-    }
-  },
-  {
-    description:
-      "Make sure the redeem beneficiary received the correct amount of funds",
-    fn: ({
-      verifyBalanceFn,
-      local: { claimableOverflowOfTicketBeneficiary1, redeemBeneficiary1 }
-    }) =>
-      verifyBalanceFn({
-        address: redeemBeneficiary1.address,
-        expect: claimableOverflowOfTicketBeneficiary1
-      })
-  },
-  {
-    description:
-      "Make sure the new claimable overflow is greater than what wouldve been claimable before the first beneficiary redeemed",
-    fn: async ({
-      constants,
-      contracts,
-      expectFn,
-      local: {
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3,
-        claimableOverflowOfTicketBeneficiary3,
-        ticketBeneficiary3,
-        bondingCurveRate
-      }
-    }) => {
-      const updatedClaimableOverflowOfTicketBeneficiary3 = await contracts.juicer.claimableOverflowOf(
-        ticketBeneficiary3.address,
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3
-      );
-
-      expectFn(
-        bondingCurveRate.eq(constants.MaxPercent)
-          ? // Allow off-by-one
-            updatedClaimableOverflowOfTicketBeneficiary3.eq(
-              claimableOverflowOfTicketBeneficiary3
-            ) ||
-              updatedClaimableOverflowOfTicketBeneficiary3.gt(
-                claimableOverflowOfTicketBeneficiary3.sub(1)
-              ) ||
-              updatedClaimableOverflowOfTicketBeneficiary3.lt(
-                claimableOverflowOfTicketBeneficiary3.add(1)
-              )
-          : updatedClaimableOverflowOfTicketBeneficiary3.gt(
-              claimableOverflowOfTicketBeneficiary3
-            )
-      ).to.equal(true);
-
       return {
-        claimableOverflowOfTicketBeneficiary3: updatedClaimableOverflowOfTicketBeneficiary3
+        redeemBeneficiary1,
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        expectedRedeemableTicketsOfTicketBeneficiary1,
+        initialBalanceOfRedeemBeneficiary1,
+        expectedTotalTicketsFromPayment2,
+        expectedTotalTicketsFromPayment3,
+        expectedTotalTickets
       };
     }
   },
   {
     description:
-      "Pass along a reference to the claimable overflow of the first ticket beneficiary",
-    fn: async ({
-      contracts,
+      "Make sure the first redeem beneficiary received the correct amount of funds",
+    fn: ({
+      verifyBalanceFn,
       local: {
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary2,
-        ticketBeneficiary2
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        redeemBeneficiary1,
+        initialBalanceOfRedeemBeneficiary1
       }
-    }) => ({
-      claimableOverflowOfTicketBeneficiary2: await contracts.juicer.claimableOverflowOf(
-        ticketBeneficiary2.address,
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary2
-      )
-    })
+    }) =>
+      verifyBalanceFn({
+        address: redeemBeneficiary1,
+        expect: initialBalanceOfRedeemBeneficiary1.add(
+          expectedRedeemableAmountOfTicketBeneficiary1
+        ),
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
+      })
   },
   {
     description:
       "Make sure the second ticket beneficiary tickets can be redeemed successfully",
     fn: async ({
-      addrs,
       executeFn,
       contracts,
       randomBoolFn,
+      bondingCurveFn,
+      getBalanceFn,
+      randomAddressFn,
+      constants,
       local: {
+        bondingCurveRate,
+        reservedRate,
         expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary2,
-        claimableOverflowOfTicketBeneficiary2,
-        ticketBeneficiary2
+        ticketBeneficiary2,
+        expectedTotalTicketsFromPayment2,
+        expectedTotalTickets,
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        target,
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        expectedRedeemableTicketsOfTicketBeneficiary1
       }
     }) => {
       // An address that will be the beneficiary of funds when redeeming the second set of tickets.
-      const redeemBeneficiary2 = addrs[6];
+      const redeemBeneficiary2 = randomAddressFn({
+        // Can't be the ticket beneficiary because this account will spend on gas before the desired calculation is made.
+        exclude: [ticketBeneficiary2.address]
+      });
 
+      console.log({
+        redeemBeneficiary2,
+        ticketBeneficiary1: ticketBeneficiary2.address
+      });
+      const initialBalanceOfRedeemBeneficiary2 = await getBalanceFn(
+        redeemBeneficiary2
+      );
+
+      const expectedRedeemableTicketsOfTicketBeneficiary2 = expectedTotalTicketsFromPayment2
+        .mul(constants.MaxPercent.sub(reservedRate))
+        .div(constants.MaxPercent);
+
+      console.log({
+        expectedRedeemableTicketsOfTicketBeneficiary2
+      });
+      const expectedRedeemableAmountOfTicketBeneficiary2 = bondingCurveFn({
+        rate: bondingCurveRate,
+        count: expectedRedeemableTicketsOfTicketBeneficiary2,
+        total: expectedTotalTickets.sub(
+          expectedRedeemableTicketsOfTicketBeneficiary1
+        ),
+        overflow: paymentValue1
+          .add(paymentValue2)
+          .add(paymentValue3)
+          .sub(target)
+          .sub(expectedRedeemableAmountOfTicketBeneficiary1)
+      });
+      console.log({
+        meep: expectedRedeemableAmountOfTicketBeneficiary2,
+        moop: await contracts.juicer.claimableOverflowOf(
+          ticketBeneficiary2.address,
+          expectedProjectId,
+          await contracts.ticketBooth.balanceOf(
+            ticketBeneficiary2.address,
+            expectedProjectId
+          )
+        )
+      });
       await executeFn({
         caller: ticketBeneficiary2,
         contract: contracts.juicer,
@@ -438,70 +517,47 @@ module.exports = [
         args: [
           ticketBeneficiary2.address,
           expectedProjectId,
-          redeemableTicketsOfTicketBeneficiary2,
-          claimableOverflowOfTicketBeneficiary2,
-          redeemBeneficiary2.address,
+          expectedRedeemableTicketsOfTicketBeneficiary2,
+          expectedRedeemableAmountOfTicketBeneficiary2
+            .mul(999999999999999)
+            .div(1000000000000000),
+          redeemBeneficiary2,
           randomBoolFn()
-        ]
+        ],
+        revert:
+          expectedRedeemableAmountOfTicketBeneficiary2.eq(0) &&
+          "Juicer::redeem: NO_OP"
       });
 
-      return { redeemBeneficiary2 };
-    }
-  },
-  {
-    description:
-      "Make sure the redeem beneficiary received the correct amount of funds",
-    fn: ({
-      verifyBalanceFn,
-      local: { claimableOverflowOfTicketBeneficiary2, redeemBeneficiary2 }
-    }) =>
-      verifyBalanceFn({
-        address: redeemBeneficiary2.address,
-        expect: claimableOverflowOfTicketBeneficiary2
-      })
-  },
-  {
-    description:
-      "Make sure the new claimable overflow is greater than what wouldve been claimable before the first beneficiary redeemed",
-    fn: async ({
-      expectFn,
-      contracts,
-      constants,
-      local: {
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3,
-        claimableOverflowOfTicketBeneficiary3,
-        ticketBeneficiary3,
-        bondingCurveRate
-      }
-    }) => {
-      const updatedClaimableOverflowOfTicketBeneficiary3 = await contracts.juicer.claimableOverflowOf(
-        ticketBeneficiary3.address,
-        expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3
-      );
-
-      expectFn(
-        bondingCurveRate.eq(constants.MaxPercent)
-          ? // Allow off-by-one
-            updatedClaimableOverflowOfTicketBeneficiary3.eq(
-              claimableOverflowOfTicketBeneficiary3
-            ) ||
-              updatedClaimableOverflowOfTicketBeneficiary3.gt(
-                claimableOverflowOfTicketBeneficiary3.sub(1)
-              ) ||
-              updatedClaimableOverflowOfTicketBeneficiary3.lt(
-                claimableOverflowOfTicketBeneficiary3.add(1)
-              )
-          : updatedClaimableOverflowOfTicketBeneficiary3.gt(
-              claimableOverflowOfTicketBeneficiary3
-            )
-      ).to.equal(true);
-
       return {
-        claimableOverflowOfTicketBeneficiary3: updatedClaimableOverflowOfTicketBeneficiary3
+        redeemBeneficiary2,
+        initialBalanceOfRedeemBeneficiary2,
+        expectedRedeemableAmountOfTicketBeneficiary2,
+        expectedRedeemableTicketsOfTicketBeneficiary2
       };
     }
+  },
+  {
+    description:
+      "Make sure the second redeem beneficiary received the correct amount of funds",
+    fn: ({
+      verifyBalanceFn,
+      local: {
+        expectedRedeemableAmountOfTicketBeneficiary2,
+        redeemBeneficiary2,
+        initialBalanceOfRedeemBeneficiary2
+      }
+    }) =>
+      verifyBalanceFn({
+        address: redeemBeneficiary2,
+        expect: initialBalanceOfRedeemBeneficiary2.add(
+          expectedRedeemableAmountOfTicketBeneficiary2
+        ),
+        plusMinus: {
+          accuracy: 999999,
+          precision: 1000000
+        }
+      })
   },
   {
     description:
@@ -509,17 +565,66 @@ module.exports = [
     fn: async ({
       executeFn,
       randomBoolFn,
+      getBalanceFn,
+      bondingCurveFn,
+      randomAddressFn,
       contracts,
-      addrs,
+      constants,
       local: {
+        reservedRate,
+        bondingCurveRate,
         expectedProjectId,
-        redeemableTicketsOfTicketBeneficiary3,
-        claimableOverflowOfTicketBeneficiary3,
-        ticketBeneficiary3
+        ticketBeneficiary3,
+        expectedTotalTicketsFromPayment3,
+        expectedRedeemableTicketsOfTicketBeneficiary1,
+        expectedRedeemableTicketsOfTicketBeneficiary2,
+        expectedTotalTickets,
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        target,
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        expectedRedeemableAmountOfTicketBeneficiary2
       }
     }) => {
       // An address that will be the beneficiary of funds when redeeming the third set of tickets.
-      const redeemBeneficiary3 = addrs[7];
+      const redeemBeneficiary3 = randomAddressFn({
+        // Can't be the ticket beneficiary because this account will spend on gas before the desired calculation is made.
+        exclude: [ticketBeneficiary3.address]
+      });
+
+      const initialBalanceOfRedeemBeneficiary3 = await getBalanceFn(
+        redeemBeneficiary3
+      );
+
+      const expectedRedeemableTicketsOfTicketBeneficiary3 = expectedTotalTicketsFromPayment3
+        .mul(constants.MaxPercent.sub(reservedRate))
+        .div(constants.MaxPercent);
+
+      const expectedRedeemableAmountOfTicketBeneficiary3 = bondingCurveFn({
+        rate: bondingCurveRate,
+        count: expectedRedeemableTicketsOfTicketBeneficiary3,
+        total: expectedTotalTickets
+          .sub(expectedRedeemableTicketsOfTicketBeneficiary1)
+          .sub(expectedRedeemableTicketsOfTicketBeneficiary2),
+        overflow: paymentValue1
+          .add(paymentValue2)
+          .add(paymentValue3)
+          .sub(target)
+          .sub(expectedRedeemableAmountOfTicketBeneficiary1)
+          .sub(expectedRedeemableAmountOfTicketBeneficiary2)
+      });
+      console.log({
+        expectedRedeemableTicketsOfTicketBeneficiary3,
+        expectedRedeemableAmountOfTicketBeneficiary3,
+        muldiv: expectedRedeemableAmountOfTicketBeneficiary3
+          .mul(999999999999999)
+          .div(1000000000000000)
+      });
+
+      const minimumAmountReturned = expectedRedeemableAmountOfTicketBeneficiary3
+        .mul(999999999999999)
+        .div(1000000000000000);
 
       await executeFn({
         caller: ticketBeneficiary3,
@@ -529,115 +634,264 @@ module.exports = [
         args: [
           ticketBeneficiary3.address,
           expectedProjectId,
-          redeemableTicketsOfTicketBeneficiary3,
-          claimableOverflowOfTicketBeneficiary3,
-          redeemBeneficiary3.address,
+          expectedRedeemableTicketsOfTicketBeneficiary3,
+          minimumAmountReturned,
+          redeemBeneficiary3,
           randomBoolFn()
-        ]
+        ],
+        revert:
+          (expectedRedeemableAmountOfTicketBeneficiary3.eq(0) ||
+            minimumAmountReturned.eq(0)) &&
+          "Juicer::redeem: NO_OP"
       });
 
-      return { redeemBeneficiary3 };
+      return {
+        redeemBeneficiary3,
+        initialBalanceOfRedeemBeneficiary3,
+        expectedRedeemableAmountOfTicketBeneficiary3,
+        expectedRedeemableTicketsOfTicketBeneficiary3
+      };
     }
   },
   {
     description:
-      "Make sure the redeem beneficiary received the correct amount of funds",
+      "Make sure the third redeem beneficiary received the correct amount of funds",
     fn: ({
       verifyBalanceFn,
-      local: { claimableOverflowOfTicketBeneficiary3, redeemBeneficiary3 }
+      local: {
+        initialBalanceOfRedeemBeneficiary3,
+        redeemBeneficiary3,
+        expectedRedeemableAmountOfTicketBeneficiary3
+      }
     }) =>
       verifyBalanceFn({
-        address: redeemBeneficiary3.address,
-        expect: claimableOverflowOfTicketBeneficiary3
+        address: redeemBeneficiary3,
+        expect: initialBalanceOfRedeemBeneficiary3.add(
+          expectedRedeemableAmountOfTicketBeneficiary3
+        ),
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
-    description:
-      "Pass along the number of tickets reserved for the project owner",
-    fn: async ({ contracts, local: { expectedProjectId, reservedRate } }) => ({
-      reservedTicketAmount: await contracts.juicer.reservedTicketAmountOf(
-        expectedProjectId,
-        reservedRate
-      )
-    })
-  },
-  {
     description: "Print the reserved tickets for the owner of the project",
-    fn: ({ executeFn, contracts, local: { expectedProjectId, owner } }) =>
+    fn: ({
+      executeFn,
+      randomSignerFn,
+      contracts,
+      local: { expectedProjectId }
+    }) =>
       executeFn({
-        caller: owner,
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "printReservedTickets",
         args: [expectedProjectId]
       })
   },
   {
-    description:
-      "Pass along a reference to the claimable overflow of the owner",
-    fn: async ({
-      contracts,
-      BigNumber,
-      local: { expectedProjectId, reservedTicketAmount, owner, reservedRate }
-    }) => ({
-      claimableOverflowOfOwner: reservedRate.eq(BigNumber.from(0))
-        ? BigNumber.from(0)
-        : await contracts.juicer.claimableOverflowOf(
-            owner.address,
-            expectedProjectId,
-            reservedTicketAmount
-          )
-    })
-  },
-  {
-    description: "Make sure the owner can redeem successfully",
+    description: "Make sure the owner has the correct ticket balance",
     fn: ({
-      executeFn,
       contracts,
-      randomBoolFn,
-      BigNumber,
+      checkFn,
+      randomSignerFn,
       local: {
+        expectedTotalTickets,
+        expectedRedeemableTicketsOfTicketBeneficiary1,
+        expectedRedeemableTicketsOfTicketBeneficiary2,
+        expectedRedeemableTicketsOfTicketBeneficiary3,
         expectedProjectId,
-        reservedTicketAmount,
-        claimableOverflowOfOwner,
-        owner,
-        redeemBeneficiary4,
-        reservedRate
+        owner
       }
     }) =>
-      executeFn({
-        caller: owner,
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [owner.address, expectedProjectId],
+        expect: expectedTotalTickets
+          .sub(expectedRedeemableTicketsOfTicketBeneficiary1)
+          .sub(expectedRedeemableTicketsOfTicketBeneficiary2)
+          .sub(expectedRedeemableTicketsOfTicketBeneficiary3),
+        // Tolerate a small difference.
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
+      })
+  },
+  {
+    description:
+      "The expected redeem amount for the owner's portion should match the claimable overflow for all its tickets",
+    // "The expected redeem amount for the owner's portion should match the remainder of overflow",
+    fn: async ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        owner,
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        target,
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        expectedRedeemableAmountOfTicketBeneficiary2,
+        expectedRedeemableAmountOfTicketBeneficiary3,
+        bondingCurveRate,
+        reservedRate
+      }
+    }) => {
+      const expectedReservedAmount = paymentValue1
+        .add(paymentValue2)
+        .add(paymentValue3)
+        .sub(target)
+        .sub(expectedRedeemableAmountOfTicketBeneficiary1)
+        .sub(expectedRedeemableAmountOfTicketBeneficiary2)
+        .sub(expectedRedeemableAmountOfTicketBeneficiary3);
+
+      console.log({
+        paymentValue1,
+        paymentValue2,
+        paymentValue3,
+        target,
+        expectedRedeemableAmountOfTicketBeneficiary1,
+        expectedRedeemableAmountOfTicketBeneficiary2,
+        expectedRedeemableAmountOfTicketBeneficiary3,
+        bondingCurveRate,
+        reservedRate,
+        expected: expectedReservedAmount,
+        actual: await contracts.juicer.claimableOverflowOf(
+          owner.address,
+          expectedProjectId,
+          await contracts.ticketBooth.balanceOf(
+            owner.address,
+            expectedProjectId
+          )
+        )
+      });
+
+      await checkFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "redeem",
-        // Redeem all available tickets. Expect the rest of the overflow to be claimed.
+        fn: "claimableOverflowOf",
         args: [
           owner.address,
           expectedProjectId,
-          reservedTicketAmount,
-          claimableOverflowOfOwner,
-          redeemBeneficiary4.address,
+          await contracts.ticketBooth.balanceOf(
+            owner.address,
+            expectedProjectId
+          )
+        ],
+        expect: expectedReservedAmount,
+        // Tolerate a small difference.
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
+      });
+    }
+  },
+  {
+    description: "Make sure the owner can redeem successfully",
+    fn: async ({
+      executeFn,
+      contracts,
+      randomBoolFn,
+      getBalanceFn,
+      randomAddressFn,
+      local: { expectedProjectId, owner }
+    }) => {
+      // An address that will be the beneficiary of funds when redeeming the reserved set of tickets.
+      const redeemBeneficiary4 = randomAddressFn({
+        // Can't be the ticket beneficiary because this account will spend on gas before the desired calculation is made.
+        exclude: [owner.address]
+      });
+
+      const initialBalanceOfRedeemBeneficiary4 = await getBalanceFn(
+        redeemBeneficiary4
+      );
+
+      const ticketBalance = await contracts.ticketBooth.balanceOf(
+        owner.address,
+        expectedProjectId
+      );
+      const claimableOverflow = await contracts.juicer.claimableOverflowOf(
+        owner.address,
+        expectedProjectId,
+        await contracts.ticketBooth.balanceOf(owner.address, expectedProjectId)
+      );
+      console.log({
+        ticketBalance,
+        claimableOverflow,
+        totalO: await contracts.juicer.currentOverflowOf(expectedProjectId),
+        owner: owner.address,
+        redeemBeneficiary4,
+        totalSupply: await contracts.ticketBooth.totalSupplyOf(
+          expectedProjectId
+        )
+      });
+      await executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "redeem",
+        args: [
+          owner.address,
+          expectedProjectId,
+          ticketBalance,
+          claimableOverflow,
+          redeemBeneficiary4,
           randomBoolFn()
         ],
-        revert: reservedRate.eq(BigNumber.from(0)) && "Juicer::redeem: NO_OP"
-      })
+        revert:
+          (ticketBalance.eq(0) || claimableOverflow.eq(0)) &&
+          "Juicer::redeem: NO_OP"
+      });
+      return {
+        redeemBeneficiary4,
+        initialBalanceOfRedeemBeneficiary4,
+        claimableOverflow
+      };
+    }
   },
   {
     description:
       "Make sure the beneficiary received the correct amount of funds",
     fn: ({
       verifyBalanceFn,
-      local: { claimableOverflowOfOwner, redeemBeneficiary4 }
+      local: {
+        redeemBeneficiary4,
+        claimableOverflow,
+        initialBalanceOfRedeemBeneficiary4
+      }
     }) =>
       verifyBalanceFn({
-        address: redeemBeneficiary4.address,
-        expect: claimableOverflowOfOwner
+        address: redeemBeneficiary4,
+        expect: initialBalanceOfRedeemBeneficiary4.add(claimableOverflow)
       })
   },
   {
     description: "The contract should just have the target funds in it left",
-    fn: ({ verifyBalanceFn, contracts, local: { target } }) =>
-      verifyBalanceFn({
+    fn: async ({
+      verifyBalanceFn,
+      contracts,
+      getBalanceFn,
+      local: { target, initialContractBalance }
+    }) => {
+      console.log({
+        exp: initialContractBalance.add(target),
+        act: await getBalanceFn(contracts.juicer.address)
+      });
+      await verifyBalanceFn({
         address: contracts.juicer.address,
-        expect: target
-      })
+        expect: initialContractBalance.add(target),
+        // Tolerate a small difference.
+        plusMinus: {
+          accuracy: 999999999999990, // if the expected value is 0, tolerate up to 10 plus or minus.
+          precision: 1000000000000000
+        }
+      });
+    }
   }
 ];

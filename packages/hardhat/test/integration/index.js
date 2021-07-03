@@ -135,17 +135,26 @@ module.exports = function() {
       return fundingCycleId;
     };
 
-    this.bondingCurveFn = ({ rate, count, total, overflow }) =>
-      overflow
+    this.bondingCurveFn = ({ rate, count, total, overflow }) => {
+      if (rate.eq(this.constants.MaxPercent))
+        return overflow.mul(count).div(total);
+      if (rate.eq(0))
+        return overflow
+          .mul(count)
+          .div(total)
+          .mul(count)
+          .div(total);
+      return overflow
         .mul(count)
         .div(total)
         .mul(
           rate.add(count.mul(this.constants.MaxPercent.sub(rate)).div(total))
         )
         .div(this.constants.MaxPercent);
+    };
   });
 
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 50; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -158,7 +167,7 @@ module.exports = function() {
       "Ticket holders can lock their tickets, which prevents them from being redeemed, unstaked, or transfered",
       run(workflows.ticketLockingAndTransfers)
     );
-    // describe.only("Redeem tickets for overflow", run(workflows.redeem));
+    describe("Redeem tickets for overflow", run(workflows.redeem));
     // it("Prints reserved tickets", run(workflows.printReservedTickets));
     // it("Issues tickets and honors preference", run(workflows.issueTickets));
     // it("Reconfigures a project", run(workflows.reconfigure));

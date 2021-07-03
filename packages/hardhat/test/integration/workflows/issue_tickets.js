@@ -331,7 +331,6 @@ module.exports = async ({
         ticketBeneficiary.address,
         expectedProjectId
       );
-      console.log({ balance });
 
       if (balance.gt(0)) {
         await executeFn({

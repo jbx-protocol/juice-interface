@@ -1,6 +1,7 @@
 /** 
   Tickets can be locked, which prevent them from being redeemed, unstaked, or transfered.
 */
+
 module.exports = [
   {
     description: "Deploy a project for the owner",
@@ -31,10 +32,10 @@ module.exports = [
       const payer = randomSignerFn();
 
       // Two payments will be made. Cant pay entire balance because some is needed for gas.
-      // So, arbitrarily find a number less than a third so that all payments can be made successfully.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
       const paymentValue = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: (await getBalanceFn(payer.address)).div(3)
+        max: (await getBalanceFn(payer.address)).div(100)
       });
 
       // The project's funding cycle target will at most be a fourth of the payment value. Leaving plenty of overflow.
@@ -116,10 +117,15 @@ module.exports = [
       contracts,
       randomStringFn,
       randomSignerFn,
+      getBalanceFn,
       local: { expectedProjectId, payer, paymentValue }
     }) => {
       // An account that will be distributed tickets in the first payment.
       const ticketBeneficiary = randomSignerFn();
+
+      const initialBalanceOfTicketBeneficiary = await getBalanceFn(
+        ticketBeneficiary.address
+      );
 
       await executeFn({
         caller: payer,
@@ -134,7 +140,7 @@ module.exports = [
         value: paymentValue
       });
 
-      return { ticketBeneficiary };
+      return { ticketBeneficiary, initialBalanceOfTicketBeneficiary };
     }
   },
   {
@@ -167,8 +173,10 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       });
 
       return { expectedStakedBalance, expectedTotalTicketBalance };
@@ -188,8 +196,10 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -261,8 +271,10 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -284,8 +296,10 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance.sub(amountToUnstake),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -343,8 +357,10 @@ module.exports = [
             ? amountToTransfer
             : BigNumber.from(0)
         ),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -375,8 +391,10 @@ module.exports = [
               ? amountToTransfer
               : BigNumber.from(0)
           ),
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -403,8 +421,10 @@ module.exports = [
           ticketBeneficiary.address === ticketTransferRecipient.address
             ? expectedStakedBalance
             : amountToTransfer,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -432,8 +452,10 @@ module.exports = [
           ticketBeneficiary.address === ticketTransferRecipient.address
             ? expectedStakedBalance.sub(amountToUnstake)
             : amountToTransfer,
-        // Allow the least significant digit to fluctuate due to division precision errors.
-        plusMinus: 10
+        plusMinus: {
+          accuracy: 999999999999999,
+          precision: 1000000000000000
+        }
       })
   },
   {
@@ -653,12 +675,14 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
-        // Allow the least significant digits to fluctuate due to division precision errors.
-        plusMinus: 100
+        plusMinus: {
+          amount: 10
+        }
       })
   },
   {
-    description: "The staked balance should be zero",
+    description:
+      "The staked balance should be zero, or with a small margin of error caused by division rounding",
     fn: ({
       checkFn,
       randomSignerFn,
@@ -672,8 +696,9 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
-        // Allow the least significant digits to fluctuate due to division precision errors.
-        plusMinus: 100
+        plusMinus: {
+          amount: 10
+        }
       })
   }
 ];

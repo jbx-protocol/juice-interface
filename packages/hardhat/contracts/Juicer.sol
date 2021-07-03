@@ -205,9 +205,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _base =
             PRBMathCommon.mulDiv(_currentOverflow, _count, _totalSupply);
 
-        // If there funding cycle isn't recurring return the base proportion.
-        if (_fundingCycle.discountRate == 0) return _base;
-
         // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate =
             fundingCycles.currentBallotStateOf(_projectId) == BallotState.Active // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
@@ -217,6 +214,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The bonding curve formula.
         // https://www.desmos.com/calculator/sp9ru6zbpk
         // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+
+        // If there funding cycle isn't recurring return the base proportion.
+        if (_bondingCurveRate == 200) return _base;
+        if (_bondingCurveRate == 0)
+            return PRBMathCommon.mulDiv(_base, _count, _totalSupply);
         return
             PRBMathCommon.mulDiv(
                 _base,
@@ -701,18 +703,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the processed ticket tracker for the project.
         int256 _processedTicketTracker = _processedTicketTrackerOf[_projectId];
 
-        // Safely subtract the count from the processed ticket tracker.
+        // Subtract the count from the processed ticket tracker.
         // Subtract from processed tickets so that the difference between whats been processed and the
         // total supply remains the same.
         // If there are at least as many processed tickets as there are tickets being redeemed,
         // the processed ticket tracker of the project will be positive. Otherwise it will be negative.
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _count <= uint256(type(int256).max),
-            "Juicer::redeem: INT_LIMIT_REACHED"
-        );
-
-        // Set the tracker.
         _processedTicketTrackerOf[_projectId] = _processedTicketTracker < 0 // If the tracker is negative, add the count and reverse it.
             ? -int256(uint256(-_processedTicketTracker) + _count) // the tracker is less than the count, subtract it from the count and reverse it.
             : _processedTicketTracker < int256(_count)
@@ -917,12 +912,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _totalEligibleTickets
         );
 
-        // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
-        require(
-            _totalEligibleTickets + amount <= uint256(type(int256).max),
-            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
-        );
-
         // Set the tracker to be the new total supply.
         _processedTicketTrackerOf[_projectId] = int256(
             _totalEligibleTickets + amount
@@ -1028,8 +1017,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     _mod.projectId,
                     _mod.beneficiary
                 );
-                // Otherwise, if a project is specified, pay its Juice project.
             } else if (_mod.projectId != 0) {
+                // Otherwise, if a project is specified, pay its Juice project.
+
                 // Get a reference to the Juice terminal being used.
                 ITerminal _terminal =
                     terminalDirectory.terminalOf(_mod.projectId);
@@ -1061,9 +1051,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         _mod.preferUnstaked
                     );
                 }
-
-                // Otherwise, send the funds directly to the beneficiary.
             } else {
+                // Otherwise, send the funds directly to the beneficiary.
                 Address.sendValue(_mod.beneficiary, _modCut);
             }
 
@@ -1098,21 +1087,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the current funding cycle for the project.
         // Use the funding cycle's weight if it exists. Otherwise use the base weight.
         uint256 _weight =
-            _fundingCycle.number > 0
-                ? _fundingCycle.weight
-                : fundingCycles.BASE_WEIGHT();
-
-        // Add to the balance of the project.
-        balanceOf[_projectId] = balanceOf[_projectId] + _amount;
+            _fundingCycle.number == 0
+                ? fundingCycles.BASE_WEIGHT()
+                : _fundingCycle.weight;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount = PRBMathUD60x18.mul(_amount, _weight);
 
         // Use the funding cycle's reserved rate if it exists. Otherwise don't set a reserved rate.
         uint256 _reservedRate =
-            _fundingCycle.number > 0
-                ? uint256(uint8(_fundingCycle.metadata >> 8))
-                : 0;
+            _fundingCycle.number == 0
+                ? 0
+                : uint256(uint8(_fundingCycle.metadata >> 8));
+
+        // Add to the balance of the project.
+        balanceOf[_projectId] = balanceOf[_projectId] + _amount;
 
         // Only print the tickets that are unreserved.
         uint256 _unreservedWeightedAmount =
@@ -1123,7 +1112,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 200
             );
 
-        if (_unreservedWeightedAmount > 0)
+        // If theres an unreserved weighted amount, print tickets representing this weight.
+        if (_unreservedWeightedAmount > 0) {
+            // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
+            if (_fundingCycle.number == 0)
+                // Set the count of premined tickets this project has printed.
+                preconfigureTicketCountOf[_projectId] =
+                    preconfigureTicketCountOf[_projectId] +
+                    _unreservedWeightedAmount;
+
             // Print the project's tickets for the beneficiary.
             ticketBooth.print(
                 _beneficiary,
@@ -1131,14 +1128,16 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _unreservedWeightedAmount,
                 _preferUnstakedTickets
             );
+        } else if (_weightedAmount > 0) {
+            // If there is no unreserved weight amount but there is a weighted amount,
+            // the weighted amount should be explicitly tracked as reserved since no unreserved tickets were printed.
 
-        // Print the project's tickets for the beneficiary.
-        // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
-        if (_fundingCycle.number == 0)
-            // Set the count of premined tickets this project has printed.
-            preconfigureTicketCountOf[_projectId] =
-                preconfigureTicketCountOf[_projectId] +
-                _unreservedWeightedAmount;
+            // Otherwise if the full amount is reserved, adjust the tracker to account for this correctly.
+            // Subtract the total weighted amount from the tracker so the full reserved ticket amount can be printed later.
+            _processedTicketTrackerOf[_projectId] =
+                _processedTicketTrackerOf[_projectId] -
+                int256(_weightedAmount);
+        }
 
         emit Pay(
             _fundingCycle.id,
@@ -1208,7 +1207,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
 
-        // If there are no unprocessed tickets, return.
+        if (_reservedRate == 200) return _unprocessedTicketBalanceOf;
+
+        //TODO divide by zero error if reserve rate is 100%
         return
             PRBMathCommon.mulDiv(
                 _unprocessedTicketBalanceOf,

@@ -22,7 +22,8 @@ module.exports = [
       constants,
       contracts,
       incrementProjectIdFn,
-      incrementFundingCycleIdFn
+      incrementFundingCycleIdFn,
+      deployContractFn
     }) => {
       const expectedProjectId = incrementProjectIdFn();
 
@@ -63,9 +64,32 @@ module.exports = [
       // Set a random percentage of tickets to reserve for the project owner.
       const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
 
-      // Set a random bonding curve rate if there is a discount rate. Otherwise it should be 100%.
+      // Set a random discount rate. Don't allow non-recurring cycles.
+      const discountRate = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: constants.MaxPercent
+      });
+
+      // Set a random bonding curve rate.
       const bondingCurveRate = randomBigNumberFn({
         max: constants.MaxPercent
+      });
+
+      // Set a random reconfiguration bonding curve rate.
+      const reconfigurationBondingCurveRate = randomBigNumberFn({
+        max: constants.MaxPercent
+      });
+
+      // Use a ballot that has a fixed approval time.
+      const ballot = await deployContractFn("FundingCycleBallot");
+
+      // The duration of the ballot, after which it is approved.
+      const ballotDurationInDays = (await ballot.duration()).div(86400);
+
+      // The duration of the funding cycle should be at least one day longer than the ballot.
+      const minDuration = randomBigNumberFn({
+        min: ballotDurationInDays.add(1),
+        max: constants.MaxUint16
       });
 
       await executeFn({
@@ -82,19 +106,17 @@ module.exports = [
             target,
             currency,
             duration: randomBigNumberFn({
-              min: BigNumber.from(1),
+              min: minDuration,
               max: constants.MaxUint16
             }),
             cycleLimit: randomBigNumberFn({ max: constants.MaxCycleLimit }),
-            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
-            ballot: constants.AddressZero
+            discountRate,
+            ballot: ballot.address
           },
           {
             reservedRate,
             bondingCurveRate,
-            reconfigurationBondingCurveRate: randomBigNumberFn({
-              max: constants.MaxPercent
-            })
+            reconfigurationBondingCurveRate
           },
           [],
           []
@@ -107,11 +129,13 @@ module.exports = [
         target,
         reservedRate,
         bondingCurveRate,
+        reconfigurationBondingCurveRate,
         payer,
         paymentValue1,
         paymentValue2,
         paymentValue3,
-        initialContractBalance: await getBalanceFn(contracts.juicer.address)
+        initialContractBalance: await getBalanceFn(contracts.juicer.address),
+        ballot
       };
     }
   },
@@ -553,7 +577,53 @@ module.exports = [
   },
   {
     description:
-      "The second ticket beneficiary has the expected amount of claimable funds",
+      "A reconfiguration should activate the reconfiguration bonding curve",
+    fn: ({
+      executeFn,
+      randomBigNumberFn,
+      contracts,
+      constants,
+      BigNumber,
+      local: { owner, expectedProjectId }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "configure",
+        args: [
+          expectedProjectId,
+          {
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
+            cycleLimit: randomBigNumberFn({
+              max: constants.MaxCycleLimit
+            }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            ballot: constants.AddressZero
+          },
+          {
+            reservedRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
+          },
+          [],
+          []
+        ]
+      })
+  },
+  {
+    description:
+      "The second ticket beneficiary has the expected amount of claimable funds using the reconfiguration bonding curve rate",
     fn: async ({
       contracts,
       bondingCurveFn,
@@ -566,7 +636,7 @@ module.exports = [
         paymentValue2,
         paymentValue3,
         target,
-        bondingCurveRate,
+        reconfigurationBondingCurveRate,
         redeemableTicketsOfTicketBeneficiary1,
         redeemableAmountOfTicketBeneficiary1,
         leftoverTicketsOfTicketBeneficiary1,
@@ -589,7 +659,7 @@ module.exports = [
           redeemableTicketsOfTicketBeneficiary2
         ],
         expect: bondingCurveFn({
-          rate: bondingCurveRate,
+          rate: reconfigurationBondingCurveRate,
           count: redeemableTicketsOfTicketBeneficiary2,
           total: expectedTotalTickets
             .sub(redeemableTicketsOfTicketBeneficiary1)
@@ -763,6 +833,11 @@ module.exports = [
 
       return { expectedRedeemableTicketsOfTicketBeneficiary3 };
     }
+  },
+  {
+    description: "Fast forward past to the ballot duration",
+    fn: async ({ fastforwardFn, local: { ballot } }) =>
+      fastforwardFn(await ballot.duration())
   },
   {
     description:

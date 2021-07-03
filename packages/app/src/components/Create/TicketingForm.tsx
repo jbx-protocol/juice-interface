@@ -28,15 +28,14 @@ export default function TicketingForm({
         <h1>Reserved tokens</h1>
 
         <p>
-          Tokens are earned by anyone who makes a payment to your Juicebox, and
-          can be redeemed for overflow if your Juicebox has set a funding
-          target.
+          Tokens are earned by anyone who pays your Juicebox, and can be
+          redeemed for overflow if your Juicebox has set a funding target.
         </p>
         <p>
           You'll be able to issue ERC-20 tokens once your Juicebox contract has
-          been deployed. Until then, your Juicebox will use staked tokens, so
-          your supporters can still track their balance and redeem for overflow
-          in the meantime.
+          been deployed. Until then, your Juicebox will use staked tokens,
+          allowing your supporters to still track their balance and redeem for
+          overflow in the meantime.
         </p>
       </div>
 

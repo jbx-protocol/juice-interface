@@ -78,7 +78,10 @@ export default function Create() {
     functionName: 'fee',
   })
 
-  const incrementStep = () => setCurrentStep(currentStep + 1)
+  const incrementStep = (index: number) => {
+    if (index < currentStep) return
+    setCurrentStep(currentStep + 1)
+  }
 
   const resetBudgetForm = () =>
     budgetForm.setFieldsValue({
@@ -109,7 +112,7 @@ export default function Create() {
     )
     dispatch(editingProjectActions.setCurrency(currency))
 
-    if (fields?.duration && target) incrementStep()
+    if (fields?.duration && target) incrementStep(2)
   }
 
   const onProjectFormSaved = () => {
@@ -261,7 +264,11 @@ export default function Create() {
                     : colors.icon.primary,
                 }}
               >
-                {currentStep > i ? <CheckCircleFilled /> : <CaretRightFilled />}
+                {currentStep > i ? (
+                  <CheckCircleFilled style={{ color: colors.icon.success }} />
+                ) : (
+                  <CaretRightFilled />
+                )}
               </div>
             </div>
           )
@@ -376,7 +383,7 @@ export default function Create() {
             await budgetForm.validateFields()
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)
-            incrementStep()
+            incrementStep(1)
           }}
         />
       </Drawer>
@@ -399,7 +406,7 @@ export default function Create() {
             await budgetForm.validateFields()
             onBudgetFormSaved(currency, target)
             setBudgetFormModalVisible(false)
-            incrementStep()
+            incrementStep(2)
           }}
         />
       </Drawer>
@@ -419,7 +426,7 @@ export default function Create() {
             await projectForm.validateFields()
             onProjectFormSaved()
             setProjectFormModalVisible(false)
-            incrementStep()
+            incrementStep(0)
           }}
         />
       </Drawer>
@@ -439,7 +446,7 @@ export default function Create() {
             await ticketingForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)
             setIncentivesFormModalVisible(false)
-            incrementStep()
+            incrementStep(4)
           }}
         />
       </Drawer>
@@ -460,7 +467,7 @@ export default function Create() {
             await ticketingForm.validateFields()
             onTicketingFormSaved(mods)
             setTicketingFormModalVisible(false)
-            incrementStep()
+            incrementStep(3)
           }}
         />
       </Drawer>

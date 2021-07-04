@@ -99,14 +99,13 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
 
         // Get a reference to the standby funding cycle.
-        uint256 _standbyFundingCycleId = _standby(_projectId);
+        uint256 _fundingCycleId = _standby(_projectId);
 
         // If it exists, return it.
-        if (_standbyFundingCycleId > 0)
-            return _getStruct(_standbyFundingCycleId);
+        if (_fundingCycleId > 0) return _getStruct(_fundingCycleId);
 
         // Get a reference to the eligible funding cycle.
-        uint256 _fundingCycleId = _eligible(_projectId);
+        _fundingCycleId = _eligible(_projectId);
 
         // If an eligible funding cycle exists,
         // check to see if it has been approved by the base funding cycle's ballot.
@@ -119,15 +118,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 // _fundingCycle.start <= block.timestamp &&
                 _isApproved(_fundingCycle)
             ) return _mockFundingCycleBasedOn(_fundingCycle, false);
-
-            // If it hasn't been approved, set the ID to be the based funding cycle,
-            // which carries the last approved configuration.
-            _fundingCycleId = _fundingCycle.basedOn;
-        } else {
-            // No upcoming funding cycle found that is eligible to become active,
-            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-            _fundingCycleId = latestIdOf[_projectId];
         }
+
+        // No upcoming funding cycle found that is eligible to become active,
+        // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+        _fundingCycleId = latestIdOf[_projectId];
 
         // A funding cycle must exist.
         require(_fundingCycleId > 0, "FundingCycle::getQueuedOf: NOT_FOUND");
@@ -175,18 +170,34 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
             if (
-                _fundingCycle.start <= block.timestamp &&
+                // _fundingCycle.start <= block.timestamp &&
                 _isApproved(_fundingCycle)
             ) return _fundingCycle;
-
-            // If it hasn't been approved, set the ID to be the based funding cycle,
-            // which carries the last approved configuration.
-            _fundingCycleId = _fundingCycle.basedOn;
-        } else {
-            // No upcoming funding cycle found that is eligible to become active,
-            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-            _fundingCycleId = latestIdOf[_projectId];
         }
+
+        // No upcoming funding cycle found that is eligible to become active,
+        // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+        _fundingCycleId = latestIdOf[_projectId];
+        // // If a standy funding cycle exists,
+        // // check to see if it has been approved by the base funding cycle's ballot.
+        // if (_fundingCycleId > 0) {
+        //     // Get the necessary properties for the standby funding cycle.
+        //     _fundingCycle = _getStruct(_fundingCycleId);
+
+        //     // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
+        //     if (
+        //         // _fundingCycle.start <= block.timestamp &&
+        //         _isApproved(_fundingCycle)
+        //     ) return _fundingCycle;
+
+        //     // If it hasn't been approved, set the ID to be the based funding cycle,
+        //     // which carries the last approved configuration.
+        //     _fundingCycleId = _fundingCycle.basedOn;
+        // } else {
+        //     // No upcoming funding cycle found that is eligible to become active,
+        //     // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+        //     _fundingCycleId = latestIdOf[_projectId];
+        // }
 
         // The funding cycle cant be 0.
         require(_fundingCycleId > 0, "FundingCycles::getCurrentOf: NOT_FOUND");
@@ -522,15 +533,28 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the cycle is approved. If so, return it.
             if (_isApproved(_fundingCycle)) return fundingCycleId;
-
-            // If it hasn't been approved, set the ID to be the base funding cycle,
-            // which carries the last approved configuration.
-            fundingCycleId = _fundingCycle.basedOn;
-        } else {
-            // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-            // which carries the last approved configuration.
-            fundingCycleId = latestIdOf[_projectId];
         }
+
+        // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+        // which carries the last approved configuration.
+        fundingCycleId = latestIdOf[_projectId];
+        // // If the ID of an eligible funding cycle exists,
+        // // check to see if it has been approved by the based funding cycle's ballot.
+        // if (fundingCycleId > 0) {
+        //     // Get the necessary properties for the funding cycle.
+        //     _fundingCycle = _getStruct(fundingCycleId);
+
+        //     // Check to see if the cycle is approved. If so, return it.
+        //     if (_isApproved(_fundingCycle)) return fundingCycleId;
+
+        //     // If it hasn't been approved, set the ID to be the base funding cycle,
+        //     // which carries the last approved configuration.
+        //     fundingCycleId = _fundingCycle.basedOn;
+        // } else {
+        //     // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+        //     // which carries the last approved configuration.
+        //     fundingCycleId = latestIdOf[_projectId];
+        // }
 
         // The funding cycle cant be 0.
         require(fundingCycleId > 0, "FundingCycles::_tappable: NOT_FOUND");
@@ -730,32 +754,36 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 : _baseFundingCycle;
 
         // The distance of the current time to the start of the next possible funding cycle.
-        uint256 _rewind = 0;
+        uint256 _timeFromImmediateStartMultiple;
 
         // Only rewind if a mid cycle mock are cycle.
         // Cycles with a duration of 0 will start right away so no need to rewind.
         if (_allowMidCycle && _baseFundingCycle.duration > 0) {
-            // Rewind a full cycle.
-            _rewind = _baseFundingCycle.duration * SECONDS_IN_DAY;
+            // Get the end time of the last cycle.
+            uint256 _cycleEnd =
+                _baseFundingCycle.start +
+                    (_baseFundingCycle.cycleLimit *
+                        _baseFundingCycle.duration *
+                        SECONDS_IN_DAY);
 
             // If the cycles have expired, the must start date should
             // be an increment of the latest from it.
-            if (_baseFundingCycle.cycleLimit > 0) {
-                // Get the end time of the last cycle.
-                uint256 _cycleEnd =
-                    _baseFundingCycle.start +
-                        (_baseFundingCycle.cycleLimit *
-                            _baseFundingCycle.duration *
-                            SECONDS_IN_DAY);
-
-                // If the cycle end time is in the past, the mock should start at a multiple of the last
-                // permanent cycle since the cycle ended.
-                if (_cycleEnd < block.timestamp)
-                    _rewind =
-                        (block.timestamp - _cycleEnd) %
-                        (_latestPermanentFundingCycle.duration *
-                            SECONDS_IN_DAY);
+            // If the cycle end time is in the past, the mock should start at a multiple of the last
+            // permanent cycle since the cycle ended.
+            if (
+                _baseFundingCycle.cycleLimit > 0 && _cycleEnd < block.timestamp
+            ) {
+                _timeFromImmediateStartMultiple =
+                    (block.timestamp - _cycleEnd) %
+                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+            } else {
+                // Rewind a full cycle.
+                _timeFromImmediateStartMultiple =
+                    _baseFundingCycle.duration *
+                    SECONDS_IN_DAY;
             }
+        } else {
+            _timeFromImmediateStartMultiple = 0;
         }
 
         // Derive what the start time should be.
@@ -763,7 +791,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _deriveStart(
                 _baseFundingCycle,
                 _latestPermanentFundingCycle,
-                block.timestamp - _rewind
+                block.timestamp - _timeFromImmediateStartMultiple
             );
 
         // Derive what the cycle limit should be.

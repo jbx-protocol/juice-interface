@@ -326,7 +326,10 @@ describe("Juice", async function() {
       const candidate = ethers.utils.formatBytes32String(
         this.randomStringFn({
           prepend,
-          seed: this.randomBigNumberFn({ min, max: BigNumber.from(32) })
+          seed: this.randomBigNumberFn({
+            min: BigNumber.from(10),
+            max: BigNumber.from(32)
+          })
         })
       );
       if (exclude.includes(candidate))

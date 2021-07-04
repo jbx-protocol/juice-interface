@@ -33,6 +33,7 @@ module.exports = [
         args: [
           owner.address,
           randomBytesFn({
+            // Make sure its unique by prepending the id.
             prepend: expectedProjectId.toString()
           }),
           randomStringFn(),
@@ -216,7 +217,7 @@ module.exports = [
       incrementFundingCycleIdFn,
       local: { expectedProjectId, owner, payer, preconfigTicketBeneficiary }
     }) => {
-      // Burn the unused funding cycle id.
+      // Burn the unused funding cycle ID id.
       incrementFundingCycleIdFn();
 
       const paymentValue2 = randomBigNumberFn({

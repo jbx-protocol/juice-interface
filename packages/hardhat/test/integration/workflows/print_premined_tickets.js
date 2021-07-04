@@ -28,6 +28,7 @@ module.exports = [
         args: [
           owner.address,
           randomBytesFn({
+            // Make sure its unique by prepending the id.
             prepend: expectedProjectId.toString()
           }),
           randomStringFn(),
@@ -324,7 +325,7 @@ module.exports = [
       incrementFundingCycleIdFn,
       local: { expectedProjectId, owner }
     }) => {
-      // Burn the unused funding cycle id.
+      // Burn the unused funding cycle ID id.
       incrementFundingCycleIdFn();
 
       await executeFn({

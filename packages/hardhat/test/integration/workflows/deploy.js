@@ -24,6 +24,7 @@ module.exports = [
 
       const target = randomBigNumberFn();
       const handle = randomBytesFn({
+        // Make sure its unique by prepending the id.
         prepend: expectedProjectId.toString()
       });
       const uri = randomStringFn();

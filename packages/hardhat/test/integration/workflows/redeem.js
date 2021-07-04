@@ -31,7 +31,7 @@ module.exports = [
     }) => {
       const expectedProjectId = incrementProjectIdFn();
 
-      // Burn the unused funding cycle id.
+      // Burn the unused funding cycle ID id.
       incrementFundingCycleIdFn();
 
       // The owner of the project that will migrate.
@@ -100,6 +100,7 @@ module.exports = [
         args: [
           owner.address,
           randomBytesFn({
+            // Make sure its unique by prepending the id.
             prepend: expectedProjectId.toString()
           }),
           randomStringFn(),
@@ -589,7 +590,7 @@ module.exports = [
       incrementFundingCycleIdFn,
       local: { owner, expectedProjectId }
     }) => {
-      // Burn the unused funding cycle ID.
+      // Burn the unused funding cycle ID ID.
       incrementFundingCycleIdFn();
       await executeFn({
         caller: owner,

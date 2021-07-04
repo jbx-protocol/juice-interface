@@ -22,7 +22,7 @@ module.exports = [
       // Get the next project ID.
       const expectedProjectId = incrementProjectIdFn();
 
-      // Burn the unused funding cycle id.
+      // Burn the unused funding cycle ID id.
       incrementFundingCycleIdFn();
 
       // The owner of the project that will migrate.

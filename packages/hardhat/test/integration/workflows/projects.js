@@ -26,6 +26,7 @@ module.exports = [
 
       const expectedProjectId = incrementProjectIdFn();
 
+      // Make sure its unique by prepending the id.
       const handle = randomBytesFn({ prepend: expectedProjectId.toString() });
 
       const uri = randomStringFn();
@@ -177,6 +178,7 @@ module.exports = [
       local: { owner, handle, expectedProjectId }
     }) => {
       const secondHandle = randomBytesFn({
+        // Make sure its unique by prepending the id.
         prepend: expectedProjectId.toString(),
         exclude: [handle]
       });
@@ -237,15 +239,18 @@ module.exports = [
   {
     description:
       "Create another project for a different owner using the old handle",
-    fn: ({
+    fn: async ({
       contracts,
       constants,
       executeFn,
       randomStringFn,
       randomSignerFn,
+      incrementProjectIdFn,
       local: { secondOwner, handle }
-    }) =>
-      executeFn({
+    }) => {
+      const expectedSecondProjectId = incrementProjectIdFn();
+
+      await executeFn({
         caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
@@ -255,29 +260,25 @@ module.exports = [
           randomStringFn(),
           constants.AddressZero
         ]
-      })
+      });
+      return { expectedSecondProjectId };
+    }
   },
   {
     description:
       "Make sure the other owner can't set its project's handle to the one currently in use",
-    fn: async ({
+    fn: ({
       contracts,
       executeFn,
-      incrementProjectIdFn,
-      local: { secondOwner, secondHandle }
-    }) => {
-      const expectedSecondProjectId = incrementProjectIdFn();
-
-      await executeFn({
+      local: { secondOwner, secondHandle, expectedSecondProjectId }
+    }) =>
+      executeFn({
         caller: secondOwner,
         contract: contracts.projects,
         fn: "setHandle",
         args: [expectedSecondProjectId, secondHandle],
         revert: "Projects::setHandle: HANDLE_TAKEN"
-      });
-
-      return { expectedSecondProjectId };
-    }
+      })
   },
   {
     description:
@@ -304,6 +305,7 @@ module.exports = [
       local: { owner, secondOwner, expectedProjectId, handle, secondHandle }
     }) => {
       const thirdHandle = randomBytesFn({
+        // Make sure its unique by prepending the id.
         prepend: expectedProjectId.toString(),
         exclude: [handle, secondHandle]
       });
@@ -545,7 +547,7 @@ module.exports = [
     }
   },
   {
-    description: "Configure the projects funding cycle",
+    description: "Configure the project's funding cycle",
     fn: async ({
       contracts,
       constants,
@@ -555,7 +557,7 @@ module.exports = [
       incrementFundingCycleIdFn,
       local: { owner, paymentValue, expectedProjectId }
     }) => {
-      // Burn the unused funding cycle.
+      // Burn the unused funding cycle ID.
       incrementFundingCycleIdFn();
 
       // The currency will be 0, which corresponds to ETH.

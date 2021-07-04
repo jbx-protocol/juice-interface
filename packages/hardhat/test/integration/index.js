@@ -88,9 +88,10 @@ module.exports = function() {
         {
           target: 0,
           currency: 0,
-          duration: BigNumber.from(10000),
+          // Duration must be zero so that the same cycle lasts throughout the tests.
+          duration: 0,
           cycleLimit: BigNumber.from(0),
-          discountRate: BigNumber.from(180),
+          discountRate: this.constants.MaxPercent,
           ballot: constants.AddressZero
         },
         {
@@ -124,6 +125,9 @@ module.exports = function() {
 
     this.constants.MaxCycleLimit = await fundingCycles.MAX_CYCLE_LIMIT();
 
+    this.constants.GovernanceProjectId = projectId;
+    this.constants.GovenanceOwner = this.deployer.address;
+
     // eslint-disable-next-line no-plusplus
     this.incrementProjectIdFn = () => {
       projectId = projectId.add(1);
@@ -155,7 +159,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -174,11 +178,11 @@ module.exports = function() {
       "Projects can print premined tickets before a payment has been made to it",
       run(workflows.printPreminedTickets)
     );
-    describe(
-      "Issues tickets and honors preference",
-      run(workflows.issueTickets)
-    );
-    // describe.only("Tap funds up to the configured target", run(workflows.tap));
+    // describe(
+    //   "Issues tickets and honors preference",
+    //   run(workflows.issueTickets)
+    // );
+    // describe("Tap funds up to the configured target", run(workflows.tap));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(
     //   "Ballot must be approved for reconfiguration to become active",

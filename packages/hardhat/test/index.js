@@ -8,8 +8,8 @@ const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
-// Save the initial balances for each address.
-const initialBalances = {};
+// // Save the initial balances for each address.
+// const initialBalances = {};
 
 describe("Juice", async function() {
   before(async function() {
@@ -112,12 +112,12 @@ describe("Juice", async function() {
       const tx = await promise;
 
       // Wait for a block to get mined.
-      const receipt = await tx.wait();
+      await tx.wait();
 
-      // Subtract the gas spent from the signer's account.
-      initialBalances[receipt.from] = (
-        initialBalances[receipt.from] || BigNumber.from(0)
-      ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
+      // // Subtract the gas spent from the signer's account.
+      // initialBalances[receipt.from] = (
+      //   initialBalances[receipt.from] || BigNumber.from(0)
+      // ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
 
       // Set the time mark of this function.
       await this.setTimeMarkFn(tx.blockNumber);
@@ -152,12 +152,12 @@ describe("Juice", async function() {
       const tx = await promise;
 
       // Wait for a block to get mined.
-      const receipt = await tx.wait();
+      await tx.wait();
 
       // Subtract the gas spent from the signer's account.
-      initialBalances[receipt.from] = (
-        initialBalances[receipt.from] || BigNumber.from(0)
-      ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
+      // initialBalances[receipt.from] = (
+      //   initialBalances[receipt.from] || BigNumber.from(0)
+      // ).sub(receipt.cumulativeGasUsed.mul(tx.gasPrice));
 
       // Set the time mark of this function.
       await this.setTimeMarkFn(tx.blockNumber);
@@ -216,11 +216,11 @@ describe("Juice", async function() {
     // Binds a function that gets the balance of an address.
     this.getBalanceFn = address => ethers.provider.getBalance(address);
 
-    // Binds a function that gets the balance of an address as its changed during the current test.
-    this.changeInBalanceFn = async address =>
-      (await ethers.provider.getBalance(address)).sub(
-        initialBalances[address] || 0
-      );
+    // // Binds a function that gets the balance of an address as its changed during the current test.
+    // this.changeInBalanceFn = async address =>
+    //   (await ethers.provider.getBalance(address)).sub(
+    //     initialBalances[address] || 0
+    //   );
 
     // Binds the standard expect function.
     this.expectFn = chai.expect;
@@ -347,20 +347,20 @@ describe("Juice", async function() {
 
   // Before each test, take a snapshot of the contract state.
   beforeEach(async function() {
-    // Mark the start time of each test.
-    this.timeMark = await this.getTimestampFn();
+    // // Mark the start time of each test.
+    // this.timeMark = await this.getTimestampFn();
 
     // Make the start time of the test available.
     this.testStart = await this.getTimestampFn();
 
-    // Set initial balances.
-    await Promise.all(
-      [...this.addrs, this.deployer].map(async addr => {
-        initialBalances[addr.address] = await ethers.provider.getBalance(
-          addr.address
-        );
-      })
-    );
+    // // Set initial balances.
+    // await Promise.all(
+    //   [...this.addrs, this.deployer].map(async addr => {
+    //     initialBalances[addr.address] = await ethers.provider.getBalance(
+    //       addr.address
+    //     );
+    //   })
+    // );
   });
 
   // Run the tests.

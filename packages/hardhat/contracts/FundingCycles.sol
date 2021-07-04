@@ -7,6 +7,8 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
+import "hardhat/console.sol";
+
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -192,6 +194,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The funding cycle to base a current one on.
         _fundingCycle = _getStruct(_fundingCycleId);
 
+        // The funding cycle cant be 0.
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
         return _mockFundingCycleBasedOn(_fundingCycle, true);
@@ -251,7 +254,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         @param _properties The funding cycle configuration.
           @dev _properties.target The amount that the project wants to receive in each funding cycle. 18 decimals.
           @dev _properties.currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in days.
+          @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in days. 
+            Set to 0 for no expiry and to be able to reconfigure anytime.
           @dev _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
             If it's 200, each funding cycle will have equal weight.
@@ -276,10 +280,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         onlyTerminal(_projectId)
         returns (FundingCycle memory fundingCycle)
     {
-        // Duration must be greater than 0, and must fit in a uint16.
+        // Duration must fit in a uint16.
         require(
-            _properties.duration > 0 &&
-                _properties.duration <= type(uint16).max,
+            _properties.duration <= type(uint16).max,
             "FundingCycles::configure: BAD_DURATION"
         );
 
@@ -457,11 +460,18 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             );
 
             if (_configureActiveFundingCycle) {
-                // Set to the start time of the current active start time.
-                uint256 _timeFromStartMultiple =
-                    (block.timestamp - _fundingCycle.start) %
-                        (_fundingCycle.duration * SECONDS_IN_DAY);
-                _mustStartOnOrAfter = block.timestamp - _timeFromStartMultiple;
+                // If the duration is zero, always go back to the original start.
+                if (_fundingCycle.duration == 0) {
+                    _mustStartOnOrAfter = _fundingCycle.start;
+                } else {
+                    // Set to the start time of the current active start time.
+                    uint256 _timeFromStartMultiple =
+                        (block.timestamp - _fundingCycle.start) %
+                            (_fundingCycle.duration * SECONDS_IN_DAY);
+                    _mustStartOnOrAfter =
+                        block.timestamp -
+                        _timeFromStartMultiple;
+                }
             } else {
                 // The ballot must have ended.
                 _mustStartOnOrAfter = _getTimeAfterBallot(
@@ -539,9 +549,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY);
 
         // The distance from now until the nearest past multiple of the cycle duration from its start.
+        // A duration of zero means the reconfiguration can start right away.
         uint256 _timeFromImmediateStartMultiple =
-            (block.timestamp - _nextImmediateStart) %
-                (_fundingCycle.duration * SECONDS_IN_DAY);
+            _fundingCycle.duration == 0
+                ? 0
+                : (block.timestamp - _nextImmediateStart) %
+                    (_fundingCycle.duration * SECONDS_IN_DAY);
 
         // Return the tappable funding cycle.
         fundingCycleId = _init(
@@ -660,7 +673,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _fundingCycle = _getStruct(fundingCycleId);
 
         // If the latest is expired, return an undefined funding cycle.
+        // A duration of 0 can not be expired.
         if (
+            _fundingCycle.duration > 0 &&
             block.timestamp >=
             _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY)
         ) return 0;
@@ -675,7 +690,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle =
             _getStruct(_fundingCycle.basedOn);
 
+        // If the current time is past the end of the base, return 0.
+        // A duration of 0 is always eligible.
         if (
+            _baseFundingCycle.duration > 0 &&
             block.timestamp >=
             _baseFundingCycle.start +
                 (_baseFundingCycle.duration * SECONDS_IN_DAY)
@@ -715,7 +733,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _rewind = 0;
 
         // Only rewind if a mid cycle mock are cycle.
-        if (_allowMidCycle) {
+        // Cycles with a duration of 0 will start right away so no need to rewind.
+        if (_allowMidCycle && _baseFundingCycle.duration > 0) {
             // Rewind a full cycle.
             _rewind = _baseFundingCycle.duration * SECONDS_IN_DAY;
 
@@ -1015,6 +1034,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _mustStartOnOrAfter
     ) internal pure returns (uint256 start) {
+        // A subsequent cycle to one with a duration of 0 should start as soon as possible.
+        if (_baseFundingCycle.duration == 0) return _mustStartOnOrAfter;
+
         // Save a reference to the duration measured in seconds.
         uint256 _durationInSeconds =
             _baseFundingCycle.duration * SECONDS_IN_DAY;
@@ -1074,13 +1096,22 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal pure returns (uint256 weight) {
+    ) internal view returns (uint256 weight) {
+        // A subsequent cycle to one with a duration of 0 should have the next possible weight.
+        if (_baseFundingCycle.duration == 0)
+            return
+                PRBMathCommon.mulDiv(
+                    _baseFundingCycle.weight,
+                    _baseFundingCycle.discountRate,
+                    200
+                );
+
         // The difference between the start of the base funding cycle and the proposed start.
         uint256 _startDistance = _start - _baseFundingCycle.start;
 
         // The number of seconds that the base funding cycle is limited to.
         uint256 _limitLength =
-            _baseFundingCycle.cycleLimit == 0
+            _baseFundingCycle.cycleLimit == 0 || _baseFundingCycle.basedOn == 0
                 ? 0
                 : _baseFundingCycle.cycleLimit *
                     (_baseFundingCycle.duration * SECONDS_IN_DAY);
@@ -1093,46 +1124,57 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             uint256 _discountMultiple =
                 _startDistance / (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
+            console.log("HERE WE GO id: %d", _baseFundingCycle.id);
+            console.log("HERE WE GO proj: %d", _baseFundingCycle.projectId);
+            console.log("HERE WE GO dur: %d", _baseFundingCycle.duration);
+            console.log("HERE WE GO now: %d", block.timestamp);
+            console.log("HERE WE GO: %d", _discountMultiple);
+            console.log("HERE WE GO rate: %d", _baseFundingCycle.discountRate);
+            uint256 num = _baseFundingCycle.discountRate**_discountMultiple;
+            console.log("num: %d", num);
+            uint256 den = 200**_discountMultiple;
+            console.log("den: %d", den);
+
             // The number of times to apply the discount rate.
             // Base the new weight on the specified funding cycle's weight.
-            weight = PRBMathCommon.mulDiv(
-                _baseFundingCycle.weight,
-                _baseFundingCycle.discountRate**_discountMultiple,
-                200**_discountMultiple
-            );
+            weight = _baseFundingCycle.discountRate == 200
+                ? _baseFundingCycle.weight
+                : PRBMathCommon.mulDiv(_baseFundingCycle.weight, num, den);
         } else {
             // If the time between the base start at the given start is longer than
             // the limit, the discount rate for the limited base has to be applied first,
             // and then the discount rate for the last permanent should be applied to
             // the remaining distance.
 
-            // The number of times to apply the limited discount rate (use it all up).
-            uint256 _limitedDiscountMultiple = _baseFundingCycle.cycleLimit;
-
             // Use up the limited discount rate up until the limit.
-            weight = PRBMathCommon.mulDiv(
-                _baseFundingCycle.weight,
-                _baseFundingCycle.discountRate**_limitedDiscountMultiple,
-                200**_limitedDiscountMultiple
-            );
+            weight = _baseFundingCycle.discountRate == 200
+                ? _baseFundingCycle.weight
+                : PRBMathCommon.mulDiv(
+                    _baseFundingCycle.weight,
+                    _baseFundingCycle.discountRate **
+                        _baseFundingCycle.cycleLimit,
+                    200**_baseFundingCycle.cycleLimit
+                );
 
             // The number of times to apply the latest permanent discount rate.
-            uint256 _premanentDiscountMultiple =
+            uint256 _permanentDiscountMultiple =
                 (_startDistance - _limitLength) /
                     (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
 
-            weight = PRBMathCommon.mulDiv(
-                weight, // base the weight on the result of the previous calculation.
-                _latestPermanentFundingCycle.discountRate **
-                    _premanentDiscountMultiple,
-                200**_premanentDiscountMultiple
-            );
+            weight = _latestPermanentFundingCycle.discountRate == 200
+                ? weight
+                : PRBMathCommon.mulDiv(
+                    weight, // base the weight on the result of the previous calculation.
+                    _latestPermanentFundingCycle.discountRate **
+                        _permanentDiscountMultiple,
+                    200**_permanentDiscountMultiple
+                );
         }
     }
 
     /** 
         @notice 
-        The number of next funding cycle given the specified funding cycle.
+        The number of the next funding cycle given the specified funding cycle.
 
         @param _baseFundingCycle The funding cycle to make the calculation with.
         @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_fundingCycle` to not have a limit.
@@ -1145,6 +1187,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
     ) internal pure returns (uint256 number) {
+        // A subsequent cycle to one with a duration of 0 should be the next number.
+        if (_baseFundingCycle.duration == 0)
+            return _baseFundingCycle.number + 1;
+
         // The difference between the start of the base funding cycle and the proposed start.
         uint256 _startDistance = _start - _baseFundingCycle.start;
 
@@ -1191,7 +1237,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _fundingCycle,
         uint256 _start
     ) internal pure returns (uint256) {
-        if (_fundingCycle.cycleLimit <= 1) return 0;
+        if (_fundingCycle.cycleLimit <= 1 || _fundingCycle.duration == 0)
+            return 0;
         uint256 _cycles =
             ((_start - _fundingCycle.start) /
                 (_fundingCycle.duration * SECONDS_IN_DAY));

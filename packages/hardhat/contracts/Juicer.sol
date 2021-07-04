@@ -591,6 +591,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to this project's current balance, including any earned yield.
         uint256 _balance = balanceOf[_fundingCycle.projectId];
 
+        // Get a reference to this project's current balance, including any earned yield.
         // Get the currency price of ETH.
         uint256 _ethPrice = prices.getETHPriceFor(_fundingCycle.currency);
 
@@ -1031,51 +1032,53 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             PaymentMod memory _mod = _mods[_i];
             // The amount to send towards mods.
             uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
-            // Transfer ETH to the mod.
-            // If there's an allocator set, transfer to its `allocate` function.
-            if (_mod.allocator != IModAllocator(address(0))) {
-                _mod.allocator.allocate{value: _modCut}(
-                    _fundingCycle.projectId,
-                    _mod.projectId,
-                    _mod.beneficiary
-                );
-            } else if (_mod.projectId != 0) {
-                // Otherwise, if a project is specified, pay its Juice project.
-
-                // Get a reference to the Juice terminal being used.
-                ITerminal _terminal =
-                    terminalDirectory.terminalOf(_mod.projectId);
-
-                // The project must have a juice terminal to send funds to.
-                require(
-                    _terminal != ITerminal(address(0)),
-                    "Juicer::tap: BAD_MOD"
-                );
-
-                // Make a memo using the paying project's handle.
-                string memory _memo =
-                    string(bytes.concat("Payment from @", _handle));
-
-                // Save gas if this terminal is being used.
-                if (_terminal == this) {
-                    _pay(
+            if (_modCut > 0) {
+                // Transfer ETH to the mod.
+                // If there's an allocator set, transfer to its `allocate` function.
+                if (_mod.allocator != IModAllocator(address(0))) {
+                    _mod.allocator.allocate{value: _modCut}(
+                        _fundingCycle.projectId,
                         _mod.projectId,
-                        _modCut,
-                        _mod.beneficiary,
-                        _memo,
-                        _mod.preferUnstaked
+                        _mod.beneficiary
                     );
+                } else if (_mod.projectId != 0) {
+                    // Otherwise, if a project is specified, pay its Juice project.
+
+                    // Get a reference to the Juice terminal being used.
+                    ITerminal _terminal =
+                        terminalDirectory.terminalOf(_mod.projectId);
+
+                    // The project must have a juice terminal to send funds to.
+                    require(
+                        _terminal != ITerminal(address(0)),
+                        "Juicer::tap: BAD_MOD"
+                    );
+
+                    // Make a memo using the paying project's handle.
+                    string memory _memo =
+                        string(bytes.concat("Payment from @", _handle));
+
+                    // Save gas if this terminal is being used.
+                    if (_terminal == this) {
+                        _pay(
+                            _mod.projectId,
+                            _modCut,
+                            _mod.beneficiary,
+                            _memo,
+                            _mod.preferUnstaked
+                        );
+                    } else {
+                        _terminal.pay{value: _modCut}(
+                            _mod.projectId,
+                            _mod.beneficiary,
+                            _memo,
+                            _mod.preferUnstaked
+                        );
+                    }
                 } else {
-                    _terminal.pay{value: _modCut}(
-                        _mod.projectId,
-                        _mod.beneficiary,
-                        _memo,
-                        _mod.preferUnstaked
-                    );
+                    // Otherwise, send the funds directly to the beneficiary.
+                    Address.sendValue(_mod.beneficiary, _modCut);
                 }
-            } else {
-                // Otherwise, send the funds directly to the beneficiary.
-                Address.sendValue(_mod.beneficiary, _modCut);
             }
 
             // Subtract from the amount to be sent to the beneficiary.

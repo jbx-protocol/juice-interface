@@ -182,7 +182,7 @@ module.exports = function() {
       "Issues tickets and honors preference",
       run(workflows.issueTickets)
     );
-    // describe("Tap funds up to the configured target", run(workflows.tap));
+    describe("Tap funds up to the configured target", run(workflows.tap));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(
     //   "Ballot must be approved for reconfiguration to become active",

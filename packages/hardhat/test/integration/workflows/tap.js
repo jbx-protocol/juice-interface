@@ -106,10 +106,6 @@ module.exports = [
         projectId: BigNumber.from(0)
       };
 
-      const discountRate = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
-      });
       await executeFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
@@ -129,7 +125,10 @@ module.exports = [
               max: constants.MaxCycleLimit
             }),
             // Recurring.
-            discountRate,
+            discountRate: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxPercent
+            }),
             ballot: constants.AddressZero
           },
           {
@@ -156,9 +155,7 @@ module.exports = [
         target,
         addressMod,
         projectMod,
-        allocatorMod,
-        // TODO temp
-        discountRate
+        allocatorMod
       };
     }
   },
@@ -217,7 +214,7 @@ module.exports = [
       randomStringFn,
       randomSignerFn,
       incrementFundingCycleIdFn,
-      local: { duration, expectedIdOfModProject, owner, discountRate }
+      local: { duration, expectedIdOfModProject, owner }
     }) => {
       // Burn the unused funding cycle ID id.
       incrementFundingCycleIdFn();
@@ -232,22 +229,11 @@ module.exports = [
       // the base cycle's duration (< 1/30), the program could break because it
       // could have to apply the discount rate exponentially according to the factor in the worst case.
       // This worse case only happens when the smaller cycle isnt tapped or configured for a long while.
-      const duration2 = duration;
-      const discountRate2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+      const duration2 = randomBigNumberFn({
+        min: duration < 500 ? BigNumber.from(1) : duration.div(500),
+        max: constants.MaxUint16
       });
-      // randomBigNumberFn({
-      //   min: duration < 30 ? BigNumber.from(1) : duration.div(30),
-      //   max: constants.MaxUint16
-      // });
 
-      console.log({
-        duration: duration.toNumber(),
-        duration2: duration2.toNumber(),
-        discountRate2: discountRate2.toNumber(),
-        discountRate: discountRate.toNumber()
-      });
       await executeFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,

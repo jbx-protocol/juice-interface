@@ -1124,7 +1124,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal view returns (uint256 weight) {
+    ) internal pure returns (uint256 weight) {
         // A subsequent cycle to one with a duration of 0 should have the next possible weight.
         if (_baseFundingCycle.duration == 0)
             return
@@ -1144,30 +1144,27 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 : _baseFundingCycle.cycleLimit *
                     (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
-        if (_limitLength == 0 || _limitLength > _startDistance) {
-            // If there's no limit or if the limit is greater than the start distance,
-            // apply the discount rate of the base and find the number of
-            // base cycles fit in the start distance.
+        // The weight should be based off the base funding cycle's weight.
+        weight = _baseFundingCycle.weight;
 
+        // If there's no limit or if the limit is greater than the start distance,
+        // apply the discount rate of the base.
+        if (
+            (_limitLength == 0 || _limitLength > _startDistance) &&
+            _baseFundingCycle.discountRate < 200
+        ) {
             uint256 _discountMultiple =
                 _startDistance / (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
-            console.log("HERE WE GO id: %d", _baseFundingCycle.id);
-            console.log("HERE WE GO proj: %d", _baseFundingCycle.projectId);
-            console.log("HERE WE GO dur: %d", _baseFundingCycle.duration);
-            console.log("HERE WE GO now: %d", block.timestamp);
-            console.log("HERE WE GO: %d", _discountMultiple);
-            console.log("HERE WE GO rate: %d", _baseFundingCycle.discountRate);
-            uint256 num = _baseFundingCycle.discountRate**_discountMultiple;
-            console.log("num: %d", num);
-            uint256 den = 200**_discountMultiple;
-            console.log("den: %d", den);
-
-            // The number of times to apply the discount rate.
-            // Base the new weight on the specified funding cycle's weight.
-            weight = _baseFundingCycle.discountRate == 200
-                ? _baseFundingCycle.weight
-                : PRBMathCommon.mulDiv(_baseFundingCycle.weight, num, den);
+            for (uint256 i = 0; i < _discountMultiple; i++) {
+                // The number of times to apply the discount rate.
+                // Base the new weight on the specified funding cycle's weight.
+                weight = PRBMathCommon.mulDiv(
+                    weight,
+                    _baseFundingCycle.discountRate,
+                    200
+                );
+            }
         } else {
             // If the time between the base start at the given start is longer than
             // the limit, the discount rate for the limited base has to be applied first,
@@ -1175,28 +1172,31 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             // the remaining distance.
 
             // Use up the limited discount rate up until the limit.
-            weight = _baseFundingCycle.discountRate == 200
-                ? _baseFundingCycle.weight
-                : PRBMathCommon.mulDiv(
-                    _baseFundingCycle.weight,
-                    _baseFundingCycle.discountRate **
-                        _baseFundingCycle.cycleLimit,
-                    200**_baseFundingCycle.cycleLimit
-                );
+            if (_baseFundingCycle.discountRate < 200) {
+                for (uint256 i = 0; i < _baseFundingCycle.cycleLimit; i++) {
+                    weight = PRBMathCommon.mulDiv(
+                        weight,
+                        _baseFundingCycle.discountRate,
+                        200
+                    );
+                }
+            }
 
-            // The number of times to apply the latest permanent discount rate.
-            uint256 _permanentDiscountMultiple =
-                (_startDistance - _limitLength) /
-                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+            if (_latestPermanentFundingCycle.discountRate < 200) {
+                // The number of times to apply the latest permanent discount rate.
+                uint256 _permanentDiscountMultiple =
+                    (_startDistance - _limitLength) /
+                        (_latestPermanentFundingCycle.duration *
+                            SECONDS_IN_DAY);
 
-            weight = _latestPermanentFundingCycle.discountRate == 200
-                ? weight
-                : PRBMathCommon.mulDiv(
-                    weight, // base the weight on the result of the previous calculation.
-                    _latestPermanentFundingCycle.discountRate **
-                        _permanentDiscountMultiple,
-                    200**_permanentDiscountMultiple
-                );
+                for (uint256 i = 0; i < _permanentDiscountMultiple; i++) {
+                    weight = PRBMathCommon.mulDiv(
+                        weight, // base the weight on the result of the previous calculation.
+                        _latestPermanentFundingCycle.discountRate,
+                        200
+                    );
+                }
+            }
         }
     }
 

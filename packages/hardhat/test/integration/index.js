@@ -178,10 +178,10 @@ module.exports = function() {
       "Projects can print premined tickets before a payment has been made to it",
       run(workflows.printPreminedTickets)
     );
-    // describe(
-    //   "Issues tickets and honors preference",
-    //   run(workflows.issueTickets)
-    // );
+    describe(
+      "Issues tickets and honors preference",
+      run(workflows.issueTickets)
+    );
     // describe("Tap funds up to the configured target", run(workflows.tap));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(

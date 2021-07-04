@@ -186,6 +186,7 @@ describe("Juice", async function() {
       const storedVal = await contract.connect(caller)[fn](...args);
       if (plusMinus) {
         console.log({
+          storedVal,
           diff: storedVal.sub(expect),
           plusMinus: plusMinus.amount
         });
@@ -201,6 +202,7 @@ describe("Juice", async function() {
       const storedVal = await ethers.provider.getBalance(address);
       if (plusMinus) {
         console.log({
+          storedVal,
           diff: storedVal.sub(expect),
           plusMinus: plusMinus.amount
         });

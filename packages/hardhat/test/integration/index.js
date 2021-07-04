@@ -169,7 +169,7 @@ module.exports = function() {
       run(workflows.ticketLockingAndTransfers)
     );
     describe("Redeem tickets for overflow", run(workflows.redeem));
-    // it("Prints reserved tickets", run(workflows.printReservedTickets));
+    describe("Prints reserved tickets", run(workflows.printReservedTickets));
     // it("Issues tickets and honors preference", run(workflows.issueTickets));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(

@@ -522,7 +522,7 @@ module.exports = [
           .div(constants.MaxPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
-          amount: 1000
+          amount: 10000
         }
       })
   },
@@ -612,7 +612,7 @@ module.exports = [
           .div(constants.MaxPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
-          amount: 1000
+          amount: 10000
         }
       })
   },
@@ -644,7 +644,7 @@ module.exports = [
               .div(constants.MaxPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
-          amount: 1000
+          amount: 10000
         }
       })
   },

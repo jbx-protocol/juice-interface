@@ -411,6 +411,7 @@ module.exports = [
             .add(paymentValue3)
             .sub(target)
         }),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -675,6 +676,7 @@ module.exports = [
             .sub(target)
             .sub(redeemableAmountOfTicketBeneficiary1)
         }),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -899,6 +901,7 @@ module.exports = [
             .sub(redeemableAmountOfTicketBeneficiary1)
             .sub(redeemableAmountOfTicketBeneficiary2)
         }),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -1074,7 +1077,7 @@ module.exports = [
           .sub(expectedRedeemableTicketsOfTicketBeneficiary1)
           .sub(expectedRedeemableTicketsOfTicketBeneficiary2)
           .sub(expectedRedeemableTicketsOfTicketBeneficiary3),
-        // Tolerate a small difference.
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100000
         }
@@ -1109,7 +1112,7 @@ module.exports = [
           .add(leftoverTicketsOfTicketBeneficiary2)
           .sub(redeemableTicketsOfTicketBeneficiary3)
           .add(leftoverTicketsOfTicketBeneficiary3),
-        // Tolerate a small difference.
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100000
         }
@@ -1144,7 +1147,7 @@ module.exports = [
           .sub(redeemableAmountOfTicketBeneficiary1)
           .sub(redeemableAmountOfTicketBeneficiary2)
           .sub(redeemableAmountOfTicketBeneficiary3),
-        // Tolerate a small difference.
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -1177,7 +1180,7 @@ module.exports = [
           total: await contracts.ticketBooth.totalSupplyOf(expectedProjectId),
           overflow: await contracts.juicer.currentOverflowOf(expectedProjectId)
         }),
-        // Tolerate a small difference.
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }

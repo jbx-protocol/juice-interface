@@ -173,6 +173,7 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -195,6 +196,7 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -269,6 +271,7 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance,
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -293,6 +296,7 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: expectedStakedBalance.sub(amountToUnstake),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -353,6 +357,7 @@ module.exports = [
             ? amountToTransfer
             : BigNumber.from(0)
         ),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -386,6 +391,7 @@ module.exports = [
               ? amountToTransfer
               : BigNumber.from(0)
           ),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -415,6 +421,7 @@ module.exports = [
           ticketBeneficiary.address === ticketTransferRecipient.address
             ? expectedStakedBalance
             : amountToTransfer,
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -445,6 +452,7 @@ module.exports = [
           ticketBeneficiary.address === ticketTransferRecipient.address
             ? expectedStakedBalance.sub(amountToUnstake)
             : amountToTransfer,
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -650,6 +658,7 @@ module.exports = [
         fn: "balanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }
@@ -671,6 +680,7 @@ module.exports = [
         fn: "stakedBalanceOf",
         args: [ticketBeneficiary.address, expectedProjectId],
         expect: BigNumber.from(0),
+        // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 100
         }

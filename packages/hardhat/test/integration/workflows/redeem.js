@@ -7,6 +7,10 @@
   If a project is has an active reconfiguration ballot, the reconfiguration bonding curve should be used,
   instead of the regular bonding curve.
 */
+
+// The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.
+const currency = 0;
+
 module.exports = [
   {
     description: "Deploy a project for the owner",
@@ -57,9 +61,6 @@ module.exports = [
       const target = randomBigNumberFn({
         max: paymentValue1.add(paymentValue2).add(paymentValue3)
       });
-
-      // The currency will be 0, which corresponds to ETH.
-      const currency = 0;
 
       // Set a random percentage of tickets to reserve for the project owner.
       const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });

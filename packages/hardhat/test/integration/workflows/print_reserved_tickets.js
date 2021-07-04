@@ -6,11 +6,14 @@
 
  Any configured ticket mods will get sent some of the printing reserved tickets at this time.
 */
+
+// The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.
+const currency = 0;
+
 module.exports = [
   {
     description: "Create a project",
     fn: async ({
-      deployer,
       randomSignerFn,
       contracts,
       executeFn,
@@ -24,7 +27,7 @@ module.exports = [
       const owner = randomSignerFn();
 
       await executeFn({
-        caller: deployer,
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
         args: [
@@ -123,9 +126,6 @@ module.exports = [
       BigNumber,
       local: { expectedProjectId, owner, preconfigTicketBeneficiary }
     }) => {
-      // The currency will be 0, which corresponds to ETH.
-      const currency = 0;
-
       // The first amount of premined tickets to print. The amount is currency-denominated, based on the weight of the first funding cycle.
       const preminePrintAmount = randomBigNumberFn({
         min: BigNumber.from(1),
@@ -147,7 +147,7 @@ module.exports = [
         ]
       });
 
-      return { currency, preminePrintAmount };
+      return { preminePrintAmount };
     }
   },
   {
@@ -214,13 +214,7 @@ module.exports = [
       randomBoolFn,
       randomSignerFn,
       incrementFundingCycleIdFn,
-      local: {
-        expectedProjectId,
-        owner,
-        payer,
-        currency,
-        preconfigTicketBeneficiary
-      }
+      local: { expectedProjectId, owner, payer, preconfigTicketBeneficiary }
     }) => {
       // Burn the unused funding cycle id.
       incrementFundingCycleIdFn();

@@ -13,6 +13,8 @@ import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
 
+import "hardhat/console.sol";
+
 /**
   ─────────────────────────────────────────────────────────────────────────────────────────────────
   ─────────██████──███████──██████──██████████──██████████████──██████████████──████████████████───
@@ -1134,10 +1136,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 200
             );
 
+        console.log("aa");
         // If theres an unreserved weighted amount, print tickets representing this weight.
         if (_unreservedWeightedAmount > 0) {
+            console.log("a: %d", _fundingCycle.number);
             // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
             if (_fundingCycle.number == 0) {
+                console.log("b");
                 // Set the count of premined tickets this project has printed.
                 // This will let the owner continue to print premined tickets.
                 preconfigureTicketCountOf[_projectId] =

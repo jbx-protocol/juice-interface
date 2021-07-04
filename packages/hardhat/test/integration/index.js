@@ -170,6 +170,10 @@ module.exports = function() {
     );
     describe("Redeem tickets for overflow", run(workflows.redeem));
     describe("Prints reserved tickets", run(workflows.printReservedTickets));
+    describe(
+      "Projects can print premined tickets before a payment has been made to it",
+      run(workflows.printPreminedTickets)
+    );
     // it("Issues tickets and honors preference", run(workflows.issueTickets));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(
@@ -201,10 +205,6 @@ module.exports = function() {
     // it(
     //   "Governance can set a new fee for future configurations",
     //   run(workflows.setFee)
-    // );
-    // it(
-    //   "Projects can print premined tickets before a payment has been made to it",
-    //   run(workflows.printPreminedTickets)
     // );
     // it(
     //   "Currencies rates are converted to/from correctly",

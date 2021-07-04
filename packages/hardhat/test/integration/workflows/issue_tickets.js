@@ -18,10 +18,14 @@ module.exports = [
       getBalanceFn,
       randomBytesFn,
       incrementProjectIdFn,
+      incrementFundingCycleIdFn,
       constants,
       contracts
     }) => {
       const expectedProjectId = incrementProjectIdFn();
+
+      // Burn the unused funding cycle id.
+      incrementFundingCycleIdFn();
 
       // The owner of the project that will migrate.
       const owner = randomSignerFn();

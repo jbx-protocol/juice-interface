@@ -155,7 +155,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 30; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -178,7 +178,7 @@ module.exports = function() {
       "Issues tickets and honors preference",
       run(workflows.issueTickets)
     );
-    // it("Tap funds up to the configured target", run(workflows.tap));
+    // describe.only("Tap funds up to the configured target", run(workflows.tap));
     // it("Reconfigures a project", run(workflows.reconfigure));
     // it(
     //   "Ballot must be approved for reconfiguration to become active",

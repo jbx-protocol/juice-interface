@@ -7,8 +7,6 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -154,11 +152,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         override
         returns (FundingCycle memory fundingCycle)
     {
-        console.log("p %d: ", _projectId);
         // The project must have funding cycles.
         if (latestIdOf[_projectId] == 0) return _getStruct(0);
 
-        console.log("isshh: %d ", latestIdOf[_projectId]);
         // Check for an active funding cycle.
         uint256 _fundingCycleId = _eligible(_projectId);
 
@@ -961,7 +957,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         returns (FundingCycle memory _fundingCycle)
     {
         _fundingCycle.id = _id;
-        console.log("id %d: ", _id);
         uint256 _packedIntrinsicProperties = _packedIntrinsicPropertiesOf[_id];
 
         _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));

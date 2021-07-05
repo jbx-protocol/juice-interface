@@ -1,12 +1,13 @@
 import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import { BigNumber, constants } from 'ethers'
+import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
-import { useEditingFundingCycleRecurringSelector } from 'hooks/AppSelector'
+import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
 import { useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
+import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 export type BudgetFormFields = {
   duration: string
@@ -27,14 +28,14 @@ export default function BudgetForm({
   const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
-  const isRecurring = useEditingFundingCycleRecurringSelector()
+  const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setTarget(initialTarget)
-    setShowFundingFields(parseWad(initialTarget).lt(constants.MaxUint256))
+    setShowFundingFields(hasFundingTarget(editingFC))
   }, [])
 
   return (
@@ -69,9 +70,11 @@ export default function BudgetForm({
         {showFundingFields && (
           <FormItems.ProjectDuration
             value={form.getFieldValue('duration')}
-            isRecurring={isRecurring}
+            isRecurring={isRecurring(editingFC)}
             onToggleRecurring={() =>
-              dispatch(editingProjectActions.setIsRecurring(!isRecurring))
+              dispatch(
+                editingProjectActions.setIsRecurring(!isRecurring(editingFC)),
+              )
             }
             formItemProps={{
               rules: [{ required: true }],

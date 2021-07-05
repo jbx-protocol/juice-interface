@@ -4,7 +4,11 @@ import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import {
+  decodeFCMetadata,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
 
 import TooltipLabel from '../shared/TooltipLabel'
 
@@ -35,12 +39,14 @@ export default function FundingCycleDetails({
 
       <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
 
-      <Descriptions.Item label="Target">
-        <CurrencySymbol
-          currency={fundingCycle.currency.toNumber() as CurrencyOption}
-        />
-        {formatWad(fundingCycle.target)}
-      </Descriptions.Item>
+      {hasFundingTarget(fundingCycle) && (
+        <Descriptions.Item label="Target">
+          <CurrencySymbol
+            currency={fundingCycle.currency.toNumber() as CurrencyOption}
+          />
+          {formatWad(fundingCycle.target)}
+        </Descriptions.Item>
+      )}
 
       <Descriptions.Item
         label={
@@ -53,28 +59,32 @@ export default function FundingCycleDetails({
         {fromPerbicent(metadata?.reservedRate)}%
       </Descriptions.Item>
 
-      <Descriptions.Item
-        label={
-          <TooltipLabel
-            label="Discount rate"
-            tip="The rate at which payments to future
-            budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tokens received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
-          />
-        }
-      >
-        {fromPerbicent(fundingCycle.discountRate)}%
-      </Descriptions.Item>
+      {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label="Discount rate"
+              tip="The rate at which payments to future
+        budgeting time frames are valued compared to payments to the current one. For example, if this is set to 97%, then someone who pays 100 towards the next budgeting time frame will only receive 97% the amount of tokens received by someone who paid 100 towards this budgeting time frame.  This rewards your earlier adopters."
+            />
+          }
+        >
+          {fromPerbicent(fundingCycle.discountRate)}%
+        </Descriptions.Item>
+      )}
 
-      <Descriptions.Item
-        label={
-          <TooltipLabel
-            label="Bonding curve"
-            tip="This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
-          />
-        }
-      >
-        {fromPerbicent(metadata?.bondingCurveRate)}%
-      </Descriptions.Item>
+      {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label="Bonding curve"
+              tip="This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hodl tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+            />
+          }
+        >
+          {fromPerbicent(metadata?.bondingCurveRate)}%
+        </Descriptions.Item>
+      )}
     </Descriptions>
   )
 }

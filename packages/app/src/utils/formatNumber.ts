@@ -33,6 +33,9 @@ export const fracDiv = (quotient: string, dividend: string) => {
   return parseFloat(quotient) / parseFloat(dividend)
 }
 
+export const mulPercent = (num: BigNumber, percent: string) =>
+  num.mul(parsePerbicent(percent)).div(200)
+
 const separateThousands = (str?: string, separator = thousandsSeparator) => {
   if (!str?.trim().length) return
 

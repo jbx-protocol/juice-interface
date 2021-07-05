@@ -1,12 +1,12 @@
 import { Collapse, Space } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { ModRef } from 'models/mods'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
-import { isRecurring } from 'utils/fundingCycle'
+import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import Mods from './Mods'
@@ -32,8 +32,6 @@ export default function FundingCyclePreview({
 
   if (!fundingCycle) return null
 
-  const showFundingCycle = fundingCycle.target.lt(constants.MaxUint256)
-
   const secsPerDay = 60 * 60 * 24
 
   const today = Math.floor(new Date().valueOf() / 1000 / secsPerDay)
@@ -51,7 +49,7 @@ export default function FundingCyclePreview({
 
   return (
     <div>
-      {showFundingCycle && (
+      {hasFundingTarget(fundingCycle) && (
         <Collapse
           style={{
             background: 'transparent',

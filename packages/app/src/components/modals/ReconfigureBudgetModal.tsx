@@ -43,6 +43,8 @@ export default function ReconfigureBudgetModal({
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
+  console.log('metadata', metadata, fundingCycle)
+
   useEffect(() => {
     if (!fundingCycle || !metadata) return
 

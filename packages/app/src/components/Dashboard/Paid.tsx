@@ -7,13 +7,13 @@ import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import React, { CSSProperties, useContext, useMemo } from 'react'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from './styles'
 import { CurrencyOption } from 'models/currency-option'
-import { constants } from 'ethers'
+import { hasFundingTarget } from 'utils/fundingCycle'
 
 export default function Paid({
   projectId,
@@ -65,8 +65,6 @@ export default function Paid({
       ),
     [fundingCycle?.currency, totalOverflow, converter],
   )
-
-  const hideTarget = fundingCycle?.target.eq(constants.MaxUint256)
 
   const paidInCurrency = balanceInCurrency?.add(fundingCycle?.tapped ?? 0)
 
@@ -129,7 +127,7 @@ export default function Paid({
           </div>
         </div>
 
-        {totalOverflow?.gt(0) && !hideTarget && (
+        {totalOverflow?.gt(0) && (
           <div style={{ fontWeight: 500, textAlign: 'right' }}>
             <div style={smallHeaderStyle(colors)}>
               <TooltipLabel
@@ -198,7 +196,7 @@ export default function Paid({
         />
       )}
 
-      {!hideTarget && (
+      {hasFundingTarget(fundingCycle) && (
         <div style={{ marginTop: 4 }}>
           <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
             <CurrencySymbol

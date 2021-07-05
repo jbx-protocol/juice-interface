@@ -21,7 +21,11 @@ import { ModRef } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
-import { encodeFCMetadata, isRecurring } from 'utils/fundingCycle'
+import {
+  encodeFCMetadata,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -30,10 +34,11 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
+
 import { FCProperties } from '../../models/funding-cycle-properties'
 import BudgetForm, { BudgetFormFields } from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm, { IncentivesFormFields } from './IncentivesForm'
+import IncentivesForm from './IncentivesForm'
 import PayModsForm from './PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
@@ -165,7 +170,9 @@ export default function Create() {
 
     if (!fee) return
 
-    const targetWithFee = editingFC.target?.add(fee).toHexString()
+    const targetWithFee = editingFC.target
+      ?.add(hasFundingTarget(editingFC) ? fee : 0)
+      .toHexString()
 
     const properties: Record<keyof FCProperties, any> = {
       target: targetWithFee,
@@ -316,18 +323,18 @@ export default function Create() {
             callback: () => setProjectFormModalVisible(true),
           },
           {
-            title: 'Spending',
-            callback: () => setPayModsFormModalVisible(true),
-          },
-          {
             title: 'Funding',
             callback: () => setBudgetFormModalVisible(true),
+          },
+          {
+            title: 'Spending',
+            callback: () => setPayModsFormModalVisible(true),
           },
           {
             title: 'Reserved tokens',
             callback: () => setTicketingFormModalVisible(true),
           },
-          ...(isRecurring(editingFC)
+          ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
             ? [
                 {
                   title: 'Incentives',
@@ -367,51 +374,6 @@ export default function Create() {
       </div>
 
       <Drawer
-        visible={payModsModalVisible}
-        placement="right"
-        width={640}
-        onClose={() => {
-          setPayModsFormModalVisible(false)
-        }}
-        destroyOnClose
-      >
-        <PayModsForm
-          initialMods={editingPaymentMods}
-          currency={editingFC.currency.toNumber() as CurrencyOption}
-          target={parseFloat(fromWad(editingFC.target))}
-          onSave={async mods => {
-            await budgetForm.validateFields()
-            onPayModsFormSaved(mods)
-            setPayModsFormModalVisible(false)
-            incrementStep(1)
-          }}
-        />
-      </Drawer>
-
-      <Drawer
-        visible={budgetFormModalVisible}
-        placement="right"
-        width={640}
-        onClose={() => {
-          resetBudgetForm()
-          setBudgetFormModalVisible(false)
-        }}
-        destroyOnClose
-      >
-        <BudgetForm
-          form={budgetForm}
-          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
-          initialTarget={fromWad(editingFC.target)}
-          onSave={async (currency, target) => {
-            await budgetForm.validateFields()
-            onBudgetFormSaved(currency, target)
-            setBudgetFormModalVisible(false)
-            incrementStep(2)
-          }}
-        />
-      </Drawer>
-
-      <Drawer
         visible={projectFormModalVisible}
         placement="right"
         width={640}
@@ -432,21 +394,48 @@ export default function Create() {
       </Drawer>
 
       <Drawer
-        visible={incentivesFormModalVisible}
+        visible={budgetFormModalVisible}
         placement="right"
         width={640}
         onClose={() => {
-          setIncentivesFormModalVisible(false)
+          resetBudgetForm()
+          setBudgetFormModalVisible(false)
+          incrementStep(1)
         }}
+        destroyOnClose
       >
-        <IncentivesForm
-          initialDiscountRate={editingFC.discountRate.toNumber()}
-          initialBondingCurveRate={editingFC.bondingCurveRate}
-          onSave={async (discountRate: number, bondingCurveRate: number) => {
-            await ticketingForm.validateFields()
-            onIncentivesFormSaved(discountRate, bondingCurveRate)
-            setIncentivesFormModalVisible(false)
-            incrementStep(4)
+        <BudgetForm
+          form={budgetForm}
+          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+          initialTarget={fromWad(editingFC.target)}
+          onSave={async (currency, target) => {
+            await budgetForm.validateFields()
+            onBudgetFormSaved(currency, target)
+            setBudgetFormModalVisible(false)
+            incrementStep(1)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={payModsModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          setPayModsFormModalVisible(false)
+          incrementStep(2)
+        }}
+        destroyOnClose
+      >
+        <PayModsForm
+          initialMods={editingPaymentMods}
+          currency={editingFC.currency.toNumber() as CurrencyOption}
+          target={editingFC.target}
+          onSave={async mods => {
+            await budgetForm.validateFields()
+            onPayModsFormSaved(mods)
+            setPayModsFormModalVisible(false)
+            incrementStep(2)
           }}
         />
       </Drawer>
@@ -458,6 +447,7 @@ export default function Create() {
         onClose={() => {
           resetTicketingForm()
           setTicketingFormModalVisible(false)
+          incrementStep(3)
         }}
       >
         <TicketingForm
@@ -468,6 +458,27 @@ export default function Create() {
             onTicketingFormSaved(mods)
             setTicketingFormModalVisible(false)
             incrementStep(3)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={incentivesFormModalVisible}
+        placement="right"
+        width={640}
+        onClose={() => {
+          setIncentivesFormModalVisible(false)
+          incrementStep(4)
+        }}
+      >
+        <IncentivesForm
+          initialDiscountRate={editingFC.discountRate.toNumber()}
+          initialBondingCurveRate={editingFC.bondingCurveRate}
+          onSave={async (discountRate: number, bondingCurveRate: number) => {
+            await ticketingForm.validateFields()
+            onIncentivesFormSaved(discountRate, bondingCurveRate)
+            setIncentivesFormModalVisible(false)
+            incrementStep(4)
           }}
         />
       </Drawer>

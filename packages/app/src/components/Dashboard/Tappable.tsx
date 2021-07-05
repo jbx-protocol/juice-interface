@@ -6,14 +6,14 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { smallHeaderStyle } from './styles'
-import { CurrencyOption } from 'models/currency-option'
-import { constants } from 'ethers'
 
 export default function Tappable({
   fundingCycle,
@@ -109,7 +109,7 @@ export default function Tappable({
           currency={fundingCycle.currency.toNumber() as CurrencyOption}
         />
         {formatWad(fundingCycle.tapped) || '0'}
-        {fundingCycle.target.eq(constants.MaxUint256) ? null : (
+        {hasFundingTarget(fundingCycle) && (
           <span>/{formatWad(fundingCycle.target)} </span>
         )}{' '}
         withdrawn

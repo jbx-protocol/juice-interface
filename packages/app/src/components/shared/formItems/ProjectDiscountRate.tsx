@@ -16,14 +16,13 @@ export default function ProjectDiscountRate({
   console.log('projdis', value)
   return (
     <Form.Item
-      extra="The discount rate determines how you'll reward earlier adopters and investors of your Juicebox.
-      For example, if this is set to 97%, then someone who pays 100 towards the next funding cycle will only receive 97% the amount of tokens received by someone who paid 100 towards this funding cycle."
+      extra="The discount rate determines how you'll reward earlier adopters and investors of your Juicebox. For example, if this is set to 90%, someone who pays this project in the next funding cycle will only receive 90% of the tokens per amount they would have paid in this funding cycle."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}
     >
       <NumberSlider
-        min={95}
+        min={10}
         value={value}
         suffix="%"
         onChange={onChange}

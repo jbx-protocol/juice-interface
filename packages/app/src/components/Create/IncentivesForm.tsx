@@ -30,8 +30,6 @@ export default function IncentivesForm({
 
   const [showAdvanced, setShowAdvanced] = useState<boolean>()
 
-  console.log('init', initialDiscountRate, initialBondingCurveRate)
-
   const saveButton = (
     <Form.Item>
       <Button
@@ -87,24 +85,8 @@ export default function IncentivesForm({
               tooltipVisible={false}
               dots
               onChange={val => {
-                setBondingCurveRate((4 - val ?? 0) * 25)
-                switch (val) {
-                  case 0:
-                    setDiscountRate(100)
-                    break
-                  case 1:
-                    setDiscountRate(98.5)
-                    break
-                  case 2:
-                    setDiscountRate(97.5)
-                    break
-                  case 3:
-                    setDiscountRate(96.5)
-                    break
-                  case 4:
-                    setDiscountRate(95)
-                    break
-                }
+                setBondingCurveRate((4 - val) * 25)
+                setDiscountRate(100 - val * 5)
               }}
             />
             <div style={{ color: colors.text.secondary, marginTop: 30 }}>

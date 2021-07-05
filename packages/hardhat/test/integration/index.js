@@ -183,7 +183,9 @@ module.exports = function() {
       run(workflows.issueTickets)
     );
     describe("Tap funds up to the configured target", run(workflows.tap));
-    // it("Reconfigures a project", run(workflows.reconfigure));
+    describe("Reconfigures a project", run(workflows.reconfigure));
+
+    // it("A funding cycle configuration can have a limit", run(workflows.limit));
     // it(
     //   "Ballot must be approved for reconfiguration to become active",
     //   run(workflows.approvedBallot)
@@ -229,6 +231,5 @@ module.exports = function() {
     //   "A project can be created without a payment terminal, and can set one after",
     //   run(workflows.setTerminal)
     // );
-    // it("A funding cycle configuration can have a limit", run(workflows.limit));
   }
 };

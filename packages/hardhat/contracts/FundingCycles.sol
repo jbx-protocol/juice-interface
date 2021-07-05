@@ -93,10 +93,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         returns (FundingCycle memory)
     {
         // The project must have funding cycles.
-        require(
-            latestIdOf[_projectId] > 0,
-            "FundingCycles::getQueuedOf: NOT_FOUND"
-        );
+        if (latestIdOf[_projectId] == 0) return _getStruct(0);
 
         // Get a reference to the standby funding cycle.
         uint256 _fundingCycleId = _standby(_projectId);
@@ -113,6 +110,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
 
+            // There's no queued if the current has a duration of 0.
+            if (_fundingCycle.duration == 0) return _getStruct(0);
+
             // Check to see if the correct ballot is approved for this funding cycle.
             if (
                 // _fundingCycle.start <= block.timestamp &&
@@ -125,7 +125,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         _fundingCycleId = latestIdOf[_projectId];
 
         // A funding cycle must exist.
-        require(_fundingCycleId > 0, "FundingCycle::getQueuedOf: NOT_FOUND");
+        if (_fundingCycleId == 0) return _getStruct(0);
 
         // Return a mock of what its second next up funding cycle would be like.
         // Use second next because the next would be a mock of the current funding cycle.
@@ -200,7 +200,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // }
 
         // The funding cycle cant be 0.
-        require(_fundingCycleId > 0, "FundingCycles::getCurrentOf: NOT_FOUND");
+        if (_fundingCycleId == 0) return _getStruct(0);
 
         // The funding cycle to base a current one on.
         _fundingCycle = _getStruct(_fundingCycleId);

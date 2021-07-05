@@ -61,7 +61,7 @@ module.exports = [
       // The target of the first funding cycle should be the same as the payment value.
       const target1 = paymentValue;
 
-      // discount rate of 0 means non recurring, which isn't desired.
+      // make recurring.
       const discountRate1 = randomBigNumberFn({
         min: BigNumber.from(1),
         max: constants.MaxPercent
@@ -173,7 +173,11 @@ module.exports = [
         max: constants.MaxUint16
       });
       const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
-      const discountRate2 = randomBigNumberFn({ max: constants.MaxPercent });
+      // make recurring.
+      const discountRate2 = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: constants.MaxPercent
+      });
       const ballot2 = constants.AddressZero;
       const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
       const bondingCurveRate2 = randomBigNumberFn({

@@ -3,12 +3,11 @@ import { Button } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { ProjectMetadata } from 'models/project-metadata'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, parseWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
@@ -28,16 +27,12 @@ export default function Pay({
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const { contracts, transactor } = useContext(UserContext)
-
   const converter = useCurrencyConverter()
 
   const weiPayAmt =
     payAs === 1 ? converter.usdToWei(payAmount) : parseWad(payAmount)
 
   function pay() {
-    if (!transactor || !contracts || !weiPayAmt) return
-
     setPayModalVisible(true)
   }
 

@@ -107,12 +107,17 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
-  const ticketSupply = useContractReader<BigNumber>({
+  const stakedTokenSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
-    functionName: 'totalSupply',
+    functionName: 'stakedTotalSupplyOf',
     args: [projectId?.toHexString()],
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
+  })
+  const unstakedTokenSupply = useContractReader<BigNumber>({
+    contract: ticketContract,
+    functionName: 'totalSupply',
+    valueDidChange: bigNumbersDiff,
   })
   const reservedTickets = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
@@ -170,7 +175,9 @@ export default function Rewards({
   })
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
-  const totalSupply = ticketSupply?.add(reservedTickets ?? 0)
+  const totalSupply = stakedTokenSupply
+    ?.add(unstakedTokenSupply ?? 0)
+    .add(reservedTickets ?? 0)
 
   const share = totalSupply?.gt(0)
     ? totalBalance

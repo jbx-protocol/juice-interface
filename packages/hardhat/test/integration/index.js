@@ -185,7 +185,10 @@ module.exports = function() {
     describe("Tap funds up to the configured target", run(workflows.tap));
     describe("Reconfigures a project", run(workflows.reconfigure));
 
-    // it("A funding cycle configuration can have a limit", run(workflows.limit));
+    describe(
+      "A funding cycle configuration can have a limit",
+      run(workflows.limit)
+    );
     // it(
     //   "Ballot must be approved for reconfiguration to become active",
     //   run(workflows.approvedBallot)

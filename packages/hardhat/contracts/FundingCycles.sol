@@ -7,8 +7,6 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -162,6 +160,30 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Keep a reference to the eligible funding cycle.
         FundingCycle memory _fundingCycle;
 
+        // console.log("q: %d", _fundingCycleId);
+        // // If a standy funding cycle exists,
+        // // check to see if it has been approved by the base funding cycle's ballot.
+        // if (_fundingCycleId > 0) {
+        //     // Get the necessary properties for the standby funding cycle.
+        //     _fundingCycle = _getStruct(_fundingCycleId);
+
+        //     console.log("q: %d", _fundingCycle.start);
+        //     console.log("q duration: %d", _fundingCycle.duration);
+        //     console.log("q now: %d", block.timestamp);
+        //     // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
+        //     if (
+        //         _fundingCycle.start <= block.timestamp &&
+        //         _isApproved(_fundingCycle)
+        //     ) return _fundingCycle;
+        // }
+        // console.log("w: %d", _fundingCycleId);
+
+        // // No upcoming funding cycle found that is eligible to become active,
+        // // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+        // _fundingCycleId = _fundingCycle.basedOn;
+
+        // console.log("q: %d", _fundingCycleId);
+
         // If a standy funding cycle exists,
         // check to see if it has been approved by the base funding cycle's ballot.
         if (_fundingCycleId > 0) {
@@ -170,34 +192,18 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
             if (
-                // _fundingCycle.start <= block.timestamp &&
+                _fundingCycle.start <= block.timestamp &&
                 _isApproved(_fundingCycle)
             ) return _fundingCycle;
+
+            // If it hasn't been approved, set the ID to be the based funding cycle,
+            // which carries the last approved configuration.
+            _fundingCycleId = _fundingCycle.basedOn;
+        } else {
+            // No upcoming funding cycle found that is eligible to become active,
+            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+            _fundingCycleId = latestIdOf[_projectId];
         }
-
-        // No upcoming funding cycle found that is eligible to become active,
-        // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-        _fundingCycleId = latestIdOf[_projectId];
-        // // If a standy funding cycle exists,
-        // // check to see if it has been approved by the base funding cycle's ballot.
-        // if (_fundingCycleId > 0) {
-        //     // Get the necessary properties for the standby funding cycle.
-        //     _fundingCycle = _getStruct(_fundingCycleId);
-
-        //     // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
-        //     if (
-        //         // _fundingCycle.start <= block.timestamp &&
-        //         _isApproved(_fundingCycle)
-        //     ) return _fundingCycle;
-
-        //     // If it hasn't been approved, set the ID to be the based funding cycle,
-        //     // which carries the last approved configuration.
-        //     _fundingCycleId = _fundingCycle.basedOn;
-        // } else {
-        //     // No upcoming funding cycle found that is eligible to become active,
-        //     // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-        //     _fundingCycleId = latestIdOf[_projectId];
-        // }
 
         // The funding cycle cant be 0.
         if (_fundingCycleId == 0) return _getStruct(0);
@@ -490,6 +496,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                     _configured
                 );
             }
+            // The ballot must have ended.
         } else {
             _mustStartOnOrAfter = block.timestamp;
         }
@@ -1124,7 +1131,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal pure returns (uint256 weight) {
+    ) internal view returns (uint256 weight) {
         // A subsequent cycle to one with a duration of 0 should have the next possible weight.
         if (_baseFundingCycle.duration == 0)
             return
@@ -1149,10 +1156,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // If there's no limit or if the limit is greater than the start distance,
         // apply the discount rate of the base.
-        if (
-            (_limitLength == 0 || _limitLength > _startDistance) &&
-            _baseFundingCycle.discountRate < 200
-        ) {
+        if (_limitLength == 0 || _limitLength > _startDistance) {
+            // If the discount rate is 200, return the same weight.
+            if (_baseFundingCycle.discountRate == 200) return weight;
+
             uint256 _discountMultiple =
                 _startDistance / (_baseFundingCycle.duration * SECONDS_IN_DAY);
 

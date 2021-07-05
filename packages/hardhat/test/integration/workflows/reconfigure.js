@@ -15,7 +15,6 @@ module.exports = [
   {
     description: "Deploy a project",
     fn: async ({
-      deployer,
       constants,
       contracts,
       executeFn,
@@ -60,7 +59,7 @@ module.exports = [
       });
 
       await executeFn({
-        caller: deployer,
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "deploy",
         args: [
@@ -138,7 +137,7 @@ module.exports = [
       expectedPackedMetadata1 = expectedPackedMetadata1.shl(8);
 
       // Expect the funding cycle's weight to be the base weight.
-      const expectedWeight = await contracts.fundingCycles.BASE_WEIGHT();
+      const expectedInitialWeight = await contracts.fundingCycles.BASE_WEIGHT();
 
       // Expect the funding cycle's fee to be the juicer's fee.
       const expectedFee = await contracts.juicer.fee();
@@ -159,7 +158,7 @@ module.exports = [
           timeMark,
           // Cycle limit should be 0 for the first funding cycle.
           cycleLimit1,
-          expectedWeight,
+          expectedInitialWeight,
           ballot1,
           timeMark,
           duration1,
@@ -174,7 +173,7 @@ module.exports = [
       return {
         originalTimeMark: timeMark,
         expectedPackedMetadata1,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       };
@@ -273,7 +272,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
         expectedProjectId,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -300,7 +299,7 @@ module.exports = [
           BigNumber.from(expectedInitialBasedOn),
           timeMark,
           cycleLimit2,
-          expectedWeight,
+          expectedInitialWeight,
           ballot2,
           // The start time should stay the same.
           originalTimeMark,
@@ -409,7 +408,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
         expectedProjectId,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -426,7 +425,7 @@ module.exports = [
           BigNumber.from(expectedInitialBasedOn),
           timeMark,
           cycleLimit1,
-          expectedWeight,
+          expectedInitialWeight,
           ballot1,
           // The start time should stay the same.
           originalTimeMark,
@@ -557,7 +556,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleId2,
         expectedFundingCycleNumber2,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -574,7 +573,7 @@ module.exports = [
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
-          expectedWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),
@@ -607,7 +606,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedProjectId,
         expectedFundingCycleNumber1,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -624,7 +623,7 @@ module.exports = [
           BigNumber.from(expectedInitialBasedOn),
           configuredTimeMark,
           cycleLimit1,
-          expectedWeight,
+          expectedInitialWeight,
           ballot1,
           // The start time should stay the same.
           originalTimeMark,
@@ -657,7 +656,7 @@ module.exports = [
         expectedProjectId,
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -674,7 +673,7 @@ module.exports = [
           BigNumber.from(expectedInitialBasedOn),
           configuredTimeMark,
           cycleLimit1,
-          expectedWeight,
+          expectedInitialWeight,
           ballot1,
           // The start time should stay the same.
           originalTimeMark,
@@ -711,7 +710,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleId2,
         expectedFundingCycleNumber2,
-        expectedWeight,
+        expectedInitialWeight,
         expectedFee,
         expectedTapped
       }
@@ -728,7 +727,7 @@ module.exports = [
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
-          expectedWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),

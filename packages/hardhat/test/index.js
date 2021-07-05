@@ -249,11 +249,12 @@ describe("Juice", async function() {
     this.randomBigNumberFn = ({
       min = ethers.BigNumber.from(0),
       max = this.constants.MaxUint256,
-      precision = 10000000
+      precision = 10000000,
+      favorEdges = true
     } = {}) => {
       // To test an edge condition, return the min or the max and the numbers around them more often.
       // Return the min or the max or the numbers around them 50% of the time.
-      if (Math.random() < 0.5) {
+      if (favorEdges && Math.random() < 0.5) {
         const r = Math.random();
         if (r <= 0.25 && min.add(1).lt(max)) return min.add(1);
         if (r >= 0.75 && max.sub(1).gt(min)) return max.sub(1);
@@ -306,18 +307,19 @@ describe("Juice", async function() {
     this.randomStringFn = ({
       exclude = [],
       prepend = "",
-      canBeEmpty = true
+      canBeEmpty = true,
+      favorEdges = true
     } = {}) => {
-      const seed = this.randomBigNumberFn();
+      const seed = this.randomBigNumberFn({
+        min: canBeEmpty ? BigNumber.from(0) : BigNumber.from(1),
+        favorEdges
+      });
       const candidate = prepend.concat(
         Math.random()
           .toString(36)
           .substr(2, seed)
       );
-      if (
-        (candidate.length === 0 && !canBeEmpty) ||
-        exclude.includes(candidate)
-      )
+      if (exclude.includes(candidate))
         return this.randomStringFn({ exclude, prepend, canBeEmpty });
       return candidate;
     };
@@ -338,7 +340,8 @@ describe("Juice", async function() {
           seed: this.randomBigNumberFn({
             min,
             max
-          })
+          }),
+          favorEdges: false
         })
       );
       if (exclude.includes(candidate))

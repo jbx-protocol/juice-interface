@@ -4,6 +4,7 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { useState } from 'react'
+import { hasFundingTarget } from 'utils/fundingCycle'
 
 import ReconfigureBudgetModal from '../modals/ReconfigureBudgetModal'
 import FundingCycleDetails from './FundingCycleDetails'
@@ -43,11 +44,15 @@ export default function QueuedFundingCycle({
       <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
         {isOwner && (
           <Button onClick={() => setReconfigureModalVisible(true)} size="small">
-            Reconfigure
+            {queuedCycle && !hasFundingTarget(queuedCycle)
+              ? 'Add funding details'
+              : 'Reconfigure'}
           </Button>
         )}
         {queuedCycle ? (
-          <FundingCycleDetails fundingCycle={queuedCycle} />
+          hasFundingTarget(queuedCycle) ? (
+            <FundingCycleDetails fundingCycle={queuedCycle} />
+          ) : null
         ) : (
           <div>No upcoming funding cycle</div>
         )}

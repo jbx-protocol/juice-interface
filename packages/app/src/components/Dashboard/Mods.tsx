@@ -11,7 +11,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formattedNum, fromPerbicent, fromWad } from 'utils/formatNumber'
+import { formatWad, fromPerbicent, mulPercent } from 'utils/formatNumber'
 
 import { FundingCycle } from '../../models/funding-cycle'
 
@@ -37,6 +37,8 @@ export default function Mods({
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
+
+    console.log('mods', mods)
 
     return {
       editableMods:
@@ -135,7 +137,7 @@ export default function Mods({
       {fundingCycle ? (
         <Modal
           visible={modalVisible}
-          title="Edit auto payouts"
+          title="Edit payouts"
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)
@@ -148,22 +150,24 @@ export default function Mods({
             mods={editingMods}
             lockedMods={lockedMods}
             onModsChanged={setEditingMods}
-            formatPercent={percent => (
-              <span>
-                {fundingCycle.currency ? (
-                  <CurrencySymbol
-                    currency={
-                      fundingCycle.currency.toNumber() as CurrencyOption
-                    }
-                  />
-                ) : null}
-                {formattedNum(
-                  (parseFloat(fromWad(fundingCycle.target)) *
-                    parseFloat(fromPerbicent(percent))) /
-                    100,
-                )}
-              </span>
-            )}
+            formatPercent={
+              fundingCycle.target.lt(constants.MaxUint256)
+                ? percent => (
+                    <span>
+                      {fundingCycle.currency !== undefined ? (
+                        <CurrencySymbol
+                          currency={
+                            fundingCycle.currency.toNumber() as CurrencyOption
+                          }
+                        />
+                      ) : null}
+                      {formatWad(
+                        mulPercent(fundingCycle.target, percent.toString()),
+                      )}
+                    </span>
+                  )
+                : undefined
+            }
             addButtonText="Add a payout"
           />
         </Modal>

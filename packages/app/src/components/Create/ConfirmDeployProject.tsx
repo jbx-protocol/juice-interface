@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import Mods from 'components/Dashboard/Mods'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { constants } from 'ethers'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
@@ -16,7 +15,7 @@ import {
   fromPerbicent,
   fromWad,
 } from 'utils/formatNumber'
-import { isRecurring } from 'utils/fundingCycle'
+import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { feeForAmount } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
@@ -49,8 +48,6 @@ export default function ConfirmDeployProject() {
     )
   }
 
-  const showTarget = editingFC.target.lt(constants.MaxUint256)
-
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
@@ -64,7 +61,7 @@ export default function ConfirmDeployProject() {
           value={'@' + orEmpty(editingProject?.handle)}
         />
       </Space>
-      {showTarget && (
+      {hasFundingTarget(editingFC) && (
         <Space size="large">
           <Statistic
             title="Duration"
@@ -82,19 +79,19 @@ export default function ConfirmDeployProject() {
         value={orEmpty(editingProject?.metadata.infoUri)}
       />
       <Space size="large" align="end">
-        {editingFC && isRecurring(editingFC) && (
+        <Statistic
+          title="Reserved tokens"
+          value={fromPerbicent(editingFC?.reserved)}
+          suffix="%"
+        />
+        {editingFC && isRecurring(editingFC) && hasFundingTarget(editingFC) && (
           <Statistic
             title="Discount rate"
             value={fromPerbicent(editingFC?.discountRate)}
             suffix="%"
           />
         )}
-        <Statistic
-          title="Reserved tokens"
-          value={fromPerbicent(editingFC?.reserved)}
-          suffix="%"
-        />
-        {editingFC && isRecurring(editingFC) && (
+        {editingFC && isRecurring(editingFC) && hasFundingTarget(editingFC) && (
           <Statistic
             title="Bonding curve rate"
             value={fromPerbicent(editingFC?.bondingCurveRate)}

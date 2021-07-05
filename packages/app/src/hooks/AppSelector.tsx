@@ -8,8 +8,3 @@ export const useEditingFundingCycleSelector = () =>
   useAppSelector(state =>
     deserializeFundingCycle(state.editingProject.fundingCycle),
   )
-
-export const useEditingFundingCycleRecurringSelector = () =>
-  useAppSelector(
-    state => state.editingProject.fundingCycle.discountRate !== '0',
-  )

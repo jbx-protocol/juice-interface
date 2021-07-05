@@ -4,7 +4,14 @@ import { FormItems } from 'components/shared/formItems'
 import { CurrencyOption } from 'models/currency-option'
 import { ModRef } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
-import { formattedNum } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fromPerbicent,
+  mulPercent,
+  parsePerbicent,
+} from 'utils/formatNumber'
+import { BigNumber, constants } from 'ethers'
 
 export default function PayModsForm({
   initialMods,
@@ -14,7 +21,7 @@ export default function PayModsForm({
 }: {
   initialMods: ModRef[]
   currency: CurrencyOption
-  target: number
+  target: BigNumber
   onSave: (mods: ModRef[]) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
@@ -47,17 +54,18 @@ export default function PayModsForm({
           mods={mods}
           onModsChanged={setMods}
           addButtonText="Add a payout"
-          formatPercent={percent => (
-            <span>
-              {currency !== undefined ? (
-                <CurrencySymbol currency={currency} />
-              ) : null}
-              {formattedNum(target * (percent / 100), {
-                decimals: 0,
-                padEnd: 0,
-              })}
-            </span>
-          )}
+          formatPercent={
+            target.lt(constants.MaxUint256)
+              ? percent => (
+                  <span>
+                    {currency !== undefined ? (
+                      <CurrencySymbol currency={currency} />
+                    ) : null}
+                    {formatWad(mulPercent(target, percent.toString()))}
+                  </span>
+                )
+              : undefined
+          }
         />
         <Form.Item>
           <Button

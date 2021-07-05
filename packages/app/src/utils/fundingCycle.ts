@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { constants } from 'ethers'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 
 import { EditingFundingCycle } from './serializers'
@@ -39,3 +40,7 @@ export const encodeFCMetadata = (
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.gt(0)
+
+export const hasFundingTarget = (
+  fundingCycle: FundingCycle | EditingFundingCycle,
+) => fundingCycle.target.lt(constants.MaxUint256)

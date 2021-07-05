@@ -7,7 +7,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
-  useEditingFundingCycleRecurringSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
@@ -15,6 +14,7 @@ import { useContext, useEffect } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { normalizeHandle } from 'utils/formatHandle'
 import { formatWad, fromWad } from 'utils/formatNumber'
+import { isRecurring } from 'utils/fundingCycle'
 
 type FormFields = {
   name: string
@@ -29,18 +29,17 @@ export default function DefineProject() {
     forThemeOption,
   } = useContext(ThemeContext)
   const [form] = useForm<FormFields>()
-  const editingBudget = useEditingFundingCycleSelector()
+  const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const isRecurring = useEditingFundingCycleRecurringSelector()
   const dispatch = useAppDispatch()
 
   useEffect(
     () =>
       form.setFieldsValue({
         name: editingProject?.metadata.name ?? '',
-        target: fromWad(editingBudget?.target) ?? '0',
-        duration: editingBudget?.duration.toString() ?? '0',
-        currency: (editingBudget?.currency.toNumber() as CurrencyOption) ?? 0,
+        target: fromWad(editingFC?.target) ?? '0',
+        duration: editingFC?.duration.toString() ?? '0',
+        currency: (editingFC?.currency.toNumber() as CurrencyOption) ?? 0,
       }),
     [],
   )
@@ -116,7 +115,7 @@ export default function DefineProject() {
             <FormItems.ProjectDuration
               name="duration"
               value={form.getFieldValue('duration')}
-              isRecurring={isRecurring}
+              isRecurring={isRecurring(editingFC)}
               onToggleRecurring={() =>
                 dispatch(editingProjectActions.setIsRecurring(!isRecurring))
               }
@@ -149,12 +148,12 @@ export default function DefineProject() {
             {bold(editingProject?.metadata.name, 'Your project')} needs{' '}
             <CurrencySymbol
               style={{ color: colors.text.primary, fontWeight: 600 }}
-              currency={editingBudget?.currency.toNumber() as CurrencyOption}
+              currency={editingFC?.currency.toNumber() as CurrencyOption}
             />
-            {bold(formatWad(editingBudget?.target) ?? '0')}{' '}
-            {isRecurring && (
+            {bold(formatWad(editingFC?.target) ?? '0')}{' '}
+            {isRecurring(editingFC) && (
               <span>
-                every {bold(editingBudget?.duration.toString(), '0')} days
+                every {bold(editingFC?.duration.toString(), '0')} days
               </span>
             )}{' '}
             to work. All extra money received is overflow.

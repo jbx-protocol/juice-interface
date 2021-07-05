@@ -9,24 +9,21 @@ import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
-export type BudgetFormFields = {
-  duration: string
-}
-
 export default function BudgetForm({
-  form,
   initialCurrency,
   initialTarget,
+  initialDuration,
   onSave,
 }: {
-  form: FormInstance<BudgetFormFields>
   initialCurrency: CurrencyOption
   initialTarget: string
-  onSave: (currency: CurrencyOption, target: string) => void
+  initialDuration: string
+  onSave: (currency: CurrencyOption, target: string, duration: string) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
+  const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
   const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
@@ -35,6 +32,7 @@ export default function BudgetForm({
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setTarget(initialTarget)
+    setDuration(initialDuration)
     setShowFundingFields(hasFundingTarget(editingFC))
   }, [])
 
@@ -50,7 +48,7 @@ export default function BudgetForm({
         them for a portion of funds from the overflow pool.
       </p>
 
-      <Form form={form} layout="vertical">
+      <Form layout="vertical">
         <Form.Item>
           <Space>
             <Switch
@@ -60,6 +58,7 @@ export default function BudgetForm({
                   checked ? '10000' : fromWad(constants.MaxUint256) || '0',
                 )
                 setCurrency(1)
+                setDuration(checked ? '30' : '0')
                 dispatch(editingProjectActions.setIsRecurring(checked))
                 setShowFundingFields(checked)
               }}
@@ -69,13 +68,14 @@ export default function BudgetForm({
         </Form.Item>
         {showFundingFields && (
           <FormItems.ProjectDuration
-            value={form.getFieldValue('duration')}
+            value={duration}
             isRecurring={isRecurring(editingFC)}
             onToggleRecurring={() =>
               dispatch(
                 editingProjectActions.setIsRecurring(!isRecurring(editingFC)),
               )
             }
+            onValueChange={val => setDuration(val ?? '0')}
             formItemProps={{
               rules: [{ required: true }],
             }}
@@ -97,7 +97,7 @@ export default function BudgetForm({
             style={{ marginTop: 20 }}
             htmlType="submit"
             type="primary"
-            onClick={() => onSave(currency, target)}
+            onClick={() => onSave(currency, target, duration)}
           >
             Save
           </Button>

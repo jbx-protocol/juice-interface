@@ -45,7 +45,7 @@ export const editingProjectSlice = createSlice({
       target: constants.MaxUint256,
       currency: BigNumber.from(1),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-      duration: BigNumber.from(30),
+      duration: BigNumber.from(0),
       tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
       fee: BigNumber.from(15),

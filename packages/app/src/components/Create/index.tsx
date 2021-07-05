@@ -36,7 +36,7 @@ import {
 import { feeForAmount } from 'utils/math'
 
 import { FCProperties } from '../../models/funding-cycle-properties'
-import BudgetForm, { BudgetFormFields } from './BudgetForm'
+import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
 import PayModsForm from './PayModsForm'
@@ -67,7 +67,6 @@ export default function Create() {
     boolean
   >(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
-  const [budgetForm] = useForm<BudgetFormFields>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
   const editingFC = useEditingFundingCycleSelector()
@@ -88,11 +87,6 @@ export default function Create() {
     setCurrentStep(currentStep + 1)
   }
 
-  const resetBudgetForm = () =>
-    budgetForm.setFieldsValue({
-      duration: editingFC?.duration.toString() ?? '0',
-    })
-
   const resetProjectForm = () =>
     projectForm.setFieldsValue({
       name: editingProjectInfo?.metadata.name ?? '',
@@ -109,15 +103,16 @@ export default function Create() {
   const onPayModsFormSaved = (mods: ModRef[]) =>
     dispatch(editingProjectActions.setPaymentMods(mods))
 
-  const onBudgetFormSaved = (currency: CurrencyOption, target: string) => {
-    const fields = budgetForm.getFieldsValue(true)
+  const onBudgetFormSaved = (
+    currency: CurrencyOption,
+    target: string,
+    duration: string,
+  ) => {
     dispatch(editingProjectActions.setTarget(target))
-    dispatch(
-      editingProjectActions.setDuration(parseFloat(fields.duration).toString()),
-    )
+    dispatch(editingProjectActions.setDuration(duration))
     dispatch(editingProjectActions.setCurrency(currency))
 
-    if (fields?.duration && target) incrementStep(2)
+    if (target) incrementStep(2)
   }
 
   const onProjectFormSaved = () => {
@@ -145,7 +140,6 @@ export default function Create() {
   }
 
   useLayoutEffect(() => {
-    resetBudgetForm()
     resetProjectForm()
     resetTicketingForm()
   }, [])
@@ -398,19 +392,17 @@ export default function Create() {
         placement="right"
         width={640}
         onClose={() => {
-          resetBudgetForm()
           setBudgetFormModalVisible(false)
           incrementStep(1)
         }}
         destroyOnClose
       >
         <BudgetForm
-          form={budgetForm}
           initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
           initialTarget={fromWad(editingFC.target)}
-          onSave={async (currency, target) => {
-            await budgetForm.validateFields()
-            onBudgetFormSaved(currency, target)
+          initialDuration={editingFC?.duration.toString()}
+          onSave={async (currency, target, duration) => {
+            onBudgetFormSaved(currency, target, duration)
             setBudgetFormModalVisible(false)
             incrementStep(1)
           }}
@@ -432,7 +424,6 @@ export default function Create() {
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
           onSave={async mods => {
-            await budgetForm.validateFields()
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)
             incrementStep(2)

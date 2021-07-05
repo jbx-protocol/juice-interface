@@ -44,12 +44,10 @@ export default function QueuedFundingCycle({
       <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
         {isOwner && (
           <Button onClick={() => setReconfigureModalVisible(true)} size="small">
-            {queuedCycle && !hasFundingTarget(queuedCycle)
-              ? 'Add funding details'
-              : 'Reconfigure'}
+            {queuedCycle?.id.gt(0) ? 'Reconfigure' : 'Add funding details'}
           </Button>
         )}
-        {queuedCycle ? (
+        {queuedCycle?.id.gt(0) ? (
           hasFundingTarget(queuedCycle) ? (
             <FundingCycleDetails fundingCycle={queuedCycle} />
           ) : null

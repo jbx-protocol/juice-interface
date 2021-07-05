@@ -43,8 +43,6 @@ export default function ReconfigureBudgetModal({
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
-  console.log('metadata', metadata, fundingCycle)
-
   useEffect(() => {
     if (!fundingCycle || !metadata) return
 
@@ -112,17 +110,18 @@ export default function ReconfigureBudgetModal({
       width={600}
     >
       <Form form={form} layout="vertical">
-        {/* <FormItems.ProjectTarget
+        <FormItems.ProjectTarget
           name="target"
           value={form.getFieldValue('target')}
           onValueChange={val => form.setFieldsValue({ target: val })}
           currency={form.getFieldValue('currency')}
           onCurrencyChange={currency => form.setFieldsValue({ currency })}
           formItemProps={{ rules: [{ required: true }] }}
-        /> */}
+        />
         <FormItems.ProjectDuration
           name="duration"
           value={form.getFieldValue('duration')}
+          onValueChange={duration => form.setFieldsValue({ duration })}
           isRecurring={isRecurring}
           onToggleRecurring={() => setIsRecurring(!isRecurring)}
         />

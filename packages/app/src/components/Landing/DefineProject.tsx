@@ -115,6 +115,7 @@ export default function DefineProject() {
             <FormItems.ProjectDuration
               name="duration"
               value={form.getFieldValue('duration')}
+              onValueChange={duration => form.setFieldsValue({ duration })}
               isRecurring={isRecurring(editingFC)}
               onToggleRecurring={() =>
                 dispatch(editingProjectActions.setIsRecurring(!isRecurring))

@@ -11,10 +11,12 @@ export default function ProjectDuration({
   isRecurring,
   hideLabel,
   onToggleRecurring,
+  onValueChange,
 }: {
   value: string | undefined
   isRecurring: boolean | undefined
   onToggleRecurring: VoidFunction
+  onValueChange: (val?: string) => void
 } & FormItemExt) {
   return (
     <Form.Item
@@ -27,6 +29,7 @@ export default function ProjectDuration({
         placeholder="30"
         value={value}
         suffix="days"
+        onChange={onValueChange}
         accessory={
           <InputAccessoryButton
             content={isRecurring ? 'recurring' : 'one-time'}

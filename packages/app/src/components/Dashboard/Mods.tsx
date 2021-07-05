@@ -38,8 +38,6 @@ export default function Mods({
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
 
-    console.log('mods', mods)
-
     return {
       editableMods:
         mods?.filter(m => !m.lockedUntil || m.lockedUntil < now) ?? [],

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
@@ -14,6 +14,7 @@ import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import Pay from './Pay'
 import PayEvents from './PayEvents'
+import PrintPremined from './PrintPremined'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
 
@@ -123,11 +124,17 @@ export default function Project({
           />
         </Col>
         <Col xs={24} md={12}>
-          <Pay
-            metadata={metadata}
-            fundingCycle={fundingCycle}
-            projectId={projectId}
-          />
+          <Space direction="vertical" style={{ width: '100%' }} size="large">
+            {balance?.eq(0) &&
+              fundingCycle?.tapped.eq(0) &&
+              fundingCycle.number.eq(1) &&
+              isOwner && <PrintPremined projectId={projectId} />}
+            <Pay
+              metadata={metadata}
+              fundingCycle={fundingCycle}
+              projectId={projectId}
+            />
+          </Space>
         </Col>
       </Row>
 

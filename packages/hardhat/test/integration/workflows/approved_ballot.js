@@ -44,7 +44,8 @@ module.exports = [
       const duration1 = randomBigNumberFn({
         min: BigNumber.from(1),
         // The ballot duration is in seconds, but duration is in days.
-        max: (await ballot.duration()).div(86400).sub(1)
+        // Take an arbitrary amount of seconds away from the end.
+        max: (await ballot.duration()).div(86400).sub(5)
       });
       const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
 
@@ -466,20 +467,23 @@ module.exports = [
   {
     description:
       "Fast forward to the cycle that starts soonest after the ballot has expired",
-    fn: async ({
+    fn: ({
       fastforwardFn,
       randomBigNumberFn,
       BigNumber,
-      local: { ballot }
+      local: { duration1, cycleCountDuringBallot }
     }) =>
       // Add random padding to comfortably fit the fast forward within the next cycle.
       fastforwardFn(
-        (await ballot.duration()).add(
-          randomBigNumberFn({
-            min: BigNumber.from(2),
-            max: BigNumber.from(86390)
-          })
-        )
+        duration1
+          .mul(cycleCountDuringBallot.sub(1))
+          .mul(86400)
+          .add(
+            randomBigNumberFn({
+              min: BigNumber.from(3),
+              max: BigNumber.from(84397)
+            })
+          )
       )
   },
   {

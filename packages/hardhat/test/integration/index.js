@@ -197,7 +197,7 @@ module.exports = function() {
       "Reconfiguration that fails a ballot should be ignored",
       run(workflows.failedBallot)
     );
-    // it("Migrate from one Terminal to another", run(workflows.migrate));
+    describe("Migrate from one Terminal to another", run(workflows.migrate));
     // it(
     //   "Operators can be given permissions",
     //   run(workflows.operatorPermissions)

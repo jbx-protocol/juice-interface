@@ -131,10 +131,17 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
             Operations.Issue
         )
     {
+        //TODO unit test
+        require((bytes(_name).length > 0), "TicketBooth::issue: EMPTY_NAME");
+        require(
+            (bytes(_symbol).length > 0),
+            "TicketBooth::issue: EMPTY_SYMBOL"
+        );
+
         // Only one ERC20 ticket can be issued.
         require(
             ticketsOf[_projectId] == ITickets(address(0)),
-            "Tickets::issue: ALREADY_ISSUED"
+            "TicketBooth::issue: ALREADY_ISSUED"
         );
 
         // Create the contract in this Juicer contract in order to have mint and burn privileges.
@@ -160,7 +167,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         bool _preferUnstakedTickets
     ) external override onlyTerminal(_projectId) {
         // An amount must be specified.
-        require(_amount > 0, "Tickets::print: NO_OP");
+        require(_amount > 0, "TicketBooth::print: NO_OP");
 
         // Get a reference to the project's ERC20 tickets.
         ITickets _tickets = ticketsOf[_projectId];
@@ -228,7 +235,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
                     _unlockedStakedBalance >= _amount - _unstakedBalanceOf) ||
                 (_amount >= _unlockedStakedBalance &&
                     _unstakedBalanceOf >= _amount - _unlockedStakedBalance),
-            "Tickets::redeem: INSUFFICIENT_FUNDS"
+            "TicketBooth::redeem: INSUFFICIENT_FUNDS"
         );
 
         // The amount of tickets to redeem.
@@ -300,7 +307,10 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         ITickets _tickets = ticketsOf[_projectId];
 
         // Tickets must have been issued.
-        require(_tickets != ITickets(address(0)), "Tickets::stake: NOT_FOUND");
+        require(
+            _tickets != ITickets(address(0)),
+            "TicketBooth::stake: NOT_FOUND"
+        );
 
         // Get a reference to the holder's current balance.
         uint256 _unstakedBalanceOf = _tickets.balanceOf(_holder);
@@ -308,7 +318,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         // There must be enough balance to stake.
         require(
             _unstakedBalanceOf >= _amount,
-            "Tickets::stake: INSUFFICIENT_FUNDS"
+            "TicketBooth::stake: INSUFFICIENT_FUNDS"
         );
 
         // Redeem the equivalent amount of ERC20s.
@@ -354,7 +364,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         // Tickets must have been issued.
         require(
             _tickets != ITickets(address(0)),
-            "Tickets::unstake: NOT_FOUND"
+            "TicketBooth::unstake: NOT_FOUND"
         );
 
         // Get a reference to the amount of unstaked tickets.
@@ -365,7 +375,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         // There must be enough unlocked staked tickets to unstake.
         require(
             _unlockedStakedTickets >= _amount,
-            "Tickets::unstake: INSUFFICIENT_FUNDS"
+            "TicketBooth::unstake: INSUFFICIENT_FUNDS"
         );
 
         // Subtract the unstaked amount from the holder's balance.
@@ -406,14 +416,14 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         )
     {
         // Amount must be greater than 0.
-        require(_amount > 0, "Tickets::lock: NO_OP");
+        require(_amount > 0, "TicketBooth::lock: NO_OP");
 
         // The holder must have enough tickets to lock.
         require(
             stakedBalanceOf[_holder][_projectId] -
                 lockedBalanceOf[_holder][_projectId] >=
                 _amount,
-            "Tickets::lock: INSUFFICIENT_FUNDS"
+            "TicketBooth::lock: INSUFFICIENT_FUNDS"
         );
 
         // Update the lock.
@@ -444,12 +454,12 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         uint256 _amount
     ) external override {
         // Amount must be greater than 0.
-        require(_amount > 0, "Tickets::unlock: NO_OP");
+        require(_amount > 0, "TicketBooth::unlock: NO_OP");
 
         // There must be enough locked tickets to unlock.
         require(
             lockedBalanceBy[msg.sender][_holder][_projectId] >= _amount,
-            "Tickets::unlock: INSUFFICIENT_FUNDS"
+            "TicketBooth::unlock: INSUFFICIENT_FUNDS"
         );
 
         // Update the lock.
@@ -487,13 +497,16 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         )
     {
         // Can't transfer to the zero address.
-        require(_recipient != address(0), "Tickets::transfer: ZERO_ADDRESS");
+        require(
+            _recipient != address(0),
+            "TicketBooth::transfer: ZERO_ADDRESS"
+        );
 
         // An address can't transfer to itself.
-        require(_holder != _recipient, "Tickets::transfer: IDENTITY");
+        require(_holder != _recipient, "TicketBooth::transfer: IDENTITY");
 
         // There must be an amount to transfer.
-        require(_amount > 0, "Tickets::transfer: NO_OP");
+        require(_amount > 0, "TicketBooth::transfer: NO_OP");
 
         // Get a reference to the amount of unlocked staked tickets.
         uint256 _unlockedStakedTickets =
@@ -503,7 +516,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         // There must be enough unlocked staked tickets to transfer.
         require(
             _amount <= _unlockedStakedTickets,
-            "Tickets::transfer: INSUFFICIENT_FUNDS"
+            "TicketBooth::transfer: INSUFFICIENT_FUNDS"
         );
 
         // Subtract from the holder.

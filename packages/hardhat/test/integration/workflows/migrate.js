@@ -247,7 +247,7 @@ module.exports = [
 
       await executeFn({
         // Exclude the redeem beneficiary to not spend gas from that account.
-        caller: randomSignerFn({ exlude: [redeemBeneficiary] }),
+        caller: randomSignerFn({ exclude: [redeemBeneficiary] }),
         contract: contracts.juicer,
         fn: "tap",
         args: [expectedProjectId, amountToTap1, currency, amountToTap1]

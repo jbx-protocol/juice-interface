@@ -104,7 +104,7 @@ const tests = {
         amount: BigNumber.from(0),
         preferUnstaked: false,
         withERC20: false,
-        revert: "Tickets::print: NO_OP"
+        revert: "TicketBooth::print: NO_OP"
       })
     }
   ]

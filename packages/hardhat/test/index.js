@@ -322,13 +322,18 @@ describe("Juice", async function() {
     this.BigNumber = ethers.BigNumber;
 
     // Bind a function that returns a random set of bytes.
-    this.randomBytesFn = ({ min, max, prepend = "", exclude = [] } = {}) => {
+    this.randomBytesFn = ({
+      min = BigNumber.from(10),
+      max = BigNumber.from(32),
+      prepend = "",
+      exclude = []
+    } = {}) => {
       const candidate = ethers.utils.formatBytes32String(
         this.randomStringFn({
           prepend,
           seed: this.randomBigNumberFn({
-            min: BigNumber.from(10),
-            max: BigNumber.from(32)
+            min,
+            max
           })
         })
       );
@@ -336,6 +341,8 @@ describe("Juice", async function() {
         return this.randomBytesFn({ exclude, min, max, prepend });
       return candidate;
     };
+
+    this.stringToBytes = ethers.utils.formatBytes32String;
 
     // Bind a function to get a normalized percent.
     this.normalizedPercentFn = percent =>

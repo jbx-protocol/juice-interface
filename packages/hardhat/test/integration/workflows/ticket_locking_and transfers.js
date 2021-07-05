@@ -237,7 +237,7 @@ module.exports = [
         contract: contracts.ticketBooth,
         fn: "lock",
         args: [ticketBeneficiary.address, expectedProjectId, amountToLock],
-        revert: amountToLock.eq(0) && "Tickets::lock: NO_OP"
+        revert: amountToLock.eq(0) && "TicketBooth::lock: NO_OP"
       });
 
       return { amountToUnstake, amountToTransfer, amountToLock };
@@ -325,8 +325,8 @@ module.exports = [
         ],
         revert:
           ticketBeneficiary.address === ticketTransferRecipient.address
-            ? "Tickets::transfer: IDENTITY"
-            : amountToTransfer.eq(0) && "Tickets::transfer: NO_OP"
+            ? "TicketBooth::transfer: IDENTITY"
+            : amountToTransfer.eq(0) && "TicketBooth::transfer: NO_OP"
       });
 
       return { ticketTransferRecipient };
@@ -479,7 +479,7 @@ module.exports = [
         revert:
           (amountToTransfer.eq(0) ||
             ticketBeneficiary.address !== ticketTransferRecipient.address) &&
-          "Tickets::unstake: INSUFFICIENT_FUNDS"
+          "TicketBooth::unstake: INSUFFICIENT_FUNDS"
       })
   },
   {
@@ -502,8 +502,8 @@ module.exports = [
         ],
         revert:
           ticketBeneficiary.address === ticketTransferRecipient.address
-            ? "Tickets::transfer: IDENTITY"
-            : "Tickets::transfer: INSUFFICIENT_FUNDS"
+            ? "TicketBooth::transfer: IDENTITY"
+            : "TicketBooth::transfer: INSUFFICIENT_FUNDS"
       })
   },
   {
@@ -560,7 +560,7 @@ module.exports = [
           // No op if no tickets are being redeemed, or if there's no amount to claim.
           ticketsToRedeem.eq(0) || expectedClaimedAmountIsZero
             ? "Juicer::redeem: NO_OP"
-            : amountToLock.gt(0) && "Tickets::redeem: INSUFFICIENT_FUNDS"
+            : amountToLock.gt(0) && "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       });
 
       return { ticketsToRedeem, expectedClaimedAmountIsZero };
@@ -585,8 +585,8 @@ module.exports = [
         fn: "unlock",
         args: [ticketBeneficiary.address, expectedProjectId, amountToLock],
         revert: amountToLock.eq(0)
-          ? "Tickets::unlock: NO_OP"
-          : "Tickets::unlock: INSUFFICIENT_FUNDS"
+          ? "TicketBooth::unlock: NO_OP"
+          : "TicketBooth::unlock: INSUFFICIENT_FUNDS"
       });
     }
   },
@@ -603,7 +603,7 @@ module.exports = [
         fn: "unlock",
         args: [ticketBeneficiary.address, expectedProjectId, amountToLock],
         // If there were no locked funds, no op.
-        revert: amountToLock.eq(0) && "Tickets::unlock: NO_OP"
+        revert: amountToLock.eq(0) && "TicketBooth::unlock: NO_OP"
       })
   },
   {

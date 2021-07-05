@@ -123,7 +123,7 @@ const tests = {
           lockedAmount: BigNumber.from(0),
           issue: false
         },
-        revert: "Tickets::unstake: NOT_FOUND"
+        revert: "TicketBooth::unstake: NOT_FOUND"
       })
     },
     {
@@ -154,7 +154,7 @@ const tests = {
           lockedAmount: BigNumber.from(0),
           issue: true
         },
-        revert: "Tickets::unstake: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unstake: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -169,7 +169,7 @@ const tests = {
           lockedAmount: BigNumber.from(47),
           issue: true
         },
-        revert: "Tickets::unstake: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unstake: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -184,7 +184,7 @@ const tests = {
           lockedAmount: constants.MaxUint256,
           issue: true
         },
-        revert: "Tickets::unstake: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unstake: INSUFFICIENT_FUNDS"
       })
     }
   ]

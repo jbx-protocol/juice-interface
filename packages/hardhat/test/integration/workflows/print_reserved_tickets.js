@@ -488,7 +488,7 @@ module.exports = [
         contract: contracts.juicer,
         fn: "printReservedTickets",
         args: [expectedProjectId],
-        expect: reservedRate.eq(0) && "Tickets::print: NO_OP"
+        expect: reservedRate.eq(0) && "TicketBooth::print: NO_OP"
       })
   },
   {

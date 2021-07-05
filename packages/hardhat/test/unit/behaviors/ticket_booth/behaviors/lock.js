@@ -103,7 +103,7 @@ const tests = {
           stakedBalance: BigNumber.from(40),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::lock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::lock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -118,7 +118,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(10)
         },
-        revert: "Tickets::lock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::lock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -133,7 +133,7 @@ const tests = {
           stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
-        revert: "Tickets::lock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::lock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -148,7 +148,7 @@ const tests = {
           stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
-        revert: "Tickets::lock: NO_OP"
+        revert: "TicketBooth::lock: NO_OP"
       })
     }
   ]

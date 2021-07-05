@@ -185,7 +185,7 @@ const tests = {
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -202,7 +202,7 @@ const tests = {
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -220,7 +220,7 @@ const tests = {
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -238,7 +238,7 @@ const tests = {
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -255,7 +255,7 @@ const tests = {
           erc20Balance: BigNumber.from(0),
           lockedAmount: BigNumber.from(20)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -273,7 +273,7 @@ const tests = {
           erc20Balance: BigNumber.from(10),
           lockedAmount: BigNumber.from(20)
         },
-        revert: "Tickets::redeem: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       })
     }
   ]

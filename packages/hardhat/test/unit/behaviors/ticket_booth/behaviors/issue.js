@@ -41,7 +41,7 @@ const tests = {
         projectId: 1,
         permissionFlag: false,
         preissue: true,
-        revert: "Tickets::issue: ALREADY_ISSUED"
+        revert: "TicketBooth::issue: ALREADY_ISSUED"
       })
     }
   ]

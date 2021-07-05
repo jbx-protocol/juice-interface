@@ -198,10 +198,10 @@ module.exports = function() {
       run(workflows.failedBallot)
     );
     describe("Migrate from one Terminal to another", run(workflows.migrate));
-    // it(
-    //   "Operators can be given permissions",
-    //   run(workflows.operatorPermissions)
-    // );
+    describe(
+      "Operators can be given permissions",
+      run(workflows.operatorPermissions)
+    );
     // it(
     //   "Set and update payout mods, honoring locked status",
     //   run(workflows.setPaymentMods)

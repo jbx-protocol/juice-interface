@@ -58,7 +58,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unlock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -74,7 +74,7 @@ const tests = {
           lockedAmount: BigNumber.from(40),
           lockedBy: deployer
         },
-        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unlock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -90,7 +90,7 @@ const tests = {
           lockedAmount: constants.MaxUint256.sub(BigNumber.from(1)),
           lockedBy: deployer
         },
-        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unlock: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -105,7 +105,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::unlock: NO_OP"
+        revert: "TicketBooth::unlock: NO_OP"
       })
     },
     {
@@ -121,7 +121,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40)
         },
-        revert: "Tickets::unlock: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::unlock: INSUFFICIENT_FUNDS"
       })
     }
   ]

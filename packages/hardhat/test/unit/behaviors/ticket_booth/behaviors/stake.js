@@ -93,7 +93,7 @@ const tests = {
           erc20Balance: BigNumber.from(50),
           issue: false
         },
-        revert: "Tickets::stake: NOT_FOUND"
+        revert: "TicketBooth::stake: NOT_FOUND"
       })
     },
     {
@@ -122,7 +122,7 @@ const tests = {
           erc20Balance: BigNumber.from(50),
           issue: true
         },
-        revert: "Tickets::stake: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::stake: INSUFFICIENT_FUNDS"
       })
     }
   ]

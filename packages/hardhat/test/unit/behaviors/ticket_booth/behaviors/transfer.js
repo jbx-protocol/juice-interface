@@ -105,7 +105,7 @@ const tests = {
         holder: deployer.address,
         recipient: constants.AddressZero,
         amount: BigNumber.from(50),
-        revert: "Tickets::transfer: ZERO_ADDRESS"
+        revert: "TicketBooth::transfer: ZERO_ADDRESS"
       })
     },
     {
@@ -116,7 +116,7 @@ const tests = {
         holder: deployer.address,
         recipient: deployer.address,
         amount: BigNumber.from(50),
-        revert: "Tickets::transfer: IDENTITY"
+        revert: "TicketBooth::transfer: IDENTITY"
       })
     },
     {
@@ -127,7 +127,7 @@ const tests = {
         holder: deployer.address,
         recipient: addrs[0].address,
         amount: BigNumber.from(0),
-        revert: "Tickets::transfer: NO_OP"
+        revert: "TicketBooth::transfer: NO_OP"
       })
     },
     {
@@ -142,7 +142,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(0)
         },
-        revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::transfer: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -157,7 +157,7 @@ const tests = {
           stakedBalance: BigNumber.from(50),
           lockedAmount: BigNumber.from(40)
         },
-        revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::transfer: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -172,7 +172,7 @@ const tests = {
           stakedBalance: constants.MaxUint256,
           lockedAmount: constants.MaxUint256
         },
-        revert: "Tickets::transfer: INSUFFICIENT_FUNDS"
+        revert: "TicketBooth::transfer: INSUFFICIENT_FUNDS"
       })
     }
   ]

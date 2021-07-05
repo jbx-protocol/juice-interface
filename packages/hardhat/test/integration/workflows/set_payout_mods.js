@@ -89,42 +89,44 @@ module.exports = async ({
   const target = randomBigNumberFn({ min: amountToTap });
 
   return [
-    /** 
-      Deploy first project with at least a locked payment mod.
-    */
-    () =>
-      executeFn({
-        caller: deployer,
-        contract: contracts.juicer,
-        fn: "deploy",
-        args: [
-          owner.address,
-          stringToBytesFn("some-unique-handle"),
-          randomStringFn(),
-          {
-            target,
-            currency,
-            duration: randomBigNumberFn({
-              min: BigNumber.from(1),
-              max: constants.MaxUint16
-            }),
-            cycleLimit: randomBigNumberFn({
-              max: constants.MaxCycleLimit
-            }),
-            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
-            ballot: constants.AddressZero
-          },
-          {
-            reservedRate: BigNumber.from(0),
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
-            reconfigurationBondingCurveRate: randomBigNumberFn({
-              max: constants.MaxPercent
-            })
-          },
-          [lockedAddressMod, unlockedProjectMod],
-          []
-        ]
-      }),
+    {
+      describe: "Deploy first project with at least a locked payment mod",
+      fn: () =>
+        executeFn({
+          caller: deployer,
+          contract: contracts.juicer,
+          fn: "deploy",
+          args: [
+            owner.address,
+            stringToBytesFn("some-unique-handle"),
+            randomStringFn(),
+            {
+              target,
+              currency,
+              duration: randomBigNumberFn({
+                min: BigNumber.from(1),
+                max: constants.MaxUint16
+              }),
+              cycleLimit: randomBigNumberFn({
+                max: constants.MaxCycleLimit
+              }),
+              discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
+              ballot: constants.AddressZero
+            },
+            {
+              reservedRate: BigNumber.from(0),
+              bondingCurveRate: randomBigNumberFn({
+                max: constants.MaxPercent
+              }),
+              reconfigurationBondingCurveRate: randomBigNumberFn({
+                max: constants.MaxPercent
+              })
+            },
+            [lockedAddressMod, unlockedProjectMod],
+            []
+          ]
+        })
+    },
     /**
         Check that the payment mod got set.
       */

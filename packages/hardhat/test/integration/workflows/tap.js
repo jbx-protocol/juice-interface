@@ -290,7 +290,11 @@ module.exports = [
         caller: modProjectOwner,
         contract: contracts.ticketBooth,
         fn: "issue",
-        args: [expectedIdOfModProject, randomStringFn(), randomStringFn()]
+        args: [
+          expectedIdOfModProject,
+          randomStringFn({ canBeEmpty: false }),
+          randomStringFn({ canBeEmpty: false })
+        ]
       })
   },
   {

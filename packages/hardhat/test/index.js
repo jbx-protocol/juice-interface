@@ -304,17 +304,21 @@ describe("Juice", async function() {
 
     // Bind a function that generates a random string.
     this.randomStringFn = ({
-      seed = this.randomBigNumberFn(),
       exclude = [],
-      prepend = ""
+      prepend = "",
+      canBeEmpty = true
     } = {}) => {
+      const seed = this.randomBigNumberFn();
       const candidate = prepend.concat(
         Math.random()
           .toString(36)
           .substr(2, seed)
       );
-      if (exclude.includes(candidate))
-        return this.randomStringFn({ seed, exclude, prepend });
+      if (
+        (candidate.length === 0 && !canBeEmpty) ||
+        exclude.includes(candidate)
+      )
+        return this.randomStringFn({ exclude, prepend, canBeEmpty });
       return candidate;
     };
 

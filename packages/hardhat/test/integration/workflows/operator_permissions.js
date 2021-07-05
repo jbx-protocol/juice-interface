@@ -26,7 +26,7 @@ const operations = [
           ballot: constants.AddressZero
         },
         {
-          reservedRate: BigNumber.from(1),
+          reservedRate: BigNumber.from(201),
           bondingCurveRate: BigNumber.from(1),
           reconfigurationBondingCurveRate: BigNumber.from(1)
         },
@@ -34,7 +34,9 @@ const operations = [
         []
       ],
       domain: expectedProjectId,
-      permissionIndex: 1
+      permissionIndex: 1,
+      authorizedRevert:
+        "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
     })
   },
   {

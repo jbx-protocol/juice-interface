@@ -2,87 +2,102 @@
   A project can be created without specifying a payment terminal. 
   The project will have to set a terminal before it can print tickets or configure its funding cycles.
 */
-module.exports = async ({
-  addrs,
-  constants,
-  contracts,
-  executeFn,
-  randomBigNumberFn,
-  BigNumber,
-  getBalanceFn,
-  randomStringFn,
-  stringToBytesFn,
-  randomAddressFn,
-  randomBoolFn,
-  checkFn
-}) => {
-  // The owner of the project that will reconfigure.
-  const owner = addrs[0];
 
-  // An account that will be used to make payments.
-  const payer = addrs[1];
+// The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.
+const currency = 0;
 
-  // Use the 0 currency so no price feed is needed.
-  const currency = 0;
+module.exports = [
+  {
+    description: "Create a project with no payment terminal",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      randomStringFn,
+      randomSignerFn,
+      incrementProjectIdFn,
+      randomBytesFn
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
 
-  // One payments will be made. Cant pay entire balance because some is needed for gas.
-  // So, arbitrarily find a number less than a half so that all payments can be made successfully.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
-  });
+      // The owner of the project that will reconfigure.
+      const owner = randomSignerFn();
 
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedProjectId = BigNumber.from(2);
-
-  return [
-    /**
-      Create a project with no payment terminal.
-    */
-    () =>
       executeFn({
-        caller: owner,
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
           randomStringFn(),
           constants.AddressZero
         ]
-      }),
-    /**
-      Make sure the terminal was not set in the directory.
-    */
-    () =>
+      });
+      return { owner, expectedProjectId };
+    }
+  },
+  {
+    description: "Make sure the terminal was not set in the directory",
+    fn: ({
+      checkFn,
+      randomSignerFn,
+      contracts,
+      constants,
+      local: { expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
         expect: constants.AddressZero
-      }),
-    /**
-      Shouldn't be able to print premined tickets.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Shouldn't be able to print premined tickets",
+    fn: ({
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      randomStringFn,
+      randomAddressFn,
+      randomBoolFn,
+      local: { expectedProjectId, owner }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
-          // some big number not close to the limit.
-          randomBigNumberFn({ max: BigNumber.from(10).pow(30) }),
+          // Use an arbitrary large big number that can be added to other large big numbers without risk of running into uint256 boundaries.
+          randomBigNumberFn({
+            min: BigNumber.from(0),
+            max: BigNumber.from(10).pow(30)
+          }),
           currency,
           randomAddressFn(),
           randomStringFn(),
           randomBoolFn()
         ],
         revert: "TerminalUtility: UNAUTHORIZED"
-      }),
-    /**
-      Shouldn't be able to configure.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Shouldn't be able to configure",
+    fn: ({
+      constants,
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      local: { expectedProjectId, owner }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
@@ -104,7 +119,9 @@ module.exports = async ({
           },
           {
             reservedRate: randomBigNumberFn({ max: constants.MaxPercent }),
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -113,12 +130,31 @@ module.exports = async ({
           []
         ],
         revert: "TerminalUtility: UNAUTHORIZED"
-      }),
-    /**
-      Shouldn't be able to pay.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description: "Shouldn't be able to pay",
+    fn: async ({
+      contracts,
+      randomBigNumberFn,
+      getBalanceFn,
+      executeFn,
+      randomStringFn,
+      randomBoolFn,
+      randomAddressFn,
+      randomSignerFn,
+      BigNumber,
+      local: { expectedProjectId }
+    }) => {
+      // An account that will be used to make payments.
+      const payer = randomSignerFn();
+      // One payment will be made. Cant pay entire balance because some is needed for gas.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
+      const paymentValue = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(100)
+      });
+      await executeFn({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
@@ -130,40 +166,65 @@ module.exports = async ({
         ],
         value: paymentValue,
         revert: "TerminalUtility: UNAUTHORIZED"
-      }),
-    /**
-      Set a payment terminal.
-    */
-    () =>
+      });
+      return { payer, paymentValue };
+    }
+  },
+  {
+    description: "Set a payment terminal",
+    fn: ({ executeFn, contracts, local: { expectedProjectId, owner } }) =>
       executeFn({
         caller: owner,
         contract: contracts.terminalDirectory,
         fn: "setTerminal",
         args: [expectedProjectId, contracts.juicer.address]
-      }),
-    /**
-      Should now be able to print premined tickets.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Should now be able to print premined tickets",
+    fn: ({
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      randomStringFn,
+      randomAddressFn,
+      randomBoolFn,
+
+      local: { expectedProjectId, owner }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
-          // some big number not close to the limit.
-          randomBigNumberFn({ max: BigNumber.from(10).pow(30) }),
+          // Use an arbitrary large big number that can be added to other large big numbers without risk of running into uint256 boundaries.
+          randomBigNumberFn({
+            min: BigNumber.from(1),
+            max: BigNumber.from(10).pow(30)
+          }),
           currency,
           randomAddressFn(),
           randomStringFn(),
           randomBoolFn()
         ]
-      }),
-    /**
-      Should now be able to configure.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description: "Should now be able to configure",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      incrementFundingCycleIdFn,
+      local: { expectedProjectId, owner }
+    }) => {
+      // Burn the unused funding cycle ID id.
+      incrementFundingCycleIdFn();
+      await executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "configure",
@@ -184,7 +245,9 @@ module.exports = async ({
           },
           {
             reservedRate: randomBigNumberFn({ max: constants.MaxPercent }),
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -192,11 +255,19 @@ module.exports = async ({
           [],
           []
         ]
-      }),
-    /**
-      Should now be able to pay.
-    */
-    () =>
+      });
+    }
+  },
+  {
+    description: "Should now be able to pay",
+    fn: ({
+      executeFn,
+      contracts,
+      randomAddressFn,
+      randomStringFn,
+      randomBoolFn,
+      local: { expectedProjectId, payer, paymentValue }
+    }) =>
       executeFn({
         caller: payer,
         contract: contracts.juicer,
@@ -209,5 +280,5 @@ module.exports = async ({
         ],
         value: paymentValue
       })
-  ];
-};
+  }
+];

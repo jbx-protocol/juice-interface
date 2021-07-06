@@ -8,324 +8,381 @@
   If a project reconfigures its funding cycle, new mods can be set that override any locked payout mods.
   These new mods will take effect once the reconfigured funding cycle becomes active.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  constants,
-  contracts,
-  executeFn,
-  checkFn,
-  BigNumber,
-  deployContractFn,
-  randomBigNumberFn,
-  stringToBytesFn,
-  normalizedPercentFn,
-  getBalanceFn,
-  getTimestampFn,
-  randomBoolFn,
-  randomStringFn,
-  randomAddressFn
-}) => {
-  // An account that will be used to make a payment.
-  const payer = addrs[1];
 
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedIdOfBaseProject = 2;
+module.exports = [
+  {
+    description: "Deploy first project with at least a locked payment mod",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomSignerFn,
+      randomBigNumberFn,
+      randomBytesFn,
+      normalizedPercentFn,
+      getTimestampFn,
+      randomBoolFn,
+      randomStringFn,
+      randomAddressFn,
+      incrementFundingCycleIdFn,
+      incrementProjectIdFn
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
 
-  // The second project created will have ID 3, and will be used to route Mod payouts to.
-  const expectedIdOfModProject = 3;
+      // Burn the unused funding cycle ID id.
+      incrementFundingCycleIdFn();
 
-  // Payment mods can be locked.
-  // Make a locked mods.
-  const lockedAddressMod = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(50).toNumber(),
-    // Lock at least until the end of the tests.
-    lockedUntil: (await getTimestampFn())
-      .add(
-        randomBigNumberFn({
-          min: BigNumber.from(1000),
-          max: BigNumber.from(100000000)
-        })
-      )
-      .toNumber(),
-    beneficiary: randomAddressFn(),
-    allocator: constants.AddressZero,
-    projectId: BigNumber.from(0)
-  };
-  // Make two unlocked mods.
-  const unlockedProjectMod = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(25).toNumber(),
-    lockedUntil: 0,
-    beneficiary: randomAddressFn(),
-    allocator: constants.AddressZero,
-    projectId: BigNumber.from(expectedIdOfModProject)
-  };
-  const unlockedAllocatorMod = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(20).toNumber(),
-    lockedUntil: 0,
-    beneficiary: randomAddressFn(),
-    allocator: (await deployContractFn("ExampleModAllocator")).address,
-    projectId: BigNumber.from(0)
-  };
+      // The owner of the project with mods.
+      const owner = randomSignerFn();
 
-  // The currency will be 0, which corresponds to ETH.
-  const currency = 0;
+      // Payment mods can be locked.
+      // Make a locked mods.
+      const lockedMod1 = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(50).toNumber(),
+        // Lock at least until the end of the tests.
+        lockedUntil: (await getTimestampFn())
+          .add(
+            randomBigNumberFn({
+              min: BigNumber.from(1000),
+              max: BigNumber.from(100000000)
+            })
+          )
+          .toNumber(),
+        beneficiary: randomAddressFn(),
+        allocator: constants.AddressZero,
+        projectId: BigNumber.from(0)
+      };
+      const unlockedMod1 = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(25).toNumber(),
+        lockedUntil: 0,
+        beneficiary: randomAddressFn(),
+        allocator: constants.AddressZero,
+        projectId: BigNumber.from(0)
+      };
 
-  // Cant pay entire balance because some is needed for gas.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
-  });
+      await executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "deploy",
+        args: [
+          owner.address,
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
+          randomStringFn(),
+          {
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
+            cycleLimit: randomBigNumberFn({
+              max: constants.MaxCycleLimit
+            }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            ballot: constants.AddressZero
+          },
+          {
+            reservedRate: BigNumber.from(0),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
+          },
+          [lockedMod1, unlockedMod1],
+          []
+        ]
+      });
 
-  // An amount up to the amount paid can be tapped.
-  const amountToTap = randomBigNumberFn({ max: paymentValue });
-
-  // The target must be at least the amount to tap.
-  const target = randomBigNumberFn({ min: amountToTap });
-
-  return [
-    {
-      describe: "Deploy first project with at least a locked payment mod",
-      fn: async () => {
-        // The owner of the project with mods.
-        const owner = addrs[0];
-
-        await executeFn({
-          caller: deployer,
-          contract: contracts.juicer,
-          fn: "deploy",
-          args: [
-            owner.address,
-            stringToBytesFn("some-unique-handle"),
-            randomStringFn(),
-            {
-              target,
-              currency,
-              duration: randomBigNumberFn({
-                min: BigNumber.from(1),
-                max: constants.MaxUint16
-              }),
-              cycleLimit: randomBigNumberFn({
-                max: constants.MaxCycleLimit
-              }),
-              discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
-              ballot: constants.AddressZero
-            },
-            {
-              reservedRate: BigNumber.from(0),
-              bondingCurveRate: randomBigNumberFn({
-                max: constants.MaxPercent
-              }),
-              reconfigurationBondingCurveRate: randomBigNumberFn({
-                max: constants.MaxPercent
-              })
-            },
-            [lockedAddressMod, unlockedProjectMod],
-            []
-          ]
-        });
-      }
-    },
-    {
-      description: "Check that the payment mod got set",
-      fn: ({ timeMark }) =>
-        checkFn({
-          contract: contracts.modStore,
-          fn: "paymentModsOf",
-          args: [expectedIdOfBaseProject, timeMark],
-          expect: [
-            [
-              lockedAddressMod.preferUnstaked,
-              lockedAddressMod.percent,
-              lockedAddressMod.lockedUntil,
-              lockedAddressMod.beneficiary,
-              lockedAddressMod.allocator,
-              lockedAddressMod.projectId
-            ],
-            [
-              unlockedProjectMod.preferUnstaked,
-              unlockedProjectMod.percent,
-              unlockedProjectMod.lockedUntil,
-              unlockedProjectMod.beneficiary,
-              unlockedProjectMod.allocator,
-              unlockedProjectMod.projectId
-            ]
-          ]
-        })
-    },
-    {
-      description:
-        "Overriding a locked mod shouldn't work when setting payment mods",
-      fn: ({ timeMark }) =>
-        executeFn({
-          caller: owner,
-          contract: contracts.modStore,
-          fn: "setPaymentMods",
-          args: [
-            expectedIdOfBaseProject,
-            timeMark,
-            [unlockedProjectMod, unlockedAllocatorMod]
-          ],
-          revert: "ModStore::setPaymentMods: SOME_LOCKED"
-        })
-    },
-    {
-      description:
-        "Overriding a locked mod with a shorter locked date shouldn't work when setting payment mods",
-      fn: ({ timeMark }) =>
-        executeFn({
-          caller: owner,
-          contract: contracts.modStore,
-          fn: "setPaymentMods",
-          args: [
-            expectedIdOfBaseProject,
-            timeMark,
-            [
-              {
-                ...lockedAddressMod,
-                lockedUntil: lockedAddressMod.lockedUntil - 1
-              },
-              unlockedProjectMod,
-              unlockedAllocatorMod
-            ]
-          ],
-          revert: "ModStore::setPaymentMods: SOME_LOCKED"
-        })
-    },
-    {
-      description:
-        "Set new payment mods, making sure to include any locked mods. Locked mods can have their locked date extended",
-      fn: ({ timeMark }) =>
-        executeFn({
-          caller: owner,
-          contract: contracts.modStore,
-          fn: "setPaymentMods",
-          args: [
-            expectedIdOfBaseProject,
-            timeMark,
-            [
-              {
-                ...lockedAddressMod,
-                lockedUntil: lockedAddressMod.lockedUntil + 1
-              },
-              unlockedAllocatorMod
-            ]
-          ]
-        })
-    },
-    {
-      description: "Check that the new payment mods got set correctly",
-      fn: ({ timeMark }) =>
-        checkFn({
-          contract: contracts.modStore,
-          fn: "paymentModsOf",
-          // Subtract 1 from timeMark to get the time of the configuration execution.
-          args: [expectedIdOfBaseProject, timeMark.sub(1)],
-          expect: [
-            [
-              lockedAddressMod.preferUnstaked,
-              lockedAddressMod.percent,
-              lockedAddressMod.lockedUntil + 1,
-              lockedAddressMod.beneficiary,
-              lockedAddressMod.allocator,
-              lockedAddressMod.projectId
-            ],
-            [
-              unlockedAllocatorMod.preferUnstaked,
-              unlockedAllocatorMod.percent,
-              unlockedAllocatorMod.lockedUntil,
-              unlockedAllocatorMod.beneficiary,
-              unlockedAllocatorMod.allocator,
-              unlockedAllocatorMod.projectId
-            ]
-          ]
-        })
-    },
-    {
-      description:
-        "Configuring a project should allow overriding locked mods for the new configuration",
-      fn: () =>
-        executeFn({
-          caller: owner,
-          contract: contracts.juicer,
-          fn: "configure",
-          args: [
-            expectedIdOfBaseProject,
-            {
-              target,
-              currency,
-              duration: randomBigNumberFn({
-                min: BigNumber.from(1),
-                max: constants.MaxUint16
-              }),
-              cycleLimit: randomBigNumberFn({
-                max: constants.MaxCycleLimit
-              }),
-              discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
-              ballot: constants.AddressZero
-            },
-            {
-              reservedRate: BigNumber.from(0),
-              bondingCurveRate: randomBigNumberFn({
-                max: constants.MaxPercent
-              }),
-              reconfigurationBondingCurveRate: randomBigNumberFn({
-                max: constants.MaxPercent
-              })
-            },
-            [unlockedProjectMod],
-            []
-          ]
-        })
-    },
-    {
-      description: "Check that the old configuration still has its mods",
-      fn: ({ timeMark }) =>
-        checkFn({
-          contract: contracts.modStore,
-          fn: "paymentModsOf",
-          // Subtract 2 from timeMark to get the time of the configuration execution.
-          args: [expectedIdOfBaseProject, timeMark.sub(2)],
-          expect: [
-            [
-              lockedAddressMod.preferUnstaked,
-              lockedAddressMod.percent,
-              lockedAddressMod.lockedUntil + 1,
-              lockedAddressMod.beneficiary,
-              lockedAddressMod.allocator,
-              lockedAddressMod.projectId
-            ],
-            [
-              unlockedAllocatorMod.preferUnstaked,
-              unlockedAllocatorMod.percent,
-              unlockedAllocatorMod.lockedUntil,
-              unlockedAllocatorMod.beneficiary,
-              unlockedAllocatorMod.allocator,
-              unlockedAllocatorMod.projectId
-            ]
-          ]
-        })
-    },
-    {
-      description: "Check that the new configuration has its mods",
-      fn: ({ timeMark }) =>
-        checkFn({
-          contract: contracts.modStore,
-          fn: "paymentModsOf",
-          args: [expectedIdOfBaseProject, timeMark],
-          expect: [
-            [
-              unlockedProjectMod.preferUnstaked,
-              unlockedProjectMod.percent,
-              unlockedProjectMod.lockedUntil,
-              unlockedProjectMod.beneficiary,
-              unlockedProjectMod.allocator,
-              unlockedProjectMod.projectId
-            ]
-          ]
-        })
+      return {
+        owner,
+        expectedProjectId,
+        lockedMod1,
+        unlockedMod1
+      };
     }
-  ];
-};
+  },
+  {
+    description: "Check that the payment mod got set",
+    fn: async ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      timeMark,
+      local: { expectedProjectId, lockedMod1, unlockedMod1 }
+    }) => {
+      await checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.modStore,
+        fn: "paymentModsOf",
+        args: [expectedProjectId, timeMark],
+        expect: [
+          [
+            lockedMod1.preferUnstaked,
+            lockedMod1.percent,
+            lockedMod1.lockedUntil,
+            lockedMod1.beneficiary,
+            lockedMod1.allocator,
+            lockedMod1.projectId
+          ],
+          [
+            unlockedMod1.preferUnstaked,
+            unlockedMod1.percent,
+            unlockedMod1.lockedUntil,
+            unlockedMod1.beneficiary,
+            unlockedMod1.allocator,
+            unlockedMod1.projectId
+          ]
+        ]
+      });
+      return { configurationTimeMark: timeMark };
+    }
+  },
+  {
+    description:
+      "Overriding a locked mod shouldn't work when setting payment mods",
+    fn: async ({
+      contracts,
+      executeFn,
+      BigNumber,
+      deployContractFn,
+      normalizedPercentFn,
+      randomBoolFn,
+      randomAddressFn,
+      timeMark,
+      local: { owner, expectedProjectId, unlockedMod1 }
+    }) => {
+      const unlockedMod2 = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(20).toNumber(),
+        lockedUntil: 0,
+        beneficiary: randomAddressFn(),
+        allocator: (await deployContractFn("ExampleModAllocator")).address,
+        projectId: BigNumber.from(0)
+      };
+      await executeFn({
+        caller: owner,
+        contract: contracts.modStore,
+        fn: "setPaymentMods",
+        args: [expectedProjectId, timeMark, [unlockedMod1, unlockedMod2]],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      });
+
+      return { unlockedMod2 };
+    }
+  },
+  {
+    description:
+      "Overriding a locked mod with a shorter locked date shouldn't work when setting payment mods",
+    fn: ({
+      contracts,
+      executeFn,
+      timeMark,
+      local: {
+        owner,
+        expectedProjectId,
+        lockedMod1,
+        unlockedMod1,
+        unlockedMod2
+      }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.modStore,
+        fn: "setPaymentMods",
+        args: [
+          expectedProjectId,
+          timeMark,
+          [
+            {
+              ...lockedMod1,
+              lockedUntil: lockedMod1.lockedUntil - 1
+            },
+            unlockedMod1,
+            unlockedMod2
+          ]
+        ],
+        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+      })
+  },
+  {
+    description: "Set new payment mods, making sure to include any locked mods",
+    fn: ({
+      contracts,
+      executeFn,
+      timeMark,
+      local: { owner, expectedProjectId, unlockedMod2, lockedMod1 }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.modStore,
+        fn: "setPaymentMods",
+        args: [
+          expectedProjectId,
+          timeMark,
+          [
+            {
+              ...lockedMod1,
+              lockedUntil: lockedMod1.lockedUntil + 1
+            },
+            unlockedMod2
+          ]
+        ]
+      })
+  },
+  {
+    description: "Check that the new payment mods got set correctly",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        lockedMod1,
+        unlockedMod2,
+        configurationTimeMark
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.modStore,
+        fn: "paymentModsOf",
+        // Subtract 1 from timeMark to get the time of the configuration execution.
+        args: [expectedProjectId, configurationTimeMark],
+        expect: [
+          [
+            lockedMod1.preferUnstaked,
+            lockedMod1.percent,
+            lockedMod1.lockedUntil + 1,
+            lockedMod1.beneficiary,
+            lockedMod1.allocator,
+            lockedMod1.projectId
+          ],
+          [
+            unlockedMod2.preferUnstaked,
+            unlockedMod2.percent,
+            unlockedMod2.lockedUntil,
+            unlockedMod2.beneficiary,
+            unlockedMod2.allocator,
+            unlockedMod2.projectId
+          ]
+        ]
+      })
+  },
+  {
+    description:
+      "Configuring a project should allow overriding locked mods for the new configuration",
+    fn: ({
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      local: { owner, expectedProjectId, unlockedMod1 }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "configure",
+        args: [
+          expectedProjectId,
+          {
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
+            duration: randomBigNumberFn({
+              min: BigNumber.from(1),
+              max: constants.MaxUint16
+            }),
+            cycleLimit: randomBigNumberFn({
+              max: constants.MaxCycleLimit
+            }),
+            discountRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            ballot: constants.AddressZero
+          },
+          {
+            reservedRate: BigNumber.from(0),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
+            reconfigurationBondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            })
+          },
+          [unlockedMod1],
+          []
+        ]
+      })
+  },
+  {
+    description: "Check that the new configuration has its mods",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      timeMark,
+      local: { expectedProjectId, unlockedMod1 }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.modStore,
+        fn: "paymentModsOf",
+        args: [expectedProjectId, timeMark],
+        expect: [
+          [
+            unlockedMod1.preferUnstaked,
+            unlockedMod1.percent,
+            unlockedMod1.lockedUntil,
+            unlockedMod1.beneficiary,
+            unlockedMod1.allocator,
+            unlockedMod1.projectId
+          ]
+        ]
+      })
+  },
+  {
+    description: "Check that the old configuration still has its mods",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        lockedMod1,
+        unlockedMod2,
+        configurationTimeMark
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.modStore,
+        fn: "paymentModsOf",
+        // Subtract 2 from timeMark to get the time of the configuration execution.
+        args: [expectedProjectId, configurationTimeMark],
+        expect: [
+          [
+            lockedMod1.preferUnstaked,
+            lockedMod1.percent,
+            lockedMod1.lockedUntil + 1,
+            lockedMod1.beneficiary,
+            lockedMod1.allocator,
+            lockedMod1.projectId
+          ],
+          [
+            unlockedMod2.preferUnstaked,
+            unlockedMod2.percent,
+            unlockedMod2.lockedUntil,
+            unlockedMod2.beneficiary,
+            unlockedMod2.allocator,
+            unlockedMod2.projectId
+          ]
+        ]
+      })
+  }
+];

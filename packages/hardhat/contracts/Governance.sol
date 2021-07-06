@@ -46,7 +46,7 @@ contract Governance is JuiceProject {
     }
 
     /** 
-      @notice Sets the fee of the Juicer.
+      @notice Appoints a new governance for the specified juicer.
       @param _juicer The juicer to change the governance of.
       @param _newGovernance The address to appoint as governance.
     */
@@ -55,5 +55,13 @@ contract Governance is JuiceProject {
         onlyOwner
     {
         _juicer.appointGovernance(_newGovernance);
+    }
+
+    /** 
+      @notice Accepts the offer to be the governance of a new juicer.
+      @param _juicer The juicer to change the governance of.
+    */
+    function acceptGovernance(IJuicer _juicer) external onlyOwner {
+        _juicer.acceptGovernance();
     }
 }

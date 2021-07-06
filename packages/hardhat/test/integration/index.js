@@ -202,37 +202,37 @@ module.exports = function() {
       "Operators can be given permissions",
       run(workflows.operatorPermissions)
     );
-    // describe.only(
-    //   "Set and update payout mods, honoring locked status",
-    //   run(workflows.setPayoutMods)
-    // );
-    // it(
-    //   "Set and update ticket mods, honoring locked status",
-    //   run(workflows.setTicketMods)
-    // );
-    // it(
-    //   "A new governance can be appointed and accepted",
-    //   run(workflows.governance)
-    // );
-    // it(
-    //   "Governance can set a new fee for future configurations",
-    //   run(workflows.setFee)
-    // );
-    // it(
-    //   "Currencies rates are converted to/from correctly",
-    //   run(workflows.currencyConversion)
-    // );
-    // it(
-    //   "Transfer ownership over a project",
-    //   run(workflows.transferProjectOwnership)
-    // );
-    // it(
-    //   "Direct payment addresses can be deployed to add an fundable address to a project",
-    //   run(workflows.directPaymentAddresses)
-    // );
-    // it(
-    //   "A project can be created without a payment terminal, and can set one after",
-    //   run(workflows.setTerminal)
-    // );
+    describe(
+      "Set and update payout mods, honoring locked status",
+      run(workflows.setPayoutMods)
+    );
+    describe(
+      "Set and update ticket mods, honoring locked status",
+      run(workflows.setTicketMods)
+    );
+    describe(
+      "A new governance can be appointed and accepted",
+      run(workflows.governance)
+    );
+    describe(
+      "Governance can set a new fee for future configurations",
+      run(workflows.setFee)
+    );
+    describe(
+      "Currencies rates are converted to/from correctly",
+      run(workflows.currencyConversion)
+    );
+    describe(
+      "Transfer ownership over a project",
+      run(workflows.transferProjectOwnership)
+    );
+    describe(
+      "Direct payment addresses can be deployed to add an fundable address to a project",
+      run(workflows.directPaymentAddresses)
+    );
+    describe(
+      "A project can be created without a payment terminal, and can set one after",
+      run(workflows.setTerminal)
+    );
   }
 };

@@ -7,127 +7,95 @@
 
   This test makes sure the conversion rates are honored.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  constants,
-  contracts,
-  executeFn,
-  checkFn,
-  BigNumber,
-  deployContractFn,
-  randomBigNumberFn,
-  stringToBytesFn,
-  getBalanceFn,
-  verifyBalanceFn,
-  randomBoolFn,
-  randomStringFn
-}) => {
-  // The owner of the project with mods.
-  const owner = addrs[0];
+module.exports = [
+  {
+    description: "Add the price feed to the prices contract",
+    fn: async ({
+      deployer,
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      deployContractFn,
+      randomBigNumberFn
+    }) => {
+      // An example price feed.
+      const priceFeed = await deployContractFn("ExampleETHUSDPriceFeed");
+      const [, rate] = await priceFeed.latestRoundData();
+      // The amount of decimals the price should be adjusted for.
+      const decimals = await priceFeed.decimals();
 
-  // An account that will be used to make a payment.
-  const payer = addrs[1];
+      // The currency number that will store the price feed. Can't be 0, which is reserve for ETH.
+      const currency = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: constants.MaxUint8
+      });
 
-  // An account that will receive tickets for the premine.
-  const premineTicketBeneficiary = addrs[2];
-
-  // An account that will receive tickets for the payment.
-  const paymentTicketBeneficiary = addrs[3];
-
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedIdOfProject = 2;
-
-  // The reserve rate to configure.
-  const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
-
-  // An example price feed.
-  const priceFeed = await deployContractFn("ExampleETHUSDPriceFeed");
-  const [, rate] = await priceFeed.latestRoundData();
-
-  // The currency number that will store the price feed. Can't be 0, which is reserve for ETH.
-  const currency = randomBigNumberFn({
-    min: BigNumber.from(1),
-    max: constants.MaxUint8
-  });
-
-  // The amount of decimals the price should be adjusted for.
-  const decimals = await priceFeed.decimals();
-
-  // One payment will be made.
-  // Cant pay entire balance because some is needed for gas.
-  const paymentValueInWei = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
-  });
-
-  // The target must be at most the payment value.
-  const targetDenominatedInWei = randomBigNumberFn({
-    min: BigNumber.from(1),
-    max: paymentValueInWei
-  });
-
-  const targetDenominatedInCurrency = targetDenominatedInWei.mul(
-    rate.div(BigNumber.from(10).pow(decimals))
-  );
-
-  // Tap a portion of the target.
-  const amountToTapInWei = targetDenominatedInWei.sub(
-    randomBigNumberFn({ min: BigNumber.from(1), max: targetDenominatedInWei })
-  );
-
-  // An amount up to the amount paid can be tapped.
-  const amountToTapInCurrency = amountToTapInWei.mul(
-    rate.div(BigNumber.from(10).pow(decimals))
-  );
-
-  // The amount tapped takes into account any fees paid.
-  const expectedTappedAmountInWei = amountToTapInWei
-    .mul(constants.MaxPercent)
-    .div((await contracts.juicer.fee()).add(constants.MaxPercent));
-
-  // The expected number of tickets to receive during the payment.
-  const expectedPaymentTickets = paymentValueInWei
-    .mul(constants.MaxPercent.sub(reservedRate))
-    .div(constants.MaxPercent)
-    .mul(constants.InitialWeightMultiplier);
-
-  const premineValueInWei = randomBigNumberFn({
-    // Some big number that isn't close to the limit.
-    max: BigNumber.from(10).pow(22)
-  });
-
-  // Convert the premine value to the currency.
-  const premineValueInCurrency = premineValueInWei.mul(
-    rate.div(BigNumber.from(10).pow(decimals))
-  );
-
-  // The expected number of tickets to receive during the premine.
-  const expectedPremineTickets = premineValueInWei.mul(
-    constants.InitialWeightMultiplier
-  );
-
-  return [
-    /** 
-      Add the price feed to the prices contract.
-    */
-    () =>
-      executeFn({
+      await executeFn({
         caller: deployer,
         contract: contracts.governance,
         fn: "addPriceFeed",
         args: [contracts.prices.address, priceFeed.address, currency]
-      }),
-    /**
-      Deploy first project with a payment mod.
-    */
-    () =>
-      executeFn({
-        caller: deployer,
+      });
+      return { priceFeed, decimals, rate, currency };
+    }
+  },
+  {
+    description: "Deploy first project",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      randomBytesFn,
+      getBalanceFn,
+      randomStringFn,
+      randomSignerFn,
+      incrementProjectIdFn,
+      incrementFundingCycleIdFn,
+      local: { rate, decimals, currency }
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
+
+      // Burn the unused funding cycle ID id.
+      incrementFundingCycleIdFn();
+
+      // The owner of the project with mods.
+      const owner = randomSignerFn();
+
+      // An account that will be used to make a payment.
+      const payer = randomSignerFn();
+
+      // One payment will be made. Cant pay entire balance because some is needed for gas.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
+      const paymentValueInWei = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(2)
+      });
+      // The target must be at most the payment value.
+      const targetDenominatedInWei = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: paymentValueInWei
+      });
+
+      const targetDenominatedInCurrency = targetDenominatedInWei.mul(
+        rate.div(BigNumber.from(10).pow(decimals))
+      );
+
+      // Set to zero to make the test cases cleaner.
+      const reservedRate = BigNumber.from(0);
+
+      await executeFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "deploy",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
           randomStringFn(),
           {
             target: targetDenominatedInCurrency,
@@ -142,7 +110,9 @@ module.exports = async ({
           },
           {
             reservedRate,
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -150,105 +120,243 @@ module.exports = async ({
           [],
           []
         ]
-      }),
-    /*
-      Print premined tickets. The argument is denominated in `currency`.
-      */
-    () =>
-      executeFn({
+      });
+      return {
+        expectedProjectId,
+        owner,
+        payer,
+        paymentValueInWei,
+        reservedRate,
+        targetDenominatedInWei
+      };
+    }
+  },
+  {
+    description:
+      "Print premined tickets. The argument is denominated in `currency`",
+    fn: async ({
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      randomBoolFn,
+      randomStringFn,
+      randomAddressFn,
+      local: { owner, rate, decimals, currency, expectedProjectId }
+    }) => {
+      // An account that will receive tickets for the premine.
+      const premineTicketBeneficiary = randomAddressFn();
+      const premineValueInWei = randomBigNumberFn({
+        min: BigNumber.from(1),
+        // Use an arbitrary large big number that can be added to other large big numbers without risk of running into uint256 boundaries.
+        max: BigNumber.from(10).pow(30)
+      });
+      // Convert the premine value to the currency.
+      const premineValueInCurrency = premineValueInWei.mul(
+        rate.div(BigNumber.from(10).pow(decimals))
+      );
+      await executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "printPreminedTickets",
         args: [
-          expectedIdOfProject,
+          expectedProjectId,
           premineValueInCurrency,
           currency,
-          premineTicketBeneficiary.address,
+          premineTicketBeneficiary,
           randomStringFn(),
           randomBoolFn()
         ]
-      }),
-    /**
-      Check that the beneficiary of the premine got the correct amount of tickets.
-      */
-    () =>
-      checkFn({
+      });
+      return { premineTicketBeneficiary, premineValueInWei };
+    }
+  },
+  {
+    description:
+      "Check that the beneficiary of the premine got the correct amount of tickets",
+    fn: async ({
+      constants,
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { premineTicketBeneficiary, premineValueInWei, expectedProjectId }
+    }) => {
+      // The expected number of tickets to receive during the premine.
+      const expectedPremineTickets = premineValueInWei.mul(
+        constants.InitialWeightMultiplier
+      );
+      await checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
-        args: [premineTicketBeneficiary.address, expectedIdOfProject],
+        args: [premineTicketBeneficiary, expectedProjectId],
         expect: expectedPremineTickets
-      }),
-    /*
-        Make a payment to the project.
-        This is denominated in `currency`.
-      */
-    () =>
-      executeFn({
+      });
+    }
+  },
+  {
+    description: "Make a payment to the project, denominated in `currency`",
+    fn: async ({
+      contracts,
+      executeFn,
+      randomBoolFn,
+      randomStringFn,
+      randomAddressFn,
+      local: {
+        payer,
+        paymentValueInWei,
+        expectedProjectId,
+        premineTicketBeneficiary
+      }
+    }) => {
+      // An account that will receive tickets for the payment.
+      // Exlcude the premine ticket beneficiary to make the test cases cleaner.
+      const paymentTicketBeneficiary = randomAddressFn({
+        exclude: [premineTicketBeneficiary]
+      });
+      await executeFn({
         caller: payer,
         contract: contracts.juicer,
         fn: "pay",
         args: [
-          expectedIdOfProject,
-          paymentTicketBeneficiary.address,
+          expectedProjectId,
+          paymentTicketBeneficiary,
           randomStringFn(),
           randomBoolFn()
         ],
         value: paymentValueInWei
-      }),
-    /**
-      Check that the beneficiary of the payment got the correct amount of tickets.
-      */
-    () =>
+      });
+      return { paymentTicketBeneficiary };
+    }
+  },
+  {
+    description:
+      "Check that the beneficiary of the payment got the correct amount of tickets",
+    fn: ({
+      constants,
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        paymentValueInWei,
+        paymentTicketBeneficiary,
+        reservedRate,
+        expectedProjectId
+      }
+    }) => {
+      // The expected number of tickets to receive during the payment.
+      const expectedPaymentTickets = paymentValueInWei
+        .mul(constants.MaxPercent.sub(reservedRate))
+        .div(constants.MaxPercent)
+        .mul(constants.InitialWeightMultiplier);
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
-        args: [paymentTicketBeneficiary.address, expectedIdOfProject],
-        expect: expectedPaymentTickets,
-        // Allow the last two significant digit to fluctuate due to division precision errors.
-        plusMinus: 100
-      }),
-    /**
-      Check that the overflow amount is being converted correctly.
-      */
-    () =>
+        args: [paymentTicketBeneficiary, expectedProjectId],
+        expect: expectedPaymentTickets
+      });
+    }
+  },
+  {
+    description: "Check that the overflow amount is being converted correctly",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { paymentValueInWei, targetDenominatedInWei, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "currentOverflowOf",
-        args: [expectedIdOfProject],
+        args: [expectedProjectId],
         expect: paymentValueInWei.sub(targetDenominatedInWei)
-      }),
-    /*
-        Tap the full amount from the project.
-      */
-    () =>
-      executeFn({
-        caller: deployer,
+      })
+  },
+  {
+    description: "Tap the full amount from the project",
+    fn: async ({
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      randomSignerFn,
+      getBalanceFn,
+      local: {
+        targetDenominatedInWei,
+        rate,
+        decimals,
+        currency,
+        expectedProjectId,
+        owner
+      }
+    }) => {
+      // Tap a portion of the target.
+      const amountToTapInWei = targetDenominatedInWei.sub(
+        randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: targetDenominatedInWei
+        })
+      );
+
+      // An amount up to the amount paid can be tapped.
+      const amountToTapInCurrency = amountToTapInWei.mul(
+        rate.div(BigNumber.from(10).pow(decimals))
+      );
+
+      // Save the owner's balance before tapping.
+      const ownersInitialBalance = await getBalanceFn(owner.address);
+
+      await executeFn({
+        // Exclude the owner's address to not let gas mess up the balance calculation.
+        caller: randomSignerFn({ exclude: [owner.address] }),
         contract: contracts.juicer,
         fn: "tap",
         args: [
-          expectedIdOfProject,
+          expectedProjectId,
           amountToTapInCurrency,
           currency,
           amountToTapInWei
         ]
-      }),
-    /**
-      The tapped funds should be in the owners balance.
-      */
-    () =>
-      verifyBalanceFn({
+      });
+
+      return { amountToTapInWei, ownersInitialBalance };
+    }
+  },
+  {
+    description: "The tapped funds should be in the owners balance",
+    fn: async ({
+      constants,
+      contracts,
+      verifyBalanceFn,
+      local: { owner, amountToTapInWei, ownersInitialBalance }
+    }) => {
+      // The amount tapped takes into account any fees paid.
+      const expectedTappedAmountInWei = amountToTapInWei
+        .mul(constants.MaxPercent)
+        .div((await contracts.juicer.fee()).add(constants.MaxPercent));
+      await verifyBalanceFn({
         address: owner.address,
-        expect: expectedTappedAmountInWei
-      }),
-    /**
-      Check that the overflow amount is still being converted correctly after tapping.
-      */
-    () =>
+        expect: ownersInitialBalance.add(expectedTappedAmountInWei)
+      });
+    }
+  },
+  {
+    description:
+      "Check that the overflow amount is still being converted correctly after tapping",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { paymentValueInWei, targetDenominatedInWei, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "currentOverflowOf",
-        args: [expectedIdOfProject],
+        args: [expectedProjectId],
         expect: paymentValueInWei.sub(targetDenominatedInWei)
       })
-  ];
-};
+  }
+];

@@ -7,92 +7,68 @@
   If a project reconfigures its funding cycle, new mods can be set that override any locked payout mods.
   These new mods will take effect once the reconfigured funding cycle becomes active.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  constants,
-  contracts,
-  executeFn,
-  checkFn,
-  BigNumber,
-  randomBigNumberFn,
-  stringToBytesFn,
-  normalizedPercentFn,
-  getBalanceFn,
-  getTimestampFn,
-  randomBoolFn,
-  randomStringFn,
-  randomAddressFn
-}) => {
-  // The owner of the project with mods.
-  const owner = addrs[0];
+module.exports = [
+  {
+    description: "Deploy first project with at least a locked ticket mod",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      randomBytesFn,
+      normalizedPercentFn,
+      getTimestampFn,
+      randomBoolFn,
+      randomStringFn,
+      randomAddressFn,
+      randomSignerFn,
+      incrementProjectIdFn,
+      incrementFundingCycleIdFn
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
 
-  // An account that will be used to make a payment.
-  const payer = addrs[1];
+      // Burn the unused funding cycle ID id.
+      incrementFundingCycleIdFn();
 
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedIdOfBaseProject = 2;
+      // The owner of the project with mods.
+      const owner = randomSignerFn();
 
-  // Ticket mods can be locked.
-  // Make a locked mods.
-  const lockedMod = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(50).toNumber(),
-    // Lock at least until the end of the tests.
-    lockedUntil: (await getTimestampFn())
-      .add(
-        randomBigNumberFn({
-          min: BigNumber.from(1000),
-          max: BigNumber.from(100000000)
-        })
-      )
-      .toNumber(),
-    beneficiary: randomAddressFn()
-  };
-  // Make two unlocked mods.
-  const unlockedMod1 = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(25).toNumber(),
-    lockedUntil: 0,
-    beneficiary: randomAddressFn()
-  };
-  const unlockedMod2 = {
-    preferUnstaked: randomBoolFn(),
-    percent: normalizedPercentFn(20).toNumber(),
-    lockedUntil: 0,
-    beneficiary: randomAddressFn()
-  };
-
-  // The currency will be 0, which corresponds to ETH.
-  const currency = 0;
-
-  // Cant pay entire balance because some is needed for gas.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(2)
-  });
-
-  // An amount up to the amount paid can be tapped.
-  const amountToTap = randomBigNumberFn({ max: paymentValue });
-
-  // The target must be at least the amount to tap.
-  const target = randomBigNumberFn({ min: amountToTap });
-
-  return [
-    /** 
-      Deploy first project with at least a locked ticket mod.
-    */
-    () =>
-      executeFn({
-        caller: deployer,
+      // Ticket mods can be locked.
+      const lockedMod = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(50).toNumber(),
+        // Lock at least until the end of the tests.
+        lockedUntil: (await getTimestampFn())
+          .add(
+            randomBigNumberFn({
+              min: BigNumber.from(1000),
+              max: BigNumber.from(100000000)
+            })
+          )
+          .toNumber(),
+        beneficiary: randomAddressFn()
+      };
+      const unlockedMod1 = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(25).toNumber(),
+        lockedUntil: 0,
+        beneficiary: randomAddressFn()
+      };
+      await executeFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "deploy",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
           randomStringFn(),
           {
-            target,
-            currency,
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
             duration: randomBigNumberFn({
               min: BigNumber.from(1),
               max: constants.MaxUint16
@@ -105,7 +81,9 @@ module.exports = async ({
           },
           {
             reservedRate: BigNumber.from(0),
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -113,15 +91,24 @@ module.exports = async ({
           [],
           [lockedMod, unlockedMod1]
         ]
-      }),
-    /**
-        Check that the ticket mods got set.
-      */
-    ({ timeMark }) =>
-      checkFn({
+      });
+      return { owner, expectedProjectId, lockedMod, unlockedMod1 };
+    }
+  },
+  {
+    description: "Check that the ticket mods got set",
+    fn: async ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      timeMark,
+      local: { expectedProjectId, lockedMod, unlockedMod1 }
+    }) => {
+      await checkFn({
+        caller: randomSignerFn(),
         contract: contracts.modStore,
         fn: "ticketModsOf",
-        args: [expectedIdOfBaseProject, timeMark],
+        args: [expectedProjectId, timeMark],
         expect: [
           [
             lockedMod.preferUnstaked,
@@ -136,28 +123,53 @@ module.exports = async ({
             unlockedMod1.beneficiary
           ]
         ]
-      }),
-    /**
-      Overriding a locked mod shouldn't work when setting ticket mods.
-    */
-    ({ timeMark }) =>
-      executeFn({
+      });
+      return { configurationTimeMark: timeMark };
+    }
+  },
+  {
+    description:
+      "Overriding a locked mod shouldn't work when setting ticket mods",
+    fn: async ({
+      contracts,
+      executeFn,
+      normalizedPercentFn,
+      randomBoolFn,
+      randomAddressFn,
+      timeMark,
+      local: { owner, expectedProjectId, unlockedMod1 }
+    }) => {
+      const unlockedMod2 = {
+        preferUnstaked: randomBoolFn(),
+        percent: normalizedPercentFn(20).toNumber(),
+        lockedUntil: 0,
+        beneficiary: randomAddressFn()
+      };
+      await executeFn({
         caller: owner,
         contract: contracts.modStore,
         fn: "setTicketMods",
-        args: [expectedIdOfBaseProject, timeMark, [unlockedMod1, unlockedMod2]],
+        args: [expectedProjectId, timeMark, [unlockedMod1, unlockedMod2]],
         revert: "ModStore::setTicketMods: SOME_LOCKED"
-      }),
-    /**
-      Overriding a locked mod with a shorter locked date shouldn't work when setting ticket mods.
-    */
-    ({ timeMark }) =>
+      });
+      return { unlockedMod2 };
+    }
+  },
+  {
+    description:
+      "Overriding a locked mod with a shorter locked date shouldn't work when setting ticket mods",
+    fn: ({
+      contracts,
+      executeFn,
+      timeMark,
+      local: { owner, expectedProjectId, lockedMod, unlockedMod1, unlockedMod2 }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.modStore,
         fn: "setTicketMods",
         args: [
-          expectedIdOfBaseProject,
+          expectedProjectId,
           timeMark,
           [
             {
@@ -169,19 +181,22 @@ module.exports = async ({
           ]
         ],
         revert: "ModStore::setTicketMods: SOME_LOCKED"
-      }),
-    /**
-      Set new ticket mods, making sure to include any locked mods.
-
-      Locked mods can have their locked date extended.
-    */
-    ({ timeMark }) =>
+      })
+  },
+  {
+    description: "Set new ticket mods, making sure to include any locked mods",
+    fn: ({
+      contracts,
+      executeFn,
+      timeMark,
+      local: { owner, expectedProjectId, lockedMod, unlockedMod2 }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.modStore,
         fn: "setTicketMods",
         args: [
-          expectedIdOfBaseProject,
+          expectedProjectId,
           timeMark,
           [
             {
@@ -191,16 +206,27 @@ module.exports = async ({
             unlockedMod2
           ]
         ]
-      }),
-    /**
-        Check that the new payment mods got set correctly.
-      */
-    ({ timeMark }) =>
+      })
+  },
+  {
+    description: "Check that the new payment mods got set correctly",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        lockedMod,
+        unlockedMod2,
+        configurationTimeMark
+      }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.modStore,
         fn: "ticketModsOf",
         // Subtract 1 from timeMark to get the time of the configuration execution.
-        args: [expectedIdOfBaseProject, timeMark.sub(1)],
+        args: [expectedProjectId, configurationTimeMark],
         expect: [
           [
             lockedMod.preferUnstaked,
@@ -215,20 +241,28 @@ module.exports = async ({
             unlockedMod2.beneficiary
           ]
         ]
-      }),
-    /**
-      Configuring a project should allow overriding locked mods for the new configuration.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "Configuring a project should allow overriding locked mods for the new configuration",
+    fn: ({
+      constants,
+      contracts,
+      executeFn,
+      BigNumber,
+      randomBigNumberFn,
+      local: { owner, expectedProjectId, unlockedMod1 }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "configure",
         args: [
-          expectedIdOfBaseProject,
+          expectedProjectId,
           {
-            target,
-            currency,
+            target: randomBigNumberFn(),
+            currency: randomBigNumberFn({ max: constants.MaxUint8 }),
             duration: randomBigNumberFn({
               min: BigNumber.from(1),
               max: constants.MaxUint16
@@ -241,7 +275,9 @@ module.exports = async ({
           },
           {
             reservedRate: BigNumber.from(0),
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -249,16 +285,51 @@ module.exports = async ({
           [],
           [unlockedMod1]
         ]
-      }),
-    /**
-        Check that the old configuration still has its mods.
-      */
-    ({ timeMark }) =>
+      })
+  },
+  {
+    description: "Check that the new configuration has its mods",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      timeMark,
+      local: { expectedProjectId, unlockedMod1 }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.modStore,
+        fn: "ticketModsOf",
+        args: [expectedProjectId, timeMark],
+        expect: [
+          [
+            unlockedMod1.preferUnstaked,
+            unlockedMod1.percent,
+            unlockedMod1.lockedUntil,
+            unlockedMod1.beneficiary
+          ]
+        ]
+      })
+  },
+  {
+    description: "Check that the old configuration still has its mods",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        lockedMod,
+        unlockedMod2,
+        configurationTimeMark
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
         contract: contracts.modStore,
         fn: "ticketModsOf",
         // Subtract 2 from timeMark to get the time of the configuration execution.
-        args: [expectedIdOfBaseProject, timeMark.sub(2)],
+        args: [expectedProjectId, configurationTimeMark],
         expect: [
           [
             lockedMod.preferUnstaked,
@@ -273,23 +344,6 @@ module.exports = async ({
             unlockedMod2.beneficiary
           ]
         ]
-      }),
-    /**
-        Check that the new configuration has its mods.
-      */
-    ({ timeMark }) =>
-      checkFn({
-        contract: contracts.modStore,
-        fn: "ticketModsOf",
-        args: [expectedIdOfBaseProject, timeMark],
-        expect: [
-          [
-            unlockedMod1.preferUnstaked,
-            unlockedMod1.percent,
-            unlockedMod1.lockedUntil,
-            unlockedMod1.beneficiary
-          ]
-        ]
       })
-  ];
-};
+  }
+];

@@ -1,81 +1,51 @@
 /** 
   Projects can deploy addresses that will forward funds received to the project's funding cycle.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  constants,
-  contracts,
-  executeFn,
-  checkFn,
-  randomBigNumberFn,
-  BigNumber,
-  stringToBytesFn,
-  randomStringFn,
-  getBalanceFn,
-  randomBoolFn,
-  deployContractFn
-}) => {
-  const owner = addrs[0];
 
-  // An account that will be used to make payments.
-  const payer = addrs[1];
+// The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.
+const currency = 0;
 
-  // The beneficiary to give tickets to.
-  const payerTicketBeneficiary = addrs[2];
+module.exports = [
+  {
+    description: "Deploy a project",
+    fn: async ({
+      constants,
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      randomBytesFn,
+      randomStringFn,
+      randomSignerFn,
+      incrementFundingCycleIdFn,
+      incrementProjectIdFn
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
 
-  // The unstaked preference to set.
-  const preferUnstakedTickets = randomBoolFn();
+      // Burn the unused funding cycle ID id.
+      incrementFundingCycleIdFn();
 
-  // Two payments will be made. Cant pay entire balance because some is needed for gas.
-  // So, arbitrarily find a number less than 1/3 so that all payments can be made successfully.
-  const paymentValue = randomBigNumberFn({
-    max: (await getBalanceFn(payer.address)).div(3)
-  });
+      const owner = randomSignerFn();
 
-  const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });
-  const expectedTicketAmount = paymentValue
-    .mul(constants.InitialWeightMultiplier)
-    .mul(constants.MaxPercent.sub(reservedRate))
-    .div(constants.MaxPercent);
+      // Make the test case cleaner with a reserved rate of 0.
+      const reservedRate = BigNumber.from(0);
 
-  const target = randomBigNumberFn();
-
-  // The currency will be 0, which corresponds to ETH.
-  const currency = 0;
-
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedProjectId = BigNumber.from(2);
-
-  // The juicer that will be migrated to.
-  const secondJuicer = await deployContractFn("Juicer", [
-    contracts.projects.address,
-    contracts.fundingCycles.address,
-    contracts.ticketBooth.address,
-    contracts.operatorStore.address,
-    contracts.modStore.address,
-    contracts.prices.address,
-    contracts.terminalDirectory.address,
-    contracts.governance.address
-  ]);
-  return [
-    /** 
-      Deploy a project.
-    */
-    () =>
-      executeFn({
-        caller: deployer,
+      await executeFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "deploy",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
           randomStringFn(),
           {
-            target,
+            target: randomBigNumberFn(),
             currency,
             duration: randomBigNumberFn({
-              min: BigNumber.from(1),
+              min: BigNumber.from(0),
               max: constants.MaxUint16
             }),
             cycleLimit: randomBigNumberFn({
@@ -86,7 +56,9 @@ module.exports = async ({
           },
           {
             reservedRate,
-            bondingCurveRate: randomBigNumberFn({ max: constants.MaxPercent }),
+            bondingCurveRate: randomBigNumberFn({
+              max: constants.MaxPercent
+            }),
             reconfigurationBondingCurveRate: randomBigNumberFn({
               max: constants.MaxPercent
             })
@@ -94,73 +66,146 @@ module.exports = async ({
           [],
           []
         ]
-      }),
-    /**
-      Make sure the juicer got set as the project's current terminal.
-    */
-    () =>
+      });
+      return { owner, reservedRate, expectedProjectId };
+    }
+  },
+  {
+    description:
+      "Make sure the juicer got set as the project's current terminal",
+    fn: ({
+      checkFn,
+      contracts,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
         expect: contracts.juicer.address
-      }),
-    /** 
-      Deploy a direct payment address.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Deploy a direct payment address",
+    fn: ({
+      executeFn,
+      deployer,
+      contracts,
+      randomStringFn,
+      local: { expectedProjectId }
+    }) =>
       executeFn({
         caller: deployer,
         contract: contracts.terminalDirectory,
         fn: "deployAddress",
         args: [expectedProjectId, randomStringFn()]
-      }),
-    /** 
-      Make a payment to the address.
-    */
-    async () => {
+      })
+  },
+  {
+    description: "Make a payment to the address",
+    fn: async ({
+      contracts,
+      randomBigNumberFn,
+      BigNumber,
+      getBalanceFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) => {
       const [address] = await contracts.terminalDirectory.addressesOf(
         expectedProjectId
       );
+      // An account that will be used to make payments.
+      const payer = randomSignerFn();
+
+      // Three payments will be made. Cant pay entire balance because some is needed for gas.
+      // So, arbitrarily divide the balance so that all payments can be made successfully.
+      const paymentValue = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: (await getBalanceFn(payer.address)).div(100)
+      });
+
       await payer.sendTransaction({
         to: address,
         value: paymentValue
       });
-    },
-    /**
-      There should now be a balance in the terminal.
-    */
-    () =>
+
+      return { payer, paymentValue };
+    }
+  },
+  {
+    description: "There should now be a balance in the terminal",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { paymentValue, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue
-      }),
-    /**
-      The payer should have gotten tickets.
-    */
-    () =>
-      checkFn({
+      })
+  },
+  {
+    description: "The payer should have gotten tickets",
+    fn: async ({
+      randomSignerFn,
+      constants,
+      contracts,
+      checkFn,
+      local: { payer, paymentValue, reservedRate, expectedProjectId }
+    }) => {
+      const expectedTicketAmount = paymentValue
+        .mul(constants.InitialWeightMultiplier)
+        .mul(constants.MaxPercent.sub(reservedRate))
+        .div(constants.MaxPercent);
+      await checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
         args: [payer.address, expectedProjectId],
         expect: expectedTicketAmount
-      }),
-    /** 
-      Set a beneficiary address and staked ticket preference.
-    */
-    () =>
-      executeFn({
+      });
+      return { expectedTicketAmount };
+    }
+  },
+  {
+    description: "Set a beneficiary address and staked ticket preference",
+    fn: async ({
+      contracts,
+      executeFn,
+      randomBoolFn,
+      randomAddressFn,
+      local: { payer }
+    }) => {
+      // The beneficiary to give tickets to.
+      // Exclude the payers address to make the test cases cleaner.
+      const payerTicketBeneficiary = randomAddressFn({
+        exclude: [payer.address]
+      });
+      // The unstaked preference to set.
+      const preferUnstakedTickets = randomBoolFn();
+      await executeFn({
         caller: payer,
         contract: contracts.terminalDirectory,
         fn: "setPayerPreferences",
-        args: [payerTicketBeneficiary.address, preferUnstakedTickets]
-      }),
-    /**
-      Issue tickets.
-    */
-    () =>
+        args: [payerTicketBeneficiary, preferUnstakedTickets]
+      });
+      return { payerTicketBeneficiary, preferUnstakedTickets };
+    }
+  },
+  {
+    description: "Issue tickets",
+    fn: ({
+      contracts,
+      executeFn,
+      randomStringFn,
+      local: { owner, expectedProjectId }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.ticketBooth,
@@ -170,23 +215,30 @@ module.exports = async ({
           randomStringFn({ canBeEmpty: false }),
           randomStringFn({ canBeEmpty: false })
         ]
-      }),
-    /** 
-      Deploy another direct payment address.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Deploy another direct payment address",
+    fn: ({
+      deployer,
+      contracts,
+      executeFn,
+      randomStringFn,
+      local: { expectedProjectId }
+    }) =>
       executeFn({
         caller: deployer,
         contract: contracts.terminalDirectory,
         fn: "deployAddress",
         args: [expectedProjectId, randomStringFn()]
-      }),
-    /** 
-      Make another payment to the address.
-
-      All addresses should work.
-    */
-    async () => {
+      })
+  },
+  {
+    description: "Make another payment to the address",
+    fn: async ({
+      contracts,
+      local: { payer, paymentValue, expectedProjectId }
+    }) => {
       const [, secondAddress] = await contracts.terminalDirectory.addressesOf(
         expectedProjectId
       );
@@ -194,61 +246,107 @@ module.exports = async ({
         to: secondAddress,
         value: paymentValue
       });
-    },
-    /**
-      There should now be a double the payment value balance in the terminal.
-    */
-    () =>
+    }
+  },
+  {
+    description:
+      "There should now be a double the payment value balance in the terminal",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { paymentValue, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue.mul(2)
-      }),
-    /**
-      The beneficiary should have gotten tickets.
-    */
-    () =>
+      })
+  },
+  {
+    description: "The beneficiary should have gotten tickets",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { payerTicketBeneficiary, expectedTicketAmount, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
-        args: [payerTicketBeneficiary.address, expectedProjectId],
+        args: [payerTicketBeneficiary, expectedProjectId],
         expect: expectedTicketAmount
-      }),
-    /**
-      If there was a preference for unstaked tickets, the tickets should be unstaked.
-    */
-    () =>
+      })
+  },
+  {
+    description:
+      "If there was a preference for unstaked tickets, the tickets should be unstaked",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        payerTicketBeneficiary,
+        expectedTicketAmount,
+        preferUnstakedTickets,
+        expectedProjectId
+      }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "stakedBalanceOf",
-        args: [payerTicketBeneficiary.address, expectedProjectId],
+        args: [payerTicketBeneficiary, expectedProjectId],
         expect: preferUnstakedTickets ? 0 : expectedTicketAmount
-      }),
-    /**
-      Allow a migration to the new terminal.
-    */
-    () =>
-      executeFn({
+      })
+  },
+  {
+    description: "Allow a migration to the new terminal",
+    fn: async ({ deployer, contracts, executeFn, deployContractFn }) => {
+      // The juicer that will be migrated to.
+      const secondJuicer = await deployContractFn("Juicer", [
+        contracts.projects.address,
+        contracts.fundingCycles.address,
+        contracts.ticketBooth.address,
+        contracts.operatorStore.address,
+        contracts.modStore.address,
+        contracts.prices.address,
+        contracts.terminalDirectory.address,
+        contracts.governance.address
+      ]);
+      await executeFn({
         caller: deployer,
         contract: contracts.governance,
         fn: "allowMigration",
         args: [contracts.juicer.address, secondJuicer.address]
-      }),
-    /**
-      Migrate to the new terminal.
-    */
-    () =>
+      });
+      return { secondJuicer };
+    }
+  },
+  {
+    description: "Migrate to the new terminal",
+    fn: ({
+      contracts,
+      executeFn,
+      local: { owner, expectedProjectId, secondJuicer }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.juicer,
         fn: "migrate",
         args: [expectedProjectId, secondJuicer.address]
-      }),
-    /**
-      Make another payment to the address. It should now have been routed to the new terminal.
-    */
-    async () => {
+      })
+  },
+  {
+    description:
+      "Make another payment to the address. It should now have been routed to the new terminal",
+    fn: async ({
+      contracts,
+      local: { payer, paymentValue, expectedProjectId }
+    }) => {
       const [address] = await contracts.terminalDirectory.addressesOf(
         expectedProjectId
       );
@@ -256,26 +354,48 @@ module.exports = async ({
         to: address,
         value: paymentValue
       });
-    },
-    /**
-      There should now be a trip the payment value balance in the new terminal.
-    */
-    () =>
+    }
+  },
+  {
+    description:
+      "There should now be triple the payment value balance in the new terminal",
+    fn: ({
+      checkFn,
+      randomSignerFn,
+      local: { paymentValue, expectedProjectId, secondJuicer }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: secondJuicer,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue.mul(3)
-      }),
-    /**
-      The beneficiary should have gotten tickets.
-    */
-    () =>
+      })
+  },
+  {
+    description: "The beneficiary should have gotten tickets",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { payerTicketBeneficiary, expectedTicketAmount, expectedProjectId }
+    }) =>
       checkFn({
+        caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
-        args: [payerTicketBeneficiary.address, expectedProjectId],
+        args: [payerTicketBeneficiary, expectedProjectId],
         expect: expectedTicketAmount.mul(2)
       })
-  ];
-};
+  },
+  {
+    description: "Set a beneficiary address back to the paying address",
+    fn: ({ contracts, executeFn, randomBoolFn, local: { payer } }) =>
+      executeFn({
+        caller: payer,
+        contract: contracts.terminalDirectory,
+        fn: "setPayerPreferences",
+        args: [payer.address, randomBoolFn()]
+      })
+  }
+];

@@ -2,92 +2,122 @@
   The governance of the Juicer can transfer its power to a new address.
   To do so, the governance must appoint a new address, and that address must accept the appointment.
 */
-module.exports = async ({
-  deployer,
-  addrs,
-  contracts,
-  constants,
-  BigNumber,
-  executeFn,
-  stringToBytesFn,
-  randomStringFn
-}) => {
-  // The address that will own a project.
-  const owner = addrs[0];
+module.exports = [
+  {
+    description: "Create a project for the initial owner",
+    fn: async ({
+      contracts,
+      constants,
+      executeFn,
+      randomStringFn,
+      randomSignerFn,
+      incrementProjectIdFn,
+      randomBytesFn
+    }) => {
+      const expectedProjectId = incrementProjectIdFn();
 
-  // The address that will own another project.
-  const secondOwner = addrs[1];
+      // The address that will own a project.
+      const owner = randomSignerFn();
 
-  // Since the governance project was created before this test, the created project ID should be 2.
-  const expectedProjectId = BigNumber.from(2);
-
-  return [
-    /** 
-      Create a project for the initial owner.
-    */
-    () =>
-      executeFn({
-        caller: deployer,
+      await executeFn({
+        caller: randomSignerFn(),
         contract: contracts.projects,
         fn: "create",
         args: [
           owner.address,
-          stringToBytesFn("some-unique-handle"),
-          stringToBytesFn("some-unique-handle"),
+          randomBytesFn({
+            // Make sure its unique by prepending the id.
+            prepend: expectedProjectId.toString()
+          }),
+          randomStringFn(),
           constants.AddressZero
         ]
-      }),
-    /**
-      The owner should be able to set a new uri for the project.
-    */
-    () =>
+      });
+      return { owner, expectedProjectId };
+    }
+  },
+  {
+    description: "The owner should be able to set a new uri for the project",
+    fn: ({
+      contracts,
+      executeFn,
+      randomStringFn,
+      local: { owner, expectedProjectId }
+    }) =>
       executeFn({
         caller: owner,
         contract: contracts.projects,
         fn: "setUri",
         args: [expectedProjectId, randomStringFn()]
-      }),
-    /**
-      Non owners that aren't operators cant set the uri.
-    */
-    () =>
+      })
+  },
+  {
+    description: "Non owners that aren't operators cant set the uri",
+    fn: ({
+      executeFn,
+      contracts,
+      randomStringFn,
+      randomSignerFn,
+      local: { owner, expectedProjectId }
+    }) =>
       executeFn({
-        caller: secondOwner,
-        contract: contracts.projects,
-        fn: "setUri",
-        args: [expectedProjectId, randomStringFn()],
-        revert: "Operatable: UNAUTHORIZED"
-      }),
-    /**
-      Transfer ownership to a new owner.
-    */
-    () =>
-      executeFn({
-        caller: owner,
-        contract: contracts.projects,
-        fn: "transferFrom",
-        args: [owner.address, secondOwner.address, expectedProjectId]
-      }),
-    /**
-      The new owner should be able to set a new uri for the project.
-    */
-    () =>
-      executeFn({
-        caller: secondOwner,
-        contract: contracts.projects,
-        fn: "setUri",
-        args: [expectedProjectId, randomStringFn()]
-      }),
-    /**
-      The old owner can no longer set the uri.
-    */
-    () =>
-      executeFn({
-        caller: owner,
+        caller: randomSignerFn({ exclude: [owner.address] }),
         contract: contracts.projects,
         fn: "setUri",
         args: [expectedProjectId, randomStringFn()],
         revert: "Operatable: UNAUTHORIZED"
       })
-  ];
-};
+  },
+  {
+    description: "Transfer ownership to a new owner",
+    fn: async ({
+      executeFn,
+      contracts,
+      randomSignerFn,
+      local: { owner, expectedProjectId }
+    }) => {
+      // The address that will own another project.
+      const secondOwner = randomSignerFn();
+      await executeFn({
+        caller: owner,
+        contract: contracts.projects,
+        fn: "transferFrom",
+        args: [owner.address, secondOwner.address, expectedProjectId]
+      });
+      return { secondOwner };
+    }
+  },
+  {
+    description:
+      "The new owner should be able to set a new uri for the project",
+    fn: ({
+      executeFn,
+      contracts,
+      randomStringFn,
+      local: { secondOwner, expectedProjectId }
+    }) =>
+      executeFn({
+        caller: secondOwner,
+        contract: contracts.projects,
+        fn: "setUri",
+        args: [expectedProjectId, randomStringFn()]
+      })
+  },
+  {
+    description: "The old owner can no longer set the uri",
+    fn: ({
+      executeFn,
+      contracts,
+      randomStringFn,
+      local: { owner, secondOwner, expectedProjectId }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.projects,
+        fn: "setUri",
+        args: [expectedProjectId, randomStringFn()],
+        revert:
+          owner.address !== secondOwner.address && "Operatable: UNAUTHORIZED"
+      })
+  }
+];

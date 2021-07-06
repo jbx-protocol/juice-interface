@@ -77,6 +77,12 @@ export default function Project({
     [fundingCycle?.currency, balance, converter],
   )
 
+  const canPrintPreminedTickets = useContractReader<boolean>({
+    contract: ContractName.Juicer,
+    functionName: 'canPrintPreminedTickets',
+    args: projectId ? [projectId.toHexString()] : null,
+  })
+
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
     functionName: 'currentOverflowOf',
@@ -125,10 +131,9 @@ export default function Project({
         </Col>
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
-            {balance?.eq(0) &&
-              fundingCycle?.tapped.eq(0) &&
-              fundingCycle.number.eq(1) &&
-              isOwner && <PrintPremined projectId={projectId} />}
+            {canPrintPreminedTickets && isOwner && (
+              <PrintPremined projectId={projectId} />
+            )}
             <Pay
               metadata={metadata}
               fundingCycle={fundingCycle}

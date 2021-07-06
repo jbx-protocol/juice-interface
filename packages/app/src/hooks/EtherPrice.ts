@@ -10,7 +10,7 @@ export function useEtherPrice() {
 
   useContractReader({
     contract: ContractName.Prices,
-    functionName: 'getETHPrice',
+    functionName: 'getETHPriceFor',
     args: ['1'], // USD
     callback: useCallback(
       (val?: BigNumber) => setPrice(parseFloat(fromWad(val))),

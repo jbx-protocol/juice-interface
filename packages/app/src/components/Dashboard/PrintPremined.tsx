@@ -1,12 +1,12 @@
-import { Button, Modal, Input, Form, Space, Switch } from 'antd'
-import { UserContext } from 'contexts/userContext'
-import { useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
-import { FormItems } from 'components/shared/formItems'
-import { CurrencyOption } from 'models/currency-option'
-import { parseWad } from 'utils/formatNumber'
-import { constants, utils } from 'ethers'
+import { Button, Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { FormItems } from 'components/shared/formItems'
+import { UserContext } from 'contexts/userContext'
+import { constants, utils } from 'ethers'
+import { CurrencyOption } from 'models/currency-option'
+import { useContext, useState } from 'react'
+import { parseWad } from 'utils/formatNumber'
 
 export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
   const { contracts, transactor } = useContext(UserContext)

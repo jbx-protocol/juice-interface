@@ -478,7 +478,7 @@ const tests = {
           // Preconfigure the duration.
           duration: BigNumber.from(10),
           ballot: {
-            address: constants.AddressZero
+            state: 0
           }
         },
         ops: [
@@ -757,6 +757,88 @@ const tests = {
           basedOn: 2
         }
       })
+    },
+    {
+      description: "base on last good cycle if there ballot is active",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(10),
+          ballot: {
+            state: 1
+          }
+        },
+        ops: [
+          // Add a reconfiguration to the same project with a cycle limit.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(5),
+            discountRate: BigNumber.from(20),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false,
+            ballot: {
+              duration: BigNumber.from(0)
+            },
+            expectedCyclesUsed: 0
+          }
+        ],
+        // Fast forward to within the cycle.
+        fastforward: BigNumber.from(86400 * 11 - 1),
+        op: {
+          cycleLimit: 2
+        },
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 3,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description: "base on last good cycle if there ballot failed",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(10),
+          ballot: {
+            state: 2
+          }
+        },
+        ops: [
+          // Add a reconfiguration to the same project with a cycle limit.
+          {
+            type: "configure",
+            projectId: 1,
+            target: BigNumber.from(10),
+            currency: BigNumber.from(2),
+            duration: BigNumber.from(1),
+            cycleLimit: BigNumber.from(5),
+            discountRate: BigNumber.from(20),
+            fee: BigNumber.from(30),
+            metadata: BigNumber.from(5),
+            configureActiveFundingCycle: false,
+            ballot: {
+              duration: BigNumber.from(0)
+            },
+            expectedCyclesUsed: 0
+          }
+        ],
+        // Fast forward to within the cycle.
+        fastforward: BigNumber.from(86400 * 11 - 1),
+        op: {
+          cycleLimit: 2
+        },
+        expectation: {
+          configuredNumber: 3,
+          configuredId: 3,
+          basedOn: 1
+        }
+      })
     }
   ],
   failure: [
@@ -906,6 +988,9 @@ module.exports = function() {
             await this.ballot.mock.duration.returns(
               preconfigure.ballot.duration
             );
+
+          if (preconfigure.ballot.state !== undefined)
+            await this.ballot.mock.state.returns(preconfigure.ballot.state);
 
           await this.setTimeMarkFn(tx.blockNumber);
         }
@@ -1075,68 +1160,68 @@ module.exports = function() {
       });
     });
   });
-  // describe("Failure cases", function() {
-  //   tests.failure.forEach(function(failureTest) {
-  //     it(failureTest.description, async function() {
-  //       const {
-  //         caller,
-  //         controller,
-  //         projectId,
-  //         target,
-  //         currency,
-  //         duration,
-  //         cycleLimit,
-  //         discountRate,
-  //         fee,
-  //         metadata,
-  //         configureActiveFundingCycle,
-  //         setup: { preconfigure } = {},
-  //         revert
-  //       } = failureTest.fn(this);
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const {
+          caller,
+          controller,
+          projectId,
+          target,
+          currency,
+          duration,
+          cycleLimit,
+          discountRate,
+          fee,
+          metadata,
+          configureActiveFundingCycle,
+          setup: { preconfigure } = {},
+          revert
+        } = failureTest.fn(this);
 
-  //       // Mock the caller to be the project's controller for setup.
-  //       await this.terminalDirectory.mock.terminalOf
-  //         .withArgs(projectId)
-  //         .returns(caller.address);
+        // Mock the caller to be the project's controller for setup.
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(caller.address);
 
-  //       if (preconfigure) {
-  //         await this.contract.connect(caller).configure(
-  //           projectId,
-  //           {
-  //             target: preconfigure.target,
-  //             currency: preconfigure.currency,
-  //             duration: preconfigure.duration,
-  //             cycleLimit: preconfigure.cycleLimit,
-  //             discountRate: preconfigure.discountRate,
-  //             ballot: preconfigure.ballot.address
-  //           },
-  //           preconfigure.metadata,
-  //           preconfigure.fee,
-  //           preconfigure.configureActiveFundingCycle
-  //         );
-  //       }
+        if (preconfigure) {
+          await this.contract.connect(caller).configure(
+            projectId,
+            {
+              target: preconfigure.target,
+              currency: preconfigure.currency,
+              duration: preconfigure.duration,
+              cycleLimit: preconfigure.cycleLimit,
+              discountRate: preconfigure.discountRate,
+              ballot: preconfigure.ballot.address
+            },
+            preconfigure.metadata,
+            preconfigure.fee,
+            preconfigure.configureActiveFundingCycle
+          );
+        }
 
-  //       await this.terminalDirectory.mock.terminalOf
-  //         .withArgs(projectId)
-  //         .returns(controller);
+        await this.terminalDirectory.mock.terminalOf
+          .withArgs(projectId)
+          .returns(controller);
 
-  //       await expect(
-  //         this.contract.connect(caller).configure(
-  //           projectId,
-  //           {
-  //             target,
-  //             currency,
-  //             duration,
-  //             cycleLimit,
-  //             discountRate,
-  //             ballot: this.ballot.address
-  //           },
-  //           metadata,
-  //           fee,
-  //           configureActiveFundingCycle
-  //         )
-  //       ).to.be.revertedWith(revert);
-  //     });
-  //   });
-  // });
+        await expect(
+          this.contract.connect(caller).configure(
+            projectId,
+            {
+              target,
+              currency,
+              duration,
+              cycleLimit,
+              discountRate,
+              ballot: this.ballot.address
+            },
+            metadata,
+            fee,
+            configureActiveFundingCycle
+          )
+        ).to.be.revertedWith(revert);
+      });
+    });
+  });
 };

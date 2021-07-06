@@ -101,30 +101,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
     mapping(ITerminal => bool) public override migrationIsAllowed;
 
-    // --- public views --- //
-
-    /** 
-      @notice 
-      Gets the amount of reserved tickets that a project has.
-
-      @param _projectId The ID of the project to get overflow for.
-      @param _reservedRate The reserved rate to use to make the calculation.
-
-      @return amount overflow The current overflow of funds for the project.
-    */
-    function reservedTicketBalanceOf(uint256 _projectId, uint256 _reservedRate)
-        public
-        view
-        override
-        returns (uint256)
-    {
-        return
-            _reservedTicketAmountFrom(
-                _processedTicketTrackerOf[_projectId],
-                _reservedRate,
-                ticketBooth.totalSupplyOf(_projectId)
-            );
-    }
+    // --- external views --- //
 
     /** 
       @notice 
@@ -135,7 +112,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @return overflow The current overflow of funds for the project.
     */
     function currentOverflowOf(uint256 _projectId)
-        public
+        external
         view
         override
         returns (uint256 overflow)
@@ -149,6 +126,31 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         return _overflowFrom(_fundingCycle);
     }
+
+    /** 
+      @notice 
+      Gets the amount of reserved tickets that a project has.
+
+      @param _projectId The ID of the project to get overflow for.
+      @param _reservedRate The reserved rate to use to make the calculation.
+
+      @return amount overflow The current overflow of funds for the project.
+    */
+    function reservedTicketBalanceOf(uint256 _projectId, uint256 _reservedRate)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        return
+            _reservedTicketAmountFrom(
+                _processedTicketTrackerOf[_projectId],
+                _reservedRate,
+                ticketBooth.totalSupplyOf(_projectId)
+            );
+    }
+
+    // --- public views --- //
 
     /**
         @notice 
@@ -232,6 +234,29 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     ),
                 200
             );
+    }
+
+    /**
+      @notice
+      Whether or not a project can still print premined tickets.
+
+      @param _projectId The ID of the project to get the status of.
+
+      @return Boolean flag.
+    */
+    function canPrintPremineTickets(uint256 _projectId)
+        public
+        view
+        override
+        returns (bool)
+    {
+        return
+            ticketBooth.totalSupplyOf(_projectId) ==
+            preconfigureTicketCountOf[_projectId] &&
+            // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
+            _processedTicketTrackerOf[_projectId] >= 0 &&
+            uint256(_processedTicketTrackerOf[_projectId]) ==
+            preconfigureTicketCountOf[_projectId];
     }
 
     // --- external transactions --- //
@@ -464,12 +489,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     {
         // Make sure the project hasnt printed tickets that werent preconfigure.
         require(
-            ticketBooth.totalSupplyOf(_projectId) ==
-                preconfigureTicketCountOf[_projectId] &&
-                // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
-                _processedTicketTrackerOf[_projectId] >= 0 &&
-                uint256(_processedTicketTrackerOf[_projectId]) ==
-                preconfigureTicketCountOf[_projectId],
+            canPrintPremineTickets(_projectId),
             "Juicer::printTickets: ALREADY_ACTIVE"
         );
 

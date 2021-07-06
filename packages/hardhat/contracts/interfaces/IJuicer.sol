@@ -109,6 +109,11 @@ interface IJuicer {
         view
         returns (uint256);
 
+    function canPrintPremineTickets(uint256 _projectId)
+        external
+        view
+        returns (bool);
+
     function balanceOf(uint256 _projectId) external view returns (uint256);
 
     function preconfigureTicketCountOf(uint256 _projectId)

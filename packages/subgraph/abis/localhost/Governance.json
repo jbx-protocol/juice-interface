@@ -37,6 +37,19 @@
   {
     "inputs": [
       {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      }
+    ],
+    "name": "acceptGovernance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "contract IPrices",
         "name": "_prices",
         "type": "address"

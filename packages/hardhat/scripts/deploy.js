@@ -146,6 +146,7 @@ const main = async () => {
         target: "0x21E19E0C9BAB2400000",
         currency: 1,
         duration: 30, // 30 days
+        cycleLimit: 0,
         discountRate: 190,
         ballot: ballot.address
       },

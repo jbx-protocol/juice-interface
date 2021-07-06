@@ -67,10 +67,10 @@ function App() {
             <h2>Connect wallet to {networkName}</h2>
             <div>Or, go to:</div>
             {supportedNetworks
-              .filter(n => n !== signerNetwork)
+              .filter(n => !window.location.hostname.includes(n))
               .map(_n => (
-                <a key={_n} href={`https://${_n}.juice.work`}>
-                  {_n}.juice.work
+                <a key={_n} href={`https://${_n}.juicebox.money`}>
+                  {_n}.juicebox.money
                 </a>
               ))}
           </Space>

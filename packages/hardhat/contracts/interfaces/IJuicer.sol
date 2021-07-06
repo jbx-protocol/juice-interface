@@ -109,7 +109,7 @@ interface IJuicer {
         view
         returns (uint256);
 
-    function canPrintPremineTickets(uint256 _projectId)
+    function canPrintPreminedTickets(uint256 _projectId)
         external
         view
         returns (bool);

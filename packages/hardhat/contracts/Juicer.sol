@@ -242,7 +242,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @return Boolean flag.
     */
-    function canPrintPremineTickets(uint256 _projectId)
+    function canPrintPreminedTickets(uint256 _projectId)
         public
         view
         override
@@ -487,7 +487,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     {
         // Make sure the project hasnt printed tickets that werent preconfigure.
         require(
-            canPrintPremineTickets(_projectId),
+            canPrintPreminedTickets(_projectId),
             "Juicer::printTickets: ALREADY_ACTIVE"
         );
 

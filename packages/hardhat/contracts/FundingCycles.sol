@@ -87,7 +87,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         @return _fundingCycle The queued funding cycle.
     */
-    function getQueuedOf(uint256 _projectId)
+    function queuedOf(uint256 _projectId)
         external
         view
         override
@@ -148,7 +148,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         @return fundingCycle The current funding cycle.
     */
-    function getCurrentOf(uint256 _projectId)
+    function currentOf(uint256 _projectId)
         external
         view
         override

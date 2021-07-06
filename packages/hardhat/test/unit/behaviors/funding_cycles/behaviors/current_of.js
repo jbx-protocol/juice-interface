@@ -718,7 +718,7 @@ module.exports = function() {
         }
 
         // Execute the transaction.
-        const storedCurrentFundingCycle = await this.contract.getCurrentOf(
+        const storedCurrentFundingCycle = await this.contract.currentOf(
           projectId
         );
 
@@ -810,7 +810,7 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).getCurrentOf(projectId)
+          this.contract.connect(caller).currentOf(projectId)
         ).to.be.revertedWith(revert);
       });
     });

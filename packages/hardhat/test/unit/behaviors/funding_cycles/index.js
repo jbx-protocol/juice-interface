@@ -36,7 +36,7 @@ module.exports = function() {
   // Test each function.
   describe("configure(...)", shouldBehaveLike.configure);
   describe("tap(...)", shouldBehaveLike.tap);
-  describe("getCurrentOf(...)", shouldBehaveLike.getCurrentOf);
-  describe("getQueuedOf(...)", shouldBehaveLike.getQueuedOf);
+  describe("currentOf(...)", shouldBehaveLike.currentOf);
+  describe("queuedOf(...)", shouldBehaveLike.queuedOf);
   describe("currentBallotStateOf(...)", shouldBehaveLike.currentBallotStateOf);
 };

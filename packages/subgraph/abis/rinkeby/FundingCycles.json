@@ -485,7 +485,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getCurrentOf",
+    "name": "currentOf",
     "outputs": [
       {
         "components": [
@@ -586,7 +586,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getQueuedOf",
+    "name": "queuedOf",
     "outputs": [
       {
         "components": [

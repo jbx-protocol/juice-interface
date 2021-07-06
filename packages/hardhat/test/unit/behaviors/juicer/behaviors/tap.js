@@ -455,7 +455,7 @@ const ops = ({
             ? [
                 mockFn({
                   mockContract: mockContracts.fundingCycles,
-                  fn: "getCurrentOf",
+                  fn: "currentOf",
                   args: [govProjectId],
                   returns: [
                     {
@@ -537,7 +537,7 @@ const ops = ({
                 mockFn({
                   condition: projectMod.terminal === undefined,
                   mockContract: mockContracts.fundingCycles,
-                  fn: "getCurrentOf",
+                  fn: "currentOf",
                   args: [projectMod.projectId],
                   returns: [
                     {

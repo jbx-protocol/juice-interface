@@ -150,7 +150,7 @@ const ops = ({
   return [
     mockFn({
       mockContract: mockContracts.fundingCycles,
-      fn: "getCurrentOf",
+      fn: "currentOf",
       args: [projectId],
       returns: [
         {

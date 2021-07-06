@@ -707,7 +707,7 @@ module.exports = function() {
         }
 
         // Execute the transaction.
-        const storedQueuedFundingCycle = await this.contract.getQueuedOf(
+        const storedQueuedFundingCycle = await this.contract.queuedOf(
           projectId
         );
 
@@ -799,7 +799,7 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).getQueuedOf(projectId)
+          this.contract.connect(caller).queuedOf(projectId)
         ).to.be.revertedWith(revert);
       });
     });

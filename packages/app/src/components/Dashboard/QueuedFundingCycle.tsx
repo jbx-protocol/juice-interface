@@ -24,7 +24,7 @@ export default function QueuedFundingCycle({
 
   const queuedCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
-    functionName: 'getQueuedOf',
+    functionName: 'queuedOf',
     args: projectId ? [projectId.toHexString()] : null,
     updateOn: projectId
       ? [

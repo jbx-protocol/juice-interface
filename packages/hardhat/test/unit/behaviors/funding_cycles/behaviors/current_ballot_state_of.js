@@ -620,7 +620,7 @@ module.exports = function() {
           }
         }
 
-        const storedQueued = await this.contract.getQueuedOf(projectId);
+        const storedQueued = await this.contract.queuedOf(projectId);
 
         if (expectation.fundingCycleId) {
           await this.ballot.mock.state

@@ -139,7 +139,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     mockFn({
       condition: !revert,
       mockContract: mockContracts.fundingCycles,
-      fn: "getCurrentOf",
+      fn: "currentOf",
       args: [projectId],
       returns: [
         {

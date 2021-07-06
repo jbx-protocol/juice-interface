@@ -284,7 +284,7 @@ module.exports = function() {
         if (unprintedReservedTicketAmount.gt(0))
           await this.mockFn({
             mockContract: this.mockContracts.fundingCycles,
-            fn: "getCurrentOf",
+            fn: "currentOf",
             args: [projectId],
             returns: [
               {

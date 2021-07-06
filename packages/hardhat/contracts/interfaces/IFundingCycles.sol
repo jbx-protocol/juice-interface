@@ -90,12 +90,12 @@ interface IFundingCycles {
         view
         returns (FundingCycle memory);
 
-    function getQueuedOf(uint256 _projectId)
+    function queuedOf(uint256 _projectId)
         external
         view
         returns (FundingCycle memory);
 
-    function getCurrentOf(uint256 _projectId)
+    function currentOf(uint256 _projectId)
         external
         view
         returns (FundingCycle memory);

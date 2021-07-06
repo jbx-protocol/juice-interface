@@ -118,8 +118,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         returns (uint256 overflow)
     {
         // Get a reference to the project's current funding cycle.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
+        FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
         // There's no overflow if there's no funding cycle.
         if (_fundingCycle.id == 0) return 0;
@@ -177,8 +176,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         );
 
         // Get a reference to the current funding cycle for the project.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
+        FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
         // Get the amount of current overflow.
         uint256 _currentOverflow = _overflowFrom(_fundingCycle);
@@ -932,8 +930,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         returns (uint256 amount)
     {
         // Get the current funding cycle to read the reserved rate from.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
+        FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
         // If there's no funding cycle, there's no reserved tickets to print.
         if (_fundingCycle.id == 0) return 0;
@@ -1125,8 +1122,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         bool _preferUnstakedTickets
     ) private returns (uint256) {
         // Get a reference to the current funding cycle for the project.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.getCurrentOf(_projectId);
+        FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
         // Get a reference to the current funding cycle for the project.
         // Use the funding cycle's weight if it exists. Otherwise use the base weight.

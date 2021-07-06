@@ -278,7 +278,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           cycleLimit1.eq(1) ? expectedFundingCycleId1 : BigNumber.from(0),
@@ -345,7 +345,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           BigNumber.from(0),
@@ -484,7 +484,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           BigNumber.from(0),
@@ -557,7 +557,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId2,
@@ -626,7 +626,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           BigNumber.from(0),
@@ -712,7 +712,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           BigNumber.from(0),
@@ -806,7 +806,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId3,

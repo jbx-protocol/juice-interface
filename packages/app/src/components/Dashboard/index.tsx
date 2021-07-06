@@ -41,7 +41,7 @@ export default function Dashboard() {
 
   const fundingCycle = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
-    functionName: 'getCurrentOf',
+    functionName: 'currentOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
     updateOn: useMemo(

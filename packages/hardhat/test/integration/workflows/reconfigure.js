@@ -674,7 +674,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getQueuedOf",
+        fn: "queuedOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId2,
@@ -724,7 +724,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId1,
@@ -789,7 +789,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
+        fn: "currentOf",
         args: [expectedProjectId],
         expect: [
           expectedFundingCycleId1,

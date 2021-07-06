@@ -18,6 +18,6 @@ module.exports = function() {
 
   // Test each function.
   describe("deployAddress(...)", shouldBehaveLike.deployAddress);
-  describe("setTerminal(...)", shouldBehaveLike.setTerminal);
+  describe.only("setTerminal(...)", shouldBehaveLike.setTerminal);
   describe("setPayerPreferences(...)", shouldBehaveLike.setPayerPreferences);
 };

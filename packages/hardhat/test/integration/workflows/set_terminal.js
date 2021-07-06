@@ -280,5 +280,78 @@ module.exports = [
         ],
         value: paymentValue
       })
+  },
+  {
+    description:
+      "Setting a new terminal before migration to it has been allowed shouldnt be allowed",
+    fn: async ({
+      executeFn,
+      contracts,
+      deployContractFn,
+      local: { expectedProjectId, owner }
+    }) => {
+      // The juicer that will be migrated to.
+      const secondJuicer = await deployContractFn("Juicer", [
+        contracts.projects.address,
+        contracts.fundingCycles.address,
+        contracts.ticketBooth.address,
+        contracts.operatorStore.address,
+        contracts.modStore.address,
+        contracts.prices.address,
+        contracts.terminalDirectory.address,
+        contracts.governance.address
+      ]);
+      await executeFn({
+        caller: owner,
+        contract: contracts.terminalDirectory,
+        fn: "setTerminal",
+        args: [expectedProjectId, secondJuicer.address],
+        revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
+      });
+
+      return { secondJuicer };
+    }
+  },
+  // Allow migration to a new terminal.
+  {
+    description: "Allow a migration to a new juicer",
+    fn: ({ deployer, contracts, executeFn, local: { secondJuicer } }) =>
+      executeFn({
+        caller: deployer,
+        contract: contracts.governance,
+        fn: "allowMigration",
+        args: [contracts.juicer.address, secondJuicer.address]
+      })
+  },
+  {
+    description:
+      "Set a terminal that can be migrated to from the current terminal should be allowed",
+    fn: ({
+      executeFn,
+      contracts,
+      local: { expectedProjectId, owner, secondJuicer }
+    }) =>
+      executeFn({
+        caller: owner,
+        contract: contracts.terminalDirectory,
+        fn: "setTerminal",
+        args: [expectedProjectId, secondJuicer.address]
+      })
+  },
+  {
+    description: "The new terminal should be set",
+    fn: ({
+      checkFn,
+      randomSignerFn,
+      contracts,
+      local: { expectedProjectId, secondJuicer }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.terminalDirectory,
+        fn: "terminalOf",
+        args: [expectedProjectId],
+        expect: secondJuicer.address
+      })
   }
 ];

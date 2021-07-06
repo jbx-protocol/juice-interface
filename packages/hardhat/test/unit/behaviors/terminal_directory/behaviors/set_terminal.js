@@ -18,6 +18,33 @@ const tests = {
         projectId: 1,
         setup: { permissionFlag: true }
       })
+    },
+    {
+      description: "terminal set yet and is allowed, called by owner",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        setup: {
+          preset: {
+            allowMigration: true
+          }
+        }
+      })
+    },
+    {
+      description: "terminal set and is allowed, called by operator",
+      fn: ({ deployer, addrs }) => ({
+        caller: addrs[0],
+        projectOwner: deployer.address,
+        projectId: 1,
+        setup: {
+          permissionFlag: true,
+          preset: {
+            allowMigration: true
+          }
+        }
+      })
     }
   ],
   failure: [
@@ -40,6 +67,37 @@ const tests = {
         setup: { createProject: true, preset: false },
         revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
       })
+    },
+    {
+      description: "terminal set yet and is not allowed, unauthorized",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        setup: {
+          createProject: true,
+          preset: {
+            allowMigration: false
+          }
+        },
+        revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
+      })
+    },
+    {
+      description: "terminal set and is not allowed, unauthorized",
+      fn: ({ deployer, addrs }) => ({
+        caller: addrs[0],
+        projectOwner: deployer.address,
+        projectId: 1,
+        setup: {
+          permissionFlag: true,
+          createProject: true,
+          preset: {
+            allowMigration: false
+          }
+        },
+        revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
+      })
     }
   ]
 };
@@ -52,7 +110,7 @@ module.exports = function() {
           projectOwner,
           caller,
           projectId,
-          setup: { permissionFlag } = {},
+          setup: { permissionFlag, preset } = {},
           expect: { noEvent = false } = {}
         } = successTest.fn(this);
 
@@ -71,15 +129,66 @@ module.exports = function() {
         // The project should exist.
         await this.projects.mock.exists.withArgs(projectId).returns(true);
 
-        const mockTerminalDirectory = await this.deployMockLocalContractFn(
-          "TerminalDirectory",
-          [this.projects.address]
+        const operatorStore = await this.deployMockLocalContractFn(
+          "OperatorStore"
         );
+        const projects = await this.deployMockLocalContractFn("Projects", [
+          operatorStore.address
+        ]);
+        const prices = await this.deployMockLocalContractFn("Prices");
+        const terminalDirectory = await this.deployMockLocalContractFn(
+          "TerminalDirectory",
+          [projects.address]
+        );
+        const fundingCycles = await this.deployMockLocalContractFn(
+          "FundingCycles",
+          [terminalDirectory.address]
+        );
+        const ticketBooth = await this.deployMockLocalContractFn(
+          "TicketBooth",
+          [projects.address, operatorStore.address, terminalDirectory.address]
+        );
+        const modStore = await this.deployMockLocalContractFn("ModStore", [
+          projects.address,
+          operatorStore.address
+        ]);
+
+        // Deploy mock dependency contracts.
+        const mockTerminal = await this.deployMockLocalContractFn("Juicer", [
+          projects.address,
+          fundingCycles.address,
+          ticketBooth.address,
+          operatorStore.address,
+          modStore.address,
+          prices.address,
+          terminalDirectory.address
+        ]);
+
+        if (preset) {
+          const presetMockTerminal = await this.deployMockLocalContractFn(
+            "Juicer",
+            [
+              projects.address,
+              fundingCycles.address,
+              ticketBooth.address,
+              operatorStore.address,
+              modStore.address,
+              prices.address,
+              terminalDirectory.address
+            ]
+          );
+          await presetMockTerminal.mock.migrationIsAllowed
+            .withArgs(mockTerminal.address)
+            .returns(preset.allowMigration);
+          await this.contract
+            .connect(caller)
+            .setTerminal(projectId, presetMockTerminal.address);
+        }
 
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setTerminal(projectId, mockTerminalDirectory.address);
+          .setTerminal(projectId, mockTerminal.address);
 
         if (noEvent) {
           const receipt = await tx.wait();
@@ -88,7 +197,7 @@ module.exports = function() {
           // Expect an event to have been emitted.
           await expect(tx)
             .to.emit(this.contract, "SetTerminal")
-            .withArgs(projectId, mockTerminalDirectory.address, caller.address);
+            .withArgs(projectId, mockTerminal.address, caller.address);
         }
 
         // Get the stored ticket for the project.
@@ -96,7 +205,7 @@ module.exports = function() {
           .connect(caller)
           .terminalOf(projectId);
 
-        expect(storedTerminal).to.equal(mockTerminalDirectory.address);
+        expect(storedTerminal).to.equal(mockTerminal.address);
       });
     });
   });
@@ -128,26 +237,67 @@ module.exports = function() {
           .withArgs(projectId)
           .returns(createProject);
 
+        const operatorStore = await this.deployMockLocalContractFn(
+          "OperatorStore"
+        );
+        const projects = await this.deployMockLocalContractFn("Projects", [
+          operatorStore.address
+        ]);
+        const prices = await this.deployMockLocalContractFn("Prices");
+        const terminalDirectory = await this.deployMockLocalContractFn(
+          "TerminalDirectory",
+          [projects.address]
+        );
+        const fundingCycles = await this.deployMockLocalContractFn(
+          "FundingCycles",
+          [terminalDirectory.address]
+        );
+        const ticketBooth = await this.deployMockLocalContractFn(
+          "TicketBooth",
+          [projects.address, operatorStore.address, terminalDirectory.address]
+        );
+        const modStore = await this.deployMockLocalContractFn("ModStore", [
+          projects.address,
+          operatorStore.address
+        ]);
+
+        // Deploy mock dependency contracts.
+        const mockTerminal = await this.deployMockLocalContractFn("Juicer", [
+          projects.address,
+          fundingCycles.address,
+          ticketBooth.address,
+          operatorStore.address,
+          modStore.address,
+          prices.address,
+          terminalDirectory.address
+        ]);
+
         if (preset) {
-          const presetMockTerminalDirectory = await this.deployMockLocalContractFn(
-            "TerminalDirectory",
-            [this.projects.address]
+          const presetMockTerminal = await this.deployMockLocalContractFn(
+            "Juicer",
+            [
+              projects.address,
+              fundingCycles.address,
+              ticketBooth.address,
+              operatorStore.address,
+              modStore.address,
+              prices.address,
+              terminalDirectory.address
+            ]
           );
+          await presetMockTerminal.mock.migrationIsAllowed
+            .withArgs(mockTerminal.address)
+            .returns(preset.allowMigration);
           await this.contract
             .connect(caller)
-            .setTerminal(projectId, presetMockTerminalDirectory.address);
+            .setTerminal(projectId, presetMockTerminal.address);
         }
-
-        const mockTerminalDirectory = await this.deployMockLocalContractFn(
-          "TerminalDirectory",
-          [this.projects.address]
-        );
 
         // Execute the transaction.
         await expect(
           this.contract
             .connect(caller)
-            .setTerminal(projectId, mockTerminalDirectory.address)
+            .setTerminal(projectId, mockTerminal.address)
         ).to.be.revertedWith(revert);
       });
     });

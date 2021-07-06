@@ -109,21 +109,26 @@ contract TerminalDirectory is ITerminalDirectory, Operatable {
         address _projectOwner = projects.ownerOf(_projectId);
 
         // Either:
-        // - the current terminal hasn't been set yet and the msg sender is either the projects contract or the terminal being set.
-        // - the current terminal must not yet be set, or the current terminal is setting a new terminal.
-        // - the msg sender is the owner.
-        // - the msg sender is an operator.
+        // - case 1: the current terminal hasn't been set yet and the msg sender is either the projects contract or the terminal being set.
+        // - case 2: the current terminal must not yet be set, or the current terminal is setting a new terminal.
+        // - case 3: the msg sender is the owner or operator and either the current terminal hasn't been set, or the current terminal allows migration to the terminal being set.
         require(
+            // case 1.
             (_currentTerminal == ITerminal(address(0)) &&
                 (msg.sender == address(projects) ||
-                    msg.sender == address(_terminal) ||
-                    msg.sender == _projectOwner ||
+                    msg.sender == address(_terminal))) ||
+                // case 2.
+                msg.sender == address(_currentTerminal) ||
+                // case 3.
+                ((msg.sender == _projectOwner ||
                     operatorStore.hasPermission(
                         msg.sender,
                         _projectOwner,
                         _projectId,
                         Operations.SetTerminal
-                    ))) || msg.sender == address(_currentTerminal),
+                    )) &&
+                    (_currentTerminal == ITerminal(address(0)) ||
+                        _currentTerminal.migrationIsAllowed(_terminal))),
             "TerminalDirectory::setTerminal: UNAUTHORIZED"
         );
 

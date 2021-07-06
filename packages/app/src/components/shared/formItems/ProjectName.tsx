@@ -11,7 +11,7 @@ export default function ProjectName({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Juicebox name'}
+      label={hideLabel ? undefined : 'Project name'}
       {...formItemProps}
     >
       <Input

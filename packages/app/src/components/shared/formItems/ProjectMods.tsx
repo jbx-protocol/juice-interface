@@ -363,7 +363,7 @@ export default function ProjectMods({
           <Form.Item>
             <Select value={editingModType} onChange={setEditingModType}>
               <Select.Option value="address">Wallet address</Select.Option>
-              <Select.Option value="project">Juicebox</Select.Option>
+              <Select.Option value="project">Juicebox project</Select.Option>
             </Select>
           </Form.Item>
 
@@ -390,7 +390,7 @@ export default function ProjectMods({
               name="project"
               requireState="exists"
               formItemProps={{
-                label: 'Juicebox handle',
+                label: 'Project handle',
                 rules: [{ required: true }],
               }}
               value={form.getFieldValue('handle')}
@@ -401,7 +401,7 @@ export default function ProjectMods({
             <Form.Item
               name="beneficiary"
               label="Beneficiary"
-              extra="The address that should receive the tokens minted from paying this Juicebox."
+              extra="The address that should receive the tokens minted from paying this project."
               rules={[{ required: true }]}
             >
               <Input placeholder={constants.AddressZero} />

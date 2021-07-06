@@ -38,13 +38,14 @@ export default function PayModsForm({
 
         <p>
           Payouts let you commit portions of every withdrawal to other Ethereum
-          wallets or Juiceboxes. Use this to pay contributors, charities, other
-          Juiceboxes you depend on, or anyone else. Payouts will be distributed
-          automatically whenever a withdrawal is made from your Juicebox.
+          wallets or Juicebox projects. Use this to pay contributors, charities,
+          other projects you depend on, or anyone else. Payouts will be
+          distributed automatically whenever a withdrawal is made from your
+          project.
         </p>
         <p>
           Payouts are optional. By default, all unallocated revenue will be
-          withdrawable to the Juicebox owner's wallet.
+          withdrawable to the project owner's wallet.
         </p>
       </div>
 

@@ -46,12 +46,12 @@ type IpfsMetadataQuery = Record<
 export const IPFS_TAGS = {
   METADATA:
     process.env.NODE_ENV === 'production'
-      ? 'juicebox_metadata'
-      : 'DEV_juicebox_metadata',
+      ? 'juicebox_project_metadata'
+      : 'DEV_juicebox_project_metadata',
   LOGO:
     process.env.NODE_ENV === 'production'
-      ? 'juicebox_logo'
-      : 'DEV_juicebox_logo',
+      ? 'juicebox_project_logo'
+      : 'DEV_juicebox_project_logo',
 }
 
 const formatQueryMetadata = (metadata?: IpfsMetadataQuery) => {

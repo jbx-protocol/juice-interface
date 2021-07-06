@@ -56,8 +56,8 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
         Mint tokens
       </Button>
       <div>
-        Note: You may only manually mint tokens before your Juicebox has
-        received its first payment!
+        Note: You may only manually mint tokens before your project has received
+        its first payment!
       </div>
 
       <Modal
@@ -88,7 +88,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
             formItemProps={{
               label: 'Amount',
               extra:
-                'The minted token amount will be calculated based on if the receiver had paid this amount to this Juicebox.',
+                'The minted token amount will be calculated based on if the receiver had paid this amount to this project.',
             }}
             currency={currency}
             onCurrencyChange={setCurrency}
@@ -101,7 +101,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
           <Form.Item
             name="preferUnstaked"
             label="Mint as ERC-20"
-            extra="You can mint ERC-20 tokens if they have been issued for this Juicebox. Otherwise staked tokens will be minted, which can be claimed later as ERC-20 by the recever."
+            extra="You can mint ERC-20 tokens if they have been issued for this project. Otherwise staked tokens will be minted, which can be claimed later as ERC-20 by the recever."
             initialValue={false}
           >
             <Switch />

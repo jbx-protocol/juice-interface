@@ -28,12 +28,12 @@ export default function TicketingForm({
         <h1>Reserved tokens</h1>
 
         <p>
-          Tokens are earned by anyone who pays your Juicebox, and can be
-          redeemed for overflow if your Juicebox has set a funding target.
+          Tokens are earned by anyone who pays your project, and can be redeemed
+          for overflow if your project has set a funding target.
         </p>
         <p>
-          You'll be able to issue ERC-20 tokens once your Juicebox contract has
-          been deployed. Until then, your Juicebox will use staked tokens,
+          You'll be able to issue ERC-20 tokens once your project contract has
+          been deployed. Until then, your project will use staked tokens,
           allowing your supporters to still track their balance and redeem for
           overflow in the meantime.
         </p>
@@ -53,7 +53,7 @@ export default function TicketingForm({
           formItemProps={{
             label: 'Allocate reserved tokens (optional)',
             extra:
-              "Automatically distribute a portion of your Juicebox's reserved tokens to other Juiceboxes or ETH wallets. Reserved tokens will be distributed as soon as they're minted.",
+              "Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets. Reserved tokens will be distributed as soon as they're minted.",
           }}
         />
         <Form.Item>

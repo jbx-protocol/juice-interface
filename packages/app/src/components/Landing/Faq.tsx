@@ -10,42 +10,42 @@ const QAs: {
   }
 }[] = [
   {
-    q: 'Who funds Juiceboxes?',
+    q: 'Who funds Juicebox projects?',
     a: [
-      `Users fund your Juicebox by paying to use your app or service, or as a patron or investor by making a payment directly to your Juicebox's smart contract (like on this app).`,
+      `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).`,
       `For users paying through your app, you should route those funds through the Juice smart contracts so they receive Tokens in return.`,
     ],
   },
   {
-    q: `What does Juice cost?`,
+    q: `What does Juicebox cost?`,
     a: [
       `Juicebox is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
-      `5% of all money made by Juiceboxes is sent to help pay for Juicebox itself. In exchange, Juiceboxes get Juicebox community tokens (JBX), which will be worth more as the ecosystem grows over time.`,
+      `5% of all money made by projects is sent to help pay for Juicebox itself. In exchange, projects get Juicebox community tokens (JBX), which will be worth more as the ecosystem grows over time.`,
     ],
   },
   {
     q: `What is overflow?`,
     a: [
-      `If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your Juicebox earns more than that, the surplus funds are locked in an overflow pool. Overflow funds earn interest, and may be claimed by your community token holders by burning their tokens.`,
+      `If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Overflow funds earn interest, and may be claimed by your community token holders by burning their tokens.`,
     ],
   },
   {
     q: 'What are community tokens?',
     a: [
-      `Each Juicebox has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a Juicebox gets a newly minted supply of tokens in return. `,
+      `Each project has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a project gets a newly minted supply of tokens in return. `,
     ],
   },
   {
-    q: `Why should I want to own a Juicebox's tokens?`,
+    q: `Why should I want to own a project's tokens?`,
     a: [
-      `Tokens can be redeemed for a portion of a Juicebox's overflow, letting you benefit from its success. After all, you helped it get there!`,
+      `Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there!`,
     ],
   },
   {
     q: `What's a discount rate?`,
     a: [
-      `Juiceboxes can be created with an optional discount rate to incentivize funding it earlier than later. With each new funding cycle, the discount rate decreases the number of tokens that are minted per payment.`,
-      `For example: with a discount rate of 97%, $100 paid to a Juicebox today might mint you 100 tokens, but the same amount paid during the next funding cycle would only mint you 97.`,
+      `Projects can be created with an optional discount rate to incentivize funding it earlier than later. With each new funding cycle, the discount rate decreases the number of tokens that are minted per payment.`,
+      `For example: with a discount rate of 97%, $100 paid to a project today might mint you 100 tokens, but the same amount paid during the next funding cycle would only mint you 97.`,
     ],
   },
   {
@@ -57,16 +57,16 @@ const QAs: {
     ],
   },
   {
-    q: 'Does a Juicebox benefit from its own overflow?',
+    q: 'Does a project benefit from its own overflow?',
     a: [
-      `A Juicebox can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the Juicebox.`,
-      `Holding these tokens entitles a Juicebox to a portion of its own overflow.`,
+      `A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.`,
+      `Holding these tokens entitles a project to a portion of its own overflow.`,
     ],
   },
   {
-    q: "Can I change my Juicebox's contract after it's been created?",
+    q: "Can I change my project's contract after it's been created?",
     a: [
-      `A Juicebox owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended.`,
+      `A project owner can propose changes to any part of the contract at any time, with changes taking effect after the current budgeting time frame has ended.`,
       `For now, a minimum of 14 days must pass from the time of a proposed reconfiguration for it to take effect. This gives token holders time to react to the decision.`,
       `Anyone can deploy and use another governance smart contract to override this scheme.`,
     ],

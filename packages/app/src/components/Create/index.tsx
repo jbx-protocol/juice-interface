@@ -305,11 +305,10 @@ export default function Create() {
       <div
         style={{
           marginRight: 40,
-          // borderRight: '1px solid ' + colors.stroke.secondary,
           minWidth: 300,
         }}
       >
-        <h1 style={{ marginBottom: 20 }}>Create your Juicebox 🚀</h1>
+        <h1 style={{ marginBottom: 20 }}>Create your project 🚀</h1>
 
         {buildSteps([
           {

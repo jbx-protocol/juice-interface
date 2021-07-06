@@ -61,7 +61,7 @@ export default function ProjectHandle({
       if (handleExists && requireState === 'notExist')
         return Promise.reject('Handle not available')
       if (!handleExists && requireState === 'exists')
-        return Promise.reject("Juicebox doesn't exist")
+        return Promise.reject("Project doesn't exist")
       else return Promise.resolve()
     },
     [handleExists, requireState],

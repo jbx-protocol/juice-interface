@@ -15,7 +15,7 @@ export default function ProjectDiscountRate({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The discount rate determines how you'll reward earlier adopters and investors of your Juicebox. For example, if this is set to 90%, someone who pays this project in the next funding cycle will only receive 90% of the tokens per amount they would have paid in this funding cycle."
+      extra="The discount rate determines how you'll reward early supporters of your project. For example, if this is set to 90%, someone will receive 10% more tokens if they pay this project in the current funding than if they paid the same amount in the next funding cycle."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}

@@ -14,7 +14,7 @@ export default function ProjectReserved({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="This rate deterimes how you'll be allocated some of your Juicebox's own tokens whenever someone pays you. For example, a 5% rate means you'll receive 5% of the total tokens distributed for each payment made to your Juicebox – the rest will go to the payer."
+      extra="This rate deterimes how you'll be allocated some of your project's own tokens whenever someone pays you. For example, a 5% rate means you'll receive 5% of the total tokens distributed for each payment made to your project – the rest will go to the payer."
       name={name}
       label={hideLabel ? undefined : 'Reserved tokens'}
       {...formItemProps}

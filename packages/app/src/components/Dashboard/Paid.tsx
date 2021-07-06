@@ -101,7 +101,7 @@ export default function Paid({
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
               label="PAID"
-              tip="The total paid to the Juicebox in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
+              tip="The total paid to the project in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
             />
           </div>
           <div
@@ -132,7 +132,7 @@ export default function Paid({
             <div style={smallHeaderStyle(colors)}>
               <TooltipLabel
                 label="OVERFLOW"
-                tip="The amount paid to this Juicebox, minus the current funding cycle's target. Overflow can be claimed by token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
+                tip="The amount paid to this project, minus the current funding cycle's target. Overflow can be claimed by token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
               />
             </div>
             {fundingCycle.currency.eq(1) ? (

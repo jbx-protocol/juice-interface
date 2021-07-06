@@ -52,7 +52,7 @@ export default function FundingCycleDetails({
         label={
           <TooltipLabel
             label="Reserved"
-            tip="This Juicebox's owner can mint tokens for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tokens were given out over the course of this budget, then the owner will be able to mint 5 tokens for themselves once the budget expires."
+            tip="This project's owner can mint tokens for themselves to share in the overflow with all contributors. For example, if this is set to 5% and 95 tokens were given out over the course of this budget, then the owner will be able to mint 5 tokens for themselves once the budget expires."
           />
         }
       >

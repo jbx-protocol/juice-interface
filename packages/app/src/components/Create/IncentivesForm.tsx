@@ -93,20 +93,20 @@ export default function IncentivesForm({
               <p>
                 <span style={{ color: colors.text.primary }}>
                   <div style={{ fontWeight: 600 }}>Neutral</div> Everyone
-                  benefits equally from paying your Juicebox or redeeming their
+                  benefits equally from paying your project or redeeming their
                   tokens.
                 </span>{' '}
                 The number of tokens earned per amount paid is always the same.
-                When redeemed for this Juicebox's overflow, tokens are always
+                When redeemed for this project's overflow, tokens are always
                 worth proportionally the same.
               </p>
               <p>
                 <span style={{ color: colors.text.primary }}>
                   <div style={{ fontWeight: 600 }}>Growth</div> Encourages
-                  supporters to fund your Juicebox earlier, and hold their
-                  tokens instead of redeem them.
+                  supporters to fund your project earlier, and hold their tokens
+                  instead of redeem them.
                 </span>{' '}
-                Payments made sooner after a Juicebox has been created will
+                Payments made sooner after a project has been created will
                 reward the payer with more tokens than if they paid the same
                 amount later. Tokens that are redeemed first are also worth
                 proportionally less than tokens that are redeemed last.

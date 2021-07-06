@@ -42,7 +42,7 @@ export default function BudgetForm({
 
       <p>
         Setting a funding target allows you to redistribute surplus revenue to
-        your community. Whenever your Juicebox earns more than your funding
+        your community. Whenever your project earns more than your funding
         target in a set duration, the extra funds are locked in an overflow pool
         and begin earning interest. Anyone who holds your tokens can exchange
         them for a portion of funds from the overflow pool.

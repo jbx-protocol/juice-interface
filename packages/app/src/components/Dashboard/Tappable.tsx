@@ -136,7 +136,10 @@ export default function Tappable({
           />
           {formatWad(withdrawable)}
         </div>
-        <p>Funds will be withdrawn according to this Juicebox's payouts.</p>
+        <p>
+          Funds will be withdrawn according to this project's spending
+          configuration.
+        </p>
         <Space direction="vertical" style={{ width: '100%' }}>
           <Input
             name="withdrawable"

@@ -39,7 +39,7 @@ export default function IssueTickets({
           Issue ERC-20 token
         </Button>
         <Tooltip
-          title="Issue an ERC-20 to be used as this Juicebox's token. Once
+          title="Issue an ERC-20 to be used as this project's token. Once
           issued, current staked token holders will be able to claim their
           balance in the new token."
         >
@@ -55,7 +55,7 @@ export default function IssueTickets({
         onCancel={() => setModalVisible(false)}
       >
         <p>
-          Issue an ERC-20 token for this Juicebox. Once issued, current staked
+          Issue an ERC-20 token for this project. Once issued, current staked
           token holders will be able to claim their existing balance in the new
           token.
         </p>

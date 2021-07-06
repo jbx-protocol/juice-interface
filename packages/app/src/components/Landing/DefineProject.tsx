@@ -128,7 +128,7 @@ export default function DefineProject() {
               }}
             >
               <Button type="primary" htmlType="submit" onClick={goToReview}>
-                Preview your Juicebox
+                Preview your project
               </Button>
             </Form.Item>
           </Form>

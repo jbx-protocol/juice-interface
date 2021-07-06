@@ -18,7 +18,8 @@ contract ExampleFailingFundingCycleBallot is IFundingCycleBallot {
         returns (BallotState)
     {
         return
-            block.timestamp > _configured + reconfigurationDelay
+            // Fails halfway through
+            block.timestamp > _configured + (reconfigurationDelay / 2)
                 ? BallotState.Failed
                 : BallotState.Active;
     }

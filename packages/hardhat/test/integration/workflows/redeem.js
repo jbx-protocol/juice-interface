@@ -4,7 +4,7 @@
 
   The bonding curve rate that tunes the bonding curve formula gets configured by the project.
 
-  If a project is has an active reconfiguration ballot, the reconfiguration bonding curve should be used,
+  If a project has an active reconfiguration ballot, the reconfiguration bonding curve should be used,
   instead of the regular bonding curve.
 */
 

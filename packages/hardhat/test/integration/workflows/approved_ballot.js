@@ -156,6 +156,22 @@ module.exports = [
     }
   },
   {
+    description: "The funding cycle ballot state should be in standby",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentBallotStateOf",
+        args: [expectedProjectId],
+        expect: 3
+      })
+  },
+  {
     description: "Reconfiguring should create a new funding cycle",
     fn: async ({
       constants,
@@ -234,6 +250,22 @@ module.exports = [
     }
   },
   {
+    description: "The funding cycle ballot state be active",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentBallotStateOf",
+        args: [expectedProjectId],
+        expect: 1
+      })
+  },
+  {
     description: "The queued funding cycle should have the reconfiguration",
     fn: async ({
       constants,
@@ -265,8 +297,8 @@ module.exports = [
       // This is how many cycles can pass while the ballot is active and waiting for approval.
       const cycleCountDuringBallot = (await ballot.duration())
         .div(86400)
-        .div(duration1)
-        .add(1);
+        .div(duration1);
+
       let expectedPackedMetadata2 = BigNumber.from(0);
       expectedPackedMetadata2 = expectedPackedMetadata2.add(
         reconfigurationBondingCurveRate2
@@ -284,7 +316,7 @@ module.exports = [
       const expectedFee = await contracts.juicer.fee();
 
       let expectedPostBallotWeight = expectedInititalWeight;
-      for (let i = 0; i < cycleCountDuringBallot; i += 1) {
+      for (let i = 0; i < cycleCountDuringBallot.add(1); i += 1) {
         expectedPostBallotWeight = expectedPostBallotWeight
           .mul(discountRate1)
           .div(constants.MaxPercent);
@@ -298,7 +330,7 @@ module.exports = [
         expect: [
           expectedFundingCycleId2,
           expectedProjectId,
-          expectedFundingCycleNumber1.add(cycleCountDuringBallot),
+          expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(1),
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
@@ -306,7 +338,7 @@ module.exports = [
           ballot2,
           // The start time should be two duration after the initial start.
           originalTimeMark.add(
-            duration1.mul(86400).mul(cycleCountDuringBallot)
+            duration1.mul(86400).mul(cycleCountDuringBallot.add(1))
           ),
           duration2,
           target2,
@@ -408,14 +440,29 @@ module.exports = [
     }
   },
   {
-    description:
-      "The ballot should not yet be approved at the end of the funding cycle",
+    description: "Fastforward to the end of the funding cycle",
     fn: ({ fastforwardFn, local: { duration1 } }) =>
       fastforwardFn(duration1.mul(86400))
   },
   {
+    description: "The funding cycle ballot state should still be pending",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentBallotStateOf",
+        args: [expectedProjectId],
+        expect: 1
+      })
+  },
+  {
     description:
-      "The current funding cycle should have a new funding cycle of the first configuration",
+      "The ballot should not yet be approved at the end of the funding cycle",
     fn: ({
       contracts,
       checkFn,
@@ -476,7 +523,7 @@ module.exports = [
       // Add random padding to comfortably fit the fast forward within the next cycle.
       fastforwardFn(
         duration1
-          .mul(cycleCountDuringBallot.sub(1))
+          .mul(cycleCountDuringBallot)
           .mul(86400)
           .add(
             randomBigNumberFn({
@@ -485,6 +532,22 @@ module.exports = [
             })
           )
       )
+  },
+  {
+    description: "The funding cycle ballot state should still be approved",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentBallotStateOf",
+        args: [expectedProjectId],
+        expect: 0
+      })
   },
   {
     description: "The current funding cycle should have the reconfiguration",
@@ -521,7 +584,7 @@ module.exports = [
         expect: [
           expectedFundingCycleId2,
           expectedProjectId,
-          expectedFundingCycleNumber1.add(cycleCountDuringBallot),
+          expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(1),
           expectedFundingCycleId1,
           reconfigurationTimeMark,
           cycleLimit2,
@@ -529,7 +592,7 @@ module.exports = [
           ballot2,
           // The start time should be two duration after the initial start.
           originalTimeMark.add(
-            duration1.mul(86400).mul(cycleCountDuringBallot)
+            duration1.mul(86400).mul(cycleCountDuringBallot.add(1))
           ),
           duration2,
           target2,
@@ -602,7 +665,7 @@ module.exports = [
         expect: [
           expectedFundingCycleId2,
           expectedProjectId,
-          expectedFundingCycleNumber1.add(cycleCountDuringBallot),
+          expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(1),
           expectedFundingCycleId1,
           reconfigurationTimeMark,
           cycleLimit2,
@@ -610,7 +673,7 @@ module.exports = [
           ballot2,
           // The start time should be two duration after the initial start.
           originalTimeMark.add(
-            duration1.mul(86400).mul(cycleCountDuringBallot)
+            duration1.mul(86400).mul(cycleCountDuringBallot.add(1))
           ),
           duration2,
           target2,

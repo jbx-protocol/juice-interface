@@ -40,12 +40,13 @@ module.exports = [
       const ballot = await deployContractFn("ExampleFailingFundingCycleBallot");
 
       // The duration of the funding cycle should be less than the ballot duration
-      const duration1 = randomBigNumberFn({
-        // Fails after half.
-        min: (await ballot.duration()).div(86400).div(2),
-        // The ballot duration is in seconds, but duration is in days.
-        max: (await ballot.duration()).div(86400).sub(1)
-      });
+      const duration1 = (await ballot.duration()).div(86400).div(2);
+      // randomBigNumberFn({
+      //   // Fails after half.
+      //   min: (await ballot.duration()).div(86400).div(2),
+      //   // The ballot duration is in seconds, but duration is in days.
+      //   max: (await ballot.duration()).div(86400).sub(1)
+      // });
       const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
 
       // An account that will be used to make payments.
@@ -183,6 +184,7 @@ module.exports = [
     }) => {
       const expectedFundingCycleId2 = incrementFundingCycleIdFn();
 
+      console.log({ expectedFundingCycleId2 });
       // The next funding cycle should be the second.
       const expectedFundingCycleNumber2 = BigNumber.from(2);
 
@@ -294,6 +296,7 @@ module.exports = [
       const cycleCountDuringBallot = (await ballot.duration())
         .div(86400)
         .div(duration1);
+
       let expectedPackedMetadata2 = BigNumber.from(0);
       expectedPackedMetadata2 = expectedPackedMetadata2.add(
         reconfigurationBondingCurveRate2
@@ -561,6 +564,77 @@ module.exports = [
   },
   {
     description:
+      "Reconfiguring should create a new funding cycle that should obide by the ballot",
+    fn: async ({
+      contracts,
+      executeFn,
+      incrementFundingCycleIdFn,
+      local: {
+        expectedProjectId,
+        owner,
+        target2,
+        currency2,
+        duration2,
+        cycleLimit2,
+        discountRate2,
+        ballot2,
+        reservedRate2,
+        bondingCurveRate2,
+        reconfigurationBondingCurveRate2
+      }
+    }) => {
+      const expectedFundingCycleId3 = incrementFundingCycleIdFn();
+      console.log({ expectedFundingCycleId3 });
+
+      await executeFn({
+        caller: owner,
+        contract: contracts.juicer,
+        fn: "configure",
+        args: [
+          expectedProjectId,
+          {
+            target: target2,
+            currency: currency2,
+            duration: duration2,
+            cycleLimit: cycleLimit2,
+            discountRate: discountRate2,
+            ballot: ballot2
+          },
+          {
+            reservedRate: reservedRate2,
+            bondingCurveRate: bondingCurveRate2,
+            reconfigurationBondingCurveRate: reconfigurationBondingCurveRate2
+          },
+          [],
+          []
+        ]
+      });
+      return {
+        expectedFundingCycleId3
+      };
+    }
+  },
+  {
+    description: "The funding cycle ballot state should be active",
+    fn: async ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      timeMark,
+      local: { expectedProjectId }
+    }) => {
+      await checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentBallotStateOf",
+        args: [expectedProjectId],
+        expect: 1
+      });
+      return { secondReconfigurationTimeMark: timeMark };
+    }
+  },
+  {
+    description:
       "The current funding cycle should not have the reconfiguration",
     fn: ({
       contracts,
@@ -614,8 +688,8 @@ module.exports = [
       })
   },
   {
-    description: "The queued funding cycle should not have the reconfiguration",
-    fn: ({
+    description: "The queued funding cycle should have the reconfiguration",
+    fn: async ({
       contracts,
       checkFn,
       BigNumber,
@@ -627,129 +701,61 @@ module.exports = [
         expectedFundingCycleNumber1,
         cycleCountDuringBallot,
         originalTimeMark,
+        duration2,
         duration1,
-        cycleLimit1,
-        ballot,
-        target1,
+        cycleLimit2,
+        ballot2,
+        target2,
         discountRate1,
-        expectedPackedMetadata1,
+        discountRate2,
+        currency2,
+        expectedPackedMetadata2,
+        secondReconfigurationTimeMark,
         expectedPostBallotWeight,
-        expectedFee
+        expectedFee,
+        expectedFundingCycleId3
       }
-    }) =>
-      checkFn({
+    }) => {
+      let expectedPostDoubleBallotWeight = expectedPostBallotWeight;
+      for (let i = 0; i < cycleCountDuringBallot.add(1); i += 1) {
+        expectedPostDoubleBallotWeight = expectedPostDoubleBallotWeight
+          .mul(discountRate1)
+          .div(constants.MaxPercent);
+      }
+      await checkFn({
         caller: randomSignerFn(),
         contract: contracts.fundingCycles,
         fn: "getQueuedOf",
         args: [expectedProjectId],
         expect: [
-          BigNumber.from(0),
-          expectedProjectId,
-          expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(2),
-          expectedFundingCycleId1,
-          originalTimeMark,
-          cycleLimit1.lt(1) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
-            ? BigNumber.from(0)
-            : cycleLimit1.sub(cycleCountDuringBallot.add(1)).sub(1),
-          // one before.
-          expectedPostBallotWeight.mul(discountRate1).div(constants.MaxPercent),
-          ballot.address,
-          originalTimeMark.add(
-            duration1.mul(86400).mul(cycleCountDuringBallot.add(2))
-          ),
-          duration1,
-          target1,
-          BigNumber.from(currency),
-          expectedFee,
-          discountRate1,
-          BigNumber.from(0),
-          expectedPackedMetadata1
-        ]
-      })
-  },
-  {
-    description: "Tap some of the current funding cycle",
-    fn: async ({
-      randomSignerFn,
-      contracts,
-      executeFn,
-      randomBigNumberFn,
-      BigNumber,
-      incrementFundingCycleIdFn,
-      local: { expectedProjectId, amountToTap }
-    }) => {
-      // Tapping should create a new funding cycle.
-      const expectedFundingCycleId3 = incrementFundingCycleIdFn();
-
-      // Leave some left for tapping another amount later.
-      const tapAmount2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: amountToTap
-      });
-
-      await executeFn({
-        caller: randomSignerFn(),
-        contract: contracts.juicer,
-        fn: "tap",
-        args: [expectedProjectId, tapAmount2, currency, 0]
-      });
-
-      return { expectedFundingCycleId3, tapAmount2 };
-    }
-  },
-  {
-    description: "The current funding cycle should have the tapped amount",
-    fn: ({
-      contracts,
-      checkFn,
-      BigNumber,
-      randomSignerFn,
-      local: {
-        expectedProjectId,
-        expectedFundingCycleId1,
-        expectedFundingCycleId3,
-        expectedFundingCycleNumber1,
-        cycleCountDuringBallot,
-        originalTimeMark,
-        duration1,
-        cycleLimit1,
-        ballot,
-        target1,
-        discountRate1,
-        expectedPackedMetadata1,
-        expectedPostBallotWeight,
-        expectedFee,
-        tapAmount2
-      }
-    }) =>
-      checkFn({
-        caller: randomSignerFn(),
-        contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
-        args: [expectedProjectId],
-        expect: [
           expectedFundingCycleId3,
           expectedProjectId,
-          expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(1),
+          expectedFundingCycleNumber1
+            .add(cycleCountDuringBallot)
+            .add(1)
+            .add(cycleCountDuringBallot)
+            .add(1),
           expectedFundingCycleId1,
-          originalTimeMark,
-          cycleLimit1.eq(0) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
-            ? BigNumber.from(0)
-            : cycleLimit1.sub(cycleCountDuringBallot.add(1)),
+          secondReconfigurationTimeMark,
+          cycleLimit2,
           // one before.
-          expectedPostBallotWeight,
-          ballot.address,
+          expectedPostDoubleBallotWeight,
+          ballot2,
           originalTimeMark.add(
-            duration1.mul(86400).mul(cycleCountDuringBallot.add(1))
+            duration1
+              .mul(86400)
+              .mul(cycleCountDuringBallot.add(1))
+              .mul(2)
           ),
-          duration1,
-          target1,
-          BigNumber.from(currency),
+          duration2,
+          target2,
+          currency2,
           expectedFee,
-          discountRate1,
-          tapAmount2,
-          expectedPackedMetadata1
+          discountRate2,
+          BigNumber.from(0),
+          expectedPackedMetadata2
         ]
-      })
+      });
+    }
   }
 ];

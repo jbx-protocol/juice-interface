@@ -159,7 +159,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 1; i += 1) {
+  for (let i = 0; i < 30; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -196,6 +196,10 @@ module.exports = function() {
     describe(
       "Reconfiguration that fails a ballot should be ignored",
       run(workflows.failedBallot)
+    );
+    describe(
+      "Reconfiguration proposed after a failed configuration should obide by the ballot duration",
+      run(workflows.iteratedFailedBallot)
     );
     describe("Migrate from one Terminal to another", run(workflows.migrate));
     describe(

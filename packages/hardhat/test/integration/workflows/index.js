@@ -10,6 +10,7 @@ const issueTickets = require("./issue_tickets");
 const reconfigure = require("./reconfigure");
 const approvedBallot = require("./approved_ballot");
 const failedBallot = require("./failed_ballot");
+const iteratedFailedBallot = require("./iterated_failed_ballot");
 const governance = require("./governance");
 const setFee = require("./set_fee");
 const printPreminedTickets = require("./print_premined_tickets");
@@ -36,6 +37,7 @@ module.exports = {
   reconfigure,
   approvedBallot,
   failedBallot,
+  iteratedFailedBallot,
   governance,
   setFee,
   printPreminedTickets,

@@ -98,72 +98,66 @@ const main = async () => {
 
   const blockGasLimit = 9000000;
 
-  try {
-    const PricesFactory = await ethers.getContractFactory("Prices");
-    const GovernanceFactory = await ethers.getContractFactory("Governance");
-    const JuicerFactory = await ethers.getContractFactory("Juicer");
+  const PricesFactory = await ethers.getContractFactory("Prices");
+  const GovernanceFactory = await ethers.getContractFactory("Governance");
+  const JuicerFactory = await ethers.getContractFactory("Juicer");
 
-    const attachedPrices = await PricesFactory.attach(prices.address);
-    const attachedGovernance = await GovernanceFactory.attach(
-      governance.address
+  const attachedPrices = await PricesFactory.attach(prices.address);
+  const attachedGovernance = await GovernanceFactory.attach(governance.address);
+  const attachedJuicer = await JuicerFactory.attach(juicer.address);
+
+  const callContractIcon = "🛰  ";
+  console.log(callContractIcon + "Setting the prices owner");
+  await attachedPrices.transferOwnership(governance.address, {
+    gasLimit: blockGasLimit
+  });
+
+  // Add a production price feed if there is a reference to one.
+  if (ethUsdAddr) {
+    console.log(
+      callContractIcon + "Adding ETH/USD price feed to the funding cycles"
     );
-    const attachedJuicer = await JuicerFactory.attach(juicer.address);
-
-    const callContractIcon = "🛰  ";
-    console.log(callContractIcon + "Setting the prices owner");
-    await attachedPrices.transferOwnership(governance.address, {
+    await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
       gasLimit: blockGasLimit
     });
-
-    // Add a production price feed if there is a reference to one.
-    if (ethUsdAddr) {
-      console.log(
-        callContractIcon + "Adding ETH/USD price feed to the funding cycles"
-      );
-      await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
-        gasLimit: blockGasLimit
-      });
-      // Otherwise deploy a static local price feed.
-    } else {
-      const feed = await deploy("ExampleETHUSDPriceFeed", []);
-      await attachedGovernance.addPriceFeed(prices.address, feed.address, 1, {
-        gasLimit: blockGasLimit
-      });
-    }
-
-    // TODO set the owner of the admin contract.
-    // await attachedJuicer.transferOwnership(admin.address, {
-    //   gasLimit: blockGasLimit
-    // });
-
-    console.log(callContractIcon + "Configuring governance's budget");
-
-    await attachedJuicer.deploy(
-      governance.address,
-      utils.formatBytes32String("juice"),
-      "QmSFLBMjeuHLo5hrh7oGRNYNVasCN66LYEELrDyLV8qTQt",
-      {
-        target: "0x21E19E0C9BAB2400000",
-        currency: 1,
-        duration: 30, // 30 days
-        cycleLimit: 0,
-        discountRate: 190,
-        ballot: ballot.address
-      },
-      {
-        bondingCurveRate: 140,
-        reservedRate: 100,
-        reconfigurationBondingCurveRate: 200
-      },
-      [],
-      [],
-      {
-        gasLimit: blockGasLimit
-      }
-    );
-  } catch (e) {
-    console.log("Failed to set up environment: ", e);
+    // Otherwise deploy a static local price feed.
+  } else {
+    const feed = await deploy("ExampleETHUSDPriceFeed", []);
+    await attachedGovernance.addPriceFeed(prices.address, feed.address, 1, {
+      gasLimit: blockGasLimit
+    });
   }
+
+  // TODO set the owner of the admin contract.
+  // await attachedJuicer.transferOwnership(admin.address, {
+  //   gasLimit: blockGasLimit
+  // });
+
+  console.log(callContractIcon + "Configuring governance's budget");
+
+  await attachedJuicer.deploy(
+    governance.address,
+    utils.formatBytes32String("juice"),
+    "QmSFLBMjeuHLo5hrh7oGRNYNVasCN66LYEELrDyLV8qTQt",
+    {
+      target: "0x21E19E0C9BAB2400000",
+      currency: 1,
+      duration: 30, // 30 days
+      cycleLimit: 0,
+      discountRate: 190,
+      ballot: ballot.address
+    },
+    {
+      bondingCurveRate: 140,
+      reservedRate: 100,
+      reconfigurationBondingCurveRate: 200
+    },
+    [],
+    [],
+    {
+      gasLimit: blockGasLimit
+    }
+  );
 
   console.log("\n");
 

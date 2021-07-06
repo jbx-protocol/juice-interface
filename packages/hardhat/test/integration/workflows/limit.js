@@ -32,7 +32,12 @@ module.exports = [
 
       // The owner of the project that will reconfigure.
       const owner = randomSignerFn();
-      const target1 = randomBigNumberFn();
+
+      // At the end of the tests, this amount will be attempted to be tapped.
+      const amountToTap = BigNumber.from(1);
+
+      // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+      const target1 = randomBigNumberFn({ min: amountToTap.mul(2) });
 
       const duration1 = randomBigNumberFn({
         min: BigNumber.from(1),
@@ -99,7 +104,8 @@ module.exports = [
         discountRate1,
         reconfigurationBondingCurveRate1,
         bondingCurveRate1,
-        reservedRate1
+        reservedRate1,
+        amountToTap
       };
     }
   },
@@ -143,7 +149,7 @@ module.exports = [
       const expectedFee = await contracts.juicer.fee();
 
       // Expect nothing to have been tapped yet from the funding cycle.
-      const expectedTapped = BigNumber.from(0);
+      const expectedInitialTapped = BigNumber.from(0);
 
       await checkFn({
         caller: randomSignerFn(),
@@ -166,7 +172,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       });
@@ -175,7 +181,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       };
     }
   },
@@ -260,7 +266,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       let expectedWeight = expectedInitialWeight;
@@ -295,7 +301,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       });
@@ -327,7 +333,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       let expectedFullLimitWeight = expectedInitialWeight;
@@ -357,7 +363,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       });
@@ -472,7 +478,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedFullLimitWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -496,7 +502,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       })
@@ -535,7 +541,7 @@ module.exports = [
         reservedRate2,
         expectedFullLimitWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       let expectedPackedMetadata2 = BigNumber.from(0);
@@ -573,7 +579,7 @@ module.exports = [
           currency2,
           expectedFee,
           discountRate2,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata2
         ]
       });
@@ -612,7 +618,7 @@ module.exports = [
         expectedFundingCycleId2,
         expectedFullLimitWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       if (cycleLimit2.lte(1)) return;
@@ -648,7 +654,7 @@ module.exports = [
           currency2,
           expectedFee,
           discountRate2,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata2
         ]
       });
@@ -692,7 +698,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedFullLimitWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       let expectedFullLimitWeight2 = expectedFullLimitWeight
@@ -733,7 +739,101 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
+          expectedPackedMetadata1
+        ]
+      });
+    }
+  },
+  {
+    description: "Tap some of the current funding cycle",
+    fn: async ({
+      randomSignerFn,
+      contracts,
+      executeFn,
+      incrementFundingCycleIdFn,
+      local: { expectedProjectId, amountToTap }
+    }) => {
+      // Tapping at this point will create a new funding cycle.
+      const expectedFundingCycleId3 = incrementFundingCycleIdFn();
+
+      await executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedProjectId, amountToTap, currency, 0]
+      });
+
+      return { expectedFundingCycleId3 };
+    }
+  },
+  {
+    description: "Make sure the tapped funding cycle is the current",
+    fn: async ({
+      constants,
+      contracts,
+      checkFn,
+      BigNumber,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        expectedFundingCycleId2,
+        expectedFundingCycleId3,
+        amountToTap,
+        expectedFundingCycleNumber1,
+        originalTimeMark,
+        target1,
+        cycleLimit1,
+        discountRate1,
+        ballot1,
+        duration1,
+        cycleLimit2,
+        discountRate2,
+        duration2,
+        expectedPackedMetadata1,
+        expectedFullLimitWeight,
+        expectedFee
+      }
+    }) => {
+      let expectedFullLimitWeight2 = expectedFullLimitWeight
+        .mul(discountRate1)
+        .div(constants.MaxPercent);
+      for (let i = 0; i < cycleLimit2; i += 1) {
+        expectedFullLimitWeight2 = expectedFullLimitWeight2
+          .mul(discountRate2)
+          .div(constants.MaxPercent);
+      }
+      await checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId3,
+          expectedProjectId,
+          expectedFundingCycleNumber1
+            .add(cycleLimit1)
+            .add(cycleLimit2)
+            .add(1),
+          expectedFundingCycleId2,
+          originalTimeMark,
+          BigNumber.from(0),
+          expectedFullLimitWeight2,
+          ballot1,
+          originalTimeMark
+            .add(
+              cycleLimit1
+                .add(1)
+                .mul(duration1)
+                .mul(86400)
+            )
+            .add(cycleLimit2.mul(duration2).mul(86400)),
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          amountToTap,
           expectedPackedMetadata1
         ]
       });

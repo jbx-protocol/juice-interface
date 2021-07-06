@@ -112,8 +112,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @return amount overflow The current overflow of funds for the project.
     */
-    // TODO rename reservedTicketBalanceOf
-    function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
+    function reservedTicketBalanceOf(uint256 _projectId, uint256 _reservedRate)
         public
         view
         override
@@ -704,7 +703,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         )
         returns (uint256 amount)
     {
-        //TODO unit test
+        // There must be an amount specified to redeem.
         require(_count > 0, "Juicer::redeem: NO_OP");
 
         // Can't send claimed funds to the zero address.

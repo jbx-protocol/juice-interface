@@ -293,6 +293,13 @@ const tests = {
       })
     },
     {
+      description: "zero count",
+      fn: () => ({
+        count: BigNumber.from(0),
+        revert: "Juicer::redeem: NO_OP"
+      })
+    },
+    {
       description: "zero address",
       fn: () => ({
         beneficiary: constants.AddressZero,

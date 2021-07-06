@@ -131,8 +131,10 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
             Operations.Issue
         )
     {
-        //TODO unit test
+        // There must be a name.
         require((bytes(_name).length > 0), "TicketBooth::issue: EMPTY_NAME");
+
+        // There must be a symbol.
         require(
             (bytes(_symbol).length > 0),
             "TicketBooth::issue: EMPTY_SYMBOL"

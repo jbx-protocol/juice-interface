@@ -104,7 +104,7 @@ interface IJuicer {
 
     function modStore() external view returns (IModStore);
 
-    function reservedTicketAmountOf(uint256 _projectId, uint256 _reservedRate)
+    function reservedTicketBalanceOf(uint256 _projectId, uint256 _reservedRate)
         external
         view
         returns (uint256);

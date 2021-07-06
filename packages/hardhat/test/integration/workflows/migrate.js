@@ -326,7 +326,7 @@ module.exports = [
       local: { owner, expectedProjectId, secondJuicer, reservedRate }
     }) => {
       // Before migrating, save a reference to the amount of reserved tickets available.
-      const reservedTicketAmount = await contracts.juicer.reservedTicketAmountOf(
+      const reservedTicketAmount = await contracts.juicer.reservedTicketBalanceOf(
         expectedProjectId,
         reservedRate
       );

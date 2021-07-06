@@ -68,7 +68,7 @@ module.exports = function() {
   describe("configure(...)", shouldBehaveLike.configure);
   describe("pay(...)", shouldBehaveLike.pay);
   describe("printPremineTickets(...)", shouldBehaveLike.printPreminedTickets);
-  describe("redeem(...)", shouldBehaveLike.redeem);
+  describe.only("redeem(...)", shouldBehaveLike.redeem);
   describe("tap(...)", shouldBehaveLike.tap);
   describe("printReservedTickets(...)", shouldBehaveLike.printReservedTickets);
 };

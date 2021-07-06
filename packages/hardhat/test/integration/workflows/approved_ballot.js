@@ -52,10 +52,14 @@ module.exports = [
       // An account that will be used to make payments.
       const payer = randomSignerFn();
 
+      // At the end of the tests, this amount will be attempted to be tapped.
+      const amountToTap = BigNumber.from(1);
+
       // One payment will be made. Cant pay entire balance because some is needed for gas.
       // So, arbitrarily divide the balance so that all payments can be made successfully.
       const paymentValue = randomBigNumberFn({
-        min: BigNumber.from(1),
+        // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+        min: amountToTap.mul(3),
         max: (await getBalanceFn(payer.address)).div(100)
       });
 
@@ -119,7 +123,8 @@ module.exports = [
         bondingCurveRate1,
         reservedRate1,
         payer,
-        paymentValue
+        paymentValue,
+        amountToTap
       };
     }
   },
@@ -159,16 +164,19 @@ module.exports = [
       randomBigNumberFn,
       BigNumber,
       incrementFundingCycleIdFn,
-      local: { expectedProjectId, owner }
+      local: { expectedProjectId, owner, paymentValue }
     }) => {
       const expectedFundingCycleId2 = incrementFundingCycleIdFn();
 
       // The next funding cycle should be the second.
       const expectedFundingCycleNumber2 = BigNumber.from(2);
 
-      const target2 = randomBigNumberFn();
+      // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+      const target2 = randomBigNumberFn({ min: paymentValue.div(2) });
 
-      const currency2 = randomBigNumberFn({ max: constants.MaxUint8 });
+      // Make the second currency the same as the first in order to fulfill a tap later.
+      const currency2 = BigNumber.from(currency);
+
       const duration2 = randomBigNumberFn({
         min: BigNumber.from(1),
         max: constants.MaxUint16
@@ -326,22 +334,14 @@ module.exports = [
       randomSignerFn,
       contracts,
       executeFn,
-      randomBigNumberFn,
-      BigNumber,
-      local: { expectedProjectId, paymentValue }
-    }) => {
-      const tapAmount = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: paymentValue
-      });
-      await executeFn({
+      local: { expectedProjectId, amountToTap }
+    }) =>
+      executeFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "tap",
-        args: [expectedProjectId, tapAmount, currency, 0]
-      });
-      return { tapAmount };
-    }
+        args: [expectedProjectId, amountToTap, currency, 0]
+      })
   },
   {
     description:
@@ -356,7 +356,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
         originalTimeMark,
-        tapAmount,
+        amountToTap,
         ballot,
         cycleLimit1,
         duration1,
@@ -400,7 +400,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          tapAmount,
+          amountToTap,
           expectedPackedMetadata1
         ]
       });
@@ -537,6 +537,87 @@ module.exports = [
           expectedFee,
           discountRate2,
           BigNumber.from(0),
+          expectedPackedMetadata2
+        ]
+      })
+  },
+  {
+    description: "Tap some of the current funding cycle",
+    fn: async ({
+      randomSignerFn,
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      local: { expectedProjectId, amountToTap, currency2 }
+    }) => {
+      const tapAmount2 = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: amountToTap
+      });
+
+      await executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedProjectId, amountToTap, currency2, 0]
+      });
+
+      return { tapAmount2 };
+    }
+  },
+  {
+    description:
+      "The current funding cycle should have the second tapped amount",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        expectedFundingCycleId1,
+        expectedFundingCycleId2,
+        expectedFundingCycleNumber1,
+        originalTimeMark,
+        reconfigurationTimeMark,
+        duration1,
+        cycleCountDuringBallot,
+        cycleLimit2,
+        ballot2,
+        duration2,
+        target2,
+        currency2,
+        discountRate2,
+        expectedPackedMetadata2,
+        expectedFee,
+        expectedPostBallotWeight,
+        tapAmount2
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId2,
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(cycleCountDuringBallot),
+          expectedFundingCycleId1,
+          reconfigurationTimeMark,
+          cycleLimit2,
+          expectedPostBallotWeight,
+          ballot2,
+          // The start time should be two duration after the initial start.
+          originalTimeMark.add(
+            duration1.mul(86400).mul(cycleCountDuringBallot)
+          ),
+          duration2,
+          target2,
+          currency2,
+          expectedFee,
+          discountRate2,
+          tapAmount2,
           expectedPackedMetadata2
         ]
       })

@@ -121,7 +121,7 @@ export default function Rewards({
   })
   const reservedTickets = useContractReader<BigNumber>({
     contract: ContractName.Juicer,
-    functionName: 'reservedTicketAmountOf',
+    functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
         ? [

@@ -35,7 +35,12 @@ module.exports = [
       // The owner of the project that will reconfigure.
       const owner = randomSignerFn();
 
-      const target1 = randomBigNumberFn();
+      // At the end of the tests, this amount will be attempted to be tapped.
+      const amountToTap = BigNumber.from(1);
+
+      // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+      const target1 = randomBigNumberFn({ min: amountToTap.mul(2) });
+
       const duration1 = randomBigNumberFn({
         min: BigNumber.from(1),
         max: BigNumber.from(10000)
@@ -99,7 +104,8 @@ module.exports = [
         discountRate1,
         reservedRate1,
         bondingCurveRate1,
-        reconfigurationBondingCurveRate1
+        reconfigurationBondingCurveRate1,
+        amountToTap
       };
     }
   },
@@ -143,7 +149,7 @@ module.exports = [
       const expectedFee = await contracts.juicer.fee();
 
       // Expect nothing to have been tapped yet from the funding cycle.
-      const expectedTapped = BigNumber.from(0);
+      const expectedInitialTapped = BigNumber.from(0);
 
       await checkFn({
         caller: randomSignerFn(),
@@ -166,7 +172,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       });
@@ -175,7 +181,7 @@ module.exports = [
         expectedPackedMetadata1,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       };
     }
   },
@@ -274,7 +280,7 @@ module.exports = [
         expectedProjectId,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       let expectedPackedMetadata2 = BigNumber.from(0);
@@ -308,7 +314,7 @@ module.exports = [
           currency2,
           expectedFee,
           discountRate2,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata2
         ]
       });
@@ -410,7 +416,7 @@ module.exports = [
         expectedProjectId,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) => {
       await checkFn({
@@ -434,7 +440,7 @@ module.exports = [
           BigNumber.from(currency),
           BigNumber.from(expectedFee),
           discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       });
@@ -558,7 +564,7 @@ module.exports = [
         expectedFundingCycleNumber2,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -582,7 +588,7 @@ module.exports = [
           BigNumber.from(currency2),
           expectedFee,
           discountRate2,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata2
         ]
       })
@@ -608,7 +614,7 @@ module.exports = [
         expectedFundingCycleNumber1,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -632,57 +638,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          expectedTapped,
-          expectedPackedMetadata1
-        ]
-      })
-  },
-  {
-    description: "The first funding cycle should still be the current",
-    fn: ({
-      contracts,
-      checkFn,
-      randomSignerFn,
-      BigNumber,
-      local: {
-        originalTimeMark,
-        configuredTimeMark,
-        target1,
-        cycleLimit1,
-        ballot1,
-        duration1,
-        discountRate1,
-        expectedPackedMetadata1,
-        expectedProjectId,
-        expectedFundingCycleId1,
-        expectedFundingCycleNumber1,
-        expectedInitialWeight,
-        expectedFee,
-        expectedTapped
-      }
-    }) =>
-      checkFn({
-        caller: randomSignerFn(),
-        contract: contracts.fundingCycles,
-        fn: "getCurrentOf",
-        args: [expectedProjectId],
-        expect: [
-          expectedFundingCycleId1,
-          expectedProjectId,
-          expectedFundingCycleNumber1,
-          BigNumber.from(expectedInitialBasedOn),
-          configuredTimeMark,
-          cycleLimit1,
-          expectedInitialWeight,
-          ballot1,
-          // The start time should stay the same.
-          originalTimeMark,
-          duration1,
-          target1,
-          BigNumber.from(currency),
-          expectedFee,
-          discountRate1,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata1
         ]
       })
@@ -712,7 +668,7 @@ module.exports = [
         expectedFundingCycleNumber2,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -736,8 +692,123 @@ module.exports = [
           currency2,
           expectedFee,
           discountRate2,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata2
+        ]
+      })
+  },
+  {
+    description: "The first funding cycle should still be the current",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      BigNumber,
+      local: {
+        originalTimeMark,
+        configuredTimeMark,
+        target1,
+        cycleLimit1,
+        ballot1,
+        duration1,
+        discountRate1,
+        expectedPackedMetadata1,
+        expectedProjectId,
+        expectedFundingCycleId1,
+        expectedFundingCycleNumber1,
+        expectedInitialWeight,
+        expectedFee,
+        expectedInitialTapped
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId1,
+          expectedProjectId,
+          expectedFundingCycleNumber1,
+          BigNumber.from(expectedInitialBasedOn),
+          configuredTimeMark,
+          cycleLimit1,
+          expectedInitialWeight,
+          ballot1,
+          // The start time should stay the same.
+          originalTimeMark,
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          expectedInitialTapped,
+          expectedPackedMetadata1
+        ]
+      })
+  },
+  {
+    description: "Tap some of the current funding cycle",
+    fn: ({
+      randomSignerFn,
+      contracts,
+      executeFn,
+      local: { expectedProjectId, amountToTap }
+    }) =>
+      executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedProjectId, amountToTap, currency, 0]
+      })
+  },
+  {
+    description: "The current should now have a tapped amount",
+    fn: ({
+      contracts,
+      checkFn,
+      randomSignerFn,
+      BigNumber,
+      local: {
+        originalTimeMark,
+        configuredTimeMark,
+        target1,
+        cycleLimit1,
+        ballot1,
+        duration1,
+        discountRate1,
+        expectedPackedMetadata1,
+        expectedProjectId,
+        expectedFundingCycleId1,
+        expectedFundingCycleNumber1,
+        expectedInitialWeight,
+        expectedFee,
+        amountToTap
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId1,
+          expectedProjectId,
+          expectedFundingCycleNumber1,
+          BigNumber.from(expectedInitialBasedOn),
+          configuredTimeMark,
+          cycleLimit1,
+          expectedInitialWeight,
+          ballot1,
+          // The start time should stay the same.
+          originalTimeMark,
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          amountToTap,
+          expectedPackedMetadata1
         ]
       })
   }

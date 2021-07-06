@@ -164,7 +164,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [
           expectedProjectId,
           randomBigNumberFn({ max: constants.MaxPercent })
@@ -432,7 +432,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount2,
         // Allow some wiggle room due to possible division precision errors.
@@ -657,7 +657,7 @@ module.exports = [
       checkFn({
         caller: owner,
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: 0
       })
@@ -724,7 +724,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
         // Allow some wiggle room due to possible division precision errors.
@@ -782,7 +782,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
         // Allow some wiggle room due to possible division precision errors.
@@ -843,7 +843,7 @@ module.exports = [
       checkFn({
         caller: owner,
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
         // Allow some wiggle room due to possible division precision errors.
@@ -872,7 +872,7 @@ module.exports = [
       checkFn({
         caller: owner,
         contract: contracts.juicer,
-        fn: "reservedTicketAmountOf",
+        fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: 0
       })

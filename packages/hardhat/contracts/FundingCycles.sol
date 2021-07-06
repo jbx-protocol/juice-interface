@@ -7,8 +7,6 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
-import "hardhat/console.sol";
-
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -81,6 +79,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     /**
         @notice 
         The funding cycle that's next up for a project, and therefor not currently accepting payments.
+
+        @dev 
+        This runs roughly similar logic to `_configurable`.
 
         @param _projectId The ID of the project being looked through.
 
@@ -517,7 +518,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             _fundingCycle = _getStruct(fundingCycleId);
 
             // Check to see if the cycle is approved. If so, return it.
-            if (_isApproved(_fundingCycle)) return fundingCycleId;
+            if (
+                _fundingCycle.start <= block.timestamp &&
+                _isApproved(_fundingCycle)
+            ) return fundingCycleId;
 
             // If it hasn't been approved, set the ID to be the base funding cycle,
             // which carries the last approved configuration.
@@ -1303,23 +1307,21 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // If there is no ballot funding cycle, auto approve.
         if (_ballotFundingCycleId == 0) return BallotState.Approved;
 
-        // Get a reference to the ballot to use.
-        // The ballot is stored in bits 0-159 of the packed configuration properties.
-        IFundingCycleBallot _ballot =
-            IFundingCycleBallot(
-                address(
-                    uint160(
-                        _packedConfigurationPropertiesOf[_ballotFundingCycleId]
-                    )
-                )
-            );
+        // Get the ballot funding cycle.
+        FundingCycle memory _ballotFundingCycle =
+            _getStruct(_ballotFundingCycleId);
+
+        // If the configuration is the same as the ballot's funding cycle,
+        // the ballot isn't applicable. Auto approve since the ballot funding cycle is approved.
+        if (_ballotFundingCycle.configured == _configuration)
+            return BallotState.Approved;
 
         // If there is no ballot, the ID is auto approved.
         // Otherwise, return the ballot's state.
         return
-            _ballot == IFundingCycleBallot(address(0))
+            _ballotFundingCycle.ballot == IFundingCycleBallot(address(0))
                 ? BallotState.Approved
-                : _ballot.state(_id, _configuration);
+                : _ballotFundingCycle.ballot.state(_id, _configuration);
     }
 
     /** 

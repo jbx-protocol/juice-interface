@@ -50,10 +50,14 @@ module.exports = [
       // An account that will be used to make payments.
       const payer = randomSignerFn();
 
+      // At the end of the tests, this amount will be attempted to be tapped.
+      const amountToTap = BigNumber.from(1);
+
       // One payment will be made. Cant pay entire balance because some is needed for gas.
       // So, arbitrarily divide the balance so that all payments can be made successfully.
       const paymentValue = randomBigNumberFn({
-        min: BigNumber.from(1),
+        // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+        min: amountToTap.mul(3),
         max: (await getBalanceFn(payer.address)).div(100)
       });
 
@@ -117,7 +121,8 @@ module.exports = [
         bondingCurveRate1,
         reservedRate1,
         payer,
-        paymentValue
+        paymentValue,
+        amountToTap
       };
     }
   },
@@ -324,22 +329,14 @@ module.exports = [
       randomSignerFn,
       contracts,
       executeFn,
-      randomBigNumberFn,
-      BigNumber,
-      local: { expectedProjectId, paymentValue }
-    }) => {
-      const tapAmount = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: paymentValue
-      });
-      await executeFn({
+      local: { expectedProjectId, amountToTap }
+    }) =>
+      executeFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
         fn: "tap",
-        args: [expectedProjectId, tapAmount, currency, 0]
-      });
-      return { tapAmount };
-    }
+        args: [expectedProjectId, amountToTap, currency, 0]
+      })
   },
   {
     description:
@@ -354,7 +351,7 @@ module.exports = [
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
         originalTimeMark,
-        tapAmount,
+        amountToTap,
         ballot,
         cycleLimit1,
         duration1,
@@ -398,7 +395,7 @@ module.exports = [
           BigNumber.from(currency),
           expectedFee,
           discountRate1,
-          tapAmount,
+          amountToTap,
           expectedPackedMetadata1
         ]
       });
@@ -533,6 +530,91 @@ module.exports = [
           expectedFee,
           discountRate1,
           BigNumber.from(0),
+          expectedPackedMetadata1
+        ]
+      })
+  },
+  {
+    description: "Tap some of the current funding cycle",
+    fn: async ({
+      randomSignerFn,
+      contracts,
+      executeFn,
+      randomBigNumberFn,
+      BigNumber,
+      incrementFundingCycleIdFn,
+      local: { expectedProjectId, amountToTap }
+    }) => {
+      // Tapping should create a new funding cycle.
+      const expectedFundingCycleId3 = incrementFundingCycleIdFn();
+
+      // Leave some left for tapping another amount later.
+      const tapAmount2 = randomBigNumberFn({
+        min: BigNumber.from(1),
+        max: amountToTap
+      });
+
+      await executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedProjectId, tapAmount2, currency, 0]
+      });
+
+      return { expectedFundingCycleId3, tapAmount2 };
+    }
+  },
+  {
+    description: "The current funding cycle should have the tapped amount",
+    fn: ({
+      contracts,
+      checkFn,
+      BigNumber,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        expectedFundingCycleId1,
+        expectedFundingCycleId3,
+        expectedFundingCycleNumber1,
+        cycleCountDuringBallot,
+        originalTimeMark,
+        duration1,
+        cycleLimit1,
+        ballot,
+        target1,
+        discountRate1,
+        expectedPackedMetadata1,
+        expectedPostBallotWeight,
+        expectedFee,
+        tapAmount2
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId3,
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(cycleCountDuringBallot),
+          expectedFundingCycleId1,
+          originalTimeMark,
+          cycleLimit1.eq(0) || cycleCountDuringBallot.gt(cycleLimit1)
+            ? BigNumber.from(0)
+            : cycleLimit1.sub(cycleCountDuringBallot),
+          // one before.
+          expectedPostBallotWeight,
+          ballot.address,
+          originalTimeMark.add(
+            duration1.mul(86400).mul(cycleCountDuringBallot)
+          ),
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          tapAmount2,
           expectedPackedMetadata1
         ]
       })

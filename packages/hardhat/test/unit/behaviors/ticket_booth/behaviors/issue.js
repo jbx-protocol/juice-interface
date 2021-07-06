@@ -34,6 +34,28 @@ const tests = {
       })
     },
     {
+      description: "empty name",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        permissionFlag: false,
+        useEmptyName: true,
+        revert: "TicketBooth::issue: EMPTY_NAME"
+      })
+    },
+    {
+      description: "empty symbol",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectOwner: deployer.address,
+        projectId: 1,
+        permissionFlag: false,
+        useEmptySymbol: true,
+        revert: "TicketBooth::issue: EMPTY_SYMBOL"
+      })
+    },
+    {
       description: "tickets already issued",
       fn: ({ deployer }) => ({
         caller: deployer,
@@ -115,6 +137,8 @@ module.exports = function() {
           projectId,
           permissionFlag,
           preissue,
+          useEmptyName,
+          useEmptySymbol,
           revert
         } = failureTest.fn(this);
 
@@ -138,7 +162,13 @@ module.exports = function() {
         }
 
         await expect(
-          this.contract.connect(caller).issue(projectId, "doesnt", "matter")
+          this.contract
+            .connect(caller)
+            .issue(
+              projectId,
+              useEmptyName ? "" : "doesnt",
+              useEmptySymbol ? "" : "matter"
+            )
         ).to.be.revertedWith(revert);
       });
     });

@@ -3,6 +3,10 @@
 
   All current configurations will not be affected, and will keep the old fee until a new configuration is approved.
 */
+
+// The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.
+const currency = 0;
+
 module.exports = [
   {
     description: "Deploy a project",
@@ -27,9 +31,12 @@ module.exports = [
       // The owner of the project that will reconfigure.
       const owner = randomSignerFn();
 
-      const target = randomBigNumberFn();
+      // At the end of the tests, this amount will be attempted to be tapped.
+      const amountToTap = BigNumber.from(1);
 
-      const currency = randomBigNumberFn({ max: constants.MaxUint8 });
+      // Make sure the target is arbitrarily larger than the amount that will be tapped, included fees that will be incurred.
+      const target = randomBigNumberFn({ min: amountToTap.mul(2) });
+
       const duration = randomBigNumberFn({
         min: BigNumber.from(1),
         max: BigNumber.from(10000)
@@ -96,7 +103,8 @@ module.exports = [
         duration,
         target,
         currency,
-        discountRate
+        discountRate,
+        amountToTap
       };
     }
   },
@@ -119,7 +127,6 @@ module.exports = [
         ballot,
         duration,
         target,
-        currency,
         discountRate
       }
     }) => {
@@ -144,7 +151,7 @@ module.exports = [
       const expectedFee = await contracts.juicer.fee();
 
       // Expect nothing to have been tapped yet from the funding cycle.
-      const expectedTapped = BigNumber.from(0);
+      const expectedInitialTapped = BigNumber.from(0);
 
       await checkFn({
         caller: randomSignerFn(),
@@ -163,10 +170,10 @@ module.exports = [
           timeMark,
           duration,
           target,
-          currency,
+          BigNumber.from(currency),
           expectedFee,
           discountRate,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata
         ]
       });
@@ -175,7 +182,7 @@ module.exports = [
         expectedPackedMetadata,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       };
     }
   },
@@ -235,11 +242,10 @@ module.exports = [
         discountRate,
         duration,
         target,
-        currency,
         expectedPackedMetadata,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -259,10 +265,10 @@ module.exports = [
           originalTimeMark.add(duration.mul(86400)),
           duration,
           target,
-          currency,
+          BigNumber.from(currency),
           expectedFee,
           discountRate,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata
         ]
       })
@@ -306,6 +312,8 @@ module.exports = [
         ],
         value: paymentValue
       });
+
+      return { paymentValue };
     }
   },
   {
@@ -319,7 +327,6 @@ module.exports = [
         expectedProjectId,
         owner,
         target,
-        currency,
         duration,
         cycleLimit,
         discountRate,
@@ -364,6 +371,7 @@ module.exports = [
       checkFn,
       timeMark,
       randomSignerFn,
+      BigNumber,
       local: {
         expectedFundingCycleId1,
         expectedFundingCycleNumber1,
@@ -374,12 +382,11 @@ module.exports = [
         ballot,
         discountRate,
         duration,
-        currency,
         expectedPackedMetadata,
         expectedFundingCycleId2,
         expectedProjectId,
         expectedInitialWeight,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -403,10 +410,10 @@ module.exports = [
           originalTimeMark.add(duration.mul(86400).mul(2)),
           duration,
           target,
-          currency,
+          BigNumber.from(currency),
           newFee,
           discountRate,
-          expectedTapped,
+          expectedInitialTapped,
           expectedPackedMetadata
         ]
       })
@@ -429,11 +436,10 @@ module.exports = [
         discountRate,
         duration,
         target,
-        currency,
         expectedPackedMetadata,
         expectedInitialWeight,
         expectedFee,
-        expectedTapped
+        expectedInitialTapped
       }
     }) =>
       checkFn({
@@ -453,10 +459,81 @@ module.exports = [
           originalTimeMark.add(duration.mul(86400)),
           duration,
           target,
-          currency,
+          BigNumber.from(currency),
           expectedFee,
           discountRate,
-          expectedTapped,
+          expectedInitialTapped,
+          expectedPackedMetadata
+        ]
+      })
+  },
+  {
+    description: "Tap some of the current funding cycle",
+    fn: async ({
+      randomSignerFn,
+      contracts,
+      executeFn,
+      incrementFundingCycleIdFn,
+      local: { expectedProjectId, amountToTap }
+    }) => {
+      // Tapping should create a new funding cycle.
+      const expectedFundingCycleId3 = incrementFundingCycleIdFn();
+
+      await executeFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "tap",
+        args: [expectedProjectId, amountToTap, currency, 0]
+      });
+      return { expectedFundingCycleId3 };
+    }
+  },
+  {
+    description: "The current should have the tapped amount",
+    fn: async ({
+      constants,
+      contracts,
+      checkFn,
+      BigNumber,
+      randomSignerFn,
+      local: {
+        expectedProjectId,
+        expectedFundingCycleId1,
+        expectedFundingCycleNumber1,
+        originalTimeMark,
+        cycleLimit,
+        ballot,
+        discountRate,
+        duration,
+        target,
+        amountToTap,
+        expectedFundingCycleId3,
+        expectedPackedMetadata,
+        expectedInitialWeight,
+        expectedFee
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "getCurrentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId3,
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(1),
+          expectedFundingCycleId1,
+          originalTimeMark,
+          cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
+          expectedInitialWeight.mul(discountRate).div(constants.MaxPercent),
+          ballot,
+          originalTimeMark.add(duration.mul(86400)),
+          duration,
+          target,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate,
+          amountToTap,
           expectedPackedMetadata
         ]
       })

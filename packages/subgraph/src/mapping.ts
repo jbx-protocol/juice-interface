@@ -1,5 +1,3 @@
-import { ethereum } from "@graphprotocol/graph-ts";
-
 import { Create, SetHandle, SetUri } from "../generated/Projects/Projects";
 import { Project } from "../generated/schema";
 

@@ -55,6 +55,10 @@ const deploy = async (contractName, _args) => {
 };
 
 const main = async () => {
+  const startBlock = await ethers.provider.getBlockNumber();
+
+  console.log("Start block:", startBlock);
+
   const ethUsdAddr = ethUsdPriceFeed(network);
   const prices = await deploy("Prices");
   const operatorStore = await deploy("OperatorStore");
@@ -174,7 +178,6 @@ const main = async () => {
     "\n"
   );
 
-  const startBlock = await ethers.provider.getBlockNumber();
   await publish(startBlock);
 };
 

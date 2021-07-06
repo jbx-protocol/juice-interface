@@ -1,5 +1,16 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -21,40 +32,48 @@
         "type": "uint256"
       },
       {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
         "indexed": false,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currency",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "metadata",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IFundingCycleBallot",
-        "name": "ballot",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -160,16 +179,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "MAX_CYCLE_LIMIT",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "appointAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -180,38 +199,50 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
+        "name": "_metadata",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "_fee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_metadata",
         "type": "uint256"
       },
       {
@@ -223,9 +254,91 @@
     "name": "configure",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "basedOn",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "metadata",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycle",
+        "name": "fundingCycle",
+        "type": "tuple"
       }
     ],
     "stateMutability": "nonpayable",
@@ -252,7 +365,7 @@
         "type": "uint256"
       }
     ],
-    "name": "currentBallotState",
+    "name": "currentBallotStateOf",
     "outputs": [
       {
         "internalType": "enum BallotState",
@@ -298,6 +411,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -367,7 +485,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getCurrent",
+    "name": "getCurrentOf",
     "outputs": [
       {
         "components": [
@@ -394,6 +512,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -463,7 +586,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getQueued",
+    "name": "getQueuedOf",
     "outputs": [
       {
         "components": [
@@ -490,6 +613,11 @@
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -554,31 +682,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "isAdmin",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "name": "latestId",
+    "name": "latestIdOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -587,102 +696,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "metadata",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "packedConfigurationProperties",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "packedIntrinsicProperties",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "revokeAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "setOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -701,47 +714,104 @@
     "name": "tap",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "basedOn",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "metadata",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycle",
+        "name": "fundingCycle",
+        "type": "tuple"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "tappedAmounts",
+    "inputs": [],
+    "name": "terminalDirectory",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract ITerminalDirectory",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "targetAmounts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",

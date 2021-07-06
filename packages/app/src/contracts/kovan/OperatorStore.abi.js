@@ -5,6 +5,12 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "account",
         "type": "address"
       },
@@ -13,12 +19,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "domain",
         "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -40,6 +40,11 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_account",
         "type": "address"
       },
@@ -47,11 +52,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_domain",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_operator",
-        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -74,6 +74,11 @@ module.exports = [
     "inputs": [
       {
         "internalType": "address",
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_account",
         "type": "address"
       },
@@ -81,11 +86,6 @@ module.exports = [
         "internalType": "uint256",
         "name": "_domain",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_operator",
-        "type": "address"
       },
       {
         "internalType": "uint256[]",
@@ -112,17 +112,17 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "permissions",
+    "name": "permissionsOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -136,14 +136,14 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_domain",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "_operator",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_domain",
+        "type": "uint256"
       },
       {
         "internalType": "uint256[]",
@@ -159,14 +159,14 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "uint256[]",
-        "name": "_domains",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "address[]",
         "name": "_operators",
         "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_domains",
+        "type": "uint256[]"
       },
       {
         "internalType": "uint256[][]",

@@ -1,16 +1,5 @@
 module.exports = [
   {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "inputs": [],
     "name": "duration",
     "outputs": [
@@ -21,19 +10,6 @@ module.exports = [
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "juicer",
-    "outputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

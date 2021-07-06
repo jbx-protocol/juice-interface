@@ -5,6 +5,11 @@
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
+      },
+      {
+        "internalType": "contract ITerminalDirectory",
+        "name": "_terminalDirectory",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -32,6 +37,19 @@
   {
     "inputs": [
       {
+        "internalType": "contract IJuicer",
+        "name": "_juicer",
+        "type": "address"
+      }
+    ],
+    "name": "acceptGovernance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "contract IPrices",
         "name": "_prices",
         "type": "address"
@@ -55,12 +73,12 @@
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminal",
         "name": "_from",
         "type": "address"
       },
       {
-        "internalType": "address",
+        "internalType": "contract ITerminal",
         "name": "_to",
         "type": "address"
       }
@@ -86,37 +104,6 @@
     "name": "appointGovernance",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IAdministered",
-        "name": "_contract",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "grantAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "juiceTerminal",
-    "outputs": [
-      {
-        "internalType": "contract IJuiceTerminal",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -177,6 +164,11 @@
         "internalType": "string",
         "name": "_memo",
         "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_preferUnstakedTickets",
+        "type": "bool"
       }
     ],
     "name": "pay",
@@ -207,24 +199,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract IAdministered",
-        "name": "_contract",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_oldAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "revokeAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IJuicer",
         "name": "_juicer",
         "type": "address"
@@ -243,32 +217,19 @@
   {
     "inputs": [
       {
-        "internalType": "contract IJuiceTerminal",
-        "name": "_to",
-        "type": "address"
-      }
-    ],
-    "name": "setJuiceTerminal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IOperatorStore",
         "name": "_operatorStore",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_operator",
         "type": "address"
       },
       {
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_operator",
-        "type": "address"
       },
       {
         "internalType": "uint256[]",
@@ -289,14 +250,14 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "_projectIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "address[]",
         "name": "_operators",
         "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_projectIds",
+        "type": "uint256[]"
       },
       {
         "internalType": "uint256[][]",
@@ -323,67 +284,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "terminalDirectory",
+    "outputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTargetLocalETH",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IYielder",
-        "name": "_yielder",
+        "internalType": "contract ITerminalDirectory",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "setYielder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IProjects",
-        "name": "_projects",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_newHandle",
-        "type": "bytes32"
-      }
-    ],
-    "name": "transferHandle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -415,9 +325,32 @@
         "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
       }
     ],
     "name": "transferProjectOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

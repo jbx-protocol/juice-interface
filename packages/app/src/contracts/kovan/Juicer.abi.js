@@ -12,8 +12,8 @@ module.exports = [
         "type": "address"
       },
       {
-        "internalType": "contract ITickets",
-        "name": "_tickets",
+        "internalType": "contract ITicketBooth",
+        "name": "_ticketBooth",
         "type": "address"
       },
       {
@@ -88,12 +88,12 @@ module.exports = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
+        "internalType": "contract ITerminal",
         "name": "allowed",
         "type": "address"
       }
     ],
-    "name": "AddToMigrationAllowList",
+    "name": "AllowMigration",
     "type": "event"
   },
   {
@@ -115,13 +115,13 @@ module.exports = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "projectId",
+        "name": "fundingCycleId",
         "type": "uint256"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
-        "name": "fundingCycleId",
+        "name": "projectId",
         "type": "uint256"
       },
       {
@@ -131,7 +131,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "Deploy",
+    "name": "Configure",
     "type": "event"
   },
   {
@@ -145,6 +145,19 @@ module.exports = [
       }
     ],
     "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "target",
+        "type": "uint256"
+      }
+    ],
+    "name": "EnsureTargetLocalWei",
     "type": "event"
   },
   {
@@ -176,49 +189,6 @@ module.exports = [
       }
     ],
     "name": "Migrate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "beneficiary",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "percent",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "modCut",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "total",
-        "type": "uint256"
-      }
-    ],
-    "name": "ModDistribution",
     "type": "event"
   },
   {
@@ -280,6 +250,69 @@ module.exports = [
         "type": "uint256"
       },
       {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct PaymentMod",
+        "name": "mod",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "PaymentModDistribution",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
         "indexed": true,
         "internalType": "address",
         "name": "beneficiary",
@@ -293,12 +326,24 @@ module.exports = [
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "currency",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "memo",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "caller",
         "type": "address"
       }
     ],
-    "name": "PrintInitialTickets",
+    "name": "PrintPreminedTickets",
     "type": "event"
   },
   {
@@ -342,84 +387,6 @@ module.exports = [
       }
     ],
     "name": "PrintReserveTickets",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currency",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservedRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reconfigurationBondingCurveRate",
-            "type": "uint256"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct FundingCycleMetadata",
-        "name": "metadata",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IFundingCycleBallot",
-        "name": "ballot",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "Reconfigure",
     "type": "event"
   },
   {
@@ -488,7 +455,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "SetTargetLocalETH",
+    "name": "SetTargetLocalWei",
     "type": "event"
   },
   {
@@ -566,6 +533,65 @@ module.exports = [
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct TicketMod",
+        "name": "mod",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "TicketModDistribution",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "acceptGovernance",
     "outputs": [],
@@ -588,7 +614,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "contract ITerminal",
         "name": "_contract",
         "type": "address"
       }
@@ -612,28 +638,10 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "balance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountWithoutYield",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountWithYield",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_projectId",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -666,7 +674,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "claimableOverflow",
+    "name": "claimableOverflowOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -678,16 +686,145 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "configurePermissionIndex",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "reservedRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondingCurveRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reconfigurationBondingCurveRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycleMetadata",
+        "name": "_metadata",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "_paymentMods",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "_ticketMods",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "configure",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "fundingCycleId",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -727,35 +864,52 @@ module.exports = [
         "type": "string"
       },
       {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "components": [
           {
             "internalType": "uint256",
-            "name": "bondingCurveRate",
+            "name": "reservedRate",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "reservedRate",
+            "name": "bondingCurveRate",
             "type": "uint256"
           },
           {
@@ -769,19 +923,71 @@ module.exports = [
         "type": "tuple"
       },
       {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PaymentMod[]",
+        "name": "_paymentMods",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct TicketMod[]",
+        "name": "_ticketMods",
+        "type": "tuple[]"
       }
     ],
     "name": "deploy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "deposit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -844,13 +1050,19 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "migratePermissionIndex",
+    "inputs": [
+      {
+        "internalType": "contract ITerminal",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "migrationIsAllowed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "bool",
         "name": "",
-        "type": "uint256"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -930,6 +1142,25 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "preconfigureTicketCountOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "prices",
     "outputs": [
@@ -955,9 +1186,19 @@ module.exports = [
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "_currency",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_beneficiary",
         "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_memo",
+        "type": "string"
       },
       {
         "internalType": "bool",
@@ -965,22 +1206,9 @@ module.exports = [
         "type": "bool"
       }
     ],
-    "name": "printInitialTickets",
+    "name": "printPreminedTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "printInitialTicketsPermissionIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1018,72 +1246,6 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_projectId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "bondingCurveRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservedRate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reconfigurationBondingCurveRate",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct FundingCycleMetadata",
-        "name": "_metadata",
-        "type": "tuple"
-      },
-      {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
-      }
-    ],
-    "name": "reconfigure",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_account",
         "type": "address"
@@ -1100,7 +1262,7 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_minReturnedETH",
+        "name": "_minReturnedWei",
         "type": "uint256"
       },
       {
@@ -1126,19 +1288,6 @@ module.exports = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "redeemPermissionIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -1151,7 +1300,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "reservedTicketAmount",
+    "name": "reservedTicketBalanceOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1179,32 +1328,6 @@ module.exports = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTargetLocalETH",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IYielder",
-        "name": "_yielder",
-        "type": "address"
-      }
-    ],
-    "name": "setYielder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_projectId",
         "type": "uint256"
       },
@@ -1215,26 +1338,18 @@ module.exports = [
       },
       {
         "internalType": "uint256",
-        "name": "_minReturnedETH",
+        "name": "_currency",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minReturnedWei",
         "type": "uint256"
       }
     ],
     "name": "tap",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "targetLocalETH",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1252,23 +1367,10 @@ module.exports = [
   },
   {
     "inputs": [],
-    "name": "tickets",
+    "name": "ticketBooth",
     "outputs": [
       {
-        "internalType": "contract ITickets",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "yielder",
-    "outputs": [
-      {
-        "internalType": "contract IYielder",
+        "internalType": "contract ITicketBooth",
         "name": "",
         "type": "address"
       }

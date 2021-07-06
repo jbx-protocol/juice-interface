@@ -1,15 +1,17 @@
 {
   "Network": "rinkeby",
   "AbisDir": "rinkeby",
-  "StartBlock": 8730246,
-  "FundingCycleBallotAddress": "0xB99CABE531ec6f284a5BC6B9Af7Fd919e3d4A53b",
-  "FundingCyclesAddress": "0xBa2446374c15eb1439dD0f520Bcb82B217fd1281",
-  "GovernanceAddress": "0x41879d0681b0dCDD7405eC3601Fa0F053aDd502e",
+  "StartBlock": 8891099,
+  "FundingCycleBallotAddress": "0x266Fd063F666A48356190026E29d6639168eC7C5",
+  "FundingCyclesAddress": "0x1Cb926893772C5a70984D7931564192a5b8F4b17",
+  "GovernanceAddress": "0xBE37c74Bba1E967652131451DbD78B331dd3910C",
   "JuiceTerminalDirectoryAddress": "0xDDa31b15DC9aA6e797cC73507121989223F685BD",
-  "JuicerAddress": "0xD7d114188498746D36bE59a45D2F564bb13A0F9C",
-  "ModStoreAddress": "0xf3d646E2D4e8fAEe4F46ab224C9FCD60e428A46D",
-  "OperatorStoreAddress": "0x7222D579b77431985b79E39C290C773f4d689E32",
-  "PricesAddress": "0x333aF62AC5e8c1405414abbA757cfE8cd390dc83",
-  "ProjectsAddress": "0xe9c43e5bcBdf2822e0b9c9BdE66440CADd49Eff5",
-  "TicketsAddress": "0x17249007d92A10049E4A622615037391F37f4363"
+  "JuicerAddress": "0xeD7a713C0d2Ac0ef0893Ff8260bC68FEb5f85D4a",
+  "ModStoreAddress": "0x025b4e5306bed6d74D0956d93afbe1eE9bE75cCf",
+  "OperatorStoreAddress": "0x5a113c780869023d5f0E4ffFdA84E53feaa606f6",
+  "PricesAddress": "0xEC278367b0A06a65544504067da12c1fAE38D931",
+  "ProjectsAddress": "0xA9E8b041128F809e9c46DeeD101B0DF24EB125Bb",
+  "TicketsAddress": "0x17249007d92A10049E4A622615037391F37f4363",
+  "TerminalDirectoryAddress": "0xb693F8bf1D32A71C8A65600f35981a2481ec967d",
+  "TicketBoothAddress": "0x346b2498BB870771D0d73c8a0500930035b0aBA9"
 }

@@ -32,40 +32,48 @@ module.exports = [
         "type": "uint256"
       },
       {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
         "indexed": false,
-        "internalType": "uint256",
-        "name": "target",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "currency",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "discountRate",
-        "type": "uint256"
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "metadata",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract IFundingCycleBallot",
-        "name": "ballot",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -171,6 +179,19 @@ module.exports = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "MAX_CYCLE_LIMIT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -178,38 +199,50 @@ module.exports = [
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_target",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct FundingCycleProperties",
+        "name": "_properties",
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
-        "name": "_currency",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountRate",
+        "name": "_metadata",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "_fee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "contract IFundingCycleBallot",
-        "name": "_ballot",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_metadata",
         "type": "uint256"
       },
       {
@@ -221,9 +254,91 @@ module.exports = [
     "name": "configure",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "basedOn",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "metadata",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycle",
+        "name": "fundingCycle",
+        "type": "tuple"
       }
     ],
     "stateMutability": "nonpayable",
@@ -250,7 +365,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "currentBallotState",
+    "name": "currentBallotStateOf",
     "outputs": [
       {
         "internalType": "enum BallotState",
@@ -296,6 +411,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -365,7 +485,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "getCurrent",
+    "name": "getCurrentOf",
     "outputs": [
       {
         "components": [
@@ -392,6 +512,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -461,7 +586,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "getQueued",
+    "name": "getQueuedOf",
     "outputs": [
       {
         "components": [
@@ -488,6 +613,11 @@ module.exports = [
           {
             "internalType": "uint256",
             "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
             "type": "uint256"
           },
           {
@@ -557,64 +687,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "latestId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "metadata",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "packedConfigurationProperties",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "packedIntrinsicProperties",
+    "name": "latestIdOf",
     "outputs": [
       {
         "internalType": "uint256",
@@ -641,50 +714,94 @@ module.exports = [
     "name": "tap",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "number",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "basedOn",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "configured",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cycleLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "weight",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract IFundingCycleBallot",
+            "name": "ballot",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "target",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currency",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "discountRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tapped",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "metadata",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundingCycle",
+        "name": "fundingCycle",
+        "type": "tuple"
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "tappedAmounts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "targetAmounts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

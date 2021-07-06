@@ -82,7 +82,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "feeds",
+    "name": "feedFor",
     "outputs": [
       {
         "internalType": "contract AggregatorV3Interface",
@@ -101,7 +101,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "getETHPrice",
+    "name": "getETHPriceFor",
     "outputs": [
       {
         "internalType": "uint256",

@@ -19,7 +19,7 @@ dataSources:
         - name: Projects
           file: ./abis/{{AbisDir}}/Projects.json
       eventHandlers:
-        - event: Create(indexed uint256,indexed address,bytes32,string,address)
+        - event: Create(indexed uint256,indexed address,bytes32,string,address,address)
           handler: handleProjectCreate
         - event: SetHandle(indexed uint256,bytes32,address)
           handler: handleSetHandle

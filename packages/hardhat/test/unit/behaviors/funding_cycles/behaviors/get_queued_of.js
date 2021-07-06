@@ -584,9 +584,7 @@ const tests = {
           id: 0
         }
       })
-    }
-  ],
-  failure: [
+    },
     {
       description: "project not found",
       fn: testTemplate({
@@ -594,9 +592,14 @@ const tests = {
           // No preconfigure
           preconfigure: null
         },
-        revert: "FundingCycles::getQueuedOf: NOT_FOUND"
+        expectation: {
+          number: 0,
+          id: 0
+        }
       })
-    },
+    }
+  ],
+  failure: [
     {
       description: "non recurring",
       fn: testTemplate({

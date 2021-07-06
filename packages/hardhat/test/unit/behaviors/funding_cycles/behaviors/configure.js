@@ -777,19 +777,6 @@ const tests = {
       })
     },
     {
-      description: "duration is 0",
-      fn: testTemplate({
-        op: {
-          duration: BigNumber.from(0)
-        },
-        setup: {
-          // no preconfiguration
-          preconfigure: null
-        },
-        revert: "FundingCycles::configure: BAD_DURATION"
-      })
-    },
-    {
       description: "funding cycle limit is over 32",
       fn: testTemplate({
         op: {

@@ -7,6 +7,8 @@ import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
 import "./abstract/TerminalUtility.sol";
 
+import "hardhat/console.sol";
+
 /** 
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
@@ -159,30 +161,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // Keep a reference to the eligible funding cycle.
         FundingCycle memory _fundingCycle;
-
-        // console.log("q: %d", _fundingCycleId);
-        // // If a standy funding cycle exists,
-        // // check to see if it has been approved by the base funding cycle's ballot.
-        // if (_fundingCycleId > 0) {
-        //     // Get the necessary properties for the standby funding cycle.
-        //     _fundingCycle = _getStruct(_fundingCycleId);
-
-        //     console.log("q: %d", _fundingCycle.start);
-        //     console.log("q duration: %d", _fundingCycle.duration);
-        //     console.log("q now: %d", block.timestamp);
-        //     // Check to see if the correct ballot is approved for this funding cycle, and that it has started.
-        //     if (
-        //         _fundingCycle.start <= block.timestamp &&
-        //         _isApproved(_fundingCycle)
-        //     ) return _fundingCycle;
-        // }
-        // console.log("w: %d", _fundingCycleId);
-
-        // // No upcoming funding cycle found that is eligible to become active,
-        // // so us the ID of the latest active funding cycle, which carries the last approved configuration.
-        // _fundingCycleId = _fundingCycle.basedOn;
-
-        // console.log("q: %d", _fundingCycleId);
 
         // If a standy funding cycle exists,
         // check to see if it has been approved by the base funding cycle's ballot.
@@ -540,28 +518,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             // Check to see if the cycle is approved. If so, return it.
             if (_isApproved(_fundingCycle)) return fundingCycleId;
+
+            // If it hasn't been approved, set the ID to be the base funding cycle,
+            // which carries the last approved configuration.
+            fundingCycleId = _fundingCycle.basedOn;
+        } else {
+            // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
+            // which carries the last approved configuration.
+            fundingCycleId = latestIdOf[_projectId];
         }
-
-        // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-        // which carries the last approved configuration.
-        fundingCycleId = latestIdOf[_projectId];
-        // // If the ID of an eligible funding cycle exists,
-        // // check to see if it has been approved by the based funding cycle's ballot.
-        // if (fundingCycleId > 0) {
-        //     // Get the necessary properties for the funding cycle.
-        //     _fundingCycle = _getStruct(fundingCycleId);
-
-        //     // Check to see if the cycle is approved. If so, return it.
-        //     if (_isApproved(_fundingCycle)) return fundingCycleId;
-
-        //     // If it hasn't been approved, set the ID to be the base funding cycle,
-        //     // which carries the last approved configuration.
-        //     fundingCycleId = _fundingCycle.basedOn;
-        // } else {
-        //     // No upcoming funding cycle found that is eligible to become active, clone the latest active funding cycle.
-        //     // which carries the last approved configuration.
-        //     fundingCycleId = latestIdOf[_projectId];
-        // }
 
         // The funding cycle cant be 0.
         require(fundingCycleId > 0, "FundingCycles::_tappable: NOT_FOUND");

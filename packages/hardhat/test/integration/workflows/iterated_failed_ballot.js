@@ -40,14 +40,15 @@ module.exports = [
       const ballot = await deployContractFn("ExampleFailingFundingCycleBallot");
 
       // The duration of the funding cycle should be less than the ballot duration
-      const duration1 = (await ballot.duration()).div(86400).div(2);
-      // randomBigNumberFn({
-      //   // Fails after half.
-      //   min: (await ballot.duration()).div(86400).div(2),
-      //   // The ballot duration is in seconds, but duration is in days.
-      //   max: (await ballot.duration()).div(86400).sub(1)
-      // });
-      const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+      const duration1 = randomBigNumberFn({
+        // Fails after half.
+        min: (await ballot.duration()).div(86400).div(2),
+        // The ballot duration is in seconds, but duration is in days.
+        max: (await ballot.duration()).div(86400).sub(1)
+      });
+
+      // Make this zero to make test cases cleaner.
+      const cycleLimit1 = BigNumber.from(0);
 
       // An account that will be used to make payments.
       const payer = randomSignerFn();
@@ -184,7 +185,6 @@ module.exports = [
     }) => {
       const expectedFundingCycleId2 = incrementFundingCycleIdFn();
 
-      console.log({ expectedFundingCycleId2 });
       // The next funding cycle should be the second.
       const expectedFundingCycleNumber2 = BigNumber.from(2);
 
@@ -195,7 +195,10 @@ module.exports = [
         min: BigNumber.from(1),
         max: constants.MaxUint16
       });
-      const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+
+      // Make this zero to make test cases cleaner.
+      const cycleLimit2 = BigNumber.from(0);
+
       // make recurring.
       const discountRate2 = randomBigNumberFn({
         min: BigNumber.from(1),
@@ -584,7 +587,6 @@ module.exports = [
       }
     }) => {
       const expectedFundingCycleId3 = incrementFundingCycleIdFn();
-      console.log({ expectedFundingCycleId3 });
 
       await executeFn({
         caller: owner,
@@ -671,7 +673,6 @@ module.exports = [
           cycleLimit1.eq(0) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
             ? BigNumber.from(0)
             : cycleLimit1.sub(cycleCountDuringBallot.add(1)),
-          // one before.
           expectedPostBallotWeight,
           ballot.address,
           originalTimeMark.add(

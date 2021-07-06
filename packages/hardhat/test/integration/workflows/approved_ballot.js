@@ -47,7 +47,9 @@ module.exports = [
         // Take an arbitrary amount of seconds away from the end.
         max: (await ballot.duration()).div(86400).sub(5)
       });
-      const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+
+      // Make this zero to make test cases cleaner.
+      const cycleLimit1 = BigNumber.from(0);
 
       // An account that will be used to make payments.
       const payer = randomSignerFn();
@@ -197,7 +199,10 @@ module.exports = [
         min: BigNumber.from(1),
         max: constants.MaxUint16
       });
-      const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+
+      // Make this zero to make test cases cleaner.
+      const cycleLimit2 = BigNumber.from(0);
+
       // make recurring.
       const discountRate2 = randomBigNumberFn({
         min: BigNumber.from(1),

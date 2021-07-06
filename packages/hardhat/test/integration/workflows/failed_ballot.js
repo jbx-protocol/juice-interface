@@ -46,7 +46,9 @@ module.exports = [
         // The ballot duration is in seconds, but duration is in days.
         max: (await ballot.duration()).div(86400).sub(1)
       });
-      const cycleLimit1 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+
+      // Make this zero to make test cases cleaner.
+      const cycleLimit1 = BigNumber.from(0);
 
       // An account that will be used to make payments.
       const payer = randomSignerFn();
@@ -193,7 +195,9 @@ module.exports = [
         min: BigNumber.from(1),
         max: constants.MaxUint16
       });
-      const cycleLimit2 = randomBigNumberFn({ max: constants.MaxCycleLimit });
+      // Make this zero to make test cases cleaner.
+      const cycleLimit2 = BigNumber.from(0);
+
       // make recurring.
       const discountRate2 = randomBigNumberFn({
         min: BigNumber.from(1),
@@ -597,7 +601,6 @@ module.exports = [
           cycleLimit1.eq(0) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
             ? BigNumber.from(0)
             : cycleLimit1.sub(cycleCountDuringBallot.add(1)),
-          // one before.
           expectedPostBallotWeight,
           ballot.address,
           originalTimeMark.add(
@@ -648,10 +651,7 @@ module.exports = [
           expectedFundingCycleNumber1.add(cycleCountDuringBallot).add(2),
           expectedFundingCycleId1,
           originalTimeMark,
-          cycleLimit1.lt(1) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
-            ? BigNumber.from(0)
-            : cycleLimit1.sub(cycleCountDuringBallot.add(1)).sub(1),
-          // one before.
+          cycleLimit1,
           expectedPostBallotWeight.mul(discountRate1).div(constants.MaxPercent),
           ballot.address,
           originalTimeMark.add(
@@ -736,7 +736,6 @@ module.exports = [
           cycleLimit1.eq(0) || cycleCountDuringBallot.add(1).gt(cycleLimit1)
             ? BigNumber.from(0)
             : cycleLimit1.sub(cycleCountDuringBallot.add(1)),
-          // one before.
           expectedPostBallotWeight,
           ballot.address,
           originalTimeMark.add(

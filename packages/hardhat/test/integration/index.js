@@ -206,11 +206,11 @@ module.exports = function() {
       "Operators can be given permissions",
       run(workflows.operatorPermissions)
     );
-    describe(
+    describe.only(
       "Set and update payout mods, honoring locked status",
       run(workflows.setPayoutMods)
     );
-    describe(
+    describe.only(
       "Set and update ticket mods, honoring locked status",
       run(workflows.setTicketMods)
     );

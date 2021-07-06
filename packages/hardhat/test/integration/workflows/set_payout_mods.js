@@ -20,7 +20,6 @@ module.exports = [
       randomSignerFn,
       randomBigNumberFn,
       randomBytesFn,
-      normalizedPercentFn,
       getTimestampFn,
       randomBoolFn,
       randomStringFn,
@@ -40,7 +39,11 @@ module.exports = [
       // Make a locked mods.
       const lockedMod1 = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(50).toNumber(),
+        // Arbitrary percent that adds up to <= 100% across all mods.
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(2)
+        }).toNumber(),
         // Lock at least until the end of the tests.
         lockedUntil: (await getTimestampFn())
           .add(
@@ -56,7 +59,11 @@ module.exports = [
       };
       const unlockedMod1 = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(25).toNumber(),
+        // Arbitrary percent that adds up to <= 100% across all mods.
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(4)
+        }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn(),
         allocator: constants.AddressZero,
@@ -153,15 +160,20 @@ module.exports = [
       executeFn,
       BigNumber,
       deployContractFn,
-      normalizedPercentFn,
       randomBoolFn,
       randomAddressFn,
       timeMark,
+      constants,
+      randomBigNumberFn,
       local: { owner, expectedProjectId, unlockedMod1 }
     }) => {
       const unlockedMod2 = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(20).toNumber(),
+        // Arbitrary percent that adds up to <= 100% across all mods.
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(5)
+        }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn(),
         allocator: (await deployContractFn("ExampleModAllocator")).address,

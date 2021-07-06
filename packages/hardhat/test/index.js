@@ -332,12 +332,6 @@ describe("Juice", async function() {
 
     this.stringToBytes = ethers.utils.formatBytes32String;
 
-    // Bind a function to get a normalized percent.
-    this.normalizedPercentFn = percent =>
-      ethers.BigNumber.from(percent)
-        .mul(this.constants.MaxPercent)
-        .div(100);
-
     // Bind functions for cleaning state.
     this.snapshotFn = () => ethers.provider.send("evm_snapshot", []);
     this.restoreFn = id => ethers.provider.send("evm_revert", [id]);
@@ -351,5 +345,5 @@ describe("Juice", async function() {
 
   // Run the tests.
   describe("Unit", unit);
-  describe("Integration", integration);
+  describe.only("Integration", integration);
 });

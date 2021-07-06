@@ -17,7 +17,6 @@ module.exports = [
       BigNumber,
       randomBigNumberFn,
       randomBytesFn,
-      normalizedPercentFn,
       getTimestampFn,
       randomBoolFn,
       randomStringFn,
@@ -37,7 +36,11 @@ module.exports = [
       // Ticket mods can be locked.
       const lockedMod = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(50).toNumber(),
+        // Arbitrary percent that adds up to <= 100% across all mods.
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(2)
+        }).toNumber(),
         // Lock at least until the end of the tests.
         lockedUntil: (await getTimestampFn())
           .add(
@@ -51,7 +54,11 @@ module.exports = [
       };
       const unlockedMod1 = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(25).toNumber(),
+        // Arbitrary percent that adds up to <= 100% across all mods.
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(4)
+        }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn()
       };
@@ -133,15 +140,21 @@ module.exports = [
     fn: async ({
       contracts,
       executeFn,
-      normalizedPercentFn,
       randomBoolFn,
       randomAddressFn,
       timeMark,
+      constants,
+      randomBigNumberFn,
+      BigNumber,
       local: { owner, expectedProjectId, unlockedMod1 }
     }) => {
+      // Arbitrary percent that adds up to <= 100% across all mods.
       const unlockedMod2 = {
         preferUnstaked: randomBoolFn(),
-        percent: normalizedPercentFn(20).toNumber(),
+        percent: randomBigNumberFn({
+          min: BigNumber.from(1),
+          max: constants.MaxPercent.div(5)
+        }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn()
       };

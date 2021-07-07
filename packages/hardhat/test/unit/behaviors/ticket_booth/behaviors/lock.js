@@ -179,7 +179,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = 12;
+          const permissionIndex = 13;
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
@@ -260,7 +260,7 @@ module.exports = function() {
           .returns(caller.address);
 
         // Get the permission index needed to set the payment mods on an owner's behalf.
-        const permissionIndex = 12;
+        const permissionIndex = 13;
 
         // If there should be an staked balance set up, print the necessary tickets before issuing a ticket.
         if (stakedBalance) {

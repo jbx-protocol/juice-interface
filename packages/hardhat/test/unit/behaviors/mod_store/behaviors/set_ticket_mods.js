@@ -527,7 +527,7 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          const permissionIndex = 14;
+          const permissionIndex = 15;
 
           // Set the Operator store to return the permission flag.
           await this.operatorStore.mock.hasPermission
@@ -619,7 +619,7 @@ module.exports = function() {
           .returns(controller);
 
         if (permissionFlag !== undefined) {
-          const permissionIndex = 14;
+          const permissionIndex = 15;
 
           await this.operatorStore.mock.hasPermission
             .withArgs(caller.address, projectOwner, projectId, permissionIndex)

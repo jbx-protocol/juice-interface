@@ -320,7 +320,7 @@ module.exports = function() {
             .print(holder, projectId, erc20Balance, true);
         }
         if (lockedAmount > 0) {
-          const permissionIndex = 12;
+          const permissionIndex = 13;
           await this.operatorStore.mock.hasPermission
             .withArgs(caller.address, holder, projectId, permissionIndex)
             .returns(true);
@@ -471,7 +471,7 @@ module.exports = function() {
         }
         if (lockedAmount > 0) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = 12;
+          const permissionIndex = 13;
 
           await this.operatorStore.mock.hasPermission
             .withArgs(caller.address, holder, projectId, permissionIndex)

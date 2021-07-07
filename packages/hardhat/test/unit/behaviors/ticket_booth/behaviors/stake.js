@@ -159,7 +159,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = 9;
+          const permissionIndex = 10;
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.
@@ -262,7 +262,7 @@ module.exports = function() {
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
           // Get the permission index needed to set the payment mods on an owner's behalf.
-          const permissionIndex = 9;
+          const permissionIndex = 10;
 
           // Set the Operator store to return the permission flag.
           // If setting to a project ID other than 0, the operator should not have permission to the 0th project.

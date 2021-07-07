@@ -16,6 +16,11 @@ import "./libraries/Operations.sol";
   Projects are represented as ERC-721's.
 */
 contract Projects is ERC721, IProjects, Operatable {
+    // --- private stored properties --- //
+
+    // The number of seconds in a day.
+    uint256 private constant SECONDS_IN_YEAR = 31536000;
+
     // --- public stored properties --- //
 
     /// @notice A running count of project IDs.
@@ -32,6 +37,9 @@ contract Projects is ERC721, IProjects, Operatable {
 
     /// @notice Handles that have been transfered to the specified address.
     mapping(bytes32 => address) public override transferAddressFor;
+
+    /// @notice The timestamps when each handle is claimable. A value of 0 means a handle isn't being challenged.
+    mapping(bytes32 => uint256) public override challengeExpiryOf;
 
     // --- external views --- //
 
@@ -226,18 +234,14 @@ contract Projects is ERC721, IProjects, Operatable {
             Operations.ClaimHandle
         )
     {
-        // The handle must have been transfered to the specified address.
+        // The handle must have been transfered to the specified address,
+        // or the handle challange must have expired before being renewed.
         require(
-            transferAddressFor[_handle] == _for,
-            "Projects::claimHandle: NOT_FOUND"
+            transferAddressFor[_handle] == _for ||
+                (challengeExpiryOf[_handle] > 0 &&
+                    block.timestamp > challengeExpiryOf[_handle]),
+            "Projects::claimHandle: UNAUTHORIZED"
         );
-        // require(
-        //     transferAddressFor[_handle] == _for ||
-        //         (challengeFor[_handle] != 0 &&
-        //             challengeFor[_handle] <
-        //             block.timestamp - ONE_YEAR_IN_SECONDS),
-        //     "Projects::claimHandle: NOT_FOUND"
-        // );
 
         // Register the change in the resolver.
         projectFor[handleOf[_projectId]] = 0;
@@ -251,29 +255,60 @@ contract Projects is ERC721, IProjects, Operatable {
         // Set the handle as not being transfered.
         transferAddressFor[_handle] = address(0);
 
+        // Reset the challenge to 0.
+        challengeExpiryOf[_handle] = 0;
+
         emit ClaimHandle(_for, _projectId, _handle, msg.sender);
     }
 
-    // function challengeHandle(bytes32 _handle) external {
-    //     require(
-    //         challengeFor[_handle] == 0,
-    //         "Projects::challenge: HANDLE_ALREADY_BEING_CHALLENGED"
-    //     );
-    //     challengeFor[_handle] = block.timestamp + YEAR_IN_SECONDS;
+    /** 
+      @notice
+      Allows anyone to challenge a project's handle. After one year, the handle can be claimed by the public if the challenge isn't answered by the handle's project.
+      This can be used to make sure a handle belonging to an unattended to project isn't lost forever.
 
-    //     emit ChallengeHandle();
-    // }
+      @param _handle The handle to challenge.
+    */
+    function challengeHandle(bytes32 _handle) external {
+        // No need to challenge a handle that's not taken.
+        require(
+            projectFor[_handle] > 0,
+            "Projects::challenge: HANDLE_NOT_TAKEN"
+        );
 
-    // function renewHandle(bytes32 _projectId)
-    //     external
-    //     requirePermission(
-    //         ownerOf(_projectId),
-    //         _projectId,
-    //         Operations.RenewHandle
-    //     )
-    // {
-    //     challengeFor[_handle] = 0;
+        // No need to challenge again if a handle is already being challenged.
+        require(
+            challengeExpiryOf[_handle] == 0,
+            "Projects::challenge: HANDLE_ALREADY_BEING_CHALLENGED"
+        );
 
-    //     emit RenewHandle();
-    // }
+        // The challenge will expire in a year, at which point the handle can be claimed if the challenge hasn't been answered.
+        uint256 _challengeExpiry = block.timestamp + SECONDS_IN_YEAR;
+
+        challengeExpiryOf[_handle] = _challengeExpiry;
+
+        emit ChallengeHandle(_handle, _challengeExpiry, msg.sender);
+    }
+
+    /** 
+      @notice
+      Allows a project to renew its handle so it can't be claimed until a year after its challenged again.
+
+      @param _projectId The ID of the project that current has the handle being renewed.
+    */
+    function renewHandle(uint256 _projectId)
+        external
+        requirePermission(
+            ownerOf(_projectId),
+            _projectId,
+            Operations.RenewHandle
+        )
+    {
+        // Get the handle of the project.
+        bytes32 _handle = handleOf[_projectId];
+
+        // Reset the challenge to 0.
+        challengeExpiryOf[_handle] = 0;
+
+        emit RenewHandle(_handle, _projectId, msg.sender);
+    }
 }

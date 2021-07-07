@@ -7,28 +7,27 @@ import "./ITerminal.sol";
 import "./IOperatorStore.sol";
 
 interface IProjects is IERC721 {
-    struct Info {
-        bytes32 handle;
-        string uri;
-    }
-
     event Create(
         uint256 indexed projectId,
         address indexed owner,
-        bytes32 handle,
+        bytes32 indexed handle,
         string uri,
         ITerminal terminal,
         address caller
     );
 
-    event SetHandle(uint256 indexed projectId, bytes32 handle, address caller);
+    event SetHandle(
+        uint256 indexed projectId,
+        bytes32 indexed handle,
+        address caller
+    );
 
     event SetUri(uint256 indexed projectId, string uri, address caller);
 
     event TransferHandle(
         uint256 indexed projectId,
         address indexed to,
-        bytes32 handle,
+        bytes32 indexed handle,
         bytes32 newHandle,
         address caller
     );
@@ -36,7 +35,19 @@ interface IProjects is IERC721 {
     event ClaimHandle(
         address indexed account,
         uint256 indexed projectId,
-        bytes32 handle,
+        bytes32 indexed handle,
+        address caller
+    );
+
+    event ChallengeHandle(
+        bytes32 indexed handle,
+        uint256 challengeExpiry,
+        address caller
+    );
+
+    event RenewHandle(
+        bytes32 indexed handle,
+        uint256 indexed projectId,
         address caller
     );
 
@@ -51,6 +62,8 @@ interface IProjects is IERC721 {
     function transferAddressFor(bytes32 _handle)
         external
         returns (address receiver);
+
+    function challengeExpiryOf(bytes32 _handle) external returns (uint256);
 
     function exists(uint256 _projectId) external view returns (bool);
 

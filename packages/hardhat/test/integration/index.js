@@ -159,10 +159,14 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
+    );
+    describe(
+      "Projects can have their handle's challenged, and claimed if not renewed in time",
+      run(workflows.challengeHandle)
     );
     describe(
       "Deployment of a project with funding cycles and mods included",
@@ -188,6 +192,14 @@ module.exports = function() {
     describe(
       "A funding cycle configuration can have a limit",
       run(workflows.limit)
+    );
+    describe(
+      "A funding cycle configuration can have a duration of 0",
+      run(workflows.zeroDuration)
+    );
+    describe(
+      "A funding cycle configuration can be non recurring",
+      run(workflows.nonRecurring)
     );
     describe(
       "Ballot must be approved for reconfiguration to become active",

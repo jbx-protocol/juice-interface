@@ -93,6 +93,38 @@ const tests = {
       })
     },
     {
+      description: "during first funding cycle with duration of 0",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(0)
+        },
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
+      description:
+        "during first funding cycle with duration of 0, fastforwarded a bunch",
+      fn: testTemplate({
+        preconfigure: {
+          // Preconfigure the duration.
+          duration: BigNumber.from(0)
+        },
+        fastforward: BigNumber.from(12345678),
+        expectation: {
+          configuredNumber: 2,
+          configuredId: 2,
+          initId: 2,
+          basedOn: 1
+        }
+      })
+    },
+    {
       description: "at the end of first funding cycle",
       fn: testTemplate({
         preconfigure: {
@@ -788,7 +820,7 @@ const tests = {
           }
         ],
         // Fast forward to within the cycle.
-        fastforward: BigNumber.from(86400 * 11 - 1),
+        fastforward: BigNumber.from(86400 * 11 - 2),
         op: {
           cycleLimit: 2
         },
@@ -1106,7 +1138,7 @@ module.exports = function() {
 
         // Get the time when the configured funding cycle starts.
         let expectedStart;
-        if (preconfigure) {
+        if (preconfigure && preconfigure.duration > 0) {
           expectedStart = expectedPreconfigureStart.add(
             preconfigure.duration
               .mul(86400)

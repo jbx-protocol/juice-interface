@@ -186,6 +186,106 @@ module.exports = [
     }
   },
   {
+    description: "Make sure the funding cycle is the current one",
+    fn: async ({
+      contracts,
+      checkFn,
+      BigNumber,
+      randomSignerFn,
+      timeMark,
+      local: {
+        target1,
+        cycleLimit1,
+        ballot1,
+        duration1,
+        discountRate1,
+        expectedFundingCycleId1,
+        expectedProjectId,
+        expectedFundingCycleNumber1,
+        expectedPackedMetadata1,
+        expectedInitialWeight,
+        expectedFee,
+        expectedInitialTapped
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "currentOf",
+        args: [expectedProjectId],
+        expect: [
+          expectedFundingCycleId1,
+          expectedProjectId,
+          expectedFundingCycleNumber1,
+          BigNumber.from(expectedInitialBasedOn),
+          timeMark,
+          // Cycle limit should be 0 for the first funding cycle.
+          cycleLimit1,
+          expectedInitialWeight,
+          ballot1,
+          timeMark,
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          expectedInitialTapped,
+          expectedPackedMetadata1
+        ]
+      })
+  },
+  {
+    description:
+      "The queued cycle should be a generated one with incremented properties",
+    fn: async ({
+      contracts,
+      checkFn,
+      BigNumber,
+      randomSignerFn,
+      timeMark,
+      constants,
+      local: {
+        cycleLimit1,
+        target1,
+        ballot1,
+        duration1,
+        discountRate1,
+        expectedFundingCycleId1,
+        expectedProjectId,
+        expectedFundingCycleNumber1,
+        expectedPackedMetadata1,
+        expectedInitialWeight,
+        expectedFee,
+        expectedInitialTapped
+      }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.fundingCycles,
+        fn: "queuedOf",
+        args: [expectedProjectId],
+        expect: [
+          BigNumber.from(0),
+          expectedProjectId,
+          expectedFundingCycleNumber1.add(1),
+          expectedFundingCycleId1,
+          timeMark,
+          // Cycle limit should be 0 for the first funding cycle.
+          cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
+          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
+          ballot1,
+          timeMark.add(duration1.mul(86400)),
+          duration1,
+          target1,
+          BigNumber.from(currency),
+          expectedFee,
+          discountRate1,
+          expectedInitialTapped,
+          expectedPackedMetadata1
+        ]
+      })
+  },
+  {
     description:
       "Reconfiguring a project before a payment has been made should change the active funding cycle",
     fn: async ({

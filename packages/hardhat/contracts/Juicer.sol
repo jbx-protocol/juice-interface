@@ -416,14 +416,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _packedMetadata =
             _validateAndPackFundingCycleMetadata(_metadata);
 
-        // If the project hasn't yet issued non-preconfiugure tickets, configure the active funding cycle instead of creating a standby one.
-        bool _shouldConfigureActive =
-            ticketBooth.totalSupplyOf(_projectId) ==
-                preconfigureTicketCountOf[_projectId] &&
-                // The only case when processedTicketTracker is `preconfigureTicketCountOf` is before redeeming and printing reserved tickets.
-                _processedTicketTrackerOf[_projectId] >= 0 &&
-                uint256(_processedTicketTrackerOf[_projectId]) ==
-                preconfigureTicketCountOf[_projectId];
+        // If the project can still print premined tickets configure the active funding cycle instead of creating a standby one.
+        bool _shouldConfigureActive = canPrintPreminedTickets(_projectId);
 
         // Configure the funding stage's state.
         FundingCycle memory _fundingCycle =

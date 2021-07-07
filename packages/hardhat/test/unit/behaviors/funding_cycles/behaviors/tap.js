@@ -679,6 +679,46 @@ const tests = {
           newTappedAmount: BigNumber.from(200)
         }
       })
+    },
+    {
+      description: "with duration of zero, right away",
+      fn: testTemplate({
+        op: {
+          // Less than the preconfiguration, greater than the standby.
+          amount: BigNumber.from(120)
+        },
+        preconfigure: {
+          // At least the amount being tapped. Should be ignored.
+          target: BigNumber.from(120),
+          duration: BigNumber.from(0)
+        },
+        expectation: {
+          tappedId: 1,
+          tappedNumber: 1,
+          newTappedAmount: BigNumber.from(120)
+        }
+      })
+    },
+    {
+      description: "with duration of zero, a while later",
+      fn: testTemplate({
+        op: {
+          // Less than the preconfiguration, greater than the standby.
+          amount: BigNumber.from(120)
+        },
+        preconfigure: {
+          // At least the amount being tapped. Should be ignored.
+          target: BigNumber.from(120),
+          duration: BigNumber.from(0)
+        },
+        // Fast forward the full duration.
+        fastforward: BigNumber.from(12345678),
+        expectation: {
+          tappedId: 1,
+          tappedNumber: 1,
+          newTappedAmount: BigNumber.from(120)
+        }
+      })
     }
   ],
   failure: [

@@ -417,7 +417,7 @@ module.exports = [
         args: [secondHandle, owner.address, expectedProjectId],
         revert:
           owner.address !== secondOwner.address &&
-          "Projects::claimHandle: NOT_FOUND"
+          "Projects::claimHandle: UNAUTHORIZED"
       })
   },
   {
@@ -435,7 +435,7 @@ module.exports = [
         args: [secondHandle, secondOwner.address, expectedSecondProjectId],
         revert:
           owner.address === secondOwner.address &&
-          "Projects::claimHandle: NOT_FOUND"
+          "Projects::claimHandle: UNAUTHORIZED"
       })
   },
   {

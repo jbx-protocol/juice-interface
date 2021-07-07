@@ -120,7 +120,7 @@ module.exports = function() {
           .returns(projectOwner);
 
         // Mock the Operator store permissions.
-        const permissionIndex = 15;
+        const permissionIndex = 16;
         // Mock the caller to be the project's controller.
         await this.operatorStore.mock.hasPermission
           .withArgs(caller.address, projectOwner, projectId, permissionIndex)
@@ -226,7 +226,7 @@ module.exports = function() {
           .returns(projectOwner);
 
         // Mock the Operator store permissions.
-        const permissionIndex = 15;
+        const permissionIndex = 16;
         // Mock the caller to be the project's controller.
         await this.operatorStore.mock.hasPermission
           .withArgs(caller.address, projectOwner, projectId, permissionIndex)

@@ -718,10 +718,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         bool _allowMidCycle
     ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
-        require(
-            _baseFundingCycle.discountRate > 0,
-            "FundingCycles::_mockFundingCycleBasedOn: NON_RECURRING"
-        );
+        if (_baseFundingCycle.discountRate == 0) return _getStruct(0);
 
         // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
         // Otherwise, the base is already the latest permanent funding cycle.
@@ -750,9 +747,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             if (
                 _baseFundingCycle.cycleLimit > 0 && _cycleEnd < block.timestamp
             ) {
-                _timeFromImmediateStartMultiple =
-                    (block.timestamp - _cycleEnd) %
-                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+                _timeFromImmediateStartMultiple = _latestPermanentFundingCycle
+                    .duration == 0
+                    ? 0
+                    : ((block.timestamp - _cycleEnd) %
+                        (_latestPermanentFundingCycle.duration *
+                            SECONDS_IN_DAY));
             } else {
                 // Rewind a full cycle.
                 _timeFromImmediateStartMultiple =
@@ -1071,11 +1071,13 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _durationInSeconds;
         } else {
             // If the cycle has ended, make the calculation with the latest permanent funding cycle.
-            _timeFromImmediateStartMultiple =
-                (_mustStartOnOrAfter -
+            _timeFromImmediateStartMultiple = _latestPermanentFundingCycle
+                .duration == 0
+                ? 0
+                : ((_mustStartOnOrAfter -
                     (_baseFundingCycle.start +
                         (_durationInSeconds * _cycleLimit))) %
-                (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY);
+                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY));
 
             // Use the duration of the permanent funding cycle from here on out.
             _durationInSeconds =
@@ -1084,7 +1086,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         }
 
         // Otherwise use an increment of the duration from the most recent start.
-        start = _mustStartOnOrAfter - _timeFromImmediateStartMultiple; // +
+        start = _mustStartOnOrAfter - _timeFromImmediateStartMultiple;
 
         // Add increments of duration as necessary to satisfy the threshold.
         while (_mustStartOnOrAfter > start) start = start + _durationInSeconds;
@@ -1104,7 +1106,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal pure returns (uint256 weight) {
+    ) internal view returns (uint256 weight) {
         // A subsequent cycle to one with a duration of 0 should have the next possible weight.
         if (_baseFundingCycle.duration == 0)
             return
@@ -1165,9 +1167,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             if (_latestPermanentFundingCycle.discountRate < 200) {
                 // The number of times to apply the latest permanent discount rate.
                 uint256 _permanentDiscountMultiple =
-                    (_startDistance - _limitLength) /
-                        (_latestPermanentFundingCycle.duration *
-                            SECONDS_IN_DAY);
+                    _latestPermanentFundingCycle.duration == 0
+                        ? 0
+                        : (_startDistance - _limitLength) /
+                            (_latestPermanentFundingCycle.duration *
+                                SECONDS_IN_DAY);
 
                 for (uint256 i = 0; i < _permanentDiscountMultiple; i++) {
                     weight = PRBMathCommon.mulDiv(
@@ -1194,7 +1198,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal pure returns (uint256 number) {
+    ) internal view returns (uint256 number) {
         // A subsequent cycle to one with a duration of 0 should be the next number.
         if (_baseFundingCycle.duration == 0)
             return _baseFundingCycle.number + 1;
@@ -1227,8 +1231,13 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             number =
                 number +
-                ((_startDistance - _limitLength) /
-                    (_latestPermanentFundingCycle.duration * SECONDS_IN_DAY));
+                (
+                    _latestPermanentFundingCycle.duration == 0
+                        ? 0
+                        : ((_startDistance - _limitLength) /
+                            (_latestPermanentFundingCycle.duration *
+                                SECONDS_IN_DAY))
+                );
         }
     }
 

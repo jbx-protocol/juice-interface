@@ -163,7 +163,7 @@ const operations = [
             contract: contracts.projects,
             fn: "claimHandle",
             args: [randomBytesFn(), owner.address, expectedProjectId],
-            revert: "Projects::claimHandle: NOT_FOUND"
+            revert: "Projects::claimHandle: UNAUTHORIZED"
           })
       },
       {
@@ -283,7 +283,7 @@ const operations = [
             contract: contracts.projects,
             fn: "claimHandle",
             args: [randomBytesFn(), claimer.address, expectedProjectId],
-            revert: "Projects::claimHandle: NOT_FOUND"
+            revert: "Projects::claimHandle: UNAUTHORIZED"
           })
       },
       {
@@ -373,7 +373,7 @@ const operations = [
             contract: contracts.projects,
             fn: "claimHandle",
             args: [randomBytesFn(), claimer.address, expectedProjectId],
-            revert: "Projects::claimHandle: NOT_FOUND"
+            revert: "Projects::claimHandle: UNAUTHORIZED"
           })
       },
       {
@@ -442,11 +442,20 @@ const operations = [
   },
   {
     expand: ({ contracts, local: { expectedProjectId } }) => ({
+      contract: contracts.projects,
+      fn: "renewHandle",
+      args: [expectedProjectId],
+      domain: expectedProjectId,
+      permissionIndex: 8
+    })
+  },
+  {
+    expand: ({ contracts, local: { expectedProjectId } }) => ({
       contract: contracts.ticketBooth,
       fn: "issue",
       args: [expectedProjectId, "", ""],
       domain: expectedProjectId,
-      permissionIndex: 8,
+      permissionIndex: 9,
       authorizedRevert: "TicketBooth::issue: EMPTY_NAME"
     })
   },
@@ -460,7 +469,7 @@ const operations = [
       fn: "stake",
       args: [owner.address, expectedProjectId, BigNumber.from(1)],
       domain: expectedProjectId,
-      permissionIndex: 9,
+      permissionIndex: 10,
       authorizedRevert: "TicketBooth::stake: NOT_FOUND"
     }),
     allowWildcard: true
@@ -475,7 +484,7 @@ const operations = [
       fn: "unstake",
       args: [owner.address, expectedProjectId, BigNumber.from(1)],
       domain: expectedProjectId,
-      permissionIndex: 10,
+      permissionIndex: 11,
       authorizedRevert: "TicketBooth::unstake: NOT_FOUND"
     }),
     allowWildcard: true
@@ -496,7 +505,7 @@ const operations = [
         constants.AddressZero
       ],
       domain: expectedProjectId,
-      permissionIndex: 11,
+      permissionIndex: 12,
       authorizedRevert: "TicketBooth::transfer: ZERO_ADDRESS"
     }),
     allowWildcard: true
@@ -511,7 +520,7 @@ const operations = [
       fn: "lock",
       args: [owner.address, expectedProjectId, BigNumber.from(0)],
       domain: expectedProjectId,
-      permissionIndex: 12,
+      permissionIndex: 13,
       authorizedRevert: "TicketBooth::lock: NO_OP"
     }),
     allowWildcard: true
@@ -523,7 +532,7 @@ const operations = [
       fn: "setPaymentMods",
       args: [expectedProjectId, BigNumber.from(0), []],
       domain: expectedProjectId,
-      permissionIndex: 13,
+      permissionIndex: 14,
       authorizedRevert: "ModStore::setPaymentMods: NO_OP"
     })
   },
@@ -533,7 +542,7 @@ const operations = [
       fn: "setTicketMods",
       args: [expectedProjectId, BigNumber.from(0), []],
       domain: expectedProjectId,
-      permissionIndex: 14,
+      permissionIndex: 15,
       authorizedRevert: "ModStore::setTicketMods: NO_OP"
     })
   },
@@ -544,7 +553,7 @@ const operations = [
       fn: "setTerminal",
       args: [expectedProjectId, constants.AddressZero],
       domain: expectedProjectId,
-      permissionIndex: 15,
+      permissionIndex: 16,
       authorizedRevert: "TerminalDirectory::setTerminal: UNAUTHORIZED",
       revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
     })

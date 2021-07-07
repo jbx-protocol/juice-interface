@@ -1,6 +1,5 @@
 /** 
-  This test is the same as the `approveBallot` test, but instead of a ballot that auto succeeds after its duration,
-  the initial configuration of this test uses a ballot that auto fails after its duration.
+  If a funding cycle ballot fails, any subsequent reconfigurations should be based on the last approved cycle.
 */
 
 // The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.

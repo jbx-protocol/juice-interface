@@ -22,6 +22,9 @@ const operatorPermissions = require("./operator_permissions");
 const ticketLockingAndTransfers = require("./ticket_locking_and transfers");
 const setTerminal = require("./set_terminal");
 const limit = require("./limit");
+const zeroDuration = require("./zero_duration");
+const nonRecurring = require("./non_recurring");
+const challengeHandle = require("./challenge_handle");
 
 module.exports = {
   deploy,
@@ -47,5 +50,8 @@ module.exports = {
   operatorPermissions,
   ticketLockingAndTransfers,
   setTerminal,
-  limit
+  limit,
+  zeroDuration,
+  nonRecurring,
+  challengeHandle
 };

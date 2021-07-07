@@ -20,4 +20,6 @@ module.exports = function() {
   describe("setUri(...)", shouldBehaveLike.setUri);
   describe("transferHandle(...)", shouldBehaveLike.transferHandle);
   describe("claimHandle(...)", shouldBehaveLike.claimHandle);
+  describe("renewHandle(...)", shouldBehaveLike.renewHandle);
+  describe("challengeHandle(...)", shouldBehaveLike.challengeHandle);
 };

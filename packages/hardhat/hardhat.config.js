@@ -82,7 +82,10 @@ module.exports = {
         runs: 10000
       }
     }
-  }
+  },
+  mocha: {
+    bail: true,
+  },
 };
 
 const DEBUG = true;

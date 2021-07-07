@@ -3,6 +3,7 @@ const fs = require("fs");
 const chalk = require("chalk");
 
 require("@nomiclabs/hardhat-waffle");
+require("hardhat-gas-reporter");
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
@@ -85,6 +86,11 @@ module.exports = {
   },
   mocha: {
     bail: true,
+  },
+  gasReporter: {
+    currency: "USD",
+    // gasPrice: 21,
+    enabled: process.env.REPORT_GAS ? true : false,
   },
 };
 

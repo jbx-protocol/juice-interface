@@ -16,6 +16,7 @@
     "start": "yarn workspace @juice.work/app start",
     "chain": "yarn workspace @juice.work/hardhat chain",
     "test": "yarn workspace @juice.work/hardhat test",
+    "test:gas": "yarn workspace @juice.work/hardhat test:gas",
     "test:unit": "yarn workspace @juice.work/hardhat test:unit",
     "test:integration": "yarn workspace @juice.work/hardhat test:integration",
     "compile": "yarn workspace @juice.work/hardhat compile",

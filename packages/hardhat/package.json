@@ -23,6 +23,7 @@
     "ethereum-waffle": "^3.1.1",
     "ethers": "^5.1.0",
     "hardhat": "^2.3.0",
+    "hardhat-gas-reporter": "^1.0.4",
     "moment": "^2.29.1",
     "node-watch": "^0.7.0",
     "prb-math": "^1.1.0",
@@ -32,6 +33,7 @@
   "scripts": {
     "chain": "hardhat node",
     "test": "hardhat test --network localhost",
+    "test:gas": "REPORT_GAS=true hardhat test --network localhost",
     "test:unit": "mocha --grep \"Unit\" --bail",
     "test:integration": "mocha --grep \"Integration\" --bail",
     "clean": "rimraf ./cache && rimraf ./artifacts",

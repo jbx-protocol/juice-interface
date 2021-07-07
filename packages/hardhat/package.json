@@ -31,7 +31,7 @@
   },
   "scripts": {
     "chain": "hardhat node",
-    "test": "mocha --bail",
+    "test": "hardhat test --network localhost",
     "test:unit": "mocha --grep \"Unit\" --bail",
     "test:integration": "mocha --grep \"Integration\" --bail",
     "clean": "rimraf ./cache && rimraf ./artifacts",

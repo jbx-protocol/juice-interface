@@ -183,7 +183,7 @@ module.exports = function() {
       run(workflows.issueTickets)
     );
     describe("Tap funds up to the configured target", run(workflows.tap));
-    describe.only("Reconfigures a project", run(workflows.reconfigure));
+    describe("Reconfigures a project", run(workflows.reconfigure));
 
     describe(
       "A funding cycle configuration can have a limit",

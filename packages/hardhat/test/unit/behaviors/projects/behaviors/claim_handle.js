@@ -313,9 +313,15 @@ module.exports = function() {
         // Get the stored project value.
         const storedProject = await this.contract.projectFor(handle);
 
+        // Get the stored challenge expiry of.
+        const storedChallengeExpiryOf = await this.contract.challengeExpiryOf(
+          handle
+        );
+
         // Expect the stored values to equal the set values.
         expect(storedHandle).to.equal(handle);
         expect(storedProject).to.equal(2);
+        expect(storedChallengeExpiryOf).to.equal(0);
       });
     });
   });

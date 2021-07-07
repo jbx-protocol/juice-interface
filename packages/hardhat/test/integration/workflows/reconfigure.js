@@ -43,7 +43,7 @@ module.exports = [
 
       const duration1 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: BigNumber.from(10000)
+        max: constants.MaxUint16
       });
       const cycleLimit1 = randomBigNumberFn({
         max: constants.MaxCycleLimit

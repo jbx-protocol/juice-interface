@@ -1106,7 +1106,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal view returns (uint256 weight) {
+    ) internal pure returns (uint256 weight) {
         // A subsequent cycle to one with a duration of 0 should have the next possible weight.
         if (_baseFundingCycle.duration == 0)
             return
@@ -1198,7 +1198,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         FundingCycle memory _baseFundingCycle,
         FundingCycle memory _latestPermanentFundingCycle,
         uint256 _start
-    ) internal view returns (uint256 number) {
+    ) internal pure returns (uint256 number) {
         // A subsequent cycle to one with a duration of 0 should be the next number.
         if (_baseFundingCycle.duration == 0)
             return _baseFundingCycle.number + 1;

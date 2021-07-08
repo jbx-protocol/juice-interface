@@ -296,7 +296,7 @@ const tests = {
         },
         // Fast forward to the time where the ballot would equal the preconfigured duration,
         // which is the first second where the proposed configuration could start.
-        fastforward: BigNumber.from(10),
+        fastforward: BigNumber.from(9),
         expectation: {
           configuredNumber: 2,
           configuredId: 2,
@@ -861,7 +861,7 @@ const tests = {
           }
         ],
         // Fast forward to within the cycle.
-        fastforward: BigNumber.from(86400 * 11 - 1),
+        fastforward: BigNumber.from(86400 * 11 - 2),
         op: {
           cycleLimit: 2
         },

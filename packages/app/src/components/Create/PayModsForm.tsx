@@ -1,17 +1,9 @@
-import { Button, Form, FormInstance, Space } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { Button, Form, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { ModRef } from 'models/mods'
+import { PaymentMod } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
-import {
-  formattedNum,
-  formatWad,
-  fromPerbicent,
-  mulPercent,
-  parsePerbicent,
-} from 'utils/formatNumber'
-import { BigNumber, constants } from 'ethers'
 
 export default function PayModsForm({
   initialMods,
@@ -19,13 +11,13 @@ export default function PayModsForm({
   target,
   onSave,
 }: {
-  initialMods: ModRef[]
+  initialMods: PaymentMod[]
   currency: CurrencyOption
   target: BigNumber
-  onSave: (mods: ModRef[]) => void
+  onSave: (mods: PaymentMod[]) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
-  const [mods, setMods] = useState<ModRef[]>([])
+  const [mods, setMods] = useState<PaymentMod[]>([])
 
   useLayoutEffect(() => {
     setMods(initialMods)
@@ -50,23 +42,12 @@ export default function PayModsForm({
       </div>
 
       <Form layout="vertical">
-        <FormItems.ProjectMods
+        <FormItems.ProjectPaymentMods
           name="mods"
           mods={mods}
+          target={target}
+          currency={currency}
           onModsChanged={setMods}
-          addButtonText="Add a payout"
-          formatPercent={
-            target.lt(constants.MaxUint256)
-              ? percent => (
-                  <span>
-                    {currency !== undefined ? (
-                      <CurrencySymbol currency={currency} />
-                    ) : null}
-                    {formatWad(mulPercent(target, percent.toString()))}
-                  </span>
-                )
-              : undefined
-          }
         />
         <Form.Item>
           <Button

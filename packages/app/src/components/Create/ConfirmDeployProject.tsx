@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
-import Mods from 'components/Dashboard/Mods'
+import PaymentModsList from 'components/Dashboard/PaymentModsList'
+import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import {
   useAppSelector,
@@ -102,24 +103,22 @@ export default function ConfirmDeployProject() {
       <Statistic
         title="Spending"
         valueRender={() => (
-          <Mods
+          <PaymentModsList
             mods={paymentMods}
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}
-            emptyText="No payouts set"
           />
         )}
       />
       <Statistic
         title="Reserved token allocations"
         valueRender={() => (
-          <Mods
+          <TicketModsList
             mods={ticketMods}
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}
-            emptyText="No allocations set"
           />
         )}
       />

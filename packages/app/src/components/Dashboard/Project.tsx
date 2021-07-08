@@ -5,7 +5,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { ModRef } from 'models/mods'
+import { PaymentMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
 import { CSSProperties, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -34,8 +34,8 @@ export default function Project({
   projectId: BigNumber
   isOwner: boolean
   fundingCycle: FundingCycle | undefined
-  paymentMods: ModRef[] | undefined
-  ticketMods: ModRef[] | undefined
+  paymentMods: PaymentMod[] | undefined
+  ticketMods: TicketMod[] | undefined
   showCurrentDetail?: boolean
   style?: CSSProperties
 }) {

@@ -5,6 +5,7 @@ import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FCProperties } from 'models/funding-cycle-properties'
 import { useContext, useEffect, useState } from 'react'
 import {
   fromPerbicent,
@@ -13,8 +14,6 @@ import {
   parseWad,
 } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
-
-import { FCProperties } from '../../models/funding-cycle-properties'
 
 export type ReconfigureBudgetFormFields = {
   target: string

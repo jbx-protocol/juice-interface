@@ -7,7 +7,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { ModRef } from 'models/mods'
+import { PaymentMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -75,7 +75,7 @@ export default function Dashboard() {
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const paymentMods = useContractReader<ModRef[]>({
+  const paymentMods = useContractReader<PaymentMod[]>({
     contract: ContractName.ModStore,
     functionName: 'paymentModsOf',
     args:
@@ -100,7 +100,7 @@ export default function Dashboard() {
     ),
   })
 
-  const ticketMods = useContractReader<ModRef[]>({
+  const ticketMods = useContractReader<TicketMod[]>({
     contract: ContractName.ModStore,
     functionName: 'ticketModsOf',
     args:

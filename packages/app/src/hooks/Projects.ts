@@ -2,10 +2,9 @@ import axios, { AxiosResponse } from 'axios'
 import { readNetwork } from 'constants/networks'
 import { SUBGRAPHS } from 'constants/subgraphs'
 import { utils } from 'ethers'
+import { ProjectInfo } from 'models/project-info'
 import { useEffect, useState } from 'react'
 import { formatGraphQuery } from 'utils/graph'
-
-import { ProjectInfo } from '../models/project-info'
 
 export function useProjects({
   pageNumber,

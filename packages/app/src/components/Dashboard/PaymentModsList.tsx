@@ -1,38 +1,36 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import ProjectMods from 'components/shared/formItems/ProjectMods'
+import ProjectMods from 'components/shared/formItems/ProjectPaymentMods'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import ShortAddress from 'components/shared/ShortAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { ModRef } from 'models/mods'
+import { FundingCycle } from 'models/funding-cycle'
+import { PaymentMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent, mulPercent } from 'utils/formatNumber'
+import ProjectPaymentMods from '../shared/formItems/ProjectPaymentMods'
 
-import { FundingCycle } from '../../models/funding-cycle'
-
-export default function Mods({
+export default function PaymentModsList({
   mods,
   fundingCycle,
   projectId,
   isOwner,
-  emptyText,
   editButtonText,
 }: {
-  mods: ModRef[] | undefined
+  mods: PaymentMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
-  emptyText?: string
   editButtonText?: string
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [editingMods, setEditingMods] = useState<ModRef[]>()
+  const [editingMods, setEditingMods] = useState<PaymentMod[]>()
   const { transactor, contracts } = useContext(UserContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -120,9 +118,9 @@ export default function Mods({
             </span>
           </div>
         ))
-      ) : emptyText ? (
-        <span style={{ color: colors.text.secondary }}>{emptyText}</span>
-      ) : null}
+      ) : (
+        <span style={{ color: colors.text.secondary }}>No payouts set</span>
+      )}
 
       {fundingCycle && projectId?.gt(0) && isOwner && editButtonText ? (
         <div style={{ marginTop: 5 }}>
@@ -144,29 +142,12 @@ export default function Mods({
           confirmLoading={loading}
           width={720}
         >
-          <ProjectMods
+          <ProjectPaymentMods
             mods={editingMods}
             lockedMods={lockedMods}
             onModsChanged={setEditingMods}
-            formatPercent={
-              fundingCycle.target.lt(constants.MaxUint256)
-                ? percent => (
-                    <span>
-                      {fundingCycle.currency !== undefined ? (
-                        <CurrencySymbol
-                          currency={
-                            fundingCycle.currency.toNumber() as CurrencyOption
-                          }
-                        />
-                      ) : null}
-                      {formatWad(
-                        mulPercent(fundingCycle.target, percent.toString()),
-                      )}
-                    </span>
-                  )
-                : undefined
-            }
-            addButtonText="Add a payout"
+            target={fundingCycle.target}
+            currency={fundingCycle.currency.toNumber() as CurrencyOption}
           />
         </Modal>
       ) : null}

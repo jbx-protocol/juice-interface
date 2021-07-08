@@ -1,12 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { FundingCycle } from 'models/funding-cycle'
 import {
   fromPerbicent,
   fromWad,
   parsePerbicent,
   parseWad,
 } from 'utils/formatNumber'
-
-import { FundingCycle } from '../models/funding-cycle'
 
 export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
   reserved: number

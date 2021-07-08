@@ -1,6 +1,6 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import { ModRef } from 'models/mods'
+import { TicketMod } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
 
 export type TicketingFormFields = {
@@ -13,10 +13,10 @@ export default function TicketingForm({
   onSave,
 }: {
   form: FormInstance<TicketingFormFields>
-  initialMods: ModRef[]
-  onSave: (mods: ModRef[]) => void
+  initialMods: TicketMod[]
+  onSave: (mods: TicketMod[]) => void
 }) {
-  const [mods, setMods] = useState<ModRef[]>([])
+  const [mods, setMods] = useState<TicketMod[]>([])
 
   useLayoutEffect(() => {
     setMods(initialMods)
@@ -45,11 +45,10 @@ export default function TicketingForm({
           value={form.getFieldValue('reserved')}
           onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
         />
-        <FormItems.ProjectMods
+        <FormItems.ProjectTicketMods
           name="ticketMods"
           mods={mods}
           onModsChanged={setMods}
-          addButtonText="Add a token receiver"
           formItemProps={{
             label: 'Allocate reserved tokens (optional)',
             extra:

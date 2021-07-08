@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { ModRef } from 'models/mods'
+import { PaymentMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
 import { parsePerbicent } from 'utils/formatNumber'
 import {
@@ -19,8 +19,8 @@ type EditingProjectInfo = {
 export type EditingProjectState = {
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
-  paymentMods: ModRef[]
-  ticketMods: ModRef[]
+  paymentMods: PaymentMod[]
+  ticketMods: TicketMod[]
 }
 
 const defaultDiscountRate = parsePerbicent('97')
@@ -178,11 +178,11 @@ export const editingProjectSlice = createSlice({
           : '0',
       },
     }),
-    setPaymentMods: (state, action: PayloadAction<ModRef[]>) => ({
+    setPaymentMods: (state, action: PayloadAction<PaymentMod[]>) => ({
       ...state,
       paymentMods: action.payload,
     }),
-    setTicketMods: (state, action: PayloadAction<ModRef[]>) => ({
+    setTicketMods: (state, action: PayloadAction<TicketMod[]>) => ({
       ...state,
       ticketMods: action.payload,
     }),

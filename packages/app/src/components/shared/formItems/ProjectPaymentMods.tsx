@@ -15,33 +15,42 @@ import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { ModRef } from 'models/mods'
+import { CurrencyOption } from 'models/currency-option'
+import { PaymentMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPerbicent, parsePerbicent } from 'utils/formatNumber'
+import {
+  formatWad,
+  fromPerbicent,
+  mulPercent,
+  parsePerbicent,
+} from 'utils/formatNumber'
 
 import { FormItems } from '.'
+import CurrencySymbol from '../CurrencySymbol'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
 type ModType = 'project' | 'address'
 
-export default function ProjectMods({
+type EditingPaymentMod = PaymentMod & { handle?: string }
+
+export default function ProjectPaymentMods({
   name,
+  target,
+  currency,
   lockedMods,
   mods,
   onModsChanged,
   formItemProps,
-  addButtonText,
-  formatPercent,
 }: {
-  lockedMods?: (ModRef & { handle?: string })[]
-  mods: (ModRef & { handle?: string })[] | undefined
-  onModsChanged: (mods: (ModRef & { handle?: string })[]) => void
-  addButtonText: string
-  formatPercent?: (x: number) => JSX.Element | string
+  target: BigNumber
+  currency: CurrencyOption
+  lockedMods?: EditingPaymentMod[]
+  mods: EditingPaymentMod[] | undefined
+  onModsChanged: (mods: EditingPaymentMod[]) => void
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
@@ -86,7 +95,7 @@ export default function ProjectMods({
   const gutter = 10
 
   const modInput = useCallback(
-    (mod: ModRef, index: number, locked?: boolean) => {
+    (mod: EditingPaymentMod, index: number, locked?: boolean) => {
       if (!mods) return
 
       return (
@@ -200,15 +209,14 @@ export default function ProjectMods({
                   >
                     <Space>
                       <span>{fromPerbicent(mod.percent)}%</span>
-                      {formatPercent ? (
+                      {target.lt(constants.MaxUint256) && (
                         <span>
-                          (
-                          {formatPercent(
-                            parseFloat(fromPerbicent(mod.percent)),
+                          <CurrencySymbol currency={currency} />
+                          {formatWad(
+                            mulPercent(target, fromPerbicent(mod.percent)),
                           )}
-                          )
                         </span>
-                      ) : null}
+                      )}
                     </Space>
                   </span>
                 </div>
@@ -245,7 +253,7 @@ export default function ProjectMods({
         </div>
       )
     },
-    [mods, formatPercent],
+    [mods],
   )
 
   if (!mods) return null
@@ -299,7 +307,7 @@ export default function ProjectMods({
       {...formItemProps}
       rules={[
         {
-          validator: (rule: any, value: any) => {
+          validator: () => {
             if (total > 100)
               return Promise.reject('Percentages must add up to less than 100%')
 
@@ -339,12 +347,12 @@ export default function ProjectMods({
           }}
           block
         >
-          {addButtonText}
+          Add a payout
         </Button>
       </Space>
 
       <Modal
-        title={addButtonText}
+        title="Add a payout"
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         onCancel={() => {
@@ -425,11 +433,12 @@ export default function ProjectMods({
                   suffix="%"
                 />
               </span>
-              {formatPercent ? (
-                <span style={{ color: colors.text.primary }}>
-                  {formatPercent(editingPercent ?? 0)}
-                </span>
-              ) : null}
+              <span style={{ color: colors.text.primary }}>
+                <CurrencySymbol currency={currency} />
+                {formatWad(
+                  mulPercent(target, (editingPercent ?? 0).toString()),
+                )}
+              </span>
             </div>
           </Form.Item>
           <Form.Item

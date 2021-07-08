@@ -3,13 +3,14 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
-import { ModRef } from 'models/mods'
+import { PaymentMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
-import Mods from './Mods'
+import PaymentModsList from './PaymentModsList'
+import TicketModsList from './TicketModsList'
 
 export default function FundingCyclePreview({
   projectId,
@@ -21,8 +22,8 @@ export default function FundingCyclePreview({
 }: {
   projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
-  paymentMods: ModRef[] | undefined
-  ticketMods: ModRef[] | undefined
+  paymentMods: PaymentMod[] | undefined
+  ticketMods: TicketMod[] | undefined
   showDetail?: boolean
   isOwner?: boolean
 }) {
@@ -88,13 +89,11 @@ export default function FundingCyclePreview({
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             Spending:
           </h4>
-          <Mods
+          <PaymentModsList
             mods={paymentMods}
             fundingCycle={fundingCycle}
             projectId={projectId}
             isOwner={isOwner}
-            emptyText="No payouts set"
-            editButtonText="Edit payouts"
           />
         </div>
 
@@ -102,13 +101,11 @@ export default function FundingCyclePreview({
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             Allocated token reserves:
           </h4>
-          <Mods
+          <TicketModsList
             mods={ticketMods}
             fundingCycle={fundingCycle}
             projectId={projectId}
             isOwner={isOwner}
-            emptyText="No destinations set"
-            editButtonText="Allocate token reserves"
           />
         </div>
       </Space>

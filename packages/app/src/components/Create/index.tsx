@@ -17,7 +17,8 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
-import { ModRef } from 'models/mods'
+import { FCProperties } from 'models/funding-cycle-properties'
+import { PaymentMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
@@ -35,7 +36,6 @@ import {
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
-import { FCProperties } from '../../models/funding-cycle-properties'
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
@@ -100,7 +100,7 @@ export default function Create() {
       reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
-  const onPayModsFormSaved = (mods: ModRef[]) =>
+  const onPayModsFormSaved = (mods: PaymentMod[]) =>
     dispatch(editingProjectActions.setPaymentMods(mods))
 
   const onBudgetFormSaved = (
@@ -123,7 +123,7 @@ export default function Create() {
     dispatch(editingProjectActions.setLogoUri(fields.logoUrl))
   }
 
-  const onTicketingFormSaved = (mods: ModRef[]) => {
+  const onTicketingFormSaved = (mods: TicketMod[]) => {
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(editingProjectActions.setReserved(fields.reserved))
     dispatch(editingProjectActions.setTicketMods(mods))

@@ -5,7 +5,7 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
-import { ModRef } from 'models/mods'
+import { PaymentMod, TicketMod } from 'models/mods'
 import React, { useContext, useState } from 'react'
 
 import FundingCyclePreview from './FundingCyclePreview'
@@ -26,8 +26,8 @@ export default function FundingCycles({
 }: {
   projectId: BigNumber
   fundingCycle: FundingCycle | undefined
-  paymentMods: ModRef[] | undefined
-  ticketMods: ModRef[] | undefined
+  paymentMods: PaymentMod[] | undefined
+  ticketMods: TicketMod[] | undefined
   balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
   isOwner?: boolean

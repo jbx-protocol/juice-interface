@@ -199,10 +199,10 @@ export default function Landing() {
               `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
             ])}
             {fourthCol('ERC20 community tokens', [
-              `When someone pays your project, they earn a proportional amount of your community token. When you win, your token holders win, so they'll want you to win even more.`,
+              `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your community token. When you win, your token holders win, so they'll want you to win even more.`,
             ])}
             {fourthCol('Redistributable surplus', [
-              `Set a funding target to cover predictable expenses. Any extra revenue earns interest in your overflow pool, and can be claimed by community token holders.`,
+              `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by community token holders.`,
             ])}
             {fourthCol('Transparency & accountability', [
               `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,

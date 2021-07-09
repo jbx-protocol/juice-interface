@@ -151,6 +151,134 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IModAllocator",
+            "name": "allocator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectId",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct PaymentMod",
+        "name": "mod",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "DistributeToPayoutMod",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fundingCycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "projectId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "preferUnstaked",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "percent",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint48",
+            "name": "lockedUntil",
+            "type": "uint48"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct TicketMod",
+        "name": "mod",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "modCut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "caller",
+        "type": "address"
+      }
+    ],
+    "name": "DistributeToTicketMod",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "target",
@@ -232,75 +360,6 @@
       }
     ],
     "name": "Pay",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bool",
-            "name": "preferUnstaked",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint8",
-            "name": "percent",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint48",
-            "name": "lockedUntil",
-            "type": "uint48"
-          },
-          {
-            "internalType": "address payable",
-            "name": "beneficiary",
-            "type": "address"
-          },
-          {
-            "internalType": "contract IModAllocator",
-            "name": "allocator",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "projectId",
-            "type": "uint256"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct PaymentMod",
-        "name": "mod",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "modCut",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "DistributeToPayoutMod",
     "type": "event"
   },
   {
@@ -507,7 +566,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "transferAmount",
+        "name": "netTransferAmount",
         "type": "uint256"
       },
       {
@@ -530,65 +589,6 @@
       }
     ],
     "name": "Tap",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "fundingCycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "projectId",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bool",
-            "name": "preferUnstaked",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint8",
-            "name": "percent",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint48",
-            "name": "lockedUntil",
-            "type": "uint48"
-          },
-          {
-            "internalType": "address payable",
-            "name": "beneficiary",
-            "type": "address"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct TicketMod",
-        "name": "mod",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "modCut",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "DistributeToTicketMod",
     "type": "event"
   },
   {
@@ -839,7 +839,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "fundingCycleId",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -1161,25 +1161,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "preconfigureTicketCountOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "prices",
     "outputs": [
@@ -1367,7 +1348,13 @@
       }
     ],
     "name": "tap",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },

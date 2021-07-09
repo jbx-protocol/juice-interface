@@ -11,40 +11,39 @@ import "./abstract/TerminalUtility.sol";
   @notice Manage funding cycle configurations, accounting, and scheduling.
 */
 contract FundingCycles is TerminalUtility, IFundingCycles {
-    // --- private stored properties --- //
+    // --- private stored contants --- //
 
     // The number of seconds in a day.
     uint256 private constant SECONDS_IN_DAY = 86400;
 
-    // Stores the reconfiguration properties of each funding cycle,
-    // packed into one storage slot.
+    // --- private stored properties --- //
+
+    // Stores the reconfiguration properties of each funding cycle, packed into one storage slot.
     mapping(uint256 => uint256) private _packedConfigurationPropertiesOf;
 
-    // Stores the properties added by the mechanism to manage and schedule each funding cycle,
-    // packed into one storage slot.
+    // Stores the properties added by the mechanism to manage and schedule each funding cycle, packed into one storage slot.
     mapping(uint256 => uint256) private _packedIntrinsicPropertiesOf;
 
-    // Stores the metadata for each funding cycle,
-    // packed into one storage slot.
+    // Stores the metadata for each funding cycle, packed into one storage slot.
     mapping(uint256 => uint256) private _metadataOf;
 
-    // Stores the amount that each funding cycle can tap funding cycle,
-    // packed into one storage slot.
+    // Stores the amount that each funding cycle can tap funding cycle.
     mapping(uint256 => uint256) private _targetOf;
 
-    // Stores the amount that has been tapped within each funding cycle,
-    // packed into one storage slot.
+    // Stores the amount that has been tapped within each funding cycle.
     mapping(uint256 => uint256) private _tappedOf;
 
-    // --- public stored properties --- //
+    // --- public stored constants --- //
 
-    /// @notice The starting weight for each project's first funding cycle.
+    /// @notice The weight used for each project's first funding cycle.
     uint256 public constant override BASE_WEIGHT = 1E19;
 
     /// @notice The maximum value that a cycle limit can be set to.
     uint256 public constant override MAX_CYCLE_LIMIT = 32;
 
-    /// @notice The latest FundingCycle ID for each project id.
+    // --- public stored properties --- //
+
+    /// @notice The ID of the latest funding cycle for each project.
     mapping(uint256 => uint256) public override latestIdOf;
 
     /// @notice The total number of funding cycles created, which is used for issuing funding cycle IDs.
@@ -105,8 +104,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get a reference to the eligible funding cycle.
         _fundingCycleId = _eligible(_projectId);
 
-        // If an eligible funding cycle exists,
-        // check to see if it has been approved by the base funding cycle's ballot.
+        // If an eligible funding cycle exists...
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             FundingCycle memory _fundingCycle = _getStruct(_fundingCycleId);
@@ -115,31 +113,29 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             if (_fundingCycle.duration == 0) return _getStruct(0);
 
             // Check to see if the correct ballot is approved for this funding cycle.
-            if (
-                // _fundingCycle.start <= block.timestamp &&
-                _isApproved(_fundingCycle)
-            ) return _mockFundingCycleBasedOn(_fundingCycle, false);
+            // If so, return a funding cycle based on it.
+            if (_isApproved(_fundingCycle))
+                return _mockFundingCycleBasedOn(_fundingCycle, false);
 
-            // If it hasn't been approved, set the ID to be the based funding cycle,
-            // which carries the last approved configuration.
+            // If it hasn't been approved, set the ID to be its base funding cycle, which carries the last approved configuration.
             _fundingCycleId = _fundingCycle.basedOn;
         } else {
             // No upcoming funding cycle found that is eligible to become active,
-            // so us the ID of the latest active funding cycle, which carries the last approved configuration.
+            // so use the ID of the latest active funding cycle, which carries the last approved configuration.
             _fundingCycleId = latestIdOf[_projectId];
         }
 
         // A funding cycle must exist.
         if (_fundingCycleId == 0) return _getStruct(0);
 
-        // Return a mock of what its second next up funding cycle would be like.
+        // Return a mock of what its second next up funding cycle would be.
         // Use second next because the next would be a mock of the current funding cycle.
         return _mockFundingCycleBasedOn(_getStruct(_fundingCycleId), false);
     }
 
     /**
         @notice 
-        The funding cycle that is currently tappable for the specified project.
+        The funding cycle that is currently active for the specified project.
 
         @dev 
         This runs very similar logic to `_tappable`.
@@ -160,15 +156,14 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Check for an active funding cycle.
         uint256 _fundingCycleId = _eligible(_projectId);
 
-        // No active funding cycle found, check if there is a standby funding cycle.
-        // If this one exists, it will become active one it has been tapped.
+        // If no active funding cycle is found, check if there is a standby funding cycle.
+        // If one exists, it will become active one it has been tapped.
         if (_fundingCycleId == 0) _fundingCycleId = _standby(_projectId);
 
         // Keep a reference to the eligible funding cycle.
         FundingCycle memory _fundingCycle;
 
-        // If a standy funding cycle exists,
-        // check to see if it has been approved by the base funding cycle's ballot.
+        // If a standy funding cycle exists...
         if (_fundingCycleId > 0) {
             // Get the necessary properties for the standby funding cycle.
             _fundingCycle = _getStruct(_fundingCycleId);
@@ -194,7 +189,6 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The funding cycle to base a current one on.
         _fundingCycle = _getStruct(_fundingCycleId);
 
-        // The funding cycle cant be 0.
         // Return a mock of what the next funding cycle would be like,
         // which would become active one it has been tapped.
         return _mockFundingCycleBasedOn(_fundingCycle, true);
@@ -202,7 +196,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /** 
       @notice 
-      Checks whether a project has a pending reconfiguration.
+      The currency ballot state of the project.
 
       @param _projectId The ID of the project to check for a pending reconfiguration.
 
@@ -248,7 +242,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /**
         @notice 
-        Configures the next eligible funding for the specified project.
+        Configures the next eligible funding cycle for the specified project.
+
+        @dev
+        Only a project's current terminal can configure its funding cycles.
 
         @param _projectId The ID of the project being reconfigured.
         @param _properties The funding cycle configuration.
@@ -256,13 +253,13 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
           @dev _properties.currency The currency of the `_target`. Send 0 for ETH or 1 for USD.
           @dev _properties.duration The duration of the funding cycle for which the `_target` amount is needed. Measured in days. 
             Set to 0 for no expiry and to be able to reconfigure anytime.
-          @dev _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
+          @dev _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This does nothing for a project's first funding cycle.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
             If it's 200, each funding cycle will have equal weight.
             If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
             If the number is 0, an non-recurring funding cycle will get made.
           @dev _ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _metadata Data to store associated to this funding cycle configuration.
+        @param _metadata Data to associate with this funding cycle configuration.
         @param _fee The fee that this configuration will incure when tapping.
         @param _configureActiveFundingCycle If a funding cycle that has already started should be configurable.
 
@@ -286,7 +283,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             "FundingCycles::configure: BAD_DURATION"
         );
 
-        // Currency must be less than 32.
+        // Currency must be less than the limit.
         require(
             _properties.cycleLimit <= MAX_CYCLE_LIMIT,
             "FundingCycles::configure: BAD_CYCLE_LIMIT"
@@ -305,20 +302,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
 
         // Fee must be less than or equal to 100%.
-        assert(_fee <= 200);
+        require(_fee <= 200, "FundingCycles::configure: BAD_FEE");
 
-        // Set the configuration timestamp to now.
+        // Set the configuration timestamp is now.
         uint256 _configured = block.timestamp;
 
         // Gets the ID of the funding cycle to reconfigure.
-        uint256 _fundingCycleId =
-            _configurable(
-                _projectId,
-                _configured,
-                _configureActiveFundingCycle
-            );
+        uint256 _fundingCycleId = _configurable(
+            _projectId,
+            _configured,
+            _configureActiveFundingCycle
+        );
 
-        // Save the configuration efficiently.
+        // Store the configuration.
         _packAndStoreConfigurationProperties(
             _fundingCycleId,
             _configured,
@@ -352,10 +348,13 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
       @notice 
       Tap funds from a project's currently tappable funding cycle.
 
-      @param _projectId The ID of the project being tapped.
-      @param _amount The amount of being tapped.
+      @dev
+      Only a project's current terminal can tap funds for its funding cycles.
 
-      @return fundingCycle The funding cycle that was tapped from.
+      @param _projectId The ID of the project being tapped.
+      @param _amount The amount being tapped.
+
+      @return fundingCycle The tapped funding cycle.
     */
     function tap(uint256 _projectId, uint256 _amount)
         external
@@ -378,7 +377,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // The new amount that has been tapped.
         uint256 _newTappedAmount = _tapped + _amount;
 
-        // Add the amount to the funding cycle's tapped amount.
+        // Store the new amount.
         _tappedOf[fundingCycleId] = _newTappedAmount;
 
         emit Tap(
@@ -396,10 +395,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /**
         @notice 
-        Returns the configurable funding cycle for this project if it exists, 
-        otherwise creates one.
+        Returns the configurable funding cycle for this project if it exists, otherwise creates one.
 
-        @param _projectId The ID of the project being looked through.
+        @param _projectId The ID of the project to find a configurable funding cycle for.
         @param _configured The time at which the configuration is occuring.
         @param _configureActiveFundingCycle If the active funding cycle should be configurable. Otherwise the next funding cycle will be used.
 
@@ -420,13 +418,14 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // If it exists, make sure its updated, then return it.
         if (fundingCycleId > 0) {
             // Get the funding cycle that the specified one is based on.
-            FundingCycle memory _baseFundingCycle =
-                _getStruct(_getStruct(fundingCycleId).basedOn);
+            FundingCycle memory _baseFundingCycle = _getStruct(
+                _getStruct(fundingCycleId).basedOn
+            );
 
+            // The base's ballot must have ended.
             _updateFundingCycle(
                 fundingCycleId,
                 _baseFundingCycle,
-                // The base's ballot must have ended.
                 _getTimeAfterBallot(_baseFundingCycle, _configured),
                 false
             );
@@ -436,7 +435,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Get the active funding cycle's ID.
         fundingCycleId = _eligible(_projectId);
 
-        // If the ID of an eligible funding cycle exists, it's approved, and active funding cycles are configurable, and its approved, return it.
+        // If the ID of an eligible funding cycle exists, it's approved, and active funding cycles are configurable, return it.
         if (fundingCycleId > 0) {
             if (!_isIdApproved(fundingCycleId)) {
                 // If it hasn't been approved, set the ID to be the based funding cycle,
@@ -468,9 +467,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 _mustStartOnOrAfter = _fundingCycle.start;
             } else {
                 // Set to the start time of the current active start time.
-                uint256 _timeFromStartMultiple =
-                    (block.timestamp - _fundingCycle.start) %
-                        (_fundingCycle.duration * SECONDS_IN_DAY);
+                uint256 _timeFromStartMultiple = (block.timestamp -
+                    _fundingCycle.start) %
+                    (_fundingCycle.duration * SECONDS_IN_DAY);
                 _mustStartOnOrAfter = block.timestamp - _timeFromStartMultiple;
             }
         } else {
@@ -492,9 +491,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
     /**
         @notice 
-        Returns the one funding cycle that can be tapped at the time of the call.
+        Returns the funding cycle that can be tapped at the time of the call.
 
-        @param _projectId The ID of the project being looked through.
+        @param _projectId The ID of the project to find a configurable funding cycle for.
 
         @return fundingCycleId The ID of the tappable funding cycle.
     */
@@ -546,16 +545,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         );
 
         // The time when the funding cycle immediately after the eligible funding cycle starts.
-        uint256 _nextImmediateStart =
-            _fundingCycle.start + (_fundingCycle.duration * SECONDS_IN_DAY);
+        uint256 _nextImmediateStart = _fundingCycle.start +
+            (_fundingCycle.duration * SECONDS_IN_DAY);
 
         // The distance from now until the nearest past multiple of the cycle duration from its start.
         // A duration of zero means the reconfiguration can start right away.
-        uint256 _timeFromImmediateStartMultiple =
-            _fundingCycle.duration == 0
-                ? 0
-                : (block.timestamp - _nextImmediateStart) %
-                    (_fundingCycle.duration * SECONDS_IN_DAY);
+        uint256 _timeFromImmediateStartMultiple = _fundingCycle.duration == 0
+            ? 0
+            : (block.timestamp - _nextImmediateStart) %
+                (_fundingCycle.duration * SECONDS_IN_DAY);
 
         // Return the tappable funding cycle.
         fundingCycleId = _init(
@@ -688,8 +686,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         ) return fundingCycleId;
 
         // The base cant be expired.
-        FundingCycle memory _baseFundingCycle =
-            _getStruct(_fundingCycle.basedOn);
+        FundingCycle memory _baseFundingCycle = _getStruct(
+            _fundingCycle.basedOn
+        );
 
         // If the current time is past the end of the base, return 0.
         // A duration of 0 is always eligible.
@@ -722,39 +721,32 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
         // Otherwise, the base is already the latest permanent funding cycle.
-        FundingCycle memory _latestPermanentFundingCycle =
-            _baseFundingCycle.cycleLimit > 0
-                ? _latestPermanentCycleBefore(_baseFundingCycle)
-                : _baseFundingCycle;
+        FundingCycle memory _latestPermanentFundingCycle = _baseFundingCycle
+        .cycleLimit > 0
+            ? _latestPermanentCycleBefore(_baseFundingCycle)
+            : _baseFundingCycle;
 
         // The distance of the current time to the start of the next possible funding cycle.
         uint256 _timeFromImmediateStartMultiple;
 
-        // Only rewind if a mid cycle mock are cycle.
-        // Cycles with a duration of 0 will start right away so no need to rewind.
         if (_allowMidCycle && _baseFundingCycle.duration > 0) {
             // Get the end time of the last cycle.
-            uint256 _cycleEnd =
-                _baseFundingCycle.start +
-                    (_baseFundingCycle.cycleLimit *
-                        _baseFundingCycle.duration *
-                        SECONDS_IN_DAY);
+            uint256 _cycleEnd = _baseFundingCycle.start +
+                (_baseFundingCycle.cycleLimit *
+                    _baseFundingCycle.duration *
+                    SECONDS_IN_DAY);
 
-            // If the cycles have expired, the must start date should
-            // be an increment of the latest from it.
-            // If the cycle end time is in the past, the mock should start at a multiple of the last
-            // permanent cycle since the cycle ended.
+            // If the cycle end time is in the past, the mock should start at a multiple of the last permanent cycle since the cycle ended.
             if (
                 _baseFundingCycle.cycleLimit > 0 && _cycleEnd < block.timestamp
             ) {
                 _timeFromImmediateStartMultiple = _latestPermanentFundingCycle
-                    .duration == 0
+                .duration == 0
                     ? 0
                     : ((block.timestamp - _cycleEnd) %
                         (_latestPermanentFundingCycle.duration *
                             SECONDS_IN_DAY));
             } else {
-                // Rewind a full cycle.
                 _timeFromImmediateStartMultiple =
                     _baseFundingCycle.duration *
                     SECONDS_IN_DAY;
@@ -764,19 +756,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         }
 
         // Derive what the start time should be.
-        uint256 _start =
-            _deriveStart(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                block.timestamp - _timeFromImmediateStartMultiple
-            );
+        uint256 _start = _deriveStart(
+            _baseFundingCycle,
+            _latestPermanentFundingCycle,
+            block.timestamp - _timeFromImmediateStartMultiple
+        );
 
         // Derive what the cycle limit should be.
         uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
 
         // Copy the last permanent funding cycle if the bases' limit is up.
-        FundingCycle memory _fundingCycleToCopy =
-            _cycleLimit == 0 ? _latestPermanentFundingCycle : _baseFundingCycle;
+        FundingCycle memory _fundingCycleToCopy = _cycleLimit == 0
+            ? _latestPermanentFundingCycle
+            : _baseFundingCycle;
 
         return
             FundingCycle(
@@ -823,34 +815,31 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         bool _copy
     ) private {
         // Get the latest permanent funding cycle.
-        FundingCycle memory _latestPermanentFundingCycle =
-            _baseFundingCycle.cycleLimit > 0
-                ? _latestPermanentCycleBefore(_baseFundingCycle)
-                : _baseFundingCycle;
+        FundingCycle memory _latestPermanentFundingCycle = _baseFundingCycle
+        .cycleLimit > 0
+            ? _latestPermanentCycleBefore(_baseFundingCycle)
+            : _baseFundingCycle;
 
         // Derive the correct next start time from the base.
-        uint256 _start =
-            _deriveStart(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _mustStartOnOrAfter
-            );
+        uint256 _start = _deriveStart(
+            _baseFundingCycle,
+            _latestPermanentFundingCycle,
+            _mustStartOnOrAfter
+        );
 
         // Derive the correct weight.
-        uint256 _weight =
-            _deriveWeight(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
+        uint256 _weight = _deriveWeight(
+            _baseFundingCycle,
+            _latestPermanentFundingCycle,
+            _start
+        );
 
         // Derive the correct number.
-        uint256 _number =
-            _deriveNumber(
-                _baseFundingCycle,
-                _latestPermanentFundingCycle,
-                _start
-            );
+        uint256 _number = _deriveNumber(
+            _baseFundingCycle,
+            _latestPermanentFundingCycle,
+            _start
+        );
 
         // Copy if needed.
         if (_copy) {
@@ -858,10 +847,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             uint256 _cycleLimit = _deriveCycleLimit(_baseFundingCycle, _start);
 
             // Copy the last permanent funding cycle if the bases' limit is up.
-            FundingCycle memory _fundingCycleToCopy =
-                _cycleLimit == 0
-                    ? _latestPermanentFundingCycle
-                    : _baseFundingCycle;
+            FundingCycle memory _fundingCycleToCopy = _cycleLimit == 0
+                ? _latestPermanentFundingCycle
+                : _baseFundingCycle;
 
             // Save the configuration efficiently.
             _packAndStoreConfigurationProperties(
@@ -910,15 +898,15 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _basedOn,
         uint256 _start
     ) private {
-        // weight in first 64 bytes.
+        // weight in bytes 0-63 bytes.
         uint256 packed = _weight;
-        // projectId in bytes 65-112 bytes.
+        // projectId in bytes 64-111 bytes.
         packed |= _projectId << 64;
-        // number in bytes 113-160 bytes.
+        // number in bytes 112-159 bytes.
         packed |= _number << 112;
-        // basedOn in bytes 161-208 bytes.
+        // basedOn in bytes 160-207 bytes.
         packed |= _basedOn << 160;
-        // start in bytes 209-256 bytes.
+        // start in bytes 208-255 bytes.
         packed |= _start << 208;
 
         // Set in storage.
@@ -948,19 +936,19 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _fee,
         uint256 _discountRate
     ) private {
-        // ballot in first 160 bytes.
+        // ballot in bytes 0-159 bytes.
         uint256 packed = uint160(address(_ballot));
-        // configured in bytes 161-208 bytes.
+        // configured in bytes 160-207 bytes.
         packed |= _configured << 160;
-        // duration in bytes 209-224 bytes.
+        // duration in bytes 208-223 bytes.
         packed |= _duration << 208;
-        // basedOn in bytes 225-232 bytes.
+        // basedOn in bytes 224-231 bytes.
         packed |= _currency << 224;
-        // fee in bytes 233-240 bytes.
+        // fee in bytes 232-239 bytes.
         packed |= _fee << 232;
-        // discountRate in bytes 241-248 bytes.
+        // discountRate in bytes 240-247 bytes.
         packed |= _discountRate << 240;
-        // cycleLimit in bytes 249-256 bytes.
+        // cycleLimit in bytes 248-255 bytes.
         packed |= _cycleLimit << 248;
 
         // Set in storage.
@@ -984,6 +972,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_id == 0) return _fundingCycle;
 
         _fundingCycle.id = _id;
+
         uint256 _packedIntrinsicProperties = _packedIntrinsicPropertiesOf[_id];
 
         _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
@@ -999,8 +988,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         _fundingCycle.start = uint256(
             uint48(_packedIntrinsicProperties >> 208)
         );
-        uint256 _packedConfigurationProperties =
-            _packedConfigurationPropertiesOf[_id];
+
+
+            uint256 _packedConfigurationProperties
+         = _packedConfigurationPropertiesOf[_id];
         _fundingCycle.ballot = IFundingCycleBallot(
             address(uint160(_packedConfigurationProperties))
         );
@@ -1032,7 +1023,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         The date that is the nearest multiple of the specified funding cycle's duration from its end.
 
         @param _baseFundingCycle The funding cycle to make the calculation for.
-        @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_fundingCycle` to not have a limit.
+        @param _latestPermanentFundingCycle The latest funding cycle in the same project as `_baseFundingCycle` to not have a limit.
         @param _mustStartOnOrAfter A date that the derived start must be on or come after.
 
         @return start The next start time.
@@ -1046,12 +1037,12 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_baseFundingCycle.duration == 0) return _mustStartOnOrAfter;
 
         // Save a reference to the duration measured in seconds.
-        uint256 _durationInSeconds =
-            _baseFundingCycle.duration * SECONDS_IN_DAY;
+        uint256 _durationInSeconds = _baseFundingCycle.duration *
+            SECONDS_IN_DAY;
 
         // The time when the funding cycle immediately after the specified funding cycle starts.
-        uint256 _nextImmediateStart =
-            _baseFundingCycle.start + _durationInSeconds;
+        uint256 _nextImmediateStart = _baseFundingCycle.start +
+            _durationInSeconds;
 
         // If the next immediate start is now or in the future, return it.
         if (_nextImmediateStart >= _mustStartOnOrAfter)
@@ -1072,7 +1063,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         } else {
             // If the cycle has ended, make the calculation with the latest permanent funding cycle.
             _timeFromImmediateStartMultiple = _latestPermanentFundingCycle
-                .duration == 0
+            .duration == 0
                 ? 0
                 : ((_mustStartOnOrAfter -
                     (_baseFundingCycle.start +
@@ -1120,11 +1111,11 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _startDistance = _start - _baseFundingCycle.start;
 
         // The number of seconds that the base funding cycle is limited to.
-        uint256 _limitLength =
-            _baseFundingCycle.cycleLimit == 0 || _baseFundingCycle.basedOn == 0
-                ? 0
-                : _baseFundingCycle.cycleLimit *
-                    (_baseFundingCycle.duration * SECONDS_IN_DAY);
+        uint256 _limitLength = _baseFundingCycle.cycleLimit == 0 ||
+            _baseFundingCycle.basedOn == 0
+            ? 0
+            : _baseFundingCycle.cycleLimit *
+                (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
         // The weight should be based off the base funding cycle's weight.
         weight = _baseFundingCycle.weight;
@@ -1135,8 +1126,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             // If the discount rate is 200, return the same weight.
             if (_baseFundingCycle.discountRate == 200) return weight;
 
-            uint256 _discountMultiple =
-                _startDistance / (_baseFundingCycle.duration * SECONDS_IN_DAY);
+            uint256 _discountMultiple = _startDistance /
+                (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
             for (uint256 i = 0; i < _discountMultiple; i++) {
                 // The number of times to apply the discount rate.
@@ -1166,12 +1157,14 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
             if (_latestPermanentFundingCycle.discountRate < 200) {
                 // The number of times to apply the latest permanent discount rate.
-                uint256 _permanentDiscountMultiple =
-                    _latestPermanentFundingCycle.duration == 0
-                        ? 0
-                        : (_startDistance - _limitLength) /
-                            (_latestPermanentFundingCycle.duration *
-                                SECONDS_IN_DAY);
+
+
+                    uint256 _permanentDiscountMultiple
+                 = _latestPermanentFundingCycle.duration == 0
+                    ? 0
+                    : (_startDistance - _limitLength) /
+                        (_latestPermanentFundingCycle.duration *
+                            SECONDS_IN_DAY);
 
                 for (uint256 i = 0; i < _permanentDiscountMultiple; i++) {
                     weight = PRBMathCommon.mulDiv(
@@ -1207,11 +1200,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _startDistance = _start - _baseFundingCycle.start;
 
         // The number of seconds that the base funding cycle is limited to.
-        uint256 _limitLength =
-            _baseFundingCycle.cycleLimit == 0
-                ? 0
-                : _baseFundingCycle.cycleLimit *
-                    (_baseFundingCycle.duration * SECONDS_IN_DAY);
+        uint256 _limitLength = _baseFundingCycle.cycleLimit == 0
+            ? 0
+            : _baseFundingCycle.cycleLimit *
+                (_baseFundingCycle.duration * SECONDS_IN_DAY);
 
         if (_limitLength == 0 || _limitLength > _startDistance) {
             // If there's no limit or if the limit is greater than the start distance,
@@ -1256,9 +1248,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     ) internal pure returns (uint256) {
         if (_fundingCycle.cycleLimit <= 1 || _fundingCycle.duration == 0)
             return 0;
-        uint256 _cycles =
-            ((_start - _fundingCycle.start) /
-                (_fundingCycle.duration * SECONDS_IN_DAY));
+        uint256 _cycles = ((_start - _fundingCycle.start) /
+            (_fundingCycle.duration * SECONDS_IN_DAY));
 
         if (_cycles >= _fundingCycle.cycleLimit) return 0;
         return _fundingCycle.cycleLimit - _cycles;
@@ -1321,8 +1312,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         if (_ballotFundingCycleId == 0) return BallotState.Approved;
 
         // Get the ballot funding cycle.
-        FundingCycle memory _ballotFundingCycle =
-            _getStruct(_ballotFundingCycleId);
+        FundingCycle memory _ballotFundingCycle = _getStruct(
+            _ballotFundingCycleId
+        );
 
         // If the configuration is the same as the ballot's funding cycle,
         // the ballot isn't applicable. Auto approve since the ballot funding cycle is approved.
@@ -1377,10 +1369,10 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _from
     ) private view returns (uint256) {
         // The ballot must have ended.
-        uint256 _ballotExpiration =
-            _fundingCycle.ballot != IFundingCycleBallot(address(0))
-                ? _from + _fundingCycle.ballot.duration()
-                : 0;
+        uint256 _ballotExpiration = _fundingCycle.ballot !=
+            IFundingCycleBallot(address(0))
+            ? _from + _fundingCycle.ballot.duration()
+            : 0;
 
         return
             block.timestamp > _ballotExpiration

@@ -231,7 +231,7 @@ module.exports = [
       randomBigNumberFn,
       local: { cycleLimit1, duration1 }
     }) => {
-      // Can move within a day, with some room on the boundaries for time inprecision.
+      // Can move within a day, with some room on the boundaries for time imprecision.
       const buffer = randomBigNumberFn({
         min: BigNumber.from(5),
         max: BigNumber.from(86395)
@@ -309,8 +309,7 @@ module.exports = [
   },
   {
     description: "Fastforward to past the limit",
-    fn: async ({ fastforwardFn, local: { buffer } }) =>
-      fastforwardFn(buffer.add(buffer))
+    fn: async ({ fastforwardFn, local: { buffer } }) => fastforwardFn(buffer)
   },
   {
     description: "Make sure the same funding cycle is current",
@@ -449,12 +448,7 @@ module.exports = [
   {
     description: "Fastforward to just before the reconfiguration",
     fn: async ({ fastforwardFn, timeMark, local: { duration1, buffer } }) => {
-      await fastforwardFn(
-        duration1
-          .mul(86400)
-          .sub(buffer)
-          .sub(buffer)
-      );
+      await fastforwardFn(duration1.mul(86400).sub(buffer));
       return { configurationTimeMark: timeMark };
     }
   },
@@ -509,8 +503,7 @@ module.exports = [
   },
   {
     description: "Fastforward to the reconfiguration",
-    fn: async ({ fastforwardFn, local: { buffer } }) =>
-      fastforwardFn(buffer.add(buffer))
+    fn: async ({ fastforwardFn, local: { buffer } }) => fastforwardFn(buffer)
   },
   {
     description: "Make sure the configuration changed",

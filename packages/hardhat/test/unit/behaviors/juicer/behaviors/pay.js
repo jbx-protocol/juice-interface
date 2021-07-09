@@ -215,12 +215,19 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       args: [projectId],
       value: addToBalance.add(amount)
     }),
+    mockFn({
+      condition: !revert,
+      mockContract: mockContracts.ticketBooth,
+      fn: "totalSupplyOf",
+      args: [projectId],
+      returns: [unreservedWeightedAmount]
+    }),
     check({
       condition: !revert,
       contract: targetContract,
-      fn: "preconfigureTicketCountOf",
+      fn: "canPrintPreminedTickets",
       args: [projectId],
-      value: fundingCycleNumber === 0 ? unreservedWeightedAmount : 0
+      value: fundingCycleNumber === 0
     })
   ];
 };

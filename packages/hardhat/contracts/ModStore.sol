@@ -85,6 +85,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
       @notice 
       Adds a mod to the payment mods list.
 
+      @dev
+      Only the owner or operator of a project can make this call, or the current terminal of the project.
+
       @param _projectId The project to add a mod to.
       @param _configuration The configuration to set the mods to be active during.
       @param _mods The payment mods to set.
@@ -100,7 +103,6 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
             projects.ownerOf(_projectId),
             _projectId,
             Operations.SetPaymentMods,
-            // The project's terminal can also make this call.
             address(terminalDirectory.terminalOf(_projectId))
         )
     {
@@ -108,8 +110,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
         require(_mods.length > 0, "ModStore::setPaymentMods: NO_OP");
 
         // Get a reference to the project's payment mods.
-        PaymentMod[] memory _currentMods =
-            _paymentModsOf[_projectId][_configuration];
+        PaymentMod[] memory _currentMods = _paymentModsOf[_projectId][
+            _configuration
+        ];
 
         // Check to see if all locked Mods are included.
         for (uint256 _i = 0; _i < _currentMods.length; _i++) {
@@ -180,6 +183,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
       @notice 
       Adds a mod to the ticket mods list.
 
+      @dev
+      Only the owner or operator of a project can make this call, or the current terminal of the project.
+
       @param _projectId The project to add a mod to.
       @param _configuration The configuration to set the mods to be active during.
       @param _mods The ticket mods to set.
@@ -195,7 +201,6 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
             projects.ownerOf(_projectId),
             _projectId,
             Operations.SetTicketMods,
-            // The project's terminal can also make this call.
             address(terminalDirectory.terminalOf(_projectId))
         )
     {
@@ -203,8 +208,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
         require(_mods.length > 0, "ModStore::setTicketMods: NO_OP");
 
         // Get a reference to the project's ticket mods.
-        TicketMod[] memory _projectTicketMods =
-            _ticketModsOf[_projectId][_configuration];
+        TicketMod[] memory _projectTicketMods = _ticketModsOf[_projectId][
+            _configuration
+        ];
 
         // Check to see if all locked Mods are included.
         for (uint256 _i = 0; _i < _projectTicketMods.length; _i++) {

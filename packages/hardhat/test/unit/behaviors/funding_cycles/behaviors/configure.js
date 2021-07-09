@@ -955,7 +955,7 @@ const tests = {
           // no preconfiguration
           preconfigure: null
         },
-        revert: ""
+        revert: "FundingCycles::configure: BAD_FEE"
       })
     },
     {

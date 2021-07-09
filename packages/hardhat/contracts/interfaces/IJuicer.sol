@@ -116,11 +116,6 @@ interface IJuicer {
 
     function balanceOf(uint256 _projectId) external view returns (uint256);
 
-    function preconfigureTicketCountOf(uint256 _projectId)
-        external
-        view
-        returns (uint256);
-
     function currentOverflowOf(uint256 _projectId)
         external
         view

@@ -17,8 +17,8 @@ import "./Tickets.sol";
   Tickets can be either represented internally staked, or as unstaked ERC-20s.
   This contract manages these two representations and the conversion between the two.
 
-  The total supply of a project's tickets and the balance of each account 
-  must thus be calculated in this contract.
+  @dev
+  The total supply of a project's tickets and the balance of each account are calculated in this contract.
 */
 contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     // --- public immutable stored properties --- //
@@ -157,6 +157,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
       @notice 
       Print new tickets.
 
+      @dev
+      Only a project's current terminal can print its tickets.
+
       @param _holder The address receiving the new tickets.
       @param _projectId The project to which the tickets belong.
       @param _amount The amount to print.
@@ -175,8 +178,8 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         ITickets _tickets = ticketsOf[_projectId];
 
         // If there exists ERC-20 tickets and the caller prefers these unstaked tickets.
-        bool _shouldUnstakeTickets =
-            _preferUnstakedTickets && _tickets != ITickets(address(0));
+        bool _shouldUnstakeTickets = _preferUnstakedTickets &&
+            _tickets != ITickets(address(0));
 
         if (_shouldUnstakeTickets) {
             // Print the equivalent amount of ERC20s.
@@ -205,7 +208,10 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
       @notice 
       Redeems tickets.
 
-      @param _holder The address redeeming tickets.
+      @dev
+      Only a project's current terminal can redeem its tickets.
+
+      @param _holder The address that owns the tickets being redeemed.
       @param _projectId The ID of the project of the tickets being redeemed.
       @param _amount The amount of tickets being redeemed.
       @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
@@ -220,13 +226,13 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         ITickets _tickets = ticketsOf[_projectId];
 
         // Get a reference to the staked amount.
-        uint256 _unlockedStakedBalance =
-            stakedBalanceOf[_holder][_projectId] -
-                lockedBalanceOf[_holder][_projectId];
+        uint256 _unlockedStakedBalance = stakedBalanceOf[_holder][_projectId] -
+            lockedBalanceOf[_holder][_projectId];
 
         // Get a reference to the number of tickets there are.
-        uint256 _unstakedBalanceOf =
-            _tickets == ITickets(address(0)) ? 0 : _tickets.balanceOf(_holder);
+        uint256 _unstakedBalanceOf = _tickets == ITickets(address(0))
+            ? 0
+            : _tickets.balanceOf(_holder);
 
         // There must be enough tickets.
         // Prevent potential overflow by not relying on addition.
@@ -288,6 +294,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
       @notice 
       Stakes ERC20 tickets by burning their supply and creating an internal staked version.
 
+      @dev
+      Only a ticket holder or an operator can stake its tickets.
+
       @param _holder The owner of the tickets to stake.
       @param _projectId The ID of the project whos tickets are being staked.
       @param _amount The amount of tickets to stake.
@@ -343,6 +352,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
       @notice 
       Unstakes internal tickets by creating and distributing ERC20 tickets.
 
+      @dev
+      Only a ticket holder or an operator can unstake its tickets.
+
       @param _holder The owner of the tickets to unstake.
       @param _projectId The ID of the project whos tickets are being unstaked.
       @param _amount The amount of tickets to unstake.
@@ -370,9 +382,8 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         );
 
         // Get a reference to the amount of unstaked tickets.
-        uint256 _unlockedStakedTickets =
-            stakedBalanceOf[_holder][_projectId] -
-                lockedBalanceOf[_holder][_projectId];
+        uint256 _unlockedStakedTickets = stakedBalanceOf[_holder][_projectId] -
+            lockedBalanceOf[_holder][_projectId];
 
         // There must be enough unlocked staked tickets to unstake.
         require(
@@ -399,6 +410,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     /** 
       @notice 
       Lock a project's tickets, preventing them from being redeemed and from converting to ERC20s.
+
+      @dev
+      Only a ticket holder or an operator can lock its tickets.
 
       @param _holder The holder to lock tickets from.
       @param _projectId The ID of the project whos tickets are being locked.
@@ -479,6 +493,9 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
       @notice 
       Allows a ticket holder to transfer its tickets to another account, without unstaking to ERC-20s.
 
+      @dev
+      Only a ticket holder or an operator can transfer its tickets.
+
       @param _holder The holder to transfer tickets from.
       @param _projectId The ID of the project whos tickets are being transfered.
       @param _amount The amount of tickets to transfer.
@@ -511,9 +528,8 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         require(_amount > 0, "TicketBooth::transfer: NO_OP");
 
         // Get a reference to the amount of unlocked staked tickets.
-        uint256 _unlockedStakedTickets =
-            stakedBalanceOf[_holder][_projectId] -
-                lockedBalanceOf[_holder][_projectId];
+        uint256 _unlockedStakedTickets = stakedBalanceOf[_holder][_projectId] -
+            lockedBalanceOf[_holder][_projectId];
 
         // There must be enough unlocked staked tickets to transfer.
         require(

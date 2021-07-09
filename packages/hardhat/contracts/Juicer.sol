@@ -31,22 +31,8 @@ import "./libraries/Operations.sol";
   @notice 
   This contract manages the Juice ecosystem, serves as a payment terminal, and custodies all funds.
 
-  @dev  
-  1. Deploy a project that specifies how much funds can be tapped over a set amount of time. 
-  2. Anyone can pay your project in ETH, which gives them your Tickets in return that can be redeemed for your project's overflowed funds.
-     They'll receive an amount of Tickets equivalent to a predefined formula that takes into account:
-        - The contributed amount of ETH. The more someone contributes, the more Tickets they'll receive.
-        - The funding cycle's weight, which is a number that decreases with subsequent funding cycle at a configured discount rate. 
-          This rate is called a "discount rate" because it allows you to give out more Tickets to those who contribute to your 
-          earlier funding cycles, effectively giving earlier adopters a discounted rate.
-  3. You can tap ETH up to your specified denominated target amount. 
-     Any overflow can be claimed by Ticket holders by redeeming tickets along a bonding curve that rewards those who wait longer to redeem, 
-     otherwise overflow rolls over to your future funding cycles.
-  4. You can reconfigure your project at any time with the approval of a ballot that you pre set.
-     The new configuration will go into effect once the current funding cycle one expires.
-
   @dev 
-  A project can transfer its funds, along with the power to reconfigure and mint/burn their Tickets, from this contract to another allowed contract at any time.
+  A project can transfer its funds, along with the power to reconfigure and mint/burn their Tickets, from this contract to another allowed terminal contract at any time.
 */
 contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     // Modifier to only allow governance to call the function.
@@ -60,6 +46,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     // The difference between the processed ticket tracker of a project and the project's ticket's total supply is the amount of tickets that
     // still need to have reserves printed against them.
     mapping(uint256 => int256) private _processedTicketTrackerOf;
+
+    // The amount of ticket printed prior to a project configuring their first funding cycle.
+    mapping(uint256 => uint256) private _preconfigureTicketCountOf;
 
     // --- public immutable stored properties --- //
 
@@ -85,9 +74,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /// @notice The amount of ETH that each project is responsible for.
     mapping(uint256 => uint256) public override balanceOf;
-
-    /// @notice The amount of ticket printed prior to a project configuring their first funding cycle.
-    mapping(uint256 => uint256) public override preconfigureTicketCountOf;
 
     /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
@@ -152,17 +138,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     // --- public views --- //
 
     /**
-        @notice 
-        The amount of tokens that can be claimed by the given address.
+      @notice 
+      The amount of tokens that can be claimed by the given address.
 
-        @dev The _account must have at least _count tickets for the specified project.
-        @dev If there is a funding cycle reconfiguration ballot open for the project, the project's current bonding curve is bypassed.
+      @dev The _account must have at least _count tickets for the specified project.
+      @dev If there is a funding cycle reconfiguration ballot open for the project, the project's current bonding curve is bypassed.
 
-        @param _account The address to get an amount for.
-        @param _projectId The ID of the project to get a claimable amount for.
-        @param _count The number of Tickets that would be redeemed to get the resulting amount.
+      @param _account The address to get an amount for.
+      @param _projectId The ID of the project to get a claimable amount for.
+      @param _count The number of Tickets that would be redeemed to get the resulting amount.
 
-        @return amount The amount of tokens that can be claimed.
+      @return amount The amount of tokens that can be claimed.
     */
     function claimableOverflowOf(
         address _account,
@@ -257,12 +243,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         return
             // The total supply of tickets must equal the preconfigured ticket count.
             ticketBooth.totalSupplyOf(_projectId) ==
-            preconfigureTicketCountOf[_projectId] &&
+            _preconfigureTicketCountOf[_projectId] &&
             // The above condition is still possible after post-configured tickets have been printed due to ticket redeeming.
             // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
             _processedTicketTrackerOf[_projectId] >= 0 &&
             uint256(_processedTicketTrackerOf[_projectId]) ==
-            preconfigureTicketCountOf[_projectId];
+            _preconfigureTicketCountOf[_projectId];
     }
 
     // --- external transactions --- //
@@ -305,36 +291,36 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Deploys a project. This will mint an ERC-721 into the `_owner`'s account, configure a first funding cycle, and set up any mods.
+      @notice 
+      Deploys a project. This will mint an ERC-721 into the `_owner`'s account, configure a first funding cycle, and set up any mods.
 
-        @dev
-        Each operation withing this transaction can be done in sequence separately.
+      @dev
+      Each operation withing this transaction can be done in sequence separately.
 
-        @dev
-        Anyone can deploy a project on an owner's behalf.
+      @dev
+      Anyone can deploy a project on an owner's behalf.
 
-        @param _owner The address that will own the project.
-        @param _handle The project's unique handle.
-        @param _uri A link to information about the project and this funding cycle.
-        @param _properties The funding cycle configuration.
-          @dev _properties.target The amount that the project wants to receive in this funding cycle. Sent as a wad.
-          @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
-          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
-          @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-            If it's 200, each funding stage will have equal weight.
-            If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
-            If the number is 0, an non-recurring funding stage will get made.
-          @dev _configuration.ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
-          @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
-          @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
-            The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
-            where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-          @dev _reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
-        @param _paymentMods Any payment mods to set.
-        @param _ticketMods Any ticket mods to set.
+      @param _owner The address that will own the project.
+      @param _handle The project's unique handle.
+      @param _uri A link to information about the project and this funding cycle.
+      @param _properties The funding cycle configuration.
+        @dev _properties.target The amount that the project wants to receive in this funding cycle. Sent as a wad.
+        @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+        @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
+        @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
+        @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+          If it's 200, each funding stage will have equal weight.
+          If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+          If the number is 0, an non-recurring funding stage will get made.
+        @dev _configuration.ballot The new ballot that will be used to approve subsequent reconfigurations.
+      @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
+        @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
+        @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
+          The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
+          where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        @dev _reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
+      @param _paymentMods Any payment mods to set.
+      @param _ticketMods Any ticket mods to set.
     */
     function deploy(
         address _owner,
@@ -380,34 +366,34 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Configures the properties of the current funding cycle if the project hasn't distributed tickets yet, or
-        sets the properties of the proposed funding cycle that will take effect once the current one expires
-        if it is approved by the current funding cycle's ballot.
+      @notice 
+      Configures the properties of the current funding cycle if the project hasn't distributed tickets yet, or
+      sets the properties of the proposed funding cycle that will take effect once the current one expires
+      if it is approved by the current funding cycle's ballot.
 
-        @dev
-        Only a project's owner or a designated operator can configure its funding cycles.
+      @dev
+      Only a project's owner or a designated operator can configure its funding cycles.
 
-        @param _projectId The ID of the project being reconfigured. 
-        @param _properties The funding cycle configuration.
-          @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
-          @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
-          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
-          @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
-            If it's 200, each funding stage will have equal weight.
-            If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
-            If the number is 0, an non-recurring funding stage will get made.
-          @dev _properties.ballot The new ballot that will be used to approve subsequent reconfigurations.
-        @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
-          @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
-            The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
-            where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-          @dev _metadata.reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
-          @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
-          @dev _metadata.reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
+      @param _projectId The ID of the project being reconfigured. 
+      @param _properties The funding cycle configuration.
+        @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
+        @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
+        @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
+        @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
+        @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
+          If it's 200, each funding stage will have equal weight.
+          If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
+          If the number is 0, an non-recurring funding stage will get made.
+        @dev _properties.ballot The new ballot that will be used to approve subsequent reconfigurations.
+      @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
+        @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
+          The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
+          where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
+        @dev _metadata.reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
+        @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
+        @dev _metadata.reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
 
-        @return The ID of the funding cycle that was successfully configured.
+      @return The ID of the funding cycle that was successfully configured.
     */
     function configure(
         uint256 _projectId,
@@ -462,21 +448,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-        @notice 
-        Allows a project to print tickets for a specified beneficiary before payments have been received.
+      @notice 
+      Allows a project to print tickets for a specified beneficiary before payments have been received.
 
-        @dev 
-        This can only be done if the project hasn't yet received a payment after configuring a funding cycle.
+      @dev 
+      This can only be done if the project hasn't yet received a payment after configuring a funding cycle.
 
-        @dev
-        Only a project's owner or a designated operator can print premined tickets.
+      @dev
+      Only a project's owner or a designated operator can print premined tickets.
 
-        @param _projectId The ID of the project to premine tickets for.
-        @param _amount The amount to base the ticket premine off of.
-        @param _currency The currency of the amount to base the ticket premine off of. 
-        @param _beneficiary The address to send the printed tickets to.
-        @param _memo A memo to leave with the printing.
-        @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
+      @param _projectId The ID of the project to premine tickets for.
+      @param _amount The amount to base the ticket premine off of.
+      @param _currency The currency of the amount to base the ticket premine off of. 
+      @param _beneficiary The address to send the printed tickets to.
+      @param _memo A memo to leave with the printing.
+      @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
     */
     function printPreminedTickets(
         uint256 _projectId,
@@ -535,8 +521,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             int256(_weightedAmount);
 
         // Set the count of preconfigure tickets this project has printed.
-        preconfigureTicketCountOf[_projectId] =
-            preconfigureTicketCountOf[_projectId] +
+        _preconfigureTicketCountOf[_projectId] =
+            _preconfigureTicketCountOf[_projectId] +
             _weightedAmount;
 
         // Print the project's tickets for the beneficiary.
@@ -558,21 +544,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Contribute ETH to a project.
+      @notice 
+      Contribute ETH to a project.
 
-        @dev 
-        Print's the project's tickets proportional to the amount of the contribution.
+      @dev 
+      Print's the project's tickets proportional to the amount of the contribution.
 
-        @dev 
-        The msg.value is the amount of the contribution in wei.
+      @dev 
+      The msg.value is the amount of the contribution in wei.
 
-        @param _projectId The ID of the project being contribute to.
-        @param _beneficiary The address to print Tickets for. 
-        @param _memo A memo that will be included in the published event.
-        @param _preferUnstakedTickets Whether ERC20's should be unstaked automatically if they have been issued.
+      @param _projectId The ID of the project being contribute to.
+      @param _beneficiary The address to print Tickets for. 
+      @param _memo A memo that will be included in the published event.
+      @param _preferUnstakedTickets Whether ERC20's should be unstaked automatically if they have been issued.
 
-        @return The ID of the funding cycle that the payment was made during.
+      @return The ID of the funding cycle that the payment was made during.
     */
     function pay(
         uint256 _projectId,
@@ -597,18 +583,18 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Tap into funds that have been contributed to a project's current funding cycle.
+      @notice 
+      Tap into funds that have been contributed to a project's current funding cycle.
 
-        @dev
-        Anyone can tap funds on a project's behalf.
+      @dev
+      Anyone can tap funds on a project's behalf.
 
-        @param _projectId The ID of the project to which the funding cycle being tapped belongs.
-        @param _amount The amount being tapped, in the funding cycle's currency.
-        @param _currency The expected currency being tapped.
-        @param _minReturnedWei The minimum number of wei that the amount should be valued at.
+      @param _projectId The ID of the project to which the funding cycle being tapped belongs.
+      @param _amount The amount being tapped, in the funding cycle's currency.
+      @param _currency The expected currency being tapped.
+      @param _minReturnedWei The minimum number of wei that the amount should be valued at.
 
-        @return The ID of the funding cycle that was tapped.
+      @return The ID of the funding cycle that was tapped.
     */
     function tap(
         uint256 _projectId,
@@ -701,20 +687,20 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Addresses can redeem their Tickets to claim the project's overflowed ETH.
+      @notice 
+      Addresses can redeem their Tickets to claim the project's overflowed ETH.
 
-        @dev
-        Only a ticket's holder or a designated operator can redeem it.
+      @dev
+      Only a ticket's holder or a designated operator can redeem it.
 
-        @param _account The account to redeem tickets for.
-        @param _projectId The ID of the project to which the Tickets being redeemed belong.
-        @param _count The number of Tickets to redeem.
-        @param _minReturnedWei The minimum amount of Wei expected in return.
-        @param _beneficiary The address to send the ETH to.
-        @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
+      @param _account The account to redeem tickets for.
+      @param _projectId The ID of the project to which the Tickets being redeemed belong.
+      @param _count The number of Tickets to redeem.
+      @param _minReturnedWei The minimum amount of Wei expected in return.
+      @param _beneficiary The address to send the ETH to.
+      @param _preferUnstaked If the preference is to redeem tickets that have been converted to ERC-20s.
 
-        @return amount The amount of ETH that the tickets were redeemed for.
+      @return amount The amount of ETH that the tickets were redeemed for.
     */
     function redeem(
         address _account,
@@ -783,14 +769,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Allows a project owner to migrate its funds and operations to a new contract.
+      @notice 
+      Allows a project owner to migrate its funds and operations to a new contract.
 
-        @dev
-        Only a project's owner or a designated operator can migrate it.
+      @dev
+      Only a project's owner or a designated operator can migrate it.
 
-        @param _projectId The ID of the project being migrated.
-        @param _to The contract that will gain the project's funds.
+      @param _projectId The ID of the project being migrated.
+      @param _to The contract that will gain the project's funds.
     */
     function migrate(uint256 _projectId, ITerminal _to)
         external
@@ -833,10 +819,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-        @notice 
-        Receives and allocates funds belonging to the specified project.
+      @notice 
+      Receives and allocates funds belonging to the specified project.
 
-        @param _projectId The ID of the project to which the funds received belong.
+      @param _projectId The ID of the project to which the funds received belong.
     */
     function addToBalance(uint256 _projectId) external payable override {
         // The amount must be positive.
@@ -846,13 +832,13 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /**
-        @notice 
-        Adds to the contract addresses that projects can migrate their Tickets to.
+      @notice 
+      Adds to the contract addresses that projects can migrate their Tickets to.
 
-        @dev
-        Only governance can add a contract to the migration allow list.
+      @dev
+      Only governance can add a contract to the migration allow list.
 
-        @param _contract The contract to allow.
+      @param _contract The contract to allow.
     */
     function allowMigration(ITerminal _contract) external override onlyGov {
         // Can't allow the zero address.
@@ -871,17 +857,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-        @notice 
-        Allow the admin to change the fee. 
+      @notice 
+      Allow the admin to change the fee. 
 
-        @dev
-        Only funding cycle reconfigurations after the new fee is set will use the new fee.
-        All future funding cycles based on configurations made in the past will use the fee that was set at the time of the configuration.
-      
-        @dev
-        Only governance can set a new fee.
+      @dev
+      Only funding cycle reconfigurations after the new fee is set will use the new fee.
+      All future funding cycles based on configurations made in the past will use the fee that was set at the time of the configuration.
+    
+      @dev
+      Only governance can set a new fee.
 
-        @param _fee The new fee percent. Out of 200.
+      @param _fee The new fee percent. Out of 200.
     */
     function setFee(uint256 _fee) external override onlyGov {
         // Fee must be under 100%.
@@ -894,14 +880,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-        @notice 
-        Allows governance to transfer its privileges to another contract.
+      @notice 
+      Allows governance to transfer its privileges to another contract.
 
-        @dev
-        Only the currency governance can appoint a new governance.
+      @dev
+      Only the currency governance can appoint a new governance.
 
-        @param _pendingGovernance The governance to transition power to. 
-          @dev This address will have to accept the responsibility in a subsequent transaction.
+      @param _pendingGovernance The governance to transition power to. 
+        @dev This address will have to accept the responsibility in a subsequent transaction.
     */
     function appointGovernance(address payable _pendingGovernance)
         external
@@ -948,12 +934,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     // --- public transactions --- //
 
     /**
-        @notice 
-        Prints all reserved tickets for a project.
+      @notice 
+      Prints all reserved tickets for a project.
 
-        @param _projectId The ID of the project to which the reserved tickets belong.
+      @param _projectId The ID of the project to which the reserved tickets belong.
 
-        @return amount The amount of tickets that are being printed.
+      @return amount The amount of tickets that are being printed.
     */
     function printReservedTickets(uint256 _projectId)
         public
@@ -1229,8 +1215,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     int256(_unreservedWeightedAmount);
 
                 // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle was configured.
-                preconfigureTicketCountOf[_projectId] =
-                    preconfigureTicketCountOf[_projectId] +
+                _preconfigureTicketCountOf[_projectId] =
+                    _preconfigureTicketCountOf[_projectId] +
                     _unreservedWeightedAmount;
             }
 

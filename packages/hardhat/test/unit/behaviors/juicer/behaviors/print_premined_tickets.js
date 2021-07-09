@@ -214,7 +214,6 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       args: [projectId],
       returns: [weightedPrePrintAmount]
     }),
-    ...(!revert > 0 ? [] : []),
     mockFn({
       condition: !revert,
       mockContract: mockContracts.ticketBooth,
@@ -235,13 +234,19 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       ],
       revert
     }),
-    ...(!revert > 0
+    mockFn({
+      mockContract: mockContracts.ticketBooth,
+      fn: "totalSupplyOf",
+      args: [projectId],
+      returns: [weightedPrePrintAmount.add(weightedAmount)]
+    }),
+    ...(!revert
       ? [
           check({
             contract: targetContract,
-            fn: "preconfigureTicketCountOf",
+            fn: "canPrintPreminedTickets",
             args: [projectId],
-            value: weightedPrePrintAmount.add(weightedAmount)
+            value: true
           })
         ]
       : [])

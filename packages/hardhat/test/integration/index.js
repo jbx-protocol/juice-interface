@@ -9,9 +9,6 @@ let fundingCycleId = BigNumber.from(1);
 
 const run = function(ops) {
   return function() {
-    // before(async function() {
-    //   snapshotId = await this.snapshotFn();
-    // });
     // eslint-disable-next-line no-restricted-syntax
     for (const op of ops) {
       it(op.description, async function() {
@@ -22,9 +19,6 @@ const run = function(ops) {
         };
       });
     }
-    // after(async function() {
-    //   await this.restoreFn(snapshotId);
-    // });
   };
 };
 
@@ -159,7 +153,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < 200; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)

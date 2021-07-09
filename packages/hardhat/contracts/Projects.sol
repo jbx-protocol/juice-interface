@@ -69,6 +69,9 @@ contract Projects is ERC721, IProjects, Operatable {
         @notice 
         Create a new project.
 
+        @dev 
+        Anyone can create a project on an owner's behalf.
+
         @param _owner The owner of the project.
         @param _handle A unique handle for the project.
         @param _uri An ipfs CID to more info about the project.
@@ -118,6 +121,9 @@ contract Projects is ERC721, IProjects, Operatable {
       @notice 
       Allows a project owner to set the project's handle.
 
+      @dev 
+      Only a project's owner or operator can set its handle.
+
       @param _projectId The ID of the project.
       @param _handle The new unique handle for the project.
     */
@@ -149,6 +155,9 @@ contract Projects is ERC721, IProjects, Operatable {
       @notice 
       Allows a project owner to set the project's uri.
 
+      @dev 
+      Only a project's owner or operator can set its uri.
+
       @param _projectId The ID of the project.
       @param _uri An ipfs CDN to more info about the project. Don't include the leading ipfs://
     */
@@ -166,6 +175,9 @@ contract Projects is ERC721, IProjects, Operatable {
     /**
       @notice 
       Allows a project owner to transfer its handle to another address.
+
+      @dev 
+      Only a project's owner or operator can transfer its handle.
 
       @param _projectId The ID of the project to transfer the handle from.
       @param _to The address that can now reallocate the handle.
@@ -211,6 +223,9 @@ contract Projects is ERC721, IProjects, Operatable {
     /**
       @notice 
       Allows an address to claim and handle that has been transfered to them and apply it to a project of theirs.
+
+      @dev 
+      Only a project's owner or operator can claim a handle onto it.
 
       @param _handle The handle being claimed.
       @param _for The address that the handle has been transfered to.
@@ -292,6 +307,9 @@ contract Projects is ERC721, IProjects, Operatable {
     /** 
       @notice
       Allows a project to renew its handle so it can't be claimed until a year after its challenged again.
+
+      @dev 
+      Only a project's owner or operator can renew its handle.
 
       @param _projectId The ID of the project that current has the handle being renewed.
     */

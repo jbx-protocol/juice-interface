@@ -40,7 +40,7 @@ module.exports = [
     }
   },
   {
-    description: "There should be no preconfigured tickets printed",
+    description: "The project should still be able to print premined tickets",
     fn: ({
       randomSignerFn,
       checkFn,
@@ -50,9 +50,9 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "preconfigureTicketCountOf",
+        fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
-        expect: 0
+        expect: true
       })
   },
   {
@@ -148,19 +148,19 @@ module.exports = [
   },
   {
     description:
-      "There should be the correct amount of preconfigured tickets printed",
+      "The project should still be allowed to print more premined tickets",
     fn: ({
       randomSignerFn,
       checkFn,
       contracts,
-      local: { expectedProjectId, expectedPreminedPrintedTicketAmount1 }
+      local: { expectedProjectId }
     }) =>
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.juicer,
-        fn: "preconfigureTicketCountOf",
+        fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
-        expect: expectedPreminedPrintedTicketAmount1
+        expect: true
       })
   },
   {
@@ -211,15 +211,17 @@ module.exports = [
   },
   {
     description:
-      "The tickets from the amount paid before configuration should be added to the preconfigured tickets",
+      "The payment beneficiary should have gotten the correct amount of tickets",
     fn: async ({
       randomSignerFn,
       checkFn,
       contracts,
       constants,
       local: {
-        expectedProjectId,
+        preconfigureTicketBeneficiary1,
+        preconfigureTicketBeneficiary2,
         expectedPreminedPrintedTicketAmount1,
+        expectedProjectId,
         paymentValue1
       }
     }) => {
@@ -227,36 +229,7 @@ module.exports = [
       const expectedPaymentPrintedTicketAmount1 = paymentValue1.mul(
         constants.InitialWeightMultiplier
       );
-
       await checkFn({
-        caller: randomSignerFn(),
-        contract: contracts.juicer,
-        fn: "preconfigureTicketCountOf",
-        args: [expectedProjectId],
-        expect: expectedPreminedPrintedTicketAmount1.add(
-          expectedPaymentPrintedTicketAmount1
-        )
-      });
-
-      return { expectedPaymentPrintedTicketAmount1 };
-    }
-  },
-  {
-    description:
-      "The payment beneficiary should have gotten the correct amount of tickets",
-    fn: async ({
-      randomSignerFn,
-      checkFn,
-      contracts,
-      local: {
-        preconfigureTicketBeneficiary1,
-        preconfigureTicketBeneficiary2,
-        expectedPaymentPrintedTicketAmount1,
-        expectedPreminedPrintedTicketAmount1,
-        expectedProjectId
-      }
-    }) =>
-      checkFn({
         caller: randomSignerFn(),
         contract: contracts.ticketBooth,
         fn: "balanceOf",
@@ -268,7 +241,9 @@ module.exports = [
             ? expectedPreminedPrintedTicketAmount1
             : 0
         )
-      })
+      });
+      return { expectedPaymentPrintedTicketAmount1 };
+    }
   },
   {
     description: "All the tickets should still be staked",
@@ -295,6 +270,23 @@ module.exports = [
             ? expectedPreminedPrintedTicketAmount1
             : 0
         )
+      })
+  },
+  {
+    description:
+      "The project should still be able to print more premined tickets",
+    fn: ({
+      randomSignerFn,
+      checkFn,
+      contracts,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "canPrintPreminedTickets",
+        args: [expectedProjectId],
+        expect: true
       })
   },
   {
@@ -569,7 +561,23 @@ module.exports = [
     }
   },
   {
-    description: "Printing tickets is no longer allowed",
+    description: "Printing tickets should no longer allowed",
+    fn: ({
+      randomSignerFn,
+      checkFn,
+      contracts,
+      local: { expectedProjectId }
+    }) =>
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.juicer,
+        fn: "canPrintPreminedTickets",
+        args: [expectedProjectId],
+        expect: false
+      })
+  },
+  {
+    description: "Confirm that printing tickets is no longer allowed",
     fn: async ({
       executeFn,
       contracts,

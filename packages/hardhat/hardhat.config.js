@@ -86,13 +86,14 @@ module.exports = {
   },
   mocha: {
     bail: true,
+    timeout: 3000
   },
   gasReporter: {
     currency: "USD",
     // gasPrice: 21,
-    enabled: process.env.REPORT_GAS ? true : false,
-    showTimeSpent: true,
-  },
+    enabled: !!process.env.REPORT_GAS,
+    showTimeSpent: true
+  }
 };
 
 const DEBUG = true;

@@ -300,7 +300,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "PaymentModDistribution",
+    "name": "DistributeToPayoutMod",
     "type": "event"
   },
   {
@@ -588,7 +588,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "TicketModDistribution",
+    "name": "DistributeToTicketMod",
     "type": "event"
   },
   {

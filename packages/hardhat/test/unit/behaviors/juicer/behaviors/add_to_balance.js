@@ -31,6 +31,17 @@ const tests = {
         }
       })
     }
+  ],
+  failure: [
+    {
+      description: "zero amount",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        projectId: 1,
+        amount: BigNumber.from(0),
+        revert: "Juicer::addToBalance: BAD_AMOUNT"
+      })
+    }
   ]
 };
 
@@ -76,6 +87,20 @@ module.exports = function() {
         expect(storedBalance.amountWithoutYield).to.equal(
           totalBalanceWithoutYield
         );
+      });
+    });
+  });
+  describe("Failure cases", function() {
+    tests.failure.forEach(function(failureTest) {
+      it(failureTest.description, async function() {
+        const { caller, projectId, amount, revert } = await failureTest.fn(
+          this
+        );
+        await expect(
+          this.targetContract
+            .connect(caller)
+            .addToBalance(projectId, { value: amount })
+        ).to.be.revertedWith(revert);
       });
     });
   });

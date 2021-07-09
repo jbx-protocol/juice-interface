@@ -229,7 +229,7 @@ const ops = ({
         ...(mod
           ? [
               {
-                name: "TicketModDistribution",
+                name: "DistributeToTicketMod",
                 args: [
                   fundingCycleId,
                   projectId,

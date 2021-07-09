@@ -569,14 +569,15 @@ module.exports = [
     }
   },
   {
-    description: "Printing tickets is no longer allowed.",
-    fn: ({
+    description: "Printing tickets is no longer allowed",
+    fn: async ({
       executeFn,
       contracts,
       randomBigNumberFn,
       randomStringFn,
       randomAddressFn,
       randomBoolFn,
+      BigNumber,
       local: { owner, expectedProjectId }
     }) =>
       executeFn({
@@ -585,7 +586,11 @@ module.exports = [
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
-          randomBigNumberFn(),
+          randomBigNumberFn({
+            min: BigNumber.from(1),
+            // Use an arbitrary large big number that can be added to other large big numbers without risk of running into uint256 boundaries.
+            max: BigNumber.from(10).pow(30)
+          }),
           currency,
           randomAddressFn(),
           randomStringFn(),

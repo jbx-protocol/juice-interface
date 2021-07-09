@@ -178,6 +178,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the current funding cycle for the project.
         FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
+        // There's no overflow if there's no funding cycle.
+        if (_fundingCycle.id == 0) return 0;
+
         // Get the amount of current overflow.
         uint256 _currentOverflow = _overflowFrom(_fundingCycle);
 
@@ -188,13 +191,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _totalSupply = ticketBooth.totalSupplyOf(_projectId);
 
         // Get the number of reserved tickets the project has.
-        uint256 _reservedTicketAmount =
-            _reservedTicketAmountFrom(
-                _processedTicketTrackerOf[_projectId],
-                // The reserved rate is in bits 9-24 of the metadata.
-                uint256(uint8(_fundingCycle.metadata >> 8)),
-                _totalSupply
-            );
+        // The reserved rate is in bits 8-15 of the metadata.
+        uint256 _reservedTicketAmount = _reservedTicketAmountFrom(
+            _processedTicketTrackerOf[_projectId],
+            uint256(uint8(_fundingCycle.metadata >> 8)),
+            _totalSupply
+        );
 
         // If there are reserved tickets, add them to the total supply.
         if (_reservedTicketAmount > 0)
@@ -203,21 +205,25 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // If the amount being redeemed is the the total supply, return the rest of the overflow.
         if (_count == _totalSupply) return _currentOverflow;
 
-        // Get a reference to the base proportion.
-        uint256 _base =
-            PRBMathCommon.mulDiv(_currentOverflow, _count, _totalSupply);
+        // Get a reference to the linear proportion.
+        uint256 _base = PRBMathCommon.mulDiv(
+            _currentOverflow,
+            _count,
+            _totalSupply
+        );
 
         // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
-        uint256 _bondingCurveRate =
-            fundingCycles.currentBallotStateOf(_projectId) == BallotState.Active // The reconfiguration bonding curve rate is stored in bytes 41-56 of the metadata property.
-                ? uint256(uint8(_fundingCycle.metadata >> 24)) // The bonding curve rate is stored in bytes 25-40 of the data property after.
-                : uint256(uint8(_fundingCycle.metadata >> 16));
+        uint256 _bondingCurveRate = fundingCycles.currentBallotStateOf(
+            _projectId
+        ) == BallotState.Active // The reconfiguration bonding curve rate is stored in bytes 24-31 of the metadata property.
+            ? uint256(uint8(_fundingCycle.metadata >> 24)) // The bonding curve rate is stored in bytes 16-23 of the data property after.
+            : uint256(uint8(_fundingCycle.metadata >> 16));
 
         // The bonding curve formula.
         // https://www.desmos.com/calculator/sp9ru6zbpk
         // where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
 
-        // If there funding cycle isn't recurring return the base proportion.
+        // These conditions are all part of the same curve. Edge conditions are separated because fewer operation are necessary.
         if (_bondingCurveRate == 200) return _base;
         if (_bondingCurveRate == 0)
             return PRBMathCommon.mulDiv(_base, _count, _totalSupply);
@@ -249,8 +255,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         returns (bool)
     {
         return
+            // The total supply of tickets must equal the preconfigured ticket count.
             ticketBooth.totalSupplyOf(_projectId) ==
             preconfigureTicketCountOf[_projectId] &&
+            // The above condition is still possible after post-configured tickets have been printed due to ticket redeeming.
             // The only case when processedTicketTracker is 0 is before redeeming and printing reserved tickets.
             _processedTicketTrackerOf[_projectId] >= 0 &&
             uint256(_processedTicketTrackerOf[_projectId]) ==
@@ -298,16 +306,22 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Deploys a project. This will mint an ERC-721 into the `_owner`'s account and configure a first funding cycle.
+        Deploys a project. This will mint an ERC-721 into the `_owner`'s account, configure a first funding cycle, and set up any mods.
+
+        @dev
+        Each operation withing this transaction can be done in sequence separately.
+
+        @dev
+        Anyone can deploy a project on an owner's behalf.
 
         @param _owner The address that will own the project.
         @param _handle The project's unique handle.
-        @param _uri A link to information about the project and this funding stage. Must return a JSON file with properties `name`, `logoUri`, and `infoUri`.
+        @param _uri A link to information about the project and this funding cycle.
         @param _properties The funding cycle configuration.
-          @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
+          @dev _properties.target The amount that the project wants to receive in this funding cycle. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
-          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
+          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
+          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -331,26 +345,22 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         PaymentMod[] memory _paymentMods,
         TicketMod[] memory _ticketMods
     ) external override {
+        // Make sure the metadata checks out. If it does, return a packed version of it.
+        uint256 _packedMetadata = _validateAndPackFundingCycleMetadata(
+            _metadata
+        );
+
         // Create the project for the owner.
         uint256 _projectId = projects.create(_owner, _handle, _uri, this);
 
-        // Set this Juicer as the project's current terminal in the directory.
-        // Must do this before the call to configure.
-        terminalDirectory.setTerminal(_projectId, this);
-
-        // Make sure the metadata checks out. If it does, return a packed version of it.
-        uint256 _packedMetadata =
-            _validateAndPackFundingCycleMetadata(_metadata);
-
         // Configure the funding stage's state.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.configure(
-                _projectId,
-                _properties,
-                _packedMetadata,
-                fee,
-                true
-            );
+        FundingCycle memory _fundingCycle = fundingCycles.configure(
+            _projectId,
+            _properties,
+            _packedMetadata,
+            fee,
+            true
+        );
 
         // Set payment mods if there are any.
         if (_paymentMods.length > 0)
@@ -371,16 +381,19 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Configures the properties of the current funding stage if the project hasn't distributed tickets yet, or
-        sets the properties of the proposed funding stage that will take effect once the current one expires
+        Configures the properties of the current funding cycle if the project hasn't distributed tickets yet, or
+        sets the properties of the proposed funding cycle that will take effect once the current one expires
         if it is approved by the current funding cycle's ballot.
+
+        @dev
+        Only a project's owner or a designated operator can configure its funding cycles.
 
         @param _projectId The ID of the project being reconfigured. 
         @param _properties The funding cycle configuration.
           @dev _properties.target The amount that the project wants to receive in this funding stage. Sent as a wad.
           @dev _properties.currency The currency of the `target`. Send 0 for ETH or 1 for USD.
-          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days.
-          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent.
+          @dev _properties.duration The duration of the funding stage for which the `target` amount is needed. Measured in days. Send 0 for a boundless cycle reconfigurable at any time.
+          @dev _properties.cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This has no effect for a project's first funding cycle.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding stage is compared to the project's previous funding stage.
             If it's 200, each funding stage will have equal weight.
             If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
@@ -394,7 +407,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
           @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
           @dev _metadata.reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
 
-        @return fundingCycleId The id of the funding cycle that was successfully configured.
+        @return The ID of the funding cycle that was successfully configured.
     */
     function configure(
         uint256 _projectId,
@@ -410,24 +423,24 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _projectId,
             Operations.Configure
         )
-        returns (uint256 fundingCycleId)
+        returns (uint256)
     {
         // Make sure the metadata is validated, and pack it into a uint256.
-        uint256 _packedMetadata =
-            _validateAndPackFundingCycleMetadata(_metadata);
+        uint256 _packedMetadata = _validateAndPackFundingCycleMetadata(
+            _metadata
+        );
 
         // If the project can still print premined tickets configure the active funding cycle instead of creating a standby one.
         bool _shouldConfigureActive = canPrintPreminedTickets(_projectId);
 
         // Configure the funding stage's state.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.configure(
-                _projectId,
-                _properties,
-                _packedMetadata,
-                fee,
-                _shouldConfigureActive
-            );
+        FundingCycle memory _fundingCycle = fundingCycles.configure(
+            _projectId,
+            _properties,
+            _packedMetadata,
+            fee,
+            _shouldConfigureActive
+        );
 
         // Set payment mods for the new configuration if there are any.
         if (_paymentMods.length > 0)
@@ -449,18 +462,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-      @notice 
-      Allows a project to print tickets for a specified beneficiary before payments have been received.
+        @notice 
+        Allows a project to print tickets for a specified beneficiary before payments have been received.
 
-      @dev 
-      This can only be done if the project hasn't yet received a payment.
+        @dev 
+        This can only be done if the project hasn't yet received a payment after configuring a funding cycle.
 
-      @param _projectId The ID of the project to premine tickets for.
-      @param _amount The amount to base the ticket premine off of.
-      @param _currency The currency of the amount to base the ticket premine off of. 
-      @param _beneficiary The address to send the printed tickets to.
-      @param _memo A memo to leave with the printing.
-      @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
+        @dev
+        Only a project's owner or a designated operator can print premined tickets.
+
+        @param _projectId The ID of the project to premine tickets for.
+        @param _amount The amount to base the ticket premine off of.
+        @param _currency The currency of the amount to base the ticket premine off of. 
+        @param _beneficiary The address to send the printed tickets to.
+        @param _memo A memo to leave with the printing.
+        @param _preferUnstakedTickets If there is a preference to unstake the printed tickets.
     */
     function printPreminedTickets(
         uint256 _projectId,
@@ -472,19 +488,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     )
         external
         override
-        nonReentrant
         requirePermission(
             projects.ownerOf(_projectId),
             _projectId,
             Operations.PrintPreminedTickets
         )
     {
-        // Make sure the project hasnt printed tickets that werent preconfigure.
-        require(
-            canPrintPreminedTickets(_projectId),
-            "Juicer::printTickets: ALREADY_ACTIVE"
-        );
-
         // Can't send to the zero address.
         require(
             _beneficiary != address(0),
@@ -499,13 +508,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _ethPrice = prices.getETHPriceFor(_currency);
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
-        uint256 _weightedAmount =
-            PRBMathUD60x18.mul(PRBMathUD60x18.div(_amount, _ethPrice), _weight);
+        uint256 _weightedAmount = PRBMathUD60x18.mul(
+            PRBMathUD60x18.div(_amount, _ethPrice),
+            _weight
+        );
 
-        // Set the count of preconfigure tickets this project has printed.
-        preconfigureTicketCountOf[_projectId] =
-            preconfigureTicketCountOf[_projectId] +
-            _weightedAmount;
+        // Make sure the project hasnt printed tickets that werent preconfigure.
+        // Do this check after the external calls above.
+        require(
+            canPrintPreminedTickets(_projectId),
+            "Juicer::printTickets: ALREADY_ACTIVE"
+        );
 
         // Set the preconfigure tickets as processed so that reserved tickets cant be minted against them.
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
@@ -516,9 +529,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 uint256(type(int256).max),
             "Juicer::printTickets: INT_LIMIT_REACHED"
         );
+
         _processedTicketTrackerOf[_projectId] =
             _processedTicketTrackerOf[_projectId] +
             int256(_weightedAmount);
+
+        // Set the count of preconfigure tickets this project has printed.
+        preconfigureTicketCountOf[_projectId] =
+            preconfigureTicketCountOf[_projectId] +
+            _weightedAmount;
 
         // Print the project's tickets for the beneficiary.
         ticketBooth.print(
@@ -542,15 +561,18 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @notice 
         Contribute ETH to a project.
 
-        @dev Mints the project's tickets proportional to the amount of the contribution.
-        @dev The msg.value is the amount of the contribution in wei.
+        @dev 
+        Print's the project's tickets proportional to the amount of the contribution.
+
+        @dev 
+        The msg.value is the amount of the contribution in wei.
 
         @param _projectId The ID of the project being contribute to.
         @param _beneficiary The address to print Tickets for. 
         @param _memo A memo that will be included in the published event.
         @param _preferUnstakedTickets Whether ERC20's should be unstaked automatically if they have been issued.
 
-        @return _fundingCycleId The ID of the funding cycle that the payment was made during.
+        @return The ID of the funding cycle that the payment was made during.
     */
     function pay(
         uint256 _projectId,
@@ -578,29 +600,36 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         @notice 
         Tap into funds that have been contributed to a project's current funding cycle.
 
+        @dev
+        Anyone can tap funds on a project's behalf.
+
         @param _projectId The ID of the project to which the funding cycle being tapped belongs.
         @param _amount The amount being tapped, in the funding cycle's currency.
         @param _currency The expected currency being tapped.
         @param _minReturnedWei The minimum number of wei that the amount should be valued at.
+
+        @return The ID of the funding cycle that was tapped.
     */
     function tap(
         uint256 _projectId,
         uint256 _amount,
         uint256 _currency,
         uint256 _minReturnedWei
-    ) external override nonReentrant {
-        // The ID of the funding cycle that was tapped.
-        FundingCycle memory _fundingCycle =
-            fundingCycles.tap(_projectId, _amount);
+    ) external override nonReentrant returns (uint256) {
+        // Register the funds as tapped. Get the ID of the funding cycle that was tapped.
+        FundingCycle memory _fundingCycle = fundingCycles.tap(
+            _projectId,
+            _amount
+        );
+
+        // If there's no funding cycle, there are no funds to tap.
+        if (_fundingCycle.id == 0) return 0;
 
         // Make sure the currency's match.
         require(
             _currency == _fundingCycle.currency,
             "Juicer::tap: UNEXPECTED_CURRENCY"
         );
-
-        // Get a reference to this project's current balance, including any earned yield.
-        uint256 _balance = balanceOf[_fundingCycle.projectId];
 
         // Get a reference to this project's current balance, including any earned yield.
         // Get the currency price of ETH.
@@ -610,62 +639,47 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The amount of ETH that is being tapped.
         uint256 _tappedWeiAmount = PRBMathUD60x18.div(_amount, _ethPrice);
 
+        // The amount being tapped must be at least as much as was expected.
+        require(_minReturnedWei <= _tappedWeiAmount, "Juicer::tap: INADEQUATE");
+
+        // Get a reference to this project's current balance, including any earned yield.
+        uint256 _balance = balanceOf[_fundingCycle.projectId];
+
         // The amount being tapped must be available.
         require(
             _tappedWeiAmount <= _balance,
             "Juicer::tap: INSUFFICIENT_FUNDS"
         );
 
-        // The amount being tapped must be at least as much as was expected.
-        require(_minReturnedWei <= _tappedWeiAmount, "Juicer::tap: INADEQUATE");
-
         // Removed the tapped funds from the project's balance.
         balanceOf[_projectId] = _balance - _tappedWeiAmount;
 
         // Get a reference to the project owner, which will receive the admin's tickets from paying the fee,
         // and receive any extra tapped funds not allocated to mods.
-        address payable _projectOwner =
-            payable(projects.ownerOf(_fundingCycle.projectId));
+        address payable _projectOwner = payable(
+            projects.ownerOf(_fundingCycle.projectId)
+        );
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
-        uint256 _govFeeAmount =
-            _tappedWeiAmount -
-                PRBMathCommon.mulDiv(
-                    _tappedWeiAmount,
-                    200,
-                    _fundingCycle.fee + 200
-                );
+        uint256 _govFeeAmount = _tappedWeiAmount -
+            PRBMathCommon.mulDiv(
+                _tappedWeiAmount,
+                200,
+                _fundingCycle.fee + 200
+            );
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
-        if (_govFeeAmount > 0) {
-            // When processing the admin fee, save gas if the admin is using this juice terminal.
-            if (
-                terminalDirectory.terminalOf(
-                    JuiceProject(governance).projectId()
-                ) == this
-            ) {
-                // When processing the admin fee, save gas if the admin is using this juice terminal.
-                _pay(
-                    JuiceProject(governance).projectId(),
-                    _govFeeAmount,
-                    _projectOwner,
-                    "Juice fee",
-                    false
-                );
-            } else {
-                JuiceProject(governance).pay{value: _govFeeAmount}(
-                    _projectOwner,
-                    "Juice fee",
-                    false
-                );
-            }
-        }
-        // Transfer the tapped amount minus the fees.
-        uint256 _transferAmount = _tappedWeiAmount - _govFeeAmount;
+        // The project's owner will be the beneficiary of the resulting printed tickets from the governance project.
+        if (_govFeeAmount > 0) _takeFee(_govFeeAmount, _projectOwner);
 
-        // Pay mods and get a reference to the leftover transfer amount after all mods have been paid.
-        uint256 _leftoverTransferAmount =
-            _payMods(_fundingCycle, _transferAmount);
+        // The net transfer amount is the tapped amount minus the fee.
+        uint256 _netTransferAmount = _tappedWeiAmount - _govFeeAmount;
+
+        // Payout to mods and get a reference to the leftover transfer amount after all mods have been paid.
+        uint256 _leftoverTransferAmount = _distributeToPayoutMods(
+            _fundingCycle,
+            _netTransferAmount
+        );
 
         // Transfer any remaining balance to the beneficiary.
         if (_leftoverTransferAmount > 0)
@@ -677,16 +691,21 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _projectOwner,
             _amount,
             _fundingCycle.currency,
-            _transferAmount,
+            _netTransferAmount,
             _leftoverTransferAmount,
             _govFeeAmount,
             msg.sender
         );
+
+        return _fundingCycle.id;
     }
 
     /**
         @notice 
         Addresses can redeem their Tickets to claim the project's overflowed ETH.
+
+        @dev
+        Only a ticket's holder or a designated operator can redeem it.
 
         @param _account The account to redeem tickets for.
         @param _projectId The ID of the project to which the Tickets being redeemed belong.
@@ -747,7 +766,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             ? -(int256(_count) - _processedTicketTracker) // simply subtract otherwise.
             : _processedTicketTracker - int256(_count);
 
-        // Redeem the tickets, which removes and burns them from the account's wallet.
+        // Redeem the tickets, which burns them.
         ticketBooth.redeem(_account, _projectId, _count, _preferUnstaked);
 
         // Transfer funds to the specified address.
@@ -765,7 +784,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
     /**
         @notice 
-        Allows a project owner to migrate its funds to a new contract that can manage a project's funds.
+        Allows a project owner to migrate its funds and operations to a new contract.
+
+        @dev
+        Only a project's owner or a designated operator can migrate it.
 
         @param _projectId The ID of the project being migrated.
         @param _to The contract that will gain the project's funds.
@@ -811,12 +833,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-      @notice 
-      Receives and allocates funds belonging to the specified project.
+        @notice 
+        Receives and allocates funds belonging to the specified project.
 
-      @param _projectId The ID of the project to which the funds received belong.
+        @param _projectId The ID of the project to which the funds received belong.
     */
     function addToBalance(uint256 _projectId) external payable override {
+        // The amount must be positive.
+        require(msg.value > 0, "Juicer::addToBalance: BAD_AMOUNT");
         balanceOf[_projectId] = balanceOf[_projectId] + msg.value;
         emit AddToBalance(_projectId, msg.value, msg.sender);
     }
@@ -824,6 +848,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /**
         @notice 
         Adds to the contract addresses that projects can migrate their Tickets to.
+
+        @dev
+        Only governance can add a contract to the migration allow list.
 
         @param _contract The contract to allow.
     */
@@ -844,10 +871,17 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-      @notice 
-      Allow the admin to change the fee. 
+        @notice 
+        Allow the admin to change the fee. 
 
-      @param _fee The new fee percent. Out of 200.
+        @dev
+        Only funding cycle reconfigurations after the new fee is set will use the new fee.
+        All future funding cycles based on configurations made in the past will use the fee that was set at the time of the configuration.
+      
+        @dev
+        Only governance can set a new fee.
+
+        @param _fee The new fee percent. Out of 200.
     */
     function setFee(uint256 _fee) external override onlyGov {
         // Fee must be under 100%.
@@ -860,11 +894,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     }
 
     /** 
-      @notice 
-      Allows governance to transfer its privileges to another contract.
+        @notice 
+        Allows governance to transfer its privileges to another contract.
 
-      @param _pendingGovernance The governance to transition power to. 
-        This address will have to claim the responsibility in a subsequent transaction.
+        @dev
+        Only the currency governance can appoint a new governance.
+
+        @param _pendingGovernance The governance to transition power to. 
+          @dev This address will have to accept the responsibility in a subsequent transaction.
     */
     function appointGovernance(address payable _pendingGovernance)
         external
@@ -934,12 +971,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // Get a reference to the number of tickets that need to be printed.
         // If there's no funding cycle, there's no tickets to print.
+        // The reserved rate is in bits 8-15 of the metadata.
         amount = _reservedTicketAmountFrom(
             _processedTicketTrackerOf[_projectId],
-            // The reserved rate is in bits 9-24 of the metadata.
             uint256(uint8(_fundingCycle.metadata >> 8)),
             _totalTickets
         );
+
+        // If there's nothing to print, return.
+        if (amount == 0) return amount;
 
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
@@ -950,48 +990,16 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Set the tracker to be the new total supply.
         _processedTicketTrackerOf[_projectId] = int256(_totalTickets + amount);
 
+        // Distribute tickets to mods and get a reference to the leftover amount to print after all mods have had their share printed.
+        uint256 _leftoverTicketAmount = _distributeToTicketMods(
+            _fundingCycle,
+            amount
+        );
+
         // Get a reference to the project owner.
         address _owner = projects.ownerOf(_projectId);
 
-        // If there's nothing to print, return.
-        if (amount == 0) return amount;
-
-        // Get a reference to the leftover reserved ticket amount after printing for all mods.
-        uint256 _leftoverTicketAmount = amount;
-
-        // Get a reference to the project's ticket mods.
-        TicketMod[] memory _mods =
-            modStore.ticketModsOf(_projectId, _fundingCycle.configured);
-
-        //Transfer between all mods.
-        for (uint256 _i = 0; _i < _mods.length; _i++) {
-            // Get a reference to the mod being iterated on.
-            TicketMod memory _mod = _mods[_i];
-
-            // The amount to send towards mods.
-            uint256 _modCut = PRBMathCommon.mulDiv(amount, _mod.percent, 200);
-            // Print tickets for the mod if needed.
-            if (_modCut > 0)
-                ticketBooth.print(
-                    _mod.beneficiary,
-                    _projectId,
-                    _modCut,
-                    _mod.preferUnstaked
-                );
-
-            // Subtract from the amount to be sent to the beneficiary.
-            _leftoverTicketAmount = _leftoverTicketAmount - _modCut;
-
-            emit TicketModDistribution(
-                _fundingCycle.id,
-                _projectId,
-                _mod,
-                _modCut,
-                msg.sender
-            );
-        }
-
-        // Mint any remaining reserved tickets to the beneficiary.
+        // Print any remaining reserved tickets to the owner.
         if (_leftoverTicketAmount > 0)
             ticketBooth.print(_owner, _projectId, _leftoverTicketAmount, false);
 
@@ -1011,37 +1019,39 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @notice
       Pays out the mods for the specified funding cycle.
 
-      @param _fundingCycle The funding cycle to base the payment from.
+      @param _fundingCycle The funding cycle to base the distribution on.
       @param _amount The total amount being paid out.
 
       @return leftoverAmount If the mod percents dont add up to 100%, the leftover amount is returned.
 
     */
-    function _payMods(FundingCycle memory _fundingCycle, uint256 _amount)
-        private
-        returns (uint256 leftoverAmount)
-    {
+    function _distributeToPayoutMods(
+        FundingCycle memory _fundingCycle,
+        uint256 _amount
+    ) private returns (uint256 leftoverAmount) {
         // Set the leftover amount to the initial amount.
         leftoverAmount = _amount;
 
         // Get a reference to the project's payment mods.
-        PaymentMod[] memory _mods =
-            modStore.paymentModsOf(
-                _fundingCycle.projectId,
-                _fundingCycle.configured
-            );
+        PaymentMod[] memory _mods = modStore.paymentModsOf(
+            _fundingCycle.projectId,
+            _fundingCycle.configured
+        );
 
         if (_mods.length == 0) return leftoverAmount;
 
-        // Get the paying project's handle.
-        bytes32 _handle = projects.handleOf(_fundingCycle.projectId);
+        // Keep a reference to the paying project's handle. This'll be used for a memo in the payout.
+        // This should only be done once while looping.
+        bytes32 _handle;
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             // Get a reference to the mod being iterated on.
             PaymentMod memory _mod = _mods[_i];
+
             // The amount to send towards mods.
             uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
+
             if (_modCut > 0) {
                 // Transfer ETH to the mod.
                 // If there's an allocator set, transfer to its `allocate` function.
@@ -1052,23 +1062,29 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         _mod.beneficiary
                     );
                 } else if (_mod.projectId != 0) {
-                    // Otherwise, if a project is specified, pay its Juice project.
+                    // Otherwise, if a project is specified, make a payment to it.
 
                     // Get a reference to the Juice terminal being used.
-                    ITerminal _terminal =
-                        terminalDirectory.terminalOf(_mod.projectId);
+                    ITerminal _terminal = terminalDirectory.terminalOf(
+                        _mod.projectId
+                    );
 
-                    // The project must have a juice terminal to send funds to.
+                    // The project must have a terminal to send funds to.
                     require(
                         _terminal != ITerminal(address(0)),
                         "Juicer::tap: BAD_MOD"
                     );
 
-                    // Make a memo using the paying project's handle.
-                    string memory _memo =
-                        string(bytes.concat("Payment from @", _handle));
+                    // Get the handle if it isn't yet in memory.
+                    if (_handle == bytes32(0))
+                        _handle = projects.handleOf(_fundingCycle.projectId);
 
-                    // Save gas if this terminal is being used.
+                    // Make a memo using the paying project's handle.
+                    string memory _memo = string(
+                        bytes.concat("Payment from @", _handle)
+                    );
+
+                    // Save gas if this contract is being used as the terminal.
                     if (_terminal == this) {
                         _pay(
                             _mod.projectId,
@@ -1094,7 +1110,60 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Subtract from the amount to be sent to the beneficiary.
             leftoverAmount = leftoverAmount - _modCut;
 
-            emit PaymentModDistribution(
+            emit DistributeToPayoutMod(
+                _fundingCycle.id,
+                _fundingCycle.projectId,
+                _mod,
+                _modCut,
+                msg.sender
+            );
+        }
+    }
+
+    /** 
+      @notice
+      distributed tickets to the mods for the specified funding cycle.
+
+      @param _fundingCycle The funding cycle to base the ticket distribution on.
+      @param _amount The total amount of tickets to print.
+
+      @return leftoverAmount If the mod percents dont add up to 100%, the leftover amount is returned.
+
+    */
+    function _distributeToTicketMods(
+        FundingCycle memory _fundingCycle,
+        uint256 _amount
+    ) private returns (uint256 leftoverAmount) {
+        // Set the leftover amount to the initial amount.
+        leftoverAmount = _amount;
+
+        // Get a reference to the project's ticket mods.
+        TicketMod[] memory _mods = modStore.ticketModsOf(
+            _fundingCycle.projectId,
+            _fundingCycle.configured
+        );
+
+        //Transfer between all mods.
+        for (uint256 _i = 0; _i < _mods.length; _i++) {
+            // Get a reference to the mod being iterated on.
+            TicketMod memory _mod = _mods[_i];
+
+            // The amount to send towards mods.
+            uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
+
+            // Print tickets for the mod if needed.
+            if (_modCut > 0)
+                ticketBooth.print(
+                    _mod.beneficiary,
+                    _fundingCycle.projectId,
+                    _modCut,
+                    _mod.preferUnstaked
+                );
+
+            // Subtract from the amount to be sent to the beneficiary.
+            leftoverAmount = leftoverAmount - _modCut;
+
+            emit DistributeToTicketMod(
                 _fundingCycle.id,
                 _fundingCycle.projectId,
                 _mod,
@@ -1118,45 +1187,35 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the current funding cycle for the project.
         FundingCycle memory _fundingCycle = fundingCycles.currentOf(_projectId);
 
-        // Get a reference to the current funding cycle for the project.
         // Use the funding cycle's weight if it exists. Otherwise use the base weight.
-        uint256 _weight =
-            _fundingCycle.number == 0
-                ? fundingCycles.BASE_WEIGHT()
-                : _fundingCycle.weight;
+        uint256 _weight = _fundingCycle.number == 0
+            ? fundingCycles.BASE_WEIGHT()
+            : _fundingCycle.weight;
 
         // Multiply the amount by the funding cycle's weight to determine the amount of tickets to print.
         uint256 _weightedAmount = PRBMathUD60x18.mul(_amount, _weight);
 
         // Use the funding cycle's reserved rate if it exists. Otherwise don't set a reserved rate.
-        uint256 _reservedRate =
-            _fundingCycle.number == 0
-                ? 0
-                : uint256(uint8(_fundingCycle.metadata >> 8));
+        // The reserved rate is stored in bytes 8-15 of the metadata property.
+        uint256 _reservedRate = _fundingCycle.number == 0
+            ? 0
+            : uint256(uint8(_fundingCycle.metadata >> 8));
+
+        // Only print the tickets that are unreserved.
+        uint256 _unreservedWeightedAmount = PRBMathCommon.mulDiv(
+            _weightedAmount,
+            200 - _reservedRate,
+            200
+        );
 
         // Add to the balance of the project.
         balanceOf[_projectId] = balanceOf[_projectId] + _amount;
 
-        // Only print the tickets that are unreserved.
-        uint256 _unreservedWeightedAmount =
-            PRBMathCommon.mulDiv(
-                _weightedAmount,
-                // The reserved rate is stored in bytes 9-24 of the metadata property.
-                200 - _reservedRate,
-                200
-            );
-
-        // If theres an unreserved weighted amount, print tickets representing this weight.
+        // If theres an unreserved weighted amount, print tickets representing this amount for the beneficiary.
         if (_unreservedWeightedAmount > 0) {
-            // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle.
+            // If there's no funding cycle, track this payment as having been made before a configuration.
             if (_fundingCycle.number == 0) {
-                // Set the count of premined tickets this project has printed.
-                // This will let the owner continue to print premined tickets.
-                preconfigureTicketCountOf[_projectId] =
-                    preconfigureTicketCountOf[_projectId] +
-                    _unreservedWeightedAmount;
-
-                // Mark the premined tickets as processed so that reserved tickets cant later be printed against them.
+                // Mark the premined tickets as processed so that reserved tickets can't later be printed against them.
                 // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
                 require(
                     _processedTicketTrackerOf[_projectId] < 0 ||
@@ -1168,6 +1227,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _processedTicketTrackerOf[_projectId] =
                     _processedTicketTrackerOf[_projectId] +
                     int256(_unreservedWeightedAmount);
+
+                // If theres no funding cycle, add these tickets to the amount that were printed before a funding cycle was configured.
+                preconfigureTicketCountOf[_projectId] =
+                    preconfigureTicketCountOf[_projectId] +
+                    _unreservedWeightedAmount;
             }
 
             // Print the project's tickets for the beneficiary.
@@ -1179,9 +1243,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             );
         } else if (_weightedAmount > 0) {
             // If there is no unreserved weight amount but there is a weighted amount,
-            // the weighted amount should be explicitly tracked as reserved since no unreserved tickets were printed.
+            // the full weighted amount should be explicitly tracked as reserved since no unreserved tickets were printed.
 
-            // Otherwise if the full amount is reserved, adjust the tracker to account for this correctly.
             // Subtract the total weighted amount from the tracker so the full reserved ticket amount can be printed later.
             // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
             require(
@@ -1212,6 +1275,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @notice 
       Gets the amount overflowed in relation to the provided funding cycle.
 
+      @dev
+      This amount changes as the price of ETH changes against the funding cycle's currency.
+
       @param _currentFundingCycle The ID of the funding cycle to base the overflow on.
 
       @return overflow The current overflow of funds.
@@ -1222,27 +1288,29 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         returns (uint256)
     {
         // Get the current price of ETH.
-        uint256 _ethPrice =
-            prices.getETHPriceFor(_currentFundingCycle.currency);
+        uint256 _ethPrice = prices.getETHPriceFor(
+            _currentFundingCycle.currency
+        );
 
         // Get a reference to the amount still tappable in the current funding cycle.
-        uint256 _limit =
-            _currentFundingCycle.target - _currentFundingCycle.tapped;
+        uint256 _limit = _currentFundingCycle.target -
+            _currentFundingCycle.tapped;
 
-        // The amount of ETH currently that the owner could still tap if its available. This amount isn't considered overflow.
-        uint256 _ethLimit =
-            _limit == 0 ? 0 : PRBMathUD60x18.div(_limit, _ethPrice);
+        // The amount of ETH that the owner could currently still tap if its available. This amount isn't considered overflow.
+        uint256 _ethLimit = _limit == 0
+            ? 0
+            : PRBMathUD60x18.div(_limit, _ethPrice);
 
-        // Get the current balance of the project with yield.
+        // Get the current balance of the project.
         uint256 _balanceOf = balanceOf[_currentFundingCycle.projectId];
 
-        // Overflow is the balance of this project including any accumulated yields, minus the reserved amount.
+        // Overflow is the balance of this project minus the reserved amount.
         return _balanceOf < _ethLimit ? 0 : _balanceOf - _ethLimit;
     }
 
     /** 
       @notice 
-      Gets the amount of reserved tickets that a project has given the specified total tickets.
+      Gets the amount of reserved tickets currently tracked for a project given a reserved rate.
 
       @param _processedTicketTracker The tracker to make the calculation with.
       @param _reservedRate The reserved rate to use to make the calculation.
@@ -1256,14 +1324,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _totalEligibleTickets
     ) private pure returns (uint256) {
         // Get a reference to the amount of tickets that are unprocessed.
-        uint256 _unprocessedTicketBalanceOf =
-            _processedTicketTracker >= 0 // preconfigure tickets shouldn't contribute to the reserved ticket amount.
-                ? _totalEligibleTickets - uint256(_processedTicketTracker)
-                : _totalEligibleTickets + uint256(-_processedTicketTracker);
+        uint256 _unprocessedTicketBalanceOf = _processedTicketTracker >= 0 // preconfigure tickets shouldn't contribute to the reserved ticket amount.
+            ? _totalEligibleTickets - uint256(_processedTicketTracker)
+            : _totalEligibleTickets + uint256(-_processedTicketTracker);
 
         // If there are no unprocessed tickets, return.
         if (_unprocessedTicketBalanceOf == 0) return 0;
 
+        // If all tickets are reserved, return the full unprocessed amount.
         if (_reservedRate == 200) return _unprocessedTicketBalanceOf;
 
         return
@@ -1305,11 +1373,43 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // version 0 in the first 8 bytes.
         packed = 0;
-        // reserved rate in bytes 9-16.
+        // reserved rate in bytes 8-15.
         packed |= _metadata.reservedRate << 8;
-        // bonding curve in bytes 17-24 bytes.
+        // bonding curve in bytes 16-23.
         packed |= _metadata.bondingCurveRate << 16;
-        // reconfiguration bonding curve rate in bytes 25-32 bytes.
+        // reconfiguration bonding curve rate in bytes 24-31.
         packed |= _metadata.reconfigurationBondingCurveRate << 24;
+    }
+
+    /** 
+      @notice 
+      Takes a fee into the Governance contract's project.
+
+      @param _feeAmount The amount to take as a fee.
+      @param _beneficiary The address to print governance's tickets for.
+    */
+    function _takeFee(uint256 _feeAmount, address _beneficiary) private {
+        // When processing the admin fee, save gas if the admin is using this contract as its terminal.
+        if (
+            terminalDirectory.terminalOf(
+                JuiceProject(governance).projectId()
+            ) == this
+        ) {
+            // Use the local pay call.
+            _pay(
+                JuiceProject(governance).projectId(),
+                _feeAmount,
+                _beneficiary,
+                "Juice fee",
+                false
+            );
+        } else {
+            // Use the external pay call of the governance contract.
+            JuiceProject(governance).pay{value: _feeAmount}(
+                _beneficiary,
+                "Juice fee",
+                false
+            );
+        }
     }
 }

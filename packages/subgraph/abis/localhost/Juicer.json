@@ -300,7 +300,7 @@
         "type": "address"
       }
     ],
-    "name": "PaymentModDistribution",
+    "name": "DistributeToPayoutMod",
     "type": "event"
   },
   {
@@ -588,7 +588,7 @@
         "type": "address"
       }
     ],
-    "name": "TicketModDistribution",
+    "name": "DistributeToTicketMod",
     "type": "event"
   },
   {

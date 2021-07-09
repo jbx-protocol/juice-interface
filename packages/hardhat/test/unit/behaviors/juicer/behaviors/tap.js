@@ -293,7 +293,7 @@ const ops = ({
   if (projectMod) {
     mods.push(projectMod);
     modEvents.push({
-      name: "PaymentModDistribution",
+      name: "DistributeToPayoutMod",
       args: [
         fundingCycleId,
         projectId,
@@ -312,7 +312,7 @@ const ops = ({
   }
   if (addressMod) {
     modEvents.push({
-      name: "PaymentModDistribution",
+      name: "DistributeToPayoutMod",
       args: [
         fundingCycleId,
         projectId,
@@ -335,7 +335,7 @@ const ops = ({
     allocator = allocatorMod.allocator;
     allocatorMod.allocator = allocatorMod.allocator.address;
     modEvents.push({
-      name: "PaymentModDistribution",
+      name: "DistributeToPayoutMod",
       args: [
         fundingCycleId,
         projectId,

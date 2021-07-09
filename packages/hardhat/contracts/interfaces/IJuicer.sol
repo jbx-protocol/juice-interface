@@ -30,7 +30,7 @@ interface IJuicer {
         address indexed beneficiary,
         uint256 amount,
         uint256 currency,
-        uint256 transferAmount,
+        uint256 netTransferAmount,
         uint256 beneficiaryTransferAmount,
         uint256 govFeeAmount,
         address caller
@@ -53,14 +53,14 @@ interface IJuicer {
         address caller
     );
 
-    event PaymentModDistribution(
+    event DistributeToPayoutMod(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         PaymentMod mod,
         uint256 modCut,
         address caller
     );
-    event TicketModDistribution(
+    event DistributeToTicketMod(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
         TicketMod mod,
@@ -150,7 +150,7 @@ interface IJuicer {
         FundingCycleMetadata calldata _metadata,
         PaymentMod[] memory _paymentMods,
         TicketMod[] memory _ticketMods
-    ) external returns (uint256 fundingCycleId);
+    ) external returns (uint256);
 
     function printPreminedTickets(
         uint256 _projectId,
@@ -166,7 +166,7 @@ interface IJuicer {
         uint256 _amount,
         uint256 _currency,
         uint256 _minReturnedWei
-    ) external;
+    ) external returns (uint256);
 
     function redeem(
         address _account,

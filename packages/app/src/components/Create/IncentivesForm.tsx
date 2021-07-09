@@ -92,9 +92,10 @@ export default function IncentivesForm({
             <div style={{ color: colors.text.secondary, marginTop: 30 }}>
               <p>
                 <span style={{ color: colors.text.primary }}>
-                  <div style={{ fontWeight: 600 }}>Neutral</div> Everyone
-                  benefits equally from paying your project or redeeming their
-                  tokens.
+                  <span style={{ fontWeight: 600 }}>Neutral</span>
+                  <br />
+                  Everyone benefits equally from paying your project or
+                  redeeming their tokens.
                 </span>{' '}
                 The number of tokens earned per amount paid is always the same.
                 When redeemed for this project's overflow, tokens are always
@@ -102,9 +103,10 @@ export default function IncentivesForm({
               </p>
               <p>
                 <span style={{ color: colors.text.primary }}>
-                  <div style={{ fontWeight: 600 }}>Growth</div> Encourages
-                  supporters to fund your project earlier, and hold their tokens
-                  instead of redeem them.
+                  <span style={{ fontWeight: 600 }}>Growth</span>
+                  <br />
+                  Encourages supporters to fund your project earlier, and hold
+                  their tokens instead of redeem them.
                 </span>{' '}
                 Payments made sooner after a project has been created will
                 reward the payer with more tokens than if they paid the same

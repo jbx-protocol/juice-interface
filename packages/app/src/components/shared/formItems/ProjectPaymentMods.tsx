@@ -253,7 +253,7 @@ export default function ProjectPaymentMods({
         </div>
       )
     },
-    [mods],
+    [mods, colors, radii],
   )
 
   if (!mods) return null

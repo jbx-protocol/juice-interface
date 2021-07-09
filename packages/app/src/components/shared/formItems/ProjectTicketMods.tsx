@@ -147,7 +147,7 @@ export default function ProjectTicketMods({
         </div>
       )
     },
-    [mods],
+    [mods, colors, radii],
   )
 
   if (!mods) return null

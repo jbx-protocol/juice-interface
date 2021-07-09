@@ -288,7 +288,7 @@ export default function Create() {
         </Button>
       </Space>
     ),
-    [currentStep],
+    [currentStep, colors, radii],
   )
 
   const fundingCycle: FundingCycle = {

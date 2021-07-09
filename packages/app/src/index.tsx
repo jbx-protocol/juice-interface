@@ -2,14 +2,14 @@ import './styles/antd.css'
 import './styles/index.scss'
 
 import App from 'components/App'
+import Network from 'Network'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import User from 'User'
 
 import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
-import Network from 'Network'
-import User from 'User'
 
 ReactDOM.render(
   <React.StrictMode>

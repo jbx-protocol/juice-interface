@@ -51,10 +51,10 @@ export default function ProjectHeader({
               margin: 0,
               color: metadata.name
                 ? colors.text.primary
-                : colors.text.secondary,
+                : colors.text.placeholder,
             }}
           >
-            {metadata.name ?? 'Untitled project'}
+            {metadata.name || 'Untitled project'}
           </h1>
 
           <h3>

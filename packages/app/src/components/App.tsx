@@ -35,7 +35,6 @@ function App() {
   return (
     <ThemeContext.Provider value={juiceTheme}>
       <Layout
-        className="App"
         style={{
           display: 'flex',
           flexDirection: 'column',

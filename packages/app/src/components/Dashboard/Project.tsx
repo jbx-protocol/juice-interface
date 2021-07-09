@@ -144,7 +144,7 @@ export default function Project({
       </Row>
 
       <Row gutter={gutter} style={{ marginTop: gutter }}>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} style={{ marginBottom: gutter }}>
           <FundingCycles
             projectId={projectId}
             fundingCycle={fundingCycle}
@@ -156,7 +156,7 @@ export default function Project({
           />
         </Col>
 
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} style={{ paddingBottom: gutter }}>
           <div style={{ marginBottom: gutter }}>
             <Rewards
               projectId={projectId}

@@ -33,7 +33,7 @@ export default function FundingCycleDetails({
     <Descriptions
       labelStyle={{ fontWeight: 600 }}
       size="small"
-      column={{ xl: 1, xxl: 2 }}
+      column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 2, xxl: 2 }}
     >
       <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>
 

@@ -20,7 +20,7 @@ export default function Account() {
 
   return (
     <div>
-      <Row gutter={10} align="middle" style={{ justifyContent: 'flex-end' }}>
+      <Row gutter={10} align="middle">
         {userAddress && (
           <Col>
             <Balance userAddress={userAddress} />

@@ -89,8 +89,8 @@ export default function Landing() {
                     fontSize: '1rem',
                   }}
                 >
-                  Build a community and program it's spending. Light enough for
-                  a group of friends, powerful enough for a global network of
+                  Build a community and program its spending. Light enough for a
+                  group of friends, powerful enough for a global network of
                   anons.
                   <br />
                   <br />
@@ -159,7 +159,7 @@ export default function Landing() {
             <Col xs={24} md={10}>
               <img
                 style={{
-                  height: '75vh',
+                  height: '60vh',
                   maxHeight: 500,
                   minHeight: 400,
                   maxWidth: '100%',
@@ -307,11 +307,16 @@ export default function Landing() {
             maxWidth: 800,
           }}
         >
-          <div style={wrapper}>
-            <div style={{ display: 'grid', rowGap: 60 }}>
-              {bigHeader('FAQs')}
-              <Faq />
-            </div>
+          <div
+            style={{
+              display: 'grid',
+              rowGap: 60,
+              paddingLeft: 20,
+              paddingRight: 20,
+            }}
+          >
+            {bigHeader('FAQs')}
+            <Faq />
           </div>
         </div>
       </section>

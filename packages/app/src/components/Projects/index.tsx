@@ -75,7 +75,7 @@ export default function Projects() {
       </div>
 
       <div style={{ marginBottom: 40 }}>
-        <a href="/#/create" target="_blank" rel="noopener noreferrer">
+        <a href="/#/create">
           <Button size="small">Create a project</Button>
         </a>
       </div>

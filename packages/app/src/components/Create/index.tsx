@@ -1,6 +1,6 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Drawer, Space } from 'antd'
+import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
@@ -221,6 +221,11 @@ export default function Create() {
     )
   }
 
+  const drawerStyle: Partial<DrawerProps> = {
+    placement: 'right',
+    width: Math.min(640, window.innerWidth * 0.9),
+  }
+
   const buildSteps = useCallback(
     (steps: { title: string; callback: VoidFunction }[]) => (
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -296,18 +301,14 @@ export default function Create() {
   }
 
   return (
-    <div
+    <Row
       style={{
         display: 'flex',
         padding: 40,
       }}
+      gutter={40}
     >
-      <div
-        style={{
-          marginRight: 40,
-          minWidth: 300,
-        }}
-      >
+      <Col xs={24} lg={7} style={{ marginBottom: 40 }}>
         <h1 style={{ marginBottom: 20 }}>Create your project 🚀</h1>
 
         {buildSteps([
@@ -336,40 +337,41 @@ export default function Create() {
               ]
             : []),
         ])}
-      </div>
+      </Col>
 
-      <div
-        style={{
-          padding: 40,
-          paddingTop: 30,
-          borderRadius: radii.lg,
-          border: '1px solid ' + colors.stroke.secondary,
-        }}
-      >
-        <h3
+      <Col xs={24} lg={17}>
+        <div
           style={{
-            marginBottom: 30,
-            color: colors.text.secondary,
+            padding: 40,
+            paddingTop: 30,
+            borderRadius: radii.lg,
+            border: '1px solid ' + colors.stroke.secondary,
           }}
         >
-          Preview:
-        </h3>
-        <Project
-          isOwner={false}
-          showCurrentDetail={currentStep > 2}
-          fundingCycle={fundingCycle}
-          paymentMods={editingPaymentMods}
-          ticketMods={editingTicketMods}
-          metadata={editingProjectInfo.metadata}
-          handle={editingProjectInfo.handle}
-          projectId={BigNumber.from(0)}
-        />
-      </div>
+          <h3
+            style={{
+              marginBottom: 30,
+              color: colors.text.secondary,
+            }}
+          >
+            Preview:
+          </h3>
+          <Project
+            isOwner={false}
+            showCurrentDetail={currentStep > 2}
+            fundingCycle={fundingCycle}
+            paymentMods={editingPaymentMods}
+            ticketMods={editingTicketMods}
+            metadata={editingProjectInfo.metadata}
+            handle={editingProjectInfo.handle}
+            projectId={BigNumber.from(0)}
+          />
+        </div>
+      </Col>
 
       <Drawer
+        {...drawerStyle}
         visible={projectFormModalVisible}
-        placement="right"
-        width={640}
         onClose={() => {
           resetProjectForm()
           setProjectFormModalVisible(false)
@@ -388,8 +390,7 @@ export default function Create() {
 
       <Drawer
         visible={budgetFormModalVisible}
-        placement="right"
-        width={640}
+        {...drawerStyle}
         onClose={() => {
           setBudgetFormModalVisible(false)
           incrementStep(1)
@@ -410,8 +411,7 @@ export default function Create() {
 
       <Drawer
         visible={payModsModalVisible}
-        placement="right"
-        width={640}
+        {...drawerStyle}
         onClose={() => {
           setPayModsFormModalVisible(false)
           incrementStep(2)
@@ -432,8 +432,7 @@ export default function Create() {
 
       <Drawer
         visible={ticketingFormModalVisible}
-        placement="right"
-        width={640}
+        {...drawerStyle}
         onClose={() => {
           resetTicketingForm()
           setTicketingFormModalVisible(false)
@@ -454,8 +453,7 @@ export default function Create() {
 
       <Drawer
         visible={incentivesFormModalVisible}
-        placement="right"
-        width={640}
+        {...drawerStyle}
         onClose={() => {
           setIncentivesFormModalVisible(false)
           incrementStep(4)
@@ -483,6 +481,6 @@ export default function Create() {
       >
         <ConfirmDeployProject />
       </Modal>
-    </div>
+    </Row>
   )
 }

@@ -45,10 +45,9 @@ module.exports = [
         max: constants.MaxCycleLimit
       });
 
-      // dont use non recurring.
+      // Make recurring.
       const discountRate = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot = constants.AddressZero;
 
@@ -264,7 +263,9 @@ module.exports = [
           expectedFundingCycleId1,
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
-          expectedInitialWeight.mul(discountRate).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate))
+            .div(constants.MaxPercent),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,
@@ -406,8 +407,8 @@ module.exports = [
           timeMark,
           cycleLimit,
           expectedInitialWeight
-            .mul(discountRate)
-            .mul(discountRate)
+            .mul(constants.MaxPercent.sub(discountRate))
+            .mul(constants.MaxPercent.sub(discountRate))
             .div(constants.MaxPercent)
             .div(constants.MaxPercent),
           ballot,
@@ -458,7 +459,9 @@ module.exports = [
           expectedFundingCycleId1,
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
-          expectedInitialWeight.mul(discountRate).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate))
+            .div(constants.MaxPercent),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,
@@ -529,7 +532,9 @@ module.exports = [
           expectedFundingCycleId1,
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
-          expectedInitialWeight.mul(discountRate).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate))
+            .div(constants.MaxPercent),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,

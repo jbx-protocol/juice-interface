@@ -47,8 +47,7 @@ module.exports = [
 
       // dont allow non recurring.
       const discountRate1 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot1 = constants.AddressZero;
 
@@ -424,8 +423,7 @@ module.exports = [
 
       // Non recurring.
       const discountRate2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot2 = constants.AddressZero;
 
@@ -525,7 +523,9 @@ module.exports = [
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
-          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot2,
           timeMark,
           duration2,
@@ -587,9 +587,9 @@ module.exports = [
               timeMark,
               cycleLimit2.eq(0) ? BigNumber.from(0) : cycleLimit2.sub(1),
               expectedInitialWeight
-                .mul(discountRate1)
+                .mul(constants.MaxPercent.sub(discountRate1))
                 .div(constants.MaxPercent)
-                .mul(discountRate2)
+                .mul(constants.MaxPercent.sub(discountRate2))
                 .div(constants.MaxPercent),
               ballot2,
               timeMark.add(duration2.mul(86400)),
@@ -609,9 +609,9 @@ module.exports = [
               originalTimeMark,
               BigNumber.from(0),
               expectedInitialWeight
-                .mul(discountRate1)
+                .mul(constants.MaxPercent.sub(discountRate1))
                 .div(constants.MaxPercent)
-                .mul(discountRate2)
+                .mul(constants.MaxPercent.sub(discountRate2))
                 .div(constants.MaxPercent),
               ballot1,
               timeMark.add(duration2.mul(86400)),

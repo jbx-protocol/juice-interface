@@ -48,7 +48,7 @@ module.exports = [
         max: constants.MaxCycleLimit
       });
 
-      const discountRate1 = BigNumber.from(0);
+      const discountRate1 = BigNumber.from(constants.MaxPercent);
 
       const ballot1 = constants.AddressZero;
 
@@ -382,7 +382,6 @@ module.exports = [
               max: constants.MaxCycleLimit
             }),
             discountRate: randomBigNumberFn({
-              min: BigNumber.from(1),
               max: constants.MaxPercent
             }),
             ballot: constants.AddressZero
@@ -528,7 +527,6 @@ module.exports = [
               max: constants.MaxCycleLimit
             }),
             discountRate: randomBigNumberFn({
-              min: BigNumber.from(1),
               max: constants.MaxPercent
             }),
             ballot: constants.AddressZero

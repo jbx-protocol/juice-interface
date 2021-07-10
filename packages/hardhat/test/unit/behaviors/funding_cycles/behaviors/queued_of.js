@@ -349,7 +349,7 @@ const tests = {
         },
         fastforward: BigNumber.from(80),
         expectation: {
-          number: 2,
+          number: 0, // Expect 0 because its non recurring.
           id: 0
         }
       })
@@ -627,7 +627,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(0),
+          discountRate: BigNumber.from(200),
           duration: BigNumber.from(1)
         },
         fastforward: BigNumber.from(86401),

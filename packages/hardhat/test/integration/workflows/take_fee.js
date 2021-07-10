@@ -68,8 +68,7 @@ module.exports = [
             }),
             // Recurring.
             discountRate: randomBigNumberFn({
-              min: BigNumber.from(1),
-              max: constants.MaxPercent
+              max: constants.MaxPercent.sub(1)
             }),
             ballot: constants.AddressZero
           },

@@ -255,9 +255,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             Set to 0 for no expiry and to be able to reconfigure anytime.
           @dev _cycleLimit The number of cycles that this configuration should last for before going back to the last permanent. This does nothing for a project's first funding cycle.
           @dev _properties.discountRate A number from 0-200 indicating how valuable a contribution to this funding cycle is compared to previous funding cycles.
-            If it's 200, each funding cycle will have equal weight.
-            If the number is 180, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
-            If the number is 0, an non-recurring funding cycle will get made.
+            If it's 0, each funding cycle will have equal weight.
+            If the number is 20, a contribution to the next funding cycle will only give you 90% of tickets given to a contribution of the same amount during the current funding cycle.
+            If the number is 200, an non-recurring funding cycle will get made.
           @dev _ballot The new ballot that will be used to approve subsequent reconfigurations.
         @param _metadata Data to associate with this funding cycle configuration.
         @param _fee The fee that this configuration will incure when tapping.
@@ -457,7 +457,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         // Make sure the funding cycle is recurring.
         require(
-            _fundingCycle.discountRate > 0,
+            _fundingCycle.discountRate < 200,
             "FundingCycles::_configurable: NON_RECURRING"
         );
 
@@ -538,9 +538,9 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // Set the eligible funding cycle.
         _fundingCycle = _getStruct(fundingCycleId);
 
-        // Funding cycles with a discount rate of 0 are non-recurring.
+        // Funding cycles with a discount rate of 100% are non-recurring.
         require(
-            _fundingCycle.discountRate > 0,
+            _fundingCycle.discountRate < 200,
             "FundingCycles::_tappable: NON_RECURRING"
         );
 
@@ -717,7 +717,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         bool _allowMidCycle
     ) internal view returns (FundingCycle memory) {
         // Can't mock a non recurring funding cycle.
-        if (_baseFundingCycle.discountRate == 0) return _getStruct(0);
+        if (_baseFundingCycle.discountRate == 200) return _getStruct(0);
 
         // If the base has a limit, find the last permanent funding cycle, which is needed to make subsequent calculations.
         // Otherwise, the base is already the latest permanent funding cycle.
@@ -1103,7 +1103,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             return
                 PRBMathCommon.mulDiv(
                     _baseFundingCycle.weight,
-                    _baseFundingCycle.discountRate,
+                    200 - _baseFundingCycle.discountRate,
                     200
                 );
 
@@ -1123,8 +1123,8 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // If there's no limit or if the limit is greater than the start distance,
         // apply the discount rate of the base.
         if (_limitLength == 0 || _limitLength > _startDistance) {
-            // If the discount rate is 200, return the same weight.
-            if (_baseFundingCycle.discountRate == 200) return weight;
+            // If the discount rate is 0, return the same weight.
+            if (_baseFundingCycle.discountRate == 0) return weight;
 
             uint256 _discountMultiple = _startDistance /
                 (_baseFundingCycle.duration * SECONDS_IN_DAY);
@@ -1134,7 +1134,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 // Base the new weight on the specified funding cycle's weight.
                 weight = PRBMathCommon.mulDiv(
                     weight,
-                    _baseFundingCycle.discountRate,
+                    200 - _baseFundingCycle.discountRate,
                     200
                 );
             }
@@ -1145,17 +1145,17 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             // the remaining distance.
 
             // Use up the limited discount rate up until the limit.
-            if (_baseFundingCycle.discountRate < 200) {
+            if (_baseFundingCycle.discountRate > 0) {
                 for (uint256 i = 0; i < _baseFundingCycle.cycleLimit; i++) {
                     weight = PRBMathCommon.mulDiv(
                         weight,
-                        _baseFundingCycle.discountRate,
+                        200 - _baseFundingCycle.discountRate,
                         200
                     );
                 }
             }
 
-            if (_latestPermanentFundingCycle.discountRate < 200) {
+            if (_latestPermanentFundingCycle.discountRate > 0) {
                 // The number of times to apply the latest permanent discount rate.
 
 
@@ -1169,7 +1169,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
                 for (uint256 i = 0; i < _permanentDiscountMultiple; i++) {
                     weight = PRBMathCommon.mulDiv(
                         weight, // base the weight on the result of the previous calculation.
-                        _latestPermanentFundingCycle.discountRate,
+                        200 - _latestPermanentFundingCycle.discountRate,
                         200
                     );
                 }

@@ -73,7 +73,7 @@ const tests = {
         addToBalance: BigNumber.from(10)
           .pow(18)
           .mul(100),
-        // positive discount rate to make recurring.
+        // sub-100% discount rate to make recurring.
         discountRate: 1,
         bondingCurveRate: 100,
         // Half the amount of tickets.
@@ -110,7 +110,7 @@ const tests = {
         addToBalance: BigNumber.from(10)
           .pow(18)
           .mul(100),
-        // positive discount rate to make recurring.
+        // sub-100% discount rate to make recurring.
         discountRate: 1,
         bondingCurveRate: 100,
         // Half the amount of tickets.
@@ -147,7 +147,7 @@ const tests = {
         addToBalance: BigNumber.from(10)
           .pow(18)
           .mul(100),
-        // positive discount rate to make recurring.
+        // sub-100% discount rate to make recurring.
         discountRate: 1,
         bondingCurveRate: 20,
         // Half the amount of tickets.
@@ -184,7 +184,7 @@ const tests = {
         addToBalance: BigNumber.from(10)
           .pow(18)
           .mul(100),
-        // positive discount rate to make recurring.
+        // sub-100% discount rate to make recurring.
         discountRate: 1,
         bondingCurveRate: 20,
         // Half the amount of tickets.
@@ -221,7 +221,7 @@ const tests = {
         addToBalance: BigNumber.from(10)
           .pow(18)
           .mul(100),
-        // positive discount rate to make recurring.
+        // sub-100% discount rate to make recurring.
         discountRate: 1,
         // active ballot
         currentBallotStateOf: 1,

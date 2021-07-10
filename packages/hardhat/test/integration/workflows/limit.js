@@ -51,8 +51,7 @@ module.exports = [
 
       // dont allow non recurring.
       const discountRate1 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot1 = constants.AddressZero;
 
@@ -272,7 +271,7 @@ module.exports = [
       let expectedWeight = expectedInitialWeight;
       for (let i = 0; i < cycleLimit1.sub(1); i += 1) {
         expectedWeight = expectedWeight
-          .mul(discountRate1)
+          .mul(constants.MaxPercent.sub(discountRate1))
           .div(constants.MaxPercent);
       }
       await checkFn({
@@ -338,7 +337,7 @@ module.exports = [
       let expectedFullLimitWeight = expectedInitialWeight;
       for (let i = 0; i < cycleLimit1; i += 1) {
         expectedFullLimitWeight = expectedFullLimitWeight
-          .mul(discountRate1)
+          .mul(constants.MaxPercent.sub(discountRate1))
           .div(constants.MaxPercent);
       }
       await checkFn({
@@ -395,8 +394,7 @@ module.exports = [
       });
       // dont allow non recurring.
       const discountRate2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot2 = constants.AddressZero;
 
@@ -559,7 +557,9 @@ module.exports = [
           expectedFundingCycleId1,
           configurationTimeMark,
           cycleLimit2,
-          expectedFullLimitWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedFullLimitWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot2,
           originalTimeMark.add(
             cycleLimit1
@@ -629,9 +629,9 @@ module.exports = [
           configurationTimeMark,
           cycleLimit2.sub(1),
           expectedFullLimitWeight
-            .mul(discountRate1)
+            .mul(constants.MaxPercent.sub(discountRate1))
             .div(constants.MaxPercent)
-            .mul(discountRate2)
+            .mul(constants.MaxPercent.sub(discountRate2))
             .div(constants.MaxPercent),
           ballot2,
           originalTimeMark
@@ -695,11 +695,11 @@ module.exports = [
       }
     }) => {
       let expectedFullLimitWeight2 = expectedFullLimitWeight
-        .mul(discountRate1)
+        .mul(constants.MaxPercent.sub(discountRate1))
         .div(constants.MaxPercent);
       for (let i = 0; i < cycleLimit2; i += 1) {
         expectedFullLimitWeight2 = expectedFullLimitWeight2
-          .mul(discountRate2)
+          .mul(constants.MaxPercent.sub(discountRate2))
           .div(constants.MaxPercent);
       }
       checkFn({
@@ -789,11 +789,11 @@ module.exports = [
       }
     }) => {
       let expectedFullLimitWeight2 = expectedFullLimitWeight
-        .mul(discountRate1)
+        .mul(constants.MaxPercent.sub(discountRate1))
         .div(constants.MaxPercent);
       for (let i = 0; i < cycleLimit2; i += 1) {
         expectedFullLimitWeight2 = expectedFullLimitWeight2
-          .mul(discountRate2)
+          .mul(constants.MaxPercent.sub(discountRate2))
           .div(constants.MaxPercent);
       }
       await checkFn({

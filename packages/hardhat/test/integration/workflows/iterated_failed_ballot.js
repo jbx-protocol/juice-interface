@@ -68,8 +68,7 @@ module.exports = [
 
       // make recurring.
       const discountRate1 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
 
       const reservedRate1 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -200,8 +199,7 @@ module.exports = [
 
       // make recurring.
       const discountRate2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot2 = constants.AddressZero;
       const reservedRate2 = randomBigNumberFn({ max: constants.MaxPercent });
@@ -318,7 +316,7 @@ module.exports = [
       let expectedPostBallotWeight = expectedInititalWeight;
       for (let i = 0; i < cycleCountDuringBallot.add(1); i += 1) {
         expectedPostBallotWeight = expectedPostBallotWeight
-          .mul(discountRate1)
+          .mul(constants.MaxPercent.sub(discountRate1))
           .div(constants.MaxPercent);
       }
 
@@ -513,7 +511,9 @@ module.exports = [
           originalTimeMark,
           // The cycle limit should be one lower than the previous.
           cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
-          expectedInititalWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInititalWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot.address,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),
@@ -719,7 +719,7 @@ module.exports = [
       let expectedPostDoubleBallotWeight = expectedPostBallotWeight;
       for (let i = 0; i < cycleCountDuringBallot.add(1); i += 1) {
         expectedPostDoubleBallotWeight = expectedPostDoubleBallotWeight
-          .mul(discountRate1)
+          .mul(constants.MaxPercent.sub(discountRate1))
           .div(constants.MaxPercent);
       }
       await checkFn({

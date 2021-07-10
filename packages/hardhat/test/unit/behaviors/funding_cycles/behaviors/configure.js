@@ -962,7 +962,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(0)
+          discountRate: BigNumber.from(200)
         },
         revert: "FundingCycles::_configurable: NON_RECURRING"
       })
@@ -1129,11 +1129,13 @@ module.exports = function() {
           i += 1
         ) {
           expectedWeight = expectedWeight
-            .mul(preconfigure.discountRate)
+            .mul(BigNumber.from(200).sub(preconfigure.discountRate))
             .div(200);
         }
         for (let i = 0; i < discountRatesToApply.length; i += 1) {
-          expectedWeight = expectedWeight.mul(discountRatesToApply[i]).div(200);
+          expectedWeight = expectedWeight
+            .mul(BigNumber.from(200).sub(discountRatesToApply[i]))
+            .div(200);
         }
 
         // Get the time when the configured funding cycle starts.

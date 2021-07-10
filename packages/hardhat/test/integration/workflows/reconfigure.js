@@ -50,8 +50,7 @@ module.exports = [
       });
       // Make sure its recurring.
       const discountRate1 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot1 = constants.AddressZero;
 
@@ -272,7 +271,9 @@ module.exports = [
           timeMark,
           // Cycle limit should be 0 for the first funding cycle.
           cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
-          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot1,
           timeMark.add(duration1.mul(86400)),
           duration1,
@@ -307,8 +308,7 @@ module.exports = [
       });
       // Make sure its not recurring.
       const discountRate2 = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxPercent
+        max: constants.MaxPercent.sub(1)
       });
       const ballot2 = constants.AddressZero;
 
@@ -679,7 +679,9 @@ module.exports = [
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
-          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),
@@ -783,7 +785,9 @@ module.exports = [
           expectedFundingCycleId1,
           timeMark,
           cycleLimit2,
-          expectedInitialWeight.mul(discountRate1).div(constants.MaxPercent),
+          expectedInitialWeight
+            .mul(constants.MaxPercent.sub(discountRate1))
+            .div(constants.MaxPercent),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),

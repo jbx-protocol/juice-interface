@@ -85,7 +85,7 @@ module.exports = function() {
           // Duration must be zero so that the same cycle lasts throughout the tests.
           duration: 0,
           cycleLimit: BigNumber.from(0),
-          discountRate: this.constants.MaxPercent,
+          discountRate: BigNumber.from(0),
           ballot: constants.AddressZero
         },
         {

@@ -56,6 +56,7 @@ module.exports = function() {
     tests.success.forEach(function(successTest) {
       it(successTest.description, async function() {
         const { caller, currency, decimals } = successTest.fn(this);
+        expect(true).to.equal(false);
 
         // Set the mock to the return the specified number of decimals.
         await this.aggregatorV3Contract.mock.decimals.returns(decimals);

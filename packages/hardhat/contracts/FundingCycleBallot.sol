@@ -7,6 +7,7 @@ import "./interfaces/IFundingCycleBallot.sol";
 /** 
    @notice Manages votes towards approving funding cycle reconfigurations.
  */
+// TODO rename
 contract FundingCycleBallot is IFundingCycleBallot {
     // --- public stored properties --- //
 

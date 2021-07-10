@@ -13,6 +13,7 @@ import "./../interfaces/IJuicer.sol";
     - Which address is the funding cycle owner, which can tap funds from the funding cycle.
     - Should this project's Tickets be migrated to a new Juicer. 
 */
+// TODO rename to JuiceboxProject
 abstract contract JuiceProject is IERC721Receiver, Ownable {
     /// @notice The direct deposit terminals.
     ITerminalDirectory public immutable terminalDirectory;
@@ -64,13 +65,15 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
     ) external payable {
         require(projectId != 0, "JuiceProject::pay: PROJECT_NOT_FOUND");
 
-        // Find the terminal for this contract's project.
+        // Get the terminal for this contract's project.
         ITerminal _terminal = terminalDirectory.terminalOf(projectId);
 
+        // There must be a terminal.
         require(
             _terminal != ITerminal(address(0)),
             "JuiceProject::pay: TERMINAL_NOT_FOUND"
         );
+
         _terminal.pay{value: msg.value}(
             projectId,
             _beneficiary,
@@ -147,11 +150,19 @@ abstract contract JuiceProject is IERC721Receiver, Ownable {
         // Find the terminal for this contract's project.
         ITerminal _terminal = terminalDirectory.terminalOf(projectId);
 
+        // There must be a terminal.
         require(
             _terminal != ITerminal(address(0)),
             "JuiceProject::takeFee: TERMINAL_NOT_FOUND"
         );
 
+        // There must be enough funds in the contract to take the fee.
+        require(
+            address(this).balance >= _amount,
+            "JuiceProject::takeFee: INSUFFICIENT_FUNDS"
+        );
+
+        // Send funds to the terminal.
         _terminal.pay{value: _amount}(
             projectId,
             _beneficiary,

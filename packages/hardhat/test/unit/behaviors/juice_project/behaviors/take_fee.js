@@ -37,6 +37,17 @@ const tests = {
         setup: { setTerminal: false },
         revert: "JuiceProject::takeFee: TERMINAL_NOT_FOUND"
       })
+    },
+    {
+      description: "insufficient funds",
+      fn: ({ deployer, addrs }) => ({
+        caller: deployer,
+        beneficiary: addrs[0].address,
+        memo: "some-memo",
+        preferUnstakedTickets: true,
+        setup: { setTerminal: true },
+        revert: "JuiceProject::takeFee: INSUFFICIENT_FUNDS"
+      })
     }
   ]
 };

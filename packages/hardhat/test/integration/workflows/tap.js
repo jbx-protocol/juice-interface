@@ -49,7 +49,7 @@ module.exports = [
         max: (await getBalanceFn(payer.address)).div(100)
       });
 
-      // The target must at most the payment value.
+      // The target must at most be the payment value.
       const target = randomBigNumberFn({
         min: BigNumber.from(1),
         max: paymentValue1

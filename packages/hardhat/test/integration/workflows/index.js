@@ -25,6 +25,7 @@ const limit = require("./limit");
 const zeroDuration = require("./zero_duration");
 const nonRecurring = require("./non_recurring");
 const challengeHandle = require("./challenge_handle");
+const takeFee = require("./take_fee");
 
 module.exports = {
   deploy,
@@ -53,5 +54,6 @@ module.exports = {
   limit,
   zeroDuration,
   nonRecurring,
-  challengeHandle
+  challengeHandle,
+  takeFee
 };

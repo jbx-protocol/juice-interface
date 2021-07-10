@@ -111,6 +111,9 @@ module.exports = function() {
       juicer
     };
 
+    // The governance project should have an ID of 1.
+    this.constants.GovernanceProjectId = 1;
+
     // Bind the standard weight multiplier to the constants.
     // This is used to determine how many tickets get printed per value contributed during a first funding cycle.
     this.constants.InitialWeightMultiplier = (
@@ -153,7 +156,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 200; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)
@@ -181,6 +184,10 @@ module.exports = function() {
       run(workflows.issueTickets)
     );
     describe("Tap funds up to the configured target", run(workflows.tap));
+    describe(
+      "A fee should be taken into governance's project when a project taps funds",
+      run(workflows.takeFee)
+    );
     describe("Reconfigures a project", run(workflows.reconfigure));
 
     describe(

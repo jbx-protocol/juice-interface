@@ -260,13 +260,13 @@ module.exports = function() {
         });
 
         // Add to balance if needed.
-        if (addToBalance)
+        if (addToBalance) {
           await this.targetContract.addToBalance(projectId, {
             value: addToBalance
           });
-
-        // Mock the ability to add a balance to the terminal.
-        await terminal.mock.addToBalance.withArgs(projectId).returns();
+          // Mock the ability to add a balance to the terminal.
+          await terminal.mock.addToBalance.withArgs(projectId).returns();
+        }
 
         // Mock the terminal directory setting process.
         await this.mockContracts.terminalDirectory.mock.setTerminal

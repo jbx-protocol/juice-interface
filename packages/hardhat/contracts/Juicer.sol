@@ -809,8 +809,8 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Set the balance to 0.
         balanceOf[_projectId] = 0;
 
-        // Move the funds to the new contract.
-        _to.addToBalance{value: _balanceOf}(_projectId);
+        // Move the funds to the new contract if needed.
+        if (_balanceOf > 0) _to.addToBalance{value: _balanceOf}(_projectId);
 
         // Switch the direct payment terminal.
         terminalDirectory.setTerminal(_projectId, _to);

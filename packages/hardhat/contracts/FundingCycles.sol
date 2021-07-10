@@ -36,7 +36,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     // --- public stored constants --- //
 
     /// @notice The weight used for each project's first funding cycle.
-    uint256 public constant override BASE_WEIGHT = 1E19;
+    uint256 public constant override BASE_WEIGHT = 1E24;
 
     /// @notice The maximum value that a cycle limit can be set to.
     uint256 public constant override MAX_CYCLE_LIMIT = 32;
@@ -898,16 +898,16 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         uint256 _basedOn,
         uint256 _start
     ) private {
-        // weight in bytes 0-63 bytes.
+        // weight in bytes 0-79 bytes.
         uint256 packed = _weight;
-        // projectId in bytes 64-111 bytes.
-        packed |= _projectId << 64;
-        // number in bytes 112-159 bytes.
-        packed |= _number << 112;
-        // basedOn in bytes 160-207 bytes.
-        packed |= _basedOn << 160;
-        // start in bytes 208-255 bytes.
-        packed |= _start << 208;
+        // projectId in bytes 80-127 bytes.
+        packed |= _projectId << 80;
+        // basedOn in bytes 128-175 bytes.
+        packed |= _basedOn << 128;
+        // start in bytes 176-223 bytes.
+        packed |= _start << 176;
+        // number in bytes 224-255 bytes.
+        packed |= _number << 224;
 
         // Set in storage.
         _packedIntrinsicPropertiesOf[_fundingCycleId] = packed;
@@ -975,18 +975,18 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         uint256 _packedIntrinsicProperties = _packedIntrinsicPropertiesOf[_id];
 
-        _fundingCycle.weight = uint256(uint64(_packedIntrinsicProperties));
+        _fundingCycle.weight = uint256(uint80(_packedIntrinsicProperties));
         _fundingCycle.projectId = uint256(
-            uint48(_packedIntrinsicProperties >> 64)
-        );
-        _fundingCycle.number = uint256(
-            uint48(_packedIntrinsicProperties >> 112)
+            uint48(_packedIntrinsicProperties >> 80)
         );
         _fundingCycle.basedOn = uint256(
-            uint48(_packedIntrinsicProperties >> 160)
+            uint48(_packedIntrinsicProperties >> 128)
         );
         _fundingCycle.start = uint256(
-            uint48(_packedIntrinsicProperties >> 208)
+            uint48(_packedIntrinsicProperties >> 176)
+        );
+        _fundingCycle.number = uint256(
+            uint32(_packedIntrinsicProperties >> 224)
         );
 
 

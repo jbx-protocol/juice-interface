@@ -664,7 +664,7 @@ module.exports = [
         expect: BigNumber.from(0),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
-          amount: 100
+          amount: 10000000
         }
       })
   },
@@ -686,7 +686,7 @@ module.exports = [
         expect: BigNumber.from(0),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
-          amount: 100
+          amount: 10000000
         }
       })
   }

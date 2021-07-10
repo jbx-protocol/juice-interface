@@ -24,7 +24,7 @@ const tests = {
         memo: "some-memo",
         preferUnstakedTickets: true,
         setup: { setTerminal: false, zeroProject: true },
-        revert: "JuiceProject::pay: PROJECT_NOT_FOUND"
+        revert: "JuiceboxProject::pay: PROJECT_NOT_FOUND"
       })
     },
     {
@@ -35,7 +35,7 @@ const tests = {
         memo: "some-memo",
         preferUnstakedTickets: true,
         setup: { setTerminal: false },
-        revert: "JuiceProject::pay: TERMINAL_NOT_FOUND"
+        revert: "JuiceboxProject::pay: TERMINAL_NOT_FOUND"
       })
     }
   ]

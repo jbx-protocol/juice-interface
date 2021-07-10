@@ -446,7 +446,7 @@ const ops = ({
                 mockFn({
                   mockContract: governance,
                   fn: "pay",
-                  args: [owner, "Juice fee", false],
+                  args: [owner, "Juicebox fee", false],
                   returns: []
                 })
               ]
@@ -582,7 +582,7 @@ const ops = ({
     mockFn({
       mockContract: governance,
       fn: "pay",
-      args: [owner, "Juice fee", false],
+      args: [owner, "Juicebox fee", false],
       returns: []
     }),
     executeFn({

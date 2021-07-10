@@ -13,7 +13,7 @@ module.exports = function() {
   describe("Projects", shouldBehaveLike.projects);
   describe("TerminalDirectory", shouldBehaveLike.terminalDirectory);
   describe("Governance", shouldBehaveLike.governance);
-  describe("JuiceProject", shouldBehaveLike.juiceProject);
+  describe("JuiceboxProject", shouldBehaveLike.JuiceboxProject);
   // Depends on TerminalDirectory.
   describe("FundingCycles", shouldBehaveLike.fundingCycles);
   // Depends on TerminalDirectory.

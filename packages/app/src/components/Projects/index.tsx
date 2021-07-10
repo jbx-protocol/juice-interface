@@ -37,7 +37,7 @@ export default function Projects() {
           alignItems: 'baseline',
         }}
       >
-        <h1>Projects on Juice</h1>
+        <h1>Projects on Juicebox</h1>
         <Space>
           <Select
             value={selectOption}

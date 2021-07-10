@@ -3,14 +3,14 @@ pragma solidity >=0.8.0;
 
 import "./interfaces/ITerminal.sol";
 import "./interfaces/IPrices.sol";
-import "./abstract/JuiceProject.sol";
+import "./abstract/JuiceboxProject.sol";
 
 /// Owner should eventually change to a multisig wallet contract.
-contract Governance is JuiceProject {
+contract Governance is JuiceboxProject {
     // --- external transactions --- //
 
     constructor(uint256 _projectId, ITerminalDirectory _terminalDirectory)
-        JuiceProject(_projectId, _terminalDirectory)
+        JuiceboxProject(_projectId, _terminalDirectory)
     {}
 
     /** 

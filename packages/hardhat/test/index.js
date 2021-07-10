@@ -8,7 +8,7 @@ const { BigNumber } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
-describe("Juice", async function() {
+describe("Juicebox", async function() {
   before(async function() {
     // Bind a reference to the deployer address and an array of other addresses to `this`.
     [this.deployer, ...this.addrs] = await ethers.getSigners();

@@ -22,7 +22,9 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy mock dependency contracts.
-    this.ballot = await this.deployMockLocalContractFn("FundingCycleBallot");
+    this.ballot = await this.deployMockLocalContractFn(
+      "Active14DaysFundingCycleBallot"
+    );
     this.terminalDirectory = await this.deployMockLocalContractFn(
       "TerminalDirectory"
     );

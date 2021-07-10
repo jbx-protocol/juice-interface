@@ -38,7 +38,7 @@ module.exports = [
       const owner = randomSignerFn();
 
       // Use a ballot that has a fixed approval time one its duration passes.
-      const ballot = await deployContractFn("FundingCycleBallot");
+      const ballot = await deployContractFn("Active14DaysFundingCycleBallot");
 
       // The duration of the funding cycle should be less than the ballot duration
       const duration1 = randomBigNumberFn({

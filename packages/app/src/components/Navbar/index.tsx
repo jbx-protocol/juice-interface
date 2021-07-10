@@ -51,7 +51,7 @@ export default function Navbar() {
           [ThemeOption.dark]: '/assets/juice_logo-od.png',
         })
       }
-      alt="Juice logo"
+      alt="Juicebox logo"
     />
   )
 

@@ -4,7 +4,7 @@
   When a project is tapped, it will issue the appropriate payouts to its mods, and will send
   any leftover funds to the project owner.
 
-  Payment mods allow payouts to automatically be sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
+  Payment mods allow payouts to automatically be sent to either an address, another project on Juicebox, or a contract that inherits from IModAllocator.
 */
 
 // The currency will be 0, which corresponds to ETH, preventing the need for currency price conversion.

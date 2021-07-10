@@ -61,7 +61,7 @@ contract Projects is ERC721, IProjects, Operatable {
       @param _operatorStore A contract storing operator assignments.
     */
     constructor(IOperatorStore _operatorStore)
-        ERC721("Juice project", "JUICE PROJECT")
+        ERC721("Juicebox project", "JUICEBOX PROJECT")
         Operatable(_operatorStore)
     {}
 

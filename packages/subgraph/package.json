@@ -1,14 +1,14 @@
 {
-  "name": "@juice.work/subgraph",
+  "name": "@juicebox.money/subgraph",
   "license": "UNLICENSED",
   "version": "1.0.0",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "create-local": "graph create --node http://localhost:8020/ juice-local",
-    "remove-local": "graph remove --node http://localhost:8020/ juice-local",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juice-local",
-    "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ @peripheralist/juice-rinkeby"
+    "create-local": "graph create --node http://localhost:8020/ juicebox-local",
+    "remove-local": "graph remove --node http://localhost:8020/ juicebox-local",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juicebox-local",
+    "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ @peripheralist/juicebox-rinkeby"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",

@@ -28,7 +28,7 @@ contract TerminalDirectory is ITerminalDirectory, Operatable {
 
     // --- public stored properties --- //
 
-    /// @notice For each project ID, the juice terminal that the direct payment addresses are proxies for.
+    /// @notice For each project ID, the juicebox terminal that the direct payment addresses are proxies for.
     mapping(uint256 => ITerminal) public override terminalOf;
 
     /// @notice For each address, the address that will be used as the beneficiary of direct payments made.
@@ -94,7 +94,7 @@ contract TerminalDirectory is ITerminalDirectory, Operatable {
 
     /** 
       @notice 
-      Update the juice terminal that payments to direct payment addresses will be forwarded for the specified project ID.
+      Update the juicebox terminal that payments to direct payment addresses will be forwarded for the specified project ID.
 
       @param _projectId The ID of the project to set a new terminal for.
       @param _terminal The new terminal to set.

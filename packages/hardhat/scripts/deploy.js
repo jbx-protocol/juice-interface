@@ -94,7 +94,7 @@ const main = async () => {
     governance.address
   ]);
 
-  const ballot = await deploy("FundingCycleBallot", []);
+  const ballot = await deploy("Active14DaysFundingCycleBallot", []);
 
   const blockGasLimit = 9000000;
 
@@ -137,7 +137,7 @@ const main = async () => {
 
   await attachedJuicer.deploy(
     governance.address,
-    utils.formatBytes32String("juice"),
+    utils.formatBytes32String("juicebox"),
     "QmSFLBMjeuHLo5hrh7oGRNYNVasCN66LYEELrDyLV8qTQt",
     {
       target: "0x21E19E0C9BAB2400000",

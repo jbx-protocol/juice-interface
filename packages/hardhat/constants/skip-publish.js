@@ -1,7 +1,7 @@
 module.exports = [
   "ExampleModAllocator",
   "ExampleETHUSDPriceFeed",
-  "ExampleJuiceProject",
+  "ExampleJuiceboxProject",
   "ExampleYielder",
   "ExampleFailingFundingCycleBallot",
   "YearnYielder",

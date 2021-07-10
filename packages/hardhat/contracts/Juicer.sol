@@ -8,7 +8,7 @@ import "prb-math/contracts/PRBMathCommon.sol";
 import "prb-math/contracts/PRBMathUD60x18.sol";
 
 import "./interfaces/IJuicer.sol";
-import "./abstract/JuiceProject.sol";
+import "./abstract/JuiceboxProject.sol";
 import "./abstract/Operatable.sol";
 
 import "./libraries/Operations.sol";
@@ -29,7 +29,7 @@ import "./libraries/Operations.sol";
   ───────────────────────────────────────────────────────────────────────────────────────────
 
   @notice 
-  This contract manages the Juice ecosystem, serves as a payment terminal, and custodies all funds.
+  This contract manages the Juicebox ecosystem, serves as a payment terminal, and custodies all funds.
 
   @dev 
   A project can transfer its funds, along with the power to reconfigure and mint/burn their Tickets, from this contract to another allowed terminal contract at any time.
@@ -75,7 +75,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The amount of ETH that each project is responsible for.
     mapping(uint256 => uint256) public override balanceOf;
 
-    /// @notice The percent fee the Juice project takes from tapped amounts. Out of 200.
+    /// @notice The percent fee the Juicebox project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
 
     /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
@@ -259,7 +259,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @param _ticketBooth A contract that manages Ticket printing and redeeming.
       @param _modStore A storage for a project's mods.
       @param _prices A price feed contract to use.
-      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
+      @param _terminalDirectory A directory of a project's current Juicebox terminal to receive payments in.
     */
     constructor(
         IProjects _projects,
@@ -1050,7 +1050,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 } else if (_mod.projectId != 0) {
                     // Otherwise, if a project is specified, make a payment to it.
 
-                    // Get a reference to the Juice terminal being used.
+                    // Get a reference to the Juicebox terminal being used.
                     ITerminal _terminal = terminalDirectory.terminalOf(
                         _mod.projectId
                     );
@@ -1378,22 +1378,22 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // When processing the admin fee, save gas if the admin is using this contract as its terminal.
         if (
             terminalDirectory.terminalOf(
-                JuiceProject(governance).projectId()
+                JuiceboxProject(governance).projectId()
             ) == this
         ) {
             // Use the local pay call.
             _pay(
-                JuiceProject(governance).projectId(),
+                JuiceboxProject(governance).projectId(),
                 _feeAmount,
                 _beneficiary,
-                "Juice fee",
+                "Juicebox fee",
                 false
             );
         } else {
             // Use the external pay call of the governance contract.
-            JuiceProject(governance).pay{value: _feeAmount}(
+            JuiceboxProject(governance).pay{value: _feeAmount}(
                 _beneficiary,
-                "Juice fee",
+                "Juicebox fee",
                 false
             );
         }

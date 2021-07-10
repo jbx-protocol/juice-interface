@@ -1,6 +1,6 @@
-# 🧃⚡️ juice.work
+# 🧃⚡️ juicebox.money
 
-[juice.work](https://juice.work)
+[juicebox.money](https://juicebox.money)
 
 Built with [🏗 scaffold-eth](https://github.com/austintgriffith/scaffold-eth)
 
@@ -58,7 +58,7 @@ Each time contracts are deployed, artifacts are copied to:
 - `packages/app/src/contracts` where they're used by the frontend
 - `packages/subgraph/abis` where they're used to generate Graph templates
 
-The frontend connects to whichever chain its provider (i.e. Metamask) is using to, and reads the corresponding contract artifacts for that chain. Connecting to a chain that Juice contracts have not been deployed to will cause the app to fail.
+The frontend connects to whichever chain its provider (i.e. Metamask) is using to, and reads the corresponding contract artifacts for that chain. Connecting to a chain that juicebox contracts have not been deployed to will cause the app to fail.
 
 ### deploy to local chain
 
@@ -106,10 +106,10 @@ The frontend has three different providers that provide different levels of acce
 
 ## Deploying frontend
 
-Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juice-kovan).
+Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
 
-[kovan.juice.work](kovan.juice.work) deploys from `remote/prod/kovan`.
-[rinkeby.juice.work](rinkeby.juice.work) deploys from `remote/prod/rinkeby`.
+[kovan.juicebox.money](kovan.juicebox.money) deploys from `remote/prod/kovan`.
+[rinkeby.juicebox.money](rinkeby.juicebox.money) deploys from `remote/prod/rinkeby`.
 
 Automatic deployment does not:
 
@@ -132,7 +132,7 @@ If contracts or subgraphs have changed:
 
 ## Graph
 
-Juice uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. **_Production deployment is still WIP._**
+juicebox uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. **_Production deployment is still WIP._**
 
 ### Running locally
 

@@ -6,7 +6,7 @@ import "./interfaces/IOperatorStore.sol";
 /** 
   @notice
   Addresses can give permissions to any other address to take specific actions 
-  throughout the Juice ecosystem on their behalf. These addresses are called `operators`.
+  throughout the Juicebox ecosystem on their behalf. These addresses are called `operators`.
   
   @dev
   Permissions are stored as a uint256, with each boolean bit representing whether or not

@@ -13,13 +13,13 @@ const QAs: {
     q: 'Who funds Juicebox projects?',
     a: [
       `Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).`,
-      `For users paying through your app, you should route those funds through the Juice smart contracts so they receive Tokens in return.`,
+      `For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive Tokens in return.`,
     ],
   },
   {
     q: `What does Juicebox cost?`,
     a: [
-      `Juicebox is an open protocol on Ethereum that makes money using Juice itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
+      `Juicebox is an open protocol on Ethereum that makes money using Juicebox itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
       `5% of all money made by projects is sent to help pay for Juicebox itself. In exchange, projects get Juicebox community tokens (JBX), which will be worth more as the ecosystem grows over time.`,
     ],
   },
@@ -74,36 +74,36 @@ const QAs: {
   {
     q: 'Why Ethereum?',
     a: [
-      `A mechanism like Juice where upfront financial commitments should be honored over time is only guarenteed within an ecosystem like Ethereum.`,
-      `Ethereum provides a public environment where internet apps like Juice can run permissionlessly, trustlessly, and unstoppably.`,
+      `A mechanism like Juicebox where upfront financial commitments should be honored over time is only guarenteed within an ecosystem like Ethereum.`,
+      `Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably.`,
       `This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.`,
-      `People using Juice are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.`,
-      `Juice was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.`,
+      `People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.`,
+      `Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.`,
     ],
   },
   {
-    q: 'How decentralized is Juice?',
+    q: 'How decentralized is Juicebox?',
     a: [
-      `Juice is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juice governance smart contract can adjust these levers.`,
-      `At the start, power over the governance smart contract is held by Juice's founding contributors. The intent is to soon transfer the power to a community of token holders.`,
+      `Juicebox is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.`,
+      `At the start, power over the governance smart contract is held by Juicebox's founding contributors. The intent is to soon transfer the power to a community of token holders.`,
     ],
   },
   {
     q: 'What are the risks?',
     a: [
-      `Juice is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use, there still may be bugs.`,
-      `Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juice with caution.`,
+      `Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use, there still may be bugs.`,
+      `Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution.`,
     ],
   },
   {
     q: 'Will it work on L2s?',
     a: [
-      `Yes, but the core Juice contracts will first be deployed to Ethereum Mainnet.`,
-      `The founding contributors will then be working on L2 payment terminals for Juice projects.`,
+      `Yes, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.`,
+      `The founding contributors will then be working on L2 payment terminals for Juicebox projects.`,
     ],
   },
   {
-    q: `Do I have to make my project open source in order to use Juice as its business model?`,
+    q: `Do I have to make my project open source in order to use Juicebox as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',
       alt: "It'd be a lot cooler if you did",

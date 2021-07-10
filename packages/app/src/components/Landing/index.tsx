@@ -331,7 +331,7 @@ export default function Landing() {
         <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
         <h3 style={{ color: 'white', margin: 0 }}>
           Big ups to the Ethereum community for crafting the infrastructure and
-          economy to make Juice possible.
+          economy to make Juicebox possible.
         </h3>
       </div>
 

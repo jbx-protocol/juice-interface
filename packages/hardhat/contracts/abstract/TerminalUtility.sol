@@ -16,7 +16,7 @@ abstract contract TerminalUtility is ITerminalUtility {
     ITerminalDirectory public immutable override terminalDirectory;
 
     /** 
-      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
+      @param _terminalDirectory A directory of a project's current Juicebox terminal to receive payments in.
     */
     constructor(ITerminalDirectory _terminalDirectory) {
         terminalDirectory = _terminalDirectory;

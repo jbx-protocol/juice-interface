@@ -7,7 +7,7 @@ const publicNetUrl = `${baseUrl}/${path}/${username}`
 
 // https://thegraph.com/docs/querying
 export const SUBGRAPHS: Partial<Record<NetworkName, string>> = {
-  [NetworkName.localhost]: `http://localhost:8000/${path}/juice-local`,
-  [NetworkName.rinkeby]: `${publicNetUrl}/juice-rinkeby`,
-  [NetworkName.kovan]: `${publicNetUrl}/juice-kovan`,
+  [NetworkName.localhost]: `http://localhost:8000/${path}/juicebox-local`,
+  [NetworkName.rinkeby]: `${publicNetUrl}/juicebox-rinkeby`,
+  [NetworkName.kovan]: `${publicNetUrl}/juicebox-kovan`,
 }

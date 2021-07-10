@@ -25,7 +25,7 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
     // --- external transactions --- //
 
     /** 
-      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
+      @param _terminalDirectory A directory of a project's current Juicebox terminal to receive payments in.
       @param _projectId The ID of the project to pay when this contract receives funds.
       @param _memo The memo to use when this contract forwards a payment to a terminal.
     */
@@ -42,14 +42,16 @@ contract DirectPaymentAddress is IDirectPaymentAddress {
     // Receive funds and make a payment to the project's current terminal.
     receive() external payable {
         // Check to see if the sender has configured a beneficiary.
-        address _storedBeneficiary =
-            terminalDirectory.beneficiaryOf(msg.sender);
+        address _storedBeneficiary = terminalDirectory.beneficiaryOf(
+            msg.sender
+        );
         // If no beneficiary is configured, use the sender's address.
-        address _beneficiary =
-            _storedBeneficiary != address(0) ? _storedBeneficiary : msg.sender;
+        address _beneficiary = _storedBeneficiary != address(0)
+            ? _storedBeneficiary
+            : msg.sender;
 
-        bool _preferUnstakedTickets =
-            terminalDirectory.unstakedTicketsPreferenceOf(msg.sender);
+        bool _preferUnstakedTickets = terminalDirectory
+        .unstakedTicketsPreferenceOf(msg.sender);
 
         terminalDirectory.terminalOf(projectId).pay{value: msg.value}(
             projectId,

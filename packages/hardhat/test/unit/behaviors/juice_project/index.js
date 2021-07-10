@@ -1,6 +1,6 @@
 const shouldBehaveLike = require("./behaviors");
 
-const contractName = "ExampleJuiceProject";
+const contractName = "ExampleJuiceboxProject";
 
 module.exports = function() {
   // Before the tests, deploy the contract.

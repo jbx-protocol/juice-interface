@@ -29,7 +29,7 @@ export default function Footer() {
     >
       <div style={{ display: 'inline-flex', justifyContent: 'center' }}>
         {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
-        {link('Github', 'https://github.com/juice-work/juicehouse')}
+        {link('Github', 'https://github.com/juicebox-work/juicehouse')}
         {link('Twitter', 'https://twitter.com/juicedotwork')}
       </div>
     </div>

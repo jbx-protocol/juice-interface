@@ -82,7 +82,7 @@ module.exports = [
       });
 
       // Use a ballot that has a fixed approval time.
-      const ballot = await deployContractFn("FundingCycleBallot");
+      const ballot = await deployContractFn("Active14DaysFundingCycleBallot");
 
       // The duration of the ballot, after which it is approved.
       const ballotDurationInDays = (await ballot.duration()).div(86400);

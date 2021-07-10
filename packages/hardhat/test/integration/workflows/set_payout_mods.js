@@ -1,6 +1,6 @@
 /** 
   Project's can set payment mods, which allow payouts to automatically be
-  sent to either an address, another project on Juice, or a contract that inherits from IModAllocator.
+  sent to either an address, another project on Juicebox, or a contract that inherits from IModAllocator.
 
   A payout mod can be locked until a specified timestamp, which prevents it from being removed while
   the current funding cycle configuration is active. 

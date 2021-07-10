@@ -77,7 +77,7 @@ module.exports = function() {
       fn: "deploy",
       args: [
         this.deployer.address,
-        utils.formatBytes32String("juice"),
+        utils.formatBytes32String("juicebox"),
         "",
         {
           target: 0,

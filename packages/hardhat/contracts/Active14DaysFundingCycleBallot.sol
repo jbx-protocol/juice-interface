@@ -7,12 +7,11 @@ import "./interfaces/IFundingCycleBallot.sol";
 /** 
    @notice Manages votes towards approving funding cycle reconfigurations.
  */
-// TODO rename
-contract FundingCycleBallot is IFundingCycleBallot {
+contract Active14DaysFundingCycleBallot is IFundingCycleBallot {
     // --- public stored properties --- //
 
     /// @notice The number of seconds that must pass for a funding cycle reconfiguration to become active.
-    uint256 public constant reconfigurationDelay = 1209600;
+    uint256 public constant reconfigurationDelay = 1209600; // 14 days
 
     // --- external views --- //
 

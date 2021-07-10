@@ -31,7 +31,7 @@ struct FundingCycle {
     uint256 target;
     // The currency that the target is measured in.
     uint256 currency;
-    // The percentage of each payment to send as a fee to the Juice admin.
+    // The percentage of each payment to send as a fee to the Juicebox admin.
     uint256 fee;
     // A percentage indicating how much more weight to give a funding cycle compared to its predecessor.
     uint256 discountRate;

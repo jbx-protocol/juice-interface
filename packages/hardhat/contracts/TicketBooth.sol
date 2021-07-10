@@ -97,7 +97,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
     /** 
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _operatorStore A contract storing operator assignments.
-      @param _terminalDirectory A directory of a project's current Juice terminal to receive payments in.
+      @param _terminalDirectory A directory of a project's current Juicebox terminal to receive payments in.
     */
     constructor(
         IProjects _projects,
@@ -115,7 +115,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
         Deploys an owner's Ticket ERC-20 token contract.
 
         @param _projectId The ID of the project being issued tickets.
-        @param _name The ERC-20's name. " Juice ticket" will be appended.
+        @param _name The ERC-20's name. " Juicebox ticket" will be appended.
         @param _symbol The ERC-20's symbol. "j" will be prepended.
     */
     function issue(

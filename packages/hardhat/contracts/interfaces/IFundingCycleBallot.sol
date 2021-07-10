@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
+pragma solidity 0.8.6;
 
 import "./IJuicer.sol";
 
-enum BallotState {Approved, Active, Failed, Standby}
+enum BallotState {
+    Approved,
+    Active,
+    Failed,
+    Standby
+}
 
 interface IFundingCycleBallot {
     function duration() external view returns (uint256);

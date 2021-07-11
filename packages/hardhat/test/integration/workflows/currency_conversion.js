@@ -12,12 +12,10 @@ module.exports = [
     description: "Add the price feed to the prices contract",
     fn: async ({
       deployer,
-      constants,
       contracts,
       executeFn,
-      BigNumber,
       deployContractFn,
-      randomBigNumberFn
+      incrementCurrencyFn
     }) => {
       // An example price feed.
       const priceFeed = await deployContractFn("ExampleETHUSDPriceFeed");
@@ -25,11 +23,8 @@ module.exports = [
       // The amount of decimals the price should be adjusted for.
       const decimals = await priceFeed.decimals();
 
-      // The currency number that will store the price feed. Can't be 0, which is reserve for ETH.
-      const currency = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: constants.MaxUint8
-      });
+      // The currency number that will store the price feed. Can't be 0, which is reserve for ETH, or any other currency already set.
+      const currency = incrementCurrencyFn();
 
       await executeFn({
         caller: deployer,

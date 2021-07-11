@@ -15,7 +15,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: deployer.address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -34,7 +34,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: addrs[0].address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -53,7 +53,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: deployer.address,
-            percent: 100,
+            percent: 5000,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -61,7 +61,7 @@ const tests = {
             allocator: modAllocator.address,
             projectId: 2,
             beneficiary: ethers.constants.AddressZero,
-            percent: 50,
+            percent: 2500,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -81,7 +81,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: deployer.address,
-            percent: 100,
+            percent: 5000,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -294,7 +294,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: deployer.address,
-            percent: 210,
+            percent: 10010,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -352,7 +352,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 1,
             beneficiary: deployer.address,
-            percent: 180,
+            percent: 9000,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -360,7 +360,7 @@ const tests = {
             allocator: ethers.constants.AddressZero,
             projectId: 2,
             beneficiary: deployer.address,
-            percent: 50,
+            percent: 1010,
             preferUnstaked: false,
             lockedUntil: 0
           }

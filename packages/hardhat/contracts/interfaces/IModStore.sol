@@ -7,16 +7,16 @@ import "./IModAllocator.sol";
 
 struct PaymentMod {
     bool preferUnstaked;
-    uint8 percent;
+    uint16 percent;
     uint48 lockedUntil;
     address payable beneficiary;
     IModAllocator allocator;
-    uint256 projectId;
+    uint56 projectId;
 }
 
 struct TicketMod {
     bool preferUnstaked;
-    uint8 percent;
+    uint16 percent;
     uint48 lockedUntil;
     address payable beneficiary;
 }

@@ -248,11 +248,11 @@ module.exports = [
       // The mod percents should add up to <= constants.MaxPercent.
       const percent1 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: constants.MaxPercent.sub(2)
+        max: constants.MaxModPercent.sub(2)
       });
       const percent2 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: constants.MaxPercent.sub(percent1).sub(1)
+        max: constants.MaxModPercent.sub(percent1).sub(1)
       });
 
       // The preference for unstaked tickets.
@@ -517,8 +517,8 @@ module.exports = [
         fn: "balanceOf",
         args: [owner.address, expectedProjectId],
         expect: expectedReservedTicketAmount2
-          .mul(constants.MaxPercent.sub(percent1).sub(percent2))
-          .div(constants.MaxPercent),
+          .mul(constants.MaxModPercent.sub(percent1).sub(percent2))
+          .div(constants.MaxModPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 10000
@@ -547,7 +547,7 @@ module.exports = [
         args: [mod1Beneficiary.address, expectedProjectId],
         expect: expectedReservedTicketAmount2
           .mul(percent1)
-          .div(constants.MaxPercent),
+          .div(constants.MaxModPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 10000
@@ -579,7 +579,7 @@ module.exports = [
           ? BigNumber.from(0)
           : expectedReservedTicketAmount2
               .mul(percent1)
-              .div(constants.MaxPercent),
+              .div(constants.MaxModPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 10000
@@ -608,7 +608,7 @@ module.exports = [
         args: [mod2Beneficiary.address, expectedProjectId],
         expect: expectedReservedTicketAmount2
           .mul(percent2)
-          .div(constants.MaxPercent),
+          .div(constants.MaxModPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 10000
@@ -640,7 +640,7 @@ module.exports = [
           ? BigNumber.from(0)
           : expectedReservedTicketAmount2
               .mul(percent2)
-              .div(constants.MaxPercent),
+              .div(constants.MaxModPercent),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
           amount: 10000

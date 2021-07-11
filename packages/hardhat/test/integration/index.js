@@ -1,11 +1,12 @@
 const { BigNumber, constants, utils } = require("ethers");
 const workflows = require("./workflows");
 
-// let snapshotId;
 // The first project ID is used for governance.
 let projectId = BigNumber.from(1);
 // The first funding cycle ID is used for governance.
 let fundingCycleId = BigNumber.from(1);
+
+let currency = BigNumber.from(0);
 
 const run = function(ops) {
   return function() {
@@ -125,15 +126,24 @@ module.exports = function() {
     this.constants.GovernanceProjectId = projectId;
     this.constants.GovenanceOwner = this.deployer.address;
 
-    // eslint-disable-next-line no-plusplus
+    // All perecents are out of 200, except for mods.
+    this.constants.MaxPercent = BigNumber.from(200);
+
+    // Mod percents are out of 10000.
+    this.constants.MaxModPercent = BigNumber.from(10000);
+
     this.incrementProjectIdFn = () => {
       projectId = projectId.add(1);
       return projectId;
     };
-    // eslint-disable-next-line no-plusplus
     this.incrementFundingCycleIdFn = () => {
       fundingCycleId = fundingCycleId.add(1);
       return fundingCycleId;
+    };
+
+    this.incrementCurrencyFn = () => {
+      currency = currency.add(1);
+      return currency;
     };
 
     this.bondingCurveFn = ({ rate, count, total, overflow }) => {

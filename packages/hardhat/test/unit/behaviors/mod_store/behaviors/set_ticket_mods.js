@@ -13,7 +13,7 @@ const tests = {
         mods: [
           {
             beneficiary: deployer.address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -30,7 +30,7 @@ const tests = {
         mods: [
           {
             beneficiary: addrs[0].address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: 0
           }
@@ -396,7 +396,7 @@ const tests = {
         mods: [
           {
             beneficiary: deployer.address,
-            percent: 210,
+            percent: 10010,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -424,7 +424,7 @@ const tests = {
           mods: [
             {
               beneficiary: deployer.address,
-              percent: 200,
+              percent: 10000,
               preferUnstaked: false,
               lockedUntil: testStart.add(10)
             }
@@ -434,7 +434,7 @@ const tests = {
         mods: [
           {
             beneficiary: deployer.address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: testStart.add(10)
           },
@@ -484,13 +484,13 @@ const tests = {
         mods: [
           {
             beneficiary: deployer.address,
-            percent: 180,
+            percent: 9000,
             preferUnstaked: false,
             lockedUntil: 0
           },
           {
             beneficiary: deployer.address,
-            percent: 50,
+            percent: 1010,
             preferUnstaked: false,
             lockedUntil: 0
           }

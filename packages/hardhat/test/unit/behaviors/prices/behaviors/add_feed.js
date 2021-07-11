@@ -40,6 +40,16 @@ const tests = {
       })
     },
     {
+      description: "already exists",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        currency: 1,
+        decimals: 18,
+        setup: { preset: true },
+        revert: "Prices::addFeed: ALREADY_EXISTS"
+      })
+    },
+    {
       description: "over 18 decimals",
       fn: ({ deployer }) => ({
         caller: deployer,
@@ -96,9 +106,21 @@ module.exports = function() {
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { caller, currency, decimals, revert } = failureTest.fn(this);
+        const {
+          caller,
+          currency,
+          decimals,
+          revert,
+          setup: { preset } = {}
+        } = failureTest.fn(this);
 
         await this.aggregatorV3Contract.mock.decimals.returns(decimals);
+
+        if (preset) {
+          await this.contract
+            .connect(caller)
+            .addFeed(this.aggregatorV3Contract.address, currency);
+        }
 
         await expect(
           this.contract

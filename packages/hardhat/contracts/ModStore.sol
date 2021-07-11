@@ -154,9 +154,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
                 _paymentModPercentTotal +
                 _mods[_i].percent;
 
-            // The total percent should be less than 200.
+            // The total percent should be less than 10000.
             require(
-                _paymentModPercentTotal <= 200,
+                _paymentModPercentTotal <= 10000,
                 "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
             );
 
@@ -248,9 +248,9 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
 
             // Add to the total percents.
             _ticketModPercentTotal = _ticketModPercentTotal + _mods[_i].percent;
-            // The total percent should be less than 200.
+            // The total percent should be less than 10000.
             require(
-                _ticketModPercentTotal <= 200,
+                _ticketModPercentTotal <= 10000,
                 "ModStore::setTicketMods: BAD_TOTAL_PERCENT"
             );
 

@@ -222,8 +222,7 @@ describe("Juicebox", async function() {
         .sub(1),
       MaxUint8: ethers.BigNumber.from(2)
         .pow(8)
-        .sub(1),
-      MaxPercent: ethers.BigNumber.from(200)
+        .sub(1)
     };
 
     // Bind function that gets a random big number.

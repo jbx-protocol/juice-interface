@@ -1035,8 +1035,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Get a reference to the mod being iterated on.
             PaymentMod memory _mod = _mods[_i];
 
-            // The amount to send towards mods.
-            uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
+            // The amount to send towards mods. Mods percents are out of 10000.
+            uint256 _modCut = PRBMathCommon.mulDiv(
+                _amount,
+                _mod.percent,
+                10000
+            );
 
             if (_modCut > 0) {
                 // Transfer ETH to the mod.
@@ -1134,8 +1138,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Get a reference to the mod being iterated on.
             TicketMod memory _mod = _mods[_i];
 
-            // The amount to send towards mods.
-            uint256 _modCut = PRBMathCommon.mulDiv(_amount, _mod.percent, 200);
+            // The amount to send towards mods. Mods percents are out of 10000.
+            uint256 _modCut = PRBMathCommon.mulDiv(
+                _amount,
+                _mod.percent,
+                10000
+            );
 
             // Print tickets for the mod if needed.
             if (_modCut > 0)

@@ -66,7 +66,7 @@ const tests = {
       fn: ({ addrs }) => ({
         mod: {
           preferUnstaked: false,
-          percent: 100,
+          percent: 5000,
           lockedUntil: 0,
           beneficiary: addrs[3].address
         },
@@ -81,7 +81,7 @@ const tests = {
       fn: ({ addrs }) => ({
         mod: {
           preferUnstaked: false,
-          percent: 200,
+          percent: 10000,
           lockedUntil: 0,
           beneficiary: addrs[3].address
         },
@@ -201,7 +201,7 @@ const ops = ({
                   args: [
                     mod.beneficiary,
                     projectId,
-                    expectedReservedAmount.mul(mod.percent).div(200),
+                    expectedReservedAmount.mul(mod.percent).div(10000),
                     mod.preferUnstaked
                   ],
                   returns: []
@@ -239,7 +239,7 @@ const ops = ({
                     mod.lockedUntil,
                     mod.beneficiary
                   ],
-                  expectedReservedAmount.mul(mod.percent).div(200),
+                  expectedReservedAmount.mul(mod.percent).div(10000),
                   caller.address
                 ]
               }

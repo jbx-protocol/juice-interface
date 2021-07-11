@@ -118,7 +118,7 @@ const tests = {
             allocator: constants.AddressZero,
             projectId: 1212,
             beneficiary: addrs[0].address,
-            percent: 100,
+            percent: 5000,
             preferUnstaked: false,
             lockedUntil: 0,
             terminal
@@ -141,7 +141,7 @@ const tests = {
             allocator: constants.AddressZero,
             projectId: 1212,
             beneficiary: addrs[0].address,
-            percent: 70,
+            percent: 3000,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -149,7 +149,7 @@ const tests = {
             allocator: constants.AddressZero,
             projectId: 0,
             beneficiary: addrs[7].address,
-            percent: 30,
+            percent: 2000,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -157,7 +157,7 @@ const tests = {
             allocator,
             projectId: 9,
             beneficiary: addrs[3].address,
-            percent: 50,
+            percent: 2500,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -176,7 +176,7 @@ const tests = {
             allocator: constants.AddressZero,
             projectId: 1212,
             beneficiary: addrs[0].address,
-            percent: 200,
+            percent: 10000,
             preferUnstaked: false,
             lockedUntil: 0
           },
@@ -305,7 +305,7 @@ const ops = ({
           projectMod.allocator,
           projectMod.projectId
         ],
-        tapped.mul(projectMod.percent).div(200),
+        tapped.mul(projectMod.percent).div(10000),
         caller.address
       ]
     });
@@ -324,7 +324,7 @@ const ops = ({
           addressMod.allocator,
           addressMod.projectId
         ],
-        tapped.mul(addressMod.percent).div(200),
+        tapped.mul(addressMod.percent).div(10000),
         caller.address
       ]
     });
@@ -347,7 +347,7 @@ const ops = ({
           allocatorMod.allocator,
           allocatorMod.projectId
         ],
-        tapped.mul(allocatorMod.percent).div(200),
+        tapped.mul(allocatorMod.percent).div(10000),
         caller.address
       ]
     });
@@ -626,7 +626,7 @@ const ops = ({
             contract: targetContract,
             fn: "balanceOf",
             args: [projectMod.projectId],
-            value: tapped.mul(projectMod.percent).div(200)
+            value: tapped.mul(projectMod.percent).div(10000)
           })
         ]
       : []),
@@ -638,7 +638,7 @@ const ops = ({
             args: [addressMod.beneficiary],
             value: (
               await caller.provider.getBalance(addressMod.beneficiary)
-            ).add(tapped.mul(addressMod.percent).div(200))
+            ).add(tapped.mul(addressMod.percent).div(10000))
           })
         ]
       : []),
@@ -650,7 +650,7 @@ const ops = ({
             args: [allocatorMod.allocator],
             value: (
               await caller.provider.getBalance(allocatorMod.allocator)
-            ).add(tapped.mul(allocatorMod.percent).div(200))
+            ).add(tapped.mul(allocatorMod.percent).div(10000))
           })
         ]
       : [])

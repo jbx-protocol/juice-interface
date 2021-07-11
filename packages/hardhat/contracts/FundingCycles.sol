@@ -900,14 +900,14 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
     ) private {
         // weight in bytes 0-79 bytes.
         uint256 packed = _weight;
-        // projectId in bytes 80-127 bytes.
+        // projectId in bytes 80-135 bytes.
         packed |= _projectId << 80;
-        // basedOn in bytes 128-175 bytes.
-        packed |= _basedOn << 128;
-        // start in bytes 176-223 bytes.
-        packed |= _start << 176;
-        // number in bytes 224-255 bytes.
-        packed |= _number << 224;
+        // basedOn in bytes 136-183 bytes.
+        packed |= _basedOn << 136;
+        // start in bytes 184-231 bytes.
+        packed |= _start << 184;
+        // number in bytes 232-255 bytes.
+        packed |= _number << 232;
 
         // Set in storage.
         _packedIntrinsicPropertiesOf[_fundingCycleId] = packed;
@@ -977,16 +977,16 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
         _fundingCycle.weight = uint256(uint80(_packedIntrinsicProperties));
         _fundingCycle.projectId = uint256(
-            uint48(_packedIntrinsicProperties >> 80)
+            uint56(_packedIntrinsicProperties >> 80)
         );
         _fundingCycle.basedOn = uint256(
-            uint48(_packedIntrinsicProperties >> 128)
+            uint48(_packedIntrinsicProperties >> 136)
         );
         _fundingCycle.start = uint256(
-            uint48(_packedIntrinsicProperties >> 176)
+            uint48(_packedIntrinsicProperties >> 184)
         );
         _fundingCycle.number = uint256(
-            uint32(_packedIntrinsicProperties >> 224)
+            uint24(_packedIntrinsicProperties >> 232)
         );
 
 

@@ -42,7 +42,7 @@ module.exports = [
         // Arbitrary percent that adds up to <= 100% across all mods.
         percent: randomBigNumberFn({
           min: BigNumber.from(1),
-          max: constants.MaxPercent.div(2)
+          max: constants.MaxModPercent.div(2)
         }).toNumber(),
         // Lock at least until the end of the tests.
         lockedUntil: (await getTimestampFn())
@@ -62,7 +62,7 @@ module.exports = [
         // Arbitrary percent that adds up to <= 100% across all mods.
         percent: randomBigNumberFn({
           min: BigNumber.from(1),
-          max: constants.MaxPercent.div(4)
+          max: constants.MaxModPercent.div(4)
         }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn(),
@@ -172,7 +172,7 @@ module.exports = [
         // Arbitrary percent that adds up to <= 100% across all mods.
         percent: randomBigNumberFn({
           min: BigNumber.from(1),
-          max: constants.MaxPercent.div(5)
+          max: constants.MaxModPercent.div(5)
         }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn(),

@@ -63,15 +63,15 @@ module.exports = [
       // The mod percents should add up to <= constants.MaxPercent.
       const percent1 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: constants.MaxPercent.sub(2)
+        max: constants.MaxModPercent.sub(2)
       });
       const percent2 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: constants.MaxPercent.sub(percent1).sub(1)
+        max: constants.MaxModPercent.sub(percent1).sub(1)
       });
       const percent3 = randomBigNumberFn({
         min: BigNumber.from(1),
-        max: constants.MaxPercent.sub(percent1).sub(percent2)
+        max: constants.MaxModPercent.sub(percent1).sub(percent2)
       });
 
       // There are three types of mods.
@@ -405,7 +405,9 @@ module.exports = [
       await verifyBalanceFn({
         address: addressMod.beneficiary,
         expect: addressModBeneficiaryInitialBalance.add(
-          expectedAmountTapped.mul(addressMod.percent).div(constants.MaxPercent)
+          expectedAmountTapped
+            .mul(addressMod.percent)
+            .div(constants.MaxModPercent)
         )
       });
 
@@ -428,7 +430,7 @@ module.exports = [
         args: [expectedIdOfModProject],
         expect: expectedAmountTapped
           .mul(projectMod.percent)
-          .div(constants.MaxPercent)
+          .div(constants.MaxModPercent)
       })
   },
   {
@@ -447,7 +449,7 @@ module.exports = [
         args: [projectMod.beneficiary, expectedIdOfModProject],
         expect: expectedAmountTapped
           .mul(projectMod.percent)
-          .div(constants.MaxPercent)
+          .div(constants.MaxModPercent)
           .mul(constants.InitialWeightMultiplier)
       })
   },
@@ -470,7 +472,7 @@ module.exports = [
           ? BigNumber.from(0)
           : expectedAmountTapped
               .mul(projectMod.percent)
-              .div(constants.MaxPercent)
+              .div(constants.MaxModPercent)
               .mul(constants.InitialWeightMultiplier)
       })
   },
@@ -490,7 +492,7 @@ module.exports = [
         expect: allocatorModContractInitialBalance.add(
           expectedAmountTapped
             .mul(allocatorMod.percent)
-            .div(constants.MaxPercent)
+            .div(constants.MaxModPercent)
         )
       })
   },
@@ -515,17 +517,17 @@ module.exports = [
             .sub(
               expectedAmountTapped
                 .mul(addressMod.percent)
-                .div(constants.MaxPercent)
+                .div(constants.MaxModPercent)
             )
             .sub(
               expectedAmountTapped
                 .mul(projectMod.percent)
-                .div(constants.MaxPercent)
+                .div(constants.MaxModPercent)
             )
             .sub(
               expectedAmountTapped
                 .mul(allocatorMod.percent)
-                .div(constants.MaxPercent)
+                .div(constants.MaxModPercent)
             )
         )
       })

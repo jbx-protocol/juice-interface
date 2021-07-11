@@ -63,6 +63,9 @@ contract Prices is IPrices, Ownable {
       @notice 
       Add a price feed for the price of ETH.
 
+      @dev
+      Current feeds can't be modified.
+
       @param _feed The price feed being added.
       @param _currency The currency that the price feed is for.
     */
@@ -73,6 +76,12 @@ contract Prices is IPrices, Ownable {
     {
         // The 0 currency is reserved for ETH.
         require(_currency > 0, "Prices::addFeed: RESERVED");
+
+        // There can't already be a feed for the specified currency.
+        require(
+            feedFor[_currency] == AggregatorV3Interface(address(0)),
+            "Prices::addFeed: ALREADY_EXISTS"
+        );
 
         // Get a reference to the number of decimals the feed uses.
         uint256 _decimals = _feed.decimals();

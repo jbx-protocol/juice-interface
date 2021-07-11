@@ -197,7 +197,7 @@ module.exports = [
   {
     description: "Fastforward to within the challenge expiry",
     fn: ({ fastforwardFn, BigNumber }) =>
-      fastforwardFn(BigNumber.from(31535990))
+      fastforwardFn(BigNumber.from(31535900))
   },
   {
     description: "Claiming should still be unauthorized",
@@ -219,7 +219,7 @@ module.exports = [
     fn: ({ BigNumber, fastforwardFn, randomBigNumberFn }) =>
       fastforwardFn(
         randomBigNumberFn({
-          min: BigNumber.from(10),
+          min: BigNumber.from(100),
           max: BigNumber.from(9999)
         })
       )

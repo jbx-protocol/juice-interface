@@ -4,7 +4,12 @@ import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { PaymentMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
-import { parsePerbicent } from 'utils/formatNumber'
+import {
+  fromPerbicent,
+  fromPermille,
+  parsePerbicent,
+  parsePermille,
+} from 'utils/formatNumber'
 import {
   EditingFundingCycle,
   SerializedFundingCycle,
@@ -23,8 +28,8 @@ export type EditingProjectState = {
   ticketMods: TicketMod[]
 }
 
-const defaultDiscountRate = parsePerbicent('97')
-const defaultBondingCurveRate = parsePerbicent('50')
+const defaultDiscountRate = parsePermille(0)
+const defaultBondingCurveRate = parsePerbicent(100)
 
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
@@ -48,10 +53,10 @@ export const editingProjectSlice = createSlice({
       duration: BigNumber.from(0),
       tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
-      fee: BigNumber.from(15),
-      reserved: 50,
-      bondingCurveRate: parsePerbicent('100').toNumber(),
-      discountRate: parsePerbicent('100'),
+      fee: BigNumber.from(10),
+      reserved: parsePerbicent(5),
+      bondingCurveRate: defaultBondingCurveRate,
+      discountRate: defaultDiscountRate,
       cycleLimit: BigNumber.from(0),
       configured: BigNumber.from(0),
       ballot: constants.AddressZero,
@@ -172,10 +177,12 @@ export const editingProjectSlice = createSlice({
       ...state,
       fundingCycle: {
         ...state.fundingCycle,
-        discountRate: action.payload ? defaultDiscountRate.toString() : '0',
-        bondingCurveRate: action.payload
-          ? defaultBondingCurveRate.toString()
-          : '0',
+        discountRate: fromPermille(
+          action.payload ? defaultDiscountRate : '201',
+        ),
+        bondingCurveRate: fromPerbicent(
+          action.payload ? defaultBondingCurveRate : 0,
+        ),
       },
     }),
     setPaymentMods: (state, action: PayloadAction<PaymentMod[]>) => ({

@@ -21,7 +21,12 @@ import { FCProperties } from 'models/funding-cycle-properties'
 import { PaymentMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromPerbicent, fromWad, parsePerbicent } from 'utils/formatNumber'
+import {
+  fromPerbicent,
+  fromPermille,
+  fromWad,
+  parsePerbicent,
+} from 'utils/formatNumber'
 import {
   encodeFCMetadata,
   hasFundingTarget,
@@ -130,13 +135,11 @@ export default function Create() {
   }
 
   const onIncentivesFormSaved = (
-    discountRate: number,
-    bondingCurveRate: number,
+    discountRate: string,
+    bondingCurveRate: string,
   ) => {
-    dispatch(editingProjectActions.setDiscountRate(discountRate.toString()))
-    dispatch(
-      editingProjectActions.setBondingCurveRate(bondingCurveRate.toString()),
-    )
+    dispatch(editingProjectActions.setDiscountRate(discountRate))
+    dispatch(editingProjectActions.setBondingCurveRate(bondingCurveRate))
   }
 
   useLayoutEffect(() => {
@@ -178,9 +181,9 @@ export default function Create() {
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {
-      bondingCurveRate: editingFC.bondingCurveRate,
-      reservedRate: editingFC.reserved,
-      reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
+      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      reservedRate: editingFC.reserved.toNumber(),
+      reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
     }
 
     transactor(
@@ -299,6 +302,8 @@ export default function Create() {
       1000,
     ),
   }
+
+  console.log('editing', editingFC.bondingCurveRate.toString())
 
   return (
     <Row
@@ -460,9 +465,9 @@ export default function Create() {
         }}
       >
         <IncentivesForm
-          initialDiscountRate={editingFC.discountRate.toNumber()}
-          initialBondingCurveRate={editingFC.bondingCurveRate}
-          onSave={async (discountRate: number, bondingCurveRate: number) => {
+          initialDiscountRate={fromPermille(editingFC.discountRate)}
+          initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+          onSave={async (discountRate: string, bondingCurveRate: string) => {
             await ticketingForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)
             setIncentivesFormModalVisible(false)

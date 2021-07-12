@@ -9,8 +9,10 @@ import { FCProperties } from 'models/funding-cycle-properties'
 import { useContext, useEffect, useState } from 'react'
 import {
   fromPerbicent,
+  fromPermille,
   fromWad,
   parsePerbicent,
+  parsePermille,
   parseWad,
 } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
@@ -49,7 +51,7 @@ export default function ReconfigureBudgetModal({
       duration: fundingCycle.duration.toString(),
       target: fromWad(fundingCycle.target),
       currency: fundingCycle.currency.toNumber() as CurrencyOption,
-      discountRate: fromPerbicent(fundingCycle.discountRate),
+      discountRate: fromPermille(fundingCycle.discountRate),
       reserved: fromPerbicent(metadata.reservedRate),
       bondingCurveRate: fromPerbicent(metadata.bondingCurveRate),
     })
@@ -74,7 +76,7 @@ export default function ReconfigureBudgetModal({
       target: parseWad(fields.target)?.toHexString(),
       currency: BigNumber.from(fields.currency).toHexString(),
       duration: BigNumber.from(fields.duration).toHexString(),
-      discountRate: parsePerbicent(fields.discountRate).toHexString(),
+      discountRate: parsePermille(fields.discountRate).toHexString(),
       cycleLimit: BigNumber.from(0).toHexString(),
       ballot: fundingCycle.ballot,
     }
@@ -82,7 +84,7 @@ export default function ReconfigureBudgetModal({
     const metadata: Omit<FCMetadata, 'version'> = {
       reservedRate: fields.reserved,
       bondingCurveRate: fields.bondingCurveRate,
-      reconfigurationBondingCurveRate: parsePerbicent('100').toNumber(),
+      reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
     }
 
     transactor(

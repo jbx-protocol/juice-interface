@@ -5,7 +5,7 @@ export default function NumberSlider({
   min,
   max,
   step,
-  value,
+  sliderValue,
   suffix,
   onChange,
   defaultValue,
@@ -13,7 +13,7 @@ export default function NumberSlider({
   min?: number
   max?: number
   step?: number
-  value?: number
+  sliderValue?: number
   suffix?: string
   onChange?: (num: number | undefined) => void
   defaultValue?: number
@@ -31,7 +31,7 @@ export default function NumberSlider({
     if (onChange) onChange(val)
   }
 
-  useEffect(() => setValue(value), [])
+  useEffect(() => setValue(sliderValue), [])
 
   return (
     <div style={{ display: 'flex', alignItems: 'baseline' }}>

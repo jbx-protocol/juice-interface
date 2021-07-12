@@ -22,9 +22,9 @@ import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
-  fromPerbicent,
+  fromPermyriad,
   mulPercent,
-  parsePerbicent,
+  parsePermyriad,
 } from 'utils/formatNumber'
 
 import { FormItems } from '.'
@@ -120,7 +120,7 @@ export default function ProjectPaymentMods({
             onClick={() => {
               if (locked) return
 
-              const percent = parseFloat(fromPerbicent(mod.percent))
+              const percent = parseFloat(fromPermyriad(mod.percent))
 
               setEditingModType(
                 BigNumber.from(mod.projectId || '0').gt(0)
@@ -208,12 +208,12 @@ export default function ProjectPaymentMods({
                     }}
                   >
                     <Space>
-                      <span>{fromPerbicent(mod.percent)}%</span>
+                      <span>{fromPermyriad(mod.percent)}%</span>
                       {target.lt(constants.MaxUint256) && (
                         <span>
                           <CurrencySymbol currency={currency} />
                           {formatWad(
-                            mulPercent(target, fromPerbicent(mod.percent)),
+                            mulPercent(target, fromPermyriad(mod.percent)),
                           )}
                         </span>
                       )}
@@ -259,7 +259,7 @@ export default function ProjectPaymentMods({
   if (!mods) return null
 
   const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(fromPerbicent(curr.percent ?? '0')),
+    (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
     0,
   )
 
@@ -268,7 +268,7 @@ export default function ProjectPaymentMods({
 
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
-    const percent = parsePerbicent(form.getFieldValue('percent')).toNumber()
+    const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
     const lockedUntil = _lockedUntil
@@ -428,7 +428,7 @@ export default function ProjectPaymentMods({
                     form.setFieldsValue({ percent })
                     setEditingPercent(percent)
                   }}
-                  step={0.5}
+                  step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}
                   suffix="%"
                 />

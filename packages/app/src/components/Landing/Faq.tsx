@@ -44,8 +44,7 @@ const QAs: {
   {
     q: `What's a discount rate?`,
     a: [
-      `Projects can be created with an optional discount rate to incentivize funding it earlier than later. With each new funding cycle, the discount rate decreases the number of tokens that are minted per payment.`,
-      `For example: with a discount rate of 97%, $100 paid to a project today might mint you 100 tokens, but the same amount paid during the next funding cycle would only mint you 97.`,
+      `Projects can be created with an optional discount rate to incentivize funding it earlier than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. Use this to incentivize supporters to pay your project earlier than later.`,
     ],
   },
   {

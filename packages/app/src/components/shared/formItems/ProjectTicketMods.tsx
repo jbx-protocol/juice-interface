@@ -7,7 +7,7 @@ import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPerbicent, parsePerbicent } from 'utils/formatNumber'
+import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -62,7 +62,7 @@ export default function ProjectTicketMods({
             onClick={() => {
               if (locked) return
 
-              const percent = parseFloat(fromPerbicent(mod.percent))
+              const percent = parseFloat(fromPermyriad(mod.percent))
 
               form.setFieldsValue({
                 ...mod,
@@ -111,7 +111,7 @@ export default function ProjectTicketMods({
                       maxWidth: 100,
                     }}
                   >
-                    {fromPerbicent(mod.percent)}%
+                    {fromPermyriad(mod.percent)}%
                   </span>
                 </div>
               </Col>
@@ -153,7 +153,7 @@ export default function ProjectTicketMods({
   if (!mods) return null
 
   const total = mods.reduce(
-    (acc, curr) => acc + parseFloat(fromPerbicent(curr.percent ?? '0')),
+    (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
     0,
   )
 
@@ -161,7 +161,7 @@ export default function ProjectTicketMods({
     await form.validateFields()
 
     const beneficiary = form.getFieldValue('beneficiary')
-    const percent = parsePerbicent(form.getFieldValue('percent')).toNumber()
+    const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
     const lockedUntil = _lockedUntil
@@ -271,7 +271,7 @@ export default function ProjectTicketMods({
           >
             <NumberSlider
               onChange={percent => form.setFieldsValue({ percent })}
-              step={0.5}
+              step={0.01}
               defaultValue={form.getFieldValue('percent') || 0}
               suffix="%"
             />

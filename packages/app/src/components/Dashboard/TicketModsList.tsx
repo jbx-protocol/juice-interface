@@ -9,7 +9,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPerbicent } from 'utils/formatNumber'
+import { fromPermyriad } from 'utils/formatNumber'
 
 export default function TicketModsList({
   mods,
@@ -89,7 +89,7 @@ export default function TicketModsList({
               alignItems: 'baseline',
             }}
           >
-            <span style={{ minWidth: 70 }}>{fromPerbicent(m.percent)}%:</span>
+            <span style={{ minWidth: 70 }}>{fromPermyriad(m.percent)}%:</span>
             <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
               <ShortAddress address={m.beneficiary} />
               {m.lockedUntil ? (

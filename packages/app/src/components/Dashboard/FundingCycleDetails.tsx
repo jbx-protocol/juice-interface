@@ -3,7 +3,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { formatDate } from 'utils/formatDate'
-import { formatWad, fromPerbicent } from 'utils/formatNumber'
+import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
   decodeFCMetadata,
   hasFundingTarget,
@@ -33,7 +33,7 @@ export default function FundingCycleDetails({
     <Descriptions
       labelStyle={{ fontWeight: 600 }}
       size="small"
-      column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 2, xxl: 2 }}
+      column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
     >
       <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>
 
@@ -69,7 +69,7 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {fromPerbicent(fundingCycle.discountRate)}%
+          {fromPermille(fundingCycle.discountRate)}%
         </Descriptions.Item>
       )}
 

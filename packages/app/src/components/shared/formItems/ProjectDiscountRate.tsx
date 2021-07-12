@@ -10,22 +10,22 @@ export default function ProjectDiscountRate({
   value,
   onChange,
 }: {
-  value: number | undefined
+  value: string | undefined
   onChange: (val?: number) => void
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The discount rate determines how you'll reward early supporters of your project. For example, if this is set to 90%, someone will receive 10% more tokens if they pay this project in the current funding than if they paid the same amount in the next funding cycle."
+      extra="The amount of tokens rewarded per amount paid to your project will decrease by this rate with each new funding cycle. Use this to incentivize supporters to pay your project earlier than later."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}
     >
       <NumberSlider
-        min={10}
-        value={value}
+        max={20}
+        sliderValue={parseFloat(value ?? '0')}
         suffix="%"
         onChange={onChange}
-        step={0.5}
+        step={0.1}
       />
     </Form.Item>
   )

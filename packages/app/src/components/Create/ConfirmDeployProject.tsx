@@ -14,6 +14,7 @@ import {
   formattedNum,
   formatWad,
   fromPerbicent,
+  fromPermille,
   fromWad,
 } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
@@ -88,7 +89,7 @@ export default function ConfirmDeployProject() {
         {editingFC && isRecurring(editingFC) && hasFundingTarget(editingFC) && (
           <Statistic
             title="Discount rate"
-            value={fromPerbicent(editingFC?.discountRate)}
+            value={fromPermille(editingFC?.discountRate)}
             suffix="%"
           />
         )}

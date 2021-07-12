@@ -2,14 +2,16 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 import {
   fromPerbicent,
+  fromPermille,
   fromWad,
   parsePerbicent,
+  parsePermille,
   parseWad,
 } from 'utils/formatNumber'
 
 export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
-  reserved: number
-  bondingCurveRate: number
+  reserved: BigNumber
+  bondingCurveRate: BigNumber
 }
 
 export type SerializedFundingCycle = Record<keyof EditingFundingCycle, string>
@@ -30,7 +32,7 @@ export const serializeFundingCycle = (
   weight: fromWad(fc.weight),
   fee: fromPerbicent(fc.fee),
   bondingCurveRate: fromPerbicent(fc.bondingCurveRate),
-  discountRate: fromPerbicent(fc.discountRate),
+  discountRate: fromPermille(fc.discountRate),
   configured: fc.configured.toString(),
   cycleLimit: fc.cycleLimit.toString(),
   ballot: fc.ballot,
@@ -53,9 +55,9 @@ export const deserializeFundingCycle = (
         tapped: parseWad(fc.tapped),
         weight: parseWad(fc.weight),
         fee: parsePerbicent(fc.fee),
-        reserved: parsePerbicent(fc.reserved).toNumber(),
-        bondingCurveRate: parsePerbicent(fc.bondingCurveRate).toNumber(),
-        discountRate: parsePerbicent(fc.discountRate),
+        reserved: parsePerbicent(fc.reserved),
+        bondingCurveRate: parsePerbicent(fc.bondingCurveRate),
+        discountRate: parsePermille(fc.discountRate),
         cycleLimit: BigNumber.from(fc.cycleLimit),
         configured: BigNumber.from(fc.configured),
         ballot: fc.ballot,

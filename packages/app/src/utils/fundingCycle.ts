@@ -39,7 +39,7 @@ export const encodeFCMetadata = (
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
-  fundingCycle.discountRate.gt(0)
+  fundingCycle.discountRate.lt(201)
 
 export const hasFundingTarget = (
   fundingCycle: FundingCycle | EditingFundingCycle,

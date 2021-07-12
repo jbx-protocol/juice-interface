@@ -18,7 +18,7 @@ export default function ProjectBondingCurveRate({
   formItemProps,
   onChange,
 }: {
-  value: number | undefined
+  value: string | undefined
   onChange: (val?: number) => void
 } & FormItemExt) {
   const { colors } = useContext(ThemeContext).theme
@@ -64,7 +64,7 @@ export default function ProjectBondingCurveRate({
     }
   }, [])
 
-  useEffect(() => graphCurve(value), [calculator])
+  useEffect(() => graphCurve(parseFloat(value ?? '0')), [calculator])
 
   function graphCurve(_value?: number) {
     if (_value === undefined || !calculator) return
@@ -180,7 +180,7 @@ export default function ProjectBondingCurveRate({
         min={0}
         max={100}
         step={0.5}
-        value={value}
+        sliderValue={parseFloat(value ?? '0')}
         onChange={val => {
           graphCurve(val)
           onChange(val)

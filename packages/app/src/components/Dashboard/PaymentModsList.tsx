@@ -1,7 +1,5 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import ProjectMods from 'components/shared/formItems/ProjectPaymentMods'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import ShortAddress from 'components/shared/ShortAddress'
 import { ThemeContext } from 'contexts/themeContext'
@@ -12,7 +10,8 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PaymentMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad, fromPerbicent, mulPercent } from 'utils/formatNumber'
+import { fromPermyriad } from 'utils/formatNumber'
+
 import ProjectPaymentMods from '../shared/formItems/ProjectPaymentMods'
 
 export default function PaymentModsList({
@@ -97,7 +96,7 @@ export default function PaymentModsList({
               alignItems: 'baseline',
             }}
           >
-            <span style={{ minWidth: 70 }}>{fromPerbicent(m.percent)}%:</span>
+            <span style={{ minWidth: 70 }}>{fromPermyriad(m.percent)}%:</span>
             <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
               {m.projectId && BigNumber.from(m.projectId).gt(0) ? (
                 <span>

@@ -1,4 +1,5 @@
 import { Form } from 'antd'
+
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
@@ -19,7 +20,12 @@ export default function ProjectReserved({
       label={hideLabel ? undefined : 'Reserved tokens'}
       {...formItemProps}
     >
-      <NumberSlider value={value} suffix="%" onChange={onChange} step={0.5} />
+      <NumberSlider
+        sliderValue={value}
+        suffix="%"
+        onChange={onChange}
+        step={0.5}
+      />
     </Form.Item>
   )
 }

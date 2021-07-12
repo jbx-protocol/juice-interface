@@ -17,9 +17,7 @@ export const weightedRate = (
   return fc.weight
     .mul(wad)
     .mul(
-      output === 'reserved'
-        ? reserved
-        : parsePerbicent('100').sub(reserved ?? 0),
+      output === 'reserved' ? reserved : parsePerbicent(100).sub(reserved ?? 0),
     )
     .div(1000)
 }

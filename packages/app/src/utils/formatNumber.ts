@@ -17,15 +17,21 @@ export const fromWad = (amt?: BigNumberish) => {
 export const formatWad = (amt?: BigNumberish) =>
   amt !== undefined && amt !== null ? formattedNum(fromWad(amt)) : undefined
 
+// Permyriad: x/10000
+export const parsePermyriad = (amt?: string | number) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 100) : 0)
+export const fromPermyriad = (amt?: BigNumberish) =>
+  amt ? (BigNumber.from(amt).toNumber() / 100).toString() : '0'
+
 // Permille: x/1000
-export const parsePermille = (amt?: string) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 10) : 0)
+export const parsePermille = (amt?: string | number) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 10) : 0)
 export const fromPermille = (amt?: BigNumberish) =>
   amt ? (BigNumber.from(amt).toNumber() / 10).toString() : '0'
 
 // Perbicent: x/200
-export const parsePerbicent = (amt?: string) =>
-  BigNumber.from(amt ? Math.floor(parseFloat(amt) * 2) : 0)
+export const parsePerbicent = (amt?: string | number) =>
+  BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 2) : 0)
 export const fromPerbicent = (amt?: BigNumberish) =>
   amt ? (BigNumber.from(amt).toNumber() / 2).toString() : '0'
 

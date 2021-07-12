@@ -13,12 +13,12 @@ export default function IncentivesForm({
   initialBondingCurveRate,
   onSave,
 }: {
-  initialDiscountRate: number
-  initialBondingCurveRate: number
-  onSave: (discountRate: number, bondingCurveRate: number) => void
+  initialDiscountRate: string
+  initialBondingCurveRate: string
+  onSave: (discountRate: string, bondingCurveRate: string) => void
 }) {
-  const [discountRate, setDiscountRate] = useState<number>()
-  const [bondingCurveRate, setBondingCurveRate] = useState<number>()
+  const [discountRate, setDiscountRate] = useState<string>()
+  const [bondingCurveRate, setBondingCurveRate] = useState<string>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -61,13 +61,13 @@ export default function IncentivesForm({
         <Form layout="vertical">
           <FormItems.ProjectDiscountRate
             name="discountRate"
-            value={discountRate}
-            onChange={(val?: number) => setDiscountRate(val)}
+            value={discountRate?.toString() ?? '0'}
+            onChange={(val?: number) => setDiscountRate(val?.toString())}
           />
           <FormItems.ProjectBondingCurveRate
             name="bondingCurveRate"
-            value={bondingCurveRate}
-            onChange={(val?: number) => setBondingCurveRate(val)}
+            value={bondingCurveRate?.toString() ?? '0'}
+            onChange={(val?: number) => setBondingCurveRate(val?.toString())}
           />
           {saveButton}
         </Form>
@@ -85,8 +85,8 @@ export default function IncentivesForm({
               tooltipVisible={false}
               dots
               onChange={val => {
-                setBondingCurveRate((4 - val) * 25)
-                setDiscountRate(100 - val * 5)
+                setBondingCurveRate(((4 - val) * 25).toString()) // 0 - 100 %
+                setDiscountRate((val * 2).toString()) // 0 - 8 %
               }}
             />
             <div style={{ color: colors.text.secondary, marginTop: 30 }}>

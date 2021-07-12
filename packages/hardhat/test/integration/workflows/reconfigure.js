@@ -50,7 +50,7 @@ module.exports = [
       });
       // Make sure its recurring.
       const discountRate1 = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
       const ballot1 = constants.AddressZero;
 
@@ -272,8 +272,8 @@ module.exports = [
           // Cycle limit should be 0 for the first funding cycle.
           cycleLimit1.eq(0) ? BigNumber.from(0) : cycleLimit1.sub(1),
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate1))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+            .div(constants.DiscountRatePercentDenominator),
           ballot1,
           timeMark.add(duration1.mul(86400)),
           duration1,
@@ -308,7 +308,7 @@ module.exports = [
       });
       // Make sure its not recurring.
       const discountRate2 = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
       const ballot2 = constants.AddressZero;
 
@@ -680,8 +680,8 @@ module.exports = [
           timeMark,
           cycleLimit2,
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate1))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+            .div(constants.DiscountRatePercentDenominator),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),
@@ -786,8 +786,8 @@ module.exports = [
           timeMark,
           cycleLimit2,
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate1))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+            .div(constants.DiscountRatePercentDenominator),
           ballot2,
           // The start time should be one duration after the initial start.
           originalTimeMark.add(duration1.mul(86400)),

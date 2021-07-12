@@ -395,12 +395,12 @@ const tests = {
       })
     },
     {
-      description: "first configuration, discount rate 200",
+      description: "first configuration, non recurring",
       fn: testTemplate({
         op: {
           // Less than the preconfiguration, greater than the standby.
           amount: BigNumber.from(20),
-          discountRate: BigNumber.from(200)
+          discountRate: BigNumber.from(201)
         },
         preconfigure: {
           // Greater than the amount being tapped.
@@ -748,7 +748,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           duration: BigNumber.from(1)
         },
         fastforward: BigNumber.from(86401),
@@ -927,13 +927,13 @@ module.exports = function() {
             i += 1
           ) {
             expectedWeight = expectedWeight
-              .mul(BigNumber.from(200).sub(preconfigure.discountRate))
-              .div(200);
+              .mul(BigNumber.from(1000).sub(preconfigure.discountRate))
+              .div(1000);
           }
           for (let i = 0; i < discountRatesToApply.length; i += 1) {
             expectedWeight = expectedWeight
-              .mul(BigNumber.from(200).sub(discountRatesToApply[i]))
-              .div(200);
+              .mul(BigNumber.from(1000).sub(discountRatesToApply[i]))
+              .div(1000);
           }
 
           // Get the time when the configured funding cycle starts.

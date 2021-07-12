@@ -343,7 +343,7 @@ const tests = {
             .pow(16)
             .sub(1),
           cycleLimit: BigNumber.from(0),
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           fee: BigNumber.from(200),
           metadata: constants.MaxUint256
         },
@@ -627,7 +627,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           duration: BigNumber.from(1)
         },
         fastforward: BigNumber.from(86401),

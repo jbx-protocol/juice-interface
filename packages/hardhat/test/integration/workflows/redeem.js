@@ -67,7 +67,7 @@ module.exports = [
 
       // Set a random discount rate. Don't allow non-recurring cycles.
       const discountRate = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
 
       // Set a random bonding curve rate.

@@ -341,7 +341,7 @@ const tests = {
           duration: BigNumber.from(2)
             .pow(16)
             .sub(1),
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           fee: BigNumber.from(200),
           metadata: constants.MaxUint256
         },
@@ -584,11 +584,11 @@ const tests = {
       })
     },
     {
-      description: "first configuration, discount rate 200",
+      description: "first configuration, non recurring",
       fn: testTemplate({
         preconfigure: {
           target: BigNumber.from(140),
-          discountRate: BigNumber.from(200)
+          discountRate: BigNumber.from(201)
         },
         expectation: {
           number: 1,
@@ -638,7 +638,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           duration: BigNumber.from(1)
         },
         fastforward: BigNumber.from(86401),

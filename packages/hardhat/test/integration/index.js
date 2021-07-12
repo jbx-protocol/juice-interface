@@ -132,6 +132,12 @@ module.exports = function() {
     // Mod percents are out of 10000.
     this.constants.MaxModPercent = BigNumber.from(10000);
 
+    // Discount rate percents are out of 201. sending 201 creates a non recurring funding cycle.
+    this.constants.MaxDiscountRate = BigNumber.from(201);
+
+    // The denominator for discount rates is 1000, meaning only 80% - 100% are accessible.
+    this.constants.DiscountRatePercentDenominator = BigNumber.from(1000);
+
     this.incrementProjectIdFn = () => {
       projectId = projectId.add(1);
       return projectId;
@@ -166,7 +172,7 @@ module.exports = function() {
     };
   });
 
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 80; i += 1) {
     describe(
       "Projects can be created, have their URIs changed, transfer/claim handles, and be attached to funding cycles",
       run(workflows.projects)

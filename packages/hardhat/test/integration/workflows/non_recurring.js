@@ -48,7 +48,7 @@ module.exports = [
         max: constants.MaxCycleLimit
       });
 
-      const discountRate1 = BigNumber.from(constants.MaxPercent);
+      const discountRate1 = BigNumber.from(constants.MaxDiscountRate);
 
       const ballot1 = constants.AddressZero;
 

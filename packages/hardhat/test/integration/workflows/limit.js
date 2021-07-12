@@ -51,7 +51,7 @@ module.exports = [
 
       // dont allow non recurring.
       const discountRate1 = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
       const ballot1 = constants.AddressZero;
 
@@ -271,8 +271,8 @@ module.exports = [
       let expectedWeight = expectedInitialWeight;
       for (let i = 0; i < cycleLimit1.sub(1); i += 1) {
         expectedWeight = expectedWeight
-          .mul(constants.MaxPercent.sub(discountRate1))
-          .div(constants.MaxPercent);
+          .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+          .div(constants.DiscountRatePercentDenominator);
       }
       await checkFn({
         caller: randomSignerFn(),
@@ -337,8 +337,8 @@ module.exports = [
       let expectedFullLimitWeight = expectedInitialWeight;
       for (let i = 0; i < cycleLimit1; i += 1) {
         expectedFullLimitWeight = expectedFullLimitWeight
-          .mul(constants.MaxPercent.sub(discountRate1))
-          .div(constants.MaxPercent);
+          .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+          .div(constants.DiscountRatePercentDenominator);
       }
       await checkFn({
         caller: randomSignerFn(),
@@ -394,7 +394,7 @@ module.exports = [
       });
       // dont allow non recurring.
       const discountRate2 = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
       const ballot2 = constants.AddressZero;
 
@@ -558,8 +558,8 @@ module.exports = [
           configurationTimeMark,
           cycleLimit2,
           expectedFullLimitWeight
-            .mul(constants.MaxPercent.sub(discountRate1))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+            .div(constants.DiscountRatePercentDenominator),
           ballot2,
           originalTimeMark.add(
             cycleLimit1
@@ -629,10 +629,10 @@ module.exports = [
           configurationTimeMark,
           cycleLimit2.sub(1),
           expectedFullLimitWeight
-            .mul(constants.MaxPercent.sub(discountRate1))
-            .div(constants.MaxPercent)
-            .mul(constants.MaxPercent.sub(discountRate2))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+            .div(constants.DiscountRatePercentDenominator)
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate2))
+            .div(constants.DiscountRatePercentDenominator),
           ballot2,
           originalTimeMark
             .add(
@@ -695,12 +695,12 @@ module.exports = [
       }
     }) => {
       let expectedFullLimitWeight2 = expectedFullLimitWeight
-        .mul(constants.MaxPercent.sub(discountRate1))
-        .div(constants.MaxPercent);
+        .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+        .div(constants.DiscountRatePercentDenominator);
       for (let i = 0; i < cycleLimit2; i += 1) {
         expectedFullLimitWeight2 = expectedFullLimitWeight2
-          .mul(constants.MaxPercent.sub(discountRate2))
-          .div(constants.MaxPercent);
+          .mul(constants.DiscountRatePercentDenominator.sub(discountRate2))
+          .div(constants.DiscountRatePercentDenominator);
       }
       checkFn({
         caller: randomSignerFn(),
@@ -789,12 +789,12 @@ module.exports = [
       }
     }) => {
       let expectedFullLimitWeight2 = expectedFullLimitWeight
-        .mul(constants.MaxPercent.sub(discountRate1))
-        .div(constants.MaxPercent);
+        .mul(constants.DiscountRatePercentDenominator.sub(discountRate1))
+        .div(constants.DiscountRatePercentDenominator);
       for (let i = 0; i < cycleLimit2; i += 1) {
         expectedFullLimitWeight2 = expectedFullLimitWeight2
-          .mul(constants.MaxPercent.sub(discountRate2))
-          .div(constants.MaxPercent);
+          .mul(constants.DiscountRatePercentDenominator.sub(discountRate2))
+          .div(constants.DiscountRatePercentDenominator);
       }
       await checkFn({
         caller: randomSignerFn(),

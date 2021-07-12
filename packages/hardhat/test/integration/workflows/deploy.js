@@ -36,7 +36,9 @@ module.exports = [
       const cycleLimit = randomBigNumberFn({
         max: constants.MaxCycleLimit
       });
-      const discountRate = randomBigNumberFn({ max: constants.MaxPercent });
+      const discountRate = randomBigNumberFn({
+        max: constants.MaxDiscountRate
+      });
       const ballot = constants.AddressZero;
 
       const reservedRate = randomBigNumberFn({ max: constants.MaxPercent });

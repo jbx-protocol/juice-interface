@@ -245,7 +245,7 @@ const tests = {
           duration: BigNumber.from(2)
             .pow(16)
             .sub(1),
-          discountRate: BigNumber.from(200),
+          discountRate: BigNumber.from(201),
           fee: BigNumber.from(200),
           metadata: constants.MaxUint256
         },
@@ -920,10 +920,10 @@ const tests = {
       })
     },
     {
-      description: "discount rate over 100%",
+      description: "discount rate over limit",
       fn: testTemplate({
         op: {
-          discountRate: BigNumber.from(201)
+          discountRate: BigNumber.from(202)
         },
         setup: {
           // no preconfiguration
@@ -962,7 +962,7 @@ const tests = {
       description: "non recurring",
       fn: testTemplate({
         preconfigure: {
-          discountRate: BigNumber.from(200)
+          discountRate: BigNumber.from(201)
         },
         revert: "FundingCycles::_configurable: NON_RECURRING"
       })
@@ -1129,13 +1129,13 @@ module.exports = function() {
           i += 1
         ) {
           expectedWeight = expectedWeight
-            .mul(BigNumber.from(200).sub(preconfigure.discountRate))
-            .div(200);
+            .mul(BigNumber.from(1000).sub(preconfigure.discountRate))
+            .div(1000);
         }
         for (let i = 0; i < discountRatesToApply.length; i += 1) {
           expectedWeight = expectedWeight
-            .mul(BigNumber.from(200).sub(discountRatesToApply[i]))
-            .div(200);
+            .mul(BigNumber.from(1000).sub(discountRatesToApply[i]))
+            .div(1000);
         }
 
         // Get the time when the configured funding cycle starts.

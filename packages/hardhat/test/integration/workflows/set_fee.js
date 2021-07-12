@@ -47,7 +47,7 @@ module.exports = [
 
       // Make recurring.
       const discountRate = randomBigNumberFn({
-        max: constants.MaxPercent.sub(1)
+        max: constants.MaxPercent
       });
       const ballot = constants.AddressZero;
 
@@ -264,8 +264,8 @@ module.exports = [
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate))
+            .div(constants.DiscountRatePercentDenominator),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,
@@ -407,10 +407,10 @@ module.exports = [
           timeMark,
           cycleLimit,
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate))
-            .mul(constants.MaxPercent.sub(discountRate))
-            .div(constants.MaxPercent)
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate))
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate))
+            .div(constants.DiscountRatePercentDenominator)
+            .div(constants.DiscountRatePercentDenominator),
           ballot,
           originalTimeMark.add(duration.mul(86400).mul(2)),
           duration,
@@ -460,8 +460,8 @@ module.exports = [
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate))
+            .div(constants.DiscountRatePercentDenominator),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,
@@ -533,8 +533,8 @@ module.exports = [
           originalTimeMark,
           cycleLimit.eq(0) ? BigNumber.from(0) : cycleLimit.sub(1),
           expectedInitialWeight
-            .mul(constants.MaxPercent.sub(discountRate))
-            .div(constants.MaxPercent),
+            .mul(constants.DiscountRatePercentDenominator.sub(discountRate))
+            .div(constants.DiscountRatePercentDenominator),
           ballot,
           originalTimeMark.add(duration.mul(86400)),
           duration,

@@ -157,6 +157,7 @@ export default function Create() {
       name: editingProjectInfo.metadata.name,
       logoUri: editingProjectInfo.metadata.logoUri,
       infoUri: editingProjectInfo.metadata.infoUri,
+      description: editingProjectInfo.metadata.description,
     })
 
     if (!uploadedMetadata.success) {
@@ -181,10 +182,10 @@ export default function Create() {
       ballot: constants.AddressZero,
     }
 
-    const metadata: Omit<FCMetadata, 'version'> = {
-      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      reservedRate: editingFC.reserved.toNumber(),
-      reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
+    const metadata: Record<keyof Omit<FCMetadata, 'version'>, string> = {
+      bondingCurveRate: editingFC.bondingCurveRate.toHexString(),
+      reservedRate: editingFC.reserved.toHexString(),
+      reconfigurationBondingCurveRate: parsePerbicent(100).toHexString(),
     }
 
     transactor(

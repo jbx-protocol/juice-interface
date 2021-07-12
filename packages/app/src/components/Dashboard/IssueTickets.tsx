@@ -61,7 +61,7 @@ export default function IssueTickets({
         </p>
         <Form form={form} layout="vertical">
           <Form.Item name="name" label="Token name">
-            <Input placeholder="Community Token" />
+            <Input placeholder="Project Token" />
           </Form.Item>
           <Form.Item name="symbol" label="Token symbol">
             <Input

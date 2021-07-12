@@ -20,13 +20,13 @@ const QAs: {
     q: `What does Juicebox cost?`,
     a: [
       `Juicebox is an open protocol on Ethereum that makes money using Juicebox itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
-      `5% of all money made by projects is sent to help pay for Juicebox itself. In exchange, projects get Juicebox community tokens (JBX), which will be worth more as the ecosystem grows over time.`,
+      `5% of all money made by projects is sent to help pay for Juicebox itself. In exchange, projects get Juicebox tokens (JBX), which will be worth more as the ecosystem grows over time.`,
     ],
   },
   {
     q: `What is overflow?`,
     a: [
-      `If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Overflow funds earn interest, and may be claimed by your community token holders by burning their tokens.`,
+      `If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for burning their tokens.`,
     ],
   },
   {
@@ -110,7 +110,7 @@ const QAs: {
     ],
   },
   {
-    q: `Do I have to make my project open source in order to use Juicebox as its business model?`,
+    q: `Do I have to make my project open source to use Juicebox as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',
       alt: "It'd be a lot cooler if you did",

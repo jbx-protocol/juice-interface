@@ -1,4 +1,5 @@
 import { Button, Col, Row, Space } from 'antd'
+import Create from 'components/Create'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
@@ -138,8 +139,12 @@ export default function Landing() {
                 </div>
 
                 <div className="hide-mobile">
-                  <a href="/#/create" style={{ display: 'inline-block' }}>
-                    <Button type="primary" size="large">
+                  <div style={{ display: 'inline-block' }}>
+                    <Button
+                      type="primary"
+                      size="large"
+                      onClick={scrollToCreate}
+                    >
                       Design your project
                     </Button>
                     <div
@@ -151,7 +156,7 @@ export default function Landing() {
                     >
                       (Launching July)
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -199,10 +204,10 @@ export default function Landing() {
               `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
             ])}
             {fourthCol('ERC20 community tokens', [
-              `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your community token. When you win, your token holders win, so they'll want you to win even more.`,
+              `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
             ])}
             {fourthCol('Redistributable surplus', [
-              `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by community token holders alongside you.`,
+              `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens.`,
             ])}
             {fourthCol('Transparency & accountability', [
               `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
@@ -226,8 +231,7 @@ export default function Landing() {
           ...section,
           marginTop: 0,
           paddingTop: 20,
-          paddingBottom: 40,
-          // background: 'rgb(57, 43, 70)',
+          paddingBottom: 60,
         }}
       >
         <div
@@ -236,9 +240,29 @@ export default function Landing() {
           }}
         >
           {smallHeader('Projects using Juicebox')}
-          <p>Soon...</p>
-          <ProjectsGrid projects={[]} />
+          <div style={{ marginTop: 20 }}>
+            <ProjectsGrid
+              projects={[
+                {
+                  handle: 'juicebox',
+                  uri: 'QmPUssshSn5zHRNs46btxawrS4LJyCmy2cTvrFZDaU8CFC',
+                },
+              ]}
+            />
+          </div>
         </div>
+      </section>
+
+      <section
+        id="create"
+        style={{
+          ...section,
+          marginTop: 0,
+          paddingTop: 20,
+          paddingBottom: 40,
+        }}
+      >
+        <Create />
       </section>
 
       {/* <section style={section} className="hide-mobile">

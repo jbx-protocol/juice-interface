@@ -6,7 +6,7 @@ import ProjectCard from './ProjectCard'
 export default function ProjectsGrid({
   projects,
 }: {
-  projects: ProjectInfo[]
+  projects: Pick<ProjectInfo, 'handle' | 'uri'>[]
 }) {
   const gutter = 20
 

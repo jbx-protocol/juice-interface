@@ -62,7 +62,7 @@ export default function BudgetForm({
                 setShowFundingFields(checked)
               }}
             />
-            <label htmlFor="">Set a funding target</label>
+            <label>Set a funding target</label>
           </Space>
         </Form.Item>
         {showFundingFields && (

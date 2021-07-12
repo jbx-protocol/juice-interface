@@ -7,7 +7,11 @@ import { useContext } from 'react'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
-export default function ProjectCard({ project }: { project: ProjectInfo }) {
+export default function ProjectCard({
+  project,
+}: {
+  project: Pick<ProjectInfo, 'handle' | 'uri'>
+}) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
@@ -76,9 +80,16 @@ export default function ProjectCard({ project }: { project: ProjectInfo }) {
             </div>
 
             {metadata.description && (
-              <p style={{ color: colors.text.tertiary }}>
+              <div
+                style={{
+                  marginTop: 2,
+                  color: colors.text.tertiary,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
                 {metadata.description}
-              </p>
+              </div>
             )}
           </div>
         </div>

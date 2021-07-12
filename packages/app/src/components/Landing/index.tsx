@@ -90,7 +90,7 @@ export default function Landing() {
                     fontSize: '1rem',
                   }}
                 >
-                  Build a community and program its spending. Light enough for a
+                  Build a community around a project, fund it, and program its spending. Light enough for a
                   group of friends, powerful enough for a global network of
                   anons.
                   <br />

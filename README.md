@@ -25,7 +25,7 @@ yarn chain
 > in a second terminal window, deploy contract to local blockchain:
 
 ```bash
-yarn deploy
+yarn deploy-local
 ```
 
 > in a third terminal window, start the app and open http://localhost:3000 to view it
@@ -166,4 +166,26 @@ The app uses the `SemanticTheme` pattern defined in src/models/semantic-theme, w
 
 The app also relies on (antd)[https://ant-design.gitee.io/] components. To make Antd compatible with `SemanticTheme`, overrides are defined in src/styles/antd-overrides.
 
-# juicehouse
+## contracts
+
+### tests
+
+Run the Mocha tests:
+
+```sh
+$ yarn test
+```
+
+## Security
+
+While the code was written with an attention for quality and with extensive test coverage, you shouldn't assume that this library is completely safe to use. The contracts
+have not yet been audited by a security researcher. If you discover any security issues, please report them in a DM on Discord.
+
+## Acknowledgements
+
+Juicebox is made possible by Ethereum, and a few libraries made by inspiring developers and teams:
+
+- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- Austin Griffith's [Scaffold ETH](https://github.com/austintgriffith/scaffold-eth)
+- Paul Razvan Berg's [DS Math](https://github.com/paulrberg/contracts)
+- Chainlink's [price oracles](https://github.com/smartcontractkit/chainlink)

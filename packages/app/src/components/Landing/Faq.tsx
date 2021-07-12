@@ -81,6 +81,14 @@ const QAs: {
     ],
   },
   {
+    q: "What's going on under the hood?",
+    a: [
+      `This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)`,
+      `Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.`,
+      `The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The distribution schedule is proportional to payments recieved, weighted by a project's discount rate over time.`
+    ],
+  },
+  {
     q: 'How decentralized is Juicebox?',
     a: [
       `Juicebox is a governance-minimal protocol, meaning there are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.`,

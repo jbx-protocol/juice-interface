@@ -19,8 +19,8 @@ const QAs: {
   {
     q: `What does Juicebox cost?`,
     a: [
-      `Juicebox is an open protocol on Ethereum that makes money using Juicebox itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
-      `5% of all money made by projects is sent to help pay for Juicebox itself. In exchange, projects get Juicebox tokens (JBX), which will be worth more as the ecosystem grows over time.`,
+      `Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
+      `5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time.`,
     ],
   },
   {
@@ -38,7 +38,7 @@ const QAs: {
   {
     q: `Why should I want to own a project's tokens?`,
     a: [
-      `Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there!`,
+      `Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there.`,
     ],
   },
   {
@@ -99,13 +99,13 @@ const QAs: {
     a: [
       `There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.`,
       `There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script.`,
-      `The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to help out.`
+      `The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to work with us.`
     ],
   },
   {
     q: 'Will it work on L2s?',
     a: [
-      `Yes, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.`,
+      `That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.`,
       `The founding contributors will then be working on L2 payment terminals for Juicebox projects.`,
     ],
   },

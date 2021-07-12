@@ -166,9 +166,11 @@ The app uses the `SemanticTheme` pattern defined in src/models/semantic-theme, w
 
 The app also relies on (antd)[https://ant-design.gitee.io/] components. To make Antd compatible with `SemanticTheme`, overrides are defined in src/styles/antd-overrides.
 
-## contracts
+---
 
-### tests
+## Contracts
+
+### Tests
 
 Run the Mocha tests:
 

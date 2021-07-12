@@ -10,7 +10,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PaymentMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPermyriad } from 'utils/formatNumber'
+import { fromPermyriad, fromWad } from 'utils/formatNumber'
 
 import ProjectPaymentMods from '../shared/formItems/ProjectPaymentMods'
 
@@ -145,7 +145,7 @@ export default function PaymentModsList({
             mods={editingMods}
             lockedMods={lockedMods}
             onModsChanged={setEditingMods}
-            target={fundingCycle.target}
+            target={fromWad(fundingCycle.target)}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
           />
         </Modal>

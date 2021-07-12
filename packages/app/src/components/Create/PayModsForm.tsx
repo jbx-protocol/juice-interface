@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { PaymentMod } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
+import { fromWad } from 'utils/formatNumber'
 
 export default function PayModsForm({
   initialMods,
@@ -45,7 +46,7 @@ export default function PayModsForm({
         <FormItems.ProjectPaymentMods
           name="mods"
           mods={mods}
-          target={target}
+          target={fromWad(target)}
           currency={currency}
           onModsChanged={setMods}
         />

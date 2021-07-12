@@ -25,6 +25,7 @@ import {
   fromPermyriad,
   mulPercent,
   parsePermyriad,
+  parseWad,
 } from 'utils/formatNumber'
 
 import { FormItems } from '.'
@@ -46,7 +47,7 @@ export default function ProjectPaymentMods({
   onModsChanged,
   formItemProps,
 }: {
-  target: BigNumber
+  target: string
   currency: CurrencyOption
   lockedMods?: EditingPaymentMod[]
   mods: EditingPaymentMod[] | undefined
@@ -209,11 +210,14 @@ export default function ProjectPaymentMods({
                   >
                     <Space>
                       <span>{fromPermyriad(mod.percent)}%</span>
-                      {target.lt(constants.MaxUint256) && (
+                      {parseWad(target).lt(constants.MaxUint256) && (
                         <span>
                           <CurrencySymbol currency={currency} />
                           {formatWad(
-                            mulPercent(target, fromPermyriad(mod.percent)),
+                            mulPercent(
+                              parseWad(target),
+                              fromPermyriad(mod.percent),
+                            ),
                           )}
                         </span>
                       )}
@@ -433,12 +437,17 @@ export default function ProjectPaymentMods({
                   suffix="%"
                 />
               </span>
-              <span style={{ color: colors.text.primary }}>
-                <CurrencySymbol currency={currency} />
-                {formatWad(
-                  mulPercent(target, (editingPercent ?? 0).toString()),
-                )}
-              </span>
+              {parseWad(target).lt(constants.MaxUint256) && (
+                <span style={{ color: colors.text.primary }}>
+                  <CurrencySymbol currency={currency} />
+                  {formatWad(
+                    mulPercent(
+                      parseWad(target),
+                      (editingPercent ?? 0).toString(),
+                    ),
+                  )}
+                </span>
+              )}
             </div>
           </Form.Item>
           <Form.Item

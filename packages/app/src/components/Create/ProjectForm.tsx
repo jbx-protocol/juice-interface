@@ -6,6 +6,7 @@ import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
 export type ProjectFormFields = {
   name: string
+  description: string
   infoUrl: string
   handle: string
   logoUrl: string
@@ -47,6 +48,7 @@ export default function ProjectForm({
             dependencies: ['name'],
           }}
         />
+        <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLink name="infoUrl" />
         <FormItems.ProjectLogoUrl
           name="logoUrl"

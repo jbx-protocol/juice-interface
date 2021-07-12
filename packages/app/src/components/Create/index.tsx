@@ -126,6 +126,7 @@ export default function Create() {
     dispatch(editingProjectActions.setInfoUri(fields.infoUrl))
     dispatch(editingProjectActions.setHandle(fields.handle))
     dispatch(editingProjectActions.setLogoUri(fields.logoUrl))
+    dispatch(editingProjectActions.setDescription(fields.description))
   }
 
   const onTicketingFormSaved = (mods: TicketMod[]) => {

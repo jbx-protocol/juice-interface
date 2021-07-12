@@ -26,17 +26,16 @@ export default function ProjectHeader({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const headerHeight = 100
+  const headerHeight = 120
 
   return (
     <div>
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: 20 }}>
+        <div style={{ marginRight: 20, height: '100%' }}>
           <ProjectLogo
             uri={metadata.logoUri}
             name={metadata.name}
@@ -74,6 +73,12 @@ export default function ProjectHeader({
               )}
             </Space>
           </h3>
+
+          {metadata.description && (
+            <p style={{ color: colors.text.tertiary }}>
+              {metadata.description}
+            </p>
+          )}
         </div>
 
         <div

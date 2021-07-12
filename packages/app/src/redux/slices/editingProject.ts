@@ -39,6 +39,7 @@ export const editingProjectSlice = createSlice({
         name: '',
         infoUri: '',
         logoUri: '',
+        description: '',
       },
       handle: '',
     },
@@ -104,6 +105,16 @@ export const editingProjectSlice = createSlice({
       info: {
         ...state.info,
         handle: action.payload,
+      },
+    }),
+    setDescription: (state, action: PayloadAction<string>) => ({
+      ...state,
+      info: {
+        ...state.info,
+        metadata: {
+          ...state.info.metadata,
+          description: action.payload,
+        },
       },
     }),
     setFundingCycle: (state, action: PayloadAction<EditingFundingCycle>) => ({

@@ -1,4 +1,5 @@
 import ProjectBondingCurveRate from './ProjectBondingCurveRate'
+import ProjectDescription from './ProjectDescription'
 import ProjectDiscountRate from './ProjectDiscountRate'
 import ProjectDuration from './ProjectDuration'
 import ProjectHandle from './ProjectHandle'
@@ -12,6 +13,7 @@ import ProjectTicketMods from './ProjectTicketMods'
 
 export const FormItems = {
   ProjectBondingCurveRate,
+  ProjectDescription,
   ProjectDiscountRate,
   ProjectDuration,
   ProjectHandle,

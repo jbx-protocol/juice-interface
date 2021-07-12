@@ -1,3 +1,4 @@
+import { Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ProjectInfo } from 'models/project-info'
@@ -53,27 +54,31 @@ export default function ProjectCard({ project }: { project: ProjectInfo }) {
             >
               {metadata.name}
             </h2>
-            <div
-              style={{
-                fontWeight: 500,
-                color: colors.text.secondary,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              @{project.handle}
+
+            <div>
+              <Space size="middle">
+                {project.handle && (
+                  <span style={{ color: colors.text.secondary }}>
+                    @{project.handle}
+                  </span>
+                )}
+                {metadata?.infoUri && (
+                  <a
+                    style={{ fontWeight: 400 }}
+                    href={metadata?.infoUri}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {metadata.infoUri}
+                  </a>
+                )}
+              </Space>
             </div>
 
-            {metadata.infoUri && (
-              <div
-                style={{
-                  color: colors.text.action.primary,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {metadata.infoUri}
-              </div>
+            {metadata.description && (
+              <p style={{ color: colors.text.tertiary }}>
+                {metadata.description}
+              </p>
             )}
           </div>
         </div>

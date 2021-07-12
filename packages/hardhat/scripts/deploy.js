@@ -96,7 +96,7 @@ const main = async () => {
 
   const ballot = await deploy("Active14DaysFundingCycleBallot", []);
 
-  const blockGasLimit = 9000000;
+  const blockGasLimit = 6000000;
 
   const PricesFactory = await ethers.getContractFactory("Prices");
   const GovernanceFactory = await ethers.getContractFactory("Governance");
@@ -144,7 +144,7 @@ const main = async () => {
       currency: 1,
       duration: 30, // 30 days
       cycleLimit: 0,
-      discountRate: 190,
+      discountRate: 100,
       ballot: ballot.address
     },
     {

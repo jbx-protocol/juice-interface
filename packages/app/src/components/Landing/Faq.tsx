@@ -90,8 +90,16 @@ const QAs: {
   {
     q: 'What are the risks?',
     a: [
-      `Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use, there still may be bugs.`,
+      `Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs.`,
       `Due to their public nature, any exploits to the contracts may have irreversable consequences, including loss of funds. Please use Juicebox with caution.`,
+    ],
+  },
+  {
+    q: 'How have the contracts been tested?',
+    a: [
+      `There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.`,
+      `There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script.`,
+      `The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to help out.`
     ],
   },
   {

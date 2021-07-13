@@ -50,6 +50,8 @@ export default function Tappable({
       ? converter.usdToWei(tapAmount)
       : parseWad(tapAmount)
 
+    console.log('tappp2', minAmount)
+
     transactor(
       contracts.Juicer,
       'tap',
@@ -60,7 +62,10 @@ export default function Tappable({
         minAmount?.toHexString(),
       ],
       {
-        onDone: () => setLoadingWithdraw(false),
+        onDone: () => {
+          setLoadingWithdraw(false)
+          setWithdrawModalVisible(false)
+        },
       },
     )
   }
@@ -118,10 +123,7 @@ export default function Tappable({
       <Modal
         title="Withdraw funds"
         visible={withdrawModalVisible}
-        onOk={() => {
-          tap()
-          setWithdrawModalVisible(false)
-        }}
+        onOk={tap}
         onCancel={() => {
           setTapAmount(undefined)
           setWithdrawModalVisible(false)

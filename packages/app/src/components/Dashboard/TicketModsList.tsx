@@ -83,7 +83,7 @@ export default function TicketModsList({
       {mods?.length ? (
         mods.map(m => (
           <div
-            key={m.beneficiary}
+            key={m.beneficiary ?? '' + m.percent}
             style={{
               display: 'flex',
               alignItems: 'baseline',

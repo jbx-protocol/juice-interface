@@ -88,7 +88,7 @@ export default function PaymentModsList({
       {mods?.length ? (
         mods.map(m => (
           <div
-            key={m.beneficiary}
+            key={m.beneficiary ?? '' + m.percent}
             style={{
               display: 'flex',
               alignItems: 'baseline',

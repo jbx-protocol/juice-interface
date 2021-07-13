@@ -5,5 +5,6 @@ import { createContext } from 'react'
 export const NetworkContext: React.Context<{
   signingProvider?: Web3Provider
   signerNetwork?: NetworkName
+  usingBurnerProvider?: boolean
   onNeedProvider?: () => Promise<void>
 }> = createContext({})

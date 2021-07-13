@@ -17,7 +17,7 @@ export default function Network({ children }: { children: ChildElems }) {
     setInjectedProvider(provider)
   }, [setInjectedProvider])
 
-  const burnerProvider = useBurnerProvider(NetworkName.localhost)
+  const burnerProvider = useBurnerProvider()
 
   const signingProvider = injectedProvider ?? burnerProvider
 
@@ -43,6 +43,7 @@ export default function Network({ children }: { children: ChildElems }) {
       value={{
         signerNetwork: network,
         signingProvider,
+        usingBurnerProvider: !!burnerProvider,
         onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
       }}
     >

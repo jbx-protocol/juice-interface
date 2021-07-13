@@ -4,7 +4,7 @@ import { NETWORKS_BY_NAME } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
 import { useMemo } from 'react'
 
-export function useBurnerProvider(network?: NetworkName) {
+export function useBurnerProvider() {
   return useMemo(() => {
     if (process.env.REACT_APP_INFURA_NETWORK !== NetworkName.localhost) return
 
@@ -41,8 +41,7 @@ export function useBurnerProvider(network?: NetworkName) {
       )
       return undefined
     }
-    burnerConfig.rpcUrl =
-      NETWORKS_BY_NAME[network || NetworkName.localhost].rpcUrl
+    burnerConfig.rpcUrl = NETWORKS_BY_NAME[NetworkName.localhost].rpcUrl
     return new Web3Provider(new BurnerProvider(burnerConfig))
-  }, [network])
+  }, [])
 }

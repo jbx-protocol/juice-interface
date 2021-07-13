@@ -4,7 +4,7 @@
 
 Built with [🏗 scaffold-eth](https://github.com/austintgriffith/scaffold-eth)
 
----
+## For a visual overview of how everything works, see the [Fluid Dynamics file on Figma](https://www.figma.com/file/dHsQ7Bt3ryXbZ2sRBAfBq5/Fluid-Dynamics?node-id=0%3A1).
 
 ## Run local
 

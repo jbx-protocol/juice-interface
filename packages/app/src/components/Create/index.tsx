@@ -289,7 +289,7 @@ export default function Create() {
           disabled={currentStep < steps.length}
           type="primary"
         >
-          Deploy
+          Deploy 🚀
         </Button>
       </Space>
     ),
@@ -316,7 +316,7 @@ export default function Create() {
       gutter={40}
     >
       <Col xs={24} lg={7} style={{ marginBottom: 40 }}>
-        <h1 style={{ marginBottom: 20 }}>Design your project 🎨 🚀</h1>
+        <h1 style={{ marginBottom: 20 }}>Design your project 🎨</h1>
 
         {buildSteps([
           {

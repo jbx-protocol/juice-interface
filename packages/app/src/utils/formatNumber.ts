@@ -6,7 +6,7 @@ const decimalSeparator = '.'
 const thousandsSeparator = ','
 
 // Wad: x/1e18
-export const parseWad = (amt?: string | number) =>
+export const parseWad = (amt?: BigNumberish) =>
   parseUnits(amt?.toString() || '0', wadPrecision)
 export const fromWad = (amt?: BigNumberish) => {
   const result = formatUnits(amt ?? '0', wadPrecision)

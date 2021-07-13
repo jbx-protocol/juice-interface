@@ -35,17 +35,17 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
         projectId.toHexString(),
         parseWad(value).toHexString(),
         BigNumber.from(currency).toHexString(),
-        form.getFieldValue('beneficary'),
-        form.getFieldValue('memo'),
+        form.getFieldValue('beneficary') ?? '',
+        form.getFieldValue('memo') ?? '',
         form.getFieldValue('preferUnstaked'),
       ],
       {
         onConfirmed: () => {
-          setLoading(false)
           form.resetFields()
           setValue('0')
           setModalVisible(false)
         },
+        onDone: () => setLoading(false),
       },
     )
   }

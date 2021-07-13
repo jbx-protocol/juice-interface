@@ -19,13 +19,11 @@ export default function PaymentModsList({
   fundingCycle,
   projectId,
   isOwner,
-  editButtonText,
 }: {
   mods: PaymentMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
-  editButtonText?: string
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -121,10 +119,10 @@ export default function PaymentModsList({
         <span style={{ color: colors.text.secondary }}>No payouts set</span>
       )}
 
-      {fundingCycle && projectId?.gt(0) && isOwner && editButtonText ? (
+      {fundingCycle && projectId?.gt(0) && isOwner ? (
         <div style={{ marginTop: 5 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
-            {editButtonText}
+            Edit payouts
           </Button>
         </div>
       ) : null}

@@ -94,7 +94,7 @@ export default function FundingHistory({
           </div>
         ))
       ) : (
-        <div>No previous funding cycles</div>
+        <div>No past funding cycles</div>
       )}
     </Space>
   )

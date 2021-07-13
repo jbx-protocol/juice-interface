@@ -3,6 +3,7 @@ import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
+import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { FCProperties } from 'models/funding-cycle-properties'
@@ -49,7 +50,9 @@ export default function ReconfigureBudgetModal({
 
     form.setFieldsValue({
       duration: fundingCycle.duration.toString(),
-      target: fromWad(fundingCycle.target),
+      target: fundingCycle.target.lt(constants.MaxUint256)
+        ? fromWad(fundingCycle.target)
+        : '0',
       currency: fundingCycle.currency.toNumber() as CurrencyOption,
       discountRate: fromPermille(fundingCycle.discountRate),
       reserved: fromPerbicent(metadata.reservedRate),

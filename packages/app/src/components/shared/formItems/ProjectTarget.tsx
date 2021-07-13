@@ -22,7 +22,7 @@ export default function ProjectTarget({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The money you need to run your project for one funding cycle. You'll be paid in $ETH no matter the denomination currency you choose."
+      extra="The money you need to run your project for one funding cycle. You'll be paid in ETH no matter the denomination currency you choose."
       name={name}
       label={hideLabel ? undefined : 'Funding target'}
       {...formItemProps}

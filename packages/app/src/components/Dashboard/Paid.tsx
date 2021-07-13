@@ -156,45 +156,46 @@ export default function Paid({
         )}
       </div>
 
-      {totalOverflow?.gt(0) ? (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      {hasFundingTarget(fundingCycle) &&
+        (totalOverflow?.gt(0) ? (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Progress
+              style={{
+                width: (1 - percentOverflow) * 100 + '%',
+                minWidth: 10,
+              }}
+              percent={percentPaid}
+              showInfo={false}
+              strokeColor={colors.text.brand.primary}
+            />
+            <div
+              style={{
+                width: 4,
+                height: 15,
+                borderRadius: 2,
+                background: colors.text.primary,
+                marginLeft: 5,
+                marginRight: 5,
+                marginTop: 3,
+              }}
+            ></div>
+            <Progress
+              style={{
+                width: percentOverflow * 100 + '%',
+                minWidth: 10,
+              }}
+              percent={100}
+              showInfo={false}
+              strokeColor={colors.text.brand.primary}
+            />
+          </div>
+        ) : (
           <Progress
-            style={{
-              width: (1 - percentOverflow) * 100 + '%',
-              minWidth: 10,
-            }}
             percent={percentPaid}
             showInfo={false}
             strokeColor={colors.text.brand.primary}
           />
-          <div
-            style={{
-              width: 4,
-              height: 15,
-              borderRadius: 2,
-              background: colors.text.primary,
-              marginLeft: 5,
-              marginRight: 5,
-              marginTop: 3,
-            }}
-          ></div>
-          <Progress
-            style={{
-              width: percentOverflow * 100 + '%',
-              minWidth: 10,
-            }}
-            percent={100}
-            showInfo={false}
-            strokeColor={colors.text.brand.primary}
-          />
-        </div>
-      ) : (
-        <Progress
-          percent={percentPaid}
-          showInfo={false}
-          strokeColor={colors.text.brand.primary}
-        />
-      )}
+        ))}
 
       {hasFundingTarget(fundingCycle) && (
         <div style={{ marginTop: 4 }}>

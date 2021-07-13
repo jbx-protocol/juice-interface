@@ -15,7 +15,7 @@ export default function ProjectReserved({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="This rate deterimes how you'll be allocated some of your project's own tokens whenever someone pays you. For example, a 5% rate means you'll receive 5% of the total tokens distributed for each payment made to your project – the rest will go to the payer."
+      extra='Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.'
       name={name}
       label={hideLabel ? undefined : 'Reserved tokens'}
       {...formItemProps}

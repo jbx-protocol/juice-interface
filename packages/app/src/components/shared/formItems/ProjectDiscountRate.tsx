@@ -15,7 +15,7 @@ export default function ProjectDiscountRate({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The amount of tokens rewarded per amount paid to your project will decrease by this rate with each new funding cycle. Use this to incentivize supporters to pay your project earlier than later."
+      extra="The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
       name={name}
       label={hideLabel ? undefined : 'Discount rate'}
       {...formItemProps}

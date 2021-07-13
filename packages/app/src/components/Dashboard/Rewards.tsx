@@ -56,6 +56,11 @@ export default function Rewards({
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
+        contract: ContractName.Juicer,
+        eventName: 'PrintPreminedTickets',
+        topics: projectId ? [projectId.toHexString()] : undefined,
+      },
+      {
         contract: ContractName.TicketBooth,
         eventName: 'Redeem',
         topics: projectId ? [projectId.toHexString()] : undefined,
@@ -321,7 +326,11 @@ export default function Rewards({
                         <div>
                           {formatWad(iouBalance ?? 0)}{' '}
                           {ticketsIssued && iouBalance?.gt(0) && (
-                            <Tooltip title={'Convert to ' + ticketSymbol}>
+                            <Tooltip
+                              title={
+                                'Claim staked token balance in ' + ticketSymbol
+                              }
+                            >
                               {loadingConvert ? (
                                 <Loading />
                               ) : (

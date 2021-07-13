@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -23,27 +24,21 @@ export default function Pay({
   projectId: BigNumber | undefined
   metadata: ProjectMetadata
 }) {
-  const [payAs, setPayAs] = useState<CurrencyOption>(1)
+  const [payIn, setPayIn] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
   const converter = useCurrencyConverter()
 
   const weiPayAmt =
-    payAs === 1 ? converter.usdToWei(payAmount) : parseWad(payAmount)
+    payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
 
   function pay() {
     setPayModalVisible(true)
   }
 
   const formatReceivedTickets = (wei: BigNumber) =>
-    formatWad(
-      weightedRate(
-        fundingCycle,
-        fundingCycle?.currency.eq(0) ? wei : converter.weiToUsd(wei),
-        'payer',
-      ),
-    )
+    formatWad(weightedRate(fundingCycle, wei, 'payer'))
 
   if (!fundingCycle || !projectId) return null
 
@@ -65,24 +60,24 @@ export default function Pay({
             accessory={
               <InputAccessoryButton
                 withArrow={true}
-                content={currencyName(payAs)}
-                onClick={() => setPayAs(payAs === 0 ? 1 : 0)}
+                content={currencyName(payIn)}
+                onClick={() => setPayIn(payIn === 0 ? 1 : 0)}
               />
             }
           />
 
           <div style={{ fontSize: '.7rem' }}>
             Receive{' '}
-            {payAmount && weiPayAmt?.gt(0) ? (
-              formatReceivedTickets(weiPayAmt) + ' Tickets'
+            {weiPayAmt?.gt(0) ? (
+              formatReceivedTickets(weiPayAmt) + ' tokens'
             ) : (
               <span>
                 {formatReceivedTickets(
-                  (payAs === 0 ? parseWad('1') : converter.usdToWei('1')) ??
+                  (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
                     BigNumber.from(0),
                 )}{' '}
-                tickets/
-                <CurrencySymbol currency={payAs} />
+                tokens/
+                <CurrencySymbol currency={payIn} />
               </span>
             )}
           </div>
@@ -97,7 +92,7 @@ export default function Pay({
           >
             Pay
           </Button>
-          {payAs === 1 && (
+          {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
               Paid as <CurrencySymbol currency={0} />
               {formatWad(weiPayAmt) || '0'}

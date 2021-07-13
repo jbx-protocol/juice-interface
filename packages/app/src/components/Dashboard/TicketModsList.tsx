@@ -102,13 +102,15 @@ export default function TicketModsList({
           </div>
         ))
       ) : (
-        <span style={{ color: colors.text.secondary }}>No allocations set</span>
+        <span style={{ color: colors.text.secondary }}>
+          No destinations set
+        </span>
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (
         <div style={{ marginTop: 5 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
-            Allocate token reserves
+            Edit destinations
           </Button>
         </div>
       ) : null}

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 
-import { parsePerbicent } from './formatNumber'
+import { fromWad, parsePerbicent } from './formatNumber'
 import { decodeFCMetadata } from './fundingCycle'
 
 export const weightedRate = (
@@ -14,12 +14,12 @@ export const weightedRate = (
 
   if (!reserved) return
 
-  return fc.weight
-    .mul(wad)
-    .mul(
-      output === 'reserved' ? reserved : parsePerbicent(100).sub(reserved ?? 0),
-    )
-    .div(1000)
+  return fromWad(
+    fc.weight
+      .mul(wad)
+      .mul(output === 'reserved' ? reserved : parsePerbicent(100).sub(reserved))
+      .div(200),
+  )
 }
 
 export const feeForAmount = (

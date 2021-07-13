@@ -44,7 +44,7 @@ const QAs: {
   {
     q: `What's a discount rate?`,
     a: [
-      `Projects can be created with an optional discount rate to incentivize funding it earlier than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. Use this to incentivize supporters to pay your project earlier than later.`,
+      `Projects can be created with an optional discount rate to incentivize funding it earlier than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`,
     ],
   },
   {
@@ -85,7 +85,7 @@ const QAs: {
     a: [
       `This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)`,
       `Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.`,
-      `The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The distribution schedule is proportional to payments recieved, weighted by a project's discount rate over time.`
+      `The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The distribution schedule is proportional to payments recieved, weighted by a project's discount rate over time.`,
     ],
   },
   {
@@ -107,7 +107,7 @@ const QAs: {
     a: [
       `There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.`,
       `There was also a script written for iteratively running the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 millions test cases through this stress-testing script.`,
-      `The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to work with us.`
+      `The code could always use more eyes and more critique to further the community's confidence. Join our Discord and peek the code on Github to work with us.`,
     ],
   },
   {

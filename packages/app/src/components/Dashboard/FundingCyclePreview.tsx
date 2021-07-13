@@ -1,5 +1,6 @@
 import { Collapse, Space } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
@@ -42,15 +43,47 @@ export default function FundingCyclePreview({
     .sub(today)
   const isEnded = daysLeft.lte(0)
 
-  let headerText: string
+  let headerText = ''
 
-  if (isRecurring(fundingCycle)) {
-    headerText = isEnded ? `ended` : `ends in ${detailedTimeString(daysLeft)}`
-  } else headerText = detailedTimeString(daysLeft) + ' left'
+  if (hasFundingTarget(fundingCycle)) {
+    if (isRecurring(fundingCycle)) {
+      headerText = isEnded ? `ended` : `ends in ${detailedTimeString(daysLeft)}`
+    } else headerText = detailedTimeString(daysLeft) + ' left'
+  }
 
   return (
     <div>
-      {hasFundingTarget(fundingCycle) && (
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <div>
+          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+            <TooltipLabel
+              label="Spending:"
+              tip="Any time a withdrawal is made, a percentage of the withdrawal amount will be automatically paid to each payout destination."
+            />
+          </h4>
+          <PaymentModsList
+            mods={paymentMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+          />
+        </div>
+
+        <div>
+          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
+            <TooltipLabel
+              label="Reserved token distributions:"
+              tip="Reserved tokens accumulate as a project is paid, based on a percentage set by the project owner. When reserved tokens are minted, a percentage of them will be distributed to each destination wallet here, with the rest going to the project owner."
+            />
+          </h4>
+          <TicketModsList
+            mods={ticketMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+          />
+        </div>
+
         <Collapse
           style={{
             background: 'transparent',
@@ -74,7 +107,11 @@ export default function FundingCyclePreview({
                   color: colors.text.secondary,
                 }}
               >
-                <span>Funding cycle #{fundingCycle.number.toString()}</span>
+                {hasFundingTarget(fundingCycle) ? (
+                  <span>Funding cycle #{fundingCycle.number.toString()}</span>
+                ) : (
+                  <span>Details</span>
+                )}
                 {headerText}
               </div>
             }
@@ -82,32 +119,6 @@ export default function FundingCyclePreview({
             <FundingCycleDetails fundingCycle={fundingCycle} />
           </CollapsePanel>
         </Collapse>
-      )}
-
-      <Space direction="vertical" size="middle">
-        <div>
-          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-            Spending:
-          </h4>
-          <PaymentModsList
-            mods={paymentMods}
-            fundingCycle={fundingCycle}
-            projectId={projectId}
-            isOwner={isOwner}
-          />
-        </div>
-
-        <div>
-          <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
-            Allocated token reserves:
-          </h4>
-          <TicketModsList
-            mods={ticketMods}
-            fundingCycle={fundingCycle}
-            projectId={projectId}
-            isOwner={isOwner}
-          />
-        </div>
       </Space>
     </div>
   )

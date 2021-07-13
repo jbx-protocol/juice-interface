@@ -44,7 +44,7 @@ export default function QueuedFundingCycle({
       <Space size={spacing} direction="vertical" style={{ width: '100%' }}>
         {isOwner && (
           <Button onClick={() => setReconfigureModalVisible(true)} size="small">
-            {queuedCycle?.id.gt(0) ? 'Reconfigure' : 'Add funding details'}
+            {queuedCycle?.id.gt(0) ? 'Reconfigure' : 'Configure funding cycles'}
           </Button>
         )}
         {queuedCycle?.id.gt(0) ? (
@@ -59,7 +59,7 @@ export default function QueuedFundingCycle({
       <ReconfigureBudgetModal
         visible={reconfigureModalVisible}
         onDone={() => setReconfigureModalVisible(false)}
-        fundingCycle={queuedCycle ?? currentCycle}
+        fundingCycle={queuedCycle?.id.gt(0) ? queuedCycle : currentCycle}
         projectId={projectId}
       />
     </div>

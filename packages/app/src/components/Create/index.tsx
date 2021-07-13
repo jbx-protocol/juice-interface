@@ -305,8 +305,6 @@ export default function Create() {
     ),
   }
 
-  console.log('editing', editingFC.bondingCurveRate.toString())
-
   return (
     <Row
       style={{

@@ -346,7 +346,9 @@ export default function Rewards({
                       {ticketsIssued && (
                         <div>
                           {formatWad(ticketsBalance ?? 0)}{' '}
-                          <span>{ticketSymbol}</span>
+                          <Tooltip title={ticketSymbol}>
+                            {ticketAddress}
+                          </Tooltip>
                         </div>
                       )}
                     </div>

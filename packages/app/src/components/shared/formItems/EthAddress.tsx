@@ -24,8 +24,6 @@ export default function EthAddress({
         const address = await readProvider.resolveName(name)
         const newVal = utils.isAddress(address) ? address : ''
 
-        console.log('asdfasdf', address)
-
         setAddress(newVal)
         onAddressChange(newVal)
       }

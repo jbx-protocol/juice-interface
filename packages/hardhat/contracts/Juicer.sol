@@ -1376,7 +1376,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Get a reference to the handle of the project paying the fee.
         bytes32 _handle = projects.handleOf(_projectId);
 
-        // Create the memo that'll be attached to the payment.
+        // Create the memo that'll be attached to the fee payment.
         string memory _memo = string(bytes.concat("Fee from @", _handle));
 
         // When processing the admin fee, save gas if the admin is using this contract as its terminal.

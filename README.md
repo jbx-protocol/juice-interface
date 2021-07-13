@@ -1,4 +1,4 @@
-# 🧃⚡️ juicebox.money
+# 🧃 juicebox.money
 
 [juicebox.money](https://juicebox.money)
 

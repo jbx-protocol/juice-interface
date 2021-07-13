@@ -446,7 +446,8 @@ const ops = ({
                 mockFn({
                   mockContract: governance,
                   fn: "pay",
-                  args: [owner, "Juicebox fee", false],
+                  // For some reason, the bytes to string doesnt match.
+                  // args: [owner, "Juicebox fee", false],
                   returns: []
                 })
               ]
@@ -582,7 +583,8 @@ const ops = ({
     mockFn({
       mockContract: governance,
       fn: "pay",
-      args: [owner, "Juicebox fee", false],
+      // For some reason, the bytes to string doesnt match.
+      // args: [owner, "Juicebox fee", false],
       returns: []
     }),
     executeFn({

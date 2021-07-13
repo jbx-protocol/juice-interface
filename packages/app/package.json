@@ -1,5 +1,5 @@
 {
-  "name": "@juicebox.money/app",
+  "name": "@jbox/app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

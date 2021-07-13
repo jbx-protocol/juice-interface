@@ -2,7 +2,7 @@
 pragma solidity 0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "prb-math/contracts/PRBMathCommon.sol";
+import "@paulrberg/contracts/math/PRBMath.sol";
 
 import "../abstract/JuiceboxProject.sol";
 
@@ -140,7 +140,7 @@ contract Shwotime is JuiceboxProject {
         );
 
         uint256 _total = _tickets.price * _tickets.sold;
-        uint256 _collectable = PRBMathCommon.mulDiv(_total, 200 - fee, 200);
+        uint256 _collectable = PRBMath.mulDiv(_total, 200 - fee, 200);
         dai.safeTransfer(msg.sender, _collectable);
         //Take your fee into Juicebox.
         _takeFee(_total - _collectable, msg.sender, _memo, false);

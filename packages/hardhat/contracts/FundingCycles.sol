@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import "prb-math/contracts/PRBMathCommon.sol";
+import "@paulrberg/contracts/math/PRBMath.sol";
 
 import "./interfaces/IFundingCycles.sol";
 import "./interfaces/IPrices.sol";
@@ -1102,7 +1102,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
         // A subsequent cycle to one with a duration of 0 should have the next possible weight.
         if (_baseFundingCycle.duration == 0)
             return
-                PRBMathCommon.mulDiv(
+                PRBMath.mulDiv(
                     _baseFundingCycle.weight,
                     1000 - _baseFundingCycle.discountRate,
                     1000
@@ -1133,7 +1133,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             for (uint256 i = 0; i < _discountMultiple; i++) {
                 // The number of times to apply the discount rate.
                 // Base the new weight on the specified funding cycle's weight.
-                weight = PRBMathCommon.mulDiv(
+                weight = PRBMath.mulDiv(
                     weight,
                     1000 - _baseFundingCycle.discountRate,
                     1000
@@ -1148,7 +1148,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
             // Use up the limited discount rate up until the limit.
             if (_baseFundingCycle.discountRate > 0) {
                 for (uint256 i = 0; i < _baseFundingCycle.cycleLimit; i++) {
-                    weight = PRBMathCommon.mulDiv(
+                    weight = PRBMath.mulDiv(
                         weight,
                         1000 - _baseFundingCycle.discountRate,
                         1000
@@ -1169,7 +1169,7 @@ contract FundingCycles is TerminalUtility, IFundingCycles {
 
                 for (uint256 i = 0; i < _permanentDiscountMultiple; i++) {
                     // base the weight on the result of the previous calculation.
-                    weight = PRBMathCommon.mulDiv(
+                    weight = PRBMath.mulDiv(
                         weight,
                         1000 - _latestPermanentFundingCycle.discountRate,
                         1000

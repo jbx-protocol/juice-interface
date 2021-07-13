@@ -142,7 +142,7 @@ abstract contract JuiceboxProject is IERC721Receiver, Ownable {
     function _takeFee(
         uint256 _amount,
         address _beneficiary,
-        string calldata _memo,
+        string memory _memo,
         bool _preferUnstakedTickets
     ) internal {
         require(projectId != 0, "JuiceboxProject::takeFee: PROJECT_NOT_FOUND");

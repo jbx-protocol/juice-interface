@@ -4,8 +4,8 @@ pragma solidity 0.8.6;
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "prb-math/contracts/PRBMathCommon.sol";
-import "prb-math/contracts/PRBMathUD60x18.sol";
+import "@paulrberg/contracts/math/PRBMath.sol";
+import "@paulrberg/contracts/math/PRBMathUD60x18.sol";
 
 import "./interfaces/IJuicer.sol";
 import "./abstract/JuiceboxProject.sol";
@@ -192,11 +192,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         if (_count == _totalSupply) return _currentOverflow;
 
         // Get a reference to the linear proportion.
-        uint256 _base = PRBMathCommon.mulDiv(
-            _currentOverflow,
-            _count,
-            _totalSupply
-        );
+        uint256 _base = PRBMath.mulDiv(_currentOverflow, _count, _totalSupply);
 
         // Use the reconfiguration bonding curve if the queued cycle is pending approval according to the previous funding cycle's ballot.
         uint256 _bondingCurveRate = fundingCycles.currentBallotStateOf(
@@ -212,12 +208,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // These conditions are all part of the same curve. Edge conditions are separated because fewer operation are necessary.
         if (_bondingCurveRate == 200) return _base;
         if (_bondingCurveRate == 0)
-            return PRBMathCommon.mulDiv(_base, _count, _totalSupply);
+            return PRBMath.mulDiv(_base, _count, _totalSupply);
         return
-            PRBMathCommon.mulDiv(
+            PRBMath.mulDiv(
                 _base,
                 _bondingCurveRate +
-                    PRBMathCommon.mulDiv(
+                    PRBMath.mulDiv(
                         _count,
                         200 - _bondingCurveRate,
                         _totalSupply
@@ -648,15 +644,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
         uint256 _govFeeAmount = _tappedWeiAmount -
-            PRBMathCommon.mulDiv(
-                _tappedWeiAmount,
-                200,
-                _fundingCycle.fee + 200
-            );
+            PRBMath.mulDiv(_tappedWeiAmount, 200, _fundingCycle.fee + 200);
 
         // The amount of ETH from the _tappedAmount to pay as a fee.
         // The project's owner will be the beneficiary of the resulting printed tickets from the governance project.
-        if (_govFeeAmount > 0) _takeFee(_govFeeAmount, _projectOwner);
+        if (_govFeeAmount > 0)
+            _takeFee(_govFeeAmount, _projectOwner, _fundingCycle.projectId);
 
         // The net transfer amount is the tapped amount minus the fee.
         uint256 _netTransferAmount = _tappedWeiAmount - _govFeeAmount;
@@ -1036,11 +1029,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             PaymentMod memory _mod = _mods[_i];
 
             // The amount to send towards mods. Mods percents are out of 10000.
-            uint256 _modCut = PRBMathCommon.mulDiv(
-                _amount,
-                _mod.percent,
-                10000
-            );
+            uint256 _modCut = PRBMath.mulDiv(_amount, _mod.percent, 10000);
 
             if (_modCut > 0) {
                 // Transfer ETH to the mod.
@@ -1059,19 +1048,18 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         _mod.projectId
                     );
 
+                    // Get the handle if it isn't yet in memory.
+                    if (_handle == bytes32(0))
+                        _handle = projects.handleOf(_fundingCycle.projectId);
+
                     // The project must have a terminal to send funds to.
                     require(
                         _terminal != ITerminal(address(0)),
                         "Juicer::tap: BAD_MOD"
                     );
 
-                    // Get the handle if it isn't yet in memory.
-                    if (_handle == bytes32(0))
-                        _handle = projects.handleOf(_fundingCycle.projectId);
-
-                    // Make a memo using the paying project's handle.
                     string memory _memo = string(
-                        bytes.concat("Payment from @", _handle)
+                        bytes.concat("Payout from @", _handle)
                     );
 
                     // Save gas if this contract is being used as the terminal.
@@ -1139,11 +1127,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             TicketMod memory _mod = _mods[_i];
 
             // The amount to send towards mods. Mods percents are out of 10000.
-            uint256 _modCut = PRBMathCommon.mulDiv(
-                _amount,
-                _mod.percent,
-                10000
-            );
+            uint256 _modCut = PRBMath.mulDiv(_amount, _mod.percent, 10000);
 
             // Print tickets for the mod if needed.
             if (_modCut > 0)
@@ -1196,7 +1180,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             : uint256(uint8(_fundingCycle.metadata >> 8));
 
         // Only print the tickets that are unreserved.
-        uint256 _unreservedWeightedAmount = PRBMathCommon.mulDiv(
+        uint256 _unreservedWeightedAmount = PRBMath.mulDiv(
             _weightedAmount,
             200 - _reservedRate,
             200
@@ -1329,7 +1313,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         if (_reservedRate == 200) return _unprocessedTicketBalanceOf;
 
         return
-            PRBMathCommon.mulDiv(
+            PRBMath.mulDiv(
                 _unprocessedTicketBalanceOf,
                 200,
                 200 - _reservedRate
@@ -1381,8 +1365,20 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @param _feeAmount The amount to take as a fee.
       @param _beneficiary The address to print governance's tickets for.
+      @param _projectId The ID of the project paying the fee.
+
     */
-    function _takeFee(uint256 _feeAmount, address _beneficiary) private {
+    function _takeFee(
+        uint256 _feeAmount,
+        address _beneficiary,
+        uint256 _projectId
+    ) private {
+        // Get a reference to the handle of the project paying the fee.
+        bytes32 _handle = projects.handleOf(_projectId);
+
+        // Create the memo that'll be attached to the payment.
+        string memory _memo = string(bytes.concat("Fee from @", _handle));
+
         // When processing the admin fee, save gas if the admin is using this contract as its terminal.
         if (
             terminalDirectory.terminalOf(
@@ -1394,14 +1390,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 JuiceboxProject(governance).projectId(),
                 _feeAmount,
                 _beneficiary,
-                "Juicebox fee",
+                _memo,
                 false
             );
         } else {
             // Use the external pay call of the governance contract.
             JuiceboxProject(governance).pay{value: _feeAmount}(
                 _beneficiary,
-                "Juicebox fee",
+                _memo,
                 false
             );
         }

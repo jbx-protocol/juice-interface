@@ -2,15 +2,18 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Input, Modal, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants } from 'ethers'
+import { constants, utils } from 'ethers'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
+import FormattedAddress from '../FormattedAddress'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
+import EthAddress from './EthAddress'
+import { FormItems } from '.'
 
 export default function ProjectTicketMods({
   name,
@@ -86,7 +89,9 @@ export default function ProjectTicketMods({
                     justifyContent: 'space-between',
                   }}
                 >
-                  <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
+                  <span style={{ cursor: 'pointer' }}>
+                    <FormattedAddress address={mod.beneficiary} />
+                  </span>
                 </div>
               </Col>
             </Row>
@@ -254,14 +259,26 @@ export default function ProjectTicketMods({
             if (e.key === 'Enter') setReceiver()
           }}
         >
-          <Form.Item
+          <FormItems.EthAddress
             name="beneficiary"
-            label="Beneficiary"
-            extra="The address that should receive the tokens."
-            rules={[{ required: true }]}
-          >
-            <Input placeholder={constants.AddressZero} />
-          </Form.Item>
+            formItemProps={{
+              label: 'Beneficiary',
+              extra: 'The address that should receive the tokens.',
+              rules: [
+                {
+                  validator: (rule: any, value: any) => {
+                    const address = form.getFieldValue('beneficiary')
+                    if (!address || !utils.isAddress(address))
+                      return Promise.reject('Address is required')
+                    else return Promise.resolve()
+                  },
+                },
+              ],
+            }}
+            onAddressChange={beneficiary =>
+              form.setFieldsValue({ beneficiary })
+            }
+          />
 
           <Form.Item
             name="percent"

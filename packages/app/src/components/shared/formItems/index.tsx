@@ -1,3 +1,4 @@
+import EthAddress from './EthAddress'
 import ProjectBondingCurveRate from './ProjectBondingCurveRate'
 import ProjectDescription from './ProjectDescription'
 import ProjectDiscountRate from './ProjectDiscountRate'
@@ -12,6 +13,7 @@ import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
 
 export const FormItems = {
+  EthAddress,
   ProjectBondingCurveRate,
   ProjectDescription,
   ProjectDiscountRate,

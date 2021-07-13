@@ -1,7 +1,7 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import ProjectHandle from 'components/shared/ProjectHandle'
-import ShortAddress from 'components/shared/ShortAddress'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
@@ -100,11 +100,11 @@ export default function PaymentModsList({
                 <span>
                   <div>
                     @<ProjectHandle projectId={m.projectId} /> (Beneficiary:{' '}
-                    <ShortAddress address={m.beneficiary} />)
+                    <FormattedAddress address={m.beneficiary} />)
                   </div>
                 </span>
               ) : (
-                <ShortAddress address={m.beneficiary} />
+                <FormattedAddress address={m.beneficiary} />
               )}
               {m.lockedUntil ? (
                 <div>

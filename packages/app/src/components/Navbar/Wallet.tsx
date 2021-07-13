@@ -1,4 +1,4 @@
-import ShortAddress from 'components/shared/ShortAddress'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
@@ -20,7 +20,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
         userSelect: 'all',
       }}
     >
-      <ShortAddress address={userAddress} />
+      <FormattedAddress address={userAddress} />
     </span>
   )
 }

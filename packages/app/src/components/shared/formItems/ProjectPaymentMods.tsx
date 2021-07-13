@@ -30,6 +30,7 @@ import {
 
 import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
+import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
@@ -171,7 +172,9 @@ export default function ProjectPaymentMods({
                       justifyContent: 'space-between',
                     }}
                   >
-                    <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
+                    <span style={{ cursor: 'pointer' }}>
+                      <FormattedAddress address={mod.beneficiary} />
+                    </span>
                   </div>
                 </Col>
               </Row>
@@ -183,7 +186,9 @@ export default function ProjectPaymentMods({
                   <label>Beneficiary</label>
                 </Col>
                 <Col span={19}>
-                  <span style={{ cursor: 'pointer' }}>{mod.beneficiary}</span>
+                  <span style={{ cursor: 'pointer' }}>
+                    <FormattedAddress address={mod.beneficiary} />
+                  </span>
                 </Col>
               </Row>
             ) : null}
@@ -380,24 +385,43 @@ export default function ProjectPaymentMods({
           </Form.Item>
 
           {editingModType === 'address' ? (
-            <Form.Item
+            <FormItems.EthAddress
               name="beneficiary"
-              label="Address"
-              rules={[
-                {
-                  validator: (rule, value) => {
-                    if (!utils.isAddress(value))
-                      return Promise.reject('Not a valid ETH address.')
-
-                    return Promise.resolve()
+              formItemProps={{
+                label: 'Address',
+                rules: [
+                  {
+                    validator: (rule: any, value: any) => {
+                      const address = form.getFieldValue('beneficiary')
+                      if (!address || !utils.isAddress(address))
+                        return Promise.reject('Address is required')
+                      else return Promise.resolve()
+                    },
                   },
-                },
-                { required: true },
-              ]}
-            >
-              <Input placeholder={constants.AddressZero} />
-            </Form.Item>
+                ],
+              }}
+              onAddressChange={beneficiary =>
+                form.setFieldsValue({ beneficiary })
+              }
+            />
           ) : (
+            // <Form.Item
+            //   name="beneficiary"
+            //   label="Address"
+            //   rules={[
+            //     {
+            //       validator: (rule, value) => {
+            //         if (!utils.isAddress(value))
+            //           return Promise.reject('Not a valid ETH address.')
+
+            //         return Promise.resolve()
+            //       },
+            //     },
+            //     { required: true },
+            //   ]}
+            // >
+            //   <Input placeholder={constants.AddressZero} />
+            // </Form.Item>
             <FormItems.ProjectHandle
               name="project"
               requireState="exists"

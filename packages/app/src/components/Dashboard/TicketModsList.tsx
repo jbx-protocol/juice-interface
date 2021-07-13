@@ -1,7 +1,7 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
-import ShortAddress from 'components/shared/ShortAddress'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
@@ -91,7 +91,7 @@ export default function TicketModsList({
           >
             <span style={{ minWidth: 70 }}>{fromPermyriad(m.percent)}%:</span>
             <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
-              <ShortAddress address={m.beneficiary} />
+              <FormattedAddress address={m.beneficiary} />
               {m.lockedUntil ? (
                 <div>
                   <LockOutlined /> locked until{' '}

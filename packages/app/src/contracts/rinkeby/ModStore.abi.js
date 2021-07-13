@@ -43,9 +43,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",
@@ -63,9 +63,9 @@ module.exports = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint56",
             "name": "projectId",
-            "type": "uint256"
+            "type": "uint56"
           }
         ],
         "indexed": false,
@@ -106,9 +106,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",
@@ -172,9 +172,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",
@@ -192,9 +192,9 @@ module.exports = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint56",
             "name": "projectId",
-            "type": "uint256"
+            "type": "uint56"
           }
         ],
         "internalType": "struct PaymentMod[]",
@@ -238,9 +238,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",
@@ -258,9 +258,9 @@ module.exports = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint56",
             "name": "projectId",
-            "type": "uint256"
+            "type": "uint56"
           }
         ],
         "internalType": "struct PaymentMod[]",
@@ -293,9 +293,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",
@@ -354,9 +354,9 @@ module.exports = [
             "type": "bool"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint16",
             "name": "percent",
-            "type": "uint8"
+            "type": "uint16"
           },
           {
             "internalType": "uint48",

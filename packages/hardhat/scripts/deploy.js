@@ -150,13 +150,13 @@ const main = async () => {
       currency: 1,
       duration: 30, // 30 days
       cycleLimit: 0,
-      discountRate: 100,
+      discountRate: 200,
       ballot: ballot.address
     },
     {
-      bondingCurveRate: 140,
-      reservedRate: 100,
-      reconfigurationBondingCurveRate: 200
+      bondingCurveRate: 120,
+      reservedRate: 20,
+      reconfigurationBondingCurveRate: 120
     },
     [],
     [],

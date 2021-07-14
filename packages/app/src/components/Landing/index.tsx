@@ -70,10 +70,10 @@ export default function Landing() {
     <div>
       <section style={section}>
         <div style={wrapper}>
-          <Row gutter={30} align="bottom">
+          <Row gutter={30} align="middle">
             <Col
               xs={24}
-              md={14}
+              md={13}
               style={{ display: 'flex', alignItems: 'center' }}
             >
               <div
@@ -90,9 +90,9 @@ export default function Landing() {
                     fontSize: '1rem',
                   }}
                 >
-                  Build a community around a project, fund it, and program its spending. Light enough for a
-                  group of friends, powerful enough for a global network of
-                  anons.
+                  Build a community around a project, fund it, and program its
+                  spending. Light enough for a group of friends, powerful enough
+                  for a global network of anons.
                   <br />
                   <br />
                   Powered by public smart contracts on{' '}
@@ -161,20 +161,20 @@ export default function Landing() {
               </div>
             </Col>
 
-            <Col xs={24} md={10}>
+            <Col xs={24} md={11}>
               <img
                 style={{
                   height: '60vh',
-                  maxHeight: 500,
-                  minHeight: 400,
+                  maxHeight: 600,
+                  minHeight: 300,
                   maxWidth: '100%',
                   objectFit: 'contain',
                 }}
                 src={
                   forThemeOption &&
                   forThemeOption({
-                    [ThemeOption.dark]: '/assets/orange_lady-od.png',
-                    [ThemeOption.light]: '/assets/orange_lady.png',
+                    [ThemeOption.dark]: '/assets/banana-od.png',
+                    [ThemeOption.light]: '/assets/banana-ol.png',
                   })
                 }
                 alt="GET JUICED"
@@ -313,8 +313,7 @@ export default function Landing() {
             <Col xs={24} md={10}>
               <img
                 style={{ maxWidth: '100%' }}
-                src="/assets/banana_dwgj.png"
-                alt="Banana chilling and saying 'DO WORK GET JUICED'"
+                src="/assets/blueberry-ol.png"
               />
             </Col>
           </Row>
@@ -342,6 +341,26 @@ export default function Landing() {
             {bigHeader('FAQs')}
             <Faq />
           </div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 60 }}>
+          <img
+            style={{
+              height: '40vh',
+              maxHeight: 400,
+              minHeight: 300,
+              maxWidth: '100%',
+              objectFit: 'contain',
+              objectPosition: 'center',
+            }}
+            src={
+              forThemeOption &&
+              forThemeOption({
+                [ThemeOption.dark]: '/assets/orange_lady-od.png',
+                [ThemeOption.light]: '/assets/orange_lady-ol.png',
+              })
+            }
+          />
         </div>
       </section>
 

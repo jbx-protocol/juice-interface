@@ -144,9 +144,9 @@ const main = async () => {
   await attachedJuicer.deploy(
     governance.address,
     utils.formatBytes32String("juicebox"),
-    "Qmav2KFE8iX6QdgDV3fqBhRNMw31TZyp5yDdCk6iYg3wA4",
+    "QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr",
     {
-      target: "0x21E19E0C9BAB2400000",
+      target: "4315C32D71A9E600000",
       currency: 1,
       duration: 30, // 30 days
       cycleLimit: 0,

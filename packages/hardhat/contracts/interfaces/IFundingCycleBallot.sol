@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-import "./IJuicer.sol";
+import "./ITerminalV1.sol";
 
 enum BallotState {
     Approved,

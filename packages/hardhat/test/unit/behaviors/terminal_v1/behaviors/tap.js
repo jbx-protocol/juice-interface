@@ -190,7 +190,7 @@ const tests = {
       description: "unexpected currency",
       fn: () => ({
         currency: 19,
-        revert: "Juicer::tap: UNEXPECTED_CURRENCY"
+        revert: "TerminalV1::tap: UNEXPECTED_CURRENCY"
       })
     },
     {
@@ -206,7 +206,7 @@ const tests = {
           .pow(18)
           .mul(1)
           .add(1),
-        revert: "Juicer::tap: INSUFFICIENT_FUNDS"
+        revert: "TerminalV1::tap: INSUFFICIENT_FUNDS"
       })
     },
     {
@@ -222,7 +222,7 @@ const tests = {
           .pow(18)
           .mul(1)
           .add(1),
-        revert: "Juicer::tap: INADEQUATE"
+        revert: "TerminalV1::tap: INADEQUATE"
       })
     },
     {
@@ -237,7 +237,7 @@ const tests = {
           lockedUntil: 0,
           terminal: { address: constants.AddressZero }
         },
-        revert: "Juicer::tap: BAD_MOD"
+        revert: "TerminalV1::tap: BAD_MOD"
       })
     }
   ]

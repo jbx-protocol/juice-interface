@@ -54,7 +54,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -132,7 +132,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -231,7 +231,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -322,7 +322,7 @@ module.exports = [
           );
 
       // Find how much the subset is redeemable for.
-      const claimableAmount = await contracts.juicer.claimableOverflowOf(
+      const claimableAmount = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary.address,
         expectedProjectId,
         redeemedPortionOfStakedBalance
@@ -333,7 +333,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -343,7 +343,7 @@ module.exports = [
           randomAddressFn(),
           false // prefer staked
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       return {
@@ -431,7 +431,7 @@ module.exports = [
           );
 
       // Find how much the subset is redeemable for.
-      const claimableAmount = await contracts.juicer.claimableOverflowOf(
+      const claimableAmount = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary.address,
         expectedProjectId,
         redeemedPortionOfUnstakedBalance
@@ -442,7 +442,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -452,7 +452,7 @@ module.exports = [
           randomAddressFn(),
           true // prefer unstaked
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       return {
@@ -536,7 +536,7 @@ module.exports = [
       );
 
       // Find how much the balance is redeemable for.
-      const claimableAmount = await contracts.juicer.claimableOverflowOf(
+      const claimableAmount = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary.address,
         expectedProjectId,
         balance
@@ -546,7 +546,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -556,7 +556,7 @@ module.exports = [
           randomAddressFn(),
           randomBoolFn()
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       return {

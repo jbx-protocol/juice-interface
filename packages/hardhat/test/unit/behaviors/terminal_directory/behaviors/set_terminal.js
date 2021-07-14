@@ -154,19 +154,22 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const mockTerminal = await this.deployMockLocalContractFn("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const mockTerminal = await this.deployMockLocalContractFn(
+          "TerminalV1",
+          [
+            projects.address,
+            fundingCycles.address,
+            ticketBooth.address,
+            operatorStore.address,
+            modStore.address,
+            prices.address,
+            terminalDirectory.address
+          ]
+        );
 
         if (preset) {
           const presetMockTerminal = await this.deployMockLocalContractFn(
-            "Juicer",
+            "TerminalV1",
             [
               projects.address,
               fundingCycles.address,
@@ -262,19 +265,22 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const mockTerminal = await this.deployMockLocalContractFn("Juicer", [
-          projects.address,
-          fundingCycles.address,
-          ticketBooth.address,
-          operatorStore.address,
-          modStore.address,
-          prices.address,
-          terminalDirectory.address
-        ]);
+        const mockTerminal = await this.deployMockLocalContractFn(
+          "TerminalV1",
+          [
+            projects.address,
+            fundingCycles.address,
+            ticketBooth.address,
+            operatorStore.address,
+            modStore.address,
+            prices.address,
+            terminalDirectory.address
+          ]
+        );
 
         if (preset) {
           const presetMockTerminal = await this.deployMockLocalContractFn(
-            "Juicer",
+            "TerminalV1",
             [
               projects.address,
               fundingCycles.address,

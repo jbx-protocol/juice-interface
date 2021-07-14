@@ -62,7 +62,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -122,7 +122,7 @@ module.exports = [
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
-        expect: contracts.juicer.address
+        expect: contracts.terminalV1.address
       })
   },
   {
@@ -140,11 +140,13 @@ module.exports = [
       const ticketBeneficiary = randomSignerFn();
 
       // Get the initial balance of the jucier.
-      const initialJuicerBalance = await getBalanceFn(contracts.juicer.address);
+      const initialTerminalV1Balance = await getBalanceFn(
+        contracts.terminalV1.address
+      );
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -155,7 +157,7 @@ module.exports = [
         value: paymentValue1
       });
 
-      return { ticketBeneficiary, initialJuicerBalance };
+      return { ticketBeneficiary, initialTerminalV1Balance };
     }
   },
   {
@@ -163,16 +165,16 @@ module.exports = [
     fn: ({
       contracts,
       verifyBalanceFn,
-      local: { paymentValue1, initialJuicerBalance }
+      local: { paymentValue1, initialTerminalV1Balance }
     }) =>
       verifyBalanceFn({
-        address: contracts.juicer.address,
-        expect: initialJuicerBalance.add(paymentValue1)
+        address: contracts.terminalV1.address,
+        expect: initialTerminalV1Balance.add(paymentValue1)
       })
   },
   {
     description:
-      "Make sure tickets can be redeemed successfully in this Juicer",
+      "Make sure tickets can be redeemed successfully in this TerminalV1",
     fn: async ({
       deployer,
       contracts,
@@ -207,7 +209,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         // Redeem half as many tickets as are available. The rest will be redeemed later.
         args: [
@@ -230,7 +232,8 @@ module.exports = [
     }
   },
   {
-    description: "Make sure funds can be tapped successfully in this Juicer",
+    description:
+      "Make sure funds can be tapped successfully in this TerminalV1",
     fn: async ({
       contracts,
       BigNumber,
@@ -248,7 +251,7 @@ module.exports = [
       await executeFn({
         // Exclude the redeem beneficiary to not spend gas from that account.
         caller: randomSignerFn({ exclude: [redeemBeneficiary] }),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedProjectId, amountToTap1, currency, amountToTap1]
       });
@@ -258,15 +261,15 @@ module.exports = [
   },
   {
     description:
-      "Migrating to a new juicer shouldn't work because it hasn't been allowed yet",
+      "Migrating to a new terminalV1 shouldn't work because it hasn't been allowed yet",
     fn: async ({
       contracts,
       executeFn,
       deployContractFn,
       local: { owner, expectedProjectId }
     }) => {
-      // The juicer that will be migrated to.
-      const secondJuicer = await deployContractFn("Juicer", [
+      // The terminalV1 that will be migrated to.
+      const secondTerminalV1 = await deployContractFn("TerminalV1", [
         contracts.projects.address,
         contracts.fundingCycles.address,
         contracts.ticketBooth.address,
@@ -278,63 +281,63 @@ module.exports = [
       ]);
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address],
-        revert: "Juicer::migrate: NOT_ALLOWED"
+        args: [expectedProjectId, secondTerminalV1.address],
+        revert: "TerminalV1::migrate: NOT_ALLOWED"
       });
 
-      return { secondJuicer };
+      return { secondTerminalV1 };
     }
   },
   {
-    description: "Allow a migration to the new juicer",
-    fn: ({ deployer, contracts, executeFn, local: { secondJuicer } }) =>
+    description: "Allow a migration to the new terminalV1",
+    fn: ({ deployer, contracts, executeFn, local: { secondTerminalV1 } }) =>
       executeFn({
         caller: deployer,
         contract: contracts.governance,
         fn: "allowMigration",
-        args: [contracts.juicer.address, secondJuicer.address]
+        args: [contracts.terminalV1.address, secondTerminalV1.address]
       })
   },
   {
     description:
-      "Migrating to the new juicer called by a different address shouldn't be allowed",
+      "Migrating to the new terminalV1 called by a different address shouldn't be allowed",
     fn: ({
       contracts,
       executeFn,
       randomSignerFn,
-      local: { owner, expectedProjectId, secondJuicer, redeemBeneficiary }
+      local: { owner, expectedProjectId, secondTerminalV1, redeemBeneficiary }
     }) =>
       executeFn({
         // Also exlude the redeemBeneficary to not spend gas from that account.
         caller: randomSignerFn({
           exclude: [owner.address, redeemBeneficiary]
         }),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address],
+        args: [expectedProjectId, secondTerminalV1.address],
         revert: "Operatable: UNAUTHORIZED"
       })
   },
   {
     description:
-      "Migrate to the new juicer, which should automatically print reserved tickets for the owner",
+      "Migrate to the new terminalV1, which should automatically print reserved tickets for the owner",
     fn: async ({
       contracts,
       executeFn,
-      local: { owner, expectedProjectId, secondJuicer, reservedRate }
+      local: { owner, expectedProjectId, secondTerminalV1, reservedRate }
     }) => {
       // Before migrating, save a reference to the amount of reserved tickets available.
-      const reservedTicketAmount = await contracts.juicer.reservedTicketBalanceOf(
+      const reservedTicketAmount = await contracts.terminalV1.reservedTicketBalanceOf(
         expectedProjectId,
         reservedRate
       );
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address]
+        args: [expectedProjectId, secondTerminalV1.address]
       });
 
       return { reservedTicketAmount };
@@ -342,20 +345,20 @@ module.exports = [
   },
   {
     description:
-      "The only balance that should be left in the old juicer is the admin fee incurred while tapping",
+      "The only balance that should be left in the old terminalV1 is the admin fee incurred while tapping",
     fn: async ({
       constants,
       contracts,
       verifyBalanceFn,
-      local: { amountToTap1, initialJuicerBalance }
+      local: { amountToTap1, initialTerminalV1Balance }
     }) => {
       // The percent, out of `constants.MaxPercent`, that will be charged as a fee.
-      const fee = await contracts.juicer.fee();
+      const fee = await contracts.terminalV1.fee();
 
       await verifyBalanceFn({
-        address: contracts.juicer.address,
+        address: contracts.terminalV1.address,
         // Take the fee from the amount that was tapped.
-        expect: initialJuicerBalance
+        expect: initialTerminalV1Balance
           .add(amountToTap1)
           .sub(
             amountToTap1
@@ -366,7 +369,8 @@ module.exports = [
     }
   },
   {
-    description: "The rest of the balance should be entirely in the new Juicer",
+    description:
+      "The rest of the balance should be entirely in the new TerminalV1",
     fn: async ({
       verifyBalanceFn,
       getBalanceFn,
@@ -374,12 +378,12 @@ module.exports = [
         paymentValue1,
         redeemBeneficiary,
         amountToTap1,
-        secondJuicer,
+        secondTerminalV1,
         initialBalanceOfRedeemBeneficiary
       }
     }) =>
       verifyBalanceFn({
-        address: secondJuicer.address,
+        address: secondTerminalV1.address,
         // The balance should be the amount paid minus the amount tapped and the amount claimed from redeeming tickets.
         expect: paymentValue1
           .sub(amountToTap1)
@@ -392,23 +396,23 @@ module.exports = [
   },
   {
     description:
-      "The terminal should have been updated to the new juicer in the directory",
+      "The terminal should have been updated to the new terminalV1 in the directory",
     fn: ({
       contracts,
       checkFn,
       randomSignerFn,
-      local: { expectedProjectId, secondJuicer }
+      local: { expectedProjectId, secondTerminalV1 }
     }) =>
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
-        expect: secondJuicer.address
+        expect: secondTerminalV1.address
       })
   },
   {
-    description: "Payments to the old Juicer should no longer be accepted",
+    description: "Payments to the old TerminalV1 should no longer be accepted",
     fn: ({
       contracts,
       executeFn,
@@ -419,7 +423,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -432,15 +436,16 @@ module.exports = [
       })
   },
   {
-    description: "Make sure funds can be tapped successfully in the new Juicer",
+    description:
+      "Make sure funds can be tapped successfully in the new TerminalV1",
     fn: ({
       executeFn,
       randomSignerFn,
-      local: { target, expectedProjectId, amountToTap1, secondJuicer }
+      local: { target, expectedProjectId, amountToTap1, secondTerminalV1 }
     }) =>
       executeFn({
         caller: randomSignerFn(),
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "tap",
         args: [
           expectedProjectId,
@@ -452,7 +457,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure tickets can be redeemed successfully in the new Juicer",
+      "Make sure tickets can be redeemed successfully in the new TerminalV1",
     fn: ({
       executeFn,
       randomAddressFn,
@@ -461,12 +466,12 @@ module.exports = [
         leftoverRedeemableTicketsOfTicketBeneficiary,
         ticketBeneficiary,
         expectedProjectId,
-        secondJuicer
+        secondTerminalV1
       }
     }) =>
       executeFn({
         caller: ticketBeneficiary,
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -489,12 +494,12 @@ module.exports = [
         owner,
         reservedRate,
         expectedProjectId,
-        secondJuicer
+        secondTerminalV1
       }
     }) =>
       executeFn({
         caller: owner,
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "redeem",
         args: [
           owner.address,
@@ -504,21 +509,21 @@ module.exports = [
           randomAddressFn(),
           randomBoolFn()
         ],
-        revert: reservedRate.eq(0) && "Juicer::redeem: NO_OP"
+        revert: reservedRate.eq(0) && "TerminalV1::redeem: NO_OP"
       })
   },
   {
-    description: "Payments to the new Juicer should be accepted",
+    description: "Payments to the new TerminalV1 should be accepted",
     fn: ({
       executeFn,
       randomAddressFn,
       randomBoolFn,
       randomStringFn,
-      local: { payer, paymentValue2, expectedProjectId, secondJuicer }
+      local: { payer, paymentValue2, expectedProjectId, secondTerminalV1 }
     }) =>
       executeFn({
         caller: payer,
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "pay",
         args: [
           expectedProjectId,

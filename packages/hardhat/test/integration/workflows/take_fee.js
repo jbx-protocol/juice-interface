@@ -47,7 +47,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -107,7 +107,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -134,13 +134,13 @@ module.exports = [
       );
 
       // Save the initial balances of the owner, address mod beneficiary, and the allocator mod contract.
-      const governanceInitialBalance = await contracts.juicer.balanceOf(
+      const governanceInitialBalance = await contracts.terminalV1.balanceOf(
         constants.GovernanceProjectId
       );
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedProjectId, amountToTap1, currency, amountToTap1]
       });
@@ -164,12 +164,12 @@ module.exports = [
       const expectedFeeAmount1 = amountToTap1.sub(
         amountToTap1
           .mul(constants.MaxPercent)
-          .div((await contracts.juicer.fee()).add(constants.MaxPercent))
+          .div((await contracts.terminalV1.fee()).add(constants.MaxPercent))
       );
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [constants.GovernanceProjectId],
         expect: governanceInitialBalance.add(expectedFeeAmount1)
@@ -179,10 +179,10 @@ module.exports = [
     }
   },
   {
-    description: "Allow migration to a new juicer",
+    description: "Allow migration to a new terminalV1",
     fn: async ({ deployer, contracts, executeFn, deployContractFn }) => {
-      // The juicer that will be migrated to.
-      const secondJuicer = await deployContractFn("Juicer", [
+      // The terminalV1 that will be migrated to.
+      const secondTerminalV1 = await deployContractFn("TerminalV1", [
         contracts.projects.address,
         contracts.fundingCycles.address,
         contracts.ticketBooth.address,
@@ -197,40 +197,40 @@ module.exports = [
         caller: deployer,
         contract: contracts.governance,
         fn: "allowMigration",
-        args: [contracts.juicer.address, secondJuicer.address]
+        args: [contracts.terminalV1.address, secondTerminalV1.address]
       });
 
-      return { secondJuicer };
+      return { secondTerminalV1 };
     }
   },
   {
-    description: "Migrating to the new juicer",
+    description: "Migrating to the new terminalV1",
     fn: async ({
       contracts,
       executeFn,
-      local: { owner, expectedProjectId, secondJuicer }
+      local: { owner, expectedProjectId, secondTerminalV1 }
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address]
+        args: [expectedProjectId, secondTerminalV1.address]
       })
   },
   {
     description:
-      "Tap funds for the project in the second juicer to incure the fee",
+      "Tap funds for the project in the second terminalV1 to incure the fee",
     fn: async ({
       executeFn,
       randomSignerFn,
-      local: { target, expectedProjectId, amountToTap1, secondJuicer }
+      local: { target, expectedProjectId, amountToTap1, secondTerminalV1 }
     }) => {
       // Tap the other portion of the target.
       const amountToTap2 = target.sub(amountToTap1);
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "tap",
         args: [expectedProjectId, amountToTap2, currency, amountToTap2]
       });
@@ -254,12 +254,12 @@ module.exports = [
       const expectedFeeAmount2 = amountToTap2.sub(
         amountToTap2
           .mul(constants.MaxPercent)
-          .div((await contracts.juicer.fee()).add(constants.MaxPercent))
+          .div((await contracts.terminalV1.fee()).add(constants.MaxPercent))
       );
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [constants.GovernanceProjectId],
         expect: governanceInitialBalance

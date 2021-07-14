@@ -65,7 +65,7 @@ export default function ReconfigureBudgetModal({
   if (!transactor || !contracts) return null
 
   async function saveBudget() {
-    if (!transactor || !contracts?.Juicer || !fundingCycle) return
+    if (!transactor || !contracts?.TerminalV1 || !fundingCycle) return
 
     const valid = await form.validateFields()
 
@@ -91,7 +91,7 @@ export default function ReconfigureBudgetModal({
     }
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'configure',
       [projectId.toHexString(), properties, metadata, [], []],
       {

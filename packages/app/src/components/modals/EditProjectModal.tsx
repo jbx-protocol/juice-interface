@@ -52,7 +52,7 @@ export default function EditProjectModal({
   }, [handle, form, metadata])
 
   async function setUri() {
-    if (!transactor || !contracts?.Juicer || !handle) return
+    if (!transactor || !contracts?.TerminalV1 || !handle) return
 
     setLoading(true)
 

@@ -1,5 +1,5 @@
 /** 
-  Deploying a project through the Juicer should create a project, configure a funding cycle, and set mods.
+  Deploying a project through the TerminalV1 should create a project, configure a funding cycle, and set mods.
 
   These steps can all be taken seperately without calling `deploy`.
 */
@@ -53,7 +53,7 @@ module.exports = [
       const paymentMods = [];
       const ticketMods = [];
 
-      const contract = contracts.juicer;
+      const contract = contracts.terminalV1;
       const terminal = contract;
 
       await executeFn({
@@ -144,8 +144,8 @@ module.exports = [
       // Expect the funding cycle's weight to be the base weight.
       const expectedWeight = await contracts.fundingCycles.BASE_WEIGHT();
 
-      // Expect the funding cycle's fee to be the juicer's fee.
-      const expectedFee = await contracts.juicer.fee();
+      // Expect the funding cycle's fee to be the terminalV1's fee.
+      const expectedFee = await contracts.terminalV1.fee();
 
       await checkFn({
         caller: randomSignerFn(),
@@ -223,7 +223,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure the juicer got set as the project's current terminal",
+      "Make sure the terminalV1 got set as the project's current terminal",
     fn: ({
       randomSignerFn,
       contracts,

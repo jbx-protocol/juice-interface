@@ -37,8 +37,8 @@ module.exports = [
             prepend: expectedProjectId.toString()
           }),
           randomStringFn(),
-          // Set the juicer to the terminal.
-          contracts.juicer.address
+          // Set the terminalV1 to the terminal.
+          contracts.terminalV1.address
         ]
       });
 
@@ -76,7 +76,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -136,7 +136,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -163,7 +163,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [
           expectedProjectId,
@@ -288,7 +288,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -350,7 +350,7 @@ module.exports = [
     fn: ({ contracts, executeFn, local: { expectedProjectId, owner } }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printReservedTickets",
         args: [expectedProjectId]
       })
@@ -400,7 +400,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -431,7 +431,7 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount2,
@@ -489,7 +489,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printReservedTickets",
         args: [expectedProjectId],
         expect: reservedRate.eq(0) && "TicketBooth::print: NO_OP"
@@ -656,7 +656,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: 0
@@ -692,7 +692,7 @@ module.exports = [
       });
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -723,7 +723,7 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
@@ -748,14 +748,14 @@ module.exports = [
         ticketBeneficiary1.address,
         expectedProjectId
       );
-      const claimable = await contracts.juicer.claimableOverflowOf(
+      const claimable = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary1.address,
         expectedProjectId,
         ticketAmount
       );
       await executeFn({
         caller: ticketBeneficiary1,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary1.address,
@@ -766,7 +766,7 @@ module.exports = [
           randomBoolFn()
         ],
         revert:
-          (ticketAmount.eq(0) || claimable.eq(0)) && "Juicer::redeem: NO_OP"
+          (ticketAmount.eq(0) || claimable.eq(0)) && "TerminalV1::redeem: NO_OP"
       });
     }
   },
@@ -781,7 +781,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
@@ -804,14 +804,14 @@ module.exports = [
         ticketBeneficiary2.address,
         expectedProjectId
       );
-      const claimable = await contracts.juicer.claimableOverflowOf(
+      const claimable = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary2.address,
         expectedProjectId,
         ticketAmount
       );
       await executeFn({
         caller: ticketBeneficiary2,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         // Redeem all available tickets.
         args: [
@@ -823,7 +823,7 @@ module.exports = [
           randomBoolFn()
         ],
         revert:
-          (ticketAmount.eq(0) || claimable.eq(0)) && "Juicer::redeem: NO_OP"
+          (ticketAmount.eq(0) || claimable.eq(0)) && "TerminalV1::redeem: NO_OP"
       });
     }
   },
@@ -842,7 +842,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: expectedReservedTicketAmount3,
@@ -857,7 +857,7 @@ module.exports = [
     fn: ({ contracts, executeFn, local: { expectedProjectId, owner } }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printReservedTickets",
         args: [expectedProjectId]
       })
@@ -871,7 +871,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "reservedTicketBalanceOf",
         args: [expectedProjectId, reservedRate],
         expect: 0

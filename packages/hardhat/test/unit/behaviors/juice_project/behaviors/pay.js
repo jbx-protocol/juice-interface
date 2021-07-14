@@ -77,7 +77,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const juicer = await this.deployMockLocalContractFn("Juicer", [
+        const terminalV1 = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -89,9 +89,9 @@ module.exports = function() {
 
         await this.terminalDirectory.mock.terminalOf
           .withArgs(this.projectId)
-          .returns(juicer.address);
+          .returns(terminalV1.address);
 
-        await juicer.mock.pay
+        await terminalV1.mock.pay
           .withArgs(this.projectId, beneficiary, memo, preferUnstakedTickets)
           .returns(0);
 
@@ -142,20 +142,23 @@ module.exports = function() {
           ]);
 
           // Deploy mock dependency contracts.
-          const juicer = await this.deployMockLocalContractFn("Juicer", [
-            projects.address,
-            fundingCycles.address,
-            ticketBooth.address,
-            operatorStore.address,
-            modStore.address,
-            prices.address,
-            terminalDirectory.address
-          ]);
+          const terminalV1 = await this.deployMockLocalContractFn(
+            "TerminalV1",
+            [
+              projects.address,
+              fundingCycles.address,
+              ticketBooth.address,
+              operatorStore.address,
+              modStore.address,
+              prices.address,
+              terminalDirectory.address
+            ]
+          );
 
           await this.terminalDirectory.mock.terminalOf
             .withArgs(this.projectId)
-            .returns(juicer.address);
-          await juicer.mock.pay
+            .returns(terminalV1.address);
+          await terminalV1.mock.pay
             .withArgs(this.projectId, beneficiary, memo, preferUnstakedTickets)
             .returns(0);
         } else {

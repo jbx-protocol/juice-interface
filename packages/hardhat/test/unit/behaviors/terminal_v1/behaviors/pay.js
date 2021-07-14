@@ -34,14 +34,14 @@ const tests = {
       description: "paid zero",
       fn: () => ({
         amount: BigNumber.from(0),
-        revert: "Juicer::pay: BAD_AMOUNT"
+        revert: "TerminalV1::pay: BAD_AMOUNT"
       })
     },
     {
       description: "zero address beneficiary",
       fn: () => ({
         beneficiary: constants.AddressZero,
-        revert: "Juicer::pay: ZERO_ADDRESS"
+        revert: "TerminalV1::pay: ZERO_ADDRESS"
       })
     }
   ]

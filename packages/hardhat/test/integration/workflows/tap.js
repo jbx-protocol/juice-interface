@@ -87,7 +87,7 @@ module.exports = [
         allocator: constants.AddressZero,
         projectId: BigNumber.from(0)
       };
-      // Project mods route payout directly to another project on Juicer.
+      // Project mods route payout directly to another project on TerminalV1.
       const projectMod = {
         preferUnstaked: randomBoolFn(),
         percent: percent2.toNumber(),
@@ -108,7 +108,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -235,7 +235,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           modProjectOwner.address,
@@ -307,7 +307,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedIdOfBaseProject,
@@ -329,7 +329,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [expectedIdOfModProject],
         expect: BigNumber.from(0)
@@ -375,7 +375,7 @@ module.exports = [
         caller: randomSignerFn({
           exclude: [addressMod.beneficiary, owner.address]
         }),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedIdOfBaseProject, amountToTap, currency, amountToTap]
       });
@@ -400,7 +400,7 @@ module.exports = [
       // The amount tapped takes into account any fees paid.
       const expectedAmountTapped = amountToTap
         .mul(constants.MaxPercent)
-        .div((await contracts.juicer.fee()).add(constants.MaxPercent));
+        .div((await contracts.terminalV1.fee()).add(constants.MaxPercent));
 
       await verifyBalanceFn({
         address: addressMod.beneficiary,
@@ -425,7 +425,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [expectedIdOfModProject],
         expect: expectedAmountTapped
@@ -578,7 +578,7 @@ module.exports = [
       });
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedIdOfBaseProject,
@@ -603,7 +603,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedIdOfBaseProject, paymentValue2, currency, paymentValue2],
         revert: "FundingCycles::tap: INSUFFICIENT_FUNDS"
@@ -628,7 +628,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedIdOfBaseProject, paymentValue2, currency, paymentValue2]
       });

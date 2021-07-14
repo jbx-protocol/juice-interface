@@ -68,7 +68,7 @@ const tests = {
           reservedRate: 201
         },
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
       })
     },
     {
@@ -78,7 +78,7 @@ const tests = {
           bondingCurveRate: 201
         },
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
       })
     },
     {
@@ -88,7 +88,7 @@ const tests = {
           reconfigurationBondingCurveRate: 201
         },
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
       })
     }
   ]

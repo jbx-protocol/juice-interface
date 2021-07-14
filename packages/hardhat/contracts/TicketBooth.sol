@@ -146,7 +146,7 @@ contract TicketBooth is TerminalUtility, Operatable, ITicketBooth {
             "TicketBooth::issue: ALREADY_ISSUED"
         );
 
-        // Create the contract in this Juicer contract in order to have mint and burn privileges.
+        // Create the contract in this TerminalV1 contract in order to have mint and burn privileges.
         // Prepend the strings with standards.
         ticketsOf[_projectId] = new Tickets(_name, _symbol);
 

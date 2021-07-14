@@ -1,7 +1,7 @@
 export enum ContractName {
   Admin = 'Admin',
   FundingCycles = 'FundingCycles',
-  Juicer = 'Juicer',
+  TerminalV1 = 'TerminalV1',
   ModStore = 'ModStore',
   Prices = 'Prices',
   Projects = 'Projects',

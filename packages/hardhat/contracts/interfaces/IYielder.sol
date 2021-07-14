@@ -3,9 +3,9 @@ pragma solidity 0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "./IJuicer.sol";
+import "./ITerminalV1.sol";
 
-// In constructure, give unlimited access for Juicer to take money from this.
+// In constructure, give unlimited access for TerminalV1 to take money from this.
 interface IYielder {
     function deposited() external view returns (uint256);
 

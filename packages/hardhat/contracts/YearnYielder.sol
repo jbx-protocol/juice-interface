@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@paulrberg/contracts/math/PRBMath.sol";
 
 import "./interfaces/IYielder.sol";
-import "./interfaces/IJuicer.sol";
+import "./interfaces/ITerminalV1.sol";
 import "./interfaces/IyVaultV2.sol";
 import "./interfaces/IWETH.sol";
 
@@ -56,7 +56,7 @@ contract YearnYielder is IYielder, Ownable {
         // Convert weth back to eth.
         IWETH(weth).withdraw(_amount);
 
-        // Move the funds to the Juicer.
+        // Move the funds to the TerminalV1.
         _beneficiary.transfer(_amount);
     }
 

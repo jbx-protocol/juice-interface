@@ -48,7 +48,7 @@ module.exports = [
           owner.address,
           handle,
           randomStringFn(),
-          contracts.juicer.address
+          contracts.terminalV1.address
         ]
       });
 
@@ -155,7 +155,7 @@ module.exports = [
           claimer.address,
           handle2,
           randomStringFn(),
-          contracts.juicer.address
+          contracts.terminalV1.address
         ]
       });
 

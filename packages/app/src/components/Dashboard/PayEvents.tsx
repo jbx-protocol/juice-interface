@@ -16,7 +16,7 @@ export default function PayEvents({
   const { colors } = useContext(ThemeContext).theme
 
   const events = useEventListener<PayEvent>({
-    contractName: ContractName.Juicer,
+    contractName: ContractName.TerminalV1,
     eventName: 'Pay',
     topics: projectId ? [undefined, toUint256(projectId)] : undefined,
     includeHistory: true,

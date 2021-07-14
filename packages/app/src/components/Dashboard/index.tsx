@@ -54,12 +54,12 @@ export default function Dashboard() {
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },

@@ -8,7 +8,7 @@ const tests = {
       fn: async ({ governance, deployMockLocalContractFn, mockContracts }) => ({
         caller: governance,
         terminal: (
-          await deployMockLocalContractFn("Juicer", [
+          await deployMockLocalContractFn("TerminalV1", [
             mockContracts.projects.address,
             mockContracts.fundingCycles.address,
             mockContracts.ticketBooth.address,
@@ -28,7 +28,7 @@ const tests = {
       fn: ({ deployer, targetContract }) => ({
         caller: deployer,
         terminal: targetContract.address,
-        revert: "Juicer: UNAUTHORIZED"
+        revert: "TerminalV1: UNAUTHORIZED"
       })
     },
     {
@@ -36,7 +36,7 @@ const tests = {
       fn: ({ governance }) => ({
         caller: governance,
         terminal: constants.AddressZero,
-        revert: "Juicer::allowMigration: ZERO_ADDRESS"
+        revert: "TerminalV1::allowMigration: ZERO_ADDRESS"
       })
     },
     {
@@ -44,7 +44,7 @@ const tests = {
       fn: ({ governance, targetContract }) => ({
         caller: governance,
         terminal: targetContract.address,
-        revert: "Juicer::allowMigration: NO_OP"
+        revert: "TerminalV1::allowMigration: NO_OP"
       })
     }
   ]

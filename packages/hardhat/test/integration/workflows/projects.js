@@ -1,10 +1,10 @@
 /** 
-  Projects can be created independently from the Juicer `deploy` mechanism.
+  Projects can be created independently from the TerminalV1 `deploy` mechanism.
   Each project can set a URI that should be a IPFS CID, and a unique handle.
 
   Unique handles can be transfered between accounts.
 
-  A created project can make use all Juicer functionality as normal.
+  A created project can make use all TerminalV1 functionality as normal.
 */
 module.exports = [
   {
@@ -21,8 +21,8 @@ module.exports = [
       // The address that will own a project.
       const owner = randomSignerFn();
 
-      // Use the juicer as the terminal.
-      const terminal = contracts.juicer.address;
+      // Use the terminalV1 as the terminal.
+      const terminal = contracts.terminalV1.address;
 
       const expectedProjectId = incrementProjectIdFn();
 
@@ -532,7 +532,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -564,7 +564,7 @@ module.exports = [
       const currency = 0;
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -609,7 +609,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [expectedProjectId, paymentValue, currency, paymentValue]
       })

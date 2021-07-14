@@ -6,7 +6,7 @@ module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.
   before(async function() {
     // Deploy mock dependency contracts.
-    this.juicer = await this.deployMockLocalContractFn("Juicer");
+    this.terminalV1 = await this.deployMockLocalContractFn("TerminalV1");
     this.terminalDirectory = await this.deployMockLocalContractFn(
       "TerminalDirectory"
     );

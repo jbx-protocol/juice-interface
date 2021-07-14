@@ -17,7 +17,7 @@ struct FundingCycleMetadata {
     uint256 reconfigurationBondingCurveRate;
 }
 
-interface IJuicer {
+interface ITerminalV1 {
     event Configure(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,

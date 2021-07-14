@@ -66,7 +66,7 @@ const tests = {
     {
       description: "with terminal",
       fn: async ({ deployer, deployMockLocalContractFn }) => {
-        // Create a mock for a juicer.
+        // Create a mock for a terminalV1.
         const operatorStore = await deployMockLocalContractFn("OperatorStore");
         const projects = await deployMockLocalContractFn("Projects", [
           operatorStore.address
@@ -90,7 +90,7 @@ const tests = {
         ]);
 
         // Deploy mock dependency contracts.
-        const juicer = await deployMockLocalContractFn("Juicer", [
+        const terminalV1 = await deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -100,13 +100,13 @@ const tests = {
           terminalDirectory.address
         ]);
         // make the mock terminalDirectory return a mock of the terminal directory.
-        await juicer.mock.terminalDirectory
+        await terminalV1.mock.terminalDirectory
           .withArgs()
           .returns(terminalDirectory.address);
 
         // mock the set terminal function of the terminal directory.
         await terminalDirectory.mock.setTerminal
-          .withArgs(1, juicer.address)
+          .withArgs(1, terminalV1.address)
           .returns();
 
         return {
@@ -114,7 +114,7 @@ const tests = {
           owner: deployer.address,
           handle: ethers.utils.formatBytes32String("some-handle"),
           uri: "",
-          terminal: juicer.address,
+          terminal: terminalV1.address,
           expectation: {
             projectId: 1
           }

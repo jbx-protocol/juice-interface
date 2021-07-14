@@ -1,3 +1,6 @@
+const {
+  ethers: { constants }
+} = require("hardhat");
 const { expect } = require("chai");
 
 const tests = {
@@ -6,16 +9,33 @@ const tests = {
       description: "appoint",
       fn: ({ addrs, governance }) => ({
         caller: governance,
-        governance: addrs[0]
+        governance: addrs[0].address
       })
     }
   ],
   failure: [
     {
       description: "unauthorized",
+      fn: ({ deployer }) => ({
+        caller: deployer,
+        governance: constants.AddressZero,
+        revert: "TerminalV1: UNAUTHORIZED"
+      })
+    },
+    {
+      description: "zero address",
       fn: ({ governance }) => ({
         caller: governance,
-        revert: "Juicer::acceptGovernance: UNAUTHORIZED"
+        governance: constants.AddressZero,
+        revert: "TerminalV1::appointGovernance: ZERO_ADDRESS"
+      })
+    },
+    {
+      description: "same as current",
+      fn: ({ governance }) => ({
+        caller: governance,
+        governance: governance.address,
+        revert: "TerminalV1::appointGovernance: NO_OP"
       })
     }
   ]
@@ -27,36 +47,31 @@ module.exports = function() {
       it(successTest.description, async function() {
         const { caller, governance } = successTest.fn(this);
 
-        // Appoint the governance that will accept.
-        await this.targetContract
-          .connect(caller)
-          .appointGovernance(governance.address);
-
         // Execute the transaction.
         const tx = await this.targetContract
-          .connect(governance)
-          .acceptGovernance();
+          .connect(caller)
+          .appointGovernance(governance);
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.targetContract, "AcceptGovernance")
-          .withArgs(governance.address);
+          .to.emit(this.targetContract, "AppointGovernance")
+          .withArgs(governance);
 
         // Get the stored pending governance value.
-        const storedGovernance = await this.targetContract.governance();
+        const storedPendingGovernance = await this.targetContract.pendingGovernance();
 
         // Expect the stored value to equal whats expected.
-        expect(storedGovernance).to.equal(governance.address);
+        expect(storedPendingGovernance).to.equal(governance);
       });
     });
   });
   describe("Failure cases", function() {
     tests.failure.forEach(function(failureTest) {
       it(failureTest.description, async function() {
-        const { caller, revert } = failureTest.fn(this);
+        const { caller, governance, revert } = failureTest.fn(this);
 
         await expect(
-          this.targetContract.connect(caller).acceptGovernance()
+          this.targetContract.connect(caller).appointGovernance(governance)
         ).to.be.revertedWith(revert);
       });
     });

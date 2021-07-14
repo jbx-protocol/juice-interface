@@ -14,7 +14,7 @@ contract Governance is JuiceboxProject {
     {}
 
     /** 
-      @notice Gives projects using one Juicer access to migrate to another Juicer.
+      @notice Gives projects using one Terminal access to migrate to another Terminal.
       @param _from The terminal to allow a new migration from.
       @param _to The terminal to allow migration to.
     */
@@ -37,31 +37,31 @@ contract Governance is JuiceboxProject {
     }
 
     /** 
-      @notice Sets the fee of the Juicer.
-      @param _juicer The juicer to change the fee of.
+      @notice Sets the fee of the TerminalV1.
+      @param _terminalV1 The terminalV1 to change the fee of.
       @param _fee The new fee.
     */
-    function setFee(IJuicer _juicer, uint256 _fee) external onlyOwner {
-        _juicer.setFee(_fee);
+    function setFee(ITerminalV1 _terminalV1, uint256 _fee) external onlyOwner {
+        _terminalV1.setFee(_fee);
     }
 
     /** 
-      @notice Appoints a new governance for the specified juicer.
-      @param _juicer The juicer to change the governance of.
+      @notice Appoints a new governance for the specified terminalV1.
+      @param _terminalV1 The terminalV1 to change the governance of.
       @param _newGovernance The address to appoint as governance.
     */
-    function appointGovernance(IJuicer _juicer, address payable _newGovernance)
-        external
-        onlyOwner
-    {
-        _juicer.appointGovernance(_newGovernance);
+    function appointGovernance(
+        ITerminalV1 _terminalV1,
+        address payable _newGovernance
+    ) external onlyOwner {
+        _terminalV1.appointGovernance(_newGovernance);
     }
 
     /** 
-      @notice Accepts the offer to be the governance of a new juicer.
-      @param _juicer The juicer to change the governance of.
+      @notice Accepts the offer to be the governance of a new terminalV1.
+      @param _terminalV1 The terminalV1 to change the governance of.
     */
-    function acceptGovernance(IJuicer _juicer) external onlyOwner {
-        _juicer.acceptGovernance();
+    function acceptGovernance(ITerminalV1 _terminalV1) external onlyOwner {
+        _terminalV1.acceptGovernance();
     }
 }

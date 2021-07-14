@@ -51,12 +51,12 @@ export default function Rewards({
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
       {
-        contract: ContractName.Juicer,
+        contract: ContractName.TerminalV1,
         eventName: 'Pay',
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.Juicer,
+        contract: ContractName.TerminalV1,
         eventName: 'PrintPreminedTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
@@ -125,7 +125,7 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
   })
   const reservedTickets = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -139,7 +139,7 @@ export default function Rewards({
       () => [
         ...ticketsUpdateOn,
         {
-          contract: ContractName.Juicer,
+          contract: ContractName.TerminalV1,
           eventName: 'PrintReserveTickets',
           topics: projectId ? [[], projectId.toHexString()] : undefined,
         },
@@ -148,7 +148,7 @@ export default function Rewards({
     ),
   })
   const claimableOverflow = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'claimableOverflowOf',
     args:
       userAddress && projectId && redeemAmount
@@ -164,12 +164,12 @@ export default function Rewards({
         projectId && userAddress
           ? [
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString(), userAddress],
               },
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Redeem',
                 topics: [projectId.toHexString(), userAddress],
               },
@@ -212,7 +212,7 @@ export default function Rewards({
     setLoadingPrint(true)
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'printReservedTickets',
       [projectId.toHexString()],
       {
@@ -234,7 +234,7 @@ export default function Rewards({
     const minAmount = claimableOverflow?.sub(1e12).toHexString()
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'redeem',
       [
         userAddress,

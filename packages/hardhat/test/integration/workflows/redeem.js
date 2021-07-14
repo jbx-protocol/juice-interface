@@ -94,7 +94,7 @@ module.exports = [
 
       await executeFn({
         caller: deployer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -135,7 +135,7 @@ module.exports = [
         paymentValue1,
         paymentValue2,
         paymentValue3,
-        initialContractBalance: await getBalanceFn(contracts.juicer.address),
+        initialContractBalance: await getBalanceFn(contracts.terminalV1.address),
         ballot
       };
     }
@@ -157,7 +157,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -197,7 +197,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary1,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary1.address,
@@ -208,8 +208,8 @@ module.exports = [
           randomBoolFn()
         ],
         revert: expectedRedeemableTicketsOfTicketBeneficiary1.eq(0)
-          ? "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
-          : "Juicer::redeem: NO_OP"
+          ? "TerminalV1::claimableOverflow: INSUFFICIENT_TICKETS"
+          : "TerminalV1::redeem: NO_OP"
       });
 
       return {
@@ -242,7 +242,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -284,7 +284,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -308,14 +308,14 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomAddressFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue1.add(paymentValue2).add(paymentValue3)
       })
   },
   {
-    description: "The juicer should have the funds from the payments",
+    description: "The terminalV1 should have the funds from the payments",
     fn: ({
       contracts,
       verifyBalanceFn,
@@ -327,7 +327,7 @@ module.exports = [
       }
     }) =>
       verifyBalanceFn({
-        address: contracts.juicer.address,
+        address: contracts.terminalV1.address,
         expect: initialContractBalance.add(
           paymentValue1.add(paymentValue2).add(paymentValue3)
         )
@@ -395,7 +395,7 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "claimableOverflowOf",
         args: [
           ticketBeneficiary1.address,
@@ -452,7 +452,7 @@ module.exports = [
       );
 
       // Get the stored claimable amount.
-      const redeemableAmountOfTicketBeneficiary1 = await contracts.juicer.claimableOverflowOf(
+      const redeemableAmountOfTicketBeneficiary1 = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary1.address,
         expectedProjectId,
         redeemableTicketsOfTicketBeneficiary1
@@ -462,7 +462,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary1,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary1.address,
@@ -472,7 +472,7 @@ module.exports = [
           redeemBeneficiary1,
           randomBoolFn()
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       // If the requested reverted with no op, the tickets wont be redeemed.
@@ -528,7 +528,7 @@ module.exports = [
   },
   {
     description:
-      "The juicer should no longer have the funds sent to the first redeem beneificiary",
+      "The terminalV1 should no longer have the funds sent to the first redeem beneificiary",
     fn: ({
       contracts,
       verifyBalanceFn,
@@ -541,7 +541,7 @@ module.exports = [
       }
     }) =>
       verifyBalanceFn({
-        address: contracts.juicer.address,
+        address: contracts.terminalV1.address,
         expect: initialContractBalance
           .add(paymentValue1.add(paymentValue2).add(paymentValue3))
           .sub(redeemableAmountOfTicketBeneficiary1)
@@ -593,7 +593,7 @@ module.exports = [
       incrementFundingCycleIdFn();
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -657,7 +657,7 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "claimableOverflowOf",
         args: [
           ticketBeneficiary2.address,
@@ -714,7 +714,7 @@ module.exports = [
       );
 
       // Get the stored claimable amount.
-      const redeemableAmountOfTicketBeneficiary2 = await contracts.juicer.claimableOverflowOf(
+      const redeemableAmountOfTicketBeneficiary2 = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary2.address,
         expectedProjectId,
         redeemableTicketsOfTicketBeneficiary2
@@ -724,7 +724,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary2,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary2.address,
@@ -734,7 +734,7 @@ module.exports = [
           redeemBeneficiary2,
           randomBoolFn()
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       // If the requested reverted with no op, the tickets wont be redeemed.
@@ -790,7 +790,7 @@ module.exports = [
   },
   {
     description:
-      "The juicer should no longer have the funds sent to the second redeem beneificiary",
+      "The terminalV1 should no longer have the funds sent to the second redeem beneificiary",
     fn: ({
       contracts,
       verifyBalanceFn,
@@ -804,7 +804,7 @@ module.exports = [
       }
     }) =>
       verifyBalanceFn({
-        address: contracts.juicer.address,
+        address: contracts.terminalV1.address,
         expect: initialContractBalance
           .add(paymentValue1.add(paymentValue2).add(paymentValue3))
           .sub(redeemableAmountOfTicketBeneficiary1)
@@ -879,7 +879,7 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "claimableOverflowOf",
         args: [
           ticketBeneficiary3.address,
@@ -939,7 +939,7 @@ module.exports = [
       );
 
       // Get the stored claimable amount.
-      const redeemableAmountOfTicketBeneficiary3 = await contracts.juicer.claimableOverflowOf(
+      const redeemableAmountOfTicketBeneficiary3 = await contracts.terminalV1.claimableOverflowOf(
         ticketBeneficiary3.address,
         expectedProjectId,
         redeemableTicketsOfTicketBeneficiary3
@@ -949,7 +949,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary3,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary3.address,
@@ -959,7 +959,7 @@ module.exports = [
           redeemBeneficiary3,
           randomBoolFn()
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       // If the requested reverted with no op, the tickets wont be redeemed.
@@ -1015,7 +1015,7 @@ module.exports = [
   },
   {
     description:
-      "The juicer should no longer have the funds sent to the second redeem beneificiary",
+      "The terminalV1 should no longer have the funds sent to the second redeem beneificiary",
     fn: ({
       contracts,
       verifyBalanceFn,
@@ -1030,7 +1030,7 @@ module.exports = [
       }
     }) =>
       verifyBalanceFn({
-        address: contracts.juicer.address,
+        address: contracts.terminalV1.address,
         expect: initialContractBalance
           .add(paymentValue1.add(paymentValue2).add(paymentValue3))
           .sub(redeemableAmountOfTicketBeneficiary1)
@@ -1048,7 +1048,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printReservedTickets",
         args: [expectedProjectId]
       })
@@ -1137,7 +1137,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "currentOverflowOf",
         args: [expectedProjectId],
         expect: paymentValue1
@@ -1171,14 +1171,14 @@ module.exports = [
 
       await checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "claimableOverflowOf",
         args: [owner.address, expectedProjectId, reservedTicketBalance],
         expect: bondingCurveFn({
           rate: bondingCurveRate,
           count: reservedTicketBalance,
           total: await contracts.ticketBooth.totalSupplyOf(expectedProjectId),
-          overflow: await contracts.juicer.currentOverflowOf(expectedProjectId)
+          overflow: await contracts.terminalV1.currentOverflowOf(expectedProjectId)
         }),
         // Allow some wiggle room due to possible division precision errors.
         plusMinus: {
@@ -1210,7 +1210,7 @@ module.exports = [
         redeemBeneficiary4
       );
 
-      const claimableOverflow = await contracts.juicer.claimableOverflowOf(
+      const claimableOverflow = await contracts.terminalV1.claimableOverflowOf(
         owner.address,
         expectedProjectId,
         reservedTicketBalance
@@ -1220,7 +1220,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           owner.address,
@@ -1230,7 +1230,7 @@ module.exports = [
           redeemBeneficiary4,
           randomBoolFn()
         ],
-        revert: expectNoOp && "Juicer::redeem: NO_OP"
+        revert: expectNoOp && "TerminalV1::redeem: NO_OP"
       });
 
       // If the requested reverted with no op, the tickets wont be redeemed.

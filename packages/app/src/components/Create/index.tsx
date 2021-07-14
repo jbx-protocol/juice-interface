@@ -83,7 +83,7 @@ export default function Create() {
   const dispatch = useAppDispatch()
 
   const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'fee',
   })
 
@@ -189,7 +189,7 @@ export default function Create() {
     }
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'deploy',
       [
         userAddress,

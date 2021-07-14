@@ -296,14 +296,14 @@ const tests = {
       description: "zero count",
       fn: () => ({
         count: BigNumber.from(0),
-        revert: "Juicer::redeem: NO_OP"
+        revert: "TerminalV1::redeem: NO_OP"
       })
     },
     {
       description: "zero address",
       fn: () => ({
         beneficiary: constants.AddressZero,
-        revert: "Juicer::redeem: ZERO_ADDRESS"
+        revert: "TerminalV1::redeem: ZERO_ADDRESS"
       })
     },
     {
@@ -311,7 +311,7 @@ const tests = {
       fn: () => ({
         count: BigNumber.from(2),
         ticketBalance: BigNumber.from(1),
-        revert: "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
+        revert: "TerminalV1::claimableOverflow: INSUFFICIENT_TICKETS"
       })
     },
     {
@@ -328,7 +328,7 @@ const tests = {
           .pow(18)
           .mul(100),
         amount: BigNumber.from(0),
-        revert: "Juicer::redeem: NO_OP"
+        revert: "TerminalV1::redeem: NO_OP"
       })
     },
     {
@@ -350,7 +350,7 @@ const tests = {
           .pow(18)
           .mul(50)
           .add(1),
-        revert: "Juicer::redeem: INADEQUATE"
+        revert: "TerminalV1::redeem: INADEQUATE"
       })
     }
   ]

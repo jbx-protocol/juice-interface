@@ -83,7 +83,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -152,7 +152,7 @@ module.exports = [
       );
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -211,7 +211,7 @@ module.exports = [
       });
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -263,7 +263,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "currentOverflowOf",
         args: [expectedProjectId],
         expect: paymentValueInWei.sub(targetDenominatedInWei)
@@ -306,7 +306,7 @@ module.exports = [
       await executeFn({
         // Exclude the owner's address to not let gas mess up the balance calculation.
         caller: randomSignerFn({ exclude: [owner.address] }),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "tap",
         args: [
           expectedProjectId,
@@ -330,7 +330,7 @@ module.exports = [
       // The amount tapped takes into account any fees paid.
       const expectedTappedAmountInWei = amountToTapInWei
         .mul(constants.MaxPercent)
-        .div((await contracts.juicer.fee()).add(constants.MaxPercent));
+        .div((await contracts.terminalV1.fee()).add(constants.MaxPercent));
       await verifyBalanceFn({
         address: owner.address,
         expect: ownersInitialBalance.add(expectedTappedAmountInWei)
@@ -348,7 +348,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "currentOverflowOf",
         args: [expectedProjectId],
         expect: paymentValueInWei.sub(targetDenominatedInWei)

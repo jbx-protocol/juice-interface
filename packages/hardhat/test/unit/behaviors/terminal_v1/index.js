@@ -1,6 +1,6 @@
 const shouldBehaveLike = require("./behaviors");
 
-const contractName = "Juicer";
+const contractName = "TerminalV1";
 
 module.exports = function() {
   // Before the tests, deploy mocked dependencies and the contract.

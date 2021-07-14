@@ -71,7 +71,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -100,7 +100,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -156,7 +156,7 @@ module.exports = [
       });
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -177,7 +177,7 @@ module.exports = [
         caller: owner,
         contract: contracts.terminalDirectory,
         fn: "setTerminal",
-        args: [expectedProjectId, contracts.juicer.address]
+        args: [expectedProjectId, contracts.terminalV1.address]
       })
   },
   {
@@ -195,7 +195,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -226,7 +226,7 @@ module.exports = [
       incrementFundingCycleIdFn();
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -270,7 +270,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -290,8 +290,8 @@ module.exports = [
       deployContractFn,
       local: { expectedProjectId, owner }
     }) => {
-      // The juicer that will be migrated to.
-      const secondJuicer = await deployContractFn("Juicer", [
+      // The terminalV1 that will be migrated to.
+      const secondTerminalV1 = await deployContractFn("TerminalV1", [
         contracts.projects.address,
         contracts.fundingCycles.address,
         contracts.ticketBooth.address,
@@ -305,22 +305,22 @@ module.exports = [
         caller: owner,
         contract: contracts.terminalDirectory,
         fn: "setTerminal",
-        args: [expectedProjectId, secondJuicer.address],
+        args: [expectedProjectId, secondTerminalV1.address],
         revert: "TerminalDirectory::setTerminal: UNAUTHORIZED"
       });
 
-      return { secondJuicer };
+      return { secondTerminalV1 };
     }
   },
   // Allow migration to a new terminal.
   {
-    description: "Allow a migration to a new juicer",
-    fn: ({ deployer, contracts, executeFn, local: { secondJuicer } }) =>
+    description: "Allow a migration to a new terminalV1",
+    fn: ({ deployer, contracts, executeFn, local: { secondTerminalV1 } }) =>
       executeFn({
         caller: deployer,
         contract: contracts.governance,
         fn: "allowMigration",
-        args: [contracts.juicer.address, secondJuicer.address]
+        args: [contracts.terminalV1.address, secondTerminalV1.address]
       })
   },
   {
@@ -329,13 +329,13 @@ module.exports = [
     fn: ({
       executeFn,
       contracts,
-      local: { expectedProjectId, owner, secondJuicer }
+      local: { expectedProjectId, owner, secondTerminalV1 }
     }) =>
       executeFn({
         caller: owner,
         contract: contracts.terminalDirectory,
         fn: "setTerminal",
-        args: [expectedProjectId, secondJuicer.address]
+        args: [expectedProjectId, secondTerminalV1.address]
       })
   },
   {
@@ -344,14 +344,14 @@ module.exports = [
       checkFn,
       randomSignerFn,
       contracts,
-      local: { expectedProjectId, secondJuicer }
+      local: { expectedProjectId, secondTerminalV1 }
     }) =>
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
-        expect: secondJuicer.address
+        expect: secondTerminalV1.address
       })
   }
 ];

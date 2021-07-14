@@ -54,7 +54,7 @@ module.exports = [
 
       await executeFn({
         caller: deployer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -133,7 +133,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -541,7 +541,7 @@ module.exports = [
 
       // If the amount expected to be claimed is zero.
       const expectedClaimedAmountIsZero = (
-        await contracts.juicer.claimableOverflowOf(
+        await contracts.terminalV1.claimableOverflowOf(
           ticketBeneficiary.address,
           expectedProjectId,
           ticketsToRedeem
@@ -550,7 +550,7 @@ module.exports = [
 
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -563,7 +563,7 @@ module.exports = [
         revert:
           // No op if no tickets are being redeemed, or if there's no amount to claim.
           ticketsToRedeem.eq(0) || expectedClaimedAmountIsZero
-            ? "Juicer::redeem: NO_OP"
+            ? "TerminalV1::redeem: NO_OP"
             : amountToLock.gt(0) && "TicketBooth::redeem: INSUFFICIENT_FUNDS"
       });
 
@@ -628,7 +628,7 @@ module.exports = [
     }) => {
       await executeFn({
         caller: ticketBeneficiary,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "redeem",
         args: [
           ticketBeneficiary.address,
@@ -640,10 +640,10 @@ module.exports = [
         ],
         revert:
           ticketsToRedeem.eq(0) || expectedClaimedAmountIsZero
-            ? "Juicer::redeem: NO_OP"
+            ? "TerminalV1::redeem: NO_OP"
             : // If the locked amount is zero, the tickets have already been redeemed.
               amountToLock.eq(0) &&
-              "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
+              "TerminalV1::claimableOverflow: INSUFFICIENT_TICKETS"
       });
     }
   },

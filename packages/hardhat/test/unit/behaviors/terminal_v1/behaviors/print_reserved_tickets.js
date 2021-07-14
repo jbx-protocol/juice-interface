@@ -103,7 +103,7 @@ const tests = {
       description: "overflow",
       fn: () => ({
         totalTickets: BigNumber.from(2).pow(255),
-        revert: "Juicer::printReservedTickets: INT_LIMIT_REACHED"
+        revert: "TerminalV1::printReservedTickets: INT_LIMIT_REACHED"
       })
     }
   ]

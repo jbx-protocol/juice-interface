@@ -8,7 +8,7 @@ const directPaymentAddress = require("./direct_payment_address");
 const terminalDirectory = require("./terminal_directory");
 const governance = require("./governance");
 const JuiceboxProject = require("./juice_project");
-const juicer = require("./juicer");
+const terminalV1 = require("./terminal_v1");
 
 module.exports = {
   operatorStore,
@@ -21,5 +21,5 @@ module.exports = {
   terminalDirectory,
   governance,
   JuiceboxProject,
-  juicer
+  terminalV1
 };

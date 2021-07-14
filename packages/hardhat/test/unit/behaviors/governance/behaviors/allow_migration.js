@@ -51,7 +51,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContractFn("Juicer", [
+        const from = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -60,7 +60,7 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContractFn("Juicer", [
+        const to = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -109,7 +109,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const from = await this.deployMockLocalContractFn("Juicer", [
+        const from = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -118,7 +118,7 @@ module.exports = function() {
           prices.address,
           terminalDirectory.address
         ]);
-        const to = await this.deployMockLocalContractFn("Juicer", [
+        const to = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,

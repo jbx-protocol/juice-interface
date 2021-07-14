@@ -53,7 +53,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const juicer = await this.deployMockLocalContractFn("Juicer", [
+        const terminalV1 = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -63,12 +63,14 @@ module.exports = function() {
           terminalDirectory.address
         ]);
 
-        await juicer.mock.appointGovernance.withArgs(newGovernance).returns();
+        await terminalV1.mock.appointGovernance
+          .withArgs(newGovernance)
+          .returns();
 
         // Execute the transaction.
         await this.contract
           .connect(caller)
-          .appointGovernance(juicer.address, newGovernance);
+          .appointGovernance(terminalV1.address, newGovernance);
       });
     });
   });
@@ -102,7 +104,7 @@ module.exports = function() {
         ]);
 
         // Deploy mock dependency contracts.
-        const juicer = await this.deployMockLocalContractFn("Juicer", [
+        const terminalV1 = await this.deployMockLocalContractFn("TerminalV1", [
           projects.address,
           fundingCycles.address,
           ticketBooth.address,
@@ -116,7 +118,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .appointGovernance(juicer.address, newGovernance)
+            .appointGovernance(terminalV1.address, newGovernance)
         ).to.be.revertedWith(revert);
       });
     });

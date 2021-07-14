@@ -20,7 +20,7 @@ const tests = {
       fn: ({ deployer }) => ({
         caller: deployer,
         fee: BigNumber.from(200),
-        revert: "Juicer: UNAUTHORIZED"
+        revert: "TerminalV1: UNAUTHORIZED"
       })
     },
     {
@@ -28,7 +28,7 @@ const tests = {
       fn: ({ governance }) => ({
         caller: governance,
         fee: BigNumber.from(201),
-        revert: "Juicer::setFee: BAD_FEE"
+        revert: "TerminalV1::setFee: BAD_FEE"
       })
     }
   ]

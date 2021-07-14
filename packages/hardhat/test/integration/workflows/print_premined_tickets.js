@@ -32,7 +32,7 @@ module.exports = [
             prepend: expectedProjectId.toString()
           }),
           randomStringFn(),
-          contracts.juicer.address
+          contracts.terminalV1.address
         ]
       });
 
@@ -49,7 +49,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
         expect: true
@@ -79,7 +79,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -157,7 +157,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
         expect: true
@@ -191,7 +191,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -283,7 +283,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
         expect: true
@@ -326,7 +326,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,
@@ -384,7 +384,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -548,7 +548,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -570,7 +570,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "canPrintPreminedTickets",
         args: [expectedProjectId],
         expect: false
@@ -590,7 +590,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "printPreminedTickets",
         args: [
           expectedProjectId,
@@ -604,7 +604,7 @@ module.exports = [
           randomStringFn(),
           randomBoolFn()
         ],
-        revert: "Juicer::printTickets: ALREADY_ACTIVE"
+        revert: "TerminalV1::printTickets: ALREADY_ACTIVE"
       })
   }
 ];

@@ -106,7 +106,7 @@ module.exports = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminalV1",
         "name": "to",
         "type": "address"
       },
@@ -558,7 +558,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminalV1",
         "name": "_to",
         "type": "address"
       }

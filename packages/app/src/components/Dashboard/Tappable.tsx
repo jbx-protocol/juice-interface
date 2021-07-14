@@ -36,7 +36,7 @@ export default function Tappable({
   const converter = useCurrencyConverter()
 
   function tap() {
-    if (!transactor || !contracts?.Juicer || !fundingCycle) return
+    if (!transactor || !contracts?.TerminalV1 || !fundingCycle) return
 
     setLoadingWithdraw(true)
 
@@ -53,7 +53,7 @@ export default function Tappable({
     console.log('tappp2', minAmount)
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'tap',
       [
         projectId.toHexString(),

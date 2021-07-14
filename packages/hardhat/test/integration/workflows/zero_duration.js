@@ -60,7 +60,7 @@ module.exports = [
       });
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -140,8 +140,8 @@ module.exports = [
       // Expect the funding cycle's weight to be the base weight.
       const expectedInitialWeight = await contracts.fundingCycles.BASE_WEIGHT();
 
-      // Expect the funding cycle's fee to be the juicer's fee.
-      const expectedFee = await contracts.juicer.fee();
+      // Expect the funding cycle's fee to be the terminalV1's fee.
+      const expectedFee = await contracts.terminalV1.fee();
 
       // Expect nothing to have been tapped yet from the funding cycle.
       const expectedInitialTapped = BigNumber.from(0);
@@ -290,7 +290,7 @@ module.exports = [
 
       await executeFn({
         caller: payer,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "pay",
         args: [
           expectedProjectId,
@@ -437,7 +437,7 @@ module.exports = [
 
       await executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "configure",
         args: [
           expectedProjectId,

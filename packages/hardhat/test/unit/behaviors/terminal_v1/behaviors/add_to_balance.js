@@ -39,7 +39,7 @@ const tests = {
         caller: deployer,
         projectId: 1,
         amount: BigNumber.from(0),
-        revert: "Juicer::addToBalance: BAD_AMOUNT"
+        revert: "TerminalV1::addToBalance: BAD_AMOUNT"
       })
     }
   ]

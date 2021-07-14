@@ -85,7 +85,7 @@ const main = async () => {
 
   const governance = await deploy("Governance", [1, terminalDirectory.address]);
 
-  const juicer = await deploy("Juicer", [
+  const terminalV1 = await deploy("TerminalV1", [
     projects.address,
     fundingCycles.address,
     ticketBooth.address,
@@ -102,11 +102,11 @@ const main = async () => {
 
   const PricesFactory = await ethers.getContractFactory("Prices");
   const GovernanceFactory = await ethers.getContractFactory("Governance");
-  const JuicerFactory = await ethers.getContractFactory("Juicer");
+  const TerminalV1Factory = await ethers.getContractFactory("TerminalV1");
 
   const attachedPrices = await PricesFactory.attach(prices.address);
   const attachedGovernance = await GovernanceFactory.attach(governance.address);
-  const attachedJuicer = await JuicerFactory.attach(juicer.address);
+  const attachedTerminalV1 = await TerminalV1Factory.attach(terminalV1.address);
 
   const callContractIcon = "🛰  ";
   console.log(callContractIcon + "Setting the prices owner");
@@ -141,7 +141,7 @@ const main = async () => {
 
   console.log(callContractIcon + "Configuring governance's budget");
 
-  await attachedJuicer.deploy(
+  await attachedTerminalV1.deploy(
     governance.address,
     utils.formatBytes32String("juicebox"),
     "QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr",

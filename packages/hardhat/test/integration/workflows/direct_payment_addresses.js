@@ -32,7 +32,7 @@ module.exports = [
 
       await executeFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "deploy",
         args: [
           owner.address,
@@ -72,7 +72,7 @@ module.exports = [
   },
   {
     description:
-      "Make sure the juicer got set as the project's current terminal",
+      "Make sure the terminalV1 got set as the project's current terminal",
     fn: ({
       checkFn,
       contracts,
@@ -84,7 +84,7 @@ module.exports = [
         contract: contracts.terminalDirectory,
         fn: "terminalOf",
         args: [expectedProjectId],
-        expect: contracts.juicer.address
+        expect: contracts.terminalV1.address
       })
   },
   {
@@ -144,7 +144,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue
@@ -259,7 +259,7 @@ module.exports = [
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue.mul(2)
@@ -306,8 +306,8 @@ module.exports = [
   {
     description: "Allow a migration to the new terminal",
     fn: async ({ deployer, contracts, executeFn, deployContractFn }) => {
-      // The juicer that will be migrated to.
-      const secondJuicer = await deployContractFn("Juicer", [
+      // The terminalV1 that will be migrated to.
+      const secondTerminalV1 = await deployContractFn("TerminalV1", [
         contracts.projects.address,
         contracts.fundingCycles.address,
         contracts.ticketBooth.address,
@@ -321,9 +321,9 @@ module.exports = [
         caller: deployer,
         contract: contracts.governance,
         fn: "allowMigration",
-        args: [contracts.juicer.address, secondJuicer.address]
+        args: [contracts.terminalV1.address, secondTerminalV1.address]
       });
-      return { secondJuicer };
+      return { secondTerminalV1 };
     }
   },
   {
@@ -331,13 +331,13 @@ module.exports = [
     fn: ({
       contracts,
       executeFn,
-      local: { owner, expectedProjectId, secondJuicer }
+      local: { owner, expectedProjectId, secondTerminalV1 }
     }) =>
       executeFn({
         caller: owner,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "migrate",
-        args: [expectedProjectId, secondJuicer.address]
+        args: [expectedProjectId, secondTerminalV1.address]
       })
   },
   {
@@ -362,11 +362,11 @@ module.exports = [
     fn: ({
       checkFn,
       randomSignerFn,
-      local: { paymentValue, expectedProjectId, secondJuicer }
+      local: { paymentValue, expectedProjectId, secondTerminalV1 }
     }) =>
       checkFn({
         caller: randomSignerFn(),
-        contract: secondJuicer,
+        contract: secondTerminalV1,
         fn: "balanceOf",
         args: [expectedProjectId],
         expect: paymentValue.mul(3)

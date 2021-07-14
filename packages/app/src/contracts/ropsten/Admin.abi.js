@@ -42,7 +42,7 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminalV1",
         "name": "_from",
         "type": "address"
       },
@@ -124,12 +124,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
+        "internalType": "contract ITerminalV1",
+        "name": "_terminalV1",
         "type": "address"
       }
     ],
-    "name": "deprecateJuicer",
+    "name": "deprecateTerminalV1",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -168,12 +168,12 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminalV1",
         "name": "_from",
         "type": "address"
       },
       {
-        "internalType": "contract IJuicer",
+        "internalType": "contract ITerminalV1",
         "name": "_to",
         "type": "address"
       }
@@ -212,8 +212,8 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
+        "internalType": "contract ITerminalV1",
+        "name": "_terminalV1",
         "type": "address"
       },
       {
@@ -265,8 +265,8 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
+        "internalType": "contract ITerminalV1",
+        "name": "_terminalV1",
         "type": "address"
       },
       {
@@ -283,8 +283,8 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
+        "internalType": "contract ITerminalV1",
+        "name": "_terminalV1",
         "type": "address"
       },
       {
@@ -314,8 +314,8 @@ module.exports = [
   {
     "inputs": [
       {
-        "internalType": "contract IJuicer",
-        "name": "_juicer",
+        "internalType": "contract ITerminalV1",
+        "name": "_terminalV1",
         "type": "address"
       },
       {

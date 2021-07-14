@@ -28,7 +28,7 @@ export default function ConfirmDeployProject() {
     state => state.editingProject,
   )
   const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'fee',
   })
 

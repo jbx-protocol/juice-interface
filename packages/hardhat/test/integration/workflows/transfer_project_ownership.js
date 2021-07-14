@@ -1,5 +1,5 @@
 /** 
-  The governance of the Juicer can transfer its power to a new address.
+  The governance of the TerminalV1 can transfer its power to a new address.
   To do so, the governance must appoint a new address, and that address must accept the appointment.
 */
 module.exports = [

@@ -42,7 +42,7 @@ export default function Project({
   const converter = useCurrencyConverter()
 
   const balance = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -51,12 +51,12 @@ export default function Project({
         projectId
           ? [
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
@@ -78,13 +78,13 @@ export default function Project({
   )
 
   const canPrintPreminedTickets = useContractReader<boolean>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'canPrintPreminedTickets',
     args: projectId ? [projectId.toHexString()] : null,
   })
 
   const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.Juicer,
+    contract: ContractName.TerminalV1,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -93,12 +93,12 @@ export default function Project({
         projectId
           ? [
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.Juicer,
+                contract: ContractName.TerminalV1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },

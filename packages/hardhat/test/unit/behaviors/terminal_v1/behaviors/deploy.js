@@ -80,7 +80,7 @@ const tests = {
         paymentMods: [],
         ticketMods: [],
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
       })
     },
     {
@@ -96,7 +96,7 @@ const tests = {
         paymentMods: [],
         ticketMods: [],
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
       })
     },
     {
@@ -112,7 +112,7 @@ const tests = {
         paymentMods: [],
         ticketMods: [],
         revert:
-          "Juicer::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
+          "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
       })
     }
   ]

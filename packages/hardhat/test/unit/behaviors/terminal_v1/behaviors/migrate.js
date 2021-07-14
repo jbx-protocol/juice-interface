@@ -18,7 +18,7 @@ const tests = {
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContractFn("Juicer", [
+        terminal: await deployMockLocalContractFn("TerminalV1", [
           mockContracts.projects.address,
           mockContracts.fundingCycles.address,
           mockContracts.ticketBooth.address,
@@ -43,7 +43,7 @@ const tests = {
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContractFn("Juicer", [
+        terminal: await deployMockLocalContractFn("TerminalV1", [
           mockContracts.projects.address,
           mockContracts.fundingCycles.address,
           mockContracts.ticketBooth.address,
@@ -70,7 +70,7 @@ const tests = {
         projectOwner: deployer.address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContractFn("Juicer", [
+        terminal: await deployMockLocalContractFn("TerminalV1", [
           mockContracts.projects.address,
           mockContracts.fundingCycles.address,
           mockContracts.ticketBooth.address,
@@ -98,7 +98,7 @@ const tests = {
         projectOwner: addrs[0].address,
         governance,
         projectId: 1,
-        terminal: await deployMockLocalContractFn("Juicer", [
+        terminal: await deployMockLocalContractFn("TerminalV1", [
           mockContracts.projects.address,
           mockContracts.fundingCycles.address,
           mockContracts.ticketBooth.address,
@@ -130,7 +130,7 @@ const tests = {
           projectOwner: addrs[0].address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContractFn("Juicer", [
+          terminal: await deployMockLocalContractFn("TerminalV1", [
             mockContracts.projects.address,
             mockContracts.fundingCycles.address,
             mockContracts.ticketBooth.address,
@@ -161,7 +161,7 @@ const tests = {
           projectOwner: deployer.address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContractFn("Juicer", [
+          terminal: await deployMockLocalContractFn("TerminalV1", [
             mockContracts.projects.address,
             mockContracts.fundingCycles.address,
             mockContracts.ticketBooth.address,
@@ -173,7 +173,7 @@ const tests = {
           ]),
           setup: {
             allowMigration: false,
-            currentTerminal: await deployMockLocalContractFn("Juicer", [
+            currentTerminal: await deployMockLocalContractFn("TerminalV1", [
               mockContracts.projects.address,
               mockContracts.fundingCycles.address,
               mockContracts.ticketBooth.address,
@@ -184,7 +184,7 @@ const tests = {
               governance.address
             ])
           },
-          revert: "Juicer::migrate: UNAUTHORIZED"
+          revert: "TerminalV1::migrate: UNAUTHORIZED"
         };
       }
     },
@@ -202,7 +202,7 @@ const tests = {
           projectOwner: deployer.address,
           governance,
           projectId: 1,
-          terminal: await deployMockLocalContractFn("Juicer", [
+          terminal: await deployMockLocalContractFn("TerminalV1", [
             mockContracts.projects.address,
             mockContracts.fundingCycles.address,
             mockContracts.ticketBooth.address,
@@ -216,7 +216,7 @@ const tests = {
             allowMigration: false,
             currentTerminal: targetContract
           },
-          revert: "Juicer::migrate: NOT_ALLOWED"
+          revert: "TerminalV1::migrate: NOT_ALLOWED"
         };
       }
     }

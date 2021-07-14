@@ -13,7 +13,7 @@ const operations = [
       constants,
       local: { expectedProjectId }
     }) => ({
-      contract: contracts.juicer,
+      contract: contracts.terminalV1,
       fn: "configure",
       args: [
         expectedProjectId,
@@ -36,7 +36,7 @@ const operations = [
       domain: expectedProjectId,
       permissionIndex: 1,
       authorizedRevert:
-        "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
+        "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
     })
   },
   {
@@ -46,7 +46,7 @@ const operations = [
       constants,
       local: { expectedProjectId }
     }) => ({
-      contract: contracts.juicer,
+      contract: contracts.terminalV1,
       fn: "printPreminedTickets",
       args: [
         expectedProjectId,
@@ -58,7 +58,7 @@ const operations = [
       ],
       domain: expectedProjectId,
       permissionIndex: 2,
-      authorizedRevert: "Juicer::printTickets: ZERO_ADDRESS"
+      authorizedRevert: "TerminalV1::printTickets: ZERO_ADDRESS"
     })
   },
   {
@@ -68,7 +68,7 @@ const operations = [
       constants,
       local: { expectedProjectId, owner }
     }) => ({
-      contract: contracts.juicer,
+      contract: contracts.terminalV1,
       fn: "redeem",
       args: [
         owner.address,
@@ -80,17 +80,17 @@ const operations = [
       ],
       domain: expectedProjectId,
       permissionIndex: 3,
-      authorizedRevert: "Juicer::redeem: ZERO_ADDRESS"
+      authorizedRevert: "TerminalV1::redeem: ZERO_ADDRESS"
     })
   },
   {
     expand: ({ contracts, constants, local: { expectedProjectId } }) => ({
-      contract: contracts.juicer,
+      contract: contracts.terminalV1,
       fn: "migrate",
       args: [expectedProjectId, constants.AddressZero],
       domain: expectedProjectId,
       permissionIndex: 4,
-      authorizedRevert: "Juicer::migrate: NOT_ALLOWED"
+      authorizedRevert: "TerminalV1::migrate: NOT_ALLOWED"
     })
   },
   {
@@ -525,7 +525,7 @@ const operations = [
     }),
     allowWildcard: true
   },
-  // Juicer calls to set payment mods and ticket mods are checked throughout other integration tests.
+  // TerminalV1 calls to set payment mods and ticket mods are checked throughout other integration tests.
   {
     expand: ({ contracts, BigNumber, local: { expectedProjectId } }) => ({
       contract: contracts.modStore,
@@ -594,7 +594,7 @@ module.exports = [
                 prepend: expectedProjectId.toString()
               }),
               randomStringFn(),
-              contracts.juicer.address
+              contracts.terminalV1.address
             ]
           });
 

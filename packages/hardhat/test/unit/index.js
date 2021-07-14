@@ -23,7 +23,7 @@ module.exports = function() {
   // Depends on OperatorStore and Projects.
   describe("TicketBooth", shouldBehaveLike.ticketBooth);
   // Depends on everything.
-  describe("Juicer", shouldBehaveLike.juicer);
+  describe("TerminalV1", shouldBehaveLike.terminalV1);
 
   // After each test, restore the contract state.
   afterEach(async function() {

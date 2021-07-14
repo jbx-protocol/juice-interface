@@ -51,7 +51,7 @@ const tests = {
       description: "with tickets",
       fn: () => ({
         weightedPrePrintAmount: BigNumber.from(42),
-        revert: "Juicer::printTickets: ALREADY_ACTIVE"
+        revert: "TerminalV1::printTickets: ALREADY_ACTIVE"
       })
     }
   ]

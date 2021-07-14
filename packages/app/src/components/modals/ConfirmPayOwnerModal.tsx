@@ -40,7 +40,7 @@ export default function ConfirmPayOwnerModal({
     await form.validateFields()
 
     transactor(
-      contracts.Juicer,
+      contracts.TerminalV1,
       'pay',
       [
         projectId.toHexString(),

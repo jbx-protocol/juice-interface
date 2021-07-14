@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@paulrberg/contracts/math/PRBMath.sol";
 import "@paulrberg/contracts/math/PRBMathUD60x18.sol";
 
-import "./interfaces/IJuicer.sol";
+import "./interfaces/ITerminalV1.sol";
 import "./abstract/JuiceboxProject.sol";
 import "./abstract/Operatable.sol";
 
@@ -34,10 +34,10 @@ import "./libraries/Operations.sol";
   @dev 
   A project can transfer its funds, along with the power to reconfigure and mint/burn their Tickets, from this contract to another allowed terminal contract at any time.
 */
-contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
+contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
     // Modifier to only allow governance to call the function.
     modifier onlyGov() {
-        require(msg.sender == governance, "Juicer: UNAUTHORIZED");
+        require(msg.sender == governance, "TerminalV1: UNAUTHORIZED");
         _;
     }
 
@@ -78,10 +78,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     /// @notice The percent fee the Juicebox project takes from tapped amounts. Out of 200.
     uint256 public override fee = 10;
 
-    /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
+    /// @notice The governance of the contract who makes fees and can allow new TerminalV1 contracts to be migrated to by project owners.
     address payable public override governance;
 
-    /// @notice The governance of the contract who makes fees and can allow new Juicer contracts to be migrated to by project owners.
+    /// @notice The governance of the contract who makes fees and can allow new TerminalV1 contracts to be migrated to by project owners.
     address payable public override pendingGovernance;
 
     // Whether or not a particular contract is available for projects to migrate their funds and Tickets to.
@@ -158,7 +158,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The holder must have the specified number of the project's tickets.
         require(
             ticketBooth.balanceOf(_account, _projectId) >= _count,
-            "Juicer::claimableOverflow: INSUFFICIENT_TICKETS"
+            "TerminalV1::claimableOverflow: INSUFFICIENT_TICKETS"
         );
 
         // Get a reference to the current funding cycle for the project.
@@ -275,7 +275,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 _prices != IPrices(address(0)) &&
                 _terminalDirectory != ITerminalDirectory(address(0)) &&
                 _governance != address(address(0)),
-            "Juicer: ZERO_ADDRESS"
+            "TerminalV1: ZERO_ADDRESS"
         );
         projects = _projects;
         fundingCycles = _fundingCycles;
@@ -309,7 +309,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
           If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
           If the number is 0, an non-recurring funding stage will get made.
         @dev _configuration.ballot The new ballot that will be used to approve subsequent reconfigurations.
-      @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
+      @param _metadata A struct specifying the TerminalV1 specific params _bondingCurveRate, and _reservedRate.
         @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
           The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
@@ -381,7 +381,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
           If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
           If the number is 0, an non-recurring funding stage will get made.
         @dev _properties.ballot The new ballot that will be used to approve subsequent reconfigurations.
-      @param _metadata A struct specifying the Juicer specific params _bondingCurveRate, and _reservedRate.
+      @param _metadata A struct specifying the TerminalV1 specific params _bondingCurveRate, and _reservedRate.
         @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
           The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
           where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
@@ -479,7 +479,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Can't send to the zero address.
         require(
             _beneficiary != address(0),
-            "Juicer::printTickets: ZERO_ADDRESS"
+            "TerminalV1::printTickets: ZERO_ADDRESS"
         );
 
         // Get the current funding cycle to read the weight and currency from.
@@ -499,7 +499,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Do this check after the external calls above.
         require(
             canPrintPreminedTickets(_projectId),
-            "Juicer::printTickets: ALREADY_ACTIVE"
+            "TerminalV1::printTickets: ALREADY_ACTIVE"
         );
 
         // Set the preconfigure tickets as processed so that reserved tickets cant be minted against them.
@@ -509,7 +509,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                 uint256(_processedTicketTrackerOf[_projectId]) +
                     uint256(_weightedAmount) <=
                 uint256(type(int256).max),
-            "Juicer::printTickets: INT_LIMIT_REACHED"
+            "TerminalV1::printTickets: INT_LIMIT_REACHED"
         );
 
         _processedTicketTrackerOf[_projectId] =
@@ -563,10 +563,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         bool _preferUnstakedTickets
     ) external payable override returns (uint256) {
         // Positive payments only.
-        require(msg.value > 0, "Juicer::pay: BAD_AMOUNT");
+        require(msg.value > 0, "TerminalV1::pay: BAD_AMOUNT");
 
         // Cant send tickets to the zero address.
-        require(_beneficiary != address(0), "Juicer::pay: ZERO_ADDRESS");
+        require(_beneficiary != address(0), "TerminalV1::pay: ZERO_ADDRESS");
 
         return
             _pay(
@@ -610,7 +610,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Make sure the currency's match.
         require(
             _currency == _fundingCycle.currency,
-            "Juicer::tap: UNEXPECTED_CURRENCY"
+            "TerminalV1::tap: UNEXPECTED_CURRENCY"
         );
 
         // Get a reference to this project's current balance, including any earned yield.
@@ -622,7 +622,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         uint256 _tappedWeiAmount = PRBMathUD60x18.div(_amount, _ethPrice);
 
         // The amount being tapped must be at least as much as was expected.
-        require(_minReturnedWei <= _tappedWeiAmount, "Juicer::tap: INADEQUATE");
+        require(
+            _minReturnedWei <= _tappedWeiAmount,
+            "TerminalV1::tap: INADEQUATE"
+        );
 
         // Get a reference to this project's current balance, including any earned yield.
         uint256 _balance = balanceOf[_fundingCycle.projectId];
@@ -630,7 +633,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The amount being tapped must be available.
         require(
             _tappedWeiAmount <= _balance,
-            "Juicer::tap: INSUFFICIENT_FUNDS"
+            "TerminalV1::tap: INSUFFICIENT_FUNDS"
         );
 
         // Removed the tapped funds from the project's balance.
@@ -718,19 +721,19 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         returns (uint256 amount)
     {
         // There must be an amount specified to redeem.
-        require(_count > 0, "Juicer::redeem: NO_OP");
+        require(_count > 0, "TerminalV1::redeem: NO_OP");
 
         // Can't send claimed funds to the zero address.
-        require(_beneficiary != address(0), "Juicer::redeem: ZERO_ADDRESS");
+        require(_beneficiary != address(0), "TerminalV1::redeem: ZERO_ADDRESS");
 
         // The amount of ETH claimable by the message sender from the specified project by redeeming the specified number of tickets.
         amount = claimableOverflowOf(_account, _projectId, _count);
 
         // Nothing to do if the amount is 0.
-        require(amount > 0, "Juicer::redeem: NO_OP");
+        require(amount > 0, "TerminalV1::redeem: NO_OP");
 
         // The amount being claimed must be at least as much as was expected.
-        require(amount >= _minReturnedWei, "Juicer::redeem: INADEQUATE");
+        require(amount >= _minReturnedWei, "TerminalV1::redeem: INADEQUATE");
 
         // Remove the redeemed funds from the project's balance.
         balanceOf[_projectId] = balanceOf[_projectId] - amount;
@@ -785,14 +788,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         )
         nonReentrant
     {
-        // This Juicer must be the project's current terminal.
+        // This TerminalV1 must be the project's current terminal.
         require(
             terminalDirectory.terminalOf(_projectId) == this,
-            "Juicer::migrate: UNAUTHORIZED"
+            "TerminalV1::migrate: UNAUTHORIZED"
         );
 
         // The migration destination must be allowed.
-        require(migrationIsAllowed[_to], "Juicer::migrate: NOT_ALLOWED");
+        require(migrationIsAllowed[_to], "TerminalV1::migrate: NOT_ALLOWED");
 
         // All reserved tickets must be printed before migrating.
         if (
@@ -823,7 +826,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     */
     function addToBalance(uint256 _projectId) external payable override {
         // The amount must be positive.
-        require(msg.value > 0, "Juicer::addToBalance: BAD_AMOUNT");
+        require(msg.value > 0, "TerminalV1::addToBalance: BAD_AMOUNT");
         balanceOf[_projectId] = balanceOf[_projectId] + msg.value;
         emit AddToBalance(_projectId, msg.value, msg.sender);
     }
@@ -841,11 +844,11 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Can't allow the zero address.
         require(
             _contract != ITerminal(address(0)),
-            "Juicer::allowMigration: ZERO_ADDRESS"
+            "TerminalV1::allowMigration: ZERO_ADDRESS"
         );
 
         // Can't migrate to this same contract
-        require(_contract != this, "Juicer::allowMigration: NO_OP");
+        require(_contract != this, "TerminalV1::allowMigration: NO_OP");
 
         // Set the contract as allowed
         migrationIsAllowed[_contract] = true;
@@ -868,7 +871,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
     */
     function setFee(uint256 _fee) external override onlyGov {
         // Fee must be under 100%.
-        require(_fee <= 200, "Juicer::setFee: BAD_FEE");
+        require(_fee <= 200, "TerminalV1::setFee: BAD_FEE");
 
         // Set the fee.
         fee = _fee;
@@ -894,12 +897,12 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The new governance can't be the zero address.
         require(
             _pendingGovernance != address(0),
-            "Juicer::appointGovernance: ZERO_ADDRESS"
+            "TerminalV1::appointGovernance: ZERO_ADDRESS"
         );
         // The new governance can't be the same as the current governance.
         require(
             _pendingGovernance != governance,
-            "Juicer::appointGovernance: NO_OP"
+            "TerminalV1::appointGovernance: NO_OP"
         );
 
         // Set the appointed governance as pending.
@@ -916,7 +919,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Only the pending governance address can accept.
         require(
             msg.sender == pendingGovernance,
-            "Juicer::acceptGovernance: UNAUTHORIZED"
+            "TerminalV1::acceptGovernance: UNAUTHORIZED"
         );
 
         // Get a reference to the pending governance.
@@ -967,7 +970,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // Make sure int casting isnt overflowing the int. 2^255 - 1 is the largest number that can be stored in an int.
         require(
             _totalTickets + amount <= uint256(type(int256).max),
-            "Juicer::printReservedTickets: INT_LIMIT_REACHED"
+            "TerminalV1::printReservedTickets: INT_LIMIT_REACHED"
         );
 
         // Set the tracker to be the new total supply.
@@ -1053,7 +1056,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     // The project must have a terminal to send funds to.
                     require(
                         _terminal != ITerminal(address(0)),
-                        "Juicer::tap: BAD_MOD"
+                        "TerminalV1::tap: BAD_MOD"
                     );
 
                     // Save gas if this contract is being used as the terminal.
@@ -1194,7 +1197,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         uint256(_processedTicketTrackerOf[_projectId]) +
                             uint256(_weightedAmount) <=
                         uint256(type(int256).max),
-                    "Juicer::printTickets: INT_LIMIT_REACHED"
+                    "TerminalV1::printTickets: INT_LIMIT_REACHED"
                 );
                 _processedTicketTrackerOf[_projectId] =
                     _processedTicketTrackerOf[_projectId] +
@@ -1224,7 +1227,7 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                     uint256(-_processedTicketTrackerOf[_projectId]) +
                         uint256(_weightedAmount) <=
                     uint256(type(int256).max),
-                "Juicer::printTickets: INT_LIMIT_REACHED"
+                "TerminalV1::printTickets: INT_LIMIT_REACHED"
             );
             _processedTicketTrackerOf[_projectId] =
                 _processedTicketTrackerOf[_projectId] -
@@ -1328,19 +1331,19 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         // The reserved project ticket rate must be less than or equal to 200.
         require(
             _metadata.reservedRate <= 200,
-            "Juicer::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
+            "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
         );
 
         // The bonding curve rate must be between 0 and 200.
         require(
             _metadata.bondingCurveRate <= 200,
-            "Juicer::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
+            "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
         );
 
         // The reconfiguration bonding curve rate must be less than or equal to 200.
         require(
             _metadata.reconfigurationBondingCurveRate <= 200,
-            "Juicer::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
+            "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
         );
 
         // version 0 in the first 8 bytes.

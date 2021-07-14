@@ -39,7 +39,7 @@ module.exports = function() {
           preferUnstakedTickets
         } = successTest.fn(this);
 
-        await this.juicer.mock.pay
+        await this.terminalV1.mock.pay
           .withArgs(
             this.projectId,
             beneficiary,
@@ -55,7 +55,7 @@ module.exports = function() {
           .returns(beneficiary || constants.AddressZero);
         await this.terminalDirectory.mock.terminalOf
           .withArgs(this.projectId)
-          .returns(this.juicer.address);
+          .returns(this.terminalV1.address);
 
         // Execute the transaction.
         const tx = await caller.sendTransaction({

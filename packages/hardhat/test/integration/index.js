@@ -56,7 +56,7 @@ module.exports = function() {
       terminalDirectory.address
     ]);
 
-    const juicer = await this.deployContractFn("Juicer", [
+    const terminalV1 = await this.deployContractFn("TerminalV1", [
       projects.address,
       fundingCycles.address,
       ticketBooth.address,
@@ -74,7 +74,7 @@ module.exports = function() {
     */
     await this.executeFn({
       caller: this.deployer,
-      contract: juicer,
+      contract: terminalV1,
       fn: "deploy",
       args: [
         this.deployer.address,
@@ -109,7 +109,7 @@ module.exports = function() {
       fundingCycles,
       projects,
       modStore,
-      juicer
+      terminalV1
     };
 
     // The governance project should have an ID of 1.

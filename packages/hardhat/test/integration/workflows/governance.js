@@ -1,5 +1,5 @@
 /** 
-  The governance of the Juicer can transfer its power to a new address.
+  The governance of the TerminalV1 can transfer its power to a new address.
   To do so, the governance must appoint a new address, and that address must accept the appointment.
 */
 module.exports = [
@@ -11,7 +11,7 @@ module.exports = [
         contract: contracts.governance,
         fn: "setFee",
         args: [
-          contracts.juicer.address,
+          contracts.terminalV1.address,
           randomBigNumberFn({ max: constants.MaxPercent })
         ]
       })
@@ -26,7 +26,7 @@ module.exports = [
         caller: deployer,
         contract: contracts.governance,
         fn: "appointGovernance",
-        args: [contracts.juicer.address, firstAppointedGovernance.address]
+        args: [contracts.terminalV1.address, firstAppointedGovernance.address]
       });
       return { firstAppointedGovernance };
     }
@@ -42,10 +42,10 @@ module.exports = [
     }) =>
       executeFn({
         caller: firstAppointedGovernance,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "setFee",
         args: [randomBigNumberFn({ max: constants.MaxPercent })],
-        revert: "Juicer: UNAUTHORIZED"
+        revert: "TerminalV1: UNAUTHORIZED"
       })
   },
   {
@@ -56,7 +56,7 @@ module.exports = [
         contract: contracts.governance,
         fn: "setFee",
         args: [
-          contracts.juicer.address,
+          contracts.terminalV1.address,
           randomBigNumberFn({ max: constants.MaxPercent })
         ]
       })
@@ -70,7 +70,7 @@ module.exports = [
         caller: deployer,
         contract: contracts.governance,
         fn: "appointGovernance",
-        args: [contracts.juicer.address, secondAppointedGovernance.address]
+        args: [contracts.terminalV1.address, secondAppointedGovernance.address]
       });
       return { secondAppointedGovernance };
     }
@@ -85,13 +85,13 @@ module.exports = [
     }) =>
       executeFn({
         caller: firstAppointedGovernance,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "acceptGovernance",
         args: [],
         revert:
           firstAppointedGovernance.address !==
             secondAppointedGovernance.address &&
-          "Juicer::acceptGovernance: UNAUTHORIZED"
+          "TerminalV1::acceptGovernance: UNAUTHORIZED"
       })
   },
   {
@@ -99,7 +99,7 @@ module.exports = [
     fn: ({ executeFn, contracts, local: { secondAppointedGovernance } }) =>
       executeFn({
         caller: secondAppointedGovernance,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "acceptGovernance",
         args: []
       })
@@ -119,12 +119,12 @@ module.exports = [
         contract: contracts.governance,
         fn: "setFee",
         args: [
-          contracts.juicer.address,
+          contracts.terminalV1.address,
           randomBigNumberFn({ max: constants.MaxPercent })
         ],
         revert:
           contracts.governance.address !== secondAppointedGovernance.address &&
-          "Juicer: UNAUTHORIZED"
+          "TerminalV1: UNAUTHORIZED"
       })
   },
   {
@@ -138,7 +138,7 @@ module.exports = [
     }) =>
       executeFn({
         caller: secondAppointedGovernance,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "setFee",
         args: [randomBigNumberFn({ max: constants.MaxPercent })]
       })
@@ -149,7 +149,7 @@ module.exports = [
     fn: ({ executeFn, contracts, local: { secondAppointedGovernance } }) =>
       executeFn({
         caller: secondAppointedGovernance,
-        contract: contracts.juicer,
+        contract: contracts.terminalV1,
         fn: "appointGovernance",
         args: [contracts.governance.address]
       })
@@ -161,7 +161,7 @@ module.exports = [
         caller: deployer,
         contract: contracts.governance,
         fn: "acceptGovernance",
-        args: [contracts.juicer.address]
+        args: [contracts.terminalV1.address]
       });
     }
   }

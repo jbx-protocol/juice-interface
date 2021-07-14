@@ -642,22 +642,26 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             projects.ownerOf(_fundingCycle.projectId)
         );
 
-        // The amount of ETH from the _tappedAmount to pay as a fee.
-        uint256 _govFeeAmount = _tappedWeiAmount -
-            PRBMath.mulDiv(_tappedWeiAmount, 200, _fundingCycle.fee + 200);
+        // Get a reference to the handle of the project paying the fee and sending payouts.
+        bytes32 _handle = projects.handleOf(_projectId);
 
-        // The amount of ETH from the _tappedAmount to pay as a fee.
+        // Take a fee from the _tappedWeiAmount, if needed.
         // The project's owner will be the beneficiary of the resulting printed tickets from the governance project.
-        if (_govFeeAmount > 0)
-            _takeFee(_govFeeAmount, _projectOwner, _fundingCycle.projectId);
-
-        // The net transfer amount is the tapped amount minus the fee.
-        uint256 _netTransferAmount = _tappedWeiAmount - _govFeeAmount;
+        uint256 _feeAmount = _fundingCycle.fee > 0
+            ? _takeFee(
+                _tappedWeiAmount,
+                _fundingCycle.fee,
+                _projectOwner,
+                string(bytes.concat("Fee from @", _handle))
+            )
+            : 0;
 
         // Payout to mods and get a reference to the leftover transfer amount after all mods have been paid.
+        // The net transfer amount is the tapped amount minus the fee.
         uint256 _leftoverTransferAmount = _distributeToPayoutMods(
             _fundingCycle,
-            _netTransferAmount
+            _tappedWeiAmount - _feeAmount,
+            string(bytes.concat("Payout from @", _handle))
         );
 
         // Transfer any remaining balance to the beneficiary.
@@ -670,9 +674,9 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             _projectOwner,
             _amount,
             _fundingCycle.currency,
-            _netTransferAmount,
+            _tappedWeiAmount - _feeAmount,
             _leftoverTransferAmount,
-            _govFeeAmount,
+            _feeAmount,
             msg.sender
         );
 
@@ -1000,13 +1004,15 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
 
       @param _fundingCycle The funding cycle to base the distribution on.
       @param _amount The total amount being paid out.
+      @param _memo A memo to send along with project payouts.
 
       @return leftoverAmount If the mod percents dont add up to 100%, the leftover amount is returned.
 
     */
     function _distributeToPayoutMods(
         FundingCycle memory _fundingCycle,
-        uint256 _amount
+        uint256 _amount,
+        string memory _memo
     ) private returns (uint256 leftoverAmount) {
         // Set the leftover amount to the initial amount.
         leftoverAmount = _amount;
@@ -1018,10 +1024,6 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
         );
 
         if (_mods.length == 0) return leftoverAmount;
-
-        // Keep a reference to the paying project's handle. This'll be used for a memo in the payout.
-        // This should only be done once while looping.
-        bytes32 _handle;
 
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
@@ -1048,18 +1050,10 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
                         _mod.projectId
                     );
 
-                    // Get the handle if it isn't yet in memory.
-                    if (_handle == bytes32(0))
-                        _handle = projects.handleOf(_fundingCycle.projectId);
-
                     // The project must have a terminal to send funds to.
                     require(
                         _terminal != ITerminal(address(0)),
                         "Juicer::tap: BAD_MOD"
-                    );
-
-                    string memory _memo = string(
-                        bytes.concat("Payout from @", _handle)
                     );
 
                     // Save gas if this contract is being used as the terminal.
@@ -1363,21 +1357,24 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
       @notice 
       Takes a fee into the Governance contract's project.
 
-      @param _feeAmount The amount to take as a fee.
+      @param _from The amount to take a fee from.
+      @param _percent The percent fee to take. Out of 200.
       @param _beneficiary The address to print governance's tickets for.
-      @param _projectId The ID of the project paying the fee.
+      @param _memo A memo to send with the fee.
 
+      @return feeAmount The amount of the fee taken.
     */
     function _takeFee(
-        uint256 _feeAmount,
+        uint256 _from,
+        uint256 _percent,
         address _beneficiary,
-        uint256 _projectId
-    ) private {
-        // Get a reference to the handle of the project paying the fee.
-        bytes32 _handle = projects.handleOf(_projectId);
+        string memory _memo
+    ) private returns (uint256 feeAmount) {
+        // The amount of ETH from the _tappedAmount to pay as a fee.
+        feeAmount = _from - PRBMath.mulDiv(_from, 200, _percent + 200);
 
-        // Create the memo that'll be attached to the fee payment.
-        string memory _memo = string(bytes.concat("Fee from @", _handle));
+        // Nothing to do if there's no fee to take.
+        if (feeAmount == 0) return 0;
 
         // When processing the admin fee, save gas if the admin is using this contract as its terminal.
         if (
@@ -1388,14 +1385,14 @@ contract Juicer is Operatable, IJuicer, ITerminal, ReentrancyGuard {
             // Use the local pay call.
             _pay(
                 JuiceboxProject(governance).projectId(),
-                _feeAmount,
+                feeAmount,
                 _beneficiary,
                 _memo,
                 false
             );
         } else {
             // Use the external pay call of the governance contract.
-            JuiceboxProject(governance).pay{value: _feeAmount}(
+            JuiceboxProject(governance).pay{value: feeAmount}(
                 _beneficiary,
                 _memo,
                 false

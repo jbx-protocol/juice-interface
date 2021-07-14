@@ -74,6 +74,7 @@
     "deploy-kovan": "hardhat run scripts/deploy.js --network kovan",
     "deploy-OEkovan": "hardhat run scripts/deploy.js --network OEkovan",
     "deploy-rinkeby": "hardhat run scripts/deploy.js --network rinkeby",
+    "deploy-mainnet": "hardhat run scripts/deploy.js --network mainnet",
     "hardhat-publish": "hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",
     "accounts": "hardhat accounts",

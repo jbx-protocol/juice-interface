@@ -5,11 +5,11 @@
     "name": "Jango de la Noche"
   },
   "bugs": {
-    "url": "https://github.com/juice-work/juicehouse/issues"
+    "url": "https://github.com/jbx-protocol/juicehouse/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/juice-work/juicehouse/"
+    "url": "https://github.com/jbx-protocol/juicehouse/"
   },
   "files": [
     "contracts/**/*.sol",
@@ -44,7 +44,7 @@
     "@openzeppelin/contracts": "^4.1.0",
     "@paulrberg/contracts": "^3.4.0"
   },
-  "homepage": "https://github.com/juice-work/juicehouse",
+  "homepage": "https://github.com/jbx-protocol/juicehouse",
   "keywords": [
     "blockchain",
     "erc20",

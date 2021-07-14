@@ -96,7 +96,7 @@ const main = async () => {
     governance.address
   ]);
 
-  const ballot = await deploy("Active14DaysFundingCycleBallot", []);
+  const ballot = await deploy("Active7DaysFundingCycleBallot", []);
 
   const blockGasLimit = 6000000;
 

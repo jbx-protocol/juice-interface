@@ -6,5 +6,6 @@ module.exports = [
   "ExampleFailingFundingCycleBallot",
   "YearnYielder",
   "Tickets",
-  "DirectPaymentAddress"
+  "DirectPaymentAddress",
+  "Active14DaysFundingCycleBallot"
 ];

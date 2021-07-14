@@ -146,7 +146,7 @@ const main = async () => {
     utils.formatBytes32String("juicebox"),
     "QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr",
     {
-      target: "4315C32D71A9E600000",
+      target: "0x4315C32D71A9E600000",
       currency: 1,
       duration: 30, // 30 days
       cycleLimit: 0,

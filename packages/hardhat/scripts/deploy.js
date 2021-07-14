@@ -10,6 +10,8 @@ const publish = require("./publish");
 
 const network = process.env.HARDHAT_NETWORK;
 
+const multisigAddress = "0xAF28bcB48C40dBC86f52D459A6562F658fc94B1e";
+
 // ------ utils -------
 
 // abi encodes contract arguments
@@ -128,10 +130,14 @@ const main = async () => {
     });
   }
 
-  // TODO set the owner of the admin contract.
-  // await attachedJuicer.transferOwnership(admin.address, {
-  //   gasLimit: blockGasLimit
-  // });
+  console.log(
+    callContractIcon + "Transfering ownership of governance to the multisig"
+  );
+
+  // Transfer ownership of governance to the multisig.
+  await attachedGovernance.transferOwnership(multisigAddress, {
+    gasLimit: blockGasLimit
+  });
 
   console.log(callContractIcon + "Configuring governance's budget");
 

@@ -74,13 +74,16 @@ export default function Landing() {
             <Col
               xs={24}
               md={13}
-              style={{ display: 'flex', alignItems: 'center' }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingBottom: 60,
+              }}
             >
               <div
                 style={{
                   display: 'grid',
                   rowGap: 30,
-                  paddingBottom: 60,
                 }}
               >
                 {bigHeader('Community funding for people and projects')}
@@ -164,8 +167,6 @@ export default function Landing() {
             <Col xs={24} md={11}>
               <img
                 style={{
-                  height: '60vh',
-                  maxHeight: 600,
                   minHeight: 300,
                   maxWidth: '100%',
                   objectFit: 'contain',
@@ -343,7 +344,13 @@ export default function Landing() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 60 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            paddingBottom: 60,
+          }}
+        >
           <img
             style={{
               height: '40vh',

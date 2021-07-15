@@ -98,8 +98,6 @@ const main = async () => {
 
   const ballot = await deploy("Active7DaysFundingCycleBallot", []);
 
-  const blockGasLimit = 6000000;
-
   const PricesFactory = await ethers.getContractFactory("Prices");
   const GovernanceFactory = await ethers.getContractFactory("Governance");
   const TerminalV1Factory = await ethers.getContractFactory("TerminalV1");
@@ -110,9 +108,7 @@ const main = async () => {
 
   const callContractIcon = "🛰  ";
   console.log(callContractIcon + "Setting the prices owner");
-  await attachedPrices.transferOwnership(governance.address, {
-    gasLimit: blockGasLimit
-  });
+  await attachedPrices.transferOwnership(governance.address);
 
   // Add a production price feed if there is a reference to one.
   if (ethUsdAddr) {
@@ -120,14 +116,12 @@ const main = async () => {
       callContractIcon + "Adding ETH/USD price feed to the funding cycles"
     );
     await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
-      gasLimit: blockGasLimit
+      gasLimit: 6000000
     });
     // Otherwise deploy a static local price feed.
   } else {
     const feed = await deploy("ExampleETHUSDPriceFeed", []);
-    await attachedGovernance.addPriceFeed(prices.address, feed.address, 1, {
-      gasLimit: blockGasLimit
-    });
+    await attachedGovernance.addPriceFeed(prices.address, feed.address, 1);
   }
 
   console.log(
@@ -135,9 +129,7 @@ const main = async () => {
   );
 
   // Transfer ownership of governance to the multisig.
-  await attachedGovernance.transferOwnership(multisigAddress, {
-    gasLimit: blockGasLimit
-  });
+  await attachedGovernance.transferOwnership(multisigAddress);
 
   console.log(callContractIcon + "Configuring governance's budget");
 
@@ -146,7 +138,7 @@ const main = async () => {
     utils.formatBytes32String("juicebox"),
     "QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr",
     {
-      target: "0x4315C32D71A9E600000",
+      target: "0x43A69CA064CD09C0000",
       currency: 1,
       duration: 30, // 30 days
       cycleLimit: 0,
@@ -161,7 +153,7 @@ const main = async () => {
     [],
     [],
     {
-      gasLimit: blockGasLimit
+      gasLimit: 6000000
     }
   );
 

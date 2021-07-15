@@ -127,7 +127,9 @@ export default function Dashboard() {
 
   const metadata = useProjectMetadata(uri)
 
-  const isOwner = userAddress === owner
+  const isOwner =
+    userAddress === owner ||
+    userAddress === '0x823b92d6a4b2AED4b15675c7917c9f922ea8ADAD' // temp jango hack
 
   if (projectExists === undefined) return <Loading />
 

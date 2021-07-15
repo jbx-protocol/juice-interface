@@ -10,4 +10,5 @@ export const SUBGRAPHS: Partial<Record<NetworkName, string>> = {
   [NetworkName.localhost]: `http://localhost:8000/${path}/juicebox-local`,
   [NetworkName.rinkeby]: `${publicNetUrl}/juicebox-rinkeby`,
   [NetworkName.kovan]: `${publicNetUrl}/juicebox-kovan`,
+  [NetworkName.mainnet]: `${publicNetUrl}/juicebox-mainnet`,
 }

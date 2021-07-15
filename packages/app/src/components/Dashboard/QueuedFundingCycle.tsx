@@ -47,7 +47,7 @@ export default function QueuedFundingCycle({
             {queuedCycle?.id.gt(0) ? 'Reconfigure' : 'Configure funding cycles'}
           </Button>
         )}
-        {queuedCycle?.id.gt(0) ? (
+        {queuedCycle?.number.gt(0) ? (
           hasFundingTarget(queuedCycle) ? (
             <FundingCycleDetails fundingCycle={queuedCycle} />
           ) : null
@@ -59,7 +59,7 @@ export default function QueuedFundingCycle({
       <ReconfigureBudgetModal
         visible={reconfigureModalVisible}
         onDone={() => setReconfigureModalVisible(false)}
-        fundingCycle={queuedCycle?.id.gt(0) ? queuedCycle : currentCycle}
+        fundingCycle={queuedCycle?.number.gt(0) ? queuedCycle : currentCycle}
         projectId={projectId}
       />
     </div>

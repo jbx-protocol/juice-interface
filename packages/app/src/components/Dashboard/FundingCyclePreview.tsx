@@ -6,8 +6,9 @@ import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
+import { fromPerbicent } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
-import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import { decodeFCMetadata, hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutModsList from './PayoutModsList'
@@ -51,6 +52,8 @@ export default function FundingCyclePreview({
     } else headerText = detailedTimeString(daysLeft) + ' left'
   }
 
+  const metadata = decodeFCMetadata(fundingCycle.metadata)
+
   return (
     <div>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -72,7 +75,7 @@ export default function FundingCyclePreview({
         <div>
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             <TooltipLabel
-              label="Reserved token distributions:"
+              label={`Reserved tokens (${fromPerbicent(metadata?.reservedRate)}%):`}
               tip="Reserved tokens accumulate as a project is paid, based on a percentage set by the project owner. When reserved tokens are minted, a percentage of them will be distributed to each destination wallet here, with the rest going to the project owner."
             />
           </h4>

@@ -239,6 +239,10 @@ export default function Landing() {
                   handle: 'juicebox',
                   uri: 'QmPUssshSn5zHRNs46btxawrS4LJyCmy2cTvrFZDaU8CFC',
                 },
+                {
+                  handle: 'tiles',
+                  uri: 'QmQnFfNowL2GsY567WEBXGJDqn1tD6hT3LJPTEAE4gQ7Zc',
+                },
               ]}
             />
           </div>

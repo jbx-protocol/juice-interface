@@ -150,15 +150,6 @@ export default function Landing() {
                     >
                       Design your project
                     </Button>
-                    <div
-                      style={{
-                        textAlign: 'center',
-                        marginTop: 5,
-                        color: colors.text.primary,
-                      }}
-                    >
-                      (Launching July)
-                    </div>
                   </div>
                 </div>
               </div>

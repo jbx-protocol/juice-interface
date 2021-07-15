@@ -7,7 +7,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
-import { PaymentMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -75,9 +75,9 @@ export default function Dashboard() {
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const paymentMods = useContractReader<PaymentMod[]>({
+  const payoutMods = useContractReader<PayoutMod[]>({
     contract: ContractName.ModStore,
-    functionName: 'paymentModsOf',
+    functionName: 'payoutModsOf',
     args:
       projectId && fundingCycle
         ? [projectId.toHexString(), fundingCycle.configured.toHexString()]
@@ -88,7 +88,7 @@ export default function Dashboard() {
           ? [
               {
                 contract: ContractName.ModStore,
-                eventName: 'SetPaymentMod',
+                eventName: 'SetPayoutMod',
                 topics: [
                   projectId.toHexString(),
                   fundingCycle.configured.toHexString(),
@@ -155,7 +155,7 @@ export default function Dashboard() {
         isOwner={isOwner}
         projectId={projectId}
         fundingCycle={fundingCycle}
-        paymentMods={paymentMods}
+        payoutMods={payoutMods}
         ticketMods={ticketMods}
       />
     </div>

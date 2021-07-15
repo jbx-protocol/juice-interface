@@ -7,27 +7,27 @@ import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { PaymentMod } from 'models/mods'
+import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, fromWad } from 'utils/formatNumber'
 
-import ProjectPaymentMods from '../shared/formItems/ProjectPaymentMods'
+import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
 
-export default function PaymentModsList({
+export default function PayoutModsList({
   mods,
   fundingCycle,
   projectId,
   isOwner,
 }: {
-  mods: PaymentMod[] | undefined
+  mods: PayoutMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [editingMods, setEditingMods] = useState<PaymentMod[]>()
+  const [editingMods, setEditingMods] = useState<PayoutMod[]>()
   const { transactor, contracts } = useContext(UserContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -60,7 +60,7 @@ export default function PaymentModsList({
 
     transactor(
       contracts.ModStore,
-      'setPaymentMods',
+      'setPayoutMods',
       [
         projectId.toHexString(),
         fundingCycle.configured.toHexString(),
@@ -139,7 +139,7 @@ export default function PaymentModsList({
           confirmLoading={loading}
           width={720}
         >
-          <ProjectPaymentMods
+          <ProjectPayoutMods
             mods={editingMods}
             lockedMods={lockedMods}
             onModsChanged={setEditingMods}

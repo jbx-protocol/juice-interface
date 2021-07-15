@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
-import PaymentModsList from 'components/Dashboard/PaymentModsList'
+import PayoutModsList from 'components/Dashboard/PayoutModsList'
 import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import {
@@ -24,7 +24,7 @@ import { orEmpty } from 'utils/orEmpty'
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
-  const { paymentMods, ticketMods } = useAppSelector(
+  const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
   const adminFeePercent = useContractReader<BigNumber>({
@@ -104,8 +104,8 @@ export default function ConfirmDeployProject() {
       <Statistic
         title="Spending"
         valueRender={() => (
-          <PaymentModsList
-            mods={paymentMods}
+          <PayoutModsList
+            mods={payoutMods}
             projectId={undefined}
             fundingCycle={undefined}
             isOwner={true}

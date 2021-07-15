@@ -5,7 +5,7 @@ import "./IOperatorStore.sol";
 import "./IProjects.sol";
 import "./IModAllocator.sol";
 
-struct PaymentMod {
+struct PayoutMod {
     bool preferUnstaked;
     uint16 percent;
     uint48 lockedUntil;
@@ -22,10 +22,10 @@ struct TicketMod {
 }
 
 interface IModStore {
-    event SetPaymentMod(
+    event SetPayoutMod(
         uint256 indexed projectId,
         uint256 indexed configuration,
-        PaymentMod mods,
+        PayoutMod mods,
         address caller
     );
 
@@ -38,20 +38,20 @@ interface IModStore {
 
     function projects() external view returns (IProjects);
 
-    function paymentModsOf(uint256 _projectId, uint256 _configuration)
+    function payoutModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
-        returns (PaymentMod[] memory);
+        returns (PayoutMod[] memory);
 
     function ticketModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         returns (TicketMod[] memory);
 
-    function setPaymentMods(
+    function setPayoutMods(
         uint256 _projectId,
         uint256 _configuration,
-        PaymentMod[] memory _mods
+        PayoutMod[] memory _mods
     ) external;
 
     function setTicketMods(

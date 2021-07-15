@@ -69,7 +69,7 @@ module.exports = [
           }
         ],
         "indexed": false,
-        "internalType": "struct PaymentMod",
+        "internalType": "struct PayoutMod",
         "name": "mods",
         "type": "tuple"
       },
@@ -80,7 +80,7 @@ module.exports = [
         "type": "address"
       }
     ],
-    "name": "SetPaymentMod",
+    "name": "SetPayoutMod",
     "type": "event"
   },
   {
@@ -162,7 +162,7 @@ module.exports = [
         "type": "uint256"
       }
     ],
-    "name": "paymentModsOf",
+    "name": "payoutModsOf",
     "outputs": [
       {
         "components": [
@@ -197,7 +197,7 @@ module.exports = [
             "type": "uint56"
           }
         ],
-        "internalType": "struct PaymentMod[]",
+        "internalType": "struct PayoutMod[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -263,12 +263,12 @@ module.exports = [
             "type": "uint56"
           }
         ],
-        "internalType": "struct PaymentMod[]",
+        "internalType": "struct PayoutMod[]",
         "name": "_mods",
         "type": "tuple[]"
       }
     ],
-    "name": "setPaymentMods",
+    "name": "setPayoutMods",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

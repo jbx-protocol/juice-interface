@@ -7,7 +7,7 @@ import ProjectHandle from './ProjectHandle'
 import ProjectLink from './ProjectLink'
 import ProjectLogoUrl from './ProjectLogoUrl'
 import ProjectName from './ProjectName'
-import ProjectPaymentMods from './ProjectPaymentMods'
+import ProjectPayoutMods from './ProjectPayoutMods'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
@@ -22,7 +22,7 @@ export const FormItems = {
   ProjectLink,
   ProjectLogoUrl,
   ProjectName,
-  ProjectPaymentMods,
+  ProjectPayoutMods,
   ProjectReserved,
   ProjectTarget,
   ProjectTicketMods,

@@ -525,15 +525,15 @@ const operations = [
     }),
     allowWildcard: true
   },
-  // TerminalV1 calls to set payment mods and ticket mods are checked throughout other integration tests.
+  // TerminalV1 calls to set payout mods and ticket mods are checked throughout other integration tests.
   {
     expand: ({ contracts, BigNumber, local: { expectedProjectId } }) => ({
       contract: contracts.modStore,
-      fn: "setPaymentMods",
+      fn: "setPayoutMods",
       args: [expectedProjectId, BigNumber.from(0), []],
       domain: expectedProjectId,
       permissionIndex: 14,
-      authorizedRevert: "ModStore::setPaymentMods: NO_OP"
+      authorizedRevert: "ModStore::setPayoutMods: NO_OP"
     })
   },
   {

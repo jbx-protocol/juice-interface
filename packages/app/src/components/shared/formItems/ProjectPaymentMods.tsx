@@ -16,7 +16,7 @@ import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
-import { PaymentMod } from 'models/mods'
+import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
@@ -37,9 +37,9 @@ import { FormItemExt } from './formItemExt'
 
 type ModType = 'project' | 'address'
 
-type EditingPaymentMod = PaymentMod & { handle?: string }
+type EditingPayoutMod = PayoutMod & { handle?: string }
 
-export default function ProjectPaymentMods({
+export default function ProjectPayoutMods({
   name,
   target,
   currency,
@@ -50,9 +50,9 @@ export default function ProjectPaymentMods({
 }: {
   target: string
   currency: CurrencyOption
-  lockedMods?: EditingPaymentMod[]
-  mods: EditingPaymentMod[] | undefined
-  onModsChanged: (mods: EditingPaymentMod[]) => void
+  lockedMods?: EditingPayoutMod[]
+  mods: EditingPayoutMod[] | undefined
+  onModsChanged: (mods: EditingPayoutMod[]) => void
 } & FormItemExt) {
   const [form] = useForm<{
     handle: string
@@ -97,7 +97,7 @@ export default function ProjectPaymentMods({
   const gutter = 10
 
   const modInput = useCallback(
-    (mod: EditingPaymentMod, index: number, locked?: boolean) => {
+    (mod: EditingPayoutMod, index: number, locked?: boolean) => {
       if (!mods) return
 
       return (

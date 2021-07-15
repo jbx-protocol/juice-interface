@@ -50,7 +50,7 @@ module.exports = [
       });
 
       // These can be whatever.
-      const paymentMods = [];
+      const payoutMods = [];
       const ticketMods = [];
 
       const contract = contracts.terminalV1;
@@ -77,7 +77,7 @@ module.exports = [
             bondingCurveRate,
             reconfigurationBondingCurveRate
           },
-          paymentMods,
+          payoutMods,
           ticketMods
         ]
       });

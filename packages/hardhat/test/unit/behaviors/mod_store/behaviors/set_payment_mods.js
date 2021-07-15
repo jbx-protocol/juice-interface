@@ -4,7 +4,7 @@ const { expect } = require("chai");
 const tests = {
   success: [
     {
-      description: "set one payment mod, called by owner, max percent",
+      description: "set one payout mod, called by owner, max percent",
       fn: ({ deployer }) => ({
         caller: deployer,
         projectOwner: deployer.address,
@@ -23,7 +23,7 @@ const tests = {
       })
     },
     {
-      description: "set one payment mod, beneficiary is different from caller",
+      description: "set one payout mod, beneficiary is different from caller",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectOwner: deployer.address,
@@ -42,7 +42,7 @@ const tests = {
       })
     },
     {
-      description: "set many payment mods, called by owner",
+      description: "set many payout mods, called by owner",
       fn: ({ deployer, modAllocator }) => ({
         caller: deployer,
         projectOwner: deployer.address,
@@ -69,7 +69,7 @@ const tests = {
       })
     },
     {
-      description: "set one payment mod, called by operator",
+      description: "set one payout mod, called by operator",
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         projectOwner: addrs[0].address,
@@ -257,7 +257,7 @@ const tests = {
         projectId: 1,
         configuration: 10,
         mods: [],
-        revert: "ModStore::setPaymentMods: NO_OP"
+        revert: "ModStore::setPayoutMods: NO_OP"
       })
     },
     {
@@ -278,7 +278,7 @@ const tests = {
             lockedUntil: 0
           }
         ],
-        revert: "ModStore::setPaymentMods: ZERO_ADDRESS"
+        revert: "ModStore::setPayoutMods: ZERO_ADDRESS"
       })
     },
     {
@@ -307,7 +307,7 @@ const tests = {
             lockedUntil: 0
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+        revert: "ModStore::setPayoutMods: BAD_TOTAL_PERCENT"
       })
     },
     {
@@ -336,7 +336,7 @@ const tests = {
             lockedUntil: 0
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_MOD_PERCENT"
+        revert: "ModStore::setPayoutMods: BAD_MOD_PERCENT"
       })
     },
     {
@@ -365,7 +365,7 @@ const tests = {
             lockedUntil: 0
           }
         ],
-        revert: "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+        revert: "ModStore::setPayoutMods: BAD_TOTAL_PERCENT"
       })
     },
     {
@@ -401,7 +401,7 @@ const tests = {
             lockedUntil: testStart.add(10)
           }
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
     },
     {
@@ -437,7 +437,7 @@ const tests = {
             lockedUntil: testStart.add(10)
           }
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
     },
     {
@@ -473,7 +473,7 @@ const tests = {
             lockedUntil: testStart.add(10)
           }
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
     },
     {
@@ -509,7 +509,7 @@ const tests = {
             lockedUntil: testStart.add(10)
           }
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
     },
     {
@@ -545,7 +545,7 @@ const tests = {
             lockedUntil: testStart.add(9)
           }
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
     }
   ]
@@ -577,7 +577,7 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the payment mods on an owner's behalf.
+          // Get the permission index needed to set the payout mods on an owner's behalf.
           const permissionIndex = 14;
 
           // Set the Operator store to return the permission flag.
@@ -602,7 +602,7 @@ module.exports = function() {
             // Execute the transaction.
             await this.contract
               .connect(caller)
-              .setPaymentMods(setup.projectId, setup.configuration, setup.mods);
+              .setPayoutMods(setup.projectId, setup.configuration, setup.mods);
           }
           if (setup.fastforward) {
             // Fast forward the clock if needed.
@@ -615,10 +615,10 @@ module.exports = function() {
         // Execute the transaction.
         const tx = await this.contract
           .connect(caller)
-          .setPaymentMods(projectId, configuration, mods);
+          .setPayoutMods(projectId, configuration, mods);
 
-        // Get the stored payment mods value.
-        const storedProjectMods = await this.contract.paymentModsOf(
+        // Get the stored payout mods value.
+        const storedProjectMods = await this.contract.payoutModsOf(
           projectId,
           configuration
         );
@@ -627,7 +627,7 @@ module.exports = function() {
         await Promise.all(
           storedProjectMods.map(mod =>
             expect(tx)
-              .to.emit(this.contract, "SetPaymentMod")
+              .to.emit(this.contract, "SetPayoutMod")
               .withArgs(projectId, configuration, mod, caller.address)
           )
         );
@@ -684,7 +684,7 @@ module.exports = function() {
           if (setup.mods) {
             await this.contract
               .connect(caller)
-              .setPaymentMods(setup.projectId, setup.configuration, setup.mods);
+              .setPayoutMods(setup.projectId, setup.configuration, setup.mods);
           }
           if (setup.fastforward) {
             await this.fastforwardFn(setup.fastforward.sub(1));
@@ -694,7 +694,7 @@ module.exports = function() {
         await expect(
           this.contract
             .connect(caller)
-            .setPaymentMods(projectId, configuration, mods)
+            .setPayoutMods(projectId, configuration, mods)
         ).to.be.revertedWith(revert);
       });
     });

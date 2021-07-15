@@ -23,7 +23,7 @@ const tests = {
     {
       description: "with mods",
       fn: async ({ deployMockLocalContractFn }) => ({
-        paymentMods: [
+        payoutMods: [
           {
             // These values dont matter.
             preferUnstaked: false,
@@ -147,7 +147,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
     addToTicketSupply = 0,
     addTerminal,
     owner = deployer.address,
-    paymentMods = [],
+    payoutMods = [],
     ticketMods = [],
     handle = utils.formatBytes32String("something"),
     uri = "some-uri",
@@ -283,23 +283,23 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
           })
         ]
       : []),
-    ...(!revert && paymentMods.length
+    ...(!revert && payoutMods.length
       ? [
           mockFn({
-            condition: !revert && paymentMods.length,
+            condition: !revert && payoutMods.length,
             mockContract: mockContracts.modStore,
-            fn: "setPaymentMods",
-            args: [projectId, configured, paymentMods]
+            fn: "setPayoutMods",
+            args: [projectId, configured, payoutMods]
           })
         ]
       : []),
     ...(!revert && ticketMods.length
       ? [
           mockFn({
-            condition: !revert && paymentMods.length,
+            condition: !revert && payoutMods.length,
             mockContract: mockContracts.modStore,
             fn: "setTicketMods",
-            args: [projectId, configured, paymentMods]
+            args: [projectId, configured, payoutMods]
           })
         ]
       : []),
@@ -307,7 +307,7 @@ const ops = ({ deployer, mockContracts, targetContract }) => custom => {
       caller,
       contract: targetContract,
       fn: "configure",
-      args: [projectId, properties, metadata, paymentMods, ticketMods],
+      args: [projectId, properties, metadata, payoutMods, ticketMods],
       revert
     })
   ];

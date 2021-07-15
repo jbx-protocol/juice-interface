@@ -4,26 +4,26 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
-import { PaymentMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
-import PaymentModsList from './PaymentModsList'
+import PayoutModsList from './PayoutModsList'
 import TicketModsList from './TicketModsList'
 
 export default function FundingCyclePreview({
   projectId,
   fundingCycle,
-  paymentMods,
+  payoutMods,
   ticketMods,
   showDetail,
   isOwner,
 }: {
   projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
-  paymentMods: PaymentMod[] | undefined
+  payoutMods: PayoutMod[] | undefined
   ticketMods: TicketMod[] | undefined
   showDetail?: boolean
   isOwner?: boolean
@@ -61,8 +61,8 @@ export default function FundingCyclePreview({
               tip="Any time a withdrawal is made, a percentage of the withdrawal amount will be automatically paid to each payout destination."
             />
           </h4>
-          <PaymentModsList
-            mods={paymentMods}
+          <PayoutModsList
+            mods={payoutMods}
             fundingCycle={fundingCycle}
             projectId={projectId}
             isOwner={isOwner}

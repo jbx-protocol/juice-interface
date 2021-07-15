@@ -15,7 +15,7 @@ library Operations {
     uint256 public constant Unstake = 11;
     uint256 public constant Transfer = 12;
     uint256 public constant Lock = 13;
-    uint256 public constant SetPaymentMods = 14;
+    uint256 public constant SetPayoutMods = 14;
     uint256 public constant SetTicketMods = 15;
     uint256 public constant SetTerminal = 16;
 }

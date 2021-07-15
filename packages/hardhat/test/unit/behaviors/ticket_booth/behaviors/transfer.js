@@ -203,7 +203,7 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the payment mods on an owner's behalf.
+          // Get the permission index needed to set the payout mods on an owner's behalf.
           const permissionIndex = 12;
 
           // Set the Operator store to return the permission flag.
@@ -296,7 +296,7 @@ module.exports = function() {
 
         // If a permission flag is specified, set the mock to return it.
         if (permissionFlag !== undefined) {
-          // Get the permission index needed to set the payment mods on an owner's behalf.
+          // Get the permission index needed to set the payout mods on an owner's behalf.
           const permissionIndex = 12;
 
           // Set the Operator store to return the permission flag.

@@ -223,7 +223,7 @@ module.exports = [
           }
         ],
         "indexed": false,
-        "internalType": "struct PaymentMod",
+        "internalType": "struct PayoutMod",
         "name": "mod",
         "type": "tuple"
       },
@@ -830,8 +830,8 @@ module.exports = [
             "type": "uint56"
           }
         ],
-        "internalType": "struct PaymentMod[]",
-        "name": "_paymentMods",
+        "internalType": "struct PayoutMod[]",
+        "name": "_payoutMods",
         "type": "tuple[]"
       },
       {
@@ -1001,8 +1001,8 @@ module.exports = [
             "type": "uint56"
           }
         ],
-        "internalType": "struct PaymentMod[]",
-        "name": "_paymentMods",
+        "internalType": "struct PayoutMod[]",
+        "name": "_payoutMods",
         "type": "tuple[]"
       },
       {

@@ -5,7 +5,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { PaymentMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
 import { CSSProperties, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -23,7 +23,7 @@ export default function Project({
   metadata,
   projectId,
   fundingCycle,
-  paymentMods,
+  payoutMods,
   ticketMods,
   showCurrentDetail,
   style,
@@ -34,7 +34,7 @@ export default function Project({
   projectId: BigNumber
   isOwner: boolean
   fundingCycle: FundingCycle | undefined
-  paymentMods: PaymentMod[] | undefined
+  payoutMods: PayoutMod[] | undefined
   ticketMods: TicketMod[] | undefined
   showCurrentDetail?: boolean
   style?: CSSProperties
@@ -148,7 +148,7 @@ export default function Project({
           <FundingCycles
             projectId={projectId}
             fundingCycle={fundingCycle}
-            paymentMods={paymentMods}
+            payoutMods={payoutMods}
             ticketMods={ticketMods}
             isOwner={isOwner}
             balanceInCurrency={balanceInCurrency}

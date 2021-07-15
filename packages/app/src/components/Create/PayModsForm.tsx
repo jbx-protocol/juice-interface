@@ -2,7 +2,7 @@ import { Button, Form, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { PaymentMod } from 'models/mods'
+import { PayoutMod } from 'models/mods'
 import { useLayoutEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
@@ -12,13 +12,13 @@ export default function PayModsForm({
   target,
   onSave,
 }: {
-  initialMods: PaymentMod[]
+  initialMods: PayoutMod[]
   currency: CurrencyOption
   target: BigNumber
-  onSave: (mods: PaymentMod[]) => void
+  onSave: (mods: PayoutMod[]) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
-  const [mods, setMods] = useState<PaymentMod[]>([])
+  const [mods, setMods] = useState<PayoutMod[]>([])
 
   useLayoutEffect(() => {
     setMods(initialMods)
@@ -43,7 +43,7 @@ export default function PayModsForm({
       </div>
 
       <Form layout="vertical">
-        <FormItems.ProjectPaymentMods
+        <FormItems.ProjectPayoutMods
           name="mods"
           mods={mods}
           target={fromWad(target)}

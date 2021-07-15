@@ -17,8 +17,8 @@ import "./libraries/Operations.sol";
 contract ModStore is IModStore, Operatable, TerminalUtility {
     // --- private stored properties --- //
 
-    // All payment mods for each project ID's configurations.
-    mapping(uint256 => mapping(uint256 => PaymentMod[])) private _paymentModsOf;
+    // All payout mods for each project ID's configurations.
+    mapping(uint256 => mapping(uint256 => PayoutMod[])) private _payoutModsOf;
 
     // All ticket mods for each project ID's configurations.
     mapping(uint256 => mapping(uint256 => TicketMod[])) private _ticketModsOf;
@@ -32,20 +32,20 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
 
     /**
       @notice 
-      Get all payment mods for the specified project ID.
+      Get all payout mods for the specified project ID.
 
       @param _projectId The ID of the project to get mods for.
       @param _configuration The configuration to get mods for.
 
       @return An array of all mods for the project.
      */
-    function paymentModsOf(uint256 _projectId, uint256 _configuration)
+    function payoutModsOf(uint256 _projectId, uint256 _configuration)
         external
         view
         override
-        returns (PaymentMod[] memory)
+        returns (PayoutMod[] memory)
     {
-        return _paymentModsOf[_projectId][_configuration];
+        return _payoutModsOf[_projectId][_configuration];
     }
 
     /**
@@ -83,34 +83,34 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
 
     /** 
       @notice 
-      Adds a mod to the payment mods list.
+      Adds a mod to the payout mods list.
 
       @dev
       Only the owner or operator of a project can make this call, or the current terminal of the project.
 
       @param _projectId The project to add a mod to.
       @param _configuration The configuration to set the mods to be active during.
-      @param _mods The payment mods to set.
+      @param _mods The payout mods to set.
     */
-    function setPaymentMods(
+    function setPayoutMods(
         uint256 _projectId,
         uint256 _configuration,
-        PaymentMod[] memory _mods
+        PayoutMod[] memory _mods
     )
         external
         override
         requirePermissionAcceptingAlternateAddress(
             projects.ownerOf(_projectId),
             _projectId,
-            Operations.SetPaymentMods,
+            Operations.SetPayoutMods,
             address(terminalDirectory.terminalOf(_projectId))
         )
     {
         // There must be something to do.
-        require(_mods.length > 0, "ModStore::setPaymentMods: NO_OP");
+        require(_mods.length > 0, "ModStore::setPayoutMods: NO_OP");
 
-        // Get a reference to the project's payment mods.
-        PaymentMod[] memory _currentMods = _paymentModsOf[_projectId][
+        // Get a reference to the project's payout mods.
+        PayoutMod[] memory _currentMods = _payoutModsOf[_projectId][
             _configuration
         ];
 
@@ -131,46 +131,44 @@ contract ModStore is IModStore, Operatable, TerminalUtility {
                 }
                 require(
                     _includesLocked,
-                    "ModStore::setPaymentMods: SOME_LOCKED"
+                    "ModStore::setPayoutMods: SOME_LOCKED"
                 );
             }
         }
 
         // Delete from storage so mods can be repopulated.
-        delete _paymentModsOf[_projectId][_configuration];
+        delete _payoutModsOf[_projectId][_configuration];
 
         // Add up all the percents to make sure they cumulative are under 100%.
-        uint256 _paymentModPercentTotal = 0;
+        uint256 _payoutModPercentTotal = 0;
 
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             // The percent should be greater than 0.
             require(
                 _mods[_i].percent > 0,
-                "ModStore::setPaymentMods: BAD_MOD_PERCENT"
+                "ModStore::setPayoutMods: BAD_MOD_PERCENT"
             );
 
             // Add to the total percents.
-            _paymentModPercentTotal =
-                _paymentModPercentTotal +
-                _mods[_i].percent;
+            _payoutModPercentTotal = _payoutModPercentTotal + _mods[_i].percent;
 
             // The total percent should be less than 10000.
             require(
-                _paymentModPercentTotal <= 10000,
-                "ModStore::setPaymentMods: BAD_TOTAL_PERCENT"
+                _payoutModPercentTotal <= 10000,
+                "ModStore::setPayoutMods: BAD_TOTAL_PERCENT"
             );
 
             // The allocator and the beneficiary shouldn't both be the zero address.
             require(
                 _mods[_i].allocator != IModAllocator(address(0)) ||
                     _mods[_i].beneficiary != address(0),
-                "ModStore::setPaymentMods: ZERO_ADDRESS"
+                "ModStore::setPayoutMods: ZERO_ADDRESS"
             );
 
             // Push the new mod into the project's list of mods.
-            _paymentModsOf[_projectId][_configuration].push(_mods[_i]);
+            _payoutModsOf[_projectId][_configuration].push(_mods[_i]);
 
-            emit SetPaymentMod(
+            emit SetPayoutMod(
                 _projectId,
                 _configuration,
                 _mods[_i],

@@ -1,6 +1,6 @@
 const deploy = require("./deploy");
 const migrate = require("./migrate");
-const payoutToPaymentMods = require("./tap");
+const payoutToPayoutMods = require("./tap");
 const setPayoutMods = require("./set_payout_mods");
 const setTicketMods = require("./set_ticket_mods");
 const tap = require("./tap");
@@ -31,7 +31,7 @@ module.exports = {
   deploy,
   projects,
   migrate,
-  payoutToPaymentMods,
+  payoutToPayoutMods,
   setPayoutMods,
   setTicketMods,
   tap,

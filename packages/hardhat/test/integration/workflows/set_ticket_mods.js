@@ -222,7 +222,7 @@ module.exports = [
       })
   },
   {
-    description: "Check that the new payment mods got set correctly",
+    description: "Check that the new payout mods got set correctly",
     fn: ({
       contracts,
       checkFn,

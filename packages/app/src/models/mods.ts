@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-export interface PaymentMod {
+export interface PayoutMod {
   beneficiary?: string
   percent: number
   preferUnstaked?: boolean

@@ -12,7 +12,7 @@ const currency = 0;
 
 module.exports = [
   {
-    description: "Deploy first project with a payment mod",
+    description: "Deploy first project with a payout mod",
     fn: async ({
       constants,
       contracts,
@@ -159,7 +159,7 @@ module.exports = [
     }
   },
   {
-    description: "Check that the payment mods got set",
+    description: "Check that the payout mods got set",
     fn: ({
       contracts,
       checkFn,
@@ -170,7 +170,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "payoutModsOf",
         args: [expectedIdOfBaseProject, timeMark],
         expect: [
           [
@@ -202,7 +202,7 @@ module.exports = [
   },
   {
     description:
-      "Deploy second project that'll be sent funds by the configured project payment mod",
+      "Deploy second project that'll be sent funds by the configured project payout mod",
     fn: async ({
       constants,
       contracts,
@@ -336,7 +336,7 @@ module.exports = [
       })
   },
   {
-    description: "Tap funds for the project with payment mods",
+    description: "Tap funds for the project with payout mods",
     fn: async ({
       contracts,
       executeFn,
@@ -390,7 +390,7 @@ module.exports = [
     }
   },
   {
-    description: "Check that payment mod beneficiary has expected funds",
+    description: "Check that payout mod beneficiary has expected funds",
     fn: async ({
       constants,
       contracts,

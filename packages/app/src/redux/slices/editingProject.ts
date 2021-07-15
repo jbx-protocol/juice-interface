@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
-import { PaymentMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
 import {
   fromPerbicent,
@@ -24,7 +24,7 @@ type EditingProjectInfo = {
 export type EditingProjectState = {
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
-  paymentMods: PaymentMod[]
+  payoutMods: PayoutMod[]
   ticketMods: TicketMod[]
 }
 
@@ -62,7 +62,7 @@ export const editingProjectSlice = createSlice({
       configured: BigNumber.from(0),
       ballot: constants.AddressZero,
     }),
-    paymentMods: [],
+    payoutMods: [],
     ticketMods: [],
   } as EditingProjectState,
   reducers: {
@@ -196,9 +196,9 @@ export const editingProjectSlice = createSlice({
         ),
       },
     }),
-    setPaymentMods: (state, action: PayloadAction<PaymentMod[]>) => ({
+    setPayoutMods: (state, action: PayloadAction<PayoutMod[]>) => ({
       ...state,
-      paymentMods: action.payload,
+      payoutMods: action.payload,
     }),
     setTicketMods: (state, action: PayloadAction<TicketMod[]>) => ({
       ...state,

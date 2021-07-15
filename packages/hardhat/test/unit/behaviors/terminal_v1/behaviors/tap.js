@@ -419,7 +419,7 @@ const ops = ({
     }),
     mockFn({
       mockContract: mockContracts.modStore,
-      fn: "paymentModsOf",
+      fn: "payoutModsOf",
       args: [projectId, configured],
       returns: [mods]
     }),

@@ -18,7 +18,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { FCProperties } from 'models/funding-cycle-properties'
-import { PaymentMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
@@ -78,7 +78,7 @@ export default function Create() {
   const {
     info: editingProjectInfo,
     ticketMods: editingTicketMods,
-    paymentMods: editingPaymentMods,
+    payoutMods: editingPayoutMods,
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
@@ -105,8 +105,8 @@ export default function Create() {
       reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
-  const onPayModsFormSaved = (mods: PaymentMod[]) =>
-    dispatch(editingProjectActions.setPaymentMods(mods))
+  const onPayModsFormSaved = (mods: PayoutMod[]) =>
+    dispatch(editingProjectActions.setPayoutMods(mods))
 
   const onBudgetFormSaved = (
     currency: CurrencyOption,
@@ -197,7 +197,7 @@ export default function Create() {
         uploadedMetadata.cid,
         properties,
         metadata,
-        editingPaymentMods.map(m => ({
+        editingPayoutMods.map(m => ({
           preferUnstaked: false,
           percent: BigNumber.from(m.percent).toHexString(),
           lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
@@ -365,7 +365,7 @@ export default function Create() {
             isOwner={false}
             showCurrentDetail={currentStep > 2}
             fundingCycle={fundingCycle}
-            paymentMods={editingPaymentMods}
+            payoutMods={editingPayoutMods}
             ticketMods={editingTicketMods}
             metadata={editingProjectInfo.metadata}
             handle={editingProjectInfo.handle}
@@ -424,7 +424,7 @@ export default function Create() {
         destroyOnClose
       >
         <PayModsForm
-          initialMods={editingPaymentMods}
+          initialMods={editingPayoutMods}
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
           onSave={async mods => {

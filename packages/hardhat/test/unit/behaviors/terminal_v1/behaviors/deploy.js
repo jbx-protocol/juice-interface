@@ -13,7 +13,7 @@ const tests = {
           bondingCurveRate: 200,
           reconfigurationBondingCurveRate: 200
         },
-        paymentMods: [],
+        payoutMods: [],
         ticketMods: []
       })
     },
@@ -27,7 +27,7 @@ const tests = {
           bondingCurveRate: 200,
           reconfigurationBondingCurveRate: 200
         },
-        paymentMods: [],
+        payoutMods: [],
         ticketMods: []
       })
     },
@@ -41,7 +41,7 @@ const tests = {
           bondingCurveRate: 200,
           reconfigurationBondingCurveRate: 200
         },
-        paymentMods: [
+        payoutMods: [
           {
             // These values dont matter.
             preferUnstaked: false,
@@ -77,7 +77,7 @@ const tests = {
           bondingCurveRate: 200,
           reconfigurationBondingCurveRate: 200
         },
-        paymentMods: [],
+        payoutMods: [],
         ticketMods: [],
         revert:
           "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RESERVED_RATE"
@@ -93,7 +93,7 @@ const tests = {
           bondingCurveRate: 201,
           reconfigurationBondingCurveRate: 200
         },
-        paymentMods: [],
+        payoutMods: [],
         ticketMods: [],
         revert:
           "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_BONDING_CURVE_RATE"
@@ -109,7 +109,7 @@ const tests = {
           bondingCurveRate: 200,
           reconfigurationBondingCurveRate: 201
         },
-        paymentMods: [],
+        payoutMods: [],
         ticketMods: [],
         revert:
           "TerminalV1::_validateAndPackFundingCycleMetadata: BAD_RECONFIGURATION_BONDING_CURVE_RATE"
@@ -126,7 +126,7 @@ module.exports = function() {
           caller,
           owner,
           metadata,
-          paymentMods,
+          payoutMods,
           ticketMods
         } = await successTest.fn(this);
         const handle = utils.formatBytes32String("something");
@@ -183,10 +183,10 @@ module.exports = function() {
             metadata: 0
           });
 
-        if (paymentMods.length)
-          // Set a mock for setting payment mods.
-          await this.mockContracts.modStore.mock.setPaymentMods
-            .withArgs(projectId, configured, paymentMods)
+        if (payoutMods.length)
+          // Set a mock for setting payout mods.
+          await this.mockContracts.modStore.mock.setPayoutMods
+            .withArgs(projectId, configured, payoutMods)
             .returns();
 
         if (ticketMods.length)
@@ -204,7 +204,7 @@ module.exports = function() {
             uri,
             properties,
             metadata,
-            paymentMods,
+            payoutMods,
             ticketMods
           );
       });

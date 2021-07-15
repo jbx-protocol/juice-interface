@@ -315,7 +315,7 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
           The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
           where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
         @dev _reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
-      @param _paymentMods Any payment mods to set.
+      @param _payoutMods Any payout mods to set.
       @param _ticketMods Any ticket mods to set.
     */
     function deploy(
@@ -324,7 +324,7 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
         string calldata _uri,
         FundingCycleProperties calldata _properties,
         FundingCycleMetadata calldata _metadata,
-        PaymentMod[] memory _paymentMods,
+        PayoutMod[] memory _payoutMods,
         TicketMod[] memory _ticketMods
     ) external override {
         // Make sure the metadata checks out. If it does, return a packed version of it.
@@ -344,12 +344,12 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
             true
         );
 
-        // Set payment mods if there are any.
-        if (_paymentMods.length > 0)
-            modStore.setPaymentMods(
+        // Set payout mods if there are any.
+        if (_payoutMods.length > 0)
+            modStore.setPayoutMods(
                 _projectId,
                 _fundingCycle.configured,
-                _paymentMods
+                _payoutMods
             );
 
         // Set ticket mods if there are any.
@@ -395,7 +395,7 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
         uint256 _projectId,
         FundingCycleProperties calldata _properties,
         FundingCycleMetadata calldata _metadata,
-        PaymentMod[] memory _paymentMods,
+        PayoutMod[] memory _payoutMods,
         TicketMod[] memory _ticketMods
     )
         external
@@ -424,15 +424,15 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
             _shouldConfigureActive
         );
 
-        // Set payment mods for the new configuration if there are any.
-        if (_paymentMods.length > 0)
-            modStore.setPaymentMods(
+        // Set payout mods for the new configuration if there are any.
+        if (_payoutMods.length > 0)
+            modStore.setPayoutMods(
                 _projectId,
                 _fundingCycle.configured,
-                _paymentMods
+                _payoutMods
             );
 
-        // Set payment mods for the new configuration if there are any.
+        // Set payout mods for the new configuration if there are any.
         if (_ticketMods.length > 0)
             modStore.setTicketMods(
                 _projectId,
@@ -1020,8 +1020,8 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
         // Set the leftover amount to the initial amount.
         leftoverAmount = _amount;
 
-        // Get a reference to the project's payment mods.
-        PaymentMod[] memory _mods = modStore.paymentModsOf(
+        // Get a reference to the project's payout mods.
+        PayoutMod[] memory _mods = modStore.payoutModsOf(
             _fundingCycle.projectId,
             _fundingCycle.configured
         );
@@ -1031,7 +1031,7 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
         //Transfer between all mods.
         for (uint256 _i = 0; _i < _mods.length; _i++) {
             // Get a reference to the mod being iterated on.
-            PaymentMod memory _mod = _mods[_i];
+            PayoutMod memory _mod = _mods[_i];
 
             // The amount to send towards mods. Mods percents are out of 10000.
             uint256 _modCut = PRBMath.mulDiv(_amount, _mod.percent, 10000);

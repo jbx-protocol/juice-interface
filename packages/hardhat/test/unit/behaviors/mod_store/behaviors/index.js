@@ -1,7 +1,7 @@
-const setPaymentMods = require("./set_payment_mods");
+const setPayoutMods = require("./set_payment_mods");
 const setTicketMods = require("./set_ticket_mods");
 
 module.exports = {
-  setPaymentMods,
+  setPayoutMods,
   setTicketMods
 };

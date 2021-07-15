@@ -1,5 +1,5 @@
 /** 
-  Project's can set payment mods, which allow payouts to automatically be
+  Project's can set payout mods, which allow payouts to automatically be
   sent to either an address, another project on Juicebox, or a contract that inherits from IModAllocator.
 
   A payout mod can be locked until a specified timestamp, which prevents it from being removed while
@@ -11,7 +11,7 @@
 
 module.exports = [
   {
-    description: "Deploy first project with at least a locked payment mod",
+    description: "Deploy first project with at least a locked payout mod",
     fn: async ({
       constants,
       contracts,
@@ -117,7 +117,7 @@ module.exports = [
     }
   },
   {
-    description: "Check that the payment mod got set",
+    description: "Check that the payout mod got set",
     fn: async ({
       contracts,
       checkFn,
@@ -128,7 +128,7 @@ module.exports = [
       await checkFn({
         caller: randomSignerFn(),
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "payoutModsOf",
         args: [expectedProjectId, timeMark],
         expect: [
           [
@@ -154,7 +154,7 @@ module.exports = [
   },
   {
     description:
-      "Overriding a locked mod shouldn't work when setting payment mods",
+      "Overriding a locked mod shouldn't work when setting payout mods",
     fn: async ({
       contracts,
       executeFn,
@@ -182,9 +182,9 @@ module.exports = [
       await executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
+        fn: "setPayoutMods",
         args: [expectedProjectId, timeMark, [unlockedMod1, unlockedMod2]],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       });
 
       return { unlockedMod2 };
@@ -192,7 +192,7 @@ module.exports = [
   },
   {
     description:
-      "Overriding a locked mod with a shorter locked date shouldn't work when setting payment mods",
+      "Overriding a locked mod with a shorter locked date shouldn't work when setting payout mods",
     fn: ({
       contracts,
       executeFn,
@@ -208,7 +208,7 @@ module.exports = [
       executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
+        fn: "setPayoutMods",
         args: [
           expectedProjectId,
           timeMark,
@@ -221,11 +221,11 @@ module.exports = [
             unlockedMod2
           ]
         ],
-        revert: "ModStore::setPaymentMods: SOME_LOCKED"
+        revert: "ModStore::setPayoutMods: SOME_LOCKED"
       })
   },
   {
-    description: "Set new payment mods, making sure to include any locked mods",
+    description: "Set new payout mods, making sure to include any locked mods",
     fn: ({
       contracts,
       executeFn,
@@ -235,7 +235,7 @@ module.exports = [
       executeFn({
         caller: owner,
         contract: contracts.modStore,
-        fn: "setPaymentMods",
+        fn: "setPayoutMods",
         args: [
           expectedProjectId,
           timeMark,
@@ -250,7 +250,7 @@ module.exports = [
       })
   },
   {
-    description: "Check that the new payment mods got set correctly",
+    description: "Check that the new payout mods got set correctly",
     fn: ({
       contracts,
       checkFn,
@@ -265,7 +265,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "payoutModsOf",
         // Subtract 1 from timeMark to get the time of the configuration execution.
         args: [expectedProjectId, configurationTimeMark],
         expect: [
@@ -344,7 +344,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "payoutModsOf",
         args: [expectedProjectId, timeMark],
         expect: [
           [
@@ -374,7 +374,7 @@ module.exports = [
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.modStore,
-        fn: "paymentModsOf",
+        fn: "payoutModsOf",
         // Subtract 2 from timeMark to get the time of the configuration execution.
         args: [expectedProjectId, configurationTimeMark],
         expect: [

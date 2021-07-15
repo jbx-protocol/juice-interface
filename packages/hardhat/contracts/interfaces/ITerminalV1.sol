@@ -56,7 +56,7 @@ interface ITerminalV1 {
     event DistributeToPayoutMod(
         uint256 indexed fundingCycleId,
         uint256 indexed projectId,
-        PaymentMod mod,
+        PayoutMod mod,
         uint256 modCut,
         address caller
     );
@@ -135,7 +135,7 @@ interface ITerminalV1 {
         string calldata _uri,
         FundingCycleProperties calldata _properties,
         FundingCycleMetadata calldata _metadata,
-        PaymentMod[] memory _paymentMods,
+        PayoutMod[] memory _payoutMods,
         TicketMod[] memory _ticketMods
     ) external;
 
@@ -143,7 +143,7 @@ interface ITerminalV1 {
         uint256 _projectId,
         FundingCycleProperties calldata _properties,
         FundingCycleMetadata calldata _metadata,
-        PaymentMod[] memory _paymentMods,
+        PayoutMod[] memory _payoutMods,
         TicketMod[] memory _ticketMods
     ) external returns (uint256);
 

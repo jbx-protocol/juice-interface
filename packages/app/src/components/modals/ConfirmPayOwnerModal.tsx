@@ -35,28 +35,26 @@ export default function ConfirmPayOwnerModal({
   const usdAmount = converter.weiToUsd(weiAmount)
 
   async function pay() {
-    window.alert('Soon...')
-    return
-    // if (!contracts || !projectId || !transactor) return
+    if (!contracts || !projectId || !transactor) return
 
-    // await form.validateFields()
+    await form.validateFields()
 
-    // transactor(
-    //   contracts.TerminalV1,
-    //   'pay',
-    //   [
-    //     projectId.toHexString(),
-    //     userAddress,
-    //     form.getFieldValue('note') || '',
-    //     false,
-    //   ],
-    //   {
-    //     value: weiAmount?.toHexString(),
-    //     onConfirmed: () => {
-    //       if (onSuccess) onSuccess()
-    //     },
-    //   },
-    // )
+    transactor(
+      contracts.TerminalV1,
+      'pay',
+      [
+        projectId.toHexString(),
+        userAddress,
+        form.getFieldValue('note') || '',
+        false,
+      ],
+      {
+        value: weiAmount?.toHexString(),
+        onConfirmed: () => {
+          if (onSuccess) onSuccess()
+        },
+      },
+    )
   }
 
   const receivedTickets = weightedRate(fundingCycle, weiAmount, 'payer')

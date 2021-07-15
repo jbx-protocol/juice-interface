@@ -91,7 +91,7 @@ const tests = {
             metadata: BigNumber.from(92)
           }
         ],
-        fastforward: BigNumber.from(86399),
+        fastforward: BigNumber.from(86398),
         expectation: {
           number: 1,
           id: 1

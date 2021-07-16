@@ -78,10 +78,7 @@ export default function Navbar() {
               ?.scrollIntoView({ behavior: 'smooth' })
           }, 0)
         })}
-        {menuItem(
-          'Fluid dynamics',
-          'https://www.figma.com/file/dHsQ7Bt3ryXbZ2sRBAfBq5/Fluid-Dynamics?node-id=0%3A1',
-        )}
+        {menuItem('Docs', 'https://docs.juicebox.money/')}
       </Space>
       <Space size="middle">
         <ThemePicker />
@@ -131,10 +128,7 @@ export default function Navbar() {
                   ?.scrollIntoView({ behavior: 'smooth' })
               }, 0)
             })}
-            {menuItem(
-              'Fluid dynamics',
-              'https://www.figma.com/file/dHsQ7Bt3ryXbZ2sRBAfBq5/Fluid-Dynamics?node-id=0%3A1',
-            )}
+            {menuItem('Docs', 'https://docs.juicebox.money/')}
             <Account />
           </Space>
         </CollapsePanel>

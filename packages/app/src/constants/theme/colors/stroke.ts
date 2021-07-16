@@ -20,7 +20,7 @@ export const strokeColors: Record<ThemeOption, SemanticColors['stroke']> = {
   [ThemeOption.dark]: {
     primary: darkColors.light1,
     secondary: darkColors.light2,
-    tertiary: darkColors.grapeHint,
+    tertiary: darkColors.light3,
     success: darkColors.green,
     warn: darkColors.yellow,
     failure: darkColors.red,

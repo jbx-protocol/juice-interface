@@ -56,14 +56,14 @@ export default function Landing() {
   }
 
   const fourthCol = (header: string, body: (JSX.Element | string)[]) => (
-    <Col xs={24} md={12} lg={6} style={{ marginBottom: 60 }}>
+    <div>
       {smallHeader(header)}
       <p style={{ marginBottom: 0, marginTop: 5 }}>
         {body.map((b, i) => (
           <span key={i}>{b} </span>
         ))}
       </p>
-    </Col>
+    </div>
   )
 
   return (
@@ -169,7 +169,6 @@ export default function Landing() {
                     [ThemeOption.light]: '/assets/banana-ol.png',
                   })
                 }
-                alt="GET JUICED"
               />
             </Col>
           </Row>
@@ -179,49 +178,7 @@ export default function Landing() {
       <section
         style={{
           ...section,
-          marginTop: 0,
-          paddingTop: 20,
-          paddingBottom: 40,
-          // background: 'rgb(57, 43, 70)',
-        }}
-      >
-        <div
-          style={{
-            ...wrapper,
-          }}
-        >
-          {/* {bigHeader('How it works')} */}
-          <Row gutter={60}>
-            {fourthCol('Programmable spending', [
-              `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
-            ])}
-            {fourthCol('ERC20 community tokens', [
-              `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
-            ])}
-            {fourthCol('Redistributable surplus', [
-              `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens.`,
-            ])}
-            {fourthCol('Transparency & accountability', [
-              `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
-            ])}
-          </Row>
-        </div>
-        {/* <div
-            style={{
-              fontWeight: 600,
-              marginTop: 40,
-              textAlign: 'center',
-            }}
-          >
-            Create value for your community, crush your craft, make your money,
-            and lift up your people.<br></br>
-          </div> */}
-      </section>
-
-      <section
-        style={{
-          ...section,
-          marginTop: 0,
+          marginTop: 80,
           paddingTop: 20,
           paddingBottom: 60,
         }}
@@ -237,7 +194,7 @@ export default function Landing() {
               projects={[
                 {
                   handle: 'juicebox',
-                  uri: 'QmPUssshSn5zHRNs46btxawrS4LJyCmy2cTvrFZDaU8CFC',
+                  uri: 'QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr',
                 },
                 {
                   handle: 'tiles',
@@ -246,6 +203,70 @@ export default function Landing() {
               ]}
             />
           </div>
+        </div>
+      </section>
+
+      <section
+        style={{
+          ...section,
+          paddingTop: 60,
+          paddingBottom: 40,
+        }}
+      >
+        <div
+          style={{
+            ...wrapper,
+          }}
+        >
+          <Row align="middle">
+            <Col xs={24} sm={11}>
+              <img
+                style={{
+                  maxHeight: 480,
+                  maxWidth: '100%',
+                  objectFit: 'contain',
+                  marginBottom: 40,
+                }}
+                src="/assets/pina.png"
+              />
+            </Col>
+            <Col xs={24} sm={13}>
+              <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
+                {fourthCol('Programmable spending', [
+                  `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
+                ])}
+                {fourthCol('ERC20 community tokens', [
+                  `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
+                ])}
+                {fourthCol('Redistributable surplus', [
+                  `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens.`,
+                ])}
+                {fourthCol('Transparency & accountability', [
+                  `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
+                ])}
+                <p>
+                  Note: Juicebox is new, unaudited, and not guaranteed to work
+                  perfectly. Before spending money, do your own research:{' '}
+                  <a
+                    href="https://discord.gg/6jXrJSyDFf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ask questions
+                  </a>
+                  ,{' '}
+                  <a
+                    href="https://github.com/jbx-protocol/juicehouse"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    check out the code
+                  </a>
+                  , and understand the risks!
+                </p>
+              </div>
+            </Col>
+          </Row>
         </div>
       </section>
 
@@ -338,33 +359,33 @@ export default function Landing() {
             <Faq />
           </div>
         </div>
-
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            paddingBottom: 60,
-          }}
-        >
-          <img
-            style={{
-              height: '40vh',
-              maxHeight: 400,
-              minHeight: 300,
-              maxWidth: '100%',
-              objectFit: 'contain',
-              objectPosition: 'center',
-            }}
-            src={
-              forThemeOption &&
-              forThemeOption({
-                [ThemeOption.dark]: '/assets/orange_lady-od.png',
-                [ThemeOption.light]: '/assets/orange_lady-ol.png',
-              })
-            }
-          />
-        </div>
       </section>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <img
+          style={{
+            height: '40vh',
+            maxHeight: 400,
+            minHeight: 300,
+            maxWidth: '100%',
+            objectFit: 'contain',
+            objectPosition: 'center',
+            marginBottom: -10,
+          }}
+          src={
+            forThemeOption &&
+            forThemeOption({
+              [ThemeOption.dark]: '/assets/orange_lady-od.png',
+              [ThemeOption.light]: '/assets/orange_lady-ol.png',
+            })
+          }
+        />
+      </div>
 
       <div
         style={{

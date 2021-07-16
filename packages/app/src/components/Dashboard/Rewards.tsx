@@ -26,11 +26,15 @@ export default function Rewards({
   currentCycle,
   totalOverflow,
   isOwner,
+  ticketAddress,
+  ticketSymbol,
 }: {
   projectId: BigNumber | undefined
   currentCycle: FundingCycle | undefined
   totalOverflow: BigNumber | undefined
   isOwner: boolean | undefined
+  ticketAddress?: string
+  ticketSymbol?: string
 }) {
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
@@ -77,26 +81,8 @@ export default function Rewards({
     [projectId],
   )
 
-  const ticketAddress = useContractReader<string>({
-    contract: ContractName.TicketBooth,
-    functionName: 'ticketsOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    updateOn: useMemo(
-      () => [
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Issue',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-      ],
-      [],
-    ),
-  })
   const ticketContract = useErc20Contract(ticketAddress)
-  const ticketSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
+
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
     functionName: 'balanceOf',
@@ -264,7 +250,7 @@ export default function Rewards({
           title={
             <TooltipLabel
               label="Tokens"
-              tip="Tokens are distributed to whoever pays a project. Supporters will initially receive staked tokens, which can be redeemed for a project's overflow if it has set a funding target. Once a project has issued its ERC-20 tokens, token holders can withdraw their balance in ERC-20s, which can still be redeemed for overflow."
+              tip="Tokens are distributed to whoever pays a project. Supporters will initially receive staked tokens, and once a project has issued its ERC-20 tokens, token holders can withdraw their balance in the ERC-20. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
               style={{
                 fontWeight:
                   forThemeOption &&
@@ -278,7 +264,13 @@ export default function Rewards({
           valueRender={() => (
             <Descriptions layout="horizontal" column={1}>
               <Descriptions.Item
-                label="Total supply"
+                label={
+                  <TooltipLabel
+                    label="Supply"
+                    tip="The total number of tokens in circulation. This number will increase each time a payment is made to this project, and decrease each time tokens are burned in exchange for overflow."
+                    style={{ marginRight: 31 }}
+                  />
+                }
                 children={<div>{formatWad(totalSupply)}</div>}
               />
               <Descriptions.Item
@@ -326,11 +318,7 @@ export default function Rewards({
                         <div>
                           {formatWad(iouBalance ?? 0)}{' '}
                           {ticketsIssued && iouBalance?.gt(0) && (
-                            <Tooltip
-                              title={
-                                'Claim staked token balance in ' + ticketSymbol
-                              }
-                            >
+                            <Tooltip title={'Claim ' + ticketSymbol}>
                               {loadingConvert ? (
                                 <Loading />
                               ) : (

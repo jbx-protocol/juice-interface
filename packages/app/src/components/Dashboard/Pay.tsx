@@ -10,7 +10,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useState } from 'react'
 import { currencyName } from 'utils/currency'
-import { formatWad, parseWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
@@ -19,10 +19,12 @@ export default function Pay({
   fundingCycle,
   projectId,
   metadata,
+  ticketSymbol,
 }: {
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
   metadata: ProjectMetadata
+  ticketSymbol?: string
 }) {
   const [payIn, setPayIn] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
@@ -69,14 +71,14 @@ export default function Pay({
           <div style={{ fontSize: '.7rem' }}>
             Receive{' '}
             {weiPayAmt?.gt(0) ? (
-              formatReceivedTickets(weiPayAmt) + ' tokens'
+              formatReceivedTickets(weiPayAmt) + ' ' + ticketSymbol ?? 'tokens'
             ) : (
               <span>
                 {formatReceivedTickets(
                   (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
                     BigNumber.from(0),
                 )}{' '}
-                tokens/
+                {ticketSymbol ?? 'tokens'}/
                 <CurrencySymbol currency={payIn} />
               </span>
             )}

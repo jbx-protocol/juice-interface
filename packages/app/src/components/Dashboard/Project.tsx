@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -108,6 +109,27 @@ export default function Project({
     ),
   })
 
+  const ticketAddress = useContractReader<string>({
+    contract: ContractName.TicketBooth,
+    functionName: 'ticketsOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: useMemo(
+      () => [
+        {
+          contract: ContractName.TicketBooth,
+          eventName: 'Issue',
+          topics: projectId ? [projectId.toHexString()] : undefined,
+        },
+      ],
+      [],
+    ),
+  })
+  const ticketContract = useErc20Contract(ticketAddress)
+  const ticketSymbol = useContractReader<string>({
+    contract: ticketContract,
+    functionName: 'symbol',
+  })
+
   if (!projectId || !metadata) return null
 
   const gutter = 40
@@ -163,6 +185,8 @@ export default function Project({
               currentCycle={fundingCycle}
               totalOverflow={totalOverflow}
               isOwner={isOwner}
+              ticketAddress={ticketAddress}
+              ticketSymbol={ticketSymbol}
             />
           </div>
 

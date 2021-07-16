@@ -130,13 +130,7 @@ export default function PayoutModsList({
               <CurrencySymbol
                 currency={fundingCycle.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(
-                fundingCycle.target
-                  .mul(m.percent ?? 0)
-                  .div(1000)
-                  .div(100),
-              )}
-              )
+              {formatWad(fundingCycle.target.mul(m.percent ?? 0).div(10000))})
             </span>
           </div>
         ))

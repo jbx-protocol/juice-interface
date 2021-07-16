@@ -87,18 +87,24 @@ export default function TicketModsList({
             style={{
               display: 'flex',
               alignItems: 'baseline',
+              justifyContent: 'space-between',
+              marginBottom: 5,
             }}
           >
-            <span style={{ minWidth: 70 }}>{fromPermyriad(m.percent)}%:</span>
-            <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
-              <FormattedAddress address={m.beneficiary} />
+            <div style={{ lineHeight: 1.4 }}>
+              <div style={{ fontWeight: 600 }}>
+                <FormattedAddress address={m.beneficiary} />:
+              </div>
               {m.lockedUntil ? (
-                <div>
-                  <LockOutlined /> locked until{' '}
+                <div
+                  style={{ fontSize: '.8rem', color: colors.text.secondary }}
+                >
+                  <LockOutlined /> until{' '}
                   {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </div>
               ) : null}
-            </span>
+            </div>
+            <div>{fromPermyriad(m.percent)}%:</div>
           </div>
         ))
       ) : (
@@ -108,7 +114,7 @@ export default function TicketModsList({
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit destinations
           </Button>

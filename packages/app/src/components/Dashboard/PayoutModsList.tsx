@@ -1,7 +1,8 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
-import ProjectHandle from 'components/shared/ProjectHandle'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import ProjectHandle from 'components/shared/ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
@@ -10,7 +11,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { fromPermyriad, fromWad } from 'utils/formatNumber'
+import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 
 import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
 
@@ -83,6 +84,8 @@ export default function PayoutModsList({
     )
   }
 
+  if (!fundingCycle) return null
+
   return (
     <div>
       {mods?.length ? (
@@ -92,26 +95,48 @@ export default function PayoutModsList({
             style={{
               display: 'flex',
               alignItems: 'baseline',
+              justifyContent: 'space-between',
+              marginBottom: 5,
             }}
           >
-            <span style={{ minWidth: 70 }}>{fromPermyriad(m.percent)}%:</span>
-            <span style={{ fontWeight: 500, fontSize: '0.75rem' }}>
+            <span style={{ lineHeight: 1.4 }}>
               {m.projectId && BigNumber.from(m.projectId).gt(0) ? (
-                <span>
-                  <div>
-                    @<ProjectHandle projectId={m.projectId} /> (Beneficiary:{' '}
-                    <FormattedAddress address={m.beneficiary} />)
+                <div>
+                  <div style={{ fontWeight: 600 }}>
+                    @<ProjectHandle projectId={m.projectId} />:
                   </div>
-                </span>
+                  <div
+                    style={{ fontSize: '.8rem', color: colors.text.secondary }}
+                  >
+                    Beneficiary: <FormattedAddress address={m.beneficiary} />
+                  </div>
+                </div>
               ) : (
-                <FormattedAddress address={m.beneficiary} />
+                <div style={{ fontWeight: 600 }}>
+                  <FormattedAddress address={m.beneficiary} />:
+                </div>
               )}
               {m.lockedUntil ? (
-                <div>
-                  <LockOutlined /> locked until{' '}
+                <div
+                  style={{ fontSize: '.8rem', color: colors.text.secondary }}
+                >
+                  <LockOutlined /> until{' '}
                   {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </div>
-              ) : null}
+              ) : null}{' '}
+            </span>
+            <span style={{ fontWeight: 400 }}>
+              {fromPermyriad(m.percent)}% (
+              <CurrencySymbol
+                currency={fundingCycle.currency.toNumber() as CurrencyOption}
+              />
+              {formatWad(
+                fundingCycle.target
+                  .mul(m.percent ?? 0)
+                  .div(1000)
+                  .div(100),
+              )}
+              )
             </span>
           </div>
         ))
@@ -120,7 +145,7 @@ export default function PayoutModsList({
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit payouts
           </Button>

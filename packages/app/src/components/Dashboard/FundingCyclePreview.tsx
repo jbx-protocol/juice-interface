@@ -8,7 +8,11 @@ import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { fromPerbicent } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
-import { decodeFCMetadata, hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import {
+  decodeFCMetadata,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutModsList from './PayoutModsList'
@@ -60,8 +64,8 @@ export default function FundingCyclePreview({
         <div>
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             <TooltipLabel
-              label="Spending:"
-              tip="Any time a withdrawal is made, a percentage of the withdrawal amount will be automatically paid to each payout destination."
+              label="Withdraws to:"
+              tip="Whenever a withdrawal is made, a percentage of the amount will automatically be paid to each payout destination. The rest will go to the project owner."
             />
           </h4>
           <PayoutModsList
@@ -75,7 +79,9 @@ export default function FundingCyclePreview({
         <div>
           <h4 style={{ color: colors.text.secondary, fontWeight: 600 }}>
             <TooltipLabel
-              label={`Reserved tokens (${fromPerbicent(metadata?.reservedRate)}%):`}
+              label={`Reserved tokens (${fromPerbicent(
+                metadata?.reservedRate,
+              )}%):`}
               tip="Reserved tokens accumulate as a project is paid, based on a percentage set by the project owner. When reserved tokens are minted, a percentage of them will be distributed to each destination wallet here, with the rest going to the project owner."
             />
           </h4>

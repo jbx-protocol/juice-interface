@@ -34,18 +34,20 @@ export default function EthAddress({
   )
 
   return (
-    <Form.Item name={name} {...formItemProps}>
-      <Input
-        placeholder={'juicebox.eth / ' + constants.AddressZero}
-        type="string"
-        autoComplete="off"
-        onChange={e => addressFromEnsName(e.target.value)}
-      />
-      {address?.length && (
+    <Form.Item {...formItemProps}>
+      <Form.Item name={name}>
+        <Input
+          placeholder={'juicebox.eth / ' + constants.AddressZero}
+          type="string"
+          autoComplete="off"
+          onChange={e => addressFromEnsName(e.target.value)}
+        />
+      </Form.Item>
+      {address?.length ? (
         <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
           <CheckCircleFilled /> {address}
         </div>
-      )}
+      ) : null}
     </Form.Item>
   )
 }

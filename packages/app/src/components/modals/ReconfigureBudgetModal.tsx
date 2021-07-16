@@ -85,8 +85,8 @@ export default function ReconfigureBudgetModal({
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {
-      reservedRate: fields.reserved,
-      bondingCurveRate: fields.bondingCurveRate,
+      reservedRate: parsePerbicent(fields.reserved).toNumber(),
+      bondingCurveRate: parsePerbicent(fields.bondingCurveRate).toNumber(),
       reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
     }
 

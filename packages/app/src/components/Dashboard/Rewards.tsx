@@ -184,8 +184,8 @@ export default function Rewards({
 
     transactor(
       contracts.TicketBooth,
-      'convert',
-      [userAddress, projectId.toHexString()],
+      'unstake',
+      [userAddress, projectId.toHexString(), iouBalance?.toHexString()],
       {
         onDone: () => setLoadingConvert(false),
       },

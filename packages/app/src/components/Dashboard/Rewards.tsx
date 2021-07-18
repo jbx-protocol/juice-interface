@@ -171,14 +171,13 @@ export default function Rewards({
     .add(reservedTickets ?? 0)
 
   const sharePct = totalSupply?.gt(0)
-    ? totalBalance
-        ?.mul(100)
-        .div(totalSupply)
+    ? totalBalance?.mul(100).div(totalSupply)
     : BigNumber.from(0)
 
-  const share = sharePct?.toString() === '0' && sharePct.gt(0) 
-    ? '<1'
-    : sharePct?.toString()
+  const share =
+    sharePct?.toString() === '0' && totalBalance?.gt(0)
+      ? '<1'
+      : sharePct?.toString()
 
   function convert() {
     if (!transactor || !contracts || !userAddress || !projectId) return

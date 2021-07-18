@@ -160,6 +160,7 @@ export default function Project({
               metadata={metadata}
               fundingCycle={fundingCycle}
               projectId={projectId}
+              ticketSymbol={ticketSymbol}
             />
           </Space>
         </Col>

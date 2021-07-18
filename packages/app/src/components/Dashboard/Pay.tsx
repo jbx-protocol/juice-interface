@@ -71,7 +71,9 @@ export default function Pay({
           <div style={{ fontSize: '.7rem' }}>
             Receive{' '}
             {weiPayAmt?.gt(0) ? (
-              formatReceivedTickets(weiPayAmt) + ' ' + ticketSymbol ?? 'tokens'
+              formatReceivedTickets(weiPayAmt) +
+              ' ' +
+              (ticketSymbol ?? 'tokens')
             ) : (
               <span>
                 {formatReceivedTickets(

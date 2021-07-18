@@ -170,12 +170,15 @@ export default function Rewards({
     ?.add(unstakedTokenSupply ?? 0)
     .add(reservedTickets ?? 0)
 
-  const share = totalSupply?.gt(0)
+  const sharePct = totalSupply?.gt(0)
     ? totalBalance
         ?.mul(100)
         .div(totalSupply)
-        .toString()
-    : '0'
+    : BigNumber.from(0)
+
+  const share = sharePct?.toString() === '0' && sharePct.gt(0) 
+    ? '<1'
+    : sharePct?.toString()
 
   function convert() {
     if (!transactor || !contracts || !userAddress || !projectId) return

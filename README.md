@@ -133,7 +133,7 @@ If contracts or subgraphs have changed:
 
 ## Graph
 
-juicebox uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src. **_Production deployment is still WIP._**
+juicebox uses the Graph to query contract events from the frontend. Event handlers and mappings are defined in packages/subgraph/src.
 
 ### Running locally
 

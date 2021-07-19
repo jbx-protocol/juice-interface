@@ -86,7 +86,7 @@ export default function PayoutModsList({
   }
 
   if (!fundingCycle) return null
-console.log(mods)
+
   return (
     <div>
       {mods?.length ? (

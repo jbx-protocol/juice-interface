@@ -89,9 +89,9 @@ export default function PayoutModsList({
   return (
     <div>
       {mods?.length ? (
-        mods.map(m => (
+        mods.map((m, i) => (
           <div
-            key={m.beneficiary ?? '' + m.percent}
+            key={`${m.beneficiary ?? '' + m.percent}-${i}`}
             style={{
               display: 'flex',
               alignItems: 'baseline',

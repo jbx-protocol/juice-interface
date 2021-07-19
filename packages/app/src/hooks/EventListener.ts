@@ -66,7 +66,7 @@ export default function useEventListener<E>({
         setShouldGetHistory(false)
       })
     }
-  }, [shouldGetHistory, contract, filter])
+  }, [shouldGetHistory, filter, contract])
 
   // Setup listener for future events
   useEffect(() => {

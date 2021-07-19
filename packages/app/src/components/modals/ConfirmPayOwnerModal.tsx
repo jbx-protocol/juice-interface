@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { FundingCycle } from 'models/funding-cycle'
@@ -77,7 +78,10 @@ export default function ConfirmPayOwnerModal({
             {currencyName(0)})
           </Descriptions.Item>
           <Descriptions.Item label="Tickets for you" className="content-right">
-            {formatWad(receivedTickets)}
+            <div>{formatWad(receivedTickets)}</div>
+            <div>
+              To: <FormattedAddress address={userAddress} />
+            </div>
           </Descriptions.Item>
           <Descriptions.Item label="Tickets reserved" className="content-right">
             {formatWad(ownerTickets)}

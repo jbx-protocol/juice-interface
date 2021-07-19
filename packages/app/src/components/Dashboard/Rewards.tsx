@@ -1,6 +1,6 @@
-import { SwapOutlined } from '@ant-design/icons'
+import { SwapOutlined, ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
+import { Button, Descriptions, Divider, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -267,21 +267,23 @@ export default function Rewards({
             <Descriptions layout="horizontal" column={1}>
               <Descriptions.Item
                 label={
-                  <TooltipLabel
-                    label="Supply"
-                    tip="The total number of tokens in circulation. This number will increase each time a payment is made to this project, and decrease each time tokens are burned in exchange for overflow."
-                    style={{ marginRight: 31 }}
-                  />
+                  <div style={{ width: 100 }}>
+                    <TooltipLabel
+                      label="Supply"
+                      tip="The total number of tokens in circulation. This number will increase each time a payment is made to this project, and decrease each time tokens are burned in exchange for overflow."
+                    />
+                  </div>
                 }
                 children={<div>{formatWad(totalSupply)}</div>}
               />
               <Descriptions.Item
                 label={
-                  <TooltipLabel
-                    label="Reserved"
-                    tip="A project may reserve a percentage of tokens minted from every payment it receives, for any number of chosen addresses. Minting reserved tokens transfers them to their destined wallets."
-                    style={{ marginRight: 14 }}
-                  />
+                  <div style={{ width: 100 }}>
+                    <TooltipLabel
+                      label="Reserved"
+                      tip="A project may reserve a percentage of tokens minted from every payment it receives, for any number of chosen addresses. Minting reserved tokens transfers them to their destined wallets."
+                    />
+                  </div>
                 }
                 children={
                   <div
@@ -305,7 +307,16 @@ export default function Rewards({
                 }
               />
               <Descriptions.Item
-                label="Your balance"
+                label={
+                  <span style={{ width: 100 }}>
+                    Your{' '}
+                    {ticketSymbol ? (
+                      <TooltipLabel label={ticketSymbol} tip={ticketAddress} />
+                    ) : (
+                      'tokens'
+                    )}
+                  </span>
+                }
                 children={
                   <div
                     style={{
@@ -316,29 +327,26 @@ export default function Rewards({
                     }}
                   >
                     <div>
+                      {ticketsIssued && (
+                        <div>{formatWad(ticketsBalance ?? 0)} </div>
+                      )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {formatWad(iouBalance ?? 0)}{' '}
-                          {ticketsIssued && iouBalance?.gt(0) && (
-                            <Tooltip title={'Claim ' + ticketSymbol}>
-                              {loadingConvert ? (
-                                <Loading />
-                              ) : (
-                                <SwapOutlined
-                                  onClick={convert}
+                          {ticketsIssued &&
+                          iouBalance?.gt(0) &&
+                          loadingConvert ? (
+                            <Loading />
+                          ) : (
+                            <div style={{ color: colors.text.secondary }}>
+                              {formatWad(iouBalance ?? 0)} staked{' '}
+                              <Tooltip title={'Unstake ' + ticketSymbol}>
+                                <ExportOutlined
                                   style={{ color: colors.icon.action.primary }}
+                                  onClick={convert}
                                 />
-                              )}
-                            </Tooltip>
+                              </Tooltip>
+                            </div>
                           )}
-                        </div>
-                      )}
-                      {ticketsIssued && (
-                        <div>
-                          {formatWad(ticketsBalance ?? 0)}{' '}
-                          <Tooltip title={ticketAddress}>
-                            {ticketSymbol}
-                          </Tooltip>
                         </div>
                       )}
                     </div>

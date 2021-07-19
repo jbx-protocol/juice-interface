@@ -43,17 +43,17 @@ export default function useEventListener<E>({
   const filter = useMemo(() => {
     return (
       contract &&
-      eventName && {
+      eventName && JSON.stringify({
         address: contract.address,
         topics: [...(eventTopic ? [eventTopic] : []), ...(topics ?? [])],
       }
-    )
+    ))
   }, [contract, eventName, eventTopic, topics])
 
   // Get all events history
   useEffect(() => {
     if (shouldGetHistory && filter) {
-      contract?.queryFilter(filter).then(async initialEvents => {
+      contract?.queryFilter(JSON.parse(filter)).then(async initialEvents => {
         // Slice last (most recent) event, will be retrieved by listener
         const events = await Promise.all(
           initialEvents
@@ -66,7 +66,7 @@ export default function useEventListener<E>({
         setShouldGetHistory(false)
       })
     }
-  }, [shouldGetHistory, contract])
+  }, [shouldGetHistory, contract, filter])
 
   // Setup listener for future events
   useEffect(() => {
@@ -77,22 +77,24 @@ export default function useEventListener<E>({
 
     if (contract && filter) {
       try {
+        const filterParsed = JSON.parse(filter);
+
         const listener: Listener = async (..._events: any[]) => {
           const event = await formatEvent(_events[_events.length - 1])
 
           setEvents((events: any[]) => [event, ...events])
         }
 
-        contract.on(filter, listener)
+        contract.on(filterParsed, listener)
 
         return () => {
-          contract.off(filter, listener)
+          contract.off(filterParsed, listener)
         }
       } catch (e) {
         console.log(e)
       }
     }
-  }, [provider, startBlock, contract, eventName])
+  }, [provider, startBlock, contract, eventName, filter])
 
   return events
 }

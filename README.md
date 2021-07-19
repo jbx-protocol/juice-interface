@@ -93,7 +93,8 @@ REACT_APP_INFURA_NETWORK= # defaults to localhost in development mode
 
 `REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
 `REACT_APP_INFURA_NETWORK`: Network name (kovan, rinkeby, mainnet, localhost).
-
+`REACT_APP_PINATA_PINNER_KEY`: Your [Pinata](https://pinata.cloud/) key.
+`REACT_APP_PINATA_PINNER_SECRET`: Your [Pinata](https://pinata.cloud/) secret.
 ---
 
 ## 🔏 Web3 Providers:

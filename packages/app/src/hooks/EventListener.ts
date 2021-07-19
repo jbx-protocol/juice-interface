@@ -66,7 +66,7 @@ export default function useEventListener<E>({
         setShouldGetHistory(false)
       })
     }
-  }, [shouldGetHistory, filter, contract])
+  }, [shouldGetHistory, contract])
 
   // Setup listener for future events
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function useEventListener<E>({
         console.log(e)
       }
     }
-  }, [provider, startBlock, contract, eventName, filter])
+  }, [provider, startBlock, contract, eventName])
 
   return events
 }

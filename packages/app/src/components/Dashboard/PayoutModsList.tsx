@@ -3,6 +3,7 @@ import { Button, Modal } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
+import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
@@ -85,7 +86,7 @@ export default function PayoutModsList({
   }
 
   if (!fundingCycle) return null
-
+console.log(mods)
   return (
     <div>
       {mods?.length ? (
@@ -106,9 +107,14 @@ export default function PayoutModsList({
                     @<ProjectHandle projectId={m.projectId} />:
                   </div>
                   <div
-                    style={{ fontSize: '.8rem', color: colors.text.secondary }}
+                    style={{ fontSize: '.8rem', color: colors.text.secondary, marginLeft: 10 }}
                   >
-                    Beneficiary: <FormattedAddress address={m.beneficiary} />
+                    <TooltipLabel
+                      label={'Beneficiary:'}
+                      tip={`This address will receive any tokens minted when the recipient project gets paid.`}
+                    />
+                    &nbsp;
+                    <FormattedAddress address={m.beneficiary} />
                   </div>
                 </div>
               ) : (

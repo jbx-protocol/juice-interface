@@ -100,7 +100,7 @@ export default function Paid({
         <div>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
-              label="PAID"
+              label="BALANCE"
               tip="The total paid to the project in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
             />
           </div>

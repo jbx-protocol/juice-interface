@@ -34,7 +34,8 @@ export function useProjects({
     handle: utils.parseBytes32String(project.handle),
   })
 
-  const apiUrl = SUBGRAPHS[readNetwork.name]
+  // const apiUrl = SUBGRAPHS[readNetwork.name]
+  const apiUrl = 'https://api.studio.thegraph.com/query/2231/juicebox/0.0.14'
 
   useEffect(() => {
     if (!apiUrl) return

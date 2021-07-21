@@ -1,0 +1,62 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Projects
+    network: mainnet
+    source:
+      address: "0x9b5a4053FfBB11cA9cd858AAEE43cc95ab435418"
+      abi: Projects
+      startBlock: 12833319
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Project
+      abis:
+        - name: Projects
+          file: ./abis/Projects.json
+      eventHandlers:
+        - event: Create(indexed uint256,indexed address,indexed bytes32,string,address,address)
+          handler: handleProjectCreate
+        - event: SetHandle(indexed uint256,indexed bytes32,address)
+          handler: handleSetHandle
+        - event: SetUri(indexed uint256,string,address)
+          handler: handleSetUri
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: TerminalV1
+    network: mainnet
+    source:
+      address: "0xd569D3CCE55b71a8a3f3C418c329A66e5f714431"
+      abi: TerminalV1
+      startBlock: 12833319
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PayEvent
+        - PrintPremineEvent
+        - TapEvent
+        - RedeemEvent
+        - PrintReservesEvent
+      abis:
+        - name: TerminalV1
+          file: ./abis/TerminalV1.json
+      eventHandlers:
+        - event: Pay(indexed uint256,indexed uint256,indexed address,uint256,string,address)
+          handler: handlePay
+        - event: PrintPreminedTickets(indexed uint256,indexed address,uint256,uint256,string,address)
+          handler: handlePrintPreminedTickets
+        - event: PrintReserveTickets(indexed uint256,indexed uint256,indexed address,uint256,uint256,address)
+          handler: handlePrintReserveTickets
+        - event: Tap(indexed uint256,indexed uint256,indexed address,uint256,uint256,uint256,uint256,uint256,address)
+          handler: handleTap
+        - event: Redeem(indexed address,indexed address,indexed uint256,uint256,uint256,address)
+          handler: handleRedeem
+        - event: Configure(indexed uint256,indexed uint256,address)
+          handler: handleConfigure
+      file: ./src/mapping.ts

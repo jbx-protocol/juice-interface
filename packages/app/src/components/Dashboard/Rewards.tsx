@@ -2,6 +2,7 @@ import { SwapOutlined, ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Divider, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import Loading from 'components/shared/Loading'
@@ -47,7 +48,6 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
-  const [loadingPrint, setLoadingPrint] = useState<boolean>()
   const [loadingConvert, setLoadingConvert] = useState<boolean>()
 
   const metadata = decodeFCMetadata(currentCycle?.metadata)
@@ -133,7 +133,7 @@ export default function Rewards({
       [ticketsUpdateOn],
     ),
   })
-  const claimableOverflow = useContractReader<BigNumber>({
+  const rewardAmount = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
     functionName: 'claimableOverflowOf',
     args:
@@ -166,6 +166,35 @@ export default function Rewards({
   })
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
+
+  const maxClaimable = useContractReader<BigNumber>({
+    contract: ContractName.TerminalV1,
+    functionName: 'claimableOverflowOf',
+    args:
+      userAddress && projectId
+        ? [userAddress, projectId.toHexString(), totalBalance?.toHexString()]
+        : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId && userAddress
+          ? [
+              {
+                contract: ContractName.TerminalV1,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString(), userAddress],
+              },
+              {
+                contract: ContractName.TerminalV1,
+                eventName: 'Redeem',
+                topics: [projectId.toHexString(), userAddress],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
+
   const totalSupply = stakedTokenSupply
     ?.add(unstakedTokenSupply ?? 0)
     .add(reservedTickets ?? 0)
@@ -194,23 +223,8 @@ export default function Rewards({
     )
   }
 
-  function print() {
-    if (!transactor || !contracts || !projectId) return
-
-    setLoadingPrint(true)
-
-    transactor(
-      contracts.TerminalV1,
-      'printReservedTickets',
-      [projectId.toHexString()],
-      {
-        onDone: () => setLoadingPrint(false),
-      },
-    )
-  }
-
   function redeem() {
-    if (!transactor || !contracts || !claimableOverflow) return
+    if (!transactor || !contracts || !rewardAmount) return
 
     setLoadingRedeem(true)
 
@@ -219,7 +233,7 @@ export default function Rewards({
     if (!redeemWad || !projectId) return
 
     // Arbitrary discrete value (wei) subtracted
-    const minAmount = claimableOverflow?.sub(1e12).toHexString()
+    const minAmount = rewardAmount?.sub(1e12).toHexString()
 
     transactor(
       contracts.TerminalV1,
@@ -275,36 +289,6 @@ export default function Rewards({
                   </div>
                 }
                 children={<div>{formatWad(totalSupply)}</div>}
-              />
-              <Descriptions.Item
-                label={
-                  <div style={{ width: 100 }}>
-                    <TooltipLabel
-                      label="Reserved"
-                      tip="A project may reserve a percentage of tokens minted from every payment it receives, for any number of chosen addresses. Minting reserved tokens transfers them to their destined wallets."
-                    />
-                  </div>
-                }
-                children={
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      width: '100%',
-                    }}
-                  >
-                    <div>{formatWad(reservedTickets) || 0}</div>
-                    <Button
-                      loading={loadingPrint}
-                      size="small"
-                      onClick={print}
-                      disabled={!reservedTickets?.gt(0)}
-                    >
-                      Mint
-                    </Button>
-                  </div>
-                }
               />
               <Descriptions.Item
                 label={
@@ -394,12 +378,16 @@ export default function Rewards({
         width={540}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <div>Balance: {formatWad(totalBalance ?? 0)} tickets</div>
+          <div>
+            Balance: {formatWad(totalBalance ?? 0)} {ticketSymbol ?? 'tokens'}
+          </div>
+          <p>
+            Currently worth: <CurrencySymbol currency={0} />
+            {formatWad(maxClaimable)}
+          </p>
           <p>
             Tokens can be redeemed for a project's overflow according to the
-            bonding curve rate of the current funding cycle. For example, if the
-            rate is 70%, there's 100 ETH overflow available, and 100 tokens in
-            circulation, 10 tokens could be redeemed for 7 ETH.
+            bonding curve rate of the current funding cycle.
           </p>
           {redeemDisabled ? (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
@@ -421,8 +409,7 @@ export default function Rewards({
                 }
                 onChange={val => setRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(claimableOverflow) || '--'}{' '}
-              ETH
+              You will receive minimum {formatWad(rewardAmount) || '--'} ETH
             </div>
           )}
         </Space>

@@ -41,7 +41,7 @@ export default function TicketModsList({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useLayoutEffect(() => setEditingMods(editableMods), [])
+  useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
   function setMods() {
     if (
@@ -92,7 +92,7 @@ export default function TicketModsList({
             }}
           >
             <div style={{ lineHeight: 1.4 }}>
-              <div style={{ fontWeight: 600 }}>
+              <div style={{ fontWeight: 500 }}>
                 <FormattedAddress address={m.beneficiary} />:
               </div>
               {m.lockedUntil ? (
@@ -104,7 +104,7 @@ export default function TicketModsList({
                 </div>
               ) : null}
             </div>
-            <div>{fromPermyriad(m.percent)}%:</div>
+            <div>{fromPermyriad(m.percent)}%</div>
           </div>
         ))
       ) : (
@@ -116,7 +116,7 @@ export default function TicketModsList({
       {fundingCycle && projectId?.gt(0) && isOwner ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
-            Edit destinations
+            Edit token receivers
           </Button>
         </div>
       ) : null}

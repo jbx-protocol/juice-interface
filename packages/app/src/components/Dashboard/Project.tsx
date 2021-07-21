@@ -173,6 +173,7 @@ export default function Project({
             fundingCycle={fundingCycle}
             payoutMods={payoutMods}
             ticketMods={ticketMods}
+            ticketSymbol={ticketSymbol}
             isOwner={isOwner}
             balanceInCurrency={balanceInCurrency}
             showCurrentDetail={showCurrentDetail}

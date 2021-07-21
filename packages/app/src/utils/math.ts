@@ -28,5 +28,5 @@ export const feeForAmount = (
 ) => {
   if (!adminFeePercent || !target) return
 
-  return target.mul(adminFeePercent).div(1000)
+  return target.mul(adminFeePercent).div(200)
 }

@@ -7,6 +7,8 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
+import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
@@ -46,7 +48,12 @@ export default function PayoutModsList({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useLayoutEffect(() => setEditingMods(editableMods), [])
+  const adminFeePercent = useContractReader<BigNumber>({
+    contract: ContractName.TerminalV1,
+    functionName: 'fee',
+  })
+
+  useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
   function setMods() {
     if (
@@ -103,11 +110,15 @@ export default function PayoutModsList({
             <span style={{ lineHeight: 1.4 }}>
               {m.projectId && BigNumber.from(m.projectId).gt(0) ? (
                 <div>
-                  <div style={{ fontWeight: 600 }}>
+                  <div style={{ fontWeight: 500 }}>
                     @<ProjectHandle projectId={m.projectId} />:
                   </div>
                   <div
-                    style={{ fontSize: '.8rem', color: colors.text.secondary, marginLeft: 10 }}
+                    style={{
+                      fontSize: '.8rem',
+                      color: colors.text.secondary,
+                      marginLeft: 10,
+                    }}
                   >
                     <TooltipLabel
                       label={'Beneficiary:'}
@@ -118,7 +129,7 @@ export default function PayoutModsList({
                   </div>
                 </div>
               ) : (
-                <div style={{ fontWeight: 600 }}>
+                <div style={{ fontWeight: 500 }}>
                   <FormattedAddress address={m.beneficiary} />:
                 </div>
               )}
@@ -136,7 +147,14 @@ export default function PayoutModsList({
               <CurrencySymbol
                 currency={fundingCycle.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(fundingCycle.target.mul(m.percent ?? 0).div(10000))})
+              {formatWad(
+                fundingCycle.target
+                  .mul(m.percent ?? 0)
+                  .div(10000)
+                  .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
+                  .div(200),
+              )}
+              )
             </span>
           </div>
         ))

@@ -11,7 +11,8 @@ import React, { useContext, useState } from 'react'
 import FundingCyclePreview from './FundingCyclePreview'
 import FundingHistory from './FundingHistory'
 import QueuedFundingCycle from './QueuedFundingCycle'
-import Tappable from './Tappable'
+import ReservedTokens from './ReservedTokens'
+import Spending from './Spending'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 
@@ -20,6 +21,7 @@ export default function FundingCycles({
   fundingCycle,
   payoutMods,
   ticketMods,
+  ticketSymbol,
   balanceInCurrency,
   showCurrentDetail,
   isOwner,
@@ -28,6 +30,7 @@ export default function FundingCycles({
   fundingCycle: FundingCycle | undefined
   payoutMods: PayoutMod[] | undefined
   ticketMods: TicketMod[] | undefined
+  ticketSymbol: string | undefined
   balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
   isOwner?: boolean
@@ -63,36 +66,62 @@ export default function FundingCycles({
   switch (selectedTab) {
     case 'current':
       tabContent = (
-        <div>
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            <Tappable
-              projectId={projectId}
+        <div style={{ position: 'relative' }}>
+          <CardSection padded style={{ marginBottom: 10 }}>
+            <Spending
               fundingCycle={fundingCycle}
+              payoutMods={payoutMods}
+              projectId={projectId}
+              isOwner={isOwner}
               balanceInCurrency={balanceInCurrency}
             />
-            <FundingCyclePreview
+          </CardSection>
+          <CardSection padded style={{ marginBottom: 10 }}>
+            <ReservedTokens
               fundingCycle={fundingCycle}
-              showDetail={showCurrentDetail}
-              payoutMods={payoutMods}
               ticketMods={ticketMods}
+              ticketSymbol={ticketSymbol}
               projectId={projectId}
               isOwner={isOwner}
             />
-          </Space>
+          </CardSection>
+          <CardSection padded>
+            <FundingCyclePreview
+              fundingCycle={fundingCycle}
+              showDetail={showCurrentDetail}
+            />
+          </CardSection>
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: -1,
+              left: 10,
+              right: -10,
+              top: 10,
+              bottom: 0,
+              background: colors.background.l1,
+            }}
+          ></div>
         </div>
       )
       break
     case 'upcoming':
       tabContent = (
-        <QueuedFundingCycle
-          isOwner={isOwner}
-          projectId={projectId}
-          currentCycle={fundingCycle}
-        />
+        <CardSection padded>
+          <QueuedFundingCycle
+            isOwner={isOwner}
+            projectId={projectId}
+            currentCycle={fundingCycle}
+          />
+        </CardSection>
       )
       break
     case 'history':
-      tabContent = <FundingHistory startId={fundingCycle?.previous} />
+      tabContent = (
+        <CardSection padded>
+          <FundingHistory startId={fundingCycle?.previous} />
+        </CardSection>
+      )
       break
   }
 
@@ -124,7 +153,7 @@ export default function FundingCycles({
           {tab('history')}
         </Space>
       </div>
-      <CardSection padded>{tabContent}</CardSection>
+      <div>{tabContent}</div>
     </div>
   )
 }

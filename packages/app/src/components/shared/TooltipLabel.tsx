@@ -1,6 +1,5 @@
 import { TooltipProps } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties } from 'react'
 
 import TooltipIcon from './TooltipIcon'
 
@@ -15,8 +14,6 @@ export default function TooltipLabel({
   placement?: TooltipProps['placement']
   style?: CSSProperties
 }) {
-  const { colors } = useContext(ThemeContext).theme
-
   return (
     <span style={style}>
       <span style={{ marginRight: tip ? 5 : 0 }}>{label}</span>

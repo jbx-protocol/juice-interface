@@ -8,13 +8,13 @@ import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
-import { PayoutMod, TicketMod } from 'models/mods'
+import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
-import PayoutModsList from './PayoutModsList'
 
+import PayoutModsList from './PayoutModsList'
 import { smallHeaderStyle } from './styles'
 
 export default function Spending({
@@ -97,7 +97,7 @@ export default function Spending({
               <span
                 style={{
                   fontSize: '1rem',
-                  color: colors.text.header,
+                  fontWeight: 500,
                 }}
               >
                 <CurrencySymbol

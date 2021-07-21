@@ -1,0 +1,67 @@
+type Project @entity {
+  id: ID!
+  handle: String!
+  owner: Bytes!
+  createdAt: BigInt!
+  uri: String
+}
+
+type PayEvent @entity {
+  id: ID!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  caller: Bytes!
+  beneficiary: Bytes!
+  amount: BigInt!
+  note: String
+}
+
+type PrintPremineEvent @entity {
+  id: ID!
+  projectId: BigInt!
+  beneficiary: Bytes!
+  amount: BigInt!
+  currency: BigInt!
+  memo: String
+  caller: Bytes!
+}
+
+type TapEvent @entity {
+  id: ID!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  beneficiary: Bytes!
+  amount: BigInt!
+  currency: BigInt!
+  netTransferAmount: BigInt!
+  beneficiaryTransferAmount: BigInt!
+  govFeeAmount: BigInt!
+  caller: Bytes!
+}
+
+type RedeemEvent @entity {
+  id: ID!
+  holder: Bytes!
+  beneficiary: Bytes!
+  projectId: BigInt!
+  amount: BigInt!
+  returnAmount: BigInt!
+  caller: Bytes!
+}
+
+type PrintReservesEvent @entity {
+  id: ID!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  beneficiary: Bytes!
+  count: BigInt!
+  beneficiaryTicketAmount: BigInt!
+  caller: Bytes!
+}
+
+type ConfigureEvent @entity {
+  id: ID!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  caller: Bytes!
+}

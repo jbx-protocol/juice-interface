@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import { subgraphUrl } from 'constants/subgraphs'
 import { ThemeContext } from 'contexts/themeContext'
 import { PayEvent } from 'models/events/pay-event'
@@ -109,9 +110,13 @@ export default function PayEvents({
                     color: colors.text.secondary,
                     marginTop: '.3rem',
                     lineHeight: contentLineHeight,
+                    textAlign: 'right',
                   }}
                 >
-                  {event.caller}
+                  <FormattedAddress
+                    address={event.beneficiary}
+                    shortened={false}
+                  />
                 </div>
               </div>
             </div>

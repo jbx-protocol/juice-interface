@@ -83,6 +83,7 @@ export default function ProjectCard({
               <div
                 style={{
                   marginTop: 2,
+                  maxHeight: 20,
                   color: colors.text.tertiary,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',

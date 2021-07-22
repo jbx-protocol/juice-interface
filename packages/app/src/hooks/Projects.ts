@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { readNetwork } from 'constants/networks'
-import { SUBGRAPHS } from 'constants/subgraphs'
+import { subgraphUrl } from 'constants/subgraphs'
 import { utils } from 'ethers'
 import { ProjectInfo } from 'models/project-info'
 import { useEffect, useState } from 'react'
@@ -34,24 +33,25 @@ export function useProjects({
     handle: utils.parseBytes32String(project.handle),
   })
 
-  // const apiUrl = SUBGRAPHS[readNetwork.name]
-  const apiUrl = 'https://api.studio.thegraph.com/query/2231/juicebox/0.0.14'
-
   useEffect(() => {
-    if (!apiUrl) return
-
     axios
       .post(
-        apiUrl,
+        subgraphUrl,
         {
           query: formatGraphQuery({
             entity: 'project',
             keys: ['handle', 'owner', 'createdAt', 'uri'],
             first: pageSize,
             skip: pageNumber ? pageNumber * pageSize : undefined,
-            orderDirection: 'desc',
+            orderDirection: 'asc',
             orderBy: 'createdAt',
-            where: owner ? { key: 'owner_contains', value: owner } : undefined,
+            where: owner
+              ? {
+                  key: 'owner',
+                  operator: 'contains',
+                  value: owner,
+                }
+              : undefined,
           }),
         },
         { headers: { 'Content-Type': 'application/json' } },

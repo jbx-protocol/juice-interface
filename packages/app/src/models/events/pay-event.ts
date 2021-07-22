@@ -1,10 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
-
 export interface PayEvent {
-  fundingCycleId: BigNumber
-  projectId: BigNumber
+  id: string
+  fundingCycleId: string
+  projectId: string
+  caller: string
   beneficiary: string
-  amount: BigNumber
+  amount: string
   note: string
-  operator: string
+  timestamp: string
 }

@@ -40,7 +40,7 @@ export default function FundingCyclePreview({
     if (isRecurring(fundingCycle)) {
       headerText = isEnded
         ? `#${fundingCycle.number.add(1).toString()} starts ${formattedEndTime}`
-        : `${daysLeft} day until #${fundingCycle.number.add(1).toString()}`
+        : `${daysLeft} days until #${fundingCycle.number.add(1).toString()}`
     } else headerText = daysLeft + 'd left'
   }
 

@@ -1,12 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { subgraphUrl } from 'constants/subgraphs'
 import { ThemeContext } from 'contexts/themeContext'
-import useEventListener from 'hooks/EventListener'
-import { ContractName } from 'models/contract-name'
 import { PayEvent } from 'models/events/pay-event'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad, toUint256 } from 'utils/formatNumber'
+import { formatWad } from 'utils/formatNumber'
+import { formatGraphQuery } from 'utils/graph'
 
 export default function PayEvents({
   projectId,
@@ -14,13 +15,42 @@ export default function PayEvents({
   projectId: BigNumber | undefined
 }) {
   const { colors } = useContext(ThemeContext).theme
+  const [events, setEvents] = useState<PayEvent[]>()
 
-  const events = useEventListener<PayEvent>({
-    contractName: ContractName.TerminalV1,
-    eventName: 'Pay',
-    topics: projectId ? [undefined, toUint256(projectId)] : undefined,
-    includeHistory: true,
-  })
+  useEffect(() => {
+    axios
+      .post(
+        subgraphUrl,
+        {
+          query: formatGraphQuery<PayEvent>({
+            entity: 'payEvent',
+            keys: [
+              'amount',
+              'beneficiary',
+              'caller',
+              'fundingCycleId',
+              'id',
+              'note',
+              'timestamp',
+            ],
+            first: 100,
+            orderDirection: 'desc',
+            orderBy: 'timestamp',
+            where: projectId
+              ? {
+                  key: 'projectId',
+                  value: projectId.toString(),
+                }
+              : undefined,
+          }),
+        },
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+      .then((res: AxiosResponse<{ data: { payEvents: PayEvent[] } }>) =>
+        setEvents(res.data?.data?.payEvents),
+      )
+      .catch(err => console.log('Error getting pay events', err))
+  }, [projectId])
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -28,6 +58,7 @@ export default function PayEvents({
   }
 
   const contentLineHeight = 1.5
+
   return (
     <div>
       {events?.length ? (
@@ -70,7 +101,7 @@ export default function PayEvents({
                     color: colors.text.secondary,
                   }}
                 >
-                  {formatDate(event.timestamp * 1000)}
+                  {formatDate(BigNumber.from(event.timestamp).mul(1000))}
                 </div>
                 <div
                   style={{
@@ -80,7 +111,7 @@ export default function PayEvents({
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {event.operator}
+                  {event.caller}
                 </div>
               </div>
             </div>

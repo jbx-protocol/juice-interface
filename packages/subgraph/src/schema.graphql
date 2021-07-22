@@ -1,7 +1,0 @@
-type Project @entity {
-  id: ID!
-  handle: String!
-  owner: Bytes!
-  createdAt: BigInt!
-  uri: String!
-}

@@ -108,9 +108,7 @@ export default function TicketModsList({
           </div>
         ))
       ) : (
-        <span style={{ color: colors.text.secondary }}>
-          No destinations set
-        </span>
+        <span style={{ color: colors.text.secondary }}>Project owner</span>
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (

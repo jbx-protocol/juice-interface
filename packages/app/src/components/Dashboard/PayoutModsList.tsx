@@ -159,7 +159,7 @@ export default function PayoutModsList({
           </div>
         ))
       ) : (
-        <span style={{ color: colors.text.secondary }}>No payouts set</span>
+        <span style={{ color: colors.text.secondary }}>Project owner</span>
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (

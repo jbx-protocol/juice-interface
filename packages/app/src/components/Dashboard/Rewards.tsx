@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Divider, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import Loading from 'components/shared/Loading'
@@ -265,8 +266,18 @@ export default function Rewards({
         <Statistic
           title={
             <TooltipLabel
-              label="Tokens"
-              tip="Tokens are distributed to whoever pays a project. Supporters will initially receive staked tokens, and once a project has issued its ERC-20 tokens, token holders can withdraw their balance in the ERC-20. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+              label={
+                <span>
+                  {ticketSymbol ? ticketSymbol + ' tokens' : 'Tokens'}
+                </span>
+              }
+              tip={`${
+                ticketSymbol ? ticketSymbol + ' ERC20' : 'tokens'
+              } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
+                ticketAddress && ticketAddress !== constants.AddressZero
+                  ? 'Address: ' + ticketAddress
+                  : ''
+              }`}
               style={{
                 fontWeight:
                   forThemeOption &&
@@ -280,27 +291,11 @@ export default function Rewards({
           valueRender={() => (
             <Descriptions layout="horizontal" column={1}>
               <Descriptions.Item
-                label={
-                  <div style={{ width: 100 }}>
-                    <TooltipLabel
-                      label="Supply"
-                      tip="The total number of tokens in circulation. This number will increase each time a payment is made to this project, and decrease each time tokens are burned in exchange for overflow."
-                    />
-                  </div>
-                }
+                label={<div style={{ width: 110 }}>Total supply</div>}
                 children={<div>{formatWad(totalSupply)}</div>}
               />
               <Descriptions.Item
-                label={
-                  <span style={{ width: 100 }}>
-                    Your{' '}
-                    {ticketSymbol ? (
-                      <TooltipLabel label={ticketSymbol} tip={ticketAddress} />
-                    ) : (
-                      'tokens'
-                    )}
-                  </span>
-                }
+                label={<div style={{ width: 110 }}>Your balance</div>}
                 children={
                   <div
                     style={{
@@ -312,7 +307,11 @@ export default function Rewards({
                   >
                     <div>
                       {ticketsIssued && (
-                        <div>{formatWad(ticketsBalance ?? 0)} </div>
+                        <div>
+                          {ticketsBalance?.gt(0)
+                            ? formatWad(ticketsBalance ?? 0)
+                            : '0 in your wallet'}{' '}
+                        </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>

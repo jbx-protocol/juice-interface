@@ -3,6 +3,7 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext } from 'react'
+import { formatDate } from 'utils/formatDate'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
@@ -31,10 +32,14 @@ export default function FundingCyclePreview({
 
   let headerText = ''
 
+  const formattedEndTime = formatDate(
+    fundingCycle.start.add(fundingCycle.duration.mul(secsPerDay)).mul(1000),
+  )
+
   if (hasFundingTarget(fundingCycle)) {
     if (isRecurring(fundingCycle)) {
       headerText = isEnded
-        ? `ended`
+        ? `#${fundingCycle.number.add(1).toString()} starts ${formattedEndTime}`
         : `${daysLeft} day until #${fundingCycle.number.add(1).toString()}`
     } else headerText = daysLeft + 'd left'
   }

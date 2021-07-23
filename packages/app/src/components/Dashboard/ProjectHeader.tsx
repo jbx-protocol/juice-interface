@@ -64,7 +64,12 @@ export default function ProjectHeader({
               {metadata?.infoUri && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={metadata?.infoUri}
+                  href={
+                    metadata.infoUri.startsWith('http://') ||
+                    metadata.infoUri.startsWith('https://')
+                      ? metadata.infoUri
+                      : 'http://' + metadata.infoUri
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -161,7 +161,7 @@ export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
 export const ipfsCidUrl = (hash: string) =>
-  'https://gateway.pinata.cloud/ipfs/' + hash
+  'https://jbx.mypinata.cloud/ipfs/' + hash
 
 export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
 

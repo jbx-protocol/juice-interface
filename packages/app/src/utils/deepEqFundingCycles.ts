@@ -13,7 +13,7 @@ export const deepEqFundingCycles = (a?: FundingCycle, b?: FundingCycle) => {
     a?.id.eq(b?.id ?? -1) &&
     a?.metadata.eq(b?.metadata ?? -1) &&
     a?.number.eq(b?.number ?? -1) &&
-    a?.previous.eq(b?.previous ?? -1) &&
+    a?.basedOn.eq(b?.basedOn ?? -1) &&
     a?.projectId.eq(b?.projectId ?? -1) &&
     a?.start.eq(b?.start ?? -1) &&
     a?.tapped.eq(b?.tapped ?? -1) &&

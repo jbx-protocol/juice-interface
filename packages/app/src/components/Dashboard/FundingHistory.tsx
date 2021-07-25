@@ -41,7 +41,7 @@ export default function FundingHistory({
         if (
           !cycle ||
           !cycleNumber ||
-          cycleNumbers.includes(cycle.previous) ||
+          cycleNumbers.includes(cycle.basedOn) ||
           cycle.id.eq(0)
         )
           return
@@ -49,7 +49,7 @@ export default function FundingHistory({
         setFundingCycles([...fundingCycles, cycle])
         setCycleNumbers([
           ...cycleNumbers,
-          ...(cycle.previous.toNumber() > 0 ? [cycle.previous] : []),
+          ...(cycle.basedOn.toNumber() > 0 ? [cycle.basedOn] : []),
         ])
       },
       [cycleNumber, cycleNumbers, fundingCycles],

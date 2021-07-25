@@ -4,7 +4,7 @@ export interface FundingCycle {
   id: BigNumber
   projectId: BigNumber
   number: BigNumber
-  previous: BigNumber
+  basedOn: BigNumber
   target: BigNumber
   currency: BigNumber // 0 ETH, 1 USD
   start: BigNumber

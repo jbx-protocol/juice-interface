@@ -261,6 +261,7 @@ export default function ProjectTicketMods({
         >
           <FormItems.EthAddress
             name="beneficiary"
+            defaultValue={form.getFieldValue('beneficiary')}
             formItemProps={{
               label: 'Beneficiary',
               extra: 'The address that should receive the tokens.',

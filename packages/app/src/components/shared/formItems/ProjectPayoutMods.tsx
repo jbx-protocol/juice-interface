@@ -387,6 +387,7 @@ export default function ProjectPayoutMods({
           {editingModType === 'address' ? (
             <FormItems.EthAddress
               name="beneficiary"
+              defaultValue={form.getFieldValue('beneficiary')}
               formItemProps={{
                 label: 'Address',
                 rules: [

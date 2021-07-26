@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import Loading from 'components/shared/Loading'
 import { subgraphUrl } from 'constants/subgraphs'
 import { ThemeContext } from 'contexts/themeContext'
 import { PayEvent } from 'models/events/pay-event'
@@ -229,22 +230,26 @@ export default function ProjectActivity({
     ),
   })
 
-  const sortedActivity: DisplayActivity[] = useMemo(
+  const sortedActivity: DisplayActivity[] | undefined = useMemo(
     () =>
-      [
-        ...(payEvents?.map(formatPayEvent) ?? []),
-        ...(redeemEvents?.map(formatRedeemEvent) ?? []),
-      ].sort((a, b) =>
-        BigNumber.from(a.timestamp).lt(BigNumber.from(b.timestamp)) ? 1 : -1,
-      ),
+      payEvents && redeemEvents
+        ? [
+            ...(payEvents?.map(formatPayEvent) ?? []),
+            ...(redeemEvents?.map(formatRedeemEvent) ?? []),
+          ].sort((a, b) =>
+            BigNumber.from(a.timestamp).lt(BigNumber.from(b.timestamp))
+              ? 1
+              : -1,
+          )
+        : undefined,
     [payEvents, redeemEvents],
   )
 
   return (
     <div>
-      {sortedActivity?.length ? (
+      {sortedActivity && sortedActivity.length ? (
         sortedActivity.map(item => <div key={item.id}>{item.element}</div>)
-      ) : (
+      ) : sortedActivity?.length === 0 ? (
         <div
           style={{
             color: colors.text.secondary,
@@ -254,6 +259,8 @@ export default function ProjectActivity({
         >
           No activity yet
         </div>
+      ) : (
+        <Loading />
       )}
     </div>
   )

@@ -17,13 +17,13 @@ export default function ReservedTokens({
   projectId,
   fundingCycle,
   ticketMods,
-  ticketSymbol,
+  tokenSymbol,
   isOwner,
 }: {
   projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
   ticketMods: TicketMod[] | undefined
-  ticketSymbol: string | undefined
+  tokenSymbol: string | undefined
   isOwner?: boolean
 }) {
   const { userAddress, transactor, contracts } = useContext(UserContext)
@@ -98,7 +98,7 @@ export default function ReservedTokens({
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
-              Reserved {ticketSymbol ?? 'tokens'} (
+              Reserved {tokenSymbol ?? 'tokens'} (
               {fromPerbicent(metadata?.reservedRate)}%)
             </h4>
           }

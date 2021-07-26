@@ -19,12 +19,12 @@ export default function Pay({
   fundingCycle,
   projectId,
   metadata,
-  ticketSymbol,
+  tokenSymbol,
 }: {
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
   metadata: ProjectMetadata
-  ticketSymbol?: string
+  tokenSymbol?: string
 }) {
   const [payIn, setPayIn] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
@@ -73,14 +73,14 @@ export default function Pay({
             {weiPayAmt?.gt(0) ? (
               formatReceivedTickets(weiPayAmt) +
               ' ' +
-              (ticketSymbol ?? 'tokens')
+              (tokenSymbol ?? 'tokens')
             ) : (
               <span>
                 {formatReceivedTickets(
                   (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
                     BigNumber.from(0),
                 )}{' '}
-                {ticketSymbol ?? 'tokens'}/
+                {tokenSymbol ?? 'tokens'}/
                 <CurrencySymbol currency={payIn} />
               </span>
             )}

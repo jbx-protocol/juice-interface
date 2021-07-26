@@ -14,8 +14,8 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import Pay from './Pay'
-import PayEvents from './PayEvents'
 import PrintPremined from './PrintPremined'
+import ProjectActivity from './ProjectActivity'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
 
@@ -125,7 +125,7 @@ export default function Project({
     ),
   })
   const ticketContract = useErc20Contract(ticketAddress)
-  const ticketSymbol = useContractReader<string>({
+  const tokenSymbol = useContractReader<string>({
     contract: ticketContract,
     functionName: 'symbol',
   })
@@ -160,7 +160,7 @@ export default function Project({
               metadata={metadata}
               fundingCycle={fundingCycle}
               projectId={projectId}
-              ticketSymbol={ticketSymbol}
+              tokenSymbol={tokenSymbol}
             />
           </Space>
         </Col>
@@ -173,7 +173,7 @@ export default function Project({
             fundingCycle={fundingCycle}
             payoutMods={payoutMods}
             ticketMods={ticketMods}
-            ticketSymbol={ticketSymbol}
+            tokenSymbol={tokenSymbol}
             isOwner={isOwner}
             balanceInCurrency={balanceInCurrency}
             showCurrentDetail={showCurrentDetail}
@@ -188,11 +188,11 @@ export default function Project({
               totalOverflow={totalOverflow}
               isOwner={isOwner}
               ticketAddress={ticketAddress}
-              ticketSymbol={ticketSymbol}
+              tokenSymbol={tokenSymbol}
             />
           </div>
 
-          <PayEvents projectId={projectId} />
+          <ProjectActivity projectId={projectId} tokenSymbol={tokenSymbol} />
         </Col>
       </Row>
     </div>

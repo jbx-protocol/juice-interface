@@ -29,14 +29,14 @@ export default function Rewards({
   totalOverflow,
   isOwner,
   ticketAddress,
-  ticketSymbol,
+  tokenSymbol,
 }: {
   projectId: BigNumber | undefined
   currentCycle: FundingCycle | undefined
   totalOverflow: BigNumber | undefined
   isOwner: boolean | undefined
   ticketAddress?: string
-  ticketSymbol?: string
+  tokenSymbol?: string
 }) {
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
@@ -268,11 +268,11 @@ export default function Rewards({
             <TooltipLabel
               label={
                 <span>
-                  {ticketSymbol ? ticketSymbol + ' tokens' : 'Tokens'}
+                  {tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
                 </span>
               }
               tip={`${
-                ticketSymbol ? ticketSymbol + ' ERC20' : 'tokens'
+                tokenSymbol ? tokenSymbol + ' ERC20' : 'tokens'
               } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
                 ticketAddress && ticketAddress !== constants.AddressZero
                   ? 'Address: ' + ticketAddress
@@ -322,7 +322,7 @@ export default function Rewards({
                           ) : (
                             <div style={{ color: colors.text.secondary }}>
                               {formatWad(iouBalance ?? 0)} staked{' '}
-                              <Tooltip title={'Unstake ' + ticketSymbol}>
+                              <Tooltip title={'Unstake ' + tokenSymbol}>
                                 <ExportOutlined
                                   style={{ color: colors.icon.action.primary }}
                                   onClick={convert}
@@ -362,7 +362,7 @@ export default function Rewards({
       </Space>
 
       <Modal
-        title={`Redeem ${ticketSymbol ?? 'Tokens'}`}
+        title={`Redeem ${tokenSymbol ?? 'Tokens'}`}
         visible={redeemModalVisible}
         onOk={() => {
           redeem()
@@ -378,7 +378,7 @@ export default function Rewards({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>
-            Balance: {formatWad(totalBalance ?? 0)} {ticketSymbol ?? 'tokens'}
+            Balance: {formatWad(totalBalance ?? 0)} {tokenSymbol ?? 'tokens'}
           </div>
           <p>
             Currently worth: <CurrencySymbol currency={0} />

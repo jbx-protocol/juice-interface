@@ -21,7 +21,7 @@ export default function FundingCycles({
   fundingCycle,
   payoutMods,
   ticketMods,
-  ticketSymbol,
+  tokenSymbol,
   balanceInCurrency,
   showCurrentDetail,
   isOwner,
@@ -30,7 +30,7 @@ export default function FundingCycles({
   fundingCycle: FundingCycle | undefined
   payoutMods: PayoutMod[] | undefined
   ticketMods: TicketMod[] | undefined
-  ticketSymbol: string | undefined
+  tokenSymbol: string | undefined
   balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
   isOwner?: boolean
@@ -80,7 +80,7 @@ export default function FundingCycles({
             <ReservedTokens
               fundingCycle={fundingCycle}
               ticketMods={ticketMods}
-              ticketSymbol={ticketSymbol}
+              tokenSymbol={tokenSymbol}
               projectId={projectId}
               isOwner={isOwner}
             />

@@ -1,4 +1,4 @@
-export type SubgraphEntity = 'project' | 'payEvent'
+export type SubgraphEntity = 'project' | 'payEvent' | 'redeemEvent'
 
 // https://thegraph.com/docs/graphql-api#filtering
 export const formatGraphQuery = <Entity>(opts: {

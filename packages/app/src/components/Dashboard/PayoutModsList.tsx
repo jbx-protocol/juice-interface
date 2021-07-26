@@ -143,18 +143,26 @@ export default function PayoutModsList({
               ) : null}{' '}
             </span>
             <span style={{ fontWeight: 400 }}>
-              {fromPermyriad(m.percent)}% (
-              <CurrencySymbol
-                currency={fundingCycle.currency.toNumber() as CurrencyOption}
-              />
-              {formatWad(
-                fundingCycle.target
-                  .mul(m.percent ?? 0)
-                  .div(10000)
-                  .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
-                  .div(200),
+              {fromPermyriad(m.percent)}%
+              {!fundingCycle.target.eq(constants.MaxUint256) && (
+                <>
+                  {' '}
+                  (
+                  <CurrencySymbol
+                    currency={
+                      fundingCycle.currency.toNumber() as CurrencyOption
+                    }
+                  />
+                  {formatWad(
+                    fundingCycle.target
+                      .mul(m.percent ?? 0)
+                      .div(10000)
+                      .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
+                      .div(200),
+                  )}
+                  )
+                </>
               )}
-              )
             </span>
           </div>
         ))

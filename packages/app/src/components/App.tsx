@@ -21,7 +21,10 @@ function App() {
 
   const networkName = readNetwork.name
 
-  const supportedNetworks: NetworkName[] = [NetworkName.kovan]
+  const supportedNetworks: NetworkName[] = [
+    NetworkName.kovan,
+    NetworkName.rinkeby,
+  ]
 
   useLayoutEffect(() => {
     if (!signerNetwork) return
@@ -63,7 +66,7 @@ function App() {
             <h2>Connect wallet to {networkName}</h2>
             <div>Or, go to:</div>
             {supportedNetworks
-              .filter(n => !window.location.hostname.includes(n))
+              .filter(n => process.env.REACT_APP_INFURA_NETWORK !== n)
               .map(_n => (
                 <a key={_n} href={`https://${_n}.juicebox.money`}>
                   {_n}.juicebox.money

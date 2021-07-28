@@ -1,1 +1,1 @@
-module.exports = ["Active14DaysFundingCycleBallot","FundingCycles","Governance","TerminalV1","ModStore","OperatorStore","Prices","Projects","TerminalDirectory","TicketBooth"];
+module.exports = ["Active7DaysFundingCycleBallot","FundingCycles","Governance","ModStore","OperatorStore","Prices","Projects","TerminalDirectory","TerminalV1","TicketBooth"];

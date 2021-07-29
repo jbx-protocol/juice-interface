@@ -6,13 +6,11 @@ import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 
-import FundingCyclePreview from './FundingCyclePreview'
+import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingHistory from './FundingHistory'
 import QueuedFundingCycle from './QueuedFundingCycle'
-import ReservedTokens from './ReservedTokens'
-import Spending from './Spending'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 
@@ -66,43 +64,16 @@ export default function FundingCycles({
   switch (selectedTab) {
     case 'current':
       tabContent = (
-        <div style={{ position: 'relative' }}>
-          <CardSection padded style={{ marginBottom: 10 }}>
-            <Spending
-              fundingCycle={fundingCycle}
-              payoutMods={payoutMods}
-              projectId={projectId}
-              isOwner={isOwner}
-              balanceInCurrency={balanceInCurrency}
-            />
-          </CardSection>
-          <CardSection padded style={{ marginBottom: 10 }}>
-            <ReservedTokens
-              fundingCycle={fundingCycle}
-              ticketMods={ticketMods}
-              tokenSymbol={tokenSymbol}
-              projectId={projectId}
-              isOwner={isOwner}
-            />
-          </CardSection>
-          <CardSection padded>
-            <FundingCyclePreview
-              fundingCycle={fundingCycle}
-              showDetail={showCurrentDetail}
-            />
-          </CardSection>
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: -1,
-              left: 10,
-              right: -10,
-              top: 10,
-              bottom: 0,
-              background: colors.background.l1,
-            }}
-          ></div>
-        </div>
+        <CurrentFundingCycle
+          projectId={projectId}
+          fundingCycle={fundingCycle}
+          payoutMods={payoutMods}
+          ticketMods={ticketMods}
+          balanceInCurrency={balanceInCurrency}
+          showCurrentDetail={showCurrentDetail}
+          isOwner={isOwner}
+          tokenSymbol={tokenSymbol}
+        />
       )
       break
     case 'upcoming':

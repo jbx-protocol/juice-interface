@@ -134,18 +134,12 @@ export default function Spending({
           </div>
         </div>
 
-        <div>
-          <TooltipLabel
-            label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
-            tip="Available funds are distributed according to any payouts below. The rest will go to the project owner."
-          />
-          <PayoutModsList
-            mods={payoutMods}
-            fundingCycle={fundingCycle}
-            projectId={projectId}
-            isOwner={isOwner}
-          />
-        </div>
+        <PayoutModsList
+          mods={payoutMods}
+          fundingCycle={fundingCycle}
+          projectId={projectId}
+          isOwner={isOwner}
+        />
       </Space>
 
       <Modal

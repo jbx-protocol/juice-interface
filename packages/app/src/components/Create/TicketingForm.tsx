@@ -52,7 +52,7 @@ export default function TicketingForm({
           formItemProps={{
             label: 'Allocate reserved tokens (optional)',
             extra:
-              "Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets. Reserved tokens will be distributed as soon as they're minted.",
+              "Automatically distribute a portion of your project's reserved tokens to other Juicebox projects or ETH wallets.",
           }}
         />
         <Form.Item>

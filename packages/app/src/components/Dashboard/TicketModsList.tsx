@@ -122,7 +122,7 @@ export default function TicketModsList({
       {fundingCycle ? (
         <Modal
           visible={modalVisible}
-          title="Edit payouts"
+          title="Edit reserved token receivers"
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)

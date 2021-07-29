@@ -19,12 +19,14 @@ export default function ReservedTokens({
   ticketMods,
   tokenSymbol,
   isOwner,
+  hideActions,
 }: {
   projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
   ticketMods: TicketMod[] | undefined
   tokenSymbol: string | undefined
   isOwner?: boolean
+  hideActions?: boolean
 }) {
   const { userAddress, transactor, contracts } = useContext(UserContext)
   const [loadingPrint, setLoadingPrint] = useState<boolean>()
@@ -104,18 +106,20 @@ export default function ReservedTokens({
           }
           tip="A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time."
         />
-        <div>
-          <span>{formatWad(reservedTickets) || 0}</span>
-          <Button
-            style={{ marginLeft: 10 }}
-            loading={loadingPrint}
-            size="small"
-            onClick={print}
-            disabled={!reservedTickets?.gt(0)}
-          >
-            Distribute
-          </Button>
-        </div>
+        {!hideActions && (
+          <div>
+            <span>{formatWad(reservedTickets) || 0}</span>
+            <Button
+              style={{ marginLeft: 10 }}
+              loading={loadingPrint}
+              size="small"
+              onClick={print}
+              disabled={!reservedTickets?.gt(0)}
+            >
+              Distribute
+            </Button>
+          </div>
+        )}
       </div>
 
       <TicketModsList

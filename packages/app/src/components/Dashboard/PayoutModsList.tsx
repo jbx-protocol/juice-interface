@@ -190,6 +190,19 @@ export default function PayoutModsList({
           confirmLoading={loading}
           width={720}
         >
+          <div>
+            <p>
+              Payouts let you commit portions of every withdrawal to other
+              Ethereum wallets or Juicebox projects. Use this to pay
+              contributors, charities, other projects you depend on, or anyone
+              else. Payouts will be distributed automatically whenever a
+              withdrawal is made from your project.
+            </p>
+            <p>
+              Payouts are optional. By default, all unallocated revenue will be
+              withdrawable to the project owner's wallet.
+            </p>
+          </div>
           <ProjectPayoutMods
             mods={editingMods}
             lockedMods={lockedMods}

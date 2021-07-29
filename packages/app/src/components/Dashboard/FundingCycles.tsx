@@ -107,13 +107,12 @@ export default function FundingCycles({
       break
     case 'upcoming':
       tabContent = (
-        <CardSection padded>
-          <QueuedFundingCycle
-            isOwner={isOwner}
-            projectId={projectId}
-            currentCycle={fundingCycle}
-          />
-        </CardSection>
+        <QueuedFundingCycle
+          isOwner={isOwner}
+          projectId={projectId}
+          currentCycle={fundingCycle}
+          tokenSymbol={tokenSymbol}
+        />
       )
       break
     case 'history':

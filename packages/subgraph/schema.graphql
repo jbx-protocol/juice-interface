@@ -15,6 +15,7 @@ type PayEvent @entity {
   amount: BigInt!
   note: String
   timestamp: BigInt!
+  txHash: Bytes!
 }
 
 type PrintPremineEvent @entity {
@@ -26,6 +27,7 @@ type PrintPremineEvent @entity {
   memo: String
   caller: Bytes!
   timestamp: BigInt!
+  txHash: Bytes!
 }
 
 type TapEvent @entity {
@@ -40,6 +42,7 @@ type TapEvent @entity {
   govFeeAmount: BigInt!
   caller: Bytes!
   timestamp: BigInt!
+  txHash: Bytes!
 }
 
 type RedeemEvent @entity {
@@ -51,6 +54,7 @@ type RedeemEvent @entity {
   returnAmount: BigInt!
   caller: Bytes!
   timestamp: BigInt!
+  txHash: Bytes!
 }
 
 type PrintReservesEvent @entity {
@@ -62,6 +66,7 @@ type PrintReservesEvent @entity {
   beneficiaryTicketAmount: BigInt!
   caller: Bytes!
   timestamp: BigInt!
+  txHash: Bytes!
 }
 
 type ConfigureEvent @entity {
@@ -70,4 +75,11 @@ type ConfigureEvent @entity {
   projectId: BigInt!
   caller: Bytes!
   timestamp: BigInt!
+  txHash: Bytes!
+}
+
+type ProjectStat @entity {
+  id: ID!
+  totalPaid: BigInt!
+  totalRedeemed: BigInt!
 }

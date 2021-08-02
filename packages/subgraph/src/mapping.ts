@@ -1,10 +1,13 @@
+import { BigInt } from "@graphprotocol/graph-ts";
+
 import { Create, SetHandle, SetUri } from "../generated/Projects/Projects";
 import {
-  PayEvent,
-  PrintReservesEvent,
-  PrintPremineEvent,
-  Project,
   ConfigureEvent,
+  PayEvent,
+  PrintPremineEvent,
+  PrintReservesEvent,
+  Project,
+  ProjectStat,
   RedeemEvent,
   TapEvent,
 } from "../generated/schema";
@@ -35,6 +38,11 @@ export function handleProjectCreate(event: Create): void {
   project.createdAt = event.block.timestamp;
   project.uri = event.params.uri;
   project.save();
+
+  let stat = new ProjectStat(event.params.projectId.toHexString());
+  stat.totalPaid = new BigInt(0);
+  stat.totalRedeemed = new BigInt(0);
+  stat.save();
 }
 
 export function handleSetHandle(event: SetHandle): void {
@@ -50,17 +58,25 @@ export function handleSetUri(event: SetUri): void {
 }
 
 export function handlePay(event: Pay): void {
+  let timestamp = event.block.timestamp;
+  let caller = event.params.caller;
+
   let pay = new PayEvent(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
   pay.amount = event.params.amount;
   pay.beneficiary = event.params.beneficiary;
-  pay.caller = event.params.caller;
+  pay.caller = caller;
   pay.fundingCycleId = event.params.fundingCycleId;
   pay.projectId = event.params.projectId;
   pay.note = event.params.note;
-  pay.timestamp = event.block.timestamp;
+  pay.timestamp = timestamp;
+  pay.txHash = event.transaction.hash;
   pay.save();
+
+  let stat = ProjectStat.load(event.params.projectId.toHexString());
+  stat.totalPaid = stat.totalPaid.plus(event.params.amount);
+  stat.save();
 }
 
 export function handlePrintPreminedTickets(event: PrintPreminedTickets): void {
@@ -74,6 +90,7 @@ export function handlePrintPreminedTickets(event: PrintPreminedTickets): void {
   printPremine.memo = event.params.memo;
   printPremine.projectId = event.params.projectId;
   printPremine.timestamp = event.block.timestamp;
+  printPremine.txHash = event.transaction.hash;
   printPremine.save();
 }
 
@@ -91,21 +108,30 @@ export function handleTap(event: Tap): void {
   tapEvent.netTransferAmount = event.params.netTransferAmount;
   tapEvent.projectId = event.params.projectId;
   tapEvent.timestamp = event.block.timestamp;
+  tapEvent.txHash = event.transaction.hash;
   tapEvent.save();
 }
 
 export function handleRedeem(event: Redeem): void {
+  let timestamp = event.block.timestamp;
+  let caller = event.params.caller;
+
   let redeemEvent = new RedeemEvent(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
   redeemEvent.amount = event.params.amount;
   redeemEvent.beneficiary = event.params.beneficiary;
-  redeemEvent.caller = event.params.caller;
+  redeemEvent.caller = caller;
   redeemEvent.holder = event.params.holder;
   redeemEvent.returnAmount = event.params.returnAmount;
   redeemEvent.projectId = event.params._projectId;
-  redeemEvent.timestamp = event.block.timestamp;
+  redeemEvent.timestamp = timestamp;
+  redeemEvent.txHash = event.transaction.hash;
   redeemEvent.save();
+
+  let stat = ProjectStat.load(event.params._projectId.toHexString());
+  stat.totalRedeemed = stat.totalRedeemed.plus(event.params.amount);
+  stat.save();
 }
 
 export function handlePrintReserveTickets(event: PrintReserveTickets): void {
@@ -113,12 +139,14 @@ export function handlePrintReserveTickets(event: PrintReserveTickets): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
   printReserveEvent.beneficiary = event.params.beneficiary;
-  printReserveEvent.beneficiaryTicketAmount = event.params.beneficiaryTicketAmount;
+  printReserveEvent.beneficiaryTicketAmount =
+    event.params.beneficiaryTicketAmount;
   printReserveEvent.caller = event.params.caller;
   printReserveEvent.count = event.params.count;
   printReserveEvent.fundingCycleId = event.params.fundingCycleId;
   printReserveEvent.projectId = event.params.projectId;
   printReserveEvent.timestamp = event.block.timestamp;
+  printReserveEvent.txHash = event.transaction.hash;
   printReserveEvent.save();
 }
 
@@ -130,6 +158,7 @@ export function handleConfigure(event: Configure): void {
   configureEvent.fundingCycleId = event.params.fundingCycleId;
   configureEvent.projectId = event.params.projectId;
   configureEvent.timestamp = event.block.timestamp;
+  configureEvent.txHash = event.transaction.hash;
   configureEvent.save();
 }
 

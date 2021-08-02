@@ -89,11 +89,17 @@ export default function ProjectHeader({
         <div
           style={{
             height: headerHeight,
+            display: 'flex',
+            alignItems: 'baseline',
             marginLeft: 20,
           }}
         >
+          <div style={{ color: colors.text.tertiary }}>
+            ID: {projectId.toNumber()}
+          </div>
           {isOwner && (
             <Button
+              style={{ marginLeft: 20 }}
               onClick={() => setEditProjectModalVisible(true)}
               icon={<SettingOutlined />}
               type="text"

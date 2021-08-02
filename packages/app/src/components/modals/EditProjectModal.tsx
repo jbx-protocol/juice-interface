@@ -16,6 +16,7 @@ import {
 
 export type EditProjectFormFields = {
   name: string
+  description: string
   infoUrl: string
   handle: string
   logoUrl: string
@@ -48,6 +49,7 @@ export default function EditProjectModal({
       handle: handle,
       infoUrl: metadata?.infoUri,
       logoUrl: metadata?.logoUri,
+      description: metadata?.description
     })
   }, [handle, form, metadata])
 
@@ -60,6 +62,7 @@ export default function EditProjectModal({
 
     const uploadedMetadata = await uploadProjectMetadata({
       name: fields.name,
+      description: fields.description,
       logoUri: fields.logoUrl,
       infoUri: fields.infoUrl,
     })
@@ -123,6 +126,7 @@ export default function EditProjectModal({
           formItemProps={{ rules: [{ required: true }] }}
         />
         <FormItems.ProjectLink name="infoUrl" />
+        <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLogoUrl
           name="logoUrl"
           initialUrl={form.getFieldValue('logoUrl')}

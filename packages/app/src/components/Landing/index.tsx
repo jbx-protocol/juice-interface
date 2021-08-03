@@ -239,7 +239,7 @@ export default function Landing() {
                   `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
                 ])}
                 {fourthCol('Redistributable surplus', [
-                  `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens.`,
+                  `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you.`,
                 ])}
                 {fourthCol('Transparency & accountability', [
                   `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,

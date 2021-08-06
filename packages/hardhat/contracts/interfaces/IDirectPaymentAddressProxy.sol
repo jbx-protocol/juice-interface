@@ -12,7 +12,7 @@ interface IDirectPaymentAddressProxy {
         uint256 value
     );
 
-    event TransferTickets(
+    event ProxyTransferTickets(
         address indexed directPaymentAddressProxy,
         address indexed owner,
         address indexed beneficiary,

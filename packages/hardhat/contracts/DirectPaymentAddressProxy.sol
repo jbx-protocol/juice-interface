@@ -33,29 +33,35 @@ contract DirectPaymentAddressProxy is IDirectPaymentAddressProxy, Ownable {
         projectId = _projectId;
     }
 
-    // Receive funds and transfer them to the direct payment address.
-    receive() external payable {
-        payable(address(directPaymentAddress)).transfer(msg.value);
+    // Receive funds and hold them in the contract until they are ready to be transferred.
+    receive() external payable { 
+      // Do nothing.
+    }
 
-        emit ProxyForward(
+    // Transfers all funds held in the contract to the direct payment address.
+    function tap() external override {
+        uint256 amount = address(this).balance;
+
+        payable(address(directPaymentAddress)).transfer(amount);
+
+        emit ProxyTap(
             msg.sender,
             address(directPaymentAddress),
-            msg.value
-        );        
+            amount
+        );     
     }
 
     /** 
       @notice Transfers tickets held by this contract to a beneficiary.
       @param _beneficiary Address of the beneficiary tickets will be transferred to.
     */
-    function transferTickets(address _beneficiary) external override onlyOwner {
+    function transferTickets(address _beneficiary, uint256 _amount) external override onlyOwner {
         address from = address(this);
-        uint256 amount = ticketBooth.stakedBalanceOf(from, projectId);
 
         ticketBooth.transfer(
             from,
             projectId,
-            amount,
+            _amount,
             _beneficiary
         );
 
@@ -64,7 +70,7 @@ contract DirectPaymentAddressProxy is IDirectPaymentAddressProxy, Ownable {
             owner(),
             _beneficiary,
             projectId,
-            amount
+            _amount
         );            
     }
 

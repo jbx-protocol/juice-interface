@@ -6,8 +6,8 @@ import "./ITicketBooth.sol";
 
 interface IDirectPaymentAddressProxy {
 
-    event ProxyForward(
-        address indexed payer,
+    event ProxyTap(
+        address indexed sender,
         address indexed directPaymentAddress,
         uint256 value
     );
@@ -26,6 +26,8 @@ interface IDirectPaymentAddressProxy {
 
     function projectId() external returns (uint256);
 
-    function transferTickets(address _beneficiary) external;
+    function tap() external;
+
+    function transferTickets(address _beneficiary, uint256 _amount) external;
 
 }

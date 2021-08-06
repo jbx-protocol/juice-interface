@@ -59,7 +59,7 @@ contract DirectPaymentAddressProxy is IDirectPaymentAddressProxy, Ownable {
             _beneficiary
         );
 
-        emit TransferTickets(
+        emit ProxyTransferTickets(
             from,
             owner(),
             _beneficiary,

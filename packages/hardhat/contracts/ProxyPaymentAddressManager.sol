@@ -63,7 +63,7 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
         );
 
         // Create the proxy payment address contract.
-        ProxyPaymentAddress proxyPaymentAddress =  new ProxyPaymentAddress(
+        ProxyPaymentAddress proxyPaymentAddress = new ProxyPaymentAddress(
             terminalDirectory,
             ticketBooth,
             _projectId,

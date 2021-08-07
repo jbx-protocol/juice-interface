@@ -75,7 +75,7 @@
     "deploy-OEkovan": "hardhat run scripts/deployAll.js --network OEkovan",
     "deploy-rinkeby": "hardhat run scripts/deployAll.js --network rinkeby",
     "deploy-mainnet": "hardhat run scripts/deployAll.js --network mainnet",
-    "deploy-proxy-address-manager": "hardhat run scripts/deployProxyAddressManager.js --network mainnet",
+    "deploy-proxy-address-manager": "hardhat run scripts/deployProxyPaymentAddressManager.js --network mainnet",
     "hardhat-publish": "hardhat run scripts/publish.js",
     "watch": "node scripts/watch.js",
     "accounts": "hardhat accounts",

@@ -2,7 +2,7 @@
 //
 // Usage:
 // cd packages/hardhat
-// npx hardhat run scripts/deployProxyAddressManager.js --network mainnet
+// npx hardhat run scripts/deployProxyPaymentAddressManager.js --network mainnet
 
 /* eslint no-use-before-define: "warn" */
 const chalk = require("chalk");

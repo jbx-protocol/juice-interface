@@ -16,7 +16,7 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
     // --- private stored properties --- //
 
     // A mapping from project id to proxy payment addresses.
-    mapping(uint256 => IProxyPaymentAddress[]) private _proxyPaymentAddressesOf;
+    mapping(uint256 => IProxyPaymentAddress[]) private _addressesOf;
 
     // --- public immutable stored properties --- //
 
@@ -42,13 +42,13 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
 
       @return A list of proxy payment addresses for the specified project ID.
     */
-    function proxyPaymentAddressesOf(uint256 _projectId)
+    function addressesOf(uint256 _projectId)
         external
         view
         override
         returns (IProxyPaymentAddress[] memory)
     {
-        return _proxyPaymentAddressesOf[_projectId];
+        return _addressesOf[_projectId];
     }    
 
     /** 
@@ -56,12 +56,13 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
       @param _projectId ID of the project funds will be fowarded to.
       @param _memo Memo that will be attached withdrawal transactions.
     */
-    function deployProxyPaymentAddress(uint256 _projectId, string memory _memo) external override {
+    function deploy(uint256 _projectId, string memory _memo) external override {
         require(
             _projectId > 0,
             "ProxyPaymentAddressManager::deployProxyPaymentAddress: ZERO_PROJECT"
         );
 
+        // Create the proxy payment address contract.
         ProxyPaymentAddress proxyPaymentAddress =  new ProxyPaymentAddress(
             terminalDirectory,
             ticketBooth,
@@ -69,10 +70,11 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
             _memo
         );
 
+        // Transfer ownership to the caller of this tx.
         proxyPaymentAddress.transferOwnership(msg.sender);
 
-        // Deploy the contract and push it to the list.
-        _proxyPaymentAddressesOf[_projectId].push(proxyPaymentAddress);
+        // Push it to the list for the corresponding project.
+        _addressesOf[_projectId].push(proxyPaymentAddress);
 
         emit DeployProxyPaymentAddress(_projectId, _memo, msg.sender);
     }

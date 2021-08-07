@@ -101,7 +101,7 @@ module.exports = [
       executeFn({
         caller: deployer,
         contract: contracts.proxyPaymentAddressManager,
-        fn: "deployProxyPaymentAddress",
+        fn: "deploy",
         args: [expectedProjectId, randomStringFn()],
       }),
   },
@@ -114,7 +114,7 @@ module.exports = [
       local: { expectedProjectId },
     }) => {
       const [proxyPaymentAddress] =
-        await contracts.proxyPaymentAddressManager.proxyPaymentAddressesOf(
+        await contracts.proxyPaymentAddressManager.addressesOf(
           expectedProjectId
         );
       // An account that will be used to make payments.

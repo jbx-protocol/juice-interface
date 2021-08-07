@@ -6,18 +6,19 @@ import "./ITicketBooth.sol";
 
 interface IProxyPaymentAddress {
 
+    event ProxyPay(
+        address indexed sender,
+        uint256 value
+    );
+
     event ProxyTap(
         address indexed sender,
         uint256 value
     );
 
-    /// TODO: fix indexing.
     event ProxyTransferTickets(
-        address indexed proxyPaymentAddress,
-        address indexed terminalDirectory,
-        address indexed owner,
-        address beneficiary,
-        uint256 projectId,
+        address indexed beneficiary,
+        uint256 indexed projectId,
         uint256 amount
     );
 

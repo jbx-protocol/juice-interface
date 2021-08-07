@@ -7,19 +7,18 @@ const tests = {
       fn: ({ deployer, addrs }) => ({
         caller: deployer,
         beneficiary: addrs[0].address,
-        prefereClaimedTickets: true
-      })
-    }
-  ]
+        prefereClaimedTickets: true,
+      }),
+    },
+  ],
 };
 
-module.exports = function() {
-  describe("Success cases", function() {
-    tests.success.forEach(function(successTest) {
-      it(successTest.description, async function() {
-        const { caller, beneficiary, prefereClaimedTickets } = successTest.fn(
-          this
-        );
+module.exports = function () {
+  describe("Success cases", function () {
+    tests.success.forEach(function (successTest) {
+      it(successTest.description, async function () {
+        const { caller, beneficiary, prefereClaimedTickets } =
+          successTest.fn(this);
 
         // Execute the transaction.
         const tx = await this.contract

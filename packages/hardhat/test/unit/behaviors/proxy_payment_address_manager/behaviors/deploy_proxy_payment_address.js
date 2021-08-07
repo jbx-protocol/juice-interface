@@ -52,7 +52,7 @@ module.exports = function () {
 
             // Expect an event to have been emitted.
             await expect(tx)
-              .to.emit(this.contract, "DeployProxyPaymentAddress")
+              .to.emit(this.contract, "Deploy")
               .withArgs(op.projectId, op.memo, caller.address);
           })
         );

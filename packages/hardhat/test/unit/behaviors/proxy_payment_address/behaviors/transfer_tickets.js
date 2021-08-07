@@ -38,8 +38,13 @@ module.exports = function () {
 
         // Expect an event to have been emitted.
         await expect(tx)
-          .to.emit(this.contract, "ProxyTransferTickets")
-          .withArgs(beneficiary.address, this.projectId, amount);
+          .to.emit(this.contract, "TransferTickets")
+          .withArgs(
+            caller.address,
+            beneficiary.address,
+            this.projectId,
+            amount
+          );
       });
     });
   });

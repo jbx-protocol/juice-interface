@@ -45,7 +45,7 @@ module.exports = function () {
 
             // Expect an event to have been emitted.
             await expect(tx)
-              .to.emit(this.contract, "ProxyPay")
+              .to.emit(this.contract, "Receive")
               .withArgs(op.sender.address, op.value);
           })
         );
@@ -70,7 +70,7 @@ module.exports = function () {
 
         // Expect an event to have been emitted.
         await expect(tapTx)
-          .to.emit(this.contract, "ProxyTap")
+          .to.emit(this.contract, "Tap")
           .withArgs(caller.address, expectedBalance);
       });
     });

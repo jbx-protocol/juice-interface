@@ -43,7 +43,7 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
 
     // Receive funds and hold them in the contract until they are ready to be transferred.
     receive() external payable { 
-        emit ProxyPay(
+        emit Receive(
             msg.sender,
             msg.value
         );
@@ -60,7 +60,7 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
             /*_preferUnstakedTickets=*/false
         );
 
-        emit ProxyTap(
+        emit Tap(
             msg.sender,
             amount
         ); 
@@ -78,7 +78,8 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
             _beneficiary
         );
 
-        emit ProxyTransferTickets(
+        emit TransferTickets(
+            msg.sender,
             _beneficiary,
             projectId,
             _amount

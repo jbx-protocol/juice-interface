@@ -7,7 +7,7 @@ import "./IProxyPaymentAddress.sol";
 
 interface IProxyPaymentAddressManager {
 
-    event DeployProxyPaymentAddress(
+    event Deploy(
         uint256 indexed projectId,
         string memo,
         address indexed caller
@@ -22,6 +22,6 @@ interface IProxyPaymentAddressManager {
         view
         returns (IProxyPaymentAddress[] memory);    
 
-    function deploy(uint256 _projectId, string memory _memo) external;
+    function deploy(uint256 _projectId, string memory _memo) external returns(address);
 
 }

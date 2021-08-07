@@ -43,7 +43,7 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
 
         // Deploy the contract and push it to the list.
         _proxyPaymentAddressesOf[_projectId].push(
-            new ProxyPaymentAddress(this, _projectId, memo)
+            new ProxyPaymentAddress(terminalDirectory, ticketBooth, _projectId, memo)
         );
 
         emit DeployProxyPaymentAddress(_projectId, memo, msg.sender);

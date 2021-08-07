@@ -31,8 +31,7 @@ const tests = {
         caller: deployer,
         projectId: 0,
         memo: "some-memo",
-        revert:
-          "ProxyPaymentAddressManager::deployProxyPaymentAddress: ZERO_PROJECT",
+        revert: "ProxyPaymentAddressManager::deploy: ZERO_PROJECT",
       }),
     },
   ],

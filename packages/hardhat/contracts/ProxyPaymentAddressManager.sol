@@ -59,7 +59,7 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
     function deploy(uint256 _projectId, string memory _memo) external override {
         require(
             _projectId > 0,
-            "ProxyPaymentAddressManager::deployProxyPaymentAddress: ZERO_PROJECT"
+            "ProxyPaymentAddressManager::deploy: ZERO_PROJECT"
         );
 
         // Create the proxy payment address contract.

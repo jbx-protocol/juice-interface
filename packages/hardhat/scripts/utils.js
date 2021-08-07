@@ -6,80 +6,6 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const { JsonRpcProvider } = require("@ethersproject/providers");
 
-async function deploy({
-  rpcUrl,
-  contractName,
-  ovm = false,
-  mnemonicFile = "./mnemonic.txt",
-  _args = [],
-  overrides = {},
-  libraries = {},
-}) {
-  console.log(
-    ` 🛰 ${ovm ? `OVM` : `EVM`} Deploying: ${contractName} on ${rpcUrl}`
-  );
-
-  const contractArgs = _args || [];
-
-  const optimisticProvider = new JsonRpcProvider(rpcUrl);
-  const mnemonic = fs.readFileSync(mnemonicFile).toString().trim();
-  const newWallet = new ethers.Wallet.fromMnemonic(mnemonic); // , optimisticProvider)
-  const signerProvider = newWallet.connect(optimisticProvider);
-
-  let contractArtifacts;
-
-  if (ovm === true) {
-    contractArtifacts = await l2ethers.getContractFactory(
-      contractName,
-      signerProvider
-    );
-  } else {
-    contractArtifacts = await ethers.getContractFactory(
-      contractName,
-      signerProvider
-    );
-  }
-
-  const deployed = await contractArtifacts.deploy(...contractArgs, overrides);
-
-  const receipt = await deployed.deployTransaction.wait();
-  console.log({ receipt });
-
-  const encoded = abiEncodeArgs(deployed, contractArgs);
-  fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
-
-  let extraGasInfo = "";
-  if (deployed && deployed.deployTransaction) {
-    const gasUsed = deployed.deployTransaction.gasLimit.mul(
-      deployed.deployTransaction.gasPrice
-    );
-    extraGasInfo = "(" + utils.formatEther(gasUsed) + " ETH)";
-  }
-
-  // await tenderly.persistArtifacts({
-  //   name: contractName,
-  //   address: deployed.address,
-  // });
-  const checkCode = async (_address) => {
-    const code = await optimisticProvider.getCode(_address);
-    console.log({ code });
-  };
-
-  await checkCode(deployed.address);
-  console.log(
-    " 📄",
-    chalk.cyan(contractName),
-    "deployed to:",
-    chalk.magenta(deployed.address),
-    chalk.grey(extraGasInfo)
-  );
-
-  if (!encoded || encoded.length <= 2) return deployed;
-  fs.writeFileSync(`artifacts/${contractName}.args`, encoded.slice(2));
-
-  return deployed;
-}
-
 // abi encodes contract arguments
 // useful when you want to manually verify the contracts
 // for example, on Etherscan
@@ -99,26 +25,29 @@ const abiEncodeArgs = (deployed, contractArgs) => {
   return encoded;
 };
 
-// checks if it is a Solidity file
-const isSolidity = (fileName) =>
-  fileName.indexOf(".sol") >= 0 &&
-  fileName.indexOf(".swp") < 0 &&
-  fileName.indexOf(".swap") < 0;
+const deploy = async (contractName, _args) => {
+  console.log("🚀", chalk.cyan(contractName), "deploying...");
 
-const readArgsFile = (contractName) => {
-  let args = [];
-  try {
-    const argsFile = `./contracts/${contractName}.args`;
-    if (!fs.existsSync(argsFile)) return args;
-    args = JSON.parse(fs.readFileSync(argsFile));
-  } catch (e) {
-    console.log(e);
-  }
-  return args;
+  const contractArgs = _args || [];
+  const contractArtifacts = await ethers.getContractFactory(contractName);
+  const deployed = await contractArtifacts.deploy(...contractArgs);
+  await deployed.deployTransaction.wait();
+
+  const encoded = abiEncodeArgs(deployed, contractArgs);
+  fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
+
+  console.log(
+    chalk.green("   Done!"),
+    "Deployed at:",
+    chalk.magenta(deployed.address)
+  );
+
+  if (!encoded || encoded.length <= 2) return deployed;
+  fs.writeFileSync(`artifacts/${contractName}.args`, encoded.slice(2));
+
+  return deployed;
 };
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 exports.deploy = deploy;
+exports.abiEncodeArgs = abiEncodeArgs;
+exports.multisigAddress = "0xAF28bcB48C40dBC86f52D459A6562F658fc94B1e";

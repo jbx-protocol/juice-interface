@@ -6,55 +6,11 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const ethUsdPriceFeed = require("../constants/eth_usd_price_feed");
 const publish = require("./publish");
+const juice = require("./utils");
+
 /* eslint no-use-before-define: "warn" */
 
 const network = process.env.HARDHAT_NETWORK;
-
-const multisigAddress = "0xAF28bcB48C40dBC86f52D459A6562F658fc94B1e";
-
-// ------ utils -------
-
-// abi encodes contract arguments
-// useful when you want to manually verify the contracts
-// for example, on Etherscan
-const abiEncodeArgs = (deployed, contractArgs) => {
-  // not writing abi encoded args if this does not pass
-  if (
-    !contractArgs ||
-    !deployed ||
-    !R.hasPath(["interface", "deploy"], deployed)
-  ) {
-    return "";
-  }
-  const encoded = utils.defaultAbiCoder.encode(
-    deployed.interface.deploy.inputs,
-    contractArgs
-  );
-  return encoded;
-};
-
-const deploy = async (contractName, _args) => {
-  console.log("🚀", chalk.cyan(contractName), "deploying...");
-
-  const contractArgs = _args || [];
-  const contractArtifacts = await ethers.getContractFactory(contractName);
-  const deployed = await contractArtifacts.deploy(...contractArgs);
-  await deployed.deployTransaction.wait();
-
-  const encoded = abiEncodeArgs(deployed, contractArgs);
-  fs.writeFileSync(`artifacts/${contractName}.address`, deployed.address);
-
-  console.log(
-    chalk.green("   Done!"),
-    "Deployed at:",
-    chalk.magenta(deployed.address)
-  );
-
-  if (!encoded || encoded.length <= 2) return deployed;
-  fs.writeFileSync(`artifacts/${contractName}.args`, encoded.slice(2));
-
-  return deployed;
-};
 
 const main = async () => {
   const startBlock = await ethers.provider.getBlockNumber();
@@ -62,30 +18,37 @@ const main = async () => {
   console.log("Start block:", startBlock);
 
   const ethUsdAddr = ethUsdPriceFeed(network);
-  const prices = await deploy("Prices");
-  const operatorStore = await deploy("OperatorStore");
-  const projects = await deploy("Projects", [operatorStore.address]);
-  const terminalDirectory = await deploy("TerminalDirectory", [
-    projects.address,
-    operatorStore.address
-  ]);
-  const fundingCycles = await deploy("FundingCycles", [
-    terminalDirectory.address
-  ]);
-  const ticketBooth = await deploy("TicketBooth", [
+  const prices = await juice.deploy("Prices");
+  const operatorStore = await juice.deploy("OperatorStore");
+  const projects = await juice.deploy("Projects", [operatorStore.address]);
+  const terminalDirectory = await juice.deploy("TerminalDirectory", [
     projects.address,
     operatorStore.address,
-    terminalDirectory.address
   ]);
-  const modStore = await deploy("ModStore", [
+  const fundingCycles = await juice.deploy("FundingCycles", [
+    terminalDirectory.address,
+  ]);
+  const ticketBooth = await juice.deploy("TicketBooth", [
     projects.address,
     operatorStore.address,
-    terminalDirectory.address
+    terminalDirectory.address,
+  ]);
+  const modStore = await juice.deploy("ModStore", [
+    projects.address,
+    operatorStore.address,
+    terminalDirectory.address,
+  ]);
+  await juice.deploy("ProxyPaymentAddressManager", [
+    terminalDirectory.address,
+    ticketBooth.address,
   ]);
 
-  const governance = await deploy("Governance", [1, terminalDirectory.address]);
+  const governance = await juice.deploy("Governance", [
+    1,
+    terminalDirectory.address,
+  ]);
 
-  const terminalV1 = await deploy("TerminalV1", [
+  const terminalV1 = await juice.deploy("TerminalV1", [
     projects.address,
     fundingCycles.address,
     ticketBooth.address,
@@ -93,10 +56,10 @@ const main = async () => {
     modStore.address,
     prices.address,
     terminalDirectory.address,
-    governance.address
+    governance.address,
   ]);
 
-  const ballot = await deploy("Active7DaysFundingCycleBallot", []);
+  const ballot = await juice.deploy("Active7DaysFundingCycleBallot", []);
 
   const PricesFactory = await ethers.getContractFactory("Prices");
   const GovernanceFactory = await ethers.getContractFactory("Governance");
@@ -116,11 +79,11 @@ const main = async () => {
       callContractIcon + "Adding ETH/USD price feed to the funding cycles"
     );
     await attachedGovernance.addPriceFeed(prices.address, ethUsdAddr, 1, {
-      gasLimit: 6000000
+      gasLimit: 6000000,
     });
     // Otherwise deploy a static local price feed.
   } else {
-    const feed = await deploy("ExampleETHUSDPriceFeed", []);
+    const feed = await juice.deploy("ExampleETHUSDPriceFeed", []);
     await attachedGovernance.addPriceFeed(prices.address, feed.address, 1);
   }
 
@@ -129,7 +92,7 @@ const main = async () => {
   );
 
   // Transfer ownership of governance to the multisig.
-  await attachedGovernance.transferOwnership(multisigAddress);
+  await attachedGovernance.transferOwnership(juice.multisigAddress);
 
   console.log(callContractIcon + "Configuring governance's budget");
 
@@ -143,17 +106,17 @@ const main = async () => {
       duration: 30, // 30 days
       cycleLimit: 0,
       discountRate: 200,
-      ballot: ballot.address
+      ballot: ballot.address,
     },
     {
       bondingCurveRate: 120,
       reservedRate: 20,
-      reconfigurationBondingCurveRate: 120
+      reconfigurationBondingCurveRate: 120,
     },
     [],
     [],
     {
-      gasLimit: 6000000
+      gasLimit: 6000000,
     }
   );
 
@@ -176,7 +139,7 @@ const main = async () => {
 
 main()
   .then(() => process.exit(0))
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exit(1);
   });

@@ -9,7 +9,10 @@ import "./interfaces/ITicketBooth.sol";
 
 /** 
   @notice
-  A contract that can receive funds directly and forward them to a direct payment address.
+  A contract that can receive and hold funds for a given project.
+  Once funds are tapped, tickets are printed and can be transferred out of the contract at a later date.
+
+  Particularly useful for routing funds from third-party platforms (e.g., Open Sea).
 */
 contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
     // --- public immutable stored properties --- //

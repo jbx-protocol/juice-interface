@@ -169,10 +169,13 @@ module.exports = [
     fn: ({
       checkFn,
       contracts,
+      constants,
       randomSignerFn,
       local: { proxyPaymentAddress, expectedProjectId, paymentValue },
     }) => {
-      const expectedNumTickets = paymentValue.mul(BigNumber.from(1000000));
+      const expectedNumTickets = paymentValue.mul(
+        constants.InitialWeightMultiplier
+      );
       checkFn({
         caller: randomSignerFn(),
         contract: contracts.ticketBooth,
@@ -223,7 +226,6 @@ module.exports = [
         args: [beneficiary.address, expectedProjectId],
         expect: expectedNumTickets,
       });
-      return { expectedNumTickets };
     },
   },
 ];

@@ -7,5 +7,7 @@ module.exports = [
   "YearnYielder",
   "Tickets",
   "DirectPaymentAddress",
+  "Active3DaysFundingCycleBallot",
+  "Active7DaysFundingCycleBallot",
   "Active14DaysFundingCycleBallot"
 ];

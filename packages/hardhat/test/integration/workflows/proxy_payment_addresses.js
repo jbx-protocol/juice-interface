@@ -90,7 +90,7 @@ module.exports = [
       }),
   },
   {
-    description: "Deploy a direct payment address",
+    description: "Deploy a proxy payment address",
     fn: ({
       executeFn,
       deployer,

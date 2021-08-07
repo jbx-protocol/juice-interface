@@ -142,17 +142,13 @@ module.exports = [
   },
   {
     description: "Tap the proxy payment address",
-    fn: async ({ bindContractFn, local: { proxyPaymentAddress, payer } }) => {
-      // An account that will be used to make payments.
-      const proxyPaymentAddressContract = await bindContractFn({
+    fn: async ({ executeFn, local: { proxyPaymentAddress, payer } }) => {
+      await executeFn({
+        caller: payer,
         contractName: "ProxyPaymentAddress",
-        address: proxyPaymentAddress,
-        signerOrProvider: payer,
+        contractAddress: proxyPaymentAddress,
+        fn: "tap",
       });
-
-      await proxyPaymentAddressContract.tap();
-
-      return { payer, proxyPaymentAddress, proxyPaymentAddressContract };
     },
   },
   {
@@ -187,25 +183,43 @@ module.exports = [
     },
   },
   {
-    description: "Transfer tickets from the proxy payment address",
+    description: "Transfer tickets from non-owner should fail.",
     fn: async ({
       randomSignerFn,
-      deployer,
-      bindContractFn,
+      executeFn,
       local: { proxyPaymentAddress, expectedNumTickets },
     }) => {
       const beneficiary = randomSignerFn();
 
-      const deployerProxyPaymentAddressContract = await bindContractFn({
+      await executeFn({
+        caller: randomSignerFn(),
         contractName: "ProxyPaymentAddress",
-        address: proxyPaymentAddress,
-        signerOrProvider: deployer,
+        contractAddress: proxyPaymentAddress,
+        fn: "transferTickets",
+        args: [beneficiary.address, expectedNumTickets],
+        revert: "Ownable: caller is not the owner",
       });
 
-      await deployerProxyPaymentAddressContract.transferTickets(
-        beneficiary.address,
-        expectedNumTickets
-      );
+      return { beneficiary };
+    },
+  },
+  {
+    description: "Transfer tickets from the proxy payment address",
+    fn: async ({
+      randomSignerFn,
+      deployer,
+      executeFn,
+      local: { proxyPaymentAddress, expectedNumTickets },
+    }) => {
+      const beneficiary = randomSignerFn();
+
+      await executeFn({
+        caller: deployer,
+        contractName: "ProxyPaymentAddress",
+        contractAddress: proxyPaymentAddress,
+        fn: "transferTickets",
+        args: [beneficiary.address, expectedNumTickets],
+      });
 
       return { beneficiary };
     },

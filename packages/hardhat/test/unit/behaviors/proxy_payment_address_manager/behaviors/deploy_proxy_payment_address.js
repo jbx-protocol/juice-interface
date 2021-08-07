@@ -42,7 +42,7 @@ module.exports = function () {
   describe("Success cases", function () {
     tests.success.forEach(function (successTest) {
       it(successTest.description, async function () {
-        const { caller, ops, expectations } = successTest.fn(this);
+        const { caller, ops } = successTest.fn(this);
 
         await Promise.all(
           ops.map(async (op) => {

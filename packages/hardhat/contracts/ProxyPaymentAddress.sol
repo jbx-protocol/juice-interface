@@ -55,9 +55,9 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
 
         terminalDirectory.terminalOf(projectId).pay{value: amount}(
             projectId,
-            address(this),
+            /*_beneficiary=*/address(this),
             memo,
-            true // prefer unstaked tickets. TODO: configurable?
+            /*_preferUnstakedTickets=*/false
         );
 
         emit ProxyTap(

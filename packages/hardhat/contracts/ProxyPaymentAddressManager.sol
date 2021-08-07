@@ -62,10 +62,17 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
             "ProxyPaymentAddressManager::deployProxyPaymentAddress: ZERO_PROJECT"
         );
 
-        // Deploy the contract and push it to the list.
-        _proxyPaymentAddressesOf[_projectId].push(
-            new ProxyPaymentAddress(terminalDirectory, ticketBooth, _projectId, _memo)
+        ProxyPaymentAddress proxyPaymentAddress =  new ProxyPaymentAddress(
+            terminalDirectory,
+            ticketBooth,
+            _projectId,
+            _memo
         );
+
+        proxyPaymentAddress.transferOwnership(msg.sender);
+
+        // Deploy the contract and push it to the list.
+        _proxyPaymentAddressesOf[_projectId].push(proxyPaymentAddress);
 
         emit DeployProxyPaymentAddress(_projectId, _memo, msg.sender);
     }

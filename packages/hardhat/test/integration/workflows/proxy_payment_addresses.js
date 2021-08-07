@@ -21,7 +21,6 @@ module.exports = [
       randomSignerFn,
       incrementFundingCycleIdFn,
       incrementProjectIdFn,
-      verifyBalanceFn,
     }) => {
       const expectedProjectId = incrementProjectIdFn();
 
@@ -45,7 +44,7 @@ module.exports = [
           }),
           randomStringFn(),
           {
-            target: randomBigNumberFn(),
+            target: BigNumber.from(1),
             currency,
             duration: randomBigNumberFn({
               min: BigNumber.from(0),
@@ -110,9 +109,7 @@ module.exports = [
     description: "Make a payment to the proxy payment address",
     fn: async ({
       contracts,
-      randomBigNumberFn,
       BigNumber,
-      getBalanceFn,
       randomSignerFn,
       local: { expectedProjectId },
     }) => {
@@ -125,10 +122,7 @@ module.exports = [
 
       // Three payments will be made. Cant pay entire balance because some is needed for gas.
       // So, arbitrarily divide the balance so that all payments can be made successfully.
-      const paymentValue = randomBigNumberFn({
-        min: BigNumber.from(1),
-        max: (await getBalanceFn(payer.address)).div(100),
-      });
+      const paymentValue = BigNumber.from(1);
 
       await payer.sendTransaction({
         to: proxyPaymentAddress,
@@ -148,32 +142,88 @@ module.exports = [
   },
   {
     description: "Tap the proxy payment address",
-    fn: async ({
-      randomSignerFn,
-      bindContractFn,
-      local: { proxyPaymentAddress },
-    }) => {
+    fn: async ({ bindContractFn, local: { proxyPaymentAddress, payer } }) => {
       // An account that will be used to make payments.
-      const payer = randomSignerFn();
-
-      const contract = await bindContractFn({
+      const proxyPaymentAddressContract = await bindContractFn({
         contractName: "ProxyPaymentAddress",
         address: proxyPaymentAddress,
         signerOrProvider: payer,
       });
 
-      await contract.tap();
+      await proxyPaymentAddressContract.tap();
 
-      return { payer, proxyPaymentAddress };
+      return { payer, proxyPaymentAddress, proxyPaymentAddressContract };
     },
   },
   {
     description: "The balance should be empty in the proxy payment address",
-    fn: ({ verifyBalanceFn, local: { paymentValue, proxyPaymentAddress } }) =>
+    fn: ({ verifyBalanceFn, local: { proxyPaymentAddress } }) =>
       verifyBalanceFn({
         address: proxyPaymentAddress,
         expect: BigNumber.from(0),
       }),
   },
-  // TODO: to be continued
+  {
+    description:
+      "Make sure the correct number of tickets were printed for the proxy payment address",
+    fn: ({
+      checkFn,
+      contracts,
+      randomSignerFn,
+      local: { proxyPaymentAddress, expectedProjectId, paymentValue },
+    }) => {
+      const expectedNumTickets = paymentValue.mul(BigNumber.from(1000000));
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [proxyPaymentAddress, expectedProjectId],
+        expect: expectedNumTickets,
+      });
+      return { expectedNumTickets };
+    },
+  },
+  {
+    description: "Transfer tickets from the proxy payment address",
+    fn: async ({
+      randomSignerFn,
+      deployer,
+      bindContractFn,
+      local: { proxyPaymentAddress, expectedNumTickets },
+    }) => {
+      const beneficiary = randomSignerFn();
+
+      const deployerProxyPaymentAddressContract = await bindContractFn({
+        contractName: "ProxyPaymentAddress",
+        address: proxyPaymentAddress,
+        signerOrProvider: deployer,
+      });
+
+      await deployerProxyPaymentAddressContract.transferTickets(
+        beneficiary.address,
+        expectedNumTickets
+      );
+
+      return { beneficiary };
+    },
+  },
+  {
+    description:
+      "Make sure the correct number of tickets are transferred to the beneficiary",
+    fn: ({
+      checkFn,
+      contracts,
+      randomSignerFn,
+      local: { expectedNumTickets, expectedProjectId, beneficiary },
+    }) => {
+      checkFn({
+        caller: randomSignerFn(),
+        contract: contracts.ticketBooth,
+        fn: "balanceOf",
+        args: [beneficiary.address, expectedProjectId],
+        expect: expectedNumTickets,
+      });
+      return { expectedNumTickets };
+    },
+  },
 ];

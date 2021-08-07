@@ -46,7 +46,7 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
       // Do nothing.
     }
 
-    // Transfers all funds held in the contract to the direct payment address.
+    // Transfers all funds held in the contract to the terminal of the corresponding project.
     function tap() external override {
         uint256 amount = address(this).balance;
 
@@ -54,7 +54,7 @@ contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
             projectId,
             address(this),
             memo,
-            true // prefer unstaked tickets.
+            true // prefer unstaked tickets. TODO: configurable?
         );
 
         emit ProxyTap(

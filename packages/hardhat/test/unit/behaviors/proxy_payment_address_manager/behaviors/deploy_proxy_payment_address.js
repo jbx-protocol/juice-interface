@@ -49,7 +49,7 @@ module.exports = function () {
             // Execute the transaction.
             const tx = await this.contract
               .connect(caller)
-              .deployProxyPaymentAddress(op.projectId, op.memo);
+              .deploy(op.projectId, op.memo);
 
             // Expect an event to have been emitted.
             await expect(tx)
@@ -66,9 +66,7 @@ module.exports = function () {
         const { caller, projectId, memo, revert } = failureTest.fn(this);
 
         await expect(
-          this.contract
-            .connect(caller)
-            .deployProxyPaymentAddress(projectId, memo)
+          this.contract.connect(caller).deploy(projectId, memo)
         ).to.be.revertedWith(revert);
       });
     });

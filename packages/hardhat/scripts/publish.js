@@ -11,15 +11,16 @@ const graphConfigPath = `${graphDir}/config/${configFileName}`;
 
 let graphConfig;
 
-module.exports = startBlock =>
-  publish(startBlock)
+// If contract name is empty, all contracts will be published.
+module.exports = (startBlock, singleContractName) =>
+  publish(startBlock, singleContractName)
     .then(() => process.exit(0))
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       process.exit(1);
     });
 
-async function publish(startBlock) {
+async function publish(startBlock, singleContractName) {
   console.log(
     "Publishing artifacts to app and hardhat directories for network:",
     chalk.bold(process.env.HARDHAT_NETWORK),
@@ -54,8 +55,11 @@ async function publish(startBlock) {
     fs.mkdirSync(publishDir);
   }
   const finalContractList = [];
-  fs.readdirSync(bre.config.paths.sources).forEach(file => {
-    if (file.indexOf(".sol") >= 0) {
+  fs.readdirSync(bre.config.paths.sources).forEach((file) => {
+    if (
+      (singleContractName && file.indexOf(`${singleContractName}.sol`) >= 0) ||
+      (!singleContractName && file.indexOf(`.sol`) >= 0)
+    ) {
       const contractName = file.replace(".sol", "");
       // Add contract to list if publishing is successful
       if (publishContract(contractName)) finalContractList.push(contractName);

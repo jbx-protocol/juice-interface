@@ -59,7 +59,7 @@ module.exports = function () {
         expect(storedBalance).to.equal(expectedBalance);
 
         await this.terminalV1.mock.pay
-          .withArgs(this.projectId, this.contract.address, this.memo, true)
+          .withArgs(this.projectId, this.contract.address, this.memo, false)
           .returns(1);
 
         await this.terminalDirectory.mock.terminalOf

@@ -1,23 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-import "./IDirectPaymentAddress.sol";
 import "./ITerminalDirectory.sol";
 import "./ITicketBooth.sol";
 
-interface IDirectPaymentAddressProxy {
+interface IProxyPaymentAddress {
 
     event ProxyTap(
         address indexed sender,
-        address indexed directPaymentAddress,
         uint256 value
     );
 
+    /// TODO: fix indexing.
     event ProxyTransferTickets(
         address indexed proxyPaymentAddress,
         address indexed terminalDirectory,
         address indexed owner,
-        address indexed beneficiary,
+        address beneficiary,
         uint256 projectId,
         uint256 amount
     );
@@ -27,6 +26,8 @@ interface IDirectPaymentAddressProxy {
     function ticketBooth() external returns (ITicketBooth);
 
     function projectId() external returns (uint256);
+
+    function memo() external returns (string memory);
 
     function tap() external;
 

@@ -5,7 +5,7 @@ import "./ITerminalDirectory.sol";
 import "./ITicketBooth.sol";
 import "./IProxyPaymentAddress.sol";
 
-interface IDirectPaymentAddressProxyManager {
+interface IProxyPaymentAddressManager {
 
     event DeployProxyPaymentAddress(
         uint256 indexed projectId,
@@ -17,6 +17,6 @@ interface IDirectPaymentAddressProxyManager {
 
     function ticketBooth() external returns (ITicketBooth);
 
-    function deployProxyPaymentAddress(uint256 _projectId) external;
+    function deployProxyPaymentAddress(uint256 _projectId, string memory _memo) external;
 
 }

@@ -11,7 +11,7 @@ import "./interfaces/ITicketBooth.sol";
   @notice
   A contract that can receive funds directly and forward them to a direct payment address.
 */
-contract ProxyPaymentAddressProxy is IProxyPaymentAddress, Ownable {
+contract ProxyPaymentAddress is IProxyPaymentAddress, Ownable {
     // --- public immutable stored properties --- //
 
     /// @notice The directory to use when resolving which terminal to send the payment to.
@@ -24,13 +24,13 @@ contract ProxyPaymentAddressProxy is IProxyPaymentAddress, Ownable {
     uint256 public immutable override projectId;
 
     /// @notice The memo to use when this contract forwards a payment to a terminal.
-    string public immutable override memo;
+    string public override memo;
 
     constructor(
         ITerminalDirectory _terminalDirectory,
         ITicketBooth _ticketBooth,
         uint256 _projectId,
-        string _memo
+        string memory _memo
     ) {
         terminalDirectory = _terminalDirectory;
         ticketBooth = _ticketBooth;
@@ -56,7 +56,6 @@ contract ProxyPaymentAddressProxy is IProxyPaymentAddress, Ownable {
 
         emit ProxyTap(
             msg.sender,
-            address(directPaymentAddress),
             amount
         );     
     }

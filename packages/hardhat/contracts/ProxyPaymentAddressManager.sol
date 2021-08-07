@@ -35,6 +35,23 @@ contract ProxyPaymentAddressManager is IProxyPaymentAddressManager {
     }
 
     /** 
+      @notice 
+      A list of all proxy payment addresses for the specified project ID.
+
+      @param _projectId The ID of the project to get proxy payment addresses for.
+
+      @return A list of proxy payment addresses for the specified project ID.
+    */
+    function proxyPaymentAddressesOf(uint256 _projectId)
+        external
+        view
+        override
+        returns (IProxyPaymentAddress[] memory)
+    {
+        return _proxyPaymentAddressesOf[_projectId];
+    }    
+
+    /** 
       @notice Deploys a proxy payment address.
       @param _projectId ID of the project funds will be fowarded to.
       @param _memo Memo that will be attached withdrawal transactions.

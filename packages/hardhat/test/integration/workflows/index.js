@@ -26,6 +26,7 @@ const zeroDuration = require("./zero_duration");
 const nonRecurring = require("./non_recurring");
 const challengeHandle = require("./challenge_handle");
 const takeFee = require("./take_fee");
+const proxyPaymentAddresses = require("./proxy_payment_addresses");
 
 module.exports = {
   deploy,
@@ -55,5 +56,6 @@ module.exports = {
   zeroDuration,
   nonRecurring,
   challengeHandle,
-  takeFee
+  takeFee,
+  proxyPaymentAddresses,
 };

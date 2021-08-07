@@ -4,30 +4,30 @@ const fs = require("fs");
 
 const { deployMockContract } = require("@ethereum-waffle/mock-contract");
 
-const { BigNumber } = require("ethers");
+const { BigNumber, Contract } = require("ethers");
 const unit = require("./unit");
 const integration = require("./integration");
 
-describe("Juicebox", async function() {
-  before(async function() {
+describe("Juicebox", async function () {
+  before(async function () {
     // Bind a reference to the deployer address and an array of other addresses to `this`.
     [this.deployer, ...this.addrs] = await ethers.getSigners();
 
     // Bind the ability to manipulate time to `this`.
     // Bind a function that gets the current block's timestamp.
-    this.getTimestampFn = async block => {
+    this.getTimestampFn = async (block) => {
       return ethers.BigNumber.from(
         (await ethers.provider.getBlock(block || "latest")).timestamp
       );
     };
 
     // Binds a function that sets a time mark that is taken into account while fastforward.
-    this.setTimeMarkFn = async blockNumber => {
+    this.setTimeMarkFn = async (blockNumber) => {
       this.timeMark = await this.getTimestampFn(blockNumber);
     };
 
     // Binds a function that fastforward a certain amount from the beginning of the test, or from the latest time mark if one is set.
-    this.fastforwardFn = async seconds => {
+    this.fastforwardFn = async (seconds) => {
       const now = await this.getTimestampFn();
       const timeSinceTimemark = now.sub(this.timeMark);
       const fastforwardAmount = seconds.toNumber() - timeSinceTimemark;
@@ -41,10 +41,10 @@ describe("Juicebox", async function() {
     };
 
     // Bind a reference to a function that can deploy mock contracts from an abi.
-    this.deployMockContractFn = abi => deployMockContract(this.deployer, abi);
+    this.deployMockContractFn = (abi) => deployMockContract(this.deployer, abi);
 
     // Bind a reference to a function that can deploy mock local contracts from names.
-    this.deployMockLocalContractFn = async mockContractName => {
+    this.deployMockLocalContractFn = async (mockContractName) => {
       // Deploy mock contracts.
       const mockArtifacts = fs
         .readFileSync(
@@ -89,7 +89,7 @@ describe("Juicebox", async function() {
       args = [],
       value = 0,
       events = [],
-      revert
+      revert,
     }) => {
       // Args can be either a function or an array.
       const normalizedArgs = typeof args === "function" ? await args() : args;
@@ -118,7 +118,7 @@ describe("Juicebox", async function() {
       if (events.length === 0) return;
 
       // Check for events.
-      events.forEach(event =>
+      events.forEach((event) =>
         chai
           .expect(tx)
           .to.emit(contract, event.name)
@@ -126,12 +126,26 @@ describe("Juicebox", async function() {
       );
     };
 
+    this.bindContractFn = async ({
+      address,
+      contractName,
+      signerOrProvider,
+    }) => {
+      const artifacts = fs
+        .readFileSync(
+          `${config.paths.artifacts}/contracts/${contractName}.sol/${contractName}.json`
+        )
+        .toString();
+
+      return new Contract(address, JSON.parse(artifacts).abi, signerOrProvider);
+    };
+
     // Bind a function that sends funds from one address to another.
     this.sendTransactionFn = async ({ from, to, value, revert, events }) => {
       // Transfer the funds.
       const promise = from.sendTransaction({
         to,
-        value
+        value,
       });
 
       // If a revert message is passed in, check to see if it was thrown.
@@ -153,7 +167,7 @@ describe("Juicebox", async function() {
       if (events.length === 0) return;
 
       // Check for events.
-      events.forEach(event =>
+      events.forEach((event) =>
         chai
           .expect(tx)
           .to.emit(event.contract, event.name)
@@ -168,14 +182,14 @@ describe("Juicebox", async function() {
       fn,
       args,
       expect,
-      plusMinus
+      plusMinus,
     }) => {
       const storedVal = await contract.connect(caller)[fn](...args);
       if (plusMinus) {
         console.log({
           storedVal,
           diff: storedVal.sub(expect),
-          plusMinus: plusMinus.amount
+          plusMinus: plusMinus.amount,
         });
         chai.expect(storedVal.lte(expect.add(plusMinus.amount))).to.equal(true);
         chai.expect(storedVal.gte(expect.sub(plusMinus.amount))).to.equal(true);
@@ -191,7 +205,7 @@ describe("Juicebox", async function() {
         console.log({
           storedVal,
           diff: storedVal.sub(expect),
-          plusMinus: plusMinus.amount
+          plusMinus: plusMinus.amount,
         });
         chai.expect(storedVal.lte(expect.add(plusMinus.amount))).to.equal(true);
         chai.expect(storedVal.gte(expect.sub(plusMinus.amount))).to.equal(true);
@@ -201,7 +215,7 @@ describe("Juicebox", async function() {
     };
 
     // Binds a function that gets the balance of an address.
-    this.getBalanceFn = address => ethers.provider.getBalance(address);
+    this.getBalanceFn = (address) => ethers.provider.getBalance(address);
 
     // Binds the standard expect function.
     this.expectFn = chai.expect;
@@ -211,18 +225,10 @@ describe("Juicebox", async function() {
     this.constants = {
       AddressZero: ethers.constants.AddressZero,
       MaxUint256: ethers.constants.MaxUint256,
-      MaxInt256: ethers.BigNumber.from(2)
-        .pow(255)
-        .sub(1),
-      MaxUint24: ethers.BigNumber.from(2)
-        .pow(24)
-        .sub(1),
-      MaxUint16: ethers.BigNumber.from(2)
-        .pow(16)
-        .sub(1),
-      MaxUint8: ethers.BigNumber.from(2)
-        .pow(8)
-        .sub(1)
+      MaxInt256: ethers.BigNumber.from(2).pow(255).sub(1),
+      MaxUint24: ethers.BigNumber.from(2).pow(24).sub(1),
+      MaxUint16: ethers.BigNumber.from(2).pow(16).sub(1),
+      MaxUint8: ethers.BigNumber.from(2).pow(8).sub(1),
     };
 
     // Bind function that gets a random big number.
@@ -230,7 +236,7 @@ describe("Juicebox", async function() {
       min = ethers.BigNumber.from(0),
       max = this.constants.MaxUint256,
       precision = 10000000,
-      favorEdges = true
+      favorEdges = true,
     } = {}) => {
       // To test an edge condition, return the min or the max and the numbers around them more often.
       // Return the min or the max or the numbers around them 50% of the time.
@@ -288,16 +294,14 @@ describe("Juicebox", async function() {
       exclude = [],
       prepend = "",
       canBeEmpty = true,
-      favorEdges = true
+      favorEdges = true,
     } = {}) => {
       const seed = this.randomBigNumberFn({
         min: canBeEmpty ? BigNumber.from(0) : BigNumber.from(1),
-        favorEdges
+        favorEdges,
       });
       const candidate = prepend.concat(
-        Math.random()
-          .toString(36)
-          .substr(2, seed)
+        Math.random().toString(36).substr(2, seed)
       );
       if (exclude.includes(candidate))
         return this.randomStringFn({ exclude, prepend, canBeEmpty });
@@ -312,16 +316,16 @@ describe("Juicebox", async function() {
       min = BigNumber.from(10),
       max = BigNumber.from(32),
       prepend = "",
-      exclude = []
+      exclude = [],
     } = {}) => {
       const candidate = ethers.utils.formatBytes32String(
         this.randomStringFn({
           prepend,
           seed: this.randomBigNumberFn({
             min,
-            max
+            max,
           }),
-          favorEdges: false
+          favorEdges: false,
         })
       );
       if (exclude.includes(candidate))
@@ -333,11 +337,11 @@ describe("Juicebox", async function() {
 
     // Bind functions for cleaning state.
     this.snapshotFn = () => ethers.provider.send("evm_snapshot", []);
-    this.restoreFn = id => ethers.provider.send("evm_revert", [id]);
+    this.restoreFn = (id) => ethers.provider.send("evm_revert", [id]);
   });
 
   // Before each test, take a snapshot of the contract state.
-  beforeEach(async function() {
+  beforeEach(async function () {
     // Make the start time of the test available.
     this.testStart = await this.getTimestampFn();
   });

@@ -2,6 +2,7 @@
 pragma solidity 0.8.6;
 
 import "./IDirectPaymentAddress.sol";
+import "./ITerminalDirectory.sol";
 import "./ITicketBooth.sol";
 
 interface IDirectPaymentAddressProxy {
@@ -13,14 +14,15 @@ interface IDirectPaymentAddressProxy {
     );
 
     event ProxyTransferTickets(
-        address indexed directPaymentAddressProxy,
+        address indexed proxyPaymentAddress,
+        address indexed terminalDirectory,
         address indexed owner,
         address indexed beneficiary,
         uint256 projectId,
         uint256 amount
-    );    
+    );
 
-    function directPaymentAddress() external returns (IDirectPaymentAddress);
+    function terminalDirectory() external returns (ITerminalDirectory);
 
     function ticketBooth() external returns (ITicketBooth);
 

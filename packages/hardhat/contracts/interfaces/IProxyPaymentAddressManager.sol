@@ -17,6 +17,11 @@ interface IProxyPaymentAddressManager {
 
     function ticketBooth() external returns (ITicketBooth);
 
+    function proxyPaymentAddressesOf(uint256 _projectId)
+        external
+        view
+        returns (IProxyPaymentAddress[] memory);    
+
     function deployProxyPaymentAddress(uint256 _projectId, string memory _memo) external;
 
 }

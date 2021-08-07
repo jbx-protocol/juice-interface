@@ -85,6 +85,8 @@ describe("Juicebox", async function () {
     this.executeFn = async ({
       caller,
       contract,
+      contractName,
+      contractAddress,
       fn,
       args = [],
       value = 0,
@@ -94,8 +96,31 @@ describe("Juicebox", async function () {
       // Args can be either a function or an array.
       const normalizedArgs = typeof args === "function" ? await args() : args;
 
+      let contractInternal;
+      if (contractName) {
+        if (contract) {
+          throw "You can only provide a contract name or contract object.";
+        }
+        if (!contractAddress) {
+          throw "You must provide a contract address with a contract name.";
+        }
+        const artifacts = fs
+          .readFileSync(
+            `${config.paths.artifacts}/contracts/${contractName}.sol/${contractName}.json`
+          )
+          .toString();
+
+        contractInternal = new Contract(
+          contractAddress,
+          JSON.parse(artifacts).abi,
+          caller
+        );
+      } else {
+        contractInternal = contract;
+      }
+
       // Save the promise that is returned.
-      const promise = contract
+      const promise = contractInternal
         .connect(caller)
         [fn](...normalizedArgs, { value });
 

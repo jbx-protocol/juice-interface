@@ -3,32 +3,25 @@ import { Button } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
-import { ProjectMetadata } from 'models/project-metadata'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 
-export default function Pay({
-  fundingCycle,
-  projectId,
-  metadata,
-  tokenSymbol,
-}: {
-  fundingCycle: FundingCycle | undefined
-  projectId: BigNumber | undefined
-  metadata: ProjectMetadata
-  tokenSymbol?: string
-}) {
+export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(1)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
+
+  const { projectId, currentFC, metadata, tokenSymbol } = useContext(
+    ProjectContext,
+  )
 
   const converter = useCurrencyConverter()
 
@@ -40,9 +33,9 @@ export default function Pay({
   }
 
   const formatReceivedTickets = (wei: BigNumber) =>
-    formatWad(weightedRate(fundingCycle, wei, 'payer'))
+    formatWad(weightedRate(currentFC, wei, 'payer'))
 
-  if (!fundingCycle || !projectId) return null
+  if (!currentFC || !projectId || !metadata) return null
 
   return (
     <div>
@@ -55,7 +48,7 @@ export default function Pay({
         <div style={{ flex: 1, marginRight: 10 }}>
           <FormattedNumberInput
             placeholder="0"
-            disabled={fundingCycle?.configured.eq(0)}
+            disabled={currentFC.configured.eq(0)}
             onChange={val => setPayAmount(val)}
             value={payAmount}
             min={0}
@@ -71,9 +64,7 @@ export default function Pay({
           <div style={{ fontSize: '.7rem' }}>
             Receive{' '}
             {weiPayAmt?.gt(0) ? (
-              formatReceivedTickets(weiPayAmt) +
-              ' ' +
-              (tokenSymbol ?? 'tokens')
+              formatReceivedTickets(weiPayAmt) + ' ' + (tokenSymbol ?? 'tokens')
             ) : (
               <span>
                 {formatReceivedTickets(
@@ -91,7 +82,7 @@ export default function Pay({
           <Button
             style={{ width: '100%' }}
             type="primary"
-            disabled={fundingCycle?.configured.eq(0)}
+            disabled={currentFC.configured.eq(0)}
             onClick={weiPayAmt ? pay : undefined}
           >
             Pay
@@ -106,7 +97,7 @@ export default function Pay({
       </div>
 
       <ConfirmPayOwnerModal
-        fundingCycle={fundingCycle}
+        fundingCycle={currentFC}
         metadata={metadata}
         projectId={projectId}
         visible={payModalVisible}

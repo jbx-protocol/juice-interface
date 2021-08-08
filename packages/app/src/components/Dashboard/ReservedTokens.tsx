@@ -1,5 +1,6 @@
 import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -14,22 +15,18 @@ import { decodeFCMetadata } from 'utils/fundingCycle'
 import TicketModsList from './TicketModsList'
 
 export default function ReservedTokens({
-  projectId,
   fundingCycle,
   ticketMods,
-  tokenSymbol,
-  isOwner,
   hideActions,
 }: {
-  projectId: BigNumber | undefined
   fundingCycle: FundingCycle | undefined
   ticketMods: TicketMod[] | undefined
-  tokenSymbol: string | undefined
-  isOwner?: boolean
   hideActions?: boolean
 }) {
   const { userAddress, transactor, contracts } = useContext(UserContext)
   const [loadingPrint, setLoadingPrint] = useState<boolean>()
+
+  const { projectId, isOwner, tokenSymbol } = useContext(ProjectContext)
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
@@ -96,7 +93,7 @@ export default function ReservedTokens({
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div>
         <TooltipLabel
           label={
             <h4 style={{ display: 'inline-block' }}>
@@ -106,20 +103,6 @@ export default function ReservedTokens({
           }
           tip="A project can reserve a percentage of tokens minted from every payment it receives. They can be distributed to the receivers below at any time."
         />
-        {!hideActions && (
-          <div>
-            <span>{formatWad(reservedTickets) || 0}</span>
-            <Button
-              style={{ marginLeft: 10 }}
-              loading={loadingPrint}
-              size="small"
-              onClick={print}
-              disabled={!reservedTickets?.gt(0)}
-            >
-              Distribute
-            </Button>
-          </div>
-        )}
       </div>
 
       <TicketModsList
@@ -128,6 +111,30 @@ export default function ReservedTokens({
         projectId={projectId}
         isOwner={isOwner}
       />
+
+      {!hideActions && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            marginTop: 20,
+          }}
+        >
+          <span>
+            {formatWad(reservedTickets) || 0} {tokenSymbol ?? 'tokens'}
+          </span>
+          <Button
+            style={{ marginLeft: 10 }}
+            loading={loadingPrint}
+            size="small"
+            onClick={print}
+            disabled={!reservedTickets?.gt(0)}
+          >
+            Distribute
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

@@ -4,6 +4,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import { subgraphUrl } from 'constants/subgraphs'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { PayEvent } from 'models/events/pay-event'
 import { RedeemEvent } from 'models/events/redeem-event'
@@ -18,16 +19,12 @@ type DisplayActivity = {
   element: JSX.Element
 }
 
-export default function ProjectActivity({
-  projectId,
-  tokenSymbol,
-}: {
-  projectId: BigNumber | undefined
-  tokenSymbol: string | undefined
-}) {
+export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
   const [payEvents, setPayEvents] = useState<PayEvent[]>()
   const [redeemEvents, setRedeemEvents] = useState<RedeemEvent[]>()
+
+  const { projectId, tokenSymbol } = useContext(ProjectContext)
 
   useEffect(() => {
     // Load pay events

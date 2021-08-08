@@ -5,6 +5,7 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants, utils } from 'ethers'
@@ -361,16 +362,26 @@ export default function Create() {
           >
             Preview:
           </h3>
-          <Project
-            isOwner={false}
-            showCurrentDetail={currentStep > 2}
-            fundingCycle={fundingCycle}
-            payoutMods={editingPayoutMods}
-            ticketMods={editingTicketMods}
-            metadata={editingProjectInfo.metadata}
-            handle={editingProjectInfo.handle}
-            projectId={BigNumber.from(0)}
-          />
+          <ProjectContext.Provider
+            value={{
+              owner: userAddress,
+              isOwner: false,
+              currentFC: fundingCycle,
+              currentPayoutMods: editingPayoutMods,
+              currentTicketMods: editingTicketMods,
+              metadata: editingProjectInfo.metadata,
+              handle: editingProjectInfo.handle,
+              projectId: BigNumber.from(0),
+              queuedFC: undefined,
+              queuedPayoutMods: undefined,
+              queuedTicketMods: undefined,
+              balanceInCurrency: BigNumber.from(0),
+              tokenSymbol: undefined,
+              tokenAddress: constants.AddressZero,
+            }}
+          >
+            <Project showCurrentDetail={currentStep > 2} />
+          </ProjectContext.Provider>
         </div>
       </Col>
 

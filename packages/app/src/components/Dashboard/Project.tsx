@@ -1,14 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
+import { ProjectContext } from 'contexts/projectContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
-import { FundingCycle } from 'models/funding-cycle'
-import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadata } from 'models/project-metadata'
-import { CSSProperties, useMemo } from 'react'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import FundingCycles from './FundingCycles'
@@ -20,63 +18,13 @@ import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
 
 export default function Project({
-  handle,
-  metadata,
-  projectId,
-  fundingCycle,
-  payoutMods,
-  ticketMods,
-  showCurrentDetail,
   style,
-  isOwner,
+  showCurrentDetail,
 }: {
-  handle: string
-  metadata: ProjectMetadata
-  projectId: BigNumber
-  isOwner: boolean
-  fundingCycle: FundingCycle | undefined
-  payoutMods: PayoutMod[] | undefined
-  ticketMods: TicketMod[] | undefined
-  showCurrentDetail?: boolean
   style?: CSSProperties
+  showCurrentDetail?: boolean
 }) {
-  const converter = useCurrencyConverter()
-
-  const balance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'balanceOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId
-          ? [
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString()],
-              },
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Tap',
-                topics: [[], projectId.toHexString()],
-              },
-            ]
-          : undefined,
-      [projectId],
-    ),
-  })
-
-  const balanceInCurrency = useMemo(
-    () =>
-      balance &&
-      converter.wadToCurrency(
-        balance,
-        fundingCycle?.currency.toNumber() as CurrencyOption,
-        0,
-      ),
-    [fundingCycle?.currency, balance, converter],
-  )
+  const { projectId, isOwner } = useContext(ProjectContext)
 
   const canPrintPreminedTickets = useContractReader<boolean>({
     contract: ContractName.TerminalV1,
@@ -109,90 +57,39 @@ export default function Project({
     ),
   })
 
-  const ticketAddress = useContractReader<string>({
-    contract: ContractName.TicketBooth,
-    functionName: 'ticketsOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    updateOn: useMemo(
-      () => [
-        {
-          contract: ContractName.TicketBooth,
-          eventName: 'Issue',
-          topics: projectId ? [projectId.toHexString()] : undefined,
-        },
-      ],
-      [],
-    ),
-  })
-  const ticketContract = useErc20Contract(ticketAddress)
-  const tokenSymbol = useContractReader<string>({
-    contract: ticketContract,
-    functionName: 'symbol',
-  })
-
-  if (!projectId || !metadata) return null
+  if (!projectId) return null
 
   const gutter = 40
 
   return (
     <div style={style}>
-      <ProjectHeader
-        handle={handle}
-        metadata={metadata}
-        projectId={projectId}
-        isOwner={isOwner}
-      />
+      <ProjectHeader />
 
       <Row gutter={gutter} style={{ marginTop: gutter }} align="bottom">
         <Col xs={24} md={12}>
-          <Paid
-            projectId={projectId}
-            fundingCycle={fundingCycle}
-            balanceInCurrency={balanceInCurrency}
-          />
+          <Paid />
         </Col>
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
             {canPrintPreminedTickets && isOwner && (
               <PrintPremined projectId={projectId} />
             )}
-            <Pay
-              metadata={metadata}
-              fundingCycle={fundingCycle}
-              projectId={projectId}
-              tokenSymbol={tokenSymbol}
-            />
+            <Pay />
           </Space>
         </Col>
       </Row>
 
       <Row gutter={gutter} style={{ marginTop: gutter }}>
         <Col xs={24} md={12} style={{ marginBottom: gutter }}>
-          <FundingCycles
-            projectId={projectId}
-            fundingCycle={fundingCycle}
-            payoutMods={payoutMods}
-            ticketMods={ticketMods}
-            tokenSymbol={tokenSymbol}
-            isOwner={isOwner}
-            balanceInCurrency={balanceInCurrency}
-            showCurrentDetail={showCurrentDetail}
-          />
+          <FundingCycles showCurrentDetail={showCurrentDetail} />
         </Col>
 
         <Col xs={24} md={12} style={{ paddingBottom: gutter }}>
           <div style={{ marginBottom: gutter }}>
-            <Rewards
-              projectId={projectId}
-              currentCycle={fundingCycle}
-              totalOverflow={totalOverflow}
-              isOwner={isOwner}
-              ticketAddress={ticketAddress}
-              tokenSymbol={tokenSymbol}
-            />
+            <Rewards totalOverflow={totalOverflow} />
           </div>
 
-          <ProjectActivity projectId={projectId} tokenSymbol={tokenSymbol} />
+          <ProjectActivity />
         </Col>
       </Row>
     </div>

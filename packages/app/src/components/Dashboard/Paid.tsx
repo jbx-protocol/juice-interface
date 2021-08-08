@@ -2,31 +2,25 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Progress } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
-import { FundingCycle } from 'models/funding-cycle'
+import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
-
-import { smallHeaderStyle } from './styles'
-import { CurrencyOption } from 'models/currency-option'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-export default function Paid({
-  projectId,
-  fundingCycle,
-  balanceInCurrency,
-}: {
-  projectId: BigNumber
-  fundingCycle: FundingCycle | undefined
-  balanceInCurrency: BigNumber | undefined
-}) {
+import { smallHeaderStyle } from './styles'
+
+export default function Paid() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const { projectId, currentFC, balanceInCurrency } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -60,21 +54,20 @@ export default function Paid({
       totalOverflow &&
       converter.wadToCurrency(
         totalOverflow,
-        fundingCycle?.currency.toNumber() as CurrencyOption,
+        currentFC?.currency.toNumber() as CurrencyOption,
         0,
       ),
-    [fundingCycle?.currency, totalOverflow, converter],
+    [currentFC?.currency, totalOverflow, converter],
   )
 
-  const paidInCurrency = balanceInCurrency?.add(fundingCycle?.tapped ?? 0)
+  const paidInCurrency = balanceInCurrency?.add(currentFC?.tapped ?? 0)
 
   const percentPaid = useMemo(
     () =>
-      paidInCurrency && fundingCycle?.target
-        ? fracDiv(paidInCurrency.toString(), fundingCycle.target.toString()) *
-          100
+      paidInCurrency && currentFC?.target
+        ? fracDiv(paidInCurrency.toString(), currentFC.target.toString()) * 100
         : 0,
-    [fundingCycle?.target, paidInCurrency],
+    [currentFC?.target, paidInCurrency],
   )
 
   const percentOverflow = fracDiv(
@@ -92,7 +85,7 @@ export default function Paid({
     fontSize: '0.8rem',
   }
 
-  if (!fundingCycle) return null
+  if (!currentFC) return null
 
   return (
     <div>
@@ -111,9 +104,9 @@ export default function Paid({
             }}
           >
             <CurrencySymbol
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+              currency={currentFC.currency.toNumber() as CurrencyOption}
             />
-            {fundingCycle.currency.eq(1) ? (
+            {currentFC.currency.eq(1) ? (
               <span>
                 {formatWad(paidInCurrency)}{' '}
                 <span style={subTextStyle}>
@@ -135,7 +128,7 @@ export default function Paid({
                 tip="The amount paid to this project, minus the current funding cycle's target. Overflow can be claimed by token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
               />
             </div>
-            {fundingCycle.currency.eq(1) ? (
+            {currentFC.currency.eq(1) ? (
               <span>
                 <span style={subTextStyle}>
                   <CurrencySymbol currency={0} />
@@ -156,7 +149,7 @@ export default function Paid({
         )}
       </div>
 
-      {hasFundingTarget(fundingCycle) &&
+      {hasFundingTarget(currentFC) &&
         (totalOverflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Progress
@@ -197,13 +190,13 @@ export default function Paid({
           />
         ))}
 
-      {hasFundingTarget(fundingCycle) && (
+      {hasFundingTarget(currentFC) && (
         <div style={{ marginTop: 4 }}>
           <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
             <CurrencySymbol
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
+              currency={currentFC.currency.toNumber() as CurrencyOption}
             />
-            {formatWad(fundingCycle.target)}{' '}
+            {formatWad(currentFC.target)}{' '}
           </span>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel

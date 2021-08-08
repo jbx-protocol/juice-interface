@@ -1,14 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import ReconfigureBudgetModal from 'components/modals/ReconfigureBudgetModal'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
-import { FundingCycle } from 'models/funding-cycle'
-import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext, useState } from 'react'
 
 import CurrentFundingCycle from './CurrentFundingCycle'
@@ -18,23 +14,9 @@ import QueuedFundingCycle from './QueuedFundingCycle'
 type TabOption = 'current' | 'upcoming' | 'history'
 
 export default function FundingCycles({
-  projectId,
-  fundingCycle,
-  payoutMods,
-  ticketMods,
-  tokenSymbol,
-  balanceInCurrency,
   showCurrentDetail,
-  isOwner,
 }: {
-  projectId: BigNumber
-  fundingCycle: FundingCycle | undefined
-  payoutMods: PayoutMod[] | undefined
-  ticketMods: TicketMod[] | undefined
-  tokenSymbol: string | undefined
-  balanceInCurrency: BigNumber | undefined
   showCurrentDetail?: boolean
-  isOwner?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
   const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
@@ -42,25 +24,12 @@ export default function FundingCycles({
   >(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
+  const { projectId, currentFC, isOwner, queuedFC } = useContext(ProjectContext)
+
   const {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
-
-  const queuedCycle = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
-    functionName: 'queuedOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    updateOn: projectId
-      ? [
-          {
-            contract: ContractName.FundingCycles,
-            eventName: 'Configure',
-            topics: [[], projectId.toHexString()],
-          },
-        ]
-      : undefined,
-  })
 
   const tab = (option: TabOption) => (
     <div
@@ -84,37 +53,21 @@ export default function FundingCycles({
 
   switch (selectedTab) {
     case 'current':
-      tabContent = (
-        <CurrentFundingCycle
-          projectId={projectId}
-          fundingCycle={fundingCycle}
-          payoutMods={payoutMods}
-          ticketMods={ticketMods}
-          balanceInCurrency={balanceInCurrency}
-          showCurrentDetail={showCurrentDetail}
-          isOwner={isOwner}
-          tokenSymbol={tokenSymbol}
-        />
-      )
+      tabContent = <CurrentFundingCycle showCurrentDetail={showCurrentDetail} />
       break
     case 'upcoming':
-      tabContent = (
-        <QueuedFundingCycle
-          isOwner={isOwner}
-          projectId={projectId}
-          queuedCycle={queuedCycle}
-          tokenSymbol={tokenSymbol}
-        />
-      )
+      tabContent = <QueuedFundingCycle />
       break
     case 'history':
       tabContent = (
         <CardSection padded>
-          <FundingHistory startId={fundingCycle?.basedOn} />
+          <FundingHistory startId={currentFC?.basedOn} />
         </CardSection>
       )
       break
   }
+
+  if (!projectId) return null
 
   return (
     <div>
@@ -140,7 +93,7 @@ export default function FundingCycles({
         />
         <Space style={{ fontSize: '.8rem' }} size="middle">
           {tab('current')}
-          {fundingCycle?.duration.gt(0) ? tab('upcoming') : null}
+          {currentFC?.duration.gt(0) ? tab('upcoming') : null}
           {tab('history')}
         </Space>
       </div>
@@ -159,7 +112,7 @@ export default function FundingCycles({
       <ReconfigureBudgetModal
         visible={reconfigureModalVisible}
         onDone={() => setReconfigureModalVisible(false)}
-        fundingCycle={queuedCycle?.number.gt(0) ? queuedCycle : fundingCycle}
+        fundingCycle={queuedFC?.number.gt(0) ? queuedFC : currentFC}
         projectId={projectId}
       />
     </div>

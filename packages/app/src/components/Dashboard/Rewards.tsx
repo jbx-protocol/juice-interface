@@ -1,20 +1,19 @@
-import { SwapOutlined, ExportOutlined } from '@ant-design/icons'
+import { ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Divider, Space, Statistic, Tooltip } from 'antd'
+import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import Loading from 'components/shared/Loading'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
-import { FundingCycle } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
@@ -24,22 +23,18 @@ import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
 
 export default function Rewards({
-  projectId,
-  currentCycle,
   totalOverflow,
-  isOwner,
-  ticketAddress,
   tokenSymbol,
 }: {
-  projectId: BigNumber | undefined
-  currentCycle: FundingCycle | undefined
   totalOverflow: BigNumber | undefined
-  isOwner: boolean | undefined
-  ticketAddress?: string
   tokenSymbol?: string
 }) {
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
+
+  const { projectId, currentFC, isOwner, tokenAddress } = useContext(
+    ProjectContext,
+  )
 
   const {
     theme: { colors },
@@ -51,7 +46,7 @@ export default function Rewards({
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
   const [loadingConvert, setLoadingConvert] = useState<boolean>()
 
-  const metadata = decodeFCMetadata(currentCycle?.metadata)
+  const metadata = decodeFCMetadata(currentFC?.metadata)
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -82,7 +77,7 @@ export default function Rewards({
     [projectId],
   )
 
-  const ticketContract = useErc20Contract(ticketAddress)
+  const ticketContract = useErc20Contract(tokenAddress)
 
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,
@@ -256,8 +251,8 @@ export default function Rewards({
 
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
-  const ticketsIssued = ticketAddress
-    ? ticketAddress !== constants.AddressZero
+  const ticketsIssued = tokenAddress
+    ? tokenAddress !== constants.AddressZero
     : undefined
 
   return (
@@ -267,15 +262,13 @@ export default function Rewards({
           title={
             <TooltipLabel
               label={
-                <span>
-                  {tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
-                </span>
+                <span>{tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}</span>
               }
               tip={`${
                 tokenSymbol ? tokenSymbol + ' ERC20' : 'tokens'
               } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
-                ticketAddress && ticketAddress !== constants.AddressZero
-                  ? 'Address: ' + ticketAddress
+                tokenAddress && tokenAddress !== constants.AddressZero
+                  ? 'Address: ' + tokenAddress
                   : ''
               }`}
               style={{

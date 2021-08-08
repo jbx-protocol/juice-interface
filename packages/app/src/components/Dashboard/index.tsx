@@ -1,15 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
+import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
 
@@ -18,6 +23,8 @@ import Project from './Project'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
+
+  const converter = useCurrencyConverter()
 
   const { userAddress } = useContext(UserContext)
 
@@ -39,7 +46,7 @@ export default function Dashboard() {
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const fundingCycle = useContractReader<FundingCycle>({
+  const currentFC = useContractReader<FundingCycle>({
     contract: ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [projectId.toHexString()] : null,
@@ -69,63 +76,185 @@ export default function Dashboard() {
     ),
   })
 
+  const queuedFC = useContractReader<FundingCycle>({
+    contract: ContractName.FundingCycles,
+    functionName: 'queuedOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: projectId
+      ? [
+          {
+            contract: ContractName.FundingCycles,
+            eventName: 'Configure',
+            topics: [[], projectId.toHexString()],
+          },
+        ]
+      : undefined,
+  })
+
   const uri = useContractReader<string>({
     contract: ContractName.Projects,
     functionName: 'uriOf',
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const payoutMods = useContractReader<PayoutMod[]>({
+  const currentPayoutMods = useContractReader<PayoutMod[]>({
     contract: ContractName.ModStore,
     functionName: 'payoutModsOf',
     args:
-      projectId && fundingCycle
-        ? [projectId.toHexString(), fundingCycle.configured.toHexString()]
+      projectId && currentFC
+        ? [projectId.toHexString(), currentFC.configured.toHexString()]
         : null,
     updateOn: useMemo(
       () =>
-        projectId && fundingCycle
+        projectId && currentFC
           ? [
               {
                 contract: ContractName.ModStore,
                 eventName: 'SetPayoutMod',
                 topics: [
                   projectId.toHexString(),
-                  fundingCycle.configured.toHexString(),
+                  currentFC.configured.toHexString(),
                 ],
               },
             ]
           : [],
-      [projectId, fundingCycle],
+      [projectId, currentFC],
     ),
   })
 
-  const ticketMods = useContractReader<TicketMod[]>({
+  const queuedPayoutMods = useContractReader<PayoutMod[]>({
     contract: ContractName.ModStore,
-    functionName: 'ticketModsOf',
+    functionName: 'payoutModsOf',
     args:
-      projectId && fundingCycle
-        ? [projectId.toHexString(), fundingCycle.configured.toHexString()]
+      projectId && queuedFC
+        ? [projectId.toHexString(), queuedFC.configured.toHexString()]
         : null,
     updateOn: useMemo(
       () =>
-        projectId && fundingCycle
+        projectId && queuedFC
+          ? [
+              {
+                contract: ContractName.ModStore,
+                eventName: 'SetPayoutMod',
+                topics: [
+                  projectId.toHexString(),
+                  queuedFC.configured.toHexString(),
+                ],
+              },
+            ]
+          : [],
+      [projectId, queuedFC],
+    ),
+  })
+
+  const currentTicketMods = useContractReader<TicketMod[]>({
+    contract: ContractName.ModStore,
+    functionName: 'ticketModsOf',
+    args:
+      projectId && currentFC
+        ? [projectId.toHexString(), currentFC.configured.toHexString()]
+        : null,
+    updateOn: useMemo(
+      () =>
+        projectId && currentFC
           ? [
               {
                 contract: ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
                   projectId.toHexString(),
-                  fundingCycle.configured.toHexString(),
+                  currentFC.configured.toHexString(),
                 ],
               },
             ]
           : [],
-      [projectId, fundingCycle],
+      [projectId, currentFC],
     ),
   })
 
+  const queuedTicketMods = useContractReader<TicketMod[]>({
+    contract: ContractName.ModStore,
+    functionName: 'ticketModsOf',
+    args:
+      projectId && queuedFC
+        ? [projectId.toHexString(), queuedFC.configured.toHexString()]
+        : null,
+    updateOn: useMemo(
+      () =>
+        projectId && queuedFC
+          ? [
+              {
+                contract: ContractName.ModStore,
+                eventName: 'SetTicketMod',
+                topics: [
+                  projectId.toHexString(),
+                  queuedFC.configured.toHexString(),
+                ],
+              },
+            ]
+          : [],
+      [projectId, queuedFC],
+    ),
+  })
+
+  const tokenAddress = useContractReader<string>({
+    contract: ContractName.TicketBooth,
+    functionName: 'ticketsOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: useMemo(
+      () => [
+        {
+          contract: ContractName.TicketBooth,
+          eventName: 'Issue',
+          topics: projectId ? [projectId.toHexString()] : undefined,
+        },
+      ],
+      [],
+    ),
+  })
+  const ticketContract = useErc20Contract(tokenAddress)
+  const tokenSymbol = useContractReader<string>({
+    contract: ticketContract,
+    functionName: 'symbol',
+  })
+
   const metadata = useProjectMetadata(uri)
+
+  const balance = useContractReader<BigNumber>({
+    contract: ContractName.TerminalV1,
+    functionName: 'balanceOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: useMemo(
+      () =>
+        projectId
+          ? [
+              {
+                contract: ContractName.TerminalV1,
+                eventName: 'Pay',
+                topics: [[], projectId.toHexString()],
+              },
+              {
+                contract: ContractName.TerminalV1,
+                eventName: 'Tap',
+                topics: [[], projectId.toHexString()],
+              },
+            ]
+          : undefined,
+      [projectId],
+    ),
+  })
+
+  const balanceInCurrency = useMemo(
+    () =>
+      balance &&
+      converter.wadToCurrency(
+        balance,
+        currentFC?.currency.toNumber() as CurrencyOption,
+        0,
+      ),
+    [currentFC?.currency, balance, converter],
+  )
 
   // const canSetPayoutMods = useContractReader<string>({
   //   contract: ContractName.OperatorStore,
@@ -157,16 +286,27 @@ export default function Dashboard() {
   if (!projectId || !handle || !metadata) return null
 
   return (
-    <div style={layouts.maxWidth}>
-      <Project
-        handle={handle}
-        metadata={metadata}
-        isOwner={isOwner}
-        projectId={projectId}
-        fundingCycle={fundingCycle}
-        payoutMods={payoutMods}
-        ticketMods={ticketMods}
-      />
-    </div>
+    <ProjectContext.Provider
+      value={{
+        projectId,
+        owner,
+        isOwner,
+        handle,
+        metadata,
+        currentFC,
+        queuedFC,
+        currentPayoutMods,
+        currentTicketMods,
+        queuedPayoutMods,
+        queuedTicketMods,
+        tokenAddress,
+        tokenSymbol,
+        balanceInCurrency,
+      }}
+    >
+      <div style={layouts.maxWidth}>
+        <Project />
+      </div>
+    </ProjectContext.Provider>
   )
 }

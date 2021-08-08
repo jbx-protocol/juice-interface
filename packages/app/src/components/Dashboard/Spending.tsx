@@ -1,8 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Input, Modal, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -19,21 +19,17 @@ import { smallHeaderStyle } from './styles'
 
 export default function Spending({
   fundingCycle,
-  projectId,
   payoutMods,
-  balanceInCurrency,
-  isOwner,
 }: {
   fundingCycle: FundingCycle | undefined
-  projectId: BigNumber
   payoutMods: PayoutMod[] | undefined
-  balanceInCurrency: BigNumber | undefined
-  isOwner?: boolean
 }) {
   const { transactor, contracts } = useContext(UserContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const { balanceInCurrency, projectId, isOwner } = useContext(ProjectContext)
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -42,7 +38,8 @@ export default function Spending({
   const converter = useCurrencyConverter()
 
   function tap() {
-    if (!transactor || !contracts?.TerminalV1 || !fundingCycle) return
+    if (!transactor || !contracts?.TerminalV1 || !fundingCycle || !projectId)
+      return
 
     setLoadingWithdraw(true)
 

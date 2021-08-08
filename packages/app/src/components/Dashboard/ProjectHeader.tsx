@@ -1,32 +1,25 @@
 import { SettingOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 
-export default function ProjectHeader({
-  handle,
-  metadata,
-  projectId,
-  isOwner,
-}: {
-  handle: string
-  metadata: ProjectMetadata
-  projectId: BigNumber
-  isOwner?: boolean
-}) {
+export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] = useState<
     boolean
   >(false)
+
+  const { projectId, handle, metadata, isOwner } = useContext(ProjectContext)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const headerHeight = 120
+
+  if (!projectId) return null
 
   return (
     <div>
@@ -37,8 +30,8 @@ export default function ProjectHeader({
       >
         <div style={{ marginRight: 20, height: '100%' }}>
           <ProjectLogo
-            uri={metadata.logoUri}
-            name={metadata.name}
+            uri={metadata?.logoUri}
+            name={metadata?.name}
             size={headerHeight}
           />
         </div>
@@ -48,12 +41,12 @@ export default function ProjectHeader({
             style={{
               fontSize: '2.4rem',
               margin: 0,
-              color: metadata.name
+              color: metadata?.name
                 ? colors.text.primary
                 : colors.text.placeholder,
             }}
           >
-            {metadata.name || 'Untitled project'}
+            {metadata?.name || 'Untitled project'}
           </h1>
 
           <h3>
@@ -79,9 +72,9 @@ export default function ProjectHeader({
             </Space>
           </h3>
 
-          {metadata.description && (
+          {metadata?.description && (
             <p style={{ color: colors.text.tertiary }}>
-              {metadata.description}
+              {metadata?.description}
             </p>
           )}
         </div>

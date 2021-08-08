@@ -30,8 +30,8 @@ export default function EditProjectModal({
   onSuccess,
   onCancel,
 }: {
-  handle: string
-  metadata: ProjectMetadata
+  handle: string | undefined
+  metadata: ProjectMetadata | undefined
   projectId: BigNumber
   visible?: boolean
   onSuccess?: VoidFunction
@@ -49,7 +49,7 @@ export default function EditProjectModal({
       handle: handle,
       infoUrl: metadata?.infoUri,
       logoUrl: metadata?.logoUri,
-      description: metadata?.description
+      description: metadata?.description,
     })
   }, [handle, form, metadata])
 

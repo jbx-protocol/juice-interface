@@ -1,1 +1,1 @@
-module.exports = ["Active7DaysFundingCycleBallot","FundingCycles","Governance","ModStore","OperatorStore","Prices","Projects","TerminalDirectory","TerminalV1","TicketBooth"];
+module.exports = ["ProxyPaymentAddressManager"];

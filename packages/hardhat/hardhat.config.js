@@ -1,9 +1,13 @@
 const { utils } = require("ethers");
 const fs = require("fs");
 const chalk = require("chalk");
+const dotenv = require("dotenv");
 
+require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
+
+dotenv.config();
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
@@ -14,10 +18,7 @@ const defaultNetwork = "localhost";
 
 function mnemonic() {
   try {
-    return fs
-      .readFileSync("./mnemonic.txt")
-      .toString()
-      .trim();
+    return fs.readFileSync("./mnemonic.txt").toString().trim();
   } catch (e) {
     if (defaultNetwork !== "localhost") {
       console.log(
@@ -34,46 +35,46 @@ module.exports = {
   defaultNetwork,
   networks: {
     localhost: {
-      url: "http://localhost:8545"
+      url: "http://localhost:8545",
     },
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/" + infuraId,
       accounts: {
-        mnemonic: mnemonic()
-      }
+        mnemonic: mnemonic(),
+      },
     },
     mainnet: {
       url: "https://mainnet.infura.io/v3/" + infuraId,
       gasPrice: 50000000000,
       accounts: {
-        mnemonic: mnemonic()
-      }
+        mnemonic: mnemonic(),
+      },
     },
     ropsten: {
       url: "https://ropsten.infura.io/v3/" + infuraId,
       accounts: {
-        mnemonic: mnemonic()
-      }
+        mnemonic: mnemonic(),
+      },
     },
     kovan: {
       url: "https://kovan.infura.io/v3/" + infuraId,
       accounts: {
-        mnemonic: mnemonic()
-      }
+        mnemonic: mnemonic(),
+      },
     },
     goerli: {
       url: "https://goerli.infura.io/v3/" + infuraId,
       accounts: {
-        mnemonic: mnemonic()
-      }
+        mnemonic: mnemonic(),
+      },
     },
     xdai: {
       url: "https://dai.poa.network",
       gasPrice: 1000000000,
       accounts: {
-        mnemonic: mnemonic()
-      }
-    }
+        mnemonic: mnemonic(),
+      },
+    },
   },
   solidity: {
     version: "0.8.6",
@@ -81,20 +82,23 @@ module.exports = {
       optimizer: {
         enabled: true,
         // https://docs.soliditylang.org/en/v0.6.3/using-the-compiler.html
-        runs: 10000
-      }
-    }
+        runs: 10000,
+      },
+    },
   },
   mocha: {
     bail: true,
-    timeout: 6000
+    timeout: 6000,
   },
   gasReporter: {
     currency: "USD",
     // gasPrice: 21,
     enabled: !!process.env.REPORT_GAS,
-    showTimeSpent: true
-  }
+    showTimeSpent: true,
+  },
+  etherscan: {
+    apiKey: `${process.env.ETHERSCAN_API_KEY}`,
+  },
 };
 
 const DEBUG = true;
@@ -135,7 +139,7 @@ task("fundedwallet", "Create a wallet (pk) link and fund it with deployer?")
     const amount = taskArgs.amount ? taskArgs.amount : "1";
     const tx = {
       to: randomWallet.address,
-      value: ethers.utils.parseEther(amount)
+      value: ethers.utils.parseEther(amount),
     };
 
     // SEND USING LOCAL DEPLOYER MNEMONIC IF THERE IS ONE
@@ -272,10 +276,7 @@ task(
   async (_, { ethers }) => {
     const hdkey = require("ethereumjs-wallet/hdkey");
     const bip39 = require("bip39");
-    const mnemonic = fs
-      .readFileSync("./mnemonic.txt")
-      .toString()
-      .trim();
+    const mnemonic = fs.readFileSync("./mnemonic.txt").toString().trim();
     if (DEBUG) console.log("mnemonic", mnemonic);
     const seed = await bip39.mnemonicToSeed(mnemonic);
     if (DEBUG) console.log("seed", seed);
@@ -328,7 +329,7 @@ async function addr(ethers, addr) {
 
 task("accounts", "Prints the list of accounts", async (_, { ethers }) => {
   const accounts = await ethers.provider.listAccounts();
-  accounts.forEach(account => console.log(account));
+  accounts.forEach((account) => console.log(account));
 });
 
 task("blockNumber", "Prints the block number", async (_, { ethers }) => {
@@ -387,7 +388,7 @@ task("send", "Send ETH")
         "gwei"
       ).toHexString(),
       gasLimit: taskArgs.gasLimit ? taskArgs.gasLimit : 24000,
-      chainId: network.config.chainId
+      chainId: network.config.chainId,
     };
 
     if (taskArgs.data !== undefined) {

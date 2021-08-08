@@ -37,11 +37,11 @@ export default function FundingCyclePreview({
   )
 
   if (hasFundingTarget(fundingCycle)) {
-    if (isRecurring(fundingCycle)) {
+    if (isRecurring(fundingCycle) && fundingCycle.duration.gt(0)) {
       headerText = isEnded
         ? `#${fundingCycle.number.add(1).toString()} starts ${formattedEndTime}`
         : `${daysLeft} days until #${fundingCycle.number.add(1).toString()}`
-    } else headerText = daysLeft + 'd left'
+    } else if (fundingCycle.duration.gt(0)) headerText = daysLeft + 'd left'
   }
 
   return (
@@ -68,7 +68,7 @@ export default function FundingCyclePreview({
                 cursor: 'pointer',
               }}
             >
-              {hasFundingTarget(fundingCycle) ? (
+              {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) ? (
                 <span>Funding cycle #{fundingCycle.number.toString()}</span>
               ) : (
                 <span>Details</span>

@@ -35,9 +35,13 @@ export default function FundingCycleDetails({
       size="small"
       column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
     >
-      <Descriptions.Item label="Start">{formattedStartTime}</Descriptions.Item>
+      {fundingCycle.duration.gt(0) && (
+        <Descriptions.Item label="Start">
+          {formattedStartTime}
+        </Descriptions.Item>
+      )}
 
-      {hasFundingTarget(fundingCycle) && (
+      {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) && (
         <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
       )}
 

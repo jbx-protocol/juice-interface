@@ -1,9 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
+import { Button, Space } from 'antd'
+import ReconfigureBudgetModal from 'components/modals/ReconfigureBudgetModal'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
+import useContractReader from 'hooks/ContractReader'
+import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext, useState } from 'react'
@@ -34,12 +37,30 @@ export default function FundingCycles({
   isOwner?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
+  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
+    boolean
+  >(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
   const {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
+
+  const queuedCycle = useContractReader<FundingCycle>({
+    contract: ContractName.FundingCycles,
+    functionName: 'queuedOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    updateOn: projectId
+      ? [
+          {
+            contract: ContractName.FundingCycles,
+            eventName: 'Configure',
+            topics: [[], projectId.toHexString()],
+          },
+        ]
+      : undefined,
+  })
 
   const tab = (option: TabOption) => (
     <div
@@ -81,7 +102,7 @@ export default function FundingCycles({
         <QueuedFundingCycle
           isOwner={isOwner}
           projectId={projectId}
-          currentCycle={fundingCycle}
+          queuedCycle={queuedCycle}
           tokenSymbol={tokenSymbol}
         />
       )
@@ -119,11 +140,28 @@ export default function FundingCycles({
         />
         <Space style={{ fontSize: '.8rem' }} size="middle">
           {tab('current')}
-          {tab('upcoming')}
+          {fundingCycle?.duration.gt(0) ? tab('upcoming') : null}
           {tab('history')}
         </Space>
       </div>
       <div>{tabContent}</div>
+
+      {isOwner && (
+        <Button
+          style={{ marginTop: 20 }}
+          onClick={() => setReconfigureModalVisible(true)}
+          size="small"
+        >
+          Edit funding cycle
+        </Button>
+      )}
+
+      <ReconfigureBudgetModal
+        visible={reconfigureModalVisible}
+        onDone={() => setReconfigureModalVisible(false)}
+        fundingCycle={queuedCycle?.number.gt(0) ? queuedCycle : fundingCycle}
+        projectId={projectId}
+      />
     </div>
   )
 }

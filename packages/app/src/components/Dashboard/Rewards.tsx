@@ -24,17 +24,19 @@ import IssueTickets from './IssueTickets'
 
 export default function Rewards({
   totalOverflow,
-  tokenSymbol,
 }: {
   totalOverflow: BigNumber | undefined
-  tokenSymbol?: string
 }) {
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(UserContext)
 
-  const { projectId, currentFC, isOwner, tokenAddress } = useContext(
-    ProjectContext,
-  )
+  const {
+    projectId,
+    currentFC,
+    isOwner,
+    tokenAddress,
+    tokenSymbol,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -303,7 +305,8 @@ export default function Rewards({
                         <div>
                           {ticketsBalance?.gt(0)
                             ? formatWad(ticketsBalance ?? 0)
-                            : `0 ${tokenSymbol || 'tokens'} in your wallet`}{' '}
+                            : `0 ${tokenSymbol ||
+                                'tokens'} in your wallet`}{' '}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (

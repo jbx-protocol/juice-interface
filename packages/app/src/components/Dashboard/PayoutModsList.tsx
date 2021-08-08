@@ -92,7 +92,11 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  console.log('modsTotal', modsTotal)
+  const fee = adminFeePercent
+    ? fundingCycle?.target.sub(
+        fundingCycle.target.mul(200).div(adminFeePercent.add(200)),
+      )
+    : 0
 
   if (!fundingCycle) return null
 
@@ -124,11 +128,10 @@ export default function PayoutModsList({
                           }
                         />
                         {formatWad(
-                          fundingCycle.target
-                            .mul(mod.percent ?? 0)
-                            .div(10000)
-                            .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
-                            .div(200),
+                          fundingCycle?.target
+                            .sub(fee ?? 0)
+                            .mul(mod.percent)
+                            .div(10000),
                         )}
                         )
                       </>
@@ -157,11 +160,10 @@ export default function PayoutModsList({
                     }
                   />
                   {formatWad(
-                    fundingCycle.target
+                    fundingCycle?.target
+                      .sub(fee ?? 0)
                       .mul(ownerPercent)
-                      .div(10000)
-                      .div(200)
-                      .mul(BigNumber.from(200).sub(adminFeePercent ?? 0)),
+                      .div(10000),
                   )}
                   )
                 </>

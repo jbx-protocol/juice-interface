@@ -239,7 +239,7 @@ export default function ProjectActivity() {
               : -1,
           )
         : undefined,
-    [payEvents, redeemEvents],
+    [payEvents, redeemEvents, formatPayEvent, formatRedeemEvent],
   )
 
   return (

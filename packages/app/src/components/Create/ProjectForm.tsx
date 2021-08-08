@@ -54,9 +54,9 @@ export default function ProjectForm({
           name="logoUrl"
           initialUrl={form.getFieldValue('logoUrl')}
           onSuccess={logoUrl => {
-            form.setFieldsValue({ logoUrl })
-            // Unpin previous file
             const prevUrl = form.getFieldValue('logoUrl')
+            // Unpin previous file
+            form.setFieldsValue({ logoUrl })
             if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
           }}
         />

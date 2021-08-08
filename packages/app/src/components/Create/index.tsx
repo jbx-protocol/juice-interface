@@ -241,6 +241,7 @@ export default function Create() {
 
           return (
             <div
+              key={step.title}
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',

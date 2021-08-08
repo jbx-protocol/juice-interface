@@ -1,6 +1,7 @@
-import { SettingOutlined } from '@ant-design/icons'
+import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { Button, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
+import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -10,6 +11,7 @@ export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] = useState<
     boolean
   >(false)
+  const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
   const { projectId, handle, metadata, isOwner } = useContext(ProjectContext)
 
@@ -81,23 +83,37 @@ export default function ProjectHeader() {
 
         <div
           style={{
-            height: headerHeight,
             display: 'flex',
-            alignItems: 'baseline',
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            height: headerHeight,
             marginLeft: 20,
           }}
         >
-          <div style={{ color: colors.text.tertiary }}>
+          <div
+            style={{
+              color: colors.text.tertiary,
+              textAlign: 'right',
+              paddingRight: 10,
+            }}
+          >
             ID: {projectId.toNumber()}
           </div>
-          {isOwner && (
+
+          <div>
             <Button
-              style={{ marginLeft: 20 }}
-              onClick={() => setEditProjectModalVisible(true)}
-              icon={<SettingOutlined />}
+              onClick={() => setToolDrawerVisible(true)}
+              icon={<ToolOutlined />}
               type="text"
             ></Button>
-          )}
+            {isOwner && (
+              <Button
+                onClick={() => setEditProjectModalVisible(true)}
+                icon={<SettingOutlined />}
+                type="text"
+              ></Button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -108,6 +124,11 @@ export default function ProjectHeader() {
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}
+      />
+
+      <ProjectToolDrawerModal
+        visible={toolDrawerVisible}
+        onClose={() => setToolDrawerVisible(false)}
       />
     </div>
   )

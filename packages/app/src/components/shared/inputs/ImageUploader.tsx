@@ -2,12 +2,7 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
-import {
-  cidFromUrl,
-  ipfsCidUrl,
-  pinFileToIpfs,
-  unpinIpfsFileByCid,
-} from 'utils/ipfs'
+import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 export default function ImageUploader({
   initialUrl,

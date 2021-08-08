@@ -303,7 +303,7 @@ export default function Rewards({
                         <div>
                           {ticketsBalance?.gt(0)
                             ? formatWad(ticketsBalance ?? 0)
-                            : '0 in your wallet'}{' '}
+                            : `0 ${tokenSymbol || 'tokens'} in your wallet`}{' '}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (

@@ -2,7 +2,7 @@ import { Button, Modal } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Mod from 'components/shared/Mod'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
+import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -43,9 +43,7 @@ export default function PayoutModsList({
     }
   }, [mods])
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { owner } = useContext(ProjectContext)
 
   const adminFeePercent = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
@@ -91,9 +89,10 @@ export default function PayoutModsList({
     )
   }
 
-  // const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
+  const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
+  const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  // console.log('modsTotal', modsTotal)
+  console.log('modsTotal', modsTotal)
 
   if (!fundingCycle) return null
 
@@ -101,52 +100,75 @@ export default function PayoutModsList({
     <div>
       <TooltipLabel
         label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
-        tip="Available funds are distributed according to any payouts below. The rest will go to the project owner."
+        tip="Available funds are distributed according to any payouts below."
       />
-      {mods?.length ? (
-        mods.map((mod, i) => (
-          <div
-            key={`${mod.beneficiary ?? mod.percent}-${i}`}
-            style={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              marginBottom: 5,
-            }}
-          >
-            <Mod
-              mod={mod}
-              value={
-                <span style={{ fontWeight: 400 }}>
-                  {fromPermyriad(mod.percent)}%
-                  {!fundingCycle.target.eq(constants.MaxUint256) && (
-                    <>
-                      {' '}
-                      (
-                      <CurrencySymbol
-                        currency={
-                          fundingCycle.currency.toNumber() as CurrencyOption
-                        }
-                      />
-                      {formatWad(
-                        fundingCycle.target
-                          .mul(mod.percent ?? 0)
-                          .div(10000)
-                          .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
-                          .div(200),
-                      )}
-                      )
-                    </>
+      {mods?.length
+        ? mods.map((mod, i) => (
+            <div
+              key={`${mod.beneficiary ?? mod.percent}-${i}`}
+              style={{ marginBottom: 5 }}
+            >
+              <Mod
+                mod={mod}
+                isOwner={mod.beneficiary === owner}
+                value={
+                  <span style={{ fontWeight: 400 }}>
+                    {fromPermyriad(mod.percent)}%
+                    {!fundingCycle.target.eq(constants.MaxUint256) && (
+                      <>
+                        {' '}
+                        (
+                        <CurrencySymbol
+                          currency={
+                            fundingCycle.currency.toNumber() as CurrencyOption
+                          }
+                        />
+                        {formatWad(
+                          fundingCycle.target
+                            .mul(mod.percent ?? 0)
+                            .div(10000)
+                            .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
+                            .div(200),
+                        )}
+                        )
+                      </>
+                    )}
+                  </span>
+                }
+              />
+            </div>
+          ))
+        : null}
+
+      {ownerPercent > 0 && (
+        <Mod
+          mod={{ beneficiary: owner, percent: ownerPercent }}
+          isOwner
+          value={
+            <div style={{ fontWeight: 400 }}>
+              {fromPermyriad(ownerPercent)}%
+              {!fundingCycle.target.eq(constants.MaxUint256) && (
+                <>
+                  {' '}
+                  (
+                  <CurrencySymbol
+                    currency={
+                      fundingCycle.currency.toNumber() as CurrencyOption
+                    }
+                  />
+                  {formatWad(
+                    fundingCycle.target
+                      .mul(ownerPercent)
+                      .div(10000)
+                      .div(200)
+                      .mul(BigNumber.from(200).sub(adminFeePercent ?? 0)),
                   )}
-                </span>
-              }
-            />
-          </div>
-        ))
-      ) : (
-        <div style={{ color: colors.text.secondary }}>
-          100% to project owner
-        </div>
+                  )
+                </>
+              )}
+            </div>
+          }
+        />
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (

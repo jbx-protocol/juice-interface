@@ -1,14 +1,13 @@
-import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import Mod from 'components/shared/Mod'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatDate } from 'utils/formatDate'
 import { fromPermyriad } from 'utils/formatNumber'
 
 export default function TicketModsList({
@@ -26,6 +25,7 @@ export default function TicketModsList({
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
   const { transactor, contracts } = useContext(UserContext)
+  const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -36,10 +36,6 @@ export default function TicketModsList({
       lockedMods: mods?.filter(m => m.lockedUntil && m.lockedUntil > now) ?? [],
     }
   }, [mods])
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
@@ -78,37 +74,36 @@ export default function TicketModsList({
     )
   }
 
+  const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
+  const ownerPercent = 10000 - (modsTotal ?? 0)
+
   return (
     <div>
-      {mods?.length ? (
-        mods.map(m => (
-          <div
-            key={m.beneficiary ?? '' + m.percent}
-            style={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              marginBottom: 5,
-            }}
-          >
-            <div style={{ lineHeight: 1.4 }}>
-              <div style={{ fontWeight: 500 }}>
-                <FormattedAddress address={m.beneficiary} />:
-              </div>
-              {m.lockedUntil ? (
-                <div
-                  style={{ fontSize: '.8rem', color: colors.text.secondary }}
-                >
-                  <LockOutlined /> until{' '}
-                  {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
-                </div>
-              ) : null}
+      {mods?.length
+        ? mods.map(mod => (
+            <div
+              key={mod.beneficiary ?? '' + mod.percent}
+              style={{ marginBottom: 5 }}
+            >
+              <Mod
+                mod={mod}
+                value={fromPermyriad(mod.percent) + '%'}
+                isOwner={mod.beneficiary === owner}
+              />
             </div>
-            <div>{fromPermyriad(m.percent)}%</div>
-          </div>
-        ))
-      ) : (
-        <div style={{ color: colors.text.secondary }}>100% to project owner</div>
+          ))
+        : null}
+
+      {ownerPercent > 0 && (
+        <Mod
+          mod={{ beneficiary: owner, percent: ownerPercent }}
+          isOwner
+          value={
+            <span style={{ fontWeight: 400 }}>
+              {fromPermyriad(ownerPercent)}%
+            </span>
+          }
+        />
       )}
 
       {fundingCycle && projectId?.gt(0) && isOwner ? (

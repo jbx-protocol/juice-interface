@@ -12,7 +12,7 @@ export const weightedRate = (
   if (!fc || !wad) return
   const reserved = decodeFCMetadata(fc.metadata)?.reservedRate
 
-  if (!reserved) return
+  if (reserved === undefined) return
 
   return fromWad(
     fc.weight

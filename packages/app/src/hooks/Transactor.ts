@@ -52,7 +52,6 @@ export function useTransactor({
         if (options?.onDone) options.onDone()
         return false
       }
-      console.log('tappp', provider)
 
       if (!provider) return false
 

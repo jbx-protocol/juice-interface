@@ -1,8 +1,6 @@
-import { LockOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
-import ProjectHandle from 'components/shared/ProjectHandle'
+import Mod from 'components/shared/Mod'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -13,7 +11,6 @@ import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 
 import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
@@ -25,7 +22,9 @@ export default function PayoutModsList({
   isOwner,
 }: {
   mods: PayoutMod[] | undefined
-  fundingCycle: FundingCycle | undefined
+  fundingCycle:
+    | Pick<FundingCycle, 'target' | 'currency' | 'configured'>
+    | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
 }) {
@@ -92,6 +91,10 @@ export default function PayoutModsList({
     )
   }
 
+  // const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
+
+  // console.log('modsTotal', modsTotal)
+
   if (!fundingCycle) return null
 
   return (
@@ -101,9 +104,9 @@ export default function PayoutModsList({
         tip="Available funds are distributed according to any payouts below. The rest will go to the project owner."
       />
       {mods?.length ? (
-        mods.map((m, i) => (
+        mods.map((mod, i) => (
           <div
-            key={`${m.beneficiary ?? m.percent}-${i}`}
+            key={`${mod.beneficiary ?? mod.percent}-${i}`}
             style={{
               display: 'flex',
               alignItems: 'baseline',
@@ -111,63 +114,33 @@ export default function PayoutModsList({
               marginBottom: 5,
             }}
           >
-            <span style={{ lineHeight: 1.4 }}>
-              {m.projectId && BigNumber.from(m.projectId).gt(0) ? (
-                <div>
-                  <div style={{ fontWeight: 500 }}>
-                    @<ProjectHandle projectId={m.projectId} />:
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '.8rem',
-                      color: colors.text.secondary,
-                      marginLeft: 10,
-                    }}
-                  >
-                    <TooltipLabel
-                      label={'Beneficiary:'}
-                      tip={`This address will receive any tokens minted when the recipient project gets paid.`}
-                    />
-                    &nbsp;
-                    <FormattedAddress address={m.beneficiary} />
-                  </div>
-                </div>
-              ) : (
-                <div style={{ fontWeight: 500 }}>
-                  <FormattedAddress address={m.beneficiary} />:
-                </div>
-              )}
-              {m.lockedUntil ? (
-                <div
-                  style={{ fontSize: '.8rem', color: colors.text.secondary }}
-                >
-                  <LockOutlined /> until{' '}
-                  {formatDate(m.lockedUntil * 1000, 'MM-DD-yyyy')}
-                </div>
-              ) : null}{' '}
-            </span>
-            <span style={{ fontWeight: 400 }}>
-              {fromPermyriad(m.percent)}%
-              {!fundingCycle.target.eq(constants.MaxUint256) && (
-                <>
-                  {' '}
-                  (
-                  <CurrencySymbol
-                    currency={
-                      fundingCycle.currency.toNumber() as CurrencyOption
-                    }
-                  />
-                  {formatWad(
-                    fundingCycle.target
-                      .mul(m.percent ?? 0)
-                      .div(10000)
-                      .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
-                      .div(200),
+            <Mod
+              mod={mod}
+              value={
+                <span style={{ fontWeight: 400 }}>
+                  {fromPermyriad(mod.percent)}%
+                  {!fundingCycle.target.eq(constants.MaxUint256) && (
+                    <>
+                      {' '}
+                      (
+                      <CurrencySymbol
+                        currency={
+                          fundingCycle.currency.toNumber() as CurrencyOption
+                        }
+                      />
+                      {formatWad(
+                        fundingCycle.target
+                          .mul(mod.percent ?? 0)
+                          .div(10000)
+                          .mul(BigNumber.from(200).sub(adminFeePercent ?? 0))
+                          .div(200),
+                      )}
+                      )
+                    </>
                   )}
-                  )
-                </>
-              )}
-            </span>
+                </span>
+              }
+            />
           </div>
         ))
       ) : (

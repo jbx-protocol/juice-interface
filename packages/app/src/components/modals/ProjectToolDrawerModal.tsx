@@ -46,7 +46,7 @@ export default function ProjectToolDrawerModal({
 
     transactor(
       contracts.Projects,
-      'safeTransferFrom',
+      'safeTransferFrom(address,address,uint256)',
       [owner, fields.to, projectId.toHexString()],
       {
         onDone: () => setLoadingTransferOwnership(false),

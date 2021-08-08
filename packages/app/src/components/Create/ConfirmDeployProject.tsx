@@ -107,7 +107,7 @@ export default function ConfirmDeployProject() {
           <PayoutModsList
             mods={payoutMods}
             projectId={undefined}
-            fundingCycle={undefined}
+            fundingCycle={editingFC}
             isOwner={true}
           />
         )}

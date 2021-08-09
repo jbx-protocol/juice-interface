@@ -80,42 +80,6 @@ export default function ProjectActivity() {
         setRedeemEvents(res.data?.data?.redeemEvents),
       )
       .catch(err => console.log('Error getting redeem events', err))
-
-    // Load pay stats
-    axios
-      .post(
-        subgraphUrl,
-        {
-          query: formatGraphQuery<PayEvent>({
-            entity: 'payEvent',
-            keys: ['amount', 'caller'],
-            where: projectId
-              ? {
-                  key: 'projectId',
-                  value: projectId.toString(),
-                }
-              : undefined,
-          }),
-        },
-        { headers: { 'Content-Type': 'application/json' } },
-      )
-      .then((res: AxiosResponse<{ data: { payEvents: PayEvent[] } }>) => {
-        let payers: string[] = []
-        let payersMap: Record<string, number> = {}
-
-        res.data.data?.payEvents.forEach(e => {
-          if (!payers.includes(e.caller)) payers.push(e.caller)
-
-          payersMap[e.caller] =
-            (payersMap[e.caller] ?? 0) + parseFloat(fromWad(e.amount))
-        })
-
-        console.log('payers', {
-          count: payers.length,
-          amounts: payersMap,
-        })
-      })
-      .catch(err => console.log('Error getting pay events', err))
   }, [projectId])
 
   const smallHeaderStyle: CSSProperties = {

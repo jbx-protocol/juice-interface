@@ -44,26 +44,25 @@ export default function PayerStats() {
         { headers: { 'Content-Type': 'application/json' } },
       )
       .then((res: AxiosResponse<{ data: { payEvents: PayEvent[] } }>) => {
-        let payers: string[] = []
-        let payersMap: Record<string, number> = {}
+        let _payers: string[] = []
+        let _payerAmounts: Record<string, number> = {}
 
         res.data.data?.payEvents.forEach(e => {
-          if (!payers.includes(e.caller)) payers.push(e.caller)
+          if (!_payers.includes(e.caller)) _payers.push(e.caller)
 
-          payersMap[e.caller] =
-            (payersMap[e.caller] ?? 0) + parseFloat(fromWad(e.amount))
+          _payerAmounts[e.caller] =
+            (_payerAmounts[e.caller] ?? 0) + parseFloat(fromWad(e.amount))
         })
 
-        setPayers(payers.sort((a, b) => (payersMap[a] < payersMap[b] ? 1 : -1)))
-        setPayerAmounts(payersMap)
-
-        console.log('payers', {
-          count: payers.length,
-          amounts: payersMap,
-        })
+        setPayers(
+          _payers.sort((a, b) =>
+            _payerAmounts[a] < _payerAmounts[b] ? 1 : -1,
+          ),
+        )
+        setPayerAmounts(_payerAmounts)
       })
       .catch(err => console.log('Error getting pay events', err))
-  }, [projectId])
+  }, [projectId, setPayers, setPayerAmounts])
 
   return (
     <div style={{ padding: 80 }}>

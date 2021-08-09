@@ -8,9 +8,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
 export default function ProjectHeader() {
-  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [editProjectModalVisible, setEditProjectModalVisible] =
+    useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
   const { projectId, handle, metadata, isOwner } = useContext(ProjectContext)
@@ -97,7 +96,7 @@ export default function ProjectHeader() {
               paddingRight: 10,
             }}
           >
-            ID: {projectId.toNumber()}
+            ID: {projectId.toHexString()}
           </div>
 
           <div>

@@ -108,14 +108,20 @@ export default function Spending({
                 tip="The funds that can be withdrawn for this funding cycle. They won't roll over to the next funding cycle, so they should be withdrawn before this one ends."
               />
             </div>
-            <Button
-              type="ghost"
-              size="small"
-              loading={loadingWithdraw}
-              onClick={() => setWithdrawModalVisible(true)}
-            >
-              Distribute
-            </Button>
+            {projectId?.eq(7) ? (
+              <Button type="ghost" size="small" disabled>
+                Distribute
+              </Button>
+            ) : (
+              <Button
+                type="ghost"
+                size="small"
+                loading={loadingWithdraw}
+                onClick={() => setWithdrawModalVisible(true)}
+              >
+                Distribute
+              </Button>
+            )}
           </div>
           <div
             style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}

@@ -96,40 +96,11 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
-  const stakedTokenSupply = useContractReader<BigNumber>({
+  const totalSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
-    functionName: 'stakedTotalSupplyOf',
+    functionName: 'totalSupplyOf',
     args: [projectId?.toHexString()],
     valueDidChange: bigNumbersDiff,
-    updateOn: ticketsUpdateOn,
-  })
-  const unstakedTokenSupply = useContractReader<BigNumber>({
-    contract: ticketContract,
-    functionName: 'totalSupply',
-    valueDidChange: bigNumbersDiff,
-  })
-  const reservedTickets = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'reservedTicketBalanceOf',
-    args:
-      projectId && metadata?.reservedRate
-        ? [
-            projectId.toHexString(),
-            BigNumber.from(metadata.reservedRate).toHexString(),
-          ]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () => [
-        ...ticketsUpdateOn,
-        {
-          contract: ContractName.TerminalV1,
-          eventName: 'PrintReserveTickets',
-          topics: projectId ? [[], projectId.toHexString()] : undefined,
-        },
-      ],
-      [ticketsUpdateOn],
-    ),
   })
   const rewardAmount = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
@@ -192,10 +163,6 @@ export default function Rewards({
       [projectId],
     ),
   })
-
-  const totalSupply = stakedTokenSupply
-    ?.add(unstakedTokenSupply ?? 0)
-    .add(reservedTickets ?? 0)
 
   const sharePct = totalSupply?.gt(0)
     ? totalBalance?.mul(100).div(totalSupply)

@@ -9,7 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { PayEvent } from 'models/events/pay-event'
 import { RedeemEvent } from 'models/events/redeem-event'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { formatGraphQuery } from 'utils/graph'
 
@@ -131,7 +131,7 @@ export default function ProjectActivity() {
                 color: colors.text.secondary,
               }}
             >
-              {formatDate(BigNumber.from(e.timestamp).mul(1000))}
+              {formatHistoricalDate(BigNumber.from(e.timestamp).mul(1000))}
             </div>
             <div
               style={{
@@ -197,7 +197,7 @@ export default function ProjectActivity() {
                 color: colors.text.secondary,
               }}
             >
-              {formatDate(BigNumber.from(e.timestamp).mul(1000))}
+              {formatHistoricalDate(BigNumber.from(e.timestamp).mul(1000))}
             </div>
             <div
               style={{

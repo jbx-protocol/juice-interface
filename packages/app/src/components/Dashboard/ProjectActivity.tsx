@@ -10,7 +10,7 @@ import { PayEvent } from 'models/events/pay-event'
 import { RedeemEvent } from 'models/events/redeem-event'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/formatNumber'
 import { formatGraphQuery } from 'utils/graph'
 
 type DisplayActivity = {

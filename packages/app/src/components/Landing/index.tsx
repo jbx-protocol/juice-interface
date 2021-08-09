@@ -200,6 +200,14 @@ export default function Landing() {
                   handle: 'tiles',
                   uri: 'QmQnFfNowL2GsY567WEBXGJDqn1tD6hT3LJPTEAE4gQ7Zc',
                 },
+                {
+                  handle: 'sharkdao',
+                  uri: 'Qmf6dHEYQUvuaxtpVnvK36Tpn7gySVWMxytCvuJZC7qkJp',
+                },
+                {
+                  handle: 'wagmistudios',
+                  uri: 'QmWBSsoT1cuMsuxK4b8rXDvSBMJKBWafAeGrohFxxSzTFT',
+                },
               ]}
             />
           </div>

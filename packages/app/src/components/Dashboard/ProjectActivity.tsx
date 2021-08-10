@@ -223,6 +223,10 @@ export default function ProjectActivity() {
             __html: Autolinker.link(e.note, {
               sanitizeHtml: true,
               className: 'quiet',
+              truncate: {
+                length: 30,
+                location: 'smart',
+              },
             }),
           }}
         ></div>
@@ -367,7 +371,7 @@ export default function ProjectActivity() {
         )}
       </div>
 
-      {events.length % pageSize === 0 && !loadingActivity ? (
+      {events.length && events.length % pageSize === 0 && !loadingActivity ? (
         <div
           style={{
             textAlign: 'center',

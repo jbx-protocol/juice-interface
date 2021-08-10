@@ -27,9 +27,9 @@ export default function Router() {
         <Route path="/projects">
           <Projects />
         </Route>
-        <Route path="/p/:handle/stats">
+        {/* <Route path="/p/:handle/stats">
           <PayerStats />
-        </Route>
+        </Route> */}
         <Route path="/p/:handle">
           <Dashboard />
         </Route>

@@ -43,12 +43,11 @@ a {
 }
 
 a.quiet {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: inherit;
+  font-weight: 500;
 
   &:hover {
     color: var(--text-primary);
-    opacity: 0.7;
   }
 }
 

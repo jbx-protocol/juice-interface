@@ -222,6 +222,7 @@ export default function ProjectActivity() {
           dangerouslySetInnerHTML={{
             __html: Autolinker.link(e.note, {
               sanitizeHtml: true,
+              className: 'quiet',
             }),
           }}
         ></div>

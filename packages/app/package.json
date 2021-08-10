@@ -11,6 +11,7 @@
     "@uniswap/sdk": "^3.0.3",
     "@walletconnect/web3-provider": "^1.3.2",
     "antd": "^4.16.7",
+    "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.5.1",
     "burner-provider": "^1.0.38",

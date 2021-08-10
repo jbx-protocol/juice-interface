@@ -34,8 +34,8 @@ export default function RichImgPreview({
           <img
             src={src}
             style={{
-              width: width ?? 100,
-              height: height ?? 100,
+              maxWidth: width ?? 100,
+              maxHeight: height ?? 100,
               ...style,
             }}
           />,

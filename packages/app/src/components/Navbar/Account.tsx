@@ -23,7 +23,7 @@ export default function Account() {
       <Row gutter={10} align="middle">
         {userAddress && (
           <Col>
-            <Balance userAddress={userAddress} />
+            <Balance address={userAddress} showEthPrice />
           </Col>
         )}
         {userAddress && (

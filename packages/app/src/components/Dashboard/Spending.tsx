@@ -1,4 +1,6 @@
-import { Button, Input, Modal, Space } from 'antd'
+import { CrownFilled } from '@ant-design/icons'
+import { Button, Input, Modal, Space, Tooltip } from 'antd'
+import Balance from 'components/Navbar/Balance'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -29,7 +31,9 @@ export default function Spending({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, isOwner } = useContext(ProjectContext)
+  const { balanceInCurrency, projectId, isOwner, owner } = useContext(
+    ProjectContext,
+  )
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -120,14 +124,25 @@ export default function Spending({
           <div
             style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}
           >
-            <CurrencySymbol
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
-            />
-            {formatWad(fundingCycle.tapped) || '0'}
-            {hasFundingTarget(fundingCycle) && (
-              <span>/{formatWad(fundingCycle.target)} </span>
-            )}{' '}
-            withdrawn
+            <div>
+              <CurrencySymbol
+                currency={fundingCycle.currency.toNumber() as CurrencyOption}
+              />
+              {formatWad(fundingCycle.tapped) || '0'}
+              {hasFundingTarget(fundingCycle) && (
+                <span>/{formatWad(fundingCycle.target)} </span>
+              )}{' '}
+              withdrawn
+            </div>
+
+            <div>
+              <Tooltip title="Project owner balance">
+                <Space>
+                  <Balance address={owner} />
+                  <CrownFilled /> owner balance
+                </Space>
+              </Tooltip>
+            </div>
           </div>
         </div>
 

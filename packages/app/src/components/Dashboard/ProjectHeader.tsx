@@ -28,6 +28,9 @@ export default function ProjectHeader() {
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <div style={{ marginRight: 20, height: '100%' }}>
@@ -39,17 +42,40 @@ export default function ProjectHeader() {
         </div>
 
         <div style={{ flex: 1 }}>
-          <h1
+          <div
             style={{
-              fontSize: '2.4rem',
-              margin: 0,
-              color: metadata?.name
-                ? colors.text.primary
-                : colors.text.placeholder,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            {metadata?.name || 'Untitled project'}
-          </h1>
+            <h1
+              style={{
+                fontSize: '2.4rem',
+                margin: 0,
+                color: metadata?.name
+                  ? colors.text.primary
+                  : colors.text.placeholder,
+              }}
+            >
+              {metadata?.name || 'Untitled project'}
+            </h1>
+
+            <div>
+              <Button
+                onClick={() => setToolDrawerVisible(true)}
+                icon={<ToolOutlined />}
+                type="text"
+              ></Button>
+              {isOwner && (
+                <Button
+                  onClick={() => setEditProjectModalVisible(true)}
+                  icon={<SettingOutlined />}
+                  type="text"
+                ></Button>
+              )}
+            </div>
+          </div>
 
           <h3>
             <Space size="middle">
@@ -86,7 +112,6 @@ export default function ProjectHeader() {
             display: 'flex',
             justifyContent: 'space-between',
             flexDirection: 'column',
-            height: headerHeight,
             marginLeft: 20,
           }}
         >
@@ -98,21 +123,6 @@ export default function ProjectHeader() {
             }}
           >
             ID: {projectId.toNumber()}
-          </div>
-
-          <div>
-            <Button
-              onClick={() => setToolDrawerVisible(true)}
-              icon={<ToolOutlined />}
-              type="text"
-            ></Button>
-            {isOwner && (
-              <Button
-                onClick={() => setEditProjectModalVisible(true)}
-                icon={<SettingOutlined />}
-                type="text"
-              ></Button>
-            )}
           </div>
         </div>
       </div>

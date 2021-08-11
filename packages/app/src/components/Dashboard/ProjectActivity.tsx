@@ -245,7 +245,7 @@ export default function ProjectActivity() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', marginTop: 5 }}>
+      <div style={{ display: 'flex', marginTop: 5, overflowX: 'scroll' }}>
         <RichImgPreview src={parseLink(e.note)} style={{ marginRight: 10 }} />
 
         <div

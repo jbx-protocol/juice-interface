@@ -6,7 +6,7 @@ module.exports = [
   'OperatorStore',
   'Prices',
   'Projects',
-  'ProxyPaymentAddressMaanger',
+  'ProxyPaymentAddressManager',
   'TerminalDirectory',
   'TerminalV1',
   'TicketBooth',

@@ -5,13 +5,12 @@ import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
+import { amountSubFee } from 'utils/math'
 
 import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
 
@@ -31,7 +30,8 @@ export default function PayoutModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -42,13 +42,6 @@ export default function PayoutModsList({
       lockedMods: mods?.filter(m => m.lockedUntil && m.lockedUntil > now) ?? [],
     }
   }, [mods])
-
-  const { owner } = useContext(ProjectContext)
-
-  const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'fee',
-  })
 
   useLayoutEffect(() => setEditingMods(editableMods), [editableMods])
 
@@ -92,11 +85,7 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const fee = adminFeePercent
-    ? fundingCycle?.target.sub(
-        fundingCycle.target.mul(200).div(adminFeePercent.add(200)),
-      )
-    : 0
+  const targetSubFee = amountSubFee(fundingCycle?.target, adminFeePercent)
 
   if (!fundingCycle) return null
 
@@ -127,13 +116,7 @@ export default function PayoutModsList({
                             fundingCycle.currency.toNumber() as CurrencyOption
                           }
                         />
-                        {formatWad(
-                          fundingCycle?.target
-                            .sub(fee ?? 0)
-                            .mul(mod.percent)
-                            .div(10000),
-                        )}
-                        )
+                        {formatWad(targetSubFee?.mul(mod.percent).div(10000))})
                       </>
                     )}
                   </span>
@@ -159,13 +142,7 @@ export default function PayoutModsList({
                       fundingCycle.currency.toNumber() as CurrencyOption
                     }
                   />
-                  {formatWad(
-                    fundingCycle?.target
-                      .sub(fee ?? 0)
-                      .mul(ownerPercent)
-                      .div(10000),
-                  )}
-                  )
+                  {formatWad(targetSubFee?.mul(ownerPercent).div(10000))})
                 </>
               )}
             </div>

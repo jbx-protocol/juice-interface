@@ -15,7 +15,9 @@ import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
+import { amountSubFee, feeForAmount } from 'utils/math'
 
+import { fromPerbicent } from '../../utils/formatNumber'
 import PayoutModsList from './PayoutModsList'
 import { smallHeaderStyle } from './styles'
 
@@ -26,14 +28,13 @@ export default function Spending({
   fundingCycle: FundingCycle | undefined
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, isOwner, owner } = useContext(
-    ProjectContext,
-  )
+  const { balanceInCurrency, projectId, isOwner, owner } =
+    useContext(ProjectContext)
 
   const [tapAmount, setTapAmount] = useState<string>()
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -104,7 +105,7 @@ export default function Spending({
                 <CurrencySymbol
                   currency={fundingCycle.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(withdrawable) || '0'}{' '}
+                {formatWad(amountSubFee(withdrawable)) || '0'}{' '}
               </span>
               <TooltipLabel
                 style={smallHeaderStyle(colors)}
@@ -167,11 +168,40 @@ export default function Spending({
       >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div style={{ marginBottom: 10 }}>
-            Available to withdraw:{' '}
-            <CurrencySymbol
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
-            />
-            {formatWad(withdrawable)}
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              Available funds:{' '}
+              <div>
+                <CurrencySymbol
+                  currency={fundingCycle.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(withdrawable)}
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>JBX Fee ({fromPerbicent(adminFeePercent)}%):</div>
+              <div>
+                -{' '}
+                <CurrencySymbol
+                  currency={fundingCycle.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(feeForAmount(withdrawable) ?? 0)}
+              </div>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontWeight: 500,
+              }}
+            >
+              <div>Amount to withdraw:</div>
+              <div>
+                <CurrencySymbol
+                  currency={fundingCycle.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(amountSubFee(withdrawable, adminFeePercent) ?? 0)}
+              </div>
+            </div>
           </div>
           {payoutMods?.length ? (
             <div>

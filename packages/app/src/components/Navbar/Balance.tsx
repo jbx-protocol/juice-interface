@@ -1,13 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import EthPrice from 'components/Dashboard/EthPrice'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { usePoller } from 'hooks/Poller'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
-import CurrencySymbol from '../shared/CurrencySymbol'
 import { readProvider } from '../../constants/readProvider'
+import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Balance({
   address,

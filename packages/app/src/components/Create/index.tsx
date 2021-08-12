@@ -1,77 +1,53 @@
-import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
-import Modal from 'antd/lib/modal/Modal'
-import Project from 'components/Dashboard/Project'
-import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
-import { constants, utils } from 'ethers'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import {
-  useAppSelector,
-  useEditingFundingCycleSelector,
-} from 'hooks/AppSelector'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
-import { CurrencyOption } from 'models/currency-option'
-import { FCMetadata, FundingCycle } from 'models/funding-cycle'
-import { FCProperties } from 'models/funding-cycle-properties'
-import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useLayoutEffect, useState } from 'react'
-import { editingProjectActions } from 'redux/slices/editingProject'
-import {
-  fromPerbicent,
-  fromPermille,
-  fromWad,
-  parsePerbicent,
-} from 'utils/formatNumber'
-import {
-  encodeFCMetadata,
-  hasFundingTarget,
-  isRecurring,
-} from 'utils/fundingCycle'
-import {
-  cidFromUrl,
-  editMetadataForCid,
-  logoNameForHandle,
-  metadataNameForHandle,
-  uploadProjectMetadata,
-} from 'utils/ipfs'
-import { feeForAmount } from 'utils/math'
+import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons';
+import { BigNumber } from '@ethersproject/bignumber';
+import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
+import Modal from 'antd/lib/modal/Modal';
+import Project from 'components/Dashboard/Project';
+import { NetworkContext } from 'contexts/networkContext';
+import { ProjectContext } from 'contexts/projectContext';
+import { ThemeContext } from 'contexts/themeContext';
+import { UserContext } from 'contexts/userContext';
+import { constants, utils } from 'ethers';
+import { useAppDispatch } from 'hooks/AppDispatch';
+import { useAppSelector, useEditingFundingCycleSelector } from 'hooks/AppSelector';
+import { CurrencyOption } from 'models/currency-option';
+import { FCMetadata, FundingCycle } from 'models/funding-cycle';
+import { FCProperties } from 'models/funding-cycle-properties';
+import { PayoutMod, TicketMod } from 'models/mods';
+import { useCallback, useContext, useLayoutEffect, useState } from 'react';
+import { editingProjectActions } from 'redux/slices/editingProject';
+import { fromPerbicent, fromPermille, fromWad, parsePerbicent } from 'utils/formatNumber';
+import { encodeFCMetadata, hasFundingTarget, isRecurring } from 'utils/fundingCycle';
+import { cidFromUrl, editMetadataForCid, logoNameForHandle, metadataNameForHandle, uploadProjectMetadata } from 'utils/ipfs';
+import { feeForAmount } from 'utils/math';
 
-import BudgetForm from './BudgetForm'
-import ConfirmDeployProject from './ConfirmDeployProject'
-import IncentivesForm from './IncentivesForm'
-import PayModsForm from './PayModsForm'
-import ProjectForm, { ProjectFormFields } from './ProjectForm'
-import TicketingForm, { TicketingFormFields } from './TicketingForm'
+import BudgetForm from './BudgetForm';
+import ConfirmDeployProject from './ConfirmDeployProject';
+import IncentivesForm from './IncentivesForm';
+import PayModsForm from './PayModsForm';
+import ProjectForm, { ProjectFormFields } from './ProjectForm';
+import TicketingForm, { TicketingFormFields } from './TicketingForm';
+
 
 export default function Create() {
-  const { transactor, contracts, userAddress } = useContext(UserContext)
+  const { transactor, contracts, userAddress, adminFeePercent } =
+    useContext(UserContext)
   const { signerNetwork } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [projectFormModalVisible, setProjectFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [deployProjectModalVisible, setDeployProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [payModsModalVisible, setPayModsFormModalVisible] =
+    useState<boolean>(false)
+  const [budgetFormModalVisible, setBudgetFormModalVisible] =
+    useState<boolean>(false)
+  const [projectFormModalVisible, setProjectFormModalVisible] =
+    useState<boolean>(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
+    useState<boolean>(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
+    useState<boolean>(false)
+  const [deployProjectModalVisible, setDeployProjectModalVisible] =
+    useState<boolean>(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -82,11 +58,6 @@ export default function Create() {
     payoutMods: editingPayoutMods,
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
-
-  const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'fee',
-  })
 
   const incrementStep = (index: number) => {
     if (index < currentStep) return

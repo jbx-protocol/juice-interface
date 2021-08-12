@@ -12,6 +12,7 @@ import {
 } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
@@ -23,10 +24,10 @@ import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
   fromPermyriad,
-  mulPercent,
   parsePermyriad,
   parseWad,
 } from 'utils/formatNumber'
+import { amountSubFee } from 'utils/math'
 
 import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
@@ -65,6 +66,8 @@ export default function ProjectPayoutMods({
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
+
+  const { adminFeePercent } = useContext(UserContext)
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -213,16 +216,15 @@ export default function ProjectPayoutMods({
                       maxWidth: 100,
                     }}
                   >
-                    <Space>
+                    <Space size="large">
                       <span>{fromPermyriad(mod.percent)}%</span>
                       {parseWad(target).lt(constants.MaxUint256) && (
                         <span>
                           <CurrencySymbol currency={currency} />
                           {formatWad(
-                            mulPercent(
-                              parseWad(target),
-                              fromPermyriad(mod.percent),
-                            ),
+                            amountSubFee(parseWad(target), adminFeePercent)
+                              ?.mul(mod.percent)
+                              .div(10000),
                           )}
                         </span>
                       )}
@@ -262,7 +264,7 @@ export default function ProjectPayoutMods({
         </div>
       )
     },
-    [mods, colors, radii],
+    [mods, colors, radii, adminFeePercent],
   )
 
   if (!mods) return null
@@ -406,23 +408,6 @@ export default function ProjectPayoutMods({
               }
             />
           ) : (
-            // <Form.Item
-            //   name="beneficiary"
-            //   label="Address"
-            //   rules={[
-            //     {
-            //       validator: (rule, value) => {
-            //         if (!utils.isAddress(value))
-            //           return Promise.reject('Not a valid ETH address.')
-
-            //         return Promise.resolve()
-            //       },
-            //     },
-            //     { required: true },
-            //   ]}
-            // >
-            //   <Input placeholder={constants.AddressZero} />
-            // </Form.Item>
             <FormItems.ProjectHandle
               name="project"
               requireState="exists"
@@ -462,14 +447,14 @@ export default function ProjectPayoutMods({
                   suffix="%"
                 />
               </span>
+
               {parseWad(target).lt(constants.MaxUint256) && (
                 <span style={{ color: colors.text.primary }}>
                   <CurrencySymbol currency={currency} />
                   {formatWad(
-                    mulPercent(
-                      parseWad(target),
-                      (editingPercent ?? 0).toString(),
-                    ),
+                    amountSubFee(parseWad(target), adminFeePercent)
+                      ?.mul(Math.floor((editingPercent ?? 0) * 100))
+                      .div(10000),
                   )}
                 </span>
               )}

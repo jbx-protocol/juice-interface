@@ -1,15 +1,14 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Space, Statistic } from 'antd'
 import PayoutModsList from 'components/Dashboard/PayoutModsList'
 import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
-import useContractReader from 'hooks/ContractReader'
-import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
+import { useContext } from 'react'
 import {
   formattedNum,
   formatWad,
@@ -27,10 +26,7 @@ export default function ConfirmDeployProject() {
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
-  const adminFeePercent = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'fee',
-  })
+  const { adminFeePercent } = useContext(UserContext)
 
   const formattedTargetWithFee = () => {
     if (adminFeePercent === undefined) return

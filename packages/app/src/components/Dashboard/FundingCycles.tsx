@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd'
-import ReconfigureBudgetModal from 'components/modals/ReconfigureBudgetModal'
+import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ThemeOption } from 'constants/theme/theme-option'
@@ -19,12 +19,20 @@ export default function FundingCycles({
   showCurrentDetail?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
-  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
-    boolean
-  >(false)
+  const [reconfigureModalVisible, setReconfigureModalVisible] =
+    useState<boolean>(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const { projectId, currentFC, isOwner, queuedFC } = useContext(ProjectContext)
+  const {
+    projectId,
+    currentFC,
+    isOwner,
+    queuedFC,
+    queuedPayoutMods,
+    queuedTicketMods,
+    currentPayoutMods,
+    currentTicketMods,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -109,11 +117,17 @@ export default function FundingCycles({
         </Button>
       )}
 
-      <ReconfigureBudgetModal
+      <ReconfigureFCModal
         visible={reconfigureModalVisible}
-        onDone={() => setReconfigureModalVisible(false)}
         fundingCycle={queuedFC?.number.gt(0) ? queuedFC : currentFC}
+        payoutMods={
+          queuedFC?.number.gt(0) ? queuedPayoutMods : currentPayoutMods
+        }
+        ticketMods={
+          queuedFC?.number.gt(0) ? queuedTicketMods : currentTicketMods
+        }
         projectId={projectId}
+        onDone={() => setReconfigureModalVisible(false)}
       />
     </div>
   )

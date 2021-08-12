@@ -6,15 +6,21 @@ import { useLayoutEffect, useState } from 'react'
 
 export default function FormattedAddress({
   address,
-  shortened,
 }: {
   address: string | undefined
-  shortened?: boolean
 }) {
   const [ensName, setEnsName] = useState<string>()
 
   useLayoutEffect(() => {
     const read = async () => {
+      if (
+        address?.toLowerCase() ===
+        '0x64931F06d3266049Bf0195346973762E6996D764'.toLowerCase()
+      ) {
+        setEnsName('tiledao.eth')
+        return
+      }
+
       if (!address || !utils.isAddress(address)) {
         setEnsName(undefined)
         return

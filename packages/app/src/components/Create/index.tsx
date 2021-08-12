@@ -1,34 +1,51 @@
-import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons';
-import { BigNumber } from '@ethersproject/bignumber';
-import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd';
-import { useForm } from 'antd/lib/form/Form';
-import Modal from 'antd/lib/modal/Modal';
-import Project from 'components/Dashboard/Project';
-import { NetworkContext } from 'contexts/networkContext';
-import { ProjectContext } from 'contexts/projectContext';
-import { ThemeContext } from 'contexts/themeContext';
-import { UserContext } from 'contexts/userContext';
-import { constants, utils } from 'ethers';
-import { useAppDispatch } from 'hooks/AppDispatch';
-import { useAppSelector, useEditingFundingCycleSelector } from 'hooks/AppSelector';
-import { CurrencyOption } from 'models/currency-option';
-import { FCMetadata, FundingCycle } from 'models/funding-cycle';
-import { FCProperties } from 'models/funding-cycle-properties';
-import { PayoutMod, TicketMod } from 'models/mods';
-import { useCallback, useContext, useLayoutEffect, useState } from 'react';
-import { editingProjectActions } from 'redux/slices/editingProject';
-import { fromPerbicent, fromPermille, fromWad, parsePerbicent } from 'utils/formatNumber';
-import { encodeFCMetadata, hasFundingTarget, isRecurring } from 'utils/fundingCycle';
-import { cidFromUrl, editMetadataForCid, logoNameForHandle, metadataNameForHandle, uploadProjectMetadata } from 'utils/ipfs';
-import { feeForAmount } from 'utils/math';
+import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import Modal from 'antd/lib/modal/Modal'
+import Project from 'components/Dashboard/Project'
+import { NetworkContext } from 'contexts/networkContext'
+import { ProjectContext } from 'contexts/projectContext'
+import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
+import { constants, utils } from 'ethers'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import {
+  useAppSelector,
+  useEditingFundingCycleSelector,
+} from 'hooks/AppSelector'
+import { CurrencyOption } from 'models/currency-option'
+import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FCProperties } from 'models/funding-cycle-properties'
+import { PayoutMod, TicketMod } from 'models/mods'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import { editingProjectActions } from 'redux/slices/editingProject'
+import {
+  fromPerbicent,
+  fromPermille,
+  fromWad,
+  parsePerbicent,
+} from 'utils/formatNumber'
+import {
+  encodeFCMetadata,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
+import {
+  cidFromUrl,
+  editMetadataForCid,
+  logoNameForHandle,
+  metadataNameForHandle,
+  uploadProjectMetadata,
+} from 'utils/ipfs'
+import { feeForAmount } from 'utils/math'
 
-import BudgetForm from './BudgetForm';
-import ConfirmDeployProject from './ConfirmDeployProject';
-import IncentivesForm from './IncentivesForm';
-import PayModsForm from './PayModsForm';
-import ProjectForm, { ProjectFormFields } from './ProjectForm';
-import TicketingForm, { TicketingFormFields } from './TicketingForm';
-
+import BudgetForm from './BudgetForm'
+import ConfirmDeployProject from './ConfirmDeployProject'
+import IncentivesForm from './IncentivesForm'
+import PayModsForm from './PayModsForm'
+import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function Create() {
   const { transactor, contracts, userAddress, adminFeePercent } =
@@ -177,7 +194,13 @@ export default function Create() {
           projectId: m.projectId || BigNumber.from(0).toHexString(),
           allocator: constants.AddressZero,
         })),
-        [],
+        editingTicketMods.map(m => ({
+          preferUnstaked: false,
+          percent: BigNumber.from(m.percent).toHexString(),
+          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
+          beneficiary: m.beneficiary || constants.AddressZero,
+          allocator: constants.AddressZero,
+        })),
       ],
       {
         onDone: () => setLoadingCreate(false),

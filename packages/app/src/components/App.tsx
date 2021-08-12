@@ -4,18 +4,17 @@ import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useJuiceTheme } from 'hooks/JuiceTheme'
+import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 
 import Navbar from './Navbar'
 import Router from './Router'
-import { NetworkName } from 'models/network-name'
 
 function App() {
   const juiceTheme = useJuiceTheme()
 
-  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] = useState<
-    boolean
-  >()
+  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
+    useState<boolean>()
 
   const { signerNetwork } = useContext(NetworkContext)
 

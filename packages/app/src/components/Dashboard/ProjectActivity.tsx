@@ -209,7 +209,7 @@ export default function ProjectActivity() {
               textAlign: 'right',
             }}
           >
-            <FormattedAddress address={e.beneficiary} shortened={false} />
+            <FormattedAddress address={e.beneficiary} />
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@ export default function ProjectActivity() {
               textAlign: 'right',
             }}
           >
-            <FormattedAddress address={e.beneficiary} shortened={false} />
+            <FormattedAddress address={e.beneficiary} />
           </div>
         </div>
       </div>

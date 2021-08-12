@@ -14,7 +14,7 @@ export default function ProjectHandle({
   const handle = useContractReader<string>({
     contract: ContractName.Projects,
     functionName: 'handleOf',
-    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
+    args: projectId ? [BigNumber.from(projectId ?? 0).toHexString()] : null,
     formatter: useCallback(val => utils.parseBytes32String(val), []),
   })
 

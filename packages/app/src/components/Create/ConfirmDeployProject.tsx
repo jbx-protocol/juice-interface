@@ -14,10 +14,9 @@ import {
   formatWad,
   fromPerbicent,
   fromPermille,
-  fromWad,
 } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
-import { feeForAmount } from 'utils/math'
+import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
 export default function ConfirmDeployProject() {
@@ -27,24 +26,6 @@ export default function ConfirmDeployProject() {
     state => state.editingProject,
   )
   const { adminFeePercent } = useContext(UserContext)
-
-  const formattedTargetWithFee = () => {
-    if (adminFeePercent === undefined) return
-
-    const targetAmount = fromWad(editingFC?.target)
-
-    if (targetAmount === undefined) return
-
-    return (
-      <span>
-        <CurrencySymbol
-          currency={editingFC?.currency.toNumber() as CurrencyOption}
-        />
-        {formattedNum(targetAmount)} (+
-        {formatWad(feeForAmount(editingFC?.target, adminFeePercent))})
-      </span>
-    )
-  }
 
   return (
     <Space size="large" direction="vertical">
@@ -67,8 +48,23 @@ export default function ConfirmDeployProject() {
             suffix="days"
           />
           <Statistic
-            title="Amount (+5% admin fee)"
-            valueRender={() => formattedTargetWithFee()}
+            title="Amount"
+            valueRender={() => (
+              <span>
+                <CurrencySymbol
+                  currency={editingFC?.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(editingFC?.target)}{' '}
+                <span style={{ fontSize: '0.8rem' }}>
+                  (
+                  <CurrencySymbol
+                    currency={editingFC?.currency.toNumber() as CurrencyOption}
+                  />
+                  {formatWad(amountSubFee(editingFC?.target, adminFeePercent))}{' '}
+                  after JBX fee)
+                </span>
+              </span>
+            )}
           />
         </Space>
       )}

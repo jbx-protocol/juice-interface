@@ -12,10 +12,12 @@ export default function IncentivesForm({
   initialDiscountRate,
   initialBondingCurveRate,
   onSave,
+  useAdvanced
 }: {
   initialDiscountRate: string
   initialBondingCurveRate: string
   onSave: (discountRate: string, bondingCurveRate: string) => void
+  useAdvanced?: boolean
 }) {
   const [discountRate, setDiscountRate] = useState<string>()
   const [bondingCurveRate, setBondingCurveRate] = useState<string>()
@@ -26,6 +28,7 @@ export default function IncentivesForm({
   useLayoutEffect(() => {
     setDiscountRate(initialDiscountRate)
     setBondingCurveRate(initialBondingCurveRate)
+    setShowAdvanced(useAdvanced)
   }, [])
 
   const [showAdvanced, setShowAdvanced] = useState<boolean>()

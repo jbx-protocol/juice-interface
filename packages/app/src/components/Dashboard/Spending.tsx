@@ -147,12 +147,18 @@ export default function Spending({
           </div>
         </div>
 
-        <PayoutModsList
-          mods={payoutMods}
-          fundingCycle={fundingCycle}
-          projectId={projectId}
-          isOwner={isOwner}
-        />
+        <div>
+          <TooltipLabel
+            label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
+            tip="Available funds are distributed according to any payouts below."
+          />
+          <PayoutModsList
+            mods={payoutMods}
+            fundingCycle={fundingCycle}
+            projectId={projectId}
+            isOwner={isOwner}
+          />
+        </div>
       </Space>
 
       <Modal

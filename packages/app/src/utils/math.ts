@@ -37,3 +37,11 @@ export const amountSubFee = (
   if (!adminFeePercent || !amount) return
   return amount.sub(feeForAmount(amount, adminFeePercent) ?? 0)
 }
+
+export const amountAddFee = (
+  amount?: BigNumber,
+  adminFeePercent?: BigNumber,
+) => {
+  if (!adminFeePercent || !amount) return
+  return amount.add(feeForAmount(amount, adminFeePercent) ?? 0)
+}

@@ -91,10 +91,6 @@ export default function PayoutModsList({
 
   return (
     <div>
-      <TooltipLabel
-        label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
-        tip="Available funds are distributed according to any payouts below."
-      />
       {mods?.length
         ? mods.map((mod, i) => (
             <div

@@ -41,7 +41,6 @@ export default function TicketingForm({
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved
-          name="reserved"
           value={form.getFieldValue('reserved')}
           onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
         />

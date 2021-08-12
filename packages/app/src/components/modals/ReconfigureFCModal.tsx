@@ -1,0 +1,439 @@
+import { CaretRightFilled } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import { Drawer, DrawerProps, Space, Statistic } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import Modal from 'antd/lib/modal/Modal'
+import PayoutModsList from 'components/Dashboard/PayoutModsList'
+import TicketModsList from 'components/Dashboard/TicketModsList'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
+import { constants } from 'ethers'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { CurrencyOption } from 'models/currency-option'
+import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FCProperties } from 'models/funding-cycle-properties'
+import { PayoutMod, TicketMod } from 'models/mods'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import { editingProjectActions } from 'redux/slices/editingProject'
+import {
+  formattedNum,
+  formatWad,
+  fromPerbicent,
+  fromPermille,
+  fromWad,
+  parsePerbicent,
+} from 'utils/formatNumber'
+import {
+  decodeFCMetadata,
+  hasFundingTarget,
+  isRecurring,
+} from 'utils/fundingCycle'
+import { amountSubFee, feeForAmount } from 'utils/math'
+
+import BudgetForm from '../Create/BudgetForm'
+import IncentivesForm from '../Create/IncentivesForm'
+import PayModsForm from '../Create/PayModsForm'
+import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
+
+export default function ReconfigureFCModal({
+  fundingCycle,
+  projectId,
+  visible,
+  onDone,
+  payoutMods,
+  ticketMods,
+}: {
+  visible?: boolean
+  fundingCycle: FundingCycle | undefined
+  projectId: BigNumber | undefined
+  payoutMods: PayoutMod[] | undefined
+  ticketMods: TicketMod[] | undefined
+  onDone?: VoidFunction
+}) {
+  const { transactor, contracts } = useContext(UserContext)
+  const { colors, radii } = useContext(ThemeContext).theme
+  const [currentStep, setCurrentStep] = useState<number>()
+  const [payModsModalVisible, setPayModsFormModalVisible] =
+    useState<boolean>(false)
+  const [budgetFormModalVisible, setBudgetFormModalVisible] =
+    useState<boolean>(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
+    useState<boolean>(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
+    useState<boolean>(false)
+  useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>()
+  const [ticketingForm] = useForm<TicketingFormFields>()
+  const editingFC = useEditingFundingCycleSelector()
+  const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
+  const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
+  const dispatch = useAppDispatch()
+  const { adminFeePercent } = useContext(UserContext)
+
+  const resetTicketingForm = () =>
+    ticketingForm.setFieldsValue({
+      reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
+    })
+
+  const onPayModsFormSaved = (mods: PayoutMod[]) => setEditingPayoutMods(mods)
+
+  const onBudgetFormSaved = (
+    currency: CurrencyOption,
+    target: string,
+    duration: string,
+  ) => {
+    dispatch(editingProjectActions.setTarget(target))
+    dispatch(editingProjectActions.setDuration(duration))
+    dispatch(editingProjectActions.setCurrency(currency))
+  }
+
+  const onTicketingFormSaved = (mods: TicketMod[]) => {
+    const fields = ticketingForm.getFieldsValue(true)
+    dispatch(editingProjectActions.setReserved(fields.reserved))
+    setEditingTicketMods(mods)
+  }
+
+  const onIncentivesFormSaved = (
+    discountRate: string,
+    bondingCurveRate: string,
+  ) => {
+    dispatch(editingProjectActions.setDiscountRate(discountRate))
+    dispatch(editingProjectActions.setBondingCurveRate(bondingCurveRate))
+  }
+
+  useLayoutEffect(() => {
+    if (!fundingCycle || !ticketMods || !payoutMods) return
+    const metadata = decodeFCMetadata(fundingCycle.metadata)
+    if (!metadata) return
+    dispatch(
+      editingProjectActions.setFundingCycle({
+        ...fundingCycle,
+        reserved: BigNumber.from(metadata.reservedRate),
+        bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
+      }),
+    )
+    setEditingTicketMods(ticketMods)
+    setEditingPayoutMods(payoutMods)
+    resetTicketingForm()
+  }, [payoutMods, ticketMods])
+
+  async function reconfigure() {
+    if (!transactor || !contracts?.TerminalV1 || !fundingCycle || !projectId)
+      return
+
+    setLoading(true)
+
+    const properties: Record<keyof FCProperties, string> = {
+      target: editingFC.target.toHexString(),
+      currency: editingFC.currency.toHexString(),
+      duration: editingFC.duration.toHexString(),
+      discountRate: editingFC.discountRate.toHexString(),
+      cycleLimit: BigNumber.from(0).toHexString(),
+      ballot: fundingCycle.ballot,
+    }
+
+    const metadata: Omit<FCMetadata, 'version'> = {
+      reservedRate: editingFC.reserved.toNumber(),
+      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
+    }
+
+    transactor(
+      contracts.TerminalV1,
+      'configure',
+      [
+        projectId.toHexString(),
+        properties,
+        metadata,
+        editingPayoutMods.map(m => ({
+          preferUnstaked: false,
+          percent: BigNumber.from(m.percent).toHexString(),
+          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
+          beneficiary: m.beneficiary || constants.AddressZero,
+          projectId: m.projectId || BigNumber.from(0).toHexString(),
+          allocator: constants.AddressZero,
+        })),
+        editingTicketMods.map(m => ({
+          preferUnstaked: false,
+          percent: BigNumber.from(m.percent).toHexString(),
+          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
+          beneficiary: m.beneficiary || constants.AddressZero,
+          allocator: constants.AddressZero,
+        })),
+      ],
+      {
+        onDone: () => {
+          setLoading(false)
+          if (onDone) onDone()
+        },
+      },
+    )
+  }
+
+  const drawerStyle: Partial<DrawerProps> = {
+    placement: 'right',
+    width: Math.min(640, window.innerWidth * 0.9),
+  }
+
+  const buildSteps = useCallback(
+    (steps: { title: string; callback: VoidFunction }[]) => (
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        {steps.map((step, i) => {
+          const active = currentStep === i
+
+          return (
+            <div
+              key={step.title}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                padding: 10,
+                borderRadius: radii.sm,
+                border:
+                  '1px solid ' +
+                  (active
+                    ? colors.stroke.action.primary
+                    : colors.stroke.action.secondary),
+              }}
+              onClick={() => {
+                setCurrentStep(i)
+                step.callback()
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: active ? 600 : 500,
+                  color: active
+                    ? colors.text.action.primary
+                    : colors.text.primary,
+                }}
+              >
+                {step.title}
+              </div>
+              <div
+                style={{
+                  color: active
+                    ? colors.icon.action.primary
+                    : colors.icon.primary,
+                }}
+              >
+                <CaretRightFilled />
+              </div>
+            </div>
+          )
+        })}
+      </Space>
+    ),
+    [currentStep, colors, radii],
+  )
+
+  return (
+    <Modal
+      visible={visible}
+      onOk={reconfigure}
+      confirmLoading={loading}
+      onCancel={onDone}
+      okText="Save reconfiguration"
+      width={600}
+    >
+      <div>
+        <h1 style={{ marginBottom: 20 }}>Reconfigure funding</h1>
+
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <div>
+            {buildSteps([
+              {
+                title: 'Funding',
+                callback: () => setBudgetFormModalVisible(true),
+              },
+              {
+                title: 'Spending',
+                callback: () => setPayModsFormModalVisible(true),
+              },
+              {
+                title: 'Reserved tokens',
+                callback: () => setTicketingFormModalVisible(true),
+              },
+              ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
+                ? [
+                    {
+                      title: 'Incentives',
+                      callback: () => setIncentivesFormModalVisible(true),
+                    },
+                  ]
+                : []),
+            ])}
+          </div>
+
+          {hasFundingTarget(editingFC) && (
+            <Space size="large">
+              <Statistic
+                title="Duration"
+                value={formattedNum(editingFC?.duration)}
+                suffix="days"
+              />
+              <Statistic
+                title="Amount"
+                valueRender={() => (
+                  <span>
+                    <CurrencySymbol
+                      currency={
+                        editingFC?.currency.toNumber() as CurrencyOption
+                      }
+                    />
+                    {formatWad(editingFC.target)}{' '}
+                    <span style={{ fontSize: '0.8rem' }}>
+                      (
+                      <CurrencySymbol
+                        currency={
+                          editingFC?.currency.toNumber() as CurrencyOption
+                        }
+                      />
+                      {formatWad(
+                        amountSubFee(editingFC?.target, adminFeePercent),
+                      )}{' '}
+                      after JBX fee)
+                    </span>
+                  </span>
+                )}
+              />
+            </Space>
+          )}
+
+          <Space size="large" align="end">
+            <Statistic
+              title="Reserved tokens"
+              value={fromPerbicent(editingFC?.reserved)}
+              suffix="%"
+            />
+            {editingFC &&
+              isRecurring(editingFC) &&
+              hasFundingTarget(editingFC) && (
+                <Statistic
+                  title="Discount rate"
+                  value={fromPermille(editingFC?.discountRate)}
+                  suffix="%"
+                />
+              )}
+            {editingFC &&
+              isRecurring(editingFC) &&
+              hasFundingTarget(editingFC) && (
+                <Statistic
+                  title="Bonding curve rate"
+                  value={fromPerbicent(editingFC?.bondingCurveRate)}
+                  suffix="%"
+                />
+              )}
+          </Space>
+
+          <div>
+            <h4>Spending</h4>
+            <PayoutModsList
+              mods={editingPayoutMods}
+              projectId={undefined}
+              fundingCycle={editingFC}
+              isOwner={true}
+            />
+          </div>
+
+          <div>
+            <h4>Reserved token allocations</h4>
+            <TicketModsList
+              mods={editingTicketMods}
+              projectId={undefined}
+              fundingCycle={undefined}
+              isOwner={true}
+            />
+          </div>
+        </Space>
+      </div>
+
+      <Drawer
+        visible={budgetFormModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          setBudgetFormModalVisible(false)
+          setCurrentStep(undefined)
+        }}
+        destroyOnClose
+      >
+        <BudgetForm
+          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+          initialTarget={fromWad(editingFC.target)}
+          initialDuration={editingFC?.duration.toString()}
+          onSave={async (currency, target, duration) => {
+            onBudgetFormSaved(currency, target, duration)
+            setBudgetFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={payModsModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          setPayModsFormModalVisible(false)
+          setCurrentStep(undefined)
+        }}
+        destroyOnClose
+      >
+        <PayModsForm
+          initialMods={editingPayoutMods}
+          currency={editingFC.currency.toNumber() as CurrencyOption}
+          target={editingFC.target}
+          onSave={async mods => {
+            onPayModsFormSaved(mods)
+            setPayModsFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={ticketingFormModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          resetTicketingForm()
+          setTicketingFormModalVisible(false)
+          setCurrentStep(undefined)
+        }}
+      >
+        <TicketingForm
+          form={ticketingForm}
+          initialMods={editingTicketMods}
+          onSave={async mods => {
+            await ticketingForm.validateFields()
+            onTicketingFormSaved(mods)
+            setTicketingFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={incentivesFormModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          setIncentivesFormModalVisible(false)
+          setCurrentStep(undefined)
+        }}
+      >
+        <IncentivesForm
+          initialDiscountRate={fromPermille(editingFC.discountRate)}
+          initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+          useAdvanced
+          onSave={async (discountRate: string, bondingCurveRate: string) => {
+            await ticketingForm.validateFields()
+            onIncentivesFormSaved(discountRate, bondingCurveRate)
+            setIncentivesFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+    </Modal>
+  )
+}

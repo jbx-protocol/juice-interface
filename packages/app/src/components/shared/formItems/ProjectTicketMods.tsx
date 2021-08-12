@@ -1,19 +1,19 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import { Button, Col, DatePicker, Form, Input, Modal, Row, Space } from 'antd'
+import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants, utils } from 'ethers'
+import { utils } from 'ethers'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
-import FormattedAddress from '../FormattedAddress'
 
+import { FormItems } from '.'
+import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-import EthAddress from './EthAddress'
-import { FormItems } from '.'
+import { ProjectContext } from 'contexts/projectContext'
 
 export default function ProjectTicketMods({
   name,
@@ -32,6 +32,7 @@ export default function ProjectTicketMods({
     lockedUntil: moment.Moment
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
+  const { owner } = useContext(ProjectContext)
 
   const {
     theme: { colors, radii },
@@ -217,19 +218,32 @@ export default function ProjectTicketMods({
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {mods.map((v, i) => modInput(v, i))}
         </Space>
-        {mods.length && total > 100 ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: colors.text.secondary,
+          }}
+        >
           <div style={{ textAlign: 'right' }}>
-            <span style={{ color: colors.text.warn }}>
+            <span
+              style={{
+                color: total > 100 ? colors.text.warn : colors.text.secondary,
+              }}
+            >
               Total:{' '}
               {total
                 .toString()
                 .split('.')
                 .map((x, i) => (i > 0 ? x[0] : x))
                 .join('.')}
+              %
             </span>
-            <span style={{ color: colors.text.secondary }}>/100%</span>
           </div>
-        ) : null}
+          <div>
+            {100 - total}% to <FormattedAddress address={owner} />
+          </div>
+        </div>
         <Button
           type="dashed"
           onClick={() => {

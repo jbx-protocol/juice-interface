@@ -35,6 +35,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
+import { ProjectContext } from 'contexts/projectContext'
 
 type ModType = 'project' | 'address'
 
@@ -68,6 +69,7 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { adminFeePercent } = useContext(UserContext)
+  const { owner } = useContext(ProjectContext)
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -146,7 +148,7 @@ export default function ProjectPayoutMods({
             {mod.projectId?.gt(0) ? (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
                 <Col span={5}>
-                  <label>Project</label>{' '}
+                  <label>Project:</label>{' '}
                 </Col>
                 <Col span={19}>
                   <div
@@ -165,7 +167,7 @@ export default function ProjectPayoutMods({
             ) : (
               <Row gutter={gutter} style={{ width: '100%' }} align="middle">
                 <Col span={5}>
-                  <label>Address</label>{' '}
+                  <label>Address:</label>{' '}
                 </Col>
                 <Col span={19}>
                   <div
@@ -186,7 +188,7 @@ export default function ProjectPayoutMods({
             {mod.projectId?.gt(0) ? (
               <Row>
                 <Col span={5}>
-                  <label>Beneficiary</label>
+                  <label>Beneficiary:</label>
                 </Col>
                 <Col span={19}>
                   <span style={{ cursor: 'pointer' }}>
@@ -198,7 +200,7 @@ export default function ProjectPayoutMods({
 
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
               <Col span={5}>
-                <label>Percentage</label>
+                <label>Percentage:</label>
               </Col>
               <Col span={19}>
                 <div
@@ -336,19 +338,32 @@ export default function ProjectPayoutMods({
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {mods.map((v, i) => modInput(v, i))}
         </Space>
-        {mods.length && total > 100 ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: colors.text.secondary,
+          }}
+        >
           <div style={{ textAlign: 'right' }}>
-            <span style={{ color: colors.text.warn }}>
+            <span
+              style={{
+                color: total > 100 ? colors.text.warn : colors.text.secondary,
+              }}
+            >
               Total:{' '}
               {total
                 .toString()
                 .split('.')
                 .map((x, i) => (i > 0 ? x[0] : x))
                 .join('.')}
+              %
             </span>
-            <span style={{ color: colors.text.secondary }}>/100%</span>
           </div>
-        ) : null}
+          <div>
+            {100 - total}% to <FormattedAddress address={owner} />
+          </div>
+        </div>
         <Button
           type="dashed"
           onClick={() => {

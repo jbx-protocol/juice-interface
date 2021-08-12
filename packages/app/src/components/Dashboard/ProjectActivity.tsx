@@ -27,6 +27,16 @@ type ActivityEvent =
   | (PayEvent & { type: EventType.pay })
   | (RedeemEvent & { type: EventType.redeem })
 
+// Maps a project id to an internal map of payment event overrides.
+let payEventOverrides = new Map<string, Map<string, string>>([
+  [
+    '10',
+    new Map<string, string>([
+      ['Minted WikiToken for Page ID', 'WikiToken minted 🌐'],
+    ]),
+  ],
+])
+
 export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
   const [events, setEvents] = useState<ActivityEvent[]>([])
@@ -35,6 +45,9 @@ export default function ProjectActivity() {
   const [loadingActivity, setLoadingActivity] = useState<boolean>()
 
   const { projectId, tokenSymbol } = useContext(ProjectContext)
+
+  const usePayEventOverrides =
+    projectId && payEventOverrides.has(projectId.toString())
 
   const pageSize = 100
 
@@ -159,6 +172,24 @@ export default function ProjectActivity() {
     }
   }
 
+  const formatPayEventOverride = (e: PayEvent) => {
+    if (!projectId) {
+      return e.note
+    }
+
+    let override
+    payEventOverrides
+      .get(projectId.toString())
+      ?.forEach((value: string, key: string) => {
+        if (e.note.includes(key)) {
+          override = value
+          return
+        }
+      })
+
+    return override ? override : e.note
+  }
+
   const formatPayEvent = (e: PayEvent) => (
     <div
       style={{
@@ -220,14 +251,17 @@ export default function ProjectActivity() {
         <div
           style={{ color: colors.text.secondary }}
           dangerouslySetInnerHTML={{
-            __html: Autolinker.link(e.note, {
-              sanitizeHtml: true,
-              className: 'quiet',
-              truncate: {
-                length: 30,
-                location: 'smart',
+            __html: Autolinker.link(
+              usePayEventOverrides ? formatPayEventOverride(e) : e.note,
+              {
+                sanitizeHtml: true,
+                className: 'quiet',
+                truncate: {
+                  length: 30,
+                  location: 'smart',
+                },
               },
-            }),
+            ),
           }}
         ></div>
       </div>

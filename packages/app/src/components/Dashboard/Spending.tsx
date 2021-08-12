@@ -105,7 +105,7 @@ export default function Spending({
                 <CurrencySymbol
                   currency={fundingCycle.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(amountSubFee(withdrawable)) || '0'}{' '}
+                {formatWad(amountSubFee(withdrawable, adminFeePercent)) || '0'}{' '}
               </span>
               <TooltipLabel
                 style={smallHeaderStyle(colors)}

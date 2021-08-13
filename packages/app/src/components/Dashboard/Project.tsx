@@ -71,11 +71,7 @@ export default function Project({
             {canPrintPreminedTickets && isOwner && (
               <PrintPremined projectId={projectId} />
             )}
-            {projectId.eq(7) ? (
-              <div style={{ opacity: 0.5 }}>Pay temporarily disabled</div>
-            ) : (
-              <Pay />
-            )}
+            <Pay />
           </Space>
         </Col>
       </Row>

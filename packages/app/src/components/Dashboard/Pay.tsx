@@ -19,9 +19,8 @@ export default function Pay() {
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const { projectId, currentFC, metadata, tokenSymbol } = useContext(
-    ProjectContext,
-  )
+  const { projectId, currentFC, metadata, tokenSymbol } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -82,7 +81,7 @@ export default function Pay() {
           <Button
             style={{ width: '100%' }}
             type="primary"
-            disabled={currentFC.configured.eq(0)}
+            disabled={currentFC.configured.eq(0) || projectId.eq(7)}
             onClick={weiPayAmt ? pay : undefined}
           >
             Pay

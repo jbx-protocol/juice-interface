@@ -32,7 +32,7 @@ let payEventOverrides = new Map<string, Map<string, string>>([
   [
     '10',
     new Map<string, string>([
-      ['Minted WikiToken for Page ID', 'WikiToken minted 🌐'],
+      ['Minted WikiToken for Page ID', 'WikiToken minted'],
     ]),
   ],
 ])

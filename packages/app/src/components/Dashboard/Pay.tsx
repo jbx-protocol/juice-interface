@@ -81,7 +81,7 @@ export default function Pay() {
           <Button
             style={{ width: '100%' }}
             type="primary"
-            disabled={currentFC.configured.eq(0) || projectId.eq(7)}
+            disabled={currentFC.configured.eq(0)}
             onClick={weiPayAmt ? pay : undefined}
           >
             Pay

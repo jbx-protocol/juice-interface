@@ -23,8 +23,8 @@ export const weightedRate = (
 }
 
 export const feeForAmount = (
-  amount?: BigNumber,
-  adminFeePercent?: BigNumber,
+  amount: BigNumber | undefined,
+  adminFeePercent: BigNumber | undefined,
 ) => {
   if (!adminFeePercent || !amount) return
   return amount.sub(amount.mul(200).div(adminFeePercent.add(200)))

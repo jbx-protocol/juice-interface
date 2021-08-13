@@ -190,7 +190,7 @@ export default function Spending({
                 <CurrencySymbol
                   currency={fundingCycle.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(feeForAmount(withdrawable) ?? 0)}
+                {formatWad(feeForAmount(withdrawable, adminFeePercent) ?? 0)}
               </div>
             </div>
             <div

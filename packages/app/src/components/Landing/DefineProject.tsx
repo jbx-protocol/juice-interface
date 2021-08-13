@@ -111,6 +111,7 @@ export default function DefineProject() {
                   'The amount of funding your project needs per funding cycle to keep going.',
               }}
               hideLabel
+              includeFee
             />
             <FormItems.ProjectDuration
               name="duration"

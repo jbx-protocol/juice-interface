@@ -4,6 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
+import { detailedTimeString } from 'utils/formatTime'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
@@ -28,6 +29,9 @@ export default function FundingCyclePreview({
     .div(secsPerDay)
     .add(fundingCycle.duration)
     .sub(today)
+  const endTime = fundingCycle.start
+    .add(fundingCycle.duration.mul(secsPerDay))
+    .mul(1000)
   const isEnded = daysLeft.lte(0)
 
   let headerText = ''
@@ -40,8 +44,11 @@ export default function FundingCyclePreview({
     if (isRecurring(fundingCycle) && fundingCycle.duration.gt(0)) {
       headerText = isEnded
         ? `#${fundingCycle.number.add(1).toString()} starts ${formattedEndTime}`
-        : `${daysLeft} days until #${fundingCycle.number.add(1).toString()}`
-    } else if (fundingCycle.duration.gt(0)) headerText = daysLeft + 'd left'
+        : `${detailedTimeString(endTime)} until #${fundingCycle.number
+            .add(1)
+            .toString()}`
+    } else if (fundingCycle.duration.gt(0))
+      headerText = detailedTimeString(endTime) + ' left'
   }
 
   return (
@@ -50,15 +57,13 @@ export default function FundingCyclePreview({
         style={{
           background: 'transparent',
           border: 'none',
-          margin: 0,
-          padding: 0,
         }}
         className="minimal"
         defaultActiveKey={showDetail ? '0' : undefined}
       >
         <CollapsePanel
           key={'0'}
-          style={{ border: 'none', padding: 0 }}
+          style={{ border: 'none' }}
           header={
             <div
               style={{
@@ -69,7 +74,7 @@ export default function FundingCyclePreview({
               }}
             >
               {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) ? (
-                <span>Funding cycle #{fundingCycle.number.toString()}</span>
+                <span>Cycle #{fundingCycle.number.toString()}</span>
               ) : (
                 <span>Details</span>
               )}

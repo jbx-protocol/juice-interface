@@ -13,12 +13,14 @@ export default function ProjectTarget({
   onCurrencyChange,
   disabled,
   formItemProps,
+  includeFee,
 }: {
   value: string | undefined
   onValueChange: (val: string | undefined) => void
   currency: CurrencyOption
   onCurrencyChange: (val: CurrencyOption) => void
   disabled?: boolean
+  includeFee?: boolean
 } & FormItemExt) {
   return (
     <Form.Item
@@ -34,6 +36,7 @@ export default function ProjectTarget({
         onCurrencyChange={onCurrencyChange}
         disabled={disabled}
         placeholder="0"
+        includeFee={includeFee}
       />
     </Form.Item>
   )

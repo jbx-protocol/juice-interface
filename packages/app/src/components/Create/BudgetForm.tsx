@@ -89,6 +89,7 @@ export default function BudgetForm({
             onValueChange={val => setTarget(val || '0')}
             currency={currency}
             onCurrencyChange={setCurrency}
+            includeFee
           />
         )}
         <Form.Item>

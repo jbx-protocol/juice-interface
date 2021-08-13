@@ -12,12 +12,8 @@ export default function CurrentFundingCycle({
 }: {
   showCurrentDetail?: boolean
 }) {
-  const {
-    projectId,
-    currentFC,
-    currentPayoutMods,
-    currentTicketMods,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC, currentPayoutMods, currentTicketMods } =
+    useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -28,18 +24,18 @@ export default function CurrentFundingCycle({
   return (
     <div style={{ position: 'relative' }}>
       <CardSection padded style={{ marginBottom: 10 }}>
-        <Spending fundingCycle={currentFC} payoutMods={currentPayoutMods} />
-      </CardSection>
-      <CardSection padded style={{ marginBottom: 10 }}>
-        <ReservedTokens
-          fundingCycle={currentFC}
-          ticketMods={currentTicketMods}
-        />
-      </CardSection>
-      <CardSection padded>
         <FundingCyclePreview
           fundingCycle={currentFC}
           showDetail={showCurrentDetail}
+        />
+      </CardSection>
+      <CardSection padded style={{ marginBottom: 10 }}>
+        <Spending fundingCycle={currentFC} payoutMods={currentPayoutMods} />
+      </CardSection>
+      <CardSection padded>
+        <ReservedTokens
+          fundingCycle={currentFC}
+          ticketMods={currentTicketMods}
         />
       </CardSection>
       <div

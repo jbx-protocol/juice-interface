@@ -17,6 +17,7 @@ export default function BudgetTargetInput({
   onCurrencyChange,
   disabled,
   placeholder,
+  includeFee,
 }: {
   currency: CurrencyOption
   value: string | undefined
@@ -24,6 +25,7 @@ export default function BudgetTargetInput({
   onCurrencyChange?: (currency: CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
+  includeFee?: boolean
 }) {
   const { adminFeePercent } = useContext(UserContext)
   const {
@@ -63,13 +65,15 @@ export default function BudgetTargetInput({
         }
         onChange={value => onValueChange(value?.toString())}
       />
-      <div style={{ color: colors.text.primary, marginBottom: 10 }}>
-        <span style={{ fontWeight: 500 }}>
-          <CurrencySymbol currency={currency} />
-          {formatWad(amountSubFee(parseWad(value), adminFeePercent))}
-        </span>{' '}
-        after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
-      </div>
+      {includeFee && (
+        <div style={{ color: colors.text.primary, marginBottom: 10 }}>
+          <span style={{ fontWeight: 500 }}>
+            <CurrencySymbol currency={currency} />
+            {formatWad(amountSubFee(parseWad(value), adminFeePercent))}
+          </span>{' '}
+          after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
+        </div>
+      )}
     </div>
   )
 }

@@ -110,7 +110,9 @@ export default function Spending({
               <TooltipLabel
                 style={smallHeaderStyle(colors)}
                 label="AVAILABLE"
-                tip="The funds that can be withdrawn for this funding cycle. They won't roll over to the next funding cycle, so they should be withdrawn before this one ends."
+                tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
+                  adminFeePercent,
+                )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
               />
             </div>
             <Button
@@ -223,38 +225,47 @@ export default function Spending({
             <p>Funds will go to the project owner.</p>
           )}
 
-          <Input
-            name="withdrawable"
-            placeholder="0"
-            suffix={
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <span style={{ marginRight: 8 }}>
-                  {currencyName(
-                    fundingCycle.currency.toNumber() as CurrencyOption,
-                  )}
-                </span>
-                <InputAccessoryButton
-                  content="MAX"
-                  onClick={() => setTapAmount(fromWad(withdrawable))}
-                />
-              </div>
-            }
-            type="number"
-            value={tapAmount}
-            max={fromWad(withdrawable)}
-            onChange={e => setTapAmount(e.target.value)}
-          />
-          {fundingCycle.currency.eq(1) && (
-            <div style={{ textAlign: 'right' }}>
-              {formatWad(converter.usdToWei(tapAmount)) || 0}{' '}
-              <CurrencySymbol currency={0} />
+          <div>
+            <Input
+              name="withdrawable"
+              placeholder="0"
+              suffix={
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{ marginRight: 8 }}>
+                    {currencyName(
+                      fundingCycle.currency.toNumber() as CurrencyOption,
+                    )}
+                  </span>
+                  <InputAccessoryButton
+                    content="MAX"
+                    onClick={() => setTapAmount(fromWad(withdrawable))}
+                  />
+                </div>
+              }
+              type="number"
+              value={tapAmount}
+              onChange={e => setTapAmount(e.target.value)}
+            />
+            <div style={{ color: colors.text.primary, marginBottom: 10 }}>
+              <span style={{ fontWeight: 500 }}>
+                <CurrencySymbol currency={0} />
+                {formatWad(
+                  amountSubFee(
+                    fundingCycle.currency.eq(1)
+                      ? converter.usdToWei(tapAmount)
+                      : parseWad(tapAmount),
+                    adminFeePercent,
+                  ),
+                )}
+              </span>{' '}
+              after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
             </div>
-          )}
+          </div>
         </Space>
       </Modal>
     </div>

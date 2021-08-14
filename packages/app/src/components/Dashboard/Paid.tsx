@@ -212,7 +212,7 @@ export default function Paid() {
           </div>
         )}
 
-        <div style={{ marginTop: 4 }}>
+        <div style={{ marginTop: 4, textAlign: 'right' }}>
           <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
             <CurrencySymbol currency={0} />
             {formatWad(ownerBalance)}{' '}

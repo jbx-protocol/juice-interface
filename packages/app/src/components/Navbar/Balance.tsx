@@ -1,7 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import EthPrice from 'components/Dashboard/EthPrice'
 import { ThemeContext } from 'contexts/themeContext'
-import { useBalance } from 'hooks/Balance'
+import useBalance from 'hooks/Balance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 

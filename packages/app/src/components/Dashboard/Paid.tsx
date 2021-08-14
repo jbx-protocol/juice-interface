@@ -4,6 +4,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useBalance } from 'hooks/Balance'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
@@ -20,7 +21,8 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId, currentFC, balanceInCurrency } = useContext(ProjectContext)
+  const { projectId, currentFC, balanceInCurrency, owner } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -59,6 +61,9 @@ export default function Paid() {
       ),
     [currentFC?.currency, totalOverflow, converter],
   )
+
+  // TODO(odd-amphora): display in UI.
+  const ownerBalance = useBalance({ address: owner })
 
   const paidInCurrency = balanceInCurrency?.add(currentFC?.tapped ?? 0)
 

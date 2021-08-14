@@ -62,7 +62,6 @@ export default function Paid() {
     [currentFC?.currency, totalOverflow, converter],
   )
 
-  // TODO(odd-amphora): display in UI.
   const ownerBalance = useBalance({ address: owner })
 
   const paidInCurrency = balanceInCurrency?.add(currentFC?.tapped ?? 0)
@@ -195,22 +194,37 @@ export default function Paid() {
           />
         ))}
 
-      {hasFundingTarget(currentFC) && (
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {hasFundingTarget(currentFC) && (
+          <div style={{ marginTop: 4, flex: 1 }}>
+            <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
+              <CurrencySymbol
+                currency={currentFC.currency.toNumber() as CurrencyOption}
+              />
+              {formatWad(currentFC.target)}{' '}
+            </span>
+            <div style={smallHeaderStyle(colors)}>
+              <TooltipLabel
+                label="TARGET"
+                tip="The maximum amount that can be withdrawn during this funding cycle."
+              />
+            </div>
+          </div>
+        )}
+
         <div style={{ marginTop: 4 }}>
           <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
-            <CurrencySymbol
-              currency={currentFC.currency.toNumber() as CurrencyOption}
-            />
-            {formatWad(currentFC.target)}{' '}
+            <CurrencySymbol currency={0} />
+            {formatWad(ownerBalance)}{' '}
           </span>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
-              label="TARGET"
-              tip="The maximum amount that can be withdrawn during this funding cycle."
+              label="OWNER BALANCE"
+              tip="The ETH balance of the owner of this project."
             />
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

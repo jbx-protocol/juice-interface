@@ -1,11 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { useState } from 'react'
 
 import { usePoller } from './Poller'
 import { readProvider } from '../constants/readProvider'
 
-export function useBalance({ address }: { address: string | undefined }) {
+export default function useBalance({
+  address,
+}: {
+  address: string | undefined
+}) {
   const [balance, setBalance] = useState<BigNumber>()
   usePoller(
     () => {

@@ -5,7 +5,6 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad } from 'utils/formatNumber'
 
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
@@ -14,7 +13,6 @@ import PrintPremined from './PrintPremined'
 import ProjectActivity from './ProjectActivity'
 import ProjectHeader from './ProjectHeader'
 import Rewards from './Rewards'
-import { readProvider } from '../../constants/readProvider'
 
 export default function Project({
   style,

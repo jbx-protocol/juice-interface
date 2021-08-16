@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress } from 'antd'
+import { CrownFilled } from '@ant-design/icons'
+import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
@@ -10,17 +11,26 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fracDiv,
+  fromWad,
+  parseWad,
+} from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import { smallHeaderStyle } from './styles'
+import { useBalance } from '../../hooks/Balance'
+import FormattedAddress from 'components/shared/FormattedAddress'
 
 export default function Paid() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId, currentFC, balanceInCurrency } = useContext(ProjectContext)
+  const { projectId, currentFC, balanceInCurrency, owner } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -60,7 +70,15 @@ export default function Paid() {
     [currentFC?.currency, totalOverflow, converter],
   )
 
-  const paidInCurrency = balanceInCurrency?.add(currentFC?.tapped ?? 0)
+  const includeOwnerBalance = projectId?.eq(7)
+  const ownerBalance = useBalance(owner)
+  const paidInCurrency = balanceInCurrency?.add(
+    includeOwnerBalance
+      ? (currentFC?.currency.eq(0)
+          ? ownerBalance
+          : parseWad(converter.weiToUsd(ownerBalance))) ?? 0
+      : currentFC?.tapped ?? 0,
+  )
 
   const percentPaid = useMemo(
     () =>
@@ -89,7 +107,12 @@ export default function Paid() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <div>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
@@ -100,6 +123,8 @@ export default function Paid() {
           <div
             style={{
               ...primaryTextStyle,
+              display: 'flex',
+              alignItems: 'baseline',
               color: colors.text.brand.primary,
             }}
           >
@@ -117,6 +142,24 @@ export default function Paid() {
             ) : (
               formatWad(paidInCurrency)
             )}
+
+            {includeOwnerBalance && (
+              <div style={{ ...subTextStyle, marginLeft: 5 }}>
+                <Tooltip
+                  title={
+                    <span>
+                      Includes owner balance: <CurrencySymbol currency={0} />
+                      {formatWad(ownerBalance)}
+                      <br />
+                      <br />
+                      Wallet: <FormattedAddress address={owner} />
+                    </span>
+                  }
+                >
+                  <CrownFilled />
+                </Tooltip>
+              </div>
+            )}
           </div>
         </div>
 
@@ -132,17 +175,19 @@ export default function Paid() {
               <span>
                 <span style={subTextStyle}>
                   <CurrencySymbol currency={0} />
-                  {formatWad(totalOverflow ?? 0)}
+                  {formatWad(totalOverflow ?? 0, { decimals: 4 })}
                 </span>{' '}
                 <span style={primaryTextStyle}>
                   <CurrencySymbol currency={1} />
-                  {formattedNum(converter.weiToUsd(totalOverflow))}
+                  {formattedNum(converter.weiToUsd(totalOverflow), {
+                    decimals: 0,
+                  })}
                 </span>
               </span>
             ) : (
-              <span>
+              <span style={primaryTextStyle}>
                 <CurrencySymbol currency={0} />
-                {formatWad(totalOverflow ?? 0)}
+                {formatWad(totalOverflow ?? 0, { decimals: 4 })}
               </span>
             )}
           </div>

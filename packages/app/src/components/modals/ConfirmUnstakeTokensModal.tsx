@@ -59,7 +59,7 @@ export default function ConfirmUnstakeTokensModal({
       title={'Unstake ' + (tokenSymbol ?? 'tokens')}
       visible={visible}
       onOk={unstake}
-      okText="Pay"
+      okText="Unstake"
       confirmLoading={loading}
       onCancel={onCancel}
       width={600}

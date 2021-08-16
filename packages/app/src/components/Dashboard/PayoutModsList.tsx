@@ -1,7 +1,6 @@
 import { Button, Modal } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Mod from 'components/shared/Mod'
-import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
@@ -112,7 +111,10 @@ export default function PayoutModsList({
                             fundingCycle.currency.toNumber() as CurrencyOption
                           }
                         />
-                        {formatWad(targetSubFee?.mul(mod.percent).div(10000))})
+                        {formatWad(targetSubFee?.mul(mod.percent).div(10000), {
+                          decimals: fundingCycle.currency.eq(0) ? undefined : 0,
+                        })}
+                        )
                       </>
                     )}
                   </span>
@@ -138,7 +140,10 @@ export default function PayoutModsList({
                       fundingCycle.currency.toNumber() as CurrencyOption
                     }
                   />
-                  {formatWad(targetSubFee?.mul(ownerPercent).div(10000))})
+                  {formatWad(targetSubFee?.mul(ownerPercent).div(10000), {
+                    decimals: fundingCycle.currency.eq(0) ? undefined : 0,
+                  })}
+                  )
                 </>
               )}
             </div>

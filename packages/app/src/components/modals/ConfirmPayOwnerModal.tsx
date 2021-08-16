@@ -10,6 +10,7 @@ import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
+import { ProjectContext } from 'contexts/projectContext'
 
 export default function ConfirmPayOwnerModal({
   projectId,
@@ -30,6 +31,7 @@ export default function ConfirmPayOwnerModal({
 }) {
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
+  const { tokenSymbol } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -77,13 +79,19 @@ export default function ConfirmPayOwnerModal({
             {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}
             {currencyName(0)})
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets for you" className="content-right">
+          <Descriptions.Item
+            label={(tokenSymbol ?? 'Tokens') + ' for you'}
+            className="content-right"
+          >
             <div>{formatWad(receivedTickets)}</div>
             <div>
               To: <FormattedAddress address={userAddress} />
             </div>
           </Descriptions.Item>
-          <Descriptions.Item label="Tickets reserved" className="content-right">
+          <Descriptions.Item
+            label={(tokenSymbol ?? 'Tokens') + ' reserved'}
+            className="content-right"
+          >
             {formatWad(ownerTickets)}
           </Descriptions.Item>
         </Descriptions>

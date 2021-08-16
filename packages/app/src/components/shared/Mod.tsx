@@ -57,9 +57,9 @@ export default function Mod({
                 }}
               >
                 <TooltipLabel
-                  label={'Beneficiary:'}
+                  label={'Tokens:'}
                   tip={`This address will receive any tokens minted when the recipient project gets paid.`}
-                />
+                />{' '}
                 <FormattedAddress address={mod.beneficiary} />
               </div>
             </div>

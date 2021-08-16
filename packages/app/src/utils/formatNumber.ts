@@ -1,6 +1,14 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 
+type FormatConfig = {
+  empty?: string
+  thousandsSeparator?: string
+  decimalSeparator?: string
+  padEnd?: number
+  decimals?: number
+}
+
 const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
@@ -14,8 +22,10 @@ export const fromWad = (amt?: BigNumberish) => {
     ? result.substring(0, result.length - 2)
     : result
 }
-export const formatWad = (amt?: BigNumberish) =>
-  amt !== undefined && amt !== null ? formattedNum(fromWad(amt)) : undefined
+export const formatWad = (amt?: BigNumberish, config?: FormatConfig) =>
+  amt !== undefined && amt !== null
+    ? formattedNum(fromWad(amt), config)
+    : undefined
 
 // Permyriad: x/10000
 export const parsePermyriad = (amt?: string | number) =>
@@ -47,13 +57,7 @@ const separateThousands = (str?: string, separator = thousandsSeparator) => {
 
 export const formattedNum = (
   num: BigNumberish | undefined,
-  config?: {
-    empty?: string
-    thousandsSeparator?: string
-    decimalSeparator?: string
-    padEnd?: number
-    decimals?: number
-  },
+  config?: FormatConfig,
 ) => {
   const _empty = config?.empty ?? '0'
 
@@ -73,7 +77,10 @@ export const formattedNum = (
 
   if (str.includes(_decimalSeparator)) {
     const [integer, decimal] = str.split(_decimalSeparator)
-    const preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
+    let preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
+
+    if (config?.decimals === 0 && parseInt(decimal[0]) >= 5)
+      preDecimal = BigNumber.from(preDecimal).add(1).toString()
 
     if (decimal === '0') return preDecimal
 
@@ -81,7 +88,7 @@ export const formattedNum = (
       .substr(0, config?.decimals ?? 6)
       .padEnd(config?.padEnd ?? 2, '0')
 
-    if (!postDecimal) return preDecimal
+    if (!postDecimal || config?.decimals === 0) return preDecimal
 
     return [preDecimal, postDecimal].join(_decimalSeparator)
   }

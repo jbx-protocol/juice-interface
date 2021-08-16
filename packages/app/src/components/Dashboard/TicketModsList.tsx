@@ -2,7 +2,6 @@ import { Button, Modal } from 'antd'
 import ProjectTicketMods from 'components/shared/formItems/ProjectTicketMods'
 import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
@@ -85,11 +84,7 @@ export default function TicketModsList({
               key={mod.beneficiary ?? '' + mod.percent}
               style={{ marginBottom: 5 }}
             >
-              <Mod
-                mod={mod}
-                value={fromPermyriad(mod.percent) + '%'}
-                isOwner={mod.beneficiary === owner}
-              />
+              <Mod mod={mod} value={fromPermyriad(mod.percent) + '%'} />
             </div>
           ))
         : null}
@@ -97,7 +92,6 @@ export default function TicketModsList({
       {ownerPercent > 0 && (
         <Mod
           mod={{ beneficiary: owner, percent: ownerPercent }}
-          isOwner
           value={
             <span style={{ fontWeight: 400 }}>
               {fromPermyriad(ownerPercent)}%

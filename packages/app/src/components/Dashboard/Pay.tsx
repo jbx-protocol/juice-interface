@@ -96,9 +96,6 @@ export default function Pay() {
       </div>
 
       <ConfirmPayOwnerModal
-        fundingCycle={currentFC}
-        metadata={metadata}
-        projectId={projectId}
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}

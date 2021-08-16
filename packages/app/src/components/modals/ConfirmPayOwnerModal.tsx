@@ -2,28 +2,20 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { FundingCycle } from 'models/funding-cycle'
-import { ProjectMetadata } from 'models/project-metadata'
 import { useContext } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
-import { ProjectContext } from 'contexts/projectContext'
 
 export default function ConfirmPayOwnerModal({
-  projectId,
-  metadata,
-  fundingCycle,
   visible,
   weiAmount,
   onSuccess,
   onCancel,
 }: {
-  projectId: BigNumber
-  metadata: ProjectMetadata
-  fundingCycle: FundingCycle | undefined
   visible?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
@@ -31,7 +23,8 @@ export default function ConfirmPayOwnerModal({
 }) {
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
-  const { tokenSymbol } = useContext(ProjectContext)
+  const { tokenSymbol, currentFC, projectId, metadata } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -60,8 +53,8 @@ export default function ConfirmPayOwnerModal({
     )
   }
 
-  const receivedTickets = weightedRate(fundingCycle, weiAmount, 'payer')
-  const ownerTickets = weightedRate(fundingCycle, weiAmount, 'reserved')
+  const receivedTickets = weightedRate(currentFC, weiAmount, 'payer')
+  const ownerTickets = weightedRate(currentFC, weiAmount, 'reserved')
 
   return (
     <Modal

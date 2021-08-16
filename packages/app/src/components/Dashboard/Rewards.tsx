@@ -2,6 +2,7 @@ import { ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -27,16 +28,11 @@ export default function Rewards({
 }: {
   totalOverflow: BigNumber | undefined
 }) {
-  const { contracts, transactor } = useContext(UserContext)
-  const { userAddress } = useContext(UserContext)
+  const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
+  const { contracts, transactor, userAddress } = useContext(UserContext)
 
-  const {
-    projectId,
-    currentFC,
-    isOwner,
-    tokenAddress,
-    tokenSymbol,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC, isOwner, tokenAddress, tokenSymbol } =
+    useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -173,20 +169,20 @@ export default function Rewards({
       ? '<1'
       : sharePct?.toString()
 
-  function convert() {
-    if (!transactor || !contracts || !userAddress || !projectId) return
+  // function convert() {
+  //   if (!transactor || !contracts || !userAddress || !projectId) return
 
-    setLoadingConvert(true)
+  //   setLoadingConvert(true)
 
-    transactor(
-      contracts.TicketBooth,
-      'unstake',
-      [userAddress, projectId.toHexString(), iouBalance?.toHexString()],
-      {
-        onDone: () => setLoadingConvert(false),
-      },
-    )
-  }
+  //   transactor(
+  //     contracts.TicketBooth,
+  //     'unstake',
+  //     [userAddress, projectId.toHexString(), iouBalance?.toHexString()],
+  //     {
+  //       onDone: () => setLoadingConvert(false),
+  //     },
+  //   )
+  // }
 
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
@@ -272,8 +268,9 @@ export default function Rewards({
                         <div>
                           {ticketsBalance?.gt(0)
                             ? formatWad(ticketsBalance ?? 0)
-                            : `0 ${tokenSymbol ||
-                                'tokens'} in your wallet`}{' '}
+                            : `0 ${
+                                tokenSymbol || 'tokens'
+                              } in your wallet`}{' '}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
@@ -288,7 +285,7 @@ export default function Rewards({
                               <Tooltip title={'Unstake ' + tokenSymbol}>
                                 <ExportOutlined
                                   style={{ color: colors.icon.action.primary }}
-                                  onClick={convert}
+                                  onClick={() => setUnstakeModalVisible(true)}
                                 />
                               </Tooltip>
                             </div>
@@ -376,6 +373,11 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
+
+      <ConfirmUnstakeTokensModal
+        visible={unstakeModalVisible}
+        onCancel={() => setUnstakeModalVisible(false)}
+      />
     </div>
   )
 }

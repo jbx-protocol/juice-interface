@@ -98,7 +98,6 @@ export default function PayoutModsList({
             >
               <Mod
                 mod={mod}
-                isOwner={mod.beneficiary === owner}
                 value={
                   <span style={{ fontWeight: 400 }}>
                     {fromPermyriad(mod.percent)}%
@@ -127,7 +126,6 @@ export default function PayoutModsList({
       {ownerPercent > 0 && (
         <Mod
           mod={{ beneficiary: owner, percent: ownerPercent }}
-          isOwner
           value={
             <div style={{ fontWeight: 400 }}>
               {fromPermyriad(ownerPercent)}%

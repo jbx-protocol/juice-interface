@@ -8,9 +8,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
 export default function ProjectHeader() {
-  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [editProjectModalVisible, setEditProjectModalVisible] =
+    useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
   const { projectId, handle, metadata, isOwner } = useContext(ProjectContext)
@@ -30,7 +29,7 @@ export default function ProjectHeader() {
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}
       >
         <div style={{ marginRight: 20, height: '100%' }}>
@@ -42,40 +41,17 @@ export default function ProjectHeader() {
         </div>
 
         <div style={{ flex: 1 }}>
-          <div
+          <h1
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              fontSize: '2.4rem',
+              margin: 0,
+              color: metadata?.name
+                ? colors.text.primary
+                : colors.text.placeholder,
             }}
           >
-            <h1
-              style={{
-                fontSize: '2.4rem',
-                margin: 0,
-                color: metadata?.name
-                  ? colors.text.primary
-                  : colors.text.placeholder,
-              }}
-            >
-              {metadata?.name || 'Untitled project'}
-            </h1>
-
-            <div>
-              <Button
-                onClick={() => setToolDrawerVisible(true)}
-                icon={<ToolOutlined />}
-                type="text"
-              ></Button>
-              {isOwner && (
-                <Button
-                  onClick={() => setEditProjectModalVisible(true)}
-                  icon={<SettingOutlined />}
-                  type="text"
-                ></Button>
-              )}
-            </div>
-          </div>
+            {metadata?.name || 'Untitled project'}
+          </h1>
 
           <h3>
             <Space size="middle">
@@ -99,7 +75,6 @@ export default function ProjectHeader() {
               )}
             </Space>
           </h3>
-
           {metadata?.description && (
             <p style={{ color: colors.text.tertiary }}>
               {metadata?.description}
@@ -107,22 +82,36 @@ export default function ProjectHeader() {
           )}
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexDirection: 'column',
-            marginLeft: 20,
-          }}
-        >
+        <div>
           <div
             style={{
-              color: colors.text.tertiary,
-              textAlign: 'right',
-              paddingRight: 10,
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            ID: {projectId.toNumber()}
+            <div
+              style={{
+                color: colors.text.tertiary,
+                paddingRight: 10,
+              }}
+            >
+              ID: {projectId.toNumber()}
+            </div>
+
+            <div>
+              <Button
+                onClick={() => setToolDrawerVisible(true)}
+                icon={<ToolOutlined />}
+                type="text"
+              ></Button>
+              {isOwner && (
+                <Button
+                  onClick={() => setEditProjectModalVisible(true)}
+                  icon={<SettingOutlined />}
+                  type="text"
+                ></Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

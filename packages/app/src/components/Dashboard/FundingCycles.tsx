@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd'
+import { Button, Row, Space } from 'antd'
 import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
 import { CardSection } from 'components/shared/CardSection'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -82,13 +82,14 @@ export default function FundingCycles({
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
           justifyContent: 'space-between',
-          marginBottom: 12,
         }}
       >
         <TooltipLabel
           style={{
             color: colors.text.header,
+            marginBottom: 12,
             fontWeight:
               forThemeOption &&
               forThemeOption({
@@ -99,7 +100,7 @@ export default function FundingCycles({
           label="Funding cycle"
           tip="A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
         />
-        <Space style={{ fontSize: '.8rem' }} size="middle">
+        <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
           {tab('current')}
           {currentFC?.duration.gt(0) ? tab('upcoming') : null}
           {tab('history')}

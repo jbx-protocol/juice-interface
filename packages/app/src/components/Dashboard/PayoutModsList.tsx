@@ -91,36 +91,43 @@ export default function PayoutModsList({
   return (
     <div>
       {mods?.length
-        ? mods.map((mod, i) => (
-            <div
-              key={`${mod.beneficiary ?? mod.percent}-${i}`}
-              style={{ marginBottom: 5 }}
-            >
-              <Mod
-                mod={mod}
-                value={
-                  <span style={{ fontWeight: 400 }}>
-                    {fromPermyriad(mod.percent)}%
-                    {!fundingCycle.target.eq(constants.MaxUint256) && (
-                      <>
-                        {' '}
-                        (
-                        <CurrencySymbol
-                          currency={
-                            fundingCycle.currency.toNumber() as CurrencyOption
-                          }
-                        />
-                        {formatWad(targetSubFee?.mul(mod.percent).div(10000), {
-                          decimals: fundingCycle.currency.eq(0) ? undefined : 0,
-                        })}
-                        )
-                      </>
-                    )}
-                  </span>
-                }
-              />
-            </div>
-          ))
+        ? [...mods]
+            .sort((a, b) => (a.percent < b.percent ? 1 : -1))
+            .map((mod, i) => (
+              <div
+                key={`${mod.beneficiary ?? mod.percent}-${i}`}
+                style={{ marginBottom: 5 }}
+              >
+                <Mod
+                  mod={mod}
+                  value={
+                    <span style={{ fontWeight: 400 }}>
+                      {fromPermyriad(mod.percent)}%
+                      {!fundingCycle.target.eq(constants.MaxUint256) && (
+                        <>
+                          {' '}
+                          (
+                          <CurrencySymbol
+                            currency={
+                              fundingCycle.currency.toNumber() as CurrencyOption
+                            }
+                          />
+                          {formatWad(
+                            targetSubFee?.mul(mod.percent).div(10000),
+                            {
+                              decimals: fundingCycle.currency.eq(0)
+                                ? undefined
+                                : 0,
+                            },
+                          )}
+                          )
+                        </>
+                      )}
+                    </span>
+                  }
+                />
+              </div>
+            ))
         : null}
 
       {ownerPercent > 0 && (

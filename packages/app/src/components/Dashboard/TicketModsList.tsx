@@ -79,14 +79,16 @@ export default function TicketModsList({
   return (
     <div>
       {mods?.length
-        ? mods.map(mod => (
-            <div
-              key={mod.beneficiary ?? '' + mod.percent}
-              style={{ marginBottom: 5 }}
-            >
-              <Mod mod={mod} value={fromPermyriad(mod.percent) + '%'} />
-            </div>
-          ))
+        ? [...mods]
+            .sort((a, b) => (a.percent < b.percent ? 1 : -1))
+            .map(mod => (
+              <div
+                key={mod.beneficiary ?? '' + mod.percent}
+                style={{ marginBottom: 5 }}
+              >
+                <Mod mod={mod} value={fromPermyriad(mod.percent) + '%'} />
+              </div>
+            ))
         : null}
 
       {ownerPercent > 0 && (

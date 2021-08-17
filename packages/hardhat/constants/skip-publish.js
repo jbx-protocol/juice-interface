@@ -8,6 +8,7 @@ module.exports = [
   "Tickets",
   "DirectPaymentAddress",
   "ProxyPaymentAddress",
+  "TokenRepresentationProxy",
   "Active3DaysFundingCycleBallot",
   "Active7DaysFundingCycleBallot",
   "Active14DaysFundingCycleBallot",

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const chalk = require("chalk");
-const bre = require("hardhat");
+const bre = require("hardhat/config");
 const skipContracts = require("../constants/skip-publish");
 
 const network = process.env.HARDHAT_NETWORK || "";

@@ -3,9 +3,13 @@ const fs = require("fs");
 const chalk = require("chalk");
 const dotenv = require("dotenv");
 
+const juice = require("./scripts/utils");
+
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
+
+// const juice = require("./scripts/utils");
 
 dotenv.config();
 
@@ -399,4 +403,35 @@ task("send", "Send ETH")
     debug(JSON.stringify(txRequest, null, 2));
 
     return send(fromSigner, txRequest);
+  });
+
+// Deploy tasks
+// TODO(odd-amphora): consider moving these to a separate file when and if they grow
+
+task(
+  "deployTokenRepresentationProxy",
+  "Deploys the TokenRepresentationProxy contract"
+)
+  .addParam("ticketbooth", "TicketBooth address")
+  .addParam("projectid", "Project ID")
+  .addParam("name", "ERC20 token name")
+  .addParam("ticker", "ERC20 ticker symbol")
+  .setAction(async (taskArgs) => {
+    const contract = "TokenRepresentationProxy";
+    console.log(
+      `Deploying `,
+      chalk.magenta(contract),
+      `with the following params: `
+    );
+    console.log("TicketBooth: ", chalk.green(taskArgs.ticketbooth));
+    console.log("ProjectId: ", chalk.green(taskArgs.projectid));
+    console.log("erc20Name: ", chalk.green(taskArgs.name));
+    console.log("erc20Ticker: ", chalk.green(taskArgs.ticker));
+    await juice.deploy(contract, [
+      taskArgs.ticketbooth,
+      taskArgs.projectid,
+      taskArgs.name,
+      taskArgs.ticker,
+    ]);
+    console.log(`Successfully deployed `, chalk.magenta(contract));
   });

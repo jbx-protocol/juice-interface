@@ -3,14 +3,11 @@ const fs = require("fs");
 const chalk = require("chalk");
 const dotenv = require("dotenv");
 
-const juice = require("./scripts/utils");
-
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
 
-// const juice = require("./scripts/utils");
-
+const juice = require("./scripts/utils");
 dotenv.config();
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;

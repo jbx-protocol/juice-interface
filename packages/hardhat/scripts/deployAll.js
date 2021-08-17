@@ -42,13 +42,16 @@ const main = async () => {
     terminalDirectory.address,
     ticketBooth.address,
   ]);
-  await juice.deploy("JBXTokenRepresentationProxy", [ticketBooth.address, 1]);
+  await juice.deploy("TokenRepresentationProxy", [
+    ticketBooth.address,
+    1,
+    "JBX Proxy",
+    "JBXPROXY",
+  ]);
 
   const governance = await juice.deploy("Governance", [
     1,
     terminalDirectory.address,
-    "JBX Proxy",
-    "JBXPROXY",
   ]);
 
   const terminalV1 = await juice.deploy("TerminalV1", [

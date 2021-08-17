@@ -77,10 +77,14 @@ export const formattedNum = (
 
   if (str.includes(_decimalSeparator)) {
     const [integer, decimal] = str.split(_decimalSeparator)
-    let preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
 
-    if (config?.decimals === 0 && parseInt(decimal[0]) >= 5)
-      preDecimal = BigNumber.from(preDecimal).add(1).toString()
+    const preDecimal =
+      config?.decimals === 0 && parseInt(decimal[0]) >= 5
+        ? separateThousands(
+            BigNumber.from(integer).add(1).toString(),
+            _thousandsSeparator,
+          ) || '0'
+        : separateThousands(integer, _thousandsSeparator) || '0'
 
     if (decimal === '0') return preDecimal
 

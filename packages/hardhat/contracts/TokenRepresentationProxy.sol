@@ -7,7 +7,7 @@ import "./TicketBooth.sol";
 
 /** 
   @notice
-  ERC20 wrapper for TicketBooth calls that return both staked + unstaked JBX supply.
+  ERC20 wrapper for TicketBooth calls that return both staked + unstaked for a project's token supply.
 */
 contract TokenRepresentationProxy is ERC20 {
     ITicketBooth ticketBooth;

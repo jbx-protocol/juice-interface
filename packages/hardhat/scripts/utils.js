@@ -1,7 +1,6 @@
 /* eslint no-use-before-define: "warn" */
 const fs = require("fs");
 const chalk = require("chalk");
-const { config, l2ethers, network, tenderly } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
 const { JsonRpcProvider } = require("@ethersproject/providers");

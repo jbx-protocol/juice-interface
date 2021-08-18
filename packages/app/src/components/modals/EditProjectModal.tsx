@@ -1,8 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form, Modal } from 'antd'
+import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
+import { utils } from 'ethers'
 import { ProjectMetadata } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -14,12 +15,15 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 
-export type EditProjectFormFields = {
+export type ProjectInfoFormFields = {
   name: string
   description: string
   infoUrl: string
-  handle: string
   logoUrl: string
+}
+
+export type HandleFormFields = {
+  handle: string
 }
 
 export default function EditProjectModal({
@@ -38,27 +42,32 @@ export default function EditProjectModal({
   onCancel?: VoidFunction
 }) {
   const { transactor, contracts } = useContext(UserContext)
-  const [loading, setLoading] = useState<boolean>()
-  const [form] = useForm<EditProjectFormFields>()
+  const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
+  const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
+  const [projectInfoForm] = useForm<ProjectInfoFormFields>()
+  const [handleForm] = useForm<HandleFormFields>()
 
   useEffect(() => {
-    if (!metadata) return
+    if (metadata) {
+      projectInfoForm.setFieldsValue({
+        name: metadata?.name,
+        infoUrl: metadata?.infoUri,
+        logoUrl: metadata?.logoUri,
+        description: metadata?.description,
+      })
+    }
 
-    form.setFieldsValue({
-      name: metadata?.name,
-      handle: handle,
-      infoUrl: metadata?.infoUri,
-      logoUrl: metadata?.logoUri,
-      description: metadata?.description,
-    })
-  }, [handle, form, metadata])
+    if (handle) {
+      handleForm.setFieldsValue({ handle })
+    }
+  }, [handleForm, handle, projectInfoForm, metadata])
 
   async function setUri() {
     if (!transactor || !contracts?.TerminalV1 || !handle) return
 
-    setLoading(true)
+    setLoadingSetURI(true)
 
-    const fields = form.getFieldsValue(true)
+    const fields = projectInfoForm.getFieldsValue(true)
 
     const uploadedMetadata = await uploadProjectMetadata({
       name: fields.name,
@@ -68,7 +77,7 @@ export default function EditProjectModal({
     })
 
     if (!uploadedMetadata?.success) {
-      setLoading(false)
+      setLoadingSetURI(false)
       return
     }
 
@@ -77,7 +86,7 @@ export default function EditProjectModal({
       'setUri',
       [projectId.toHexString(), uploadedMetadata.cid],
       {
-        onDone: () => setLoading(false),
+        onDone: () => setLoadingSetURI(false),
         onConfirmed: () => {
           if (onSuccess) onSuccess()
 
@@ -99,7 +108,28 @@ export default function EditProjectModal({
               name: logoNameForHandle(handle),
             })
           }
+
+          projectInfoForm.resetFields()
         },
+      },
+    )
+  }
+
+  function setHandle() {
+    if (!transactor || !contracts) return
+
+    setLoadingSetHandle(true)
+
+    transactor(
+      contracts?.Projects,
+      'setHandle',
+      [
+        projectId.toHexString(),
+        utils.formatBytes32String(handleForm.getFieldValue('handle')),
+      ],
+      {
+        onDone: () => setLoadingSetHandle(false),
+        onConfirmed: () => handleForm.resetFields(),
       },
     )
   }
@@ -108,30 +138,44 @@ export default function EditProjectModal({
     <Modal
       title="Edit project"
       visible={visible}
-      okText="Save changes"
-      onOk={setUri}
       onCancel={onCancel}
-      confirmLoading={loading}
+      cancelText=""
       width={600}
     >
-      <Form form={form} layout="vertical">
-        <FormItems.ProjectName
-          name="name"
-          formItemProps={{ rules: [{ required: true }] }}
-        />
+      <Form form={handleForm} layout="vertical">
         <FormItems.ProjectHandle
           name="handle"
-          value={form.getFieldValue('handle')}
-          onValueChange={val => form.setFieldsValue({ handle: val })}
+          requireState="notExist"
+          value={handleForm.getFieldValue('handle')}
+          onValueChange={val => handleForm.setFieldsValue({ handle: val })}
+          formItemProps={{ rules: [{ required: true }] }}
+        />
+        <Form.Item>
+          <Button type="primary" loading={loadingSetHandle} onClick={setHandle}>
+            Save handle
+          </Button>
+        </Form.Item>
+      </Form>
+
+      <Divider />
+
+      <Form form={projectInfoForm} layout="vertical">
+        <FormItems.ProjectName
+          name="name"
           formItemProps={{ rules: [{ required: true }] }}
         />
         <FormItems.ProjectLink name="infoUrl" />
         <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLogoUrl
           name="logoUrl"
-          initialUrl={form.getFieldValue('logoUrl')}
-          onSuccess={logoUrl => form.setFieldsValue({ logoUrl })}
+          initialUrl={projectInfoForm.getFieldValue('logoUrl')}
+          onSuccess={logoUrl => projectInfoForm.setFieldsValue({ logoUrl })}
         />
+        <Form.Item>
+          <Button type="primary" loading={loadingSetURI} onClick={setUri}>
+            Save changes
+          </Button>
+        </Form.Item>
       </Form>
     </Modal>
   )

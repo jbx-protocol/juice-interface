@@ -17,7 +17,7 @@ export const ballotStrategies: Strategy[] = [
   {
     name: 'No strategy',
     description:
-      'Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may vulnerable to being rug-pulled by its owner.',
+      'Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.',
     address: constants.AddressZero,
   },
 ]

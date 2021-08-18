@@ -247,10 +247,17 @@ export default function Rewards({
             />
           }
           valueRender={() => (
-            <Descriptions layout="horizontal" column={1}>
+            <Descriptions
+              layout={
+                document.documentElement.clientWidth > 600
+                  ? 'horizontal'
+                  : 'vertical'
+              }
+              column={1}
+            >
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Total supply</div>}
-                children={<div>{formatWad(totalSupply)}</div>}
+                children={formatWad(totalSupply)}
               />
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Your balance</div>}
@@ -258,6 +265,7 @@ export default function Rewards({
                   <div
                     style={{
                       display: 'flex',
+                      flexWrap: 'wrap',
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       width: '100%',
@@ -280,7 +288,7 @@ export default function Rewards({
                           loadingConvert ? (
                             <Loading />
                           ) : (
-                            <div style={{ color: colors.text.secondary }}>
+                            <div>
                               {formatWad(iouBalance ?? 0)} staked{' '}
                               <Tooltip title={'Unstake ' + tokenSymbol}>
                                 <ExportOutlined
@@ -292,25 +300,25 @@ export default function Rewards({
                           )}
                         </div>
                       )}
-                    </div>
-                    <Space>
+
                       <div
                         style={{
-                          fontSize: '.8rem',
-                          color: colors.text.secondary,
+                          cursor: 'default',
+                          fontSize: '0.8rem',
                           fontWeight: 500,
+                          color: colors.text.tertiary,
                         }}
                       >
-                        {share ?? 0}%
+                        {share ?? 0}% of supply
                       </div>
-                      <Button
-                        loading={loadingRedeem}
-                        size="small"
-                        onClick={() => setRedeemModalVisible(true)}
-                      >
-                        Redeem
-                      </Button>
-                    </Space>
+                    </div>
+                    <Button
+                      loading={loadingRedeem}
+                      size="small"
+                      onClick={() => setRedeemModalVisible(true)}
+                    >
+                      Redeem
+                    </Button>
                   </div>
                 }
               />

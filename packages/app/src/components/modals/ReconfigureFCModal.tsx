@@ -3,9 +3,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import RulesForm from 'components/Create/RulesForm'
 import PayoutModsList from 'components/Dashboard/PayoutModsList'
 import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -30,7 +32,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
-import { amountSubFee, feeForAmount } from 'utils/math'
+import { amountSubFee } from 'utils/math'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -58,6 +60,8 @@ export default function ReconfigureFCModal({
   const [payModsModalVisible, setPayModsFormModalVisible] =
     useState<boolean>(false)
   const [budgetFormModalVisible, setBudgetFormModalVisible] =
+    useState<boolean>(false)
+  const [rulesFormModalVisible, setRulesFormModalVisible] =
     useState<boolean>(false)
   const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
     useState<boolean>(false)
@@ -93,6 +97,10 @@ export default function ReconfigureFCModal({
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(editingProjectActions.setReserved(fields.reserved))
     setEditingTicketMods(mods)
+  }
+
+  const onRulesFormSaved = (ballot: string) => {
+    dispatch(editingProjectActions.setBallot(ballot))
   }
 
   const onIncentivesFormSaved = (
@@ -131,7 +139,7 @@ export default function ReconfigureFCModal({
       duration: editingFC.duration.toHexString(),
       discountRate: editingFC.discountRate.toHexString(),
       cycleLimit: BigNumber.from(0).toHexString(),
-      ballot: fundingCycle.ballot,
+      ballot: editingFC.ballot,
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {
@@ -257,6 +265,10 @@ export default function ReconfigureFCModal({
                 title: 'Reserved tokens',
                 callback: () => setTicketingFormModalVisible(true),
               },
+              {
+                title: 'Rules',
+                callback: () => setRulesFormModalVisible(true),
+              },
               ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
                 ? [
                     {
@@ -328,6 +340,19 @@ export default function ReconfigureFCModal({
                 />
               )}
           </Space>
+
+          <Statistic
+            title="Reconfiguration strategy"
+            valueRender={() => {
+              const ballot = getBallotStrategyByAddress(editingFC.ballot)
+              return (
+                <div>
+                  {ballot.name}{' '}
+                  <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+                </div>
+              )
+            }}
+          />
 
           <div>
             <h4>Spending</h4>
@@ -410,6 +435,20 @@ export default function ReconfigureFCModal({
             onTicketingFormSaved(mods)
             setTicketingFormModalVisible(false)
             setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={rulesFormModalVisible}
+        {...drawerStyle}
+        onClose={() => setRulesFormModalVisible(false)}
+      >
+        <RulesForm
+          initialBallot={editingFC.ballot}
+          onSave={(ballot: string) => {
+            onRulesFormSaved(ballot)
+            setRulesFormModalVisible(false)
           }}
         />
       </Drawer>

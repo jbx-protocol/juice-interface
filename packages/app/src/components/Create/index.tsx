@@ -45,6 +45,7 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
 import PayModsForm from './PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function Create() {
@@ -62,6 +63,8 @@ export default function Create() {
   const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
     useState<boolean>(false)
   const [ticketingFormModalVisible, setTicketingFormModalVisible] =
+    useState<boolean>(false)
+  const [rulesFormModalVisible, setRulesFormModalVisible] =
     useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
@@ -122,6 +125,10 @@ export default function Create() {
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(editingProjectActions.setReserved(fields.reserved))
     dispatch(editingProjectActions.setTicketMods(mods))
+  }
+
+  const onRulesFormSaved = (ballot: string) => {
+    dispatch(editingProjectActions.setBallot(ballot))
   }
 
   const onIncentivesFormSaved = (
@@ -329,6 +336,10 @@ export default function Create() {
             title: 'Reserved tokens',
             callback: () => setTicketingFormModalVisible(true),
           },
+          {
+            title: 'Rules',
+            callback: () => setRulesFormModalVisible(true),
+          },
           ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
             ? [
                 {
@@ -463,11 +474,29 @@ export default function Create() {
       </Drawer>
 
       <Drawer
+        visible={rulesFormModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          setRulesFormModalVisible(false)
+          incrementStep(4)
+        }}
+      >
+        <RulesForm
+          initialBallot={editingFC.ballot}
+          onSave={(ballot: string) => {
+            onRulesFormSaved(ballot)
+            setRulesFormModalVisible(false)
+            incrementStep(4)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
         visible={incentivesFormModalVisible}
         {...drawerStyle}
         onClose={() => {
           setIncentivesFormModalVisible(false)
-          incrementStep(4)
+          incrementStep(5)
         }}
       >
         <IncentivesForm
@@ -477,7 +506,7 @@ export default function Create() {
             await ticketingForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)
             setIncentivesFormModalVisible(false)
-            incrementStep(4)
+            incrementStep(5)
           }}
         />
       </Drawer>

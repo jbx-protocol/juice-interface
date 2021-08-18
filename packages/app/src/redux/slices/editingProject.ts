@@ -51,7 +51,7 @@ export const editingProjectSlice = createSlice({
       target: constants.MaxUint256,
       currency: BigNumber.from(1),
       start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-      duration: BigNumber.from(0),
+      duration: BigNumber.from(30),
       tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
       fee: BigNumber.from(10),
@@ -60,7 +60,7 @@ export const editingProjectSlice = createSlice({
       discountRate: defaultDiscountRate,
       cycleLimit: BigNumber.from(0),
       configured: BigNumber.from(0),
-      ballot: constants.AddressZero,
+      ballot: '0xEf7480b6E7CEd228fFB0854fe49A428F562a8982', // 7 day
     }),
     payoutMods: [],
     ticketMods: [],
@@ -182,6 +182,13 @@ export const editingProjectSlice = createSlice({
       fundingCycle: {
         ...state.fundingCycle,
         currency: action.payload.toString(),
+      },
+    }),
+    setBallot: (state, action: PayloadAction<string>) => ({
+      ...state,
+      fundingCycle: {
+        ...state.fundingCycle,
+        ballot: action.payload,
       },
     }),
     setIsRecurring: (state, action: PayloadAction<boolean>) => ({

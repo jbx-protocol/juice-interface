@@ -62,6 +62,10 @@
   color: var(--text-placeholder);
 }
 
+.ant-empty-description {
+  color: var(--text-secondary);
+}
+
 .antd-no-number-handler {
   .ant-input-number-handler-wrap {
     display: none;

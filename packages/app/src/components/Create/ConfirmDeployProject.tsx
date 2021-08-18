@@ -2,6 +2,7 @@ import { Space, Statistic } from 'antd'
 import PayoutModsList from 'components/Dashboard/PayoutModsList'
 import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
@@ -93,6 +94,18 @@ export default function ConfirmDeployProject() {
           />
         )}
       </Space>
+      <Statistic
+        title="Reconfiguration strategy"
+        valueRender={() => {
+          const ballot = getBallotStrategyByAddress(editingFC.ballot)
+          return (
+            <div>
+              {ballot.name}{' '}
+              <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+            </div>
+          )
+        }}
+      />
       <Statistic
         title="Spending"
         valueRender={() => (

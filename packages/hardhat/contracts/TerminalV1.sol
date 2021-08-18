@@ -253,6 +253,7 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
       @param _projects A Projects contract which mints ERC-721's that represent project ownership and transfers.
       @param _fundingCycles A funding cycle configuration store.
       @param _ticketBooth A contract that manages Ticket printing and redeeming.
+      @param _operatorStore A contract storing operator assignments.
       @param _modStore A storage for a project's mods.
       @param _prices A price feed contract to use.
       @param _terminalDirectory A directory of a project's current Juicebox terminal to receive payments in.
@@ -308,13 +309,13 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
           If it's 200, each funding stage will have equal weight.
           If the number is 180, a contribution to the next funding stage will only give you 90% of tickets given to a contribution of the same amount during the current funding stage.
           If the number is 0, an non-recurring funding stage will get made.
-        @dev _configuration.ballot The new ballot that will be used to approve subsequent reconfigurations.
+        @dev _properties.ballot The new ballot that will be used to approve subsequent reconfigurations.
       @param _metadata A struct specifying the TerminalV1 specific params _bondingCurveRate, and _reservedRate.
-        @dev _reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
-        @dev _bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
+        @dev _metadata.reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
+        @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
           The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
           where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        @dev _reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
+        @dev _metadata.reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
       @param _payoutMods Any payout mods to set.
       @param _ticketMods Any ticket mods to set.
     */
@@ -382,11 +383,10 @@ contract TerminalV1 is Operatable, ITerminalV1, ITerminal, ReentrancyGuard {
           If the number is 0, an non-recurring funding stage will get made.
         @dev _properties.ballot The new ballot that will be used to approve subsequent reconfigurations.
       @param _metadata A struct specifying the TerminalV1 specific params _bondingCurveRate, and _reservedRate.
+        @dev _metadata.reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
         @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
           The bonding curve formula is https://www.desmos.com/calculator/sp9ru6zbpk
           where x is _count, o is _currentOverflow, s is _totalSupply, and r is _bondingCurveRate.
-        @dev _metadata.reservedRate A number from 0-200 indicating the percentage of each contribution's tickets that will be reserved for the project owner.
-        @dev _metadata.bondingCurveRate The rate from 0-200 at which a project's Tickets can be redeemed for surplus.
         @dev _metadata.reconfigurationBondingCurveRate The bonding curve rate to apply when there is an active ballot.
 
       @return The ID of the funding cycle that was successfully configured.

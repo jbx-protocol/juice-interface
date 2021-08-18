@@ -1,13 +1,13 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { CheckCircleOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input } from 'antd'
+import { ThemeContext } from 'contexts/themeContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import {
   useCallback,
   useContext,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
@@ -15,7 +15,6 @@ import {
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
-import { ThemeContext } from 'contexts/themeContext'
 
 export default function ProjectHandle({
   name,
@@ -52,7 +51,7 @@ export default function ProjectHandle({
   const handleExists = useContractReader<boolean>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
-    args: handle ? [handle] : null,
+    args: handle && requireState ? [handle] : null,
     formatter: useCallback((res: BigNumber) => res?.gt(0), []),
   })
 
@@ -69,12 +68,14 @@ export default function ProjectHandle({
 
   let suffix: string | JSX.Element = ''
 
-  if (handleExists && requireState === 'notExist')
-    suffix = 'Handle already in use'
-  if (handleExists === false && requireState === 'exists')
-    suffix = inputContents ? 'Handle not found' : ''
-  if (handleExists && requireState === 'exists')
-    suffix = <CheckCircleOutlined style={{ color: colors.icon.success }} />
+  if (value !== inputContents) {
+    if (handleExists && requireState === 'notExist')
+      suffix = 'Handle already in use'
+    if (handleExists === false && requireState === 'exists')
+      suffix = inputContents ? 'Handle not found' : ''
+    if (handleExists && requireState === 'exists')
+      suffix = <CheckCircleOutlined style={{ color: colors.icon.success }} />
+  }
 
   return (
     <Form.Item
@@ -89,7 +90,6 @@ export default function ProjectHandle({
       {...formItemProps}
       rules={[{ validator: checkHandle }, ...(formItemProps?.rules ?? [])]}
       validateTrigger={false}
-      initialValue={value}
     >
       <Input
         id="testinput"

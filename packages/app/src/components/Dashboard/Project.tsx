@@ -74,7 +74,10 @@ export default function Project({
             {projectId.eq(7) ? (
               <div>
                 SharkDAO's Juicebox is closed right now because we're planning
-                for the future. Join us on{' '}
+                for the future. Also don't pay directly to the contract! You
+                won't receive any SHARK—all tokens will be sent to governance.{' '}
+                <br />
+                <br /> Join us on{' '}
                 <a
                   href="https://discord.gg/sg5grtCV8s"
                   target="_blank"

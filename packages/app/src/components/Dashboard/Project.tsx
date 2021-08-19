@@ -109,7 +109,7 @@ export default function Project({
             <Rewards totalOverflow={totalOverflow} />
           </div>
 
-          <ProjectActivity />
+          {!projectId.eq(7) && <ProjectActivity />}
         </Col>
       </Row>
     </div>

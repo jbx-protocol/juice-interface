@@ -124,8 +124,10 @@ export default function ReconfigureFCModal({
     )
     setEditingTicketMods(ticketMods)
     setEditingPayoutMods(payoutMods)
-    resetTicketingForm()
-  }, [payoutMods, ticketMods])
+    ticketingForm.setFieldsValue({
+      reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
+    })
+  }, [payoutMods, ticketMods, fundingCycle])
 
   async function reconfigure() {
     if (!transactor || !contracts?.TerminalV1 || !fundingCycle || !projectId)

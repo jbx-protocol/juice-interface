@@ -7,14 +7,16 @@ import { BigNumber, constants } from 'ethers'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { fromPermyriad } from 'utils/formatNumber'
+import { formatWad, fromPermyriad } from 'utils/formatNumber'
 
 export default function TicketModsList({
+  total,
   mods,
   fundingCycle,
   projectId,
   isOwner,
 }: {
+  total?: BigNumber
   mods: TicketMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
@@ -24,7 +26,7 @@ export default function TicketModsList({
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<TicketMod[]>()
   const { transactor, contracts } = useContext(UserContext)
-  const { owner } = useContext(ProjectContext)
+  const { owner, tokenSymbol } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
     const now = new Date().valueOf() / 1000
@@ -86,7 +88,18 @@ export default function TicketModsList({
                 key={mod.beneficiary ?? '' + mod.percent}
                 style={{ marginBottom: 5 }}
               >
-                <Mod mod={mod} value={fromPermyriad(mod.percent) + '%'} />
+                <Mod
+                  mod={mod}
+                  value={
+                    fromPermyriad(mod.percent) +
+                    '%' +
+                    (total
+                      ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
+                          decimals: 0,
+                        })} ${tokenSymbol ?? ' tokens'})`
+                      : '')
+                  }
+                />
               </div>
             ))
         : null}
@@ -97,6 +110,11 @@ export default function TicketModsList({
           value={
             <span style={{ fontWeight: 400 }}>
               {fromPermyriad(ownerPercent)}%
+              {total
+                ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
+                    decimals: 0,
+                  })} ${tokenSymbol ?? ' tokens'})`
+                : ''}
             </span>
           }
         />

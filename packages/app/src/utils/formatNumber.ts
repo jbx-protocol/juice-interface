@@ -23,7 +23,7 @@ export const fromWad = (amt?: BigNumberish) => {
     : result
 }
 export const formatWad = (amt?: BigNumberish, config?: FormatConfig) =>
-  amt !== undefined && amt !== null
+  amt !== undefined && amt !== null && amt !== ''
     ? formattedNum(fromWad(amt), config)
     : undefined
 
@@ -81,7 +81,9 @@ export const formattedNum = (
     const preDecimal =
       config?.decimals === 0 && parseInt(decimal[0]) >= 5
         ? separateThousands(
-            BigNumber.from(integer).add(1).toString(),
+            BigNumber.from(integer || '0')
+              .add(1)
+              .toString(),
             _thousandsSeparator,
           ) || '0'
         : separateThousands(integer, _thousandsSeparator) || '0'

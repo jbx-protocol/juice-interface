@@ -18,6 +18,7 @@ export default function PayoutModsList({
   fundingCycle,
   projectId,
   isOwner,
+  total,
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
@@ -25,6 +26,7 @@ export default function PayoutModsList({
     | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
+  total?: BigNumber
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -84,7 +86,7 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const targetSubFee = amountSubFee(fundingCycle?.target, adminFeePercent)
+  const baseTotal = total ?? amountSubFee(fundingCycle?.target, adminFeePercent)
 
   if (!fundingCycle) return null
 
@@ -112,14 +114,11 @@ export default function PayoutModsList({
                               fundingCycle.currency.toNumber() as CurrencyOption
                             }
                           />
-                          {formatWad(
-                            targetSubFee?.mul(mod.percent).div(10000),
-                            {
-                              decimals: fundingCycle.currency.eq(0)
-                                ? undefined
-                                : 0,
-                            },
-                          )}
+                          {formatWad(baseTotal?.mul(mod.percent).div(10000), {
+                            decimals: fundingCycle.currency.eq(0)
+                              ? undefined
+                              : 0,
+                          })}
                           )
                         </>
                       )}
@@ -145,7 +144,7 @@ export default function PayoutModsList({
                       fundingCycle.currency.toNumber() as CurrencyOption
                     }
                   />
-                  {formatWad(targetSubFee?.mul(ownerPercent).div(10000), {
+                  {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
                     decimals: fundingCycle.currency.eq(0) ? undefined : 0,
                   })}
                   )

@@ -5,7 +5,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
@@ -21,6 +21,7 @@ export default function ConfirmPayOwnerModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
   const { tokenSymbol, currentFC, projectId, metadata } =
@@ -34,6 +35,8 @@ export default function ConfirmPayOwnerModal({
     if (!contracts || !projectId || !transactor) return
 
     await form.validateFields()
+
+    setLoading(true)
 
     transactor(
       contracts.TerminalV1,
@@ -49,6 +52,7 @@ export default function ConfirmPayOwnerModal({
         onConfirmed: () => {
           if (onSuccess) onSuccess()
         },
+        onDone: () => setLoading(false),
       },
     )
   }
@@ -63,6 +67,7 @@ export default function ConfirmPayOwnerModal({
       onOk={pay}
       okText="Pay"
       onCancel={onCancel}
+      confirmLoading={loading}
       width={800}
       centered={true}
     >

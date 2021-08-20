@@ -12,6 +12,7 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
+import DistributeTokensModal from '../modals/DistributeTokensModal'
 import TicketModsList from './TicketModsList'
 
 export default function ReservedTokens({
@@ -23,8 +24,8 @@ export default function ReservedTokens({
   ticketMods: TicketMod[] | undefined
   hideActions?: boolean
 }) {
-  const { userAddress, transactor, contracts } = useContext(UserContext)
-  const [loadingPrint, setLoadingPrint] = useState<boolean>()
+  const [modalIsVisible, setModalIsVisible] = useState<boolean>()
+  const { userAddress } = useContext(UserContext)
 
   const { projectId, isOwner, tokenSymbol } = useContext(ProjectContext)
 
@@ -76,21 +77,6 @@ export default function ReservedTokens({
     ),
   })
 
-  function print() {
-    if (!transactor || !contracts || !projectId) return
-
-    setLoadingPrint(true)
-
-    transactor(
-      contracts.TerminalV1,
-      'printReservedTickets',
-      [projectId.toHexString()],
-      {
-        onDone: () => setLoadingPrint(false),
-      },
-    )
-  }
-
   return (
     <div>
       <div>
@@ -122,17 +108,23 @@ export default function ReservedTokens({
           }}
         >
           <span>
-            {formatWad(reservedTickets) || 0} {tokenSymbol ?? 'tokens'}
+            {formatWad(reservedTickets, { decimals: 0 }) || 0}{' '}
+            {tokenSymbol ?? 'tokens'}
           </span>
           <Button
             style={{ marginLeft: 10 }}
-            loading={loadingPrint}
             size="small"
-            onClick={print}
+            onClick={() => setModalIsVisible(true)}
             disabled={!reservedTickets?.gt(0)}
           >
             Distribute
           </Button>
+
+          <DistributeTokensModal
+            visible={modalIsVisible}
+            onCancel={() => setModalIsVisible(false)}
+            onConfirmed={() => setModalIsVisible(false)}
+          />
         </div>
       )}
     </div>

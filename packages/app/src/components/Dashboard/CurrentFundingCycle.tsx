@@ -30,7 +30,7 @@ export default function CurrentFundingCycle({
         />
       </CardSection>
       <CardSection padded style={{ marginBottom: 10 }}>
-        <Spending fundingCycle={currentFC} payoutMods={currentPayoutMods} />
+        <Spending payoutMods={currentPayoutMods} />
       </CardSection>
       <CardSection padded>
         <ReservedTokens

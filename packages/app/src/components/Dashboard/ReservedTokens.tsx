@@ -115,7 +115,6 @@ export default function ReservedTokens({
             style={{ marginLeft: 10 }}
             size="small"
             onClick={() => setModalIsVisible(true)}
-            disabled={!reservedTickets?.gt(0)}
           >
             Distribute
           </Button>

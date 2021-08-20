@@ -73,7 +73,7 @@ const QAs: {
   {
     q: 'Why Ethereum?',
     a: [
-      `A mechanism like Juicebox where upfront financial commitments should be honored over time is only guarenteed within an ecosystem like Ethereum.`,
+      `A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.`,
       `Ethereum provides a public environment where internet apps like Juicebox can run permissionlessly, trustlessly, and unstoppably.`,
       `This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.`,
       `People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.`,

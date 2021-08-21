@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-import "./interfaces/IYielder.sol";
+import "../interfaces/IYielder.sol";
 
 /// @dev For testing purposes.
 contract ExampleYielder is IYielder {

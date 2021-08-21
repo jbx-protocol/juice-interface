@@ -8,12 +8,12 @@ import "../abstract/JuiceboxProject.sol";
 
 /** 
   @dev 
-  Shwotime allows friends to commit to buying tickets to events together.
+  Showtime allows friends to commit to buying tickets to events together.
   They can commit to buying a ticket if a specified list of addresses also commit to buy the ticket.
 
   Not reliable for situations where networks dont entirely overlap.
 */
-contract Shwotime is JuiceboxProject {
+contract Showtime is JuiceboxProject {
     using SafeERC20 for IERC20;
 
     struct Tix {
@@ -65,7 +65,7 @@ contract Shwotime is JuiceboxProject {
     function buyTicket(uint256 id, address[] calldata addresses) external {
         require(
             id > 0 && id <= ticketsCount,
-            "Shwotime::buyTickets: NOT_FOUND"
+            "Showtime::buyTickets: NOT_FOUND"
         );
 
         //Mark the msg.sender as committed to buying.
@@ -73,11 +73,11 @@ contract Shwotime is JuiceboxProject {
 
         require(
             _tickets.expiry > block.timestamp,
-            "Shwotime::buyTickets: EXPIRED"
+            "Showtime::buyTickets: EXPIRED"
         );
         require(
             _tickets.max >= _tickets.sold,
-            "Shwotime::buyTickets: SOLD_OUT"
+            "Showtime::buyTickets: SOLD_OUT"
         );
 
         bool _transferFundsFromMsgSender = true;
@@ -117,7 +117,7 @@ contract Shwotime is JuiceboxProject {
         // Check to see if its sold out once everyone has been given tickets.
         require(
             _tickets.max >= _tickets.sold,
-            "Shwotime::buyTickets: SOLD_OUT"
+            "Showtime::buyTickets: SOLD_OUT"
         );
 
         _tickets.committed[msg.sender] = true;
@@ -125,18 +125,18 @@ contract Shwotime is JuiceboxProject {
 
     //Allow a ticket owner to collect funds once the tickets expire.
     function collect(uint256 _id, string calldata _memo) external {
-        require(_id > 0 && _id <= ticketsCount, "Shwotime::collect: NOT_FOUND");
+        require(_id > 0 && _id <= ticketsCount, "Showtime::collect: NOT_FOUND");
 
         Tix storage _tickets = tickets[_id];
 
         require(
             msg.sender == _tickets.owner,
-            "Shwotime::collect: UNAUTHORIZED"
+            "Showtime::collect: UNAUTHORIZED"
         );
 
         require(
             _tickets.expiry <= block.timestamp,
-            "Shwotime::collect: TOO_SOON"
+            "Showtime::collect: TOO_SOON"
         );
 
         uint256 _total = _tickets.price * _tickets.sold;

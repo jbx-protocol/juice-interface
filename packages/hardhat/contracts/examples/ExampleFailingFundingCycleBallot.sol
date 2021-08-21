@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-import "./interfaces/ITerminalV1.sol";
-import "./interfaces/IFundingCycleBallot.sol";
+import "../interfaces/ITerminalV1.sol";
+import "../interfaces/IFundingCycleBallot.sol";
 
 contract ExampleFailingFundingCycleBallot is IFundingCycleBallot {
     uint256 public constant reconfigurationDelay = 1209600;

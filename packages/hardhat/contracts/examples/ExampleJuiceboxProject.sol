@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-import "./abstract/JuiceboxProject.sol";
+import "../abstract/JuiceboxProject.sol";
 
 /// @dev For testing purposes.
 contract ExampleJuiceboxProject is JuiceboxProject {

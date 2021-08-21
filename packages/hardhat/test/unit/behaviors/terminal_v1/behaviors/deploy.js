@@ -48,7 +48,7 @@ const tests = {
             percent: 200,
             lockedUntil: 1000,
             beneficiary: constants.AddressZero,
-            allocator: (await deployMockLocalContractFn("ExampleModAllocator"))
+            allocator: (await deployMockLocalContractFn("ExampleModAllocator", "example"))
               .address,
             projectId: 1,
             note: "banana"

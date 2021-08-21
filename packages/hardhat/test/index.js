@@ -44,11 +44,13 @@ describe("Juicebox", async function () {
     this.deployMockContractFn = (abi) => deployMockContract(this.deployer, abi);
 
     // Bind a reference to a function that can deploy mock local contracts from names.
-    this.deployMockLocalContractFn = async (mockContractName) => {
+    this.deployMockLocalContractFn = async (mockContractName, subdirectory) => {
       // Deploy mock contracts.
       const mockArtifacts = fs
         .readFileSync(
-          `${config.paths.artifacts}/contracts/${mockContractName}.sol/${mockContractName}.json`
+          `${config.paths.artifacts}/contracts/${
+            subdirectory ? subdirectory + `/` : ``
+          }${mockContractName}.sol/${mockContractName}.json`
         )
         .toString();
 

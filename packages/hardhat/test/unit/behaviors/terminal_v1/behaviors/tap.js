@@ -133,7 +133,7 @@ const tests = {
       description: "with all mods",
       fn: async ({ addrs, deployMockLocalContractFn }) => {
         const allocator = await deployMockLocalContractFn(
-          "ExampleModAllocator"
+          "ExampleModAllocator", "example"
         );
 
         return {

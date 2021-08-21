@@ -12,7 +12,7 @@ module.exports = function() {
       "TerminalDirectory"
     );
     this.modAllocator = await this.deployMockLocalContractFn(
-      "ExampleModAllocator"
+      "ExampleModAllocator", "example"
     );
 
     // Deploy the contract.

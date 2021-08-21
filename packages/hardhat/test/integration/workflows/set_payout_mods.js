@@ -176,7 +176,7 @@ module.exports = [
         }).toNumber(),
         lockedUntil: 0,
         beneficiary: randomAddressFn(),
-        allocator: (await deployContractFn("ExampleModAllocator")).address,
+        allocator: (await deployContractFn("ExampleModAllocator", "example")).address,
         projectId: BigNumber.from(0)
       };
       await executeFn({

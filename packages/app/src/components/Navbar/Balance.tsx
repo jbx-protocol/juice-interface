@@ -1,3 +1,4 @@
+import { Account } from 'bnc-notify'
 import EthPrice from 'components/Dashboard/EthPrice'
 import { ThemeContext } from 'contexts/themeContext'
 import { useBalance } from 'hooks/Balance'

@@ -14,7 +14,8 @@ export default function Account() {
     onSelectWallet,
     onLogOut,
     usingBurnerProvider,
-    wallet
+    wallet,
+    account,
   } = useContext(NetworkContext)
 
   const logoutOfWeb3Modal = async () => {
@@ -27,21 +28,21 @@ export default function Account() {
   return (
     <div>
       <Row gutter={10} align="middle">
-        {userAddress && (
+        {account && (
           <Col>
-            <Balance address={userAddress} showEthPrice />
+            <Balance address={account?.toString()} showEthPrice />
           </Col>
         )}
-        {userAddress && (
+        {account && (
           <Col>
-            <Wallet userAddress={userAddress}></Wallet>
+            <Wallet userAddress={account?.toString()}></Wallet>
           </Col>
         )}
         <Col>
-          {!wallet ? (
-            <Button onClick={onSelectWallet}>Connect</Button>
-          ) : (
+          {wallet && account ? (
             <Button onClick={onLogOut}>Logout</Button>
+          ) : (
+            <Button onClick={onSelectWallet}>Connect</Button>
           )}
         </Col>
       </Row>

@@ -24,6 +24,30 @@ export default function Network({ children }: { children: ChildElems }) {
     setInjectedProvider(provider)
   }, [setInjectedProvider])
 
+  const selectWallet = async () => {
+    // Open wallet modal
+    const selectedWallet = await onboard?.walletSelect();
+
+    // User quit modal
+    if (!selectedWallet) {
+      return;
+    }
+
+    // Wait for wallet selection initialization
+    const readyToTransact = await onboard?.walletCheck();
+    if (readyToTransact) {
+      // Fetch active wallet and connect
+      const currentState = onboard?.getState();
+      const activeWallet = currentState?.wallet;
+      activeWallet?.connect?.call(onboard);
+    }
+  };
+
+  const logOut = async () => {
+    onboard?.walletReset();
+    setWallet(null);
+  }
+
   const burnerProvider = useBurnerProvider()
 
   const signingProvider = injectedProvider ?? burnerProvider
@@ -65,7 +89,7 @@ export default function Network({ children }: { children: ChildElems }) {
         setWeb3(newWeb3);
         window.localStorage.setItem('selectedWallet', newWallet.name);
       } else {
-        setWallet({});
+        setWallet(null);
       }
     };
     const config = {
@@ -84,8 +108,10 @@ export default function Network({ children }: { children: ChildElems }) {
         signerNetwork: network,
         signingProvider,
         usingBurnerProvider: !!burnerProvider,
+        wallet: wallet,
         onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
-        onNeedBlockNativeProvider: onboard?.walletSelect
+        onSelectWallet: selectWallet,
+        onLogOut: logOut,
       }}
     >
       {children}

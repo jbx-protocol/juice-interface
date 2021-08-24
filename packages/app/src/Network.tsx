@@ -13,6 +13,7 @@ import { API } from 'bnc-onboard/dist/src/interfaces'
 import ethers from 'ethers';
 import Onboard from 'bnc-onboard'
 import Web3 from 'web3';
+import { Account } from 'bnc-notify'
 
 export default function Network({ children }: { children: ChildElems }) {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
@@ -48,6 +49,13 @@ export default function Network({ children }: { children: ChildElems }) {
     setWallet(null);
   }
 
+  const accountChanged = () => {
+    // if (account) {
+    //   dispatch(accountUpdated(account, web3));
+    // }
+    console.log("Account changed: ", account)
+  };  
+
   const burnerProvider = useBurnerProvider()
 
   const signingProvider = injectedProvider ?? burnerProvider
@@ -66,10 +74,12 @@ export default function Network({ children }: { children: ChildElems }) {
   }, [signingProvider, setNetwork])
 
 
-  const [address, setAddress] = useState<any>();
+  const [account, setAccount] = useState<Account>();
   const [wallet, setWallet] = useState<any>();
   const [web3, setWeb3] = useState<any>();
   const [onboard, setOnboard] = useState<API>();
+  const [notify, setNotify] = useState<any>();
+  useEffect(accountChanged, [account]);
 
   useEffect(() => {
     if (web3Modal.cachedProvider) loadWeb3Modal()
@@ -93,11 +103,11 @@ export default function Network({ children }: { children: ChildElems }) {
       }
     };
     const config = {
-      address: setAddress,
+      address: setAccount,
       wallet: selectWallet,
     }
     const onboard = initOnboard(config);
-    // TODO(odd-amphora) init notify
+    setNotify(initNotify());
     setOnboard(onboard)
   }, [])
 
@@ -109,6 +119,7 @@ export default function Network({ children }: { children: ChildElems }) {
         signingProvider,
         usingBurnerProvider: !!burnerProvider,
         wallet: wallet,
+        account: account,
         onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
         onSelectWallet: selectWallet,
         onLogOut: logOut,

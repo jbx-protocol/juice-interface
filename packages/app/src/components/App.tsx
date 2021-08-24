@@ -3,7 +3,6 @@ import { Content } from 'antd/lib/layout/layout'
 import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useJuiceTheme } from 'hooks/JuiceTheme'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 
@@ -11,8 +10,6 @@ import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {
-  const juiceTheme = useJuiceTheme()
-
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
     useState<boolean>()
 
@@ -31,9 +28,8 @@ function App() {
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
   }, [setSwitchNetworkModalVisible, signerNetwork])
 
-
   return (
-    <ThemeContext.Provider value={juiceTheme}>
+    <>
       <Layout
         style={{
           display: 'flex',
@@ -75,7 +71,7 @@ function App() {
           </Space>
         </div>
       </Modal>
-    </ThemeContext.Provider>
+    </>
   )
 }
 

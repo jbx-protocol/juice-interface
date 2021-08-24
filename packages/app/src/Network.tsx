@@ -4,15 +4,11 @@ import { NetworkContext } from 'contexts/networkContext'
 import { useBurnerProvider } from 'hooks/BurnerProvider'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { web3Modal } from 'utils/web3Modal'
+import { useContext, useEffect, useState } from 'react'
 
 // TODO(odd-amphora): new stuff. organize
 import { initOnboard, initNotify } from 'services'
 import { API } from 'bnc-onboard/dist/src/interfaces'
-import ethers from 'ethers'
-import Onboard from 'bnc-onboard'
-import Web3 from 'web3'
 import { Account } from 'bnc-notify'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
@@ -26,7 +22,6 @@ export default function Network({ children }: { children: ChildElems }) {
   // TODO(odd-amphora): new.
   const [account, setAccount] = useState<Account>()
   const [wallet, setWallet] = useState<any>()
-  const [web3, setWeb3] = useState<Web3>()
   const [onboard, setOnboard] = useState<API>()
   const [notify, setNotify] = useState<any>()
 
@@ -59,18 +54,21 @@ export default function Network({ children }: { children: ChildElems }) {
 
   const logOut = async () => {
     onboard?.walletReset()
-    setWallet(null)
-    setWeb3(undefined);
+    setInjectedProvider(undefined);
   }
 
   const accountChanged = () => {
+    // TODO(odd-amphora): Needed?
     // if (account) {
     //   dispatch(accountUpdated(account, web3));
     // }
-    console.log('Account changed: ', account)
   }
 
-  // TODO(odd-amphora): still neded?
+  const dispatchConnectionConnected = () => {
+    // TODO(odd-amphora): Needed?
+    // dispatch(connectionConnected(account));
+  }  
+
   useEffect(() => {
     async function getNetwork() {
       await signingProvider?.ready
@@ -99,11 +97,6 @@ export default function Network({ children }: { children: ChildElems }) {
       onboard.config({ darkMode: themeOption === ThemeOption.dark })
     }
   }, [themeOption]);
-
-  const dispatchConnectionConnected = () => {
-    // TODO(odd-amphora): support?
-    // dispatch(connectionConnected(account));
-  }
 
   // Initialize wallet
   useEffect(() => {

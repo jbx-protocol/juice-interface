@@ -3,8 +3,7 @@ import Onboard from 'bnc-onboard'
 import { readNetwork } from 'constants/networks'
 
 const networkId = readNetwork.chainId;
-// TODO(odd-amphora): rpc url is wrong, re: rinkeby.
-const rpcUrl = `https://rinkeby.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`
+const rpcUrl = readNetwork.rpcUrl;
 const dappId = process.env.REACT_APP_BLOCKNATIVE_API_KEY;
 
 export function initOnboard(subscriptions) {
@@ -12,6 +11,7 @@ export function initOnboard(subscriptions) {
     dappId,
     hideBranding: true,
     networkId,
+    // TODO(odd-amphora): Toggle dark mode.
     // darkMode: true,
     subscriptions,
     walletSelect: {
@@ -31,6 +31,20 @@ export function initOnboard(subscriptions) {
           walletName: 'walletConnect',
           infuraKey: `${process.env.REACT_APP_INFURA_ID}`
         },
+        { walletName: 'coinbase' },
+        { walletName: 'status' },
+        { walletName: 'walletLink', rpcUrl },
+        {
+          walletName: 'portis',
+          apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+        },
+        { walletName: 'gnosis' },
+        // TODO(odd-amphora): Let's hold off on supporting every single wallet at first.
+        // { walletName: 'dcent' },
+        // { walletName: 'bitpie' },
+        // { walletName: 'xdefi' },
+        // { walletName: 'binance' },
+        // { walletName: 'tp' },
         // { walletName: 'cobovault', appName: 'React Demo', rpcUrl },
         // { walletName: 'keystone', appName: 'React Demo', rpcUrl },
         // { walletName: 'keepkey', rpcUrl },
@@ -39,13 +53,6 @@ export function initOnboard(subscriptions) {
         //   appName: 'Onboard Demo',
         //   rpcUrl
         // },
-        { walletName: 'coinbase' },
-        { walletName: 'status' },
-        { walletName: 'walletLink', rpcUrl },
-        {
-          walletName: 'portis',
-          apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-        },
         // { walletName: 'fortmatic', apiKey: 'pk_test_886ADCAB855632AA' },
         // { walletName: 'torus' },
         // { walletName: 'trust', rpcUrl },
@@ -63,13 +70,7 @@ export function initOnboard(subscriptions) {
         // { walletName: 'frame' },
         // { walletName: 'tokenpocket', rpcUrl },
         // { walletName: 'authereum', disableNotifications: true },
-        // { walletName: 'ownbit' },
-        { walletName: 'gnosis' },
-        // { walletName: 'dcent' },
-        // { walletName: 'bitpie' },
-        // { walletName: 'xdefi' },
-        // { walletName: 'binance' },
-        // { walletName: 'tp' },
+        // { walletName: 'ownbit' },        
       ]
     },
     walletCheck: [

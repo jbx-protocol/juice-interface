@@ -5,6 +5,7 @@ import { useBurnerProvider } from 'hooks/BurnerProvider'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
+import { readNetwork } from 'constants/networks'
 
 // TODO(odd-amphora): new stuff. organize
 import { initOnboard, initNotify } from 'services'
@@ -88,6 +89,7 @@ export default function Network({ children }: { children: ChildElems }) {
     const previouslySelectedWallet =
       window.localStorage.getItem('selectedWallet')
     if (previouslySelectedWallet && onboard) {
+      console.log('teddytest onboard');
       onboard.walletSelect(previouslySelectedWallet)
     }
   }, [onboard])
@@ -121,7 +123,7 @@ export default function Network({ children }: { children: ChildElems }) {
     <NetworkContext.Provider
       value={{
         signerNetwork: network,
-        signingProvider,
+        signingProvider: signingProvider && network === readNetwork.name ? signingProvider : undefined,
         usingBurnerProvider: !!burnerProvider,
         wallet: wallet,
         notify: notify,

@@ -6,6 +6,7 @@ import Network from 'Network'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import Theme from 'Theme'
 import User from 'User'
 
 import store from './redux/store'
@@ -14,11 +15,13 @@ import reportWebVitals from './reportWebVitals'
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Network>
-        <User>
-          <App />
-        </User>
-      </Network>
+      <Theme>
+        <Network>
+          <User>
+            <App />
+          </User>
+        </Network>
+      </Theme>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

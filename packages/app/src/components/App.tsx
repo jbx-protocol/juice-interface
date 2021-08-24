@@ -5,16 +5,44 @@ import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useJuiceTheme } from 'hooks/JuiceTheme'
 import { NetworkName } from 'models/network-name'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { initOnboard, initNotify } from 'services'
+import ethers from 'ethers';
+import Onboard from 'bnc-onboard'
+import Web3 from 'web3';
 
 import Navbar from './Navbar'
 import Router from './Router'
+import { API } from 'bnc-onboard/dist/src/interfaces'
+
+let provider
+let internalTransferContract
+const internalTransferABI = [
+  {
+    inputs: [
+      {
+        internalType: 'address payable',
+        name: 'to',
+        type: 'address'
+      }
+    ],
+    name: 'internalTransfer',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function'
+  }
+]
 
 function App() {
   const juiceTheme = useJuiceTheme()
 
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
     useState<boolean>()
+
+  const [address, setAddress] = useState<any>();
+  const [wallet, setWallet] = useState<any>();
+  const [web3, setWeb3] = useState<any>();
+  const [onboard, setOnboard] = useState<API>();
 
   const { signerNetwork } = useContext(NetworkContext)
 
@@ -31,6 +59,33 @@ function App() {
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
   }, [setSwitchNetworkModalVisible, signerNetwork])
 
+  const dispatchConnectionConnected = () => {
+    // dispatch(connectionConnected(account));
+  };
+
+  useEffect(() => {
+    const selectWallet = async (newWallet) => {
+      if (newWallet.provider) {
+        const newWeb3 = new Web3(newWallet.provider);
+        newWeb3.eth.net.isListening().then(dispatchConnectionConnected);
+        setWallet(newWallet);
+
+        setWeb3(newWeb3);
+        window.localStorage.setItem('selectedWallet', newWallet.name);
+      } else {
+        setWallet({});
+      }
+    };
+    const config = {
+      address: setAddress,
+      wallet: selectWallet,
+    }
+    const onboard = initOnboard(config);
+    // TODO(odd-amphora) init notify
+    setOnboard(onboard)
+  }, [])
+
+
   return (
     <ThemeContext.Provider value={juiceTheme}>
       <Layout
@@ -41,6 +96,9 @@ function App() {
           background: 'transparent',
         }}
       >
+        <div onClick={() => {
+          onboard?.walletSelect()
+        }}>hi</div>
         <Navbar />
         <Content>
           <Router />

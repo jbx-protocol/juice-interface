@@ -39,10 +39,10 @@ export default function Network({ children }: { children: ChildElems }) {
   }
 
   const selectWallet = async () => {
-    // Open wallet modal
+    // Open select wallet modal.
     const selectedWallet = await onboard?.walletSelect()
 
-    // User quit modal
+    // User quit modal.
     if (!selectedWallet) {
       return
     }
@@ -60,6 +60,7 @@ export default function Network({ children }: { children: ChildElems }) {
   const logOut = async () => {
     onboard?.walletReset()
     setWallet(null)
+    setWeb3(undefined);
   }
 
   const accountChanged = () => {
@@ -69,20 +70,7 @@ export default function Network({ children }: { children: ChildElems }) {
     console.log('Account changed: ', account)
   }
 
-  const reconnectWallet = () => {
-    const previouslySelectedWallet =
-      window.localStorage.getItem('selectedWallet')
-    if (previouslySelectedWallet && onboard) {
-      onboard.walletSelect(previouslySelectedWallet)
-    }
-  }
-
-  const changeDarkMode = () => {
-    if (onboard) {
-      onboard.config({ darkMode: themeOption === ThemeOption.dark })
-    }
-  }
-
+  // TODO(odd-amphora): still neded?
   useEffect(() => {
     async function getNetwork() {
       await signingProvider?.ready
@@ -97,22 +85,31 @@ export default function Network({ children }: { children: ChildElems }) {
   }, [signingProvider, setNetwork])
 
   useEffect(accountChanged, [account])
-  useEffect(reconnectWallet, [onboard])
-  useEffect(changeDarkMode, [themeOption]);
+
+  useEffect(() => {
+    const previouslySelectedWallet =
+      window.localStorage.getItem('selectedWallet')
+    if (previouslySelectedWallet && onboard) {
+      onboard.walletSelect(previouslySelectedWallet)
+    }
+  }, [onboard])
+
+  useEffect(() => {
+    if (onboard) {
+      onboard.config({ darkMode: themeOption === ThemeOption.dark })
+    }
+  }, [themeOption]);
 
   const dispatchConnectionConnected = () => {
-    // TODO(odd-amphora): support.
+    // TODO(odd-amphora): support?
     // dispatch(connectionConnected(account));
   }
 
+  // Initialize wallet
   useEffect(() => {
     const selectWallet = async newWallet => {
       if (newWallet.provider) {
-        const newWeb3 = new Web3Provider(newWallet.provider)
-        // newWeb3.eth.net.isListening().then(dispatchConnectionConnected)
-        // setWallet(newWallet)
-
-        setInjectedProvider(newWeb3)
+        setInjectedProvider(new Web3Provider(newWallet.provider))
         window.localStorage.setItem('selectedWallet', newWallet.name)
       } else {
         setWallet(null)

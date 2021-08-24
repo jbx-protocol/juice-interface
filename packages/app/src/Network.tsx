@@ -19,6 +19,17 @@ export default function Network({ children }: { children: ChildElems }) {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
 
+  // TODO(odd-amphora): new.
+  const [account, setAccount] = useState<Account>();
+  const [wallet, setWallet] = useState<any>();
+  const [web3, setWeb3] = useState<any>();
+  const [onboard, setOnboard] = useState<API>();
+  const [notify, setNotify] = useState<any>();
+
+  const burnerProvider = useBurnerProvider()
+
+  const signingProvider = injectedProvider ?? burnerProvider
+
   const loadWeb3Modal = useCallback(async () => {
     const library = await web3Modal.connect()
     const provider = new Web3Provider(library)
@@ -56,9 +67,14 @@ export default function Network({ children }: { children: ChildElems }) {
     console.log("Account changed: ", account)
   };  
 
-  const burnerProvider = useBurnerProvider()
-
-  const signingProvider = injectedProvider ?? burnerProvider
+  const reconnectWallet = () => {
+    const previouslySelectedWallet = window.localStorage.getItem(
+      'selectedWallet',
+    );
+    if (previouslySelectedWallet && onboard) {
+      onboard.walletSelect(previouslySelectedWallet);
+    }
+  };
 
   useEffect(() => {
     async function getNetwork() {
@@ -74,18 +90,15 @@ export default function Network({ children }: { children: ChildElems }) {
   }, [signingProvider, setNetwork])
 
 
-  const [account, setAccount] = useState<Account>();
-  const [wallet, setWallet] = useState<any>();
-  const [web3, setWeb3] = useState<any>();
-  const [onboard, setOnboard] = useState<API>();
-  const [notify, setNotify] = useState<any>();
   useEffect(accountChanged, [account]);
+  useEffect(reconnectWallet, [onboard]);
 
   useEffect(() => {
     if (web3Modal.cachedProvider) loadWeb3Modal()
   }, [loadWeb3Modal, web3Modal.cachedProvider])
 
   const dispatchConnectionConnected = () => {
+    // TODO(odd-amphora): support.
     // dispatch(connectionConnected(account));
   };
 

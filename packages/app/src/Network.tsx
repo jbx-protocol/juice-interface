@@ -7,6 +7,13 @@ import { NetworkName } from 'models/network-name'
 import { useCallback, useEffect, useState } from 'react'
 import { web3Modal } from 'utils/web3Modal'
 
+// TODO(odd-amphora): new stuff. organize
+import { initOnboard, initNotify } from 'services'
+import { API } from 'bnc-onboard/dist/src/interfaces'
+import ethers from 'ethers';
+import Onboard from 'bnc-onboard'
+import Web3 from 'web3';
+
 export default function Network({ children }: { children: ChildElems }) {
   const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
@@ -34,9 +41,42 @@ export default function Network({ children }: { children: ChildElems }) {
     getNetwork()
   }, [signingProvider, setNetwork])
 
+
+  const [address, setAddress] = useState<any>();
+  const [wallet, setWallet] = useState<any>();
+  const [web3, setWeb3] = useState<any>();
+  const [onboard, setOnboard] = useState<API>();
+
   useEffect(() => {
     if (web3Modal.cachedProvider) loadWeb3Modal()
   }, [loadWeb3Modal, web3Modal.cachedProvider])
+
+  const dispatchConnectionConnected = () => {
+    // dispatch(connectionConnected(account));
+  };
+
+  useEffect(() => {
+    const selectWallet = async (newWallet) => {
+      if (newWallet.provider) {
+        const newWeb3 = new Web3(newWallet.provider);
+        newWeb3.eth.net.isListening().then(dispatchConnectionConnected);
+        setWallet(newWallet);
+
+        setWeb3(newWeb3);
+        window.localStorage.setItem('selectedWallet', newWallet.name);
+      } else {
+        setWallet({});
+      }
+    };
+    const config = {
+      address: setAddress,
+      wallet: selectWallet,
+    }
+    const onboard = initOnboard(config);
+    // TODO(odd-amphora) init notify
+    setOnboard(onboard)
+  }, [])
+
 
   return (
     <NetworkContext.Provider
@@ -45,6 +85,7 @@ export default function Network({ children }: { children: ChildElems }) {
         signingProvider,
         usingBurnerProvider: !!burnerProvider,
         onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
+        onNeedBlockNativeProvider: onboard?.walletSelect
       }}
     >
       {children}

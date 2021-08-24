@@ -9,7 +9,7 @@ import Wallet from './Wallet'
 
 export default function Account() {
   const { userAddress } = useContext(UserContext)
-  const { onNeedProvider, usingBurnerProvider } = useContext(NetworkContext)
+  const { onNeedProvider, onNeedBlockNativeProvider, usingBurnerProvider } = useContext(NetworkContext)
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider()
@@ -32,8 +32,8 @@ export default function Account() {
           </Col>
         )}
         <Col>
-          {onNeedProvider || usingBurnerProvider ? (
-            <Button onClick={onNeedProvider}>Connect</Button>
+          {onNeedBlockNativeProvider || usingBurnerProvider ? (
+            <Button onClick={onNeedBlockNativeProvider}>Connect</Button>
           ) : (
             <Button onClick={logoutOfWeb3Modal}>Logout</Button>
           )}

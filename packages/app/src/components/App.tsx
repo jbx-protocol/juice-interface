@@ -2,7 +2,6 @@ import { Layout, Modal, Space } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 

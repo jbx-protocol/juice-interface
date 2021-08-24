@@ -26,7 +26,7 @@ export default function Network({ children }: { children: ChildElems }) {
   // TODO(odd-amphora): new.
   const [account, setAccount] = useState<Account>()
   const [wallet, setWallet] = useState<any>()
-  const [web3, setWeb3] = useState<any>()
+  const [web3, setWeb3] = useState<Web3>()
   const [onboard, setOnboard] = useState<API>()
   const [notify, setNotify] = useState<any>()
 
@@ -37,12 +37,6 @@ export default function Network({ children }: { children: ChildElems }) {
   const isDarkMode = () => {
     return themeOption == ThemeOption.dark;
   }
-
-  const loadWeb3Modal = useCallback(async () => {
-    const library = await web3Modal.connect()
-    const provider = new Web3Provider(library)
-    setInjectedProvider(provider)
-  }, [setInjectedProvider])
 
   const selectWallet = async () => {
     // Open wallet modal
@@ -84,7 +78,6 @@ export default function Network({ children }: { children: ChildElems }) {
   }
 
   const changeDarkMode = () => {
-    console.log('change dark mode');
     if (onboard) {
       onboard.config({ darkMode: themeOption === ThemeOption.dark })
     }
@@ -107,10 +100,6 @@ export default function Network({ children }: { children: ChildElems }) {
   useEffect(reconnectWallet, [onboard])
   useEffect(changeDarkMode, [themeOption]);
 
-  useEffect(() => {
-    if (web3Modal.cachedProvider) loadWeb3Modal()
-  }, [loadWeb3Modal, web3Modal.cachedProvider])
-
   const dispatchConnectionConnected = () => {
     // TODO(odd-amphora): support.
     // dispatch(connectionConnected(account));
@@ -119,11 +108,11 @@ export default function Network({ children }: { children: ChildElems }) {
   useEffect(() => {
     const selectWallet = async newWallet => {
       if (newWallet.provider) {
-        const newWeb3 = new Web3(newWallet.provider)
-        newWeb3.eth.net.isListening().then(dispatchConnectionConnected)
-        setWallet(newWallet)
+        const newWeb3 = new Web3Provider(newWallet.provider)
+        // newWeb3.eth.net.isListening().then(dispatchConnectionConnected)
+        // setWallet(newWallet)
 
-        setWeb3(newWeb3)
+        setInjectedProvider(newWeb3)
         window.localStorage.setItem('selectedWallet', newWallet.name)
       } else {
         setWallet(null)
@@ -145,8 +134,9 @@ export default function Network({ children }: { children: ChildElems }) {
         signingProvider,
         usingBurnerProvider: !!burnerProvider,
         wallet: wallet,
+        notify: notify,
         account: account,
-        onNeedProvider: signingProvider ? undefined : loadWeb3Modal,
+        onNeedProvider: signingProvider ? undefined : selectWallet,
         onSelectWallet: selectWallet,
         onLogOut: logOut,
       }}

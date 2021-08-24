@@ -1,10 +1,9 @@
 import Notify from 'bnc-notify'
 import Onboard from 'bnc-onboard'
+import { readNetwork } from 'constants/networks'
 
-// TODO(odd-amphora): Make dynamic.
-const networkId = 4
-// TODO(odd-amphora): Replace with our API key.
-const rpcUrl = 'https://rinkeby.infura.io/v3/cea9deb6467748b0b81b920b005c10c1'
+const networkId = readNetwork.chainId;
+const rpcUrl = `https://rinkeby.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`
 const dappId = process.env.REACT_APP_BLOCKNATIVE_API_KEY;
 
 export function initOnboard(subscriptions) {

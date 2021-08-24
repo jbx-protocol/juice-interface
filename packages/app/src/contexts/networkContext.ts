@@ -7,4 +7,6 @@ export const NetworkContext: React.Context<{
   signerNetwork?: NetworkName
   usingBurnerProvider?: boolean
   onNeedProvider?: () => Promise<void>
+  // TODO(odd-amphora): Fold into one.
+  onNeedBlockNativeProvider?: () => void
 }> = createContext({})

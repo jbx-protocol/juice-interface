@@ -11,6 +11,7 @@ export default function Account() {
   const {
     onNeedProvider,
     usingBurnerProvider,
+    signingProvider,
     account,
     onLogOut
   } = useContext(NetworkContext)
@@ -29,10 +30,10 @@ export default function Account() {
           </Col>
         )}
         <Col>
-          {onNeedProvider || usingBurnerProvider ? (
-            <Button onClick={onNeedProvider}>Connect</Button>
-          ) : (
+          {signingProvider || usingBurnerProvider ? (
             <Button onClick={onLogOut}>Logout</Button>
+          ) : (
+            <Button onClick={onNeedProvider}>Connect</Button>
           )}
         </Col>
       </Row>

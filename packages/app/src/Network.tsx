@@ -84,7 +84,6 @@ export default function Network({ children }: { children: ChildElems }) {
     const previouslySelectedWallet =
       window.localStorage.getItem('selectedWallet')
     if (previouslySelectedWallet && onboard) {
-      console.log('teddytest onboard');
       onboard.walletSelect(previouslySelectedWallet)
     }
   }, [onboard])

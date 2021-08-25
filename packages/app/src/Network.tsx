@@ -6,64 +6,63 @@ import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
 
-// TODO(odd-amphora): new stuff. organize
-import { initOnboard, initNotify } from 'services'
-import { API } from 'bnc-onboard/dist/src/interfaces'
-import { Account } from 'bnc-notify'
+// TODO(odd-amphora): organize.
+import { initOnboard } from 'services'
+import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
+
+const KEY_SELECTED_WALLET = "selectedWallet";
 
 export default function Network({ children }: { children: ChildElems }) {
   const { themeOption } = useContext(ThemeContext);
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
-
-  // TODO(odd-amphora): new.
-  const [account, setAccount] = useState<Account>()
-  const [wallet, setWallet] = useState<any>()
+  const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
-  const [notify, setNotify] = useState<any>()
 
   const isDarkMode = () => {
     return themeOption == ThemeOption.dark;
   }
 
+  const resetWallet = () => {
+    onboard?.walletReset()
+    setSigningProvider(undefined);
+    window.localStorage.setItem(KEY_SELECTED_WALLET, "")
+  }
+
   const selectWallet = async () => {
+    resetWallet();
+
+    console.log('selectWallet():enter');
     // Open select wallet modal.
     const selectedWallet = await onboard?.walletSelect()
+    console.log('selectWallet():modal done');
 
     // User quit modal.
     if (!selectedWallet) {
+      console.log('selectWallet():user quit modal');
       return
     }
+
+    console.log('selectedWallet: ', selectedWallet);
 
     // Wait for wallet selection initialization
     const readyToTransact = await onboard?.walletCheck()
     if (readyToTransact) {
+      console.log('selectWallet():ready to transact');
+
       // Fetch active wallet and connect
       const currentState = onboard?.getState()
       const activeWallet = currentState?.wallet
-      activeWallet?.connect?.call(onboard)
+      activeWallet?.connect && await activeWallet.connect();
     }
   }
 
   const logOut = async () => {
-    onboard?.walletReset()
-    setSigningProvider(undefined);
+    resetWallet();
   }
-
-  const accountChanged = () => {
-    // TODO(odd-amphora): Needed?
-    // if (account) {
-    //   dispatch(accountUpdated(account, web3));
-    // }
-  }
-
-  const dispatchConnectionConnected = () => {
-    // TODO(odd-amphora): Needed?
-    // dispatch(connectionConnected(account));
-  }  
 
   useEffect(() => {
     async function getNetwork() {
@@ -78,39 +77,38 @@ export default function Network({ children }: { children: ChildElems }) {
     getNetwork()
   }, [signingProvider, setNetwork])
 
-  useEffect(accountChanged, [account])
-
   useEffect(() => {
     const previouslySelectedWallet =
-      window.localStorage.getItem('selectedWallet')
+      window.localStorage.getItem(KEY_SELECTED_WALLET);
     if (previouslySelectedWallet && onboard) {
       onboard.walletSelect(previouslySelectedWallet)
     }
   }, [onboard])
 
+  // Propagate theme changes.
   useEffect(() => {
     if (onboard) {
       onboard.config({ darkMode: themeOption === ThemeOption.dark })
     }
   }, [themeOption]);
 
-  // Initialize wallet
+  // Initialize wallet.
   useEffect(() => {
-    const selectWallet = async newWallet => {
+    if (onboard) return;
+
+    const selectWallet = async (newWallet: Wallet) => {
       if (newWallet.provider) {
         setSigningProvider(new Web3Provider(newWallet.provider))
-        window.localStorage.setItem('selectedWallet', newWallet.name)
+        window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || "")
       } else {
-        setWallet(null)
+        resetWallet();
       }
     }
-    const config = {
+    const config: Subscriptions = {
       address: setAccount,
       wallet: selectWallet,
     }
-    const onboard = initOnboard(config, isDarkMode())
-    setNotify(initNotify())
-    setOnboard(onboard)
+    setOnboard(initOnboard(config, isDarkMode()))
   }, [])
 
   return (
@@ -118,9 +116,7 @@ export default function Network({ children }: { children: ChildElems }) {
       value={{
         signerNetwork: network,
         signingProvider: signingProvider && network === readNetwork.name ? signingProvider : undefined,
-        wallet: wallet,
-        notify: notify,
-        account: account,
+        userAddress: account,
         onNeedProvider: signingProvider ? undefined : selectWallet,
         onSelectWallet: selectWallet,
         onLogOut: logOut,

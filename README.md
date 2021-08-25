@@ -99,6 +99,8 @@ REACT_APP_INFURA_NETWORK= # defaults to localhost in development mode
 
 ## 🔏 Web3 Providers:
 
+TODO(odd-amphora): update.
+
 The frontend has three different providers that provide different levels of access to different chains:
 
 `readProvider`: used to read from contracts on network of injected provider (`.env` file points you at testnet or mainnet)

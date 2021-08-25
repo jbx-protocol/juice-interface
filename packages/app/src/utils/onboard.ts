@@ -20,8 +20,8 @@ export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
         { walletName: 'metamask' },
         {
           walletName: 'trezor',
-          appUrl: 'https://reactdemo.blocknative.com',
-          email: 'aaron@blocknative.com',
+          appUrl: 'https://juicebox.money/#/',
+          email: 'me.jango@protonmail.com',
           rpcUrl,
         },
         {

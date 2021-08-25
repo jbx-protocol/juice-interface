@@ -38,6 +38,7 @@ import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
 import PayModsForm from '../Create/PayModsForm'
 import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
+import { ProjectContext } from 'contexts/projectContext'
 
 export default function ReconfigureFCModal({
   fundingCycle,
@@ -75,6 +76,7 @@ export default function ReconfigureFCModal({
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
   const { adminFeePercent } = useContext(UserContext)
+  const { currentFC } = useContext(ProjectContext)
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
@@ -251,6 +253,12 @@ export default function ReconfigureFCModal({
     >
       <div>
         <h1 style={{ marginBottom: 20 }}>Reconfigure funding</h1>
+
+        {currentFC?.duration.gt(0) && (
+          <p>
+            All changes will be applied to the <b>upcoming</b> funding cycle.
+          </p>
+        )}
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div>

@@ -5,26 +5,19 @@ import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
-
-// TODO(odd-amphora): organize.
 import { initOnboard } from 'services'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
-import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 
 const KEY_SELECTED_WALLET = "selectedWallet";
 
 export default function Network({ children }: { children: ChildElems }) {
-  const { themeOption } = useContext(ThemeContext);
+  const { isDarkMode } = useContext(ThemeContext);
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
   const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
-
-  const isDarkMode = () => {
-    return themeOption == ThemeOption.dark;
-  }
 
   const resetWallet = () => {
     onboard?.walletReset()
@@ -35,23 +28,17 @@ export default function Network({ children }: { children: ChildElems }) {
   const selectWallet = async () => {
     resetWallet();
 
-    console.log('selectWallet():enter');
     // Open select wallet modal.
     const selectedWallet = await onboard?.walletSelect()
-    console.log('selectWallet():modal done');
 
     // User quit modal.
     if (!selectedWallet) {
-      console.log('selectWallet():user quit modal');
       return
     }
-
-    console.log('selectedWallet: ', selectedWallet);
 
     // Wait for wallet selection initialization
     const readyToTransact = await onboard?.walletCheck()
     if (readyToTransact) {
-      console.log('selectWallet():ready to transact');
 
       // Fetch active wallet and connect
       const currentState = onboard?.getState()
@@ -64,36 +51,7 @@ export default function Network({ children }: { children: ChildElems }) {
     resetWallet();
   }
 
-  useEffect(() => {
-    async function getNetwork() {
-      await signingProvider?.ready
-
-      const network = signingProvider?.network?.chainId
-        ? NETWORKS[signingProvider.network.chainId]
-        : undefined
-
-      setNetwork(network?.name)
-    }
-    getNetwork()
-  }, [signingProvider, setNetwork])
-
-  useEffect(() => {
-    const previouslySelectedWallet =
-      window.localStorage.getItem(KEY_SELECTED_WALLET);
-    if (previouslySelectedWallet && onboard) {
-      onboard.walletSelect(previouslySelectedWallet)
-    }
-  }, [onboard])
-
-  // Propagate theme changes.
-  useEffect(() => {
-    if (onboard) {
-      onboard.config({ darkMode: themeOption === ThemeOption.dark })
-    }
-  }, [themeOption]);
-
-  // Initialize wallet.
-  useEffect(() => {
+  const initializeWallet = () => {
     if (onboard) return;
 
     const selectWallet = async (newWallet: Wallet) => {
@@ -108,8 +66,40 @@ export default function Network({ children }: { children: ChildElems }) {
       address: setAccount,
       wallet: selectWallet,
     }
-    setOnboard(initOnboard(config, isDarkMode()))
-  }, [])
+    setOnboard(initOnboard(config, isDarkMode))
+  }
+
+  const onDarkModeChanged = () => {
+    if (onboard) {
+      onboard.config({ darkMode: isDarkMode })
+    }
+  }
+
+  const refreshNetwork = () => {
+    async function getNetwork() {
+      await signingProvider?.ready
+
+      const network = signingProvider?.network?.chainId
+        ? NETWORKS[signingProvider.network.chainId]
+        : undefined
+
+      setNetwork(network?.name)
+    }
+    getNetwork()
+  }
+
+  const reconnectWallet = () => {
+    const previouslySelectedWallet =
+      window.localStorage.getItem(KEY_SELECTED_WALLET);
+    if (previouslySelectedWallet && onboard) {
+      onboard.walletSelect(previouslySelectedWallet)
+    }
+  }
+
+  useEffect(initializeWallet, [])
+  useEffect(onDarkModeChanged, [isDarkMode])
+  useEffect(refreshNetwork, [signingProvider, setNetwork])
+  useEffect(reconnectWallet, [onboard])
 
   return (
     <NetworkContext.Provider

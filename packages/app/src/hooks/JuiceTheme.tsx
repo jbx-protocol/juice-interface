@@ -27,6 +27,8 @@ export function useJuiceTheme(
     initialThemeOption,
   )
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(initialThemeOption === ThemeOption.dark);
+
   const setRootVarsForThemeOption = (themeOption: ThemeOption) => {
     Object.entries(
       flattenNestedObject(juiceTheme(themeOption).colors),
@@ -47,9 +49,12 @@ export function useJuiceTheme(
     initialThemeOption,
   ])
 
+  useEffect(() => setIsDarkMode(currentThemeOption === ThemeOption.dark), [currentThemeOption]);
+
   return {
     themeOption: currentThemeOption,
     theme: juiceTheme(currentThemeOption),
+    isDarkMode: isDarkMode,
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)

@@ -20,8 +20,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    // TODO(odd-amphora): Remove. Temporary.
-    "noImplicitAny": false
   },
   "include": [
     "src"

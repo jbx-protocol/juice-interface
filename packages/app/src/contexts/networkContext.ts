@@ -9,12 +9,8 @@ import { createContext } from 'react'
 export const NetworkContext: React.Context<{
   signingProvider?: Web3Provider
   signerNetwork?: NetworkName
-  usingBurnerProvider?: boolean
-  wallet?: Wallet,
-  notify?: any, // TODO(odd-amphora)
-  account?: Account,
+  userAddress?: string,
   onNeedProvider?: () => Promise<void>
-  // TODO(odd-amphora): Fold into one.
   onSelectWallet?: () => void,
   onLogOut?: () => void,
 }> = createContext({})

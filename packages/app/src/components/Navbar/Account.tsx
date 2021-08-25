@@ -8,29 +8,28 @@ import Wallet from './Wallet'
 export default function Account() {
   const {
     onNeedProvider,
-    signingProvider,
-    account,
+    userAddress,
     onLogOut
   } = useContext(NetworkContext)
 
   return (
     <div>
       <Row gutter={10} align="middle">
-        {account && (
+        {userAddress && (
           <Col>
-            <Balance address={account?.toString()} showEthPrice />
+            <Balance address={userAddress} showEthPrice />
           </Col>
         )}
-        {account && (
+        {userAddress && (
           <Col>
-            <Wallet userAddress={account?.toString()}></Wallet>
+            <Wallet userAddress={userAddress}></Wallet>
           </Col>
         )}
         <Col>
-          {signingProvider ? (
-            <Button onClick={onLogOut}>Logout</Button>
-          ) : (
+          {onNeedProvider ? (
             <Button onClick={onNeedProvider}>Connect</Button>
+          ) : (
+            <Button onClick={onLogOut}>Logout</Button>
           )}
         </Col>
       </Row>

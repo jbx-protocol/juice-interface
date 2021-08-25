@@ -114,7 +114,7 @@ export default function FundingCycles({
           onClick={() => setReconfigureModalVisible(true)}
           size="small"
         >
-          Edit funding cycle
+          Reconfigure funding
         </Button>
       )}
 

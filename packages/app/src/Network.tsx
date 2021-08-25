@@ -31,6 +31,7 @@ export default function Network({ children }: { children: ChildElems }) {
 
       setNetwork(network?.name)
     }
+    // test
     getNetwork()
   }, [signingProvider, setNetwork])
 

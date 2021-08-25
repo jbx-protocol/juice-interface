@@ -5,7 +5,7 @@ import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
-import { initOnboard } from 'services'
+import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
 

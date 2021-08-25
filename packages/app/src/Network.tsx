@@ -1,7 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { NETWORKS } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
-import { useBurnerProvider } from 'hooks/BurnerProvider'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
@@ -17,7 +16,7 @@ import { ThemeContext } from 'contexts/themeContext'
 export default function Network({ children }: { children: ChildElems }) {
   const { themeOption } = useContext(ThemeContext);
 
-  const [injectedProvider, setInjectedProvider] = useState<Web3Provider>()
+  const [signingProvider, setSigningProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
 
   // TODO(odd-amphora): new.
@@ -25,10 +24,6 @@ export default function Network({ children }: { children: ChildElems }) {
   const [wallet, setWallet] = useState<any>()
   const [onboard, setOnboard] = useState<API>()
   const [notify, setNotify] = useState<any>()
-
-  const burnerProvider = useBurnerProvider()
-
-  const signingProvider = injectedProvider ?? burnerProvider
 
   const isDarkMode = () => {
     return themeOption == ThemeOption.dark;
@@ -55,7 +50,7 @@ export default function Network({ children }: { children: ChildElems }) {
 
   const logOut = async () => {
     onboard?.walletReset()
-    setInjectedProvider(undefined);
+    setSigningProvider(undefined);
   }
 
   const accountChanged = () => {
@@ -104,7 +99,7 @@ export default function Network({ children }: { children: ChildElems }) {
   useEffect(() => {
     const selectWallet = async newWallet => {
       if (newWallet.provider) {
-        setInjectedProvider(new Web3Provider(newWallet.provider))
+        setSigningProvider(new Web3Provider(newWallet.provider))
         window.localStorage.setItem('selectedWallet', newWallet.name)
       } else {
         setWallet(null)
@@ -124,7 +119,6 @@ export default function Network({ children }: { children: ChildElems }) {
       value={{
         signerNetwork: network,
         signingProvider: signingProvider && network === readNetwork.name ? signingProvider : undefined,
-        usingBurnerProvider: !!burnerProvider,
         wallet: wallet,
         notify: notify,
         account: account,

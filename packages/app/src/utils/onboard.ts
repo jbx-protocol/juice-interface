@@ -1,4 +1,3 @@
-import Notify from 'bnc-notify'
 import Onboard from 'bnc-onboard'
 import { Subscriptions } from 'bnc-onboard/dist/src/interfaces'
 import { readNetwork } from 'constants/networks'
@@ -8,7 +7,7 @@ const networkId = readNetwork.chainId
 const rpcUrl = readNetwork.rpcUrl
 const dappId = process.env.REACT_APP_BLOCKNATIVE_API_KEY
 
-// TODO(odd-amphora): Figure out the right home for these - why do most use a "services" file?
+// TODO(odd-amphora): Add support for Formatic, Portis, etc. if requested.
 export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
   return Onboard({
     dappId,
@@ -49,13 +48,6 @@ export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
         { walletName: 'imToken', rpcUrl },
         { walletName: 'meetone' },
         { walletName: 'authereum', disableNotifications: true },
-        // TODO(odd-amphora): Set up fortmatic.
-        // { walletName: 'fortmatic', apiKey: 'pk_test_886ADCAB855632AA' },
-        // TODO(odd-amphora): Set up Portis.
-        // {
-        //   walletName: 'portis',
-        //   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-        // },
       ],
     },
     walletCheck: [
@@ -64,14 +56,5 @@ export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
       { checkName: 'accounts' },
       { checkName: 'network' },
     ],
-  })
-}
-
-export function initNotify() {
-  return Notify({
-    dappId,
-    networkId,
-    onerror: error => console.log(`Notify error: ${error.message}`),
-    
   })
 }

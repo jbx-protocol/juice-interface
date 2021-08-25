@@ -84,28 +84,17 @@ yarn deploy-mainnet
 
 ## Frontend .env
 
-Create new `packages/app/.env`, reference `packages/app/.example.env`
+Create new `packages/app/.env`, reference `packages/app/.example.env`.
 
-```bash
-REACT_APP_INFURA_ID=
-REACT_APP_INFURA_NETWORK= # defaults to localhost in development mode
-```
-
-`REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
-`REACT_APP_INFURA_NETWORK`: Network name (kovan, rinkeby, mainnet, localhost).
-`REACT_APP_PINATA_PINNER_KEY`: Your [Pinata](https://pinata.cloud/) key.
-`REACT_APP_PINATA_PINNER_SECRET`: Your [Pinata](https://pinata.cloud/) secret.
 ---
 
 ## 🔏 Web3 Providers:
 
-TODO(odd-amphora): update.
-
-The frontend has three different providers that provide different levels of access to different chains:
+The frontend has two different providers that provide different levels of access to different chains:
 
 `readProvider`: used to read from contracts on network of injected provider (`.env` file points you at testnet or mainnet)
 
-`signingProvider`: your personal [MetaMask](https://metamask.io/download.html), [WalletConnect](https://walletconnect.org/apps) via [Argent](https://www.argent.xyz/), or other injected wallet (generates [burner-provider](https://www.npmjs.com/package/burner-provider) on page load). Used to sign transactions.
+`signingProvider`: your personal wallet, connected to via [Blocknative](https://docs.blocknative.com/onboard).
 
 ---
 

@@ -60,18 +60,25 @@ export default function ConfirmPayOwnerModal({
   const receivedTickets = weightedRate(currentFC, weiAmount, 'payer')
   const ownerTickets = weightedRate(currentFC, weiAmount, 'reserved')
 
+  if (!metadata) return null
+
   return (
     <Modal
-      title={'Pay ' + metadata?.name}
+      title={'Pay ' + metadata.name}
       visible={visible}
       onOk={pay}
       okText="Pay"
       onCancel={onCancel}
       confirmLoading={loading}
-      width={800}
+      width={640}
       centered={true}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <p>
+          Paying {metadata.name} is not an investment—it's a way to support the
+          project. Any value or utility of the tokens you receive is determined
+          by {metadata.name}.
+        </p>
         <Descriptions column={1} bordered>
           <Descriptions.Item label="Pay amount" className="content-right">
             {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}

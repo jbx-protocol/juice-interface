@@ -287,6 +287,10 @@ export default function Create() {
             </div>
           )
         })}
+        <p style={{ fontWeight: 500 }}>
+          The JBX protocol is unaudited, and projects built on it may be
+          vulnerable to bugs or exploits. Be smart!
+        </p>
         <Button
           onClick={() => setDeployProjectModalVisible(true)}
           disabled={currentStep < steps.length}

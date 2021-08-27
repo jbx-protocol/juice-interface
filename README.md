@@ -102,26 +102,12 @@ The frontend has two different providers that provide different levels of access
 
 Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
 
-[kovan.juicebox.money](kovan.juicebox.money) and [rinkeby.juicebox.money](rinkeby.juicebox.money) deploy automatically from `prod-fleek`.
+[kovan.juicebox.money](kovan.juicebox.money) and [rinkeby.juicebox.money](rinkeby.juicebox.money) deploy automatically from `main`.
 
 Automatic deployment does not:
 
 - deploy contracts
 - ship subgraph updates
-
-### Suggested deployment flow:
-
-If only shipping frontend changes:
-
-1. Merge latest into `main`
-2. Rebase `main` into `prod-fleek`
-
-If contracts or subgraphs have changed:
-
-1. Merge latest into `main`
-2. Rebase `main` into `prod-fleek` locally
-3. Deploy contracts & ship subgraph updates for all networks
-4. Push `prod-fleek`
 
 ## Graph
 

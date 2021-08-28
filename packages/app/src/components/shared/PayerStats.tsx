@@ -3,12 +3,12 @@ import { subgraphUrl } from 'constants/subgraphs'
 import { BigNumber, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { PayEvent } from 'models/events/pay-event'
+import { PayerReport } from 'models/subgraph-entities/payer-report'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { normalizeHandle } from 'utils/formatHandle'
-import { formattedNum, fromWad } from 'utils/formatNumber'
-import { formatGraphQuery } from 'utils/graph'
+import { formattedNum } from 'utils/formatNumber'
+import { formatGraphQuery, trimHexZero } from 'utils/graph'
 
 import CurrencySymbol from './CurrencySymbol'
 import FormattedAddress from './FormattedAddress'
@@ -30,38 +30,23 @@ export default function PayerStats() {
       .post(
         subgraphUrl,
         {
-          query: formatGraphQuery<PayEvent>({
-            entity: 'payEvent',
-            keys: ['amount', 'caller'],
+          query: formatGraphQuery({
+            entity: 'payerReport',
+            keys: ['payer', 'totalPaid', 'lastPaidTimestamp'],
             where: projectId
               ? {
-                  key: 'projectId',
-                  value: projectId.toString(),
+                  key: 'project',
+                  value: trimHexZero(projectId.toHexString()),
                 }
               : undefined,
           }),
         },
         { headers: { 'Content-Type': 'application/json' } },
       )
-      .then((res: AxiosResponse<{ data: { payEvents: PayEvent[] } }>) => {
-        let _payers: string[] = []
-        let _payerAmounts: Record<string, number> = {}
-
-        res.data.data?.payEvents.forEach(e => {
-          if (!_payers.includes(e.caller)) _payers.push(e.caller)
-
-          _payerAmounts[e.caller] =
-            (_payerAmounts[e.caller] ?? 0) + parseFloat(fromWad(e.amount))
-        })
-
-        setPayers(
-          _payers.sort((a, b) =>
-            _payerAmounts[a] < _payerAmounts[b] ? 1 : -1,
-          ),
-        )
-        setPayerAmounts(_payerAmounts)
+      .then((res: AxiosResponse<{ data: { payerReport: PayerReport[] } }>) => {
+        console.log('res', res)
       })
-      .catch(err => console.log('Error getting pay events', err))
+      .catch(err => console.log('Error getting payer reports', err))
   }, [projectId, setPayers, setPayerAmounts])
 
   return (

@@ -1,32 +1,19 @@
-import { Button, Input, Select, Space } from 'antd'
+import { Button, Select } from 'antd'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
-import { UserContext } from 'contexts/userContext'
 import { useProjects } from 'hooks/Projects'
-import { useContext, useLayoutEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useState } from 'react'
 
-type SelectOption = 'all' | 'user' | 'address'
+type OrderByOption = 'id' | 'totalPaid'
 
 export default function Projects() {
-  const [selectOption, setSelectOption] = useState<SelectOption>()
-  const [showAddressInput, setShowAddressInput] = useState<boolean>(false)
-  const { userAddress } = useContext(UserContext)
-  const { owner }: { owner?: string } = useParams()
+  const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
 
-  useLayoutEffect(() => {
-    setShowAddressInput(owner !== undefined && owner !== userAddress)
-    setSelectOption(
-      owner ? (owner === userAddress ? 'user' : 'address') : 'all',
-    )
-  }, [owner, userAddress, setShowAddressInput, setSelectOption])
-
-  function goToOwner(addr: string) {
-    window.location.hash = addr ? '/projects/' + addr : '/projects'
-  }
-
-  const projects = useProjects({ owner })
+  const projects = useProjects({
+    orderBy,
+    orderDirection: orderBy === 'totalPaid' ? 'desc' : 'asc',
+  })
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -38,40 +25,10 @@ export default function Projects() {
         }}
       >
         <h1>Projects on Juicebox</h1>
-        <Space>
-          <Select
-            value={selectOption}
-            onChange={val => {
-              switch (val) {
-                case 'all':
-                  goToOwner('')
-                  break
-                case 'user':
-                  userAddress && goToOwner(userAddress)
-                  break
-                case 'address':
-                  setShowAddressInput(true)
-                  setSelectOption('address')
-                  break
-              }
-            }}
-            style={{ width: 160 }}
-          >
-            <Select.Option value="all">All projects</Select.Option>
-            <Select.Option value="user">Your projects</Select.Option>
-            <Select.Option value="address">By owner</Select.Option>
-          </Select>
-          {showAddressInput && (
-            <Input
-              defaultValue={owner || ''}
-              style={{ width: 400 }}
-              placeholder="0x000000..."
-              onKeyUp={e => {
-                e.key === 'Enter' && goToOwner(e.currentTarget.value)
-              }}
-            />
-          )}
-        </Space>
+        <Select value={orderBy} onChange={setOrderBy} style={{ width: 160 }}>
+          <Select.Option value="totalPaid">Total earned</Select.Option>
+          <Select.Option value="id">Date created</Select.Option>
+        </Select>
       </div>
 
       <div style={{ marginBottom: 40 }}>
@@ -80,15 +37,7 @@ export default function Projects() {
         </a>
       </div>
 
-      {!projects ? (
-        <Loading />
-      ) : projects.length ? (
-        <ProjectsGrid projects={projects} />
-      ) : (
-        <div style={{ padding: 40, textAlign: 'center' }}>
-          No projects owned by {owner}
-        </div>
-      )}
+      {projects ? <ProjectsGrid projects={projects} /> : <Loading />}
     </div>
   )
 }

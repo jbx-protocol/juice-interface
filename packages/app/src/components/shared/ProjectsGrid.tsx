@@ -1,13 +1,9 @@
 import { Col, ColProps, Row } from 'antd'
-import { ProjectInfo } from 'models/project-info'
+import { Project } from 'models/subgraph-entities/project'
 
 import ProjectCard from './ProjectCard'
 
-export default function ProjectsGrid({
-  projects,
-}: {
-  projects: Pick<ProjectInfo, 'handle' | 'uri'>[]
-}) {
+export default function ProjectsGrid({ projects }: { projects: Project[] }) {
   const gutter = 20
 
   const colProps: ColProps = {

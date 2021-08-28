@@ -414,7 +414,7 @@ export default function ProjectActivity() {
                   textAlign: 'right',
                 }}
               >
-                Total payments
+                Total contributed
               </div>
             </div>
           </div>

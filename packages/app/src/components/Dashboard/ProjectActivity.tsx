@@ -230,8 +230,8 @@ export default function ProjectActivity() {
 
     setInitialized(true)
 
-    setActivityTab(EventType.pay)
-  }, [initialized, setInitialized, activityTab])
+    setActivityTab(projectId?.eq(7) ? EventType.redeem : EventType.pay)
+  }, [initialized, setInitialized, activityTab, projectId])
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',

@@ -42,7 +42,7 @@ export default function RichImgPreview({
         )
       }
     })
-  }, [src])
+  }, [src, setElem])
 
   return elem
 }

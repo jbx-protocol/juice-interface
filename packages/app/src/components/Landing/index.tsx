@@ -1,7 +1,9 @@
 import { Button, Col, Row, Space } from 'antd'
 import Create from 'components/Create'
+import Loading from 'components/shared/Loading'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
+import { useProjects } from 'hooks/Projects'
 import { CSSProperties, useContext } from 'react'
 
 import ProjectsGrid from '../shared/ProjectsGrid'
@@ -27,6 +29,8 @@ export default function Landing() {
       {text}
     </h1>
   )
+
+  const previewProjects = useProjects({ pageSize: 4 })
 
   const smallHeader = (text: string) => (
     <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>
@@ -190,26 +194,11 @@ export default function Landing() {
         >
           {smallHeader('Projects using Juicebox')}
           <div style={{ marginTop: 20 }}>
-            <ProjectsGrid
-              projects={[
-                {
-                  handle: 'juicebox',
-                  uri: 'QmQTsEPAx1caPL5n6QQyngpBR7GdCQZFeh8z15idAYo9hr',
-                },
-                {
-                  handle: 'tiles',
-                  uri: 'QmQnFfNowL2GsY567WEBXGJDqn1tD6hT3LJPTEAE4gQ7Zc',
-                },
-                {
-                  handle: 'sharkdao',
-                  uri: 'Qmf6dHEYQUvuaxtpVnvK36Tpn7gySVWMxytCvuJZC7qkJp',
-                },
-                {
-                  handle: 'wagmistudios',
-                  uri: 'QmWBSsoT1cuMsuxK4b8rXDvSBMJKBWafAeGrohFxxSzTFT',
-                },
-              ]}
-            />
+            {previewProjects ? (
+              <ProjectsGrid projects={previewProjects} />
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </section>

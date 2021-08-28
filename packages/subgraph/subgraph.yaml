@@ -38,11 +38,14 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
+        - Project
+        - PayerReport
         - PayEvent
         - PrintPremineEvent
         - TapEvent
         - RedeemEvent
         - PrintReservesEvent
+        - ConfigureEvent
       abis:
         - name: TerminalV1
           file: ./abis/TerminalV1.json
@@ -59,4 +62,6 @@ dataSources:
           handler: handleRedeem
         - event: Configure(indexed uint256,indexed uint256,address)
           handler: handleConfigure
+        - event: AddToBalance(indexed uint256,uint256,address)
+          handler: handleAddToBalance
       file: ./src/mapping.ts

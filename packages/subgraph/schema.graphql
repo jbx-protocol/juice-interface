@@ -1,15 +1,34 @@
 type Project @entity {
   id: ID!
   handle: String!
-  owner: Bytes!
+  creator: Bytes!
   createdAt: BigInt!
   uri: String
+  totalPaid: BigInt!
+  totalRedeemed: BigInt!
+  currentBalance: BigInt!
+  payers: [PayerReport!]! @derivedFrom(field: "project")
+  payEvents: [PayEvent!]! @derivedFrom(field: "project")
+  printPremineEvents: [PrintPremineEvent!]! @derivedFrom(field: "project")
+  tapEvents: [TapEvent!]! @derivedFrom(field: "project")
+  redeemEvents: [RedeemEvent!]! @derivedFrom(field: "project")
+  printReservesEvents: [PrintReservesEvent!]! @derivedFrom(field: "project")
+  configureEvents: [ConfigureEvent!]! @derivedFrom(field: "project")
+}
+
+type PayerReport @entity {
+  id: ID!
+  project: Project!
+  payer: Bytes!
+  totalPaid: BigInt!
+  totalTokensReceived: BigInt!
+  lastPaidTimestamp: BigInt!
 }
 
 type PayEvent @entity {
   id: ID!
+  project: Project!
   fundingCycleId: BigInt!
-  projectId: BigInt!
   caller: Bytes!
   beneficiary: Bytes!
   amount: BigInt!
@@ -20,7 +39,7 @@ type PayEvent @entity {
 
 type PrintPremineEvent @entity {
   id: ID!
-  projectId: BigInt!
+  project: Project!
   beneficiary: Bytes!
   amount: BigInt!
   currency: BigInt!
@@ -32,8 +51,8 @@ type PrintPremineEvent @entity {
 
 type TapEvent @entity {
   id: ID!
+  project: Project!
   fundingCycleId: BigInt!
-  projectId: BigInt!
   beneficiary: Bytes!
   amount: BigInt!
   currency: BigInt!
@@ -47,9 +66,9 @@ type TapEvent @entity {
 
 type RedeemEvent @entity {
   id: ID!
+  project: Project!
   holder: Bytes!
   beneficiary: Bytes!
-  projectId: BigInt!
   amount: BigInt!
   returnAmount: BigInt!
   caller: Bytes!
@@ -59,8 +78,8 @@ type RedeemEvent @entity {
 
 type PrintReservesEvent @entity {
   id: ID!
+  project: Project!
   fundingCycleId: BigInt!
-  projectId: BigInt!
   beneficiary: Bytes!
   count: BigInt!
   beneficiaryTicketAmount: BigInt!
@@ -71,15 +90,9 @@ type PrintReservesEvent @entity {
 
 type ConfigureEvent @entity {
   id: ID!
+  project: Project!
   fundingCycleId: BigInt!
-  projectId: BigInt!
   caller: Bytes!
   timestamp: BigInt!
   txHash: Bytes!
-}
-
-type ProjectStat @entity {
-  id: ID!
-  totalPaid: BigInt!
-  totalRedeemed: BigInt!
 }

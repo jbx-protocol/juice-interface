@@ -1,17 +1,16 @@
-import { Space } from 'antd'
+import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { ProjectInfo } from 'models/project-info'
+import { Project } from 'models/subgraph-entities/project'
 import { useContext } from 'react'
+import { formatDate } from 'utils/formatDate'
+import { formatWad } from 'utils/formatNumber'
 
+import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
-export default function ProjectCard({
-  project,
-}: {
-  project: Pick<ProjectInfo, 'handle' | 'uri'>
-}) {
+export default function ProjectCard({ project }: { project: Project }) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
@@ -59,43 +58,27 @@ export default function ProjectCard({
               {metadata.name}
             </h2>
 
-            <div>
-              <Space size="middle">
-                {project.handle && (
-                  <span style={{ color: colors.text.secondary }}>
-                    @{project.handle}
-                  </span>
-                )}
-                {metadata?.infoUri && (
-                  <a
-                    style={{ fontWeight: 400 }}
-                    href={
-                      metadata.infoUri.startsWith('http://') ||
-                      metadata.infoUri.startsWith('https://')
-                        ? metadata.infoUri
-                        : 'http://' + metadata.infoUri
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {metadata.infoUri}
-                  </a>
-                )}
-              </Space>
+            <div style={{ color: colors.text.tertiary }}>
+              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                <CurrencySymbol currency={0} />
+                {formatWad(project.totalPaid, { decimals: 0 })}{' '}
+              </span>
+              since {formatDate(project.createdAt * 1000, 'MM-DD-YY')}
             </div>
 
             {metadata.description && (
-              <div
-                style={{
-                  marginTop: 2,
-                  maxHeight: 20,
-                  color: colors.text.tertiary,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {metadata.description}
-              </div>
+              <Tooltip title={metadata.description} placement="bottom">
+                <div
+                  style={{
+                    maxHeight: 20,
+                    color: colors.text.tertiary,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {metadata.description}
+                </div>
+              </Tooltip>
             )}
           </div>
         </div>

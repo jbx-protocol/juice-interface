@@ -1,37 +1,32 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import axios, { AxiosResponse } from 'axios'
 import { subgraphUrl } from 'constants/subgraphs'
-import { utils } from 'ethers'
-import { ProjectInfo } from 'models/project-info'
+import {
+  parseProjectJson,
+  Project,
+  ProjectJson,
+} from 'models/subgraph-entities/project'
 import { useEffect, useState } from 'react'
 import { formatGraphQuery } from 'utils/graph'
 
 export function useProjects({
   pageNumber,
-  id,
+  projectId,
   handle,
-  owner,
   uri,
+  orderBy,
+  orderDirection,
+  pageSize,
 }: {
   pageNumber?: number
-  id?: string
+  projectId?: BigNumber
   handle?: string
-  owner?: string
   uri?: string
+  orderBy?: 'id' | 'currentBalance' | 'totalPaid'
+  orderDirection?: 'asc' | 'desc'
+  pageSize?: number
 }) {
-  const [projects, setProjects] = useState<ProjectInfo[]>()
-
-  const pageSize = 50
-
-  const formatProject = (project: {
-    id: string
-    handle: string
-    owner: string
-    createdAt: number
-    uri: string
-  }) => ({
-    ...project,
-    handle: utils.parseBytes32String(project.handle),
-  })
+  const [projects, setProjects] = useState<Project[]>()
 
   useEffect(() => {
     axios
@@ -40,27 +35,32 @@ export function useProjects({
         {
           query: formatGraphQuery({
             entity: 'project',
-            keys: ['handle', 'owner', 'createdAt', 'uri'],
+            keys: [
+              'handle',
+              'creator',
+              'createdAt',
+              'uri',
+              'currentBalance',
+              'totalPaid',
+              'totalRedeemed',
+            ],
             first: pageSize,
-            skip: pageNumber ? pageNumber * pageSize : undefined,
-            orderDirection: 'asc',
-            orderBy: 'createdAt',
-            where: owner
-              ? {
-                  key: 'owner',
-                  operator: 'contains',
-                  value: owner,
-                }
-              : undefined,
+            skip: pageNumber ? pageNumber * (pageSize ?? 50) : undefined,
+            orderDirection: orderDirection ?? 'desc',
+            orderBy: orderBy ?? 'totalPaid',
           }),
         },
         { headers: { 'Content-Type': 'application/json' } },
       )
-      .then((res: AxiosResponse<{ data: { projects: ProjectInfo[] } }>) =>
-        setProjects(res.data?.data?.projects?.map(p => formatProject(p)) ?? []),
+      .then((res: AxiosResponse<{ data: { projects: ProjectJson[] } }>) =>
+        setProjects(
+          res.data?.data?.projects?.map((p: ProjectJson) =>
+            parseProjectJson(p),
+          ) ?? [],
+        ),
       )
       .catch(err => console.log('Error getting projects', err))
-  }, [pageNumber, id, handle, owner, uri])
+  }, [pageNumber, projectId, handle, uri, orderDirection, orderBy])
 
   return projects
 }

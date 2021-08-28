@@ -1,5 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
+import {
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+} from '@ant-design/icons'
+import { Select, Space } from 'antd'
 import Autolinker from 'autolinker'
 import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -8,24 +11,39 @@ import Loading from 'components/shared/Loading'
 import { subgraphUrl } from 'constants/subgraphs'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumberish } from 'ethers'
-import { PayEvent } from 'models/events/pay-event'
-import { RedeemEvent } from 'models/events/redeem-event'
-import { CSSProperties, useContext, useEffect, useState } from 'react'
+import {
+  parsePayEventJson,
+  PayEvent,
+  PayEventJson,
+} from 'models/subgraph-entities/pay-event'
+import {
+  parsePayerReportJson,
+  PayerReport,
+  PayerReportJson,
+} from 'models/subgraph-entities/payer-report'
+import {
+  parseRedeemEventJson,
+  RedeemEvent,
+  RedeemEventJson,
+} from 'models/subgraph-entities/redeem-event'
+import {
+  CSSProperties,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { formatGraphQuery } from 'utils/graph'
+import { formatGraphQuery, OrderDirection, trimHexZero } from 'utils/graph'
 
 import RichImgPreview from '../shared/RichImgPreview'
 
 enum EventType {
   pay = 'pay',
   redeem = 'redeem',
+  payerReport = 'payerReport',
 }
-
-type ActivityEvent =
-  | (PayEvent & { type: EventType.pay })
-  | (RedeemEvent & { type: EventType.redeem })
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([
@@ -39,10 +57,17 @@ let payEventOverrides = new Map<string, Map<string, string>>([
 
 export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
-  const [events, setEvents] = useState<ActivityEvent[]>([])
-  const [activityTab, setActivityTab] = useState<EventType>(EventType.pay)
+  const [initialized, setInitialized] = useState<boolean>()
+  const [payEvents, setPayEvents] = useState<PayEvent[]>([])
+  const [payerReports, setPayerReports] = useState<PayerReport[]>([])
+  const [sortPayerReports, setSortPayerReports] =
+    useState<keyof PayerReport>('totalPaid')
+  const [sortPayerReportsDirection, setSortPayerReportsDirection] =
+    useState<OrderDirection>('desc')
+  const [redeemEvents, setRedeemEvents] = useState<RedeemEvent[]>([])
+  const [activityTab, setActivityTab] = useState<EventType>()
   const [pageNumber, setPageNumber] = useState<number>(0)
-  const [loadingActivity, setLoadingActivity] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>()
 
   const { projectId, tokenSymbol } = useContext(ProjectContext)
 
@@ -51,108 +76,162 @@ export default function ProjectActivity() {
 
   const pageSize = 100
 
-  useEffect(() => {
-    setEvents([])
-    setPageNumber(0)
+  const loadPayEvents = (reset?: boolean) => {
+    if (reset) setPayEvents([])
+    axios
+      .post(
+        subgraphUrl,
+        {
+          query: formatGraphQuery({
+            entity: 'payEvent',
+            keys: ['amount', 'beneficiary', 'note', 'timestamp'],
+            first: pageSize,
+            skip: pageNumber * pageSize,
+            orderDirection: 'desc',
+            orderBy: 'timestamp',
+            where: projectId
+              ? {
+                  key: 'project',
+                  value: trimHexZero(projectId.toHexString()),
+                }
+              : undefined,
+          }),
+        },
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+      .then((res: AxiosResponse<{ data: { payEvents: PayEventJson[] } }>) => {
+        const newEvents = reset ? [] : [...payEvents]
+        newEvents.push(
+          ...res.data?.data?.payEvents.map(e => parsePayEventJson(e)),
+        )
+        setPayEvents(newEvents)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.log('Error getting pay events', err)
+        setLoading(false)
+      })
+  }
+
+  const loadPayerReports = (reset?: boolean) => {
+    if (reset) setPayerReports([])
+    axios
+      .post(
+        subgraphUrl,
+        {
+          query: formatGraphQuery({
+            entity: 'payerReport',
+            keys: ['payer', 'totalPaid', 'lastPaidTimestamp'],
+            first: pageSize,
+            skip: pageNumber * pageSize,
+            orderBy: sortPayerReports,
+            orderDirection: sortPayerReportsDirection,
+            where: projectId
+              ? {
+                  key: 'project',
+                  value: trimHexZero(projectId.toHexString()),
+                }
+              : undefined,
+          }),
+        },
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+      .then(
+        (res: AxiosResponse<{ data: { payerReports: PayerReportJson[] } }>) => {
+          const newEvents = reset ? [] : [...payerReports]
+          newEvents.push(
+            ...res.data?.data?.payerReports.map(e => parsePayerReportJson(e)),
+          )
+          setPayerReports(newEvents)
+          setLoading(false)
+        },
+      )
+      .catch(err => console.log('Error getting payer reports', err))
+  }
+
+  const loadRedeemEvents = (reset?: boolean) => {
+    if (reset) setRedeemEvents([])
+    axios
+      .post(
+        subgraphUrl,
+        {
+          query: formatGraphQuery({
+            entity: 'redeemEvent',
+            keys: ['amount', 'beneficiary', 'id', 'returnAmount', 'timestamp'],
+            first: pageSize,
+            skip: pageNumber * pageSize,
+            orderDirection: 'desc',
+            orderBy: 'timestamp',
+            where: projectId
+              ? {
+                  key: 'project',
+                  value: trimHexZero(projectId.toHexString()),
+                }
+              : undefined,
+          }),
+        },
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+      .then(
+        (res: AxiosResponse<{ data: { redeemEvents: RedeemEventJson[] } }>) => {
+          const newEvents = reset ? [] : [...redeemEvents]
+          newEvents.push(
+            ...res.data?.data?.redeemEvents.map(e => parseRedeemEventJson(e)),
+          )
+          setRedeemEvents(newEvents)
+          setLoading(false)
+        },
+      )
+      .catch(err => {
+        console.log('Error getting redeem events', err)
+        setLoading(false)
+      })
+  }
+
+  useLayoutEffect(() => {
+    setLoading(true)
+
+    switch (activityTab) {
+      case EventType.pay:
+        loadPayEvents()
+        break
+      case EventType.redeem:
+        loadRedeemEvents()
+        break
+      case EventType.payerReport:
+        loadPayerReports()
+        break
+    }
+  }, [pageNumber])
+
+  useLayoutEffect(() => {
+    setLoading(true)
+
+    switch (activityTab) {
+      case EventType.pay:
+        loadPayEvents(true)
+        break
+      case EventType.redeem:
+        loadRedeemEvents(true)
+        break
+      case EventType.payerReport:
+        loadPayerReports(true)
+        break
+    }
   }, [activityTab])
 
-  useEffect(() => {
-    setLoadingActivity(true)
+  useLayoutEffect(() => {
+    setLoading(true)
+    loadPayerReports(true)
+  }, [sortPayerReports, sortPayerReportsDirection])
 
-    const newEvents = pageNumber ? events : []
+  useLayoutEffect(() => {
+    if (initialized) return
 
-    // Load pay events
-    if (activityTab === 'pay') {
-      axios
-        .post(
-          subgraphUrl,
-          {
-            query: formatGraphQuery<PayEvent>({
-              entity: 'payEvent',
-              keys: ['amount', 'beneficiary', 'id', 'note', 'timestamp'],
-              first: pageSize,
-              skip: pageNumber * pageSize,
-              orderDirection: 'desc',
-              orderBy: 'timestamp',
-              where: projectId
-                ? {
-                    key: 'projectId',
-                    value: projectId.toString(),
-                  }
-                : undefined,
-            }),
-          },
-          { headers: { 'Content-Type': 'application/json' } },
-        )
-        .then((res: AxiosResponse<{ data: { payEvents: PayEvent[] } }>) => {
-          newEvents.push(
-            ...res.data?.data?.payEvents.map(
-              e =>
-                ({
-                  ...e,
-                  type: EventType.pay,
-                } as ActivityEvent),
-            ),
-          )
-          setEvents(newEvents)
-          setLoadingActivity(false)
-        })
-        .catch(err => {
-          console.log('Error getting pay events', err)
-          setLoadingActivity(false)
-        })
-    }
+    setInitialized(true)
 
-    if (activityTab === 'redeem') {
-      // Load redeem events
-      axios
-        .post(
-          subgraphUrl,
-          {
-            query: formatGraphQuery<RedeemEvent>({
-              entity: 'redeemEvent',
-              keys: [
-                'amount',
-                'beneficiary',
-                'id',
-                'returnAmount',
-                'timestamp',
-              ],
-              first: pageSize,
-              skip: pageNumber * pageSize,
-              orderDirection: 'desc',
-              orderBy: 'timestamp',
-              where: projectId
-                ? {
-                    key: 'projectId',
-                    value: projectId.toString(),
-                  }
-                : undefined,
-            }),
-          },
-          { headers: { 'Content-Type': 'application/json' } },
-        )
-        .then(
-          (res: AxiosResponse<{ data: { redeemEvents: RedeemEvent[] } }>) => {
-            newEvents.push(
-              ...res.data?.data?.redeemEvents.map(
-                e =>
-                  ({
-                    ...e,
-                    type: EventType.redeem,
-                  } as ActivityEvent),
-              ),
-            )
-            setEvents(newEvents)
-            setLoadingActivity(false)
-          },
-        )
-        .catch(err => {
-          console.log('Error getting redeem events', err)
-          setLoadingActivity(false)
-        })
-    }
-  }, [projectId, activityTab, pageNumber, setEvents])
+    setActivityTab(EventType.pay)
+  }, [initialized, setInitialized, activityTab])
 
   const smallHeaderStyle: CSSProperties = {
     fontSize: '.7rem',
@@ -172,7 +251,7 @@ export default function ProjectActivity() {
     }
   }
 
-  const formatPayEventOverride = (e: PayEvent) => {
+  const formatPayEventOverride = (e: Partial<PayEvent>) => {
     if (!projectId) {
       return e.note
     }
@@ -181,7 +260,7 @@ export default function ProjectActivity() {
     payEventOverrides
       .get(projectId.toString())
       ?.forEach((value: string, key: string) => {
-        if (e.note.includes(key)) {
+        if (e.note?.includes(key)) {
           override = value
           return
         }
@@ -190,166 +269,273 @@ export default function ProjectActivity() {
     return override ? override : e.note
   }
 
-  const formatPayEvent = (e: PayEvent) => (
-    <div
-      style={{
-        marginBottom: 20,
-        paddingBottom: 20,
-        borderBottom: '1px solid ' + colors.stroke.tertiary,
-      }}
-      key={e.id}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
-        <div>
-          <div style={smallHeaderStyle}>Paid</div>
+  const payEventElems = useMemo(
+    () =>
+      payEvents.map(e => (
+        <div
+          style={{
+            marginBottom: 20,
+            paddingBottom: 20,
+            borderBottom: '1px solid ' + colors.stroke.tertiary,
+          }}
+          key={e.id}
+        >
           <div
             style={{
-              lineHeight: contentLineHeight,
-              fontSize: '1rem',
-              marginRight: 10,
-              color: colors.text.primary,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignContent: 'space-between',
+            }}
+          >
+            <div>
+              <div style={smallHeaderStyle}>Paid</div>
+              <div
+                style={{
+                  lineHeight: contentLineHeight,
+                  fontSize: '1rem',
+                  marginRight: 10,
+                  color: colors.text.primary,
+                }}
+              >
+                <CurrencySymbol currency={0} />
+                {formatWad(e.amount)}
+              </div>
+            </div>
+
+            <div>
+              {e.timestamp && (
+                <div
+                  style={{
+                    ...smallHeaderStyle,
+                    textAlign: 'right',
+                    color: colors.text.secondary,
+                  }}
+                >
+                  {formatHistoricalDate(e.timestamp * 1000)}
+                </div>
+              )}
+              <div
+                style={{
+                  ...smallHeaderStyle,
+                  color: colors.text.secondary,
+                  marginTop: '.3rem',
+                  lineHeight: contentLineHeight,
+                  textAlign: 'right',
+                }}
+              >
+                <FormattedAddress address={e.beneficiary} />
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', marginTop: 5, overflowX: 'scroll' }}>
+            {e.note && (
+              <RichImgPreview
+                src={parseLink(e.note)}
+                style={{ marginRight: 10 }}
+              />
+            )}
+
+            {
+              <div
+                style={{ color: colors.text.secondary }}
+                dangerouslySetInnerHTML={{
+                  __html: Autolinker.link(
+                    (usePayEventOverrides
+                      ? formatPayEventOverride(e)
+                      : e.note) ?? '',
+                    {
+                      sanitizeHtml: true,
+                      className: 'quiet',
+                      truncate: {
+                        length: 30,
+                        location: 'smart',
+                      },
+                    },
+                  ),
+                }}
+              ></div>
+            }
+          </div>
+        </div>
+      )),
+    [payEvents, colors],
+  )
+
+  const payerReportElems = useMemo(
+    () =>
+      payerReports.map(e => (
+        <div
+          style={{
+            marginBottom: 20,
+            paddingBottom: 20,
+            borderBottom: '1px solid ' + colors.stroke.tertiary,
+          }}
+          key={e.id}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignContent: 'space-between',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  lineHeight: contentLineHeight,
+                  fontSize: '1rem',
+                  marginRight: 10,
+                  color: colors.text.primary,
+                }}
+              >
+                <FormattedAddress address={e.payer} />
+              </div>
+              {e.lastPaidTimestamp && (
+                <div style={smallHeaderStyle}>
+                  Last paid {formatHistoricalDate(e.lastPaidTimestamp * 1000)}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <div
+                style={{
+                  lineHeight: contentLineHeight,
+                  textAlign: 'right',
+                }}
+              >
+                <CurrencySymbol currency={0} />
+                {formatWad(e.totalPaid)}
+              </div>
+              <div
+                style={{
+                  ...smallHeaderStyle,
+                  textAlign: 'right',
+                }}
+              >
+                Total payments
+              </div>
+            </div>
+          </div>
+        </div>
+      )),
+    [payerReports, colors],
+  )
+
+  const redeemEventElems = useMemo(
+    () =>
+      redeemEvents.map(e => (
+        <div
+          style={{
+            marginBottom: 20,
+            paddingBottom: 20,
+            borderBottom: '1px solid ' + colors.stroke.tertiary,
+          }}
+          key={e.id}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignContent: 'space-between',
+            }}
+          >
+            <div>
+              <div style={smallHeaderStyle}>Redeemed</div>
+              <div
+                style={{
+                  lineHeight: contentLineHeight,
+                  fontSize: '1rem',
+                  marginRight: 10,
+                  color: colors.text.primary,
+                }}
+              >
+                {formatWad(e.amount)} {tokenSymbol ?? 'tokens'}
+              </div>
+            </div>
+
+            <div>
+              {e.timestamp && (
+                <div
+                  style={{
+                    ...smallHeaderStyle,
+                    textAlign: 'right',
+                    color: colors.text.secondary,
+                  }}
+                >
+                  {formatHistoricalDate(e.timestamp * 1000)}
+                </div>
+              )}
+              <div
+                style={{
+                  ...smallHeaderStyle,
+                  color: colors.text.secondary,
+                  marginTop: '.3rem',
+                  lineHeight: contentLineHeight,
+                  textAlign: 'right',
+                }}
+              >
+                <FormattedAddress address={e.beneficiary} />
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              ...smallHeaderStyle,
+              color: colors.text.secondary,
+              marginTop: 5,
             }}
           >
             <CurrencySymbol currency={0} />
-            {formatWad(e.amount)}
+            {formatWad(e.returnAmount)} overflow received
           </div>
         </div>
-
-        <div>
-          <div
-            style={{
-              ...smallHeaderStyle,
-              textAlign: 'right',
-              color: colors.text.secondary,
-            }}
-          >
-            {formatHistoricalDate(BigNumber.from(e.timestamp).mul(1000))}
-          </div>
-          <div
-            style={{
-              ...smallHeaderStyle,
-              color: colors.text.secondary,
-              marginTop: '.3rem',
-              lineHeight: contentLineHeight,
-              textAlign: 'right',
-            }}
-          >
-            <FormattedAddress address={e.beneficiary} />
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', marginTop: 5, overflowX: 'scroll' }}>
-        <RichImgPreview src={parseLink(e.note)} style={{ marginRight: 10 }} />
-
-        <div
-          style={{ color: colors.text.secondary }}
-          dangerouslySetInnerHTML={{
-            __html: Autolinker.link(
-              usePayEventOverrides ? formatPayEventOverride(e) : e.note,
-              {
-                sanitizeHtml: true,
-                className: 'quiet',
-                truncate: {
-                  length: 30,
-                  location: 'smart',
-                },
-              },
-            ),
-          }}
-        ></div>
-      </div>
-    </div>
+      )),
+    [redeemEvents, colors],
   )
 
-  const formatRedeemEvent = (e: RedeemEvent) => (
-    <div
-      style={{
-        marginBottom: 20,
-        paddingBottom: 20,
-        borderBottom: '1px solid ' + colors.stroke.tertiary,
-      }}
-      key={e.id}
-    >
+  const eventElems = useMemo(() => {
+    const noActivity = (
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
-        <div>
-          <div style={smallHeaderStyle}>Redeemed</div>
-          <div
-            style={{
-              lineHeight: contentLineHeight,
-              fontSize: '1rem',
-              marginRight: 10,
-              color: colors.text.primary,
-            }}
-          >
-            {formatWad(e.amount)} {tokenSymbol ?? 'tokens'}
-          </div>
-        </div>
-
-        <div>
-          <div
-            style={{
-              ...smallHeaderStyle,
-              textAlign: 'right',
-              color: colors.text.secondary,
-            }}
-          >
-            {formatHistoricalDate(BigNumber.from(e.timestamp).mul(1000))}
-          </div>
-          <div
-            style={{
-              ...smallHeaderStyle,
-              color: colors.text.secondary,
-              marginTop: '.3rem',
-              lineHeight: contentLineHeight,
-              textAlign: 'right',
-            }}
-          >
-            <FormattedAddress address={e.beneficiary} />
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          ...smallHeaderStyle,
           color: colors.text.secondary,
-          marginTop: 5,
+          paddingTop: 20,
+          borderTop: '1px solid ' + colors.stroke.tertiary,
         }}
       >
-        <CurrencySymbol currency={0} />
-        {formatWad(e.returnAmount)} overflow received
+        No activity yet
       </div>
-    </div>
-  )
-
-  const formatEventByType = (event: ActivityEvent) => {
-    switch (event.type) {
-      case EventType.pay:
-        return formatPayEvent(event)
-      case EventType.redeem:
-        return formatRedeemEvent(event)
-    }
-  }
-
-  const sortByTimestamp = <E extends { timestamp: BigNumberish }>(
-    events: E[],
-  ) =>
-    events.sort((a, b) =>
-      BigNumber.from(a.timestamp).lt(BigNumber.from(b.timestamp)) ? 1 : -1,
     )
+
+    let elems: JSX.Element[] = []
+
+    switch (activityTab) {
+      case EventType.pay:
+        elems = payEventElems
+        break
+      case EventType.payerReport:
+        elems = payerReportElems
+        break
+      case EventType.redeem:
+        elems = redeemEventElems
+        break
+    }
+
+    return <div>{elems?.length ? elems : loading ? null : noActivity}</div>
+  }, [activityTab, payEventElems, redeemEventElems, payerReportElems])
+
+  const elemsCount = useMemo(() => {
+    switch (activityTab) {
+      case EventType.pay:
+        return payEvents.length
+      case EventType.payerReport:
+        return payerReports.length
+      case EventType.redeem:
+        return redeemEvents.length
+    }
+  }, [activityTab, payEvents, payerReports, redeemEvents])
 
   const tab = (tab: EventType, selected: boolean) => {
     let text: string
@@ -360,6 +546,9 @@ export default function ProjectActivity() {
         break
       case EventType.redeem:
         text = 'Redeems'
+        break
+      case EventType.payerReport:
+        text = 'Contributors'
         break
     }
 
@@ -382,43 +571,93 @@ export default function ProjectActivity() {
   return (
     <div>
       <div style={{ marginBottom: 20 }}>
-        <Space size="middle">
-          {tab(EventType.pay, activityTab === EventType.pay)}
-          {tab(EventType.redeem, activityTab === EventType.redeem)}
-        </Space>
-      </div>
-      <div>
-        {events && events.length ? (
-          sortByTimestamp(events).map(event => (
-            <div key={event.id}>{formatEventByType(event)}</div>
-          ))
-        ) : loadingActivity ? null : (
-          <div
-            style={{
-              color: colors.text.secondary,
-              paddingTop: 20,
-              borderTop: '1px solid ' + colors.stroke.tertiary,
-            }}
-          >
-            No activity yet
-          </div>
+        {projectId?.eq(7) ? (
+          <Space size="middle">
+            {tab(EventType.redeem, activityTab === EventType.redeem)}
+            {tab(EventType.payerReport, activityTab === EventType.payerReport)}
+          </Space>
+        ) : (
+          <Space size="middle">
+            {tab(EventType.pay, activityTab === EventType.pay)}
+            {tab(EventType.redeem, activityTab === EventType.redeem)}
+            {tab(EventType.payerReport, activityTab === EventType.payerReport)}
+          </Space>
         )}
       </div>
 
-      {events.length && events.length % pageSize === 0 && !loadingActivity ? (
-        <div
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-          }}
-          onClick={() => setPageNumber(pageNumber + 1)}
-        >
-          Load more
-        </div>
-      ) : null}
+      <div
+        style={{
+          maxHeight: '100vh',
+          height: 600,
+          overflow: 'auto',
+          paddingBottom: 40,
+        }}
+      >
+        {activityTab === EventType.payerReport && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 20,
+            }}
+          >
+            <Select
+              style={{ flex: 1 }}
+              onChange={(val: keyof PayerReport) => setSortPayerReports(val)}
+              value={sortPayerReports}
+            >
+              <Select.Option value="totalPaid">Amount</Select.Option>
+              <Select.Option value="lastPaidTimestamp">Latest</Select.Option>
+            </Select>
+            <div
+              style={{ cursor: 'pointer', padding: 10 }}
+              onClick={() =>
+                setSortPayerReportsDirection(
+                  sortPayerReportsDirection === 'asc' ? 'desc' : 'asc',
+                )
+              }
+            >
+              {sortPayerReportsDirection === 'asc' ? (
+                <SortAscendingOutlined />
+              ) : (
+                <SortDescendingOutlined />
+              )}
+            </div>
+          </div>
+        )}
 
-      {loadingActivity && <Loading />}
+        {eventElems}
+
+        {elemsCount && elemsCount % pageSize === 0 && !loading ? (
+          <div
+            style={{
+              textAlign: 'center',
+              color: colors.text.secondary,
+              cursor: 'pointer',
+            }}
+            onClick={() => setPageNumber(pageNumber + 1)}
+          >
+            Load more
+          </div>
+        ) : loading ? null : (
+          <div
+            style={{
+              textAlign: 'center',
+              padding: 10,
+              color: colors.text.secondary,
+            }}
+          >
+            {elemsCount} total
+          </div>
+        )}
+
+        {loading && (
+          <div>
+            <Loading />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
@@ -34,6 +34,10 @@ export default function WithdrawModal({
   } = useContext(ThemeContext)
 
   const converter = useCurrencyConverter()
+
+  useEffect(() => {
+    setTapAmount(fromWad(withdrawable))
+  }, [])
 
   if (!currentFC) return null
 
@@ -96,7 +100,7 @@ export default function WithdrawModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            Available funds:{' '}
+            Total funds:{' '}
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -121,7 +125,7 @@ export default function WithdrawModal({
               fontWeight: 500,
             }}
           >
-            <div>Amount to withdraw:</div>
+            <div>Available to withdraw:</div>
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -130,24 +134,6 @@ export default function WithdrawModal({
             </div>
           </div>
         </div>
-        {currentPayoutMods?.length ? (
-          <div>
-            <h4>Funds will be distributed to:</h4>
-            <PayoutModsList
-              total={parseWad(tapAmount || '0')}
-              mods={currentPayoutMods}
-              fundingCycle={currentFC}
-              projectId={projectId}
-              isOwner={false}
-            />
-          </div>
-        ) : (
-          <p>
-            All funds will go to the project owner:{' '}
-            <FormattedAddress address={owner} />
-          </p>
-        )}
-
         <div>
           <FormattedNumberInput
             placeholder="0"
@@ -172,6 +158,7 @@ export default function WithdrawModal({
               </div>
             }
           />
+
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
               <CurrencySymbol currency={0} />
@@ -187,6 +174,24 @@ export default function WithdrawModal({
             after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
           </div>
         </div>
+
+        {currentPayoutMods?.length ? (
+          <div>
+            <h4>Funds will be distributed to:</h4>
+            <PayoutModsList
+              total={amountSubFee(parseWad(tapAmount || '0'), adminFeePercent)}
+              mods={currentPayoutMods}
+              fundingCycle={currentFC}
+              projectId={projectId}
+              isOwner={false}
+            />
+          </div>
+        ) : (
+          <p>
+            All funds will go to the project owner:{' '}
+            <FormattedAddress address={owner} />
+          </p>
+        )}
       </Space>
     </Modal>
   )

@@ -587,8 +587,7 @@ export default function ProjectActivity() {
 
       <div
         style={{
-          maxHeight: '100vh',
-          height: 600,
+          height: '200vh',
           overflow: 'auto',
           paddingBottom: 40,
         }}

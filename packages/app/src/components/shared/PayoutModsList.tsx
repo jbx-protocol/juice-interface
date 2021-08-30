@@ -11,7 +11,7 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
+import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
   mods,

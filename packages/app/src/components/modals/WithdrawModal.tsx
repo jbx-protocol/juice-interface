@@ -1,6 +1,6 @@
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import PayoutModsList from 'components/Dashboard/PayoutModsList'
+import PayoutModsList from 'components/shared/PayoutModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'

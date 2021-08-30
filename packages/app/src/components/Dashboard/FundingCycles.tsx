@@ -7,9 +7,9 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
-import CurrentFundingCycle from './CurrentFundingCycle'
+import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
 import FundingHistory from './FundingHistory'
-import QueuedFundingCycle from './QueuedFundingCycle'
+import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 

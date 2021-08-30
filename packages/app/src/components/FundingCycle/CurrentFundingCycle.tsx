@@ -4,8 +4,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import FundingCyclePreview from './FundingCyclePreview'
-import ReservedTokens from './ReservedTokens'
-import Spending from './Spending'
+import ReservedTokens from '../Dashboard/ReservedTokens'
+import Spending from '../Dashboard/Spending'
 
 export default function CurrentFundingCycle({
   showCurrentDetail,

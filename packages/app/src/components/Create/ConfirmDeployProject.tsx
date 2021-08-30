@@ -1,6 +1,6 @@
 import { Space, Statistic } from 'antd'
-import PayoutModsList from 'components/Dashboard/PayoutModsList'
-import TicketModsList from 'components/Dashboard/TicketModsList'
+import PayoutModsList from 'components/shared/PayoutModsList'
+import TicketModsList from 'components/shared/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { UserContext } from 'contexts/userContext'

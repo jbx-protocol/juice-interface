@@ -9,14 +9,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
-import { useContext, useState } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 
-import { fromPerbicent } from '../../utils/formatNumber'
 import PayoutModsList from '../shared/PayoutModsList'
-import { smallHeaderStyle } from './styles'
 
 export default function Spending({
   payoutMods,
@@ -40,6 +38,13 @@ export default function Spending({
   const withdrawable = balanceInCurrency?.gt(untapped)
     ? untapped
     : balanceInCurrency
+
+  const smallHeaderStyle: CSSProperties = {
+    fontSize: '.7rem',
+    fontWeight: 500,
+    cursor: 'default',
+    color: colors.text.secondary,
+  }
 
   return (
     <div>
@@ -65,7 +70,7 @@ export default function Spending({
                 {formatWad(amountSubFee(withdrawable, adminFeePercent)) || '0'}{' '}
               </span>
               <TooltipLabel
-                style={smallHeaderStyle(colors)}
+                style={smallHeaderStyle}
                 label="AVAILABLE"
                 tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
                   adminFeePercent,
@@ -80,9 +85,7 @@ export default function Spending({
               Distribute
             </Button>
           </div>
-          <div
-            style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}
-          >
+          <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}

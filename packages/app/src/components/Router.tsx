@@ -6,7 +6,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import CatchallRedirect from './CatchallRedirect'
 import Create from './Create'
 import Projects from './Projects'
-import PayerStats from './shared/PayerStats'
 
 export default function Router() {
   return (
@@ -26,9 +25,6 @@ export default function Router() {
         </Route>
         <Route path="/projects">
           <Projects />
-        </Route>
-        <Route path="/p/:handle/stats">
-          <PayerStats />
         </Route>
         <Route path="/p/:handle">
           <Dashboard />

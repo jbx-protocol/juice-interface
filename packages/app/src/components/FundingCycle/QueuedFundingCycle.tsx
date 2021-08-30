@@ -5,8 +5,8 @@ import { useContext } from 'react'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
-import PayoutModsList from './PayoutModsList'
-import ReservedTokens from './ReservedTokens'
+import PayoutModsList from '../shared/PayoutModsList'
+import ReservedTokens from '../Dashboard/ReservedTokens'
 
 export default function QueuedFundingCycle() {
   const {

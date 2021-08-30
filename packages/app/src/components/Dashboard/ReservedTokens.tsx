@@ -13,7 +13,7 @@ import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import DistributeTokensModal from '../modals/DistributeTokensModal'
-import TicketModsList from './TicketModsList'
+import TicketModsList from '../shared/TicketModsList'
 
 export default function ReservedTokens({
   fundingCycle,

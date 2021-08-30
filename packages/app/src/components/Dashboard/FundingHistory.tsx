@@ -10,7 +10,7 @@ import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatWad } from 'utils/formatNumber'
 
-import FundingCycleDetails from './FundingCycleDetails'
+import FundingCycleDetails from '../FundingCycle/FundingCycleDetails'
 import { CurrencyOption } from 'models/currency-option'
 
 export default function FundingHistory({

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal, Space } from 'antd'
-import TicketModsList from 'components/Dashboard/TicketModsList'
+import TicketModsList from 'components/shared/TicketModsList'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'

@@ -15,7 +15,7 @@ import { hasFundingTarget } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 
 import { fromPerbicent } from '../../utils/formatNumber'
-import PayoutModsList from './PayoutModsList'
+import PayoutModsList from '../shared/PayoutModsList'
 import { smallHeaderStyle } from './styles'
 
 export default function Spending({

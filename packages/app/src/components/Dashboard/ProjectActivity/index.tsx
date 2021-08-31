@@ -31,7 +31,7 @@ export default function ProjectActivity() {
 
     setInitialized(true)
 
-    setTabOption(projectId?.eq(7) ? TabOption.redeem : TabOption.pay)
+    setTabOption(TabOption.pay)
   }, [initialized, setInitialized, setTabOption, projectId])
 
   const content = useMemo(() => {
@@ -109,18 +109,11 @@ export default function ProjectActivity() {
 
   const tabs = (
     <div style={{ marginBottom: 20 }}>
-      {projectId?.eq(7) ? (
-        <Space size="middle">
-          {tab(TabOption.redeem, tabOption === TabOption.redeem)}
-          {tab(TabOption.payerReport, tabOption === TabOption.payerReport)}
-        </Space>
-      ) : (
-        <Space size="middle">
-          {tab(TabOption.pay, tabOption === TabOption.pay)}
-          {tab(TabOption.redeem, tabOption === TabOption.redeem)}
-          {tab(TabOption.payerReport, tabOption === TabOption.payerReport)}
-        </Space>
-      )}
+      <Space size="middle">
+        {tab(TabOption.pay, tabOption === TabOption.pay)}
+        {tab(TabOption.redeem, tabOption === TabOption.redeem)}
+        {tab(TabOption.payerReport, tabOption === TabOption.payerReport)}
+      </Space>
     </div>
   )
 

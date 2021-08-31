@@ -8,7 +8,15 @@ import EthDater from 'ethereum-block-by-date'
 import { parseProjectJson } from 'models/subgraph-entities/project'
 import moment from 'moment'
 import { CSSProperties, SVGProps, useContext, useEffect, useState } from 'react'
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph, trimHexZero } from 'utils/graph'
 
@@ -19,7 +27,7 @@ const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 type Duration = 7 | 30 | 90 | 365
 type BalanceRef = { date: string; timestamp: number; balance: number }
 
-export default function BalanceTimeline() {
+export default function BalanceTimeline({ height }: { height: number }) {
   const [balances, setBalances] = useState<BalanceRef[]>([])
   const [blockRefs, setBlockRefs] = useState<
     { date: string; block: number; timestamp: number }[]
@@ -152,70 +160,67 @@ export default function BalanceTimeline() {
   return (
     <div>
       <div style={{ position: 'relative' }}>
-        <LineChart
-          style={{ opacity: loading ? 0.5 : 1 }}
-          width={500}
-          height={280}
-          data={balances}
-        >
-          <CartesianGrid
-            style={{ paddingLeft: 200 }}
-            stroke={colors.stroke.tertiary}
-            strokeDasharray="4 2"
-          />
-          <YAxis
-            axisLine={false}
-            stroke={colors.stroke.tertiary}
-            type="number"
-            dataKey="balance"
-            domain={domain}
-            scale="linear"
-            width={20}
-            tickSize={4}
-            tickCount={4}
-            tick={axisStyle}
-          />
-          <XAxis
-            axisLine={false}
-            tickSize={4}
-            stroke={colors.stroke.tertiary}
-            tick={axisStyle}
-            dataKey="date"
-          />
-          <Line
-            dot={false}
-            stroke={colors.text.brand.primary}
-            strokeWidth={2}
-            type="monotone"
-            dataKey="balance"
-            animationDuration={0}
-          />
-          <Tooltip
-            contentStyle={{
-              background: colors.background.l0,
-              border: '1px solid ' + colors.stroke.secondary,
-              fontSize: '0.8rem',
-            }}
-            cursor={{ stroke: colors.stroke.secondary }}
-            content={({ active, payload }) => {
-              if (!active || !payload?.length) return null
+        <ResponsiveContainer width={'100%'} height={height}>
+          <LineChart style={{ opacity: loading ? 0.5 : 1 }} data={balances}>
+            <CartesianGrid
+              style={{ paddingLeft: 200 }}
+              stroke={colors.stroke.tertiary}
+              strokeDasharray="4 2"
+            />
+            <YAxis
+              axisLine={false}
+              stroke={colors.stroke.tertiary}
+              type="number"
+              dataKey="balance"
+              domain={domain}
+              scale="linear"
+              width={20}
+              tickSize={4}
+              tickCount={4}
+              tick={axisStyle}
+            />
+            <XAxis
+              axisLine={false}
+              tickSize={4}
+              stroke={colors.stroke.tertiary}
+              tick={axisStyle}
+              dataKey="date"
+            />
+            <Line
+              dot={false}
+              stroke={colors.text.brand.primary}
+              strokeWidth={2}
+              type="monotone"
+              dataKey="balance"
+              animationDuration={0}
+            />
+            <Tooltip
+              contentStyle={{
+                background: colors.background.l0,
+                border: '1px solid ' + colors.stroke.secondary,
+                fontSize: '0.8rem',
+              }}
+              cursor={{ stroke: colors.stroke.secondary }}
+              content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
 
-              return (
-                <div
-                  style={{
-                    padding: 10,
-                    background: colors.background.l0,
-                    border: '1px solid ' + colors.stroke.tertiary,
-                  }}
-                >
-                  <CurrencySymbol currency={0} />
-                  {payload[0].value}
-                </div>
-              )
-            }}
-            animationDuration={100}
-          />
-        </LineChart>
+                return (
+                  <div
+                    style={{
+                      padding: 10,
+                      background: colors.background.l0,
+                      border: '1px solid ' + colors.stroke.tertiary,
+                    }}
+                  >
+                    <CurrencySymbol currency={0} />
+                    {payload[0].value}
+                  </div>
+                )
+              }}
+              animationDuration={100}
+            />
+          </LineChart>
+        </ResponsiveContainer>
 
         {loading && (
           <div
@@ -236,8 +241,8 @@ export default function BalanceTimeline() {
             ...buttonStyle,
             width: 100,
             position: 'absolute',
-            left: 35,
-            top: 15,
+            left: 30,
+            top: 10,
           }}
           value={duration}
           onChange={val => setDuration(val)}

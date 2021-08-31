@@ -3,10 +3,10 @@ import { Col, Row, Space } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { CSSProperties, useContext, useMemo } from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import BalanceTimeline from './BalanceTimeline'
 
+import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import Pay from './Pay'
@@ -22,6 +22,7 @@ export default function Project({
   style?: CSSProperties
   showCurrentDetail?: boolean
 }) {
+  const [height, setHeight] = useState<CSSProperties['height']>()
   const { projectId, isOwner } = useContext(ProjectContext)
 
   const canPrintPreminedTickets = useContractReader<boolean>({
@@ -55,9 +56,9 @@ export default function Project({
     ),
   })
 
-  if (!projectId) return null
-
   const gutter = 40
+
+  if (!projectId) return null
 
   return (
     <div style={style}>
@@ -67,6 +68,7 @@ export default function Project({
         <Col xs={24} md={12}>
           <Paid />
         </Col>
+
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
             {canPrintPreminedTickets && isOwner && (
@@ -77,20 +79,22 @@ export default function Project({
         </Col>
       </Row>
 
-      <Row gutter={gutter} style={{ marginTop: gutter }}>
-        <Col xs={24} md={12} style={{ marginBottom: gutter }}>
-          <Space style={{ width: '100%' }} direction="vertical" size="large">
-            <BalanceTimeline />
+      <Row gutter={gutter} style={{ marginTop: gutter, paddingBottom: gutter }}>
+        <Col xs={24} md={12}>
+          <div id="col-content">
+            <div style={{ marginBottom: gutter }}>
+              <BalanceTimeline height={240} />
+            </div>
+
+            <div style={{ marginBottom: gutter }}>
+              <Rewards totalOverflow={totalOverflow} />
+            </div>
 
             <FundingCycles showCurrentDetail={showCurrentDetail} />
-          </Space>
+          </div>
         </Col>
 
-        <Col xs={24} md={12} style={{ paddingBottom: gutter }}>
-          <div style={{ marginBottom: gutter }}>
-            <Rewards totalOverflow={totalOverflow} />
-          </div>
-
+        <Col xs={24} md={12}>
           <ProjectActivity />
         </Col>
       </Row>

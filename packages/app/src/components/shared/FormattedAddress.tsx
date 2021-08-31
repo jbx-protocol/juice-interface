@@ -47,7 +47,7 @@ export default function FormattedAddress({
     }
 
     read()
-  }, [readProvider, address])
+  }, [address])
 
   if (!address) return null
 

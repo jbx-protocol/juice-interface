@@ -9,6 +9,7 @@ export type PayEvent = Partial<{
   amount: string
   note: string
   timestamp: number
+  txHash: string
 }>
 
 export type PayEventJson = Partial<Record<keyof PayEvent, string>>

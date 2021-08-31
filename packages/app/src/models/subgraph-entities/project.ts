@@ -19,14 +19,18 @@ export type ProjectJson = Record<keyof Project, string> & {
   payers: string[]
 }
 
-export const parseProjectJson = (project: ProjectJson): Project => ({
+export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
   ...project,
-  id: BigNumber.from(project.id),
-  createdAt: parseInt(project.createdAt),
-  handle: utils.parseBytes32String(project.handle),
-  currentBalance: BigNumber.from(project.currentBalance),
-  totalPaid: BigNumber.from(project.totalPaid),
-  totalRedeemed: BigNumber.from(project.totalRedeemed),
+  id: project.id ? BigNumber.from(project.id) : undefined,
+  createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
+  handle: project.handle ? utils.parseBytes32String(project.handle) : undefined,
+  currentBalance: project.currentBalance
+    ? BigNumber.from(project.currentBalance)
+    : undefined,
+  totalPaid: project.totalPaid ? BigNumber.from(project.totalPaid) : undefined,
+  totalRedeemed: project.totalRedeemed
+    ? BigNumber.from(project.totalRedeemed)
+    : undefined,
   payers:
     project.payers?.map(p => {
       const payer: Record<keyof PayerReport, string> = JSON.parse(p)

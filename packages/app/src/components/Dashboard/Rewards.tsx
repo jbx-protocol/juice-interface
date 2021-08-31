@@ -42,9 +42,6 @@ export default function Rewards({
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
-  const [loadingConvert, setLoadingConvert] = useState<boolean>()
-
-  const metadata = decodeFCMetadata(currentFC?.metadata)
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -283,21 +280,13 @@ export default function Rewards({
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {ticketsIssued &&
-                          iouBalance?.gt(0) &&
-                          loadingConvert ? (
-                            <Loading />
-                          ) : (
-                            <div>
-                              {formatWad(iouBalance ?? 0)} staked{' '}
-                              <Tooltip title={'Unstake ' + tokenSymbol}>
-                                <ExportOutlined
-                                  style={{ color: colors.icon.action.primary }}
-                                  onClick={() => setUnstakeModalVisible(true)}
-                                />
-                              </Tooltip>
-                            </div>
-                          )}
+                          {formatWad(iouBalance ?? 0)} staked{' '}
+                          <Tooltip title={'Unstake ' + tokenSymbol}>
+                            <ExportOutlined
+                              style={{ color: colors.icon.action.primary }}
+                              onClick={() => setUnstakeModalVisible(true)}
+                            />
+                          </Tooltip>
                         </div>
                       )}
 

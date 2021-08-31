@@ -1,11 +1,8 @@
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
+import { FCNumber } from 'components/shared/FCNumber'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  parseRedeemEventJson,
-  RedeemEvent,
-} from 'models/subgraph-entities/redeem-event'
+import { parseTapEventJson, TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
@@ -13,7 +10,7 @@ import { querySubgraph, trimHexZero } from 'utils/graph'
 
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
-export function RedeemActivity({
+export function TapActivity({
   pageNumber,
   pageSize,
   setLoading,
@@ -24,8 +21,8 @@ export function RedeemActivity({
   setLoading: (loading: boolean) => void
   setCount: (count: number) => void
 }) {
-  const [redeemEvents, setRedeemEvents] = useState<RedeemEvent[]>([])
-  const { projectId, tokenSymbol } = useContext(ProjectContext)
+  const [tapEvents, setTapEvents] = useState<TapEvent[]>([])
+  const { projectId } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -35,8 +32,8 @@ export function RedeemActivity({
 
     querySubgraph(
       {
-        entity: 'redeemEvent',
-        keys: ['amount', 'beneficiary', 'id', 'returnAmount', 'timestamp'],
+        entity: 'tapEvent',
+        keys: ['amount', 'fundingCycleId', 'timestamp'],
         first: pageSize,
         skip: pageNumber * pageSize,
         orderDirection: 'desc',
@@ -51,9 +48,9 @@ export function RedeemActivity({
       res => {
         if (!res) return
 
-        const newEvents = [...redeemEvents]
-        newEvents.push(...res.redeemEvents.map(e => parseRedeemEventJson(e)))
-        setRedeemEvents(newEvents)
+        const newEvents = [...tapEvents]
+        newEvents.push(...res.tapEvents.map(e => parseTapEventJson(e)))
+        setTapEvents(newEvents)
         setLoading(false)
         setCount(newEvents.length)
       },
@@ -63,7 +60,7 @@ export function RedeemActivity({
   return useMemo(
     () => (
       <div>
-        {redeemEvents.map(e => (
+        {tapEvents.map(e => (
           <div
             style={{
               marginBottom: 20,
@@ -80,7 +77,7 @@ export function RedeemActivity({
               }}
             >
               <div>
-                <div style={smallHeaderStyle(colors)}>Redeemed</div>
+                <div style={smallHeaderStyle(colors)}>Withdrew</div>
                 <div
                   style={{
                     lineHeight: contentLineHeight,
@@ -89,7 +86,8 @@ export function RedeemActivity({
                     color: colors.text.primary,
                   }}
                 >
-                  {formatWad(e.amount)} {tokenSymbol ?? 'tokens'}
+                  <CurrencySymbol currency={0} />
+                  {formatWad(e.amount)}
                 </div>
               </div>
 
@@ -109,30 +107,18 @@ export function RedeemActivity({
                   style={{
                     ...smallHeaderStyle(colors),
                     color: colors.text.secondary,
-                    marginTop: '.3rem',
-                    lineHeight: contentLineHeight,
                     textAlign: 'right',
+                    marginTop: 5,
                   }}
                 >
-                  <FormattedAddress address={e.beneficiary} />
+                  cycle #<FCNumber fundingCycleID={e.fundingCycleId} />
                 </div>
               </div>
-            </div>
-
-            <div
-              style={{
-                ...smallHeaderStyle,
-                color: colors.text.secondary,
-                marginTop: 5,
-              }}
-            >
-              <CurrencySymbol currency={0} />
-              {formatWad(e.returnAmount)} overflow received
             </div>
           </div>
         ))}
       </div>
     ),
-    [redeemEvents, colors, tokenSymbol],
+    [tapEvents, colors],
   )
 }

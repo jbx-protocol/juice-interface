@@ -23,17 +23,17 @@ export default function FundingHistory({
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number>()
   const [fundingCycles, setFundingCycles] = useState<FundingCycle[]>([])
-  const [cycleNumbers, setCycleNumbers] = useState<BigNumber[]>([])
+  const [cycleIds, setCycleIds] = useState<BigNumber[]>([])
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  if (startId?.gt(0) && !cycleNumbers.length) setCycleNumbers([startId])
+  if (startId?.gt(0) && !cycleIds.length) setCycleIds([startId])
 
-  const allCyclesLoaded = fundingCycles.length >= cycleNumbers.length
+  const allCyclesLoaded = fundingCycles.length >= cycleIds.length
   const cycleNumber = allCyclesLoaded
     ? undefined
-    : cycleNumbers[cycleNumbers.length - 1]
+    : cycleIds[cycleIds.length - 1]
   const selectedFC =
     selectedIndex !== undefined ? fundingCycles[selectedIndex] : undefined
 
@@ -47,18 +47,18 @@ export default function FundingHistory({
         if (
           !cycle ||
           !cycleNumber ||
-          cycleNumbers.includes(cycle.basedOn) ||
+          cycleIds.includes(cycle.basedOn) ||
           cycle.id.eq(0)
         )
           return
 
         setFundingCycles([...fundingCycles, cycle])
-        setCycleNumbers([
-          ...cycleNumbers,
+        setCycleIds([
+          ...cycleIds,
           ...(cycle.basedOn.toNumber() > 0 ? [cycle.basedOn] : []),
         ])
       },
-      [cycleNumber, cycleNumbers, fundingCycles],
+      [cycleNumber, cycleIds, fundingCycles],
     ),
   })
 

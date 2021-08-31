@@ -22,7 +22,6 @@ export default function Project({
   style?: CSSProperties
   showCurrentDetail?: boolean
 }) {
-  const [height, setHeight] = useState<CSSProperties['height']>()
   const { projectId, isOwner } = useContext(ProjectContext)
 
   const canPrintPreminedTickets = useContractReader<boolean>({

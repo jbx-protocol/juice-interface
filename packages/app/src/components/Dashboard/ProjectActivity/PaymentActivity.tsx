@@ -14,7 +14,7 @@ import {
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { formatGraphQuery, trimHexZero } from 'utils/graph'
+import { querySubgraph, trimHexZero } from 'utils/graph'
 
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
@@ -80,40 +80,31 @@ export function PaymentActivity({
   useEffect(() => {
     setLoading(true)
 
-    axios
-      .post(
-        subgraphUrl,
-        {
-          query: formatGraphQuery({
-            entity: 'payEvent',
-            keys: ['amount', 'beneficiary', 'note', 'timestamp'],
-            first: pageSize,
-            skip: pageNumber * pageSize,
-            orderDirection: 'desc',
-            orderBy: 'timestamp',
-            where: projectId
-              ? {
-                  key: 'project',
-                  value: trimHexZero(projectId.toHexString()),
-                }
-              : undefined,
-          }),
-        },
-        { headers: { 'Content-Type': 'application/json' } },
-      )
-      .then((res: AxiosResponse<{ data: { payEvents: PayEventJson[] } }>) => {
+    querySubgraph(
+      {
+        entity: 'payEvent',
+        keys: ['amount', 'beneficiary', 'note', 'timestamp'],
+        first: pageSize,
+        skip: pageNumber * pageSize,
+        orderDirection: 'desc',
+        orderBy: 'timestamp',
+        where: projectId
+          ? {
+              key: 'project',
+              value: trimHexZero(projectId.toHexString()),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res) return
+
         const newEvents = [...payEvents]
-        newEvents.push(
-          ...res.data?.data?.payEvents.map(e => parsePayEventJson(e)),
-        )
+        newEvents.push(...res.payEvents.map(e => parsePayEventJson(e)))
         setPayEvents(newEvents)
         setLoading(false)
         setCount(newEvents.length)
-      })
-      .catch(err => {
-        console.log('Error getting pay events', err)
-        setLoading(false)
-      })
+      },
+    )
   }, [projectId, pageSize, pageNumber])
 
   return useMemo(

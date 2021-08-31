@@ -73,9 +73,10 @@ export default function ProjectActivity() {
     return content
   }, [tabOption, pageNumber, pageSize, setLoading, setElemsCount])
 
-  const tab = (tab: TabOption, selected: boolean) => {
-    let text: string
+  const tab = (tab: TabOption) => {
+    const selected = tab === tabOption
 
+    let text: string
     switch (tab) {
       case TabOption.pay:
         text = 'Payments'
@@ -110,9 +111,9 @@ export default function ProjectActivity() {
   const tabs = (
     <div style={{ marginBottom: 20 }}>
       <Space size="middle">
-        {tab(TabOption.pay, tabOption === TabOption.pay)}
-        {tab(TabOption.redeem, tabOption === TabOption.redeem)}
-        {tab(TabOption.payerReport, tabOption === TabOption.payerReport)}
+        {tab(TabOption.pay)}
+        {tab(TabOption.redeem)}
+        {tab(TabOption.payerReport)}
       </Space>
     </div>
   )

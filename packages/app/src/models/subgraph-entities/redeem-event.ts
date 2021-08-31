@@ -9,6 +9,7 @@ export type RedeemEvent = Partial<{
   returnAmount: BigNumber
   caller: string
   timestamp: number
+  txHash: string
 }>
 
 export type RedeemEventJson = Partial<Record<keyof RedeemEvent, string>>

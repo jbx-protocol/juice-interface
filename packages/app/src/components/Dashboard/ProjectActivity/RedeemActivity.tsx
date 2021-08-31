@@ -1,18 +1,15 @@
-import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import { subgraphUrl } from 'constants/subgraphs'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   parseRedeemEventJson,
   RedeemEvent,
-  RedeemEventJson,
 } from 'models/subgraph-entities/redeem-event'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { formatGraphQuery, trimHexZero } from 'utils/graph'
+import { querySubgraph, trimHexZero } from 'utils/graph'
 
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
@@ -34,45 +31,33 @@ export function RedeemActivity({
   } = useContext(ThemeContext)
 
   useEffect(() => {
-    console.log('asdf load redeem')
     setLoading(true)
 
-    axios
-      .post(
-        subgraphUrl,
-        {
-          query: formatGraphQuery({
-            entity: 'redeemEvent',
-            keys: ['amount', 'beneficiary', 'id', 'returnAmount', 'timestamp'],
-            first: pageSize,
-            skip: pageNumber * pageSize,
-            orderDirection: 'desc',
-            orderBy: 'timestamp',
-            where: projectId
-              ? {
-                  key: 'project',
-                  value: trimHexZero(projectId.toHexString()),
-                }
-              : undefined,
-          }),
-        },
-        { headers: { 'Content-Type': 'application/json' } },
-      )
-      .then(
-        (res: AxiosResponse<{ data: { redeemEvents: RedeemEventJson[] } }>) => {
-          const newEvents = [...redeemEvents]
-          newEvents.push(
-            ...res.data?.data?.redeemEvents.map(e => parseRedeemEventJson(e)),
-          )
-          setRedeemEvents(newEvents)
-          setLoading(false)
-          setCount(newEvents.length)
-        },
-      )
-      .catch(err => {
-        console.log('Error getting redeem events', err)
+    querySubgraph(
+      {
+        entity: 'redeemEvent',
+        keys: ['amount', 'beneficiary', 'id', 'returnAmount', 'timestamp'],
+        first: pageSize,
+        skip: pageNumber * pageSize,
+        orderDirection: 'desc',
+        orderBy: 'timestamp',
+        where: projectId
+          ? {
+              key: 'project',
+              value: trimHexZero(projectId.toHexString()),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res) return
+
+        const newEvents = [...redeemEvents]
+        newEvents.push(...res.redeemEvents.map(e => parseRedeemEventJson(e)))
+        setRedeemEvents(newEvents)
         setLoading(false)
-      })
+        setCount(newEvents.length)
+      },
+    )
   }, [pageNumber, pageSize, projectId])
 
   return useMemo(

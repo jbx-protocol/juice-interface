@@ -3,21 +3,18 @@ import {
   SortDescendingOutlined,
 } from '@ant-design/icons'
 import { Select } from 'antd'
-import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import { subgraphUrl } from 'constants/subgraphs'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   parsePayerReportJson,
   PayerReport,
-  PayerReportJson,
 } from 'models/subgraph-entities/payer-report'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { formatGraphQuery, OrderDirection, trimHexZero } from 'utils/graph'
+import { OrderDirection, querySubgraph, trimHexZero } from 'utils/graph'
 
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
@@ -45,39 +42,31 @@ export function PayerReports({
   useEffect(() => {
     setLoading(true)
 
-    axios
-      .post(
-        subgraphUrl,
-        {
-          query: formatGraphQuery({
-            entity: 'payerReport',
-            keys: ['payer', 'totalPaid', 'lastPaidTimestamp'],
-            first: pageSize,
-            skip: pageNumber * pageSize,
-            orderBy: sortPayerReports,
-            orderDirection: sortPayerReportsDirection,
-            where: projectId
-              ? {
-                  key: 'project',
-                  value: trimHexZero(projectId.toHexString()),
-                }
-              : undefined,
-          }),
-        },
-        { headers: { 'Content-Type': 'application/json' } },
-      )
-      .then(
-        (res: AxiosResponse<{ data: { payerReports: PayerReportJson[] } }>) => {
-          const newEvents = [...payerReports]
-          newEvents.push(
-            ...res.data?.data?.payerReports.map(e => parsePayerReportJson(e)),
-          )
-          setPayerReports(newEvents)
-          setLoading(false)
-          setCount(newEvents.length)
-        },
-      )
-      .catch(err => console.log('Error getting payer reports', err))
+    querySubgraph(
+      {
+        entity: 'payerReport',
+        keys: ['payer', 'totalPaid', 'lastPaidTimestamp'],
+        first: pageSize,
+        skip: pageNumber * pageSize,
+        orderBy: sortPayerReports,
+        orderDirection: sortPayerReportsDirection,
+        where: projectId
+          ? {
+              key: 'project',
+              value: trimHexZero(projectId.toHexString()),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res) return
+
+        const newEvents = [...payerReports]
+        newEvents.push(...res.payerReports.map(e => parsePayerReportJson(e)))
+        setPayerReports(newEvents)
+        setLoading(false)
+        setCount(newEvents.length)
+      },
+    )
   }, [
     pageNumber,
     pageSize,

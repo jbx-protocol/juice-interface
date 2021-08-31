@@ -1,25 +1,67 @@
-import { PayEvent } from 'models/subgraph-entities/pay-event'
-import { PayerReport } from 'models/subgraph-entities/payer-report'
-import { Project } from 'models/subgraph-entities/project'
-import { RedeemEvent } from 'models/subgraph-entities/redeem-event'
+import axios, { AxiosResponse } from 'axios'
+import { subgraphUrl } from 'constants/subgraphs'
+import { PayEvent, PayEventJson } from 'models/subgraph-entities/pay-event'
+import {
+  PayerReport,
+  PayerReportJson,
+} from 'models/subgraph-entities/payer-report'
+import { Project, ProjectJson } from 'models/subgraph-entities/project'
+import {
+  RedeemEvent,
+  RedeemEventJson,
+} from 'models/subgraph-entities/redeem-event'
+import { TapEvent, TapEventJson } from 'models/subgraph-entities/tap-event'
 
 export type SubgraphEntities = {
   project: Project
   payEvent: PayEvent
   redeemEvent: RedeemEvent
   payerReport: PayerReport
+  tapEvent: TapEvent
+}
+
+export type SubgraphQueryReturnTypes = {
+  project: { projects: ProjectJson[] }
+  payEvent: { payEvents: PayEventJson[] }
+  redeemEvent: { redeemEvents: RedeemEventJson[] }
+  payerReport: { payerReports: PayerReportJson[] }
+  tapEvent: { tapEvents: TapEventJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
 
 export type OrderDirection = 'asc' | 'desc'
 
-// https://thegraph.com/docs/graphql-api#filtering
-export const formatGraphQuery = <E extends EntityKey>(opts: {
+export type WhereConfig = {
+  key: string
+  value: string | number | boolean
+  operator?:
+    | 'not'
+    | 'gt'
+    | 'lt'
+    | 'gte'
+    | 'lte'
+    | 'in'
+    | 'not_in'
+    | 'contains'
+    | 'not_contains'
+    | 'starts_with'
+    | 'ends_with'
+    | 'not_starts_with'
+    | 'not_ends_with'
+}
+
+export type BlockConfig = {
+  number?: number
+  hash?: string
+}
+
+export type GraphQueryOpts<E extends EntityKey> = {
   entity: E
   first?: number
   skip?: number
   orderBy?: keyof SubgraphEntities[E]
+  block?: BlockConfig
   keys: (
     | keyof SubgraphEntities[E]
     | {
@@ -28,25 +70,11 @@ export const formatGraphQuery = <E extends EntityKey>(opts: {
       }
   )[]
   orderDirection?: OrderDirection
-  where?: {
-    key: string
-    value: string | number | boolean
-    operator?:
-      | 'not'
-      | 'gt'
-      | 'lt'
-      | 'gte'
-      | 'lte'
-      | 'in'
-      | 'not_in'
-      | 'contains'
-      | 'not_contains'
-      | 'starts_with'
-      | 'ends_with'
-      | 'not_starts_with'
-      | 'not_ends_with'
-  }
-}) => {
+  where?: WhereConfig | WhereConfig[]
+}
+
+// https://thegraph.com/docs/graphql-api#filtering
+const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
   let args = ''
 
   const addArg = (
@@ -61,12 +89,23 @@ export const formatGraphQuery = <E extends EntityKey>(opts: {
   addArg('skip', opts.skip)
   addArg('orderBy', opts.orderBy)
   addArg('orderDirection', opts.orderDirection)
+  if (opts.block) {
+    if (opts.block.number) {
+      addArg('block', `{ number: ${opts.block.number} }`)
+    } else if (opts.block.hash) {
+      addArg('block', `{ hash: ${opts.block.hash} }`)
+    }
+  }
   addArg(
     'where',
     opts.where
-      ? `{ ${opts.where.key}${
-          opts.where.operator ? '_' + opts.where.operator : ''
-        }: "${opts.where.value}" }`
+      ? Array.isArray(opts.where)
+        ? `{ ${opts.where.map(
+            w => `${w.key}${w.operator ? '_' + w.operator : ''}: "${w.value}" `,
+          )} }`
+        : `{ ${opts.where.key}${
+            opts.where.operator ? '_' + opts.where.operator : ''
+          }: "${opts.where.value}" }`
       : undefined,
   )
 
@@ -80,5 +119,22 @@ export const formatGraphQuery = <E extends EntityKey>(opts: {
     '',
   )} } }`
 }
+
+export const querySubgraph = <E extends EntityKey>(
+  opts: GraphQueryOpts<E>,
+  callback: (res?: SubgraphQueryReturnTypes[E]) => void,
+) =>
+  axios
+    .post(
+      subgraphUrl,
+      {
+        query: formatGraphQuery(opts),
+      },
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+    .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
+      callback(res.data?.data),
+    )
+    .catch(err => console.log('Error getting ' + opts.entity + 's', err))
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')

@@ -7,11 +7,13 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { PayerReports } from './PayerReports'
 import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
+import { TapActivity } from './TapActivity.tsx'
 
 enum TabOption {
   pay = 'pay',
   redeem = 'redeem',
   payerReport = 'payerReport',
+  tap = 'tap',
 }
 
 export default function ProjectActivity() {
@@ -68,6 +70,16 @@ export default function ProjectActivity() {
           />
         )
         break
+      case TabOption.tap:
+        content = (
+          <TapActivity
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            setLoading={setLoading}
+            setCount={setElemsCount}
+          />
+        )
+        break
     }
 
     return content
@@ -83,6 +95,9 @@ export default function ProjectActivity() {
         break
       case TabOption.redeem:
         text = 'Redeems'
+        break
+      case TabOption.tap:
+        text = 'Withdrawals'
         break
       case TabOption.payerReport:
         text = 'Contributors'

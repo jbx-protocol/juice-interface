@@ -10,7 +10,11 @@ import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+}: {
+  project: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>
+}) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)

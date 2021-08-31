@@ -5,6 +5,7 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import BalanceTimeline from './BalanceTimeline'
 
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
@@ -78,7 +79,11 @@ export default function Project({
 
       <Row gutter={gutter} style={{ marginTop: gutter }}>
         <Col xs={24} md={12} style={{ marginBottom: gutter }}>
-          <FundingCycles showCurrentDetail={showCurrentDetail} />
+          <Space style={{ width: '100%' }} direction="vertical" size="large">
+            <BalanceTimeline />
+
+            <FundingCycles showCurrentDetail={showCurrentDetail} />
+          </Space>
         </Col>
 
         <Col xs={24} md={12} style={{ paddingBottom: gutter }}>

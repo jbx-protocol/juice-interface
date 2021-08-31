@@ -3,7 +3,11 @@ import { Project } from 'models/subgraph-entities/project'
 
 import ProjectCard from './ProjectCard'
 
-export default function ProjectsGrid({ projects }: { projects: Project[] }) {
+export default function ProjectsGrid({
+  projects,
+}: {
+  projects: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
+}) {
   const gutter = 20
 
   const colProps: ColProps = {

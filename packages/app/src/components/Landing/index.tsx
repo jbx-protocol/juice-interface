@@ -9,6 +9,7 @@ import { CSSProperties, useContext } from 'react'
 import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
+import { Project } from 'models/subgraph-entities/project'
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -30,7 +31,10 @@ export default function Landing() {
     </h1>
   )
 
-  const previewProjects = useProjects({ pageSize: 4 })
+  const previewProjects: Pick<
+    Project,
+    'handle' | 'uri' | 'totalPaid' | 'createdAt'
+  >[] | undefined = useProjects({ pageSize: 4 })
 
   const smallHeader = (text: string) => (
     <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>

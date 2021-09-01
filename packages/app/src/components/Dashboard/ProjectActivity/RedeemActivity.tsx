@@ -1,3 +1,4 @@
+import { LinkOutlined } from '@ant-design/icons'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
@@ -36,7 +37,14 @@ export function RedeemActivity({
     querySubgraph(
       {
         entity: 'redeemEvent',
-        keys: ['amount', 'beneficiary', 'id', 'returnAmount', 'timestamp'],
+        keys: [
+          'amount',
+          'beneficiary',
+          'id',
+          'returnAmount',
+          'timestamp',
+          'txHash',
+        ],
         first: pageSize,
         skip: pageNumber * pageSize,
         orderDirection: 'desc',
@@ -94,17 +102,25 @@ export function RedeemActivity({
               </div>
 
               <div>
-                {e.timestamp && (
-                  <div
-                    style={{
-                      ...smallHeaderStyle(colors),
-                      textAlign: 'right',
-                      color: colors.text.secondary,
-                    }}
+                <div
+                  style={{
+                    ...smallHeaderStyle(colors),
+                    textAlign: 'right',
+                    color: colors.text.secondary,
+                  }}
+                >
+                  {e.timestamp && (
+                    <span>{formatHistoricalDate(e.timestamp * 1000)}</span>
+                  )}{' '}
+                  <a
+                    className="quiet"
+                    href={`https://etherscan.io/tx/${e.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    {formatHistoricalDate(e.timestamp * 1000)}
-                  </div>
-                )}
+                    <LinkOutlined />
+                  </a>
+                </div>
                 <div
                   style={{
                     ...smallHeaderStyle(colors),

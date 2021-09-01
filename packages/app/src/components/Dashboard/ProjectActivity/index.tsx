@@ -128,6 +128,7 @@ export default function ProjectActivity() {
       <Space size="middle">
         {tab(TabOption.pay)}
         {tab(TabOption.redeem)}
+        {tab(TabOption.tap)}
         {tab(TabOption.payerReport)}
       </Space>
     </div>

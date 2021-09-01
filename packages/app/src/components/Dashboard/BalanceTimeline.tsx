@@ -24,7 +24,7 @@ const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
 const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 
-type Duration = 7 | 30 | 90 | 365
+type Duration = 1 | 7 | 30 | 90 | 365
 type BalanceRef = { date: string; timestamp: number; balance: number }
 
 export default function BalanceTimeline({ height }: { height: number }) {
@@ -52,6 +52,10 @@ export default function BalanceTimeline({ height }: { height: number }) {
     let integer: number
 
     switch (duration) {
+      case 1:
+        period = 'hours'
+        integer = 1
+        break
       case 7:
         period = 'hours'
         integer = 6
@@ -109,7 +113,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
             },
             res => {
               newBalances.push({
-                date: moment(blockRef.date).format('M/DD'),
+                date: moment(blockRef.date).format(
+                  duration > 1 ? 'M/DD' : 'h:mma',
+                ),
                 timestamp: blockRef.timestamp,
                 balance: res?.projects?.length
                   ? parseFloat(
@@ -247,6 +253,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
           value={duration}
           onChange={val => setDuration(val)}
         >
+          <Select.Option value={1}>24 hours</Select.Option>
           <Select.Option value={7}>7 days</Select.Option>
           <Select.Option value={30}>30 days</Select.Option>
           <Select.Option value={90}>90 days</Select.Option>

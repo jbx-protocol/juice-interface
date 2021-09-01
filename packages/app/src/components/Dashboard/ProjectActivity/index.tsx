@@ -24,7 +24,7 @@ export default function ProjectActivity() {
 
   const { projectId } = useContext(ProjectContext)
 
-  const pageSize = 100
+  const pageSize = 20
 
   useLayoutEffect(() => {
     if (initialized) return
@@ -121,13 +121,7 @@ export default function ProjectActivity() {
     <div>
       {tabs}
 
-      <div
-        style={{
-          height: '200vh',
-          overflow: 'auto',
-          paddingBottom: 40,
-        }}
-      >
+      <div style={{ paddingBottom: 40 }}>
         {content}
 
         {elemsCount === 0 && (

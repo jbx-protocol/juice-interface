@@ -1,16 +1,11 @@
+import { LinkOutlined } from '@ant-design/icons'
 import { Autolinker } from 'autolinker'
-import axios, { AxiosResponse } from 'axios'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import RichImgPreview from 'components/shared/RichImgPreview'
-import { subgraphUrl } from 'constants/subgraphs'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  parsePayEventJson,
-  PayEvent,
-  PayEventJson,
-} from 'models/subgraph-entities/pay-event'
+import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
@@ -83,7 +78,7 @@ export function PaymentActivity({
     querySubgraph(
       {
         entity: 'payEvent',
-        keys: ['amount', 'beneficiary', 'note', 'timestamp'],
+        keys: ['amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
         first: pageSize,
         skip: pageNumber * pageSize,
         orderDirection: 'desc',
@@ -150,7 +145,15 @@ export function PaymentActivity({
                       color: colors.text.secondary,
                     }}
                   >
-                    {formatHistoricalDate(e.timestamp * 1000)}
+                    {formatHistoricalDate(e.timestamp * 1000)}{' '}
+                    <a
+                      className="quiet"
+                      href={`https://etherscan.io/tx/${e.txHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <LinkOutlined />
+                    </a>
                   </div>
                 )}
                 <div

@@ -14,6 +14,10 @@ type Project @entity {
   redeemEvents: [RedeemEvent!]! @derivedFrom(field: "project")
   printReservesEvents: [PrintReservesEvent!]! @derivedFrom(field: "project")
   configureEvents: [ConfigureEvent!]! @derivedFrom(field: "project")
+  distributeToPayoutModEvents: [DistributeToPayoutModEvent!]!
+    @derivedFrom(field: "project")
+  distributeToTicketModEvents: [DistributeToTicketModEvent!]!
+    @derivedFrom(field: "project")
 }
 
 type PayerReport @entity {
@@ -21,7 +25,6 @@ type PayerReport @entity {
   project: Project!
   payer: Bytes!
   totalPaid: BigInt!
-  totalTokensReceived: BigInt!
   lastPaidTimestamp: BigInt!
 }
 
@@ -62,6 +65,7 @@ type TapEvent @entity {
   caller: Bytes!
   timestamp: BigInt!
   txHash: Bytes!
+  distributions: [DistributeToPayoutModEvent!]! @derivedFrom(field: "tapEvent")
 }
 
 type RedeemEvent @entity {
@@ -86,6 +90,8 @@ type PrintReservesEvent @entity {
   caller: Bytes!
   timestamp: BigInt!
   txHash: Bytes!
+  distributions: [DistributeToTicketModEvent!]!
+    @derivedFrom(field: "printReservesEvent")
 }
 
 type ConfigureEvent @entity {
@@ -93,6 +99,36 @@ type ConfigureEvent @entity {
   project: Project!
   fundingCycleId: BigInt!
   caller: Bytes!
+  timestamp: BigInt!
+  txHash: Bytes!
+}
+
+type DistributeToPayoutModEvent @entity {
+  id: ID!
+  project: Project!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  modProjectId: BigInt!
+  modAllocator: Bytes!
+  modBeneficiary: Bytes!
+  modPreferUnstaked: Boolean!
+  modCut: BigInt!
+  caller: Bytes!
+  tapEvent: TapEvent!
+  timestamp: BigInt!
+  txHash: Bytes!
+}
+
+type DistributeToTicketModEvent @entity {
+  id: ID!
+  project: Project!
+  fundingCycleId: BigInt!
+  projectId: BigInt!
+  modBeneficiary: Bytes!
+  modPreferUnstaked: Boolean!
+  modCut: BigInt!
+  caller: Bytes!
+  printReservesEvent: PrintReservesEvent!
   timestamp: BigInt!
   txHash: Bytes!
 }

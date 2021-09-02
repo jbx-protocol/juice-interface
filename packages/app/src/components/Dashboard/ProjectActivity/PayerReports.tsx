@@ -133,7 +133,6 @@ export function PayerReports({
                 <div
                   style={{
                     lineHeight: contentLineHeight,
-                    fontSize: '1rem',
                     marginRight: 10,
                     color: colors.text.primary,
                   }}

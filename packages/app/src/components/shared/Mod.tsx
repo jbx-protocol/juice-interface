@@ -39,9 +39,9 @@ export default function Mod({
           BigNumber.from((mod as PayoutMod).projectId).gt(0) ? (
             <div>
               <div style={{ fontWeight: 500 }}>
-                @
                 {(mod as PayoutMod).projectId ? (
                   <ProjectHandle
+                    link
                     projectId={(mod as PayoutMod).projectId as BigNumber}
                   />
                 ) : (

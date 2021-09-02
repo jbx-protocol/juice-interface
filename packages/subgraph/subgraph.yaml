@@ -46,6 +46,8 @@ dataSources:
         - RedeemEvent
         - PrintReservesEvent
         - ConfigureEvent
+        - DistributeToPayoutModEvent
+        - DistributeToTicketModEvent
       abis:
         - name: TerminalV1
           file: ./abis/TerminalV1.json
@@ -64,4 +66,8 @@ dataSources:
           handler: handleConfigure
         - event: AddToBalance(indexed uint256,uint256,address)
           handler: handleAddToBalance
+        - event: DistributeToPayoutMod(indexed uint256,indexed uint256,(bool,uint16,uint48,address,address,uint56),uint256,address)
+          handler: handleDistributeToPayoutMod
+        - event: DistributeToTicketMod(indexed uint256,indexed uint256,(bool,uint16,uint48,address),uint256,address)
+          handler: handleDistributeToTicketMod
       file: ./src/mapping.ts

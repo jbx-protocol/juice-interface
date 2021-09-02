@@ -137,9 +137,8 @@ export function RedeemActivity({
 
             <div
               style={{
-                ...smallHeaderStyle,
+                ...smallHeaderStyle(colors),
                 color: colors.text.secondary,
-                marginTop: 5,
               }}
             >
               <CurrencySymbol currency={0} />

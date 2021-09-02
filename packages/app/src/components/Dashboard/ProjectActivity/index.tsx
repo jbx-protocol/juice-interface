@@ -7,14 +7,10 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { PayerReports } from './PayerReports'
 import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
-import { TapActivity } from './TapActivity.tsx'
+import { ReservesActivity } from './ReservesActivity'
+import { TapActivity } from './TapActivity'
 
-enum TabOption {
-  pay = 'pay',
-  redeem = 'redeem',
-  payerReport = 'payerReport',
-  tap = 'tap',
-}
+type TabOption = 'pay' | 'redeem' | 'payerReport' | 'tap' | 'reserves'
 
 export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
@@ -33,14 +29,14 @@ export default function ProjectActivity() {
 
     setInitialized(true)
 
-    setTabOption(TabOption.pay)
+    setTabOption('pay')
   }, [initialized, setInitialized, setTabOption, projectId])
 
   const content = useMemo(() => {
     let content: JSX.Element | null = null
 
     switch (tabOption) {
-      case TabOption.pay:
+      case 'pay':
         content = (
           <PaymentActivity
             pageNumber={pageNumber}
@@ -50,7 +46,7 @@ export default function ProjectActivity() {
           />
         )
         break
-      case TabOption.redeem:
+      case 'redeem':
         content = (
           <RedeemActivity
             pageNumber={pageNumber}
@@ -60,7 +56,7 @@ export default function ProjectActivity() {
           />
         )
         break
-      case TabOption.payerReport:
+      case 'payerReport':
         content = (
           <PayerReports
             pageNumber={pageNumber}
@@ -70,9 +66,19 @@ export default function ProjectActivity() {
           />
         )
         break
-      case TabOption.tap:
+      case 'tap':
         content = (
           <TapActivity
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            setLoading={setLoading}
+            setCount={setElemsCount}
+          />
+        )
+        break
+      case 'reserves':
+        content = (
+          <ReservesActivity
             pageNumber={pageNumber}
             pageSize={pageSize}
             setLoading={setLoading}
@@ -90,17 +96,20 @@ export default function ProjectActivity() {
 
     let text: string
     switch (tab) {
-      case TabOption.pay:
+      case 'pay':
         text = 'Payments'
         break
-      case TabOption.redeem:
+      case 'redeem':
         text = 'Redeems'
         break
-      case TabOption.tap:
-        text = 'Withdrawals'
+      case 'tap':
+        text = 'Withdraws'
         break
-      case TabOption.payerReport:
-        text = 'Contributors'
+      case 'payerReport':
+        text = 'Payers'
+        break
+      case 'reserves':
+        text = 'Reserves'
         break
     }
 
@@ -126,10 +135,11 @@ export default function ProjectActivity() {
   const tabs = (
     <div style={{ marginBottom: 20 }}>
       <Space size="middle">
-        {tab(TabOption.pay)}
-        {tab(TabOption.redeem)}
-        {tab(TabOption.tap)}
-        {tab(TabOption.payerReport)}
+        {tab('pay')}
+        {tab('redeem')}
+        {tab('tap')}
+        {tab('reserves')}
+        {tab('payerReport')}
       </Space>
     </div>
   )

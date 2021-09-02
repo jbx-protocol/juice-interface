@@ -1,10 +1,22 @@
 import axios, { AxiosResponse } from 'axios'
 import { subgraphUrl } from 'constants/subgraphs'
+import {
+  DistributeToPayoutModEvent,
+  DistributeToPayoutModEventJson,
+} from 'models/subgraph-entities/distribute-to-payout-mod-event copy'
+import {
+  DistributeToTicketModEvent,
+  DistributeToTicketModEventJson,
+} from 'models/subgraph-entities/distribute-to-ticket-mod-event'
 import { PayEvent, PayEventJson } from 'models/subgraph-entities/pay-event'
 import {
   PayerReport,
   PayerReportJson,
 } from 'models/subgraph-entities/payer-report'
+import {
+  PrintReservesEvent,
+  PrintReservesEventJson,
+} from 'models/subgraph-entities/print-reserves-event'
 import { Project, ProjectJson } from 'models/subgraph-entities/project'
 import {
   RedeemEvent,
@@ -18,6 +30,9 @@ export type SubgraphEntities = {
   redeemEvent: RedeemEvent
   payerReport: PayerReport
   tapEvent: TapEvent
+  distributeToPayoutModEvent: DistributeToPayoutModEvent
+  distributeToTicketModEvent: DistributeToTicketModEvent
+  printReservesEvent: PrintReservesEvent
 }
 
 export type SubgraphQueryReturnTypes = {
@@ -26,6 +41,15 @@ export type SubgraphQueryReturnTypes = {
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   payerReport: { payerReports: PayerReportJson[] }
   tapEvent: { tapEvents: TapEventJson[] }
+  distributeToTicketModEvent: {
+    distributeToTicketModEvents: DistributeToTicketModEventJson[]
+  }
+  distributeToPayoutModEvent: {
+    distributeToPayoutModEvents: DistributeToPayoutModEventJson[]
+  }
+  printReservesEvent: {
+    printReservesEvents: PrintReservesEventJson[]
+  }
 }
 
 export type EntityKey = keyof SubgraphEntities

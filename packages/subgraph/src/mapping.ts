@@ -3,6 +3,8 @@ import { BigInt } from "@graphprotocol/graph-ts";
 import { Create, SetHandle, SetUri } from "../generated/Projects/Projects";
 import {
   ConfigureEvent,
+  DistributeToPayoutModEvent,
+  DistributeToTicketModEvent,
   PayerReport,
   PayEvent,
   PrintPremineEvent,
@@ -33,7 +35,7 @@ import {
 
 /**
  * Check health of deployed subgraph
- * curl -X POST -d '{ "query": "{indexingStatuses(subgraphs: [\"<deployment-id>\"]) {synced health fatalError {message block { number } handler } subgraph chains { chainHeadBlock { number } latestBlock { number }}}}"}' https://api.thegraph.com/index-node/graphql
+ * curl -X POST -d '{ "query": "{indexingStatuses(subgraphs: [\"QmSf47kBfhwyYxGDEdmzh2Ce2zW7HCp911a7nVAdifGZcR\"]) {synced health fatalError {message block { number } handler } subgraph chains { chainHeadBlock { number } latestBlock { number }}}}"}' https://api.thegraph.com/index-node/graphql
  */
 
 export function handleProjectCreate(event: Create): void {
@@ -67,17 +69,17 @@ export function handlePay(event: Pay): void {
   let pay = new PayEvent(
     event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
   );
+  let projectId = event.params.projectId.toHexString();
   pay.amount = event.params.amount;
   pay.beneficiary = event.params.beneficiary;
   pay.caller = caller;
   pay.fundingCycleId = event.params.fundingCycleId;
-  pay.project = event.params.projectId.toHexString();
+  pay.project = projectId;
   pay.note = event.params.note;
   pay.timestamp = timestamp;
   pay.txHash = event.transaction.hash;
   pay.save();
 
-  let projectId = event.params.projectId.toHexString();
   let project = Project.load(projectId);
   project.totalPaid = project.totalPaid.plus(event.params.amount);
   project.currentBalance = project.currentBalance.plus(event.params.amount);
@@ -115,8 +117,12 @@ export function handlePrintPreminedTickets(event: PrintPreminedTickets): void {
 
 export function handleTap(event: Tap): void {
   let tapEvent = new TapEvent(
-    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
+    event.params.projectId.toHexString() +
+      "-" +
+      event.transaction.hash.toHexString()
   );
+  let project = Project.load(event.params.projectId.toHexString());
+
   tapEvent.amount = event.params.amount;
   tapEvent.beneficiary = event.params.beneficiary;
   tapEvent.beneficiaryTransferAmount = event.params.beneficiaryTransferAmount;
@@ -130,7 +136,6 @@ export function handleTap(event: Tap): void {
   tapEvent.txHash = event.transaction.hash;
   tapEvent.save();
 
-  let project = Project.load(event.params.projectId.toHexString());
   project.currentBalance = project.currentBalance
     .minus(event.params.govFeeAmount)
     .minus(event.params.netTransferAmount);
@@ -164,8 +169,11 @@ export function handleRedeem(event: Redeem): void {
 
 export function handlePrintReserveTickets(event: PrintReserveTickets): void {
   let printReserveEvent = new PrintReservesEvent(
-    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
+    event.params.projectId.toHexString() +
+      "-" +
+      event.transaction.hash.toHexString()
   );
+
   printReserveEvent.beneficiary = event.params.beneficiary;
   printReserveEvent.beneficiaryTicketAmount =
     event.params.beneficiaryTicketAmount;
@@ -196,19 +204,63 @@ export function handleAddToBalance(event: AddToBalance): void {
   project.save();
 }
 
+export function handleDistributeToPayoutMod(
+  event: DistributeToPayoutMod
+): void {
+  let distributeToPayoutModEvent = new DistributeToPayoutModEvent(
+    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
+  );
+
+  distributeToPayoutModEvent.tapEvent =
+    event.params.projectId.toHexString() +
+    "-" +
+    event.transaction.hash.toHexString();
+  distributeToPayoutModEvent.project = event.params.projectId.toHexString();
+  distributeToPayoutModEvent.caller = event.params.caller;
+  distributeToPayoutModEvent.projectId = event.params.projectId;
+  distributeToPayoutModEvent.fundingCycleId = event.params.fundingCycleId;
+  distributeToPayoutModEvent.modProjectId = event.params.mod.projectId;
+  distributeToPayoutModEvent.modBeneficiary = event.params.mod.beneficiary;
+  distributeToPayoutModEvent.modAllocator = event.params.mod.allocator;
+  distributeToPayoutModEvent.modPreferUnstaked =
+    event.params.mod.preferUnstaked;
+  distributeToPayoutModEvent.modCut = event.params.modCut;
+  distributeToPayoutModEvent.timestamp = event.block.timestamp;
+  distributeToPayoutModEvent.txHash = event.transaction.hash;
+
+  distributeToPayoutModEvent.save();
+}
+
+export function handleDistributeToTicketMod(
+  event: DistributeToTicketMod
+): void {
+  let distributeToTicketModEvent = new DistributeToTicketModEvent(
+    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
+  );
+
+  distributeToTicketModEvent.printReservesEvent =
+    event.params.projectId.toHexString() +
+    "-" +
+    event.transaction.hash.toHexString();
+  distributeToTicketModEvent.caller = event.params.caller;
+  distributeToTicketModEvent.modBeneficiary = event.params.mod.beneficiary;
+  distributeToTicketModEvent.modPreferUnstaked =
+    event.params.mod.preferUnstaked;
+  distributeToTicketModEvent.modCut = event.params.modCut;
+  distributeToTicketModEvent.projectId = event.params.projectId;
+  distributeToTicketModEvent.fundingCycleId = event.params.fundingCycleId;
+  distributeToTicketModEvent.txHash = event.transaction.hash;
+  distributeToTicketModEvent.timestamp = event.block.timestamp;
+  distributeToTicketModEvent.project = event.params.projectId.toHexString();
+
+  distributeToTicketModEvent.save();
+}
+
 export function handleAllowMigration(event: AllowMigration): void {}
 
 export function handleAppointGovernance(event: AppointGovernance): void {}
 
 export function handleDeposit(event: Deposit): void {}
-
-export function handleDistributeToPayoutMod(
-  event: DistributeToPayoutMod
-): void {}
-
-export function handleDistributeToTicketMod(
-  event: DistributeToTicketMod
-): void {}
 
 export function handleEnsureTargetLocalWei(event: EnsureTargetLocalWei): void {}
 

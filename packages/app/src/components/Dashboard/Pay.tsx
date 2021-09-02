@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -10,6 +10,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
@@ -23,6 +24,8 @@ export default function Pay() {
     useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
+
+  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
 
   const weiPayAmt =
     payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
@@ -78,14 +81,22 @@ export default function Pay() {
         </div>
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
-          <Button
-            style={{ width: '100%' }}
-            type="primary"
-            disabled={currentFC.configured.eq(0)}
-            onClick={weiPayAmt ? pay : undefined}
-          >
-            Pay
-          </Button>
+          {fcMetadata?.reservedRate === 200 ? (
+            <Tooltip title="Paying this project is currently disabled">
+              <Button style={{ width: '100%' }} type="primary" disabled>
+                Pay
+              </Button>
+            </Tooltip>
+          ) : (
+            <Button
+              style={{ width: '100%' }}
+              type="primary"
+              disabled={currentFC.configured.eq(0)}
+              onClick={weiPayAmt ? pay : undefined}
+            >
+              Pay
+            </Button>
+          )}
           {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
               Paid as <CurrencySymbol currency={0} />

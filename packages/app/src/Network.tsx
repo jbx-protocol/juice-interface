@@ -3,11 +3,12 @@ import { NETWORKS } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { readNetwork } from 'constants/networks'
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
+import { usePrevious } from 'hooks/UsePrevious'
 
 const KEY_SELECTED_WALLET = "selectedWallet";
 
@@ -15,11 +16,13 @@ export default function Network({ children }: { children: ChildElems }) {
   const { isDarkMode } = useContext(ThemeContext);
 
   const [signingProvider, setSigningProvider] = useState<Web3Provider>()
-  const [network, setNetwork] = useState<NetworkName>()
+  const [network, setNetwork] = useState<NetworkName>()  
   const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
+  const previousAccount = usePrevious(account);
 
   const resetWallet = () => {
+    console.log('reset');
     onboard?.walletReset()
     setSigningProvider(undefined);
     window.localStorage.setItem(KEY_SELECTED_WALLET, "")
@@ -56,9 +59,11 @@ export default function Network({ children }: { children: ChildElems }) {
 
     const selectWallet = async (newWallet: Wallet) => {
       if (newWallet.provider) {
+        console.log('hi');
         setSigningProvider(new Web3Provider(newWallet.provider))
         window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || "")
       } else {
+        console.log('bye');
         resetWallet();
       }
     }
@@ -96,10 +101,19 @@ export default function Network({ children }: { children: ChildElems }) {
     }
   }
 
+  const accountChanged = () => {
+    // If the accounts have deterministically changed, reload the page.
+    // TODO: Address this with a more elegant solution.
+    if (previousAccount && account) {
+      window.location.reload();
+    }
+  }
+
   useEffect(initializeWallet, [])
   useEffect(onDarkModeChanged, [isDarkMode])
   useEffect(refreshNetwork, [signingProvider, setNetwork])
   useEffect(reconnectWallet, [onboard])
+  useEffect(accountChanged, [account]);
 
   return (
     <NetworkContext.Provider

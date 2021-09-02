@@ -29,16 +29,20 @@ export default function FormattedAddress({
       try {
         const name = await readProvider.lookupAddress(address)
 
-        if (!name) return
+        if (!name) {
+          setEnsName(undefined);
+          return;
+        }
 
         // Reverse lookup to check validity
         const isValid =
           (await (await readProvider.resolveName(name)).toLowerCase()) ===
           address.toLowerCase()
 
-        if (isValid) setEnsName(name)
+        setEnsName(isValid ? name : undefined)
       } catch (e) {
         console.log('Error looking up ENS name for address', address, e)
+        setEnsName(undefined);
       }
     }
 

@@ -1,5 +1,4 @@
-import { CrownFilled, LinkOutlined } from '@ant-design/icons'
-import { Tooltip } from 'antd'
+import { LinkOutlined } from '@ant-design/icons'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
@@ -76,10 +75,7 @@ export default function TapEventElem({
           justifyContent: 'space-between',
         }}
       >
-        <div style={smallHeaderStyle(colors)}>
-          Withdrawn
-          {/* Withdraw cycle #<FCNumber fundingCycleID={tapEvent.fundingCycleId} /> */}
-        </div>
+        <div style={smallHeaderStyle(colors)}>Withdrawn</div>
 
         <div
           style={{
@@ -167,7 +163,7 @@ export default function TapEventElem({
           }}
         >
           <CurrencySymbol currency={0} />
-          {formatWad(tapEvent.amount)}
+          {formatWad(tapEvent.netTransferAmount)}
         </div>
       )}
     </div>

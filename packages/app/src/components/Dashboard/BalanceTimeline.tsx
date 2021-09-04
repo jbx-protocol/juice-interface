@@ -25,13 +25,16 @@ const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 
 type Duration = 1 | 7 | 30 | 90 | 365
-type BalanceRef = { date: string; timestamp: number; balance: number }
+type EventRef = {
+  date: string
+  timestamp: number
+  balance?: number
+}
+type BlockRef = { block: number; timestamp: number }
 
 export default function BalanceTimeline({ height }: { height: number }) {
-  const [balances, setBalances] = useState<BalanceRef[]>([])
-  const [blockRefs, setBlockRefs] = useState<
-    { date: string; block: number; timestamp: number }[]
-  >([])
+  const [events, setEvents] = useState<EventRef[]>([])
+  const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [duration, setDuration] = useState<Duration>(30)
@@ -40,61 +43,55 @@ export default function BalanceTimeline({ height }: { height: number }) {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  // Get references to block every 12 hours in time window
+  const dateStringForBlockTime = (timestamp: number) =>
+    moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
+
+  // Get references to timestamp of blocks in interval
   useEffect(() => {
     if (!duration) return
 
     setLoading(true)
-    setBalances([])
+    setEvents([])
     setDomain(undefined)
-
-    let period: string
-    let integer: number
-
-    switch (duration) {
-      case 1:
-        period = 'hours'
-        integer = 1
-        break
-      case 7:
-        period = 'hours'
-        integer = 6
-        break
-      case 30:
-        period = 'days'
-        integer = 1
-        break
-      case 90:
-        period = 'days'
-        integer = 3
-        break
-      case 365:
-        period = 'days'
-        integer = 14
-        break
-    }
 
     new EthDater(readProvider)
       .getEvery(
-        period,
+        'days',
         moment(now - daysToMillis(duration)).toISOString(),
         moment(now).toISOString(),
-        integer,
+        duration,
       )
-      .then((res: { date: string; block: number; timestamp: number }[]) =>
-        setBlockRefs(res),
-      )
+      .then((res: BlockRef[]) => {
+        const newBlockRefs: BlockRef[] = [res[0]]
+        const count = 48
+
+        // Calculate intermediate blocks
+        for (let i = 0; i < count; i++) {
+          newBlockRefs.push({
+            block: Math.round(
+              ((res[1].block - res[0].block) / count) * i + res[0].block,
+            ),
+            timestamp: Math.round(
+              ((res[1].timestamp - res[0].timestamp) / count) * i +
+                res[0].timestamp,
+            ),
+          })
+        }
+
+        setBlockRefs(newBlockRefs)
+      })
   }, [duration])
 
   useEffect(() => {
-    const load = async () => {
-      const newBalances: BalanceRef[] = []
+    const loadBalances = async () => {
+      const newEvents: EventRef[] = []
       const promises: Promise<void>[] = []
       let max = 0
       let min = 9999999999
 
       if (!blockRefs.length) return
 
+      // Query balance of project at every block timestamp
       for (let i = 0; i < blockRefs.length; i++) {
         const blockRef = blockRefs[i]
 
@@ -112,11 +109,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
                 : undefined,
             },
             res => {
-              newBalances.push({
-                date: moment(blockRef.date).format(
-                  duration > 1 ? 'M/DD' : 'h:mma',
-                ),
+              newEvents.push({
                 timestamp: blockRef.timestamp,
+                date: dateStringForBlockTime(blockRef.timestamp || 0),
                 balance: res?.projects?.length
                   ? parseFloat(
                       parseFloat(
@@ -134,7 +129,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
       await Promise.all(promises)
 
-      newBalances.forEach(r => {
+      newEvents.forEach(r => {
+        if (r.balance === undefined) return
         if (min === undefined || r.balance < min) min = r.balance
         if (max === undefined || r.balance > max) max = r.balance
       })
@@ -142,15 +138,15 @@ export default function BalanceTimeline({ height }: { height: number }) {
       const domainPad = (max - min) * 0.05
       setDomain([Math.max(min - domainPad, 0), max + domainPad])
 
-      setBalances(
-        newBalances.sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1)),
-      )
+      setEvents(newEvents.sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1)))
 
       setLoading(false)
     }
 
-    load()
-  }, [blockRefs])
+    loadBalances()
+  }, [blockRefs, projectId])
+
+  console.log('asdf events', events)
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',
@@ -160,14 +156,14 @@ export default function BalanceTimeline({ height }: { height: number }) {
   const axisStyle: SVGProps<SVGTextElement> = {
     fontSize: 11,
     fill: colors.text.tertiary,
-    visibility: balances?.length ? 'visible' : 'hidden',
+    visibility: events?.length ? 'visible' : 'hidden',
   }
 
   return (
     <div>
       <div style={{ position: 'relative' }}>
         <ResponsiveContainer width={'100%'} height={height}>
-          <LineChart style={{ opacity: loading ? 0.5 : 1 }} data={balances}>
+          <LineChart style={{ opacity: loading ? 0.5 : 1 }} data={events}>
             <CartesianGrid
               style={{ paddingLeft: 200 }}
               stroke={colors.stroke.tertiary}
@@ -219,7 +215,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
                     }}
                   >
                     <CurrencySymbol currency={0} />
-                    {payload[0].value}
+                    {payload[0].payload.balance}
                   </div>
                 )
               }}

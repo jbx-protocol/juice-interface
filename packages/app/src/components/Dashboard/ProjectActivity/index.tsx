@@ -1,5 +1,6 @@
 import { Space } from 'antd'
 import Loading from 'components/shared/Loading'
+import { ThemeOption } from 'constants/theme/theme-option'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -21,6 +22,7 @@ export default function ProjectActivity() {
   const [loading, setLoading] = useState<boolean>()
 
   const { projectId } = useContext(ProjectContext)
+  const { forThemeOption } = useContext(ThemeContext)
 
   const pageSize = 20
 
@@ -97,19 +99,19 @@ export default function ProjectActivity() {
     let text: string
     switch (tab) {
       case 'pay':
-        text = 'Payments'
+        text = 'Pay'
         break
       case 'redeem':
-        text = 'Redeems'
+        text = 'Redeem'
         break
       case 'tap':
-        text = 'Withdraws'
+        text = 'Withdraw'
+        break
+      case 'reserves':
+        text = 'Reserve'
         break
       case 'payerReport':
         text = 'Payers'
-        break
-      case 'reserves':
-        text = 'Reserves'
         break
     }
 
@@ -133,7 +135,7 @@ export default function ProjectActivity() {
   }
 
   const tabs = (
-    <div style={{ marginBottom: 20 }}>
+    <div style={{ marginBottom: 20, maxWidth: '100%', overflow: 'auto' }}>
       <Space size="middle">
         {tab('pay')}
         {tab('redeem')}
@@ -146,6 +148,18 @@ export default function ProjectActivity() {
 
   return (
     <div>
+      <h4
+        style={{
+          fontWeight:
+            forThemeOption &&
+            forThemeOption({
+              [ThemeOption.light]: 600,
+              [ThemeOption.dark]: 400,
+            }),
+        }}
+      >
+        Activity
+      </h4>
       {tabs}
 
       <div style={{ paddingBottom: 40 }}>

@@ -3,7 +3,7 @@ import { Col, Row, Space } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
+import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import BalanceTimeline from './BalanceTimeline'
@@ -81,9 +81,11 @@ export default function Project({
       <Row gutter={gutter} style={{ marginTop: gutter, paddingBottom: gutter }}>
         <Col xs={24} md={12}>
           <div id="col-content">
-            <div style={{ marginBottom: gutter }}>
-              <BalanceTimeline height={240} />
-            </div>
+            {projectId.gt(0) && (
+              <div style={{ marginBottom: gutter }}>
+                <BalanceTimeline height={240} />
+              </div>
+            )}
 
             <div style={{ marginBottom: gutter }}>
               <Rewards totalOverflow={totalOverflow} />

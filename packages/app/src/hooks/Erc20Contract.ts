@@ -10,9 +10,9 @@ export function useErc20Contract(address: string | undefined) {
   const [contract, setContract] = useState<Contract>()
   const { signingProvider } = useContext(NetworkContext)
 
-  const provider = signingProvider ?? readProvider
-
   useEffect(() => {
+    const provider = signingProvider ?? readProvider
+
     provider.listAccounts().then(accounts => {
       if (
         !address ||
@@ -26,7 +26,7 @@ export function useErc20Contract(address: string | undefined) {
         setContract(new Contract(address, erc20Abi, provider.getSigner()))
       }
     })
-  }, [address, provider])
+  }, [address, signingProvider])
 
   return contract
 }

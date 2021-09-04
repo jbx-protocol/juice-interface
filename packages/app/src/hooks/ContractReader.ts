@@ -41,87 +41,91 @@ export default function useContractReader<V>({
     [valueDidChange],
   )
 
-  useDeepCompareEffectNoCheck(() => {
-    async function getValue() {
-      const readContract = contractToRead(contract, contracts)
+  useDeepCompareEffectNoCheck(
+    () => {
+      async function getValue() {
+        const readContract = contractToRead(contract, contracts)
 
-      if (!readContract || !functionName || args === null) return
+        if (!readContract || !functionName || args === null) return
 
-      try {
-        console.log('📚 Read >', functionName)
+        try {
+          console.log('📚 Read >', functionName)
 
-        const result = await readContract[functionName](...(args ?? []))
+          const result = await readContract[functionName](...(args ?? []))
 
-        const newValue = _formatter(result)
+          const newValue = _formatter(result)
 
-        if (_valueDidChange(value, newValue)) {
+          if (_valueDidChange(value, newValue)) {
+            console.log(
+              '📗 New >',
+              functionName,
+              { args },
+              { newValue },
+              { contract: readContract.address },
+            )
+            setValue(newValue)
+            _callback(newValue)
+          }
+        } catch (err) {
           console.log(
-            '📗 New >',
+            '📕 Read error >',
             functionName,
             { args },
-            { newValue },
+            { err },
             { contract: readContract.address },
+            contracts,
           )
-          setValue(newValue)
-          _callback(newValue)
+          setValue(_formatter(undefined))
+          _callback(_formatter(undefined))
         }
-      } catch (err) {
-        console.log(
-          '📕 Read error >',
-          functionName,
-          { args },
-          { err },
-          { contract: readContract.address },
-          contracts,
-        )
-        setValue(_formatter(undefined))
-        _callback(_formatter(undefined))
       }
-    }
 
-    getValue()
+      getValue()
 
-    const listener = (x: any) => getValue()
+      const listener = (x: any) => getValue()
 
-    let subscriptions: {
-      contract: Contract
-      filter: EventFilter
-    }[] = []
+      let subscriptions: {
+        contract: Contract
+        filter: EventFilter
+      }[] = []
 
-    if (updateOn?.length) {
-      try {
-        // Subscribe listener to updateOn events
-        updateOn.forEach(u => {
-          const _contract = contractToRead(u.contract, contracts)
+      if (updateOn?.length) {
+        try {
+          // Subscribe listener to updateOn events
+          updateOn.forEach(u => {
+            const _contract = contractToRead(u.contract, contracts)
 
-          if (!u.eventName || !_contract) return
+            if (!u.eventName || !_contract) return
 
-          const filter = _contract.filters[u.eventName](...(u.topics ?? []))
-          _contract?.on(filter, listener)
-          subscriptions.push({
-            contract: _contract,
-            filter,
+            const filter = _contract.filters[u.eventName](...(u.topics ?? []))
+            _contract?.on(filter, listener)
+            subscriptions.push({
+              contract: _contract,
+              filter,
+            })
           })
-        })
-      } catch (error) {
-        console.log('Read contract >', {
-          functionName,
-          error,
-        })
+        } catch (error) {
+          console.log('Read contract >', {
+            functionName,
+            error,
+          })
+        }
       }
-    }
 
-    return () => subscriptions.forEach(s => s.contract.off(s.filter, listener))
-  }, [
-    contract,
-    contracts,
-    functionName,
-    updateOn,
-    args,
-    _formatter,
-    _callback,
-    _valueDidChange,
-  ])
+      return () =>
+        subscriptions.forEach(s => s.contract.off(s.filter, listener))
+    },
+    [
+      contract,
+      contracts,
+      functionName,
+      updateOn,
+      args,
+      _formatter,
+      _callback,
+      _valueDidChange,
+    ],
+  )
 
   return value
 }

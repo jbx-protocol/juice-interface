@@ -6,8 +6,6 @@ import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensMod
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import Loading from 'components/shared/Loading'
-import { ThemeOption } from 'constants/theme/theme-option'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -18,10 +16,9 @@ import { ContractName } from 'models/contract-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 
-import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
+import SectionHeader from './SectionHeader'
 
 export default function Rewards({
   totalOverflow,
@@ -31,12 +28,11 @@ export default function Rewards({
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const { contracts, transactor, userAddress } = useContext(UserContext)
 
-  const { projectId, currentFC, isOwner, tokenAddress, tokenSymbol } =
+  const { projectId, isOwner, tokenAddress, tokenSymbol } =
     useContext(ProjectContext)
 
   const {
     theme: { colors },
-    forThemeOption,
   } = useContext(ThemeContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
@@ -222,10 +218,8 @@ export default function Rewards({
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <TooltipLabel
-              label={
-                <span>{tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}</span>
-              }
+            <SectionHeader
+              text={tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
               tip={`${
                 tokenSymbol ? tokenSymbol + ' ERC20' : 'tokens'
               } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
@@ -233,14 +227,6 @@ export default function Rewards({
                   ? 'Address: ' + tokenAddress
                   : ''
               }`}
-              style={{
-                fontWeight:
-                  forThemeOption &&
-                  forThemeOption({
-                    [ThemeOption.light]: 600,
-                    [ThemeOption.dark]: 400,
-                  }),
-              }}
             />
           }
           valueRender={() => (

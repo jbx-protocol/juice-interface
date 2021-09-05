@@ -127,8 +127,6 @@ export function PaymentActivity({
                   style={{
                     lineHeight: contentLineHeight,
                     fontSize: '1rem',
-                    marginRight: 10,
-                    color: colors.text.primary,
                   }}
                 >
                   <CurrencySymbol currency={0} />
@@ -136,15 +134,9 @@ export function PaymentActivity({
                 </div>
               </div>
 
-              <div>
+              <div style={{ textAlign: 'right' }}>
                 {e.timestamp && (
-                  <div
-                    style={{
-                      ...smallHeaderStyle(colors),
-                      textAlign: 'right',
-                      color: colors.text.secondary,
-                    }}
-                  >
+                  <div style={smallHeaderStyle(colors)}>
                     {formatHistoricalDate(e.timestamp * 1000)}{' '}
                     <a
                       className="quiet"
@@ -158,11 +150,8 @@ export function PaymentActivity({
                 )}
                 <div
                   style={{
-                    ...smallHeaderStyle,
-                    color: colors.text.secondary,
-                    marginTop: '.3rem',
+                    ...smallHeaderStyle(colors),
                     lineHeight: contentLineHeight,
-                    textAlign: 'right',
                   }}
                 >
                   <FormattedAddress address={e.beneficiary} />

@@ -93,8 +93,6 @@ export function RedeemActivity({
                   style={{
                     lineHeight: contentLineHeight,
                     fontSize: '1rem',
-                    marginRight: 10,
-                    color: colors.text.primary,
                   }}
                 >
                   {formatWad(e.amount)} {tokenSymbol ?? 'tokens'}
@@ -106,7 +104,6 @@ export function RedeemActivity({
                   style={{
                     ...smallHeaderStyle(colors),
                     textAlign: 'right',
-                    color: colors.text.secondary,
                   }}
                 >
                   {e.timestamp && (
@@ -124,8 +121,6 @@ export function RedeemActivity({
                 <div
                   style={{
                     ...smallHeaderStyle(colors),
-                    color: colors.text.secondary,
-                    marginTop: '.3rem',
                     lineHeight: contentLineHeight,
                     textAlign: 'right',
                   }}
@@ -135,12 +130,7 @@ export function RedeemActivity({
               </div>
             </div>
 
-            <div
-              style={{
-                ...smallHeaderStyle(colors),
-                color: colors.text.secondary,
-              }}
-            >
+            <div style={{ color: colors.text.secondary}}>
               <CurrencySymbol currency={0} />
               {formatWad(e.returnAmount)} overflow received
             </div>

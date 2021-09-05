@@ -14,9 +14,10 @@ export default function FormattedAddress({
 }: {
   address: string | undefined
 }) {
-  const storageKey = 'jb_ensDict_' + readProvider.network.chainId
+  const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
+
   const getEnsDict = () =>
-    JSON.parse(window.localStorage.getItem(storageKey) ?? '{}') as Record<
+    JSON.parse(window.localStorage.getItem(getStorageKey()) ?? '{}') as Record<
       string,
       EnsRecord
     >
@@ -51,7 +52,7 @@ export default function FormattedAddress({
       }
 
       window.localStorage.setItem(
-        storageKey,
+        getStorageKey(),
         JSON.stringify({
           ...getEnsDict(),
           [address]: newRecord,

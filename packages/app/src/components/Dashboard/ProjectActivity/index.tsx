@@ -108,7 +108,7 @@ export default function ProjectActivity() {
         text = 'Withdraw'
         break
       case 'reserves':
-        text = 'Reserve'
+        text = 'Reserves'
         break
       case 'payerReport':
         text = 'Payers'

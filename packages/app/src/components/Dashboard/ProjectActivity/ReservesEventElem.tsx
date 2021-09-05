@@ -73,12 +73,7 @@ export default function ReservesEventElem({
           Distributed reserved {tokenSymbol ?? 'tokens'}
         </div>
 
-        <div
-          style={{
-            ...smallHeaderStyle(colors),
-            color: colors.text.secondary,
-          }}
-        >
+        <div style={smallHeaderStyle(colors)}>
           {printReservesEvent.timestamp && (
             <span>
               {formatHistoricalDate(printReservesEvent.timestamp * 1000)}

@@ -5,4 +5,4 @@ export const smallHeaderStyle = (colors: SemanticColors) => ({
   color: colors.text.tertiary,
 })
 
-export const contentLineHeight = 1.5
+export const contentLineHeight = '1.4rem'

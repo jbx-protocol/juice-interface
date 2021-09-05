@@ -7,5 +7,5 @@ export const smallHeaderStyle: (colors: SemanticColors) => CSSProperties = (
   fontSize: '.7rem',
   fontWeight: 500,
   cursor: 'default',
-  color: colors.text.secondary,
+  color: colors.text.tertiary,
 })

@@ -79,21 +79,25 @@ export default function TapEventElem({
 
         <div
           style={{
-            ...smallHeaderStyle(colors),
-            color: colors.text.secondary,
+            textAlign: 'right',
           }}
         >
-          {tapEvent.timestamp && (
-            <span>{formatHistoricalDate(tapEvent.timestamp * 1000)}</span>
-          )}{' '}
-          <a
-            className="quiet"
-            href={`https://etherscan.io/tx/${tapEvent.txHash}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <LinkOutlined />
-          </a>
+          <div style={smallHeaderStyle(colors)}>
+            {tapEvent.timestamp && (
+              <span>{formatHistoricalDate(tapEvent.timestamp * 1000)}</span>
+            )}{' '}
+            <a
+              className="quiet"
+              href={`https://etherscan.io/tx/${tapEvent.txHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkOutlined />
+            </a>
+          </div>
+          <div style={smallHeaderStyle(colors)}>
+            called by <FormattedAddress address={tapEvent.caller} />
+          </div>
         </div>
       </div>
 
@@ -109,9 +113,10 @@ export default function TapEventElem({
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'baseline',
+              fontSize: '0.8rem',
             }}
           >
-            <div style={{ fontSize: '0.8rem', fontWeight: 500 }}>
+            <div style={{ fontWeight: 500 }}>
               {e.modProjectId?.gt(0) ? (
                 <span>
                   <ProjectHandle link projectId={e.modProjectId} />
@@ -122,13 +127,7 @@ export default function TapEventElem({
               :
             </div>
 
-            <div
-              style={
-                payoutEvents?.length && payoutEvents.length > 1
-                  ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                  : { fontWeight: 500 }
-              }
-            >
+            <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency={0} />
               {formatWad(e.modCut, { padEnd: 6 })}
             </div>
@@ -141,12 +140,22 @@ export default function TapEventElem({
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'baseline',
+              fontSize:
+                payoutEvents?.length && payoutEvents.length > 1
+                  ? '0.8rem'
+                  : undefined,
             }}
           >
             <div style={{ fontWeight: 500 }}>
               <FormattedAddress address={tapEvent.beneficiary} />:
             </div>
-            <div style={{ color: colors.text.secondary }}>
+            <div
+              style={
+                payoutEvents?.length && payoutEvents.length > 1
+                  ? { color: colors.text.secondary }
+                  : { fontWeight: 500 }
+              }
+            >
               <CurrencySymbol currency={0} />
               {formatWad(tapEvent.beneficiaryTransferAmount, { padEnd: 6 })}
             </div>
@@ -154,7 +163,7 @@ export default function TapEventElem({
         )}
       </div>
 
-      {payoutEvents?.length && payoutEvents.length > 1 && (
+      {payoutEvents?.length && payoutEvents.length > 1 ? (
         <div
           style={{
             color: colors.text.primary,
@@ -165,7 +174,7 @@ export default function TapEventElem({
           <CurrencySymbol currency={0} />
           {formatWad(tapEvent.netTransferAmount)}
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

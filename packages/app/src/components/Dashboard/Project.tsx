@@ -80,19 +80,17 @@ export default function Project({
 
       <Row gutter={gutter} style={{ paddingBottom: gutter }}>
         <Col xs={24} md={12} style={{ marginTop: gutter }}>
-          <div id="col-content">
-            {projectId.gt(0) && (
-              <div style={{ marginBottom: gutter }}>
-                <BalanceTimeline height={240} />
-              </div>
-            )}
-
+          {projectId.gt(0) && (
             <div style={{ marginBottom: gutter }}>
-              <Rewards totalOverflow={totalOverflow} />
+              <BalanceTimeline height={240} />
             </div>
+          )}
 
-            <FundingCycles showCurrentDetail={showCurrentDetail} />
+          <div style={{ marginBottom: gutter }}>
+            <Rewards totalOverflow={totalOverflow} />
           </div>
+
+          <FundingCycles showCurrentDetail={showCurrentDetail} />
         </Col>
 
         <Col xs={24} md={12} style={{ marginTop: gutter }}>

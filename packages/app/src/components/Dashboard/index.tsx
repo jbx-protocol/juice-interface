@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { ProjectContext } from 'contexts/projectContext'
@@ -285,10 +286,13 @@ export default function Dashboard() {
 
   if (!projectId || !handle || !metadata) return null
 
+  const projectType = projectTypes[projectId?.toNumber()] ?? 'standard'
+
   return (
     <ProjectContext.Provider
       value={{
         projectId,
+        projectType,
         owner,
         isOwner,
         handle,

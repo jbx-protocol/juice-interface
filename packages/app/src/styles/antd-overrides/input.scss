@@ -129,6 +129,22 @@ input:-webkit-autofill-selected {
   }
 }
 
+.ant-select.small {
+  .ant-select-selector {
+    height: 24px;
+    border-color: var(--stroke-tertiary) !important;
+  }
+  .ant-select-selection-item {
+    line-height: 22px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .ant-select-arrow {
+    margin-top: -4px;
+    font-size: 10px;
+  }
+}
+
 .ant-select-dropdown {
   background-color: var(--background-l0);
 

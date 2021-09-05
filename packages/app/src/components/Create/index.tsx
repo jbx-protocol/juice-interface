@@ -374,6 +374,7 @@ export default function Create() {
           </h3>
           <ProjectContext.Provider
             value={{
+              projectType: 'standard',
               owner: userAddress,
               isOwner: false,
               currentFC: fundingCycle,

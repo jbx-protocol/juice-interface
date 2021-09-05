@@ -1,15 +1,14 @@
-import { Button, Row, Space } from 'antd'
+import { Button, Space } from 'antd'
 import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
 import { CardSection } from 'components/shared/CardSection'
-import TooltipLabel from 'components/shared/TooltipLabel'
-import { ThemeOption } from 'constants/theme/theme-option'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
 import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
-import FundingHistory from './FundingHistory'
 import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
+import FundingHistory from './FundingHistory'
+import SectionHeader from './SectionHeader'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 
@@ -36,7 +35,6 @@ export default function FundingCycles({
 
   const {
     theme: { colors },
-    forThemeOption,
   } = useContext(ThemeContext)
 
   const tab = (option: TabOption) => (
@@ -86,19 +84,12 @@ export default function FundingCycles({
           justifyContent: 'space-between',
         }}
       >
-        <TooltipLabel
-          style={{
-            color: colors.text.header,
-            marginBottom: 12,
-            fontWeight:
-              forThemeOption &&
-              forThemeOption({
-                [ThemeOption.light]: 600,
-                [ThemeOption.dark]: 400,
-              }),
-          }}
-          label="Funding cycle"
+        <SectionHeader
+          text="Funding cycle"
           tip="A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
+          style={{
+            marginBottom: 12,
+          }}
         />
         <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
           {tab('current')}

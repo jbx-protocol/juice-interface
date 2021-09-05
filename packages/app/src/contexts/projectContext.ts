@@ -2,10 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadata } from 'models/project-metadata'
+import { ProjectType } from 'models/project-type'
 import { createContext } from 'react'
 
 export type ProjectContext = {
   projectId: BigNumber | undefined
+  projectType: ProjectType | undefined
   handle: string | undefined
   metadata: ProjectMetadata | undefined
   owner: string | undefined // owner address
@@ -23,6 +25,7 @@ export type ProjectContext = {
 
 export const ProjectContext = createContext<ProjectContext>({
   projectId: undefined,
+  projectType: 'standard',
   handle: undefined,
   metadata: undefined,
   owner: undefined,

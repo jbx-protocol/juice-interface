@@ -4,6 +4,7 @@ import { ThemeOption } from 'constants/theme/theme-option'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
+import SectionHeader from '../SectionHeader'
 
 import { PayerReports } from './PayerReports'
 import { PaymentActivity } from './PaymentActivity'
@@ -22,7 +23,6 @@ export default function ProjectActivity() {
   const [loading, setLoading] = useState<boolean>()
 
   const { projectId } = useContext(ProjectContext)
-  const { forThemeOption } = useContext(ThemeContext)
 
   const pageSize = 20
 
@@ -148,18 +148,7 @@ export default function ProjectActivity() {
 
   return (
     <div>
-      <h4
-        style={{
-          fontWeight:
-            forThemeOption &&
-            forThemeOption({
-              [ThemeOption.light]: 600,
-              [ThemeOption.dark]: 400,
-            }),
-        }}
-      >
-        Activity
-      </h4>
+      <SectionHeader text="Activity" />
       {tabs}
 
       <div style={{ paddingBottom: 40 }}>

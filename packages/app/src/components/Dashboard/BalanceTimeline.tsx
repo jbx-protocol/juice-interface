@@ -1,11 +1,11 @@
-import { Select } from 'antd'
+import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import Loading from 'components/shared/Loading'
 import { readProvider } from 'constants/readProvider'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
-import { parseProjectJson } from 'models/subgraph-entities/project'
+import { parseProjectJson, Project } from 'models/subgraph-entities/project'
 import { parseTapEventJson } from 'models/subgraph-entities/tap-event'
 import moment from 'moment'
 import {
@@ -27,6 +27,7 @@ import {
 } from 'recharts'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph, trimHexZero } from 'utils/graph'
+import SectionHeader from './SectionHeader'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
@@ -35,11 +36,12 @@ const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 type Duration = 1 | 7 | 30 | 90 | 365
 type EventRef = {
   timestamp: number
-  balance?: number
+  value?: number
   tapped?: number
   previousBalance?: number
 }
 type BlockRef = { block: number; timestamp: number }
+type ShowGraph = 'earned' | 'balance'
 
 export default function BalanceTimeline({ height }: { height: number }) {
   const [events, setEvents] = useState<EventRef[]>([])
@@ -47,13 +49,18 @@ export default function BalanceTimeline({ height }: { height: number }) {
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [duration, setDuration] = useState<Duration>(30)
-  const { projectId } = useContext(ProjectContext)
+  const [showGraph, setShowGraph] = useState<ShowGraph>()
+  const { projectId, projectType } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const dateStringForBlockTime = (timestamp: number) =>
     moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
+
+  useEffect(() => {
+    setShowGraph(projectType === 'bidpool' ? 'earned' : 'balance')
+  }, [projectType])
 
   // Get references to timestamp of blocks in interval
   useEffect(() => {
@@ -94,13 +101,28 @@ export default function BalanceTimeline({ height }: { height: number }) {
   }, [duration])
 
   useEffect(() => {
+    if (!showGraph) return
+
     const loadEvents = async () => {
+      setLoading(true)
+
       const newEvents: EventRef[] = []
       const promises: Promise<void>[] = []
       let max: number | undefined = undefined
       let min: number | undefined = undefined
 
       if (!blockRefs.length) return
+
+      let queryKeys: (keyof Project)[]
+
+      switch (showGraph) {
+        case 'earned':
+          queryKeys = ['totalPaid']
+          break
+        case 'balance':
+          queryKeys = ['currentBalance']
+          break
+      }
 
       // Query balance of project for interval blocks
       for (let i = 0; i < blockRefs.length; i++) {
@@ -110,7 +132,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
           querySubgraph(
             {
               entity: 'project',
-              keys: ['currentBalance'],
+              keys: queryKeys,
               block: { number: blockRef.block },
               where: projectId
                 ? {
@@ -120,18 +142,33 @@ export default function BalanceTimeline({ height }: { height: number }) {
                 : undefined,
             },
             res => {
-              newEvents.push({
-                timestamp: blockRef.timestamp,
-                balance: res?.projects?.length
-                  ? parseFloat(
-                      parseFloat(
-                        fromWad(
-                          parseProjectJson(res.projects[0]).currentBalance,
-                        ) ?? '0',
-                      ).toFixed(4),
-                    )
-                  : 0,
-              })
+              if (!res?.projects.length) return
+
+              let value: number | undefined = undefined
+
+              const project = parseProjectJson(res.projects[0])
+
+              if (!project) return
+
+              switch (showGraph) {
+                case 'earned':
+                  value = parseFloat(
+                    parseFloat(fromWad(project.totalPaid)).toFixed(4),
+                  )
+                  break
+                case 'balance':
+                  value = parseFloat(
+                    parseFloat(fromWad(project.currentBalance)).toFixed(4),
+                  )
+                  break
+              }
+
+              if (value !== undefined) {
+                newEvents.push({
+                  timestamp: blockRef.timestamp,
+                  value,
+                })
+              }
             },
           ),
         )
@@ -141,54 +178,56 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
       // Calculate domain for graph based on floor/ceiling balances
       newEvents.forEach(r => {
-        if (r.balance === undefined) return
-        if (min === undefined || r.balance < min) min = r.balance
-        if (max === undefined || r.balance > max) max = r.balance
+        if (r.value === undefined) return
+        if (min === undefined || r.value < min) min = r.value
+        if (max === undefined || r.value > max) max = r.value
       })
 
       if (max === undefined || min === undefined) {
         setDomain([0, 0])
       } else {
         const domainPad = (max - min) * 0.05
-        setDomain([Math.max(min - domainPad, 0), max + domainPad])
+        setDomain([Math.max(min - domainPad, 0), Math.max(max + domainPad, 10)])
       }
 
       // Load tap events
-      await querySubgraph(
-        {
-          entity: 'tapEvent',
-          keys: ['netTransferAmount', 'timestamp'],
-          where: projectId
-            ? [
-                {
-                  key: 'project',
-                  value: trimHexZero(projectId.toHexString()),
-                },
-                {
-                  key: 'timestamp',
-                  value: Math.round((now - daysToMillis(duration)) / 1000),
-                  operator: 'gte',
-                },
-              ]
-            : undefined,
-        },
-        res => {
-          if (res) {
-            newEvents.push(
-              ...res.tapEvents.map(e => {
-                const event = parseTapEventJson(e)
-                return {
-                  ...e,
-                  tapped: parseFloat(
-                    parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
-                  ),
-                  timestamp: event.timestamp ?? 0,
-                }
-              }),
-            )
-          }
-        },
-      )
+      if (showGraph === 'balance') {
+        await querySubgraph(
+          {
+            entity: 'tapEvent',
+            keys: ['netTransferAmount', 'timestamp'],
+            where: projectId
+              ? [
+                  {
+                    key: 'project',
+                    value: trimHexZero(projectId.toHexString()),
+                  },
+                  {
+                    key: 'timestamp',
+                    value: Math.round((now - daysToMillis(duration)) / 1000),
+                    operator: 'gte',
+                  },
+                ]
+              : undefined,
+          },
+          res => {
+            if (res) {
+              newEvents.push(
+                ...res.tapEvents.map(e => {
+                  const event = parseTapEventJson(e)
+                  return {
+                    ...e,
+                    tapped: parseFloat(
+                      parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
+                    ),
+                    timestamp: event.timestamp ?? 0,
+                  }
+                }),
+              )
+            }
+          },
+        )
+      }
 
       const sortedEvents = newEvents.sort((a, b) =>
         a.timestamp < b.timestamp ? -1 : 1,
@@ -199,7 +238,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
           if (e.tapped) {
             return {
               ...e,
-              previousBalance: sortedEvents[i - 1]?.balance,
+              previousBalance: sortedEvents[i - 1]?.value,
             }
           }
 
@@ -210,8 +249,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
       setLoading(false)
     }
 
+    setEvents([])
     loadEvents()
-  }, [blockRefs, projectId])
+  }, [blockRefs, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',
@@ -228,8 +268,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
     if (!events?.length) return []
 
     let ticks = []
-    const max = events[events.length - 1].timestamp
-    const min = events[0].timestamp
+    const max = now / 1000
+    const min = (now - daysToMillis(duration)) / 1000
 
     // TODO why are only roughly half of ticks rendered?
     for (let i = 0; i < 20; i++) {
@@ -239,8 +279,82 @@ export default function BalanceTimeline({ height }: { height: number }) {
     return ticks
   }, [events])
 
+  let header: string | undefined = undefined
+
+  switch (showGraph) {
+    case 'earned':
+      header = 'Lifetime earned'
+      break
+    case 'balance':
+      header = 'Balance'
+      break
+  }
+
+  const tab = (tab: ShowGraph) => {
+    const selected = tab === showGraph
+
+    let text: string
+    switch (tab) {
+      case 'balance':
+        text = 'Balance'
+        break
+      case 'earned':
+        text = 'Earned'
+        break
+    }
+
+    return (
+      <div
+        style={{
+          textTransform: 'uppercase',
+          fontSize: '0.8rem',
+          fontWeight: selected ? 600 : 400,
+          color: selected ? colors.text.secondary : colors.text.tertiary,
+          cursor: 'pointer',
+        }}
+        onClick={() => setShowGraph(tab)}
+      >
+        {text}
+      </div>
+    )
+  }
+
   return (
     <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        {projectType === 'bidpool' ? (
+          <SectionHeader text={header} />
+        ) : (
+          <div>
+            <Space size="middle">
+              {tab('balance')}
+              {tab('earned')}
+            </Space>
+          </div>
+        )}
+
+        <Select
+          className="small"
+          style={{
+            ...buttonStyle,
+            width: 100,
+          }}
+          value={duration}
+          onChange={val => setDuration(val)}
+        >
+          <Select.Option value={1}>24 hours</Select.Option>
+          <Select.Option value={7}>7 days</Select.Option>
+          <Select.Option value={30}>30 days</Select.Option>
+          <Select.Option value={90}>90 days</Select.Option>
+          <Select.Option value={365}>1 year</Select.Option>
+        </Select>
+      </div>
       <div style={{ position: 'relative' }}>
         <ResponsiveContainer width={'100%'} height={height}>
           <LineChart style={{ opacity: loading ? 0.5 : 1 }} data={events}>
@@ -249,17 +363,56 @@ export default function BalanceTimeline({ height }: { height: number }) {
               stroke={colors.stroke.tertiary}
               strokeDasharray="4 2"
             />
+            {showGraph === 'balance' && (
+              <Line
+                dot={props => {
+                  const { cx, payload } = props
+
+                  return payload.tapped && domain ? (
+                    <g transform={`translate(${cx},${0})`}>
+                      <line
+                        x1="0"
+                        y1={
+                          80 -
+                          (payload.tapped * 25) / (domain[1] - domain[0]) +
+                          '%'
+                        }
+                        x2="0"
+                        y2={height - 35 + 'px'}
+                        strokeWidth={4}
+                        stroke={colors.stroke.secondary}
+                      />
+                    </g>
+                  ) : (
+                    <span hidden></span>
+                  )
+                }}
+                activeDot={false}
+                stroke={colors.stroke.primary}
+                strokeWidth={0}
+                dataKey="previousBalance"
+              />
+            )}
+            <Line
+              dot={false}
+              connectNulls
+              stroke={colors.text.brand.primary}
+              strokeWidth={2}
+              type="monotone"
+              dataKey="value"
+              animationDuration={0}
+            />
             <YAxis
               axisLine={false}
               stroke={colors.stroke.tertiary}
               type="number"
-              dataKey="balance"
+              dataKey="value"
               domain={domain}
               scale="linear"
-              width={20}
-              tickSize={4}
+              tickSize={2}
               tickCount={4}
               tick={axisStyle}
+              mirror
             />
             <XAxis
               axisLine={false}
@@ -277,48 +430,11 @@ export default function BalanceTimeline({ height }: { height: number }) {
                   </g>
                 )
               }}
-              domain={[xTicks[0], xTicks[xTicks?.length - 1]]}
+              domain={[xTicks[0], xTicks[xTicks.length - 1]]}
               type="number"
               dataKey="timestamp"
               scale="time"
               interval={2}
-            />
-            <Line
-              dot={props => {
-                const { cx, payload } = props
-
-                return payload.tapped && domain ? (
-                  <g transform={`translate(${cx},${0})`}>
-                    <line
-                      x1="0"
-                      y1={
-                        80 -
-                        (payload.tapped * 25) / (domain[1] - domain[0]) +
-                        '%'
-                      }
-                      x2="0"
-                      y2={height - 35 + 'px'}
-                      strokeWidth={4}
-                      stroke={colors.stroke.tertiary}
-                    />
-                  </g>
-                ) : (
-                  <span hidden></span>
-                )
-              }}
-              activeDot={false}
-              stroke={colors.stroke.primary}
-              strokeWidth={0}
-              dataKey="previousBalance"
-            />
-            <Line
-              dot={false}
-              connectNulls
-              stroke={colors.text.brand.primary}
-              strokeWidth={2}
-              type="monotone"
-              dataKey="balance"
-              animationDuration={0}
             />
             <Tooltip
               contentStyle={{
@@ -348,16 +464,22 @@ export default function BalanceTimeline({ height }: { height: number }) {
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        <CurrencySymbol currency={0} />
+                        -<CurrencySymbol currency={0} />
                         {payload[0].payload.tapped}
-                        <div style={{ fontSize: '0.7rem', fontWeight: 500 }}>
-                          withdrawn
+                        <div
+                          style={{
+                            fontSize: '0.7rem',
+                            fontWeight: 500,
+                            color: colors.text.secondary,
+                          }}
+                        >
+                          withdraw
                         </div>
                       </div>
                     ) : (
                       <div>
                         <CurrencySymbol currency={0} />
-                        {payload[0].payload.balance}
+                        {payload[0].payload.value}
                       </div>
                     )}
                   </div>
@@ -381,24 +503,6 @@ export default function BalanceTimeline({ height }: { height: number }) {
             <Loading />
           </div>
         )}
-
-        <Select
-          style={{
-            ...buttonStyle,
-            width: 100,
-            position: 'absolute',
-            left: 30,
-            top: 10,
-          }}
-          value={duration}
-          onChange={val => setDuration(val)}
-        >
-          <Select.Option value={1}>24 hours</Select.Option>
-          <Select.Option value={7}>7 days</Select.Option>
-          <Select.Option value={30}>30 days</Select.Option>
-          <Select.Option value={90}>90 days</Select.Option>
-          <Select.Option value={365}>1 year</Select.Option>
-        </Select>
       </div>
     </div>
   )

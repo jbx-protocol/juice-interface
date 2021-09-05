@@ -29,7 +29,7 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId, currentFC, balanceInCurrency, owner } =
+  const { projectId, projectType, currentFC, balanceInCurrency, owner } =
     useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
@@ -70,11 +70,12 @@ export default function Paid() {
     [currentFC?.currency, totalOverflow, converter],
   )
 
-  const includeOwnerBalance = projectId?.eq(7)
   const ownerBalance = useBalance(owner)
   const ownerBalanceInCurrency = currentFC?.currency.eq(0)
     ? ownerBalance
     : parseWad(converter.weiToUsd(ownerBalance))
+
+  const includeOwnerBalance = projectType === 'bidpool'
   const paidInCurrency = balanceInCurrency?.add(
     (includeOwnerBalance ? ownerBalanceInCurrency : 0) ?? 0,
   )
@@ -132,16 +133,16 @@ export default function Paid() {
             />
             {currentFC.currency.eq(1) ? (
               <span>
-                {formatWad(balanceInCurrency, { decimals: 4 })}{' '}
+                {formatWad(paidInCurrency, { decimals: 4 })}{' '}
                 <span style={subTextStyle}>
                   <CurrencySymbol currency={0} />
-                  {formatWad(converter.usdToWei(fromWad(balanceInCurrency)), {
+                  {formatWad(converter.usdToWei(fromWad(paidInCurrency)), {
                     decimals: 4,
                   })}
                 </span>
               </span>
             ) : (
-              formatWad(balanceInCurrency, { decimals: 4 })
+              formatWad(paidInCurrency, { decimals: 4 })
             )}
 
             {includeOwnerBalance && (
@@ -155,7 +156,7 @@ export default function Paid() {
                 <Tooltip
                   title={
                     <span>
-                      Owner balance:
+                      Includes owner balance:
                       <br />
                       <CurrencySymbol currency={0} />
                       {formatWad(ownerBalance, { decimals: 4 })}
@@ -164,8 +165,7 @@ export default function Paid() {
                     </span>
                   }
                 >
-                  + <CurrencySymbol currency={0} />
-                  {formatWad(ownerBalance, { decimals: 4 })} <CrownFilled />
+                  <CrownFilled />
                 </Tooltip>
               </div>
             )}
@@ -246,28 +246,53 @@ export default function Paid() {
 
       {hasFundingTarget(currentFC) && (
         <div style={{ marginTop: 4 }}>
-          <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
-            <CurrencySymbol
-              currency={currentFC.currency.toNumber() as CurrencyOption}
-            />
-            {formatWad(currentFC.tapped, { decimals: 4 })}
-            <span style={{ fontSize: '0.8rem', color: colors.text.secondary }}>
-              {' '}
-              /{' '}
-              <CurrencySymbol
-                currency={currentFC.currency.toNumber() as CurrencyOption}
-              />
-              {formatWad(currentFC.target, {
-                decimals: 4,
-              })}
-            </span>
-          </span>
-          <div style={smallHeaderStyle(colors)}>
-            <TooltipLabel
-              label="WITHDRAWN"
-              tip="The portion of the funding target that has been withdrawn in the current funding cycle."
-            />
-          </div>
+          {projectType === 'bidpool' ? (
+            <div>
+              <span
+                style={{ ...primaryTextStyle, color: colors.text.secondary }}
+              >
+                <CurrencySymbol
+                  currency={currentFC.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(currentFC.target)}{' '}
+              </span>
+              <div style={smallHeaderStyle(colors)}>
+                <TooltipLabel
+                  label="TARGET"
+                  tip="The maximum amount that can be withdrawn during this funding cycle."
+                />
+              </div>
+            </div>
+          ) : (
+            <div>
+              <span
+                style={{ ...primaryTextStyle, color: colors.text.secondary }}
+              >
+                <CurrencySymbol
+                  currency={currentFC.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(currentFC.tapped, { decimals: 4 })}
+                <span
+                  style={{ fontSize: '0.8rem', color: colors.text.secondary }}
+                >
+                  {' '}
+                  /{' '}
+                  <CurrencySymbol
+                    currency={currentFC.currency.toNumber() as CurrencyOption}
+                  />
+                  {formatWad(currentFC.target, {
+                    decimals: 4,
+                  })}
+                </span>
+              </span>
+              <div style={smallHeaderStyle(colors)}>
+                <TooltipLabel
+                  label="WITHDRAWN"
+                  tip="The portion of the funding target that has been withdrawn in the current funding cycle."
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

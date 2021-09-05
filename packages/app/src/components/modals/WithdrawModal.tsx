@@ -125,7 +125,7 @@ export default function WithdrawModal({
               fontWeight: 500,
             }}
           >
-            <div>Available to withdraw:</div>
+            <div>Available after fee:</div>
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -188,8 +188,16 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            All funds will go to the project owner:{' '}
-            <FormattedAddress address={owner} />
+            <CurrencySymbol currency={0} />
+            {formatWad(
+              amountSubFee(
+                currentFC.currency.eq(1)
+                  ? converter.usdToWei(tapAmount)
+                  : parseWad(tapAmount),
+                adminFeePercent,
+              ),
+            )}{' '}
+            will go to the project owner: <FormattedAddress address={owner} />
           </p>
         )}
       </Space>

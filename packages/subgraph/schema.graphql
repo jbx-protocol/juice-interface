@@ -13,7 +13,7 @@ type Project @entity {
   tapEvents: [TapEvent!]! @derivedFrom(field: "project")
   redeemEvents: [RedeemEvent!]! @derivedFrom(field: "project")
   printReservesEvents: [PrintReservesEvent!]! @derivedFrom(field: "project")
-  configureEvents: [ConfigureEvent!]! @derivedFrom(field: "project")
+  # configureEvents: [ConfigureEvent!]! @derivedFrom(field: "project")
   distributeToPayoutModEvents: [DistributeToPayoutModEvent!]!
     @derivedFrom(field: "project")
   distributeToTicketModEvents: [DistributeToTicketModEvent!]!
@@ -94,14 +94,14 @@ type PrintReservesEvent @entity {
     @derivedFrom(field: "printReservesEvent")
 }
 
-type ConfigureEvent @entity {
-  id: ID!
-  project: Project!
-  fundingCycleId: BigInt!
-  caller: Bytes!
-  timestamp: BigInt!
-  txHash: Bytes!
-}
+# type ConfigureEvent @entity {
+#   id: ID!
+#   project: Project!
+#   fundingCycleId: BigInt!
+#   caller: Bytes!
+#   timestamp: BigInt!
+#   txHash: Bytes!
+# }
 
 type DistributeToPayoutModEvent @entity {
   id: ID!

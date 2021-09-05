@@ -31,6 +31,7 @@ export function TapActivity({
           'timestamp',
           'txHash',
           'beneficiary',
+          'caller',
           'beneficiaryTransferAmount',
         ],
         first: pageSize,

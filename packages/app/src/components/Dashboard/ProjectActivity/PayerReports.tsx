@@ -134,7 +134,6 @@ export function PayerReports({
                   style={{
                     lineHeight: contentLineHeight,
                     marginRight: 10,
-                    color: colors.text.primary,
                   }}
                 >
                   <FormattedAddress address={e.payer} />
@@ -146,24 +145,16 @@ export function PayerReports({
                 )}
               </div>
 
-              <div>
+              <div style={{ textAlign: 'right' }}>
                 <div
                   style={{
                     lineHeight: contentLineHeight,
-                    textAlign: 'right',
                   }}
                 >
                   <CurrencySymbol currency={0} />
                   {formatWad(e.totalPaid)}
                 </div>
-                <div
-                  style={{
-                    ...smallHeaderStyle(colors),
-                    textAlign: 'right',
-                  }}
-                >
-                  Total contributed
-                </div>
+                <div style={smallHeaderStyle(colors)}>Total contributed</div>
               </div>
             </div>
           </div>

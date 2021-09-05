@@ -2,7 +2,7 @@ import { LinkOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 import { readProvider } from 'constants/readProvider'
 import { utils } from 'ethers'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 type EnsRecord = {
   name: string | null
@@ -14,13 +14,20 @@ export default function FormattedAddress({
 }: {
   address: string | undefined
 }) {
+  const [ensName, setEnsName] = useState<string | null>()
+
   const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
 
-  const getEnsDict = () =>
-    JSON.parse(window.localStorage.getItem(getStorageKey()) ?? '{}') as Record<
-      string,
-      EnsRecord
-    >
+  const getEnsDict = () => {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem(getStorageKey()) ?? '{}',
+      ) as Record<string, EnsRecord>
+    } catch (e) {
+      console.info('ENS storage not found')
+      return {}
+    }
+  }
 
   const now = new Date().valueOf()
 
@@ -30,7 +37,12 @@ export default function FormattedAddress({
     const tryUpdateENSDict = async () => {
       const record = getEnsDict()[address]
 
-      if (record?.expires > now) return
+      if (record?.expires > now) {
+        setEnsName(record.name)
+        return
+      }
+
+      console.log('lookup', record, address)
 
       let newRecord = {
         name: null,
@@ -51,22 +63,21 @@ export default function FormattedAddress({
         console.log('Error looking up ENS name for address', address, e)
       }
 
-      window.localStorage.setItem(
+      window.localStorage?.setItem(
         getStorageKey(),
         JSON.stringify({
           ...getEnsDict(),
           [address]: newRecord,
         }),
       )
+
+      setEnsName(newRecord.name)
     }
 
     tryUpdateENSDict()
   }, [address])
 
   if (!address) return null
-
-  const record = getEnsDict()[address]
-  const ensName = record?.expires > now ? record.name : undefined
 
   const formatted =
     ensName ??

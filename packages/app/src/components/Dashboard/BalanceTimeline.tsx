@@ -285,15 +285,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
             />
             <Line
               dot={props => {
-                const { cx, cy, payload } = props
-
-                if (!domain) return <span hidden></span>
-                if (payload.tapped) {
-                  console.log(
-                    'asdf %',
-                    80 - payload.tapped / (domain[1] - domain[0]),
-                  )
-                }
+                const { cx, payload } = props
 
                 return payload.tapped && domain ? (
                   <g transform={`translate(${cx},${0})`}>

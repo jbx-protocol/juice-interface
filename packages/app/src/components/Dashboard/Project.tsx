@@ -63,12 +63,12 @@ export default function Project({
     <div style={style}>
       <ProjectHeader />
 
-      <Row gutter={gutter} style={{ marginTop: gutter }} align="bottom">
-        <Col xs={24} md={12}>
+      <Row gutter={gutter} align="bottom">
+        <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <Paid />
         </Col>
 
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
             {canPrintPreminedTickets && isOwner && (
               <PrintPremined projectId={projectId} />
@@ -78,8 +78,8 @@ export default function Project({
         </Col>
       </Row>
 
-      <Row gutter={gutter} style={{ marginTop: gutter, paddingBottom: gutter }}>
-        <Col xs={24} md={12}>
+      <Row gutter={gutter} style={{ paddingBottom: gutter }}>
+        <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <div id="col-content">
             {projectId.gt(0) && (
               <div style={{ marginBottom: gutter }}>
@@ -95,7 +95,7 @@ export default function Project({
           </div>
         </Col>
 
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <ProjectActivity />
         </Col>
       </Row>

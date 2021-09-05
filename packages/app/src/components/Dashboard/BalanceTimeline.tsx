@@ -6,8 +6,16 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
 import { parseProjectJson } from 'models/subgraph-entities/project'
+import { parseTapEventJson } from 'models/subgraph-entities/tap-event'
 import moment from 'moment'
-import { CSSProperties, SVGProps, useContext, useEffect, useState } from 'react'
+import {
+  CSSProperties,
+  SVGProps,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   CartesianGrid,
   Line,
@@ -26,9 +34,10 @@ const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 
 type Duration = 1 | 7 | 30 | 90 | 365
 type EventRef = {
-  date: string
   timestamp: number
   balance?: number
+  tapped?: number
+  previousBalance?: number
 }
 type BlockRef = { block: number; timestamp: number }
 
@@ -54,25 +63,27 @@ export default function BalanceTimeline({ height }: { height: number }) {
     setEvents([])
     setDomain(undefined)
 
+    // Get number of most recent block, and block at start of duration window
     new EthDater(readProvider)
       .getEvery(
         'days',
         moment(now - daysToMillis(duration)).toISOString(),
         moment(now).toISOString(),
         duration,
+        false,
       )
       .then((res: BlockRef[]) => {
         const newBlockRefs: BlockRef[] = [res[0]]
-        const count = 48
+        const blocksCount = 40
 
-        // Calculate intermediate blocks
-        for (let i = 0; i < count; i++) {
+        // Create mock block history data assuming consistent mining intervals
+        for (let i = 0; i < blocksCount; i++) {
           newBlockRefs.push({
             block: Math.round(
-              ((res[1].block - res[0].block) / count) * i + res[0].block,
+              ((res[1].block - res[0].block) / blocksCount) * i + res[0].block,
             ),
             timestamp: Math.round(
-              ((res[1].timestamp - res[0].timestamp) / count) * i +
+              ((res[1].timestamp - res[0].timestamp) / blocksCount) * i +
                 res[0].timestamp,
             ),
           })
@@ -83,15 +94,15 @@ export default function BalanceTimeline({ height }: { height: number }) {
   }, [duration])
 
   useEffect(() => {
-    const loadBalances = async () => {
+    const loadEvents = async () => {
       const newEvents: EventRef[] = []
       const promises: Promise<void>[] = []
-      let max = 0
-      let min = 9999999999
+      let max: number | undefined = undefined
+      let min: number | undefined = undefined
 
       if (!blockRefs.length) return
 
-      // Query balance of project at every block timestamp
+      // Query balance of project for interval blocks
       for (let i = 0; i < blockRefs.length; i++) {
         const blockRef = blockRefs[i]
 
@@ -111,7 +122,6 @@ export default function BalanceTimeline({ height }: { height: number }) {
             res => {
               newEvents.push({
                 timestamp: blockRef.timestamp,
-                date: dateStringForBlockTime(blockRef.timestamp || 0),
                 balance: res?.projects?.length
                   ? parseFloat(
                       parseFloat(
@@ -129,21 +139,78 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
       await Promise.all(promises)
 
+      // Calculate domain for graph based on floor/ceiling balances
       newEvents.forEach(r => {
         if (r.balance === undefined) return
         if (min === undefined || r.balance < min) min = r.balance
         if (max === undefined || r.balance > max) max = r.balance
       })
 
-      const domainPad = (max - min) * 0.05
-      setDomain([Math.max(min - domainPad, 0), max + domainPad])
+      if (max === undefined || min === undefined) {
+        setDomain([0, 0])
+      } else {
+        const domainPad = (max - min) * 0.05
+        setDomain([Math.max(min - domainPad, 0), max + domainPad])
+      }
 
-      setEvents(newEvents.sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1)))
+      // Load tap events
+      await querySubgraph(
+        {
+          entity: 'tapEvent',
+          keys: ['netTransferAmount', 'timestamp'],
+          where: projectId
+            ? [
+                {
+                  key: 'project',
+                  value: trimHexZero(projectId.toHexString()),
+                },
+                {
+                  key: 'timestamp',
+                  value: Math.round((now - daysToMillis(duration)) / 1000),
+                  operator: 'gte',
+                },
+              ]
+            : undefined,
+        },
+        res => {
+          if (res) {
+            newEvents.push(
+              ...res.tapEvents.map(e => {
+                const event = parseTapEventJson(e)
+                return {
+                  ...e,
+                  tapped: parseFloat(
+                    parseFloat(fromWad(event.netTransferAmount)).toFixed(4),
+                  ),
+                  timestamp: event.timestamp ?? 0,
+                }
+              }),
+            )
+          }
+        },
+      )
+
+      const sortedEvents = newEvents.sort((a, b) =>
+        a.timestamp < b.timestamp ? -1 : 1,
+      )
+
+      setEvents(
+        sortedEvents.map((e, i) => {
+          if (e.tapped) {
+            return {
+              ...e,
+              previousBalance: sortedEvents[i - 1]?.balance,
+            }
+          }
+
+          return e
+        }),
+      )
 
       setLoading(false)
     }
 
-    loadBalances()
+    loadEvents()
   }, [blockRefs, projectId])
 
   const buttonStyle: CSSProperties = {
@@ -156,6 +223,21 @@ export default function BalanceTimeline({ height }: { height: number }) {
     fill: colors.text.tertiary,
     visibility: events?.length ? 'visible' : 'hidden',
   }
+
+  const xTicks = useMemo(() => {
+    if (!events?.length) return []
+
+    let ticks = []
+    const max = events[events.length - 1].timestamp
+    const min = events[0].timestamp
+
+    // TODO why are only roughly half of ticks rendered?
+    for (let i = 0; i < 20; i++) {
+      ticks.push(Math.round(((max - min) / 20) * i + min))
+    }
+
+    return ticks
+  }, [events])
 
   return (
     <div>
@@ -183,11 +265,63 @@ export default function BalanceTimeline({ height }: { height: number }) {
               axisLine={false}
               tickSize={4}
               stroke={colors.stroke.tertiary}
-              tick={axisStyle}
-              dataKey="date"
+              ticks={xTicks}
+              tickCount={xTicks.length}
+              tick={props => {
+                const { x, y, payload } = props
+                return (
+                  <g transform={`translate(${x},${y})`}>
+                    <text dy={12} {...axisStyle}>
+                      {dateStringForBlockTime(payload.value)}
+                    </text>
+                  </g>
+                )
+              }}
+              domain={[xTicks[0], xTicks[xTicks?.length - 1]]}
+              type="number"
+              dataKey="timestamp"
+              scale="time"
+              interval={2}
+            />
+            <Line
+              dot={props => {
+                const { cx, cy, payload } = props
+
+                if (!domain) return <span hidden></span>
+                if (payload.tapped) {
+                  console.log(
+                    'asdf %',
+                    80 - payload.tapped / (domain[1] - domain[0]),
+                  )
+                }
+
+                return payload.tapped && domain ? (
+                  <g transform={`translate(${cx},${0})`}>
+                    <line
+                      x1="0"
+                      y1={
+                        80 -
+                        (payload.tapped * 25) / (domain[1] - domain[0]) +
+                        '%'
+                      }
+                      x2="0"
+                      y2={height - 35 + 'px'}
+                      strokeWidth={4}
+                      stroke={colors.stroke.tertiary}
+                    />
+                  </g>
+                ) : (
+                  <span hidden></span>
+                )
+              }}
+              activeDot={false}
+              stroke={colors.stroke.primary}
+              strokeWidth={0}
+              dataKey="previousBalance"
             />
             <Line
               dot={false}
+              connectNulls
               stroke={colors.text.brand.primary}
               strokeWidth={2}
               type="monotone"
@@ -212,8 +346,28 @@ export default function BalanceTimeline({ height }: { height: number }) {
                       border: '1px solid ' + colors.stroke.tertiary,
                     }}
                   >
-                    <CurrencySymbol currency={0} />
-                    {payload[0].payload.balance}
+                    <div
+                      style={{
+                        fontSize: '0.7rem',
+                        color: colors.text.tertiary,
+                      }}
+                    >
+                      {dateStringForBlockTime(payload[0].payload.timestamp)}
+                    </div>
+                    {payload[0].payload.tapped ? (
+                      <div>
+                        <CurrencySymbol currency={0} />
+                        {payload[0].payload.tapped}
+                        <div style={{ fontSize: '0.7rem', fontWeight: 500 }}>
+                          withdrawn
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <CurrencySymbol currency={0} />
+                        {payload[0].payload.balance}
+                      </div>
+                    )}
                   </div>
                 )
               }}

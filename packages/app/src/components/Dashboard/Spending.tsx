@@ -12,7 +12,6 @@ import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
-import { amountSubFee } from 'utils/math'
 
 import PayoutModsList from '../shared/PayoutModsList'
 
@@ -67,7 +66,7 @@ export default function Spending({
                 <CurrencySymbol
                   currency={currentFC.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(amountSubFee(withdrawable, adminFeePercent)) || '0'}{' '}
+                {formatWad(withdrawable) || '0'}{' '}
               </span>
               <TooltipLabel
                 style={smallHeaderStyle}

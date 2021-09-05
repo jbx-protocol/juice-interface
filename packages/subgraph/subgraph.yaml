@@ -45,7 +45,6 @@ dataSources:
         - TapEvent
         - RedeemEvent
         - PrintReservesEvent
-        - ConfigureEvent
         - DistributeToPayoutModEvent
         - DistributeToTicketModEvent
       abis:
@@ -62,8 +61,6 @@ dataSources:
           handler: handleTap
         - event: Redeem(indexed address,indexed address,indexed uint256,uint256,uint256,address)
           handler: handleRedeem
-        - event: Configure(indexed uint256,indexed uint256,address)
-          handler: handleConfigure
         - event: AddToBalance(indexed uint256,uint256,address)
           handler: handleAddToBalance
         - event: DistributeToPayoutMod(indexed uint256,indexed uint256,(bool,uint16,uint48,address,address,uint56),uint256,address)
@@ -71,3 +68,23 @@ dataSources:
         - event: DistributeToTicketMod(indexed uint256,indexed uint256,(bool,uint16,uint48,address),uint256,address)
           handler: handleDistributeToTicketMod
       file: ./src/mapping.ts
+  # - kind: ethereum/contract
+  #   name: FundingCycles
+  #   network: mainnet
+  #   source:
+  #     address: "0xf507B2A1dD7439201eb07F11E1d62AfB29216e2E"
+  #     abi: FundingCycles
+  #     startBlock: 12833319
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - ConfigureEvent
+  #     abis:
+  #       - name: FundingCycles
+  #         file: ./abis/FundingCycles.json
+  #     eventHandlers:
+  #       - event: Configure(indexed uint256,indexed uint256,uint256,(uint256,uint256,uint256,uint256,uint256,address),uint256,address)
+  #         handler: handleConfigure
+  #     file: ./src/mapping.ts

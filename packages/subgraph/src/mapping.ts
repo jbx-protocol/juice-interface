@@ -2,7 +2,6 @@ import { BigInt } from "@graphprotocol/graph-ts";
 
 import { Create, SetHandle, SetUri } from "../generated/Projects/Projects";
 import {
-  ConfigureEvent,
   DistributeToPayoutModEvent,
   DistributeToTicketModEvent,
   PayerReport,
@@ -17,7 +16,6 @@ import {
   AddToBalance,
   AllowMigration,
   AppointGovernance,
-  Configure,
   Deposit,
   DistributeToPayoutMod,
   DistributeToTicketMod,
@@ -35,7 +33,7 @@ import {
 
 /**
  * Check health of deployed subgraph
- * curl -X POST -d '{ "query": "{indexingStatuses(subgraphs: [\"QmSf47kBfhwyYxGDEdmzh2Ce2zW7HCp911a7nVAdifGZcR\"]) {synced health fatalError {message block { number } handler } subgraph chains { chainHeadBlock { number } latestBlock { number }}}}"}' https://api.thegraph.com/index-node/graphql
+ * curl -X POST -d '{ "query": "{indexingStatuses(subgraphs: [\"Qma55qUEASRbpSAGupaKSd9XZxz6Fk9hNjFoTRY3XSV8fF\"]) {synced health fatalError {message block { number } handler } subgraph chains { chainHeadBlock { number } latestBlock { number }}}}"}' https://api.thegraph.com/index-node/graphql
  */
 
 export function handleProjectCreate(event: Create): void {
@@ -186,17 +184,17 @@ export function handlePrintReserveTickets(event: PrintReserveTickets): void {
   printReserveEvent.save();
 }
 
-export function handleConfigure(event: Configure): void {
-  let configureEvent = new ConfigureEvent(
-    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
-  );
-  configureEvent.caller = event.params.caller;
-  configureEvent.fundingCycleId = event.params.fundingCycleId;
-  configureEvent.project = event.params.projectId.toHexString();
-  configureEvent.timestamp = event.block.timestamp;
-  configureEvent.txHash = event.transaction.hash;
-  configureEvent.save();
-}
+// export function handleConfigure(event: Configure): void {
+//   let configureEvent = new ConfigureEvent(
+//     event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
+//   );
+//   configureEvent.caller = event.params.caller;
+//   configureEvent.fundingCycleId = event.params.fundingCycleId;
+//   configureEvent.project = event.params.projectId.toHexString();
+//   configureEvent.timestamp = event.block.timestamp;
+//   configureEvent.txHash = event.transaction.hash;
+//   configureEvent.save();
+// }
 
 export function handleAddToBalance(event: AddToBalance): void {
   let project = Project.load(event.params.projectId.toHexString());

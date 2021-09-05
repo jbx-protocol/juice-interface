@@ -146,8 +146,6 @@ export default function BalanceTimeline({ height }: { height: number }) {
     loadBalances()
   }, [blockRefs, projectId])
 
-  console.log('asdf events', events)
-
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',
     textTransform: 'uppercase',

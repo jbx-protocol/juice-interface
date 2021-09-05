@@ -159,7 +159,7 @@ export function PaymentActivity({
               </div>
             </div>
 
-            <div style={{ display: 'flex', marginTop: 5, overflowX: 'scroll' }}>
+            <div style={{ display: 'flex', marginTop: 5 }}>
               {e.note && (
                 <RichImgPreview
                   src={parseLink(e.note)}

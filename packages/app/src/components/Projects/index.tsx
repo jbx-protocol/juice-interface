@@ -12,7 +12,7 @@ export default function Projects() {
 
   const projects = useProjects({
     orderBy,
-    orderDirection: orderBy === 'totalPaid' ? 'desc' : 'asc',
+    orderDirection: 'desc',
   })
 
   return (
@@ -25,9 +25,9 @@ export default function Projects() {
         }}
       >
         <h1>Projects on Juicebox</h1>
-        <Select value={orderBy} onChange={setOrderBy} style={{ width: 160 }}>
+        <Select value={orderBy} onChange={setOrderBy} style={{ width: 180 }}>
           <Select.Option value="totalPaid">Total earned</Select.Option>
-          <Select.Option value="id">Date created</Select.Option>
+          <Select.Option value="id">Last created</Select.Option>
         </Select>
       </div>
 

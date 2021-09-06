@@ -37,6 +37,7 @@ export function ReservesActivity({
           'beneficiaryTicketAmount',
           'timestamp',
           'txHash',
+          'caller'
         ],
         first: pageSize,
         skip: pageNumber * pageSize,

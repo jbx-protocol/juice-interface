@@ -54,8 +54,9 @@ export default function FormattedAddress({
 
         // Reverse lookup to check validity
         if (
+          name &&
           (await readProvider.resolveName(name))?.toLowerCase() ===
-          address.toLowerCase()
+            address.toLowerCase()
         ) {
           newRecord.name = name
         }

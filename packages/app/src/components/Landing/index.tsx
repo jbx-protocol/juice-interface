@@ -31,10 +31,9 @@ export default function Landing() {
     </h1>
   )
 
-  const previewProjects: Pick<
-    Project,
-    'handle' | 'uri' | 'totalPaid' | 'createdAt'
-  >[] | undefined = useProjects({ pageSize: 4 })
+  const previewProjects:
+    | Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
+    | undefined = useProjects({ pageSize: 4 })
 
   const smallHeader = (text: string) => (
     <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>
@@ -203,6 +202,11 @@ export default function Landing() {
             ) : (
               <Loading />
             )}
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <a href="/#/projects">
+              <Button>All projects</Button>
+            </a>
           </div>
         </div>
       </section>

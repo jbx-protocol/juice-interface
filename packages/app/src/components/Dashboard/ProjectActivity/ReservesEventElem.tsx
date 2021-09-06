@@ -73,20 +73,25 @@ export default function ReservesEventElem({
           Distributed reserved {tokenSymbol ?? 'tokens'}
         </div>
 
-        <div style={smallHeaderStyle(colors)}>
-          {printReservesEvent.timestamp && (
-            <span>
-              {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
-            </span>
-          )}{' '}
-          <a
-            className="quiet"
-            href={`https://etherscan.io/tx/${printReservesEvent.txHash}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <LinkOutlined />
-          </a>
+        <div style={{ textAlign: 'right' }}>
+          <div style={smallHeaderStyle(colors)}>
+            {printReservesEvent.timestamp && (
+              <span>
+                {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
+              </span>
+            )}{' '}
+            <a
+              className="quiet"
+              href={`https://etherscan.io/tx/${printReservesEvent.txHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkOutlined />
+            </a>
+          </div>
+          <div style={smallHeaderStyle(colors)}>
+            called by <FormattedAddress address={printReservesEvent.caller} />
+          </div>
         </div>
       </div>
 

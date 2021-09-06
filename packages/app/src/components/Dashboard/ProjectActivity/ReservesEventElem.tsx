@@ -136,7 +136,7 @@ export default function ReservesEventElem({
         )}
       </div>
 
-      {distributeEvents?.length && distributeEvents?.length > 1 && (
+      {distributeEvents?.length && distributeEvents?.length > 1 ? (
         <div
           style={{
             color: colors.text.primary,
@@ -146,7 +146,7 @@ export default function ReservesEventElem({
         >
           {formatWad(printReservesEvent.count, { decimals: 0 })}
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

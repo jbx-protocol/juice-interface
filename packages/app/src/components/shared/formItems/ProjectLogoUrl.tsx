@@ -22,6 +22,7 @@ export default function ProjectLogoUrl({
         onSuccess={onSuccess}
         metadata={{ tag: IPFS_TAGS.LOGO }}
         maxSize={1000000}
+        text="Upload"
       />
     </Form.Item>
   )

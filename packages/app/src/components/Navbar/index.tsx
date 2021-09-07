@@ -55,19 +55,9 @@ export default function Navbar() {
     />
   )
 
-  return window.innerWidth > 900 ? (
-    <Header
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        background: colors.background.l0,
-      }}
-    >
-      <Space size="large" style={{ flex: 1 }}>
-        <a href="/" style={{ display: 'inline-block' }}>
-          {logo()}
-        </a>
+  const menu = () => {
+    return (
+      <>
         {menuItem('Projects', '/#/projects')}
         {menuItem('FAQ', undefined, () => {
           window.location.hash = '/'
@@ -81,6 +71,24 @@ export default function Navbar() {
         {menuItem('Docs', 'https://docs.juicebox.money/')}
         {menuItem('Blog', 'https://blog.juicebox.money/')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
+      </>
+    )
+  }
+
+  return window.innerWidth > 900 ? (
+    <Header
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: colors.background.l0,
+      }}
+    >
+      <Space size="large" style={{ flex: 1 }}>
+        <a href="/" style={{ display: 'inline-block' }}>
+          {logo()}
+        </a>
+        {menu()}
       </Space>
       <Space size="middle">
         <ThemePicker />
@@ -119,19 +127,7 @@ export default function Navbar() {
           extra={<ThemePicker />}
         >
           <Space direction="vertical" size="large">
-            {menuItem('Home', '/#/')}
-            {menuItem('Projects', '/#/projects')}
-            {menuItem('FAQ', undefined, () => {
-              window.location.hash = '/'
-
-              setTimeout(() => {
-                document
-                  .getElementById('faq')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }, 0)
-            })}
-            {menuItem('Docs', 'https://docs.juicebox.money/')}
-            {menuItem('Blog', 'https://blog.juicebox.money/')}
+            {menu()}
             <Account />
           </Space>
         </CollapsePanel>

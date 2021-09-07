@@ -23,13 +23,13 @@ export default function CurrentFundingCycle({
 
   return (
     <div style={{ position: 'relative' }}>
-      <CardSection padded style={{ marginBottom: 10 }}>
+      <CardSection padded>
         <FundingCyclePreview
           fundingCycle={currentFC}
           showDetail={showCurrentDetail}
         />
       </CardSection>
-      <CardSection padded style={{ marginBottom: 10 }}>
+      <CardSection padded>
         <Spending payoutMods={currentPayoutMods} />
       </CardSection>
       <CardSection padded>

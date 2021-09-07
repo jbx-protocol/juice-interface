@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { CSSProperties, useEffect, useState } from 'react'
+import { useContentType } from 'hooks/ContentType'
+import { CSSProperties } from 'react'
 
 export default function RichImgPreview({
   src,
@@ -8,41 +8,30 @@ export default function RichImgPreview({
   style,
 }: {
   src: string | undefined
-  width?: number
-  height?: number
+  width?: CSSProperties['width']
+  height?: CSSProperties['height']
   style?: CSSProperties
 }) {
-  const [elem, setElem] = useState<JSX.Element | null>(null)
+  const contentType = useContentType(src)
 
-  useEffect(() => {
-    if (!src) {
-      setElem(null)
-      return
-    }
+  if (
+    contentType === 'image/jpeg' ||
+    contentType === 'image/jpg' ||
+    contentType === 'image/gif' ||
+    contentType === 'image/png' ||
+    contentType === 'image/svg'
+  ) {
+    return (
+      <img
+        src={src}
+        style={{
+          maxWidth: width ?? 100,
+          maxHeight: height ?? 100,
+          ...style,
+        }}
+      />
+    )
+  }
 
-    axios.get(src).then(res => {
-      const contentType = res.headers['content-type']
-
-      if (
-        contentType === 'image/jpeg' ||
-        contentType === 'image/jpg' ||
-        contentType === 'image/gif' ||
-        contentType === 'image/png' ||
-        contentType === 'image/svg'
-      ) {
-        setElem(
-          <img
-            src={src}
-            style={{
-              maxWidth: width ?? 100,
-              maxHeight: height ?? 100,
-              ...style,
-            }}
-          />,
-        )
-      }
-    })
-  }, [src, setElem])
-
-  return elem
+  return null
 }

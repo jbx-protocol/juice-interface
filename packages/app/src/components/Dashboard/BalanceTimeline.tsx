@@ -493,14 +493,17 @@ export default function BalanceTimeline({ height }: { height: number }) {
         {loading && (
           <div
             style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               position: 'absolute',
               left: 0,
               top: 0,
               right: 0,
-              bottom: 0,
+              bottom: 20,
             }}
           >
-            <Loading />
+            <div style={{ color: colors.text.disabled }}>loading...</div>
           </div>
         )}
       </div>

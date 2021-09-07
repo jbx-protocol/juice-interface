@@ -24,7 +24,7 @@ export default function ProjectActivity() {
 
   const { projectId } = useContext(ProjectContext)
 
-  const pageSize = 20
+  const pageSize = 50
 
   useLayoutEffect(() => {
     if (initialized) return

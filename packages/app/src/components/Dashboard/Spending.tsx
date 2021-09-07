@@ -6,7 +6,6 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import { CSSProperties, useContext, useState } from 'react'
@@ -20,7 +19,6 @@ export default function Spending({
 }: {
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { adminFeePercent } = useContext(UserContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -72,7 +70,7 @@ export default function Spending({
                 style={smallHeaderStyle}
                 label="AVAILABLE"
                 tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
-                  adminFeePercent,
+                  currentFC.fee,
                 )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
               />
             </div>

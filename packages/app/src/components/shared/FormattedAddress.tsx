@@ -42,8 +42,6 @@ export default function FormattedAddress({
         return
       }
 
-      console.log('lookup', record, address)
-
       let newRecord = {
         name: null,
         expires: now + 24 * 60 * 60 * 1000, // Expires in one day

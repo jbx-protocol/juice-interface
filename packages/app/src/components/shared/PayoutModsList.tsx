@@ -22,7 +22,7 @@ export default function PayoutModsList({
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
-    | Pick<FundingCycle, 'target' | 'currency' | 'configured'>
+    | Pick<FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
   isOwner: boolean | undefined
@@ -31,7 +31,7 @@ export default function PayoutModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -86,7 +86,8 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const baseTotal = total ?? amountSubFee(fundingCycle?.target, adminFeePercent)
+  const baseTotal =
+    total ?? amountSubFee(fundingCycle?.target, fundingCycle?.fee)
 
   if (!fundingCycle) return null
 

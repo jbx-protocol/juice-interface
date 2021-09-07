@@ -1,8 +1,6 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { Autolinker } from 'autolinker'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
-import RichImgPreview from 'components/shared/RichImgPreview'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
@@ -11,6 +9,7 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { querySubgraph, trimHexZero } from 'utils/graph'
 
+import RichNote from './RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
 // Maps a project id to an internal map of payment event overrides.
@@ -22,17 +21,6 @@ let payEventOverrides = new Map<string, Map<string, string>>([
     ]),
   ],
 ])
-
-const parseLink = (note: string) => {
-  const https = 'https://'
-  const http = 'http://'
-
-  if (note.includes(https)) {
-    return https + note.split(https)[1].split(' ')[0]
-  } else if (note.includes(http)) {
-    return http + note.split(http)[1].split(' ')[0]
-  }
-}
 
 export function PaymentActivity({
   pageSize,
@@ -159,34 +147,13 @@ export function PaymentActivity({
               </div>
             </div>
 
-            <div style={{ display: 'flex', marginTop: 5 }}>
-              {e.note && (
-                <RichImgPreview
-                  src={parseLink(e.note)}
-                  style={{ marginRight: 10 }}
-                />
-              )}
-
-              {
-                <div
-                  style={{ color: colors.text.secondary }}
-                  dangerouslySetInnerHTML={{
-                    __html: Autolinker.link(
-                      (usePayEventOverrides
-                        ? formatPayEventOverride(e)
-                        : e.note) ?? '',
-                      {
-                        sanitizeHtml: true,
-                        className: 'quiet',
-                        truncate: {
-                          length: 30,
-                          location: 'smart',
-                        },
-                      },
-                    ),
-                  }}
-                ></div>
-              }
+            <div style={{ marginTop: 5 }}>
+              <RichNote
+                note={
+                  (usePayEventOverrides ? formatPayEventOverride(e) : e.note) ??
+                  ''
+                }
+              />
             </div>
           </div>
         ))}

@@ -101,7 +101,7 @@ export default function Navbar() {
       style={{
         background: colors.background.l0,
         zIndex: 100,
-        padding: 16,
+        padding: 8,
       }}
       onClick={e => {
         setActiveKey(undefined)

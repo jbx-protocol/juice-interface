@@ -6,20 +6,20 @@ import { CSSProperties, useContext } from 'react'
 export function CardSection({
   header,
   padded,
-  noFooter,
+  noShadow,
   children,
   style,
 }: {
   header?: string
   padded?: boolean
-  noFooter?: boolean
+  noShadow?: boolean
   children?: ChildElems
   style?: CSSProperties
 }) {
   const { theme } = useContext(ThemeContext)
   return (
     <div style={{
-      marginBottom: (noFooter ? 0 : 10)
+      marginBottom: (noShadow ? 0 : 10)
     }}>
       {header && (
         <h2

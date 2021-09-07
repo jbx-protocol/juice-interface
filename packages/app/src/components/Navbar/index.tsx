@@ -126,7 +126,7 @@ export default function Navbar() {
           }
           extra={<ThemePicker />}
         >
-          <Space direction="vertical" size="small">
+          <Space direction="vertical" size="middle">
             {menu()}
             <Account />
           </Space>

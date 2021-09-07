@@ -101,6 +101,7 @@ export default function Navbar() {
       style={{
         background: colors.background.l0,
         zIndex: 100,
+        padding: 16,
       }}
       onClick={e => {
         setActiveKey(undefined)
@@ -125,7 +126,7 @@ export default function Navbar() {
           }
           extra={<ThemePicker />}
         >
-          <Space direction="vertical" size="large">
+          <Space direction="vertical" size="small">
             {menu()}
             <Account />
           </Space>

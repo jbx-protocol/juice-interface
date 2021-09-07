@@ -79,6 +79,7 @@ export default function Navbar() {
           }, 0)
         })}
         {menuItem('Docs', 'https://docs.juicebox.money/')}
+        {menuItem('Blog', 'https://blog.juicebox.money/')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
       </Space>
       <Space size="middle">

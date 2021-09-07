@@ -11,8 +11,8 @@ import {
   Space,
 } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
@@ -35,7 +35,6 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
-import { ProjectContext } from 'contexts/projectContext'
 
 type ModType = 'project' | 'address'
 
@@ -45,6 +44,7 @@ export default function ProjectPayoutMods({
   name,
   target,
   currency,
+  fee,
   lockedMods,
   mods,
   onModsChanged,
@@ -52,6 +52,7 @@ export default function ProjectPayoutMods({
 }: {
   target: string
   currency: CurrencyOption
+  fee: BigNumber | undefined
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void
@@ -68,7 +69,6 @@ export default function ProjectPayoutMods({
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
 
-  const { adminFeePercent } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
 
   useContractReader<BigNumber>({
@@ -224,7 +224,7 @@ export default function ProjectPayoutMods({
                         <span>
                           <CurrencySymbol currency={currency} />
                           {formatWad(
-                            amountSubFee(parseWad(target), adminFeePercent)
+                            amountSubFee(parseWad(target), fee)
                               ?.mul(mod.percent)
                               .div(10000),
                           )}
@@ -266,7 +266,7 @@ export default function ProjectPayoutMods({
         </div>
       )
     },
-    [mods, colors, radii, adminFeePercent],
+    [mods, colors, radii],
   )
 
   if (!mods) return null
@@ -467,7 +467,7 @@ export default function ProjectPayoutMods({
                 <span style={{ color: colors.text.primary }}>
                   <CurrencySymbol currency={currency} />
                   {formatWad(
-                    amountSubFee(parseWad(target), adminFeePercent)
+                    amountSubFee(parseWad(target), fee)
                       ?.mul(Math.floor((editingPercent ?? 0) * 100))
                       .div(10000),
                   )}

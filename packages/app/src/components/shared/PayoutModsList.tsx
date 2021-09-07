@@ -195,6 +195,7 @@ export default function PayoutModsList({
             onModsChanged={setEditingMods}
             target={fromWad(fundingCycle.target)}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
+            fee={fundingCycle.fee}
           />
         </Modal>
       ) : null}

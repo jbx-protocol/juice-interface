@@ -10,11 +10,13 @@ export default function PayModsForm({
   initialMods,
   currency,
   target,
+  fee,
   onSave,
 }: {
   initialMods: PayoutMod[]
   currency: CurrencyOption
   target: BigNumber
+  fee: BigNumber | undefined
   onSave: (mods: PayoutMod[]) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
@@ -49,6 +51,7 @@ export default function PayModsForm({
           target={fromWad(target)}
           currency={currency}
           onModsChanged={setMods}
+          fee={fee}
         />
         <Form.Item>
           <Button

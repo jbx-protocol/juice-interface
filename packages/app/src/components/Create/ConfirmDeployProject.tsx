@@ -1,15 +1,13 @@
 import { Space, Statistic } from 'antd'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
-import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext } from 'react'
 import {
   formattedNum,
   formatWad,
@@ -26,8 +24,6 @@ export default function ConfirmDeployProject() {
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
-  const { adminFeePercent } = useContext(UserContext)
-
   return (
     <Space size="large" direction="vertical">
       <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
@@ -61,7 +57,7 @@ export default function ConfirmDeployProject() {
                   <CurrencySymbol
                     currency={editingFC?.currency.toNumber() as CurrencyOption}
                   />
-                  {formatWad(amountSubFee(editingFC?.target, adminFeePercent))}{' '}
+                  {formatWad(amountSubFee(editingFC.target, editingFC.fee))}{' '}
                   after JBX fee)
                 </span>
               </span>

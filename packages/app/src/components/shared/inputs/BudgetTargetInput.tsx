@@ -1,5 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
+import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useEffect, useState } from 'react'
 import { currencyName } from 'utils/currency'
@@ -17,7 +17,7 @@ export default function BudgetTargetInput({
   onCurrencyChange,
   disabled,
   placeholder,
-  includeFee,
+  fee,
 }: {
   currency: CurrencyOption
   value: string | undefined
@@ -25,9 +25,8 @@ export default function BudgetTargetInput({
   onCurrencyChange?: (currency: CurrencyOption) => void
   disabled?: boolean
   placeholder?: string
-  includeFee?: boolean
+  fee: BigNumber | undefined
 }) {
-  const { adminFeePercent } = useContext(UserContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -65,13 +64,13 @@ export default function BudgetTargetInput({
         }
         onChange={value => onValueChange(value?.toString())}
       />
-      {includeFee && (
+      {fee?.gt(0) && (
         <div style={{ color: colors.text.primary, marginBottom: 10 }}>
           <span style={{ fontWeight: 500 }}>
             <CurrencySymbol currency={currency} />
-            {formatWad(amountSubFee(parseWad(value), adminFeePercent))}
+            {formatWad(amountSubFee(parseWad(value), fee))}
           </span>{' '}
-          after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
+          after {fromPerbicent(fee?.toString())}% JBX fee
         </div>
       )}
     </div>

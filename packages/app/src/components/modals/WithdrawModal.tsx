@@ -26,7 +26,7 @@ export default function WithdrawModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
     useContext(ProjectContext)
   const {
@@ -109,13 +109,13 @@ export default function WithdrawModal({
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>JBX Fee ({fromPerbicent(adminFeePercent)}%):</div>
+            <div>JBX Fee ({fromPerbicent(currentFC.fee)}%):</div>
             <div>
               -{' '}
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(feeForAmount(withdrawable, adminFeePercent) ?? 0)}
+              {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0)}
             </div>
           </div>
           <div
@@ -130,7 +130,7 @@ export default function WithdrawModal({
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(amountSubFee(withdrawable, adminFeePercent) ?? 0)}
+              {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0)}
             </div>
           </div>
         </div>
@@ -167,11 +167,11 @@ export default function WithdrawModal({
                   currentFC.currency.eq(1)
                     ? converter.usdToWei(tapAmount)
                     : parseWad(tapAmount),
-                  adminFeePercent,
+                  currentFC.fee,
                 ),
               )}
             </span>{' '}
-            after {fromPerbicent(adminFeePercent?.toString())}% JBX fee
+            after {fromPerbicent(currentFC.fee?.toString())}% JBX fee
           </div>
         </div>
 
@@ -179,7 +179,7 @@ export default function WithdrawModal({
           <div>
             <h4>Funds will be distributed to:</h4>
             <PayoutModsList
-              total={amountSubFee(parseWad(tapAmount || '0'), adminFeePercent)}
+              total={amountSubFee(parseWad(tapAmount || '0'), currentFC.fee)}
               mods={currentPayoutMods}
               fundingCycle={currentFC}
               projectId={projectId}
@@ -194,7 +194,7 @@ export default function WithdrawModal({
                 currentFC.currency.eq(1)
                   ? converter.usdToWei(tapAmount)
                   : parseWad(tapAmount),
-                adminFeePercent,
+                currentFC.fee,
               ),
             )}{' '}
             will go to the project owner: <FormattedAddress address={owner} />

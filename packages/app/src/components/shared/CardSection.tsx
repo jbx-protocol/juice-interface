@@ -5,7 +5,7 @@ import { CSSProperties, useContext } from 'react'
 
 export function CardSection({
   header,
-  padded,
+  padded = true,
   noShadow,
   children,
   style,

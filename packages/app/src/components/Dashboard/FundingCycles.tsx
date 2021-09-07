@@ -66,7 +66,7 @@ export default function FundingCycles({
       break
     case 'history':
       tabContent = (
-        <CardSection padded>
+        <CardSection>
           <FundingHistory startId={currentFC?.basedOn} />
         </CardSection>
       )

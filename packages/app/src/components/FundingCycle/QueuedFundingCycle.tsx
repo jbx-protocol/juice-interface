@@ -28,10 +28,10 @@ export default function QueuedFundingCycle() {
       {queuedFC?.number.gt(0) ? (
         hasFundingTarget(queuedFC) ? (
           <div style={{ position: 'relative' }}>
-            <CardSection padded>
+            <CardSection>
               <FundingCycleDetails fundingCycle={queuedFC} />
             </CardSection>
-            <CardSection padded>
+            <CardSection>
               <PayoutModsList
                 mods={queuedPayoutMods}
                 fundingCycle={queuedFC}
@@ -39,7 +39,7 @@ export default function QueuedFundingCycle() {
                 isOwner={isOwner}
               />
             </CardSection>
-            <CardSection padded>
+            <CardSection>
               <ReservedTokens
                 fundingCycle={queuedFC}
                 ticketMods={queuedTicketMods}

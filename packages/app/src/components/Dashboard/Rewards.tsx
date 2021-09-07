@@ -258,7 +258,9 @@ export default function Rewards({
                       {ticketsIssued && (
                         <div>
                           {ticketsBalance?.gt(0)
-                            ? formatWad(ticketsBalance ?? 0)
+                            ? `${formatWad(ticketsBalance ?? 0, {
+                                decimals: 0,
+                              })} ${tokenSymbol}`
                             : `0 ${
                                 tokenSymbol || 'tokens'
                               } in your wallet`}{' '}
@@ -266,13 +268,15 @@ export default function Rewards({
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {formatWad(iouBalance ?? 0)} staked{' '}
-                          <Tooltip title={'Unstake ' + tokenSymbol}>
-                            <ExportOutlined
-                              style={{ color: colors.icon.action.primary }}
-                              onClick={() => setUnstakeModalVisible(true)}
-                            />
-                          </Tooltip>
+                          {formatWad(iouBalance ?? 0, { decimals: 0 })} staked{' '}
+                          <Button
+                            onClick={() => setUnstakeModalVisible(true)}
+                            type="text"
+                            size="small"
+                            style={{ color: colors.text.action.primary }}
+                          >
+                            Unstake
+                          </Button>
                         </div>
                       )}
 

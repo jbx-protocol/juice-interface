@@ -131,6 +131,7 @@ export default function Navbar() {
               }, 0)
             })}
             {menuItem('Docs', 'https://docs.juicebox.money/')}
+            {menuItem('Blog', 'https://blog.juicebox.money/')}
             <Account />
           </Space>
         </CollapsePanel>

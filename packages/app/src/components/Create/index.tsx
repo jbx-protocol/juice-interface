@@ -18,7 +18,13 @@ import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
   fromPerbicent,
@@ -78,6 +84,12 @@ export default function Create() {
     payoutMods: editingPayoutMods,
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (adminFeePercent) {
+      dispatch(editingProjectActions.setFee(adminFeePercent.toString()))
+    }
+  }, [adminFeePercent])
 
   const incrementStep = (index: number) => {
     if (index < currentStep) return
@@ -145,7 +157,7 @@ export default function Create() {
   }, [])
 
   async function deployProject() {
-    if (!transactor || !contracts || !adminFeePercent || !editingFC) return
+    if (!transactor || !contracts || !editingFC) return
 
     setLoadingCreate(true)
 
@@ -161,7 +173,7 @@ export default function Create() {
       return
     }
 
-    const fee = feeForAmount(editingFC.target, adminFeePercent)
+    const fee = feeForAmount(editingFC.target, editingFC.fee)
 
     if (!fee) return
 
@@ -449,6 +461,7 @@ export default function Create() {
           initialMods={editingPayoutMods}
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
+          fee={editingFC.fee}
           onSave={async mods => {
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)

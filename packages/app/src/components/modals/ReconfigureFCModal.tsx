@@ -4,10 +4,11 @@ import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import RulesForm from 'components/Create/RulesForm'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -33,12 +34,10 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
-
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
 import PayModsForm from '../Create/PayModsForm'
 import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
-import { ProjectContext } from 'contexts/projectContext'
 
 export default function ReconfigureFCModal({
   fundingCycle,
@@ -55,7 +54,7 @@ export default function ReconfigureFCModal({
   ticketMods: TicketMod[] | undefined
   onDone?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =
@@ -75,7 +74,6 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { adminFeePercent } = useContext(UserContext)
   const { currentFC } = useContext(ProjectContext)
 
   const resetTicketingForm = () =>
@@ -309,15 +307,22 @@ export default function ReconfigureFCModal({
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
                       (
-                      <CurrencySymbol
-                        currency={
-                          editingFC?.currency.toNumber() as CurrencyOption
-                        }
-                      />
-                      {formatWad(
-                        amountSubFee(editingFC?.target, adminFeePercent),
-                      )}{' '}
-                      after JBX fee)
+                      {adminFeePercent?.gt(0) ? (
+                        <span>
+                          <CurrencySymbol
+                            currency={
+                              editingFC?.currency.toNumber() as CurrencyOption
+                            }
+                          />
+                          {formatWad(
+                            amountSubFee(editingFC?.target, adminFeePercent),
+                          )}{' '}
+                          after JBX fee
+                        </span>
+                      ) : (
+                        <span>0% fee</span>
+                      )}
+                      )
                     </span>
                   </span>
                 )}
@@ -420,6 +425,7 @@ export default function ReconfigureFCModal({
           initialMods={editingPayoutMods}
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
+          fee={adminFeePercent}
           onSave={async mods => {
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)

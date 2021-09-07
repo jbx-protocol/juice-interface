@@ -54,7 +54,7 @@ export const editingProjectSlice = createSlice({
       duration: BigNumber.from(30),
       tapped: BigNumber.from(0),
       weight: BigNumber.from(0),
-      fee: BigNumber.from(10),
+      fee: BigNumber.from(0),
       reserved: parsePerbicent(5),
       bondingCurveRate: defaultBondingCurveRate,
       discountRate: defaultDiscountRate,
@@ -147,6 +147,13 @@ export const editingProjectSlice = createSlice({
       fundingCycle: {
         ...state.fundingCycle,
         target: action.payload,
+      },
+    }),
+    setFee: (state, action: PayloadAction<string>) => ({
+      ...state,
+      fundingCycle: {
+        ...state.fundingCycle,
+        fee: action.payload,
       },
     }),
     setDuration: (state, action: PayloadAction<string>) => ({

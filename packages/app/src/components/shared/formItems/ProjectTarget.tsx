@@ -3,6 +3,7 @@ import { CurrencyOption } from 'models/currency-option'
 
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
+import { BigNumber } from 'ethers'
 
 export default function ProjectTarget({
   name,
@@ -13,14 +14,14 @@ export default function ProjectTarget({
   onCurrencyChange,
   disabled,
   formItemProps,
-  includeFee,
+  fee,
 }: {
   value: string | undefined
   onValueChange: (val: string | undefined) => void
   currency: CurrencyOption
   onCurrencyChange: (val: CurrencyOption) => void
   disabled?: boolean
-  includeFee?: boolean
+  fee?: BigNumber
 } & FormItemExt) {
   return (
     <Form.Item
@@ -36,7 +37,7 @@ export default function ProjectTarget({
         onCurrencyChange={onCurrencyChange}
         disabled={disabled}
         placeholder="0"
-        includeFee={includeFee}
+        fee={fee}
       />
     </Form.Item>
   )

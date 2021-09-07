@@ -24,24 +24,18 @@ export const weightedRate = (
 
 export const feeForAmount = (
   amount: BigNumber | undefined,
-  adminFeePercent: BigNumber | undefined,
+  feePercent: BigNumber | undefined,
 ) => {
-  if (!adminFeePercent || !amount) return
-  return amount.sub(amount.mul(200).div(adminFeePercent.add(200)))
+  if (!feePercent || !amount) return
+  return amount.sub(amount.mul(200).div(feePercent.add(200)))
 }
 
-export const amountSubFee = (
-  amount?: BigNumber,
-  adminFeePercent?: BigNumber,
-) => {
-  if (!adminFeePercent || !amount) return
-  return amount.sub(feeForAmount(amount, adminFeePercent) ?? 0)
+export const amountSubFee = (amount?: BigNumber, feePercent?: BigNumber) => {
+  if (!feePercent || !amount) return
+  return amount.sub(feeForAmount(amount, feePercent) ?? 0)
 }
 
-export const amountAddFee = (
-  amount?: BigNumber,
-  adminFeePercent?: BigNumber,
-) => {
-  if (!adminFeePercent || !amount) return
-  return amount.add(feeForAmount(amount, adminFeePercent) ?? 0)
+export const amountAddFee = (amount?: BigNumber, feePercent?: BigNumber) => {
+  if (!feePercent || !amount) return
+  return amount.add(feeForAmount(amount, feePercent) ?? 0)
 }

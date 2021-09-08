@@ -325,220 +325,220 @@ export default function Create() {
   }
 
   return (
-    <Row
-      style={{
-        display: 'flex',
-        padding: 40,
+    <ProjectContext.Provider
+      value={{
+        projectType: 'standard',
+        owner: userAddress,
+        isOwner: false,
+        currentFC: fundingCycle,
+        currentPayoutMods: editingPayoutMods,
+        currentTicketMods: editingTicketMods,
+        metadata: editingProjectInfo.metadata,
+        handle: editingProjectInfo.handle,
+        projectId: BigNumber.from(0),
+        queuedFC: undefined,
+        queuedPayoutMods: undefined,
+        queuedTicketMods: undefined,
+        balanceInCurrency: BigNumber.from(0),
+        tokenSymbol: undefined,
+        tokenAddress: constants.AddressZero,
       }}
-      gutter={40}
-    >
-      <Col xs={24} lg={7} style={{ marginBottom: 40 }}>
-        <h1 style={{ marginBottom: 20 }}>Design your project 🎨</h1>
+    >    
+      <Row
+        style={{
+          display: 'flex',
+          padding: 40,
+        }}
+        gutter={40}
+      >
+        <Col xs={24} lg={7} style={{ marginBottom: 40 }}>
+          <h1 style={{ marginBottom: 20 }}>Design your project 🎨</h1>
 
-        {buildSteps([
-          {
-            title: 'Identity',
-            callback: () => setProjectFormModalVisible(true),
-          },
-          {
-            title: 'Funding',
-            callback: () => setBudgetFormModalVisible(true),
-          },
-          {
-            title: 'Spending',
-            callback: () => setPayModsFormModalVisible(true),
-          },
-          {
-            title: 'Reserved tokens',
-            callback: () => setTicketingFormModalVisible(true),
-          },
-          {
-            title: 'Rules',
-            callback: () => setRulesFormModalVisible(true),
-          },
-          ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
-            ? [
-                {
-                  title: 'Incentives',
-                  callback: () => setIncentivesFormModalVisible(true),
-                },
-              ]
-            : []),
-        ])}
-      </Col>
+          {buildSteps([
+            {
+              title: 'Identity',
+              callback: () => setProjectFormModalVisible(true),
+            },
+            {
+              title: 'Funding',
+              callback: () => setBudgetFormModalVisible(true),
+            },
+            {
+              title: 'Spending',
+              callback: () => setPayModsFormModalVisible(true),
+            },
+            {
+              title: 'Reserved tokens',
+              callback: () => setTicketingFormModalVisible(true),
+            },
+            {
+              title: 'Rules',
+              callback: () => setRulesFormModalVisible(true),
+            },
+            ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
+              ? [
+                  {
+                    title: 'Incentives',
+                    callback: () => setIncentivesFormModalVisible(true),
+                  },
+                ]
+              : []),
+          ])}
+        </Col>
 
-      <Col xs={24} lg={17}>
-        <div
-          style={{
-            padding: 40,
-            paddingTop: 30,
-            borderRadius: radii.lg,
-            border: '1px solid ' + colors.stroke.secondary,
+        <Col xs={24} lg={17}>
+          <div
+            style={{
+              padding: 40,
+              paddingTop: 30,
+              borderRadius: radii.lg,
+              border: '1px solid ' + colors.stroke.secondary,
+            }}
+          >
+            <h3
+              style={{
+                marginBottom: 30,
+                color: colors.text.secondary,
+              }}
+            >
+              Preview:
+            </h3>
+              <Project showCurrentDetail={currentStep > 2} />
+          </div>
+        </Col>
+
+        <Drawer
+          {...drawerStyle}
+          visible={projectFormModalVisible}
+          onClose={() => {
+            resetProjectForm()
+            setProjectFormModalVisible(false)
           }}
         >
-          <h3
-            style={{
-              marginBottom: 30,
-              color: colors.text.secondary,
+          <ProjectForm
+            form={projectForm}
+            onSave={async () => {
+              await projectForm.validateFields()
+              onProjectFormSaved()
+              setProjectFormModalVisible(false)
+              incrementStep(0)
             }}
-          >
-            Preview:
-          </h3>
-          <ProjectContext.Provider
-            value={{
-              projectType: 'standard',
-              owner: userAddress,
-              isOwner: false,
-              currentFC: fundingCycle,
-              currentPayoutMods: editingPayoutMods,
-              currentTicketMods: editingTicketMods,
-              metadata: editingProjectInfo.metadata,
-              handle: editingProjectInfo.handle,
-              projectId: BigNumber.from(0),
-              queuedFC: undefined,
-              queuedPayoutMods: undefined,
-              queuedTicketMods: undefined,
-              balanceInCurrency: BigNumber.from(0),
-              tokenSymbol: undefined,
-              tokenAddress: constants.AddressZero,
-            }}
-          >
-            <Project showCurrentDetail={currentStep > 2} />
-          </ProjectContext.Provider>
-        </div>
-      </Col>
+          />
+        </Drawer>
 
-      <Drawer
-        {...drawerStyle}
-        visible={projectFormModalVisible}
-        onClose={() => {
-          resetProjectForm()
-          setProjectFormModalVisible(false)
-        }}
-      >
-        <ProjectForm
-          form={projectForm}
-          onSave={async () => {
-            await projectForm.validateFields()
-            onProjectFormSaved()
-            setProjectFormModalVisible(false)
-            incrementStep(0)
-          }}
-        />
-      </Drawer>
-
-      <Drawer
-        visible={budgetFormModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          setBudgetFormModalVisible(false)
-          incrementStep(1)
-        }}
-        destroyOnClose
-      >
-        <BudgetForm
-          initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
-          initialTarget={fromWad(editingFC.target)}
-          initialDuration={editingFC?.duration.toString()}
-          onSave={async (currency, target, duration) => {
-            onBudgetFormSaved(currency, target, duration)
+        <Drawer
+          visible={budgetFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
             setBudgetFormModalVisible(false)
             incrementStep(1)
           }}
-        />
-      </Drawer>
+          destroyOnClose
+        >
+          <BudgetForm
+            initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
+            initialTarget={fromWad(editingFC.target)}
+            initialDuration={editingFC?.duration.toString()}
+            onSave={async (currency, target, duration) => {
+              onBudgetFormSaved(currency, target, duration)
+              setBudgetFormModalVisible(false)
+              incrementStep(1)
+            }}
+          />
+        </Drawer>
 
-      <Drawer
-        visible={payModsModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          setPayModsFormModalVisible(false)
-          incrementStep(2)
-        }}
-        destroyOnClose
-      >
-        <PayModsForm
-          initialMods={editingPayoutMods}
-          currency={editingFC.currency.toNumber() as CurrencyOption}
-          target={editingFC.target}
-          fee={editingFC.fee}
-          onSave={async mods => {
-            onPayModsFormSaved(mods)
+        <Drawer
+          visible={payModsModalVisible}
+          {...drawerStyle}
+          onClose={() => {
             setPayModsFormModalVisible(false)
             incrementStep(2)
           }}
-        />
-      </Drawer>
+          destroyOnClose
+        >
+          <PayModsForm
+            initialMods={editingPayoutMods}
+            currency={editingFC.currency.toNumber() as CurrencyOption}
+            target={editingFC.target}
+            fee={editingFC.fee}
+            onSave={async mods => {
+              onPayModsFormSaved(mods)
+              setPayModsFormModalVisible(false)
+              incrementStep(2)
+            }}
+          />
+        </Drawer>
 
-      <Drawer
-        visible={ticketingFormModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          resetTicketingForm()
-          setTicketingFormModalVisible(false)
-          incrementStep(3)
-        }}
-      >
-        <TicketingForm
-          form={ticketingForm}
-          initialMods={editingTicketMods}
-          onSave={async mods => {
-            await ticketingForm.validateFields()
-            onTicketingFormSaved(mods)
+        <Drawer
+          visible={ticketingFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
+            resetTicketingForm()
             setTicketingFormModalVisible(false)
             incrementStep(3)
           }}
-        />
-      </Drawer>
+        >
+          <TicketingForm
+            form={ticketingForm}
+            initialMods={editingTicketMods}
+            onSave={async mods => {
+              await ticketingForm.validateFields()
+              onTicketingFormSaved(mods)
+              setTicketingFormModalVisible(false)
+              incrementStep(3)
+            }}
+          />
+        </Drawer>
 
-      <Drawer
-        visible={rulesFormModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          setRulesFormModalVisible(false)
-          incrementStep(4)
-        }}
-      >
-        <RulesForm
-          initialBallot={editingFC.ballot}
-          onSave={(ballot: string) => {
-            onRulesFormSaved(ballot)
+        <Drawer
+          visible={rulesFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
             setRulesFormModalVisible(false)
             incrementStep(4)
           }}
-        />
-      </Drawer>
+        >
+          <RulesForm
+            initialBallot={editingFC.ballot}
+            onSave={(ballot: string) => {
+              onRulesFormSaved(ballot)
+              setRulesFormModalVisible(false)
+              incrementStep(4)
+            }}
+          />
+        </Drawer>
 
-      <Drawer
-        visible={incentivesFormModalVisible}
-        {...drawerStyle}
-        onClose={() => {
-          setIncentivesFormModalVisible(false)
-          incrementStep(5)
-        }}
-      >
-        <IncentivesForm
-          initialDiscountRate={fromPermille(editingFC.discountRate)}
-          initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
-          onSave={async (discountRate: string, bondingCurveRate: string) => {
-            await ticketingForm.validateFields()
-            onIncentivesFormSaved(discountRate, bondingCurveRate)
+        <Drawer
+          visible={incentivesFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
             setIncentivesFormModalVisible(false)
             incrementStep(5)
           }}
-        />
-      </Drawer>
+        >
+          <IncentivesForm
+            initialDiscountRate={fromPermille(editingFC.discountRate)}
+            initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+            onSave={async (discountRate: string, bondingCurveRate: string) => {
+              await ticketingForm.validateFields()
+              onIncentivesFormSaved(discountRate, bondingCurveRate)
+              setIncentivesFormModalVisible(false)
+              incrementStep(5)
+            }}
+          />
+        </Drawer>
 
-      <Modal
-        visible={deployProjectModalVisible}
-        okText={signerNetwork ? 'Deploy on ' + signerNetwork : 'Deploy'}
-        onOk={deployProject}
-        confirmLoading={loadingCreate}
-        width={600}
-        onCancel={() => setDeployProjectModalVisible(false)}
-      >
-        <ConfirmDeployProject />
-      </Modal>
-    </Row>
+        <Modal
+          visible={deployProjectModalVisible}
+          okText={signerNetwork ? 'Deploy on ' + signerNetwork : 'Deploy'}
+          onOk={deployProject}
+          confirmLoading={loadingCreate}
+          width={600}
+          onCancel={() => setDeployProjectModalVisible(false)}
+        >
+          <ConfirmDeployProject />
+        </Modal>
+      </Row>
+    </ProjectContext.Provider>
   )
 }

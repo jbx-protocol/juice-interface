@@ -480,6 +480,7 @@ export default function ReconfigureFCModal({
         <IncentivesForm
           initialDiscountRate={fromPermille(editingFC.discountRate)}
           initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+          showBondingCurve={hasFundingTarget(editingFC)}
           useAdvanced
           onSave={async (discountRate: string, bondingCurveRate: string) => {
             await ticketingForm.validateFields()

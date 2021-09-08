@@ -64,7 +64,6 @@ export default function BudgetForm({
                   checked ? '10000' : fromWad(constants.MaxUint256) || '0',
                 )
                 setCurrency(1)
-                dispatch(editingProjectActions.setIsRecurring(checked))
                 setShowFundingFields(checked)
               }}
             />

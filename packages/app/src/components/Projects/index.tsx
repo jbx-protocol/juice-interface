@@ -5,7 +5,7 @@ import { layouts } from 'constants/styles/layouts'
 import { useProjects } from 'hooks/Projects'
 import { useState } from 'react'
 
-type OrderByOption = 'id' | 'totalPaid'
+type OrderByOption = 'createdAt' | 'totalPaid'
 
 export default function Projects() {
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
@@ -27,7 +27,7 @@ export default function Projects() {
         <h1>Projects on Juicebox</h1>
         <Select value={orderBy} onChange={setOrderBy} style={{ width: 180 }}>
           <Select.Option value="totalPaid">Total earned</Select.Option>
-          <Select.Option value="id">Last created</Select.Option>
+          <Select.Option value="createdAt">Last created</Select.Option>
         </Select>
       </div>
 

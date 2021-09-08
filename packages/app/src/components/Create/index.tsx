@@ -519,6 +519,7 @@ export default function Create() {
           <IncentivesForm
             initialDiscountRate={fromPermille(editingFC.discountRate)}
             initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+            showBondingCurve={hasFundingTarget(editingFC)}
             onSave={async (discountRate: string, bondingCurveRate: string) => {
               await ticketingForm.validateFields()
               onIncentivesFormSaved(discountRate, bondingCurveRate)

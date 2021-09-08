@@ -21,7 +21,7 @@ export function useProjects({
   projectId?: BigNumber
   handle?: string
   uri?: string
-  orderBy?: 'id' | 'currentBalance' | 'totalPaid'
+  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
 }) {

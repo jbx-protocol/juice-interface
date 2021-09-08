@@ -375,7 +375,7 @@ export default function Create() {
               title: 'Rules',
               callback: () => setRulesFormModalVisible(true),
             },
-            ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
+            ...(isRecurring(editingFC) && editingFC.duration.gt(0)
               ? [
                   {
                     title: 'Incentives',

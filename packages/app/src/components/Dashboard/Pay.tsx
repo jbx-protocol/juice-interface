@@ -16,7 +16,7 @@ import { weightedRate } from 'utils/math'
 import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay() {
-  const [payIn, setPayIn] = useState<CurrencyOption>(1)
+  const [payIn, setPayIn] = useState<CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 

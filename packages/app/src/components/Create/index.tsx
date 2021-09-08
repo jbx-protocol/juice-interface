@@ -343,7 +343,7 @@ export default function Create() {
         tokenSymbol: undefined,
         tokenAddress: constants.AddressZero,
       }}
-    >    
+    >
       <Row
         style={{
           display: 'flex',
@@ -403,7 +403,7 @@ export default function Create() {
             >
               Preview:
             </h3>
-              <Project showCurrentDetail={currentStep > 2} />
+            <Project showCurrentDetail={currentStep > 2} />
           </div>
         </Col>
 

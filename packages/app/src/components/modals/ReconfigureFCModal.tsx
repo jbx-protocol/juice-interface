@@ -292,17 +292,19 @@ export default function ReconfigureFCModal({
             <Space size="large">
               <Statistic
                 title="Duration"
-                value={formattedNum(editingFC?.duration)}
-                suffix="days"
+                value={
+                  editingFC.duration.gt(0)
+                    ? formattedNum(editingFC.duration)
+                    : 'Not set'
+                }
+                suffix={editingFC.duration.gt(0) ? 'days' : ''}
               />
               <Statistic
                 title="Amount"
                 valueRender={() => (
                   <span>
                     <CurrencySymbol
-                      currency={
-                        editingFC?.currency.toNumber() as CurrencyOption
-                      }
+                      currency={editingFC.currency.toNumber() as CurrencyOption}
                     />
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
@@ -311,11 +313,11 @@ export default function ReconfigureFCModal({
                         <span>
                           <CurrencySymbol
                             currency={
-                              editingFC?.currency.toNumber() as CurrencyOption
+                              editingFC.currency.toNumber() as CurrencyOption
                             }
                           />
                           {formatWad(
-                            amountSubFee(editingFC?.target, adminFeePercent),
+                            amountSubFee(editingFC.target, adminFeePercent),
                           )}{' '}
                           after JBX fee
                         </span>
@@ -333,7 +335,7 @@ export default function ReconfigureFCModal({
           <Space size="large" align="end">
             <Statistic
               title="Reserved tokens"
-              value={fromPerbicent(editingFC?.reserved)}
+              value={fromPerbicent(editingFC.reserved)}
               suffix="%"
             />
             {editingFC &&
@@ -341,7 +343,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title="Discount rate"
-                  value={fromPermille(editingFC?.discountRate)}
+                  value={fromPermille(editingFC.discountRate)}
                   suffix="%"
                 />
               )}
@@ -350,7 +352,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title="Bonding curve rate"
-                  value={fromPerbicent(editingFC?.bondingCurveRate)}
+                  value={fromPerbicent(editingFC.bondingCurveRate)}
                   suffix="%"
                 />
               )}
@@ -403,7 +405,7 @@ export default function ReconfigureFCModal({
         <BudgetForm
           initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
           initialTarget={fromWad(editingFC.target)}
-          initialDuration={editingFC?.duration.toString()}
+          initialDuration={editingFC.duration.toString()}
           onSave={async (currency, target, duration) => {
             onBudgetFormSaved(currency, target, duration)
             setBudgetFormModalVisible(false)

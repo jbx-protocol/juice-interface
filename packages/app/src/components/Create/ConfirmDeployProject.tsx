@@ -41,8 +41,12 @@ export default function ConfirmDeployProject() {
         <Space size="large">
           <Statistic
             title="Duration"
-            value={formattedNum(editingFC?.duration)}
-            suffix="days"
+            value={
+              editingFC.duration.gt(0)
+                ? formattedNum(editingFC.duration)
+                : 'Not set'
+            }
+            suffix={editingFC.duration.gt(0) ? 'days' : ''}
           />
           <Statistic
             title="Amount"

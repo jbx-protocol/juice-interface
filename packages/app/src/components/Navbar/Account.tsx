@@ -7,8 +7,9 @@ import Wallet from './Wallet'
 
 export default function Account() {
   const {
-    onNeedProvider,
+    signingProvider,
     userAddress,
+    onSelectWallet,
     onLogOut
   } = useContext(NetworkContext)
 
@@ -26,8 +27,8 @@ export default function Account() {
           </Col>
         )}
         <Col>
-          {onNeedProvider ? (
-            <Button onClick={onNeedProvider}>Connect</Button>
+          {!signingProvider ? (
+            <Button onClick={onSelectWallet}>Connect</Button>
           ) : (
             <Button onClick={onLogOut}>Logout</Button>
           )}

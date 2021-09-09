@@ -50,8 +50,10 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
-      if (!provider && onSelectWallet) {
-        await onSelectWallet()
+      if (!onSelectWallet) return false;
+
+      if (!provider) {
+        onSelectWallet()
         if (options?.onDone) options.onDone()
         return false
       }

@@ -6,6 +6,5 @@ import { createContext } from 'react'
 export const UserContext: React.Context<{
   contracts?: Contracts
   transactor?: Transactor
-  userAddress?: string
   adminFeePercent?: BigNumber
 }> = createContext({})

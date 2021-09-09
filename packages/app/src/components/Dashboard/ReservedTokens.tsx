@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
@@ -25,7 +25,7 @@ export default function ReservedTokens({
   hideActions?: boolean
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
-  const { userAddress } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext)
 
   const { projectId, isOwner, tokenSymbol } = useContext(ProjectContext)
 

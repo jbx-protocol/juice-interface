@@ -9,6 +9,7 @@ import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
+import { NetworkContext } from 'contexts/networkContext'
 import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
@@ -26,7 +27,8 @@ export default function Rewards({
   totalOverflow: BigNumber | undefined
 }) {
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
-  const { contracts, transactor, userAddress } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext);
 
   const { projectId, isOwner, tokenAddress, tokenSymbol } =
     useContext(ProjectContext)

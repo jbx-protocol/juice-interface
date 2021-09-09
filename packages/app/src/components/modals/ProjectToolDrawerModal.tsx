@@ -4,6 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
@@ -19,7 +20,8 @@ export default function ProjectToolDrawerModal({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { transactor, userAddress, contracts } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext)
   const { projectId, tokenSymbol, owner } = useContext(ProjectContext)
 
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()

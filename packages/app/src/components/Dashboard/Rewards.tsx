@@ -28,7 +28,7 @@ export default function Rewards({
 }) {
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContext)
-  const { userAddress } = useContext(NetworkContext);
+  const { userAddress } = useContext(NetworkContext)
 
   const { projectId, isOwner, tokenAddress, tokenSymbol } =
     useContext(ProjectContext)
@@ -335,13 +335,15 @@ export default function Rewards({
           </p>
           <p>
             Tokens can be redeemed for a project's overflow according to the
-            bonding curve rate of the current funding cycle.
+            bonding curve rate of the current funding cycle. Tokens are burned
+            when they are redeemed.
           </p>
-          {redeemDisabled ? (
+          {redeemDisabled && (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
               You can redeem tokens once this project has overflow.
             </div>
-          ) : (
+          )}
+          {!redeemDisabled && (
             <div>
               <FormattedNumberInput
                 min={0}

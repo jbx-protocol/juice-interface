@@ -55,9 +55,9 @@ import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function Create() {
-  const { transactor, contracts, userAddress, adminFeePercent } =
+  const { transactor, contracts, adminFeePercent } =
     useContext(UserContext)
-  const { signerNetwork } = useContext(NetworkContext)
+  const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [payModsModalVisible, setPayModsFormModalVisible] =

@@ -3,7 +3,7 @@ import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
+import { NetworkContext } from 'contexts/networkContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   const converter = useCurrencyConverter()
 
-  const { userAddress } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext)
 
   const { handle }: { handle?: string } = useParams()
 

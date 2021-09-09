@@ -4,6 +4,7 @@ import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
+import { NetworkContext } from 'contexts/networkContext'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -19,7 +20,8 @@ export default function ConfirmUnstakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
-  const { contracts, transactor, userAddress } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext);
   const { tokenSymbol, projectId } = useContext(ProjectContext)
 
   const iouBalance = useContractReader<BigNumber>({

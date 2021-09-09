@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { UserContext } from 'contexts/userContext'
 import { useContractLoader } from 'hooks/ContractLoader'
 import { useGasPrice } from 'hooks/GasPrice'
-import { useProviderAddress } from 'hooks/ProviderAddress'
 import { useTransactor } from 'hooks/Transactor'
 import { ChildElems } from 'models/child-elems'
 import { useEffect, useState } from 'react'
@@ -17,8 +16,6 @@ export default function User({ children }: { children: ChildElems }) {
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const userAddress = useProviderAddress()
-
   useEffect(() => {
     contracts?.TerminalV1.functions.fee().then((res: [BigNumber]) => {
       if (!adminFeePercent?.eq(res[0])) setAdminFeePercent(res[0])
@@ -30,7 +27,6 @@ export default function User({ children }: { children: ChildElems }) {
       value={{
         contracts,
         transactor,
-        userAddress,
         adminFeePercent,
       }}
     >

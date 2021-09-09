@@ -15,6 +15,12 @@ export const ballotStrategies: Strategy[] = [
     address: '0xEf7480b6E7CEd228fFB0854fe49A428F562a8982',
   },
   {
+    name: '3-day delay',
+    description:
+      'A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts.',
+    address: '0x6d6da471703647Fd8b84FFB1A29e037686dBd8b2',
+  },
+  {
     name: 'No strategy',
     description:
       'Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.',

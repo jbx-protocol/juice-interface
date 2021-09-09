@@ -1,11 +1,10 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Button, Input, Space } from 'antd'
 import { ballotStrategies } from 'constants/ballot-strategies'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { constants, utils } from 'ethers'
 import { useContext, useLayoutEffect, useState } from 'react'
-
-import { NetworkContext } from '../../contexts/networkContext'
 
 export default function RulesForm({
   initialBallot,

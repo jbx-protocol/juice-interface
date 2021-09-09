@@ -7,8 +7,8 @@ import { UserContext } from 'contexts/userContext'
 import { useContext, useEffect, useState } from 'react'
 
 export default function Gimme() {
-  const { userAddress, contracts, transactor } = useContext(UserContext)
-  const { signingProvider } = useContext(NetworkContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { signingProvider, userAddress } = useContext(NetworkContext)
   const [balance, setBalance] = useState<BigNumber>()
 
   const [gimmeAmount, setGimmeAmount] = useState<string>('2')

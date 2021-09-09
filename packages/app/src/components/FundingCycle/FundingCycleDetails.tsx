@@ -14,6 +14,9 @@ import TooltipLabel from '../shared/TooltipLabel'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
+import { weightedRate } from 'utils/math'
+import { parseEther } from '@ethersproject/units'
+import { ProjectContext } from 'contexts/projectContext'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -23,6 +26,8 @@ export default function FundingCycleDetails({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const { tokenSymbol } = useContext(ProjectContext)
 
   if (!fundingCycle) return null
 
@@ -89,6 +94,24 @@ export default function FundingCycleDetails({
             }
           >
             {fromPermille(fundingCycle.discountRate)}%
+          </Descriptions.Item>
+        )}
+
+        {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+          <Descriptions.Item
+            label={
+              <TooltipLabel
+                label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
+                tip={`${
+                  tokenSymbol ?? 'Tokens'
+                } received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
+              />
+            }
+          >
+            {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
+              decimals: 0,
+            })}{' '}
+            {tokenSymbol ?? 'tokens'}
           </Descriptions.Item>
         )}
 

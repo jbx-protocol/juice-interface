@@ -14,7 +14,7 @@
     "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.9.1",
-    "bnc-onboard": "^1.34.1",
+    "bnc-onboard": "^1.34.2",
     "env-cmd": "^10.1.0",
     "erc-20-abi": "^1.0.0",
     "ethereum-block-by-date": "^1.4.2",

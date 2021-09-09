@@ -9,24 +9,24 @@ import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
 
-const KEY_SELECTED_WALLET = "selectedWallet";
+const KEY_SELECTED_WALLET = 'selectedWallet'
 
 export default function Network({ children }: { children: ChildElems }) {
-  const { isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode } = useContext(ThemeContext)
 
-  const [signingProvider, setSigningProvider] = useState<Web3Provider|null>()
+  const [signingProvider, setSigningProvider] = useState<Web3Provider>()
   const [network, setNetwork] = useState<NetworkName>()
   const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
 
   const resetWallet = () => {
     onboard?.walletReset()
-    setSigningProvider(null);
-    window.localStorage.setItem(KEY_SELECTED_WALLET, "")
+    setSigningProvider(undefined)
+    window.localStorage.setItem(KEY_SELECTED_WALLET, '')
   }
 
   const selectWallet = async () => {
-    resetWallet();
+    resetWallet()
 
     // Open select wallet modal.
     const selectedWallet = await onboard?.walletSelect()
@@ -41,19 +41,20 @@ export default function Network({ children }: { children: ChildElems }) {
   }
 
   const logOut = async () => {
-    resetWallet();
+    resetWallet()
   }
 
   const initializeWallet = () => {
-    if (onboard) return;
+    if (onboard) return
 
     const selectWallet = async (newWallet: Wallet) => {
       if (newWallet.provider) {
-        setAccount(undefined);
-        window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || "")
+        // Reset the account when a new wallet is connected, as it will be resolved by the provider.
+        setAccount(undefined)
+        window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || '')
         setSigningProvider(new Web3Provider(newWallet.provider))
       } else {
-        resetWallet();
+        resetWallet()
       }
     }
     const config: Subscriptions = {
@@ -84,7 +85,7 @@ export default function Network({ children }: { children: ChildElems }) {
 
   const reconnectWallet = () => {
     const previouslySelectedWallet =
-      window.localStorage.getItem(KEY_SELECTED_WALLET);
+      window.localStorage.getItem(KEY_SELECTED_WALLET)
     if (previouslySelectedWallet && onboard) {
       onboard.walletSelect(previouslySelectedWallet)
     }
@@ -99,7 +100,10 @@ export default function Network({ children }: { children: ChildElems }) {
     <NetworkContext.Provider
       value={{
         signerNetwork: network,
-        signingProvider: signingProvider && network === readNetwork.name && account ? signingProvider : undefined,
+        signingProvider:
+          signingProvider && network === readNetwork.name && account
+            ? signingProvider
+            : undefined,
         userAddress: account,
         onSelectWallet: selectWallet,
         onLogOut: logOut,

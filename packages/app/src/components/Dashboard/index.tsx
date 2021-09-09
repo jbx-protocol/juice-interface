@@ -288,7 +288,7 @@ export default function Dashboard() {
   //       : null,
   // })
 
-  const isOwner = userAddress === owner
+  const isOwner = userAddress?.toLowerCase() === owner?.toLowerCase()
 
   if (projectExists === undefined) return <Loading />
 

@@ -37,7 +37,7 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider, onNeedProvider } = useContext(
+  const { signingProvider: provider, onSelectWallet } = useContext(
     NetworkContext,
   )
 
@@ -50,8 +50,8 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
-      if (onNeedProvider) {
-        await onNeedProvider()
+      if (!provider && onSelectWallet) {
+        await onSelectWallet()
         if (options?.onDone) options.onDone()
         return false
       }
@@ -158,6 +158,6 @@ export function useTransactor({
         return false
       }
     },
-    [provider, gasPrice, onNeedProvider],
+    [provider, gasPrice, onSelectWallet],
   )
 }

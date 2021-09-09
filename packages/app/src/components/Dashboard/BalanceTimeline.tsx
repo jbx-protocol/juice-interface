@@ -1,6 +1,5 @@
 import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import Loading from 'components/shared/Loading'
 import { readProvider } from 'constants/readProvider'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -27,6 +26,7 @@ import {
 } from 'recharts'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph, trimHexZero } from 'utils/graph'
+
 import SectionHeader from './SectionHeader'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
@@ -48,19 +48,33 @@ export default function BalanceTimeline({ height }: { height: number }) {
   const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
-  const [duration, setDuration] = useState<Duration>(30)
+  const [duration, setDuration] = useState<Duration>()
   const [showGraph, setShowGraph] = useState<ShowGraph>()
-  const { projectId, projectType } = useContext(ProjectContext)
+  const { projectId, projectType, createdAt } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const dateStringForBlockTime = (timestamp: number) =>
-    moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
+    duration
+      ? moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
+      : undefined
 
   useEffect(() => {
     setShowGraph(projectType === 'bidpool' ? 'earned' : 'balance')
   }, [projectType])
+
+  useEffect(() => {
+    if (!createdAt) return
+
+    if (createdAt * 1000 > now - daysToMillis(1)) {
+      setDuration(1)
+    } else if (createdAt * 1000 > now - daysToMillis(7)) {
+      setDuration(7)
+    } else {
+      setDuration(30)
+    }
+  }, [createdAt])
 
   // Get references to timestamp of blocks in interval
   useEffect(() => {
@@ -101,7 +115,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
   }, [duration])
 
   useEffect(() => {
-    if (!showGraph) return
+    if (!showGraph || !duration) return
 
     const loadEvents = async () => {
       setLoading(true)
@@ -269,7 +283,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
     let ticks = []
     const max = now / 1000
-    const min = (now - daysToMillis(duration)) / 1000
+    const min = duration ? (now - daysToMillis(duration)) / 1000 : undefined
+
+    if (!min) return []
 
     // TODO why are only roughly half of ticks rendered?
     for (let i = 0; i < 20; i++) {
@@ -277,7 +293,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
     }
 
     return ticks
-  }, [events])
+  }, [events, duration])
 
   let header: string | undefined = undefined
 

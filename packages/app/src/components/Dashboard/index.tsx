@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
-import { ProjectContext } from 'contexts/projectContext'
 import { NetworkContext } from 'contexts/networkContext'
+import { ProjectContext } from 'contexts/projectContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -13,17 +13,20 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { parseProjectJson } from 'models/subgraph-entities/project'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
+import { querySubgraph, trimHexZero } from 'utils/graph'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
+  const [createdAt, setCreatedAt] = useState<number>()
 
   const converter = useCurrencyConverter()
 
@@ -40,6 +43,25 @@ export default function Dashboard() {
       [setProjectExists],
     ),
   })
+
+  useEffect(() => {
+    querySubgraph(
+      {
+        entity: 'project',
+        keys: ['createdAt'],
+        where: projectId
+          ? {
+              key: 'id',
+              value: trimHexZero(projectId.toHexString()),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res?.projects) return
+        setCreatedAt(parseProjectJson(res.projects[0]).createdAt)
+      },
+    )
+  }, [projectId])
 
   const owner = useContractReader<string>({
     contract: ContractName.Projects,
@@ -291,6 +313,7 @@ export default function Dashboard() {
   return (
     <ProjectContext.Provider
       value={{
+        createdAt,
         projectId,
         projectType,
         owner,

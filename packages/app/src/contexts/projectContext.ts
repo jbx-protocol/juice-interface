@@ -8,6 +8,7 @@ import { createContext } from 'react'
 export type ProjectContext = {
   projectId: BigNumber | undefined
   projectType: ProjectType | undefined
+  createdAt: number | undefined
   handle: string | undefined
   metadata: ProjectMetadata | undefined
   owner: string | undefined // owner address
@@ -26,6 +27,7 @@ export type ProjectContext = {
 export const ProjectContext = createContext<ProjectContext>({
   projectId: undefined,
   projectType: 'standard',
+  createdAt: undefined,
   handle: undefined,
   metadata: undefined,
   owner: undefined,

@@ -55,8 +55,7 @@ import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function Create() {
-  const { transactor, contracts, adminFeePercent } =
-    useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
@@ -327,6 +326,7 @@ export default function Create() {
   return (
     <ProjectContext.Provider
       value={{
+        createdAt: new Date().valueOf() / 1000,
         projectType: 'standard',
         owner: userAddress,
         isOwner: false,

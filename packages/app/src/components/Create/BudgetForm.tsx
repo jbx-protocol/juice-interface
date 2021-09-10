@@ -23,7 +23,6 @@ export default function BudgetForm({
 }) {
   const {
     theme: { colors },
-    isDarkMode,
   } = useContext(ThemeContext)
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyOption>(0)
@@ -84,8 +83,13 @@ export default function BudgetForm({
             fee={editingFC.fee}
           />
         )}
-        
-        <Divider style={{margin: "40px 0", borderColor: isDarkMode ? "#ffffff0f" : "#0000000f"}} />
+
+        <Divider
+          style={{
+            margin: '40px 0',
+            borderColor: colors.stroke.tertiary,
+          }}
+        />
 
         <p style={{ color: colors.text.primary, marginTop: 40 }}>
           The duration of your funding cycle determines how often your target

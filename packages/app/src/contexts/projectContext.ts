@@ -12,7 +12,6 @@ export type ProjectContext = {
   handle: string | undefined
   metadata: ProjectMetadata | undefined
   owner: string | undefined // owner address
-  isOwner: boolean | undefined // connected user is owner
   currentFC: FundingCycle | undefined
   queuedFC: FundingCycle | undefined
   currentPayoutMods: PayoutMod[] | undefined
@@ -31,7 +30,6 @@ export const ProjectContext = createContext<ProjectContext>({
   handle: undefined,
   metadata: undefined,
   owner: undefined,
-  isOwner: undefined,
   currentFC: undefined,
   queuedFC: undefined,
   currentPayoutMods: undefined,

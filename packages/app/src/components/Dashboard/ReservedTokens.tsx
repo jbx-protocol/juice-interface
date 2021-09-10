@@ -27,7 +27,7 @@ export default function ReservedTokens({
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, isOwner, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenSymbol } = useContext(ProjectContext)
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
@@ -95,7 +95,6 @@ export default function ReservedTokens({
         mods={ticketMods}
         fundingCycle={fundingCycle}
         projectId={projectId}
-        isOwner={isOwner}
       />
 
       {!hideActions && (

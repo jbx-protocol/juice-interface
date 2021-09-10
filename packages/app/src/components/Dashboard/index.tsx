@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
-import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -14,7 +13,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { parseProjectJson } from 'models/subgraph-entities/project'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
@@ -29,8 +28,6 @@ export default function Dashboard() {
   const [createdAt, setCreatedAt] = useState<number>()
 
   const converter = useCurrencyConverter()
-
-  const { userAddress } = useContext(NetworkContext)
 
   const { handle }: { handle?: string } = useParams()
 
@@ -279,17 +276,6 @@ export default function Dashboard() {
     [currentFC?.currency, balance, converter],
   )
 
-  // const canSetPayoutMods = useContractReader<string>({
-  //   contract: ContractName.OperatorStore,
-  //   functionName: 'hasPermission',
-  //   args:
-  //     userAddress && owner && projectId
-  //       ? [userAddress, owner, projectId.toHexString(), 14]
-  //       : null,
-  // })
-
-  const isOwner = userAddress?.toLowerCase() === owner?.toLowerCase()
-
   if (projectExists === undefined) return <Loading />
 
   if (!projectExists) {
@@ -317,7 +303,6 @@ export default function Dashboard() {
         projectId,
         projectType,
         owner,
-        isOwner,
         handle,
         metadata,
         currentFC,

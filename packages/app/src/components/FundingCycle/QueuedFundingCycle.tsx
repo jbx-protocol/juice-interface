@@ -4,22 +4,17 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import FundingCycleDetails from './FundingCycleDetails'
-import PayoutModsList from '../shared/PayoutModsList'
 import ReservedTokens from '../Dashboard/ReservedTokens'
+import PayoutModsList from '../shared/PayoutModsList'
+import FundingCycleDetails from './FundingCycleDetails'
 
 export default function QueuedFundingCycle() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const {
-    projectId,
-    isOwner,
-    queuedFC,
-    queuedPayoutMods,
-    queuedTicketMods,
-  } = useContext(ProjectContext)
+  const { projectId, queuedFC, queuedPayoutMods, queuedTicketMods } =
+    useContext(ProjectContext)
 
   if (!projectId) return null
 
@@ -36,7 +31,6 @@ export default function QueuedFundingCycle() {
                 mods={queuedPayoutMods}
                 fundingCycle={queuedFC}
                 projectId={projectId}
-                isOwner={isOwner}
               />
             </CardSection>
             <CardSection>

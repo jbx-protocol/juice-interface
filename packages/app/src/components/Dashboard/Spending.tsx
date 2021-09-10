@@ -23,7 +23,7 @@ export default function Spending({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, isOwner, owner, currentFC } =
+  const { balanceInCurrency, projectId, owner, currentFC } =
     useContext(ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -114,7 +114,6 @@ export default function Spending({
             mods={payoutMods}
             fundingCycle={currentFC}
             projectId={projectId}
-            isOwner={isOwner}
           />
         </div>
       </Space>

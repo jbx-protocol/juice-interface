@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import useContractReader from 'hooks/ContractReader'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -22,13 +23,17 @@ export default function Project({
   style?: CSSProperties
   showCurrentDetail?: boolean
 }) {
-  const { projectId, isOwner } = useContext(ProjectContext)
+  const { projectId } = useContext(ProjectContext)
 
   const canPrintPreminedTickets = useContractReader<boolean>({
     contract: ContractName.TerminalV1,
     functionName: 'canPrintPreminedTickets',
     args: projectId ? [projectId.toHexString()] : null,
   })
+
+  const hasPrintPreminePermission = useHasPermission(
+    OperatorPermission.PrintPreminedTickets,
+  )
 
   const totalOverflow = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
@@ -70,7 +75,7 @@ export default function Project({
 
         <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
-            {canPrintPreminedTickets && isOwner && (
+            {canPrintPreminedTickets && hasPrintPreminePermission && (
               <PrintPremined projectId={projectId} />
             )}
             <Pay />

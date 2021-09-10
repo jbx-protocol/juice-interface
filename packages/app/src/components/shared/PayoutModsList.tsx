@@ -4,6 +4,7 @@ import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
@@ -17,7 +18,6 @@ export default function PayoutModsList({
   mods,
   fundingCycle,
   projectId,
-  isOwner,
   total,
 }: {
   mods: PayoutMod[] | undefined
@@ -25,7 +25,6 @@ export default function PayoutModsList({
     | Pick<FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
-  isOwner: boolean | undefined
   total?: BigNumber
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -88,6 +87,8 @@ export default function PayoutModsList({
 
   const baseTotal =
     total ?? amountSubFee(fundingCycle?.target, fundingCycle?.fee)
+
+  const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
   if (!fundingCycle) return null
 
@@ -156,7 +157,7 @@ export default function PayoutModsList({
         />
       )}
 
-      {fundingCycle && projectId?.gt(0) && isOwner ? (
+      {fundingCycle && projectId?.gt(0) && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit payouts

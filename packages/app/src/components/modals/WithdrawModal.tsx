@@ -183,7 +183,6 @@ export default function WithdrawModal({
               mods={currentPayoutMods}
               fundingCycle={currentFC}
               projectId={projectId}
-              isOwner={false}
             />
           </div>
         ) : (

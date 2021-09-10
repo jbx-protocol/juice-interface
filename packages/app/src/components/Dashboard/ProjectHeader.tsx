@@ -5,6 +5,7 @@ import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
 
 export default function ProjectHeader() {
@@ -12,13 +13,18 @@ export default function ProjectHeader() {
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const { projectId, handle, metadata, isOwner } = useContext(ProjectContext)
+  const { projectId, handle, metadata } = useContext(ProjectContext)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const headerHeight = 120
+
+  const hasEditPermission = useHasPermission([
+    OperatorPermission.SetHandle,
+    OperatorPermission.SetUri,
+  ])
 
   if (!projectId) return null
 
@@ -104,7 +110,7 @@ export default function ProjectHeader() {
                 icon={<ToolOutlined />}
                 type="text"
               ></Button>
-              {isOwner && (
+              {hasEditPermission && (
                 <Button
                   onClick={() => setEditProjectModalVisible(true)}
                   icon={<SettingOutlined />}

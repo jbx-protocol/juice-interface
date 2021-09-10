@@ -4,6 +4,7 @@ import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -14,13 +15,11 @@ export default function TicketModsList({
   mods,
   fundingCycle,
   projectId,
-  isOwner,
 }: {
   total?: BigNumber
   mods: TicketMod[] | undefined
   fundingCycle: FundingCycle | undefined
   projectId: BigNumber | undefined
-  isOwner: boolean | undefined
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -78,6 +77,8 @@ export default function TicketModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
+  const hasEditPermission = useHasPermission(OperatorPermission.SetTicketMods)
+
   return (
     <div>
       {mods?.length
@@ -120,7 +121,7 @@ export default function TicketModsList({
         />
       )}
 
-      {fundingCycle && projectId?.gt(0) && isOwner ? (
+      {fundingCycle && projectId?.gt(0) && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit token receivers

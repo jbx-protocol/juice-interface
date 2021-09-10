@@ -3,6 +3,7 @@ import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
 
 import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
@@ -25,7 +26,6 @@ export default function FundingCycles({
   const {
     projectId,
     currentFC,
-    isOwner,
     queuedFC,
     queuedPayoutMods,
     queuedTicketMods,
@@ -73,6 +73,8 @@ export default function FundingCycles({
       break
   }
 
+  const canReconfigure = useHasPermission(OperatorPermission.Configure)
+
   if (!projectId) return null
 
   return (
@@ -99,7 +101,7 @@ export default function FundingCycles({
       </div>
       <div>{tabContent}</div>
 
-      {isOwner && (
+      {canReconfigure && (
         <Button
           style={{ marginTop: 20 }}
           onClick={() => setReconfigureModalVisible(true)}

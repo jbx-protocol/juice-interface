@@ -377,7 +377,6 @@ export default function ReconfigureFCModal({
               mods={editingPayoutMods}
               projectId={undefined}
               fundingCycle={editingFC}
-              isOwner={true}
             />
           </div>
 
@@ -387,7 +386,6 @@ export default function ReconfigureFCModal({
               mods={editingTicketMods}
               projectId={undefined}
               fundingCycle={undefined}
-              isOwner={true}
             />
           </div>
         </Space>

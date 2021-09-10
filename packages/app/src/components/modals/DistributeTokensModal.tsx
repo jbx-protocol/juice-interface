@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal, Space } from 'antd'
-import TicketModsList from 'components/shared/TicketModsList'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import useContractReader from 'hooks/ContractReader'
@@ -84,7 +84,6 @@ export default function DistributeTokensModal({
               mods={currentTicketMods}
               fundingCycle={currentFC}
               projectId={projectId}
-              isOwner={false}
             />
           </div>
         ) : (

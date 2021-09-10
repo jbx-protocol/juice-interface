@@ -1,18 +1,19 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
+import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
-import { NetworkContext } from 'contexts/networkContext'
 import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -31,8 +32,7 @@ export default function Rewards({
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, isOwner, tokenAddress, tokenSymbol } =
-    useContext(ProjectContext)
+  const { projectId, tokenAddress, tokenSymbol } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -201,6 +201,8 @@ export default function Rewards({
     ? tokenAddress !== constants.AddressZero
     : undefined
 
+  const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
+
   return (
     <div>
       <Space direction="vertical" size="large">
@@ -303,7 +305,9 @@ export default function Rewards({
           )}
         />
 
-        {!ticketsIssued && isOwner && <IssueTickets projectId={projectId} />}
+        {!ticketsIssued && hasIssueTicketsPermission && (
+          <IssueTickets projectId={projectId} />
+        )}
       </Space>
 
       <Modal

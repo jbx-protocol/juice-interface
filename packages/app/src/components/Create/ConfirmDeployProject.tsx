@@ -113,7 +113,6 @@ export default function ConfirmDeployProject() {
             mods={payoutMods}
             projectId={undefined}
             fundingCycle={editingFC}
-            isOwner={true}
           />
         )}
       />
@@ -124,7 +123,6 @@ export default function ConfirmDeployProject() {
             mods={ticketMods}
             projectId={undefined}
             fundingCycle={undefined}
-            isOwner={true}
           />
         )}
       />

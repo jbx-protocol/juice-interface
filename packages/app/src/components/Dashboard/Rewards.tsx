@@ -267,14 +267,16 @@ export default function Rewards({
                             : `0 ${
                                 tokenSymbol || 'tokens'
                               } in your wallet`}{' '}
-                          <Button
-                            onClick={() => setStakeModalVisible(true)}
-                            type="text"
-                            size="small"
-                            style={{ color: colors.text.action.primary }}
-                          >
-                            Stake
-                          </Button>                              
+                          {ticketsBalance?.gt(0) && (
+                            <Button
+                              onClick={() => setStakeModalVisible(true)}
+                              type="text"
+                              size="small"
+                              style={{ color: colors.text.action.primary }}
+                            >
+                              Stake
+                            </Button>
+                          )}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (

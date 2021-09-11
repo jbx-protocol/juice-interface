@@ -14,7 +14,7 @@ import { useErc20Contract } from 'hooks/Erc20Contract'
 export default function ConfirmStakeTokensModal({
   visible,
   onCancel,
-  ticketsUpdateOn
+  ticketsUpdateOn,
 }: {
   visible?: boolean
   onCancel?: VoidFunction
@@ -71,8 +71,13 @@ export default function ConfirmStakeTokensModal({
       centered={true}
     >
       <p>
-        Stake your {tokenSymbol ?? 'tokens'}. You can still redeem staked{' '}
-        {tokenSymbol ?? 'tokens'} for overflow.
+        Remove {tokenSymbol ?? ''} ERC20 tokens from your wallet and lock them
+        in the Juicebox protocol.
+      </p>
+      <p>
+        Staked {tokenSymbol ?? 'tokens'} can still be redeemed for overflow, and
+        can be unstaked at any time. Right now there's no value or utility in
+        staking, though there may be in the future.
       </p>
       <FormattedNumberInput
         min={0}

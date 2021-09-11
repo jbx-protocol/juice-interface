@@ -165,21 +165,6 @@ export default function Rewards({
       ? '<1'
       : sharePct?.toString()
 
-  // function convert() {
-  //   if (!transactor || !contracts || !userAddress || !projectId) return
-
-  //   setLoadingConvert(true)
-
-  //   transactor(
-  //     contracts.TicketBooth,
-  //     'unstake',
-  //     [userAddress, projectId.toHexString(), iouBalance?.toHexString()],
-  //     {
-  //       onDone: () => setLoadingConvert(false),
-  //     },
-  //   )
-  // }
-
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
 
@@ -264,7 +249,7 @@ export default function Rewards({
                             <>
                               {`${formatWad(ticketsBalance ?? 0, {
                                 decimals: 0,
-                              })} ${tokenSymbol}`}
+                              })} ${tokenSymbol}`}{' '}
                               <Button
                                 onClick={() => setStakeModalVisible(true)}
                                 type="text"

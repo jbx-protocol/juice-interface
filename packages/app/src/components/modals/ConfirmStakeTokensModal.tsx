@@ -10,14 +10,15 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { fromWad, parseWad } from 'utils/formatNumber'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { ContractName } from 'models/contract-name'
 
 export default function ConfirmStakeTokensModal({
   visible,
   onCancel,
+  ticketsUpdateOn
 }: {
   visible?: boolean
   onCancel?: VoidFunction
+  ticketsUpdateOn?: ContractUpdateOn
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [stakeAmount, setStakeAmount] = useState<string>()
@@ -25,35 +26,6 @@ export default function ConfirmStakeTokensModal({
   const { userAddress } = useContext(NetworkContext)
   const { tokenSymbol, projectId, tokenAddress } = useContext(ProjectContext)
   const ticketContract = useErc20Contract(tokenAddress)
-
-  const ticketsUpdateOn: ContractUpdateOn = useMemo(
-    () => [
-      {
-        contract: ContractName.TerminalV1,
-        eventName: 'Pay',
-        topics: projectId ? [[], projectId.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.TerminalV1,
-        eventName: 'PrintPreminedTickets',
-        topics: projectId ? [projectId.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.TicketBooth,
-        eventName: 'Redeem',
-        topics: projectId ? [projectId.toHexString()] : undefined,
-      },
-      {
-        contract: ContractName.TicketBooth,
-        eventName: 'Convert',
-        topics:
-          userAddress && projectId
-            ? [userAddress, projectId.toHexString()]
-            : undefined,
-      },
-    ],
-    [projectId],
-  )
 
   const ticketsBalance = useContractReader<BigNumber>({
     contract: ticketContract,

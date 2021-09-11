@@ -44,5 +44,8 @@ export function useHasPermission(
         : null,
   })
 
-  return userAddress === owner || hasOperatorPermission
+  const isOwner =
+    userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
+
+  return isOwner || hasOperatorPermission
 }

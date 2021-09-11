@@ -3,7 +3,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
-import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -28,7 +27,6 @@ export default function Rewards({
   totalOverflow: BigNumber | undefined
 }) {
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
-  const [stakeModalVisible, setStakeModalVisible] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
@@ -268,14 +266,6 @@ export default function Rewards({
                             : `0 ${
                                 tokenSymbol || 'tokens'
                               } in your wallet`}{' '}
-                          <Button
-                            onClick={() => setStakeModalVisible(true)}
-                            type="text"
-                            size="small"
-                            style={{ color: colors.text.action.primary }}
-                          >
-                            Stake
-                          </Button>                              
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
@@ -375,14 +365,10 @@ export default function Rewards({
         </Space>
       </Modal>
 
-      <ConfirmStakeTokensModal
-        visible={stakeModalVisible}
-        onCancel={() => setStakeModalVisible(false)}
-      />
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
-      />      
+      />
     </div>
   )
 }

@@ -8,7 +8,7 @@ import { readNetwork } from 'constants/networks'
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
- 
+
 const KEY_SELECTED_WALLET = 'selectedWallet'
 
 export default function Network({ children }: { children: ChildElems }) {

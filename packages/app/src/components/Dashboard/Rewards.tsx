@@ -1,9 +1,8 @@
-import { ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
+import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -27,8 +26,8 @@ export default function Rewards({
 }: {
   totalOverflow: BigNumber | undefined
 }) {
-  const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [stakeModalVisible, setStakeModalVisible] = useState<boolean>()
+  const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
@@ -374,7 +373,6 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
-
       <ConfirmStakeTokensModal
         visible={stakeModalVisible}
         onCancel={() => setStakeModalVisible(false)}
@@ -382,7 +380,7 @@ export default function Rewards({
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
-      />      
+      />
     </div>
   )
 }

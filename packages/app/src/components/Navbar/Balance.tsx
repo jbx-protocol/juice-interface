@@ -1,7 +1,6 @@
-import { Account } from 'bnc-notify'
 import EthPrice from 'components/Navbar/EthPrice'
 import { ThemeContext } from 'contexts/themeContext'
-import { useBalance } from 'hooks/Balance'
+import { useEthBalance } from 'hooks/EthBalance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
@@ -18,7 +17,7 @@ export default function Balance({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const balance = useBalance(address)
+  const balance = useEthBalance(address)
 
   return (
     <div

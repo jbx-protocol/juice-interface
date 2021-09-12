@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { usePoller } from './Poller'
 
-export function useBalance(address: string | undefined) {
+export function useEthBalance(address: string | undefined) {
   const [balance, setBalance] = useState<BigNumber>()
 
   // get updated balance

@@ -9,6 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useBalance } from 'hooks/Balance'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useEthBalance } from 'hooks/EthBalance'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo } from 'react'
@@ -70,7 +71,7 @@ export default function Paid() {
     [currentFC?.currency, totalOverflow, converter],
   )
 
-  const ownerBalance = useBalance(owner)
+  const ownerBalance = useEthBalance(owner)
   const ownerBalanceInCurrency = currentFC?.currency.eq(0)
     ? ownerBalance
     : parseWad(converter.weiToUsd(ownerBalance))

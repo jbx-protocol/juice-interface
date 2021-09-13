@@ -1,50 +1,46 @@
-import { ExportOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Space, Statistic, Tooltip } from 'antd'
+import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
+import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import Loading from 'components/shared/Loading'
-import { ThemeOption } from 'constants/theme/theme-option'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
 
-import TooltipLabel from '../shared/TooltipLabel'
 import IssueTickets from './IssueTickets'
+import SectionHeader from './SectionHeader'
 
 export default function Rewards({
   totalOverflow,
 }: {
   totalOverflow: BigNumber | undefined
 }) {
+  const [stakeModalVisible, setStakeModalVisible] = useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
-  const { contracts, transactor, userAddress } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, currentFC, isOwner, tokenAddress, tokenSymbol } =
-    useContext(ProjectContext)
+  const { projectId, tokenAddress, tokenSymbol } = useContext(ProjectContext)
 
   const {
     theme: { colors },
-    forThemeOption,
   } = useContext(ThemeContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loadingRedeem, setLoadingRedeem] = useState<boolean>()
-  const [loadingConvert, setLoadingConvert] = useState<boolean>()
-
-  const metadata = decodeFCMetadata(currentFC?.metadata)
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -169,21 +165,6 @@ export default function Rewards({
       ? '<1'
       : sharePct?.toString()
 
-  // function convert() {
-  //   if (!transactor || !contracts || !userAddress || !projectId) return
-
-  //   setLoadingConvert(true)
-
-  //   transactor(
-  //     contracts.TicketBooth,
-  //     'unstake',
-  //     [userAddress, projectId.toHexString(), iouBalance?.toHexString()],
-  //     {
-  //       onDone: () => setLoadingConvert(false),
-  //     },
-  //   )
-  // }
-
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
 
@@ -220,15 +201,15 @@ export default function Rewards({
     ? tokenAddress !== constants.AddressZero
     : undefined
 
+  const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
+
   return (
     <div>
       <Space direction="vertical" size="large">
         <Statistic
           title={
-            <TooltipLabel
-              label={
-                <span>{tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}</span>
-              }
+            <SectionHeader
+              text={tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
               tip={`${
                 tokenSymbol ? tokenSymbol + ' ERC20' : 'tokens'
               } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
@@ -236,14 +217,6 @@ export default function Rewards({
                   ? 'Address: ' + tokenAddress
                   : ''
               }`}
-              style={{
-                fontWeight:
-                  forThemeOption &&
-                  forThemeOption({
-                    [ThemeOption.light]: 600,
-                    [ThemeOption.dark]: 400,
-                  }),
-              }}
             />
           }
           valueRender={() => (
@@ -274,30 +247,36 @@ export default function Rewards({
                     <div>
                       {ticketsIssued && (
                         <div>
-                          {ticketsBalance?.gt(0)
-                            ? formatWad(ticketsBalance ?? 0)
-                            : `0 ${
-                                tokenSymbol || 'tokens'
-                              } in your wallet`}{' '}
+                          {ticketsBalance?.gt(0) ? (
+                            <>
+                              {`${formatWad(ticketsBalance ?? 0, {
+                                decimals: 0,
+                              })} ${tokenSymbol}`}{' '}
+                              <Button
+                                onClick={() => setStakeModalVisible(true)}
+                                type="text"
+                                size="small"
+                                style={{ color: colors.text.action.primary }}
+                              >
+                                Stake
+                              </Button>
+                            </>
+                          ) : (
+                            <>{`0 ${tokenSymbol || 'tokens'} in your wallet`}</>
+                          )}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {ticketsIssued &&
-                          iouBalance?.gt(0) &&
-                          loadingConvert ? (
-                            <Loading />
-                          ) : (
-                            <div>
-                              {formatWad(iouBalance ?? 0)} staked{' '}
-                              <Tooltip title={'Unstake ' + tokenSymbol}>
-                                <ExportOutlined
-                                  style={{ color: colors.icon.action.primary }}
-                                  onClick={() => setUnstakeModalVisible(true)}
-                                />
-                              </Tooltip>
-                            </div>
-                          )}
+                          {formatWad(iouBalance ?? 0, { decimals: 0 })} staked{' '}
+                          <Button
+                            onClick={() => setUnstakeModalVisible(true)}
+                            type="text"
+                            size="small"
+                            style={{ color: colors.text.action.primary }}
+                          >
+                            Unstake
+                          </Button>
                         </div>
                       )}
 
@@ -326,7 +305,9 @@ export default function Rewards({
           )}
         />
 
-        {!ticketsIssued && isOwner && <IssueTickets projectId={projectId} />}
+        {!ticketsIssued && hasIssueTicketsPermission && (
+          <IssueTickets projectId={projectId} />
+        )}
       </Space>
 
       <Modal
@@ -354,13 +335,15 @@ export default function Rewards({
           </p>
           <p>
             Tokens can be redeemed for a project's overflow according to the
-            bonding curve rate of the current funding cycle.
+            bonding curve rate of the current funding cycle. Tokens are burned
+            when they are redeemed.
           </p>
-          {redeemDisabled ? (
+          {redeemDisabled && (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
               You can redeem tokens once this project has overflow.
             </div>
-          ) : (
+          )}
+          {!redeemDisabled && (
             <div>
               <FormattedNumberInput
                 min={0}
@@ -381,7 +364,11 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
-
+      <ConfirmStakeTokensModal
+        visible={stakeModalVisible}
+        onCancel={() => setStakeModalVisible(false)}
+        ticketsUpdateOn={ticketsUpdateOn}
+      />
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}

@@ -1,4 +1,5 @@
 import { CloseCircleFilled } from '@ant-design/icons'
+import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -9,11 +10,13 @@ export default function ImageUploader({
   onSuccess,
   maxSize,
   metadata,
+  text,
 }: {
   initialUrl?: string
   metadata?: Record<string | number, any>
   onSuccess?: (url?: string) => void
   maxSize?: number // KB
+  text?: string
 }) {
   const [url, setUrl] = useState<string>()
   const [loadingUpload, setLoadingUpload] = useState<boolean>()
@@ -35,7 +38,7 @@ export default function ImageUploader({
       }}
       gutter={30}
     >
-      <Col xs={24} md={8}>
+      <Col xs={24} md={7}>
         <Space align="start">
           {url && (
             <img
@@ -80,29 +83,28 @@ export default function ImageUploader({
                 })
               }
             >
-              <Button loading={loadingUpload}>Upload</Button>
+              <Button loading={loadingUpload} type="text">
+                <FileImageOutlined /> {text ?? null}
+              </Button>
             </Upload>
           )}
         </Space>
       </Col>
 
-      <Col xs={24} md={16}>
+      <Col xs={24} md={17}>
         {url?.length ? (
-          <Space
+          <span
             style={{
               fontSize: '.7rem',
               wordBreak: 'break-all',
               textOverflow: 'ellipsis',
             }}
-            direction="vertical"
           >
-            <span>
-              Uploaded to:{' '}
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                {url}
-              </a>
-            </span>
-          </Space>
+            Uploaded to:{' '}
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              {url}
+            </a>
+          </span>
         ) : null}
       </Col>
     </Row>

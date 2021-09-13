@@ -1,49 +1,80 @@
-import { Tooltip } from 'antd'
 import { LinkOutlined } from '@ant-design/icons'
+import { Tooltip } from 'antd'
 import { readProvider } from 'constants/readProvider'
 import { utils } from 'ethers'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+
+type EnsRecord = {
+  name: string | null
+  expires: number
+}
 
 export default function FormattedAddress({
   address,
 }: {
   address: string | undefined
 }) {
-  const [ensName, setEnsName] = useState<string>()
+  const [ensName, setEnsName] = useState<string | null>()
 
-  useLayoutEffect(() => {
-    const read = async () => {
-      if (
-        address?.toLowerCase() ===
-        '0x64931F06d3266049Bf0195346973762E6996D764'.toLowerCase()
-      ) {
-        setEnsName('tiledao.eth')
+  const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
+
+  const getEnsDict = () => {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem(getStorageKey()) ?? '{}',
+      ) as Record<string, EnsRecord>
+    } catch (e) {
+      console.info('ENS storage not found')
+      return {}
+    }
+  }
+
+  const now = new Date().valueOf()
+
+  useEffect(() => {
+    if (!address || !utils.isAddress(address)) return
+
+    const tryUpdateENSDict = async () => {
+      const record = getEnsDict()[address]
+
+      if (record?.expires > now) {
+        setEnsName(record.name)
         return
       }
 
-      if (!address || !utils.isAddress(address)) {
-        setEnsName(undefined)
-        return
-      }
+      let newRecord = {
+        name: null,
+        expires: now + 24 * 60 * 60 * 1000, // Expires in one day
+      } as EnsRecord
 
       try {
         const name = await readProvider.lookupAddress(address)
 
-        if (!name) return
-
         // Reverse lookup to check validity
-        const isValid =
-          (await (await readProvider.resolveName(name)).toLowerCase()) ===
-          address.toLowerCase()
-
-        if (isValid) setEnsName(name)
+        if (
+          name &&
+          (await readProvider.resolveName(name))?.toLowerCase() ===
+            address.toLowerCase()
+        ) {
+          newRecord.name = name
+        }
       } catch (e) {
         console.log('Error looking up ENS name for address', address, e)
       }
+
+      window.localStorage?.setItem(
+        getStorageKey(),
+        JSON.stringify({
+          ...getEnsDict(),
+          [address]: newRecord,
+        }),
+      )
+
+      setEnsName(newRecord.name)
     }
 
-    read()
-  }, [readProvider, address])
+    tryUpdateENSDict()
+  }, [address])
 
   if (!address) return null
 

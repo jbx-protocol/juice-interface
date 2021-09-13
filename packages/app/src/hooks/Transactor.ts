@@ -6,6 +6,7 @@ import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import { notification } from 'antd'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
+import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
 
 import { NetworkContext } from '../contexts/networkContext'
@@ -36,9 +37,11 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider, onNeedProvider } = useContext(
+  const { signingProvider: provider, onSelectWallet } = useContext(
     NetworkContext,
   )
+
+  const { isDarkMode } = useContext(ThemeContext);
 
   return useCallback(
     async (
@@ -47,8 +50,10 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
-      if (onNeedProvider) {
-        await onNeedProvider()
+      if (!onSelectWallet) return false;
+
+      if (!provider) {
+        onSelectWallet()
         if (options?.onDone) options.onDone()
         return false
       }
@@ -60,10 +65,10 @@ export function useTransactor({
       const network = await provider.getNetwork()
 
       const notifyOpts: InitOptions = {
-        dappId: '2f161484-1dae-4684-b0db-6ff7c4470e2e', // https://account.blocknative.com
+        dappId: process.env.REACT_APP_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
         networkId: network.chainId,
-        darkMode: true,
+        darkMode: isDarkMode,
         transactionHandler: txInformation => {
           console.log('HANDLE TX', txInformation)
           if (options && txInformation.transaction.status === 'confirmed') {
@@ -155,6 +160,6 @@ export function useTransactor({
         return false
       }
     },
-    [provider, gasPrice, onNeedProvider],
+    [provider, gasPrice, onSelectWallet],
   )
 }

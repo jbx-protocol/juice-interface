@@ -4,6 +4,7 @@ import Mod from 'components/shared/Mod'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber, constants } from 'ethers'
+import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod } from 'models/mods'
@@ -11,27 +12,25 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import ProjectPayoutMods from '../shared/formItems/ProjectPayoutMods'
+import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
   mods,
   fundingCycle,
   projectId,
-  isOwner,
   total,
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
-    | Pick<FundingCycle, 'target' | 'currency' | 'configured'>
+    | Pick<FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
-  isOwner: boolean | undefined
   total?: BigNumber
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -86,7 +85,10 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const baseTotal = total ?? amountSubFee(fundingCycle?.target, adminFeePercent)
+  const baseTotal =
+    total ?? amountSubFee(fundingCycle?.target, fundingCycle?.fee)
+
+  const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
   if (!fundingCycle) return null
 
@@ -155,7 +157,7 @@ export default function PayoutModsList({
         />
       )}
 
-      {fundingCycle && projectId?.gt(0) && isOwner ? (
+      {fundingCycle && projectId?.gt(0) && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit payouts
@@ -194,6 +196,7 @@ export default function PayoutModsList({
             onModsChanged={setEditingMods}
             target={fromWad(fundingCycle.target)}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
+            fee={fundingCycle.fee}
           />
         </Modal>
       ) : null}

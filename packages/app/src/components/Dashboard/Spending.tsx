@@ -6,29 +6,24 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
-import { useContext, useState } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { CSSProperties, useContext, useState } from 'react'
+import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
-import { amountSubFee } from 'utils/math'
 
-import { fromPerbicent } from '../../utils/formatNumber'
-import PayoutModsList from './PayoutModsList'
-import { smallHeaderStyle } from './styles'
+import PayoutModsList from '../shared/PayoutModsList'
 
 export default function Spending({
   payoutMods,
 }: {
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { adminFeePercent } = useContext(UserContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, isOwner, owner, currentFC } =
+  const { balanceInCurrency, projectId, owner, currentFC } =
     useContext(ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -40,6 +35,13 @@ export default function Spending({
   const withdrawable = balanceInCurrency?.gt(untapped)
     ? untapped
     : balanceInCurrency
+
+  const smallHeaderStyle: CSSProperties = {
+    fontSize: '.7rem',
+    fontWeight: 500,
+    cursor: 'default',
+    color: colors.text.secondary,
+  }
 
   return (
     <div>
@@ -62,13 +64,13 @@ export default function Spending({
                 <CurrencySymbol
                   currency={currentFC.currency.toNumber() as CurrencyOption}
                 />
-                {formatWad(amountSubFee(withdrawable, adminFeePercent)) || '0'}{' '}
+                {formatWad(withdrawable) || '0'}{' '}
               </span>
               <TooltipLabel
-                style={smallHeaderStyle(colors)}
+                style={smallHeaderStyle}
                 label="AVAILABLE"
                 tip={`The funds available to withdraw for this funding cycle after the ${fromPerbicent(
-                  adminFeePercent,
+                  currentFC.fee,
                 )}% JBX fee is subtracted. This number won't roll over to the next funding cycle, so funds should be withdrawn before it ends.`}
               />
             </div>
@@ -80,9 +82,7 @@ export default function Spending({
               Distribute
             </Button>
           </div>
-          <div
-            style={{ ...smallHeaderStyle(colors), color: colors.text.tertiary }}
-          >
+          <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
             <div>
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
@@ -114,7 +114,6 @@ export default function Spending({
             mods={payoutMods}
             fundingCycle={currentFC}
             projectId={projectId}
-            isOwner={isOwner}
           />
         </div>
       </Space>

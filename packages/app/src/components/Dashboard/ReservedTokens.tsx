@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
@@ -13,7 +13,7 @@ import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import DistributeTokensModal from '../modals/DistributeTokensModal'
-import TicketModsList from './TicketModsList'
+import TicketModsList from '../shared/TicketModsList'
 
 export default function ReservedTokens({
   fundingCycle,
@@ -25,9 +25,9 @@ export default function ReservedTokens({
   hideActions?: boolean
 }) {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
-  const { userAddress } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, isOwner, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenSymbol } = useContext(ProjectContext)
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
@@ -95,7 +95,6 @@ export default function ReservedTokens({
         mods={ticketMods}
         fundingCycle={fundingCycle}
         projectId={projectId}
-        isOwner={isOwner}
       />
 
       {!hideActions && (

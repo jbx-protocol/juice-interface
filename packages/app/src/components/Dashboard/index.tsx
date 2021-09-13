@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -12,21 +12,22 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { parseProjectJson } from 'models/subgraph-entities/project'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
+import { querySubgraph, trimHexZero } from 'utils/graph'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
+  const [createdAt, setCreatedAt] = useState<number>()
 
   const converter = useCurrencyConverter()
-
-  const { userAddress } = useContext(UserContext)
 
   const { handle }: { handle?: string } = useParams()
 
@@ -39,6 +40,25 @@ export default function Dashboard() {
       [setProjectExists],
     ),
   })
+
+  useEffect(() => {
+    querySubgraph(
+      {
+        entity: 'project',
+        keys: ['createdAt'],
+        where: projectId
+          ? {
+              key: 'id',
+              value: trimHexZero(projectId.toHexString()),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res?.projects) return
+        setCreatedAt(parseProjectJson(res.projects[0]).createdAt)
+      },
+    )
+  }, [projectId])
 
   const owner = useContractReader<string>({
     contract: ContractName.Projects,
@@ -256,17 +276,6 @@ export default function Dashboard() {
     [currentFC?.currency, balance, converter],
   )
 
-  // const canSetPayoutMods = useContractReader<string>({
-  //   contract: ContractName.OperatorStore,
-  //   functionName: 'hasPermission',
-  //   args:
-  //     userAddress && owner && projectId
-  //       ? [userAddress, owner, projectId.toHexString(), 14]
-  //       : null,
-  // })
-
-  const isOwner = userAddress === owner
-
   if (projectExists === undefined) return <Loading />
 
   if (!projectExists) {
@@ -285,12 +294,15 @@ export default function Dashboard() {
 
   if (!projectId || !handle || !metadata) return null
 
+  const projectType = projectTypes[projectId?.toNumber()] ?? 'standard'
+
   return (
     <ProjectContext.Provider
       value={{
+        createdAt,
         projectId,
+        projectType,
         owner,
-        isOwner,
         handle,
         metadata,
         currentFC,
@@ -306,6 +318,12 @@ export default function Dashboard() {
     >
       <div style={layouts.maxWidth}>
         <Project />
+        <div
+          style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          Back to top
+        </div>
       </div>
     </ProjectContext.Provider>
   )

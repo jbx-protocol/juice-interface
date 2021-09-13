@@ -23,7 +23,7 @@ export const darkColors = {
   light0: '#e1e0e8',
   light1: '#e1e0e8d8',
   light2: '#e1e0e8a4',
-  light3: '#e1e0e864',
+  light3: '#e1e0e844',
   dark0: '#1c1b21',
   dark1: '#2e2b3c',
   dark2: '#494361',

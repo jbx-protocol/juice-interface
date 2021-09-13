@@ -88,7 +88,7 @@ yarn deploy-mainnet
 
 ## Frontend .env
 
-Create new `packages/app/.env`, reference `packages/app/.example.env`
+Create new `packages/app/.env`, reference `packages/app/.example.env`.
 
 ```bash
 REACT_APP_INFURA_ID: #Your [Infura](https://infura.io/) key. This is the only .env variable you *must* provide.
@@ -97,15 +97,16 @@ REACT_APP_PINATA_PINNER_KEY: #Your [Pinata](https://pinata.cloud/) key.
 REACT_APP_PINATA_PINNER_SECRET: #Your [Pinata](https://pinata.cloud/) secret.
 ```
 
+=======
 ---
 
 ## 🔏 Web3 Providers:
 
-The frontend has three different providers that provide different levels of access to different chains:
+The frontend has two different providers that provide different levels of access to different chains:
 
 `readProvider`: used to read from contracts on network of injected provider (`.env` file points you at testnet or mainnet)
 
-`signingProvider`: your personal [MetaMask](https://metamask.io/download.html), [WalletConnect](https://walletconnect.org/apps) via [Argent](https://www.argent.xyz/), or other injected wallet (generates [burner-provider](https://www.npmjs.com/package/burner-provider) on page load). Used to sign transactions.
+`signingProvider`: your personal wallet, connected to via [Blocknative](https://docs.blocknative.com/onboard).
 
 ---
 
@@ -113,26 +114,12 @@ The frontend has three different providers that provide different levels of acce
 
 Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
 
-[kovan.juicebox.money](kovan.juicebox.money) and [rinkeby.juicebox.money](rinkeby.juicebox.money) deploy automatically from `prod-fleek`.
+[kovan.juicebox.money](kovan.juicebox.money) and [rinkeby.juicebox.money](rinkeby.juicebox.money) deploy automatically from `main`.
 
 Automatic deployment does not:
 
 - deploy contracts
 - ship subgraph updates
-
-### Suggested deployment flow:
-
-If only shipping frontend changes:
-
-1. Merge latest into `main`
-2. Rebase `main` into `prod-fleek`
-
-If contracts or subgraphs have changed:
-
-1. Merge latest into `main`
-2. Rebase `main` into `prod-fleek` locally
-3. Deploy contracts & ship subgraph updates for all networks
-4. Push `prod-fleek`
 
 ## Graph
 

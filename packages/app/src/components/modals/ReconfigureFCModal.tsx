@@ -4,10 +4,11 @@ import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import RulesForm from 'components/Create/RulesForm'
-import PayoutModsList from 'components/Dashboard/PayoutModsList'
-import TicketModsList from 'components/Dashboard/TicketModsList'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import PayoutModsList from 'components/shared/PayoutModsList'
+import TicketModsList from 'components/shared/TicketModsList'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
@@ -33,12 +34,10 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
-
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
 import PayModsForm from '../Create/PayModsForm'
 import TicketingForm, { TicketingFormFields } from '../Create/TicketingForm'
-import { ProjectContext } from 'contexts/projectContext'
 
 export default function ReconfigureFCModal({
   fundingCycle,
@@ -55,7 +54,7 @@ export default function ReconfigureFCModal({
   ticketMods: TicketMod[] | undefined
   onDone?: VoidFunction
 }) {
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =
@@ -75,7 +74,6 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { adminFeePercent } = useContext(UserContext)
   const { currentFC } = useContext(ProjectContext)
 
   const resetTicketingForm = () =>
@@ -294,30 +292,39 @@ export default function ReconfigureFCModal({
             <Space size="large">
               <Statistic
                 title="Duration"
-                value={formattedNum(editingFC?.duration)}
-                suffix="days"
+                value={
+                  editingFC.duration.gt(0)
+                    ? formattedNum(editingFC.duration)
+                    : 'Not set'
+                }
+                suffix={editingFC.duration.gt(0) ? 'days' : ''}
               />
               <Statistic
                 title="Amount"
                 valueRender={() => (
                   <span>
                     <CurrencySymbol
-                      currency={
-                        editingFC?.currency.toNumber() as CurrencyOption
-                      }
+                      currency={editingFC.currency.toNumber() as CurrencyOption}
                     />
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
                       (
-                      <CurrencySymbol
-                        currency={
-                          editingFC?.currency.toNumber() as CurrencyOption
-                        }
-                      />
-                      {formatWad(
-                        amountSubFee(editingFC?.target, adminFeePercent),
-                      )}{' '}
-                      after JBX fee)
+                      {adminFeePercent?.gt(0) ? (
+                        <span>
+                          <CurrencySymbol
+                            currency={
+                              editingFC.currency.toNumber() as CurrencyOption
+                            }
+                          />
+                          {formatWad(
+                            amountSubFee(editingFC.target, adminFeePercent),
+                          )}{' '}
+                          after JBX fee
+                        </span>
+                      ) : (
+                        <span>0% fee</span>
+                      )}
+                      )
                     </span>
                   </span>
                 )}
@@ -328,7 +335,7 @@ export default function ReconfigureFCModal({
           <Space size="large" align="end">
             <Statistic
               title="Reserved tokens"
-              value={fromPerbicent(editingFC?.reserved)}
+              value={fromPerbicent(editingFC.reserved)}
               suffix="%"
             />
             {editingFC &&
@@ -336,7 +343,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title="Discount rate"
-                  value={fromPermille(editingFC?.discountRate)}
+                  value={fromPermille(editingFC.discountRate)}
                   suffix="%"
                 />
               )}
@@ -345,7 +352,7 @@ export default function ReconfigureFCModal({
               hasFundingTarget(editingFC) && (
                 <Statistic
                   title="Bonding curve rate"
-                  value={fromPerbicent(editingFC?.bondingCurveRate)}
+                  value={fromPerbicent(editingFC.bondingCurveRate)}
                   suffix="%"
                 />
               )}
@@ -370,7 +377,6 @@ export default function ReconfigureFCModal({
               mods={editingPayoutMods}
               projectId={undefined}
               fundingCycle={editingFC}
-              isOwner={true}
             />
           </div>
 
@@ -380,7 +386,6 @@ export default function ReconfigureFCModal({
               mods={editingTicketMods}
               projectId={undefined}
               fundingCycle={undefined}
-              isOwner={true}
             />
           </div>
         </Space>
@@ -398,7 +403,7 @@ export default function ReconfigureFCModal({
         <BudgetForm
           initialCurrency={editingFC.currency.toNumber() as CurrencyOption}
           initialTarget={fromWad(editingFC.target)}
-          initialDuration={editingFC?.duration.toString()}
+          initialDuration={editingFC.duration.toString()}
           onSave={async (currency, target, duration) => {
             onBudgetFormSaved(currency, target, duration)
             setBudgetFormModalVisible(false)
@@ -420,6 +425,7 @@ export default function ReconfigureFCModal({
           initialMods={editingPayoutMods}
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
+          fee={adminFeePercent}
           onSave={async mods => {
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)
@@ -474,6 +480,7 @@ export default function ReconfigureFCModal({
         <IncentivesForm
           initialDiscountRate={fromPermille(editingFC.discountRate)}
           initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
+          showBondingCurve={hasFundingTarget(editingFC)}
           useAdvanced
           onSave={async (discountRate: string, bondingCurveRate: string) => {
             await ticketingForm.validateFields()

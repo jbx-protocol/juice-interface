@@ -1,4 +1,4 @@
-import { Button, Form, Space, Switch } from 'antd'
+import { Button, Form, Space, Switch, Divider } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants } from 'ethers'
@@ -51,7 +51,7 @@ export default function BudgetForm({
         your community. Whenever your project is earning more than your funding
         target, the extra funds are locked in an overflow pool. Anyone who holds
         your tokens can redeem them for a portion of funds from the overflow
-        pool.
+        pool. If left unclaimed, overflow serves as a runway for your project.
       </p>
 
       <Form layout="vertical">
@@ -64,7 +64,6 @@ export default function BudgetForm({
                   checked ? '10000' : fromWad(constants.MaxUint256) || '0',
                 )
                 setCurrency(1)
-                dispatch(editingProjectActions.setIsRecurring(checked))
                 setShowFundingFields(checked)
               }}
             />
@@ -81,9 +80,16 @@ export default function BudgetForm({
             onValueChange={val => setTarget(val || '0')}
             currency={currency}
             onCurrencyChange={setCurrency}
-            includeFee
+            fee={editingFC.fee}
           />
         )}
+
+        <Divider
+          style={{
+            margin: '40px 0',
+            borderColor: colors.stroke.tertiary,
+          }}
+        />
 
         <p style={{ color: colors.text.primary, marginTop: 40 }}>
           The duration of your funding cycle determines how often your target

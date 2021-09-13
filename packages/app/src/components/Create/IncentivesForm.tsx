@@ -11,11 +11,13 @@ export type IncentivesFormFields = {
 export default function IncentivesForm({
   initialDiscountRate,
   initialBondingCurveRate,
+  showBondingCurve,
   onSave,
-  useAdvanced
+  useAdvanced,
 }: {
   initialDiscountRate: string
   initialBondingCurveRate: string
+  showBondingCurve: boolean
   onSave: (discountRate: string, bondingCurveRate: string) => void
   useAdvanced?: boolean
 }) {
@@ -28,7 +30,7 @@ export default function IncentivesForm({
   useLayoutEffect(() => {
     setDiscountRate(initialDiscountRate)
     setBondingCurveRate(initialBondingCurveRate)
-    setShowAdvanced(useAdvanced)
+    setShowAdvanced(showBondingCurve ? useAdvanced : true)
   }, [])
 
   const [showAdvanced, setShowAdvanced] = useState<boolean>()
@@ -53,12 +55,14 @@ export default function IncentivesForm({
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>Incentives</h1>
 
-      <div>
-        <Space>
-          <Switch onChange={setShowAdvanced} />
-          <span>Show advanced settings</span>
-        </Space>
-      </div>
+      {showBondingCurve && (
+        <div>
+          <Space>
+            <Switch onChange={setShowAdvanced} />
+            <span>Show advanced settings</span>
+          </Space>
+        </div>
+      )}
 
       {showAdvanced ? (
         <Form layout="vertical">
@@ -67,11 +71,13 @@ export default function IncentivesForm({
             value={discountRate?.toString() ?? '0'}
             onChange={(val?: number) => setDiscountRate(val?.toString())}
           />
-          <FormItems.ProjectBondingCurveRate
-            name="bondingCurveRate"
-            value={bondingCurveRate?.toString() ?? '0'}
-            onChange={(val?: number) => setBondingCurveRate(val?.toString())}
-          />
+          {showBondingCurve && (
+            <FormItems.ProjectBondingCurveRate
+              name="bondingCurveRate"
+              value={bondingCurveRate?.toString() ?? '0'}
+              onChange={(val?: number) => setBondingCurveRate(val?.toString())}
+            />
+          )}
           {saveButton}
         </Form>
       ) : (

@@ -2,8 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import ImageUploader from 'components/shared/inputs/ImageUploader'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
+import { NetworkContext } from 'contexts/networkContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
@@ -23,7 +25,8 @@ export default function ConfirmPayOwnerModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ note: string }>()
-  const { contracts, transactor, userAddress } = useContext(UserContext)
+  const { contracts, transactor } = useContext(UserContext)
+  const { userAddress } = useContext(NetworkContext);
   const { tokenSymbol, currentFC, projectId, metadata } =
     useContext(ProjectContext)
 
@@ -100,13 +103,25 @@ export default function ConfirmPayOwnerModal({
             {formatWad(ownerTickets)}
           </Descriptions.Item>
         </Descriptions>
-        <Form form={form}>
+        <Form form={form} layout="vertical">
           <Form.Item label="Memo" name="note" rules={[{ max: 256 }]}>
             <Input.TextArea
-              placeholder="Add a note to this payment on-chain (optional)."
+              placeholder="(Optional) Add a note to this payment on-chain"
               maxLength={256}
               showCount
               autoSize
+            />
+          </Form.Item>
+          <Form.Item>
+            <ImageUploader
+              text="Add image"
+              onSuccess={url => {
+                if (!url) return
+                const note = form.getFieldValue('note') || ''
+                form.setFieldsValue({
+                  note: note ? note + ' ' + url : url,
+                })
+              }}
             />
           </Form.Item>
         </Form>

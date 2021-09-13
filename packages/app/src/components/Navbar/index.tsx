@@ -55,6 +55,25 @@ export default function Navbar() {
     />
   )
 
+  const menu = () => {
+    return (
+      <>
+        {menuItem('Projects', '/#/projects')}
+        {menuItem('FAQ', undefined, () => {
+          window.location.hash = '/'
+          setTimeout(() => {
+            document
+              .getElementById('faq')
+              ?.scrollIntoView({ behavior: 'smooth' })
+          }, 0)
+        })}
+        {menuItem('Docs', 'https://docs.juicebox.money/')}
+        {menuItem('Blog', 'https://blog.juicebox.money/')}
+        {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
+      </>
+    )
+  }
+
   return window.innerWidth > 900 ? (
     <Header
       style={{
@@ -68,18 +87,7 @@ export default function Navbar() {
         <a href="/" style={{ display: 'inline-block' }}>
           {logo()}
         </a>
-        {menuItem('Projects', '/#/projects')}
-        {menuItem('FAQ', undefined, () => {
-          window.location.hash = '/'
-
-          setTimeout(() => {
-            document
-              .getElementById('faq')
-              ?.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
-        })}
-        {menuItem('Docs', 'https://docs.juicebox.money/')}
-        {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
+        {menu()}
       </Space>
       <Space size="middle">
         <ThemePicker />
@@ -93,6 +101,7 @@ export default function Navbar() {
       style={{
         background: colors.background.l0,
         zIndex: 100,
+        padding: 8,
       }}
       onClick={e => {
         setActiveKey(undefined)
@@ -117,19 +126,8 @@ export default function Navbar() {
           }
           extra={<ThemePicker />}
         >
-          <Space direction="vertical" size="large">
-            {menuItem('Home', '/#/')}
-            {menuItem('Projects', '/#/projects')}
-            {menuItem('FAQ', undefined, () => {
-              window.location.hash = '/'
-
-              setTimeout(() => {
-                document
-                  .getElementById('faq')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }, 0)
-            })}
-            {menuItem('Docs', 'https://docs.juicebox.money/')}
+          <Space direction="vertical" size="middle">
+            {menu()}
             <Account />
           </Space>
         </CollapsePanel>

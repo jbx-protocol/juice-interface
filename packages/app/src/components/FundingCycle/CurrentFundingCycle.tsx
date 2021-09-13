@@ -4,8 +4,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import FundingCyclePreview from './FundingCyclePreview'
-import ReservedTokens from './ReservedTokens'
-import Spending from './Spending'
+import ReservedTokens from '../Dashboard/ReservedTokens'
+import Spending from '../Dashboard/Spending'
 
 export default function CurrentFundingCycle({
   showCurrentDetail,
@@ -23,16 +23,16 @@ export default function CurrentFundingCycle({
 
   return (
     <div style={{ position: 'relative' }}>
-      <CardSection padded style={{ marginBottom: 10 }}>
+      <CardSection>
         <FundingCyclePreview
           fundingCycle={currentFC}
           showDetail={showCurrentDetail}
         />
       </CardSection>
-      <CardSection padded style={{ marginBottom: 10 }}>
+      <CardSection>
         <Spending payoutMods={currentPayoutMods} />
       </CardSection>
-      <CardSection padded>
+      <CardSection>
         <ReservedTokens
           fundingCycle={currentFC}
           ticketMods={currentTicketMods}

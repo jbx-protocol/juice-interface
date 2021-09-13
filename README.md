@@ -97,7 +97,6 @@ REACT_APP_PINATA_PINNER_KEY: #Your [Pinata](https://pinata.cloud/) key.
 REACT_APP_PINATA_PINNER_SECRET: #Your [Pinata](https://pinata.cloud/) secret.
 ```
 
-=======
 ---
 
 ## 🔏 Web3 Providers:

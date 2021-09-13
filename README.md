@@ -38,7 +38,7 @@ yarn start
 
 🔑 Use `yarn accounts` to get the list of wallets that Hardhat created when you called `yarn chain` above. Account 0 deploys the contract by default, so the first address `yarn accounts` returns is the Juicebox contract deployer. 
 
-Each of the listed wallets is initialized with 10,000 ETH. Call `yarn balance <deployer-address> to see this addresses's remaining balance.
+Each of the listed wallets is initialized with 10,000 ETH. Call `yarn balance <deployer-address>` to see this addresses's remaining balance.
 
 <!-- 🔑 Create wallets links to your app with `yarn wallet` (empty) or `yarn fundedwallet --amount <eth-amount>` (pre-loaded with ETH) and navigate to generated url (http://localhost:3000/pk#\<some-key>)
 

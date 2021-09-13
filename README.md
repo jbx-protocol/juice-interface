@@ -30,21 +30,24 @@ yarn chain
 yarn deploy-local
 ```
 
-> in a third terminal window, start the app and open http://localhost:3000 to view it
+> in a third terminal window, start the app and open http://localhost:3000 to view it.
 
 ```bash
 yarn start
 ```
 
+Note: Juicebox dependencies require Node v16 or more recent releases.
+
 🔑 Use `yarn accounts` to get the list of wallets that Hardhat created when you called `yarn chain` above. Account 0 deploys the contract by default, so the first address `yarn accounts` returns is the Juicebox contract deployer. 
 
 Each of the listed wallets is initialized with 10,000 ETH. Call `yarn balance <deployer-address>` to see this addresses's remaining balance.
 
-<!-- 🔑 Create wallets links to your app with `yarn wallet` (empty) or `yarn fundedwallet --amount <eth-amount>` (pre-loaded with ETH) and navigate to generated url (http://localhost:3000/pk#\<some-key>)
+🔑 Use `yarn wallet` to create a new wallet with 0 ETH balance. Use `yarn fundedwallet` to create a wallet with 1 ETH balance, or `yarn fundedwallet --amount <eth-amount>` to specify the amount of ETH with which to initialize the new wallet. Navigate to the generated url (http://localhost:3000/pk#\<some-key>) to inspect wallet in the browser.
 
+<!-- 
 Note: `yarn fundedwallet` will fail if your local deployer account has a 0 balance. To fund it, first:
 
-- Get account address on local chain using `yarn account`
+- Get account address on local chain using `yarn accounts`
 - Run `yarn send --from 1 --to <deployer-address> --amount 10` to send 10 ETH to deployer account from first auto-generated hardhat account wallet -->
 
 🔧 Configure 👷[HardHat](https://hardhat.org/config/) by editing `hardhat.config.js` in `packages/hardhat`

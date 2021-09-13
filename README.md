@@ -36,7 +36,7 @@ yarn deploy-local
 yarn start
 ```
 
-Note: Juicebox dependencies require Node v16 or more recent releases.
+Note: Juicebox dependencies require **Node v16** or more recent releases.
 
 🔑 Use `yarn accounts` to get the list of wallets that Hardhat created when you called `yarn chain` above. Account 0 deploys the contract by default, so the first address `yarn accounts` returns is the Juicebox contract deployer. 
 

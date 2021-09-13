@@ -50,8 +50,8 @@ Note: `yarn fundedwallet` will fail if your local deployer account has a 0 balan
 🔧 Configure 👷[HardHat](https://hardhat.org/config/) by editing `hardhat.config.js` in `packages/hardhat`
 
 > ✨ The [HardHat network](https://hardhat.org/hardhat-network/) provides _stack traces_ and _console.log_ debugging for our contracts ✨
-
-Run `yarn account` to create a local deployer wallet private key. To send ETH to generated wallet on a local chain, run `# yarn send --from <address or account index> --to <receiver address> --amount <ETH amount>`
+<!-- 
+Run `yarn account` to create a local deployer wallet private key. To send ETH to generated wallet on a local chain, run `# yarn send --from <address or account index> --to <receiver address> --amount <ETH amount>` -->
 
 ---
 
@@ -91,15 +91,13 @@ yarn deploy-mainnet
 Create new `packages/app/.env`, reference `packages/app/.example.env`
 
 ```bash
-REACT_APP_INFURA_ID=
+REACT_APP_INFURA_ID= #An Infura API key. This is the only .env variable you *must* provide.
 REACT_APP_INFURA_NETWORK= # defaults to localhost in development mode
+REACT_APP_INFURA_ID: #Your [Infura](https://infura.io/) key.
+REACT_APP_INFURA_NETWORK: #Network name (kovan, rinkeby, mainnet, localhost).
+REACT_APP_PINATA_PINNER_KEY: #Your [Pinata](https://pinata.cloud/) key.
+REACT_APP_PINATA_PINNER_SECRET: #Your [Pinata](https://pinata.cloud/) secret.
 ```
-
-`REACT_APP_INFURA_ID`: Your [Infura](https://infura.io/) key.
-`REACT_APP_INFURA_NETWORK`: Network name (kovan, rinkeby, mainnet, localhost).
-`REACT_APP_PINATA_PINNER_KEY`: Your [Pinata](https://pinata.cloud/) key.
-`REACT_APP_PINATA_PINNER_SECRET`: Your [Pinata](https://pinata.cloud/) secret.
----
 
 ## 🔏 Web3 Providers:
 

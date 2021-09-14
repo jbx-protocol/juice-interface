@@ -161,10 +161,8 @@ export default function Create() {
     setLoadingCreate(true)
 
     const uploadedMetadata = await uploadProjectMetadata({
-      name: editingProjectInfo.metadata.name,
-      logoUri: editingProjectInfo.metadata.logoUri,
-      infoUri: editingProjectInfo.metadata.infoUri,
-      description: editingProjectInfo.metadata.description,
+      ...editingProjectInfo.metadata,
+      version: 1,
     })
 
     if (!uploadedMetadata.success) {

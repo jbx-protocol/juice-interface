@@ -40,6 +40,7 @@ export const editingProjectSlice = createSlice({
         infoUri: '',
         logoUri: '',
         description: '',
+        version: 1
       },
       handle: '',
     },

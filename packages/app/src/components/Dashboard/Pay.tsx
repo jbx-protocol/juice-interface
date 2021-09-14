@@ -84,7 +84,7 @@ export default function Pay() {
           {fcMetadata?.reservedRate === 200 ? (
             <Tooltip title="Paying this project is currently disabled">
               <Button style={{ width: '100%' }} type="primary" disabled>
-                Pay
+                {metadata.payText || 'Pay'}
               </Button>
             </Tooltip>
           ) : (
@@ -94,7 +94,7 @@ export default function Pay() {
               disabled={currentFC.configured.eq(0)}
               onClick={weiPayAmt ? pay : undefined}
             >
-              Pay
+              {metadata.payText || 'Pay'}
             </Button>
           )}
           {payIn === 1 && (

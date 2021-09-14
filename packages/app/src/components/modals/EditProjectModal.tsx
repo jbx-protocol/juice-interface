@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Divider, Form, Modal } from 'antd'
+import { Button, Divider, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
@@ -20,6 +20,8 @@ export type ProjectInfoFormFields = {
   description: string
   infoUrl: string
   logoUrl: string
+  payText: string
+  version: number
 }
 
 export type HandleFormFields = {
@@ -54,6 +56,7 @@ export default function EditProjectModal({
         infoUrl: metadata?.infoUri,
         logoUrl: metadata?.logoUri,
         description: metadata?.description,
+        payText: metadata?.payText,
       })
     }
 
@@ -74,6 +77,8 @@ export default function EditProjectModal({
       description: fields.description,
       logoUri: fields.logoUrl,
       infoUri: fields.infoUrl,
+      payText: fields.payText,
+      version: 1
     })
 
     if (!uploadedMetadata?.success) {
@@ -166,6 +171,13 @@ export default function EditProjectModal({
         />
         <FormItems.ProjectLink name="infoUrl" />
         <FormItems.ProjectDescription name="description" />
+        <Form.Item
+          name="payText"
+          label="Pay text"
+          extra={'Text displayed on your project\'s "pay" button.'}
+        >
+          <Input placeholder="Pay" />
+        </Form.Item>
         <FormItems.ProjectLogoUrl
           name="logoUrl"
           initialUrl={projectInfoForm.getFieldValue('logoUrl')}

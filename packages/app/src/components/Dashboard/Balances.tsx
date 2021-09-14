@@ -1,8 +1,11 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
-import TokenBalance from 'components/shared/TokenBalance'
+import ERC20TokenBalance from 'components/shared/ERC20TokenBalance'
+import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import { ProjectContext } from 'contexts/projectContext'
 import { TokenRef } from 'models/token-ref'
 import { useContext } from 'react'
+
 import SectionHeader from './SectionHeader'
 
 export default function Balances() {
@@ -10,8 +13,16 @@ export default function Balances() {
 
   const tokens: TokenRef[] = [
     {
-      symbol: 'JBX',
-      address: '0x88d8c9E98E6EdE75252c2473abc9724965fe7474',
+      type: 'project',
+      value: '0x01',
+    },
+    {
+      type: 'project',
+      value: '0x02',
+    },
+    {
+      type: 'project',
+      value: '0x08',
     },
   ]
 
@@ -22,9 +33,21 @@ export default function Balances() {
         tip="Other tokens in this project's owner's wallet."
       />
       <Space direction="vertical" style={{ width: '100%', marginTop: 10 }}>
-        {tokens.map(t => (
-          <TokenBalance key={t.address} wallet={owner} token={t} />
-        ))}
+        {tokens.map(t =>
+          t.type === 'erc20' ? (
+            <ERC20TokenBalance
+              key={t.value}
+              wallet={owner}
+              tokenAddress={t.value}
+            />
+          ) : (
+            <ProjectTokenBalance
+              key={t.value}
+              wallet={owner}
+              projectId={BigNumber.from(t.value)}
+            />
+          ),
+        )}
       </Space>
     </div>
   )

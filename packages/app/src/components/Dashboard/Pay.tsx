@@ -82,7 +82,10 @@ export default function Pay() {
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
           {fcMetadata?.reservedRate === 200 ? (
-            <Tooltip title="Paying this project is currently disabled">
+            <Tooltip
+              title="Paying this project is currently disabled"
+              className="block"
+            >
               <Button style={{ width: '100%' }} type="primary" disabled>
                 {metadata.payText || 'Pay'}
               </Button>

@@ -10,3 +10,7 @@
 .ant-tooltip-arrow-content {
   background: var(--background-l1);
 }
+
+.ant-tooltip-disabled-compatible-wrapper.block {
+  display: block !important;
+}

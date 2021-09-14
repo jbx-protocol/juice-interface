@@ -78,7 +78,33 @@ export default function Project({
             {canPrintPreminedTickets && hasPrintPreminePermission && (
               <PrintPremined projectId={projectId} />
             )}
-            <Pay />
+            {projectId.eq(7) ? (
+              <div>
+                SharkDAO's Juicebox is closed right now because we're planning
+                for the future. Also don't pay directly to the contract! You
+                won't receive any SHARK—all tokens will be sent to governance.{' '}
+                <br />
+                <br /> Join us on{' '}
+                <a
+                  href="https://discord.gg/sg5grtCV8s"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  our Discord server
+                </a>{' '}
+                and follow us on{' '}
+                <a
+                  href="https://twitter.com/sharkdao"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Twitter
+                </a>{' '}
+                to stay up to date on when memberships will be available.
+              </div>
+            ) : (
+              <Pay />
+            )}
           </Space>
         </Col>
       </Row>

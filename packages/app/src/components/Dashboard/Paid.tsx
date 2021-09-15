@@ -6,6 +6,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useBalance } from 'hooks/Balance'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { ContractName } from 'models/contract-name'
@@ -21,7 +22,6 @@ import {
 } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
-import { useBalance } from '../../hooks/Balance'
 import { smallHeaderStyle } from './styles'
 
 export default function Paid() {
@@ -83,7 +83,10 @@ export default function Paid() {
   const percentPaid = useMemo(
     () =>
       paidInCurrency && currentFC?.target
-        ? fracDiv(paidInCurrency.toString(), currentFC.target.toString()) * 100
+        ? fracDiv(
+            paidInCurrency.add(currentFC.tapped).toString(),
+            currentFC.target.toString(),
+          ) * 100
         : 0,
     [currentFC?.target, paidInCurrency],
   )

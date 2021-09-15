@@ -230,7 +230,7 @@ export default function Rewards({
             >
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Total supply</div>}
-                children={formatWad(totalSupply)}
+                children={formatWad(totalSupply, { decimals: 0 })}
               />
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Your balance</div>}

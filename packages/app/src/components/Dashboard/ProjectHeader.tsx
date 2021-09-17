@@ -13,7 +13,8 @@ export default function ProjectHeader() {
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const { projectId, handle, metadata } = useContext(ProjectContext)
+  const { projectId, handle, metadata, isPreviewMode } =
+    useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -88,38 +89,40 @@ export default function ProjectHeader() {
           )}
         </div>
 
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
+        {!isPreviewMode && (
+          <div>
             <div
               style={{
-                color: colors.text.tertiary,
-                paddingRight: 10,
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              ID: {projectId.toNumber()}
-            </div>
+              <div
+                style={{
+                  color: colors.text.tertiary,
+                  paddingRight: 10,
+                }}
+              >
+                ID: {projectId.toNumber()}
+              </div>
 
-            <div>
-              <Button
-                onClick={() => setToolDrawerVisible(true)}
-                icon={<ToolOutlined />}
-                type="text"
-              ></Button>
-              {hasEditPermission && (
+              <div>
                 <Button
-                  onClick={() => setEditProjectModalVisible(true)}
-                  icon={<SettingOutlined />}
+                  onClick={() => setToolDrawerVisible(true)}
+                  icon={<ToolOutlined />}
                   type="text"
                 ></Button>
-              )}
+                {hasEditPermission && (
+                  <Button
+                    onClick={() => setEditProjectModalVisible(true)}
+                    icon={<SettingOutlined />}
+                    type="text"
+                  ></Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <EditProjectModal

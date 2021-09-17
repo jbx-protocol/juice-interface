@@ -21,6 +21,7 @@ export type ProjectContext = {
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   balanceInCurrency: BigNumber | undefined
+  isPreviewMode: boolean | undefined
 }
 
 export const ProjectContext = createContext<ProjectContext>({
@@ -39,4 +40,5 @@ export const ProjectContext = createContext<ProjectContext>({
   tokenAddress: undefined,
   tokenSymbol: undefined,
   balanceInCurrency: undefined,
+  isPreviewMode: false
 })

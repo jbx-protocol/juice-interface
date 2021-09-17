@@ -1,17 +1,13 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
+import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { Form, Input } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
 import { FormItemExt } from './formItemExt'
@@ -23,19 +19,30 @@ export default function ProjectHandle({
   onValueChange,
   value,
   requireState,
+  returnValue,
 }: {
   onValueChange: (val: string) => void
-  value?: string
+  value?: string | BigNumber
   requireState?: 'exists' | 'notExist'
+  returnValue?: 'id' | 'handle'
 } & FormItemExt) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const [inputContents, setInputContents] = useState<string>()
 
-  useLayoutEffect(() => {
-    setInputContents(value)
-  }, [value])
+  const { contracts } = useContext(UserContext)
+
+  // Value can be either a project ID, or a project's handle
+  useEffect(() => {
+    if (typeof value === 'string') {
+      setInputContents(value)
+    } else if (isBigNumberish(value)) {
+      contracts?.Projects.functions
+        .handleOf(BigNumber.from(value).toHexString())
+        .then(res => setInputContents(utils.parseBytes32String(res[0])))
+    }
+  }, [])
 
   const handle = useMemo(() => {
     if (!inputContents) return
@@ -48,12 +55,19 @@ export default function ProjectHandle({
   }, [inputContents])
 
   // InputContents pattern allows checking if handle exists while typing
-  const handleExists = useContractReader<boolean>({
+  const idForHandle = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
     args: handle && requireState ? [handle] : null,
-    formatter: useCallback((res: BigNumber) => res?.gt(0), []),
+    callback: useCallback(
+      returnValue === 'id'
+        ? id => onValueChange(id?.toHexString() ?? '0x00')
+        : () => null,
+      [returnValue],
+    ),
   })
+
+  const handleExists = idForHandle?.gt(0)
 
   const checkHandle = useCallback(
     (rule: any, value: any) => {
@@ -67,14 +81,14 @@ export default function ProjectHandle({
   )
 
   let suffix: string | JSX.Element = ''
-
-  if (value !== inputContents) {
-    if (handleExists && requireState === 'notExist')
-      suffix = 'Handle already in use'
-    if (handleExists === false && requireState === 'exists')
-      suffix = inputContents ? 'Handle not found' : ''
-    if (handleExists && requireState === 'exists')
-      suffix = <CheckCircleOutlined style={{ color: colors.icon.success }} />
+  if (handleExists && requireState === 'notExist') {
+    suffix = 'Handle already in use'
+  }
+  if (handleExists === false && requireState === 'exists') {
+    suffix = inputContents ? 'Handle not found' : ''
+  }
+  if (handleExists && requireState === 'exists') {
+    suffix = <CheckCircleOutlined style={{ color: colors.icon.success }} />
   }
 
   return (
@@ -97,13 +111,16 @@ export default function ProjectHandle({
         prefix="@"
         suffix={suffix}
         className="err-suffix"
-        placeholder="yourProject"
+        placeholder="handle"
         type="string"
         autoComplete="off"
         onChange={e => {
           const val = normalizeHandle(e.target.value)
           setInputContents(val)
-          onValueChange(val)
+
+          if (returnValue !== 'id') {
+            onValueChange(val)
+          }
         }}
       />
     </Form.Item>

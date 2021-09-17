@@ -162,7 +162,7 @@ export default function Create() {
 
     const uploadedMetadata = await uploadProjectMetadata({
       ...editingProjectInfo.metadata,
-      version: 1,
+      version: 2,
     })
 
     if (!uploadedMetadata.success) {

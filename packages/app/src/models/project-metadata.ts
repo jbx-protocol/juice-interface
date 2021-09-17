@@ -1,6 +1,6 @@
 import { TokenRef } from './token-ref'
 
-type ProjectMetadataVersion = undefined | 1
+type ProjectMetadataVersion = undefined | 1 | 2
 
 export type ProjectMetadata = Partial<{
   name: string

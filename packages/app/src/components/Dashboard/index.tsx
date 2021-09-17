@@ -295,6 +295,7 @@ export default function Dashboard() {
   if (!projectId || !handle || !metadata) return null
 
   const projectType = projectTypes[projectId?.toNumber()] ?? 'standard'
+  const isPreviewMode = false
 
   return (
     <ProjectContext.Provider
@@ -314,6 +315,7 @@ export default function Dashboard() {
         tokenAddress,
         tokenSymbol,
         balanceInCurrency,
+        isPreviewMode,
       }}
     >
       <div style={layouts.maxWidth}>

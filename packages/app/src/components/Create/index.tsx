@@ -339,6 +339,7 @@ export default function Create() {
         balanceInCurrency: BigNumber.from(0),
         tokenSymbol: undefined,
         tokenAddress: constants.AddressZero,
+        isPreviewMode: true,
       }}
     >
       <Row

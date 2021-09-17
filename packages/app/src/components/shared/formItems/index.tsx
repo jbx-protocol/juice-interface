@@ -11,6 +11,7 @@ import ProjectPayoutMods from './ProjectPayoutMods'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTicketMods from './ProjectTicketMods'
+import TokenRefs from './TokenRefs'
 
 export const FormItems = {
   EthAddress,
@@ -26,4 +27,5 @@ export const FormItems = {
   ProjectReserved,
   ProjectTarget,
   ProjectTicketMods,
+  TokenRefs,
 }

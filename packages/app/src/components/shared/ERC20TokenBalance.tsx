@@ -3,6 +3,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
+import FormattedAddress from './FormattedAddress'
 
 export default function ERC20TokenBalance({
   tokenAddress,
@@ -23,7 +24,7 @@ export default function ERC20TokenBalance({
     args: wallet ? [wallet] : null,
   })
 
-  const symbol = useContractReader<BigNumber>({
+  const symbol = useContractReader<string>({
     contract,
     functionName: 'symbol',
   })
@@ -32,7 +33,8 @@ export default function ERC20TokenBalance({
 
   return (
     <div style={style}>
-      {formatWad(balance, { decimals: decimals ?? 0 })} {symbol}
+      {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
+      <FormattedAddress label={symbol} address={tokenAddress} />
     </div>
   )
 }

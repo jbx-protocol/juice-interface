@@ -11,8 +11,10 @@ type EnsRecord = {
 
 export default function FormattedAddress({
   address,
+  label,
 }: {
   address: string | undefined
+  label?: string
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -80,6 +82,7 @@ export default function FormattedAddress({
 
   const formatted =
     ensName ??
+    label ??
     (address
       ? address.substring(0, 6) + '...' + address.substr(address.length - 6, 6)
       : '')

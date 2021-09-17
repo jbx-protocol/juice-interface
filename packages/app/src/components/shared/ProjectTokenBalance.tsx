@@ -3,10 +3,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { ContractName } from 'models/contract-name'
-import { CSSProperties } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
 import ProjectHandle from './ProjectHandle'
+import { ThemeContext } from 'contexts/themeContext'
 
 export default function ProjectTokenBalance({
   projectId,
@@ -19,6 +20,10 @@ export default function ProjectTokenBalance({
   style?: CSSProperties
   decimals?: number
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const tokenAddress = useContractReader<string>({
     contract: ContractName.TicketBooth,
     functionName: 'ticketsOf',
@@ -44,13 +49,16 @@ export default function ProjectTokenBalance({
   if (balance === undefined) return null
 
   return (
-    <div style={style}>
-      {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
-      {symbol ?? (
-        <>
-          <ProjectHandle projectId={projectId} /> tokens
-        </>
-      )}
+    <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
+      <span>
+        {formatWad(balance, { decimals: decimals ?? 0 })} {symbol ?? 'tokens'}
+      </span>
+
+      <ProjectHandle
+        style={{ color: colors.text.tertiary }}
+        link={true}
+        projectId={projectId}
+      />
     </div>
   )
 }

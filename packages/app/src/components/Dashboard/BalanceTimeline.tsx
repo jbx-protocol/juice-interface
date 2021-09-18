@@ -40,7 +40,7 @@ type EventRef = {
   tapped?: number
   previousBalance?: number
 }
-type BlockRef = { block: number; timestamp: number }
+type BlockRef = { block: number | null; timestamp: number }
 type ShowGraph = 'earned' | 'balance'
 
 export default function BalanceTimeline({ height }: { height: number }) {
@@ -93,11 +93,11 @@ export default function BalanceTimeline({ height }: { height: number }) {
         duration,
         false,
       )
-      .then((res: BlockRef[]) => {
-        const newBlockRefs: BlockRef[] = [res[0]]
+      .then((res: (BlockRef & { block: number })[]) => {
+        const newBlockRefs: BlockRef[] = []
         const blocksCount = 40
 
-        // Create mock block history data assuming consistent mining intervals
+        // Calculate intermediate block numbers at consistent intervals
         for (let i = 0; i < blocksCount; i++) {
           newBlockRefs.push({
             block: Math.round(
@@ -109,6 +109,12 @@ export default function BalanceTimeline({ height }: { height: number }) {
             ),
           })
         }
+
+        // Push blockRef for "now"
+        newBlockRefs.push({
+          block: null,
+          timestamp: Math.round(now.valueOf() / 1000),
+        })
 
         setBlockRefs(newBlockRefs)
       })
@@ -147,7 +153,10 @@ export default function BalanceTimeline({ height }: { height: number }) {
             {
               entity: 'project',
               keys: queryKeys,
-              block: { number: blockRef.block },
+              // For block == null, don't specify block param
+              ...(blockRef.block !== null
+                ? { block: { number: blockRef.block } }
+                : {}),
               where: projectId
                 ? {
                     key: 'id',

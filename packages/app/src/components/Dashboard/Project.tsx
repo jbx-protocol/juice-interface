@@ -6,7 +6,7 @@ import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import Balances from './Balances'
+import BalancesModal from '../modals/BalancesModal'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
@@ -115,12 +115,6 @@ export default function Project({
           {projectId.gt(0) && (
             <div style={{ marginBottom: gutter }}>
               <BalanceTimeline height={240} />
-            </div>
-          )}
-
-          {projectId.gt(0) && (
-            <div style={{ marginBottom: gutter }}>
-              <Balances />
             </div>
           )}
 

@@ -40,8 +40,6 @@ export default function ProjectTokenBalance({
     formatter: symbol => symbol ?? null,
   })
 
-  console.log('asdf symbol', symbol)
-
   const balance = useContractReader<string>({
     contract: ContractName.TicketBooth,
     functionName: 'balanceOf',

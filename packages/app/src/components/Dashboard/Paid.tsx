@@ -255,7 +255,7 @@ export default function Paid() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'baseline',
+            alignItems: 'end',
             marginTop: 4,
           }}
         >
@@ -312,13 +312,18 @@ export default function Paid() {
             onClick={() => setBalancesModalVisible(true)}
           >
             <ProjectTokenBalance
-              style={{ color: colors.text.secondary }}
+              style={{
+                color: colors.text.tertiary,
+                fontSize: '0.8rem',
+                fontWeight: 500,
+              }}
               wallet={owner}
               projectId={BigNumber.from('0x01')}
               hideHandle
             />
             <div style={{ ...smallHeaderStyle(colors), cursor: 'pointer' }}>
-              ALL ASSETS <RightCircleOutlined />
+              <span style={{ marginRight: 5 }}>ASSETS</span>
+              <RightCircleOutlined />
             </div>
           </div>
         </div>

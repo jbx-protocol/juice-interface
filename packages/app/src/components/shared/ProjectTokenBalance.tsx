@@ -14,11 +14,13 @@ export default function ProjectTokenBalance({
   wallet,
   style,
   decimals,
+  hideHandle,
 }: {
   projectId: BigNumber
   wallet: string | undefined
   style?: CSSProperties
   decimals?: number
+  hideHandle?: boolean
 }) {
   const {
     theme: { colors },
@@ -32,10 +34,13 @@ export default function ProjectTokenBalance({
 
   const projectTokenContract = useErc20Contract(tokenAddress)
 
-  const symbol = useContractReader<string>({
+  const symbol = useContractReader<string | null>({
     contract: projectTokenContract,
     functionName: 'symbol',
+    formatter: symbol => symbol ?? null,
   })
+
+  console.log('asdf symbol', symbol)
 
   const balance = useContractReader<string>({
     contract: ContractName.TicketBooth,
@@ -51,14 +56,21 @@ export default function ProjectTokenBalance({
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
       <span>
-        {formatWad(balance, { decimals: decimals ?? 0 })} {symbol ?? 'tokens'}
+        {symbol !== undefined && (
+          <>
+            {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
+            {symbol ?? 'tokens'}
+          </>
+        )}
       </span>
 
-      <ProjectHandle
-        style={{ color: colors.text.tertiary }}
-        link={true}
-        projectId={projectId}
-      />
+      {!hideHandle && (
+        <ProjectHandle
+          style={{ color: colors.text.tertiary }}
+          link={true}
+          projectId={projectId}
+        />
+      )}
     </div>
   )
 }

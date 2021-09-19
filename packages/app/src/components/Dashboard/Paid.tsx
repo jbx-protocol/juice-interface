@@ -1,8 +1,9 @@
-import { CrownFilled } from '@ant-design/icons'
+import { CrownFilled, RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -11,7 +12,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalance } from 'hooks/EthBalance'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
-import { CSSProperties, useContext, useMemo } from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import {
   formattedNum,
@@ -22,9 +23,11 @@ import {
 } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
+import BalancesModal from '../modals/BalancesModal'
 import { smallHeaderStyle } from './styles'
 
 export default function Paid() {
+  const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -248,7 +251,14 @@ export default function Paid() {
         ))}
 
       {hasFundingTarget(currentFC) && (
-        <div style={{ marginTop: 4 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            marginTop: 4,
+          }}
+        >
           {projectType === 'bidpool' ? (
             <div>
               <span
@@ -296,8 +306,28 @@ export default function Paid() {
               </div>
             </div>
           )}
+
+          <div
+            style={{ textAlign: 'right', cursor: 'pointer' }}
+            onClick={() => setBalancesModalVisible(true)}
+          >
+            <ProjectTokenBalance
+              style={{ color: colors.text.secondary }}
+              wallet={owner}
+              projectId={BigNumber.from('0x01')}
+              hideHandle
+            />
+            <div style={{ ...smallHeaderStyle(colors), cursor: 'pointer' }}>
+              ALL ASSETS <RightCircleOutlined />
+            </div>
+          </div>
         </div>
       )}
+
+      <BalancesModal
+        visible={balancesModalVisible}
+        onCancel={() => setBalancesModalVisible(false)}
+      />
     </div>
   )
 }

@@ -313,6 +313,7 @@ export default function Paid() {
           >
             <ProjectTokenBalance
               style={{
+                display: 'inline-block',
                 color: colors.text.tertiary,
                 fontSize: '0.8rem',
                 fontWeight: 500,

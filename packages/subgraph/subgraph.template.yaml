@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Projects
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0x9b5a4053FfBB11cA9cd858AAEE43cc95ab435418"
+      address: {{address_projects}}
       abi: Projects
-      startBlock: 12833319
+      startBlock: {{startBlock_projects}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -28,11 +28,11 @@ dataSources:
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: TerminalV1
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0xd569D3CCE55b71a8a3f3C418c329A66e5f714431"
+      address: {{address_terminalV1}}
       abi: TerminalV1
-      startBlock: 12833319
+      startBlock: {{startBlock_terminalV1}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -68,23 +68,3 @@ dataSources:
         - event: DistributeToTicketMod(indexed uint256,indexed uint256,(bool,uint16,uint48,address),uint256,address)
           handler: handleDistributeToTicketMod
       file: ./src/mapping.ts
-  # - kind: ethereum/contract
-  #   name: FundingCycles
-  #   network: mainnet
-  #   source:
-  #     address: "0xf507B2A1dD7439201eb07F11E1d62AfB29216e2E"
-  #     abi: FundingCycles
-  #     startBlock: 12833319
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - ConfigureEvent
-  #     abis:
-  #       - name: FundingCycles
-  #         file: ./abis/FundingCycles.json
-  #     eventHandlers:
-  #       - event: Configure(indexed uint256,indexed uint256,uint256,(uint256,uint256,uint256,uint256,uint256,address),uint256,address)
-  #         handler: handleConfigure
-  #     file: ./src/mapping.ts

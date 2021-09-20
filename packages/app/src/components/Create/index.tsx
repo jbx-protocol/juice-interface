@@ -86,7 +86,9 @@ export default function Create() {
 
   useEffect(() => {
     if (adminFeePercent) {
-      dispatch(editingProjectActions.setFee(adminFeePercent.toString()))
+      dispatch(
+        editingProjectActions.setFee(fromPerbicent(adminFeePercent).toString()),
+      )
     }
   }, [adminFeePercent])
 

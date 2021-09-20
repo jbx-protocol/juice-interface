@@ -110,15 +110,13 @@ export default function ReservedTokens({
             {formatWad(reservedTickets, { decimals: 0 }) || 0}{' '}
             {tokenSymbol ?? 'tokens'}
           </span>
-          {!projectId?.eq(7) && (
-            <Button
-              style={{ marginLeft: 10 }}
-              size="small"
-              onClick={() => setModalIsVisible(true)}
-            >
-              Distribute
-            </Button>
-          )}
+          <Button
+            style={{ marginLeft: 10 }}
+            size="small"
+            onClick={() => setModalIsVisible(true)}
+          >
+            Distribute
+          </Button>
 
           <DistributeTokensModal
             visible={modalIsVisible}

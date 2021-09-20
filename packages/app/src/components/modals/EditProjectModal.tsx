@@ -79,7 +79,7 @@ export default function EditProjectModal({
       infoUri: fields.infoUrl,
       payText: fields.payText,
       tokens: [],
-      version: 2
+      version: 2,
     })
 
     if (!uploadedMetadata?.success) {
@@ -96,9 +96,6 @@ export default function EditProjectModal({
         onConfirmed: () => {
           if (onSuccess) onSuccess()
 
-          // Remove previous metadata file
-          unpinFileByName(metadataNameForHandle(handle))
-
           // Set name for new metadata file
           editMetadataForCid(uploadedMetadata.cid, {
             name: metadataNameForHandle(handle),
@@ -106,9 +103,6 @@ export default function EditProjectModal({
 
           // If logo changed
           if (metadata?.logoUri !== fields.logoUrl) {
-            // Remove previous logo file
-            unpinFileByName(logoNameForHandle(handle))
-
             // Set name for new logo file
             editMetadataForCid(cidFromUrl(fields.logoUrl), {
               name: logoNameForHandle(handle),

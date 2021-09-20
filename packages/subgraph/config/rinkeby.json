@@ -1,16 +1,7 @@
 {
-  "Network": "rinkeby",
-  "AbisDir": "rinkeby",
-  "StartBlock": 9115769,
-  "Active7DaysFundingCycleBallotAddress": "0x6A769804102770781e46843e0100FaF558F2120F",
-  "FundingCyclesAddress": "0x234985c467E90483bA42fB2C7C2f71A1874D805D",
-  "GovernanceAddress": "0xfeCeD4eBe0529a429d7DEE321Ec6F57287B8f415",
-  "ModStoreAddress": "0x5C091AfF0b5A5B211b7828242343e5ec2306a95B",
-  "OperatorStoreAddress": "0x5dA2E4Ba83569fb7A22a4aDE14bBEf1236168406",
-  "PricesAddress": "0x22c2580c58D2F84165CD5af02729Af344cE7d637",
-  "ProjectsAddress": "0x34A1d33e49907ADFE05fb4E21411a06a8c4300eE",
-  "TerminalDirectoryAddress": "0x88d8c9E98E6EdE75252c2473abc9724965fe7474",
-  "TerminalV1Address": "0x9A5EbE744DF7B66E8Bdd41DB8d6C52073556eD93",
-  "TicketBoothAddress": "0x0d038636a670E8bd8cF7D56BC4626f2a6446cF11",
-  "ProxyPaymentAddressManagerAddress": "0x6c1Ea739c6b065AF6B9E612e55ed7C8Ab004Fd17"
+  "network": "rinkeby",
+  "address_projects": "0x34A1d33e49907ADFE05fb4E21411a06a8c4300eE",
+  "startBlock_projects": 9115779,
+  "address_terminalV1": "0x9A5EbE744DF7B66E8Bdd41DB8d6C52073556eD93",
+  "startBlock_terminalV1": 9115779
 }

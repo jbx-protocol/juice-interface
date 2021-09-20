@@ -1,9 +1,11 @@
 {
   "name": "juicebox",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
   "scripts": {
-    "codegen": "graph codegen --debug --output-dir src/entities/",
-    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
-    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "codegen": "graph codegen",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && yarn codegen",
+    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml && yarn codegen",
     "deploy:mainnet": "graph deploy --node https://api.studio.thegraph.com/deploy/ juicebox",
     "deploy:rinkeby": "graph deploy --node https://api.studio.thegraph.com/deploy/ juicebox-rinkeby"
   },

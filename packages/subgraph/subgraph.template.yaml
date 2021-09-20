@@ -6,7 +6,7 @@ dataSources:
     name: Projects
     network: {{network}}
     source:
-      address: {{address_projects}}
+      address: '{{address_projects}}'
       abi: Projects
       startBlock: {{startBlock_projects}}
     mapping:
@@ -30,7 +30,7 @@ dataSources:
     name: TerminalV1
     network: {{network}}
     source:
-      address: {{address_terminalV1}}
+      address: '{{address_terminalV1}}'
       abi: TerminalV1
       startBlock: {{startBlock_terminalV1}}
     mapping:

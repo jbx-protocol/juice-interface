@@ -106,7 +106,6 @@ Frontend deployment is managed automatically through [Fleek](https://app.fleek.c
 Automatic deployment does not:
 
 - deploy contracts
-- ship subgraph updates
 
 ## Theme
 

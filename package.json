@@ -42,25 +42,7 @@
     "account": "cd packages/hardhat && npx hardhat account",
     "wallet": "cd packages/hardhat && npx hardhat wallet",
     "fundedwallet": "cd packages/hardhat && npx hardhat fundedwallet",
-    "flatten": "cd packages/hardhat && npx hardhat flatten",
-    "graph-run-node": "cd docker/graph-node && docker-compose up",
-    "graph-remove-node": "cd docker/graph-node && docker-compose down",
-    "graph-prepare-local": "mustache packages/subgraph/config/localhost.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
-    "graph-prepare-rinkeby": "mustache packages/subgraph/config/rinkeby.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
-    "graph-prepare-kovan": "mustache packages/subgraph/config/kovan.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
-    "graph-prepare-mainnet": "mustache packages/subgraph/config/mainnet.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
-    "graph-codegen": "yarn workspace @jbox/subgraph graph codegen",
-    "graph-build": "yarn workspace @jbox/subgraph graph build",
-    "graph-create-local": "yarn workspace @jbox/subgraph graph create --node http://localhost:8020/ juicebox-local",
-    "graph-remove-local": "yarn workspace @jbox/subgraph graph remove --node http://localhost:8020/ juicebox-local",
-    "graph-deploy-local": "yarn workspace @jbox/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 juicebox-local",
-    "graph-deploy-rinkeby": "yarn workspace @jbox/subgraph graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ peripheralist/juicebox-rinkeby",
-    "graph-deploy-kovan": "yarn workspace @jbox/subgraph graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ peripheralist/juicebox-kovan",
-    "graph-deploy-mainnet": "yarn workspace @jbox/subgraph graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ peripheralist/juicebox-mainnet",
-    "graph-ship-local": "yarn graph-prepare-local && yarn graph-codegen && yarn graph-deploy-local",
-    "graph-ship-rinkeby": "yarn graph-prepare-rinkeby && yarn graph-codegen && yarn graph-deploy-rinkeby",
-    "graph-ship-kovan": "yarn graph-prepare-kovan && yarn graph-codegen && yarn graph-deploy-kovan",
-    "graph-ship-mainnet": "yarn graph-prepare-mainnet && yarn graph-codegen && yarn graph-deploy-mainnet"
+    "flatten": "cd packages/hardhat && npx hardhat flatten"
   },
   "husky": {
     "hooks": {

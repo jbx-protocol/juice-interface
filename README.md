@@ -39,4 +39,4 @@ Frontend application(s) are deployment automatically on pushes to `main` using [
 
 The app uses the `SemanticTheme` pattern defined in src/models/semantic-theme, which allows mapping style properties to any number of enumerated `ThemeOption`s. These properties are defined in src/constants/theme. Theme styles can be accessed via `ThemeContext` defined in src/contexts/themeContext and instantiated in src/hooks/JuiceTheme, or via CSS root variables.
 
-The app also relies on (antd)[https://ant-design.gitee.io/] components. To make Antd compatible with `SemanticTheme`, overrides are defined in src/styles/antd-overrides.
+The app also relies on [antd](https://ant-design.gitee.io/) components. To make Antd compatible with `SemanticTheme`, overrides are defined in src/styles/antd-overrides.

@@ -7,13 +7,6 @@ Juicebox frontend application.
 
 ## Usage
 
-1. `Create `.env` from `.example.env`.
-
-  ```bash
-  yarn install
-  yarn start
-  ```
-
 1.  Clone the respository:
 
   ```bash

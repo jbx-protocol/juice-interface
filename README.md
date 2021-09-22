@@ -33,9 +33,7 @@ The frontend has two different providers that provide different levels of access
 
 ## Deployment
 
-Frontend deployment is managed automatically through [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
-
-[rinkeby.juicebox.money](rinkeby.juicebox.money) deploys automatically from `main`.
+Frontend application(s) are deployment automatically on pushe to `main` using [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
 
 ## Theme
 

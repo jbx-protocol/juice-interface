@@ -1,10 +1,3 @@
 {
     "editor.tabSize": 2,
-    "solidity.compileUsingRemoteVersion": "0.8.6",
-    "solidity.linter": "solhint",
-    "solidity.solhintRules": {
-      "avoid-sha3": "error",
-      "no-inline-assembly": "warn"
-    },
-    "solidity.compilerOptimization": 10000
 }

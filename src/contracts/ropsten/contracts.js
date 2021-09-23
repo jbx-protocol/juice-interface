@@ -1,1 +1,0 @@
-module.exports = ["Admin","BudgetBallot","BudgetStore","TerminalV1","TicketStore","TimelockStaker","Token"];

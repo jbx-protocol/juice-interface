@@ -104,7 +104,11 @@ export default function RulesForm({
             <p>
               The address of any smart contract deployed on {signerNetwork} that
               implements{' '}
-              <a href="https://github.com/jbx-protocol/juicehouse/blob/main/packages/hardhat/contracts/interfaces/IFundingCycleBallot.sol">
+              <a
+                href="https://github.com/jbx-protocol/juice-contracts/blob/main/contracts/v1/interfaces/IFundingCycleBallot.sol"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 this interface
               </a>
               .

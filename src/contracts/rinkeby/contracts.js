@@ -1,1 +1,0 @@
-module.exports = ["FundingCycles","Governance","ModStore","OperatorStore","Prices","Projects","ProxyPaymentAddressManager","TerminalDirectory","TerminalV1","TicketBooth"];

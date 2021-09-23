@@ -1,5 +1,6 @@
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { BigNumber } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
 import { useContext } from 'react'
@@ -20,7 +21,8 @@ export default function ProjectCard({
   } = useContext(ThemeContext)
 
   const metadata = useProjectMetadata(project.uri)
-
+  // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
+  const decimals = project.totalPaid.gt(0) && project.totalPaid.lt(BigNumber.from("0x8AC7230489E80000")) ? 2 : 0;
   return (
     <div
       style={{
@@ -65,7 +67,7 @@ export default function ProjectCard({
             <div style={{ color: colors.text.tertiary }}>
               <span style={{ color: colors.text.primary, fontWeight: 500 }}>
                 <CurrencySymbol currency={0} />
-                {formatWad(project.totalPaid, { decimals: 0 })}{' '}
+                {formatWad(project.totalPaid, { decimals })}{' '}
               </span>
               since {formatDate(project.createdAt * 1000, 'MM-DD-YY')}
             </div>

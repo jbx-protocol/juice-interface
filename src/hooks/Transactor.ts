@@ -147,16 +147,18 @@ export function useTransactor({
 
         return true
       } catch (e) {
-        console.log('Transaction Error:', e.message)
+        if (e instanceof Error) {
+          console.log('Transaction Error:', e.message)
 
-        notification.error({
-          key: new Date().valueOf().toString(),
-          message: 'Transaction failed',
-          description: e.message,
-          duration: 0,
-        })
+          notification.error({
+            key: new Date().valueOf().toString(),
+            message: 'Transaction failed',
+            description: e.message,
+            duration: 0,
+          })
 
-        options?.onDone && options.onDone()
+          options?.onDone && options.onDone()
+        }
         return false
       }
     },

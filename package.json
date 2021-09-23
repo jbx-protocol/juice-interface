@@ -30,6 +30,11 @@
     "use-deep-compare-effect": "^1.6.1",
     "web-vitals": "^0.2.4"
   },
+  "resolutions": {
+    "jest": "25.5.4",
+    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
+    "**/@typescript-eslint/parser": "^4.1.1"
+  },
   "scripts": {
     "compile-styles": "lessc ./src/styles/antd.less ./src/styles/antd.css --js",
     "start": "yarn compile-styles && react-scripts start",
@@ -61,6 +66,7 @@
     "@types/react": "^17",
     "@types/react-dom": "^17",
     "@types/react-router-dom": "^5.1.7",
+    "eslint-config-react-app": "^6.0.0",
     "less": "^4.1.1"
   }
 }

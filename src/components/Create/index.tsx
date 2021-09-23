@@ -189,10 +189,10 @@ export default function Create() {
       ballot: constants.AddressZero,
     }
 
-    const metadata: Record<keyof Omit<FCMetadata, 'version'>, string> = {
-      bondingCurveRate: editingFC.bondingCurveRate.toHexString(),
-      reservedRate: editingFC.reserved.toHexString(),
-      reconfigurationBondingCurveRate: parsePerbicent(100).toHexString(),
+    const metadata: Omit<FCMetadata, 'version'> = {
+      reservedRate: editingFC.reserved.toNumber(),
+      bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
     }
 
     transactor(

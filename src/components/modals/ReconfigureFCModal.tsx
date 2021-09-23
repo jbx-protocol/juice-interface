@@ -147,7 +147,7 @@ export default function ReconfigureFCModal({
     const metadata: Omit<FCMetadata, 'version'> = {
       reservedRate: editingFC.reserved.toNumber(),
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      reconfigurationBondingCurveRate: parsePerbicent(100).toNumber(),
+      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber()
     }
 
     transactor(

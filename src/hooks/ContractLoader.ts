@@ -3,7 +3,6 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { NetworkContext } from 'contexts/networkContext'
-import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
@@ -18,12 +17,20 @@ export function useContractLoader() {
       try {
         const network = readNetwork.name
 
-        const contractList: ContractName[] = require(`../contracts/${network}/contracts.js`)
+        const contractNames = [
+          'FundingCycles',
+          'TerminalV1',
+          'ModStore',
+          'OperatorStore',
+          'Prices',
+          'Projects',
+          'TicketBooth',
+        ]
 
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = contractList.reduce(
+        const newContracts = contractNames.reduce(
           (accumulator, contractName) => ({
             ...accumulator,
             [contractName]: loadContract(
@@ -48,12 +55,14 @@ export function useContractLoader() {
 }
 
 const loadContract = (
-  contractName: ContractName,
+  contractName: string,
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
-): Contract =>
-  new Contract(
-    require(`../contracts/${network}/${contractName}.address.js`),
-    require(`../contracts/${network}/${contractName}.abi.js`),
+): Contract => {
+  let contract = require(`@jbx-protocol/contracts/deployments/${network}/${contractName}.json`);
+  return new Contract(
+    contract.address,
+    contract.abi,
     signerOrProvider,
   )
+}

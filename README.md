@@ -1,4 +1,4 @@
-# juice-juicehoue
+# juice-juicehouse
 
 Juicebox frontend application.
 
@@ -14,7 +14,7 @@ Juicebox frontend application.
   cd juice-juicehouse
   ```
 
-1.  Create an `.env` file in the root directory which mirrors the `.sample.env` file.
+1.  Create an `.env` file in the root directory which mirrors the `.example.env` file.
 
 1.  Install dependencies and start the app:
 

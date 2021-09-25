@@ -1,4 +1,4 @@
-# juice-juicehouse
+# juice-interface
 
 Juicebox frontend application.
 

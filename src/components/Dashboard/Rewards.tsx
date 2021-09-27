@@ -3,6 +3,7 @@ import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
+import ParticipantsModal from 'components/modals/ParticipantsModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -17,7 +18,7 @@ import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
@@ -29,6 +30,9 @@ export default function Rewards({
 }) {
   const [stakeModalVisible, setStakeModalVisible] = useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
+  const [participantsModalVisible, setParticipantsModalVisible] = useState<
+    boolean
+  >()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
@@ -156,14 +160,7 @@ export default function Rewards({
     ),
   })
 
-  const sharePct = totalSupply?.gt(0)
-    ? totalBalance?.mul(100).div(totalSupply)
-    : BigNumber.from(0)
-
-  const share =
-    sharePct?.toString() === '0' && totalBalance?.gt(0)
-      ? '<1'
-      : sharePct?.toString()
+  const share = formatPercent(totalBalance, totalSupply)
 
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
@@ -211,7 +208,7 @@ export default function Rewards({
             <SectionHeader
               text={tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
               tip={`${
-                tokenSymbol ? tokenSymbol + ' ERC20' : 'tokens'
+                tokenSymbol ? tokenSymbol + ' ERC20' : 'Tokens'
               } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
                 tokenAddress && tokenAddress !== constants.AddressZero
                   ? 'Address: ' + tokenAddress
@@ -230,7 +227,25 @@ export default function Rewards({
             >
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Total supply</div>}
-                children={formatWad(totalSupply, { decimals: 0 })}
+                children={
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                      width: '100%',
+                    }}
+                  >
+                    {formatWad(totalSupply, { decimals: 0 })}
+                    <Button
+                      size="small"
+                      type="text"
+                      onClick={() => setParticipantsModalVisible(true)}
+                    >
+                      Holders
+                    </Button>
+                  </div>
+                }
               />
               <Descriptions.Item
                 label={<div style={{ width: 110 }}>Your balance</div>}
@@ -372,6 +387,10 @@ export default function Rewards({
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
+      />
+      <ParticipantsModal
+        visible={participantsModalVisible}
+        onCancel={() => setParticipantsModalVisible(false)}
       />
     </div>
   )

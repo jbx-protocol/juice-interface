@@ -25,7 +25,7 @@ import {
   YAxis,
 } from 'recharts'
 import { fromWad } from 'utils/formatNumber'
-import { querySubgraph, trimHexZero } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import SectionHeader from './SectionHeader'
 
@@ -160,7 +160,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
               where: projectId
                 ? {
                     key: 'id',
-                    value: trimHexZero(projectId.toHexString()),
+                    value: projectId.toString(),
                   }
                 : undefined,
             },
@@ -223,7 +223,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
               ? [
                   {
                     key: 'project',
-                    value: trimHexZero(projectId.toHexString()),
+                    value: projectId.toString(),
                   },
                   {
                     key: 'timestamp',

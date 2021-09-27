@@ -10,7 +10,7 @@ import {
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { querySubgraph, trimHexZero } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import { contentLineHeight, smallHeaderStyle } from './styles'
 
@@ -52,7 +52,7 @@ export function RedeemActivity({
         where: projectId
           ? {
               key: 'project',
-              value: trimHexZero(projectId.toHexString()),
+              value: projectId.toString(),
             }
           : undefined,
       },
@@ -130,7 +130,7 @@ export function RedeemActivity({
               </div>
             </div>
 
-            <div style={{ color: colors.text.secondary}}>
+            <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency={0} />
               {formatWad(e.returnAmount)} overflow received
             </div>

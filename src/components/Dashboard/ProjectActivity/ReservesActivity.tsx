@@ -4,7 +4,7 @@ import {
   PrintReservesEvent,
 } from 'models/subgraph-entities/print-reserves-event'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { querySubgraph, trimHexZero } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import ReservesEventElem from './ReservesEventElem'
 
@@ -37,7 +37,7 @@ export function ReservesActivity({
           'beneficiaryTicketAmount',
           'timestamp',
           'txHash',
-          'caller'
+          'caller',
         ],
         first: pageSize,
         skip: pageNumber * pageSize,
@@ -46,7 +46,7 @@ export function ReservesActivity({
         where: projectId
           ? {
               key: 'project',
-              value: trimHexZero(projectId.toHexString()),
+              value: projectId.toString(),
             }
           : undefined,
       },

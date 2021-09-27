@@ -7,11 +7,11 @@ import {
   DistributeToTicketModEvent,
   DistributeToTicketModEventJson,
 } from 'models/subgraph-entities/distribute-to-ticket-mod-event'
-import { PayEvent, PayEventJson } from 'models/subgraph-entities/pay-event'
 import {
-  PayerReport,
-  PayerReportJson,
-} from 'models/subgraph-entities/payer-report'
+  Participant,
+  ParticipantJson,
+} from 'models/subgraph-entities/participant'
+import { PayEvent, PayEventJson } from 'models/subgraph-entities/pay-event'
 import {
   PrintReservesEvent,
   PrintReservesEventJson,
@@ -27,7 +27,7 @@ export type SubgraphEntities = {
   project: Project
   payEvent: PayEvent
   redeemEvent: RedeemEvent
-  payerReport: PayerReport
+  participant: Participant
   tapEvent: TapEvent
   distributeToPayoutModEvent: DistributeToPayoutModEvent
   distributeToTicketModEvent: DistributeToTicketModEvent
@@ -38,7 +38,7 @@ export type SubgraphQueryReturnTypes = {
   project: { projects: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
-  payerReport: { payerReports: PayerReportJson[] }
+  participant: { participants: ParticipantJson[] }
   tapEvent: { tapEvents: TapEventJson[] }
   distributeToTicketModEvent: {
     distributeToTicketModEvents: DistributeToTicketModEventJson[]

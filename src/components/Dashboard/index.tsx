@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
-import { querySubgraph, trimHexZero } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
@@ -49,7 +49,7 @@ export default function Dashboard() {
         where: projectId
           ? {
               key: 'id',
-              value: trimHexZero(projectId.toHexString()),
+              value: projectId.toString(),
             }
           : undefined,
       },

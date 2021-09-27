@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { utils } from 'ethers'
 
-import { PayerReport } from './payer-report'
+import { Participant } from './participant'
 
 export type Project = {
   createdAt: number
@@ -12,11 +12,11 @@ export type Project = {
   currentBalance: BigNumber
   totalPaid: BigNumber
   totalRedeemed: BigNumber
-  payers: Partial<PayerReport>[]
+  participants: Partial<Participant>[]
 }
 
 export type ProjectJson = Record<keyof Project, string> & {
-  payers: string[]
+  participants: string[]
 }
 
 export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
@@ -31,14 +31,15 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
   totalRedeemed: project.totalRedeemed
     ? BigNumber.from(project.totalRedeemed)
     : undefined,
-  payers:
-    project.payers?.map(p => {
-      const payer: Record<keyof PayerReport, string> = JSON.parse(p)
+  participants:
+    project.participants?.map(p => {
+      const payer: Record<keyof Participant, string> = JSON.parse(p)
       return {
         ...payer,
         totalPaid: BigNumber.from(payer.totalPaid),
         project: BigNumber.from(payer.project),
         lastPaidTimestamp: parseInt(payer.lastPaidTimestamp),
+        tokenBalance: BigNumber.from(payer.tokenBalance),
       }
     }) ?? [],
 })

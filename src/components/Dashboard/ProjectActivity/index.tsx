@@ -1,18 +1,16 @@
 import { Space } from 'antd'
 import Loading from 'components/shared/Loading'
-import { ThemeOption } from 'constants/theme/theme-option'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import SectionHeader from '../SectionHeader'
 
-import { PayerReports } from './PayerReports'
+import SectionHeader from '../SectionHeader'
 import { PaymentActivity } from './PaymentActivity'
 import { RedeemActivity } from './RedeemActivity'
 import { ReservesActivity } from './ReservesActivity'
 import { TapActivity } from './TapActivity'
 
-type TabOption = 'pay' | 'redeem' | 'payerReport' | 'tap' | 'reserves'
+type TabOption = 'pay' | 'redeem' | 'tap' | 'reserves'
 
 export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
@@ -51,16 +49,6 @@ export default function ProjectActivity() {
       case 'redeem':
         content = (
           <RedeemActivity
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            setLoading={setLoading}
-            setCount={setElemsCount}
-          />
-        )
-        break
-      case 'payerReport':
-        content = (
-          <PayerReports
             pageNumber={pageNumber}
             pageSize={pageSize}
             setLoading={setLoading}
@@ -110,9 +98,6 @@ export default function ProjectActivity() {
       case 'reserves':
         text = 'Reserves'
         break
-      case 'payerReport':
-        text = 'Payers'
-        break
     }
 
     return (
@@ -141,15 +126,22 @@ export default function ProjectActivity() {
         {tab('redeem')}
         {tab('tap')}
         {tab('reserves')}
-        {tab('payerReport')}
       </Space>
     </div>
   )
 
   return (
     <div>
-      <SectionHeader text="Activity" />
-      {tabs}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <SectionHeader text="Activity" />
+        {tabs}
+      </div>
 
       <div style={{ paddingBottom: 40 }}>
         {content}

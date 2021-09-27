@@ -1,7 +1,7 @@
 import { ProjectContext } from 'contexts/projectContext'
 import { parseTapEventJson, TapEvent } from 'models/subgraph-entities/tap-event'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { querySubgraph, trimHexZero } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import TapEventElem from './TapEventElem'
 
@@ -41,7 +41,7 @@ export function TapActivity({
         where: projectId
           ? {
               key: 'project',
-              value: trimHexZero(projectId.toHexString()),
+              value: projectId.toString(),
             }
           : undefined,
       },

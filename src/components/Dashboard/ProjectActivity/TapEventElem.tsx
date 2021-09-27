@@ -20,8 +20,9 @@ export default function TapEventElem({
 }: {
   tapEvent: TapEvent | undefined
 }) {
-  const [payoutEvents, setPayoutEvents] =
-    useState<DistributeToPayoutModEvent[]>()
+  const [payoutEvents, setPayoutEvents] = useState<
+    DistributeToPayoutModEvent[]
+  >()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -129,7 +130,7 @@ export default function TapEventElem({
 
             <div style={{ color: colors.text.secondary }}>
               <CurrencySymbol currency={0} />
-              {formatWad(e.modCut, { padEnd: 6 })}
+              {formatWad(e.modCut, { decimals: 6 })}
             </div>
           </div>
         ))}
@@ -157,7 +158,7 @@ export default function TapEventElem({
               }
             >
               <CurrencySymbol currency={0} />
-              {formatWad(tapEvent.beneficiaryTransferAmount, { padEnd: 6 })}
+              {formatWad(tapEvent.beneficiaryTransferAmount, { decimals: 6 })}
             </div>
           </div>
         )}

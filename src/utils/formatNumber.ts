@@ -5,7 +5,6 @@ type FormatConfig = {
   empty?: string
   thousandsSeparator?: string
   decimalSeparator?: string
-  padEnd?: number
   decimals?: number
 }
 
@@ -92,7 +91,7 @@ export const formattedNum = (
 
     const postDecimal = decimal
       .substr(0, config?.decimals ?? 6)
-      .padEnd(config?.padEnd ?? 2, '0')
+      .padEnd(config?.decimals ?? 2, '0')
 
     if (!postDecimal || config?.decimals === 0) return preDecimal
 
@@ -104,3 +103,17 @@ export const formattedNum = (
 
 export const toUint256 = (num: BigNumber) =>
   '0x' + (num?.toHexString().split('x')[1] ?? '').padStart(64, '0')
+
+export const formatPercent = (
+  numerator: BigNumber | undefined,
+  divisor: BigNumber | undefined,
+): string => {
+  if (!divisor?.gt(0) || !numerator) return ''
+
+  const sharePct = numerator?.mul(100).div(divisor)
+
+  if (sharePct?.toString() === '0' && numerator?.gt(0)) {
+    return '<1'
+  }
+  return sharePct?.toString()
+}

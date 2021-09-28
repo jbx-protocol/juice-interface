@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import { subgraphUrl } from 'constants/subgraphs'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -144,21 +143,25 @@ const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
   )} } }`
 }
 
+const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
+
 export const querySubgraph = <E extends EntityKey>(
   opts: GraphQueryOpts<E>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
 ) =>
-  axios
-    .post(
-      subgraphUrl,
-      {
-        query: formatGraphQuery(opts),
-      },
-      { headers: { 'Content-Type': 'application/json' } },
-    )
-    .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
-      callback(res.data?.data),
-    )
-    .catch(err => console.log('Error getting ' + opts.entity + 's', err))
+  subgraphUrl
+    ? axios
+        .post(
+          subgraphUrl,
+          {
+            query: formatGraphQuery(opts),
+          },
+          { headers: { 'Content-Type': 'application/json' } },
+        )
+        .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
+          callback(res.data?.data),
+        )
+        .catch(err => console.log('Error getting ' + opts.entity + 's', err))
+    : Promise.reject('Missing url for subgraph query')
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')

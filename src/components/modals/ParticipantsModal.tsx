@@ -213,7 +213,13 @@ export default function ParticipantsModal({
         ))}
       </div>
     ),
-    [participants, colors, sortPayerReports, sortPayerReportsDirection],
+    [
+      participants,
+      colors,
+      sortPayerReports,
+      sortPayerReportsDirection,
+      totalTokenSupply,
+    ],
   )
 
   return (

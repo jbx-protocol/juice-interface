@@ -42,16 +42,16 @@ export default function Dashboard() {
   })
 
   useEffect(() => {
+    if (!projectId) return
+
     querySubgraph(
       {
         entity: 'project',
         keys: ['createdAt'],
-        where: projectId
-          ? {
-              key: 'id',
-              value: projectId.toString(),
-            }
-          : undefined,
+        where: {
+          key: 'id',
+          value: projectId.toString(),
+        },
       },
       res => {
         if (!res?.projects) return

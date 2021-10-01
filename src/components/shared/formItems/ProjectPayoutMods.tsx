@@ -345,23 +345,15 @@ export default function ProjectPayoutMods({
             color: colors.text.secondary,
           }}
         >
-          <div style={{ textAlign: 'right' }}>
-            <span
-              style={{
-                color: total > 100 ? colors.text.warn : colors.text.secondary,
-              }}
-            >
-              Total:{' '}
-              {total
-                .toString()
-                .split('.')
-                .map((x, i) => (i > 0 ? x[0] : x))
-                .join('.')}
-              %
-            </span>
+          <div
+            style={{
+              color: total > 100 ? colors.text.warn : colors.text.secondary,
+            }}
+          >
+            Total: {total.toFixed(2)}%
           </div>
           <div>
-            {100 - total}% to <FormattedAddress address={owner} />
+            {(100 - total).toFixed(2)}% to <FormattedAddress address={owner} />
           </div>
         </div>
         <Button

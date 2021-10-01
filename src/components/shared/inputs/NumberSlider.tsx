@@ -26,6 +26,8 @@ export default function NumberSlider({
     step: step ?? 0.1,
   }
 
+  const decimals = inputConfig.step.toString().split('.')[1].length
+
   const updateValue = (val?: number) => {
     setValue(val)
     if (onChange) onChange(val)
@@ -46,9 +48,15 @@ export default function NumberSlider({
       <InputNumber
         {...inputConfig}
         value={_value}
-        formatter={(val?: string | number | undefined) =>
-          `${val ?? ''}${suffix ?? ''}`
-        }
+        formatter={(val?: string | number | undefined) => {
+          let _val = val?.toString() ?? '0'
+
+          if (_val.includes('.') && _val.split('.')[1].length > decimals) {
+            _val = parseFloat(_val).toFixed(decimals)
+          }
+
+          return `${_val ?? ''}${suffix ?? ''}`
+        }}
         parser={(val?: string) =>
           parseFloat(val?.replace(suffix ?? '', '') ?? '0')
         }

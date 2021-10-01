@@ -57,16 +57,21 @@ export default function ReconfigureFCModal({
   const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
-  const [payModsModalVisible, setPayModsFormModalVisible] =
-    useState<boolean>(false)
-  const [budgetFormModalVisible, setBudgetFormModalVisible] =
-    useState<boolean>(false)
-  const [rulesFormModalVisible, setRulesFormModalVisible] =
-    useState<boolean>(false)
-  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
-    useState<boolean>(false)
-  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
-    useState<boolean>(false)
+  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [rulesFormModalVisible, setRulesFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
+    boolean
+  >(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
+    boolean
+  >(false)
   useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -147,7 +152,7 @@ export default function ReconfigureFCModal({
     const metadata: Omit<FCMetadata, 'version'> = {
       reservedRate: editingFC.reserved.toNumber(),
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber()
+      reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
     }
 
     transactor(
@@ -265,10 +270,14 @@ export default function ReconfigureFCModal({
                 title: 'Funding',
                 callback: () => setBudgetFormModalVisible(true),
               },
-              {
-                title: 'Spending',
-                callback: () => setPayModsFormModalVisible(true),
-              },
+              ...(editingFC.target.gt(0)
+                ? [
+                    {
+                      title: 'Spending',
+                      callback: () => setPayModsFormModalVisible(true),
+                    },
+                  ]
+                : []),
               {
                 title: 'Reserved tokens',
                 callback: () => setTicketingFormModalVisible(true),

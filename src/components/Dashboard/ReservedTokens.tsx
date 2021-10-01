@@ -91,11 +91,13 @@ export default function ReservedTokens({
         />
       </div>
 
-      <TicketModsList
-        mods={ticketMods}
-        fundingCycle={fundingCycle}
-        projectId={projectId}
-      />
+      {metadata?.reservedRate ? (
+        <TicketModsList
+          mods={ticketMods}
+          fundingCycle={fundingCycle}
+          projectId={projectId}
+        />
+      ) : null}
 
       {!hideActions && (
         <div

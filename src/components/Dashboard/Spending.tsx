@@ -23,8 +23,9 @@ export default function Spending({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, owner, currentFC } =
-    useContext(ProjectContext)
+  const { balanceInCurrency, projectId, owner, currentFC } = useContext(
+    ProjectContext,
+  )
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 
@@ -105,17 +106,19 @@ export default function Spending({
           </div>
         </div>
 
-        <div>
-          <TooltipLabel
-            label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
-            tip="Available funds are distributed according to any payouts below."
-          />
-          <PayoutModsList
-            mods={payoutMods}
-            fundingCycle={currentFC}
-            projectId={projectId}
-          />
-        </div>
+        {currentFC.target.gt(0) && (
+          <div>
+            <TooltipLabel
+              label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
+              tip="Available funds are distributed according to any payouts below."
+            />
+            <PayoutModsList
+              mods={payoutMods}
+              fundingCycle={currentFC}
+              projectId={projectId}
+            />
+          </div>
+        )}
       </Space>
 
       <WithdrawModal

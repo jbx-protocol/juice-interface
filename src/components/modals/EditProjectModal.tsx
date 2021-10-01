@@ -11,7 +11,6 @@ import {
   editMetadataForCid,
   logoNameForHandle,
   metadataNameForHandle,
-  unpinFileByName,
   uploadProjectMetadata,
 } from 'utils/ipfs'
 

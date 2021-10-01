@@ -39,7 +39,7 @@ export function useHasPermission(
             userAddress,
             owner,
             projectId.toHexString(),
-            ...(Array.isArray(permission) ? permission : [permission]),
+            Array.isArray(permission) ? permission : [permission],
           ]
         : null,
   })

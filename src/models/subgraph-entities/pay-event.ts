@@ -12,13 +12,15 @@ export type PayEvent = Partial<{
   txHash: string
 }>
 
-export type PayEventJson = Partial<Record<keyof PayEvent, string>>
+export type PayEventJson = Partial<
+  Record<keyof PayEvent, string> & { project: { id: string } }
+>
 
 export const parsePayEventJson = (json: PayEventJson): Partial<PayEvent> => ({
   ...json,
   fundingCycleId: json.fundingCycleId
     ? BigNumber.from(json.fundingCycleId)
     : undefined,
-  project: json.project ? BigNumber.from(json.project) : undefined,
+  project: json.project?.id ? BigNumber.from(json.project.id) : undefined,
   timestamp: json.timestamp ? parseInt(json.timestamp) : undefined,
 })

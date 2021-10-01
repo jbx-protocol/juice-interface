@@ -1,12 +1,14 @@
-import { Col, ColProps, Row } from 'antd'
+import { Col, ColProps, Row, Space } from 'antd'
 import { Project } from 'models/subgraph-entities/project'
 
 import ProjectCard from './ProjectCard'
 
 export default function ProjectsGrid({
   projects,
+  list,
 }: {
   projects: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
+  list?: boolean
 }) {
   const gutter = 20
 
@@ -16,7 +18,13 @@ export default function ProjectsGrid({
     style: { marginBottom: gutter },
   }
 
-  return (
+  return list ? (
+    <Space style={{ width: '100%' }} direction="vertical">
+      {projects?.map(project => (
+        <ProjectCard project={project} key={project.handle} />
+      ))}
+    </Space>
+  ) : (
     <div>
       {projects?.map(
         (project, i) =>

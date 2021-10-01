@@ -10,6 +10,7 @@ import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
 import { Project } from 'models/subgraph-entities/project'
+import Payments from './Payments'
 
 export default function Landing() {
   const { theme, forThemeOption } = useContext(ThemeContext)
@@ -195,19 +196,29 @@ export default function Landing() {
             ...wrapper,
           }}
         >
-          {smallHeader('Projects using Juicebox')}
-          <div style={{ marginTop: 20 }}>
-            {previewProjects ? (
-              <ProjectsGrid projects={previewProjects} />
-            ) : (
-              <Loading />
-            )}
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <a href="/#/projects">
-              <Button>All projects</Button>
-            </a>
-          </div>
+          <Row gutter={60}>
+            <Col xs={24} md={12} style={{ marginBottom: 100 }}>
+              {smallHeader('Projects using Juicebox')}
+              <div style={{ marginTop: 20 }}>
+                {previewProjects ? (
+                  <ProjectsGrid projects={previewProjects} list />
+                ) : (
+                  <Loading />
+                )}
+              </div>
+              <div style={{ textAlign: 'center', marginTop: 20 }}>
+                <a href="/#/projects">
+                  <Button>All projects</Button>
+                </a>
+              </div>
+            </Col>
+            <Col xs={24} md={12} style={{ marginBottom: 100 }}>
+              {smallHeader('Latest payments')}
+              <div style={{ maxHeight: 600, overflow: 'auto' }}>
+                <Payments />
+              </div>
+            </Col>
+          </Row>
         </div>
       </section>
 

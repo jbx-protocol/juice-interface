@@ -63,7 +63,6 @@ export default function BudgetForm({
                 setTarget(
                   checked ? '10000' : fromWad(constants.MaxUint256) || '0',
                 )
-                setCurrency(1)
                 setShowFundingFields(checked)
               }}
             />

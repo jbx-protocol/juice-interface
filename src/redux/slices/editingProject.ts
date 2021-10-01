@@ -31,43 +31,47 @@ export type EditingProjectState = {
 const defaultDiscountRate = parsePermille(0)
 const defaultBondingCurveRate = parsePerbicent(100)
 
+export const defaultProjectState: EditingProjectState = {
+  info: {
+    metadata: {
+      name: '',
+      infoUri: '',
+      logoUri: '',
+      description: '',
+      tokens: [],
+      version: 1,
+    },
+    handle: '',
+  },
+  fundingCycle: serializeFundingCycle({
+    id: BigNumber.from(1),
+    projectId: BigNumber.from(0),
+    number: BigNumber.from(1),
+    basedOn: BigNumber.from(0),
+    target: constants.MaxUint256,
+    currency: BigNumber.from(1),
+    start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
+    duration: BigNumber.from(0),
+    tapped: BigNumber.from(0),
+    weight: BigNumber.from(0),
+    fee: BigNumber.from(0),
+    reserved: parsePerbicent(0),
+    bondingCurveRate: defaultBondingCurveRate,
+    discountRate: defaultDiscountRate,
+    cycleLimit: BigNumber.from(0),
+    configured: BigNumber.from(0),
+    ballot: '0xEf7480b6E7CEd228fFB0854fe49A428F562a8982', // 7 day
+  }),
+  payoutMods: [],
+  ticketMods: [],
+}
+
 export const editingProjectSlice = createSlice({
   name: 'editingProject',
-  initialState: {
-    info: {
-      metadata: {
-        name: '',
-        infoUri: '',
-        logoUri: '',
-        description: '',
-        tokens: [],
-        version: 1
-      },
-      handle: '',
-    },
-    fundingCycle: serializeFundingCycle({
-      id: BigNumber.from(1),
-      projectId: BigNumber.from(0),
-      number: BigNumber.from(1),
-      basedOn: BigNumber.from(0),
-      target: constants.MaxUint256,
-      currency: BigNumber.from(1),
-      start: BigNumber.from(Math.floor(new Date().valueOf() / 1000)),
-      duration: BigNumber.from(30),
-      tapped: BigNumber.from(0),
-      weight: BigNumber.from(0),
-      fee: BigNumber.from(0),
-      reserved: parsePerbicent(5),
-      bondingCurveRate: defaultBondingCurveRate,
-      discountRate: defaultDiscountRate,
-      cycleLimit: BigNumber.from(0),
-      configured: BigNumber.from(0),
-      ballot: '0xEf7480b6E7CEd228fFB0854fe49A428F562a8982', // 7 day
-    }),
-    payoutMods: [],
-    ticketMods: [],
-  } as EditingProjectState,
+  initialState: defaultProjectState,
   reducers: {
+    setState: (state, action: PayloadAction<EditingProjectState>) =>
+      action.payload,
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
       ...state,
       info: action.payload,

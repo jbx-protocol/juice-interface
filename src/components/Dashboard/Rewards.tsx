@@ -337,7 +337,10 @@ export default function Rewards({
           setRedeemModalVisible(false)
         }}
         okText="Redeem"
-        okButtonProps={{ disabled: redeemDisabled }}
+        okButtonProps={{
+          disabled:
+            redeemDisabled || !redeemAmount || parseInt(redeemAmount) === 0,
+        }}
         width={540}
       >
         <Space direction="vertical" style={{ width: '100%' }}>

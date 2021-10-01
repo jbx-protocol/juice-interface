@@ -25,7 +25,10 @@ import {
   useLayoutEffect,
   useState,
 } from 'react'
-import { editingProjectActions } from 'redux/slices/editingProject'
+import {
+  defaultProjectState,
+  editingProjectActions,
+} from 'redux/slices/editingProject'
 import {
   fromPerbicent,
   fromPermille,
@@ -59,20 +62,27 @@ export default function Create() {
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [payModsModalVisible, setPayModsFormModalVisible] =
-    useState<boolean>(false)
-  const [budgetFormModalVisible, setBudgetFormModalVisible] =
-    useState<boolean>(false)
-  const [projectFormModalVisible, setProjectFormModalVisible] =
-    useState<boolean>(false)
-  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
-    useState<boolean>(false)
-  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
-    useState<boolean>(false)
-  const [rulesFormModalVisible, setRulesFormModalVisible] =
-    useState<boolean>(false)
-  const [deployProjectModalVisible, setDeployProjectModalVisible] =
-    useState<boolean>(false)
+  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [projectFormModalVisible, setProjectFormModalVisible] = useState<
+    boolean
+  >(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
+    boolean
+  >(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
+    boolean
+  >(false)
+  const [rulesFormModalVisible, setRulesFormModalVisible] = useState<boolean>(
+    false,
+  )
+  const [deployProjectModalVisible, setDeployProjectModalVisible] = useState<
+    boolean
+  >(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -155,6 +165,7 @@ export default function Create() {
   useLayoutEffect(() => {
     resetProjectForm()
     resetTicketingForm()
+    dispatch(editingProjectActions.setState(defaultProjectState))
   }, [])
 
   async function deployProject() {
@@ -182,9 +193,11 @@ export default function Create() {
 
     const properties: Record<keyof FCProperties, any> = {
       target: targetWithFee,
-      currency: editingFC.currency.toNumber(),
+      currency: hasFundingTarget(editingFC) ? editingFC.currency.toNumber() : 0,
       duration: editingFC.duration.toNumber(),
-      discountRate: editingFC.discountRate.toNumber(),
+      discountRate: hasFundingTarget(editingFC)
+        ? editingFC.discountRate.toNumber()
+        : 0,
       cycleLimit: editingFC.cycleLimit.toNumber(),
       ballot: constants.AddressZero,
     }

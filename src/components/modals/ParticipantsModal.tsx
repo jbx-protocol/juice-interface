@@ -20,6 +20,7 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
+import { indexedProjectERC20s } from '../../constants/indexed-project-erc20s'
 
 const pageSize = 100
 
@@ -222,6 +223,11 @@ export default function ParticipantsModal({
     ],
   )
 
+  const erc20IsUntracked =
+    tokenSymbol &&
+    projectId &&
+    !indexedProjectERC20s.includes(projectId?.toNumber())
+
   return (
     <Modal
       visible={visible}
@@ -232,6 +238,31 @@ export default function ParticipantsModal({
     >
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
+
+        {true && (
+          <p>
+            <b>Notice:</b> {tokenSymbol} ERC20 tokens have not been indexed by
+            Juicebox, meaning that the balances reflected below will be
+            inaccurate for users who have unstaked and transferred their tokens.
+            This will be solved with the release of{' '}
+            <a
+              href="https://app.gitbook.com/@jbx/s/juicebox/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juicebox V2
+            </a>
+            . If this is a big issue for your project, let us know in the{' '}
+            <a
+              href="https://discord.gg/6jXrJSyDFf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Discord
+            </a>
+            .
+          </p>
+        )}
 
         {list}
 

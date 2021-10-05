@@ -7,10 +7,12 @@ import { Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
+import { NetworkName } from 'models/network-name'
 import {
   parseParticipantJson,
   Participant,
@@ -226,7 +228,9 @@ export default function ParticipantsModal({
   const erc20IsUntracked =
     tokenSymbol &&
     projectId &&
-    !indexedProjectERC20s.includes(projectId?.toNumber())
+    !indexedProjectERC20s[
+      process.env.REACT_APP_INFURA_NETWORK as NetworkName
+    ]?.includes(projectId?.toNumber())
 
   return (
     <Modal
@@ -239,7 +243,7 @@ export default function ParticipantsModal({
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
 
-        {true && (
+        {erc20IsUntracked && (
           <p>
             <b>Notice:</b> {tokenSymbol} ERC20 tokens have not been indexed by
             Juicebox, meaning that the balances reflected below will be

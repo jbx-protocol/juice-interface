@@ -110,10 +110,11 @@ export const formatPercent = (
 ): string => {
   if (!divisor?.gt(0) || !numerator) return ''
 
-  const sharePct = numerator?.mul(100).div(divisor)
+  // Multiply by 10,000 for 4 significant figures
+  const sharePct = numerator?.mul(10000).div(divisor)
 
   if (sharePct?.toString() === '0' && numerator?.gt(0)) {
-    return '<1'
+    return '<0.01'
   }
-  return sharePct?.toString()
+  return (sharePct?.toNumber() / 100).toString()
 }

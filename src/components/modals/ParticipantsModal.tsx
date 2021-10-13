@@ -7,7 +7,7 @@ import { Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
-import { NetworkContext } from 'contexts/networkContext'
+import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
@@ -22,7 +22,6 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
-import { indexedProjectERC20s } from '../../constants/indexed-project-erc20s'
 
 const pageSize = 100
 

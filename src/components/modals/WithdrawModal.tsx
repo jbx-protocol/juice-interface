@@ -27,8 +27,13 @@ export default function WithdrawModal({
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()
   const { transactor, contracts } = useContext(UserContext)
-  const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
-    useContext(ProjectContext)
+  const {
+    balanceInCurrency,
+    projectId,
+    currentFC,
+    currentPayoutMods,
+    owner,
+  } = useContext(ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -58,10 +63,10 @@ export default function WithdrawModal({
       return
     }
 
-    // Arbitrary value subtracted
-    const minAmount = currentFC.currency.eq(1)
+    const minAmount = (currentFC.currency.eq(1)
       ? converter.usdToWei(tapAmount)
       : parseWad(tapAmount)
+    )?.sub(1e12) // Arbitrary value subtracted
 
     transactor(
       contracts.TerminalV1,

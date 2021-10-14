@@ -27,7 +27,7 @@ export default function Balance({
       }}
     >
       <CurrencySymbol currency={0} />
-      {formatWad(balance) ?? '--'}
+      {formatWad(balance, { decimals: 4 }) ?? '--'}
       {showEthPrice && (
         <div style={{ color: colors.text.tertiary }}>
           <EthPrice />

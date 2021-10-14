@@ -78,7 +78,6 @@ export default function FormattedNumberInput({
             ? formattedNum(val, {
                 thousandsSeparator,
                 decimalSeparator,
-                decimals: 1,
               })
             : '') +
           _suffix

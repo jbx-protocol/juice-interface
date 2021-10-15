@@ -340,6 +340,7 @@ export default function Create() {
         createdAt: new Date().valueOf() / 1000,
         projectType: 'standard',
         owner: userAddress,
+        earned: BigNumber.from(0),
         currentFC: fundingCycle,
         currentPayoutMods: editingPayoutMods,
         currentTicketMods: editingTicketMods,

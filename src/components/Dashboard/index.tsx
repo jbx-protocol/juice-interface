@@ -26,6 +26,7 @@ import Project from './Project'
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
   const [createdAt, setCreatedAt] = useState<number>()
+  const [earned, setEarned] = useState<BigNumber>()
 
   const converter = useCurrencyConverter()
 
@@ -47,7 +48,7 @@ export default function Dashboard() {
     querySubgraph(
       {
         entity: 'project',
-        keys: ['createdAt'],
+        keys: ['createdAt', 'totalPaid'],
         where: {
           key: 'id',
           value: projectId.toString(),
@@ -55,7 +56,9 @@ export default function Dashboard() {
       },
       res => {
         if (!res?.projects) return
-        setCreatedAt(parseProjectJson(res.projects[0]).createdAt)
+        const project = parseProjectJson(res.projects[0])
+        setCreatedAt(project.createdAt)
+        setEarned(project.totalPaid)
       },
     )
   }, [projectId])
@@ -304,6 +307,7 @@ export default function Dashboard() {
         projectId,
         projectType,
         owner,
+        earned,
         handle,
         metadata,
         currentFC,

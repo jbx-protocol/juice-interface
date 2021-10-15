@@ -20,8 +20,9 @@ export default function Pay() {
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
 
-  const { projectId, currentFC, metadata, tokenSymbol } =
-    useContext(ProjectContext)
+  const { projectId, currentFC, metadata, tokenSymbol } = useContext(
+    ProjectContext,
+  )
 
   const converter = useCurrencyConverter()
 
@@ -35,7 +36,7 @@ export default function Pay() {
   }
 
   const formatReceivedTickets = (wei: BigNumber) =>
-    formatWad(weightedRate(currentFC, wei, 'payer'))
+    formatWad(weightedRate(currentFC, wei, 'payer'), { decimals: 0 })
 
   if (!currentFC || !projectId || !metadata) return null
 

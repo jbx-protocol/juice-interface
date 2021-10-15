@@ -21,10 +21,16 @@ export const fromWad = (amt?: BigNumberish) => {
     ? result.substring(0, result.length - 2)
     : result
 }
-export const formatWad = (amt?: BigNumberish, config?: FormatConfig) =>
-  amt !== undefined && amt !== null && amt !== ''
-    ? formattedNum(fromWad(amt), config)
-    : undefined
+export const formatWad = (amt?: BigNumberish, config?: FormatConfig) => {
+  if (amt === undefined && amt === null && amt === '') return
+
+  let _amt = amt
+  if (_amt?.toString().includes('.')) {
+    _amt = _amt.toString().split('.')[0]
+  }
+
+  return formattedNum(fromWad(_amt), config)
+}
 
 // Permyriad: x/10000
 export const parsePermyriad = (amt?: string | number) =>

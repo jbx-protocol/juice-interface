@@ -141,11 +141,15 @@ export default function ParticipantsModal({
           ['Wallet', 'Token balance', 'Total ETH paid', 'Last paid timestamp'],
           ...res.participants.map(e => {
             const p = parseParticipantJson(e)
+
+            let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
+            if (date.includes(',')) date = date.split(',')[1]
+
             return [
               p.wallet,
               fromWad(p.tokenBalance),
               fromWad(p.totalPaid),
-              new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString(),
+              date,
             ]
           }),
         ]

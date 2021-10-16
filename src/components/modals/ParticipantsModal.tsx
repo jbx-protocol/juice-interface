@@ -1,9 +1,10 @@
 import {
   SortAscendingOutlined,
   SortDescendingOutlined,
+  DownloadOutlined,
 } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Modal, Select } from 'antd'
+import { Button, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
@@ -20,7 +21,7 @@ import {
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { formatPercent, formatWad } from 'utils/formatNumber'
+import { formatPercent, formatWad, fromWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 
 const pageSize = 100
@@ -118,6 +119,53 @@ export default function ParticipantsModal({
       <span>No payments</span>
     )
 
+  const download = () =>
+    querySubgraph(
+      {
+        entity: 'participant',
+        keys: ['wallet', 'totalPaid', 'lastPaidTimestamp', 'tokenBalance'],
+        first: 1000,
+        orderBy: sortPayerReports,
+        orderDirection: sortPayerReportsDirection,
+        where: projectId
+          ? {
+              key: 'project',
+              value: projectId.toString(),
+            }
+          : undefined,
+      },
+      res => {
+        if (!res) return
+
+        const rows = [
+          ['Wallet', 'Token balance', 'Total ETH paid', 'Last paid timestamp'],
+          ...res.participants.map(e => {
+            const p = parseParticipantJson(e)
+            return [
+              p.wallet,
+              fromWad(p.tokenBalance),
+              fromWad(p.totalPaid),
+              new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString(),
+            ]
+          }),
+        ]
+
+        let csvContent =
+          'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
+
+        var encodedUri = encodeURI(csvContent)
+        var link = document.createElement('a')
+        link.setAttribute('href', encodedUri)
+        link.setAttribute(
+          'download',
+          'juicebox_project-' + projectId + '_holders.csv',
+        )
+        document.body.appendChild(link) // Required for FF
+
+        link.click()
+      },
+    )
+
   const list = useMemo(
     () => (
       <div>
@@ -159,7 +207,10 @@ export default function ParticipantsModal({
               <SortDescendingOutlined />
             )}
           </div>
+
+          <Button type="text" icon={<DownloadOutlined />} onClick={download} />
         </div>
+
         {participants.map(p => (
           <div
             style={{

@@ -151,8 +151,13 @@ export default function Rewards({
 
 
   const rewardAmount = useMemo(() => {
-    if (!bondingCurveRate || !totalSupply || !base || !redeemAmount)
+    if (!bondingCurveRate || !totalSupply || !base || !redeemAmount || !currentOverflow)
       return undefined
+
+    if (totalSupply.sub(parseWad(redeemAmount)).isNegative()) {
+      return currentOverflow
+    }
+
     const number = base
     const numerator = parseWad(bondingCurveRate).add(
       parseWad(redeemAmount)
@@ -162,7 +167,7 @@ export default function Rewards({
     const denominator = parseWad(200)
 
     return number.mul(numerator).div(denominator)
-  }, [redeemAmount, base, bondingCurveRate, totalSupply])
+  }, [redeemAmount, base, bondingCurveRate, totalSupply, currentOverflow])
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 

@@ -25,3 +25,10 @@ export interface FCMetadata {
   reconfigurationBondingCurveRate: number
   reservedRate: number
 }
+
+export enum BallotState {
+  'Approved' = 0,
+  'Active' = 1,
+  'Failed' = 2,
+  'Stanby' = 3,
+}

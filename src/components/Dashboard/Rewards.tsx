@@ -16,9 +16,13 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import { useContext, useMemo, useState } from 'react'
+import { BallotState, FundingCycle } from 'models/funding-cycle'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { decodeFCMetadata } from 'utils/fundingCycle'
+import { numbersDiff } from 'utils/numberDiff'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
@@ -94,43 +98,71 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
+
+  const fundingCycle = useContractReader<FundingCycle>({
+    contract: ContractName.FundingCycles,
+    functionName: 'currentOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
+  })
+
+  const currentOverflow = useContractReader<BigNumber>({
+    contract: ContractName.TerminalV1,
+    functionName: 'currentOverflowOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: bigNumbersDiff,
+  })
+
+  const currentBallotState = useContractReader<BallotState>({
+    contract: ContractName.FundingCycles,
+    functionName: 'currentBallotStateOf',
+    args: projectId ? [projectId.toHexString()] : null,
+    valueDidChange: numbersDiff,
+  })
+
+  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+
+  const bondingCurveRate =
+    currentBallotState === BallotState.Active
+      ? metadata?.reconfigurationBondingCurveRate
+      : metadata?.bondingCurveRate
+
+  const reservedTicketBalance = useContractReader<BigNumber>({
+    contract: ContractName.TerminalV1,
+    functionName: 'reservedTicketBalanceOf',
+    args:
+      projectId && metadata?.reservedRate
+        ? [projectId, metadata.reservedRate]
+        : null,
+    valueDidChange: bigNumbersDiff,
+  })
+
   const totalSupply = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
     functionName: 'totalSupplyOf',
-    args: [projectId?.toHexString()],
+    args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
-  })
-  const rewardAmount = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'claimableOverflowOf',
-    args:
-      userAddress && projectId && redeemAmount
-        ? [
-            userAddress,
-            projectId.toHexString(),
-            parseWad(redeemAmount).toHexString(),
-          ]
-        : null,
-    valueDidChange: bigNumbersDiff,
-    updateOn: useMemo(
-      () =>
-        projectId && userAddress
-          ? [
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Pay',
-                topics: [[], projectId.toHexString(), userAddress],
-              },
-              {
-                contract: ContractName.TerminalV1,
-                eventName: 'Redeem',
-                topics: [projectId.toHexString(), userAddress],
-              },
-            ]
-          : undefined,
-      [projectId],
-    ),
-  })
+  })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
+
+  const base =
+    totalSupply && redeemAmount && currentOverflow
+      ? currentOverflow?.mul(parseWad(redeemAmount)).div(totalSupply)
+      : BigNumber.from(0)
+
+
+  const rewardAmount = useMemo(() => {
+    if (!bondingCurveRate || !totalSupply || !base || !redeemAmount)
+      return undefined
+    const number = base
+    const numerator = parseWad(bondingCurveRate).add(
+      parseWad(redeemAmount)
+        .mul(parseWad(200).sub(parseWad(bondingCurveRate)))
+        .div(totalSupply),
+    )
+    const denominator = parseWad(200)
+
+    return number.mul(numerator).div(denominator)
+  }, [redeemAmount, base, bondingCurveRate, totalSupply])
 
   const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 

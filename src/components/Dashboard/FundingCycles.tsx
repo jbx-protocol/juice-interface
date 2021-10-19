@@ -19,8 +19,9 @@ export default function FundingCycles({
   showCurrentDetail?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
-  const [reconfigureModalVisible, setReconfigureModalVisible] =
-    useState<boolean>(false)
+  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
+    boolean
+  >(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
   const {
@@ -31,6 +32,7 @@ export default function FundingCycles({
     queuedTicketMods,
     currentPayoutMods,
     currentTicketMods,
+    isPreviewMode,
   } = useContext(ProjectContext)
 
   const {
@@ -106,6 +108,7 @@ export default function FundingCycles({
           style={{ marginTop: 20 }}
           onClick={() => setReconfigureModalVisible(true)}
           size="small"
+          disabled={isPreviewMode}
         >
           Reconfigure funding
         </Button>

@@ -75,9 +75,9 @@ export default function Project({
 
         <Col xs={24} md={12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
-            {canPrintPreminedTickets && hasPrintPreminePermission && (
-              <PrintPremined projectId={projectId} />
-            )}
+            {canPrintPreminedTickets &&
+              hasPrintPreminePermission &&
+              projectId.gt(0) && <PrintPremined projectId={projectId} />}
             <Pay />
           </Space>
         </Col>

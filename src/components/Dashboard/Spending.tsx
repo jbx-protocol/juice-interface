@@ -23,9 +23,13 @@ export default function Spending({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { balanceInCurrency, projectId, owner, currentFC } = useContext(
-    ProjectContext,
-  )
+  const {
+    balanceInCurrency,
+    projectId,
+    owner,
+    currentFC,
+    isPreviewMode,
+  } = useContext(ProjectContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 
@@ -79,6 +83,7 @@ export default function Spending({
               type="ghost"
               size="small"
               onClick={() => setWithdrawModalVisible(true)}
+              disabled={isPreviewMode}
             >
               Distribute
             </Button>

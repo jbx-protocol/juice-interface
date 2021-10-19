@@ -273,11 +273,9 @@ export default function Create() {
                 cursor: currentStep < i ? 'default' : 'pointer',
                 padding: 10,
                 borderRadius: radii.sm,
-                border:
-                  '1px solid ' +
-                  (active
-                    ? colors.stroke.action.primary
-                    : colors.stroke.action.secondary),
+                border: active
+                  ? '2px solid ' + colors.stroke.action.primary
+                  : '1px solid' + colors.stroke.action.secondary,
               }}
               onClick={disabled ? () => null : step.callback}
             >
@@ -388,14 +386,10 @@ export default function Create() {
               title: 'Rules',
               callback: () => setRulesFormModalVisible(true),
             },
-            ...(isRecurring(editingFC) && editingFC.duration.gt(0)
-              ? [
-                  {
-                    title: 'Incentives',
-                    callback: () => setIncentivesFormModalVisible(true),
-                  },
-                ]
-              : []),
+            {
+              title: 'Incentives',
+              callback: () => setIncentivesFormModalVisible(true),
+            },
           ])}
         </Col>
 

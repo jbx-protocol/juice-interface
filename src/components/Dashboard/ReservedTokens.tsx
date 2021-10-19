@@ -27,7 +27,7 @@ export default function ReservedTokens({
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
 
   const metadata = decodeFCMetadata(fundingCycle?.metadata)
 
@@ -117,6 +117,7 @@ export default function ReservedTokens({
               style={{ marginLeft: 10 }}
               size="small"
               onClick={() => setModalIsVisible(true)}
+              disabled={isPreviewMode}
             >
               Distribute
             </Button>

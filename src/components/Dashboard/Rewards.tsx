@@ -36,7 +36,9 @@ export default function Rewards({
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenAddress, tokenSymbol } = useContext(ProjectContext)
+  const { projectId, tokenAddress, tokenSymbol, isPreviewMode } = useContext(
+    ProjectContext,
+  )
 
   const {
     theme: { colors },
@@ -241,6 +243,7 @@ export default function Rewards({
                       size="small"
                       type="text"
                       onClick={() => setParticipantsModalVisible(true)}
+                      disabled={isPreviewMode}
                     >
                       Holders
                     </Button>
@@ -310,6 +313,7 @@ export default function Rewards({
                       loading={loadingRedeem}
                       size="small"
                       onClick={() => setRedeemModalVisible(true)}
+                      disabled={isPreviewMode}
                     >
                       Redeem
                     </Button>
@@ -320,7 +324,7 @@ export default function Rewards({
           )}
         />
 
-        {!ticketsIssued && hasIssueTicketsPermission && (
+        {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
           <IssueTickets projectId={projectId} />
         )}
       </Space>

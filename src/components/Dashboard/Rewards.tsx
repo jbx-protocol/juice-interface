@@ -269,31 +269,24 @@ export default function Rewards({
                             <>
                               {`${formatWad(ticketsBalance ?? 0, {
                                 decimals: 0,
-                              })} ${tokenSymbol}`}{' '}
-                              <Button
-                                onClick={() => setStakeModalVisible(true)}
-                                type="text"
-                                size="small"
-                                style={{ color: colors.text.action.primary }}
-                              >
-                                Stake
-                              </Button>
+                              })} ${tokenSymbol}`}
                             </>
                           ) : (
-                            <>{`0 ${tokenSymbol || 'tokens'} in your wallet`}</>
+                            <>0 {tokenSymbol || 'tokens'}</>
                           )}
                         </div>
                       )}
                       {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {formatWad(iouBalance ?? 0, { decimals: 0 })} staked{' '}
+                          {formatWad(iouBalance ?? 0, { decimals: 0 })}{' '}
+                          claimable{' '}
                           <Button
                             onClick={() => setUnstakeModalVisible(true)}
                             type="text"
                             size="small"
                             style={{ color: colors.text.action.primary }}
                           >
-                            Unstake
+                            Claim
                           </Button>
                         </div>
                       )}
@@ -349,7 +342,8 @@ export default function Rewards({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>
-            Balance: {formatWad(totalBalance ?? 0)} {tokenSymbol ?? 'tokens'}
+            Balance: {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
+            {tokenSymbol ?? 'tokens'}
           </div>
           <p>
             Currently worth: <CurrencySymbol currency={0} />
@@ -386,11 +380,11 @@ export default function Rewards({
           )}
         </Space>
       </Modal>
-      <ConfirmStakeTokensModal
+      {/* <ConfirmStakeTokensModal
         visible={stakeModalVisible}
         onCancel={() => setStakeModalVisible(false)}
         ticketsUpdateOn={ticketsUpdateOn}
-      />
+      /> */}
       <ConfirmUnstakeTokensModal
         visible={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}

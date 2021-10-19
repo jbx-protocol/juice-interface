@@ -21,7 +21,7 @@ export default function ConfirmUnstakeTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
   const { contracts, transactor } = useContext(UserContext)
-  const { userAddress } = useContext(NetworkContext);
+  const { userAddress } = useContext(NetworkContext)
   const { tokenSymbol, projectId } = useContext(ProjectContext)
 
   const iouBalance = useContractReader<BigNumber>({
@@ -58,18 +58,18 @@ export default function ConfirmUnstakeTokensModal({
 
   return (
     <Modal
-      title={'Unstake ' + (tokenSymbol ?? 'tokens')}
+      title={'Claim ' + (tokenSymbol ?? 'tokens')}
       visible={visible}
       onOk={unstake}
-      okText="Unstake"
+      okText="Claim"
       confirmLoading={loading}
       onCancel={onCancel}
       width={600}
       centered={true}
     >
       <p>
-        Withdraw your {tokenSymbol ?? 'tokens'} as ERC20 to your wallet. You can
-        still redeem unstaked {tokenSymbol ?? 'tokens'} for overflow.
+        Claim your {tokenSymbol ?? 'tokens'}. You can still redeem unclaimed{' '}
+        {tokenSymbol ?? 'tokens'} for overflow.
       </p>
       <FormattedNumberInput
         min={0}

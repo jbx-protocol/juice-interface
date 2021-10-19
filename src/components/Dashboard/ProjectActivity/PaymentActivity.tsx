@@ -118,7 +118,7 @@ export function PaymentActivity({
                   }}
                 >
                   <CurrencySymbol currency={0} />
-                  {formatWad(e.amount)}
+                  {formatWad(e.amount, { decimals: 4 })}
                 </div>
               </div>
 

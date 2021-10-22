@@ -1,5 +1,6 @@
-import { LinkOutlined } from '@ant-design/icons'
+import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   DistributeToTicketModEvent,
@@ -12,15 +13,15 @@ import { formatWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
 
 import { smallHeaderStyle } from '../styles'
-import { ProjectContext } from 'contexts/projectContext'
 
 export default function ReservesEventElem({
   printReservesEvent,
 }: {
   printReservesEvent: PrintReservesEvent | undefined
 }) {
-  const [distributeEvents, setDistributeEvents] =
-    useState<DistributeToTicketModEvent[]>()
+  const [distributeEvents, setDistributeEvents] = useState<
+    DistributeToTicketModEvent[]
+  >()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -80,14 +81,7 @@ export default function ReservesEventElem({
                 {formatHistoricalDate(printReservesEvent.timestamp * 1000)}
               </span>
             )}{' '}
-            <a
-              className="quiet"
-              href={`https://etherscan.io/tx/${printReservesEvent.txHash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkOutlined />
-            </a>
+            <EtherscanLink value={printReservesEvent.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={printReservesEvent.caller} />

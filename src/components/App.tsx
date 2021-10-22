@@ -9,15 +9,16 @@ import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {
-  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
-    useState<boolean>()
+  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] = useState<
+    boolean
+  >()
 
   const { signerNetwork } = useContext(NetworkContext)
 
   const networkName = readNetwork.name
 
   const supportedNetworks: NetworkName[] = [
-    NetworkName.kovan,
+    NetworkName.mainnet,
     NetworkName.rinkeby,
   ]
 
@@ -62,11 +63,15 @@ function App() {
             <div>Or, go to:</div>
             {supportedNetworks
               .filter(n => process.env.REACT_APP_INFURA_NETWORK !== n)
-              .map(_n => (
-                <a key={_n} href={`https://${_n}.juicebox.money`}>
-                  {_n}.juicebox.money
-                </a>
-              ))}
+              .map(_n => {
+                const subDomain = _n === NetworkName.mainnet ? '' : _n + '.'
+
+                return (
+                  <a key={_n} href={`https://${subDomain}juicebox.money`}>
+                    {subDomain}juicebox.money
+                  </a>
+                )
+              })}
           </Space>
         </div>
       </Modal>

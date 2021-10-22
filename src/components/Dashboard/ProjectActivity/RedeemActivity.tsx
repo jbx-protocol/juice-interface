@@ -1,5 +1,5 @@
-import { LinkOutlined } from '@ant-design/icons'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -110,14 +110,7 @@ export function RedeemActivity({
                   {e.timestamp && (
                     <span>{formatHistoricalDate(e.timestamp * 1000)}</span>
                   )}{' '}
-                  <a
-                    className="quiet"
-                    href={`https://etherscan.io/tx/${e.txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <LinkOutlined />
-                  </a>
+                  <EtherscanLink value={e.txHash} type="tx" />
                 </div>
                 <div
                   style={{

@@ -1,5 +1,5 @@
-import { LinkOutlined } from '@ant-design/icons'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
@@ -87,14 +87,7 @@ export default function TapEventElem({
             {tapEvent.timestamp && (
               <span>{formatHistoricalDate(tapEvent.timestamp * 1000)}</span>
             )}{' '}
-            <a
-              className="quiet"
-              href={`https://etherscan.io/tx/${tapEvent.txHash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkOutlined />
-            </a>
+            <EtherscanLink value={tapEvent.txHash} type="tx" />
           </div>
           <div style={smallHeaderStyle(colors)}>
             called by <FormattedAddress address={tapEvent.caller} />

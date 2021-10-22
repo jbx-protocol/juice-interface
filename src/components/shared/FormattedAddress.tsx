@@ -1,8 +1,9 @@
-import { LinkOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 import { readProvider } from 'constants/readProvider'
 import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
+
+import EtherscanLink from './EtherscanLink'
 
 type EnsRecord = {
   name: string | null
@@ -92,13 +93,7 @@ export default function FormattedAddress({
       title={
         <span>
           <span style={{ userSelect: 'all' }}>{address}</span>{' '}
-          <a
-            href={`https://etherscan.io/address/${address}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <LinkOutlined />
-          </a>
+          <EtherscanLink value={address} type="address" />
         </span>
       }
     >

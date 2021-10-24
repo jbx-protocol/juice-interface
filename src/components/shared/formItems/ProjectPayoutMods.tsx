@@ -405,6 +405,8 @@ export default function ProjectPayoutMods({
                       const address = form.getFieldValue('beneficiary')
                       if (!address || !utils.isAddress(address))
                         return Promise.reject('Address is required')
+                      else if (address === constants.AddressZero)
+                        return Promise.reject('Cannot use zero address.')
                       else return Promise.resolve()
                     },
                   },
@@ -427,14 +429,30 @@ export default function ProjectPayoutMods({
             />
           )}
           {editingModType === 'project' ? (
-            <Form.Item
+            <FormItems.EthAddress
               name="beneficiary"
-              label="Beneficiary"
-              extra="The address that should receive the tokens minted from paying this project."
-              rules={[{ required: true }]}
-            >
-              <Input placeholder={constants.AddressZero} />
-            </Form.Item>
+              defaultValue={form.getFieldValue('beneficiary')}
+              formItemProps={{
+                label: 'Address',
+                extra:
+                  'The address that should receive the tokens minted from paying this project.',
+                rules: [
+                  {
+                    validator: (rule: any, value: any) => {
+                      const address = form.getFieldValue('beneficiary')
+                      if (!address || !utils.isAddress(address))
+                        return Promise.reject('Address is required')
+                      else if (address === constants.AddressZero)
+                        return Promise.reject('Cannot use zero address.')
+                      else return Promise.resolve()
+                    },
+                  },
+                ],
+              }}
+              onAddressChange={beneficiary =>
+                form.setFieldsValue({ beneficiary })
+              }
+            />
           ) : null}
           <Form.Item
             name="percent"

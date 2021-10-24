@@ -2,7 +2,7 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
-import { utils } from 'ethers'
+import { constants, utils } from 'ethers'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
@@ -285,6 +285,8 @@ export default function ProjectTicketMods({
                     const address = form.getFieldValue('beneficiary')
                     if (!address || !utils.isAddress(address))
                       return Promise.reject('Address is required')
+                    else if (address === constants.AddressZero)
+                      return Promise.reject('Cannot use zero address.')
                     else return Promise.resolve()
                   },
                 },

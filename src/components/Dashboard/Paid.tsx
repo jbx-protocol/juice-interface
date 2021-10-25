@@ -261,8 +261,8 @@ export default function Paid() {
               </span>
               <div style={smallHeaderStyle(colors)}>
                 <TooltipLabel
-                  label="BALANCE"
-                  tip="The current balance of this Juicebox project, out of its  funding target. Only up to the funding target can be withdrawn during this funding cycle."
+                  label="WITHDRAWABLE"
+                  tip="No more than the funding target can be withdrawn in a single funding cycle."
                 />
               </div>
             </div>

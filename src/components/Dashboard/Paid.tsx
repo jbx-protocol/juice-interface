@@ -1,6 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress } from 'antd'
+import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
@@ -74,6 +74,17 @@ export default function Paid() {
 
   const ownerBalance = useEthBalance(owner)
 
+  const ownerBalanceInCurrency = useMemo(
+    () =>
+      ownerBalance &&
+      converter.wadToCurrency(
+        ownerBalance,
+        currentFC?.currency.toNumber() as CurrencyOption,
+        0,
+      ),
+    [currentFC?.currency, ownerBalance, converter],
+  )
+
   const percentPaid = useMemo(
     () =>
       balanceInCurrency && currentFC?.target
@@ -105,21 +116,27 @@ export default function Paid() {
   const formatCurrencyAmount = (amt: BigNumber | undefined) =>
     amt ? (
       <>
-        <CurrencySymbol
-          currency={currentFC.currency.toNumber() as CurrencyOption}
-        />
         {currentFC.currency.eq(1) ? (
           <span>
-            {formatWad(amt, { decimals: 4 })}{' '}
-            <span style={subTextStyle}>
-              <CurrencySymbol currency={0} />
-              {formatWad(converter.usdToWei(fromWad(amt)), {
-                decimals: 4,
-              })}
-            </span>
+            <Tooltip
+              title={
+                <span>
+                  <CurrencySymbol currency={0} />
+                  {formatWad(converter.usdToWei(fromWad(amt)), {
+                    decimals: 2,
+                  })}
+                </span>
+              }
+            >
+              <CurrencySymbol currency={1} />
+              {formatWad(amt, { decimals: 2 })}
+            </Tooltip>
           </span>
         ) : (
-          formatWad(amt, { decimals: 2 })
+          <span>
+            <CurrencySymbol currency={0} />
+            {formatWad(amt, { decimals: 2 })}
+          </span>
         )}
       </>
     ) : null
@@ -134,17 +151,14 @@ export default function Paid() {
       >
         <div>
           <div style={smallHeaderStyle(colors)}>
-            {projectType === 'bidpool' ? (
-              <TooltipLabel
-                label="EARNED"
-                tip="The total earned by this project since it was created."
-              />
-            ) : (
-              <TooltipLabel
-                label="BALANCE"
-                tip="The total paid to the project in this funding cycle, plus any unclaimed overflow from the previous funding cycle."
-              />
-            )}
+            <TooltipLabel
+              label="FUNDING"
+              tip={
+                hasFundingTarget(currentFC)
+                  ? "The project's Juicebox balance, out of its current funding target."
+                  : "The project's Juicebox balance."
+              }
+            />
           </div>
           <div
             style={{
@@ -154,41 +168,28 @@ export default function Paid() {
               color: colors.text.brand.primary,
             }}
           >
-            {projectType === 'bidpool'
-              ? formatCurrencyAmount(earned)
-              : formatCurrencyAmount(balanceInCurrency)}
-          </div>
-        </div>
+            {formatCurrencyAmount(balanceInCurrency?.add(currentFC.tapped))}
 
-        {totalOverflow?.gt(0) && projectType === 'standard' && (
-          <div style={{ fontWeight: 500, textAlign: 'right' }}>
-            <div style={smallHeaderStyle(colors)}>
-              <TooltipLabel
-                label="OVERFLOW"
-                tip="The amount paid to this project, minus the current funding cycle's target. Overflow can be claimed by token holders. Any unclaimed overflow from this cycle will go towards the next cycle's target."
-              />
-            </div>
-            {currentFC.currency.eq(1) ? (
-              <span>
-                <span style={subTextStyle}>
-                  <CurrencySymbol currency={0} />
-                  {formatWad(totalOverflow ?? 0, { decimals: 4 })}
-                </span>{' '}
-                <span style={primaryTextStyle}>
-                  <CurrencySymbol currency={1} />
-                  {formattedNum(converter.weiToUsd(totalOverflow), {
-                    decimals: 0,
-                  })}
-                </span>
-              </span>
-            ) : (
-              <span style={primaryTextStyle}>
-                <CurrencySymbol currency={0} />
-                {formatWad(totalOverflow ?? 0, { decimals: 4 })}
+            {hasFundingTarget(currentFC) && (
+              <span style={{ ...subTextStyle, marginLeft: 8 }}>
+                / {formatCurrencyAmount(currentFC.target)}
               </span>
             )}
           </div>
-        )}
+        </div>
+
+        <div style={{ fontWeight: 500, textAlign: 'right' }}>
+          <div style={smallHeaderStyle(colors)}>
+            <TooltipLabel
+              label="LIFETIME"
+              tip="The total amount this project has earned in its lifetime."
+            />
+          </div>
+          <span style={primaryTextStyle}>
+            <CurrencySymbol currency={0} />
+            {formatWad(earned, { decimals: 2 })}
+          </span>
+        </div>
       </div>
 
       {hasFundingTarget(currentFC) &&
@@ -241,51 +242,17 @@ export default function Paid() {
             marginTop: 4,
           }}
         >
-          {projectType === 'bidpool' ? (
-            <div>
-              <span
-                style={{ ...primaryTextStyle, color: colors.text.secondary }}
-              >
-                {formatCurrencyAmount(balanceInCurrency?.add(currentFC.tapped))}
-                /{formatWad(currentFC.target)}
-              </span>
-              <div style={smallHeaderStyle(colors)}>
-                <TooltipLabel
-                  label="FUNDED"
-                  tip="Amount earned toward the target of the current funding cycle."
-                />
-              </div>
+          <div>
+            <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
+              {formatCurrencyAmount(ownerBalanceInCurrency)}
+            </span>
+            <div style={smallHeaderStyle(colors)}>
+              <TooltipLabel
+                label="WALLET"
+                tip="ETH balance of the project owner's wallet."
+              />
             </div>
-          ) : (
-            <div>
-              <span
-                style={{ ...primaryTextStyle, color: colors.text.secondary }}
-              >
-                <CurrencySymbol
-                  currency={currentFC.currency.toNumber() as CurrencyOption}
-                />
-                {formatWad(currentFC.tapped, { decimals: 4 })}
-                <span
-                  style={{ fontSize: '0.8rem', color: colors.text.secondary }}
-                >
-                  {' '}
-                  /{' '}
-                  <CurrencySymbol
-                    currency={currentFC.currency.toNumber() as CurrencyOption}
-                  />
-                  {formatWad(currentFC.target, {
-                    decimals: 4,
-                  })}
-                </span>
-              </span>
-              <div style={smallHeaderStyle(colors)}>
-                <TooltipLabel
-                  label="WITHDRAWN"
-                  tip="The portion of the funding target that has been withdrawn in the current funding cycle."
-                />
-              </div>
-            </div>
-          )}
+          </div>
 
           <div
             style={{ textAlign: 'right', cursor: 'pointer' }}

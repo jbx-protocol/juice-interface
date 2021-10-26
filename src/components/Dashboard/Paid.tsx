@@ -13,7 +13,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
+import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
@@ -108,7 +108,8 @@ export default function Paid() {
 
   const subTextStyle: CSSProperties = {
     color: colors.text.tertiary,
-    fontSize: '0.8rem',
+    fontSize: '0.85rem',
+    fontWeight: 500,
   }
 
   if (!currentFC) return null
@@ -152,7 +153,7 @@ export default function Paid() {
         <div>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
-              label="FUNDING"
+              label="BALANCE"
               tip={
                 hasFundingTarget(currentFC)
                   ? "The project's Juicebox balance, out of its current funding target."
@@ -168,10 +169,15 @@ export default function Paid() {
               color: colors.text.brand.primary,
             }}
           >
-            {formatCurrencyAmount(balanceInCurrency?.add(currentFC.tapped))}
-
+            {formatCurrencyAmount(balanceInCurrency)}
             {hasFundingTarget(currentFC) && (
-              <span style={{ ...subTextStyle, marginLeft: 8 }}>
+              <span
+                style={{
+                  ...subTextStyle,
+                  color: colors.text.primary,
+                  marginLeft: 8,
+                }}
+              >
                 / {formatCurrencyAmount(currentFC.target)}
               </span>
             )}
@@ -181,13 +187,12 @@ export default function Paid() {
         <div style={{ fontWeight: 500, textAlign: 'right' }}>
           <div style={smallHeaderStyle(colors)}>
             <TooltipLabel
-              label="LIFETIME"
-              tip="The total amount this project has earned in its lifetime."
+              label="WALLET"
+              tip="ETH balance of the project owner's wallet."
             />
           </div>
           <span style={primaryTextStyle}>
-            <CurrencySymbol currency={0} />
-            {formatWad(earned, { decimals: 2 })}
+            {formatCurrencyAmount(ownerBalanceInCurrency)}
           </span>
         </div>
       </div>
@@ -243,36 +248,23 @@ export default function Paid() {
           }}
         >
           <div>
-            <span style={{ ...primaryTextStyle, color: colors.text.secondary }}>
-              {formatCurrencyAmount(ownerBalanceInCurrency)}
+            <span style={{ ...subTextStyle }}>
+              <CurrencySymbol currency={0} />
+              {formatWad(earned, { decimals: 2 })} lifetime earned
             </span>
-            <div style={smallHeaderStyle(colors)}>
-              <TooltipLabel
-                label="WALLET"
-                tip="ETH balance of the project owner's wallet."
-              />
-            </div>
           </div>
 
           <div
-            style={{ textAlign: 'right', cursor: 'pointer' }}
+            style={{ ...subTextStyle, textAlign: 'right', cursor: 'pointer' }}
             onClick={() => setBalancesModalVisible(true)}
           >
             <ProjectTokenBalance
-              style={{
-                display: 'inline-block',
-                color: colors.text.tertiary,
-                fontSize: '0.8rem',
-                fontWeight: 500,
-              }}
+              style={{ display: 'inline-block' }}
               wallet={owner}
               projectId={BigNumber.from('0x01')}
               hideHandle
-            />
-            <div style={{ ...smallHeaderStyle(colors), cursor: 'pointer' }}>
-              <span style={{ marginRight: 5 }}>ASSETS</span>
-              <RightCircleOutlined />
-            </div>
+            />{' '}
+            <RightCircleOutlined />
           </div>
         </div>
       )}

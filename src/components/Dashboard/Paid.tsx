@@ -1,8 +1,7 @@
-import { CrownFilled, RightCircleOutlined } from '@ant-design/icons'
+import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress, Tooltip } from 'antd'
+import { Progress } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
@@ -14,13 +13,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import {
-  formattedNum,
-  formatWad,
-  fracDiv,
-  fromWad,
-  parseWad,
-} from 'utils/formatNumber'
+import { formattedNum, formatWad, fracDiv, fromWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
@@ -80,9 +73,6 @@ export default function Paid() {
   )
 
   const ownerBalance = useEthBalance(owner)
-  const ownerBalanceInCurrency = currentFC?.currency.eq(0)
-    ? ownerBalance
-    : parseWad(converter.weiToUsd(ownerBalance))
 
   const percentPaid = useMemo(
     () =>
@@ -129,7 +119,7 @@ export default function Paid() {
             </span>
           </span>
         ) : (
-          formatWad(amt, { decimals: 4 })
+          formatWad(amt, { decimals: 2 })
         )}
       </>
     ) : null
@@ -256,13 +246,13 @@ export default function Paid() {
               <span
                 style={{ ...primaryTextStyle, color: colors.text.secondary }}
               >
-                {formatCurrencyAmount(balanceInCurrency)}/
-                {formatWad(currentFC.target)}
+                {formatCurrencyAmount(balanceInCurrency?.add(currentFC.tapped))}
+                /{formatWad(currentFC.target)}
               </span>
               <div style={smallHeaderStyle(colors)}>
                 <TooltipLabel
-                  label="WITHDRAWABLE"
-                  tip="No more than the funding target can be withdrawn in a single funding cycle."
+                  label="FUNDED"
+                  tip="Amount earned toward the target of the current funding cycle."
                 />
               </div>
             </div>

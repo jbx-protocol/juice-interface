@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Tooltip } from 'antd'
 import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
+import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
@@ -19,6 +20,9 @@ export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
+  const [payWarningModalVisible, setPayWarningModalVisible] = useState<boolean>(
+    false,
+  )
 
   const { projectId, currentFC, metadata, tokenSymbol } = useContext(
     ProjectContext,
@@ -32,7 +36,7 @@ export default function Pay() {
     payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
 
   function pay() {
-    setPayModalVisible(true)
+    setPayWarningModalVisible(true)
   }
 
   const formatReceivedTickets = (wei: BigNumber) =>
@@ -110,6 +114,14 @@ export default function Pay() {
         </div>
       </div>
 
+      <PayWarningModal
+        visible={payWarningModalVisible}
+        onOk={() => {
+          setPayWarningModalVisible(false)
+          setPayModalVisible(true)
+        }}
+        onCancel={() => setPayWarningModalVisible(false)}
+      />
       <ConfirmPayOwnerModal
         visible={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}

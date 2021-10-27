@@ -16,7 +16,7 @@ export default function TooltipIcon({
 
   return (
     <Tooltip title={tip} placement={placement}>
-      <InfoCircleOutlined style={{ color: colors.icon.secondary }} />
+      <InfoCircleOutlined />
     </Tooltip>
   )
 }

@@ -13,7 +13,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatWad, fracDiv, fromWad } from 'utils/formatNumber'
+import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
@@ -25,14 +25,9 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const {
-    projectId,
-    projectType,
-    currentFC,
-    balanceInCurrency,
-    owner,
-    earned,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC, balanceInCurrency, owner, earned } = useContext(
+    ProjectContext,
+  )
 
   const converter = useCurrencyConverter()
 
@@ -103,12 +98,13 @@ export default function Paid() {
 
   const primaryTextStyle: CSSProperties = {
     fontWeight: 500,
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
   }
 
-  const subTextStyle: CSSProperties = {
+  const secondaryTextStyle: CSSProperties = {
+    textTransform: 'uppercase',
     color: colors.text.tertiary,
-    fontSize: '0.85rem',
+    fontSize: '0.8rem',
     fontWeight: 500,
   }
 
@@ -148,52 +144,74 @@ export default function Paid() {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'baseline',
         }}
       >
-        <div>
-          <div style={smallHeaderStyle(colors)}>
-            <TooltipLabel
-              label="BALANCE"
-              tip={
-                hasFundingTarget(currentFC)
-                  ? "The project's Juicebox balance, out of its current funding target."
-                  : "The project's Juicebox balance."
-              }
-            />
-          </div>
-          <div
-            style={{
-              ...primaryTextStyle,
-              display: 'flex',
-              alignItems: 'baseline',
-              color: colors.text.brand.primary,
-            }}
-          >
-            {formatCurrencyAmount(balanceInCurrency)}
-            {hasFundingTarget(currentFC) && (
-              <span
-                style={{
-                  ...subTextStyle,
-                  color: colors.text.primary,
-                  marginLeft: 8,
-                }}
-              >
-                / {formatCurrencyAmount(currentFC.target)}
-              </span>
-            )}
-          </div>
+        <span style={secondaryTextStyle}>
+          <TooltipLabel
+            label="Lifetime"
+            tip="The total amount earned by this project since it was created."
+          />
+        </span>
+        <span style={primaryTextStyle}>
+          <CurrencySymbol currency={0} />
+          {earned?.lt(parseWad('1'))
+            ? '<1'
+            : formatWad(earned, { decimals: 0 })}
+        </span>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <span style={secondaryTextStyle}>
+          <TooltipLabel
+            label="Wallet"
+            tip="The balance of the wallet that owns this Juicebox project."
+          />
+        </span>
+        <span style={primaryTextStyle}>
+          {formatCurrencyAmount(ownerBalanceInCurrency)}
+        </span>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <div style={secondaryTextStyle}>
+          <TooltipLabel
+            label="Project"
+            tip={
+              hasFundingTarget(currentFC)
+                ? "The project's Juicebox balance, out of its current funding target."
+                : "The project's Juicebox balance."
+            }
+          />
         </div>
 
-        <div style={{ fontWeight: 500, textAlign: 'right' }}>
-          <div style={smallHeaderStyle(colors)}>
-            <TooltipLabel
-              label="WALLET"
-              tip="ETH balance of the project owner's wallet."
-            />
-          </div>
-          <span style={primaryTextStyle}>
-            {formatCurrencyAmount(ownerBalanceInCurrency)}
-          </span>
+        <div
+          style={{
+            ...primaryTextStyle,
+            color: colors.text.brand.primary,
+          }}
+        >
+          {formatCurrencyAmount(balanceInCurrency)}{' '}
+          {hasFundingTarget(currentFC) && (
+            <span
+              style={{
+                ...secondaryTextStyle,
+                color: colors.text.primary,
+              }}
+            >
+              / {formatCurrencyAmount(currentFC.target)}
+            </span>
+          )}
         </div>
       </div>
 
@@ -238,36 +256,27 @@ export default function Paid() {
           />
         ))}
 
-      {hasFundingTarget(currentFC) && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'end',
-            marginTop: 4,
-          }}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <div></div>
+        <span
+          style={{ ...secondaryTextStyle, cursor: 'pointer' }}
+          onClick={() => setBalancesModalVisible(true)}
         >
-          <div>
-            <span style={{ ...subTextStyle }}>
-              <CurrencySymbol currency={0} />
-              {formatWad(earned, { decimals: 2 })} lifetime earned
-            </span>
-          </div>
-
-          <div
-            style={{ ...subTextStyle, textAlign: 'right', cursor: 'pointer' }}
-            onClick={() => setBalancesModalVisible(true)}
-          >
-            <ProjectTokenBalance
-              style={{ display: 'inline-block' }}
-              wallet={owner}
-              projectId={BigNumber.from('0x01')}
-              hideHandle
-            />{' '}
-            <RightCircleOutlined />
-          </div>
-        </div>
-      )}
+          <ProjectTokenBalance
+            style={{ display: 'inline-block' }}
+            wallet={owner}
+            projectId={BigNumber.from('0x01')}
+            hideHandle
+          />{' '}
+          <RightCircleOutlined />
+        </span>
+      </div>
 
       <BalancesModal
         visible={balancesModalVisible}

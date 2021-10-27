@@ -49,16 +49,16 @@ export default function ProjectTokenBalance({
         : null,
   })
 
-  if (balance === undefined) return null
-
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
       <span>
-        {symbol !== undefined && (
+        {symbol !== undefined ? (
           <>
             {formatWad(balance, { decimals: decimals ?? 0 })}{' '}
             {symbol ?? 'tokens'}
           </>
+        ) : (
+          '--'
         )}
       </span>
 

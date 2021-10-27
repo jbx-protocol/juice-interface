@@ -16,13 +16,11 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import { BallotState, FundingCycle } from 'models/funding-cycle'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { BallotState } from 'models/funding-cycle'
+import {  useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
-import { numbersDiff } from 'utils/numberDiff'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
@@ -40,7 +38,7 @@ export default function Rewards({
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenAddress, tokenSymbol, isPreviewMode } = useContext(
+  const { projectId, tokenAddress, tokenSymbol, isPreviewMode, currentFC } = useContext(
     ProjectContext,
   )
 
@@ -99,13 +97,6 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
 
-  const fundingCycle = useContractReader<FundingCycle>({
-    contract: ContractName.FundingCycles,
-    functionName: 'currentOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
-  })
-
   const currentOverflow = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
     functionName: 'currentOverflowOf',
@@ -117,10 +108,9 @@ export default function Rewards({
     contract: ContractName.FundingCycles,
     functionName: 'currentBallotStateOf',
     args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: numbersDiff,
   })
 
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+  const metadata = decodeFCMetadata(currentFC?.metadata)
 
   const bondingCurveRate =
     currentBallotState === BallotState.Active

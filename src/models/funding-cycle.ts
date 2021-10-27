@@ -30,5 +30,5 @@ export enum BallotState {
   'Approved' = 0,
   'Active' = 1,
   'Failed' = 2,
-  'Stanby' = 3,
+  'Standby' = 3,
 }

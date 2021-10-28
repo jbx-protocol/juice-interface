@@ -83,10 +83,8 @@ export default function Paid() {
   const percentPaid = useMemo(
     () =>
       balanceInCurrency && currentFC?.target
-        ? fracDiv(
-            balanceInCurrency.add(currentFC.tapped).toString(),
-            currentFC.target.toString(),
-          ) * 100
+        ? fracDiv(balanceInCurrency.toString(), currentFC.target.toString()) *
+          100
         : 0,
     [currentFC?.target, balanceInCurrency],
   )

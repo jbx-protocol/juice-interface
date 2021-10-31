@@ -37,17 +37,17 @@ export default function ConfirmDeployProject() {
           value={'@' + orEmpty(editingProject?.handle)}
         />
       </Space>
-      {hasFundingTarget(editingFC) && (
-        <Space size="large">
-          <Statistic
-            title="Duration"
-            value={
-              editingFC.duration.gt(0)
-                ? formattedNum(editingFC.duration)
-                : 'Not set'
-            }
-            suffix={editingFC.duration.gt(0) ? 'days' : ''}
-          />
+      <Space size="large">
+        <Statistic
+          title="Duration"
+          value={
+            editingFC.duration.gt(0)
+              ? formattedNum(editingFC.duration)
+              : 'Not set'
+          }
+          suffix={editingFC.duration.gt(0) ? 'days' : ''}
+        />
+        {hasFundingTarget(editingFC) && (
           <Statistic
             title="Amount"
             valueRender={() => (
@@ -67,8 +67,8 @@ export default function ConfirmDeployProject() {
               </span>
             )}
           />
-        </Space>
-      )}
+        )}
+      </Space>
       <Statistic
         title="Link"
         value={orEmpty(editingProject?.metadata.infoUri)}

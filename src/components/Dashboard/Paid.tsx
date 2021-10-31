@@ -147,7 +147,7 @@ export default function Paid() {
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="Lifetime"
+            label="Earned"
             tip="The total amount earned by this project since it was created."
           />
         </span>
@@ -165,26 +165,9 @@ export default function Paid() {
           alignItems: 'baseline',
         }}
       >
-        <span style={secondaryTextStyle}>
-          <TooltipLabel
-            label="Wallet"
-            tip="The balance of the wallet that owns this Juicebox project."
-          />
-        </span>
-        <span style={primaryTextStyle}>
-          {formatCurrencyAmount(ownerBalanceInCurrency)}
-        </span>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-        }}
-      >
         <div style={secondaryTextStyle}>
           <TooltipLabel
-            label="Project"
+            label="Balance"
             tip={
               hasFundingTarget(currentFC)
                 ? "The project's Juicebox balance, out of its current funding target."
@@ -221,7 +204,7 @@ export default function Paid() {
                 width: (1 - percentOverflow) * 100 + '%',
                 minWidth: 10,
               }}
-              percent={percentPaid}
+              percent={percentPaid ? Math.max(percentPaid, 1) : 0}
               showInfo={false}
               strokeColor={colors.text.brand.primary}
             />
@@ -248,11 +231,29 @@ export default function Paid() {
           </div>
         ) : (
           <Progress
-            percent={percentPaid}
+            percent={percentPaid ? Math.max(percentPaid, 1) : 0}
             showInfo={false}
             strokeColor={colors.text.brand.primary}
           />
         ))}
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <span style={secondaryTextStyle}>
+          <TooltipLabel
+            label="Wallet"
+            tip="The balance of the wallet that owns this Juicebox project."
+          />
+        </span>
+        <span style={primaryTextStyle}>
+          {formatCurrencyAmount(ownerBalanceInCurrency)}
+        </span>
+      </div>
 
       <div
         style={{

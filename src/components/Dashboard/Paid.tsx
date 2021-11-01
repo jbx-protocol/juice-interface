@@ -69,17 +69,6 @@ export default function Paid() {
 
   const ownerBalance = useEthBalance(owner)
 
-  const ownerBalanceInCurrency = useMemo(
-    () =>
-      ownerBalance &&
-      converter.wadToCurrency(
-        ownerBalance,
-        currentFC?.currency.toNumber() as CurrencyOption,
-        0,
-      ),
-    [currentFC?.currency, ownerBalance, converter],
-  )
-
   const percentPaid = useMemo(
     () =>
       balanceInCurrency && currentFC?.target
@@ -147,8 +136,8 @@ export default function Paid() {
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="Earned"
-            tip="The total amount earned by this project since it was created."
+            label="Volume"
+            tip="The total amount received by this project since it was created."
           />
         </span>
         <span style={primaryTextStyle}>
@@ -167,7 +156,7 @@ export default function Paid() {
       >
         <div style={secondaryTextStyle}>
           <TooltipLabel
-            label="Balance"
+            label="In Juicebox"
             tip={
               hasFundingTarget(currentFC)
                 ? "The project's Juicebox balance, out of its current funding target."
@@ -246,12 +235,13 @@ export default function Paid() {
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="Wallet"
+            label="In wallet"
             tip="The balance of the wallet that owns this Juicebox project."
           />
         </span>
         <span style={primaryTextStyle}>
-          {formatCurrencyAmount(ownerBalanceInCurrency)}
+          <CurrencySymbol currency={0} />
+          {formatWad(ownerBalance, { decimals: 2 })}
         </span>
       </div>
 

@@ -17,7 +17,6 @@ import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
-import { smallHeaderStyle } from './styles'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -147,21 +146,19 @@ export default function Paid() {
             : formatWad(earned, { decimals: 0 })}
         </span>
       </div>
+
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          marginTop: 10,
         }}
       >
         <div style={secondaryTextStyle}>
           <TooltipLabel
             label="In Juicebox"
-            tip={
-              hasFundingTarget(currentFC)
-                ? "The project's Juicebox balance, out of its current funding target."
-                : "The project's Juicebox balance."
-            }
+            tip="The balance of this project in the Juicebox contract."
           />
         </div>
 
@@ -171,19 +168,36 @@ export default function Paid() {
             color: colors.text.brand.primary,
           }}
         >
-          {formatCurrencyAmount(balanceInCurrency)}{' '}
-          {hasFundingTarget(currentFC) && (
-            <span
-              style={{
-                ...secondaryTextStyle,
-                color: colors.text.primary,
-              }}
-            >
-              / {formatCurrencyAmount(currentFC.target)}
-            </span>
-          )}
+          {formatCurrencyAmount(balanceInCurrency)}
         </div>
       </div>
+
+      {hasFundingTarget(currentFC) && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+          }}
+        >
+          <div style={secondaryTextStyle}>
+            <TooltipLabel
+              label="Funding target"
+              tip="No more than the funding target can be withdrawn by the project owner in a given funding cycle."
+            />
+          </div>
+
+          <div
+            style={{
+              ...secondaryTextStyle,
+              color: colors.text.primary,
+              fontWeight: 500,
+            }}
+          >
+            {formatCurrencyAmount(currentFC.target)}
+          </div>
+        </div>
+      )}
 
       {hasFundingTarget(currentFC) &&
         (totalOverflow?.gt(0) ? (
@@ -231,11 +245,12 @@ export default function Paid() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          marginTop: 10,
         }}
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="In wallet"
+            label="Wallet balance"
             tip="The balance of the wallet that owns this Juicebox project."
           />
         </span>
@@ -252,7 +267,12 @@ export default function Paid() {
           alignItems: 'baseline',
         }}
       >
-        <div></div>
+        <span style={secondaryTextStyle}>
+          <TooltipLabel
+            label="Other assets"
+            tip="Other tokens in the wallet that owns this Juicebox project. New tokens can be tracked by editing the project."
+          />
+        </span>
         <span
           style={{ ...secondaryTextStyle, cursor: 'pointer' }}
           onClick={() => setBalancesModalVisible(true)}

@@ -88,7 +88,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
     new EthDater(readProvider)
       .getEvery(
         'days',
-        moment(now - daysToMillis(duration)).toISOString(),
+        //TODO + 0.1 fixes bug where only one block is returned. Needs better fix
+        moment(now - daysToMillis(duration + 0.1)).toISOString(),
         moment(now).toISOString(),
         duration,
         false,

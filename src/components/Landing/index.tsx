@@ -286,17 +286,19 @@ export default function Landing() {
         </div>
       </section>
 
-      <section
-        id="create"
-        style={{
-          ...section,
-          marginTop: 0,
-          paddingTop: 20,
-          paddingBottom: 40,
-        }}
-      >
-        <Create />
-      </section>
+      {window.innerWidth > 600 && (
+        <section
+          id="create"
+          style={{
+            ...section,
+            marginTop: 0,
+            paddingTop: 20,
+            paddingBottom: 40,
+          }}
+        >
+          <Create />
+        </section>
+      )}
 
       <section
         style={{

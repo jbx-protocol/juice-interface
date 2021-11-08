@@ -24,9 +24,14 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId, currentFC, balanceInCurrency, owner, earned } = useContext(
-    ProjectContext,
-  )
+  const {
+    projectId,
+    currentFC,
+    balanceInCurrency,
+    balance,
+    owner,
+    earned,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -152,6 +157,7 @@ export default function Paid() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          flexWrap: 'nowrap',
           marginTop: 10,
         }}
       >
@@ -166,8 +172,17 @@ export default function Paid() {
           style={{
             ...primaryTextStyle,
             color: colors.text.brand.primary,
+            marginLeft: 10,
           }}
         >
+          {currentFC.currency.eq(1) ? (
+            <span style={secondaryTextStyle}>
+              <CurrencySymbol currency={0} />
+              {formatWad(balance, { decimals: 0 })}{' '}
+            </span>
+          ) : (
+            ''
+          )}
           {formatCurrencyAmount(balanceInCurrency)}
         </div>
       </div>

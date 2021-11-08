@@ -312,7 +312,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
       header = 'Volume'
       break
     case 'balance':
-      header = 'Balance'
+      header = 'Project'
       break
   }
 
@@ -322,7 +322,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
     let text: string
     switch (tab) {
       case 'balance':
-        text = 'Balance'
+        text = 'In Juicebox'
         break
       case 'volume':
         text = 'Volume'

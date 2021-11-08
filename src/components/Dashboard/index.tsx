@@ -318,6 +318,7 @@ export default function Dashboard() {
         queuedTicketMods,
         tokenAddress,
         tokenSymbol,
+        balance,
         balanceInCurrency,
         isPreviewMode,
       }}

@@ -350,6 +350,7 @@ export default function Create() {
         queuedFC: undefined,
         queuedPayoutMods: undefined,
         queuedTicketMods: undefined,
+        balance: BigNumber.from(0),
         balanceInCurrency: BigNumber.from(0),
         tokenSymbol: undefined,
         tokenAddress: constants.AddressZero,

@@ -21,6 +21,7 @@ export type ProjectContext = {
   queuedTicketMods: TicketMod[] | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
+  balance: BigNumber | undefined
   balanceInCurrency: BigNumber | undefined
   isPreviewMode: boolean | undefined
 }
@@ -41,6 +42,7 @@ export const ProjectContext = createContext<ProjectContext>({
   queuedTicketMods: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
+  balance: undefined,
   balanceInCurrency: undefined,
   isPreviewMode: false,
 })

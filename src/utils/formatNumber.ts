@@ -97,7 +97,7 @@ export const formattedNum = (
 
     const postDecimal = decimal
       .substr(0, config?.decimals ?? 18)
-      .padEnd(config?.decimals ?? 2, '0')
+      .padEnd(config?.decimals ?? 0, '0')
 
     if (!postDecimal || config?.decimals === 0) return preDecimal
 

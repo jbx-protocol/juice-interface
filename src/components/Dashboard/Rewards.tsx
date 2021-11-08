@@ -347,7 +347,7 @@ export default function Rewards({
           </div>
           <p>
             Currently worth: <CurrencySymbol currency={0} />
-            {formatWad(maxClaimable)}
+            {formatWad(maxClaimable, { decimals: 4 })}
           </p>
           <p>
             Tokens can be redeemed for a project's overflow according to the

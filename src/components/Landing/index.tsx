@@ -298,21 +298,6 @@ export default function Landing() {
         <Create />
       </section>
 
-      {/* <section style={section} className="hide-mobile">
-        <div
-          id="create"
-          style={{
-            ...wrapper,
-            marginBottom: 120,
-          }}
-        >
-          <div style={{ paddingTop: 80, marginBottom: 40 }}>
-            {bigHeader('What are you working on?')}
-          </div>
-          <DefineProject />
-        </div>
-      </section> */}
-
       <section
         style={{
           padding: 30,

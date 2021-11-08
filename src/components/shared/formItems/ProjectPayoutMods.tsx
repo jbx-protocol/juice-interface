@@ -227,6 +227,7 @@ export default function ProjectPayoutMods({
                             amountSubFee(parseWad(target), fee)
                               ?.mul(mod.percent)
                               .div(10000),
+                            { decimals: 2 },
                           )}
                         </span>
                       )}
@@ -480,6 +481,7 @@ export default function ProjectPayoutMods({
                     amountSubFee(parseWad(target), fee)
                       ?.mul(Math.floor((editingPercent ?? 0) * 100))
                       .div(10000),
+                    { decimals: 2 },
                   )}
                 </span>
               )}

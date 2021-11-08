@@ -23,7 +23,10 @@ export default function ProjectCard({
 
   const metadata = useProjectMetadata(project.uri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const decimals = project.totalPaid.gt(0) && project.totalPaid.lt(BigNumber.from("10000000000000000000")) ? 2 : 0;
+  const decimals =
+    project.totalPaid.gt(0) && project.totalPaid.lt(BigNumber.from(10e18))
+      ? 2
+      : 0
   return (
     <div
       style={{

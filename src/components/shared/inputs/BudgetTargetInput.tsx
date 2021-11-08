@@ -68,7 +68,7 @@ export default function BudgetTargetInput({
         <div style={{ color: colors.text.primary, marginBottom: 10 }}>
           <span style={{ fontWeight: 500 }}>
             <CurrencySymbol currency={currency} />
-            {formatWad(amountSubFee(parseWad(value), fee))}
+            {formatWad(amountSubFee(parseWad(value), fee), { decimals: 4 })}
           </span>{' '}
           after {fromPerbicent(fee?.toString())}% JBX fee
         </div>

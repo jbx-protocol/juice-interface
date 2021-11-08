@@ -86,7 +86,7 @@ export default function Payments() {
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
                   <CurrencySymbol currency={0} />
-                  {formatWad(e.amount)}
+                  {formatWad(e.amount, { decimals: 4 })}
                 </span>
                 <span>
                   <FormattedAddress address={e.beneficiary} />

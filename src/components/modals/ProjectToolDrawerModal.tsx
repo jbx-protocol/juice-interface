@@ -118,7 +118,7 @@ export default function ProjectToolDrawerModal({
 
         <section>
           <h3>Transfer staked {tokenSymbol || 'tokens'}</h3>
-          <p>Your balance: {formatWad(stakedTokenBalance)}</p>
+          <p>Your balance: {formatWad(stakedTokenBalance, { decimals: 0 })}</p>
           <Form
             form={transferTokensForm}
             labelCol={{ span: 4 }}

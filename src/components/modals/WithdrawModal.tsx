@@ -110,7 +110,7 @@ export default function WithdrawModal({
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(withdrawable)}
+              {formatWad(withdrawable, { decimals: 4 })}
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -120,7 +120,9 @@ export default function WithdrawModal({
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0)}
+              {formatWad(feeForAmount(withdrawable, currentFC.fee) ?? 0, {
+                decimals: 4,
+              })}
             </div>
           </div>
           <div
@@ -135,7 +137,9 @@ export default function WithdrawModal({
               <CurrencySymbol
                 currency={currentFC.currency.toNumber() as CurrencyOption}
               />
-              {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0)}
+              {formatWad(amountSubFee(withdrawable, currentFC.fee) ?? 0, {
+                decimals: 4,
+              })}
             </div>
           </div>
         </div>
@@ -174,6 +178,7 @@ export default function WithdrawModal({
                     : parseWad(tapAmount),
                   currentFC.fee,
                 ),
+                { decimals: 4 },
               )}
             </span>{' '}
             after {fromPerbicent(currentFC.fee?.toString())}% JBX fee
@@ -200,6 +205,7 @@ export default function WithdrawModal({
                   : parseWad(tapAmount),
                 currentFC.fee,
               ),
+              { decimals: 4 },
             )}{' '}
             will go to the project owner: <FormattedAddress address={owner} />
           </p>

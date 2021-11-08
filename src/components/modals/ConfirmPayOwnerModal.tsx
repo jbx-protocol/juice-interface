@@ -26,9 +26,10 @@ export default function ConfirmPayOwnerModal({
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor } = useContext(UserContext)
-  const { userAddress } = useContext(NetworkContext);
-  const { tokenSymbol, currentFC, projectId, metadata } =
-    useContext(ProjectContext)
+  const { userAddress } = useContext(NetworkContext)
+  const { tokenSymbol, currentFC, projectId, metadata } = useContext(
+    ProjectContext,
+  )
 
   const converter = useCurrencyConverter()
 
@@ -91,7 +92,7 @@ export default function ConfirmPayOwnerModal({
             label={(tokenSymbol ?? 'Tokens') + ' for you'}
             className="content-right"
           >
-            <div>{formatWad(receivedTickets)}</div>
+            <div>{formatWad(receivedTickets, { decimals: 0 })}</div>
             <div>
               To: <FormattedAddress address={userAddress} />
             </div>
@@ -100,7 +101,7 @@ export default function ConfirmPayOwnerModal({
             label={(tokenSymbol ?? 'Tokens') + ' reserved'}
             className="content-right"
           >
-            {formatWad(ownerTickets)}
+            {formatWad(ownerTickets, { decimals: 0 })}
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">

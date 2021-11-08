@@ -41,7 +41,7 @@ type EventRef = {
   previousBalance?: number
 }
 type BlockRef = { block: number | null; timestamp: number }
-type ShowGraph = 'earned' | 'balance'
+type ShowGraph = 'volume' | 'balance'
 
 export default function BalanceTimeline({ height }: { height: number }) {
   const [events, setEvents] = useState<EventRef[]>([])
@@ -61,7 +61,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
       : undefined
 
   useEffect(() => {
-    setShowGraph(projectType === 'bidpool' ? 'earned' : 'balance')
+    setShowGraph(projectType === 'bidpool' ? 'volume' : 'balance')
   }, [projectType])
 
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
       let queryKeys: (keyof Project)[]
 
       switch (showGraph) {
-        case 'earned':
+        case 'volume':
           queryKeys = ['totalPaid']
           break
         case 'balance':
@@ -175,7 +175,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
               if (!project) return
 
               switch (showGraph) {
-                case 'earned':
+                case 'volume':
                   value = parseFloat(
                     parseFloat(fromWad(project.totalPaid)).toFixed(4),
                   )
@@ -308,8 +308,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
   let header: string | undefined = undefined
 
   switch (showGraph) {
-    case 'earned':
-      header = 'Lifetime earned'
+    case 'volume':
+      header = 'Volume'
       break
     case 'balance':
       header = 'Balance'
@@ -324,8 +324,8 @@ export default function BalanceTimeline({ height }: { height: number }) {
       case 'balance':
         text = 'Balance'
         break
-      case 'earned':
-        text = 'Earned'
+      case 'volume':
+        text = 'Volume'
         break
     }
 
@@ -360,7 +360,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
           <div>
             <Space size="middle">
               {tab('balance')}
-              {tab('earned')}
+              {tab('volume')}
             </Space>
           </div>
         )}

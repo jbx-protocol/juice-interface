@@ -41,7 +41,7 @@ export function useTransactor({
     NetworkContext,
   )
 
-  const { isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode } = useContext(ThemeContext)
 
   return useCallback(
     async (
@@ -50,7 +50,7 @@ export function useTransactor({
       args: any[],
       options?: TransactorOptions,
     ) => {
-      if (!onSelectWallet) return false;
+      if (!onSelectWallet) return false
 
       if (!provider) {
         onSelectWallet()
@@ -150,10 +150,20 @@ export function useTransactor({
         if (e instanceof Error) {
           console.log('Transaction Error:', e.message)
 
+          let description: string
+
+          try {
+            let json = e.message.split('(error=')[1]
+            json = json.split(', method=')[0]
+            description = JSON.parse(json).message || e.message
+          } catch (_) {
+            description = e.message
+          }
+
           notification.error({
             key: new Date().valueOf().toString(),
             message: 'Transaction failed',
-            description: e.message,
+            description,
             duration: 0,
           })
 

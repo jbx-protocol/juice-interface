@@ -3,18 +3,21 @@ import { Button, Space } from 'antd'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
+import { archivedProjectIds } from 'constants/archived-projects'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
 
 export default function ProjectHeader() {
-  const [editProjectModalVisible, setEditProjectModalVisible] =
-    useState<boolean>(false)
+  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
+    boolean
+  >(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const { projectId, handle, metadata, isPreviewMode } =
-    useContext(ProjectContext)
+  const { projectId, handle, metadata, isPreviewMode } = useContext(
+    ProjectContext,
+  )
 
   const {
     theme: { colors },
@@ -62,6 +65,17 @@ export default function ProjectHeader() {
 
           <h3>
             <Space size="middle">
+              {archivedProjectIds.includes(projectId.toNumber()) && (
+                <span
+                  style={{
+                    fontSize: '0.8rem',
+                    color: colors.text.disabled,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  (archived)
+                </span>
+              )}
               {handle && (
                 <span style={{ color: colors.text.secondary }}>@{handle}</span>
               )}

@@ -24,6 +24,7 @@ export type ProjectContext = {
   balance: BigNumber | undefined
   balanceInCurrency: BigNumber | undefined
   isPreviewMode: boolean | undefined
+  isArchived: boolean | undefined
 }
 
 export const ProjectContext = createContext<ProjectContext>({
@@ -45,4 +46,5 @@ export const ProjectContext = createContext<ProjectContext>({
   balance: undefined,
   balanceInCurrency: undefined,
   isPreviewMode: false,
+  isArchived: false,
 })

@@ -1,6 +1,7 @@
 import { NetworkName } from 'models/network-name'
+import { readNetwork } from 'constants/networks'
 
-export const archivedProjectIds: Partial<Record<NetworkName, number[]>> = {
+const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
   [NetworkName.mainnet]: [
     11, // @pxdao
     27, // @svspool002
@@ -8,3 +9,6 @@ export const archivedProjectIds: Partial<Record<NetworkName, number[]>> = {
   ],
   [NetworkName.rinkeby]: [],
 }
+
+export const archivedProjectIds =
+  archivedProjectIdsByNetwork[readNetwork.name] ?? []

@@ -43,12 +43,11 @@ export default function ProjectHeader() {
     } else return url
   }
 
-  const completeUrl = (url: string) => {
+  const linkUrl = (url: string) => {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url
-    } else {
-      return 'http://' + url
     }
+    return 'http://' + url
   }
 
   if (!projectId) return null
@@ -103,7 +102,7 @@ export default function ProjectHeader() {
               {metadata?.infoUri && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={completeUrl(metadata.infoUri)}
+                  href={linkUrl(metadata.infoUri)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -113,7 +112,7 @@ export default function ProjectHeader() {
               {metadata?.twitter && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={completeUrl(metadata.twitter)}
+                  href={'https://twitter.com/' + metadata.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -130,14 +129,14 @@ export default function ProjectHeader() {
                     display: 'flex',
                     alignItems: 'center',
                   }}
-                  href={completeUrl(metadata.discord)}
+                  href={linkUrl(metadata.discord)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span style={{ display: 'flex', marginRight: 4 }}>
                     <Discord size={13} />
                   </span>
-                  {prettyUrl(metadata.discord)}
+                  Discord
                 </a>
               )}
             </Space>

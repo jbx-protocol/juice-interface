@@ -1,4 +1,5 @@
 import { Button, Select, Space } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { layouts } from 'constants/styles/layouts'
@@ -79,6 +80,13 @@ export default function Projects() {
           </Space>
         </div>
       </div>
+
+      {selectedTab === 'archived' && (
+        <p>
+          <InfoCircleOutlined /> Archived projects can still be interacted with
+          directly through the Juicebox contracts.
+        </p>
+      )}
 
       {projects ? <ProjectsGrid projects={projects} /> : <Loading />}
     </div>

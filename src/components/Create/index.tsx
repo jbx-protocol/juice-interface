@@ -345,6 +345,7 @@ export default function Create() {
         tokenSymbol: undefined,
         tokenAddress: constants.AddressZero,
         isPreviewMode: true,
+        isArchived: false,
       }}
     >
       <Row

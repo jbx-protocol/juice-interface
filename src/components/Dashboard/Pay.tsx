@@ -8,7 +8,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
@@ -24,9 +24,13 @@ export default function Pay() {
     false,
   )
 
-  const { projectId, currentFC, metadata, tokenSymbol } = useContext(
-    ProjectContext,
-  )
+  const {
+    projectId,
+    currentFC,
+    metadata,
+    tokenSymbol,
+    isArchived,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -41,6 +45,47 @@ export default function Pay() {
 
   const formatReceivedTickets = (wei: BigNumber) =>
     formatWad(weightedRate(currentFC, wei, 'payer'), { decimals: 0 })
+
+  const payButton = useMemo(() => {
+    if (!metadata || !currentFC) return null
+
+    const payText = metadata.payText || 'Pay'
+
+    if (isArchived) {
+      return (
+        <Tooltip
+          title="This project has been archived and cannot be paid."
+          className="block"
+        >
+          <Button style={{ width: '100%' }} type="primary" disabled>
+            {payText}
+          </Button>
+        </Tooltip>
+      )
+    } else if (fcMetadata?.reservedRate === 200) {
+      return (
+        <Tooltip
+          title="Paying this project is currently disabled"
+          className="block"
+        >
+          <Button style={{ width: '100%' }} type="primary" disabled>
+            {payText}
+          </Button>
+        </Tooltip>
+      )
+    } else {
+      return (
+        <Button
+          style={{ width: '100%' }}
+          type="primary"
+          disabled={currentFC.configured.eq(0) || isArchived}
+          onClick={weiPayAmt ? pay : undefined}
+        >
+          {payText}
+        </Button>
+      )
+    }
+  }, [metadata, currentFC])
 
   if (!currentFC || !projectId || !metadata) return null
 
@@ -86,25 +131,7 @@ export default function Pay() {
         </div>
 
         <div style={{ textAlign: 'center', minWidth: 150 }}>
-          {fcMetadata?.reservedRate === 200 ? (
-            <Tooltip
-              title="Paying this project is currently disabled"
-              className="block"
-            >
-              <Button style={{ width: '100%' }} type="primary" disabled>
-                {metadata.payText || 'Pay'}
-              </Button>
-            </Tooltip>
-          ) : (
-            <Button
-              style={{ width: '100%' }}
-              type="primary"
-              disabled={currentFC.configured.eq(0)}
-              onClick={weiPayAmt ? pay : undefined}
-            >
-              {metadata.payText || 'Pay'}
-            </Button>
-          )}
+          {payButton}
           {payIn === 1 && (
             <div style={{ fontSize: '.7rem' }}>
               Paid as <CurrencySymbol currency={0} />

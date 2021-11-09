@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { archivedProjectIds } from 'constants/archived-projects'
 import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
@@ -297,8 +298,9 @@ export default function Dashboard() {
 
   if (!projectId || !handle || !metadata) return null
 
-  const projectType = projectTypes[projectId?.toNumber()] ?? 'standard'
+  const projectType = projectTypes[projectId.toNumber()] ?? 'standard'
   const isPreviewMode = false
+  const isArchived = archivedProjectIds.includes(projectId.toNumber())
 
   return (
     <ProjectContext.Provider
@@ -321,6 +323,7 @@ export default function Dashboard() {
         balance,
         balanceInCurrency,
         isPreviewMode,
+        isArchived,
       }}
     >
       <div style={layouts.maxWidth}>

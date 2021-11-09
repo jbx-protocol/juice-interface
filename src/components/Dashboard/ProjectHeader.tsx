@@ -15,7 +15,7 @@ export default function ProjectHeader() {
   >(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const { projectId, handle, metadata, isPreviewMode } = useContext(
+  const { projectId, handle, metadata, isPreviewMode, isArchived } = useContext(
     ProjectContext,
   )
 
@@ -65,7 +65,7 @@ export default function ProjectHeader() {
 
           <h3>
             <Space size="middle">
-              {archivedProjectIds.includes(projectId.toNumber()) && (
+              {isArchived && (
                 <span
                   style={{
                     fontSize: '0.8rem',

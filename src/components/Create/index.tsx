@@ -101,9 +101,13 @@ export default function Create() {
   const resetProjectForm = () =>
     projectForm.setFieldsValue({
       name: editingProjectInfo?.metadata.name ?? '',
-      infoUrl: editingProjectInfo?.metadata.infoUri ?? '',
+      infoUri: editingProjectInfo?.metadata.infoUri ?? '',
       handle: editingProjectInfo?.handle ?? '',
-      logoUrl: editingProjectInfo?.metadata.logoUri ?? '',
+      description: editingProjectInfo?.metadata.description ?? '',
+      logoUri: editingProjectInfo?.metadata.logoUri ?? '',
+      twitter: editingProjectInfo?.metadata.twitter ?? '',
+      discord: editingProjectInfo?.metadata.discord ?? '',
+      payText: editingProjectInfo?.metadata.payText ?? '',
     })
 
   const resetTicketingForm = () =>
@@ -129,10 +133,13 @@ export default function Create() {
   const onProjectFormSaved = () => {
     const fields = projectForm.getFieldsValue(true)
     dispatch(editingProjectActions.setName(fields.name))
-    dispatch(editingProjectActions.setInfoUri(fields.infoUrl))
+    dispatch(editingProjectActions.setInfoUri(fields.infoUri))
     dispatch(editingProjectActions.setHandle(fields.handle))
-    dispatch(editingProjectActions.setLogoUri(fields.logoUrl))
+    dispatch(editingProjectActions.setLogoUri(fields.logoUri))
     dispatch(editingProjectActions.setDescription(fields.description))
+    dispatch(editingProjectActions.setTwitter(fields.twitter))
+    dispatch(editingProjectActions.setDiscord(fields.discord))
+    dispatch(editingProjectActions.setPayText(fields.payText))
   }
 
   const onTicketingFormSaved = (mods: TicketMod[]) => {

@@ -47,5 +47,7 @@ export function useHasPermission(
   const isOwner =
     userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
 
-  return isOwner || hasOperatorPermission
+  return (
+    isOwner || hasOperatorPermission || process.env.NODE_ENV === 'development'
+  )
 }

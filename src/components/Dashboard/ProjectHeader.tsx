@@ -1,9 +1,13 @@
-import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
+import {
+  SettingOutlined,
+  ToolOutlined,
+  TwitterOutlined,
+} from '@ant-design/icons'
 import { Button, Space } from 'antd'
+import Discord from 'components/icons/Discord'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
-import { archivedProjectIds } from 'constants/archived-projects'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
@@ -30,6 +34,22 @@ export default function ProjectHeader() {
     OperatorPermission.SetHandle,
     OperatorPermission.SetUri,
   ])
+
+  const prettyUrl = (url: string) => {
+    if (url.startsWith('https://')) {
+      return url.split('https://')[1]
+    } else if (url.startsWith('http://')) {
+      return url.split('http://')[1]
+    } else return url
+  }
+
+  const completeUrl = (url: string) => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url
+    } else {
+      return 'http://' + url
+    }
+  }
 
   if (!projectId) return null
 
@@ -65,7 +85,7 @@ export default function ProjectHeader() {
           </h1>
 
           <h3>
-            <Space size="middle">
+            <Space size="large">
               {isArchived && (
                 <span
                   style={{
@@ -83,16 +103,41 @@ export default function ProjectHeader() {
               {metadata?.infoUri && (
                 <a
                   style={{ fontWeight: 400 }}
-                  href={
-                    metadata.infoUri.startsWith('http://') ||
-                    metadata.infoUri.startsWith('https://')
-                      ? metadata.infoUri
-                      : 'http://' + metadata.infoUri
-                  }
+                  href={completeUrl(metadata.infoUri)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {metadata.infoUri}
+                  {prettyUrl(metadata.infoUri)}
+                </a>
+              )}
+              {metadata?.twitter && (
+                <a
+                  style={{ fontWeight: 400 }}
+                  href={completeUrl(metadata.twitter)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span style={{ marginRight: 4 }}>
+                    <TwitterOutlined />
+                  </span>
+                  @{prettyUrl(metadata.twitter)}
+                </a>
+              )}
+              {metadata?.discord && (
+                <a
+                  style={{
+                    fontWeight: 400,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  href={completeUrl(metadata.discord)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span style={{ display: 'flex', marginRight: 4 }}>
+                    <Discord size={13} />
+                  </span>
+                  {prettyUrl(metadata.discord)}
                 </a>
               )}
             </Space>

@@ -1,4 +1,4 @@
-import { Button, Form, FormInstance, Space } from 'antd'
+import { Button, Form, FormInstance, Input, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -7,9 +7,12 @@ import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 export type ProjectFormFields = {
   name: string
   description: string
-  infoUrl: string
+  infoUri: string
   handle: string
-  logoUrl: string
+  logoUri: string
+  twitter: string
+  discord: string
+  payText: string
 }
 
 export default function ProjectForm({
@@ -49,14 +52,23 @@ export default function ProjectForm({
           }}
         />
         <FormItems.ProjectDescription name="description" />
-        <FormItems.ProjectLink name="infoUrl" />
-        <FormItems.ProjectLogoUrl
-          name="logoUrl"
-          initialUrl={form.getFieldValue('logoUrl')}
-          onSuccess={logoUrl => {
-            const prevUrl = form.getFieldValue('logoUrl')
+        <FormItems.ProjectLink name="infoUri" />
+        <FormItems.ProjectTwitter name="twitter" />
+        <FormItems.ProjectDiscord name="discord" />
+        <Form.Item
+          name="payText"
+          label="Pay text"
+          extra={'Text displayed on your project\'s "pay" button.'}
+        >
+          <Input placeholder="Pay" />
+        </Form.Item>
+        <FormItems.ProjectLogoUri
+          name="logoUri"
+          initialUrl={form.getFieldValue('logoUri')}
+          onSuccess={logoUri => {
+            const prevUrl = form.getFieldValue('logoUri')
             // Unpin previous file
-            form.setFieldsValue({ logoUrl })
+            form.setFieldsValue({ logoUri })
             if (prevUrl) unpinIpfsFileByCid(cidFromUrl(prevUrl))
           }}
         />

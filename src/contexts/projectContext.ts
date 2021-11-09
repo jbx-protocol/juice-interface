@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadata } from 'models/project-metadata'
+import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
 import { createContext } from 'react'
 
@@ -10,7 +10,7 @@ export type ProjectContext = {
   projectType: ProjectType | undefined
   createdAt: number | undefined
   handle: string | undefined
-  metadata: ProjectMetadata | undefined
+  metadata: ProjectMetadataV3 | undefined
   owner: string | undefined // owner address
   earned: BigNumber | undefined
   currentFC: FundingCycle | undefined

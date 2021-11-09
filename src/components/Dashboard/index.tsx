@@ -23,6 +23,7 @@ import { querySubgraph } from 'utils/graph'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
+import { readNetwork } from 'constants/networks'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
@@ -300,7 +301,9 @@ export default function Dashboard() {
 
   const projectType = projectTypes[projectId.toNumber()] ?? 'standard'
   const isPreviewMode = false
-  const isArchived = archivedProjectIds.includes(projectId.toNumber())
+  const isArchived = (archivedProjectIds[readNetwork.name] ?? []).includes(
+    projectId.toNumber(),
+  )
 
   return (
     <ProjectContext.Provider

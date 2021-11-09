@@ -1,3 +1,7 @@
+.bn-onboard-modal {
+  z-index: 9999;
+}
+
 .bn-onboard-modal-content {
   // !important tags used to override blocknative's theme-based classnames
   background: var(--background-l0) !important;

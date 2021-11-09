@@ -4,7 +4,7 @@ import { IPFS_TAGS } from 'utils/ipfs'
 import ImageUploader from '../inputs/ImageUploader'
 import { FormItemExt } from './formItemExt'
 
-export default function ProjectLogoUrl({
+export default function ProjectLogoUri({
   name,
   formItemProps,
   hideLabel,

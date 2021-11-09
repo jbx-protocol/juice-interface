@@ -1,10 +1,10 @@
 import Axios from 'axios'
-import { ProjectMetadata } from 'models/project-metadata'
+import { ProjectMetadataV3 } from 'models/project-metadata'
 import { useCallback, useEffect, useState } from 'react'
 import { ipfsCidUrl } from 'utils/ipfs'
 
 export function useProjectMetadata(uri: string | undefined) {
-  const [metadata, setMetadata] = useState<ProjectMetadata>()
+  const [metadata, setMetadata] = useState<ProjectMetadataV3>()
 
   const getMetadata = useCallback(
     async (url: string) => {

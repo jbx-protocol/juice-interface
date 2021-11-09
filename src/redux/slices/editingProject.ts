@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadataV2 } from 'models/project-metadata'
+import { ProjectMetadataV3 } from 'models/project-metadata'
 import {
   fromPerbicent,
   fromPermille,
@@ -17,7 +17,7 @@ import {
 } from 'utils/serializers'
 
 type EditingProjectInfo = {
-  metadata: ProjectMetadataV2
+  metadata: ProjectMetadataV3
   handle: string
 }
 
@@ -38,8 +38,10 @@ export const defaultProjectState: EditingProjectState = {
       infoUri: '',
       logoUri: '',
       description: '',
+      twitter: '',
+      discord: '',
       tokens: [],
-      version: 2,
+      version: 3,
     },
     handle: '',
   },
@@ -103,6 +105,36 @@ export const editingProjectSlice = createSlice({
         metadata: {
           ...state.info.metadata,
           logoUri: action.payload,
+        },
+      },
+    }),
+    setTwitter: (state, action: PayloadAction<string>) => ({
+      ...state,
+      info: {
+        ...state.info,
+        metadata: {
+          ...state.info.metadata,
+          twitter: action.payload,
+        },
+      },
+    }),
+    setDiscord: (state, action: PayloadAction<string>) => ({
+      ...state,
+      info: {
+        ...state.info,
+        metadata: {
+          ...state.info.metadata,
+          discord: action.payload,
+        },
+      },
+    }),
+    setPayText: (state, action: PayloadAction<string>) => ({
+      ...state,
+      info: {
+        ...state.info,
+        metadata: {
+          ...state.info.metadata,
+          payText: action.payload,
         },
       },
     }),

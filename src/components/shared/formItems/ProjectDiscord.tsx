@@ -2,7 +2,7 @@ import { Form, Input } from 'antd'
 
 import { FormItemExt } from './formItemExt'
 
-export default function ProjectLink({
+export default function ProjectDiscord({
   name,
   hideLabel,
   formItemProps,
@@ -10,12 +10,12 @@ export default function ProjectLink({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Website (optional)'}
-      extra="Your project's website."
+      label={hideLabel ? undefined : 'Discord (optional)'}
+      extra="Add an invite link to your project's Discord server."
       {...formItemProps}
     >
       <Input
-        placeholder="http://your-project.com"
+        placeholder="https://discord.gg/abcdefgh"
         type="string"
         autoComplete="off"
       />

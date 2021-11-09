@@ -69,10 +69,26 @@ export default function ConfirmDeployProject() {
           />
         )}
       </Space>
-      <Statistic
-        title="Link"
-        value={orEmpty(editingProject?.metadata.infoUri)}
-      />
+      <Space size="large">
+        <Statistic
+          title="Website"
+          value={orEmpty(editingProject?.metadata.infoUri)}
+        />
+        <Statistic
+          title="Pay button"
+          value={orEmpty(editingProject?.metadata.payText)}
+        />
+      </Space>
+      <Space size="large">
+        <Statistic
+          title="Twitter"
+          value={orEmpty(editingProject?.metadata.twitter)}
+        />
+        <Statistic
+          title="Discord"
+          value={orEmpty(editingProject?.metadata.discord)}
+        />
+      </Space>
       <Space size="large" align="end">
         <Statistic
           title="Reserved tokens"

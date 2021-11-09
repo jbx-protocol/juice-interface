@@ -146,7 +146,7 @@ export default function Paid() {
         </span>
         <span style={primaryTextStyle}>
           <CurrencySymbol currency={0} />
-          {earned?.lt(parseWad('1'))
+          {earned?.lt(parseWad('1')) && earned.gt(0)
             ? '<1'
             : formatWad(earned, { decimals: 0 })}
         </span>

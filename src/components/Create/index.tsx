@@ -29,17 +29,8 @@ import {
   defaultProjectState,
   editingProjectActions,
 } from 'redux/slices/editingProject'
-import {
-  fromPerbicent,
-  fromPermille,
-  fromWad,
-  parsePerbicent,
-} from 'utils/formatNumber'
-import {
-  encodeFCMetadata,
-  hasFundingTarget,
-  isRecurring,
-} from 'utils/fundingCycle'
+import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
+import { encodeFCMetadata, hasFundingTarget } from 'utils/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -173,10 +164,9 @@ export default function Create() {
 
     setLoadingCreate(true)
 
-    const uploadedMetadata = await uploadProjectMetadata({
-      ...editingProjectInfo.metadata,
-      version: 2,
-    })
+    const uploadedMetadata = await uploadProjectMetadata(
+      editingProjectInfo.metadata,
+    )
 
     if (!uploadedMetadata.success) {
       setLoadingCreate(false)

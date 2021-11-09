@@ -1,13 +1,22 @@
 import { TokenRef } from './token-ref'
 
-type ProjectMetadataVersion = undefined | 1 | 2
+export type ProjectMetadata = ProjectMetadataV1 | ProjectMetadataV2
 
-export type ProjectMetadata = Partial<{
+export type ProjectMetadataV1 = Partial<{
   name: string
   description: string
   logoUri: string
   infoUri: string
   payText: string
-  version: ProjectMetadataVersion
+  version: 1
+}>
+
+export type ProjectMetadataV2 = Partial<{
+  name: string
+  description: string
+  logoUri: string
+  infoUri: string
+  payText: string
+  version: 2
   tokens: TokenRef[]
 }>

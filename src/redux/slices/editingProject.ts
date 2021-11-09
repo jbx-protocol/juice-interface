@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { constants } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadata } from 'models/project-metadata'
+import { ProjectMetadataV2 } from 'models/project-metadata'
 import {
   fromPerbicent,
   fromPermille,
@@ -17,7 +17,7 @@ import {
 } from 'utils/serializers'
 
 type EditingProjectInfo = {
-  metadata: ProjectMetadata
+  metadata: ProjectMetadataV2
   handle: string
 }
 
@@ -39,7 +39,7 @@ export const defaultProjectState: EditingProjectState = {
       logoUri: '',
       description: '',
       tokens: [],
-      version: 1,
+      version: 2,
     },
     handle: '',
   },

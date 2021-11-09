@@ -71,6 +71,12 @@ const QAs: {
     ],
   },
   {
+    q: 'Can I delete a project?',
+    a: [
+      `It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract.`,
+    ],
+  },
+  {
     q: 'Why Ethereum?',
     a: [
       `A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.`,

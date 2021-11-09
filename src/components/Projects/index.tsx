@@ -1,4 +1,4 @@
-import { Button, Select, Space } from 'antd'
+import { Button, Select, Space, Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
@@ -7,6 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjects } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { useContext, useState } from 'react'
+import TooltipLabel from 'components/shared/TooltipLabel'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -83,8 +84,20 @@ export default function Projects() {
 
       {selectedTab === 'archived' && (
         <p>
-          <InfoCircleOutlined /> Archived projects can still be interacted with
-          directly through the Juicebox contracts.
+          <InfoCircleOutlined /> Archived projects have not been modified or
+          deleted on the blockchain, and can still be interacted with directly
+          through the Juicebox contracts.{' '}
+          <Tooltip title="If you have a project you'd like to archive, let the Juicebox team know in Discord.">
+            <span
+              style={{
+                color: colors.text.action.primary,
+                fontWeight: 500,
+                cursor: 'default',
+              }}
+            >
+              How do I archive a project?
+            </span>
+          </Tooltip>
         </p>
       )}
 

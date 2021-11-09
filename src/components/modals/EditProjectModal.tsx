@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
-import { ProjectMetadata } from 'models/project-metadata'
+import { ProjectMetadata, ProjectMetadataV3 } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
 import {
   cidFromUrl,
@@ -17,8 +17,10 @@ import {
 export type ProjectInfoFormFields = {
   name: string
   description: string
-  infoUrl: string
-  logoUrl: string
+  infoUri: string
+  logoUri: string
+  twitter: string
+  discord: string
   payText: string
   version: number
 }
@@ -52,8 +54,10 @@ export default function EditProjectModal({
     if (metadata) {
       projectInfoForm.setFieldsValue({
         name: metadata?.name,
-        infoUrl: metadata?.infoUri,
-        logoUrl: metadata?.logoUri,
+        infoUri: metadata?.infoUri,
+        logoUri: metadata?.logoUri,
+        twitter: (metadata as ProjectMetadataV3)?.twitter,
+        discord: (metadata as ProjectMetadataV3)?.discord,
         description: metadata?.description,
         payText: metadata?.payText,
       })
@@ -74,8 +78,10 @@ export default function EditProjectModal({
     const uploadedMetadata = await uploadProjectMetadata({
       name: fields.name,
       description: fields.description,
-      logoUri: fields.logoUrl,
-      infoUri: fields.infoUrl,
+      logoUri: fields.logoUri,
+      infoUri: fields.infoUri,
+      twitter: fields.twitter,
+      discord: fields.discord,
       payText: fields.payText,
       tokens: [],
     })
@@ -100,9 +106,9 @@ export default function EditProjectModal({
           })
 
           // If logo changed
-          if (metadata?.logoUri !== fields.logoUrl) {
+          if (metadata?.logoUri !== fields.logoUri) {
             // Set name for new logo file
-            editMetadataForCid(cidFromUrl(fields.logoUrl), {
+            editMetadataForCid(cidFromUrl(fields.logoUri), {
               name: logoNameForHandle(handle),
             })
           }
@@ -137,7 +143,8 @@ export default function EditProjectModal({
       title="Edit project"
       visible={visible}
       onCancel={onCancel}
-      cancelText=""
+      cancelButtonProps={{ hidden: true }}
+      okButtonProps={{ hidden: true }}
       width={600}
     >
       <Form form={handleForm} layout="vertical">
@@ -162,8 +169,10 @@ export default function EditProjectModal({
           name="name"
           formItemProps={{ rules: [{ required: true }] }}
         />
-        <FormItems.ProjectLink name="infoUrl" />
         <FormItems.ProjectDescription name="description" />
+        <FormItems.ProjectLink name="infoUri" />
+        <FormItems.ProjectTwitter name="twitter" />
+        <FormItems.ProjectDiscord name="discord" />
         <Form.Item
           name="payText"
           label="Pay text"
@@ -171,10 +180,10 @@ export default function EditProjectModal({
         >
           <Input placeholder="Pay" />
         </Form.Item>
-        <FormItems.ProjectLogoUrl
-          name="logoUrl"
-          initialUrl={projectInfoForm.getFieldValue('logoUrl')}
-          onSuccess={logoUrl => projectInfoForm.setFieldsValue({ logoUrl })}
+        <FormItems.ProjectLogoUri
+          name="logoUri"
+          initialUrl={projectInfoForm.getFieldValue('logoUri')}
+          onSuccess={logoUri => projectInfoForm.setFieldsValue({ logoUri })}
         />
         <Form.Item>
           <Button type="primary" loading={loadingSetURI} onClick={setUri}>

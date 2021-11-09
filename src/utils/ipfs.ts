@@ -1,6 +1,6 @@
 import { notification } from 'antd'
 import Axios, { AxiosResponse } from 'axios'
-import { ProjectMetadataV2 } from 'models/project-metadata'
+import { ProjectMetadataV3 } from 'models/project-metadata'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
@@ -269,13 +269,13 @@ export const unpinIpfsFileByCid = (cid: string | undefined) =>
     : Promise.resolve(false)
 
 export const uploadProjectMetadata = (
-  metadata: Omit<ProjectMetadataV2, 'version'>,
+  metadata: Omit<ProjectMetadataV3, 'version'>,
 ) =>
   pinJSONToIpfs(
     {
       ...metadata,
-      version: 2,
-    } as ProjectMetadataV2,
+      version: 3,
+    },
     {
       name: 'juicebox-project-metadata.json',
       metadata: {

@@ -2,7 +2,7 @@ import { Form, Input } from 'antd'
 
 import { FormItemExt } from './formItemExt'
 
-export default function ProjectLink({
+export default function ProjectTwitter({
   name,
   hideLabel,
   formItemProps,
@@ -10,12 +10,13 @@ export default function ProjectLink({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Website (optional)'}
-      extra="Your project's website."
+      label={hideLabel ? undefined : 'Twitter (optional)'}
+      extra="Add your project's Twitter handle."
       {...formItemProps}
     >
       <Input
-        placeholder="http://your-project.com"
+        prefix="@"
+        placeholder="juiceboxETH"
         type="string"
         autoComplete="off"
       />

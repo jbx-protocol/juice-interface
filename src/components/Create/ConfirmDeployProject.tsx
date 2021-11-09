@@ -82,7 +82,11 @@ export default function ConfirmDeployProject() {
       <Space size="large">
         <Statistic
           title="Twitter"
-          value={orEmpty(editingProject?.metadata.twitter)}
+          value={
+            editingProject?.metadata.twitter
+              ? '@' + editingProject.metadata.twitter
+              : orEmpty(undefined)
+          }
         />
         <Statistic
           title="Discord"

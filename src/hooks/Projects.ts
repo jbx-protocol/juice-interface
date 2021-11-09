@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { hiddenProjectIds } from 'constants/hidden-projects'
+import { archivedProjectIds } from 'constants/archived-projects'
+import { ProjectState } from 'models/project-visibility'
 import {
   parseProjectJson,
   Project,
@@ -17,7 +18,7 @@ export function useProjects({
   orderBy,
   orderDirection,
   pageSize,
-  includeHidden,
+  filter,
 }: {
   pageNumber?: number
   projectId?: BigNumber
@@ -26,7 +27,7 @@ export function useProjects({
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
-  includeHidden?: boolean
+  filter?: ProjectState
 }) {
   const [projects, setProjects] = useState<Project[]>()
 
@@ -57,11 +58,22 @@ export function useProjects({
     )
   }, [pageNumber, projectId, handle, uri, orderDirection, orderBy])
 
-  const visibleProjects = useMemo(() => {
-    if (includeHidden || !projects?.length) return []
-
-    return projects.filter(_p => !hiddenProjectIds.includes(_p.id.toNumber()))
+  const activeProjects = useMemo(() => {
+    return projects?.filter(
+      _p => !archivedProjectIds.includes(_p.id.toNumber()),
+    )
   }, [projects])
 
-  return includeHidden ? projects : visibleProjects
+  const archivedProjects = useMemo(() => {
+    return projects?.filter(_p => archivedProjectIds.includes(_p.id.toNumber()))
+  }, [projects])
+
+  switch (filter) {
+    case 'active':
+      return activeProjects
+    case 'archived':
+      return archivedProjects
+    default:
+      return projects
+  }
 }

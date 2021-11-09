@@ -78,7 +78,6 @@ export default function EditProjectModal({
       infoUri: fields.infoUrl,
       payText: fields.payText,
       tokens: [],
-      version: 2,
     })
 
     if (!uploadedMetadata?.success) {

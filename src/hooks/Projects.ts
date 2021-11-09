@@ -1,10 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { hiddenProjectIds } from 'constants/hidden-projects'
 import {
   parseProjectJson,
   Project,
   ProjectJson,
 } from 'models/subgraph-entities/project'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { querySubgraph } from '../utils/graph'
 
@@ -16,6 +17,7 @@ export function useProjects({
   orderBy,
   orderDirection,
   pageSize,
+  includeHidden,
 }: {
   pageNumber?: number
   projectId?: BigNumber
@@ -24,6 +26,7 @@ export function useProjects({
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
+  includeHidden?: boolean
 }) {
   const [projects, setProjects] = useState<Project[]>()
 
@@ -54,5 +57,11 @@ export function useProjects({
     )
   }, [pageNumber, projectId, handle, uri, orderDirection, orderBy])
 
-  return projects
+  const visibleProjects = useMemo(() => {
+    if (includeHidden || !projects?.length) return []
+
+    return projects.filter(_p => !hiddenProjectIds.includes(_p.id.toNumber()))
+  }, [projects])
+
+  return includeHidden ? projects : visibleProjects
 }

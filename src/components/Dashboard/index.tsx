@@ -301,9 +301,7 @@ export default function Dashboard() {
 
   const projectType = projectTypes[projectId.toNumber()] ?? 'standard'
   const isPreviewMode = false
-  const isArchived = (archivedProjectIds[readNetwork.name] ?? []).includes(
-    projectId.toNumber(),
-  )
+  const isArchived = archivedProjectIds.includes(projectId.toNumber())
 
   return (
     <ProjectContext.Provider

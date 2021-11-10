@@ -7,7 +7,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjects } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { useContext, useState } from 'react'
-import TooltipLabel from 'components/shared/TooltipLabel'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -30,13 +29,17 @@ export default function Projects() {
       style={{
         textTransform: 'uppercase',
         cursor: 'pointer',
+        borderBottom: '2px solid transparent',
+        paddingBottom: 6,
         ...(tab === selectedTab
           ? {
               color: colors.text.primary,
               fontWeight: 500,
+              borderColor: colors.text.primary,
             }
           : {
               color: colors.text.secondary,
+              borderColor: 'transparent',
             }),
       }}
       onClick={() => setSelectedTab(tab)}
@@ -70,10 +73,10 @@ export default function Projects() {
             <Select
               value={orderBy}
               onChange={setOrderBy}
-              style={{ width: 180 }}
+              style={{ width: 120 }}
             >
-              <Select.Option value="totalPaid">Total earned</Select.Option>
-              <Select.Option value="createdAt">Last created</Select.Option>
+              <Select.Option value="totalPaid">Volume</Select.Option>
+              <Select.Option value="createdAt">Created</Select.Option>
             </Select>
             <a href="/#/create" style={{ marginLeft: 10 }}>
               <Button>New project</Button>
@@ -83,7 +86,7 @@ export default function Projects() {
       </div>
 
       {selectedTab === 'archived' && (
-        <p>
+        <p style={{ marginBottom: 40, maxWidth: 800 }}>
           <InfoCircleOutlined /> Archived projects have not been modified or
           deleted on the blockchain, and can still be interacted with directly
           through the Juicebox contracts.{' '}

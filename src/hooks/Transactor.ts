@@ -77,7 +77,6 @@ export function useTransactor({
           }
           if (options && txInformation.transaction.status === 'cancelled') {
             options.onCancelled && options.onCancelled(txInformation, signer)
-            options.onDone && options.onDone()
           }
         },
       }
@@ -108,19 +107,25 @@ export function useTransactor({
           {},
         )
 
-      console.log('🧃 Calling ' + functionName + '() with args:', reportArgs)
+      console.log(
+        '🧃 Calling ' + functionName + '() with args:',
+        reportArgs,
+        tx,
+      )
 
       try {
         let result
+
         if (tx instanceof Promise) {
           console.log('AWAITING TX', tx)
           result = await tx
         } else {
+          console.log('RUNNING TX', tx)
+
           if (!tx.gasPrice) tx.gasPrice = gasPrice ?? parseUnits('4.1', 'gwei')
 
           if (!tx.gasLimit) tx.gasLimit = hexlify(120000)
 
-          console.log('RUNNING TX', tx)
           result = await signer.sendTransaction(tx)
           await result.wait()
         }
@@ -142,33 +147,35 @@ export function useTransactor({
           } else {
             options?.onCancelled && options.onCancelled(result, signer)
           }
-          options?.onDone && options.onDone()
         }
+
+        options?.onDone && options.onDone()
 
         return true
       } catch (e) {
-        if (e instanceof Error) {
-          console.log('Transaction Error:', e.message)
+        const message = (e as Error).message
 
-          let description: string
+        console.log('Transaction Error:', message)
 
-          try {
-            let json = e.message.split('(error=')[1]
-            json = json.split(', method=')[0]
-            description = JSON.parse(json).message || e.message
-          } catch (_) {
-            description = e.message
-          }
+        let description: string
 
-          notification.error({
-            key: new Date().valueOf().toString(),
-            message: 'Transaction failed',
-            description,
-            duration: 0,
-          })
-
-          options?.onDone && options.onDone()
+        try {
+          let json = message.split('(error=')[1]
+          json = json.split(', method=')[0]
+          description = JSON.parse(json).message || message
+        } catch (_) {
+          description = message
         }
+
+        notification.error({
+          key: new Date().valueOf().toString(),
+          message: 'Transaction failed',
+          description,
+          duration: 0,
+        })
+
+        options?.onDone && options.onDone()
+
         return false
       }
     },

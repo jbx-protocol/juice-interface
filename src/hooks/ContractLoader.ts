@@ -4,19 +4,9 @@ import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { NetworkContext } from 'contexts/networkContext'
 import { Contracts } from 'models/contracts'
+import { ContractName } from 'models/contract-name'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
-
-// Whitelisted contracts that are used in the frontend.
-const contractNames = [
-  'FundingCycles',
-  'TerminalV1',
-  'ModStore',
-  'OperatorStore',
-  'Prices',
-  'Projects',
-  'TicketBooth',
-]
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
@@ -31,7 +21,7 @@ export function useContractLoader() {
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
         const signerOrProvider = signingProvider?.getSigner() ?? readProvider
 
-        const newContracts = contractNames.reduce(
+        const newContracts = Object.values(ContractName).reduce(
           (accumulator, contractName) => ({
             ...accumulator,
             [contractName]: loadContract(

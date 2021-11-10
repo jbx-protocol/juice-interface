@@ -49,7 +49,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [duration, setDuration] = useState<Duration>()
-  const [showGraph, setShowGraph] = useState<ShowGraph>()
+  const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
   const { projectId, projectType, createdAt } = useContext(ProjectContext)
   const {
     theme: { colors },
@@ -59,10 +59,6 @@ export default function BalanceTimeline({ height }: { height: number }) {
     duration
       ? moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
       : undefined
-
-  useEffect(() => {
-    setShowGraph(projectType === 'bidpool' ? 'volume' : 'balance')
-  }, [projectType])
 
   useEffect(() => {
     if (!createdAt) return
@@ -358,9 +354,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
           <SectionHeader text={header} />
         ) : (
           <div>
-            <Space size="middle">
-              {tab('balance')}
+            <Space size="large">
               {tab('volume')}
+              {tab('balance')}
             </Space>
           </div>
         )}

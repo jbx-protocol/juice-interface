@@ -2,6 +2,7 @@ import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
 import { ProjectContext } from 'contexts/projectContext'
@@ -266,7 +267,15 @@ export default function Paid() {
         <span style={secondaryTextStyle}>
           <TooltipLabel
             label="Wallet balance"
-            tip="The balance of the wallet that owns this Juicebox project."
+            tip={
+              <div>
+                <p>
+                  The balance of the wallet that owns this Juicebox project.
+                </p>
+                <span style={{ userSelect: 'all' }}>{owner}</span>{' '}
+                <EtherscanLink value={owner} type="address" />
+              </div>
+            }
           />
         </span>
         <span style={primaryTextStyle}>

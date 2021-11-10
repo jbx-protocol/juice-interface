@@ -7,7 +7,7 @@ export default function TooltipIcon({
   tip,
   placement,
 }: {
-  tip?: string
+  tip?: string | JSX.Element
   placement?: TooltipProps['placement']
 }) {
   const {

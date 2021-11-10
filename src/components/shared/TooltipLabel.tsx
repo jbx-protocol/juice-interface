@@ -10,7 +10,7 @@ export default function TooltipLabel({
   style,
 }: {
   label: string | JSX.Element
-  tip?: string
+  tip?: string | JSX.Element
   placement?: TooltipProps['placement']
   style?: CSSProperties
 }) {

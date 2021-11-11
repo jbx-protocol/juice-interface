@@ -3,6 +3,7 @@ import { FormItems } from 'components/shared/formItems'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
+import ProjectPayDisclosure from '../shared/formItems/ProjectPayDisclosure'
 
 export type ProjectFormFields = {
   name: string
@@ -12,7 +13,8 @@ export type ProjectFormFields = {
   logoUri: string
   twitter: string
   discord: string
-  payText: string
+  payButton: string
+  payDisclosure: string
 }
 
 export default function ProjectForm({
@@ -55,13 +57,8 @@ export default function ProjectForm({
         <FormItems.ProjectLink name="infoUri" />
         <FormItems.ProjectTwitter name="twitter" />
         <FormItems.ProjectDiscord name="discord" />
-        <Form.Item
-          name="payText"
-          label="Pay text"
-          extra={'Text displayed on your project\'s "pay" button.'}
-        >
-          <Input placeholder="Pay" />
-        </Form.Item>
+        <FormItems.ProjectPayButton name="payButton" />
+        <FormItems.ProjectPayDisclosure name="payDisclosure" />
         <FormItems.ProjectLogoUri
           name="logoUri"
           initialUrl={form.getFieldValue('logoUri')}

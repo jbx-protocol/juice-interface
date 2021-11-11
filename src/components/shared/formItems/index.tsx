@@ -8,6 +8,8 @@ import ProjectHandle from './ProjectHandle'
 import ProjectLink from './ProjectLink'
 import ProjectLogoUri from './ProjectLogoUri'
 import ProjectName from './ProjectName'
+import ProjectPayButton from './ProjectPayButton'
+import ProjectPayDisclosure from './ProjectPayDisclosure'
 import ProjectPayoutMods from './ProjectPayoutMods'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
@@ -26,6 +28,8 @@ export const FormItems = {
   ProjectLink,
   ProjectLogoUri,
   ProjectName,
+  ProjectPayButton,
+  ProjectPayDisclosure,
   ProjectPayoutMods,
   ProjectReserved,
   ProjectTarget,

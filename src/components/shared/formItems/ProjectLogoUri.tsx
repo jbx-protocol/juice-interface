@@ -14,7 +14,7 @@ export default function ProjectLogoUri({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Logo (optional)'}
+      label={hideLabel ? undefined : 'Logo'}
       {...formItemProps}
     >
       <ImageUploader

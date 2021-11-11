@@ -107,7 +107,8 @@ export default function Create() {
       logoUri: editingProjectInfo?.metadata.logoUri ?? '',
       twitter: editingProjectInfo?.metadata.twitter ?? '',
       discord: editingProjectInfo?.metadata.discord ?? '',
-      payText: editingProjectInfo?.metadata.payText ?? '',
+      payButton: editingProjectInfo?.metadata.payButton ?? '',
+      payDisclosure: editingProjectInfo?.metadata.payDisclosure ?? '',
     })
 
   const resetTicketingForm = () =>
@@ -139,7 +140,8 @@ export default function Create() {
     dispatch(editingProjectActions.setDescription(fields.description))
     dispatch(editingProjectActions.setTwitter(fields.twitter))
     dispatch(editingProjectActions.setDiscord(fields.discord))
-    dispatch(editingProjectActions.setPayText(fields.payText))
+    dispatch(editingProjectActions.setPayButton(fields.payButton))
+    dispatch(editingProjectActions.setPayDisclosure(fields.payDisclosure))
   }
 
   const onTicketingFormSaved = (mods: TicketMod[]) => {

@@ -2,7 +2,7 @@ import { Form, Input } from 'antd'
 
 import { FormItemExt } from './formItemExt'
 
-export default function ProjectTwitter({
+export default function ProjectPayButton({
   name,
   hideLabel,
   formItemProps,
@@ -11,15 +11,10 @@ export default function ProjectTwitter({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : 'Twitter'}
-      extra="Add your project's Twitter handle."
+      extra={`Text displayed on your project\'s "pay" button.`}
       {...formItemProps}
     >
-      <Input
-        prefix="@"
-        placeholder="juiceboxETH"
-        type="string"
-        autoComplete="off"
-      />
+      <Input placeholder="Pay" type="string" autoComplete="off" />
     </Form.Item>
   )
 }

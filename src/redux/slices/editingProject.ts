@@ -128,13 +128,23 @@ export const editingProjectSlice = createSlice({
         },
       },
     }),
-    setPayText: (state, action: PayloadAction<string>) => ({
+    setPayButton: (state, action: PayloadAction<string>) => ({
       ...state,
       info: {
         ...state.info,
         metadata: {
           ...state.info.metadata,
-          payText: action.payload,
+          payButton: action.payload,
+        },
+      },
+    }),
+    setPayDisclosure: (state, action: PayloadAction<string>) => ({
+      ...state,
+      info: {
+        ...state.info,
+        metadata: {
+          ...state.info.metadata,
+          payDisclosure: action.payload,
         },
       },
     }),

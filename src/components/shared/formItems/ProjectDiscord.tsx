@@ -10,7 +10,7 @@ export default function ProjectDiscord({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Discord (optional)'}
+      label={hideLabel ? undefined : 'Discord'}
       extra="Add an invite link to your project's Discord server."
       {...formItemProps}
     >

@@ -22,9 +22,24 @@ export type ProjectMetadataV2 = Partial<
 >
 
 export type ProjectMetadataV3 = Partial<
-  Omit<ProjectMetadataV2, 'version'> & {
+  Omit<ProjectMetadataV2, 'version' | 'payText'> & {
     version: 3
     twitter: string
     discord: string
+    payButton: string
+    payDisclosure: string
   }
 >
+
+// Converts metadata of any version to latest version
+export const consolidateMetadata = (
+  metadata: ProjectMetadata,
+): ProjectMetadataV3 => {
+  return {
+    ...metadata,
+    payButton:
+      (metadata as ProjectMetadataV3).payButton ??
+      (metadata as ProjectMetadataV2).payText,
+    version: 3,
+  }
+}

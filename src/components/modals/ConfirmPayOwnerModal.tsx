@@ -83,6 +83,14 @@ export default function ConfirmPayOwnerModal({
           project. Any value or utility of the tokens you receive is determined
           by {metadata.name}.
         </p>
+
+        {metadata.payDisclosure && (
+          <div>
+            <h4>Notice from {metadata.name}:</h4>
+            <p>{metadata.payDisclosure}</p>
+          </div>
+        )}
+
         <Descriptions column={1} bordered>
           <Descriptions.Item label="Pay amount" className="content-right">
             {formattedNum(usdAmount)} {currencyName(1)} ({formatWad(weiAmount)}{' '}

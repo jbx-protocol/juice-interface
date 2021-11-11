@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Divider, Form, Input, Modal } from 'antd'
+import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/shared/formItems'
 import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
-import { ProjectMetadata, ProjectMetadataV3 } from 'models/project-metadata'
+import { ProjectMetadataV3 } from 'models/project-metadata'
 import { useContext, useEffect, useState } from 'react'
 import {
   cidFromUrl,
@@ -21,7 +21,8 @@ export type ProjectInfoFormFields = {
   logoUri: string
   twitter: string
   discord: string
-  payText: string
+  payButton: string
+  payDisclosure: string
   version: number
 }
 
@@ -38,7 +39,7 @@ export default function EditProjectModal({
   onCancel,
 }: {
   handle: string | undefined
-  metadata: ProjectMetadata | undefined
+  metadata: ProjectMetadataV3 | undefined
   projectId: BigNumber
   visible?: boolean
   onSuccess?: VoidFunction
@@ -56,10 +57,11 @@ export default function EditProjectModal({
         name: metadata?.name,
         infoUri: metadata?.infoUri,
         logoUri: metadata?.logoUri,
-        twitter: (metadata as ProjectMetadataV3)?.twitter,
-        discord: (metadata as ProjectMetadataV3)?.discord,
+        twitter: metadata?.twitter,
+        discord: metadata?.discord,
         description: metadata?.description,
-        payText: metadata?.payText,
+        payButton: metadata?.payButton,
+        payDisclosure: metadata?.payDisclosure,
       })
     }
 
@@ -82,8 +84,9 @@ export default function EditProjectModal({
       infoUri: fields.infoUri,
       twitter: fields.twitter,
       discord: fields.discord,
-      payText: fields.payText,
-      tokens: [],
+      payButton: fields.payButton,
+      payDisclosure: fields.payDisclosure,
+      tokens: metadata?.tokens ?? [],
     })
 
     if (!uploadedMetadata?.success) {
@@ -173,13 +176,8 @@ export default function EditProjectModal({
         <FormItems.ProjectLink name="infoUri" />
         <FormItems.ProjectTwitter name="twitter" />
         <FormItems.ProjectDiscord name="discord" />
-        <Form.Item
-          name="payText"
-          label="Pay text"
-          extra={'Text displayed on your project\'s "pay" button.'}
-        >
-          <Input placeholder="Pay" />
-        </Form.Item>
+        <FormItems.ProjectPayButton name="payButton" />
+        <FormItems.ProjectPayDisclosure name="payDisclosure" />
         <FormItems.ProjectLogoUri
           name="logoUri"
           initialUrl={projectInfoForm.getFieldValue('logoUri')}

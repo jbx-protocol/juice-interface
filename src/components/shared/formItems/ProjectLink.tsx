@@ -10,7 +10,7 @@ export default function ProjectLink({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Website (optional)'}
+      label={hideLabel ? undefined : 'Website'}
       extra="Your project's website."
       {...formItemProps}
     >

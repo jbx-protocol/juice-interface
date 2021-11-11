@@ -49,7 +49,7 @@ export default function Pay() {
   const payButton = useMemo(() => {
     if (!metadata || !currentFC) return null
 
-    const payText = metadata.payText || 'Pay'
+    const payButtonText = metadata.payButton
 
     if (isArchived) {
       return (
@@ -58,7 +58,7 @@ export default function Pay() {
           className="block"
         >
           <Button style={{ width: '100%' }} type="primary" disabled>
-            {payText}
+            {payButtonText}
           </Button>
         </Tooltip>
       )
@@ -69,7 +69,7 @@ export default function Pay() {
           className="block"
         >
           <Button style={{ width: '100%' }} type="primary" disabled>
-            {payText}
+            {payButtonText}
           </Button>
         </Tooltip>
       )
@@ -81,7 +81,7 @@ export default function Pay() {
           disabled={currentFC.configured.eq(0) || isArchived}
           onClick={weiPayAmt ? pay : undefined}
         >
-          {payText}
+          {payButtonText}
         </Button>
       )
     }

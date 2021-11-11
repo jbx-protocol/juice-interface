@@ -76,9 +76,13 @@ export default function ConfirmDeployProject() {
         />
         <Statistic
           title="Pay button"
-          value={orEmpty(editingProject?.metadata.payText)}
+          value={orEmpty(editingProject?.metadata.payButton)}
         />
       </Space>
+      <Statistic
+        title="Pay disclosure"
+        value={orEmpty(editingProject?.metadata.payDisclosure)}
+      />
       <Space size="large">
         <Statistic
           title="Twitter"

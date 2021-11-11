@@ -85,12 +85,13 @@ export default function Paid() {
 
   const percentOverflow = fracDiv(
     overflowInCurrency?.toString() ?? '0',
-    balanceInCurrency?.toString() ?? '1',
+    balanceInCurrency?.add(currentFC?.tapped ?? 0).toString() ?? '1',
   )
 
   const primaryTextStyle: CSSProperties = {
     fontWeight: 500,
     fontSize: '1.1rem',
+    lineHeight: 1,
   }
 
   const secondaryTextStyle: CSSProperties = {
@@ -153,53 +154,19 @@ export default function Paid() {
         </span>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          flexWrap: 'nowrap',
-          marginTop: 10,
-        }}
-      >
-        <div style={secondaryTextStyle}>
-          <TooltipLabel
-            label="In Juicebox"
-            tip="The balance of this project in the Juicebox contract."
-          />
-        </div>
-
-        <div
-          style={{
-            ...primaryTextStyle,
-            color: colors.text.brand.primary,
-            marginLeft: 10,
-          }}
-        >
-          {currentFC.currency.eq(1) ? (
-            <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={0} />
-              {formatWad(balance, { decimals: 0 })}{' '}
-            </span>
-          ) : (
-            ''
-          )}
-          {formatCurrencyAmount(balanceInCurrency)}
-        </div>
-      </div>
-
       {hasFundingTarget(currentFC) && (
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'baseline',
+            marginTop: 15,
           }}
         >
           <div style={secondaryTextStyle}>
             <TooltipLabel
-              label="Funding target"
-              tip="No more than the funding target can be withdrawn by the project owner in a given funding cycle."
+              label="Funded"
+              tip="The amount that has been earned toward this funding cycle, out of the target. No more than the funding target can be withdrawn by the project owner in a given funding cycle."
             />
           </div>
 
@@ -210,7 +177,16 @@ export default function Paid() {
               fontWeight: 500,
             }}
           >
-            {formatCurrencyAmount(currentFC.target)}
+            <span style={{ color: colors.text.header }}>
+              {formatCurrencyAmount(
+                converter.wadToCurrency(
+                  balance?.add(currentFC.tapped),
+                  currentFC.currency.toNumber() as CurrencyOption,
+                  0,
+                ),
+              )}
+            </span>{' '}
+            / {formatCurrencyAmount(currentFC.target)}
           </div>
         </div>
       )}
@@ -223,7 +199,7 @@ export default function Paid() {
                 width: (1 - percentOverflow) * 100 + '%',
                 minWidth: 10,
               }}
-              percent={percentPaid ? Math.max(percentPaid, 1) : 0}
+              percent={100}
               showInfo={false}
               strokeColor={colors.text.brand.primary}
             />
@@ -261,7 +237,40 @@ export default function Paid() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
-          marginTop: 10,
+          flexWrap: 'nowrap',
+          marginTop: 15,
+        }}
+      >
+        <div style={secondaryTextStyle}>
+          <TooltipLabel
+            label="In Juicebox"
+            tip="The balance of this project in the Juicebox contract."
+          />
+        </div>
+
+        <div
+          style={{
+            ...primaryTextStyle,
+            marginLeft: 10,
+          }}
+        >
+          {currentFC.currency.eq(1) ? (
+            <span style={secondaryTextStyle}>
+              <CurrencySymbol currency={0} />
+              {formatWad(balance, { decimals: 0 })}{' '}
+            </span>
+          ) : (
+            ''
+          )}
+          {formatCurrencyAmount(balanceInCurrency)}
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
         }}
       >
         <span style={secondaryTextStyle}>

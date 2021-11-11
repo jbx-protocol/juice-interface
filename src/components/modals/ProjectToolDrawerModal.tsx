@@ -24,11 +24,13 @@ export default function ProjectToolDrawerModal({
   const { userAddress } = useContext(NetworkContext)
   const { projectId, tokenSymbol, owner } = useContext(ProjectContext)
 
+  const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
   const [loadingTransferOwnership, setLoadingTransferOwnership] = useState<
     boolean
   >()
   const [transferTokensForm] = useForm<{ amount: string; to: string }>()
+  const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
 
   const stakedTokenBalance = useContractReader<BigNumber>({
@@ -76,6 +78,25 @@ export default function ProjectToolDrawerModal({
       {
         onDone: () => setLoadingTransferTokens(false),
         onConfirmed: () => transferTokensForm.resetFields(),
+      },
+    )
+  }
+
+  function addToBalance() {
+    if (!transactor || !contracts || !userAddress || !projectId) return
+
+    setLoadingAddToBalance(true)
+
+    const fields = addToBalanceForm.getFieldsValue(true)
+
+    transactor(
+      contracts.TerminalV1,
+      'addToBalance',
+      [projectId.toHexString()],
+      {
+        value: parseWad(fields.amount).toHexString(),
+        onDone: () => setLoadingAddToBalance(false),
+        onConfirmed: () => addToBalanceForm.resetFields(),
       },
     )
   }
@@ -160,6 +181,39 @@ export default function ProjectToolDrawerModal({
                 type="primary"
               >
                 Transfer {tokenSymbol || 'tokens'}
+              </Button>
+            </Form.Item>
+          </Form>
+        </section>
+
+        <Divider />
+
+        <section>
+          <h3>Add to Balance</h3>
+          <p>Add funds to this project's balance without minting tokens.</p>
+          <Form
+            form={addToBalanceForm}
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 20 }}
+          >
+            <Form.Item name="amount" label="Amount">
+              <FormattedNumberInput
+                placeholder="0"
+                onChange={amount =>
+                  transferTokensForm.setFieldsValue({
+                    amount,
+                  })
+                }
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                onClick={() => addToBalance()}
+                loading={loadingAddToBalance}
+                size="small"
+                type="primary"
+              >
+                Add to balance
               </Button>
             </Form.Item>
           </Form>

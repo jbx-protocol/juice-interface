@@ -23,7 +23,6 @@ import { querySubgraph } from 'utils/graph'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
-import { readNetwork } from 'constants/networks'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()

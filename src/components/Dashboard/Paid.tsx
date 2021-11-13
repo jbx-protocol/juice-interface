@@ -303,9 +303,7 @@ export default function Paid() {
 
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
+          textAlign: 'right',
         }}
       >
         <span

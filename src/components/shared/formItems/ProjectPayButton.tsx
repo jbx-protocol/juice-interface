@@ -10,8 +10,8 @@ export default function ProjectPayButton({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Twitter'}
-      extra={`Text displayed on your project\'s "pay" button.`}
+      label={hideLabel ? undefined : 'Pay button'}
+      extra={`Text displayed on your project\'s "pay" button. Leave this blank to use the default.`}
       {...formItemProps}
     >
       <Input placeholder="Pay" type="string" autoComplete="off" />

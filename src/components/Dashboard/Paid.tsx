@@ -61,17 +61,6 @@ export default function Paid() {
     ),
   })
 
-  const overflowInCurrency = useMemo(
-    () =>
-      totalOverflow &&
-      converter.wadToCurrency(
-        totalOverflow,
-        currentFC?.currency.toNumber() as CurrencyOption,
-        0,
-      ),
-    [currentFC?.currency, totalOverflow, converter],
-  )
-
   const ownerBalance = useEthBalance(owner)
 
   const percentPaid = useMemo(
@@ -84,8 +73,8 @@ export default function Paid() {
   )
 
   const percentOverflow = fracDiv(
-    overflowInCurrency?.toString() ?? '0',
-    balanceInCurrency?.add(currentFC?.tapped ?? 0).toString() ?? '1',
+    balanceInCurrency?.add(currentFC?.target ?? 0).toString() ?? '0',
+    balanceInCurrency?.add(currentFC?.tapped ?? 0)?.toString() ?? '1',
   )
 
   const primaryTextStyle: CSSProperties = {
@@ -102,6 +91,9 @@ export default function Paid() {
   }
 
   if (!currentFC) return null
+
+  const spacing =
+    hasFundingTarget(currentFC) && currentFC.target.gt(0) ? 15 : 10
 
   const formatCurrencyAmount = (amt: BigNumber | undefined) =>
     amt ? (
@@ -138,6 +130,7 @@ export default function Paid() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          marginBottom: spacing,
         }}
       >
         <span style={secondaryTextStyle}>
@@ -154,44 +147,82 @@ export default function Paid() {
         </span>
       </div>
 
-      {hasFundingTarget(currentFC) && (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          flexWrap: 'nowrap',
+        }}
+      >
+        <div style={secondaryTextStyle}>
+          <TooltipLabel
+            label="In Juicebox"
+            tip="The balance of this project in the Juicebox contract."
+          />
+        </div>
+
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            marginTop: 15,
+            ...primaryTextStyle,
+            color: colors.text.brand.primary,
+            marginLeft: 10,
           }}
         >
-          <div style={secondaryTextStyle}>
-            <TooltipLabel
-              label="Funded"
-              tip="The amount that has been earned toward this funding cycle, out of the target. No more than the funding target can be withdrawn by the project owner in a given funding cycle."
-            />
-          </div>
+          {currentFC.currency.eq(1) ? (
+            <span style={secondaryTextStyle}>
+              <CurrencySymbol currency={0} />
+              {formatWad(balance, { decimals: 2 })}{' '}
+            </span>
+          ) : (
+            ''
+          )}
+          {formatCurrencyAmount(balanceInCurrency)}
+        </div>
+      </div>
 
+      {hasFundingTarget(currentFC) &&
+        (currentFC.target.gt(0) ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
+            <div style={secondaryTextStyle}>
+              <TooltipLabel
+                label="Distributed"
+                tip="The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
+              />
+            </div>
+
+            <div
+              style={{
+                ...secondaryTextStyle,
+                color: colors.text.primary,
+              }}
+            >
+              {formatCurrencyAmount(currentFC.tapped)} /{' '}
+              {formatCurrencyAmount(currentFC.target)}
+            </div>
+          </div>
+        ) : (
           <div
             style={{
               ...secondaryTextStyle,
-              color: colors.text.primary,
-              fontWeight: 500,
+              textAlign: 'right',
             }}
           >
-            <span style={{ color: colors.text.header }}>
-              {formatCurrencyAmount(
-                converter.wadToCurrency(
-                  balance?.add(currentFC.tapped),
-                  currentFC.currency.toNumber() as CurrencyOption,
-                  0,
-                ),
-              )}
-            </span>{' '}
-            / {formatCurrencyAmount(currentFC.target)}
+            <TooltipLabel
+              tip="The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+              label="100% overflow"
+            />
           </div>
-        </div>
-      )}
+        ))}
 
       {hasFundingTarget(currentFC) &&
+        currentFC.target.gt(0) &&
         (totalOverflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Progress
@@ -205,7 +236,7 @@ export default function Paid() {
             />
             <div
               style={{
-                width: 4,
+                minWidth: 4,
                 height: 15,
                 borderRadius: 2,
                 background: colors.text.primary,
@@ -237,45 +268,12 @@ export default function Paid() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
-          flexWrap: 'nowrap',
-          marginTop: 15,
-        }}
-      >
-        <div style={secondaryTextStyle}>
-          <TooltipLabel
-            label="In Juicebox"
-            tip="The balance of this project in the Juicebox contract."
-          />
-        </div>
-
-        <div
-          style={{
-            ...primaryTextStyle,
-            marginLeft: 10,
-          }}
-        >
-          {currentFC.currency.eq(1) ? (
-            <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={0} />
-              {formatWad(balance, { decimals: 0 })}{' '}
-            </span>
-          ) : (
-            ''
-          )}
-          {formatCurrencyAmount(balanceInCurrency)}
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
+          marginTop: spacing,
         }}
       >
         <span style={secondaryTextStyle}>
           <TooltipLabel
-            label="Wallet balance"
+            label="In wallet"
             tip={
               <div>
                 <p>
@@ -287,9 +285,21 @@ export default function Paid() {
             }
           />
         </span>
-        <span style={primaryTextStyle}>
-          <CurrencySymbol currency={0} />
-          {formatWad(ownerBalance, { decimals: 2 })}
+        <span>
+          <span style={secondaryTextStyle}>
+            <ProjectTokenBalance
+              style={{ display: 'inline-block' }}
+              wallet={owner}
+              projectId={BigNumber.from('0x01')}
+              hideHandle
+            />{' '}
+            {/* <RightCircleOutlined /> +{' '} */}+{' '}
+          </span>
+          <span style={primaryTextStyle}>
+            <CurrencySymbol currency={0} />
+            {formatWad(ownerBalance, { decimals: 2 })}
+          </span>
+          {/* <RightCircleOutlined />{' '} */}
         </span>
       </div>
 
@@ -301,22 +311,16 @@ export default function Paid() {
         }}
       >
         <span style={secondaryTextStyle}>
-          <TooltipLabel
+          {/* <TooltipLabel
             label="Other assets"
             tip="Other tokens in the wallet that owns this Juicebox project. New tokens can be tracked by editing the project."
-          />
+          /> */}
         </span>
         <span
           style={{ ...secondaryTextStyle, cursor: 'pointer' }}
           onClick={() => setBalancesModalVisible(true)}
         >
-          <ProjectTokenBalance
-            style={{ display: 'inline-block' }}
-            wallet={owner}
-            projectId={BigNumber.from('0x01')}
-            hideHandle
-          />{' '}
-          <RightCircleOutlined />
+          All assets <RightCircleOutlined />
         </span>
       </div>
 

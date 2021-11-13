@@ -11,7 +11,6 @@ import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalance } from 'hooks/EthBalance'
 import { ContractName } from 'models/contract-name'
-import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
@@ -293,13 +292,12 @@ export default function Paid() {
               projectId={BigNumber.from('0x01')}
               hideHandle
             />{' '}
-            {/* <RightCircleOutlined /> +{' '} */}+{' '}
+            +{' '}
           </span>
           <span style={primaryTextStyle}>
             <CurrencySymbol currency={0} />
             {formatWad(ownerBalance, { decimals: 2 })}
           </span>
-          {/* <RightCircleOutlined />{' '} */}
         </span>
       </div>
 
@@ -310,12 +308,6 @@ export default function Paid() {
           alignItems: 'baseline',
         }}
       >
-        <span style={secondaryTextStyle}>
-          {/* <TooltipLabel
-            label="Other assets"
-            tip="Other tokens in the wallet that owns this Juicebox project. New tokens can be tracked by editing the project."
-          /> */}
-        </span>
         <span
           style={{ ...secondaryTextStyle, cursor: 'pointer' }}
           onClick={() => setBalancesModalVisible(true)}

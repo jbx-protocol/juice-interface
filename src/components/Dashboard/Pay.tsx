@@ -49,7 +49,9 @@ export default function Pay() {
   const payButton = useMemo(() => {
     if (!metadata || !currentFC) return null
 
-    const payButtonText = metadata.payButton ?? 'Pay'
+    const payButtonText = metadata.payButton?.length
+      ? metadata.payButton
+      : 'Pay'
 
     if (isArchived) {
       return (

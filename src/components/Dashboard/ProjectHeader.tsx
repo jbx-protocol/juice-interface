@@ -8,6 +8,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
+import RichNote from './ProjectActivity/RichNote'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] = useState<
@@ -96,11 +97,7 @@ export default function ProjectHeader() {
               )}
             </Space>
           </h3>
-          {metadata?.description && (
-            <p style={{ color: colors.text.tertiary }}>
-              {metadata?.description}
-            </p>
-          )}
+          <RichNote note={metadata?.description} />
         </div>
 
         {!isPreviewMode && (

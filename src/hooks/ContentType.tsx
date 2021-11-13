@@ -6,7 +6,10 @@ export function useContentType(link?: string) {
 
   useEffect(() => {
     if (link) {
-      axios.get(link).then(res => setContentType(res.headers['content-type']))
+      axios
+        .get(link)
+        .then(res => setContentType(res.headers['content-type']))
+        .catch(() => setContentType(undefined))
     } else {
       setContentType(undefined)
     }

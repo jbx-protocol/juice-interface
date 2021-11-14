@@ -49,21 +49,25 @@ export default function ConfirmDeployProject() {
         />
         {hasFundingTarget(editingFC) && (
           <Statistic
-            title="Amount"
+            title="Target"
             valueRender={() => (
               <span>
                 <CurrencySymbol
                   currency={editingFC?.currency.toNumber() as CurrencyOption}
                 />
                 {formatWad(editingFC?.target)}{' '}
-                <span style={{ fontSize: '0.8rem' }}>
-                  (
-                  <CurrencySymbol
-                    currency={editingFC?.currency.toNumber() as CurrencyOption}
-                  />
-                  {formatWad(amountSubFee(editingFC.target, editingFC.fee))}{' '}
-                  after JBX fee)
-                </span>
+                {editingFC.fee?.gt(0) && (
+                  <span style={{ fontSize: '0.8rem' }}>
+                    (
+                    <CurrencySymbol
+                      currency={
+                        editingFC?.currency.toNumber() as CurrencyOption
+                      }
+                    />
+                    {formatWad(amountSubFee(editingFC.target, editingFC.fee))}{' '}
+                    after JBX fee)
+                  </span>
+                )}
               </span>
             )}
           />

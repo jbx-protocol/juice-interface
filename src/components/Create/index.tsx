@@ -52,7 +52,8 @@ export default function Create() {
   const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
-  const [currentStep, setCurrentStep] = useState<number>(0)
+  const [currentStep, setCurrentStep] = useState<number>()
+  const [viewedSteps, setViewedSteps] = useState<number[]>([])
   const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
     false,
   )
@@ -93,11 +94,6 @@ export default function Create() {
     }
   }, [adminFeePercent])
 
-  const incrementStep = (index: number) => {
-    if (index < currentStep) return
-    setCurrentStep(currentStep + 1)
-  }
-
   const resetProjectForm = () =>
     projectForm.setFieldsValue({
       name: editingProjectInfo?.metadata.name ?? '',
@@ -127,8 +123,6 @@ export default function Create() {
     dispatch(editingProjectActions.setTarget(target))
     dispatch(editingProjectActions.setDuration(duration))
     dispatch(editingProjectActions.setCurrency(currency))
-
-    if (target) incrementStep(2)
   }
 
   const onProjectFormSaved = () => {
@@ -251,6 +245,13 @@ export default function Create() {
     )
   }
 
+  function viewedCurrentStep() {
+    if (currentStep !== undefined && !viewedSteps.includes(currentStep)) {
+      setViewedSteps([...viewedSteps, currentStep])
+    }
+    setCurrentStep(undefined)
+  }
+
   const drawerStyle: Partial<DrawerProps> = {
     placement: 'right',
     width: Math.min(640, window.innerWidth * 0.9),
@@ -260,7 +261,6 @@ export default function Create() {
     (steps: { title: string; callback: VoidFunction }[]) => (
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {steps.map((step, i) => {
-          const disabled = currentStep < i
           const active = currentStep === i
 
           return (
@@ -269,23 +269,24 @@ export default function Create() {
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                cursor: currentStep < i ? 'default' : 'pointer',
-                padding: 10,
+                cursor: 'pointer',
+                // textTransform: 'uppercase',
+                padding: 15,
                 borderRadius: radii.sm,
                 border: active
-                  ? '2px solid ' + colors.stroke.action.primary
-                  : '1px solid' + colors.stroke.action.secondary,
+                  ? '3px solid ' + colors.stroke.action.primary
+                  : '1px solid' + colors.stroke.action.primary,
               }}
-              onClick={disabled ? () => null : step.callback}
+              onClick={() => {
+                if (currentStep !== undefined) return
+                setCurrentStep(i)
+                step.callback()
+              }}
             >
               <div
                 style={{
                   fontWeight: active ? 600 : 500,
-                  color: active
-                    ? colors.text.action.primary
-                    : disabled
-                    ? colors.text.disabled
-                    : colors.text.primary,
+                  color: colors.text.primary,
                 }}
               >
                 {step.title}
@@ -293,14 +294,12 @@ export default function Create() {
               <div
                 style={{
                   color: active
-                    ? colors.icon.action.primary
-                    : disabled
-                    ? colors.icon.disabled
-                    : colors.icon.primary,
+                    ? colors.icon.primary
+                    : colors.icon.action.primary,
                 }}
               >
-                {currentStep > i ? (
-                  <CheckCircleFilled style={{ color: colors.icon.success }} />
+                {viewedSteps.includes(i) ? (
+                  <CheckCircleFilled />
                 ) : (
                   <CaretRightFilled />
                 )}
@@ -308,14 +307,19 @@ export default function Create() {
             </div>
           )
         })}
+
         <p style={{ fontWeight: 500 }}>
           The JBX protocol is unaudited, and projects built on it may be
           vulnerable to bugs or exploits. Be smart!
         </p>
+
         <Button
           onClick={() => setDeployProjectModalVisible(true)}
-          disabled={currentStep < steps.length}
           type="primary"
+          disabled={
+            !projectForm.getFieldValue('name') ||
+            !projectForm.getFieldValue('handle')
+          }
         >
           Deploy 🚀
         </Button>
@@ -323,6 +327,8 @@ export default function Create() {
     ),
     [currentStep, colors, radii],
   )
+
+  const spacing = 40
 
   const fundingCycle: FundingCycle = {
     ...editingFC,
@@ -357,15 +363,17 @@ export default function Create() {
         isArchived: false,
       }}
     >
-      <Row
-        style={{
-          display: 'flex',
-          padding: 40,
-        }}
-        gutter={40}
-      >
-        <Col xs={24} lg={7} style={{ marginBottom: 40 }}>
-          <h1 style={{ marginBottom: 20 }}>Design your project 🎨</h1>
+      <Row style={{ marginTop: 40 }}>
+        <Col
+          xs={24}
+          lg={8}
+          style={{
+            marginBottom: spacing * 2,
+            paddingLeft: spacing,
+            paddingRight: spacing,
+          }}
+        >
+          <h1 style={{ marginBottom: spacing / 2 }}>Design your project 🎨</h1>
 
           {buildSteps([
             {
@@ -395,24 +403,27 @@ export default function Create() {
           ])}
         </Col>
 
-        <Col xs={24} lg={17}>
-          <div
+        <Col xs={24} lg={16}>
+          <h3
             style={{
-              padding: 40,
-              paddingTop: 30,
-              borderRadius: radii.lg,
-              border: '1px solid ' + colors.stroke.secondary,
+              marginTop: 5,
+              marginBottom: spacing / 2,
+              color: colors.text.secondary,
+              paddingLeft: spacing,
+              paddingRight: spacing,
             }}
           >
-            <h3
-              style={{
-                marginBottom: 30,
-                color: colors.text.secondary,
-              }}
-            >
-              Preview:
-            </h3>
-            <Project showCurrentDetail={currentStep > 2} />
+            Preview:
+          </h3>
+
+          <div
+            style={{
+              paddingLeft: spacing,
+              paddingRight: spacing,
+              borderLeft: '1px solid ' + colors.stroke.tertiary,
+            }}
+          >
+            <Project showCurrentDetail={true} />
           </div>
         </Col>
 
@@ -420,6 +431,7 @@ export default function Create() {
           {...drawerStyle}
           visible={projectFormModalVisible}
           onClose={() => {
+            setCurrentStep(undefined)
             resetProjectForm()
             setProjectFormModalVisible(false)
           }}
@@ -428,9 +440,9 @@ export default function Create() {
             form={projectForm}
             onSave={async () => {
               await projectForm.validateFields()
+              viewedCurrentStep()
               onProjectFormSaved()
               setProjectFormModalVisible(false)
-              incrementStep(0)
             }}
           />
         </Drawer>
@@ -439,8 +451,8 @@ export default function Create() {
           visible={budgetFormModalVisible}
           {...drawerStyle}
           onClose={() => {
+            viewedCurrentStep()
             setBudgetFormModalVisible(false)
-            incrementStep(1)
           }}
           destroyOnClose
         >
@@ -449,9 +461,9 @@ export default function Create() {
             initialTarget={fromWad(editingFC.target)}
             initialDuration={editingFC?.duration.toString()}
             onSave={async (currency, target, duration) => {
+              viewedCurrentStep()
               onBudgetFormSaved(currency, target, duration)
               setBudgetFormModalVisible(false)
-              incrementStep(1)
             }}
           />
         </Drawer>
@@ -460,8 +472,8 @@ export default function Create() {
           visible={payModsModalVisible}
           {...drawerStyle}
           onClose={() => {
+            viewedCurrentStep()
             setPayModsFormModalVisible(false)
-            incrementStep(2)
           }}
           destroyOnClose
         >
@@ -471,9 +483,9 @@ export default function Create() {
             target={editingFC.target}
             fee={editingFC.fee}
             onSave={async mods => {
+              viewedCurrentStep()
               onPayModsFormSaved(mods)
               setPayModsFormModalVisible(false)
-              incrementStep(2)
             }}
           />
         </Drawer>
@@ -482,19 +494,19 @@ export default function Create() {
           visible={ticketingFormModalVisible}
           {...drawerStyle}
           onClose={() => {
+            viewedCurrentStep()
             resetTicketingForm()
             setTicketingFormModalVisible(false)
-            incrementStep(3)
           }}
         >
           <TicketingForm
             form={ticketingForm}
             initialMods={editingTicketMods}
             onSave={async mods => {
+              viewedCurrentStep()
               await ticketingForm.validateFields()
               onTicketingFormSaved(mods)
               setTicketingFormModalVisible(false)
-              incrementStep(3)
             }}
           />
         </Drawer>
@@ -503,16 +515,16 @@ export default function Create() {
           visible={rulesFormModalVisible}
           {...drawerStyle}
           onClose={() => {
+            viewedCurrentStep()
             setRulesFormModalVisible(false)
-            incrementStep(4)
           }}
         >
           <RulesForm
             initialBallot={editingFC.ballot}
             onSave={(ballot: string) => {
+              viewedCurrentStep()
               onRulesFormSaved(ballot)
               setRulesFormModalVisible(false)
-              incrementStep(4)
             }}
           />
         </Drawer>
@@ -521,8 +533,8 @@ export default function Create() {
           visible={incentivesFormModalVisible}
           {...drawerStyle}
           onClose={() => {
+            viewedCurrentStep()
             setIncentivesFormModalVisible(false)
-            incrementStep(5)
           }}
         >
           <IncentivesForm
@@ -530,10 +542,10 @@ export default function Create() {
             initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
             showBondingCurve={hasFundingTarget(editingFC)}
             onSave={async (discountRate: string, bondingCurveRate: string) => {
+              viewedCurrentStep()
               await ticketingForm.validateFields()
               onIncentivesFormSaved(discountRate, bondingCurveRate)
               setIncentivesFormModalVisible(false)
-              incrementStep(5)
             }}
           />
         </Drawer>

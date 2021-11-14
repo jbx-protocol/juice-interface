@@ -50,6 +50,8 @@ export default function ProjectHeader() {
     return 'http://' + url
   }
 
+  const spacing = 20
+
   if (!projectId) return null
 
   return (
@@ -74,6 +76,7 @@ export default function ProjectHeader() {
           <h1
             style={{
               fontSize: '2.4rem',
+              lineHeight: '2.8rem',
               margin: 0,
               color: metadata?.name
                 ? colors.text.primary
@@ -83,64 +86,86 @@ export default function ProjectHeader() {
             {metadata?.name || 'Untitled project'}
           </h1>
 
-          <h3>
-            <Space size="large">
-              {isArchived && (
-                <span
-                  style={{
-                    fontSize: '0.8rem',
-                    color: colors.text.disabled,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  (archived)
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              flexWrap: 'wrap',
+              paddingTop: 8,
+              paddingBottom: 4,
+              fontWeight: 500,
+            }}
+          >
+            {isArchived && (
+              <span
+                style={{
+                  fontSize: '0.8rem',
+                  color: colors.text.disabled,
+                  textTransform: 'uppercase',
+                  marginRight: spacing,
+                }}
+              >
+                (archived)
+              </span>
+            )}
+            {handle && (
+              <span
+                style={{
+                  color: colors.text.secondary,
+                  marginRight: spacing,
+                  fontWeight: 600,
+                }}
+              >
+                @{handle}
+              </span>
+            )}
+            {metadata?.infoUri && (
+              <a
+                style={{ fontWeight: 500, marginRight: spacing }}
+                href={linkUrl(metadata.infoUri)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {prettyUrl(metadata.infoUri)}
+              </a>
+            )}
+            {metadata?.twitter && (
+              <a
+                style={{
+                  fontWeight: 500,
+                  marginRight: spacing,
+                  whiteSpace: 'pre',
+                }}
+                href={'https://twitter.com/' + metadata.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span style={{ marginRight: 4 }}>
+                  <TwitterOutlined />
                 </span>
-              )}
-              {handle && (
-                <span style={{ color: colors.text.secondary }}>@{handle}</span>
-              )}
-              {metadata?.infoUri && (
-                <a
-                  style={{ fontWeight: 400 }}
-                  href={linkUrl(metadata.infoUri)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {prettyUrl(metadata.infoUri)}
-                </a>
-              )}
-              {metadata?.twitter && (
-                <a
-                  style={{ fontWeight: 400 }}
-                  href={'https://twitter.com/' + metadata.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span style={{ marginRight: 4 }}>
-                    <TwitterOutlined />
-                  </span>
-                  @{prettyUrl(metadata.twitter)}
-                </a>
-              )}
-              {metadata?.discord && (
-                <a
-                  style={{
-                    fontWeight: 400,
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                  href={linkUrl(metadata.discord)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span style={{ display: 'flex', marginRight: 4 }}>
-                    <Discord size={13} />
-                  </span>
-                  Discord
-                </a>
-              )}
-            </Space>
-          </h3>
+                @{prettyUrl(metadata.twitter)}
+              </a>
+            )}
+            {metadata?.discord && (
+              <a
+                style={{
+                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginRight: spacing,
+                  whiteSpace: 'pre',
+                }}
+                href={linkUrl(metadata.discord)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span style={{ display: 'flex', marginRight: 4 }}>
+                  <Discord size={13} />
+                </span>
+                Discord
+              </a>
+            )}
+          </div>
           <RichNote note={metadata?.description} />
         </div>
 

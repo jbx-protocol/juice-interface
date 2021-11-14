@@ -17,7 +17,7 @@ import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { BallotState } from 'models/funding-cycle'
-import {  useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
@@ -38,9 +38,13 @@ export default function Rewards({
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenAddress, tokenSymbol, isPreviewMode, currentFC } = useContext(
-    ProjectContext,
-  )
+  const {
+    projectId,
+    tokenAddress,
+    tokenSymbol,
+    isPreviewMode,
+    currentFC,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -139,9 +143,14 @@ export default function Rewards({
       ? currentOverflow?.mul(parseWad(redeemAmount)).div(totalSupply)
       : BigNumber.from(0)
 
-
   const rewardAmount = useMemo(() => {
-    if (!bondingCurveRate || !totalSupply || !base || !redeemAmount || !currentOverflow)
+    if (
+      !bondingCurveRate ||
+      !totalSupply ||
+      !base ||
+      !redeemAmount ||
+      !currentOverflow
+    )
       return undefined
 
     if (totalSupply.sub(parseWad(redeemAmount)).isNegative()) {
@@ -303,7 +312,7 @@ export default function Rewards({
                           )}
                         </div>
                       )}
-                      {(iouBalance?.gt(0) || ticketsIssued === false) && (
+                      {iouBalance?.gt(0) && ticketsIssued && (
                         <div>
                           {formatWad(iouBalance ?? 0, { decimals: 0 })}{' '}
                           claimable{' '}

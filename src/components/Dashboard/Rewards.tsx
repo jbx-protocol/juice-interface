@@ -264,7 +264,7 @@ export default function Rewards({
               column={1}
             >
               <Descriptions.Item
-                label={<div style={{ width: 110 }}>Total supply</div>}
+                label="Total supply"
                 children={
                   <div
                     style={{
@@ -287,7 +287,7 @@ export default function Rewards({
                 }
               />
               <Descriptions.Item
-                label={<div style={{ width: 110 }}>Your balance</div>}
+                label="Your balance"
                 children={
                   <div
                     style={{
@@ -312,18 +312,25 @@ export default function Rewards({
                           )}
                         </div>
                       )}
-                      {iouBalance?.gt(0) && ticketsIssued && (
+                      {(iouBalance?.gt(0) || ticketsIssued === false) && (
                         <div>
-                          {formatWad(iouBalance ?? 0, { decimals: 0 })}{' '}
-                          claimable{' '}
-                          <Button
-                            onClick={() => setUnstakeModalVisible(true)}
-                            type="text"
-                            size="small"
-                            style={{ color: colors.text.action.primary }}
-                          >
-                            Claim
-                          </Button>
+                          {formatWad(iouBalance ?? 0, { decimals: 0 })}
+                          {ticketsIssued && (
+                            <>
+                              {' '}
+                              claimable{' '}
+                              <Button
+                                onClick={() => setUnstakeModalVisible(true)}
+                                type="text"
+                                size="small"
+                                style={{
+                                  color: colors.text.action.primary,
+                                }}
+                              >
+                                Claim
+                              </Button>
+                            </>
+                          )}
                         </div>
                       )}
 

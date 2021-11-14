@@ -42,27 +42,35 @@ export default function BudgetForm({
     setShowDurationInput(BigNumber.from(initialDuration).gt(0))
   }, [])
 
+  const maxIntStr = fromWad(constants.MaxUint256)
+
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>Funding</h1>
 
-      <p>
-        Setting a funding target allows you to redistribute surplus revenue to
-        your community. Whenever your project is earning more than your funding
-        target, the extra funds are locked in an overflow pool. Anyone who holds
-        your tokens can redeem them for a portion of funds from the overflow
-        pool. If left unclaimed, overflow serves as a runway for your project.
-      </p>
-
       <Form layout="vertical">
+        <div style={{ color: colors.text.primary }}>
+          <h4>Target</h4>
+          <p>
+            A funding target allows you to redistribute surplus revenue to your
+            community. When a project's balance is greater than its funding
+            target, the overflow (surplus funds) can by redeemed by the
+            community by burning their project tokens.
+          </p>
+          <p>
+            No more than the target can be distributed from the project in a
+            single funding cycle. Whenever a new funding cycle starts, any
+            overflow automatically goes towards that cycle's target amount,
+            acting as a project's runway.
+          </p>
+        </div>
+
         <Form.Item>
           <Space>
             <Switch
               checked={showFundingFields}
               onChange={checked => {
-                setTarget(
-                  checked ? '10000' : fromWad(constants.MaxUint256) || '0',
-                )
+                setTarget(checked ? '10000' : maxIntStr || '0')
                 setCurrency(1)
                 setShowFundingFields(checked)
               }}
@@ -71,10 +79,19 @@ export default function BudgetForm({
           </Space>
         </Form.Item>
 
+        {target == maxIntStr && (
+          <p style={{ color: colors.text.primary }}>
+            <span style={{ fontWeight: 600 }}>No target:</span> All funds can be
+            distributed by the project, and the project will have no overflow.
+            (This is the same as setting the target to infinity.)
+          </p>
+        )}
+
         {showFundingFields && (
           <FormItems.ProjectTarget
             formItemProps={{
               rules: [{ required: true }],
+              extra: null,
             }}
             value={target.toString()}
             onValueChange={val => setTarget(val || '0')}
@@ -84,6 +101,14 @@ export default function BudgetForm({
           />
         )}
 
+        {parseInt(target) == 0 && (
+          <p style={{ color: colors.text.primary }}>
+            <span style={{ fontWeight: 600 }}>Target is 0:</span> No funds can
+            be distributed by the project, and the project's entire balance will
+            be considered overflow.
+          </p>
+        )}
+
         <Divider
           style={{
             margin: '40px 0',
@@ -91,14 +116,18 @@ export default function BudgetForm({
           }}
         />
 
-        <p style={{ color: colors.text.primary, marginTop: 40 }}>
-          The duration of your funding cycle determines how often your target
-          amount can be withdrawn (if you've set one), how often your discount
-          rates compound, and how often configuration incentives can be updated.
-          If a duration isn't set, the project owner can pull money out whenever
-          they want up to their target amount, trigger retroactive discount
-          rates, and queue and reconfigure the funding cycle at any time.
-        </p>
+        <div>
+          <h4>Duration</h4>
+          <p style={{ color: colors.text.primary }}>
+            The duration of your funding cycle determines how often your target
+            amount can be withdrawn (if you've set one), how often your discount
+            rates compound, and how often configuration incentives can be
+            updated. If a duration isn't set, the project owner can pull money
+            out whenever they want up to their target amount, trigger
+            retroactive discount rates, and queue and reconfigure the funding
+            cycle at any time.
+          </p>
+        </div>
 
         <Form.Item>
           <Space>

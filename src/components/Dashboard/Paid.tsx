@@ -141,6 +141,14 @@ export default function Paid() {
           />
         </span>
         <span style={primaryTextStyle}>
+          {readNetwork.name === NetworkName.mainnet && projectId?.eq(36) && (
+            <span style={secondaryTextStyle}>
+              <CurrencySymbol currency={1} />
+              {formatWad(converter.wadToCurrency(earned, 1, 0), {
+                decimals: 2,
+              })}{' '}
+            </span>
+          )}
           <CurrencySymbol currency={0} />
           {earned?.lt(parseWad('1')) && earned.gt(0)
             ? '<1'
@@ -177,14 +185,6 @@ export default function Paid() {
             </span>
           ) : (
             ''
-          )}
-          {readNetwork.name === NetworkName.mainnet && projectId?.eq(36) && (
-            <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={1} />
-              {formatWad(converter.wadToCurrency(balance, 1, 0), {
-                decimals: 2,
-              })}{' '}
-            </span>
           )}
           {formatCurrencyAmount(balanceInCurrency)}
         </div>

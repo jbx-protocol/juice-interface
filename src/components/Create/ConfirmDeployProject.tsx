@@ -1,6 +1,7 @@
 import { Space, Statistic } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
+import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import {
@@ -26,7 +27,11 @@ export default function ConfirmDeployProject() {
   )
   return (
     <Space size="large" direction="vertical">
-      <h1 style={{ fontSize: '2rem' }}>Review your project</h1>
+      <h1 style={{ fontSize: '2rem' }}>Review project</h1>
+      <ProjectLogo
+        uri={editingProject?.metadata.logoUri}
+        name={editingProject?.metadata.name}
+      />
       <Space size="large">
         <Statistic
           title="Name"
@@ -36,8 +41,6 @@ export default function ConfirmDeployProject() {
           title="Handle"
           value={'@' + orEmpty(editingProject?.handle)}
         />
-      </Space>
-      <Space size="large">
         <Statistic
           title="Duration"
           value={
@@ -47,10 +50,17 @@ export default function ConfirmDeployProject() {
           }
           suffix={editingFC.duration.gt(0) ? 'days' : ''}
         />
-        {hasFundingTarget(editingFC) && (
-          <Statistic
-            title="Target"
-            valueRender={() => (
+      </Space>
+      <Statistic
+        title="Target"
+        valueRender={() =>
+          hasFundingTarget(editingFC) ? (
+            editingFC.target.eq(0) ? (
+              <span>
+                Target is 0: All funds will be considered overflow and can be
+                redeemed by burning project tokens.
+              </span>
+            ) : (
               <span>
                 <CurrencySymbol
                   currency={editingFC?.currency.toNumber() as CurrencyOption}
@@ -69,25 +79,28 @@ export default function ConfirmDeployProject() {
                   </span>
                 )}
               </span>
-            )}
-          />
-        )}
-      </Space>
-      <Space size="large">
-        <Statistic
-          title="Website"
-          value={orEmpty(editingProject?.metadata.infoUri)}
-        />
-        <Statistic
-          title="Pay button"
-          value={orEmpty(editingProject?.metadata.payButton)}
-        />
-      </Space>
+            )
+          ) : (
+            <span>
+              No funding target: The project will control how all funds are
+              distributed, and none can be redeemed by token holders.
+            </span>
+          )
+        }
+      />
+      <Statistic
+        title="Pay button"
+        value={orEmpty(editingProject?.metadata.payButton)}
+      />
       <Statistic
         title="Pay disclosure"
         value={orEmpty(editingProject?.metadata.payDisclosure)}
       />
       <Space size="large">
+        <Statistic
+          title="Website"
+          value={orEmpty(editingProject?.metadata.infoUri)}
+        />
         <Statistic
           title="Twitter"
           value={
@@ -107,7 +120,7 @@ export default function ConfirmDeployProject() {
           value={fromPerbicent(editingFC?.reserved)}
           suffix="%"
         />
-        {editingFC && isRecurring(editingFC) && hasFundingTarget(editingFC) && (
+        {editingFC && isRecurring(editingFC) && (
           <Statistic
             title="Discount rate"
             value={fromPermille(editingFC?.discountRate)}

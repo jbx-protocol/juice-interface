@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Descriptions, Form, Input, Modal, Space } from 'antd'
+import { Descriptions, Form, Input, Modal, Space, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
@@ -11,6 +11,7 @@ import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
+import { constants } from 'ethers'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -24,12 +25,17 @@ export default function ConfirmPayOwnerModal({
   onCancel?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>()
+  const [preferUnstaked, setPreferUnstaked] = useState<boolean>(false)
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, currentFC, projectId, metadata } = useContext(
-    ProjectContext,
-  )
+  const {
+    tokenSymbol,
+    tokenAddress,
+    currentFC,
+    projectId,
+    metadata,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -49,7 +55,7 @@ export default function ConfirmPayOwnerModal({
         projectId.toHexString(),
         userAddress,
         form.getFieldValue('note') || '',
-        false,
+        preferUnstaked,
       ],
       {
         value: weiAmount?.toHexString(),
@@ -63,6 +69,8 @@ export default function ConfirmPayOwnerModal({
 
   const receivedTickets = weightedRate(currentFC, weiAmount, 'payer')
   const ownerTickets = weightedRate(currentFC, weiAmount, 'reserved')
+
+  const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
   if (!metadata) return null
 
@@ -133,6 +141,21 @@ export default function ConfirmPayOwnerModal({
               }}
             />
           </Form.Item>
+          {hasIssuedTokens && (
+            <Form.Item label="Receive ERC20">
+              <Space>
+                <Switch
+                  checked={preferUnstaked}
+                  onChange={val => setPreferUnstaked(val)}
+                />
+                <label>
+                  {preferUnstaked
+                    ? 'Receive tokens in your wallet as ERC20'
+                    : 'Receive a balance of tokens tracked in the Juicebox contract, that can be claimed later as ERC20'}
+                </label>
+              </Space>
+            </Form.Item>
+          )}
         </Form>
       </Space>
     </Modal>

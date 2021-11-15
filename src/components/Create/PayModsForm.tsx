@@ -29,7 +29,7 @@ export default function PayModsForm({
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <div>
-        <h1>Spending</h1>
+        <h1>Distribution</h1>
 
         <p>
           Payouts let you commit portions of every withdrawal to other Ethereum

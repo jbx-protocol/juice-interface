@@ -73,9 +73,9 @@ export default function RulesForm({
 
   return (
     <Space direction="vertical" size="large">
-      <h1>Rules</h1>
+      <h1>Reconfiguration</h1>
 
-      <p>Restrict how this project's funding cycles can be reconfigured.</p>
+      <p>Rules for how this project's funding cycles can be reconfigured.</p>
 
       <Space direction="vertical">
         {ballotStrategies.map((s, i) =>

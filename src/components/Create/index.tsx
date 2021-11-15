@@ -407,7 +407,7 @@ export default function Create() {
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: 'Funding Cycles',
+              title: 'Funding',
               description: 'How your project will earn and manage funds.',
               callback: () => setBudgetFormModalVisible(true),
             },

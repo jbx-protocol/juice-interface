@@ -118,15 +118,19 @@ export default function BudgetForm({
 
         <div>
           <h4>Duration</h4>
-          <p style={{ color: colors.text.primary }}>
-            The duration of your funding cycle determines how often your target
-            amount can be withdrawn (if you've set one), how often your discount
-            rates compound, and how often configuration incentives can be
-            updated. If a duration isn't set, the project owner can pull money
-            out whenever they want up to their target amount, trigger
-            retroactive discount rates, and queue and reconfigure the funding
-            cycle at any time.
-          </p>
+          <div style={{ color: colors.text.primary }}>
+            <p>
+              This duration determines how long your funding cycles will last.
+              No more than the target amount (if a target has been set) can be
+              distributed by the project in a single funding cycle, and funding
+              reconfigurations won't take effect until the start of the next
+              funding cycle.
+            </p>
+            <p>
+              If a duration isn't set, funds can be distributed and the funding
+              cycle reconfigured at any point, as often as needed.
+            </p>
+          </div>
         </div>
 
         <Form.Item>

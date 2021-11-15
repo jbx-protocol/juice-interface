@@ -114,7 +114,7 @@ export default function Spending({
         {currentFC.target.gt(0) && (
           <div>
             <TooltipLabel
-              label={<h4 style={{ display: 'inline-block' }}>Spending</h4>}
+              label={<h4 style={{ display: 'inline-block' }}>Distribution</h4>}
               tip="Available funds are distributed according to any payouts below."
             />
             <PayoutModsList

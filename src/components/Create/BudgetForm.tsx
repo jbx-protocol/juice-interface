@@ -1,4 +1,4 @@
-import { Button, Form, Space, Switch, Divider } from 'antd'
+import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants } from 'ethers'
@@ -101,11 +101,11 @@ export default function BudgetForm({
           />
         )}
 
-        {parseInt(target) == 0 && (
+        {showFundingFields && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>Target is 0:</span> No funds can
-            be distributed by the project, and the project's entire balance will
-            be considered overflow.
+            <span style={{ fontWeight: 600 }}>If target is 0:</span> No funds
+            can be distributed by the project, and the project's entire balance
+            will be considered overflow.
           </p>
         )}
 

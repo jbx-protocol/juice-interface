@@ -258,10 +258,17 @@ export default function Create() {
   }
 
   const buildSteps = useCallback(
-    (steps: { title: string; callback: VoidFunction }[]) => (
+    (
+      steps: {
+        title: string
+        description?: string
+        callback: VoidFunction
+      }[],
+    ) => (
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {steps.map((step, i) => {
           const active = currentStep === i
+          const viewed = viewedSteps.includes(i)
 
           return (
             <div
@@ -270,12 +277,16 @@ export default function Create() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                // textTransform: 'uppercase',
                 padding: 15,
                 borderRadius: radii.sm,
-                border: active
-                  ? '3px solid ' + colors.stroke.action.primary
+                fontWeight: viewed ? 500 : 600,
+                color: viewed
+                  ? colors.text.primary
+                  : colors.text.action.primary,
+                border: viewed
+                  ? '1px solid ' + colors.stroke.secondary
                   : '1px solid' + colors.stroke.action.primary,
+                borderLeftWidth: active ? 10 : 1,
               }}
               onClick={() => {
                 if (currentStep !== undefined) return
@@ -285,24 +296,37 @@ export default function Create() {
             >
               <div
                 style={{
-                  fontWeight: active ? 600 : 500,
-                  color: colors.text.primary,
+                  marginRight: 15,
                 }}
               >
-                {step.title}
+                {i + 1}
               </div>
               <div
                 style={{
-                  color: active
-                    ? colors.icon.primary
-                    : colors.icon.action.primary,
+                  marginRight: 10,
+                  flex: 1,
                 }}
               >
-                {viewedSteps.includes(i) ? (
-                  <CheckCircleFilled />
-                ) : (
-                  <CaretRightFilled />
-                )}
+                <div>{step.title}</div>
+                <div
+                  style={{
+                    color: colors.text.secondary,
+                    fontWeight: 400,
+                    fontSize: '0.75rem',
+                  }}
+                >
+                  {step.description}
+                </div>
+              </div>
+              <div
+                style={{
+                  alignSelf: 'center',
+                  color: viewed
+                    ? colors.text.secondary
+                    : colors.text.action.primary,
+                }}
+              >
+                {viewed ? <CheckCircleFilled /> : <CaretRightFilled />}
               </div>
             </div>
           )
@@ -316,12 +340,13 @@ export default function Create() {
         <Button
           onClick={() => setDeployProjectModalVisible(true)}
           type="primary"
+          block
           disabled={
             !projectForm.getFieldValue('name') ||
             !projectForm.getFieldValue('handle')
           }
         >
-          Deploy 🚀
+          Review & Deploy
         </Button>
       </Space>
     ),
@@ -366,7 +391,7 @@ export default function Create() {
       <Row style={{ marginTop: 40 }}>
         <Col
           xs={24}
-          lg={8}
+          md={10}
           style={{
             marginBottom: spacing * 2,
             paddingLeft: spacing,
@@ -377,33 +402,39 @@ export default function Create() {
 
           {buildSteps([
             {
-              title: 'Identity',
+              title: 'Appearance',
+              description: 'Project name, handle, links, and other details.',
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: 'Funding',
+              title: 'Funding Cycles',
+              description: 'How your project will earn and manage funds.',
               callback: () => setBudgetFormModalVisible(true),
             },
             {
-              title: 'Spending',
+              title: 'Distribution',
+              description: 'How your project will distribute funds.',
               callback: () => setPayModsFormModalVisible(true),
             },
             {
-              title: 'Reserved tokens',
+              title: 'Reserved Tokens',
+              description: 'Reward specific community members with tokens.',
               callback: () => setTicketingFormModalVisible(true),
             },
             {
-              title: 'Rules',
+              title: 'Reconfiguration',
+              description: 'Rules for how changes can be made to your project.',
               callback: () => setRulesFormModalVisible(true),
             },
             {
               title: 'Incentives',
+              description: 'Adjust incentivizes for paying your project.',
               callback: () => setIncentivesFormModalVisible(true),
             },
           ])}
         </Col>
 
-        <Col xs={24} lg={16}>
+        <Col xs={24} md={14}>
           <h3
             style={{
               marginTop: 5,
@@ -423,7 +454,7 @@ export default function Create() {
               borderLeft: '1px solid ' + colors.stroke.tertiary,
             }}
           >
-            <Project showCurrentDetail={true} />
+            <Project showCurrentDetail column />
           </div>
         </Col>
 

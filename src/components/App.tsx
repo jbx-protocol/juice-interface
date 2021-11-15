@@ -16,7 +16,6 @@ function App() {
   >()
 
   const { signerNetwork } = useContext(NetworkContext)
-  const [isInfuraDown, setIsInfuraDown] = useState(false);
 
   const networkName = readNetwork.name
 
@@ -24,20 +23,6 @@ function App() {
     NetworkName.mainnet,
     NetworkName.rinkeby,
   ]
-
-  const testInfura = async () => {
-    try {
-      let _ = await readProvider.getGasPrice();
-      console.log('Infura is healthy');
-    } catch (e) {
-      setIsInfuraDown(true);
-      console.log('Inufura is down');
-    }
-  }
-
-  useEffect(() => {
-    testInfura();
-  }, []);
 
   useLayoutEffect(() => {
     if (!signerNetwork) return
@@ -55,11 +40,12 @@ function App() {
           background: 'transparent',
         }}
       >
-        {isInfuraDown && <Alert
-          message="⚠️ We are experiencing rate limiting issues from inufra.io. Please connect a wallet to proceed as normal, for the time being. ⚠️"
+        {/* TODO(odd-amphora): Remove. */}
+        <Alert
+          message="⚠️ We are experiencing rate limiting issues. If you are using Metamask, please connect a wallet to proceed as normal. Sorry for the inconvenience – we will be back shortly! ⚠️"
           type="error"
           style={{ textAlign: "center", fontWeight: 450 }}
-        />}
+        />
         <Navbar />
         <Content>
           <Router />

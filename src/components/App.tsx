@@ -1,9 +1,11 @@
 import { Layout, Modal, Space } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
+import { Alert } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { readProvider } from 'constants/readProvider'
 
 import Navbar from './Navbar'
 import Router from './Router'
@@ -14,6 +16,7 @@ function App() {
   >()
 
   const { signerNetwork } = useContext(NetworkContext)
+  const [isInfuraDown, setIsInfuraDown] = useState(false);
 
   const networkName = readNetwork.name
 
@@ -21,6 +24,20 @@ function App() {
     NetworkName.mainnet,
     NetworkName.rinkeby,
   ]
+
+  const testInfura = async () => {
+    try {
+      let _ = await readProvider.getGasPrice();
+      console.log('Infura is healthy');
+    } catch (e) {
+      setIsInfuraDown(true);
+      console.log('Inufura is down');
+    }
+  }
+
+  useEffect(() => {
+    testInfura();
+  }, []);
 
   useLayoutEffect(() => {
     if (!signerNetwork) return
@@ -38,6 +55,11 @@ function App() {
           background: 'transparent',
         }}
       >
+        {isInfuraDown && <Alert
+          message="⚠️ We are experiencing rate limiting issues from inufra.io. Please connect a wallet to proceed as normal, for the time being. ⚠️"
+          type="error"
+          style={{ textAlign: "center", fontWeight: 450 }}
+        />}
         <Navbar />
         <Content>
           <Router />

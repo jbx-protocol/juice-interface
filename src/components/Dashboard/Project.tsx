@@ -19,9 +19,11 @@ import Rewards from './Rewards'
 export default function Project({
   style,
   showCurrentDetail,
+  column,
 }: {
   style?: CSSProperties
   showCurrentDetail?: boolean
+  column?: boolean
 }) {
   const { projectId } = useContext(ProjectContext)
 
@@ -69,11 +71,11 @@ export default function Project({
       <ProjectHeader />
 
       <Row gutter={gutter} align="bottom">
-        <Col xs={24} md={12} style={{ marginTop: gutter }}>
+        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <Paid />
         </Col>
 
-        <Col xs={24} md={12} style={{ marginTop: gutter }}>
+        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
             {canPrintPreminedTickets &&
               hasPrintPreminePermission &&
@@ -84,7 +86,7 @@ export default function Project({
       </Row>
 
       <Row gutter={gutter} style={{ paddingBottom: gutter }}>
-        <Col xs={24} md={12} style={{ marginTop: gutter }}>
+        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           {projectId.gt(0) && (
             <div style={{ marginBottom: gutter }}>
               <BalanceTimeline height={240} />
@@ -98,7 +100,7 @@ export default function Project({
           <FundingCycles showCurrentDetail={showCurrentDetail} />
         </Col>
 
-        <Col xs={24} md={12} style={{ marginTop: gutter }}>
+        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <ProjectActivity />
         </Col>
       </Row>

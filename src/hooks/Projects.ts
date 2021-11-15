@@ -9,7 +9,6 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 
 import { querySubgraph } from '../utils/graph'
-import { readNetwork } from 'constants/networks';
 
 export function useProjects({
   pageNumber,

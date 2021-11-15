@@ -1,9 +1,8 @@
-import { Button, Form, FormInstance, Input, Space } from 'antd'
+import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
-import ProjectPayDisclosure from '../shared/formItems/ProjectPayDisclosure'
 
 export type ProjectFormFields = {
   name: string

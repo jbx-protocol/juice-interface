@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -32,7 +31,6 @@ export default function Rewards({
 }: {
   totalOverflow: BigNumber | undefined
 }) {
-  const [stakeModalVisible, setStakeModalVisible] = useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [participantsModalVisible, setParticipantsModalVisible] = useState<
     boolean
@@ -82,7 +80,7 @@ export default function Rewards({
             : undefined,
       },
     ],
-    [projectId],
+    [projectId, userAddress],
   )
 
   const ticketContract = useErc20Contract(tokenAddress)
@@ -94,6 +92,7 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
+
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
@@ -196,7 +195,7 @@ export default function Rewards({
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, userAddress],
     ),
   })
 

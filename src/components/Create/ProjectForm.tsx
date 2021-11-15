@@ -27,7 +27,7 @@ export default function ProjectForm({
 
   return (
     <Space direction="vertical" size="large">
-      <h1>Identity</h1>
+      <h1>Appearance</h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectName

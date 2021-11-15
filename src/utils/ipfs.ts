@@ -4,6 +4,7 @@ import { ProjectMetadataV3 } from 'models/project-metadata'
 
 const pinata_api_key = process.env.REACT_APP_PINATA_PINNER_KEY
 const pinata_secret_api_key = process.env.REACT_APP_PINATA_PINNER_SECRET
+const ipfs_gateway = process.env.REACT_APP_IPFS_GATEWAY
 
 type IpfsCallOptions = {
   metadata?: Record<string, any>
@@ -160,8 +161,7 @@ export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
 export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
-export const ipfsCidUrl = (hash: string) =>
-  'https://jbx.mypinata.cloud/ipfs/' + hash
+export const ipfsCidUrl = (hash: string) => ipfs_gateway + hash
 
 export const cidFromUrl = (url: string | undefined) => url?.split('/').pop()
 

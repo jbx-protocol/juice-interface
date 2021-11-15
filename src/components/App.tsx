@@ -1,11 +1,9 @@
 import { Layout, Modal, Space } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { Alert } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
-import { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { readProvider } from 'constants/readProvider'
+import { useContext, useLayoutEffect, useState } from 'react'
 
 import Navbar from './Navbar'
 import Router from './Router'
@@ -40,12 +38,6 @@ function App() {
           background: 'transparent',
         }}
       >
-        {/* TODO(odd-amphora): Remove. */}
-        <Alert
-          message="⚠️ We are experiencing rate limiting issues. If you are using Metamask, please connect a wallet to proceed as normal. Sorry for the inconvenience – we will be back shortly! ⚠️"
-          type="error"
-          style={{ textAlign: "center", fontWeight: 450 }}
-        />
         <Navbar />
         <Content>
           <Router />

@@ -124,6 +124,9 @@ export default function Paid() {
       </>
     ) : null
 
+  const isConstitutionDAO =
+    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
+
   return (
     <div>
       <div
@@ -141,7 +144,7 @@ export default function Paid() {
           />
         </span>
         <span style={primaryTextStyle}>
-          {readNetwork.name === NetworkName.mainnet && projectId?.eq(36) && (
+          {isConstitutionDAO && (
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={1} />
               {formatWad(converter.wadToCurrency(earned, 1, 0), {
@@ -149,10 +152,18 @@ export default function Paid() {
               })}{' '}
             </span>
           )}
-          <CurrencySymbol currency={0} />
-          {earned?.lt(parseWad('1')) && earned.gt(0)
-            ? '<1'
-            : formatWad(earned, { decimals: 0 })}
+          <span
+            style={{
+              color: isConstitutionDAO
+                ? colors.text.brand.primary
+                : colors.text.primary,
+            }}
+          >
+            <CurrencySymbol currency={0} />
+            {earned?.lt(parseWad('1')) && earned.gt(0)
+              ? '<1'
+              : formatWad(earned, { decimals: 0 })}
+          </span>
         </span>
       </div>
 
@@ -174,7 +185,9 @@ export default function Paid() {
         <div
           style={{
             ...primaryTextStyle,
-            color: colors.text.brand.primary,
+            color: isConstitutionDAO
+              ? colors.text.primary
+              : colors.text.brand.primary,
             marginLeft: 10,
           }}
         >

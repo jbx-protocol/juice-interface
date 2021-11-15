@@ -10,6 +10,7 @@ const projectTypesByNetwork: Partial<Record<
     7: 'bidpool', // @sharkdao
     28: 'bidpool', // @svs002
     31: 'bidpool', // @defidao
+    36: 'bidpool', // @constitutionDAO
   },
   [NetworkName.rinkeby]: {
     12: 'bidpool', // @rinkebydao

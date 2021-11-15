@@ -24,6 +24,8 @@ import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/network-name'
 
 export default function Rewards({
   totalOverflow,
@@ -230,6 +232,9 @@ export default function Rewards({
     )
   }
 
+  const isConstitutionDAO =
+    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
+
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   const ticketsIssued = tokenAddress
@@ -323,8 +328,11 @@ export default function Rewards({
                                 onClick={() => setUnstakeModalVisible(true)}
                                 type="text"
                                 size="small"
+                                disabled={isConstitutionDAO}
                                 style={{
-                                  color: colors.text.action.primary,
+                                  color: isConstitutionDAO
+                                    ? colors.text.disabled
+                                    : colors.text.action.primary,
                                 }}
                               >
                                 Claim

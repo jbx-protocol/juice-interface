@@ -55,6 +55,8 @@ export class CurrencyUtils {
     if (targetCurrency === sourceCurrency) return BigNumber.from(amount)
     if (targetCurrency === 1) return parseWad(this.weiToUsd(amount)?.toString())
     if (targetCurrency === 0 && this.usdPerEth !== undefined)
-      return BigNumber.from(amount).div(this.usdPerEth)
+      return BigNumber.from(amount)
+        .div(this.usdPerEth * 100)
+        .mul(100)
   }
 }

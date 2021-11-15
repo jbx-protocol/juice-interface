@@ -17,6 +17,8 @@ import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/network-name'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -175,6 +177,14 @@ export default function Paid() {
             </span>
           ) : (
             ''
+          )}
+          {readNetwork.name === NetworkName.mainnet && projectId?.eq(36) && (
+            <span style={secondaryTextStyle}>
+              <CurrencySymbol currency={1} />
+              {formatWad(converter.wadToCurrency(balance, 1, 0), {
+                decimals: 2,
+              })}{' '}
+            </span>
           )}
           {formatCurrencyAmount(balanceInCurrency)}
         </div>

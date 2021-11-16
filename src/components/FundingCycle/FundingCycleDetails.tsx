@@ -102,9 +102,8 @@ export default function FundingCycleDetails({
             label={
               <TooltipLabel
                 label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
-                tip={`${
-                  tokenSymbol ?? 'Tokens'
-                } received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
+                tip={`${tokenSymbol ??
+                  'Tokens'} received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
               />
             }
           >
@@ -130,25 +129,23 @@ export default function FundingCycleDetails({
         )}
       </Descriptions>
 
-      {fundingCycle.duration.gt(0) && (
-        <div>
-          <span style={{ fontWeight: 600, color: colors.text.secondary }}>
-            <TooltipLabel
-              label="Reconfiguration strategy"
-              tip="Rules for determining how funding cycles can be reconfigured."
-            />
-            :
-          </span>{' '}
-          {getBallotStrategyByAddress(fundingCycle.ballot).name}
-          <div style={{ color: colors.text.secondary }}>
-            <div style={{ fontSize: '0.7rem' }}>
-              Address: {getBallotStrategyByAddress(fundingCycle.ballot).address}
-              <br />
-              {getBallotStrategyByAddress(fundingCycle.ballot).description}
-            </div>
+      <div>
+        <span style={{ fontWeight: 600, color: colors.text.secondary }}>
+          <TooltipLabel
+            label="Reconfiguration strategy"
+            tip="Rules for determining how funding cycles can be reconfigured."
+          />
+          :
+        </span>{' '}
+        {getBallotStrategyByAddress(fundingCycle.ballot).name}
+        <div style={{ color: colors.text.secondary }}>
+          <div style={{ fontSize: '0.7rem' }}>
+            Address: {getBallotStrategyByAddress(fundingCycle.ballot).address}
+            <br />
+            {getBallotStrategyByAddress(fundingCycle.ballot).description}
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

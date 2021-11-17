@@ -17,6 +17,7 @@ export default function ProjectBondingCurveRate({
   value,
   formItemProps,
   onChange,
+  disabled,
 }: {
   value: string | undefined
   onChange: (val?: number) => void
@@ -181,6 +182,7 @@ export default function ProjectBondingCurveRate({
         max={100}
         step={0.5}
         sliderValue={parseFloat(value ?? '0')}
+        disabled={disabled}
         onChange={val => {
           graphCurve(val)
           onChange(val)

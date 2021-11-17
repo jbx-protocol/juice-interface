@@ -188,7 +188,7 @@ export default function Create() {
       target: targetWithFee,
       currency: hasFundingTarget(editingFC) ? editingFC.currency.toNumber() : 0,
       duration: editingFC.duration.toNumber(),
-      discountRate: hasFundingTarget(editingFC)
+      discountRate: editingFC.duration.gt(0)
         ? editingFC.discountRate.toNumber()
         : 0,
       cycleLimit: editingFC.cycleLimit.toNumber(),
@@ -569,9 +569,22 @@ export default function Create() {
           }}
         >
           <IncentivesForm
-            initialDiscountRate={fromPermille(editingFC.discountRate)}
+            initialDiscountRate={
+              editingFC.duration.eq(0)
+                ? '0'
+                : fromPermille(editingFC.discountRate)
+            }
             initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
-            showBondingCurve={hasFundingTarget(editingFC)}
+            disableDiscountRate={
+              editingFC.duration.eq(0)
+                ? 'Discount rate disabled while funding cycle duration is 0.'
+                : undefined
+            }
+            disableBondingCurve={
+              !hasFundingTarget(editingFC)
+                ? 'Bonding curve disabled while no funding target is set.'
+                : undefined
+            }
             onSave={async (discountRate: string, bondingCurveRate: string) => {
               viewedCurrentStep()
               await ticketingForm.validateFields()

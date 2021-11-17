@@ -10,6 +10,7 @@ import { ContractName } from 'models/contract-name'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import FormattedAddress from 'components/shared/FormattedAddress'
 
 export default function ConfirmUnstakeTokensModal({
   visible,
@@ -22,7 +23,7 @@ export default function ConfirmUnstakeTokensModal({
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const { tokenSymbol, projectId } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
 
   const iouBalance = useContractReader<BigNumber>({
     contract: ContractName.TicketBooth,
@@ -78,14 +79,14 @@ export default function ConfirmUnstakeTokensModal({
       <Space direction="vertical" size="large">
         <div>
           <p>
-            Claiming {tokenSymbol} will convert your balance to ERC20 tokens and
-            mint them to your wallet.
+            Claiming {tokenSymbol} tokens will convert your balance to ERC20
+            tokens and mint them to your wallet.
           </p>
           <p style={{ fontWeight: 600 }}>
             If you're unsure if you need to claim, you probably don't.
           </p>
           <p>
-            You can still redeem your {tokenSymbol} for overflow without
+            You can still redeem your {tokenSymbol} tokens for overflow without
             claiming them, and you can transfer unclaimed tokens to another
             address from the Tools menu, which can be accessed from the wrench
             icon in the upper right hand corner of this project.
@@ -93,7 +94,14 @@ export default function ConfirmUnstakeTokensModal({
         </div>
 
         <div>
-          <label>Unclaimed {tokenSymbol}:</label> {formatWad(iouBalance)}
+          <div>
+            <label>Unclaimed {tokenSymbol} tokens:</label>{' '}
+            {formatWad(iouBalance)}
+          </div>
+          <div>
+            <label>{tokenSymbol} ERC20 address:</label>{' '}
+            <FormattedAddress address={tokenAddress} />
+          </div>
         </div>
 
         <Form layout="vertical">

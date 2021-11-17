@@ -40,7 +40,7 @@ export default function RichNote({ note }: { note: string | undefined }) {
   return (
     <div style={{ marginTop: 5 }}>
       <div
-        style={{ color: colors.text.secondary }}
+        style={{ color: colors.text.secondary, overflowWrap: 'break-word' }}
         dangerouslySetInnerHTML={{
           __html: Autolinker.link(_note, {
             sanitizeHtml: true,

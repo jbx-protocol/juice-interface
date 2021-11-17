@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import ConfirmStakeTokensModal from 'components/modals/ConfirmStakeTokensModal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
@@ -24,8 +23,6 @@ import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
 
 export default function Rewards({
   totalOverflow,
@@ -232,9 +229,6 @@ export default function Rewards({
     )
   }
 
-  const isConstitutionDAO =
-    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
-
   const redeemDisabled = !totalOverflow || totalOverflow.eq(0)
 
   const ticketsIssued = tokenAddress
@@ -328,11 +322,8 @@ export default function Rewards({
                                 onClick={() => setUnstakeModalVisible(true)}
                                 type="text"
                                 size="small"
-                                disabled={isConstitutionDAO}
                                 style={{
-                                  color: isConstitutionDAO
-                                    ? colors.text.disabled
-                                    : colors.text.action.primary,
+                                  color: colors.text.action.primary,
                                 }}
                               >
                                 Claim

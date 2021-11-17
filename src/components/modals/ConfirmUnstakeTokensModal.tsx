@@ -87,8 +87,8 @@ export default function ConfirmUnstakeTokensModal({
           <p>
             You can still redeem your {tokenSymbol} for overflow without
             claiming them, and you can transfer unclaimed tokens to another
-            address from the Tools menu, which can be accessed from the little
-            wrench icon in the upper right hand corner of this project.
+            address from the Tools menu, which can be accessed from the wrench
+            icon in the upper right hand corner of this project.
           </p>
         </div>
 

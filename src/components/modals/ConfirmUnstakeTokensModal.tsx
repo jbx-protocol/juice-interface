@@ -37,7 +37,14 @@ export default function ConfirmUnstakeTokensModal({
   }, [iouBalance])
 
   function unstake() {
-    if (!transactor || !contracts || !userAddress || !projectId) return
+    if (
+      !transactor ||
+      !contracts ||
+      !userAddress ||
+      !projectId ||
+      parseWad(unstakeAmount).eq(0) // Disable claiming 0 tokens
+    )
+      return
 
     setLoading(true)
 
@@ -63,6 +70,7 @@ export default function ConfirmUnstakeTokensModal({
       onOk={unstake}
       okText="Claim"
       confirmLoading={loading}
+      okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}
       width={600}
       centered={true}

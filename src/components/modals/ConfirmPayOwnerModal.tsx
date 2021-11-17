@@ -1,17 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Descriptions, Form, Input, Modal, Space, Switch } from 'antd'
+import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ImageUploader from 'components/shared/inputs/ImageUploader'
+import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
-import { NetworkContext } from 'contexts/networkContext'
+import { constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
-import { constants } from 'ethers'
 
 export default function ConfirmPayOwnerModal({
   visible,
@@ -143,15 +143,17 @@ export default function ConfirmPayOwnerModal({
           </Form.Item>
           {hasIssuedTokens && (
             <Form.Item label="Receive ERC20">
-              <Space>
-                <Switch
+              <Space align="start">
+                <Checkbox
+                  style={{ padding: 20 }}
                   checked={preferUnstaked}
-                  onChange={val => setPreferUnstaked(val)}
+                  onChange={e => setPreferUnstaked(e.target.checked)}
                 />
-                <label>
-                  {preferUnstaked
-                    ? 'Receive tokens in your wallet as ERC20'
-                    : 'Receive a balance of tokens tracked in the Juicebox contract, that can be claimed later as ERC20'}
+                <label htmlFor="preferUnstaked">
+                  Check this to mint {tokenSymbol} ERC20 to your wallet. Leave
+                  unchecked to have your token balance tracked by Juicebox,
+                  saving gas on this transaction. You can always claim your
+                  ERC20 tokens later.
                 </label>
               </Space>
             </Form.Item>

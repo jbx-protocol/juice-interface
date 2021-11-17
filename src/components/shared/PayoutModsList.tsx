@@ -30,7 +30,7 @@ export default function PayoutModsList({
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts } = useContext(UserContext)
+  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -194,7 +194,7 @@ export default function PayoutModsList({
             onModsChanged={setEditingMods}
             target={fromWad(fundingCycle.target)}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
-            fee={fundingCycle.fee}
+            fee={adminFeePercent}
           />
         </Modal>
       ) : null}

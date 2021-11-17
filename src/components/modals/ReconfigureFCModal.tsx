@@ -489,8 +489,11 @@ export default function ReconfigureFCModal({
         <IncentivesForm
           initialDiscountRate={fromPermille(editingFC.discountRate)}
           initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
-          showBondingCurve={hasFundingTarget(editingFC)}
-          useAdvanced
+          disableBondingCurve={
+            !hasFundingTarget(editingFC)
+              ? 'Bonding curve disabled while no funding target is set.'
+              : undefined
+          }
           onSave={async (discountRate: string, bondingCurveRate: string) => {
             await ticketingForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)

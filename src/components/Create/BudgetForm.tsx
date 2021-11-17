@@ -127,8 +127,8 @@ export default function BudgetForm({
               funding cycle.
             </p>
             <p>
-              If a duration isn't set, funds can be distributed and the funding
-              cycle reconfigured at any point, as often as needed.
+              If a duration isn't set, the funding cycle can be reconfigured
+              on-demand, which will start the next funding cycle.
             </p>
           </div>
         </div>

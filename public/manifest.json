@@ -3,7 +3,6 @@
   "name": "Juicebox",
   "description": "Community funding for people and projects.",
   "iconPath": "android-chrome-144x144.png",
-
   "icons": [
     {
       "src": "favicon.ico",

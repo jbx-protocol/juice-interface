@@ -9,6 +9,7 @@ export default function ProjectDiscountRate({
   formItemProps,
   value,
   onChange,
+  disabled,
 }: {
   value: string | undefined
   onChange: (val?: number) => void
@@ -26,6 +27,7 @@ export default function ProjectDiscountRate({
         suffix="%"
         onChange={onChange}
         step={0.1}
+        disabled={disabled}
       />
     </Form.Item>
   )

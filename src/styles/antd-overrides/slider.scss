@@ -30,3 +30,37 @@
     box-shadow: 0 0 0 5px var(--background-action-secondary);
   }
 }
+
+.ant-slider-disabled {
+  .ant-slider-rail {
+    background: var(--background-disabled);
+  }
+  .ant-slider-track {
+    background: var(--background-disabled);
+  }
+
+  .ant-slider-handle {
+    background: var(--background-disabled);
+    border-color: var(--stroke-disabled);
+  }
+
+  &:hover {
+    .ant-slider-rail {
+      background: var(--background-disabled);
+      opacity: 0.7;
+    }
+    .ant-slider-track {
+      background: var(--background-disabled);
+    }
+
+    .ant-slider-handle {
+      background: var(--background-disabled) !important;
+      border-color: transparent !important;
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+
+  .ant-slider-handle:focus {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}

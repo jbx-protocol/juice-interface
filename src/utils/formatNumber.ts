@@ -6,6 +6,7 @@ type FormatConfig = {
   thousandsSeparator?: string
   decimalSeparator?: string
   decimals?: number
+  padEnd?: boolean
 }
 
 const wadPrecision = 18
@@ -97,7 +98,7 @@ export const formattedNum = (
 
     const postDecimal = decimal
       .substr(0, config?.decimals ?? 18)
-      .padEnd(config?.decimals ?? 0, '0')
+      .padEnd(config?.padEnd ? config?.decimals ?? 0 : 0, '0')
 
     if (!postDecimal || config?.decimals === 0) return preDecimal
 

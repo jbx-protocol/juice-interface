@@ -87,15 +87,15 @@ export default function ConfirmUnstakeTokensModal({
           </p>
           <p>
             You can still redeem your {tokenSymbol} tokens for overflow without
-            claiming them, and you can transfer unclaimed tokens to another
-            address from the Tools menu, which can be accessed from the wrench
-            icon in the upper right hand corner of this project.
+            claiming them, and you can transfer your unclaimed {tokenSymbol}{' '}
+            tokens to another address from the Tools menu, which can be accessed
+            from the wrench icon in the upper right hand corner of this project.
           </p>
         </div>
 
         <div>
           <div>
-            <label>Unclaimed {tokenSymbol} tokens:</label>{' '}
+            <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
             {formatWad(iouBalance)}
           </div>
           <div>
@@ -105,7 +105,7 @@ export default function ConfirmUnstakeTokensModal({
         </div>
 
         <Form layout="vertical">
-          <Form.Item label="Amount of tokens to claim">
+          <Form.Item label="Amount of ERC20 tokens to claim">
             <FormattedNumberInput
               min={0}
               max={parseFloat(fromWad(iouBalance))}

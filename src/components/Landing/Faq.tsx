@@ -19,7 +19,7 @@ const QAs: {
   {
     q: `What does Juicebox cost?`,
     a: [
-      `Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs at ${window.location.href}juicebox.`,
+      `Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs at https://juicebox.money/#/p/juicebox.`,
       `5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time.`,
     ],
   },

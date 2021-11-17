@@ -1,7 +1,7 @@
 import {
+  DownloadOutlined,
   SortAscendingOutlined,
   SortDescendingOutlined,
-  DownloadOutlined,
 } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
@@ -119,55 +119,76 @@ export default function ParticipantsModal({
       <span>No payments</span>
     )
 
-  const download = () =>
-    querySubgraph(
-      {
-        entity: 'participant',
-        keys: ['wallet', 'totalPaid', 'lastPaidTimestamp', 'tokenBalance'],
-        first: 1000,
-        orderBy: sortPayerReports,
-        orderDirection: sortPayerReportsDirection,
-        where: projectId
-          ? {
-              key: 'project',
-              value: projectId.toString(),
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
+  const download = () => {
+    const pageSize = 1000
+    let pageNumber = 0
 
-        const rows = [
-          ['Wallet', 'Token balance', 'Total ETH paid', 'Last paid timestamp'],
-          ...res.participants.map(e => {
+    const rows = [
+      ['Wallet', 'Token balance', 'Total ETH paid', 'Last paid timestamp'], // CSV header row
+    ]
+
+    function query() {
+      querySubgraph(
+        {
+          entity: 'participant',
+          keys: ['wallet', 'totalPaid', 'lastPaidTimestamp', 'tokenBalance'],
+          first: pageSize,
+          skip: pageSize * pageNumber,
+          orderBy: sortPayerReports,
+          orderDirection: sortPayerReportsDirection,
+          where: projectId
+            ? {
+                key: 'project',
+                value: projectId.toString(),
+              }
+            : undefined,
+        },
+        res => {
+          if (!res) return
+
+          res.participants.forEach(e => {
             const p = parseParticipantJson(e)
 
             let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
+
             if (date.includes(',')) date = date.split(',')[1]
 
-            return [
-              p.wallet,
+            rows.push([
+              p.wallet ?? '--',
               fromWad(p.tokenBalance),
               fromWad(p.totalPaid),
               date,
-            ]
-          }),
-        ]
+            ])
+          })
 
-        const csvContent =
-          'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
-        const encodedUri = encodeURI(csvContent)
-        const link = document.createElement('a')
-        link.setAttribute('href', encodedUri)
-        link.setAttribute(
-          'download',
-          'juicebox_project-' + projectId + '_holders.csv',
-        )
-        document.body.appendChild(link)
+          const expectNextPage =
+            res.participants.length && res.participants.length % pageSize === 0
 
-        link.click()
-      },
-    )
+          if (expectNextPage) {
+            pageNumber++
+            query()
+          } else {
+            // Encode CSV content and download
+            const csvContent =
+              'data:text/csv;charset=utf-8,' +
+              rows.map(e => e.join(',')).join('\n')
+            const encodedUri = encodeURI(csvContent)
+            const link = document.createElement('a')
+            link.setAttribute('href', encodedUri)
+            link.setAttribute(
+              'download',
+              'juicebox_project-' + projectId + '_holders.csv',
+            )
+            document.body.appendChild(link)
+
+            link.click()
+          }
+        },
+      )
+    }
+
+    query()
+  }
 
   const list = useMemo(
     () => (

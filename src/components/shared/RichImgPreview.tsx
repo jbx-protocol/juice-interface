@@ -1,3 +1,4 @@
+import { Image } from 'antd'
 import { useContentType } from 'hooks/ContentType'
 import { CSSProperties } from 'react'
 
@@ -22,7 +23,7 @@ export default function RichImgPreview({
     contentType === 'image/svg'
   ) {
     return (
-      <img
+      <Image
         src={src}
         style={{
           maxWidth: width ?? 100,

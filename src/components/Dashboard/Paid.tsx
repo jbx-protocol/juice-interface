@@ -107,18 +107,19 @@ export default function Paid() {
                   <CurrencySymbol currency={0} />
                   {formatWad(converter.usdToWei(fromWad(amt)), {
                     decimals: 2,
+                    padEnd: true,
                   })}
                 </span>
               }
             >
               <CurrencySymbol currency={1} />
-              {formatWad(amt, { decimals: 2 })}
+              {formatWad(amt, { decimals: 2, padEnd: true })}
             </Tooltip>
           </span>
         ) : (
           <span>
             <CurrencySymbol currency={0} />
-            {formatWad(amt, { decimals: 2 })}
+            {formatWad(amt, { decimals: 2, padEnd: true })}
           </span>
         )}
       </>
@@ -149,6 +150,7 @@ export default function Paid() {
               <CurrencySymbol currency={1} />
               {formatWad(converter.wadToCurrency(earned, 1, 0), {
                 decimals: 2,
+                padEnd: true,
               })}{' '}
             </span>
           )}
@@ -194,7 +196,7 @@ export default function Paid() {
           {currentFC.currency.eq(1) ? (
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={0} />
-              {formatWad(balance, { decimals: 2 })}{' '}
+              {formatWad(balance, { decimals: 2, padEnd: true })}{' '}
             </span>
           ) : (
             ''
@@ -319,7 +321,7 @@ export default function Paid() {
           </span>
           <span style={primaryTextStyle}>
             <CurrencySymbol currency={0} />
-            {formatWad(ownerBalance, { decimals: 2 })}
+            {formatWad(ownerBalance, { decimals: 2, padEnd: true })}
           </span>
         </span>
       </div>

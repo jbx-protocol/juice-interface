@@ -1,9 +1,10 @@
 import { Button, Form, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
-import { useLayoutEffect, useState } from 'react'
+import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
 export default function PayModsForm({
@@ -22,13 +23,17 @@ export default function PayModsForm({
   // State objects avoid antd form input dependency rerendering issues
   const [mods, setMods] = useState<PayoutMod[]>([])
 
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   useLayoutEffect(() => {
     setMods(initialMods)
   }, [])
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <div>
+      <div style={{ color: colors.text.secondary }}>
         <h1>Distribution</h1>
 
         <p>

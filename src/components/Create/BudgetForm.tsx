@@ -50,16 +50,16 @@ export default function BudgetForm({
         <div style={{ color: colors.text.primary }}>
           <h4>Target</h4>
           <p>
-            A funding target allows you to redistribute surplus revenue to your
-            community. When a project's balance is greater than its funding
-            target, the overflow (surplus funds) can by redeemed by the
-            community by burning their project tokens.
-          </p>
-          <p>
             No more than the target can be distributed from the project in a
             single funding cycle. Whenever a new funding cycle starts, any
             overflow automatically goes towards that cycle's target amount,
             acting as a project's runway.
+          </p>
+          <p>
+            A funding target allows you to redistribute surplus revenue to your
+            community. When a project's balance is greater than its funding
+            target, the overflow (surplus funds) can by redeemed by the
+            community by burning their project tokens.
           </p>
         </div>
 

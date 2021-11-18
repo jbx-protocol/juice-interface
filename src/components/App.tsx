@@ -4,6 +4,7 @@ import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
+import ProjectMetadata from './Dashboard/ProjectMetadata'
 
 import Navbar from './Navbar'
 import Router from './Router'
@@ -40,6 +41,7 @@ function App() {
       >
         <Navbar />
         <Content>
+        <ProjectMetadata />
           <Router />
         </Content>
       </Layout>

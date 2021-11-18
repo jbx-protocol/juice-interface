@@ -14,6 +14,7 @@ import Pay from './Pay'
 import PrintPremined from './PrintPremined'
 import ProjectActivity from './ProjectActivity'
 import ProjectHeader from './ProjectHeader'
+import ProjectMetadata from './ProjectMetadata'
 import Rewards from './Rewards'
 
 export default function Project({
@@ -23,7 +24,7 @@ export default function Project({
   style?: CSSProperties
   showCurrentDetail?: boolean
 }) {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId, metadata } = useContext(ProjectContext)
 
   const canPrintPreminedTickets = useContractReader<boolean>({
     contract: ContractName.TerminalV1,
@@ -66,6 +67,7 @@ export default function Project({
 
   return (
     <div style={style}>
+      <ProjectMetadata metadata={metadata} />
       <ProjectHeader />
 
       <Row gutter={gutter} align="bottom">

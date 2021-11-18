@@ -57,11 +57,11 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {fundingCycle.duration.gt(0) && (
-          <Descriptions.Item label="Duration">
-            {fundingCycle.duration.toString()} days
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item label="Duration">
+          {fundingCycle.duration.gt(0)
+            ? fundingCycle.duration.toString() + ' days'
+            : 'Not set'}
+        </Descriptions.Item>
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label="Start">

@@ -67,9 +67,10 @@ export default function Navbar() {
               ?.scrollIntoView({ behavior: 'smooth' })
           }, 0)
         })}
-        {menuItem('Docs', 'https://docs.juicebox.money/')}
-        {menuItem('Blog', 'https://blog.juicebox.money/')}
+        {menuItem('Docs', 'https://docs.juicebox.money')}
+        {menuItem('Blog', 'https://blog.juicebox.money')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
+        {menuItem('Notion', 'https://juicebox.notion.site')}
       </>
     )
   }

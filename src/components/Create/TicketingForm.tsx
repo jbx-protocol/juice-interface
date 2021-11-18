@@ -1,7 +1,8 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
-import { useLayoutEffect, useState } from 'react'
+import { useContext, useLayoutEffect, useState } from 'react'
 
 export type TicketingFormFields = {
   reserved: number
@@ -18,13 +19,17 @@ export default function TicketingForm({
 }) {
   const [mods, setMods] = useState<TicketMod[]>([])
 
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   useLayoutEffect(() => {
     setMods(initialMods)
   }, [])
 
   return (
     <Space direction="vertical" size="large">
-      <div>
+      <div style={{ color: colors.text.secondary }}>
         <h1>Reserved tokens</h1>
 
         <p>

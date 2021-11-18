@@ -141,7 +141,7 @@ export default function Paid() {
         <span style={secondaryTextStyle}>
           <TooltipLabel
             label="Volume"
-            tip="The total amount received by this project since it was created."
+            tip="The total amount received by this project through Juicebox since it was created."
           />
         </span>
         <span style={primaryTextStyle}>

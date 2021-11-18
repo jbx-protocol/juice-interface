@@ -4,6 +4,7 @@ import Modal from 'antd/lib/modal/Modal'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { NetworkContext } from 'contexts/networkContext'
@@ -233,7 +234,7 @@ export default function Rewards({
 
   const ticketsIssued = tokenAddress
     ? tokenAddress !== constants.AddressZero
-    : undefined
+    : false
 
   const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
 
@@ -246,11 +247,7 @@ export default function Rewards({
               text={tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}
               tip={`${
                 tokenSymbol ? tokenSymbol + ' ERC20' : 'Tokens'
-              } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet. ${
-                tokenAddress && tokenAddress !== constants.AddressZero
-                  ? 'Address: ' + tokenAddress
-                  : ''
-              }`}
+              } are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
             />
           }
           valueRender={() => (
@@ -262,6 +259,16 @@ export default function Rewards({
               }
               column={1}
             >
+              {ticketsIssued && (
+                <Descriptions.Item
+                  label="Address"
+                  children={
+                    <div style={{ width: '100%', textAlign: 'right' }}>
+                      <FormattedAddress address={tokenAddress} />
+                    </div>
+                  }
+                />
+              )}
               <Descriptions.Item
                 label="Total supply"
                 children={
@@ -341,7 +348,7 @@ export default function Rewards({
                           color: colors.text.tertiary,
                         }}
                       >
-                        {share ?? 0}% of supply
+                        {share || 0}% of supply
                       </div>
                     </div>
                     <Button

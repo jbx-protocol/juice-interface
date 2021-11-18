@@ -47,7 +47,7 @@ export default function BudgetForm({
       <h1>Funding</h1>
 
       <Form layout="vertical">
-        <div style={{ color: colors.text.primary }}>
+        <div style={{ color: colors.text.secondary }}>
           <h4>Target</h4>
           <p>
             No more than the target can be distributed from the project in a
@@ -116,15 +116,13 @@ export default function BudgetForm({
 
         <div>
           <h4>Duration</h4>
-          <div style={{ color: colors.text.primary }}>
-            <p>
-              This duration determines how long your funding cycles will last.
-              No more than the target amount (if a target has been set) can be
-              distributed by the project in a single funding cycle, and funding
-              reconfigurations won't take effect until the start of the next
-              funding cycle.
-            </p>
-          </div>
+          <p style={{ color: colors.text.secondary }}>
+            This duration determines how long your funding cycles will last. No
+            more than the target amount (if a target has been set) can be
+            distributed by the project in a single funding cycle, and funding
+            reconfigurations won't take effect until the start of the next
+            funding cycle.
+          </p>
         </div>
 
         <FormItems.ProjectDuration

@@ -75,7 +75,9 @@ export default function RulesForm({
     <Space direction="vertical" size="large">
       <h1>Reconfiguration</h1>
 
-      <p>Rules for how this project's funding cycles can be reconfigured.</p>
+      <p style={{ color: colors.text.secondary }}>
+        Rules for how this project's funding cycles can be reconfigured.
+      </p>
 
       <Space direction="vertical">
         {ballotStrategies.map((s, i) =>

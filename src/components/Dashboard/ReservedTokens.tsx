@@ -1,5 +1,6 @@
 import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { readNetwork } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
@@ -7,6 +8,7 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { FundingCycle } from 'models/funding-cycle'
 import { TicketMod } from 'models/mods'
+import { NetworkName } from 'models/network-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
@@ -77,6 +79,12 @@ export default function ReservedTokens({
     ),
   })
 
+  const isConstitutionDAO =
+    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
+
+  const isSharkDAO =
+    readNetwork.name === NetworkName.mainnet && projectId?.eq(7)
+
   return (
     <div>
       <div>
@@ -99,7 +107,7 @@ export default function ReservedTokens({
         />
       ) : null}
 
-      {!hideActions && (
+      {!hideActions && !isConstitutionDAO && !isSharkDAO && (
         <div
           style={{
             display: 'flex',
@@ -112,16 +120,14 @@ export default function ReservedTokens({
             {formatWad(reservedTickets, { decimals: 0 }) || 0}{' '}
             {tokenSymbol ?? 'tokens'}
           </span>
-          {!projectId?.eq(7) && (
-            <Button
-              style={{ marginLeft: 10 }}
-              size="small"
-              onClick={() => setModalIsVisible(true)}
-              disabled={isPreviewMode}
-            >
-              Distribute
-            </Button>
-          )}
+          <Button
+            style={{ marginLeft: 10 }}
+            size="small"
+            onClick={() => setModalIsVisible(true)}
+            disabled={isPreviewMode}
+          >
+            Distribute
+          </Button>
 
           <DistributeTokensModal
             visible={modalIsVisible}

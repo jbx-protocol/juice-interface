@@ -42,7 +42,7 @@ const ProjectMetadata = ({
       <meta property="og:type" content="object" />
       <meta property="og:title" content={metadata.name} />
       <meta property="og:description" content={metadata.description} />
-      <meta name="twitter:image" content={DEFAULT_METADATA.logoUri} />
+      <meta name="twitter:image" content={metadata.logoUri} />
     </Helmet>
   )
 }

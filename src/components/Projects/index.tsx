@@ -51,7 +51,12 @@ export default function Projects() {
   return (
     <div style={{ ...layouts.maxWidth }}>
       <h1>Projects on Juicebox</h1>
-
+      <p style={{ marginBottom: 40, maxWidth: 800 }}>
+        <InfoCircleOutlined /> The Juicebox protocol is open to anyone, there
+        are risks associated with interacting with them. Projects built on the
+        protocol are not endorsed by JuiceboxDAO, so you should do your own
+        research before committing your funds.
+      </p>
       <div
         style={{
           display: 'flex',

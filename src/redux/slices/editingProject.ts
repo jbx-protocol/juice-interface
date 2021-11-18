@@ -62,7 +62,7 @@ export const defaultProjectState: EditingProjectState = {
     discountRate: defaultDiscountRate,
     cycleLimit: BigNumber.from(0),
     configured: BigNumber.from(0),
-    ballot: '0xEf7480b6E7CEd228fFB0854fe49A428F562a8982', // 7 day
+    ballot: constants.AddressZero,
   }),
   payoutMods: [],
   ticketMods: [],

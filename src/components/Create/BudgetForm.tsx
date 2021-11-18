@@ -1,7 +1,7 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber, constants } from 'ethers'
+import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
@@ -29,7 +29,6 @@ export default function BudgetForm({
   const [target, setTarget] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
-  const [showDurationInput, setShowDurationInput] = useState<boolean>()
   const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
@@ -39,7 +38,6 @@ export default function BudgetForm({
     setTarget(initialTarget)
     setDuration(initialDuration)
     setShowFundingFields(hasFundingTarget(editingFC))
-    setShowDurationInput(BigNumber.from(initialDuration).gt(0))
   }, [])
 
   const maxIntStr = fromWad(constants.MaxUint256)
@@ -126,41 +124,29 @@ export default function BudgetForm({
               reconfigurations won't take effect until the start of the next
               funding cycle.
             </p>
-            <p>
-              If a duration isn't set, the funding cycle can be reconfigured
-              on-demand, which will start the next funding cycle.
-            </p>
           </div>
         </div>
 
-        <Form.Item>
-          <Space>
-            <Switch
-              checked={showDurationInput}
-              onChange={checked => {
-                const duration = checked ? '30' : '0'
-                setDuration(duration)
-                setShowDurationInput(checked)
-              }}
-            />
-            <label>Set a funding cycle duration</label>
-          </Space>
-        </Form.Item>
+        <FormItems.ProjectDuration
+          value={duration}
+          isRecurring={isRecurring(editingFC)}
+          onToggleRecurring={() =>
+            dispatch(
+              editingProjectActions.setIsRecurring(!isRecurring(editingFC)),
+            )
+          }
+          onValueChange={val => setDuration(val ?? '0')}
+          formItemProps={{
+            rules: [{ required: true }],
+          }}
+        />
 
-        {showDurationInput && (
-          <FormItems.ProjectDuration
-            value={duration}
-            isRecurring={isRecurring(editingFC)}
-            onToggleRecurring={() =>
-              dispatch(
-                editingProjectActions.setIsRecurring(!isRecurring(editingFC)),
-              )
-            }
-            onValueChange={val => setDuration(val ?? '0')}
-            formItemProps={{
-              rules: [{ required: true }],
-            }}
-          />
+        {duration === '0' && (
+          <p style={{ color: colors.text.primary, marginTop: 20 }}>
+            <span style={{ fontWeight: 600 }}>Duration not set:</span> Funding
+            can be reconfigured at any time, which will start a new funding
+            cycle.
+          </p>
         )}
 
         <Form.Item>

@@ -33,7 +33,7 @@ The frontend has two different providers that provide different levels of access
 
 ## Deployment
 
-Frontend application(s) are deployment automatically on pushes to `main` using [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
+Frontend application(s) are deployed automatically on pushes to `main` using [Fleek](https://app.fleek.co/#/sites/juicebox-kovan).
 
 ## Theme
 

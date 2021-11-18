@@ -70,7 +70,7 @@ export default function Navbar() {
         {menuItem('Docs', 'https://docs.juicebox.money')}
         {menuItem('Blog', 'https://blog.juicebox.money')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
-        {menuItem('Notion', 'https://juicebox.notion.site')}
+        {menuItem('Workspace', 'https://juicebox.notion.site')}
       </>
     )
   }

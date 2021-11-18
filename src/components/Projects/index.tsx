@@ -52,10 +52,11 @@ export default function Projects() {
     <div style={{ ...layouts.maxWidth }}>
       <h1>Projects on Juicebox</h1>
       <p style={{ marginBottom: 40, maxWidth: 800 }}>
-        <InfoCircleOutlined /> The Juicebox protocol is open to anyone, there
-        are risks associated with interacting with them. Projects built on the
-        protocol are not endorsed by JuiceboxDAO, so you should do your own
-        research before committing your funds.
+        <InfoCircleOutlined /> The Juicebox protocol is open to anyone, and
+        project configurations can vary widely. There are risks associated with
+        interacting with all projects on the protocol. Projects built on the
+        protocol are not endorsed or vetted by JuiceboxDAO, so you should do
+        your own research and understand the risks before committing your funds.
       </p>
       <div
         style={{

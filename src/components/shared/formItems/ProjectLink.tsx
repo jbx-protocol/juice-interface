@@ -15,7 +15,7 @@ export default function ProjectLink({
       {...formItemProps}
     >
       <Input
-        placeholder="http://your-project.com"
+        placeholder="https://your-project.com"
         type="string"
         autoComplete="off"
       />

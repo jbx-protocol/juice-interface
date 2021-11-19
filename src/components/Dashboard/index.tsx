@@ -244,6 +244,14 @@ export default function Dashboard() {
 
   const metadata = useProjectMetadata(uri)
 
+  useEffect(() => {
+    if (metadata?.name) {
+      document.title = metadata.name
+    } else {
+      document.title = 'Juicebox'
+    }
+  }, [metadata])
+
   const balance = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
     functionName: 'balanceOf',

@@ -10,7 +10,7 @@ export default function User({ children }: { children: ChildElems }) {
   const [adminFeePercent, setAdminFeePercent] = useState<BigNumber>()
   const contracts = useContractLoader()
 
-  const gasPrice = useGasPrice('average')
+  const { data: gasPrice } = useGasPrice('average')
 
   const transactor = useTransactor({
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,

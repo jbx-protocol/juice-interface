@@ -20,7 +20,7 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const projects = useProjects({
+  const { data: projects } = useProjects({
     orderBy,
     orderDirection: 'desc',
     filter: selectedTab,

@@ -4,7 +4,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
@@ -42,23 +42,26 @@ export function PaymentActivity({
   const usePayEventOverrides =
     projectId && payEventOverrides.has(projectId.toString())
 
-  const formatPayEventOverride = (e: Partial<PayEvent>) => {
-    if (!projectId) {
-      return e.note
-    }
+  const formatPayEventOverride = useCallback(
+    (e: Partial<PayEvent>) => {
+      if (!projectId) {
+        return e.note
+      }
 
-    let override
-    payEventOverrides
-      .get(projectId.toString())
-      ?.forEach((value: string, key: string) => {
-        if (e.note?.includes(key)) {
-          override = value
-          return
-        }
-      })
+      let override
+      payEventOverrides
+        .get(projectId.toString())
+        ?.forEach((value: string, key: string) => {
+          if (e.note?.includes(key)) {
+            override = value
+            return
+          }
+        })
 
-    return override ? override : e.note
-  }
+      return override ? override : e.note
+    },
+    [projectId],
+  )
 
   useEffect(() => {
     setLoading(true)
@@ -88,7 +91,7 @@ export function PaymentActivity({
         setCount(newEvents.length)
       },
     )
-  }, [projectId, pageSize, pageNumber])
+  }, [projectId, pageSize, pageNumber, setLoading, payEvents, setCount])
 
   return useMemo(
     () => (
@@ -152,6 +155,6 @@ export function PaymentActivity({
         ))}
       </div>
     ),
-    [payEvents, colors],
+    [payEvents, colors, usePayEventOverrides, formatPayEventOverride],
   )
 }

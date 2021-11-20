@@ -41,7 +41,7 @@ export default function BudgetForm({
     setTarget(initialTarget)
     setDuration(initialDuration)
     setShowFundingFields(hasFundingTarget(editingFC))
-  }, [])
+  }, [editingFC, initialCurrency, initialDuration, initialTarget])
 
   const maxIntStr = fromWad(constants.MaxUint256)
 

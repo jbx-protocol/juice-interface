@@ -26,7 +26,7 @@ function App() {
     if (!signerNetwork) return
 
     setSwitchNetworkModalVisible(signerNetwork !== networkName)
-  }, [setSwitchNetworkModalVisible, signerNetwork])
+  }, [networkName, signerNetwork])
 
   return (
     <>

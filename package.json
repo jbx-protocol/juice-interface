@@ -43,7 +43,7 @@
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "eslint --ext .ts,.tsx --fix ."
   },
   "eslintConfig": {
     "extends": [
@@ -52,7 +52,8 @@
     ],
     "rules": {
       "@typescript-eslint/no-unused-vars": "error",
-      "@typescript-eslint/no-redeclare": "error"
+      "@typescript-eslint/no-redeclare": "error",
+      // "react-hooks/exhaustive-deps": "error"
     }
   },
   "browserslist": {

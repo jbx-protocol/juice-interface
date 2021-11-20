@@ -42,7 +42,7 @@ export default function ProjectHandle({
         .handleOf(BigNumber.from(value).toHexString())
         .then(res => setInputContents(utils.parseBytes32String(res[0])))
     }
-  }, [])
+  }, [contracts, value])
 
   const handle = useMemo(() => {
     if (!inputContents) return

@@ -25,7 +25,7 @@ export default function TicketingForm({
 
   useLayoutEffect(() => {
     setMods(initialMods)
-  }, [])
+  }, [initialMods])
 
   return (
     <Space direction="vertical" size="large">

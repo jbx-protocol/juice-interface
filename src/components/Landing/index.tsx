@@ -177,6 +177,7 @@ export default function Landing() {
                     [ThemeOption.light]: '/assets/banana-ol.png',
                   })
                 }
+                alt="Chill banana drinking juice"
               />
             </Col>
           </Row>
@@ -244,6 +245,7 @@ export default function Landing() {
                   marginBottom: 40,
                 }}
                 src="/assets/pina.png"
+                alt="Pinepple geek artist holding a paintbrush"
               />
             </Col>
             <Col xs={24} sm={13}>
@@ -334,6 +336,7 @@ export default function Landing() {
               <img
                 style={{ maxWidth: '100%' }}
                 src="/assets/blueberry-ol.png"
+                alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
               />
             </Col>
           </Row>
@@ -387,6 +390,7 @@ export default function Landing() {
               [ThemeOption.light]: '/assets/orange_lady-ol.png',
             })
           }
+          alt="Powerlifting orange hitting an olympic deadlift"
         />
       </div>
 

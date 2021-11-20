@@ -82,7 +82,7 @@ export default function ProjectPayoutMods({
         setSettingHandle(undefined)
         setSettingHandleIndex(undefined)
       },
-      [form, onModsChanged, mods],
+      [mods, onModsChanged, settingHandleIndex],
     ),
   })
 
@@ -259,7 +259,19 @@ export default function ProjectPayoutMods({
         </div>
       )
     },
-    [mods, colors, radii],
+    [
+      mods,
+      colors.stroke.disabled,
+      colors.stroke.tertiary,
+      colors.text.primary,
+      colors.icon.disabled,
+      radii.md,
+      target,
+      currency,
+      fee,
+      form,
+      onModsChanged,
+    ],
   )
 
   if (!mods) return null

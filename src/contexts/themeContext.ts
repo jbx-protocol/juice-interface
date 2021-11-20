@@ -5,7 +5,7 @@ import { createContext } from 'react'
 
 const defaultThemeOption: ThemeOption = ThemeOption.dark
 
-type ThemeContextType = {
+export type ThemeContextType = {
   themeOption: ThemeOption
   theme: SemanticTheme
   isDarkMode: boolean

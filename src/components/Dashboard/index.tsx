@@ -96,7 +96,7 @@ export default function Dashboard() {
               },
             ]
           : undefined,
-      [],
+      [projectId],
     ),
   })
 
@@ -233,7 +233,7 @@ export default function Dashboard() {
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
       ],
-      [],
+      [projectId],
     ),
   })
   const ticketContract = useErc20Contract(tokenAddress)
@@ -285,7 +285,7 @@ export default function Dashboard() {
         currentFC?.currency.toNumber() as CurrencyOption,
         0,
       ),
-    [currentFC?.currency, balance, converter],
+    [balance, converter, currentFC],
   )
 
   if (projectExists === undefined) return <Loading />

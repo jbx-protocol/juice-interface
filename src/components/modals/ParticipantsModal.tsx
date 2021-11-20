@@ -18,7 +18,7 @@ import {
   parseParticipantJson,
   Participant,
 } from 'models/subgraph-entities/participant'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatPercent, formatWad, fromWad } from 'utils/formatNumber'
@@ -85,10 +85,10 @@ export default function ParticipantsModal({
     )
   }, [
     pageNumber,
-    pageSize,
     projectId,
     sortPayerReportsDirection,
     sortPayerReports,
+    participants,
   ])
 
   const smallHeaderStyle = {
@@ -98,11 +98,14 @@ export default function ParticipantsModal({
 
   const contentLineHeight = '1.4rem'
 
-  const formattedTokenBalance = (balance: BigNumber | undefined) => (
-    <span>
-      {formatWad(balance, { decimals: 0 })} {tokenSymbol ?? 'tokens'} (
-      {formatPercent(balance, totalTokenSupply)}%)
-    </span>
+  const formattedTokenBalance = useCallback(
+    (balance: BigNumber | undefined) => (
+      <span>
+        {formatWad(balance, { decimals: 0 })} {tokenSymbol ?? 'tokens'} (
+        {formatPercent(balance, totalTokenSupply)}%)
+      </span>
+    ),
+    [tokenSymbol, totalTokenSupply],
   )
 
   const formattedPaid = (amount: BigNumber | undefined) => (
@@ -119,7 +122,7 @@ export default function ParticipantsModal({
       <span>No payments</span>
     )
 
-  const download = () => {
+  const download = useCallback(() => {
     const pageSize = 1000
     let pageNumber = 0
 
@@ -188,7 +191,7 @@ export default function ParticipantsModal({
     }
 
     query()
-  }
+  }, [projectId, sortPayerReports, sortPayerReportsDirection])
 
   const list = useMemo(
     () => (
@@ -291,11 +294,14 @@ export default function ParticipantsModal({
       </div>
     ),
     [
-      participants,
-      colors,
       sortPayerReports,
+      tokenSymbol,
       sortPayerReportsDirection,
-      totalTokenSupply,
+      download,
+      participants,
+      colors.stroke.tertiary,
+      smallHeaderStyle,
+      formattedTokenBalance,
     ],
   )
 

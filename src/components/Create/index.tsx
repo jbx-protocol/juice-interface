@@ -92,25 +92,42 @@ export default function Create() {
         editingProjectActions.setFee(fromPerbicent(adminFeePercent).toString()),
       )
     }
-  }, [adminFeePercent])
+  }, [adminFeePercent, dispatch])
 
-  const resetProjectForm = () =>
-    projectForm.setFieldsValue({
-      name: editingProjectInfo?.metadata.name ?? '',
-      infoUri: editingProjectInfo?.metadata.infoUri ?? '',
-      handle: editingProjectInfo?.handle ?? '',
-      description: editingProjectInfo?.metadata.description ?? '',
-      logoUri: editingProjectInfo?.metadata.logoUri ?? '',
-      twitter: editingProjectInfo?.metadata.twitter ?? '',
-      discord: editingProjectInfo?.metadata.discord ?? '',
-      payButton: editingProjectInfo?.metadata.payButton ?? '',
-      payDisclosure: editingProjectInfo?.metadata.payDisclosure ?? '',
-    })
+  const resetProjectForm = useCallback(
+    () =>
+      projectForm.setFieldsValue({
+        name: editingProjectInfo?.metadata.name ?? '',
+        infoUri: editingProjectInfo?.metadata.infoUri ?? '',
+        handle: editingProjectInfo?.handle ?? '',
+        description: editingProjectInfo?.metadata.description ?? '',
+        logoUri: editingProjectInfo?.metadata.logoUri ?? '',
+        twitter: editingProjectInfo?.metadata.twitter ?? '',
+        discord: editingProjectInfo?.metadata.discord ?? '',
+        payButton: editingProjectInfo?.metadata.payButton ?? '',
+        payDisclosure: editingProjectInfo?.metadata.payDisclosure ?? '',
+      }),
+    [
+      editingProjectInfo.handle,
+      editingProjectInfo.metadata.description,
+      editingProjectInfo.metadata.discord,
+      editingProjectInfo.metadata.infoUri,
+      editingProjectInfo.metadata.logoUri,
+      editingProjectInfo.metadata.name,
+      editingProjectInfo.metadata.payButton,
+      editingProjectInfo.metadata.payDisclosure,
+      editingProjectInfo.metadata.twitter,
+      projectForm,
+    ],
+  )
 
-  const resetTicketingForm = () =>
-    ticketingForm.setFieldsValue({
-      reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
-    })
+  const resetTicketingForm = useCallback(
+    () =>
+      ticketingForm.setFieldsValue({
+        reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
+      }),
+    [editingFC.reserved, ticketingForm],
+  )
 
   const onPayModsFormSaved = (mods: PayoutMod[]) =>
     dispatch(editingProjectActions.setPayoutMods(mods))
@@ -160,7 +177,7 @@ export default function Create() {
     resetProjectForm()
     resetTicketingForm()
     dispatch(editingProjectActions.setState(defaultProjectState))
-  }, [])
+  }, [dispatch, resetProjectForm, resetTicketingForm])
 
   async function deployProject() {
     if (!transactor || !contracts || !editingFC) return
@@ -350,7 +367,17 @@ export default function Create() {
         </Button>
       </Space>
     ),
-    [currentStep, colors, radii],
+    [
+      projectForm,
+      currentStep,
+      viewedSteps,
+      radii.sm,
+      colors.text.primary,
+      colors.text.action.primary,
+      colors.text.secondary,
+      colors.stroke.secondary,
+      colors.stroke.action.primary,
+    ],
   )
 
   const spacing = 40

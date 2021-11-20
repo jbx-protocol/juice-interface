@@ -271,7 +271,7 @@ export default function BalanceTimeline({ height }: { height: number }) {
 
     setEvents([])
     loadEvents()
-  }, [blockRefs, projectId, showGraph])
+  }, [blockRefs, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.7rem',

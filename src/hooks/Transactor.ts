@@ -179,6 +179,6 @@ export function useTransactor({
         return false
       }
     },
-    [provider, gasPrice, onSelectWallet],
+    [onSelectWallet, provider, isDarkMode, gasPrice],
   )
 }

@@ -66,7 +66,7 @@ export function RedeemActivity({
         setCount(newEvents.length)
       },
     )
-  }, [pageNumber, pageSize, projectId])
+  }, [pageNumber, pageSize, projectId, redeemEvents, setCount, setLoading])
 
   return useMemo(
     () => (

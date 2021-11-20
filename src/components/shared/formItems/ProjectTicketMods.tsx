@@ -153,7 +153,16 @@ export default function ProjectTicketMods({
         </div>
       )
     },
-    [mods, colors, radii],
+    [
+      mods,
+      colors.stroke.disabled,
+      colors.stroke.tertiary,
+      colors.text.primary,
+      colors.icon.disabled,
+      radii.md,
+      form,
+      onModsChanged,
+    ],
   )
 
   if (!mods) return null

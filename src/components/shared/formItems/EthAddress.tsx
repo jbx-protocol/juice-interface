@@ -23,19 +23,22 @@ export default function EthAddress({
   const [addressForENS, setAddressForENS] = useState<string>()
   const [displayValue, setDisplayValue] = useState<string>()
 
-  const onInputChange = useCallback((value: string) => {
-    setDisplayValue(value)
+  const onInputChange = useCallback(
+    (value: string) => {
+      setDisplayValue(value)
 
-    const read = async () => {
-      const address = await readProvider.resolveName(value)
-      const newVal = utils.isAddress(address) ? address : ''
+      const read = async () => {
+        const address = await readProvider.resolveName(value)
+        const newVal = utils.isAddress(address) ? address : ''
 
-      setAddressForENS(newVal)
-      onAddressChange(newVal)
-    }
+        setAddressForENS(newVal)
+        onAddressChange(newVal)
+      }
 
-    read()
-  }, [])
+      read()
+    },
+    [onAddressChange],
+  )
 
   useLayoutEffect(() => {
     const readENSName = async () => {
@@ -68,7 +71,7 @@ export default function EthAddress({
     setDisplayValue(defaultValue)
 
     readENSName()
-  }, [])
+  }, [defaultValue])
 
   return (
     <Form.Item {...formItemProps}>

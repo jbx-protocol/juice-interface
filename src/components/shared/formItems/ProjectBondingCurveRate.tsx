@@ -2,6 +2,7 @@ import { Form } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   CSSProperties,
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -63,35 +64,45 @@ export default function ProjectBondingCurveRate({
     } catch (e) {
       console.log('Error setting calculator', e)
     }
-  }, [])
+  }, [calculator])
 
-  useEffect(() => graphCurve(parseFloat(value ?? '0')), [calculator])
+  const graphCurve = useCallback(
+    (_value?: number) => {
+      if (_value === undefined || !calculator) return
 
-  function graphCurve(_value?: number) {
-    if (_value === undefined || !calculator) return
+      const overflow = 10
+      const supply = 10
 
-    const overflow = 10
-    const supply = 10
+      calculator.setMathBounds({
+        left: 0,
+        bottom: 0,
+        right: 10,
+        top: 10,
+      })
+      calculator.removeExpressions([
+        { id: bondingCurveId },
+        { id: baseCurveId },
+      ])
+      calculator.setExpression({
+        id: bondingCurveId,
+        latex: `y=${overflow} * (x/${supply}) * (${_value /
+          100} + (x - x${_value / 100})/${supply})`,
+        color: colors.text.brand.primary,
+      })
+      calculator.setExpression({
+        id: baseCurveId,
+        latex: `y=x`,
+        color: colors.stroke.secondary,
+      })
+    },
+    [calculator, colors.stroke.secondary, colors.text.brand.primary],
+  )
 
-    calculator.setMathBounds({
-      left: 0,
-      bottom: 0,
-      right: 10,
-      top: 10,
-    })
-    calculator.removeExpressions([{ id: bondingCurveId }, { id: baseCurveId }])
-    calculator.setExpression({
-      id: bondingCurveId,
-      latex: `y=${overflow} * (x/${supply}) * (${_value /
-        100} + (x - x${_value / 100})/${supply})`,
-      color: colors.text.brand.primary,
-    })
-    calculator.setExpression({
-      id: baseCurveId,
-      latex: `y=x`,
-      color: colors.stroke.secondary,
-    })
-  }
+  useEffect(() => graphCurve(parseFloat(value ?? '0')), [
+    calculator,
+    graphCurve,
+    value,
+  ])
 
   const labelStyle: CSSProperties = {
     fontSize: '.7rem',

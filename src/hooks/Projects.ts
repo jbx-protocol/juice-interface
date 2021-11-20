@@ -6,11 +6,20 @@ import {
   Project,
   ProjectJson,
 } from 'models/subgraph-entities/project'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import useSubgraphQuery from './SubgraphQuery'
+import { archivedProjectIds } from '../constants/archived-projects'
 
-import { archivedProjectIds } from 'constants/archived-projects'
-
-import { querySubgraph } from '../utils/graph'
+interface ProjectsOptions {
+  pageNumber?: number
+  projectId?: BigNumber
+  handle?: string
+  uri?: string
+  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
+  orderDirection?: 'asc' | 'desc'
+  pageSize?: number
+  filter?: ProjectState
+}
 
 export function useProjects({
   pageNumber,
@@ -21,61 +30,50 @@ export function useProjects({
   orderDirection,
   pageSize,
   filter,
-}: {
-  pageNumber?: number
-  projectId?: BigNumber
-  handle?: string
-  uri?: string
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
-  orderDirection?: 'asc' | 'desc'
-  pageSize?: number
-  filter?: ProjectState
-}) {
-  const [projects, setProjects] = useState<Project[]>()
+}: ProjectsOptions) {
+  const { data, ...query } = useSubgraphQuery(
+    {
+      entity: 'project',
+      keys: [
+        'handle',
+        'creator',
+        'createdAt',
+        'uri',
+        'currentBalance',
+        'totalPaid',
+        'totalRedeemed',
+      ],
+      first: pageSize,
+      skip: pageNumber ? pageNumber * (pageSize ?? 50) : undefined,
+      orderDirection: orderDirection ?? 'desc',
+      orderBy: orderBy ?? 'totalPaid',
+    },
+    {
+      staleTime: 60000,
+    },
+  )
 
-  useEffect(() => {
-    querySubgraph(
-      {
-        entity: 'project',
-        keys: [
-          'handle',
-          'creator',
-          'createdAt',
-          'uri',
-          'currentBalance',
-          'totalPaid',
-          'totalRedeemed',
-        ],
-        first: pageSize,
-        skip: pageNumber ? pageNumber * (pageSize ?? 50) : undefined,
-        orderDirection: orderDirection ?? 'desc',
-        orderBy: orderBy ?? 'totalPaid',
-      },
-      res =>
-        setProjects(
-          res?.projects?.map(
-            (p: ProjectJson) => parseProjectJson(p) as Project,
-          ) ?? [],
-        ),
+  const filteredProjects = useMemo(() => {
+    const projects = data?.projects?.map(
+      (p: ProjectJson) => parseProjectJson(p) as Project,
     )
-  }, [pageNumber, projectId, handle, uri, orderDirection, orderBy, pageSize])
 
-  const activeProjects = useMemo(() => {
-    return projects?.filter(
-      _p => !archivedProjectIds.includes(_p.id.toNumber()),
-    )
-  }, [projects])
+    switch (filter) {
+      case 'active':
+        return projects?.filter(
+          _p => !archivedProjectIds.includes(_p.id.toNumber()),
+        )
+      case 'archived':
+        return projects?.filter(_p =>
+          archivedProjectIds.includes(_p.id.toNumber()),
+        )
+      default:
+        return projects
+    }
+  }, [data?.projects, filter])
 
-  const archivedProjects = useMemo(() => {
-    return projects?.filter(_p => archivedProjectIds.includes(_p.id.toNumber()))
-  }, [projects])
-
-  switch (filter) {
-    case 'active':
-      return activeProjects
-    case 'archived':
-      return archivedProjects
-    default:
-      return projects
+  return {
+    data: filteredProjects,
+    ...query,
   }
 }

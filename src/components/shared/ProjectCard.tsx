@@ -21,7 +21,7 @@ export default function ProjectCard({
     theme: { colors, radii },
   } = useContext(ThemeContext)
 
-  const metadata = useProjectMetadata(project.uri)
+  const { data: metadata } = useProjectMetadata(project.uri)
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const decimals =
     project.totalPaid.gt(0) &&

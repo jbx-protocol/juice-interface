@@ -244,7 +244,7 @@ export default function Dashboard() {
     functionName: 'symbol',
   })
 
-  const metadata = useProjectMetadata(uri)
+  const { data: metadata } = useProjectMetadata(uri)
 
   useEffect(() => {
     if (metadata?.name) {

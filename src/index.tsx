@@ -11,18 +11,21 @@ import User from 'User'
 
 import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
+import ProvideReactQuery from './ReactQuery'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Theme>
-        <Network>
-          <User>
-            <App />
-          </User>
-        </Network>
-      </Theme>
-    </Provider>
+    <ProvideReactQuery>
+      <Provider store={store}>
+        <Theme>
+          <Network>
+            <User>
+              <App />
+            </User>
+          </Network>
+        </Theme>
+      </Provider>
+    </ProvideReactQuery>
   </React.StrictMode>,
   document.getElementById('root'),
 )

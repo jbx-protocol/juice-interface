@@ -35,7 +35,7 @@ export default function NumberSlider({
     if (onChange) onChange(val)
   }
 
-  useEffect(() => setValue(sliderValue), [])
+  useEffect(() => setValue(sliderValue), [sliderValue])
 
   return (
     <div style={{ display: 'flex', alignItems: 'baseline' }}>

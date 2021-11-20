@@ -55,7 +55,7 @@ export function TapActivity({
         setCount(newEvents.length)
       },
     )
-  }, [pageNumber, pageSize, projectId])
+  }, [pageNumber, pageSize, projectId, setCount, setLoading, tapEvents])
 
   return useMemo(
     () => (

@@ -62,7 +62,14 @@ export function ReservesActivity({
         setCount(newEvents.length)
       },
     )
-  }, [pageNumber, pageSize, projectId])
+  }, [
+    pageNumber,
+    pageSize,
+    printReservesEvents,
+    projectId,
+    setCount,
+    setLoading,
+  ])
 
   return useMemo(
     () => (

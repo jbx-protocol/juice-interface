@@ -131,7 +131,7 @@ export default function ReconfigureFCModal({
     ticketingForm.setFieldsValue({
       reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
     })
-  }, [payoutMods, ticketMods])
+  }, [dispatch, fundingCycle, payoutMods, ticketMods, ticketingForm])
 
   async function reconfigure() {
     if (!transactor || !contracts?.TerminalV1 || !fundingCycle || !projectId)

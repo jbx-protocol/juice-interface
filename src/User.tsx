@@ -17,10 +17,12 @@ export default function User({ children }: { children: ChildElems }) {
   })
 
   useEffect(() => {
-    contracts?.TerminalV1.functions.fee().then((res: [BigNumber]) => {
-      if (!adminFeePercent?.eq(res[0])) setAdminFeePercent(res[0])
-    })
-  }, [setAdminFeePercent, contracts])
+    async function fetchData() {
+      const res = await contracts?.TerminalV1.functions.fee()
+      setAdminFeePercent(res[0])
+    }
+    fetchData()
+  }, [contracts])
 
   return (
     <UserContext.Provider

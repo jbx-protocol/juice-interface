@@ -1,15 +1,5 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Space,
-} from 'antd'
+import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'

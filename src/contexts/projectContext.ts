@@ -5,7 +5,7 @@ import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
 import { createContext } from 'react'
 
-export type ProjectContext = {
+type ProjectContextType = {
   projectId: BigNumber | undefined
   projectType: ProjectType | undefined
   createdAt: number | undefined
@@ -27,7 +27,7 @@ export type ProjectContext = {
   isArchived: boolean | undefined
 }
 
-export const ProjectContext = createContext<ProjectContext>({
+export const ProjectContext = createContext<ProjectContextType>({
   projectId: undefined,
   projectType: 'standard',
   createdAt: undefined,

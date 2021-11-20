@@ -1,4 +1,4 @@
-import { Button, Form, Slider, Space, Switch } from 'antd'
+import { Button, Form, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useLayoutEffect, useState } from 'react'

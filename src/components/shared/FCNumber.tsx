@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties } from 'react'
 
 import useContractReader from '../../hooks/ContractReader'
 import { ContractName } from '../../models/contract-name'

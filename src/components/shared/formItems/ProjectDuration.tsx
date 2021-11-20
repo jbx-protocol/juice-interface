@@ -23,7 +23,7 @@ export default function ProjectDuration({
 
   useEffect(() => {
     if (value && value !== '0') setShowDurationInput(true)
-  })
+  }, [value])
 
   return (
     <div>

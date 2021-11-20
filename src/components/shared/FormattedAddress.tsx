@@ -10,6 +10,19 @@ type EnsRecord = {
   expires: number
 }
 
+const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
+
+const getEnsDict = () => {
+  try {
+    return JSON.parse(
+      window.localStorage.getItem(getStorageKey()) ?? '{}',
+    ) as Record<string, EnsRecord>
+  } catch (e) {
+    console.info('ENS storage not found')
+    return {}
+  }
+}
+
 export default function FormattedAddress({
   address,
   label,
@@ -18,19 +31,6 @@ export default function FormattedAddress({
   label?: string
 }) {
   const [ensName, setEnsName] = useState<string | null>()
-
-  const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
-
-  const getEnsDict = () => {
-    try {
-      return JSON.parse(
-        window.localStorage.getItem(getStorageKey()) ?? '{}',
-      ) as Record<string, EnsRecord>
-    } catch (e) {
-      console.info('ENS storage not found')
-      return {}
-    }
-  }
 
   const now = new Date().valueOf()
 
@@ -77,7 +77,7 @@ export default function FormattedAddress({
     }
 
     tryUpdateENSDict()
-  }, [address])
+  }, [address, now])
 
   if (!address) return null
 

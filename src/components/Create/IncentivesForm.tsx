@@ -30,7 +30,7 @@ export default function IncentivesForm({
   useLayoutEffect(() => {
     setDiscountRate(initialDiscountRate)
     setBondingCurveRate(initialBondingCurveRate)
-  }, [])
+  }, [initialBondingCurveRate, initialDiscountRate])
 
   const saveButton = (
     <Form.Item>

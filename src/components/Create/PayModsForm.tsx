@@ -29,7 +29,7 @@ export default function PayModsForm({
 
   useLayoutEffect(() => {
     setMods(initialMods)
-  }, [])
+  }, [initialMods])
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>

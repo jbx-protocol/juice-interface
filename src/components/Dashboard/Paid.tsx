@@ -77,7 +77,7 @@ export default function Paid() {
         ? fracDiv(balanceInCurrency.toString(), currentFC.target.toString()) *
           100
         : 0,
-    [currentFC?.target, balanceInCurrency],
+    [balanceInCurrency, currentFC],
   )
 
   // Percent overflow of target

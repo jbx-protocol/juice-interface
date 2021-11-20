@@ -92,7 +92,14 @@ export default function Pay() {
         </Button>
       )
     }
-  }, [metadata, currentFC])
+  }, [
+    metadata,
+    currentFC,
+    isArchived,
+    fcMetadata,
+    isConstitutionDAO,
+    weiPayAmt,
+  ])
 
   if (!currentFC || !projectId || !metadata) return null
 

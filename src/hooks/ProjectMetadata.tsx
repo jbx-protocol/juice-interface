@@ -21,7 +21,7 @@ export function useProjectMetadata(uri: string | undefined) {
 
   useEffect(() => {
     uri && getMetadata(ipfsCidUrl(uri))
-  }, [uri])
+  }, [getMetadata, uri])
 
   return metadata
 }

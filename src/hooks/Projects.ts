@@ -56,7 +56,7 @@ export function useProjects({
           ) ?? [],
         ),
     )
-  }, [pageNumber, projectId, handle, uri, orderDirection, orderBy])
+  }, [pageNumber, projectId, handle, uri, orderDirection, orderBy, pageSize])
 
   const activeProjects = useMemo(() => {
     return projects?.filter(

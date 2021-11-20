@@ -41,13 +41,18 @@
     "start": "yarn compile-styles && react-scripts start",
     "build": "yarn compile-styles && react-scripts build",
     "test": "yarn compile-styles && react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:fix": "yarn lint --fix"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "error"
+    }
   },
   "browserslist": {
     "production": [

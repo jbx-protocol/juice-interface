@@ -5,7 +5,7 @@ import { createContext } from 'react'
 
 const defaultThemeOption: ThemeOption = ThemeOption.dark
 
-export type ThemeContext = {
+type ThemeContextType = {
   themeOption: ThemeOption
   theme: SemanticTheme
   isDarkMode: boolean
@@ -13,9 +13,9 @@ export type ThemeContext = {
   forThemeOption?: <T>(map: Record<ThemeOption, T>) => T
 }
 
-export const ThemeContext = createContext<ThemeContext>({
+export const ThemeContext = createContext<ThemeContextType>({
   themeOption: defaultThemeOption,
   theme: juiceTheme(defaultThemeOption),
   setThemeOption: (themeOption: ThemeOption) => {},
-  isDarkMode: defaultThemeOption === ThemeOption.dark
+  isDarkMode: defaultThemeOption === ThemeOption.dark,
 })

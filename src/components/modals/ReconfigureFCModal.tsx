@@ -26,7 +26,6 @@ import {
   fromPerbicent,
   fromPermille,
   fromWad,
-  parsePerbicent,
 } from 'utils/formatNumber'
 import {
   decodeFCMetadata,

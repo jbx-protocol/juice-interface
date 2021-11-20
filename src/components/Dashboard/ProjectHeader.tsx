@@ -3,7 +3,7 @@ import {
   ToolOutlined,
   TwitterOutlined,
 } from '@ant-design/icons'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import Discord from 'components/icons/Discord'
 import EditProjectModal from 'components/modals/EditProjectModal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'

@@ -80,7 +80,7 @@ export default function BudgetForm({
           </Space>
         </Form.Item>
 
-        {target == maxIntStr && (
+        {target === maxIntStr && (
           <p style={{ color: colors.text.primary }}>
             <span style={{ fontWeight: 600 }}>No target:</span> All funds can be
             distributed by the project, and the project will have no overflow.

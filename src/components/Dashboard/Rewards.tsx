@@ -74,7 +74,7 @@ export default function Rewards({
             : undefined,
       },
     ],
-    [projectId],
+    [projectId, userAddress],
   )
 
   const ticketContract = useErc20Contract(tokenAddress)

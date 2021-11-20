@@ -97,7 +97,7 @@ export type GraphQueryOpts<E extends EntityKey> = {
 }
 
 // https://thegraph.com/docs/graphql-api#filtering
-const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
+export const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
   let args = ''
 
   const addArg = (

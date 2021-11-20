@@ -38,9 +38,10 @@ export default function Landing() {
     </h1>
   )
 
-  const previewProjects:
-    | Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>[]
-    | undefined = useProjects({ pageSize: 4, filter: 'active' })
+  const { data: previewProjects } = useProjects({
+    pageSize: 4,
+    filter: 'active',
+  })
 
   const smallHeader = (text: string) => (
     <h2 style={{ fontWeight: 600, margin: 0 }}>{text}</h2>

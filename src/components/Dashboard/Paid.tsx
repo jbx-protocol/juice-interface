@@ -65,7 +65,7 @@ export default function Paid() {
     0,
   )
 
-  const ownerBalance = useEthBalance(owner)
+  const { data: ownerBalance } = useEthBalance(owner)
 
   const percentPaid = useMemo(
     () =>

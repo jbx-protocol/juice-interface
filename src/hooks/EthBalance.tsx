@@ -1,27 +1,19 @@
-import { BigNumber } from 'ethers'
-import { useState } from 'react'
-
 import { readProvider } from 'constants/readProvider'
-
-import { usePoller } from './Poller'
+import { useQuery } from 'react-query'
 
 export function useEthBalance(address: string | undefined) {
-  const [balance, setBalance] = useState<BigNumber>()
-
-  // get updated balance
-  usePoller(
-    () => {
-      if (!address) return
-
-      try {
-        readProvider.getBalance(address).then(setBalance)
-      } catch (e) {
-        console.log('Error getting balance', e)
+  return useQuery(
+    ['eth-balance', address],
+    async () => {
+      if (!address) {
+        throw new Error("Can't fetch ETH balance, address is undefined")
       }
+      return readProvider.getBalance(address)
     },
-    [address],
-    30000,
+    {
+      enabled: !!address,
+      staleTime: 30000,
+      refetchInterval: 30000,
+    },
   )
-
-  return balance
 }

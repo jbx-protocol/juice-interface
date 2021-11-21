@@ -21,6 +21,8 @@ interface ProjectsOptions {
   filter?: ProjectState
 }
 
+let defaultPageSize = 20
+
 export function useProjects({
   pageNumber,
   projectId,
@@ -28,7 +30,7 @@ export function useProjects({
   uri,
   orderBy,
   orderDirection,
-  pageSize,
+  pageSize = defaultPageSize,
   filter,
 }: ProjectsOptions) {
   const { data, ...query } = useSubgraphQuery(
@@ -44,7 +46,7 @@ export function useProjects({
         'totalRedeemed',
       ],
       first: pageSize,
-      skip: pageNumber ? pageNumber * (pageSize ?? 50) : undefined,
+      skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
     },

@@ -17,7 +17,7 @@ export default function Balance({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const balance = useEthBalance(address)
+  const { data: balance } = useEthBalance(address)
 
   return (
     <div

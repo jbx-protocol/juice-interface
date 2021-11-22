@@ -52,6 +52,7 @@ export default function Payments() {
         <div>
           {events.map(e => (
             <div
+              key={e.id}
               style={{
                 paddingTop: 10,
                 paddingBottom: 20,

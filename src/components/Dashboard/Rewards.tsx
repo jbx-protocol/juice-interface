@@ -12,7 +12,7 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import { useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
@@ -31,7 +31,7 @@ export default function Rewards({
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [participantsModalVisible, setParticipantsModalVisible] = useState<
     boolean
-  >()
+  >(false)
   const { userAddress } = useContext(NetworkContext)
 
   const {
@@ -125,6 +125,10 @@ export default function Rewards({
     : false
 
   const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
+  const closeParticipantsModal = useCallback(
+    () => setParticipantsModalVisible(false),
+    [],
+  )
 
   return (
     <div>
@@ -274,7 +278,7 @@ export default function Rewards({
       />
       <ParticipantsModal
         visible={participantsModalVisible}
-        onCancel={() => setParticipantsModalVisible(false)}
+        onCancel={closeParticipantsModal}
       />
     </div>
   )

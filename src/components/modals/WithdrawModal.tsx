@@ -41,8 +41,15 @@ export default function WithdrawModal({
   const converter = useCurrencyConverter()
 
   useEffect(() => {
+    if (!currentFC) return
+
+    const untapped = currentFC.target.sub(currentFC.tapped)
+    const withdrawable = balanceInCurrency?.gt(untapped)
+      ? untapped
+      : balanceInCurrency
+
     setTapAmount(fromWad(withdrawable))
-  }, [])
+  }, [balanceInCurrency, currentFC])
 
   if (!currentFC) return null
 

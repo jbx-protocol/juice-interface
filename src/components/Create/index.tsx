@@ -5,7 +5,7 @@ import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants, utils } from 'ethers'
@@ -23,12 +23,10 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useState,
 } from 'react'
-import {
-  defaultProjectState,
-  editingProjectActions,
-} from 'redux/slices/editingProject'
+import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import { encodeFCMetadata, hasFundingTarget } from 'utils/fundingCycle'
 import {
@@ -94,32 +92,30 @@ export default function Create() {
     }
   }, [adminFeePercent, dispatch])
 
-  const resetProjectForm = useCallback(
-    () =>
-      projectForm.setFieldsValue({
-        name: editingProjectInfo?.metadata.name ?? '',
-        infoUri: editingProjectInfo?.metadata.infoUri ?? '',
-        handle: editingProjectInfo?.handle ?? '',
-        description: editingProjectInfo?.metadata.description ?? '',
-        logoUri: editingProjectInfo?.metadata.logoUri ?? '',
-        twitter: editingProjectInfo?.metadata.twitter ?? '',
-        discord: editingProjectInfo?.metadata.discord ?? '',
-        payButton: editingProjectInfo?.metadata.payButton ?? '',
-        payDisclosure: editingProjectInfo?.metadata.payDisclosure ?? '',
-      }),
-    [
-      editingProjectInfo.handle,
-      editingProjectInfo.metadata.description,
-      editingProjectInfo.metadata.discord,
-      editingProjectInfo.metadata.infoUri,
-      editingProjectInfo.metadata.logoUri,
-      editingProjectInfo.metadata.name,
-      editingProjectInfo.metadata.payButton,
-      editingProjectInfo.metadata.payDisclosure,
-      editingProjectInfo.metadata.twitter,
-      projectForm,
-    ],
-  )
+  const resetProjectForm = useCallback(() => {
+    projectForm.setFieldsValue({
+      name: editingProjectInfo?.metadata.name ?? '',
+      infoUri: editingProjectInfo?.metadata.infoUri ?? '',
+      handle: editingProjectInfo?.handle ?? '',
+      description: editingProjectInfo?.metadata.description ?? '',
+      logoUri: editingProjectInfo?.metadata.logoUri ?? '',
+      twitter: editingProjectInfo?.metadata.twitter ?? '',
+      discord: editingProjectInfo?.metadata.discord ?? '',
+      payButton: editingProjectInfo?.metadata.payButton ?? '',
+      payDisclosure: editingProjectInfo?.metadata.payDisclosure ?? '',
+    })
+  }, [
+    editingProjectInfo.handle,
+    editingProjectInfo.metadata.description,
+    editingProjectInfo.metadata.discord,
+    editingProjectInfo.metadata.infoUri,
+    editingProjectInfo.metadata.logoUri,
+    editingProjectInfo.metadata.name,
+    editingProjectInfo.metadata.payButton,
+    editingProjectInfo.metadata.payDisclosure,
+    editingProjectInfo.metadata.twitter,
+    projectForm,
+  ])
 
   const resetTicketingForm = useCallback(
     () =>
@@ -128,6 +124,20 @@ export default function Create() {
       }),
     [editingFC.reserved, ticketingForm],
   )
+
+  useLayoutEffect(() => {
+    dispatch(editingProjectActions.resetState())
+    // Disable exhaustive-deps because we only need to reset the first time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch])
+
+  useEffect(() => {
+    resetProjectForm()
+  }, [resetProjectForm])
+
+  useEffect(() => {
+    resetTicketingForm()
+  }, [resetTicketingForm])
 
   const onPayModsFormSaved = (mods: PayoutMod[]) =>
     dispatch(editingProjectActions.setPayoutMods(mods))
@@ -142,7 +152,7 @@ export default function Create() {
     dispatch(editingProjectActions.setCurrency(currency))
   }
 
-  const onProjectFormSaved = () => {
+  const onProjectFormSaved = useCallback(() => {
     const fields = projectForm.getFieldsValue(true)
     dispatch(editingProjectActions.setName(fields.name))
     dispatch(editingProjectActions.setInfoUri(fields.infoUri))
@@ -153,7 +163,7 @@ export default function Create() {
     dispatch(editingProjectActions.setDiscord(fields.discord))
     dispatch(editingProjectActions.setPayButton(fields.payButton))
     dispatch(editingProjectActions.setPayDisclosure(fields.payDisclosure))
-  }
+  }, [dispatch, projectForm])
 
   const onTicketingFormSaved = (mods: TicketMod[]) => {
     const fields = ticketingForm.getFieldsValue(true)
@@ -173,13 +183,7 @@ export default function Create() {
     dispatch(editingProjectActions.setBondingCurveRate(bondingCurveRate))
   }
 
-  useLayoutEffect(() => {
-    resetProjectForm()
-    resetTicketingForm()
-    dispatch(editingProjectActions.setState(defaultProjectState))
-  }, [dispatch, resetProjectForm, resetTicketingForm])
-
-  async function deployProject() {
+  const deployProject = useCallback(async () => {
     if (!transactor || !contracts || !editingFC) return
 
     setLoadingCreate(true)
@@ -260,19 +264,31 @@ export default function Create() {
         },
       },
     )
-  }
+  }, [
+    contracts,
+    editingFC,
+    editingPayoutMods,
+    editingProjectInfo.handle,
+    editingProjectInfo.metadata,
+    editingTicketMods,
+    transactor,
+    userAddress,
+  ])
 
-  function viewedCurrentStep() {
+  const viewedCurrentStep = useCallback(() => {
     if (currentStep !== undefined && !viewedSteps.includes(currentStep)) {
       setViewedSteps([...viewedSteps, currentStep])
     }
     setCurrentStep(undefined)
-  }
+  }, [currentStep, viewedSteps])
 
-  const drawerStyle: Partial<DrawerProps> = {
-    placement: 'right',
-    width: Math.min(640, window.innerWidth * 0.9),
-  }
+  const drawerStyle: Partial<DrawerProps> = useMemo(
+    () => ({
+      placement: 'right',
+      width: Math.min(640, window.innerWidth * 0.9),
+    }),
+    [],
+  )
 
   const buildSteps = useCallback(
     (
@@ -359,8 +375,7 @@ export default function Create() {
           type="primary"
           block
           disabled={
-            !projectForm.getFieldValue('name') ||
-            !projectForm.getFieldValue('handle')
+            !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
           }
         >
           Review & Deploy
@@ -368,7 +383,8 @@ export default function Create() {
       </Space>
     ),
     [
-      projectForm,
+      editingProjectInfo.metadata.name,
+      editingProjectInfo.handle,
       currentStep,
       viewedSteps,
       radii.sm,
@@ -382,39 +398,52 @@ export default function Create() {
 
   const spacing = 40
 
-  const fundingCycle: FundingCycle = {
-    ...editingFC,
-    metadata: encodeFCMetadata(
-      editingFC.reserved,
-      editingFC.bondingCurveRate,
-      1000,
-    ),
-  }
+  const fundingCycle: FundingCycle = useMemo(
+    () => ({
+      ...editingFC,
+      metadata: encodeFCMetadata(
+        editingFC.reserved,
+        editingFC.bondingCurveRate,
+        1000,
+      ),
+    }),
+    [editingFC],
+  )
+
+  const project = useMemo<ProjectContextType>(
+    () => ({
+      createdAt: new Date().valueOf() / 1000,
+      projectType: 'standard',
+      owner: userAddress,
+      earned: BigNumber.from(0),
+      currentFC: fundingCycle,
+      currentPayoutMods: editingPayoutMods,
+      currentTicketMods: editingTicketMods,
+      metadata: editingProjectInfo.metadata,
+      handle: editingProjectInfo.handle,
+      projectId: BigNumber.from(0),
+      queuedFC: undefined,
+      queuedPayoutMods: undefined,
+      queuedTicketMods: undefined,
+      balance: BigNumber.from(0),
+      balanceInCurrency: BigNumber.from(0),
+      tokenSymbol: undefined,
+      tokenAddress: constants.AddressZero,
+      isPreviewMode: true,
+      isArchived: false,
+    }),
+    [
+      editingPayoutMods,
+      editingProjectInfo.handle,
+      editingProjectInfo.metadata,
+      editingTicketMods,
+      fundingCycle,
+      userAddress,
+    ],
+  )
 
   return (
-    <ProjectContext.Provider
-      value={{
-        createdAt: new Date().valueOf() / 1000,
-        projectType: 'standard',
-        owner: userAddress,
-        earned: BigNumber.from(0),
-        currentFC: fundingCycle,
-        currentPayoutMods: editingPayoutMods,
-        currentTicketMods: editingTicketMods,
-        metadata: editingProjectInfo.metadata,
-        handle: editingProjectInfo.handle,
-        projectId: BigNumber.from(0),
-        queuedFC: undefined,
-        queuedPayoutMods: undefined,
-        queuedTicketMods: undefined,
-        balance: BigNumber.from(0),
-        balanceInCurrency: BigNumber.from(0),
-        tokenSymbol: undefined,
-        tokenAddress: constants.AddressZero,
-        isPreviewMode: true,
-        isArchived: false,
-      }}
-    >
+    <ProjectContext.Provider value={project}>
       <Row style={{ marginTop: 40 }}>
         <Col
           xs={24}

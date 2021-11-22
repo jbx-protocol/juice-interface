@@ -1,5 +1,5 @@
 import { InputNumber } from 'antd'
-import { CSSProperties, useLayoutEffect, useState } from 'react'
+import { CSSProperties, useLayoutEffect, useMemo, useState } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
 export default function FormattedNumberInput({
@@ -29,7 +29,8 @@ export default function FormattedNumberInput({
 }) {
   const [accessoryWidth, setAccessoryWidth] = useState<number>(0)
 
-  const accessoryId = 'accessory' + Math.random() * 100
+  const accessoryId = useMemo(() => 'accessory' + Math.random() * 100, [])
+
   const thousandsSeparator = ','
   const decimalSeparator = '.'
   const _suffix = suffix ? ` ${suffix}` : ''
@@ -50,10 +51,10 @@ export default function FormattedNumberInput({
   ]
 
   useLayoutEffect(() => {
-    const accessory = document.getElementById(accessoryId)
-    if (!accessory) return
-    setAccessoryWidth(accessory.clientWidth)
-  }, [accessory, accessoryId])
+    const accessoryContainer = document.getElementById(accessoryId)
+    if (!accessoryContainer) return
+    setAccessoryWidth(accessoryContainer.clientWidth)
+  }, [accessoryId])
 
   return (
     <div

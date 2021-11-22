@@ -5,20 +5,21 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
+import { readNetwork } from 'constants/networks'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalance } from 'hooks/EthBalance'
 import { ContractName } from 'models/contract-name'
+import { CurrencyOption } from 'models/currency-option'
+import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import BalancesModal from '../modals/BalancesModal'
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -62,6 +63,12 @@ export default function Paid() {
     ),
   })
 
+  const overflowInCurrency = converter.wadToCurrency(
+    totalOverflow ?? 0,
+    currentFC?.currency.toNumber() as CurrencyOption,
+    0,
+  )
+
   const ownerBalance = useEthBalance(owner)
 
   const percentPaid = useMemo(
@@ -73,9 +80,10 @@ export default function Paid() {
     [currentFC?.target, balanceInCurrency],
   )
 
+  // Percent overflow of target
   const percentOverflow = fracDiv(
-    balanceInCurrency?.add(currentFC?.target ?? 0).toString() ?? '0',
-    balanceInCurrency?.add(currentFC?.tapped ?? 0)?.toString() ?? '1',
+    (overflowInCurrency?.sub(currentFC?.target ?? 0) ?? 0).toString(),
+    (currentFC?.target ?? 0).toString(),
   )
 
   const primaryTextStyle: CSSProperties = {

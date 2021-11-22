@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { querySubgraph } from 'utils/graph'
-import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
+import { useContext } from 'react'
 import Loading from 'components/shared/Loading'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import { formatHistoricalDate } from 'utils/formatDate'
@@ -9,48 +7,32 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import RichNote from 'components/Dashboard/ProjectActivity/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import useSubgraphQuery from '../../hooks/SubgraphQuery'
 
 export default function Payments() {
-  const [events, setEvents] = useState<PayEvent[]>([])
-  const [loading, setLoading] = useState<boolean>()
-
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useEffect(() => {
-    setLoading(true)
-
-    querySubgraph(
-      {
-        entity: 'payEvent',
-        keys: [
-          'amount',
-          'beneficiary',
-          'note',
-          'timestamp',
-          { entity: 'project', keys: ['id'] },
-        ],
-        first: 20,
-        orderDirection: 'desc',
-        orderBy: 'timestamp',
-      },
-      res => {
-        if (!res) return
-
-        setEvents(res.payEvents.map(e => parsePayEventJson(e)))
-        setLoading(false)
-      },
-    )
-  }, [])
+  const { data: events, isLoading } = useSubgraphQuery({
+    entity: 'payEvent',
+    keys: [
+      'amount',
+      'beneficiary',
+      'note',
+      'timestamp',
+      { entity: 'project', keys: ['id'] },
+    ],
+    first: 20,
+    orderDirection: 'desc',
+    orderBy: 'timestamp',
+  })
 
   return (
     <div>
-      {loading ? (
-        <Loading />
-      ) : (
+      {events || !isLoading ? (
         <div>
-          {events.map(e => (
+          {events?.map(e => (
             <div
               key={e.id}
               style={{
@@ -99,6 +81,8 @@ export default function Payments() {
             </div>
           ))}
         </div>
+      ) : (
+        <Loading />
       )}
     </div>
   )

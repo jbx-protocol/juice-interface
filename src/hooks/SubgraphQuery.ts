@@ -1,7 +1,9 @@
 import {
   EntityKey,
   formatGraphQuery,
+  formatGraphResponse,
   GraphQueryOpts,
+  SubgraphEntities,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
 import { useQuery, UseQueryOptions } from 'react-query'
@@ -12,19 +14,25 @@ const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 export default function useSubgraphQuery<E extends EntityKey>(
   opts: GraphQueryOpts<E>,
   reactQueryOptions?: UseQueryOptions<
-    SubgraphQueryReturnTypes[E],
+    SubgraphEntities[E][],
     unknown, // Specific error type?
-    SubgraphQueryReturnTypes[E],
-    [string, GraphQueryOpts<E>]
+    SubgraphEntities[E][],
+    readonly [string, GraphQueryOpts<E>]
   >,
 ) {
   if (!subgraphUrl) {
+    // This should _only_ happen in development
     throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
   }
-  return useQuery(
+  return useQuery<
+    SubgraphEntities[E][],
+    unknown, // Specific error type?
+    SubgraphEntities[E][],
+    readonly [string, GraphQueryOpts<E>]
+  >(
     ['subgraph-query', opts],
     async () => {
-      const response = await axios.post(
+      const response = await axios.post<{ data: SubgraphQueryReturnTypes[E] }>(
         subgraphUrl,
         {
           query: formatGraphQuery(opts),
@@ -32,8 +40,12 @@ export default function useSubgraphQuery<E extends EntityKey>(
         { headers: { 'Content-Type': 'application/json' } },
       )
 
-      return response.data?.data as SubgraphQueryReturnTypes[E]
+      let data = response.data?.data
+      return formatGraphResponse(opts.entity, data)
     },
-    reactQueryOptions,
+    {
+      staleTime: 60000,
+      ...reactQueryOptions,
+    },
   )
 }

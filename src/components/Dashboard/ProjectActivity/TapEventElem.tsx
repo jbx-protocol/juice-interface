@@ -3,61 +3,35 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  DistributeToPayoutModEvent,
-  parseDistributeToPayoutModEvent,
-} from 'models/subgraph-entities/distribute-to-payout-mod-event copy'
 import { TapEvent } from 'models/subgraph-entities/tap-event'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
 
 import { smallHeaderStyle } from '../styles'
+import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export default function TapEventElem({
   tapEvent,
 }: {
   tapEvent: TapEvent | undefined
 }) {
-  const [payoutEvents, setPayoutEvents] = useState<
-    DistributeToPayoutModEvent[]
-  >()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  useEffect(() => {
-    querySubgraph(
-      {
-        entity: 'distributeToPayoutModEvent',
-        keys: [
-          'timestamp',
-          'txHash',
-          'modProjectId',
-          'modBeneficiary',
-          'modCut',
-        ],
-        orderDirection: 'desc',
-        orderBy: 'modCut',
-        where: tapEvent?.id
-          ? {
-              key: 'tapEvent',
-              value: tapEvent.id,
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        setPayoutEvents(
-          res.distributeToPayoutModEvents.map(e =>
-            parseDistributeToPayoutModEvent(e),
-          ),
-        )
-      },
-    )
-  }, [tapEvent])
+  const { data: payoutEvents } = useSubgraphQuery({
+    entity: 'distributeToPayoutModEvent',
+    keys: ['timestamp', 'txHash', 'modProjectId', 'modBeneficiary', 'modCut'],
+    orderDirection: 'desc',
+    orderBy: 'modCut',
+    where: tapEvent?.id
+      ? {
+          key: 'tapEvent',
+          value: tapEvent.id,
+        }
+      : undefined,
+  })
 
   if (!tapEvent) return null
 
@@ -68,7 +42,6 @@ export default function TapEventElem({
         paddingBottom: 20,
         borderBottom: '1px solid ' + colors.stroke.tertiary,
       }}
-      key={tapEvent.id}
     >
       <div
         style={{

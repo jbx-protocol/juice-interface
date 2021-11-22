@@ -43,8 +43,6 @@
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
     "lint-staged": "lint-staged",
-    "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "eslint --ext .ts,.tsx --fix .",
     "prepare": "husky install"
   },
   "lint-staged": {

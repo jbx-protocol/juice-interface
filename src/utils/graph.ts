@@ -2,28 +2,45 @@ import axios, { AxiosResponse } from 'axios'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
+  parseDistributeToPayoutModEvent,
 } from 'models/subgraph-entities/distribute-to-payout-mod-event copy'
 import {
   DistributeToTicketModEvent,
   DistributeToTicketModEventJson,
+  parseDistributeToTicketModEvent,
 } from 'models/subgraph-entities/distribute-to-ticket-mod-event'
 import {
+  parseParticipantJson,
   Participant,
   ParticipantJson,
 } from 'models/subgraph-entities/participant'
-import { PayEvent, PayEventJson } from 'models/subgraph-entities/pay-event'
 import {
+  parsePayEventJson,
+  PayEvent,
+  PayEventJson,
+} from 'models/subgraph-entities/pay-event'
+import {
+  parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
 } from 'models/subgraph-entities/print-reserves-event'
-import { Project, ProjectJson } from 'models/subgraph-entities/project'
 import {
+  parseProjectJson,
+  Project,
+  ProjectJson,
+} from 'models/subgraph-entities/project'
+import {
+  parseRedeemEventJson,
   RedeemEvent,
   RedeemEventJson,
 } from 'models/subgraph-entities/redeem-event'
-import { TapEvent, TapEventJson } from 'models/subgraph-entities/tap-event'
+import {
+  parseTapEventJson,
+  TapEvent,
+  TapEventJson,
+} from 'models/subgraph-entities/tap-event'
 
-export type SubgraphEntities = {
+export interface SubgraphEntities {
   project: Project
   payEvent: PayEvent
   redeemEvent: RedeemEvent
@@ -34,7 +51,7 @@ export type SubgraphEntities = {
   printReservesEvent: PrintReservesEvent
 }
 
-export type SubgraphQueryReturnTypes = {
+export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
@@ -79,7 +96,7 @@ export type BlockConfig = {
   hash?: string
 }
 
-export type GraphQueryOpts<E extends EntityKey> = {
+export interface GraphQueryOpts<E extends EntityKey> {
   entity: E
   first?: number
   skip?: number
@@ -97,7 +114,9 @@ export type GraphQueryOpts<E extends EntityKey> = {
 }
 
 // https://thegraph.com/docs/graphql-api#filtering
-export const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
+export const formatGraphQuery = <E extends EntityKey>(
+  opts: GraphQueryOpts<E>,
+) => {
   let args = ''
 
   const addArg = (
@@ -165,3 +184,83 @@ export const querySubgraph = <E extends EntityKey>(
     : Promise.reject('Missing url for subgraph query')
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')
+
+export function formatGraphResponse<E extends EntityKey>(
+  entity: E,
+  response: SubgraphQueryReturnTypes[E],
+): SubgraphEntities[E][] {
+  if (!response || typeof response !== 'object') {
+    return []
+  }
+
+  // This code works perfectly, but there's an unusual TypeScript issue that
+  // makes it appear type unsafe...
+  //
+  // For example, `response.projects` is a ProjectJson[], as dictated by
+  // SubgraphQueryReturnTypes['projects']
+  // We then map over that array to return a Project[], but for some reason,
+  // TypeScript isn't equating `Project` with `SubgraphEntities['project']`,
+  // even though they're the same type.
+  //
+  // If you think you can solve it and remove the @ts-ignore, be my guest.
+  // My best guess is a conditional resolver type, ie:
+  // type EntityResolver<E extends EntityKey> = E extends 'project' ? Project : ...
+  // in favor of the main SubgraphEntities type. I tried it, though, to no avail.
+
+  switch (entity) {
+    case 'project':
+      if ('projects' in response) {
+        // @ts-ignore
+        return response.projects.map(parseProjectJson)
+      }
+      break
+    case 'payEvent':
+      if ('payEvents' in response) {
+        // @ts-ignore
+        return response.payEvents.map(parsePayEventJson)
+      }
+      break
+    case 'redeemEvent':
+      if ('redeemEvents' in response) {
+        // @ts-ignore
+        return response.redeemEvents.map(parseRedeemEventJson)
+      }
+      break
+    case 'participant':
+      if ('participants' in response) {
+        // @ts-ignore
+        return response.participants.map(parseParticipantJson)
+      }
+      break
+    case 'tapEvent':
+      if ('tapEvents' in response) {
+        // @ts-ignore
+        return response.tapEvents.map(parseTapEventJson)
+      }
+      break
+    case 'distributeToPayoutModEvent':
+      if ('distributeToPayoutModEvents' in response) {
+        // @ts-ignore
+        return response.distributeToPayoutModEvents.map(
+          parseDistributeToPayoutModEvent,
+        )
+      }
+      break
+    case 'distributeToTicketModEvent':
+      if ('distributeToTicketModEvents' in response) {
+        // @ts-ignore
+        return response.distributeToTicketModEvents.map(
+          parseDistributeToTicketModEvent,
+        )
+      }
+      break
+    case 'printReservesEvent':
+      if ('printReservesEvents' in response) {
+        // @ts-ignore
+        return response.printReservesEvents.map(parsePrintReservesEventJson)
+      }
+      break
+  }
+
+  return []
+}

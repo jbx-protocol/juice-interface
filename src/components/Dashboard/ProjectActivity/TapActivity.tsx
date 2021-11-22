@@ -1,9 +1,8 @@
 import { ProjectContext } from 'contexts/projectContext'
-import { parseTapEventJson, TapEvent } from 'models/subgraph-entities/tap-event'
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { querySubgraph } from 'utils/graph'
+import { useContext } from 'react'
 
 import TapEventElem from './TapEventElem'
+import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export function TapActivity({
   pageNumber,
@@ -16,55 +15,44 @@ export function TapActivity({
   setLoading: (loading: boolean) => void
   setCount: (count: number) => void
 }) {
-  const [tapEvents, setTapEvents] = useState<TapEvent[]>([])
   const { projectId } = useContext(ProjectContext)
 
-  useEffect(() => {
-    setLoading(true)
-
-    querySubgraph(
-      {
-        entity: 'tapEvent',
-        keys: [
-          'netTransferAmount',
-          'fundingCycleId',
-          'timestamp',
-          'txHash',
-          'beneficiary',
-          'caller',
-          'beneficiaryTransferAmount',
-        ],
-        first: pageSize,
-        skip: pageNumber * pageSize,
-        orderDirection: 'desc',
-        orderBy: 'timestamp',
-        where: projectId
-          ? {
-              key: 'project',
-              value: projectId.toString(),
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        const newEvents = [...tapEvents]
-        newEvents.push(...res.tapEvents.map(e => parseTapEventJson(e)))
-        setTapEvents(newEvents)
+  const { data: tapEvents } = useSubgraphQuery(
+    {
+      entity: 'tapEvent',
+      keys: [
+        'netTransferAmount',
+        'fundingCycleId',
+        'timestamp',
+        'txHash',
+        'beneficiary',
+        'caller',
+        'beneficiaryTransferAmount',
+      ],
+      first: pageSize,
+      skip: pageNumber * pageSize,
+      orderDirection: 'desc',
+      orderBy: 'timestamp',
+      where: projectId
+        ? {
+            key: 'project',
+            value: projectId.toString(),
+          }
+        : undefined,
+    },
+    {
+      onSuccess: data => {
         setLoading(false)
-        setCount(newEvents.length)
+        setCount(data?.length)
       },
-    )
-  }, [pageNumber, pageSize, projectId, setCount, setLoading, tapEvents])
+    },
+  )
 
-  return useMemo(
-    () => (
-      <div>
-        {tapEvents.map(e => (
-          <TapEventElem tapEvent={e} />
-        ))}
-      </div>
-    ),
-    [tapEvents],
+  return (
+    <div>
+      {tapEvents?.map(e => (
+        <TapEventElem key={e.id} tapEvent={e} />
+      ))}
+    </div>
   )
 }

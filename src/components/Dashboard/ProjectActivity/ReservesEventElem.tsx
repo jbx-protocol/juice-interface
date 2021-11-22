@@ -2,67 +2,50 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import {
-  DistributeToTicketModEvent,
-  parseDistributeToTicketModEvent,
-} from 'models/subgraph-entities/distribute-to-ticket-mod-event'
 import { PrintReservesEvent } from 'models/subgraph-entities/print-reserves-event'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
 
 import { smallHeaderStyle } from '../styles'
+import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export default function ReservesEventElem({
   printReservesEvent,
 }: {
   printReservesEvent: PrintReservesEvent | undefined
 }) {
-  const [distributeEvents, setDistributeEvents] = useState<
-    DistributeToTicketModEvent[]
-  >()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const { tokenSymbol } = useContext(ProjectContext)
 
-  useEffect(() => {
-    querySubgraph(
-      {
-        entity: 'distributeToTicketModEvent',
-        keys: ['timestamp', 'txHash', 'modBeneficiary', 'modCut'],
-        orderDirection: 'desc',
-        orderBy: 'modCut',
-        where: printReservesEvent?.id
-          ? {
-              key: 'printReservesEvent',
-              value: printReservesEvent.id,
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        setDistributeEvents(
-          res.distributeToTicketModEvents.map(e =>
-            parseDistributeToTicketModEvent(e),
-          ),
-        )
-      },
-    )
-  }, [printReservesEvent])
+  const { data: distributeEvents } = useSubgraphQuery(
+    {
+      entity: 'distributeToTicketModEvent',
+      keys: ['timestamp', 'txHash', 'modBeneficiary', 'modCut'],
+      orderDirection: 'desc',
+      orderBy: 'modCut',
+      where: printReservesEvent?.id
+        ? {
+            key: 'printReservesEvent',
+            value: printReservesEvent.id,
+          }
+        : undefined,
+    },
+    {},
+  )
 
   if (!printReservesEvent) return null
 
   return (
     <div
+      key={printReservesEvent.id}
       style={{
         marginBottom: 20,
         paddingBottom: 20,
         borderBottom: '1px solid ' + colors.stroke.tertiary,
       }}
-      key={printReservesEvent.id}
     >
       <div
         style={{

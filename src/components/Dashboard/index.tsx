@@ -25,11 +25,10 @@ import { archivedProjectIds } from 'constants/archived-projects'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
+import { useProjects } from '../../hooks/Projects'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
-  const [createdAt, setCreatedAt] = useState<number>()
-  const [earned, setEarned] = useState<BigNumber>()
 
   const converter = useCurrencyConverter()
 
@@ -45,26 +44,13 @@ export default function Dashboard() {
     ),
   })
 
-  useEffect(() => {
-    if (!projectId) return
+  const { data: projects } = useProjects({
+    projectId,
+    keys: ['createdAt', 'totalPaid'],
+  })
 
-    querySubgraph(
-      {
-        entity: 'project',
-        keys: ['createdAt', 'totalPaid'],
-        where: {
-          key: 'id',
-          value: projectId.toString(),
-        },
-      },
-      res => {
-        if (!res?.projects) return
-        const project = parseProjectJson(res.projects[0])
-        setCreatedAt(project.createdAt)
-        setEarned(project.totalPaid)
-      },
-    )
-  }, [projectId])
+  const createdAt = projects?.[0]?.createdAt
+  const earned = projects?.[0]?.totalPaid
 
   const owner = useContractReader<string>({
     contract: ContractName.Projects,

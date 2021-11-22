@@ -1,12 +1,8 @@
 import { ProjectContext } from 'contexts/projectContext'
-import {
-  parsePrintReservesEventJson,
-  PrintReservesEvent,
-} from 'models/subgraph-entities/print-reserves-event'
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { querySubgraph } from 'utils/graph'
+import { useContext } from 'react'
 
 import ReservesEventElem from './ReservesEventElem'
+import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export function ReservesActivity({
   pageNumber,
@@ -19,66 +15,44 @@ export function ReservesActivity({
   setLoading: (loading: boolean) => void
   setCount: (count: number) => void
 }) {
-  const [printReservesEvents, setPrintReservesEvents] = useState<
-    PrintReservesEvent[]
-  >([])
   const { projectId } = useContext(ProjectContext)
 
-  useEffect(() => {
-    setLoading(true)
-
-    querySubgraph(
-      {
-        entity: 'printReservesEvent',
-        keys: [
-          'id',
-          'count',
-          'beneficiary',
-          'beneficiaryTicketAmount',
-          'timestamp',
-          'txHash',
-          'caller',
-        ],
-        first: pageSize,
-        skip: pageNumber * pageSize,
-        orderDirection: 'desc',
-        orderBy: 'timestamp',
-        where: projectId
-          ? {
-              key: 'project',
-              value: projectId.toString(),
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        const newEvents = [...printReservesEvents]
-        newEvents.push(
-          ...res.printReservesEvents.map(e => parsePrintReservesEventJson(e)),
-        )
-        setPrintReservesEvents(newEvents)
+  const { data: printReservesEvents } = useSubgraphQuery(
+    {
+      entity: 'printReservesEvent',
+      keys: [
+        'id',
+        'count',
+        'beneficiary',
+        'beneficiaryTicketAmount',
+        'timestamp',
+        'txHash',
+        'caller',
+      ],
+      first: pageSize,
+      skip: pageNumber * pageSize,
+      orderDirection: 'desc',
+      orderBy: 'timestamp',
+      where: projectId
+        ? {
+            key: 'project',
+            value: projectId.toString(),
+          }
+        : undefined,
+    },
+    {
+      onSuccess: data => {
         setLoading(false)
-        setCount(newEvents.length)
+        setCount(data?.length)
       },
-    )
-  }, [
-    pageNumber,
-    pageSize,
-    printReservesEvents,
-    projectId,
-    setCount,
-    setLoading,
-  ])
+    },
+  )
 
-  return useMemo(
-    () => (
-      <div>
-        {printReservesEvents?.map(e => (
-          <ReservesEventElem printReservesEvent={e} />
-        ))}
-      </div>
-    ),
-    [printReservesEvents],
+  return (
+    <div>
+      {printReservesEvents?.map(e => (
+        <ReservesEventElem key={e.id} printReservesEvent={e} />
+      ))}
+    </div>
   )
 }

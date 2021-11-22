@@ -3,23 +3,23 @@ import { utils } from 'ethers'
 
 import { Participant } from './participant'
 
-export type Project = {
-  createdAt: number
-  handle: string
-  id: BigNumber
+export interface Project {
+  createdAt?: number
+  handle?: string
+  id?: BigNumber
   creator: string
   uri: string
-  currentBalance: BigNumber
-  totalPaid: BigNumber
-  totalRedeemed: BigNumber
-  participants: Partial<Participant>[]
+  currentBalance?: BigNumber
+  totalPaid?: BigNumber
+  totalRedeemed?: BigNumber
+  participants?: Participant[]
 }
 
 export type ProjectJson = Record<keyof Project, string> & {
   participants: string[]
 }
 
-export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
+export const parseProjectJson = (project: ProjectJson): Project => ({
   ...project,
   id: project.id ? BigNumber.from(project.id) : undefined,
   createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,

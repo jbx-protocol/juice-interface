@@ -75,21 +75,17 @@ export default function ParticipantsModal({
       res => {
         if (!res) return
 
-        const newParticipants = [...participants]
-        newParticipants.push(
-          ...res.participants.map(e => parseParticipantJson(e)),
-        )
-        setParticipants(newParticipants)
+        setParticipants(participants => {
+          const newParticipants = [...participants]
+          newParticipants.push(
+            ...res.participants.map(e => parseParticipantJson(e)),
+          )
+          return newParticipants
+        })
         setLoading(false)
       },
     )
-  }, [
-    pageNumber,
-    projectId,
-    sortPayerReportsDirection,
-    sortPayerReports,
-    participants,
-  ])
+  }, [pageNumber, projectId, sortPayerReportsDirection, sortPayerReports])
 
   const smallHeaderStyle = {
     fontSize: '.7rem',

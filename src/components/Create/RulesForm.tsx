@@ -34,6 +34,7 @@ export default function RulesForm({
 
   const buildOption = (title: string, content: JSX.Element, index: number) => (
     <div
+      key={index}
       className="clickable-border"
       style={{
         display: 'flex',

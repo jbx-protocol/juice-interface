@@ -60,10 +60,13 @@ export default function ProjectHandle({
     functionName: 'projectFor',
     args: handle && requireState ? [handle] : null,
     callback: useCallback(
-      returnValue === 'id'
-        ? id => onValueChange(id?.toHexString() ?? '0x00')
-        : () => null,
-      [returnValue],
+      id => {
+        if (returnValue !== 'id') {
+          return
+        }
+        return onValueChange(id?.toHexString() ?? '0x00')
+      },
+      [onValueChange, returnValue],
     ),
   })
 

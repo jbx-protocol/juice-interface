@@ -3,7 +3,7 @@ import { NETWORKS } from 'constants/networks'
 import { NetworkContext } from 'contexts/networkContext'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
@@ -19,11 +19,11 @@ export default function Network({ children }: { children: ChildElems }) {
   const [account, setAccount] = useState<string>()
   const [onboard, setOnboard] = useState<API>()
 
-  const resetWallet = () => {
+  const resetWallet = useCallback(() => {
     onboard?.walletReset()
     setSigningProvider(undefined)
     window.localStorage.setItem(KEY_SELECTED_WALLET, '')
-  }
+  }, [onboard])
 
   const selectWallet = async () => {
     resetWallet()
@@ -44,7 +44,8 @@ export default function Network({ children }: { children: ChildElems }) {
     resetWallet()
   }
 
-  const initializeWallet = () => {
+  // Initialize Network
+  useEffect(() => {
     if (onboard) return
 
     const selectWallet = async (newWallet: Wallet) => {
@@ -62,15 +63,17 @@ export default function Network({ children }: { children: ChildElems }) {
       wallet: selectWallet,
     }
     setOnboard(initOnboard(config, isDarkMode))
-  }
+  }, [isDarkMode, onboard, resetWallet])
 
-  const onDarkModeChanged = () => {
+  // On darkmode changed
+  useEffect(() => {
     if (onboard) {
       onboard.config({ darkMode: isDarkMode })
     }
-  }
+  }, [isDarkMode, onboard])
 
-  const refreshNetwork = () => {
+  // Refresh Network
+  useEffect(() => {
     async function getNetwork() {
       await signingProvider?.ready
 
@@ -81,20 +84,16 @@ export default function Network({ children }: { children: ChildElems }) {
       setNetwork(network?.name)
     }
     getNetwork()
-  }
+  }, [signingProvider, network])
 
-  const reconnectWallet = () => {
+  // Reconnect Wallet
+  useEffect(() => {
     const previouslySelectedWallet =
       window.localStorage.getItem(KEY_SELECTED_WALLET)
     if (previouslySelectedWallet && onboard) {
       onboard.walletSelect(previouslySelectedWallet)
     }
-  }
-
-  useEffect(initializeWallet, [])
-  useEffect(onDarkModeChanged, [isDarkMode])
-  useEffect(refreshNetwork, [signingProvider, network])
-  useEffect(reconnectWallet, [onboard])
+  }, [onboard])
 
   return (
     <NetworkContext.Provider

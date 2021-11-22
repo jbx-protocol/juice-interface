@@ -2,7 +2,7 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 export default function ImageUploader({
@@ -18,7 +18,7 @@ export default function ImageUploader({
   maxSize?: number // KB
   text?: string
 }) {
-  const [url, setUrl] = useState<string>()
+  const [url, setUrl] = useState<string | undefined>(initialUrl)
   const [loadingUpload, setLoadingUpload] = useState<boolean>()
 
   const { theme } = useContext(ThemeContext)
@@ -28,8 +28,6 @@ export default function ImageUploader({
     setUrl(newUrl)
     onSuccess && onSuccess(newUrl)
   }
-
-  useLayoutEffect(() => setUrl(initialUrl), [initialUrl])
 
   return (
     <Row

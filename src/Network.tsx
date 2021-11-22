@@ -84,7 +84,7 @@ export default function Network({ children }: { children: ChildElems }) {
       setNetwork(network?.name)
     }
     getNetwork()
-  }, [signingProvider, network])
+  }, [signingProvider])
 
   // Reconnect Wallet
   useEffect(() => {

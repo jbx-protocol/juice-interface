@@ -1,12 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { ProjectState } from 'models/project-visibility'
-import {
-  parseProjectJson,
-  Project,
-  ProjectJson,
-} from 'models/subgraph-entities/project'
-import { useMemo } from 'react'
+import { Project } from 'models/subgraph-entities/project'
 import useSubgraphQuery from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
 
@@ -19,6 +14,7 @@ interface ProjectsOptions {
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   filter?: ProjectState
+  keys?: (keyof Project)[]
 }
 
 let defaultPageSize = 20
@@ -26,6 +22,7 @@ let defaultPageSize = 20
 export function useProjects({
   pageNumber,
   projectId,
+  keys,
   handle,
   uri,
   orderBy,
@@ -33,10 +30,10 @@ export function useProjects({
   pageSize = defaultPageSize,
   filter,
 }: ProjectsOptions) {
-  const { data, ...query } = useSubgraphQuery(
+  return useSubgraphQuery(
     {
       entity: 'project',
-      keys: [
+      keys: keys ?? [
         'handle',
         'creator',
         'createdAt',
@@ -49,33 +46,34 @@ export function useProjects({
       skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
+      where:
+        projectId != null
+          ? {
+              key: 'id',
+              value: projectId.toString(),
+            }
+          : undefined,
     },
     {
       staleTime: 60000,
+      select: data => {
+        switch (filter) {
+          case 'active':
+            return data?.filter(
+              project =>
+                project?.id &&
+                !archivedProjectIds.includes(project.id.toNumber()),
+            )
+          case 'archived':
+            return data?.filter(
+              project =>
+                project.id &&
+                archivedProjectIds.includes(project.id.toNumber()),
+            )
+          default:
+            return data
+        }
+      },
     },
   )
-
-  const filteredProjects = useMemo(() => {
-    const projects = data?.projects?.map(
-      (p: ProjectJson) => parseProjectJson(p) as Project,
-    )
-
-    switch (filter) {
-      case 'active':
-        return projects?.filter(
-          _p => !archivedProjectIds.includes(_p.id.toNumber()),
-        )
-      case 'archived':
-        return projects?.filter(_p =>
-          archivedProjectIds.includes(_p.id.toNumber()),
-        )
-      default:
-        return projects
-    }
-  }, [data?.projects, filter])
-
-  return {
-    data: filteredProjects,
-    ...query,
-  }
 }

@@ -3,14 +3,14 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { PayEvent } from 'models/subgraph-entities/pay-event'
+import { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import { querySubgraph } from 'utils/graph'
 
 import RichNote from './RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
+import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([
@@ -37,7 +37,6 @@ export function PaymentActivity({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const [payEvents, setPayEvents] = useState<PayEvent[]>([])
 
   const usePayEventOverrides =
     projectId && payEventOverrides.has(projectId.toString())
@@ -63,101 +62,88 @@ export function PaymentActivity({
     [projectId],
   )
 
-  useEffect(() => {
-    setLoading(true)
-
-    querySubgraph(
-      {
-        entity: 'payEvent',
-        keys: ['amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
-        first: pageSize,
-        skip: pageNumber * pageSize,
-        orderDirection: 'desc',
-        orderBy: 'timestamp',
-        where: projectId
-          ? {
-              key: 'project',
-              value: projectId.toString(),
-            }
-          : undefined,
-      },
-      res => {
-        if (!res) return
-
-        setPayEvents(payEvents => {
-          const newEvents = [...payEvents]
-          newEvents.push(...res.payEvents.map(e => parsePayEventJson(e)))
-          setCount(newEvents.length)
-          return newEvents
-        })
-
+  const { data: payEvents } = useSubgraphQuery(
+    {
+      entity: 'payEvent',
+      keys: ['amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
+      first: pageSize,
+      skip: pageNumber * pageSize,
+      orderDirection: 'desc',
+      orderBy: 'timestamp',
+      where: projectId
+        ? {
+            key: 'project',
+            value: projectId.toString(),
+          }
+        : undefined,
+    },
+    {
+      onSuccess: data => {
         setLoading(false)
+        setCount(data?.length)
       },
-    )
-  }, [projectId, pageSize, pageNumber, setLoading, setCount])
+    },
+  )
 
-  return useMemo(
-    () => (
-      <div>
-        {payEvents.map(e => (
+  return (
+    <div>
+      {payEvents?.map(e => (
+        <div
+          key={e.id}
+          style={{
+            marginBottom: 20,
+            paddingBottom: 20,
+            borderBottom: '1px solid ' + colors.stroke.tertiary,
+          }}
+        >
           <div
             style={{
-              marginBottom: 20,
-              paddingBottom: 20,
-              borderBottom: '1px solid ' + colors.stroke.tertiary,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignContent: 'space-between',
             }}
-            key={e.id}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignContent: 'space-between',
-              }}
-            >
-              <div>
-                <div style={smallHeaderStyle(colors)}>Paid</div>
-                <div
-                  style={{
-                    lineHeight: contentLineHeight,
-                    fontSize: '1rem',
-                  }}
-                >
-                  <CurrencySymbol currency={0} />
-                  {formatWad(e.amount, { decimals: 4 })}
-                </div>
-              </div>
-
-              <div style={{ textAlign: 'right' }}>
-                {e.timestamp && (
-                  <div style={smallHeaderStyle(colors)}>
-                    {formatHistoricalDate(e.timestamp * 1000)}{' '}
-                    <EtherscanLink value={e.txHash} type="tx" />
-                  </div>
-                )}
-                <div
-                  style={{
-                    ...smallHeaderStyle(colors),
-                    lineHeight: contentLineHeight,
-                  }}
-                >
-                  <FormattedAddress address={e.beneficiary} />
-                </div>
+            <div>
+              <div style={smallHeaderStyle(colors)}>Paid</div>
+              <div
+                style={{
+                  lineHeight: contentLineHeight,
+                  fontSize: '1rem',
+                }}
+              >
+                <CurrencySymbol currency={0} />
+                {formatWad(e.amount, { decimals: 4 })}
               </div>
             </div>
 
-            <div style={{ marginTop: 5 }}>
-              <RichNote
-                note={
-                  (usePayEventOverrides ? formatPayEventOverride(e) : e.note) ??
-                  ''
-                }
-              />
+            <div style={{ textAlign: 'right' }}>
+              {e.timestamp && (
+                <div style={smallHeaderStyle(colors)}>
+                  {formatHistoricalDate(e.timestamp * 1000)}{' '}
+                  <EtherscanLink value={e.txHash} type="tx" />
+                </div>
+              )}
+              <div
+                style={{
+                  ...smallHeaderStyle(colors),
+                  lineHeight: contentLineHeight,
+                }}
+              >
+                <FormattedAddress address={e.beneficiary} />
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-    ),
-    [payEvents, colors, usePayEventOverrides, formatPayEventOverride],
+
+          <div style={{ marginTop: 5 }}>
+            <RichNote
+              note={
+                (usePayEventOverrides ? formatPayEventOverride(e) : e.note) ??
+                ''
+              }
+            />
+          </div>
+        </div>
+      ))}
+    </div>
   )
 }

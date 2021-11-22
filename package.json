@@ -34,7 +34,8 @@
   "resolutions": {
     "jest": "26.6.0",
     "**/@typescript-eslint/eslint-plugin": "^4.1.1",
-    "**/@typescript-eslint/parser": "^4.1.1"
+    "**/@typescript-eslint/parser": "^4.1.1",
+    "eslint-plugin-react-hooks": "4.2.0"
   },
   "scripts": {
     "compile-styles": "lessc ./src/styles/antd.less ./src/styles/antd.css --js",
@@ -42,6 +43,7 @@
     "build": "yarn compile-styles && react-scripts build",
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },

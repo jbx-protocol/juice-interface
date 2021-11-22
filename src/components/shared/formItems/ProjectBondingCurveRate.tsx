@@ -32,8 +32,6 @@ export default function ProjectBondingCurveRate({
 
   useLayoutEffect(() => {
     try {
-      if (calculator) return
-
       // https://www.desmos.com/api/v1.6/docs/index.html
       setCalculator(
         Desmos.GraphingCalculator(document.getElementById(graphContainerId), {
@@ -64,7 +62,7 @@ export default function ProjectBondingCurveRate({
     } catch (e) {
       console.log('Error setting calculator', e)
     }
-  }, [calculator])
+  }, [])
 
   const graphCurve = useCallback(
     (_value?: number) => {
@@ -85,8 +83,9 @@ export default function ProjectBondingCurveRate({
       ])
       calculator.setExpression({
         id: bondingCurveId,
-        latex: `y=${overflow} * (x/${supply}) * (${_value /
-          100} + (x - x${_value / 100})/${supply})`,
+        latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
+          _value / 100
+        })/${supply})`,
         color: colors.text.brand.primary,
       })
       calculator.setExpression({
@@ -98,11 +97,10 @@ export default function ProjectBondingCurveRate({
     [calculator, colors.stroke.secondary, colors.text.brand.primary],
   )
 
-  useEffect(() => graphCurve(parseFloat(value ?? '0')), [
-    calculator,
-    graphCurve,
-    value,
-  ])
+  useEffect(
+    () => graphCurve(parseFloat(value ?? '0')),
+    [calculator, graphCurve, value],
+  )
 
   const labelStyle: CSSProperties = {
     fontSize: '.7rem',

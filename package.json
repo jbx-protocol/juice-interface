@@ -42,17 +42,17 @@
     "build": "yarn compile-styles && react-scripts build",
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
+    "lint-staged": "lint-staged",
     "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "eslint --ext .ts,.tsx --fix ."
+    "lint:fix": "eslint --ext .ts,.tsx --fix .",
+    "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "@typescript-eslint/no-redeclare": "error"
-    }
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
@@ -73,6 +73,9 @@
     "@types/react-dom": "^17",
     "@types/react-router-dom": "^5.1.7",
     "eslint-config-react-app": "^6.0.0",
-    "less": "^4.1.1"
+    "husky": "^7.0.0",
+    "less": "^4.1.1",
+    "lint-staged": "^12.1.1",
+    "prettier": "2.4.1"
   }
 }

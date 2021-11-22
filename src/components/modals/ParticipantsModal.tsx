@@ -35,13 +35,11 @@ export default function ParticipantsModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
-  const [sortPayerReports, setSortPayerReports] = useState<keyof Participant>(
-    'tokenBalance',
-  )
+  const [sortPayerReports, setSortPayerReports] =
+    useState<keyof Participant>('tokenBalance')
   const [pageNumber, setPageNumber] = useState<number>(0)
-  const [sortPayerReportsDirection, setSortPayerReportsDirection] = useState<
-    OrderDirection
-  >('desc')
+  const [sortPayerReportsDirection, setSortPayerReportsDirection] =
+    useState<OrderDirection>('desc')
   const { projectId, tokenSymbol } = useContext(ProjectContext)
   const {
     theme: { colors },
@@ -86,11 +84,6 @@ export default function ParticipantsModal({
       },
     )
   }, [pageNumber, projectId, sortPayerReportsDirection, sortPayerReports])
-
-  const smallHeaderStyle = {
-    fontSize: '.7rem',
-    color: colors.text.tertiary,
-  }
 
   const contentLineHeight = '1.4rem'
 
@@ -189,8 +182,13 @@ export default function ParticipantsModal({
     query()
   }, [projectId, sortPayerReports, sortPayerReportsDirection])
 
-  const list = useMemo(
-    () => (
+  const list = useMemo(() => {
+    const smallHeaderStyle = {
+      fontSize: '.7rem',
+      color: colors.text.tertiary,
+    }
+
+    return (
       <div>
         <div
           style={{
@@ -288,18 +286,17 @@ export default function ParticipantsModal({
           </div>
         ))}
       </div>
-    ),
-    [
-      sortPayerReports,
-      tokenSymbol,
-      sortPayerReportsDirection,
-      download,
-      participants,
-      colors.stroke.tertiary,
-      smallHeaderStyle,
-      formattedTokenBalance,
-    ],
-  )
+    )
+  }, [
+    colors.text.tertiary,
+    colors.stroke.tertiary,
+    sortPayerReports,
+    tokenSymbol,
+    sortPayerReportsDirection,
+    download,
+    participants,
+    formattedTokenBalance,
+  ])
 
   const erc20IsUntracked =
     tokenSymbol &&

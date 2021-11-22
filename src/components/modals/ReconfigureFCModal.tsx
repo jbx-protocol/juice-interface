@@ -32,6 +32,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
+import { serializeFundingCycle } from 'utils/serializers'
 import { amountSubFee } from 'utils/math'
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -120,11 +121,13 @@ export default function ReconfigureFCModal({
     const metadata = decodeFCMetadata(fundingCycle.metadata)
     if (!metadata) return
     dispatch(
-      editingProjectActions.setFundingCycle({
-        ...fundingCycle,
-        reserved: BigNumber.from(metadata.reservedRate),
-        bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
-      }),
+      editingProjectActions.setFundingCycle(
+        serializeFundingCycle({
+          ...fundingCycle,
+          reserved: BigNumber.from(metadata.reservedRate),
+          bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
+        }),
+      ),
     )
     setEditingTicketMods(ticketMods)
     setEditingPayoutMods(payoutMods)

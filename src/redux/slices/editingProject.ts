@@ -11,7 +11,6 @@ import {
   parsePermille,
 } from 'utils/formatNumber'
 import {
-  EditingFundingCycle,
   SerializedFundingCycle,
   serializeFundingCycle,
 } from 'utils/serializers'
@@ -74,6 +73,7 @@ export const editingProjectSlice = createSlice({
   reducers: {
     setState: (state, action: PayloadAction<EditingProjectState>) =>
       action.payload,
+    resetState: (state, action: PayloadAction) => defaultProjectState,
     setProjectInfo: (state, action: PayloadAction<EditingProjectInfo>) => ({
       ...state,
       info: action.payload,
@@ -165,9 +165,12 @@ export const editingProjectSlice = createSlice({
         },
       },
     }),
-    setFundingCycle: (state, action: PayloadAction<EditingFundingCycle>) => ({
+    setFundingCycle: (
+      state,
+      action: PayloadAction<SerializedFundingCycle>,
+    ) => ({
       ...state,
-      fundingCycle: serializeFundingCycle(action.payload),
+      fundingCycle: action.payload,
     }),
     setId: (state, action: PayloadAction<string>) => ({
       ...state,

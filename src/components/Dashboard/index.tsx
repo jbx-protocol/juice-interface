@@ -3,7 +3,7 @@ import { archivedProjectIds } from 'constants/archived-projects'
 import { projectTypes } from 'constants/project-types'
 import { layouts } from 'constants/styles/layouts'
 import { padding } from 'constants/styles/padding'
-import { ProjectContext } from 'contexts/projectContext'
+import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -288,6 +288,55 @@ export default function Dashboard() {
     [balance, converter, currentFC],
   )
 
+  const project = useMemo<ProjectContextType>(() => {
+    const projectType = projectId
+      ? projectTypes[projectId.toNumber()]
+      : 'standard'
+    const isPreviewMode = false
+    const isArchived = projectId
+      ? archivedProjectIds.includes(projectId.toNumber())
+      : false
+
+    return {
+      createdAt,
+      projectId,
+      projectType,
+      owner,
+      earned,
+      handle,
+      metadata,
+      currentFC,
+      queuedFC,
+      currentPayoutMods,
+      currentTicketMods,
+      queuedPayoutMods,
+      queuedTicketMods,
+      tokenAddress,
+      tokenSymbol,
+      balance,
+      balanceInCurrency,
+      isPreviewMode,
+      isArchived,
+    }
+  }, [
+    balance,
+    balanceInCurrency,
+    createdAt,
+    currentFC,
+    currentPayoutMods,
+    currentTicketMods,
+    earned,
+    handle,
+    metadata,
+    owner,
+    projectId,
+    queuedFC,
+    queuedPayoutMods,
+    queuedTicketMods,
+    tokenAddress,
+    tokenSymbol,
+  ])
+
   if (projectExists === undefined) return <Loading />
 
   if (!projectExists) {
@@ -306,34 +355,8 @@ export default function Dashboard() {
 
   if (!projectId || !handle || !metadata) return null
 
-  const projectType = projectTypes[projectId.toNumber()] ?? 'standard'
-  const isPreviewMode = false
-  const isArchived = archivedProjectIds.includes(projectId.toNumber())
-
   return (
-    <ProjectContext.Provider
-      value={{
-        createdAt,
-        projectId,
-        projectType,
-        owner,
-        earned,
-        handle,
-        metadata,
-        currentFC,
-        queuedFC,
-        currentPayoutMods,
-        currentTicketMods,
-        queuedPayoutMods,
-        queuedTicketMods,
-        tokenAddress,
-        tokenSymbol,
-        balance,
-        balanceInCurrency,
-        isPreviewMode,
-        isArchived,
-      }}
-    >
+    <ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
         <Project />
         <div

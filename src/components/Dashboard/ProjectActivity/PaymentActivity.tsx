@@ -4,13 +4,7 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { parsePayEventJson, PayEvent } from 'models/subgraph-entities/pay-event'
-import {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
@@ -69,7 +63,7 @@ export function PaymentActivity({
     [projectId],
   )
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setLoading(true)
 
     querySubgraph(
@@ -90,14 +84,17 @@ export function PaymentActivity({
       res => {
         if (!res) return
 
-        const newEvents = [...payEvents]
-        newEvents.push(...res.payEvents.map(e => parsePayEventJson(e)))
-        setPayEvents(newEvents)
+        setPayEvents(payEvents => {
+          const newEvents = [...payEvents]
+          newEvents.push(...res.payEvents.map(e => parsePayEventJson(e)))
+          setCount(newEvents.length)
+          return newEvents
+        })
+
         setLoading(false)
-        setCount(newEvents.length)
       },
     )
-  }, [projectId, pageSize, pageNumber, setLoading, payEvents, setCount])
+  }, [projectId, pageSize, pageNumber, setLoading, setCount])
 
   return useMemo(
     () => (

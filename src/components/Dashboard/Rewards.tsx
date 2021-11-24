@@ -19,7 +19,13 @@ import { ContractName } from 'models/contract-name'
 import { BallotState } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formatPercent,
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import IssueTickets from './IssueTickets'
@@ -372,7 +378,7 @@ export default function Rewards({
       </Space>
 
       <Modal
-        title={`Redeem ${tokenSymbol ?? 'Tokens'}`}
+        title={`Redeem ${tokenSymbol ? tokenSymbol + ' tokens' : 'Tokens'}`}
         visible={redeemModalVisible}
         onOk={() => {
           redeem()
@@ -382,7 +388,8 @@ export default function Rewards({
           setRedeemAmount(undefined)
           setRedeemModalVisible(false)
         }}
-        okText="Redeem"
+        okText={`Burn ${formattedNum(redeemAmount)} ${tokenSymbol ??
+          'tokens'} for ETH`}
         okButtonProps={{
           disabled:
             redeemDisabled || !redeemAmount || parseInt(redeemAmount) === 0,
@@ -399,9 +406,11 @@ export default function Rewards({
             {formatWad(maxClaimable, { decimals: 4 })}
           </p>
           <p>
-            Tokens can be redeemed for a project's overflow according to the
-            bonding curve rate of the current funding cycle. Tokens are burned
-            when they are redeemed.
+            Tokens can be redeemed for a portion of this project's ETH overflow,
+            according to the bonding curve rate of the current funding cycle.{' '}
+            <span style={{ fontWeight: 500, color: colors.text.warn }}>
+              Tokens are burned when they are redeemed.
+            </span>
           </p>
           {redeemDisabled && (
             <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
@@ -424,7 +433,9 @@ export default function Rewards({
                 }
                 onChange={val => setRedeemAmount(val)}
               />
-              You will receive minimum {formatWad(rewardAmount) || '--'} ETH
+              <div style={{ fontWeight: 500, marginTop: 20 }}>
+                You will receive minimum {formatWad(rewardAmount) || '--'} ETH
+              </div>
             </div>
           )}
         </Space>

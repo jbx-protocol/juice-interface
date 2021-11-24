@@ -17,7 +17,7 @@ Start with issues labelled
 
 ### Create a pull request
 
-To contribute, create a pull request (PR) that tartgets the `main` branch. A
+To contribute, create a pull request (PR) that targets the `main` branch. A
 live Fleek preview will be automatically deployed for each PR. Before your PR is
 merged, it must meet the following criteria:
 

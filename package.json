@@ -44,6 +44,7 @@
     "test": "yarn compile-styles && react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },

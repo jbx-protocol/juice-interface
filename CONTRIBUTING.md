@@ -1,26 +1,43 @@
-# Contributing
+# Contributing to Juicebox
 
-If you're interested in contributing ideas or code to Juicebox, you're in the right place!
+If you're interested in contributing ideas or code to Juicebox, you're in the
+right place!
 
-# Development
+## Development
 
-Check out the README for instructions on running the app indevelopment.
+Check out the [README](README.md#usage) for instructions on running the app in
+development.
 
-## JB app release + contributions process
+## Contribution process
 
-All changes to the `main` branch will be automatically via [Fleek](https://fleek.co). Contributions to `main` should be created as a pull request, and a live Fleek preview will be automatically deployed. Before merged, each PR must:
+### Find something to work on
 
-- Verify that all CI checks pass before merging
-- For significant UX changes, be discussed by other design/dev contributors
-- Be approved by at least one code owner
-
-## Finding a first issue
-
-Start with issues with the label
+Start with issues labelled
 [`good first issue`](https://github.com/jbx-protocol/juice-juicehouse/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
-# Ideas
+### Create a pull request
 
-**Have an idea or suggestion?** Create a new Github [issue](https://github.com/jbx-protocol/juice-juicehouse/issues/new/choose), or mention it in the [Discord](https://discord.gg/6jXrJSyDFf)
+To contribute, create a pull request (PR) that tartgets the `main` branch. A
+live Fleek preview will be automatically deployed for each PR. Before your PR is
+merged, it must meet the following criteria:
 
-**Notice something broken?** File a [bug report](https://github.com/jbx-protocol/juice-juicehouse/issues/new/choose)
+- Passes all CI checks.
+- Approved by at least one code owner.
+- Discussed by other design/dev contributors (for contributions that make
+  significant UI/UX changes).
+
+### Juicebox app release
+
+All changes to the `main` branch will be automatically deployed via
+[Fleek](https://fleek.co).
+
+## Suggest a feature
+
+Have an idea or suggestion? Create a
+[feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+)
+or mention it in the [Discord](https://discord.gg/6jXrJSyDFf).
+
+## Report a bug
+
+Notice something broken? Create a
+[bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).

@@ -455,12 +455,7 @@ export default function ProjectPayoutMods({
               }
             />
           ) : null}
-          <Form.Item
-            name="percent"
-            label="Percent"
-            rules={[{ required: true }]}
-            shouldUpdate
-          >
+          <Form.Item label="Percent" rules={[{ required: true }]} shouldUpdate>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1, marginRight: 10 }}>
                 <NumberSlider

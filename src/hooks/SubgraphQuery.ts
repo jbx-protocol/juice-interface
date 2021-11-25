@@ -40,8 +40,7 @@ export default function useSubgraphQuery<E extends EntityKey>(
         { headers: { 'Content-Type': 'application/json' } },
       )
 
-      let data = response.data?.data
-      return formatGraphResponse(opts.entity, data)
+      return formatGraphResponse(opts.entity, response.data?.data)
     },
     {
       staleTime: 60000,

@@ -7,6 +7,12 @@ Juicebox frontend application.
 
 ## Usage
 
+### Dependencies
+
+- [Blocknative](https://www.blocknative.com) account
+- [Infura](https://infura.io) account
+- [Pinata](https://pinata.cloud) account
+
 1.  Clone the respository:
 
   ```bash

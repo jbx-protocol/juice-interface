@@ -73,18 +73,60 @@ export default function ProjectHeader() {
         </div>
 
         <div style={{ flex: 1 }}>
-          <h1
+          <div
             style={{
-              fontSize: '2.4rem',
-              lineHeight: '2.8rem',
-              margin: 0,
-              color: metadata?.name
-                ? colors.text.primary
-                : colors.text.placeholder,
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
             }}
           >
-            {metadata?.name || 'Untitled project'}
-          </h1>
+            <h1
+              style={{
+                fontSize: '2.4rem',
+                lineHeight: '2.8rem',
+                margin: 0,
+                color: metadata?.name
+                  ? colors.text.primary
+                  : colors.text.placeholder,
+              }}
+            >
+              {metadata?.name || 'Untitled project'}
+            </h1>
+
+            {!isPreviewMode && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    color: colors.text.tertiary,
+                    paddingRight: 10,
+                  }}
+                >
+                  ID: {projectId.toNumber()}
+                </span>
+
+                <div>
+                  <Button
+                    onClick={() => setToolDrawerVisible(true)}
+                    icon={<ToolOutlined />}
+                    type="text"
+                  />
+                  {hasEditPermission && (
+                    <Button
+                      onClick={() => setEditProjectModalVisible(true)}
+                      icon={<SettingOutlined />}
+                      type="text"
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
 
           <div
             style={{
@@ -166,43 +208,11 @@ export default function ProjectHeader() {
               </a>
             )}
           </div>
-          <RichNote note={metadata?.description} />
+          <RichNote
+            style={{ maxWidth: '700px' }} // good line length for reading
+            note={metadata?.description}
+          />
         </div>
-
-        {!isPreviewMode && (
-          <div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <div
-                style={{
-                  color: colors.text.tertiary,
-                  paddingRight: 10,
-                }}
-              >
-                ID: {projectId.toNumber()}
-              </div>
-
-              <div>
-                <Button
-                  onClick={() => setToolDrawerVisible(true)}
-                  icon={<ToolOutlined />}
-                  type="text"
-                ></Button>
-                {hasEditPermission && (
-                  <Button
-                    onClick={() => setEditProjectModalVisible(true)}
-                    icon={<SettingOutlined />}
-                    type="text"
-                  ></Button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       <EditProjectModal

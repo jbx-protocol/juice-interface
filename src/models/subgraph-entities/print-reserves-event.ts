@@ -1,24 +1,22 @@
 import { BigNumber } from 'ethers'
 
-export type PrintReservesEvent = Partial<{
+export interface PrintReservesEvent {
   id: string
-  project: BigNumber
-  fundingCycleId: BigNumber
+  project?: BigNumber
+  fundingCycleId?: BigNumber
   beneficiary: string
-  count: BigNumber
-  beneficiaryTicketAmount: BigNumber
+  count?: BigNumber
+  beneficiaryTicketAmount?: BigNumber
   caller: string
-  timestamp: number
+  timestamp?: number
   txHash: string
-}>
+}
 
-export type PrintReservesEventJson = Partial<
-  Record<keyof PrintReservesEvent, string>
->
+export type PrintReservesEventJson = Record<keyof PrintReservesEvent, string>
 
 export const parsePrintReservesEventJson = (
   json: PrintReservesEventJson,
-): Partial<PrintReservesEvent> => ({
+): PrintReservesEvent => ({
   ...json,
   project: json.project ? BigNumber.from(json.project) : undefined,
   fundingCycleId: json.fundingCycleId

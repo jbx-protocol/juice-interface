@@ -22,7 +22,14 @@ export default function TapEventElem({
 
   const { data: payoutEvents } = useSubgraphQuery({
     entity: 'distributeToPayoutModEvent',
-    keys: ['timestamp', 'txHash', 'modProjectId', 'modBeneficiary', 'modCut'],
+    keys: [
+      'timestamp',
+      'txHash',
+      'modProjectId',
+      'modBeneficiary',
+      'modPercent',
+      'modCut',
+    ],
     orderDirection: 'desc',
     orderBy: 'modCut',
     where: tapEvent?.id

@@ -96,17 +96,21 @@ export type BlockConfig = {
   hash?: string
 }
 
-export interface GraphQueryOpts<E extends EntityKey> {
+export type EntityKeys<E extends EntityKey> = keyof SubgraphEntities[E]
+
+export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   entity: E
   first?: number
   skip?: number
   orderBy?: keyof SubgraphEntities[E]
   block?: BlockConfig
+
+  // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
   keys: (
-    | keyof SubgraphEntities[E]
+    | K
     | {
         entity: EntityKey
-        keys: (keyof SubgraphEntities[EntityKey])[]
+        keys: string[] // hard to type accurate nested keys. All bets are off when this is used.
       }
   )[]
   orderDirection?: OrderDirection
@@ -114,8 +118,8 @@ export interface GraphQueryOpts<E extends EntityKey> {
 }
 
 // https://thegraph.com/docs/graphql-api#filtering
-export const formatGraphQuery = <E extends EntityKey>(
-  opts: GraphQueryOpts<E>,
+export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
+  opts: GraphQueryOpts<E, K>,
 ) => {
   let args = ''
 
@@ -164,8 +168,8 @@ export const formatGraphQuery = <E extends EntityKey>(
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 
-export const querySubgraph = <E extends EntityKey>(
-  opts: GraphQueryOpts<E>,
+export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
+  opts: GraphQueryOpts<E, K>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
 ) =>
   subgraphUrl

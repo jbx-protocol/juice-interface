@@ -4,7 +4,13 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContentType } from 'hooks/ContentType'
 import { useContext, useMemo } from 'react'
 
-export default function RichNote({ note }: { note: string | undefined }) {
+export default function RichNote({
+  note,
+  style,
+}: {
+  note: string | undefined
+  style?: React.CSSProperties | undefined
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -38,7 +44,7 @@ export default function RichNote({ note }: { note: string | undefined }) {
       : note
 
   return (
-    <div style={{ marginTop: 5 }}>
+    <div style={{ marginTop: 5, ...style }}>
       <div
         style={{ color: colors.text.secondary, overflowWrap: 'break-word' }}
         dangerouslySetInnerHTML={{

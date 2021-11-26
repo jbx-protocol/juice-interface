@@ -1,18 +1,18 @@
 import { BigNumber } from 'ethers'
 
-export type RedeemEvent = Partial<{
+export interface RedeemEvent {
   id: string
   holder: string
   beneficiary: string
-  project: BigNumber
-  amount: BigNumber
-  returnAmount: BigNumber
+  project?: BigNumber
+  amount?: BigNumber
+  returnAmount?: BigNumber
   caller: string
-  timestamp: number
+  timestamp?: number
   txHash: string
-}>
+}
 
-export type RedeemEventJson = Partial<Record<keyof RedeemEvent, string>>
+export type RedeemEventJson = Record<keyof RedeemEvent, string>
 
 export const parseRedeemEventJson = (json: RedeemEventJson): RedeemEvent => ({
   ...json,

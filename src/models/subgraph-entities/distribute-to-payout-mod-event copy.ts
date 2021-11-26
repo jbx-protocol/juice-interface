@@ -1,29 +1,30 @@
 import { BigNumber } from 'ethers'
 
-export type DistributeToPayoutModEvent = Partial<{
+export interface DistributeToPayoutModEvent {
   id: string
-  project: BigNumber
-  fundingCycleId: BigNumber
-  projectId: BigNumber
+  project?: BigNumber
+  fundingCycleId?: BigNumber
+  projectId?: BigNumber
   modBeneficiary: string
-  modPercent: BigNumber
+  modPercent?: BigNumber
   modPreferUnstaked: boolean
-  modProjectId: BigNumber
+  modProjectId?: BigNumber
   modAllocator: string
-  modCut: BigNumber
+  modCut?: BigNumber
   caller: string
   tapEvent: string
-  timestamp: number
+  timestamp?: number
   txHash: string
-}>
+}
 
-export type DistributeToPayoutModEventJson = Partial<
-  Record<keyof DistributeToPayoutModEvent, string>
+export type DistributeToPayoutModEventJson = Record<
+  keyof DistributeToPayoutModEvent,
+  string
 >
 
 export const parseDistributeToPayoutModEvent = (
   json: DistributeToPayoutModEventJson,
-): Partial<DistributeToPayoutModEvent> => ({
+): DistributeToPayoutModEvent => ({
   ...json,
   fundingCycleId: json.fundingCycleId
     ? BigNumber.from(json.fundingCycleId)

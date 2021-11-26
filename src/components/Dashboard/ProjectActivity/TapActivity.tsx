@@ -21,6 +21,7 @@ export function TapActivity({
     {
       entity: 'tapEvent',
       keys: [
+        'id',
         'netTransferAmount',
         'fundingCycleId',
         'timestamp',

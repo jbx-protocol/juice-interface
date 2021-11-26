@@ -1,5 +1,6 @@
 import {
   EntityKey,
+  EntityKeys,
   formatGraphQuery,
   formatGraphResponse,
   GraphQueryOpts,
@@ -11,13 +12,22 @@ import axios from 'axios'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 
-export default function useSubgraphQuery<E extends EntityKey>(
-  opts: GraphQueryOpts<E>,
+// This looks up the entity type and constructs an object
+// only with the keys you specified in K.
+type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
+  [PropertyKey in K[number]]: SubgraphEntities[E][PropertyKey]
+}[]
+
+export default function useSubgraphQuery<
+  E extends EntityKey,
+  K extends EntityKeys<E>
+>(
+  opts: GraphQueryOpts<E, K>,
   reactQueryOptions?: UseQueryOptions<
-    SubgraphEntities[E][],
+    GraphResult<E, K[]>,
     unknown, // Specific error type?
-    SubgraphEntities[E][],
-    readonly [string, GraphQueryOpts<E>]
+    GraphResult<E, K[]>,
+    readonly [string, GraphQueryOpts<E, K>]
   >,
 ) {
   if (!subgraphUrl) {
@@ -25,10 +35,10 @@ export default function useSubgraphQuery<E extends EntityKey>(
     throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
   }
   return useQuery<
-    SubgraphEntities[E][],
+    GraphResult<E, K[]>,
     unknown, // Specific error type?
-    SubgraphEntities[E][],
-    readonly [string, GraphQueryOpts<E>]
+    GraphResult<E, K[]>,
+    readonly [string, GraphQueryOpts<E, K>]
   >(
     ['subgraph-query', opts],
     async () => {

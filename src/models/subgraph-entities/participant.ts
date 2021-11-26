@@ -1,15 +1,15 @@
 import { BigNumber } from 'ethers'
 
-export type Participant = Partial<{
+export interface Participant {
   id: string
   wallet: string
   totalPaid?: BigNumber
   project?: BigNumber
   tokenBalance?: BigNumber
   lastPaidTimestamp?: number
-}>
+}
 
-export type ParticipantJson = Partial<Record<keyof Participant, string>>
+export type ParticipantJson = Record<keyof Participant, string>
 
 export const parseParticipantJson = (json: ParticipantJson): Participant => ({
   ...json,

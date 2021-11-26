@@ -1,23 +1,23 @@
 import { BigNumber } from 'ethers'
 
-export type TapEvent = Partial<{
+export interface TapEvent {
   id: string
-  project: BigNumber
-  fundingCycleId: BigNumber
+  project?: BigNumber
+  fundingCycleId?: BigNumber
   beneficiary: string
-  amount: BigNumber
-  currency: BigNumber
-  netTransferAmount: BigNumber
-  beneficiaryTransferAmount: BigNumber
-  govFeeAmount: BigNumber
+  amount?: BigNumber
+  currency?: BigNumber
+  netTransferAmount?: BigNumber
+  beneficiaryTransferAmount?: BigNumber
+  govFeeAmount?: BigNumber
   caller: string
-  timestamp: number
+  timestamp?: number
   txHash: string
-}>
+}
 
-export type TapEventJson = Partial<Record<keyof TapEvent, string>>
+export type TapEventJson = Record<keyof TapEvent, string>
 
-export const parseTapEventJson = (json: TapEventJson): Partial<TapEvent> => ({
+export const parseTapEventJson = (json: TapEventJson): TapEvent => ({
   ...json,
   project: json.project ? BigNumber.from(json.project) : undefined,
   fundingCycleId: json.fundingCycleId

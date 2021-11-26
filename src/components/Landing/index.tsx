@@ -323,7 +323,7 @@ export default function Landing() {
                     projects they support succeed.
                   </p>
                   <p className="ol">
-                    The future will be lead by creators, and owned by
+                    The future will be led by creators, and owned by
                     communities.
                   </p>
                 </div>

@@ -65,7 +65,7 @@ export function PaymentActivity({
   const { data: payEvents } = useSubgraphQuery(
     {
       entity: 'payEvent',
-      keys: ['amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
+      keys: ['id', 'amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
       first: pageSize,
       skip: pageNumber * pageSize,
       orderDirection: 'desc',

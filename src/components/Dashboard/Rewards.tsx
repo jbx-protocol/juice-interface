@@ -324,27 +324,30 @@ export default function Rewards({
                           )}
                         </div>
                       )}
-                      {(iouBalance?.gt(0) || ticketsIssued === false) && (
-                        <div>
-                          {formatWad(iouBalance ?? 0, { decimals: 0 })}
-                          {ticketsIssued && (
-                            <>
-                              {' '}
-                              claimable{' '}
-                              <Button
-                                onClick={() => setUnstakeModalVisible(true)}
-                                type="text"
-                                size="small"
-                                style={{
-                                  color: colors.text.action.primary,
-                                }}
-                              >
-                                Claim
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      )}
+                      <div>
+                        {formatWad(iouBalance ?? 0, { decimals: 0 })}
+                        {ticketsIssued && (
+                          <>
+                            {' '}
+                            claimable{' '}
+                            <Button
+                              onClick={() => setUnstakeModalVisible(true)}
+                              type="text"
+                              size="small"
+                              disabled={iouBalance?.eq(0) || !iouBalance}
+                              style={
+                                iouBalance?.eq(0) || !iouBalance
+                                  ? {}
+                                  : {
+                                      color: colors.text.action.primary,
+                                    }
+                              }
+                            >
+                              Claim
+                            </Button>
+                          </>
+                        )}
+                      </div>
 
                       <div
                         style={{

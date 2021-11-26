@@ -3,6 +3,8 @@ import TextArea from 'antd/lib/input/TextArea'
 
 import { FormItemExt } from './formItemExt'
 
+const MAX_DESCRIPTION_LENGTH = 1000
+
 export default function ProjectDescription({
   name,
   hideLabel,
@@ -17,8 +19,8 @@ export default function ProjectDescription({
     >
       <TextArea
         autoComplete="off"
-        placeholder="Max 300 characters"
-        maxLength={300}
+        placeholder={`Max ${MAX_DESCRIPTION_LENGTH} characters`}
+        maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
       />
     </Form.Item>

@@ -16,9 +16,6 @@ export default function ProjectActivity() {
   const { colors } = useContext(ThemeContext).theme
   const [initialized, setInitialized] = useState<boolean>()
   const [tabOption, setTabOption] = useState<TabOption>()
-  const [pageNumber, setPageNumber] = useState<number>(0)
-  const [elemsCount, setElemsCount] = useState<number>()
-  const [loading, setLoading] = useState<boolean>()
 
   const { projectId } = useContext(ProjectContext)
 
@@ -37,49 +34,21 @@ export default function ProjectActivity() {
 
     switch (tabOption) {
       case 'pay':
-        content = (
-          <PaymentActivity
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            setLoading={setLoading}
-            setCount={setElemsCount}
-          />
-        )
+        content = <PaymentActivity pageSize={pageSize} />
         break
       case 'redeem':
-        content = (
-          <RedeemActivity
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            setLoading={setLoading}
-            setCount={setElemsCount}
-          />
-        )
+        content = <RedeemActivity pageSize={pageSize} />
         break
       case 'tap':
-        content = (
-          <TapActivity
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            setLoading={setLoading}
-            setCount={setElemsCount}
-          />
-        )
+        content = <TapActivity pageSize={pageSize} />
         break
       case 'reserves':
-        content = (
-          <ReservesActivity
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            setLoading={setLoading}
-            setCount={setElemsCount}
-          />
-        )
+        content = <ReservesActivity pageSize={pageSize} />
         break
     }
 
     return content
-  }, [tabOption, pageNumber, pageSize, setLoading, setElemsCount])
+  }, [tabOption, pageSize])
 
   const tab = (tab: TabOption) => {
     const selected = tab === tabOption
@@ -110,7 +79,6 @@ export default function ProjectActivity() {
           cursor: 'pointer',
         }}
         onClick={() => {
-          setPageNumber(0)
           setTabOption(tab)
         }}
       >
@@ -143,50 +111,7 @@ export default function ProjectActivity() {
         {tabs}
       </div>
 
-      <div style={{ paddingBottom: 40 }}>
-        {content}
-
-        {elemsCount === 0 && (
-          <div
-            style={{
-              color: colors.text.secondary,
-              paddingTop: 20,
-              borderTop: '1px solid ' + colors.stroke.tertiary,
-            }}
-          >
-            No activity yet
-          </div>
-        )}
-
-        {loading && (
-          <div>
-            <Loading />
-          </div>
-        )}
-
-        {elemsCount && elemsCount % pageSize === 0 && !loading ? (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.secondary,
-              cursor: 'pointer',
-            }}
-            onClick={() => setPageNumber(pageNumber + 1)}
-          >
-            Load more
-          </div>
-        ) : loading ? null : (
-          <div
-            style={{
-              textAlign: 'center',
-              padding: 10,
-              color: colors.text.secondary,
-            }}
-          >
-            {elemsCount} total
-          </div>
-        )}
-      </div>
+      {content}
     </div>
   )
 }

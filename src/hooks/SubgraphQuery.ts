@@ -7,7 +7,12 @@ import {
   SubgraphEntities,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
-import { useQuery, UseQueryOptions } from 'react-query'
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query'
 import axios from 'axios'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
@@ -20,7 +25,7 @@ type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
 
 export default function useSubgraphQuery<
   E extends EntityKey,
-  K extends EntityKeys<E>
+  K extends EntityKeys<E>,
 >(
   opts: GraphQueryOpts<E, K>,
   reactQueryOptions?: UseQueryOptions<
@@ -55,6 +60,70 @@ export default function useSubgraphQuery<
     {
       staleTime: 60000,
       ...reactQueryOptions,
+    },
+  )
+}
+
+type InfiniteGraphQueryOpts<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
+  pageSize: number
+}
+
+export function useInfiniteSubgraphQuery<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+>(
+  opts: InfiniteGraphQueryOpts<E, K>,
+  reactQueryOptions?: UseInfiniteQueryOptions<
+    GraphResult<E, K[]>,
+    unknown, // Specific error type?
+    GraphResult<E, K[]>,
+    GraphResult<E, K[]>,
+    readonly [string, InfiniteGraphQueryOpts<E, K>]
+  >,
+) {
+  if (!subgraphUrl) {
+    // This should _only_ happen in development
+    throw new Error('env.REACT_APP_SUBGRAPH_URL is missing')
+  }
+  return useInfiniteQuery<
+    GraphResult<E, K[]>,
+    unknown, // Specific error type?
+    GraphResult<E, K[]>,
+    readonly [string, InfiniteGraphQueryOpts<E, K>]
+  >(
+    ['infinite-subgraph-query', opts] as const,
+    async ({ queryKey, pageParam = 1 }) => {
+      const { pageSize, ...evaluatedOpts } = queryKey[1]
+      const response = await axios.post<{ data: SubgraphQueryReturnTypes[E] }>(
+        subgraphUrl,
+        {
+          query: formatGraphQuery({
+            ...evaluatedOpts,
+            skip: pageSize * pageParam,
+          }),
+        },
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+
+      return formatGraphResponse(opts.entity, response.data?.data)
+    },
+    {
+      staleTime: 60000,
+      ...reactQueryOptions,
+
+      // Don't allow this function to be overwritten by reactQueryOptions
+      getNextPageParam: (lastPage, allPages) => {
+        // If the last page contains less than the expected page size,
+        // it's safe to assume you're at the end.
+        if (lastPage.length < opts.pageSize) {
+          return false
+        } else {
+          return allPages.length
+        }
+      },
     },
   )
 }

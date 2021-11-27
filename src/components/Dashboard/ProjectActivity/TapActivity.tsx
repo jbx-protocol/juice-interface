@@ -1,59 +1,59 @@
 import { ProjectContext } from 'contexts/projectContext'
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 
 import TapEventElem from './TapEventElem'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
+import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
+import ActivityTabContent from './ActivityTabContent'
 
-export function TapActivity({
-  pageNumber,
-  pageSize,
-  setLoading,
-  setCount,
-}: {
-  pageNumber: number
-  pageSize: number
-  setLoading: (loading: boolean) => void
-  setCount: (count: number) => void
-}) {
+export function TapActivity({ pageSize }: { pageSize: number }) {
   const { projectId } = useContext(ProjectContext)
 
-  const { data: tapEvents } = useSubgraphQuery(
-    {
-      entity: 'tapEvent',
-      keys: [
-        'id',
-        'netTransferAmount',
-        'fundingCycleId',
-        'timestamp',
-        'txHash',
-        'beneficiary',
-        'caller',
-        'beneficiaryTransferAmount',
-      ],
-      first: pageSize,
-      skip: pageNumber * pageSize,
-      orderDirection: 'desc',
-      orderBy: 'timestamp',
-      where: projectId
-        ? {
-            key: 'project',
-            value: projectId.toString(),
-          }
-        : undefined,
-    },
-    {
-      onSuccess: data => {
-        setLoading(false)
-        setCount(data?.length)
-      },
-    },
-  )
+  const {
+    data: tapEvents,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteSubgraphQuery({
+    pageSize,
+    entity: 'tapEvent',
+    keys: [
+      'id',
+      'netTransferAmount',
+      'fundingCycleId',
+      'timestamp',
+      'txHash',
+      'beneficiary',
+      'caller',
+      'beneficiaryTransferAmount',
+    ],
+    first: pageSize,
+    orderDirection: 'desc',
+    orderBy: 'timestamp',
+    where: projectId
+      ? {
+          key: 'project',
+          value: projectId.toString(),
+        }
+      : undefined,
+  })
 
   return (
-    <div>
-      {tapEvents?.map(e => (
-        <TapEventElem key={e.id} tapEvent={e} />
+    <ActivityTabContent
+      // Add up each page's `length`
+      count={tapEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0}
+      hasNextPage={hasNextPage}
+      isLoading={isLoading}
+      isLoadingNextPage={isFetchingNextPage}
+      onLoadMore={fetchNextPage}
+    >
+      {tapEvents?.pages?.map((group, i) => (
+        <React.Fragment key={i}>
+          {group?.map(e => (
+            <TapEventElem key={e.id} tapEvent={e} />
+          ))}
+        </React.Fragment>
       ))}
-    </div>
+    </ActivityTabContent>
   )
 }

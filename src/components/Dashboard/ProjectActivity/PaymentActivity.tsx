@@ -4,13 +4,14 @@ import FormattedAddress from 'components/shared/FormattedAddress'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { PayEvent } from 'models/subgraph-entities/pay-event'
-import { useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import RichNote from './RichNote'
 import { contentLineHeight, smallHeaderStyle } from './styles'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
+import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
+import ActivityTabContent from './ActivityTabContent'
 
 // Maps a project id to an internal map of payment event overrides.
 let payEventOverrides = new Map<string, Map<string, string>>([
@@ -22,17 +23,7 @@ let payEventOverrides = new Map<string, Map<string, string>>([
   ],
 ])
 
-export function PaymentActivity({
-  pageSize,
-  pageNumber,
-  setLoading,
-  setCount,
-}: {
-  pageSize: number
-  pageNumber: number
-  setLoading: (loading: boolean) => void
-  setCount: (count: number) => void
-}) {
+export function PaymentActivity({ pageSize }: { pageSize: number }) {
   const { projectId } = useContext(ProjectContext)
   const {
     theme: { colors },
@@ -62,88 +53,98 @@ export function PaymentActivity({
     [projectId],
   )
 
-  const { data: payEvents } = useSubgraphQuery(
-    {
-      entity: 'payEvent',
-      keys: ['id', 'amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
-      first: pageSize,
-      skip: pageNumber * pageSize,
-      orderDirection: 'desc',
-      orderBy: 'timestamp',
-      where: projectId
-        ? {
-            key: 'project',
-            value: projectId.toString(),
-          }
-        : undefined,
-    },
-    {
-      onSuccess: data => {
-        setLoading(false)
-        setCount(data?.length)
-      },
-    },
-  )
+  const {
+    data: payEvents,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteSubgraphQuery({
+    pageSize,
+    entity: 'payEvent',
+    keys: ['id', 'amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
+    first: pageSize,
+    orderDirection: 'desc',
+    orderBy: 'timestamp',
+    where: projectId
+      ? {
+          key: 'project',
+          value: projectId.toString(),
+        }
+      : undefined,
+  })
 
   return (
-    <div>
-      {payEvents?.map(e => (
-        <div
-          key={e.id}
-          style={{
-            marginBottom: 20,
-            paddingBottom: 20,
-            borderBottom: '1px solid ' + colors.stroke.tertiary,
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignContent: 'space-between',
-            }}
-          >
-            <div>
-              <div style={smallHeaderStyle(colors)}>Paid</div>
+    <ActivityTabContent
+      // Add up each page's `length`
+      count={payEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0}
+      hasNextPage={hasNextPage}
+      isLoading={isLoading}
+      onLoadMore={fetchNextPage}
+      isLoadingNextPage={isFetchingNextPage}
+    >
+      {payEvents?.pages?.map((group, i) => (
+        <React.Fragment key={i}>
+          {group?.map(e => (
+            <div
+              key={e.id}
+              style={{
+                marginBottom: 20,
+                paddingBottom: 20,
+                borderBottom: '1px solid ' + colors.stroke.tertiary,
+              }}
+            >
               <div
                 style={{
-                  lineHeight: contentLineHeight,
-                  fontSize: '1rem',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignContent: 'space-between',
                 }}
               >
-                <CurrencySymbol currency={0} />
-                {formatWad(e.amount, { decimals: 4 })}
-              </div>
-            </div>
-
-            <div style={{ textAlign: 'right' }}>
-              {e.timestamp && (
-                <div style={smallHeaderStyle(colors)}>
-                  {formatHistoricalDate(e.timestamp * 1000)}{' '}
-                  <EtherscanLink value={e.txHash} type="tx" />
+                <div>
+                  <div style={smallHeaderStyle(colors)}>Paid</div>
+                  <div
+                    style={{
+                      lineHeight: contentLineHeight,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    <CurrencySymbol currency={0} />
+                    {formatWad(e.amount, { decimals: 4 })}
+                  </div>
                 </div>
-              )}
-              <div
-                style={{
-                  ...smallHeaderStyle(colors),
-                  lineHeight: contentLineHeight,
-                }}
-              >
-                <FormattedAddress address={e.beneficiary} />
+
+                <div style={{ textAlign: 'right' }}>
+                  {e.timestamp && (
+                    <div style={smallHeaderStyle(colors)}>
+                      {formatHistoricalDate(e.timestamp * 1000)}{' '}
+                      <EtherscanLink value={e.txHash} type="tx" />
+                    </div>
+                  )}
+                  <div
+                    style={{
+                      ...smallHeaderStyle(colors),
+                      lineHeight: contentLineHeight,
+                    }}
+                  >
+                    <FormattedAddress address={e.beneficiary} />
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 5 }}>
+                <RichNote
+                  note={
+                    (usePayEventOverrides
+                      ? formatPayEventOverride(e)
+                      : e.note) ?? ''
+                  }
+                />
               </div>
             </div>
-          </div>
-
-          <div style={{ marginTop: 5 }}>
-            <RichNote
-              note={
-                (usePayEventOverrides ? formatPayEventOverride(e) : e.note) ??
-                ''
-              }
-            />
-          </div>
-        </div>
+          ))}
+        </React.Fragment>
       ))}
-    </div>
+    </ActivityTabContent>
   )
 }

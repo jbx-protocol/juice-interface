@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal, Space } from 'antd'
+import { plural } from '@lingui/macro'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import TicketModsList from 'components/shared/TicketModsList'
 import { ProjectContext } from 'contexts/projectContext'
@@ -56,6 +57,8 @@ export default function DistributeTokensModal({
     )
   }
 
+  const reservedTokensFormatted = formatWad(reservedTokens, { decimals: 0 })
+
   return (
     <Modal
       title={`Distribute reserved ${tokenSymbol ?? 'tokens'}`}
@@ -72,8 +75,12 @@ export default function DistributeTokensModal({
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           Available:{' '}
           <div>
-            {formatWad(reservedTokens, { decimals: 0 })}{' '}
-            {tokenSymbol ?? 'tokens'}
+            {tokenSymbol
+              ? `${reservedTokensFormatted} ${tokenSymbol}`
+              : plural(reservedTokensFormatted ?? 0, {
+                  one: '# token',
+                  other: '# tokens',
+                })}
           </div>
         </div>
         {currentTicketMods?.length ? (

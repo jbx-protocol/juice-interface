@@ -94,6 +94,11 @@ Take the following steps to set up Blocknative for local development:
    yarn start
    ```
 
+## Contributing
+
+If you'd like to contribute code or translations to the repository, check out
+[`CONTRIBUTING.md`](CONTRIBUTING.md)
+
 ## Web3 Providers
 
 The frontend has two different providers that provide different levels of access

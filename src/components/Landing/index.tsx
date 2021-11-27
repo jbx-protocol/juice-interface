@@ -7,6 +7,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
+import { Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -46,10 +48,10 @@ export default function Landing() {
   )
 
   const listData = [
-    'Indie artists, devs, creators',
-    'Ethereum protocols and DAOs',
-    'Public goods and services',
-    'Open source businesses',
+    t`Indie artists, devs, creators`,
+    t`Ethereum protocols and DAOs`,
+    t`Public goods and services`,
+    t`Open source businesses`,
   ]
 
   const section: CSSProperties = {
@@ -99,32 +101,37 @@ export default function Landing() {
                   rowGap: 30,
                 }}
               >
-                {bigHeader('Community funding for people and projects')}
+                {bigHeader(t`Community funding for people and projects`)}
                 <div
                   style={{
                     fontWeight: 500,
                     fontSize: '1rem',
                   }}
                 >
-                  Build a community around a project, fund it, and program its
-                  spending. Light enough for a group of friends, powerful enough
-                  for a global network of anons.
+                  <Trans>
+                    Build a community around a project, fund it, and program its
+                    spending. Light enough for a group of friends, powerful
+                    enough for a global network of anons.
+                  </Trans>
                   <br />
                   <br />
-                  Powered by public smart contracts on{' '}
-                  <a
-                    style={{
-                      color: colors.text.primary,
-                      fontWeight: 500,
-                      borderBottom: '1px solid ' + colors.stroke.action.primary,
-                    }}
-                    href="https://ethereum.org/en/what-is-ethereum/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Ethereum
-                  </a>
-                  .
+                  <Trans>
+                    Powered by public smart contracts on{' '}
+                    <a
+                      style={{
+                        color: colors.text.primary,
+                        fontWeight: 500,
+                        borderBottom:
+                          '1px solid ' + colors.stroke.action.primary,
+                      }}
+                      href="https://ethereum.org/en/what-is-ethereum/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Ethereum
+                    </a>
+                    .
+                  </Trans>
                 </div>
 
                 <div
@@ -136,7 +143,7 @@ export default function Landing() {
                   }}
                 >
                   <p style={{ color: colors.text.brand.primary, opacity: 1 }}>
-                    Built for:
+                    <Trans>Built for:</Trans>
                   </p>
                   {listData.map((data, i) => (
                     <Space
@@ -161,7 +168,7 @@ export default function Landing() {
                       size="large"
                       onClick={scrollToCreate}
                     >
-                      Design your project
+                      <Trans>Design your project</Trans>
                     </Button>
                   </div>
                 </div>

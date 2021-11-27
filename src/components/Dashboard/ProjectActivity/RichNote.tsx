@@ -44,8 +44,8 @@ export default function RichNote({
       : note
 
   return (
-    <div style={{ marginTop: 5, ...style }}>
-      <div
+    <span style={{ marginTop: 5, ...style }}>
+      <span
         style={{ color: colors.text.secondary, overflowWrap: 'break-word' }}
         dangerouslySetInnerHTML={{
           __html: Autolinker.link(_note, {
@@ -56,13 +56,13 @@ export default function RichNote({
             },
           }),
         }}
-      ></div>
+      ></span>
       <RichImgPreview
         src={mediaLink}
         style={{ marginTop: 10 }}
         width="100%"
         height={140}
       />
-    </div>
+    </span>
   )
 }

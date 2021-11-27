@@ -12,7 +12,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
-import RichNote from './ProjectActivity/RichNote'
+import ProjectDescription from './ProjectDescription'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] = useState<
@@ -208,10 +208,9 @@ export default function ProjectHeader() {
               </a>
             )}
           </div>
-          <RichNote
-            style={{ maxWidth: '700px' }} // good line length for reading
-            note={metadata?.description}
-          />
+          {metadata?.description && (
+            <ProjectDescription description={metadata.description} />
+          )}
         </div>
       </div>
 

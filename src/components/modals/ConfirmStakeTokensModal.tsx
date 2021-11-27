@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Modal } from 'antd'
+import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import { ProjectContext } from 'contexts/projectContext'
@@ -71,8 +72,10 @@ export default function ConfirmStakeTokensModal({
       centered={true}
     >
       <p>
-        Remove {tokenSymbol ?? ''} ERC20 tokens from your wallet and lock them
-        in the Juicebox protocol.
+        <Trans>
+          Remove {tokenSymbol ?? ''} ERC20 tokens from your wallet and lock them
+          in the Juicebox protocol.
+        </Trans>
       </p>
       <p>
         Staked {tokenSymbol ?? 'tokens'} can still be redeemed for overflow, and

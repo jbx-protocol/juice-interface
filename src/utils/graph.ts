@@ -145,9 +145,8 @@ const formatGraphQuery = <E extends EntityKey>(opts: GraphQueryOpts<E>) => {
 
 // Use REACT_APP_SUBGRAPH_URL env var to override subgraphURL during development
 const subgraphUrl =
-  process.env.NODE_ENV === 'development' && process.env.REACT_APP_SUBGRAPH_URL
-    ? process.env.REACT_APP_SUBGRAPH_URL
-    : `https://gateway.thegraph.com/api/${process.env.REACT_APP_SUBGRAPH_API_KEY}/deployments/id/${process.env.REACT_APP_SUBGRAPH_DEPLOYMENT_ID}`
+  process.env.REACT_APP_SUBGRAPH_URL ||
+  `https://gateway.thegraph.com/api/${process.env.REACT_APP_SUBGRAPH_API_KEY}/deployments/id/${process.env.REACT_APP_SUBGRAPH_DEPLOYMENT_ID}`
 
 export const querySubgraph = <E extends EntityKey>(
   opts: GraphQueryOpts<E>,

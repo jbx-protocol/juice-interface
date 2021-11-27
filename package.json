@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@jbx-protocol/contracts": "^0.0.2",
+    "@lingui/detect-locale": "^3.13.0",
+    "@lingui/react": "^3.13.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -48,7 +50,10 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "i18n:extract": "lingui extract",
+    "i18n:compile": "lingui compile",
+    "postinstall": "yarn i18n:extract && yarn i18n:compile"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
@@ -69,6 +74,8 @@
     ]
   },
   "devDependencies": {
+    "@lingui/cli": "^3.13.0",
+    "@lingui/macro": "^3.13.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17",

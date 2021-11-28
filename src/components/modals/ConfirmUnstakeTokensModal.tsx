@@ -11,6 +11,8 @@ import { useContext, useLayoutEffect, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import FormattedAddress from 'components/shared/FormattedAddress'
+import { constants } from 'ethers'
+import { ThemeContext } from 'contexts/themeContext'
 
 export default function ConfirmUnstakeTokensModal({
   visible,
@@ -23,6 +25,9 @@ export default function ConfirmUnstakeTokensModal({
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress, projectId } = useContext(ProjectContext)
 
   const iouBalance = useContractReader<BigNumber>({
@@ -64,9 +69,13 @@ export default function ConfirmUnstakeTokensModal({
     )
   }
 
+  const ticketsIssued = tokenAddress
+    ? tokenAddress !== constants.AddressZero
+    : false
+
   return (
     <Modal
-      title={'Claim ' + tokenSymbol}
+      title={'Claim ' + (tokenSymbol ?? 'tokens')}
       visible={visible}
       onOk={unstake}
       okText="Claim"
@@ -77,6 +86,14 @@ export default function ConfirmUnstakeTokensModal({
       centered={true}
     >
       <Space direction="vertical" size="large">
+        {!ticketsIssued && (
+          <div style={{ padding: 10, background: colors.background.l1 }}>
+            <b>Note:</b> Tokens cannot be claimed because no ERC20 token has
+            been issued for this project. ERC20 tokens must be issued by the
+            project owner.
+          </div>
+        )}
+
         <div>
           <p>
             Claiming {tokenSymbol} tokens will convert your balance to ERC20
@@ -96,12 +113,14 @@ export default function ConfirmUnstakeTokensModal({
         <div>
           <div>
             <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
-            {formatWad(iouBalance)}
+            {formatWad(iouBalance, { decimals: 8 })}
           </div>
-          <div>
-            <label>{tokenSymbol} ERC20 address:</label>{' '}
-            <FormattedAddress address={tokenAddress} />
-          </div>
+          {ticketsIssued && (
+            <div>
+              <label>{tokenSymbol} ERC20 address:</label>{' '}
+              <FormattedAddress address={tokenAddress} />
+            </div>
+          )}
         </div>
 
         <Form layout="vertical">
@@ -109,6 +128,7 @@ export default function ConfirmUnstakeTokensModal({
             <FormattedNumberInput
               min={0}
               max={parseFloat(fromWad(iouBalance))}
+              disabled={!ticketsIssued}
               placeholder="0"
               value={unstakeAmount}
               accessory={

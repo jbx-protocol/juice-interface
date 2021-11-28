@@ -56,7 +56,7 @@ export default function TokenRefs({
               ) : (
                 <ProjectHandle
                   formItemProps={{ label: null }}
-                  value={r.value ? BigNumber.from(r.value) : ''}
+                  initialValue={r.value ? BigNumber.from(r.value) : ''}
                   requireState="exists"
                   returnValue="id"
                   onValueChange={value =>

@@ -51,7 +51,6 @@ export default function PayModsForm({
 
       <Form layout="vertical">
         <FormItems.ProjectPayoutMods
-          name="mods"
           mods={mods}
           target={fromWad(target)}
           currency={currency}

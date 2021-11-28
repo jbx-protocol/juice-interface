@@ -241,21 +241,17 @@ export default function Rewards({
       </Space>
 
       <Modal
-        title="Manage tokens"
+        title={`Manage ${tokenSymbol ? tokenSymbol + ' ' : ''}tokens`}
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         okButtonProps={{ hidden: true }}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          <Button
-            disabled={!ticketsIssued}
-            onClick={() => setUnstakeModalVisible(true)}
-            block
-          >
-            Claim tokens as ERC20
+          <Button onClick={() => setUnstakeModalVisible(true)} block>
+            Claim {tokenSymbol || 'tokens'} as ERC20
           </Button>
           <Button onClick={() => setRedeemModalVisible(true)} block>
-            Burn tokens for ETH
+            Burn {tokenSymbol || 'tokens'} for ETH
           </Button>
         </Space>
       </Modal>

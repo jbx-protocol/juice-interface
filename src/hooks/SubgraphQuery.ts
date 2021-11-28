@@ -25,7 +25,7 @@ type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
 
 export default function useSubgraphQuery<
   E extends EntityKey,
-  K extends EntityKeys<E>,
+  K extends EntityKeys<E>
 >(
   opts: GraphQueryOpts<E, K>,
   reactQueryOptions?: UseQueryOptions<
@@ -64,16 +64,20 @@ export default function useSubgraphQuery<
   )
 }
 
+// Re-type GraphQueryOpts to remove skip and add pageSize.
+// This is so we can calculate our own `skip` value based on
+// the react-query managed page number multiplied by the provided
+// page size.
 type InfiniteGraphQueryOpts<
   E extends EntityKey,
-  K extends EntityKeys<E>,
+  K extends EntityKeys<E>
 > = Omit<GraphQueryOpts<E, K>, 'skip'> & {
   pageSize: number
 }
 
 export function useInfiniteSubgraphQuery<
   E extends EntityKey,
-  K extends EntityKeys<E>,
+  K extends EntityKeys<E>
 >(
   opts: InfiniteGraphQueryOpts<E, K>,
   reactQueryOptions?: UseInfiniteQueryOptions<

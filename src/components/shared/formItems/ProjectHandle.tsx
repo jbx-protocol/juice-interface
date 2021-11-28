@@ -1,4 +1,4 @@
-import { CheckCircleOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { Form, Input } from 'antd'
@@ -17,29 +17,32 @@ export default function ProjectHandle({
   hideLabel,
   formItemProps,
   onValueChange,
-  value,
+  initialValue,
   requireState,
   returnValue,
 }: {
-  onValueChange: (val: string) => void
-  value?: string | BigNumber
-  requireState?: 'exists' | 'notExist'
+  onValueChange?: (val: string) => void
+  initialValue?: string | BigNumber
+  requireState?: 'exists' | 'notExist' // whether the handle is required to already exist or not.
   returnValue?: 'id' | 'handle'
 } & FormItemExt) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const [inputContents, setInputContents] = useState<string>()
-
+  const [handleLoading, setHandleLoading] = useState<boolean>(false)
   const { contracts } = useContext(UserContext)
 
-  // Value can be either a project ID, or a project's handle
+  // initialValue can be either a project ID, or a project's handle
   useEffect(() => {
-    if (typeof value === 'string') {
-      setInputContents(value)
-    } else if (isBigNumberish(value)) {
+    if (initialValue) {
+      setHandleLoading(true)
+    }
+    if (typeof initialValue === 'string') {
+      setInputContents(initialValue)
+    } else if (isBigNumberish(initialValue)) {
       contracts?.Projects.functions
-        .handleOf(BigNumber.from(value).toHexString())
+        .handleOf(BigNumber.from(initialValue).toHexString())
         .then(res => setInputContents(utils.parseBytes32String(res[0])))
     }
   }, [contracts, value])
@@ -54,24 +57,27 @@ export default function ProjectHandle({
     }
   }, [inputContents])
 
-  // InputContents pattern allows checking if handle exists while typing
+  // inputContents pattern allows checking if handle exists while typing
   const idForHandle = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
     args: handle && requireState ? [handle] : null,
     callback: useCallback(
       id => {
-        if (returnValue !== 'id') {
-          return
+        setHandleLoading(false)
+        if (returnValue === 'id' && onValueChange) {
+          onValueChange(id?.toHexString() ?? '0x00')
         }
-        return onValueChange(id?.toHexString() ?? '0x00')
       },
-      [onValueChange, returnValue],
+      [returnValue, onValueChange],
     ),
   })
 
-  const handleExists = idForHandle?.gt(0)
+  const handleExists = Boolean(idForHandle?.gt(0))
 
+  /**
+   * checkHandle is the validator for the input field.
+   */
   const checkHandle = useCallback(
     (rule: any, value: any) => {
       if (handleExists && requireState === 'notExist')
@@ -83,16 +89,31 @@ export default function ProjectHandle({
     [handleExists, requireState],
   )
 
-  let suffix: string | JSX.Element = ''
-  if (handleExists && requireState === 'notExist') {
-    suffix = 'Handle already in use'
-  }
-  if (handleExists === false && requireState === 'exists') {
-    suffix = inputContents ? 'Handle not found' : ''
-  }
-  if (handleExists && requireState === 'exists') {
-    suffix = <CheckCircleOutlined style={{ color: colors.icon.success }} />
-  }
+  const suffix: string | JSX.Element = useMemo(() => {
+    if (handleLoading) {
+      return <LoadingOutlined spin />
+    }
+    if (!inputContents) {
+      return ''
+    }
+    if (handleExists && requireState === 'notExist') {
+      return 'Handle already in use'
+    }
+    if (!handleExists && requireState === 'exists') {
+      return 'Handle not found'
+    }
+    if (handleExists && requireState === 'exists') {
+      return <CheckCircleOutlined style={{ color: colors.icon.success }} />
+    }
+
+    return ''
+  }, [
+    inputContents,
+    handleLoading,
+    handleExists,
+    requireState,
+    colors.icon.success,
+  ])
 
   return (
     <Form.Item
@@ -117,12 +138,12 @@ export default function ProjectHandle({
         placeholder="handle"
         type="string"
         autoComplete="off"
+        spellCheck={false}
         onChange={e => {
           const val = normalizeHandle(e.target.value)
           setInputContents(val)
-
-          if (returnValue !== 'id') {
-            onValueChange(val)
+          if (val) {
+            setHandleLoading(true)
           }
         }}
       />

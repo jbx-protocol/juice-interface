@@ -31,7 +31,6 @@ type ModType = 'project' | 'address'
 type EditingPayoutMod = PayoutMod & { handle?: string }
 
 export default function ProjectPayoutMods({
-  name,
   target,
   currency,
   fee,
@@ -321,7 +320,6 @@ export default function ProjectPayoutMods({
 
   return (
     <Form.Item
-      name={name}
       {...formItemProps}
       rules={[
         {
@@ -426,14 +424,13 @@ export default function ProjectPayoutMods({
             />
           ) : (
             <FormItems.ProjectHandle
-              name="project"
+              name="handle"
               requireState="exists"
               formItemProps={{
                 label: 'Project handle',
                 rules: [{ required: true }],
               }}
-              value={editingModProjectId}
-              onValueChange={handle => form.setFieldsValue({ handle })}
+              initialValue={editingModProjectId}
             />
           )}
           {editingModType === 'project' ? (

@@ -164,7 +164,7 @@ export default function RedeemModal({
         if (onCancel) onCancel()
       }}
       okText={`Burn ${formattedNum(redeemAmount, {
-        decimals: 8,
+        decimals: 2,
       })} ${tokenSymbol ?? 'tokens'} for ETH`}
       okButtonProps={{
         disabled:

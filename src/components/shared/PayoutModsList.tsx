@@ -85,8 +85,7 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const baseTotal =
-    total ?? amountSubFee(fundingCycle?.target, fundingCycle?.fee)
+  const baseTotal = total ?? amountSubFee(fundingCycle?.target, adminFeePercent)
 
   const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 

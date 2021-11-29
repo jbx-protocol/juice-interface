@@ -77,13 +77,13 @@
 }
 
 .ant-btn-link {
-  color: var(--text-over-action-secondary);
+  color: var(--text-action-primary);
 
   &:hover {
     color: var(--text-action-highlight);
   }
   &:focus,
   &:active {
-    color: var(--text-over-action-secondary);
+    color: var(--text-action-primary);
   }
 }

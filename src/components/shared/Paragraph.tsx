@@ -1,22 +1,22 @@
 import { Button } from 'antd'
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
-import RichNote from './ProjectActivity/RichNote'
+import RichNote from '../Dashboard/ProjectActivity/RichNote'
 import { useState, useMemo } from 'react'
 
-const DEFAULT_CHARACTER_LIMIT = 250
-
-export default function ProjectDescription({
+export default function Paragraph({
   description,
+  characterLimit,
 }: {
   description: string
+  characterLimit?: number
 }) {
-  const CHARACTER_LIMIT_EXCEEDED = description.length > DEFAULT_CHARACTER_LIMIT
+  const CHARACTER_LIMIT_EXCEEDED =
+    characterLimit && description.length > characterLimit
   const [expanded, setExpanded] = useState<boolean>(false)
   const toggleExpanded = () => setExpanded(!expanded)
 
   const shortDescription = useMemo(
-    () => `${description.slice(0, DEFAULT_CHARACTER_LIMIT).trim()}...`,
-    [description],
+    () => `${description.slice(0, characterLimit).trim()}...`,
+    [description, characterLimit],
   )
 
   return (
@@ -31,7 +31,6 @@ export default function ProjectDescription({
         <Button
           type="link"
           style={{ paddingTop: 0, paddingBottom: 0, height: 'auto' }}
-          icon={expanded ? <CaretUpOutlined /> : <CaretDownOutlined />}
           onClick={() => toggleExpanded()}
         >
           {expanded ? 'Read less' : 'Read more'}

@@ -26,7 +26,6 @@ export function ReservesActivity({ pageSize }: { pageSize: number }) {
       'txHash',
       'caller',
     ],
-    first: pageSize,
     orderDirection: 'desc',
     orderBy: 'timestamp',
     where: projectId

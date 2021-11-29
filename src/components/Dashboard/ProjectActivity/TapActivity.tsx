@@ -27,7 +27,6 @@ export function TapActivity({ pageSize }: { pageSize: number }) {
       'caller',
       'beneficiaryTransferAmount',
     ],
-    first: pageSize,
     orderDirection: 'desc',
     orderBy: 'timestamp',
     where: projectId

@@ -99,7 +99,7 @@ export function useInfiniteSubgraphQuery<
     readonly [string, InfiniteGraphQueryOpts<E, K>]
   >(
     ['infinite-subgraph-query', opts] as const,
-    async ({ queryKey, pageParam = 1 }) => {
+    async ({ queryKey, pageParam = 0 }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
       const response = await axios.post<{ data: SubgraphQueryReturnTypes[E] }>(
         subgraphUrl,
@@ -107,6 +107,7 @@ export function useInfiniteSubgraphQuery<
           query: formatGraphQuery({
             ...evaluatedOpts,
             skip: pageSize * pageParam,
+            first: pageSize,
           }),
         },
         { headers: { 'Content-Type': 'application/json' } },

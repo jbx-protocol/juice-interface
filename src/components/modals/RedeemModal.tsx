@@ -12,7 +12,13 @@ import { ContractName } from 'models/contract-name'
 import { BallotState } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fracDiv,
+  fromWad,
+  parseWad,
+} from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 export default function RedeemModal({
@@ -118,6 +124,9 @@ export default function RedeemModal({
     return number.mul(numerator).div(denominator)
   }, [redeemAmount, base, bondingCurveRate, totalSupply, currentOverflow])
 
+  // 0.5% slippage
+  const minAmount = rewardAmount?.mul(1000).div(1005)
+
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
 
@@ -126,9 +135,6 @@ export default function RedeemModal({
     const redeemWad = parseWad(redeemAmount)
 
     if (!redeemWad || !projectId) return
-
-    // Arbitrary discrete value (wei) subtracted
-    const minAmount = rewardAmount?.sub(1e12).toHexString()
 
     transactor(
       contracts.TerminalV1,
@@ -171,6 +177,7 @@ export default function RedeemModal({
           redeemDisabled || !redeemAmount || parseInt(redeemAmount) === 0,
       }}
       width={540}
+      centered
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
@@ -211,7 +218,7 @@ export default function RedeemModal({
             />
             <div style={{ fontWeight: 500, marginTop: 20 }}>
               You will receive minimum{' '}
-              {formatWad(rewardAmount, { decimals: 8 }) || '--'} ETH
+              {formatWad(minAmount, { decimals: 8 }) || '--'} ETH
             </div>
           </div>
         )}

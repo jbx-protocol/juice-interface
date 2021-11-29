@@ -12,7 +12,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
-import ProjectDescription from './ProjectDescription'
+import ProjectDescription from '../shared/Paragraph'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] = useState<
@@ -209,7 +209,10 @@ export default function ProjectHeader() {
             )}
           </div>
           {metadata?.description && (
-            <ProjectDescription description={metadata.description} />
+            <ProjectDescription
+              description={metadata.description}
+              characterLimit={250}
+            />
           )}
         </div>
       </div>

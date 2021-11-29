@@ -245,13 +245,14 @@ export default function Rewards({
         visible={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         okButtonProps={{ hidden: true }}
+        centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
+          <Button onClick={() => setRedeemModalVisible(true)} block>
+            Return my ETH
+          </Button>
           <Button onClick={() => setUnstakeModalVisible(true)} block>
             Claim {tokenSymbol || 'tokens'} as ERC20
-          </Button>
-          <Button onClick={() => setRedeemModalVisible(true)} block>
-            Burn {tokenSymbol || 'tokens'} for ETH
           </Button>
         </Space>
       </Modal>

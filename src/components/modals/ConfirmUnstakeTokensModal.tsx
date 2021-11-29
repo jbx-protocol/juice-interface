@@ -83,7 +83,7 @@ export default function ConfirmUnstakeTokensModal({
       okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}
       width={600}
-      centered={true}
+      centered
     >
       <Space direction="vertical" size="large">
         {!ticketsIssued && (

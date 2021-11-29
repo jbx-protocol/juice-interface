@@ -1,6 +1,8 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
@@ -32,6 +34,7 @@ export default function BudgetForm({
   const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
+  const { adminFeePercent } = useContext(UserContext)
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
@@ -95,7 +98,7 @@ export default function BudgetForm({
             onValueChange={val => setTarget(val || '0')}
             currency={currency}
             onCurrencyChange={setCurrency}
-            fee={editingFC.fee}
+            fee={adminFeePercent}
           />
         )}
 

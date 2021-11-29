@@ -63,7 +63,6 @@ export function PaymentActivity({ pageSize }: { pageSize: number }) {
     pageSize,
     entity: 'payEvent',
     keys: ['id', 'amount', 'beneficiary', 'note', 'timestamp', 'txHash'],
-    first: pageSize,
     orderDirection: 'desc',
     orderBy: 'timestamp',
     where: projectId

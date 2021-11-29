@@ -34,7 +34,6 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
       'timestamp',
       'txHash',
     ],
-    first: pageSize,
     orderDirection: 'desc',
     orderBy: 'timestamp',
     where: projectId

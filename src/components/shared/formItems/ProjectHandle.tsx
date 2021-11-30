@@ -83,7 +83,7 @@ export default function ProjectHandle({
       
       return Promise.resolve()
     },
-    [handleExists, requireState],
+    [handleExists, initialValue, requireState],
   )
 
   let suffix: string | JSX.Element = ''

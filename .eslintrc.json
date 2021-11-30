@@ -1,6 +1,6 @@
 {
   "plugins": ["import"],
-  "extends": ["react-app", "react-app/jest", "prettier", "prettier/react"],
+  "extends": ["react-app", "react-app/jest", "prettier"],
   "rules": {
     "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-redeclare": "error",
@@ -8,6 +8,7 @@
     "import/order": [
       "error",
       {
+        "groups": ["external", "internal"],
         "newlines-between": "always-and-inside-groups"
       }
     ]

@@ -154,7 +154,7 @@ export default function EditProjectModal({
         <FormItems.ProjectHandle
           name="handle"
           requireState="notExist"
-          initialValue={handleForm.getFieldValue('handle')}
+          initialValue={handle}
           formItemProps={{ rules: [{ required: true }] }}
         />
         <Form.Item>

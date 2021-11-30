@@ -1,7 +1,9 @@
 import { Tooltip } from 'antd'
-import { readProvider } from 'constants/readProvider'
+
 import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
+
+import { readProvider } from 'constants/readProvider'
 
 import EtherscanLink from './EtherscanLink'
 

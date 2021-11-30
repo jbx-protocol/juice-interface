@@ -1,15 +1,21 @@
 import { Button, Col, Row, Space } from 'antd'
 import Create from 'components/Create'
 import Loading from 'components/shared/Loading'
-import { ThemeOption } from 'constants/theme/theme-option'
+
 import { ThemeContext } from 'contexts/themeContext'
+
 import { useProjects } from 'hooks/Projects'
+
 import { CSSProperties, useContext } from 'react'
+
+import { Project } from 'models/subgraph-entities/project'
+
+import { ThemeOption } from 'constants/theme/theme-option'
 
 import ProjectsGrid from '../shared/ProjectsGrid'
 import Faq from './Faq'
 import Footer from './Footer'
-import { Project } from 'models/subgraph-entities/project'
+
 import Payments from './Payments'
 
 export default function Landing() {

@@ -1,7 +1,9 @@
+import type { ThemeContextType } from 'contexts/themeContext'
+
+import { useEffect, useState } from 'react'
+
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
-import type { ThemeContextType } from 'contexts/themeContext'
-import { useEffect, useState } from 'react'
 
 const flattenNestedObject = (
   nestedObj: Record<string, any>,
@@ -17,7 +19,9 @@ const flattenNestedObject = (
     }
   }, {})
 
-export function useJuiceTheme(storageKey: string = 'jb_theme'): ThemeContextType {
+export function useJuiceTheme(
+  storageKey: string = 'jb_theme',
+): ThemeContextType {
   const initialThemeOption =
     (localStorage.getItem(storageKey) as ThemeOption) || ThemeOption.light
 

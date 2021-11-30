@@ -1,4 +1,5 @@
 import { SemanticTheme } from 'models/semantic-theme/theme'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import { juiceThemeColors } from './colors'

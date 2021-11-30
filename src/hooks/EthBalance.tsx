@@ -1,6 +1,7 @@
-import { readProvider } from 'constants/readProvider'
 import { BigNumber } from 'ethers'
 import { useState } from 'react'
+
+import { readProvider } from 'constants/readProvider'
 
 import { usePoller } from './Poller'
 

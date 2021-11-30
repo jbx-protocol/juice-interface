@@ -1,9 +1,10 @@
 import { Form } from 'antd'
 import { CurrencyOption } from 'models/currency-option'
 
+import { BigNumber } from 'ethers'
+
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
-import { BigNumber } from 'ethers'
 
 export default function ProjectTarget({
   name,

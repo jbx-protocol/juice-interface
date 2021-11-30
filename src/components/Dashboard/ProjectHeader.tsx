@@ -12,17 +12,16 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
+
 import ProjectDescription from '../shared/Paragraph'
 
 export default function ProjectHeader() {
-  const [editProjectModalVisible, setEditProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [editProjectModalVisible, setEditProjectModalVisible] =
+    useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 
-  const { projectId, handle, metadata, isPreviewMode, isArchived } = useContext(
-    ProjectContext,
-  )
+  const { projectId, handle, metadata, isPreviewMode, isArchived } =
+    useContext(ProjectContext)
 
   const {
     theme: { colors },

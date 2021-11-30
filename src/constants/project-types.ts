@@ -1,11 +1,11 @@
-import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
 import { ProjectType } from 'models/project-type'
 
-const projectTypesByNetwork: Partial<Record<
-  NetworkName,
-  Record<number, ProjectType>
->> = {
+import { readNetwork } from 'constants/networks'
+
+const projectTypesByNetwork: Partial<
+  Record<NetworkName, Record<number, ProjectType>>
+> = {
   [NetworkName.mainnet]: {
     7: 'bidpool', // @sharkdao
     28: 'bidpool', // @svs002

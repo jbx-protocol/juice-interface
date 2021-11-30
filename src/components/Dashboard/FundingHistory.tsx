@@ -14,8 +14,9 @@ import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
-import FundingCycleDetails from '../FundingCycle/FundingCycleDetails'
 import { hasFundingTarget } from 'utils/fundingCycle'
+
+import FundingCycleDetails from '../FundingCycle/FundingCycleDetails'
 
 export default function FundingHistory({
   startId,
@@ -105,10 +106,7 @@ export default function FundingHistory({
 
             <Space align="baseline" style={{ fontSize: '.8rem' }}>
               {formatHistoricalDate(
-                cycle.start
-                  .add(cycle.duration)
-                  .mul(1000)
-                  .toNumber(),
+                cycle.start.add(cycle.duration).mul(1000).toNumber(),
               )}
               <CaretRightOutlined />
             </Space>

@@ -1,7 +1,9 @@
+import { SemanticTheme } from 'models/semantic-theme/theme'
+
+import { createContext } from 'react'
+
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
-import { SemanticTheme } from 'models/semantic-theme/theme'
-import { createContext } from 'react'
 
 const defaultThemeOption: ThemeOption = ThemeOption.dark
 

@@ -6,6 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
+
 import FormattedAddress from './FormattedAddress'
 import ProjectHandle from './ProjectHandle'
 import TooltipLabel from './TooltipLabel'

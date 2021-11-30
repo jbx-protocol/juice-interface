@@ -12,13 +12,7 @@ import { ContractName } from 'models/contract-name'
 import { BallotState } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import {
-  formattedNum,
-  formatWad,
-  fracDiv,
-  fromWad,
-  parseWad,
-} from 'utils/formatNumber'
+import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 
 export default function RedeemModal({
@@ -77,7 +71,7 @@ export default function RedeemModal({
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, userAddress],
     ),
   })
 

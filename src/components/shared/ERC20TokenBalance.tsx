@@ -3,6 +3,7 @@ import useContractReader from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/formatNumber'
+
 import FormattedAddress from './FormattedAddress'
 
 export default function ERC20TokenBalance({

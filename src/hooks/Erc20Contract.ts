@@ -1,10 +1,12 @@
 import { isAddress } from '@ethersproject/address'
 import { Contract } from '@ethersproject/contracts'
-import { readProvider } from 'constants/readProvider'
+
 import { NetworkContext } from 'contexts/networkContext'
 import erc20Abi from 'erc-20-abi'
 import { constants } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
+
+import { readProvider } from 'constants/readProvider'
 
 export function useErc20Contract(address: string | undefined) {
   const [contract, setContract] = useState<Contract>()

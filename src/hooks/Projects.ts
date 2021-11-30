@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { archivedProjectIds } from 'constants/archived-projects'
+
 import { ProjectState } from 'models/project-visibility'
 import {
   parseProjectJson,
@@ -7,6 +7,8 @@ import {
   ProjectJson,
 } from 'models/subgraph-entities/project'
 import { useEffect, useMemo, useState } from 'react'
+
+import { archivedProjectIds } from 'constants/archived-projects'
 
 import { querySubgraph } from '../utils/graph'
 

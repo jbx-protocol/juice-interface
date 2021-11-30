@@ -9,11 +9,12 @@ import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
+import { ProjectContext } from 'contexts/projectContext'
+
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-import { ProjectContext } from 'contexts/projectContext'
 
 export default function ProjectTicketMods({
   name,

@@ -2,11 +2,13 @@ import { Button, Select, Space, Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
-import { layouts } from 'constants/styles/layouts'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjects } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { useContext, useState } from 'react'
+
+import { layouts } from 'constants/styles/layouts'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 

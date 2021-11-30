@@ -1,6 +1,8 @@
 import { Button } from 'antd'
-import RichNote from '../Dashboard/ProjectActivity/RichNote'
+
 import { useState, useMemo } from 'react'
+
+import RichNote from '../Dashboard/ProjectActivity/RichNote'
 
 export default function Paragraph({
   description,

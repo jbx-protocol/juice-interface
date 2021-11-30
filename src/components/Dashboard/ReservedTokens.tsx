@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { readNetwork } from 'constants/networks'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext } from 'contexts/projectContext'
 import { BigNumber } from 'ethers'
@@ -13,6 +13,8 @@ import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+
+import { readNetwork } from 'constants/networks'
 
 import DistributeTokensModal from '../modals/DistributeTokensModal'
 import TicketModsList from '../shared/TicketModsList'

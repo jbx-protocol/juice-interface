@@ -1,5 +1,6 @@
 import Onboard from 'bnc-onboard'
 import { Subscriptions } from 'bnc-onboard/dist/src/interfaces'
+
 import { readNetwork } from 'constants/networks'
 
 const appName = 'Juicebox'

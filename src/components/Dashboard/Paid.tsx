@@ -5,7 +5,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
 import ProjectTokenBalance from 'components/shared/ProjectTokenBalance'
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { readNetwork } from 'constants/networks'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
@@ -19,6 +19,8 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fracDiv, fromWad, parseWad } from 'utils/formatNumber'
 import { hasFundingTarget } from 'utils/fundingCycle'
 
+import { readNetwork } from 'constants/networks'
+
 import BalancesModal from '../modals/BalancesModal'
 
 export default function Paid() {
@@ -27,14 +29,8 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const {
-    projectId,
-    currentFC,
-    balanceInCurrency,
-    balance,
-    owner,
-    earned,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC, balanceInCurrency, balance, owner, earned } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 

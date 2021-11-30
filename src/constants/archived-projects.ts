@@ -1,4 +1,5 @@
 import { NetworkName } from 'models/network-name'
+
 import { readNetwork } from 'constants/networks'
 
 const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {

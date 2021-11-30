@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react'
+
 import { padding } from './padding'
 
 export const layouts: Record<string, CSSProperties> = {

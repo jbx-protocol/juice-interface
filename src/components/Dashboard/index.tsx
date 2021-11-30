@@ -1,8 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { archivedProjectIds } from 'constants/archived-projects'
-import { projectTypes } from 'constants/project-types'
-import { layouts } from 'constants/styles/layouts'
-import { padding } from 'constants/styles/padding'
+
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -20,6 +17,11 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
 import { querySubgraph } from 'utils/graph'
+
+import { padding } from 'constants/styles/padding'
+import { layouts } from 'constants/styles/layouts'
+import { projectTypes } from 'constants/project-types'
+import { archivedProjectIds } from 'constants/archived-projects'
 
 import Loading from '../shared/Loading'
 import Project from './Project'

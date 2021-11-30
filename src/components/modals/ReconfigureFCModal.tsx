@@ -7,7 +7,7 @@ import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -34,6 +34,8 @@ import {
 } from 'utils/fundingCycle'
 import { serializeFundingCycle } from 'utils/serializers'
 import { amountSubFee } from 'utils/math'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
 import PayModsForm from '../Create/PayModsForm'
@@ -57,21 +59,16 @@ export default function ReconfigureFCModal({
   const { transactor, contracts, adminFeePercent } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
-  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [rulesFormModalVisible, setRulesFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
-    boolean
-  >(false)
+  const [payModsModalVisible, setPayModsFormModalVisible] =
+    useState<boolean>(false)
+  const [budgetFormModalVisible, setBudgetFormModalVisible] =
+    useState<boolean>(false)
+  const [rulesFormModalVisible, setRulesFormModalVisible] =
+    useState<boolean>(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
+    useState<boolean>(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
+    useState<boolean>(false)
   useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>()
   const [ticketingForm] = useForm<TicketingFormFields>()

@@ -1,7 +1,8 @@
-import { shadowCard } from 'constants/styles/shadowCard'
 import { ThemeContext } from 'contexts/themeContext'
 import { ChildElems } from 'models/child-elems'
 import { CSSProperties, useContext } from 'react'
+
+import { shadowCard } from 'constants/styles/shadowCard'
 
 export function CardSection({
   header,
@@ -18,9 +19,11 @@ export function CardSection({
 }) {
   const { theme } = useContext(ThemeContext)
   return (
-    <div style={{
-      marginBottom: (noShadow ? 0 : 10)
-    }}>
+    <div
+      style={{
+        marginBottom: noShadow ? 0 : 10,
+      }}
+    >
       {header && (
         <h2
           style={{

@@ -2,9 +2,11 @@ import { Collapse, Space } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
-import { ThemeOption } from 'constants/theme/theme-option'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
+
+import { ThemeOption } from 'constants/theme/theme-option'
 
 import Account from './Account'
 import ThemePicker from './ThemePicker'

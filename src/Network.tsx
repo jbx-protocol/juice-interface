@@ -1,13 +1,16 @@
 import { Web3Provider } from '@ethersproject/providers'
-import { NETWORKS } from 'constants/networks'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { ChildElems } from 'models/child-elems'
 import { NetworkName } from 'models/network-name'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { readNetwork } from 'constants/networks'
+
 import { initOnboard } from 'utils/onboard'
 import { API, Subscriptions, Wallet } from 'bnc-onboard/dist/src/interfaces'
 import { ThemeContext } from 'contexts/themeContext'
+
+import { readNetwork } from 'constants/networks'
+import { NETWORKS } from 'constants/networks'
 
 const KEY_SELECTED_WALLET = 'selectedWallet'
 

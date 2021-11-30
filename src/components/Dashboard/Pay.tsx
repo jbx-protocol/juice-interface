@@ -4,7 +4,7 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import { readNetwork } from 'constants/networks'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -16,23 +16,19 @@ import { formatWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
+import { readNetwork } from 'constants/networks'
+
 import CurrencySymbol from '../shared/CurrencySymbol'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)
   const [payAmount, setPayAmount] = useState<string>()
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
-  const [payWarningModalVisible, setPayWarningModalVisible] = useState<boolean>(
-    false,
-  )
+  const [payWarningModalVisible, setPayWarningModalVisible] =
+    useState<boolean>(false)
 
-  const {
-    projectId,
-    currentFC,
-    metadata,
-    tokenSymbol,
-    isArchived,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC, metadata, tokenSymbol, isArchived } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 

@@ -1,5 +1,6 @@
-import { darkColors, lightColors } from 'constants/styles/colors'
 import { SemanticColors } from 'models/semantic-theme/colors'
+
+import { darkColors, lightColors } from 'constants/styles/colors'
 import { ThemeOption } from 'constants/theme/theme-option'
 
 export const backgroundColors: Record<

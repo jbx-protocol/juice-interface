@@ -1,6 +1,6 @@
 import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { readProvider } from 'constants/readProvider'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import EthDater from 'ethereum-block-by-date'
@@ -26,6 +26,8 @@ import {
 } from 'recharts'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
+
+import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
 

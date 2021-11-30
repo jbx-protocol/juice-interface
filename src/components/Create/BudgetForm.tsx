@@ -1,6 +1,5 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'

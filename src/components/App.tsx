@@ -1,17 +1,18 @@
 import { Layout, Modal, Space } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { readNetwork } from 'constants/networks'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
 import { useContext, useLayoutEffect, useState } from 'react'
+
+import { readNetwork } from 'constants/networks'
 
 import Navbar from './Navbar'
 import Router from './Router'
 
 function App() {
-  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] = useState<
-    boolean
-  >()
+  const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
+    useState<boolean>()
 
   const { signerNetwork } = useContext(NetworkContext)
 

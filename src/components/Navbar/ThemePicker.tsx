@@ -1,8 +1,10 @@
 import Moon from 'components/icons/Moon'
 import Sun from 'components/icons/Sun'
-import { ThemeOption } from 'constants/theme/theme-option'
+
 import { ThemeContext } from 'contexts/themeContext'
 import React, { CSSProperties, useContext } from 'react'
+
+import { ThemeOption } from 'constants/theme/theme-option'
 
 export default function ThemePicker() {
   const {

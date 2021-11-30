@@ -1,6 +1,8 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { readNetwork } from 'constants/networks'
+
 import { NetworkName } from 'models/network-name'
+
+import { readNetwork } from 'constants/networks'
 
 export default function EtherscanLink({
   value,

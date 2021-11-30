@@ -10,13 +10,14 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 
-import TooltipLabel from '../shared/TooltipLabel'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import { weightedRate } from 'utils/math'
 import { parseEther } from '@ethersproject/units'
 import { ProjectContext } from 'contexts/projectContext'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -102,8 +103,9 @@ export default function FundingCycleDetails({
             label={
               <TooltipLabel
                 label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
-                tip={`${tokenSymbol ??
-                  'Tokens'} received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
+                tip={`${
+                  tokenSymbol ?? 'Tokens'
+                } received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
               />
             }
           >

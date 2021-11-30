@@ -1,7 +1,9 @@
 import TooltipLabel from 'components/shared/TooltipLabel'
-import { ThemeOption } from 'constants/theme/theme-option'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
+
+import { ThemeOption } from 'constants/theme/theme-option'
 
 export default function SectionHeader({
   text,

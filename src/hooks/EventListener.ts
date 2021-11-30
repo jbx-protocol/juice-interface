@@ -1,8 +1,10 @@
 import { Listener } from '@ethersproject/providers'
-import { readProvider } from 'constants/readProvider'
+
 import { useContractLoader } from 'hooks/ContractLoader'
 import { ContractName } from 'models/contract-name'
 import { useEffect, useMemo, useState } from 'react'
+
+import { readProvider } from 'constants/readProvider'
 
 export default function useEventListener<E>({
   contractName,
@@ -43,11 +45,12 @@ export default function useEventListener<E>({
   const filter = useMemo(() => {
     return (
       contract &&
-      eventName && JSON.stringify({
+      eventName &&
+      JSON.stringify({
         address: contract.address,
         topics: [...(eventTopic ? [eventTopic] : []), ...(topics ?? [])],
-      }
-    ))
+      })
+    )
   }, [contract, eventName, eventTopic, topics])
 
   // Get all events history
@@ -77,7 +80,7 @@ export default function useEventListener<E>({
 
     if (contract && filter) {
       try {
-        const filterParsed = JSON.parse(filter);
+        const filterParsed = JSON.parse(filter)
 
         const listener: Listener = async (..._events: any[]) => {
           const event = await formatEvent(_events[_events.length - 1])

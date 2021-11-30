@@ -6,8 +6,9 @@ import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
-import ProjectHandle from './ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
+
+import ProjectHandle from './ProjectHandle'
 
 export default function ProjectTokenBalance({
   projectId,

@@ -1,9 +1,11 @@
 import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { shadowCard } from 'constants/styles/shadowCard'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { ChildElems } from 'models/child-elems'
 import { CSSProperties, useContext } from 'react'
+
+import { shadowCard } from 'constants/styles/shadowCard'
 
 export default function WtfCard({
   children,

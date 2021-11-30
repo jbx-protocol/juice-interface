@@ -1,15 +1,5 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Space,
-} from 'antd'
+import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -63,6 +53,7 @@ export default function ProjectPayoutMods({
     percent: number
     lockedUntil: moment.Moment
   }>()
+  const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
@@ -143,6 +134,7 @@ export default function ProjectPayoutMods({
               })
               setEditingModIndex(index)
               setEditingPercent(percent)
+              setEditingModProjectId(mod.projectId)
             }}
           >
             {mod.projectId?.gt(0) ? (
@@ -362,6 +354,7 @@ export default function ProjectPayoutMods({
           onClick={() => {
             setEditingModIndex(mods.length)
             setEditingPercent(0)
+            setEditingModProjectId(undefined)
             form.resetFields()
           }}
           block
@@ -377,6 +370,7 @@ export default function ProjectPayoutMods({
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
+          setEditingModProjectId(undefined)
         }}
         destroyOnClose
       >
@@ -425,7 +419,7 @@ export default function ProjectPayoutMods({
                 label: 'Project handle',
                 rules: [{ required: true }],
               }}
-              value={form.getFieldValue('handle')}
+              value={editingModProjectId}
               onValueChange={handle => form.setFieldsValue({ handle })}
             />
           )}

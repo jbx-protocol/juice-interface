@@ -74,7 +74,7 @@ export default function ProjectHandle({
   const checkHandle = useCallback(
     (rule: any, value: any) => {
       // Input field is back at it's initial state
-      if (initialValue && initialValue !== value)
+      if (initialValue && initialValue === value)
         return Promise.resolve()
       if (handleExists && requireState === 'notExist')
         return Promise.reject('Handle not available')

@@ -20,11 +20,13 @@ export default function ProjectHandle({
   value,
   requireState,
   returnValue,
+  initialValue,
 }: {
   onValueChange: (val: string) => void
   value?: string | BigNumber
   requireState?: 'exists' | 'notExist'
   returnValue?: 'id' | 'handle'
+  initialValue?: string
 } & FormItemExt) {
   const {
     theme: { colors },
@@ -71,11 +73,15 @@ export default function ProjectHandle({
 
   const checkHandle = useCallback(
     (rule: any, value: any) => {
+      // Input field is back at it's initial state
+      if (initialValue && initialValue !== value)
+        return Promise.resolve()
       if (handleExists && requireState === 'notExist')
         return Promise.reject('Handle not available')
       if (!handleExists && requireState === 'exists')
         return Promise.reject("Project doesn't exist")
-      else return Promise.resolve()
+      
+      return Promise.resolve()
     },
     [handleExists, requireState],
   )

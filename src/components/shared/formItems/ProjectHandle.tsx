@@ -45,7 +45,7 @@ export default function ProjectHandle({
         .handleOf(BigNumber.from(initialValue).toHexString())
         .then(res => setInputContents(utils.parseBytes32String(res[0])))
     }
-  }, [contracts, value])
+  }, [contracts, initialValue])
 
   const handle = useMemo(() => {
     if (!inputContents) return
@@ -90,20 +90,38 @@ export default function ProjectHandle({
   )
 
   const suffix: string | JSX.Element = useMemo(() => {
+    const InputCheckIcon = (
+      <CheckCircleOutlined style={{ color: colors.icon.success }} />
+    )
+
     if (handleLoading) {
       return <LoadingOutlined spin />
     }
+
+    // If there's no value, render nothing.
     if (!inputContents) {
       return ''
     }
-    if (handleExists && requireState === 'notExist') {
-      return 'Handle already in use'
+
+    if (requireState === 'notExist') {
+      // In the `notExist` case,
+      // an existing handle is assumed valid if it hasn't changed from
+      // the initialValue
+      // (for example, if a project is editing their current handle)
+      const isExistingHandleValid =
+        initialValue !== undefined && inputContents === initialValue
+
+      if (handleExists && !isExistingHandleValid) {
+        return 'Handle already in use'
+      }
+
+      if (!handleExists || (handleExists && isExistingHandleValid)) {
+        return InputCheckIcon
+      }
     }
-    if (!handleExists && requireState === 'exists') {
-      return 'Handle not found'
-    }
-    if (handleExists && requireState === 'exists') {
-      return <CheckCircleOutlined style={{ color: colors.icon.success }} />
+
+    if (requireState === 'exists') {
+      return handleExists ? InputCheckIcon : 'Handle not found'
     }
 
     return ''
@@ -112,6 +130,7 @@ export default function ProjectHandle({
     handleLoading,
     handleExists,
     requireState,
+    initialValue,
     colors.icon.success,
   ])
 

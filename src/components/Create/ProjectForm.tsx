@@ -49,6 +49,7 @@ export default function ProjectForm({
             rules: [{ required: true }],
             dependencies: ['name'],
           }}
+          initialValue={handle}
         />
         <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLink name="infoUri" />

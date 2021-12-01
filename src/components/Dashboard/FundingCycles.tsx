@@ -19,9 +19,8 @@ export default function FundingCycles({
   showCurrentDetail?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
-  const [reconfigureModalVisible, setReconfigureModalVisible] = useState<
-    boolean
-  >(false)
+  const [reconfigureModalVisible, setReconfigureModalVisible] =
+    useState<boolean>(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
   const {

@@ -3,12 +3,14 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
-
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
+import { useContext } from 'react'
 import {
   formattedNum,
   formatWad,
@@ -19,11 +21,10 @@ import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
-
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
   const editingProject = useAppSelector(state => state.editingProject.info)
+  const { adminFeePercent } = useContext(UserContext)
   const { payoutMods, ticketMods } = useAppSelector(
     state => state.editingProject,
   )
@@ -76,7 +77,7 @@ export default function ConfirmDeployProject() {
                         editingFC?.currency.toNumber() as CurrencyOption
                       }
                     />
-                    {formatWad(amountSubFee(editingFC.target, editingFC.fee))}{' '}
+                    {formatWad(amountSubFee(editingFC.target, adminFeePercent))}{' '}
                     after JBX fee)
                   </span>
                 )}
@@ -156,6 +157,7 @@ export default function ConfirmDeployProject() {
             mods={payoutMods}
             projectId={undefined}
             fundingCycle={editingFC}
+            fee={adminFeePercent}
           />
         )}
       />

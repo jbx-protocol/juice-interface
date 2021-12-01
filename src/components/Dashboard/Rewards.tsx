@@ -25,22 +25,15 @@ export default function Rewards({
 }: {
   totalOverflow: BigNumber | undefined
 }) {
-  const [manageTokensModalVisible, setManageTokensModalVisible] = useState<
-    boolean
-  >()
+  const [manageTokensModalVisible, setManageTokensModalVisible] =
+    useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
-  const [participantsModalVisible, setParticipantsModalVisible] = useState<
-    boolean
-  >(false)
+  const [participantsModalVisible, setParticipantsModalVisible] =
+    useState<boolean>(false)
   const { userAddress } = useContext(NetworkContext)
 
-  const {
-    projectId,
-    tokenAddress,
-    tokenSymbol,
-    isPreviewMode,
-    currentFC,
-  } = useContext(ProjectContext)
+  const { projectId, tokenAddress, tokenSymbol, isPreviewMode, currentFC } =
+    useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -143,14 +136,7 @@ export default function Rewards({
             />
           }
           valueRender={() => (
-            <Descriptions
-              layout={
-                document.documentElement.clientWidth > 600
-                  ? 'horizontal'
-                  : 'vertical'
-              }
-              column={1}
-            >
+            <Descriptions layout="horizontal" column={1}>
               {ticketsIssued && (
                 <Descriptions.Item
                   label="Address"
@@ -175,7 +161,6 @@ export default function Rewards({
                     {formatWad(totalSupply, { decimals: 0 })}
                     <Button
                       size="small"
-                      type="text"
                       onClick={() => setParticipantsModalVisible(true)}
                       disabled={isPreviewMode}
                     >

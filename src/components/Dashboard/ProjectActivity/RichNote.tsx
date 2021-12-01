@@ -57,12 +57,14 @@ export default function RichNote({
           }),
         }}
       ></span>
-      <RichImgPreview
-        src={mediaLink}
-        style={{ marginTop: 10 }}
-        width="100%"
-        height={140}
-      />
+      <div>
+        <RichImgPreview
+          src={mediaLink}
+          style={{ marginTop: 10 }}
+          width="100%"
+          height={140}
+        />
+      </div>
     </span>
   )
 }

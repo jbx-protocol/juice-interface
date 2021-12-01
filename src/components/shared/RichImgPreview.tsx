@@ -26,16 +26,17 @@ export default function RichImgPreview({
     contentType === 'image/svg'
   ) {
     return (
-      <Image
-        src={src}
-        style={{
-          maxWidth: w,
-          maxHeight: h,
-          width: w,
-          height: h,
-          ...style,
-        }}
-      />
+      <div style={style}>
+        <Image
+          src={src}
+          style={{
+            maxWidth: w,
+            maxHeight: h,
+            width: w,
+            height: h,
+          }}
+        />
+      </div>
     )
   }
 

@@ -110,7 +110,7 @@ export default function RulesForm({
               The address of any smart contract deployed on {signerNetwork} that
               implements{' '}
               <a
-                href="https://github.com/jbx-protocol/juice-contracts/blob/main/contracts/v1/interfaces/IFundingCycleBallot.sol"
+                href="https://github.com/jbx-protocol/juice-contracts-v1/blob/05828d57e3a27580437fc258fe9041b2401fc044/contracts/FundingCycles.sol"
                 target="_blank"
                 rel="noopener noreferrer"
               >

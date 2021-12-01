@@ -31,10 +31,10 @@ export default function EthAddress({
 
       const read = async () => {
         const address = await readProvider.resolveName(value)
-        const newVal = utils.isAddress(address) ? address : ''
-
-        setAddressForENS(newVal)
-        onAddressChange(newVal)
+        if (typeof address === 'string' && utils.isAddress(address)) {
+          setAddressForENS(address)
+          onAddressChange(address)
+        }
       }
 
       read()
@@ -59,7 +59,7 @@ export default function EthAddress({
 
         // Reverse lookup to check validity
         const isValid =
-          (await readProvider.resolveName(name)).toLowerCase() ===
+          (await readProvider.resolveName(name))?.toLowerCase() ===
           defaultValue.toLowerCase()
 
         setDisplayValue(isValid ? name : defaultValue)

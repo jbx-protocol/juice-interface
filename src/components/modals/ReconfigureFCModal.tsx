@@ -385,6 +385,7 @@ export default function ReconfigureFCModal({
               mods={editingPayoutMods}
               projectId={undefined}
               fundingCycle={editingFC}
+              fee={adminFeePercent}
             />
           </div>
 

@@ -84,15 +84,7 @@ export const formattedNum = (
   if (str.includes(_decimalSeparator)) {
     const [integer, decimal] = str.split(_decimalSeparator)
 
-    const preDecimal =
-      config?.decimals === 0 && parseInt(decimal[0]) >= 5
-        ? separateThousands(
-            BigNumber.from(integer || '0')
-              .add(1)
-              .toString(),
-            _thousandsSeparator,
-          ) || '0'
-        : separateThousands(integer, _thousandsSeparator) || '0'
+    const preDecimal = separateThousands(integer, _thousandsSeparator) || '0'
 
     if (decimal === '0') return preDecimal
 

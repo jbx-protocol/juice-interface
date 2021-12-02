@@ -12,7 +12,13 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import {
+  CSSProperties,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'

@@ -2,6 +2,7 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
+import { UserContext } from 'contexts/userContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -9,7 +10,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
@@ -60,6 +61,17 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { owner } = useContext(ProjectContext)
+  const { contracts } = useContext(UserContext)
+
+  useEffect(() => {
+    if (!editingModProjectId) return
+
+    contracts?.Projects.functions
+      .handleOf(BigNumber.from(editingModProjectId).toHexString())
+      .then(res =>
+        form.setFieldsValue({ handle: utils.parseBytes32String(res[0]) }),
+      )
+  }, [contracts?.Projects.functions, editingModProjectId, form])
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -423,14 +435,17 @@ export default function ProjectPayoutMods({
               }
             />
           ) : (
-            <FormItems.ProjectHandle
+            <FormItems.ProjectHandleFormItem
               name="handle"
               requireState="exists"
               formItemProps={{
                 label: 'Project handle',
-                rules: [{ required: true }],
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
               }}
-              initialValue={editingModProjectId}
             />
           )}
           {editingModType === 'project' ? (

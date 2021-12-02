@@ -1,6 +1,5 @@
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/shared/formItems'
-import { useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
 
@@ -23,8 +22,6 @@ export default function ProjectForm({
   form: FormInstance<ProjectFormFields>
   onSave: VoidFunction
 }) {
-  const [handle, setHandle] = useState<string>()
-
   return (
     <Space direction="vertical" size="large">
       <h1>Appearance</h1>
@@ -38,18 +35,16 @@ export default function ProjectForm({
           onChange={name => {
             const val = name ? normalizeHandle(name) : ''
             // Use `handle` state to enable ProjectHandle to validate while typing
-            setHandle(val)
             form.setFieldsValue({ handle: val })
           }}
         />
-        <FormItems.ProjectHandle
+        <FormItems.ProjectHandleFormItem
           name="handle"
           requireState="notExist"
           formItemProps={{
             rules: [{ required: true }],
             dependencies: ['name'],
           }}
-          initialValue={handle}
         />
         <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLink name="infoUri" />

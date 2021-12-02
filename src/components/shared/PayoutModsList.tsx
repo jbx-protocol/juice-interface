@@ -19,18 +19,20 @@ export default function PayoutModsList({
   fundingCycle,
   projectId,
   total,
+  fee,
 }: {
   mods: PayoutMod[] | undefined
   fundingCycle:
     | Pick<FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: BigNumber | undefined
+  fee: BigNumber | undefined
   total?: BigNumber
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [editingMods, setEditingMods] = useState<PayoutMod[]>()
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { owner } = useContext(ProjectContext)
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -85,7 +87,7 @@ export default function PayoutModsList({
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
   const ownerPercent = 10000 - (modsTotal ?? 0)
 
-  const baseTotal = total ?? amountSubFee(fundingCycle?.target, adminFeePercent)
+  const baseTotal = total ?? amountSubFee(fundingCycle?.target, fee)
 
   const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
@@ -195,7 +197,7 @@ export default function PayoutModsList({
             onModsChanged={setEditingMods}
             target={fromWad(fundingCycle.target)}
             currency={fundingCycle.currency.toNumber() as CurrencyOption}
-            fee={adminFeePercent}
+            fee={fee}
           />
         </Modal>
       ) : null}

@@ -92,6 +92,7 @@ export default function FormattedAddress({
 
   return (
     <Tooltip
+      trigger={['hover', 'click']}
       title={
         <span>
           <span style={{ userSelect: 'all' }}>{address}</span>{' '}

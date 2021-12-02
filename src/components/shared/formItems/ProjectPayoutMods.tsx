@@ -10,7 +10,7 @@ import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import * as moment from 'moment'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
   formatWad,
@@ -53,7 +53,6 @@ export default function ProjectPayoutMods({
     percent: number
     lockedUntil: moment.Moment
   }>()
-  const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
@@ -62,16 +61,6 @@ export default function ProjectPayoutMods({
 
   const { owner } = useContext(ProjectContext)
   const { contracts } = useContext(UserContext)
-
-  useEffect(() => {
-    if (!editingModProjectId) return
-
-    contracts?.Projects.functions
-      .handleOf(BigNumber.from(editingModProjectId).toHexString())
-      .then(res =>
-        form.setFieldsValue({ handle: utils.parseBytes32String(res[0]) }),
-      )
-  }, [contracts?.Projects.functions, editingModProjectId, form])
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -145,7 +134,14 @@ export default function ProjectPayoutMods({
               })
               setEditingModIndex(index)
               setEditingPercent(percent)
-              setEditingModProjectId(mod.projectId)
+
+              contracts?.Projects.functions
+                .handleOf(BigNumber.from(mod.projectId).toHexString())
+                .then(res => {
+                  form.setFieldsValue({
+                    handle: utils.parseBytes32String(res[0]),
+                  })
+                })
             }}
           >
             {mod.projectId?.gt(0) ? (
@@ -282,6 +278,7 @@ export default function ProjectPayoutMods({
       fee,
       form,
       onModsChanged,
+      contracts?.Projects.functions,
     ],
   )
 
@@ -376,7 +373,6 @@ export default function ProjectPayoutMods({
           onClick={() => {
             setEditingModIndex(mods.length)
             setEditingPercent(0)
-            setEditingModProjectId(undefined)
             form.resetFields()
           }}
           block
@@ -393,7 +389,6 @@ export default function ProjectPayoutMods({
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
-          setEditingModProjectId(undefined)
         }}
         destroyOnClose
       >

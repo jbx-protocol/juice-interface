@@ -154,9 +154,7 @@ export default function EditProjectModal({
         <FormItems.ProjectHandleFormItem
           name="handle"
           requireState="notExist"
-          formItemProps={{
-            rules: [{ required: true }],
-          }}
+          required
         />
         <Form.Item>
           <Button type="primary" loading={loadingSetHandle} onClick={setHandle}>

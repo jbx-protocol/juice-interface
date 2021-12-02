@@ -2,7 +2,7 @@ import axios from 'axios'
 import { TxGasOption } from 'models/tx-gas-option'
 import { useQuery } from 'react-query'
 
-export function useGasPrice(speed: TxGasOption) {
+export function useGasPriceQuery(speed: TxGasOption) {
   return useQuery(
     ['gas-price', speed],
     async () => {

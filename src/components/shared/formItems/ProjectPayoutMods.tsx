@@ -440,12 +440,8 @@ export default function ProjectPayoutMods({
               requireState="exists"
               formItemProps={{
                 label: 'Project handle',
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
               }}
+              required
             />
           )}
           {editingModType === 'project' ? (

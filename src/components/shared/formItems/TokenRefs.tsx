@@ -4,7 +4,7 @@ import { Button, Form, Input } from 'antd'
 import { constants } from 'ethers'
 import { TokenRef } from 'models/token-ref'
 
-import ProjectHandle from './ProjectHandle'
+import ProjectHandleFormItem from './ProjectHandle'
 
 export default function TokenRefs({
   refs,
@@ -54,9 +54,11 @@ export default function TokenRefs({
                   />
                 </Form.Item>
               ) : (
-                <ProjectHandle
-                  formItemProps={{ label: null }}
-                  initialValue={r.value ? BigNumber.from(r.value) : ''}
+                <ProjectHandleFormItem
+                  formItemProps={{
+                    label: null,
+                    initialValue: r.value ? BigNumber.from(r.value) : '',
+                  }}
                   requireState="exists"
                   returnValue="id"
                   onValueChange={value =>

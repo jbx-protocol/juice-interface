@@ -13,10 +13,12 @@ export default function ProjectHandleFormItem({
   onValueChange,
   requireState,
   returnValue,
+  required,
 }: {
   onValueChange?: (val: string) => void
   requireState?: 'exists' | 'notExist' // whether the handle is required to already exist or not.
   returnValue?: 'id' | 'handle'
+  required?: boolean
 } & FormItemExt) {
   const [handleExists, setHandleExists] = useState<Boolean>(false)
 
@@ -41,8 +43,9 @@ export default function ProjectHandleFormItem({
       label={hideLabel ? undefined : formItemProps?.label ?? DEFAULT_LABEL}
       status={formItemStatus}
       {...formItemProps}
-      rules={[{ validator }, ...(formItemProps?.rules ?? [])]}
+      rules={[{ required }, { validator }, ...(formItemProps?.rules ?? [])]}
       validateTrigger={false}
+      validateFirst
     >
       <ProjectHandleInput
         onChange={v => onValueChange?.(v ?? '')}

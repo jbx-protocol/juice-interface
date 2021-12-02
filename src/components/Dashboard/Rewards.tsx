@@ -123,6 +123,10 @@ export default function Rewards({
     [],
   )
 
+  const labelStyle: CSSProperties = {
+    width: 128,
+  }
+
   return (
     <div>
       <Space direction="vertical" size="large">
@@ -140,8 +144,9 @@ export default function Rewards({
               {ticketsIssued && (
                 <Descriptions.Item
                   label="Address"
+                  labelStyle={labelStyle}
                   children={
-                    <div style={{ width: '100%', textAlign: 'right' }}>
+                    <div style={{ width: '100%' }}>
                       <FormattedAddress address={tokenAddress} />
                     </div>
                   }
@@ -149,6 +154,7 @@ export default function Rewards({
               )}
               <Descriptions.Item
                 label="Total supply"
+                labelStyle={labelStyle}
                 children={
                   <div
                     style={{
@@ -171,6 +177,7 @@ export default function Rewards({
               />
               <Descriptions.Item
                 label="Your balance"
+                labelStyle={labelStyle}
                 children={
                   <div
                     style={{

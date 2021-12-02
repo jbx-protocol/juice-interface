@@ -42,9 +42,9 @@ export default function ProjectForm({
           name="handle"
           requireState="notExist"
           formItemProps={{
-            rules: [{ required: true }],
             dependencies: ['name'],
           }}
+          required
         />
         <FormItems.ProjectDescription name="description" />
         <FormItems.ProjectLink name="infoUri" />

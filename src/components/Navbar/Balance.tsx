@@ -1,6 +1,6 @@
 import EthPrice from 'components/Navbar/EthPrice'
 import { ThemeContext } from 'contexts/themeContext'
-import { useEthBalance } from 'hooks/EthBalance'
+import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
 
@@ -17,7 +17,7 @@ export default function Balance({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: balance } = useEthBalance(address)
+  const { data: balance } = useEthBalanceQuery(address)
 
   return (
     <div

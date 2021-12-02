@@ -10,7 +10,7 @@ import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useEthBalance } from 'hooks/EthBalance'
+import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
@@ -65,7 +65,7 @@ export default function Paid() {
     0,
   )
 
-  const { data: ownerBalance } = useEthBalance(owner)
+  const { data: ownerBalance } = useEthBalanceQuery(owner)
 
   const percentPaid = useMemo(
     () =>

@@ -14,7 +14,7 @@ import {
   ProjectHandleInput,
   ProjectHandleInitialValue,
 } from './ProjectHandleInput'
-import { FormItemExt } from './formItemExt'
+import { FormItemExt } from '../formItemExt'
 
 /**
  * Custom Form.Item component for project handles.

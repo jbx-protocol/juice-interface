@@ -4,7 +4,7 @@ import { Button, Form, Input } from 'antd'
 import { constants } from 'ethers'
 import { TokenRef } from 'models/token-ref'
 
-import ProjectHandleFormItem from './ProjectHandle'
+import ProjectHandleFormItem from './ProjectHandle/ProjectHandleFormItem'
 
 export default function TokenRefs({
   refs,

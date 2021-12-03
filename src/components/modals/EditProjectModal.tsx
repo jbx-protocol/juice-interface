@@ -153,6 +153,7 @@ export default function EditProjectModal({
       <Form form={handleForm} layout="vertical">
         <FormItems.ProjectHandleFormItem
           name="handle"
+          initialValue={handleForm.getFieldValue('handle')}
           requireState="notExist"
           required
         />

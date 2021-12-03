@@ -40,6 +40,7 @@ export default function ProjectForm({
         />
         <FormItems.ProjectHandleFormItem
           name="handle"
+          initialValue={form.getFieldValue('handle')}
           requireState="notExist"
           formItemProps={{
             dependencies: ['name'],

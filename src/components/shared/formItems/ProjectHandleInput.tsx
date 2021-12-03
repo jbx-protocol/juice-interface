@@ -2,6 +2,8 @@
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { UserContext } from 'contexts/userContext'
+
 import { useCallback, useContext, useMemo, useState, useEffect } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -12,28 +14,18 @@ type ProjectHandleInputValue = string | undefined
 
 interface ProjectHandleProps {
   value?: ProjectHandleInputValue
+  initialValue?: string | BigNumber | undefined
   onChange?: (value: ProjectHandleInputValue) => void
-  requireState?: 'exists' | 'notExist' // whether the handle is required to already exist or not.
-  returnValue?: 'id' | 'handle'
-  onHandleExistsChange?: (value: boolean) => void
+  suffix?: React.ReactNode
 }
 
 export default function ProjectHandleInput({
-  value,
   onChange,
-  requireState,
-  returnValue,
-  onHandleExistsChange,
+  suffix,
+  initialValue,
 }: ProjectHandleProps) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const [initialValue, setInitialValue] = useState<string>()
+  const { contracts } = useContext(UserContext)
   const [inputContents, setInputContents] = useState<string>()
-  const [handleLoading, setHandleLoading] = useState<boolean>(false)
-  const [handleExists, setHandleExists] = useState<boolean>(false)
-
   const triggerChange = useCallback(
     (value: ProjectHandleInputValue) => {
       onChange?.(value)
@@ -42,94 +34,22 @@ export default function ProjectHandleInput({
   )
 
   useEffect(() => {
-    setInitialValue(value)
-    setInputContents(value)
-    triggerChange(value)
-    if (value) {
-      setHandleLoading(true)
+    if (typeof initialValue === 'string') {
+      setInputContents(initialValue)
+    } else if (initialValue !== undefined) {
+      contracts?.Projects.functions
+        .handleOf(BigNumber.from(initialValue).toHexString())
+        .then(res => {
+          const handle = utils.parseBytes32String(res[0])
+          setInputContents(handle)
+        })
     }
-  }, [value, triggerChange])
-
-  const handleBytes = useMemo(() => {
-    if (!inputContents) return
-
-    try {
-      return utils.formatBytes32String(normalizeHandle(inputContents))
-    } catch (e) {
-      console.error('Error formatting handle', inputContents, e)
-    }
-  }, [inputContents]) // 0x...
-
-  useContractReader<BigNumber>({
-    contract: ContractName.Projects,
-    functionName: 'projectFor',
-    args: handleBytes && requireState ? [handleBytes] : null,
-    callback: useCallback(
-      idForHandle => {
-        setHandleExists(Boolean(idForHandle?.gt(0)))
-        onHandleExistsChange?.(handleExists)
-        setHandleLoading(false)
-
-        if (returnValue === 'id') {
-          onChange?.(idForHandle?.toHexString() ?? '0x00')
-        }
-      },
-      [handleExists, onHandleExistsChange, returnValue, onChange],
-    ),
-  })
-
-  const suffix: string | JSX.Element = useMemo(() => {
-    const InputCheckIcon = (
-      <CheckCircleOutlined style={{ color: colors.icon.success }} />
-    )
-
-    if (handleLoading) {
-      return <LoadingOutlined spin />
-    }
-
-    // If there's no value, render nothing.
-    if (!inputContents) {
-      return ''
-    }
-
-    if (requireState === 'notExist') {
-      // In the `notExist` case,
-      // an existing handle is assumed valid if it hasn't changed from
-      // the initialValue
-      // (for example, if a project is editing their current handle)
-      const isExistingHandleValid =
-        initialValue !== undefined && inputContents === initialValue
-
-      if (handleExists && !isExistingHandleValid) {
-        return 'Handle already in use'
-      }
-
-      if (!handleExists || (handleExists && isExistingHandleValid)) {
-        return InputCheckIcon
-      }
-    }
-
-    if (requireState === 'exists') {
-      return handleExists ? InputCheckIcon : 'Handle not found'
-    }
-
-    return ''
-  }, [
-    inputContents,
-    handleLoading,
-    handleExists,
-    requireState,
-    initialValue,
-    colors.icon.success,
-  ])
+  }, []) // eslint-disable-line
 
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = normalizeHandle(e.target.value)
     setInputContents(val)
     triggerChange(val)
-    if (val) {
-      setHandleLoading(true)
-    }
   }
 
   return (

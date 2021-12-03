@@ -8,9 +8,12 @@ import { useContext, useLayoutEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
 
 import Navbar from './Navbar'
-import Router from './Router'
 
-function App() {
+interface Props {
+  children: JSX.Element
+}
+
+function App({ children }: Props) {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
     useState<boolean>()
 
@@ -40,9 +43,7 @@ function App() {
         }}
       >
         <Navbar />
-        <Content>
-          <Router />
-        </Content>
+        <Content>{children}</Content>
       </Layout>
 
       <Modal

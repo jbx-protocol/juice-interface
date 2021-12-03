@@ -79,7 +79,10 @@ export default function Navbar() {
     )
   }
 
-  return window.innerWidth > 900 ? (
+  const isDesktop =
+    typeof window !== 'undefined' ? window.innerWidth > 900 : true
+
+  return isDesktop ? (
     <Header
       style={{
         display: 'flex',

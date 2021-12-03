@@ -1,10 +1,15 @@
-import Dashboard from 'components/Dashboard'
 import Landing from 'components/Landing'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, useParams, Route, Switch } from 'react-router-dom'
 
 import CatchallRedirect from './CatchallRedirect'
 import Create from './Create'
 import Projects from './Projects'
+
+const RedirectToProject = () => {
+  const { handle }: { handle?: string } = useParams()
+  window.location.href = 'http://localhost:3000/p/' + handle
+  return null
+}
 
 export default function Router() {
   return (
@@ -23,7 +28,7 @@ export default function Router() {
           <Projects />
         </Route>
         <Route path="/p/:handle">
-          <Dashboard />
+          <RedirectToProject />
         </Route>
         <Route path="/:route">
           <CatchallRedirect />

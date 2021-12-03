@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Button, Col, Row, Space } from 'antd'
 import Create from 'components/Create'
 import Loading from 'components/shared/Loading'
@@ -82,6 +83,22 @@ export default function Landing() {
 
   return (
     <div>
+      <Head>
+        <meta property="og:url" content="https://juicebox.money" />
+        <meta property="og:title" content="Juicebox" />
+        <meta
+          property="og:description"
+          content="Community funding for people and projects on Ethereum."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="%PUBLIC_URL%/assets/banana-cover.png"
+        />
+        <meta property="og:image:type" content="image/svg" />
+        <meta property="og:image:width" content="2870" />
+        <meta property="og:image:height" content="1245" />
+      </Head>
       <section style={section}>
         <div style={wrapper}>
           <Row gutter={30} align="middle">

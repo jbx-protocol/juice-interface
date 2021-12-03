@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import App from '../components/App'
+import Router from '../components/Router'
 
 function CatchallPage() {
   const [isMounted, setIsMounted] = useState(false)
@@ -13,7 +13,7 @@ function CatchallPage() {
     return null
   }
 
-  return <App />
+  return <Router />
 }
 
 export default CatchallPage

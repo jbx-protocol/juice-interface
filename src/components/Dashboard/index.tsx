@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
@@ -12,7 +14,6 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { parseProjectJson } from 'models/subgraph-entities/project'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
@@ -33,12 +34,15 @@ export default function Dashboard() {
 
   const converter = useCurrencyConverter()
 
-  const { handle }: { handle?: string } = useParams()
+  const router = useRouter()
+  const { handle } = router.query
 
   const projectId = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
-    args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
+    args: handle
+      ? [utils.formatBytes32String(normalizeHandle(handle as string))]
+      : null,
     callback: useCallback(
       (id?: BigNumber) => setProjectExists(id?.gt(0) ?? false),
       [setProjectExists],

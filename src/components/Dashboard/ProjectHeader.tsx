@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import {
   SettingOutlined,
   ToolOutlined,
@@ -55,6 +56,17 @@ export default function ProjectHeader() {
 
   return (
     <div>
+      <Head>
+        <meta property="og:site_name" content="juicebox" />
+        <meta
+          property="og:url"
+          content={`https://juicebox.money/#/p/${handle}`}
+        />
+        <meta property="og:title" content={metadata?.name} />
+        <meta property="og:description" content={metadata?.description} />
+        <meta property="og:type" content="object" />
+        <meta property="og:image" content={metadata?.logoUri} />
+      </Head>
       <div
         style={{
           display: 'flex',

@@ -9,6 +9,7 @@ import React from 'react'
 import Theme from 'Theme'
 import User from 'User'
 
+import App from 'components/App'
 import store from 'redux/store'
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
@@ -17,7 +18,9 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <Theme>
         <Network>
           <User>
-            <Component {...pageProps} />
+            <App>
+              <Component {...pageProps} />
+            </App>
           </User>
         </Network>
       </Theme>

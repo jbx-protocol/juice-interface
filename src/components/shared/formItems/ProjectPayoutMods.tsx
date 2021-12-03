@@ -2,7 +2,6 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
-import { UserContext } from 'contexts/userContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber, constants, utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
@@ -53,6 +52,7 @@ export default function ProjectPayoutMods({
     percent: number
     lockedUntil: moment.Moment
   }>()
+  const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
@@ -60,7 +60,6 @@ export default function ProjectPayoutMods({
   const [settingHandle, setSettingHandle] = useState<string>()
 
   const { owner } = useContext(ProjectContext)
-  const { contracts } = useContext(UserContext)
 
   useContractReader<BigNumber>({
     contract: ContractName.Projects,
@@ -134,14 +133,7 @@ export default function ProjectPayoutMods({
               })
               setEditingModIndex(index)
               setEditingPercent(percent)
-
-              contracts?.Projects.functions
-                .handleOf(BigNumber.from(mod.projectId).toHexString())
-                .then(res => {
-                  form.setFieldsValue({
-                    handle: utils.parseBytes32String(res[0]),
-                  })
-                })
+              setEditingModProjectId(mod.projectId)
             }}
           >
             {mod.projectId?.gt(0) ? (
@@ -278,7 +270,6 @@ export default function ProjectPayoutMods({
       fee,
       form,
       onModsChanged,
-      contracts?.Projects.functions,
     ],
   )
 
@@ -433,6 +424,7 @@ export default function ProjectPayoutMods({
             <FormItems.ProjectHandleFormItem
               name="handle"
               requireState="exists"
+              initialValue={editingModProjectId}
               formItemProps={{
                 label: 'Project handle',
               }}

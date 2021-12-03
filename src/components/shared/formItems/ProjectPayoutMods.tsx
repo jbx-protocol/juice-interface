@@ -364,6 +364,7 @@ export default function ProjectPayoutMods({
           onClick={() => {
             setEditingModIndex(mods.length)
             setEditingPercent(0)
+            setEditingModProjectId(undefined)
             form.resetFields()
           }}
           block
@@ -380,6 +381,7 @@ export default function ProjectPayoutMods({
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
+          setEditingModProjectId(undefined)
         }}
         destroyOnClose
       >

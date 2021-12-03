@@ -52,27 +52,20 @@ export default function Create() {
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
-  const [payModsModalVisible, setPayModsFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [budgetFormModalVisible, setBudgetFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [projectFormModalVisible, setProjectFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [incentivesFormModalVisible, setIncentivesFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [ticketingFormModalVisible, setTicketingFormModalVisible] = useState<
-    boolean
-  >(false)
-  const [rulesFormModalVisible, setRulesFormModalVisible] = useState<boolean>(
-    false,
-  )
-  const [deployProjectModalVisible, setDeployProjectModalVisible] = useState<
-    boolean
-  >(false)
+  const [payModsModalVisible, setPayModsFormModalVisible] =
+    useState<boolean>(false)
+  const [budgetFormModalVisible, setBudgetFormModalVisible] =
+    useState<boolean>(false)
+  const [projectFormModalVisible, setProjectFormModalVisible] =
+    useState<boolean>(false)
+  const [incentivesFormModalVisible, setIncentivesFormModalVisible] =
+    useState<boolean>(false)
+  const [ticketingFormModalVisible, setTicketingFormModalVisible] =
+    useState<boolean>(false)
+  const [rulesFormModalVisible, setRulesFormModalVisible] =
+    useState<boolean>(false)
+  const [deployProjectModalVisible, setDeployProjectModalVisible] =
+    useState<boolean>(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -259,8 +252,9 @@ export default function Create() {
           editMetadataForCid(cidFromUrl(editingProjectInfo.metadata.logoUri), {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
-
-          window.location.hash = '/p/' + editingProjectInfo.handle
+          if (window) {
+            window.location.hash = '/p/' + editingProjectInfo.handle
+          }
         },
       },
     )

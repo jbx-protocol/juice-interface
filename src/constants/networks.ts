@@ -13,13 +13,15 @@ export type NetworkInfo = {
   gasPrice?: number
 }
 
+const hostName = typeof window !== 'undefined' ? window.location.hostname : ''
+
 export const NETWORKS: Record<number, NetworkInfo> = {
   31337: {
     name: NetworkName.localhost,
     color: '#666666',
     chainId: 31337,
     blockExplorer: '',
-    rpcUrl: 'http://' + window.location.hostname + ':8545',
+    rpcUrl: 'http://' + hostName + ':8545',
   },
   1: {
     name: NetworkName.mainnet,

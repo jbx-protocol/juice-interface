@@ -294,7 +294,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {window.innerWidth > 600 && (
+      {window && window.innerWidth > 600 && (
         <section
           id="create"
           style={{

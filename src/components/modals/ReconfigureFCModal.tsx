@@ -18,7 +18,13 @@ import { CurrencyOption } from 'models/currency-option'
 import { FCMetadata, FundingCycle } from 'models/funding-cycle'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useMemo,
+  useLayoutEffect,
+  useState,
+} from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
   formattedNum,
@@ -186,10 +192,13 @@ export default function ReconfigureFCModal({
     )
   }
 
-  const drawerStyle: Partial<DrawerProps> = {
-    placement: 'right',
-    width: Math.min(640, window.innerWidth * 0.9),
-  }
+  const drawerStyle: Partial<DrawerProps> = useMemo(() => {
+    const minWidth = window ? window.innerWidth * 0.9 : 640
+    return {
+      placement: 'right',
+      width: Math.min(640, minWidth),
+    }
+  }, [])
 
   const buildSteps = useCallback(
     (steps: { title: string; callback: VoidFunction }[]) => (

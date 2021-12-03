@@ -363,7 +363,9 @@ export default function Dashboard() {
         <Project />
         <div
           style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            if (window) window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
         >
           Back to top
         </div>

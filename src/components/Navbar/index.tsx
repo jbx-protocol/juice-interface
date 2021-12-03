@@ -62,7 +62,9 @@ export default function Navbar() {
       <>
         {menuItem('Projects', '/#/projects')}
         {menuItem('FAQ', undefined, () => {
-          window.location.hash = '/'
+          if (window) {
+            window.location.hash = '/'
+          }
           setTimeout(() => {
             document
               .getElementById('faq')

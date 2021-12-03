@@ -38,7 +38,11 @@ export default function ProjectCard({
       }}
       className="clickable-border"
       key={project?.handle}
-      onClick={() => (window.location.hash = '/p/' + project.handle)}
+      onClick={() => {
+        if (window) {
+          window.location.hash = '/p/' + project.handle
+        }
+      }}
     >
       {metadata ? (
         <div

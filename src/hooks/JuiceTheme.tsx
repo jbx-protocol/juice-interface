@@ -23,7 +23,9 @@ export function useJuiceTheme(
   storageKey: string = 'jb_theme',
 ): ThemeContextType {
   const initialThemeOption =
-    (localStorage.getItem(storageKey) as ThemeOption) || ThemeOption.light
+    typeof localStorage === 'undefined'
+      ? ThemeOption.light
+      : (localStorage.getItem(storageKey) as ThemeOption) || ThemeOption.light
 
   const [currentThemeOption, setCurrentThemeOption] =
     useState<ThemeOption>(initialThemeOption)
@@ -65,7 +67,8 @@ export function useJuiceTheme(
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)
-      localStorage.setItem(storageKey, themeOption)
+      if (typeof localStorage !== 'undefined')
+        localStorage.setItem(storageKey, themeOption)
     },
   }
 }

@@ -25,7 +25,8 @@ export default function Network({ children }: { children: ChildElems }) {
   const resetWallet = useCallback(() => {
     onboard?.walletReset()
     setSigningProvider(undefined)
-    if (window) window.localStorage.setItem(KEY_SELECTED_WALLET, '')
+    if (typeof window !== 'undefined')
+      window.localStorage.setItem(KEY_SELECTED_WALLET, '')
   }, [onboard])
 
   const selectWallet = async () => {
@@ -55,7 +56,7 @@ export default function Network({ children }: { children: ChildElems }) {
       if (newWallet.provider) {
         // Reset the account when a new wallet is connected, as it will be resolved by the provider.
         setAccount(undefined)
-        if (window)
+        if (typeof window !== 'undefined')
           window.localStorage.setItem(KEY_SELECTED_WALLET, newWallet.name || '')
         setSigningProvider(new Web3Provider(newWallet.provider))
       } else {

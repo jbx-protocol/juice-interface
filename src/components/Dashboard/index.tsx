@@ -364,7 +364,8 @@ export default function Dashboard() {
         <div
           style={{ textAlign: 'center', cursor: 'pointer', padding: 20 }}
           onClick={() => {
-            if (window) window.scrollTo({ top: 0, behavior: 'smooth' })
+            if (typeof window !== 'undefined')
+              window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
         >
           Back to top

@@ -62,7 +62,7 @@ export default function Navbar() {
       <>
         {menuItem('Projects', '/#/projects')}
         {menuItem('FAQ', undefined, () => {
-          if (window) {
+          if (typeof window !== 'undefined') {
             window.location.hash = '/'
           }
           setTimeout(() => {

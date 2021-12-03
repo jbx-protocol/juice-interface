@@ -39,7 +39,7 @@ export default function ProjectCard({
       className="clickable-border"
       key={project?.handle}
       onClick={() => {
-        if (window) {
+        if (typeof window !== 'undefined') {
           window.location.hash = '/p/' + project.handle
         }
       }}

@@ -252,7 +252,7 @@ export default function Create() {
           editMetadataForCid(cidFromUrl(editingProjectInfo.metadata.logoUri), {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
-          if (window) {
+          if (typeof window !== 'undefined') {
             window.location.hash = '/p/' + editingProjectInfo.handle
           }
         },

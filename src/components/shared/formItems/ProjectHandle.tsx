@@ -1,74 +1,69 @@
+/* eslint-disable */
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+
 import { ThemeContext } from 'contexts/themeContext'
-import { UserContext } from 'contexts/userContext'
 import { utils } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
 
-import ProjectHandleInput from './ProjectHandleInput'
+import {
+  ProjectHandleInput,
+  ProjectHandleInitialValue,
+} from './ProjectHandleInput'
 import { FormItemExt } from './formItemExt'
 
+/**
+ * Custom Form.Item component for project handles.
+ */
 export default function ProjectHandleFormItem({
   name,
   hideLabel,
   formItemProps,
   onValueChange,
   requireState,
-  returnValue,
   required,
+  returnValue,
   initialValue,
 }: {
   onValueChange?: (val: string) => void
   requireState?: 'exists' | 'notExist'
   required?: boolean
   returnValue?: 'id' | 'handle'
-  initialValue?: string | BigNumber | undefined
+  initialValue?: ProjectHandleInitialValue
 } & FormItemExt) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { contracts } = useContext(UserContext)
   const [inputContents, setInputContents] = useState<string>()
   const [handleLoading, setHandleLoading] = useState<boolean>(false)
 
-  const handle = useMemo(() => {
+  // Set the initial state.
+  useEffect(() => {
+    // If there's an existing value, set loading state
+    // and disable input while we wait for loading to finish.
+    if (initialValue) {
+      setHandleLoading(true)
+    }
+  }, [initialValue])
+
+  const handleHex = useMemo(() => {
     if (!inputContents) return
 
     try {
       return utils.formatBytes32String(normalizeHandle(inputContents))
     } catch (e) {
-      console.log('Error formatting handle', inputContents, e)
+      console.error('Error formatting handle', inputContents, e)
     }
-  }, [inputContents])
+  }, [inputContents]) // 0xabc...
 
-  useEffect(() => {
-    console.log('setting initivalue', initialValue)
-    if (initialValue) {
-      setHandleLoading(true)
-    }
-
-    if (typeof initialValue === 'string') {
-      setInputContents(initialValue)
-    } else if (initialValue !== undefined) {
-      contracts?.Projects.functions
-        .handleOf(BigNumber.from(initialValue).toHexString())
-        .then(res => {
-          const handle = utils.parseBytes32String(res[0])
-          console.log('here', handle)
-          setInputContents(handle)
-        })
-    }
-  }, [initialValue, contracts?.Projects.functions])
-
-  // InputContents pattern allows checking if handle exists while typing
   const idForHandle = useContractReader<BigNumber>({
     contract: ContractName.Projects,
     functionName: 'projectFor',
-    args: handle && requireState ? [handle] : null,
+    args: handleHex && requireState ? [handleHex] : null,
     callback: useCallback(
       id => {
         setHandleLoading(false)
@@ -81,8 +76,9 @@ export default function ProjectHandleFormItem({
     ),
   })
 
-  const handleExists = idForHandle?.gt(0)
+  const handleExists = Boolean(idForHandle?.gt(0))
 
+  // Validator function for Form.Item
   const validator = useCallback(() => {
     if (handleExists && requireState === 'notExist')
       return Promise.reject('Handle not available')
@@ -99,17 +95,13 @@ export default function ProjectHandleFormItem({
     if (handleLoading) {
       return <LoadingOutlined spin />
     }
-
-    // If there's no value, render nothing.
     if (!inputContents) {
       return ''
     }
-
     if (requireState === 'notExist') {
       // In the `notExist` case,
       // an existing handle is assumed valid if it hasn't changed from
-      // the initialValue
-      // (for example, if a project is editing their current handle)
+      // the initialValue (for example, if a project is editing their current handle).
       const isExistingHandleValid =
         initialValue !== undefined && inputContents === initialValue
 
@@ -121,7 +113,6 @@ export default function ProjectHandleFormItem({
         return InputCheckIcon
       }
     }
-
     if (requireState === 'exists') {
       return handleExists ? InputCheckIcon : 'Handle not found'
     }
@@ -140,6 +131,13 @@ export default function ProjectHandleFormItem({
     setInputContents(val)
     if (val) {
       setHandleLoading(true)
+    }
+    // Only trigger onValueChange when
+    // return value is not `id`.
+    // We handle `id` type in contract
+    // reader above.
+    if (returnValue !== 'id') {
+      onValueChange?.(val ?? '')
     }
   }
 

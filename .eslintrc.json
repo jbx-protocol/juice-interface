@@ -1,6 +1,9 @@
 {
-  "plugins": ["import"],
-  "extends": ["react-app", "react-app/jest", "prettier"],
+  "plugins": ["import", "jest"],
+  "extends": ["react-app", "react-app/jest", "plugin:@next/next/recommended", "prettier"],
+  "env": {
+    "jest/globals": true
+  },
   "rules": {
     "react-hooks/exhaustive-deps": "error",
     "@typescript-eslint/no-redeclare": "error",

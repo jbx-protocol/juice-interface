@@ -98,16 +98,16 @@ export default function ConfirmDeployProject() {
         value={orEmpty(editingProject?.metadata.payButton)}
       />
       <Statistic
-        title="Pay disclosure"
+        title="A note to your supporters"
         value={orEmpty(editingProject?.metadata.payDisclosure)}
       />
       <Space size="large">
         <Statistic
-          title="Website"
+          title="Your project's website"
           value={orEmpty(editingProject?.metadata.infoUri)}
         />
         <Statistic
-          title="Twitter"
+          title="Your project's Twitter handle"
           value={
             editingProject?.metadata.twitter
               ? '@' + editingProject.metadata.twitter
@@ -115,7 +115,7 @@ export default function ConfirmDeployProject() {
           }
         />
         <Statistic
-          title="Discord"
+          title="Your project's discord link"
           value={orEmpty(editingProject?.metadata.discord)}
         />
       </Space>

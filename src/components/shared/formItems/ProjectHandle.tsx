@@ -97,7 +97,7 @@ export default function ProjectHandle({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : formItemProps?.label ?? 'Unique handle'}
+      label={hideLabel ? undefined : formItemProps?.label ?? 'Project handle'}
       status={
         (handleExists && requireState === 'notExist') ||
         (!handleExists && requireState === 'exists')
@@ -111,10 +111,10 @@ export default function ProjectHandle({
       <Input
         id="testinput"
         value={inputContents}
-        prefix="@"
+        prefix=""
         suffix={suffix}
         className="err-suffix"
-        placeholder="handle"
+        placeholder="your Juicebox username ex: @juicebox"
         type="string"
         autoComplete="off"
         onChange={e => {

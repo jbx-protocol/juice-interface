@@ -11,11 +11,14 @@ export default function ProjectPayDisclosure({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Pay disclosure'}
-      extra={`This text will be displayed to anyone who pays your project, before they complete their payment.`}
+      label={hideLabel ? undefined : 'A note to your supporters'}
+      extra={``}
       {...formItemProps}
     >
-      <TextArea autoComplete="off" />
+      <TextArea
+        placeholder="This text will be displayed to anyone who pays your project, before they complete their payment."
+        autoComplete="off"
+      />
     </Form.Item>
   )
 }

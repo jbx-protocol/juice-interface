@@ -11,11 +11,11 @@ export default function ProjectLink({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : 'Website'}
-      extra="Your project's website."
+      extra=""
       {...formItemProps}
     >
       <Input
-        placeholder="https://your-project.com"
+        placeholder="www.juicebox.money"
         type="string"
         autoComplete="off"
       />

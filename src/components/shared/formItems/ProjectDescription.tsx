@@ -19,7 +19,7 @@ export default function ProjectDescription({
     >
       <TextArea
         autoComplete="off"
-        placeholder={`Max ${MAX_DESCRIPTION_LENGTH} characters`}
+        placeholder={`Tell us about your mission. [Max ${MAX_DESCRIPTION_LENGTH} characters]`}
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}
       />

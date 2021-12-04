@@ -376,9 +376,10 @@ export default function ProjectPayoutMods({
       </Space>
 
       <Modal
-        title="Add a payout"
+        title={editingModProjectId ? 'Edit existing payout' : 'Add a payout'}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
+        okText={editingModProjectId ? 'Save payout' : 'Add payout'}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)

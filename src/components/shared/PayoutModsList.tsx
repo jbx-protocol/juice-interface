@@ -170,6 +170,7 @@ export default function PayoutModsList({
         <Modal
           visible={modalVisible}
           title="Edit payouts"
+          okText="Save payouts"
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)

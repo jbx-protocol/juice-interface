@@ -75,10 +75,10 @@ export default function ConfirmUnstakeTokensModal({
 
   return (
     <Modal
-      title={'Claim ' + (tokenSymbol ?? 'tokens')}
+      title={`Claim ${tokenSymbol ?? 'tokens'} as ERC20 tokens`}
       visible={visible}
       onOk={unstake}
-      okText="Claim"
+      okText={`Claim ${unstakeAmount} ERC20 tokens`}
       confirmLoading={loading}
       okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
       onCancel={onCancel}
@@ -96,8 +96,8 @@ export default function ConfirmUnstakeTokensModal({
 
         <div>
           <p>
-            Claiming {tokenSymbol} tokens will convert your balance to ERC20
-            tokens and mint them to your wallet.
+            Claiming {tokenSymbol} tokens will convert your {tokenSymbol}{' '}
+            balance to ERC20 tokens and mint them to your wallet.
           </p>
           <p style={{ fontWeight: 600 }}>
             If you're unsure if you need to claim, you probably don't.

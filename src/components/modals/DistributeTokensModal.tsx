@@ -58,10 +58,10 @@ export default function DistributeTokensModal({
 
   return (
     <Modal
-      title={'Distribute reserved ' + tokenSymbol ?? 'tokens'}
+      title={`Distribute reserved ${tokenSymbol ?? 'tokens'}`}
       visible={visible}
       onOk={distribute}
-      okText="Distribute"
+      okText={`Distribute ${tokenSymbol ?? 'tokens'}`}
       confirmLoading={loading}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}

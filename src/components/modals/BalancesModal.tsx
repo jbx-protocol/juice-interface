@@ -123,7 +123,7 @@ export default function BalancesModal({
           width={600}
           confirmLoading={loading}
           onOk={updateTokenRefs}
-          okText="Save"
+          okText="Save tracked assets"
         >
           <p style={{ marginBottom: 40 }}>
             Display ERC20 tokens and other Juicebox project tokens that are in

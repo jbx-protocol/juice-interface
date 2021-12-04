@@ -270,6 +270,7 @@ export default function ProjectTicketMods({
         title="Add token receiver"
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
+        okText="Add token receiver"
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)

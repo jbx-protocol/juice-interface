@@ -309,7 +309,7 @@ export default function Dashboard() {
       projectType,
       owner,
       earned,
-      handle,
+      handle: handle as string,
       metadata,
       currentFC,
       queuedFC,

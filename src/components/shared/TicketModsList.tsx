@@ -133,6 +133,7 @@ export default function TicketModsList({
         <Modal
           visible={modalVisible}
           title="Edit reserved token receivers"
+          okText="Save token receivers"
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)

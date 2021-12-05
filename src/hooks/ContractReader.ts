@@ -2,8 +2,11 @@ import { Contract, EventFilter } from '@ethersproject/contracts'
 import { UserContext } from 'contexts/userContext'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
+
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
+
+import { getContracts } from './ContractLoader'
 
 export type ContractUpdateOn = {
   contract?: ContractConfig
@@ -12,6 +15,34 @@ export type ContractUpdateOn = {
 }[]
 
 export type ContractConfig = ContractName | Contract | undefined
+
+export async function readContract<V>({
+  contract,
+  functionName,
+  args,
+  formatter,
+}: {
+  contract?: ContractConfig
+  functionName?: string
+  args?: unknown[] | null
+  formatter?: (val?: any) => V | undefined
+}) {
+  const contracts = getContracts()
+
+  const readContract = contractToRead(contract, contracts)
+
+  if (!readContract || !functionName || args === null) return
+
+  try {
+    console.log('📚 Read >', functionName)
+
+    const result = await readContract[functionName](...(args ?? []))
+    const value = formatter ? formatter(result) : result
+    return value
+  } catch (error) {
+    return null
+  }
+}
 
 export default function useContractReader<V>({
   contract,

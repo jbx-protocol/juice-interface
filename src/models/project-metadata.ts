@@ -26,7 +26,7 @@ export type ProjectMetadataV3 = Partial<
     version: 3
     twitter: string
     discord: string
-    payButton: string
+    payButton: string | null
     payDisclosure: string
   }
 >
@@ -39,7 +39,8 @@ export const consolidateMetadata = (
     ...metadata,
     payButton:
       (metadata as ProjectMetadataV3).payButton ??
-      (metadata as ProjectMetadataV2).payText,
+      (metadata as ProjectMetadataV2).payText ??
+      null,
     version: 3,
   }
 }

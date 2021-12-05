@@ -3,7 +3,7 @@ import { Content } from 'antd/lib/layout/layout'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { NetworkName } from 'models/network-name'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { readNetwork } from 'constants/networks'
 
@@ -26,7 +26,7 @@ function App({ children }: Props) {
     NetworkName.rinkeby,
   ]
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!signerNetwork) return
 
     setSwitchNetworkModalVisible(signerNetwork !== networkName)

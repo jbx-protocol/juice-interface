@@ -1,5 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
 
 import { NetworkContext } from 'contexts/networkContext'
 import { Contracts } from 'models/contracts'
@@ -10,6 +11,22 @@ import { useContext, useEffect, useState } from 'react'
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
+export function getContracts(signingProvider?: Web3Provider) {
+  const network = readNetwork.name
+
+  // Contracts can be used read-only without a signer, but require a signer to create transactions.
+  const signerOrProvider = signingProvider?.getSigner() ?? readProvider
+
+  const contracts = Object.values(ContractName).reduce(
+    (accumulator, contractName) => ({
+      ...accumulator,
+      [contractName]: loadContract(contractName, network, signerOrProvider),
+    }),
+    {} as Contracts,
+  )
+  return contracts
+}
+
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
 
@@ -18,23 +35,7 @@ export function useContractLoader() {
   useEffect(() => {
     async function loadContracts() {
       try {
-        const network = readNetwork.name
-
-        // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signingProvider?.getSigner() ?? readProvider
-
-        const newContracts = Object.values(ContractName).reduce(
-          (accumulator, contractName) => ({
-            ...accumulator,
-            [contractName]: loadContract(
-              contractName,
-              network,
-              signerOrProvider,
-            ),
-          }),
-          {} as Contracts,
-        )
-
+        const newContracts = getContracts(signingProvider)
         setContracts(newContracts)
       } catch (e) {
         console.log('CONTRACT LOADER ERROR:', e)

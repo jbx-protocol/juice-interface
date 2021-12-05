@@ -7,7 +7,7 @@ import Projects from './Projects'
 
 const RedirectToProject = () => {
   const { handle }: { handle?: string } = useParams()
-  window.location.href = 'http://localhost:3000/p/' + handle
+  window.location.href = '/p/' + handle
   return null
 }
 

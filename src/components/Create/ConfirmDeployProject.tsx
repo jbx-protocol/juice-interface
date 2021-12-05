@@ -95,7 +95,7 @@ export default function ConfirmDeployProject() {
       />
       <Statistic
         title="Pay button"
-        value={orEmpty(editingProject?.metadata.payButton ?? undefined)}
+        value={orEmpty(editingProject?.metadata.payButton)}
       />
       <Statistic
         title="Pay disclosure"

@@ -3,7 +3,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+
 import { UserContext } from 'contexts/userContext'
 import {
   useAppSelector,
@@ -20,6 +20,8 @@ import {
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { orEmpty } from 'utils/orEmpty'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingFundingCycleSelector()
@@ -93,7 +95,7 @@ export default function ConfirmDeployProject() {
       />
       <Statistic
         title="Pay button"
-        value={orEmpty(editingProject?.metadata.payButton)}
+        value={orEmpty(editingProject?.metadata.payButton ?? undefined)}
       />
       <Statistic
         title="Pay disclosure"

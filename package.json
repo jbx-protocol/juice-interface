@@ -45,7 +45,7 @@
     "build": "yarn compile-styles && next build",
     "test": "yarn compile-styles && jest",
     "eject": "react-scripts eject",
-    "lint": "next lint",
+    "lint": "eslint",
     "lint:fix": "yarn lint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install"

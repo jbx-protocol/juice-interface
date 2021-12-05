@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { useEffect } from 'react'
 import { utils } from 'ethers'
 
 import Dashboard from 'components/Dashboard'
@@ -12,8 +11,6 @@ import { ContractName } from 'models/contract-name'
 import { normalizeHandle } from 'utils/formatHandle'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 
-import { useState } from 'react'
-
 interface ProjectPageProps {
   handle: string
   projectMetadata: ProjectMetadataV3
@@ -22,15 +19,6 @@ interface ProjectPageProps {
 function ProjectPage({ projectMetadata }: ProjectPageProps) {
   const router = useRouter()
   const { handle } = router.query
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) {
-    return null
-  }
 
   return (
     <>

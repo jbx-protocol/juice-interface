@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
+
 import useSubgraphQuery from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
 

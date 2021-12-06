@@ -1,4 +1,12 @@
 import {
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query'
+import axios from 'axios'
+
+import {
   EntityKey,
   EntityKeys,
   formatGraphQuery,
@@ -7,13 +15,6 @@ import {
   SubgraphEntities,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
-import {
-  useInfiniteQuery,
-  UseInfiniteQueryOptions,
-  useQuery,
-  UseQueryOptions,
-} from 'react-query'
-import axios from 'axios'
 
 const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 
@@ -25,7 +26,7 @@ type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
 
 export default function useSubgraphQuery<
   E extends EntityKey,
-  K extends EntityKeys<E>
+  K extends EntityKeys<E>,
 >(
   opts: GraphQueryOpts<E, K>,
   reactQueryOptions?: UseQueryOptions<
@@ -70,14 +71,14 @@ export default function useSubgraphQuery<
 // page size.
 type InfiniteGraphQueryOpts<
   E extends EntityKey,
-  K extends EntityKeys<E>
+  K extends EntityKeys<E>,
 > = Omit<GraphQueryOpts<E, K>, 'skip'> & {
   pageSize: number
 }
 
 export function useInfiniteSubgraphQuery<
   E extends EntityKey,
-  K extends EntityKeys<E>
+  K extends EntityKeys<E>,
 >(
   opts: InfiniteGraphQueryOpts<E, K>,
   reactQueryOptions?: UseInfiniteQueryOptions<

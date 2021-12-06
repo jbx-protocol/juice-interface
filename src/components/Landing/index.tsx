@@ -8,8 +8,6 @@ import { useProjects } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
 
-import { Project } from 'models/subgraph-entities/project'
-
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import ProjectsGrid from '../shared/ProjectsGrid'

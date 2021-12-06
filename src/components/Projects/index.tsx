@@ -24,6 +24,7 @@ export default function Projects() {
     orderBy,
     orderDirection: 'desc',
     filter: selectedTab,
+    pageSize: 1000,
   })
 
   const tab = (tab: ProjectState) => (

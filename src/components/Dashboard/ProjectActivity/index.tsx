@@ -1,5 +1,4 @@
 import { Space } from 'antd'
-import Loading from 'components/shared/Loading'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'

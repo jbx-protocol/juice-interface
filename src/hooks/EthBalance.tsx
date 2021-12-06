@@ -1,5 +1,6 @@
-import { readProvider } from 'constants/readProvider'
 import { useQuery } from 'react-query'
+
+import { readProvider } from 'constants/readProvider'
 
 export function useEthBalanceQuery(address: string | undefined) {
   return useQuery(

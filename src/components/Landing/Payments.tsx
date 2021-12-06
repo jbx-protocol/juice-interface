@@ -7,6 +7,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import RichNote from 'components/Dashboard/ProjectActivity/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
 import FormattedAddress from 'components/shared/FormattedAddress'
+
 import useSubgraphQuery from '../../hooks/SubgraphQuery'
 
 export default function Payments() {

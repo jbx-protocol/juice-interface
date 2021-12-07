@@ -3,8 +3,30 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
-import useSubgraphQuery from './SubgraphQuery'
+import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
+
+// Take just an object that might contain an ID. That way we can support
+// arbitrary `keys` properties.
+function filterOutArchivedProjects<T extends { id?: BigNumber }>(
+  data: T[],
+  filter?: ProjectState,
+): T[] {
+  switch (filter) {
+    case 'active':
+      return data?.filter(
+        project =>
+          project?.id && !archivedProjectIds.includes(project.id.toNumber()),
+      )
+    case 'archived':
+      return data?.filter(
+        project =>
+          project.id && archivedProjectIds.includes(project.id.toNumber()),
+      )
+    default:
+      return data
+  }
+}
 
 interface ProjectsOptions {
   pageNumber?: number
@@ -35,6 +57,7 @@ export function useProjectsQuery({
     {
       entity: 'project',
       keys: keys ?? [
+        'id',
         'handle',
         'creator',
         'createdAt',
@@ -57,24 +80,54 @@ export function useProjectsQuery({
     },
     {
       staleTime: 60000,
-      select: data => {
-        switch (filter) {
-          case 'active':
-            return data?.filter(
-              project =>
-                project?.id &&
-                !archivedProjectIds.includes(project.id.toNumber()),
-            )
-          case 'archived':
-            return data?.filter(
-              project =>
-                project.id &&
-                archivedProjectIds.includes(project.id.toNumber()),
-            )
-          default:
-            return data
-        }
-      },
+      select: data => filterOutArchivedProjects(data, filter),
+    },
+  )
+}
+
+export function useInfiniteProjectsQuery({
+  projectId,
+  keys,
+  handle,
+  uri,
+  orderBy,
+  orderDirection,
+  pageSize = defaultPageSize,
+  filter,
+}: ProjectsOptions) {
+  return useInfiniteSubgraphQuery(
+    {
+      pageSize,
+      entity: 'project',
+      keys: keys ?? [
+        'id',
+        'handle',
+        'creator',
+        'createdAt',
+        'uri',
+        'currentBalance',
+        'totalPaid',
+        'totalRedeemed',
+      ],
+      orderDirection: orderDirection ?? 'desc',
+      orderBy: orderBy ?? 'totalPaid',
+      where:
+        projectId != null
+          ? {
+              key: 'id',
+              value: projectId.toString(),
+            }
+          : undefined,
+    },
+    {
+      staleTime: 60000,
+
+      select: data => ({
+        ...data,
+        pages: data.pages.map(pageData =>
+          filterOutArchivedProjects(pageData, filter),
+        ),
+      }),
     },
   )
 }

@@ -37,17 +37,17 @@ export default function Projects() {
     filter: selectedTab,
   })
 
-  // When we scroll within 128px of our loadMoreContainerRef, fetch the next page.
+  // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
     if (loadMoreContainerRef.current) {
       const observer = new IntersectionObserver(
-        () => {
-          if (hasNextPage) {
+        entries => {
+          if (entries.find(e => e.isIntersecting) && hasNextPage) {
             fetchNextPage()
           }
         },
         {
-          rootMargin: '128px',
+          rootMargin: '200px',
         },
       )
       observer.observe(loadMoreContainerRef.current)

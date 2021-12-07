@@ -23,7 +23,7 @@ import { archivedProjectIds } from 'constants/archived-projects'
 
 import Loading from '../shared/Loading'
 import Project from './Project'
-import { useProjects } from '../../hooks/Projects'
+import { useProjectsQuery } from '../../hooks/Projects'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
@@ -42,7 +42,7 @@ export default function Dashboard() {
     ),
   })
 
-  const { data: projects } = useProjects({
+  const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
   })

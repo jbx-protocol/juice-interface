@@ -4,7 +4,7 @@ import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useProjects } from 'hooks/Projects'
+import { useProjectsQuery } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { useContext, useState } from 'react'
 
@@ -20,7 +20,7 @@ export default function Projects() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: projects } = useProjects({
+  const { data: projects } = useProjectsQuery({
     orderBy,
     orderDirection: 'desc',
     filter: selectedTab,

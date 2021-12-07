@@ -4,7 +4,7 @@ import Loading from 'components/shared/Loading'
 
 import { ThemeContext } from 'contexts/themeContext'
 
-import { useProjects } from 'hooks/Projects'
+import { useProjectsQuery } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
 
@@ -36,7 +36,7 @@ export default function Landing() {
     </h1>
   )
 
-  const { data: previewProjects } = useProjects({
+  const { data: previewProjects } = useProjectsQuery({
     pageSize: 4,
     filter: 'active',
   })

@@ -20,7 +20,7 @@ interface ProjectsOptions {
 
 let defaultPageSize = 20
 
-export function useProjects({
+export function useProjectsQuery({
   pageNumber,
   projectId,
   keys,

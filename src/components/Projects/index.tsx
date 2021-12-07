@@ -4,28 +4,62 @@ import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useProjectsQuery } from 'hooks/Projects'
+import { useInfiniteProjectsQuery } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
-import { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { layouts } from 'constants/styles/layouts'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
+const pageSize = 20
+
 export default function Projects() {
   const [selectedTab, setSelectedTab] = useState<ProjectState>('active')
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
+
+  const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: projects } = useProjectsQuery({
+  const {
+    data: pages,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteProjectsQuery({
     orderBy,
+    pageSize,
     orderDirection: 'desc',
     filter: selectedTab,
-    pageSize: 1000,
   })
+
+  // When we scroll within 128px of our loadMoreContainerRef, fetch the next page.
+  useEffect(() => {
+    if (loadMoreContainerRef.current) {
+      const observer = new IntersectionObserver(
+        () => {
+          if (hasNextPage) {
+            fetchNextPage()
+          }
+        },
+        {
+          rootMargin: '128px',
+        },
+      )
+      observer.observe(loadMoreContainerRef.current)
+
+      return () => observer.disconnect()
+    }
+  }, [fetchNextPage, hasNextPage])
+
+  const concatenatedPages = pages?.pages?.reduce(
+    (prev, group) => [...prev, ...group],
+    [],
+  )
 
   const tab = (tab: ProjectState) => (
     <div
@@ -113,7 +147,25 @@ export default function Projects() {
         </p>
       )}
 
-      {projects ? <ProjectsGrid projects={projects} /> : <Loading />}
+      {concatenatedPages && <ProjectsGrid projects={concatenatedPages} />}
+      {(isLoading || isFetchingNextPage) && <Loading />}
+
+      {/* Place a div below the grid that we can connect to an intersection observer */}
+      <div ref={loadMoreContainerRef} />
+
+      {hasNextPage && !isFetchingNextPage && (
+        <div
+          role="button"
+          style={{
+            textAlign: 'center',
+            color: colors.text.secondary,
+            cursor: 'pointer',
+          }}
+          onClick={() => fetchNextPage()}
+        >
+          Load more
+        </div>
+      )}
     </div>
   )
 }

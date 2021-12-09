@@ -7,7 +7,7 @@ import useContractReader from './ContractReader'
 
 export enum OperatorPermission {
   'Configure' = 1,
-  'PrintPreminedTickets' = 2,
+  'PrintTickets' = 2,
   'Redeem' = 3,
   'Migrate' = 4,
   'SetHandle' = 5,

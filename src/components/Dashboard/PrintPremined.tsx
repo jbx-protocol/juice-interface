@@ -30,7 +30,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
 
     transactor(
       contracts.TerminalV1,
-      'printPreminedTickets',
+      'PrintTickets',
       [
         projectId.toHexString(),
         parseWad(value).toHexString(),

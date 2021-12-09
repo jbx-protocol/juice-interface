@@ -108,7 +108,7 @@ export default function ConfirmDeployProject() {
         />
         <Statistic
           title="Token printing"
-          value={editingFC.printingTicketsIsAllowed ? 'Allowed' : 'Disabled'}
+          value={editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
         />
       </Space>
       <Space size="large">

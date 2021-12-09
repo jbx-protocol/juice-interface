@@ -192,8 +192,8 @@ export default function Create() {
   const onRestrictedActionsFormSaved = () => {
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(
-      editingProjectActions.setPrintingTicketsIsAllowed(
-        fields.printingTicketsIsAllowed,
+      editingProjectActions.setticketPrintingIsAllowed(
+        fields.ticketPrintingIsAllowed,
       ),
     )
     dispatch(editingProjectActions.setPayIsPaused(fields.payIsPaused))
@@ -237,7 +237,7 @@ export default function Create() {
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       payIsPaused: editingFC.payIsPaused,
-      printingTicketsIsAllowed: editingFC.printingTicketsIsAllowed,
+      ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
     }
 
     transactor(
@@ -426,7 +426,7 @@ export default function Create() {
         editingFC.bondingCurveRate,
         1000,
         editingFC.payIsPaused,
-        editingFC.printingTicketsIsAllowed,
+        editingFC.ticketPrintingIsAllowed,
       ),
     }),
     [editingFC],

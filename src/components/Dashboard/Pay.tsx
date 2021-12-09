@@ -66,7 +66,11 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata?.reservedRate === 200 || overridePayDisabled) {
+    } else if (
+      fcMetadata?.reservedRate === 200 ||
+      fcMetadata?.payIsPaused ||
+      overridePayDisabled
+    ) {
       return (
         <Tooltip
           title="Paying this project is currently disabled"

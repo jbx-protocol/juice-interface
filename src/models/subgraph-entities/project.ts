@@ -6,6 +6,7 @@ import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
 
 export interface Project {
+  terminal?: string
   createdAt?: number
   handle?: string
   id?: BigNumber

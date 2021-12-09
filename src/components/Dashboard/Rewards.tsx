@@ -93,6 +93,7 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
+  const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
   const metadata = decodeFCMetadata(currentFC?.metadata)
 
@@ -112,8 +113,6 @@ export default function Rewards({
     args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
-
-  const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
   const share = formatPercent(totalBalance, totalSupply)
 

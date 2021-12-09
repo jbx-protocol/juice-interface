@@ -80,7 +80,7 @@ export default function Project({
             {canPrintPreminedTickets &&
               hasPrintPreminePermission &&
               projectId.gt(0) && <PrintPremined projectId={projectId} />}
-            <Pay />
+            <Pay totalOverflow={totalOverflow} />
           </Space>
         </Col>
       </Row>

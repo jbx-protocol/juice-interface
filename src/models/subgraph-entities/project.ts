@@ -7,6 +7,7 @@ import { Participant } from './participant'
 import { readNetwork } from 'constants/networks'
 
 export interface Project {
+  terminal?: string
   createdAt?: number
   handle?: string
   id?: BigNumber

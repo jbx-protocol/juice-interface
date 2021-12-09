@@ -7,7 +7,7 @@ import useContractReader from './ContractReader'
 
 export enum OperatorPermission {
   'Configure' = 1,
-  'PrintTickets' = 2,
+  'PrintPreminedTickets' = 2,
   'Redeem' = 3,
   'Migrate' = 4,
   'SetHandle' = 5,
@@ -22,6 +22,7 @@ export enum OperatorPermission {
   'SetPayoutMods' = 14,
   'SetTicketMods' = 15,
   'SetTerminal' = 16,
+  'PrintTickets' = 17,
 }
 
 export function useHasPermission(

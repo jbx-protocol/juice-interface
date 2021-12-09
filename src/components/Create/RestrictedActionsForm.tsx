@@ -5,7 +5,7 @@ import { Switch } from 'react-router'
 
 export type RestrictedActionsFormFields = {
   payIsPaused: boolean
-  printingTicketsIsAllowed: boolean
+  ticketPrintingIsAllowed: boolean
 }
 
 export default function RestrictedActionsForm({
@@ -34,7 +34,7 @@ export default function RestrictedActionsForm({
           <Switch />
         </Form.Item>
         <Form.Item
-          name="printingTicketsIsAllowed"
+          name="ticketPrintingIsAllowed"
           label="Allow printing tokens"
           extra="Enabling this allows the project owner to manually mint any amount of tokens to any address."
         >

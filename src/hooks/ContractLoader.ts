@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
+import { terminalV1_1Dict } from 'constants/terminalV1_1'
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
@@ -52,7 +53,17 @@ const loadContract = (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {
+  // TODO this is a temporary override for terminalV1_1 artifacts
+  const terminalV1_1 = terminalV1_1Dict[network]
+
+  if (contractName === ContractName.TerminalV1_1 && terminalV1_1) {
+    return new Contract(
+      terminalV1_1.address,
+      terminalV1_1.abi,
+      signerOrProvider,
+    )
+  }
+
   let contract = require(`@jbx-protocol/contracts/deployments/${network}/${contractName}.json`)
-  // TODO special case for TerminalV1_1_1
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

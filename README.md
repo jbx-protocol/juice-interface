@@ -85,7 +85,10 @@ Take the following steps to set up Blocknative for local development:
    - Enable the **Admin** toggle in the **Admin** field.
 1. Copy the API key into the `REACT_APP_BLOCKNATIVE_API_KEY` variable of the
    `.env` file.
+#### The Graph
+JuiceBox uses [The Graph](https://thegraph.com/) as an additional data provider.
 
+To integrate with The Graph, set the `REACT_APP_SUBGRAPH_URL` variable to value `https://api.thegraph.com/subgraphs/id/Qmcgtsin741cNTtgnkpoDcY92GDK1isRG5F39FNEmEok4n` in your `.env` file.
 ### Usage
 
 1. Start the app.

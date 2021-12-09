@@ -9,11 +9,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { BallotState } from 'models/ballot-state'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
@@ -42,7 +43,7 @@ export default function RedeemModal({
   const { contracts, transactor } = useContext(UserContext)
   const { projectId, tokenSymbol, currentFC } = useContext(ProjectContext)
 
-  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
+  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const maxClaimable = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,

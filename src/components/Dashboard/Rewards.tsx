@@ -21,7 +21,7 @@ import {
 } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
@@ -102,7 +102,7 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTicketBalance = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,

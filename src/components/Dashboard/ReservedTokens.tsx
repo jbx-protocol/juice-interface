@@ -36,7 +36,7 @@ export default function ReservedTokens({
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
   const reservedTickets = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -49,12 +49,12 @@ export default function ReservedTokens({
     updateOn: useMemo(
       () => [
         {
-          contract: ContractName.TerminalV1,
+          contract: ContractName.TerminalV1_1,
           eventName: 'Pay',
           topics: projectId ? [[], projectId.toHexString()] : undefined,
         },
         {
-          contract: ContractName.TerminalV1,
+          contract: ContractName.TerminalV1_1,
           eventName: 'PrintTickets',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
@@ -72,7 +72,7 @@ export default function ReservedTokens({
               : undefined,
         },
         {
-          contract: ContractName.TerminalV1,
+          contract: ContractName.TerminalV1_1,
           eventName: 'PrintReserveTickets',
           topics: projectId ? [[], projectId.toHexString()] : undefined,
         },

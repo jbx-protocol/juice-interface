@@ -36,7 +36,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
     await form.validateFields()
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'printTickets',
       [
         projectId.toHexString(),

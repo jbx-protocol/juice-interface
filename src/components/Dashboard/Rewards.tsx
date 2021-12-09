@@ -50,12 +50,12 @@ export default function Rewards({
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
       {
-        contract: ContractName.TerminalV1,
+        contract: ContractName.TerminalV1_1,
         eventName: 'Pay',
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TerminalV1,
+        contract: ContractName.TerminalV1_1,
         eventName: 'PrintTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
@@ -105,7 +105,7 @@ export default function Rewards({
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

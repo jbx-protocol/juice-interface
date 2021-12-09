@@ -153,7 +153,7 @@ export default function ReconfigureFCModal({
   }, [dispatch, fundingCycle, payoutMods, ticketMods, ticketingForm])
 
   async function reconfigure() {
-    if (!transactor || !contracts?.TerminalV1 || !fundingCycle || !projectId)
+    if (!transactor || !contracts?.TerminalV1_1 || !fundingCycle || !projectId)
       return
 
     setLoading(true)
@@ -176,7 +176,7 @@ export default function ReconfigureFCModal({
     }
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'configure',
       [
         projectId.toHexString(),

@@ -5,7 +5,7 @@ import { FundingCycle } from 'models/funding-cycle'
 import { formatDate } from 'utils/formatDate'
 import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
-  decodeFCMetadata,
+  decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
@@ -40,7 +40,7 @@ export default function FundingCycleDetails({
     fundingCycle.start.add(fundingCycle.duration.mul(secondsInDay)).mul(1000),
   )
 
-  const metadata = decodeFCMetadata(fundingCycle.metadata)
+  const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
 
   return (
     <div>
@@ -135,6 +135,18 @@ export default function FundingCycleDetails({
             {fromPerbicent(metadata?.bondingCurveRate)}%
           </Descriptions.Item>
         )}
+
+        <Descriptions.Item
+          span={2}
+          label={
+            <TooltipLabel
+              label="Token printing"
+              tip="When token printing is allowed, the owner of this project has permission to print any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
+            />
+          }
+        >
+          {metadata?.printingTicketsIsAllowed ? 'Allowed' : 'Disabled'}%
+        </Descriptions.Item>
       </Descriptions>
 
       <div>

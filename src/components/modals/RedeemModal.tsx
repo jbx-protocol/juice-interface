@@ -8,12 +8,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
+import { BallotState } from 'models/ballot-state'
 import { ContractName } from 'models/contract-name'
-import { BallotState } from 'models/funding-cycle'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 export default function RedeemModal({
   visible,
@@ -82,7 +82,7 @@ export default function RedeemModal({
   })
 
   const rewardAmount = useMemo(() => {
-    const metadata = decodeFCMetadata(currentFC?.metadata)
+    const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
     const bondingCurveRate =
       currentBallotState === BallotState.Active

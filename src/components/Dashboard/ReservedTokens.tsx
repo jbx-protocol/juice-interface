@@ -12,7 +12,7 @@ import { NetworkName } from 'models/network-name'
 import { useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad, fromPerbicent } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
@@ -33,7 +33,7 @@ export default function ReservedTokens({
 
   const { projectId, tokenSymbol, isPreviewMode } = useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(fundingCycle?.metadata)
+  const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
   const reservedTickets = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,

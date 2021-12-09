@@ -103,6 +103,16 @@ export default function ConfirmDeployProject() {
       />
       <Space size="large">
         <Statistic
+          title="Payments paused"
+          value={editingFC.payIsPaused ? 'Yes' : 'No'}
+        />
+        <Statistic
+          title="Token printing"
+          value={editingFC.printingTicketsIsAllowed ? 'Allowed' : 'Disabled'}
+        />
+      </Space>
+      <Space size="large">
+        <Statistic
           title="Website"
           value={orEmpty(editingProject?.metadata.infoUri)}
         />

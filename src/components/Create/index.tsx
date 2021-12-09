@@ -16,7 +16,8 @@ import {
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FundingCycle } from 'models/funding-cycle'
+import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import {
@@ -29,7 +30,10 @@ import {
 } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
-import { encodeFCMetadata, hasFundingTarget } from 'utils/fundingCycle'
+import {
+  encodeFundingCycleMetadata,
+  hasFundingTarget,
+} from 'utils/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -44,6 +48,9 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
 import PayModsForm from './PayModsForm'
 import ProjectForm, { ProjectFormFields } from './ProjectForm'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from './RestrictedActionsForm'
 import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
@@ -65,11 +72,16 @@ export default function Create() {
     useState<boolean>(false)
   const [rulesFormModalVisible, setRulesFormModalVisible] =
     useState<boolean>(false)
+  const [
+    restrictedActionsFormModalVisible,
+    setRestrictedActionsFormModalVisible,
+  ] = useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
+  const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const {
     info: editingProjectInfo,
@@ -177,6 +189,16 @@ export default function Create() {
     dispatch(editingProjectActions.setBondingCurveRate(bondingCurveRate))
   }
 
+  const onRestrictedActionsFormSaved = () => {
+    const fields = ticketingForm.getFieldsValue(true)
+    dispatch(
+      editingProjectActions.setPrintingTicketsIsAllowed(
+        fields.printingTicketsIsAllowed,
+      ),
+    )
+    dispatch(editingProjectActions.setPayIsPaused(fields.payIsPaused))
+  }
+
   const deployProject = useCallback(async () => {
     if (!transactor || !contracts || !editingFC) return
 
@@ -210,10 +232,12 @@ export default function Create() {
       ballot: editingFC.ballot,
     }
 
-    const metadata: Omit<FCMetadata, 'version'> = {
+    const metadata: Omit<FundingCycleMetadata, 'version'> = {
       reservedRate: editingFC.reserved.toNumber(),
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      payIsPaused: editingFC.payIsPaused,
+      printingTicketsIsAllowed: editingFC.printingTicketsIsAllowed,
     }
 
     transactor(
@@ -397,10 +421,12 @@ export default function Create() {
   const fundingCycle: FundingCycle = useMemo(
     () => ({
       ...editingFC,
-      metadata: encodeFCMetadata(
+      metadata: encodeFundingCycleMetadata(
         editingFC.reserved,
         editingFC.bondingCurveRate,
         1000,
+        editingFC.payIsPaused,
+        editingFC.printingTicketsIsAllowed,
       ),
     }),
     [editingFC],
@@ -642,6 +668,24 @@ export default function Create() {
               await ticketingForm.validateFields()
               onIncentivesFormSaved(discountRate, bondingCurveRate)
               setIncentivesFormModalVisible(false)
+            }}
+          />
+        </Drawer>
+
+        <Drawer
+          visible={restrictedActionsFormModalVisible}
+          {...drawerStyle}
+          onClose={() => {
+            setRestrictedActionsFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        >
+          <RestrictedActionsForm
+            form={restrictedActionsForm}
+            onSave={() => {
+              onRestrictedActionsFormSaved()
+              setRestrictedActionsFormModalVisible(false)
+              setCurrentStep(undefined)
             }}
           />
         </Drawer>

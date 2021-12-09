@@ -12,7 +12,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
 import { disablePayOverrides } from 'constants/overrides'
@@ -32,7 +32,7 @@ export default function Pay() {
 
   const converter = useCurrencyConverter()
 
-  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
+  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const weiPayAmt =
     payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')

@@ -3,11 +3,14 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from 'components/Create/RestrictedActionsForm'
 import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -15,7 +18,8 @@ import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FundingCycle } from 'models/funding-cycle'
+import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
@@ -28,14 +32,13 @@ import {
   fromWad,
 } from 'utils/formatNumber'
 import {
-  decodeFCMetadata,
+  decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
-import { serializeFundingCycle } from 'utils/serializers'
 import { amountSubFee } from 'utils/math'
+import { serializeFundingCycle } from 'utils/serializers'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
 import PayModsForm from '../Create/PayModsForm'
@@ -69,9 +72,14 @@ export default function ReconfigureFCModal({
     useState<boolean>(false)
   const [ticketingFormModalVisible, setTicketingFormModalVisible] =
     useState<boolean>(false)
+  const [
+    restrictedActionsFormModalVisible,
+    setRestrictedActionsFormModalVisible,
+  ] = useState<boolean>(false)
   useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>()
   const [ticketingForm] = useForm<TicketingFormFields>()
+  const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const editingFC = useEditingFundingCycleSelector()
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
@@ -101,6 +109,16 @@ export default function ReconfigureFCModal({
     setEditingTicketMods(mods)
   }
 
+  const onRestrictedActionsFormSaved = () => {
+    const fields = ticketingForm.getFieldsValue(true)
+    dispatch(
+      editingProjectActions.setPrintingTicketsIsAllowed(
+        fields.printingTicketsIsAllowed,
+      ),
+    )
+    dispatch(editingProjectActions.setPayIsPaused(fields.payIsPaused))
+  }
+
   const onRulesFormSaved = (ballot: string) => {
     dispatch(editingProjectActions.setBallot(ballot))
   }
@@ -115,12 +133,13 @@ export default function ReconfigureFCModal({
 
   useLayoutEffect(() => {
     if (!fundingCycle || !ticketMods || !payoutMods) return
-    const metadata = decodeFCMetadata(fundingCycle.metadata)
+    const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
     if (!metadata) return
     dispatch(
       editingProjectActions.setFundingCycle(
         serializeFundingCycle({
           ...fundingCycle,
+          ...metadata,
           reserved: BigNumber.from(metadata.reservedRate),
           bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
         }),
@@ -148,10 +167,12 @@ export default function ReconfigureFCModal({
       ballot: editingFC.ballot,
     }
 
-    const metadata: Omit<FCMetadata, 'version'> = {
+    const metadata: Omit<FundingCycleMetadata, 'version'> = {
       reservedRate: editingFC.reserved.toNumber(),
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
+      payIsPaused: editingFC.payIsPaused,
+      printingTicketsIsAllowed: editingFC.printingTicketsIsAllowed,
     }
 
     transactor(
@@ -284,6 +305,10 @@ export default function ReconfigureFCModal({
               {
                 title: 'Rules',
                 callback: () => setRulesFormModalVisible(true),
+              },
+              {
+                title: 'Actions',
+                callback: () => setRestrictedActionsFormModalVisible(true),
               },
               ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
                 ? [
@@ -498,6 +523,24 @@ export default function ReconfigureFCModal({
             await ticketingForm.validateFields()
             onIncentivesFormSaved(discountRate, bondingCurveRate)
             setIncentivesFormModalVisible(false)
+            setCurrentStep(undefined)
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        visible={restrictedActionsFormModalVisible}
+        {...drawerStyle}
+        onClose={() => {
+          setRestrictedActionsFormModalVisible(false)
+          setCurrentStep(undefined)
+        }}
+      >
+        <RestrictedActionsForm
+          form={restrictedActionsForm}
+          onSave={() => {
+            onRestrictedActionsFormSaved()
+            setRestrictedActionsFormModalVisible(false)
             setCurrentStep(undefined)
           }}
         />

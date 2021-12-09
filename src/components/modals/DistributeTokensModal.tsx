@@ -10,7 +10,7 @@ import { ContractName } from 'models/contract-name'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 export default function DistributeTokensModal({
   visible,
@@ -26,7 +26,7 @@ export default function DistributeTokensModal({
   const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
     useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTokens = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,

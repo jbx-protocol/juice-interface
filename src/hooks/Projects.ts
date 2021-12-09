@@ -1,12 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
-import useSubgraphQuery from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
+import { terminalAddress } from '../constants/terminal-versions'
+import useSubgraphQuery from './SubgraphQuery'
 
 interface ProjectsOptions {
+  terminal?: string
   pageNumber?: number
   projectId?: BigNumber
   handle?: string
@@ -47,13 +48,18 @@ export function useProjects({
       skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
-      where:
-        projectId != null
-          ? {
+      where: projectId
+        ? [
+            {
               key: 'id',
               value: projectId.toString(),
-            }
-          : undefined,
+            },
+            {
+              key: 'terminal',
+              value: terminalAddress,
+            },
+          ]
+        : undefined,
     },
     {
       staleTime: 60000,

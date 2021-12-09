@@ -112,8 +112,8 @@ export default function ReconfigureFCModal({
   const onRestrictedActionsFormSaved = () => {
     const fields = ticketingForm.getFieldsValue(true)
     dispatch(
-      editingProjectActions.setPrintingTicketsIsAllowed(
-        fields.printingTicketsIsAllowed,
+      editingProjectActions.setticketPrintingIsAllowed(
+        fields.ticketPrintingIsAllowed,
       ),
     )
     dispatch(editingProjectActions.setPayIsPaused(fields.payIsPaused))
@@ -172,7 +172,7 @@ export default function ReconfigureFCModal({
       bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       payIsPaused: editingFC.payIsPaused,
-      printingTicketsIsAllowed: editingFC.printingTicketsIsAllowed,
+      ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
     }
 
     transactor(

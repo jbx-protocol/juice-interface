@@ -56,7 +56,7 @@ export default function Rewards({
       },
       {
         contract: ContractName.TerminalV1,
-        eventName: 'PrintPreminedTickets',
+        eventName: 'PrintTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {

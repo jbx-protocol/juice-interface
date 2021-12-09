@@ -9,7 +9,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
-import { BallotState } from 'models/ballot-state'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
@@ -46,7 +45,7 @@ export default function RedeemModal({
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const maxClaimable = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'claimableOverflowOf',
     args:
       userAddress && projectId
@@ -58,12 +57,12 @@ export default function RedeemModal({
         projectId && userAddress
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString(), userAddress],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Redeem',
                 topics: [projectId.toHexString(), userAddress],
               },
@@ -93,7 +92,7 @@ export default function RedeemModal({
     if (!redeemWad || !projectId) return
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'redeem',
       [
         userAddress,

@@ -18,7 +18,7 @@ export default function User({ children }: { children: ChildElems }) {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await contracts?.TerminalV1.functions.fee()
+      const res = await contracts?.TerminalV1_1.functions.fee()
       if (res) setAdminFeePercent(res[0])
     }
     fetchData()

@@ -89,7 +89,7 @@ export default function ProjectToolDrawerModal({
     const fields = addToBalanceForm.getFieldsValue(true)
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'addToBalance',
       [projectId.toHexString()],
       {

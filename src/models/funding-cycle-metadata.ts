@@ -4,5 +4,5 @@ export interface FundingCycleMetadata {
   reconfigurationBondingCurveRate: number
   reservedRate: number
   payIsPaused: boolean
-  printingTicketsIsAllowed: boolean
+  ticketPrintingIsAllowed: boolean
 }

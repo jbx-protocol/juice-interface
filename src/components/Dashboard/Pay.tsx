@@ -65,7 +65,11 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata?.reservedRate === 200 || isConstitutionDAO) {
+    } else if (
+      fcMetadata?.reservedRate === 200 ||
+      fcMetadata?.payIsPaused ||
+      isConstitutionDAO
+    ) {
       return (
         <Tooltip
           title="Paying this project is currently disabled"

@@ -55,7 +55,7 @@ export default function ReservedTokens({
         },
         {
           contract: ContractName.TerminalV1,
-          eventName: 'PrintPreminedTickets',
+          eventName: 'PrintTickets',
           topics: projectId ? [projectId.toHexString()] : undefined,
         },
         {

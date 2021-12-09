@@ -28,7 +28,7 @@ export default function DistributeTokensModal({
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTokens = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -46,7 +46,7 @@ export default function DistributeTokensModal({
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'printReservedTickets',
       [projectId.toHexString()],
       {

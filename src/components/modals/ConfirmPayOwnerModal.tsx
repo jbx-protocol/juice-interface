@@ -29,13 +29,8 @@ export default function ConfirmPayOwnerModal({
   const [form] = useForm<{ note: string }>()
   const { contracts, transactor } = useContext(UserContext)
   const { userAddress } = useContext(NetworkContext)
-  const {
-    tokenSymbol,
-    tokenAddress,
-    currentFC,
-    projectId,
-    metadata,
-  } = useContext(ProjectContext)
+  const { tokenSymbol, tokenAddress, currentFC, projectId, metadata } =
+    useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -49,7 +44,7 @@ export default function ConfirmPayOwnerModal({
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'pay',
       [
         projectId.toHexString(),

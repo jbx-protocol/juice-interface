@@ -26,9 +26,8 @@ export default function ProjectToolDrawerModal({
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
-  const [loadingTransferOwnership, setLoadingTransferOwnership] = useState<
-    boolean
-  >()
+  const [loadingTransferOwnership, setLoadingTransferOwnership] =
+    useState<boolean>()
   const [transferTokensForm] = useForm<{ amount: string; to: string }>()
   const [addToBalanceForm] = useForm<{ amount: string }>()
   const [transferOwnershipForm] = useForm<{ to: string }>()
@@ -90,7 +89,7 @@ export default function ProjectToolDrawerModal({
     const fields = addToBalanceForm.getFieldsValue(true)
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'addToBalance',
       [projectId.toHexString()],
       {

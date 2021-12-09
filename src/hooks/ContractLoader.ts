@@ -53,5 +53,6 @@ const loadContract = (
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {
   let contract = require(`@jbx-protocol/contracts/deployments/${network}/${contractName}.json`)
+  // TODO special case for TerminalV1_1_1
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

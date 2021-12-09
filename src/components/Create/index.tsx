@@ -241,7 +241,7 @@ export default function Create() {
     }
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'deploy',
       [
         userAddress,

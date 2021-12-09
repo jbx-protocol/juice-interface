@@ -41,14 +41,14 @@ export default function RedeemModal({
   const { projectId, tokenSymbol, currentFC } = useContext(ProjectContext)
 
   const currentOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })
 
   const maxClaimable = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'claimableOverflowOf',
     args:
       userAddress && projectId
@@ -60,12 +60,12 @@ export default function RedeemModal({
         projectId && userAddress
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString(), userAddress],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Redeem',
                 topics: [projectId.toHexString(), userAddress],
               },
@@ -140,7 +140,7 @@ export default function RedeemModal({
     if (!redeemWad || !projectId) return
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'redeem',
       [
         userAddress,

@@ -35,7 +35,7 @@ export default function Paid() {
   const converter = useCurrencyConverter()
 
   const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -44,12 +44,12 @@ export default function Paid() {
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },

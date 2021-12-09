@@ -71,12 +71,12 @@ export default function Dashboard() {
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
@@ -239,7 +239,7 @@ export default function Dashboard() {
   }, [metadata])
 
   const balance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -248,12 +248,12 @@ export default function Dashboard() {
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },

@@ -1,6 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { constants } from 'ethers'
-import { FCMetadata, FundingCycle } from 'models/funding-cycle'
+import { FundingCycle } from 'models/funding-cycle'
+import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 
 import { EditingFundingCycle } from './serializers'
 
@@ -10,9 +11,9 @@ import { EditingFundingCycle } from './serializers'
 // B: bondingCurveRate (bits 17-24)
 // R: reconfigurationBondingCurveRate (bits 25-32)
 
-export const decodeFCMetadata = (
+export const decodeFundingCycleMetadata = (
   metadata?: BigNumber,
-): FCMetadata | undefined =>
+): FundingCycleMetadata | undefined =>
   metadata
     ? {
         version: metadata.and(0b00000000000000000000000011111111).toNumber(),
@@ -20,23 +21,24 @@ export const decodeFCMetadata = (
           .shr(8)
           .and(0b000000000000000011111111)
           .toNumber(),
-        bondingCurveRate: metadata
-          .shr(16)
-          .and(0b0000000011111111)
-          .toNumber(),
+        bondingCurveRate: metadata.shr(16).and(0b0000000011111111).toNumber(),
         reconfigurationBondingCurveRate: metadata.shr(24).toNumber(),
+        // TODO decode payIsPaused and printingTicketsIsAllowed
       }
     : undefined
 
-export const encodeFCMetadata = (
+export const encodeFundingCycleMetadata = (
   reserved: BigNumberish,
   bondingCurveRate: BigNumberish,
   reconfigurationBondingCurveRate: BigNumberish,
+  payIsPaused: boolean,
+  printingTicketsIsAllowed: boolean,
 ): BigNumber =>
   BigNumber.from(0)
     .or(BigNumber.from(reserved).shl(8))
     .or(BigNumber.from(bondingCurveRate).shl(16))
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
+    // TODO encode payIsPaused and printingTicketsIsAllowed
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.lt(201)

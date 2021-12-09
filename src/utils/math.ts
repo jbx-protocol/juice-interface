@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycle } from 'models/funding-cycle'
 
 import { fromWad, parsePerbicent } from './formatNumber'
-import { decodeFCMetadata } from './fundingCycle'
+import { decodeFundingCycleMetadata } from './fundingCycle'
 
 export const weightedRate = (
   fc: FundingCycle | undefined,
@@ -10,7 +10,7 @@ export const weightedRate = (
   output: 'payer' | 'reserved',
 ) => {
   if (!fc || !wad) return
-  const reserved = decodeFCMetadata(fc.metadata)?.reservedRate
+  const reserved = decodeFundingCycleMetadata(fc.metadata)?.reservedRate
 
   if (reserved === undefined) return
 

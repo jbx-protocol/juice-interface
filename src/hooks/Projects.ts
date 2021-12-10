@@ -1,9 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { NetworkName } from 'models/network-name'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
 import { archivedProjectIds } from '../constants/archived-projects'
-import { terminalAddress } from '../constants/terminal-versions'
+import { terminalV1_1Dict } from '../constants/terminalV1_1'
 import useSubgraphQuery from './SubgraphQuery'
 
 interface ProjectsOptions {
@@ -20,6 +21,9 @@ interface ProjectsOptions {
 }
 
 let defaultPageSize = 20
+
+const terminalV1_1Address =
+  terminalV1_1Dict[process.env.REACT_APP_INFURA_NETWORK as NetworkName]?.address
 
 export function useProjects({
   pageNumber,
@@ -48,18 +52,19 @@ export function useProjects({
       skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
-      where: projectId
-        ? [
-            {
-              key: 'id',
-              value: projectId.toString(),
-            },
-            {
-              key: 'terminal',
-              value: terminalAddress,
-            },
-          ]
-        : undefined,
+      where:
+        projectId && terminalV1_1Address
+          ? [
+              {
+                key: 'id',
+                value: projectId.toString(),
+              },
+              {
+                key: 'terminal',
+                value: terminalV1_1Address,
+              },
+            ]
+          : undefined,
     },
     {
       staleTime: 60000,

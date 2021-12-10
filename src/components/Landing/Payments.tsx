@@ -1,15 +1,14 @@
-import { useContext } from 'react'
+import RichNote from 'components/Dashboard/ProjectActivity/RichNote'
+import CurrencySymbol from 'components/shared/CurrencySymbol'
+import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import ProjectHandle from 'components/shared/ProjectHandle'
+import { CURRENCY_ETH } from 'constants/currency'
+import { ThemeContext } from 'contexts/themeContext'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
-import RichNote from 'components/Dashboard/ProjectActivity/RichNote'
-import { ThemeContext } from 'contexts/themeContext'
-import FormattedAddress from 'components/shared/FormattedAddress'
-
-import useSubgraphQuery from '../../hooks/SubgraphQuery'
-import { CURRENCY_ETH } from 'constants/currency'
 
 export default function Payments() {
   const {

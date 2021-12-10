@@ -6,7 +6,7 @@ import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
@@ -57,11 +57,11 @@ export default function Project({
     ),
   })
 
-  const fcMetadata = decodeFCMetadata(currentFC)
+  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const gutter = 40
 
-  if (!projectId) return null
+  if (!projectId || !fcMetadata) return null
 
   return (
     <div style={style}>

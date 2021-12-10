@@ -5,26 +5,31 @@ import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 
 import { EditingFundingCycle } from './serializers'
 
-// packed `metadata` format:  0bRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
-// V: version (bits 0-8)
-// r: reserved (bits 9-16)
-// B: bondingCurveRate (bits 17-24)
-// R: reconfigurationBondingCurveRate (bits 25-32)
+// packed `metadata` format: 0bTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVV
+// V: version (bits 0-7)
+// r: reserved (bits 8-15)
+// B: bondingCurveRate (bits 16-23)
+// R: reconfigurationBondingCurveRate (bits 24-31)
+// P: payIsPaused (bit 32)
+// T: ticketPrintingIsAllowed (bits 33)
 
 export const decodeFundingCycleMetadata = (
   metadata?: BigNumber,
 ): FundingCycleMetadata | undefined =>
   metadata
     ? {
-        version: metadata.and(0b00000000000000000000000011111111).toNumber(),
+        version: metadata.and(0b000000000000000000000000001111111).toNumber(),
         reservedRate: metadata
-          .shr(8)
-          .and(0b000000000000000011111111)
+          .shr(7)
+          .and(0b00000000000000000011111111)
           .toNumber(),
-        bondingCurveRate: metadata.shr(16).and(0b0000000011111111).toNumber(),
-        reconfigurationBondingCurveRate: metadata.shr(24).toNumber(),
+        bondingCurveRate: metadata.shr(15).and(0b000000000011111111).toNumber(),
+        reconfigurationBondingCurveRate: metadata
+          .shr(23)
+          .and(0b0011111111)
+          .toNumber(),
+        ticketPrintingIsAllowed: Boolean(metadata.shr(31).and(0b01)),
         payIsPaused: Boolean(metadata.shr(32)),
-        ticketPrintingIsAllowed: Boolean(metadata.shr(33)),
       }
     : undefined
 
@@ -36,13 +41,11 @@ export const encodeFundingCycleMetadata = (
   ticketPrintingIsAllowed: boolean,
 ): BigNumber =>
   BigNumber.from(0)
-    .or(BigNumber.from(reserved).shl(8))
-    .or(BigNumber.from(bondingCurveRate).shl(16))
-    .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
-    .or(payIsPaused ? 1 : 0)
-    .shl(32)
-    .or(ticketPrintingIsAllowed ? 1 : 0)
-    .shl(33)
+    .or(BigNumber.from(reserved).shl(7))
+    .or(BigNumber.from(bondingCurveRate).shl(15))
+    .or(BigNumber.from(reconfigurationBondingCurveRate).shl(23))
+    .or(BigNumber.from(payIsPaused ? 1 : 0).shl(31))
+    .or(BigNumber.from(ticketPrintingIsAllowed ? 1 : 0).shl(32))
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.lt(201)

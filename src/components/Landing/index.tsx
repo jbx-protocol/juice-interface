@@ -7,7 +7,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
+<<<<<<< HEAD
 import { t, Trans } from '@lingui/macro'
+=======
+import { Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
+>>>>>>> 82d093e8 (Use new v1.1 dependency (#270))
 
 import { ThemeOption } from 'constants/theme/theme-option'
 

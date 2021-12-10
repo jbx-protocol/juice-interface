@@ -174,6 +174,18 @@ export default function Projects() {
           Load more
         </div>
       )}
+
+      {!isFetchingNextPage && !isLoading && (
+        <div
+          style={{
+            padding: 20,
+            textAlign: 'center',
+            color: colors.text.disabled,
+          }}
+        >
+          No projects
+        </div>
+      )}
     </div>
   )
 }

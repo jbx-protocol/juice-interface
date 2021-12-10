@@ -29,6 +29,7 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
   }
 }
 
+
 interface ProjectsOptions {
   terminal?: string
   pageNumber?: number
@@ -43,8 +44,6 @@ interface ProjectsOptions {
 }
 
 let defaultPageSize = 20
-
-const terminalV1_1Address = terminalV1_1Dict[readNetwork.name]?.address
 
 export function useProjectsQuery({
   pageNumber,
@@ -75,16 +74,16 @@ export function useProjectsQuery({
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
       where:
-        projectId && terminalV1_1Address
+        projectId
           ? [
               {
                 key: 'id',
                 value: projectId.toString(),
               },
-              {
-                key: 'terminal',
-                value: terminalV1_1Address,
-              },
+//               {
+//                 key: 'terminal',
+//                 value: terminalV1_1Address,
+//               },
             ]
           : undefined,
     },

@@ -53,17 +53,7 @@ const loadContract = (
   network: NetworkName,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {
-  // TODO this is a temporary override for terminalV1_1 artifacts
-  const terminalV1_1 = terminalV1_1Dict[network]
+  let contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
 
-  if (contractName === ContractName.TerminalV1_1 && terminalV1_1) {
-    return new Contract(
-      terminalV1_1.address,
-      terminalV1_1.abi,
-      signerOrProvider,
-    )
-  }
-
-  let contract = require(`@jbx-protocol/contracts/deployments/${network}/${contractName}.json`)
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

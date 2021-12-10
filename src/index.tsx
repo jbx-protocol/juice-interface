@@ -12,18 +12,21 @@ import User from 'User'
 import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
 import ProvideReactQuery from './ReactQuery'
+import { LanguageProvider } from './i18n'
 
 ReactDOM.render(
   <React.StrictMode>
     <ProvideReactQuery>
       <Provider store={store}>
-        <Theme>
-          <Network>
-            <User>
-              <App />
-            </User>
-          </Network>
-        </Theme>
+        <LanguageProvider>
+          <Theme>
+            <Network>
+              <User>
+                <App />
+              </User>
+            </Network>
+          </Theme>
+        </LanguageProvider>
       </Provider>
     </ProvideReactQuery>
   </React.StrictMode>,

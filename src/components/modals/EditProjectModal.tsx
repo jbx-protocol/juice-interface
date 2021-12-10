@@ -71,7 +71,7 @@ export default function EditProjectModal({
   }, [handleForm, handle, projectInfoForm, metadata])
 
   async function setUri() {
-    if (!transactor || !contracts?.TerminalV1 || !handle) return
+    if (!transactor || !contracts?.TerminalV1_1 || !handle) return
 
     setLoadingSetURI(true)
 

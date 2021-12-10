@@ -4,6 +4,7 @@ import { utils } from 'ethers'
 import { Participant } from './participant'
 
 export interface Project {
+  terminal?: string
   createdAt?: number
   handle?: string
   id?: BigNumber

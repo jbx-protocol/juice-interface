@@ -21,7 +21,7 @@ import {
 } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
@@ -50,13 +50,13 @@ export default function Rewards({
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
       {
-        contract: ContractName.TerminalV1,
+        contract: ContractName.TerminalV1_1,
         eventName: 'Pay',
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TerminalV1,
-        eventName: 'PrintPreminedTickets',
+        contract: ContractName.TerminalV1_1,
+        eventName: 'PrintTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
       {
@@ -94,10 +94,10 @@ export default function Rewards({
     updateOn: ticketsUpdateOn,
   })
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

@@ -10,7 +10,7 @@ import { ContractName } from 'models/contract-name'
 import { useContext, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFCMetadata } from 'utils/fundingCycle'
+import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
 export default function DistributeTokensModal({
   visible,
@@ -26,10 +26,10 @@ export default function DistributeTokensModal({
   const { tokenSymbol, currentFC, projectId, currentTicketMods, owner } =
     useContext(ProjectContext)
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
+  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTokens = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate
@@ -47,7 +47,7 @@ export default function DistributeTokensModal({
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'printReservedTickets',
       [projectId.toHexString()],
       {

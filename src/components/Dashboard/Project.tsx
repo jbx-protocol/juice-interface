@@ -6,6 +6,7 @@ import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
+import { decodeFCMetadata } from 'utils/fundingCycle'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
@@ -25,20 +26,14 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId } = useContext(ProjectContext)
-
-  const canPrintPreminedTickets = useContractReader<boolean>({
-    contract: ContractName.TerminalV1,
-    functionName: 'canPrintPreminedTickets',
-    args: projectId ? [projectId.toHexString()] : null,
-  })
+  const { projectId, currentFC } = useContext(ProjectContext)
 
   const hasPrintPreminePermission = useHasPermission(
-    OperatorPermission.PrintPreminedTickets,
+    OperatorPermission.PrintTickets,
   )
 
   const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: ContractName.TerminalV1_1,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -47,12 +42,12 @@ export default function Project({
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1,
+                contract: ContractName.TerminalV1_1,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
@@ -61,6 +56,8 @@ export default function Project({
       [projectId],
     ),
   })
+
+  const fcMetadata = decodeFCMetadata(currentFC)
 
   const gutter = 40
 
@@ -77,7 +74,7 @@ export default function Project({
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
-            {canPrintPreminedTickets &&
+            {fcMetadata.ticketPrintingIsAllowed &&
               hasPrintPreminePermission &&
               projectId.gt(0) && <PrintPremined projectId={projectId} />}
             <Pay />

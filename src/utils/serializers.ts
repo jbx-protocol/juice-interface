@@ -12,9 +12,18 @@ import {
 export type EditingFundingCycle = Omit<FundingCycle, 'metadata'> & {
   reserved: BigNumber
   bondingCurveRate: BigNumber
+  payIsPaused: boolean
+  ticketPrintingIsAllowed: boolean
 }
 
-export type SerializedFundingCycle = Record<keyof EditingFundingCycle, string>
+export type SerializedFundingCycle = Record<
+  keyof Omit<EditingFundingCycle, 'payIsPaused' | 'ticketPrintingIsAllowed'>,
+  string
+> &
+  Record<
+    keyof Pick<EditingFundingCycle, 'payIsPaused' | 'ticketPrintingIsAllowed'>,
+    boolean
+  >
 
 export const serializeFundingCycle = (
   fc: EditingFundingCycle,
@@ -36,6 +45,8 @@ export const serializeFundingCycle = (
   configured: fc.configured.toString(),
   cycleLimit: fc.cycleLimit.toString(),
   ballot: fc.ballot,
+  payIsPaused: fc.payIsPaused,
+  ticketPrintingIsAllowed: fc.ticketPrintingIsAllowed,
 })
 
 export const deserializeFundingCycle = (

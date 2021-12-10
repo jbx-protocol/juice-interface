@@ -18,17 +18,3 @@ export interface FundingCycle {
   ballot: string
   metadata: BigNumber // encoded FundingCycleData
 }
-
-export interface FCMetadata {
-  version: number
-  bondingCurveRate: number
-  reconfigurationBondingCurveRate: number
-  reservedRate: number
-}
-
-export enum BallotState {
-  'Approved' = 0,
-  'Active' = 1,
-  'Failed' = 2,
-  'Standby' = 3,
-}

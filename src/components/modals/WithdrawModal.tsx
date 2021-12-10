@@ -55,7 +55,7 @@ export default function WithdrawModal({
     : balanceInCurrency
 
   function tap() {
-    if (!transactor || !contracts?.TerminalV1 || !currentFC || !projectId)
+    if (!transactor || !contracts?.TerminalV1_1 || !currentFC || !projectId)
       return
 
     setLoading(true)
@@ -72,7 +72,7 @@ export default function WithdrawModal({
     )?.sub(1e12) // Arbitrary value subtracted
 
     transactor(
-      contracts.TerminalV1,
+      contracts.TerminalV1_1,
       'tap',
       [
         projectId.toHexString(),

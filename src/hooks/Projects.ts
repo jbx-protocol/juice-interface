@@ -1,10 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
+import { NetworkName } from 'models/network-name'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 import { archivedProjectIds } from '../constants/archived-projects'
+import { terminalV1_1Dict } from '../constants/terminalV1_1'
+import useSubgraphQuery from './SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
 // arbitrary `keys` properties.
@@ -29,6 +30,7 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
 }
 
 interface ProjectsOptions {
+  terminal?: string
   pageNumber?: number
   projectId?: BigNumber
   handle?: string
@@ -71,11 +73,17 @@ export function useProjectsQuery({
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
       where:
-        projectId != null
-          ? {
-              key: 'id',
-              value: projectId.toString(),
-            }
+        projectId && terminalV1_1Address
+          ? [
+              {
+                key: 'id',
+                value: projectId.toString(),
+              },
+//               {
+//                 key: 'terminal',
+//                 value: terminalV1_1Address,
+//               },
+            ]
           : undefined,
     },
     {

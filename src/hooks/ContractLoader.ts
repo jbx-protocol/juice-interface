@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
+import { terminalV1_1Dict } from 'constants/terminalV1_1'
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()
@@ -53,5 +54,6 @@ const loadContract = (
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
 ): Contract => {
   let contract = require(`@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`)
+
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }

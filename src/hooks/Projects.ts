@@ -1,9 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { readNetwork } from 'constants/networks'
+import { terminalV1_1Dict } from 'constants/terminalV1_1'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
 import { archivedProjectIds } from '../constants/archived-projects'
-import { terminalAddress } from '../constants/terminal-versions'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 // Take just an object that might contain an ID. That way we can support
@@ -43,6 +44,8 @@ interface ProjectsOptions {
 
 let defaultPageSize = 20
 
+const terminalV1_1Address = terminalV1_1Dict[readNetwork.name]?.address
+
 export function useProjectsQuery({
   pageNumber,
   projectId,
@@ -71,18 +74,19 @@ export function useProjectsQuery({
       skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
-      where: projectId
-        ? [
-            {
-              key: 'id',
-              value: projectId.toString(),
-            },
-            {
-              key: 'terminal',
-              value: terminalAddress,
-            },
-          ]
-        : undefined,
+      where:
+        projectId && terminalV1_1Address
+          ? [
+              {
+                key: 'id',
+                value: projectId.toString(),
+              },
+              {
+                key: 'terminal',
+                value: terminalV1_1Address,
+              },
+            ]
+          : undefined,
     },
     {
       staleTime: 60000,

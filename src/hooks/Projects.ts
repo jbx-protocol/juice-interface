@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { readNetwork } from 'constants/networks'
-import { terminalV1_1Dict } from 'constants/terminalV1_1'
+import { ContractName } from 'models/contract-name'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 
@@ -29,7 +29,6 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
   }
 }
 
-
 interface ProjectsOptions {
   terminal?: string
   pageNumber?: number
@@ -44,6 +43,9 @@ interface ProjectsOptions {
 }
 
 let defaultPageSize = 20
+
+const terminalV1_1Address: string =
+  require(`@jbx-protocol/contracts-v1/deployments/${readNetwork.name}/${ContractName.TerminalV1_1}.json`)?.address
 
 export function useProjectsQuery({
   pageNumber,
@@ -73,19 +75,18 @@ export function useProjectsQuery({
       skip: pageNumber ? pageNumber * pageSize : undefined,
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
-      where:
-        projectId
-          ? [
-              {
-                key: 'id',
-                value: projectId.toString(),
-              },
-//               {
-//                 key: 'terminal',
-//                 value: terminalV1_1Address,
-//               },
-            ]
-          : undefined,
+      where: projectId
+        ? [
+            {
+              key: 'id',
+              value: projectId.toString(),
+            },
+            {
+              key: 'terminal',
+              value: terminalV1_1Address,
+            },
+          ]
+        : undefined,
     },
     {
       staleTime: 60000,
@@ -104,6 +105,8 @@ export function useInfiniteProjectsQuery({
   pageSize = defaultPageSize,
   filter,
 }: ProjectsOptions) {
+  console.log('asdf', terminalV1_1Address)
+
   return useInfiniteSubgraphQuery(
     {
       pageSize,
@@ -120,13 +123,24 @@ export function useInfiniteProjectsQuery({
       ],
       orderDirection: orderDirection ?? 'desc',
       orderBy: orderBy ?? 'totalPaid',
-      where:
-        projectId != null
-          ? {
-              key: 'id',
-              value: projectId.toString(),
-            }
-          : undefined,
+      where: [
+        ...(projectId
+          ? [
+              {
+                key: 'id',
+                value: projectId.toString(),
+              },
+            ]
+          : []),
+        ...(terminalV1_1Address
+          ? [
+              {
+                key: 'terminal',
+                value: terminalV1_1Address,
+              },
+            ]
+          : []),
+      ],
     },
     {
       staleTime: 60000,

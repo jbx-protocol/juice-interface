@@ -7,8 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsQuery } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
-import { Trans } from '@lingui/macro'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -211,7 +210,7 @@ export default function Landing() {
         >
           <Row gutter={60}>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
-              {smallHeader('Projects using Juicebox')}
+              {smallHeader(t`Projects using Juicebox`)}
               <div style={{ marginTop: 20 }}>
                 {previewProjects ? (
                   <ProjectsGrid projects={previewProjects} list />
@@ -226,7 +225,7 @@ export default function Landing() {
               </div>
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>
-              {smallHeader('Latest payments')}
+              {smallHeader(t`Latest payments`)}
               <div style={{ maxHeight: 600, overflow: 'auto' }}>
                 <Payments />
               </div>
@@ -262,37 +261,39 @@ export default function Landing() {
             </Col>
             <Col xs={24} sm={13}>
               <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
-                {fourthCol('Programmable spending', [
-                  `Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
+                {fourthCol(t`Programmable spending`, [
+                  t`Commit portions of your revenue to go to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they.`,
                 ])}
-                {fourthCol('ERC20 community tokens', [
-                  `When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
+                {fourthCol(t`ERC20 community tokens`, [
+                  t`When someone pays your project either as a patron or a user of your app, they earn a proportional amount of your project's token. When you win, your token holders win, so they'll want you to win even more.`,
                 ])}
-                {fourthCol('Redistributable surplus', [
-                  `Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you.`,
+                {fourthCol(t`Redistributable surplus`, [
+                  t`Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you.`,
                 ])}
-                {fourthCol('Transparency & accountability', [
-                  `Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
+                {fourthCol(t`Transparency & accountability`, [
+                  t`Changes to your project's funding require a community approval period to take effect. Your supporters don't have to trust you—even though they already do.`,
                 ])}
                 <p>
-                  Note: Juicebox is new, unaudited, and not guaranteed to work
-                  perfectly. Before spending money, do your own research:{' '}
-                  <a
-                    href="https://discord.gg/6jXrJSyDFf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    ask questions
-                  </a>
-                  ,{' '}
-                  <a
-                    href="https://github.com/jbx-protocol/juicehouse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    check out the code
-                  </a>
-                  , and understand the risks!
+                  <Trans>
+                    Note: Juicebox is new, unaudited, and not guaranteed to work
+                    perfectly. Before spending money, do your own research:{' '}
+                    <a
+                      href="https://discord.gg/6jXrJSyDFf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      ask questions
+                    </a>
+                    ,{' '}
+                    <a
+                      href="https://github.com/jbx-protocol/juice-interface"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      check out the code
+                    </a>
+                    , and understand the risks!
+                  </Trans>
                 </p>
               </div>
             </Col>
@@ -327,18 +328,24 @@ export default function Landing() {
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                {bigHeader('Should you Juicebox?')}
+                {bigHeader(t`Should you Juicebox?`)}
                 <div style={{ color: colors.text.over.brand.secondary }}>
-                  <p className="ol">Almost definitely.</p>
                   <p className="ol">
-                    With Juicebox, projects are built and maintained by
-                    motivated punks getting paid transparently, and funded by a
-                    community of users and patrons who are rewarded as the
-                    projects they support succeed.
+                    <Trans>Almost definitely.</Trans>
                   </p>
                   <p className="ol">
-                    The future will be led by creators, and owned by
-                    communities.
+                    <Trans>
+                      With Juicebox, projects are built and maintained by
+                      motivated punks getting paid transparently, and funded by
+                      a community of users and patrons who are rewarded as the
+                      projects they support succeed.
+                    </Trans>
+                  </p>
+                  <p className="ol">
+                    <Trans>
+                      The future will be led by creators, and owned by
+                      communities.
+                    </Trans>
                   </p>
                 </div>
               </div>
@@ -373,7 +380,7 @@ export default function Landing() {
               paddingRight: 20,
             }}
           >
-            {bigHeader('FAQs')}
+            {bigHeader(t`FAQs`)}
             <Faq />
           </div>
         </div>
@@ -415,8 +422,10 @@ export default function Landing() {
       >
         <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
         <h3 style={{ color: 'white', margin: 0 }}>
-          Big ups to the Ethereum community for crafting the infrastructure and
-          economy to make Juicebox possible.
+          <Trans>
+            Big ups to the Ethereum community for crafting the infrastructure
+            and economy to make Juicebox possible.
+          </Trans>
         </h3>
       </div>
 

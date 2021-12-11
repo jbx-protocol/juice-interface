@@ -6,7 +6,8 @@ import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -87,13 +88,18 @@ export default function Projects() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <h1>Projects on Juicebox</h1>
+      <h1>
+        <Trans>Projects on Juicebox</Trans>
+      </h1>
       <p style={{ marginBottom: 40, maxWidth: 800 }}>
-        <InfoCircleOutlined /> The Juicebox protocol is open to anyone, and
-        project configurations can vary widely. There are risks associated with
-        interacting with all projects on the protocol. Projects built on the
-        protocol are not endorsed or vetted by JuiceboxDAO, so you should do
-        your own research and understand the risks before committing your funds.
+        <Trans>
+          <InfoCircleOutlined />
+          The Juicebox protocol is open to anyone, and project configurations
+          can vary widely. There are risks associated with interacting with all
+          projects on the protocol. Projects built on the protocol are not
+          endorsed or vetted by JuiceboxDAO, so you should do your own research
+          and understand the risks before committing your funds.
+        </Trans>
       </p>
       <div
         style={{
@@ -130,10 +136,14 @@ export default function Projects() {
 
       {selectedTab === 'archived' && (
         <p style={{ marginBottom: 40, maxWidth: 800 }}>
-          <InfoCircleOutlined /> Archived projects have not been modified or
-          deleted on the blockchain, and can still be interacted with directly
-          through the Juicebox contracts.{' '}
-          <Tooltip title="If you have a project you'd like to archive, let the Juicebox team know in Discord.">
+          <Trans>
+            <InfoCircleOutlined /> Archived projects have not been modified or
+            deleted on the blockchain, and can still be interacted with directly
+            through the Juicebox contracts.{' '}
+          </Trans>
+          <Tooltip
+            title={t`If you have a project you'd like to archive, let the Juicebox team know in Discord.`}
+          >
             <span
               style={{
                 color: colors.text.action.primary,
@@ -141,7 +151,7 @@ export default function Projects() {
                 cursor: 'default',
               }}
             >
-              How do I archive a project?
+              <Trans>How do I archive a project?</Trans>
             </span>
           </Tooltip>
         </p>

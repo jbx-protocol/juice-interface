@@ -2,6 +2,7 @@ import { Collapse, Space } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
+import { t } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
@@ -60,8 +61,8 @@ export default function Navbar() {
   const menu = () => {
     return (
       <>
-        {menuItem('Projects', '/#/projects')}
-        {menuItem('FAQ', undefined, () => {
+        {menuItem(t`Projects`, '/#/projects')}
+        {menuItem(t`FAQ`, undefined, () => {
           window.location.hash = '/'
           setTimeout(() => {
             document
@@ -69,10 +70,10 @@ export default function Navbar() {
               ?.scrollIntoView({ behavior: 'smooth' })
           }, 0)
         })}
-        {menuItem('Docs', 'https://docs.juicebox.money')}
-        {menuItem('Blog', 'https://blog.juicebox.money')}
+        {menuItem(t`Docs`, 'https://docs.juicebox.money')}
+        {menuItem(t`Blog`, 'https://blog.juicebox.money')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
-        {menuItem('Workspace', 'https://juicebox.notion.site')}
+        {menuItem(t`Workspace`, 'https://juicebox.notion.site')}
       </>
     )
   }

@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import { Trans } from '@lingui/macro'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
@@ -359,8 +360,10 @@ export default function Create() {
         })}
 
         <p style={{ fontWeight: 500 }}>
-          The JBX protocol is unaudited, and projects built on it may be
-          vulnerable to bugs or exploits. Be smart!
+          <Trans>
+            The JBX protocol is unaudited, and projects built on it may be
+            vulnerable to bugs or exploits. Be smart!
+          </Trans>
         </p>
 
         <Button

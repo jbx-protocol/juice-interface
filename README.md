@@ -88,7 +88,16 @@ Take the following steps to set up Blocknative for local development:
 #### The Graph
 JuiceBox uses [The Graph](https://thegraph.com/) as an additional data provider.
 
-To integrate with The Graph, set the `REACT_APP_SUBGRAPH_URL` in your `.env` to a query URL for the Juicebox subgraph you'd like to use.
+To set up The Graph locally, first determine the subgraph you'd like to use. Then, set the `REACT_APP_SUBGRAPH_URL` in your `.env` to the subgraph URL.
+
+The subgraph you use depends on which Ethereum network you're using. Juicebox has subgraphs for `mainnet` and `rinkeby`. Subgraphs are also versioned. Typically, you'll want to use the latest version of the subgraph.
+
+For `mainnet`:
+1. Find and select Juicebox on [The Graph Explorer](https://thegraph.com/explorer).
+1. Find the Deployment ID of the subgraph.
+1. Set `REACT_APP_SUBGRAPH_URL` to `https://api.thegraph.com/subgraphs/id/<Deployment ID>` in your `.env` file.
+
+For `rinkeby`, ask one the friendly Juicebox devs in [Discord](https://discord.gg/6jXrJSyDFf).
 ### Usage
 
 1. Start the app.

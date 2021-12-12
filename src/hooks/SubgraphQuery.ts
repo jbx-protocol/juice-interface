@@ -13,6 +13,7 @@ import {
   formatGraphResponse,
   GraphQueryOpts,
   SubgraphEntities,
+  SubgraphError,
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
 
@@ -31,7 +32,7 @@ export default function useSubgraphQuery<
   opts: GraphQueryOpts<E, K>,
   reactQueryOptions?: UseQueryOptions<
     GraphResult<E, K[]>,
-    unknown, // Specific error type?
+    Error,
     GraphResult<E, K[]>,
     readonly [string, GraphQueryOpts<E, K>]
   >,
@@ -42,19 +43,29 @@ export default function useSubgraphQuery<
   }
   return useQuery<
     GraphResult<E, K[]>,
-    unknown, // Specific error type?
+    Error,
     GraphResult<E, K[]>,
     readonly [string, GraphQueryOpts<E, K>]
   >(
     ['subgraph-query', opts],
     async () => {
-      const response = await axios.post<{ data: SubgraphQueryReturnTypes[E] }>(
+      const response = await axios.post<{
+        errors?: SubgraphError[]
+        data: SubgraphQueryReturnTypes[E]
+      }>(
         subgraphUrl,
         {
           query: formatGraphQuery(opts),
         },
         { headers: { 'Content-Type': 'application/json' } },
       )
+
+      if ('errors' in response.data) {
+        throw new Error(
+          response.data.errors?.[0]?.message ||
+            'Something is wrong with this Graph request',
+        )
+      }
 
       return formatGraphResponse(opts.entity, response.data?.data)
     },
@@ -83,7 +94,7 @@ export function useInfiniteSubgraphQuery<
   opts: InfiniteGraphQueryOpts<E, K>,
   reactQueryOptions?: UseInfiniteQueryOptions<
     GraphResult<E, K[]>,
-    unknown, // Specific error type?
+    Error,
     GraphResult<E, K[]>,
     GraphResult<E, K[]>,
     readonly [string, InfiniteGraphQueryOpts<E, K>]
@@ -95,14 +106,17 @@ export function useInfiniteSubgraphQuery<
   }
   return useInfiniteQuery<
     GraphResult<E, K[]>,
-    unknown, // Specific error type?
+    Error,
     GraphResult<E, K[]>,
     readonly [string, InfiniteGraphQueryOpts<E, K>]
   >(
     ['infinite-subgraph-query', opts] as const,
     async ({ queryKey, pageParam = 0 }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
-      const response = await axios.post<{ data: SubgraphQueryReturnTypes[E] }>(
+      const response = await axios.post<{
+        errors?: SubgraphError[]
+        data: SubgraphQueryReturnTypes[E]
+      }>(
         subgraphUrl,
         {
           query: formatGraphQuery({
@@ -113,6 +127,13 @@ export function useInfiniteSubgraphQuery<
         },
         { headers: { 'Content-Type': 'application/json' } },
       )
+
+      if ('errors' in response.data) {
+        throw new Error(
+          response.data.errors?.[0]?.message ||
+            'Something is wrong with this Graph request',
+        )
+      }
 
       return formatGraphResponse(opts.entity, response.data?.data)
     },

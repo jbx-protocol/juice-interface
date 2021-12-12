@@ -6,7 +6,6 @@ export interface DistributeToTicketModEvent {
   fundingCycleId?: BigNumber
   projectId?: BigNumber
   modBeneficiary: string
-  modPercent?: BigNumber
   modPreferUnstaked: boolean
   modCut?: BigNumber
   caller: string
@@ -29,7 +28,6 @@ export const parseDistributeToTicketModEvent = (
     : undefined,
   project: json.project ? BigNumber.from(json.project) : undefined,
   projectId: json.projectId ? BigNumber.from(json.projectId) : undefined,
-  modPercent: json.modPercent ? BigNumber.from(json.modPercent) : undefined,
   modCut: json.modCut ? BigNumber.from(json.modCut) : undefined,
   modPreferUnstaked: !!json.modPreferUnstaked,
   timestamp: json.timestamp ? parseInt(json.timestamp) : undefined,

@@ -1,23 +1,30 @@
 ---
 name: Bug report
 about: I can't use the app because something is broken or too confusing
-title: "[BUG] "
+title: '[BUG] '
 labels: bug
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Summary
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
+ <!-- A clear and concise description of what the bug is. -->
+
+## Steps to reproduce
+
+<!-- 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
-4. See error
+4. See error -->
 
-**Setup (please complete the following information):**
- - Device/OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Hardware wallet [e.g. Ledger w/ Metamask]
+## What is the _current_ bug behavior?
+
+## What is the expected _correct_ behavior?
+
+## Relevant logs and/or screenshots
+
+## Environment
+
+- Device/OS: [e.g. iOS]
+- Browser [e.g. chrome, safari]
+- Hardware wallet [e.g. Ledger w/ Metamask]

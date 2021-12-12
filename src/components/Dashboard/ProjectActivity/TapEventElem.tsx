@@ -23,11 +23,11 @@ export default function TapEventElem({
   const { data: payoutEvents } = useSubgraphQuery({
     entity: 'distributeToPayoutModEvent',
     keys: [
+      'id',
       'timestamp',
       'txHash',
       'modProjectId',
       'modBeneficiary',
-      'modPercent',
       'modCut',
     ],
     orderDirection: 'desc',
@@ -78,11 +78,7 @@ export default function TapEventElem({
       <div style={{ marginTop: 5 }}>
         {payoutEvents?.map(e => (
           <div
-            key={
-              e.modBeneficiary +
-              (e.modProjectId?.toString() ?? '') +
-              (e.modPercent?.toString() ?? '')
-            }
+            key={e.id}
             style={{
               display: 'flex',
               justifyContent: 'space-between',

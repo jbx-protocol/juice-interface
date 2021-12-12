@@ -23,7 +23,7 @@ export default function ReservesEventElem({
   const { data: distributeEvents } = useSubgraphQuery(
     {
       entity: 'distributeToTicketModEvent',
-      keys: ['timestamp', 'txHash', 'modBeneficiary', 'modPercent', 'modCut'],
+      keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
       orderDirection: 'desc',
       orderBy: 'modCut',
       where: printReservesEvent?.id
@@ -75,7 +75,7 @@ export default function ReservesEventElem({
       <div style={{ marginTop: 5 }}>
         {distributeEvents?.map(e => (
           <div
-            key={e.modBeneficiary + (e.modPercent?.toString() ?? '')}
+            key={e.id}
             style={{
               display: 'flex',
               justifyContent: 'space-between',

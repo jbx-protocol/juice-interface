@@ -5,6 +5,17 @@ Juicebox frontend application.
 - Mainnet: https://juicebox.money
 - Rinkeby: https://rinkeby.juicebox.money
 
+## Suggest a feature
+
+Have an idea or suggestion? Create a
+[feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+)
+or mention it in the [Discord](https://discord.gg/6jXrJSyDFf).
+
+## Report a bug
+
+Notice something broken? Create a
+[bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
+
 ## Development
 
 ### Installation

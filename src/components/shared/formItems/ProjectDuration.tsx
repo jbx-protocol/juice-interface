@@ -1,7 +1,6 @@
 import { Form, Space, Switch } from 'antd'
 import { useEffect, useState } from 'react'
 
-import InputAccessoryButton from '../InputAccessoryButton'
 import FormattedNumberInput from '../inputs/FormattedNumberInput'
 import { FormItemExt } from './formItemExt'
 
@@ -59,13 +58,15 @@ export default function ProjectDuration({
             suffix="days"
             onChange={onValueChange}
             min={1}
-            accessory={
-              <InputAccessoryButton
-                content={isRecurring ? 'recurring' : 'one-time'}
-                withArrow={true}
-                onClick={onToggleRecurring}
-              />
-            }
+            // Disabled toggle for recurring/one-time
+            //
+            // accessory={
+            //   <InputAccessoryButton
+            //     content={isRecurring ? 'recurring' : 'one-time'}
+            //     withArrow={true}
+            //     onClick={onToggleRecurring}
+            //   />
+            // }
           />
         </Form.Item>
       </Space>

@@ -70,6 +70,11 @@ export interface SubgraphQueryReturnTypes {
 
 export type EntityKey = keyof SubgraphEntities
 
+export interface SubgraphError {
+  locations: { column: number; line: number }[]
+  message: string
+}
+
 export type OrderDirection = 'asc' | 'desc'
 
 export type WhereConfig = {

@@ -8,39 +8,46 @@ right place!
 Check out the [README](README.md#usage) for instructions on running the app in
 development.
 
-## Contribution process
-
-### Find something to work on
+## Finding something to work on
 
 Start with issues labelled
 [`good first issue`](https://github.com/jbx-protocol/juice-juicehouse/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
-### Create a pull request
+## Getting your pull request reviewed, approved, and merged
 
-To contribute, create a pull request (PR) that targets the `main` branch. A live
-Fleek preview will be automatically deployed for each PR. Before your PR is
-merged, it must meet the following criteria:
+Create a pull request (PR) that targets the `main` branch. A live Fleek preview
+will be automatically deployed for each PR.
 
-- Passes all CI checks.
-- Approved by at least one code owner.
-- Discussed by other design/dev contributors (for contributions that make
-  significant UI/UX changes).
+When your PR has met the [#approval guidelines](approval-guidelines) and is
+ready for review, `@mention` a [codeowner](.github/CODEOWNERS) and ask for a
+review.
+
+### Git workflow
+
+We opt for a **rebase policy** where the repository history is kept flat and
+clean. When a feature branch's development is complete, rebase/squash all the
+work down to the minimum number of meaningful commits.
+
+While the work is still in progress and a feature branch needs to be brought up
+to date with the upstream target branch, use rebase – as opposed to pull or
+merge – to avoid polluting the commit history with spurious merges.
+[Learn more](https://www.atlassian.com/git/articles/git-team-workflows-merge-or-rebase)
+about the differences between merge and rebase Git workflows.
+
+### Approval guidelines
+
+Before your PR is merged, it must meet the following criteria:
+
+1. The PR follows the [Git workflow](#git-workflow) and contains no merge
+   commits.
+1. All CI checks pass.
+1. The PR is approved by at least one [codeowner](.github/CODEOWNERS).
+1. Significant UI/UX changes are discussed by other design/dev contributors.
 
 ### Juicebox app release
 
 All changes to the `main` branch will be automatically deployed via
 [Fleek](https://fleek.co).
-
-## Suggest a feature
-
-Have an idea or suggestion? Create a
-[feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+)
-or mention it in the [Discord](https://discord.gg/6jXrJSyDFf).
-
-## Report a bug
-
-Notice something broken? Create a
-[bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
 
 ## Translations
 

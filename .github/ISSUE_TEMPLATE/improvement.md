@@ -8,12 +8,12 @@ assignees: ''
 
 ## Description
 
-<!-- A clear and concise description of what could be better. -->
+_A clear and concise description of what could be better._
 
 ## Proposal
 
-<!-- A description of the change you'd like to see. -->
+_A description of the change you'd like to see._
 
 ## Screenshots
 
-<!-- If applicable, add screenshots to help explain your problem. -->
+_If applicable, add screenshots to help explain your problem._

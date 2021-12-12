@@ -35,6 +35,11 @@ export default function ProjectDuration({
               onChange={checked => {
                 setShowDurationInput(checked)
                 onValueChange(checked ? '30' : '0')
+
+                // If toggling off Funding Cycle Duration when set to "one-time", revert it to "recurring"
+                if (!isRecurring && !checked) {
+                  onToggleRecurring()
+                }
               }}
             />
             <label>Set a funding cycle duration</label>

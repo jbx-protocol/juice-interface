@@ -8,14 +8,14 @@ assignees: ''
 
 ## Summary
 
- <!-- A clear and concise description of what the bug is. -->
+_A clear and concise description of what the bug is._
 
 ## Steps to reproduce
 
-<!-- 1. Go to '...'
+1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
-4. See error -->
+4. See error
 
 ## What is the _current_ bug behavior?
 
@@ -25,6 +25,6 @@ assignees: ''
 
 ## Environment
 
-- Device/OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Hardware wallet [e.g. Ledger w/ Metamask]
+- **Device/OS**: [e.g. iOS]
+- **Browser:** [e.g. chrome, safari]
+- **Hardware wallet**: [e.g. Ledger w/ Metamask]

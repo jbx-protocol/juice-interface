@@ -6,7 +6,6 @@ export interface DistributeToPayoutModEvent {
   fundingCycleId?: BigNumber
   projectId?: BigNumber
   modBeneficiary: string
-  modPercent?: BigNumber
   modPreferUnstaked: boolean
   modProjectId?: BigNumber
   modAllocator: string
@@ -31,7 +30,6 @@ export const parseDistributeToPayoutModEvent = (
     : undefined,
   project: json.project ? BigNumber.from(json.project) : undefined,
   projectId: json.projectId ? BigNumber.from(json.projectId) : undefined,
-  modPercent: json.modPercent ? BigNumber.from(json.modPercent) : undefined,
   modProjectId: json.modProjectId
     ? BigNumber.from(json.modProjectId)
     : undefined,

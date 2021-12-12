@@ -4,19 +4,17 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-
+import { readNetwork } from 'constants/networks'
+import { disablePayOverrides } from 'constants/overrides'
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { CurrencyOption } from 'models/currency-option'
-import { NetworkName } from 'models/network-name'
 import { useContext, useMemo, useState } from 'react'
 import { currencyName } from 'utils/currency'
 import { formatWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
-
-import { readNetwork } from 'constants/networks'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 
@@ -44,8 +42,9 @@ export default function Pay() {
   const formatReceivedTickets = (wei: BigNumber) =>
     formatWad(weightedRate(currentFC, wei, 'payer'), { decimals: 0 })
 
-  const isConstitutionDAO =
-    readNetwork.name === NetworkName.mainnet && projectId?.eq(36)
+  const overridePayDisabled =
+    projectId &&
+    disablePayOverrides[readNetwork.name]?.has(projectId.toNumber())
 
   const payButton = useMemo(() => {
     if (!metadata || !currentFC) return null
@@ -65,7 +64,7 @@ export default function Pay() {
           </Button>
         </Tooltip>
       )
-    } else if (fcMetadata?.reservedRate === 200 || isConstitutionDAO) {
+    } else if (fcMetadata?.reservedRate === 200 || overridePayDisabled) {
       return (
         <Tooltip
           title="Paying this project is currently disabled"
@@ -93,7 +92,7 @@ export default function Pay() {
     currentFC,
     isArchived,
     fcMetadata,
-    isConstitutionDAO,
+    overridePayDisabled,
     weiPayAmt,
   ])
 

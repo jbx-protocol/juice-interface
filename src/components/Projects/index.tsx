@@ -1,13 +1,13 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { t, Trans } from '@lingui/macro';
-import { Button, Select, Space, Tooltip } from 'antd';
-import Loading from 'components/shared/Loading';
-import ProjectsGrid from 'components/shared/ProjectsGrid';
-import { layouts } from 'constants/styles/layouts';
-import { ThemeContext } from 'contexts/themeContext';
-import { useInfiniteProjectsQuery } from 'hooks/Projects';
-import { ProjectState } from 'models/project-visibility';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { InfoCircleOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Button, Select, Space, Tooltip } from 'antd'
+import Loading from 'components/shared/Loading'
+import ProjectsGrid from 'components/shared/ProjectsGrid'
+import { layouts } from 'constants/styles/layouts'
+import { ThemeContext } from 'contexts/themeContext'
+import { useInfiniteProjectsQuery } from 'hooks/Projects'
+import { ProjectState } from 'models/project-visibility'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 

@@ -17,6 +17,7 @@ import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
@@ -61,7 +62,7 @@ export default function ReconfigureFCModal({
   ticketMods: TicketMod[] | undefined
   onDone?: VoidFunction
 }) {
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =
@@ -86,7 +87,8 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { currentFC } = useContext(ProjectContext)
+  const { currentFC, terminal } = useContext(ProjectContext)
+  const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   const resetTicketingForm = () =>
     ticketingForm.setFieldsValue({
@@ -365,7 +367,7 @@ export default function ReconfigureFCModal({
                     {formatWad(editingFC.target)}{' '}
                     <span style={{ fontSize: '0.8rem' }}>
                       (
-                      {adminFeePercent?.gt(0) ? (
+                      {terminalFee?.gt(0) ? (
                         <span>
                           <CurrencySymbol
                             currency={
@@ -373,7 +375,7 @@ export default function ReconfigureFCModal({
                             }
                           />
                           {formatWad(
-                            amountSubFee(editingFC.target, adminFeePercent),
+                            amountSubFee(editingFC.target, terminalFee),
                           )}{' '}
                           after JBX fee
                         </span>
@@ -433,7 +435,7 @@ export default function ReconfigureFCModal({
               mods={editingPayoutMods}
               projectId={undefined}
               fundingCycle={editingFC}
-              fee={adminFeePercent}
+              fee={terminalFee}
             />
           </div>
 
@@ -482,7 +484,7 @@ export default function ReconfigureFCModal({
           initialMods={editingPayoutMods}
           currency={editingFC.currency.toNumber() as CurrencyOption}
           target={editingFC.target}
-          fee={adminFeePercent}
+          fee={terminalFee}
           onSave={async mods => {
             onPayModsFormSaved(mods)
             setPayModsFormModalVisible(false)

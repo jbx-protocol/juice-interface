@@ -15,6 +15,7 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
@@ -58,7 +59,7 @@ import RulesForm from './RulesForm'
 import TicketingForm, { TicketingFormFields } from './TicketingForm'
 
 export default function Create() {
-  const { transactor, contracts, adminFeePercent } = useContext(UserContext)
+  const { transactor, contracts } = useContext(UserContext)
   const { signerNetwork, userAddress } = useContext(NetworkContext)
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
@@ -93,13 +94,15 @@ export default function Create() {
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
 
+  const terminalFee = useTerminalFee('1.1', contracts)
+
   useEffect(() => {
-    if (adminFeePercent) {
+    if (terminalFee) {
       dispatch(
-        editingProjectActions.setFee(fromPerbicent(adminFeePercent).toString()),
+        editingProjectActions.setFee(fromPerbicent(terminalFee).toString()),
       )
     }
-  }, [adminFeePercent, dispatch])
+  }, [terminalFee, dispatch])
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({

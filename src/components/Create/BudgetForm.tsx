@@ -1,10 +1,12 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useLayoutEffect, useState, useMemo } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
@@ -34,7 +36,10 @@ export default function BudgetForm({
   const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
-  const { adminFeePercent } = useContext(UserContext)
+  const { terminal } = useContext(ProjectContext)
+  const { contracts } = useContext(UserContext)
+
+  const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
@@ -120,7 +125,7 @@ export default function BudgetForm({
             onValueChange={val => setTarget(val || '0')}
             currency={currency}
             onCurrencyChange={setCurrency}
-            fee={adminFeePercent}
+            fee={terminalFee}
           />
         )}
 

@@ -12,9 +12,11 @@ import {
   targetToTargetSubFeeFormatted,
   targetSubFeeToTargetFormatted,
 } from 'components/shared/formItems/formHelpers'
+import { useTerminalFee } from 'hooks/TerminalFee'
 
 export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
   const { contracts, transactor } = useContext(UserContext)
+  const terminalFee = useTerminalFee()
   const [form] = useForm<{
     beneficary: string
     preferUnstaked: boolean
@@ -26,7 +28,6 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
   const [modalVisible, setModalVisible] = useState<boolean>()
-  const { adminFeePercent } = useContext(UserContext)
 
   async function mint() {
     if (!contracts || !projectId || !transactor) return
@@ -104,16 +105,13 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
             onTargetChange={target => {
               setTarget(target || '0')
               setTargetSubFee(
-                targetToTargetSubFeeFormatted(target || '0', adminFeePercent),
+                targetToTargetSubFeeFormatted(target || '0', terminalFee),
               )
             }}
             onTargetSubFeeChange={targetSubFee => {
               setTargetSubFee(targetSubFee || '0')
               setTarget(
-                targetSubFeeToTargetFormatted(
-                  targetSubFee || '0',
-                  adminFeePercent,
-                ),
+                targetSubFeeToTargetFormatted(targetSubFee || '0', terminalFee),
               )
             }}
           />

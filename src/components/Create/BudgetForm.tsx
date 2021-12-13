@@ -1,10 +1,12 @@
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import { FormItems } from 'components/shared/formItems'
+import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
 import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
+import { useTerminalFee } from 'hooks/TerminalFee'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useLayoutEffect, useState, useMemo } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
@@ -41,23 +43,18 @@ export default function BudgetForm({
   const editingFC = useEditingFundingCycleSelector()
   // TODO budgetForm should not depend on dispatch
   const dispatch = useAppDispatch()
-  const { adminFeePercent } = useContext(UserContext)
+  const { terminal } = useContext(ProjectContext)
+  const { contracts } = useContext(UserContext)
+
+  const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setTarget(initialTarget)
-    setTargetSubFee(
-      targetToTargetSubFeeFormatted(initialTarget, adminFeePercent),
-    )
+    setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
     setShowFundingFields(hasFundingTarget(editingFC))
-  }, [
-    editingFC,
-    initialCurrency,
-    initialDuration,
-    initialTarget,
-    adminFeePercent,
-  ])
+  }, [editingFC, initialCurrency, initialDuration, initialTarget, terminalFee])
 
   const maxIntStr = fromWad(constants.MaxUint256)
   const hasTarget = useMemo(() => {
@@ -120,7 +117,7 @@ export default function BudgetForm({
                   : maxIntStr || '0'
                 setTargetSubFee(targetSubFee)
                 setTarget(
-                  targetSubFeeToTargetFormatted(targetSubFee, adminFeePercent),
+                  targetSubFeeToTargetFormatted(targetSubFee, terminalFee),
                 )
                 setCurrency(1)
                 setShowFundingFields(checked)
@@ -149,21 +146,18 @@ export default function BudgetForm({
             onTargetChange={target => {
               setTarget(target ?? '0')
               setTargetSubFee(
-                targetToTargetSubFeeFormatted(target ?? '0', adminFeePercent),
+                targetToTargetSubFeeFormatted(target ?? '0', terminalFee),
               )
             }}
             onTargetSubFeeChange={targetSubFee => {
               setTargetSubFee(targetSubFee ?? '0')
               setTarget(
-                targetSubFeeToTargetFormatted(
-                  targetSubFee ?? '0',
-                  adminFeePercent,
-                ),
+                targetSubFeeToTargetFormatted(targetSubFee ?? '0', terminalFee),
               )
             }}
             currency={currency}
             onCurrencyChange={setCurrency}
-            fee={adminFeePercent}
+            fee={terminalFee}
           />
         )}
 

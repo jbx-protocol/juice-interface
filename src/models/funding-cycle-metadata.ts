@@ -5,4 +5,5 @@ export interface FundingCycleMetadata {
   reservedRate: number
   payIsPaused: boolean
   ticketPrintingIsAllowed: boolean
+  treasuryExtension: string
 }

@@ -1,12 +1,14 @@
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { readNetwork } from 'constants/networks'
-import { readProvider } from 'constants/readProvider'
+
 import { NetworkContext } from 'contexts/networkContext'
 import { ContractName } from 'models/contract-name'
 import { Contracts } from 'models/contracts'
 import { NetworkName } from 'models/network-name'
 import { useContext, useEffect, useState } from 'react'
+
+import { readProvider } from 'constants/readProvider'
+import { readNetwork } from 'constants/networks'
 
 export function useContractLoader() {
   const [contracts, setContracts] = useState<Contracts>()

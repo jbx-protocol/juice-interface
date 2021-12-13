@@ -3,7 +3,6 @@ import { Col, Row, Space } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import useContractReader from 'hooks/ContractReader'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
-import { ContractName } from 'models/contract-name'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
@@ -26,14 +25,14 @@ export default function Project({
   showCurrentDetail?: boolean
   column?: boolean
 }) {
-  const { projectId, currentFC } = useContext(ProjectContext)
+  const { projectId, currentFC, terminal } = useContext(ProjectContext)
 
   const hasPrintPreminePermission = useHasPermission(
     OperatorPermission.PrintTickets,
   )
 
   const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1_1,
+    contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -42,18 +41,18 @@ export default function Project({
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminal?.name,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminal?.name,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, terminal?.name],
     ),
   })
 

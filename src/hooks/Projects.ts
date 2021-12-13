@@ -31,7 +31,6 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
 }
 
 interface ProjectsOptions {
-  terminal?: string
   pageNumber?: number
   projectId?: BigNumber
   handle?: string

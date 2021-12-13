@@ -1,7 +1,6 @@
-import { Button, Form, FormInstance, Space } from 'antd'
+import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-import { Switch } from 'react-router'
 
 export type RestrictedActionsFormFields = {
   payIsPaused: boolean
@@ -30,6 +29,7 @@ export default function RestrictedActionsForm({
           name="payIsPaused"
           label="Pause payments"
           extra="Your project cannot receive payments while this is enabled."
+          valuePropName="checked"
         >
           <Switch />
         </Form.Item>
@@ -37,6 +37,7 @@ export default function RestrictedActionsForm({
           name="ticketPrintingIsAllowed"
           label="Allow printing tokens"
           extra="Enabling this allows the project owner to manually mint any amount of tokens to any address."
+          valuePropName="checked"
         >
           <Switch />
         </Form.Item>

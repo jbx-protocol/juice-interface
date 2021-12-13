@@ -1,9 +1,9 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
-import { Trans } from '@lingui/macro'
 import Project from 'components/Dashboard/Project'
 import { NetworkContext } from 'contexts/networkContext'
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
@@ -15,11 +15,13 @@ import {
   useAppSelector,
   useEditingFundingCycleSelector,
 } from 'hooks/AppSelector'
+import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
+import { TerminalVersion } from 'models/terminal-version'
 import {
   useCallback,
   useContext,
@@ -42,6 +44,7 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
+import { getTerminalAddress } from 'utils/terminal-versions'
 
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
@@ -238,6 +241,7 @@ export default function Create() {
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       payIsPaused: editingFC.payIsPaused,
       ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+      treasuryExtension: constants.AddressZero,
     }
 
     transactor(
@@ -427,10 +431,13 @@ export default function Create() {
         1000,
         editingFC.payIsPaused,
         editingFC.ticketPrintingIsAllowed,
+        constants.AddressZero,
       ),
     }),
     [editingFC],
   )
+
+  const terminalVersion: TerminalVersion = '1.1'
 
   const project = useMemo<ProjectContextType>(
     () => ({
@@ -453,6 +460,11 @@ export default function Create() {
       tokenAddress: constants.AddressZero,
       isPreviewMode: true,
       isArchived: false,
+      terminal: {
+        version: terminalVersion,
+        name: ContractName.TerminalV1_1,
+        address: getTerminalAddress(terminalVersion),
+      },
     }),
     [
       editingPayoutMods,

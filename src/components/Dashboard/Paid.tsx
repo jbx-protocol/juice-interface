@@ -11,7 +11,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
-import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, useContext, useMemo, useState } from 'react'
@@ -29,13 +28,20 @@ export default function Paid() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId, currentFC, balanceInCurrency, balance, owner, earned } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    currentFC,
+    balanceInCurrency,
+    balance,
+    owner,
+    earned,
+    terminal,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
   const totalOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1_1,
+    contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -44,18 +50,18 @@ export default function Paid() {
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminal?.name,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminal?.name,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, terminal?.name],
     ),
   })
 

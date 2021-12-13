@@ -38,8 +38,14 @@ export default function Rewards({
     useState<boolean>(false)
   const { userAddress } = useContext(NetworkContext)
 
-  const { projectId, tokenAddress, tokenSymbol, isPreviewMode, currentFC } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    tokenAddress,
+    tokenSymbol,
+    isPreviewMode,
+    currentFC,
+    terminal,
+  } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -50,12 +56,12 @@ export default function Rewards({
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
       {
-        contract: ContractName.TerminalV1_1,
+        contract: terminal?.name,
         eventName: 'Pay',
         topics: projectId ? [[], projectId.toHexString()] : undefined,
       },
       {
-        contract: ContractName.TerminalV1_1,
+        contract: terminal?.name,
         eventName: 'PrintTickets',
         topics: projectId ? [projectId.toHexString()] : undefined,
       },
@@ -73,7 +79,7 @@ export default function Rewards({
             : undefined,
       },
     ],
-    [projectId, userAddress],
+    [projectId, userAddress, terminal?.name],
   )
 
   const ticketContract = useErc20Contract(tokenAddress)
@@ -105,7 +111,7 @@ export default function Rewards({
   const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1_1,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

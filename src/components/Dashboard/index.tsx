@@ -15,15 +15,16 @@ import { useParams } from 'react-router-dom'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { normalizeHandle } from 'utils/formatHandle'
+import { getTerminalName, getTerminalVersion } from 'utils/terminal-versions'
 
 import { padding } from 'constants/styles/padding'
 import { layouts } from 'constants/styles/layouts'
 import { projectTypes } from 'constants/project-types'
 import { archivedProjectIds } from 'constants/archived-projects'
 
+import { useProjectsQuery } from '../../hooks/Projects'
 import Loading from '../shared/Loading'
 import Project from './Project'
-import { useProjectsQuery } from '../../hooks/Projects'
 
 export default function Dashboard() {
   const [projectExists, setProjectExists] = useState<boolean>()
@@ -46,6 +47,18 @@ export default function Dashboard() {
     projectId,
     keys: ['createdAt', 'totalPaid'],
   })
+
+  const terminalAddress = useContractReader<string>({
+    contract: ContractName.TerminalDirectory,
+    functionName: 'terminalOf',
+    args: projectId ? [projectId.toHexString()] : null,
+  })
+
+  const terminalName = getTerminalName({
+    address: terminalAddress,
+  })
+
+  const terminalVersion = getTerminalVersion(terminalAddress)
 
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.totalPaid
@@ -71,18 +84,18 @@ export default function Dashboard() {
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminalName,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminalName,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, terminalName],
     ),
   })
 
@@ -239,7 +252,7 @@ export default function Dashboard() {
   }, [metadata])
 
   const balance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1_1,
+    contract: terminalName,
     functionName: 'balanceOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
@@ -248,18 +261,18 @@ export default function Dashboard() {
         projectId
           ? [
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminalName,
                 eventName: 'Pay',
                 topics: [[], projectId.toHexString()],
               },
               {
-                contract: ContractName.TerminalV1_1,
+                contract: terminalName,
                 eventName: 'Tap',
                 topics: [[], projectId.toHexString()],
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, terminalName],
     ),
   })
 
@@ -303,6 +316,11 @@ export default function Dashboard() {
       balanceInCurrency,
       isPreviewMode,
       isArchived,
+      terminal: {
+        address: terminalAddress,
+        name: terminalName,
+        version: terminalVersion,
+      },
     }
   }, [
     balance,
@@ -321,6 +339,9 @@ export default function Dashboard() {
     queuedTicketMods,
     tokenAddress,
     tokenSymbol,
+    terminalVersion,
+    terminalName,
+    terminalAddress,
   ])
 
   if (projectExists === undefined) return <Loading />

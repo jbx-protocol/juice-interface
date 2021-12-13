@@ -1,7 +1,6 @@
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
-
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
 import { useContext } from 'react'

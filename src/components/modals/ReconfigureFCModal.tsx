@@ -10,7 +10,7 @@ import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -38,6 +38,8 @@ import {
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -91,6 +93,14 @@ export default function ReconfigureFCModal({
       reserved: parseFloat(fromPerbicent(editingFC?.reserved)),
     })
 
+  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
+
+  const resetRestrictedActionsForm = () =>
+    restrictedActionsForm.setFieldsValue({
+      payIsPaused: fcMetadata?.payIsPaused,
+      ticketPrintingIsAllowed: fcMetadata?.ticketPrintingIsAllowed,
+    })
+
   const onPayModsFormSaved = (mods: PayoutMod[]) => setEditingPayoutMods(mods)
 
   const onBudgetFormSaved = (
@@ -110,7 +120,8 @@ export default function ReconfigureFCModal({
   }
 
   const onRestrictedActionsFormSaved = () => {
-    const fields = ticketingForm.getFieldsValue(true)
+    const fields = restrictedActionsForm.getFieldsValue(true)
+    console.log('fields', fields)
     dispatch(
       editingProjectActions.setticketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,
@@ -150,7 +161,18 @@ export default function ReconfigureFCModal({
     ticketingForm.setFieldsValue({
       reserved: parseFloat(fromPerbicent(metadata.reservedRate)),
     })
-  }, [dispatch, fundingCycle, payoutMods, ticketMods, ticketingForm])
+    restrictedActionsForm.setFieldsValue({
+      payIsPaused: metadata.payIsPaused,
+      ticketPrintingIsAllowed: metadata.ticketPrintingIsAllowed,
+    })
+  }, [
+    dispatch,
+    fundingCycle,
+    payoutMods,
+    ticketMods,
+    ticketingForm,
+    restrictedActionsForm,
+  ])
 
   async function reconfigure() {
     if (!transactor || !contracts?.TerminalV1_1 || !fundingCycle || !projectId)
@@ -173,6 +195,7 @@ export default function ReconfigureFCModal({
       reconfigurationBondingCurveRate: editingFC.bondingCurveRate.toNumber(),
       payIsPaused: editingFC.payIsPaused,
       ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+      treasuryExtension: constants.AddressZero,
     }
 
     transactor(
@@ -532,6 +555,7 @@ export default function ReconfigureFCModal({
         visible={restrictedActionsFormModalVisible}
         {...drawerStyle}
         onClose={() => {
+          resetRestrictedActionsForm()
           setRestrictedActionsFormModalVisible(false)
           setCurrentStep(undefined)
         }}

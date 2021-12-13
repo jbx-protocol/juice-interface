@@ -122,6 +122,17 @@ export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   where?: WhereConfig | WhereConfig[]
 }
 
+// Re-type GraphQueryOpts to remove skip and add pageSize.
+// This is so we can calculate our own `skip` value based on
+// the react-query managed page number multiplied by the provided
+// page size.
+export type InfiniteGraphQueryOpts<
+  E extends EntityKey,
+  K extends EntityKeys<E>,
+> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
+  pageSize: number
+}
+
 // https://thegraph.com/docs/graphql-api#filtering
 export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,

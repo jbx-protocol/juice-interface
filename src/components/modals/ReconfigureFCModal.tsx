@@ -10,7 +10,7 @@ import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -39,6 +39,8 @@ import {
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'

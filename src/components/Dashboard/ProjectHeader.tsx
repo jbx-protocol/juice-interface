@@ -122,9 +122,13 @@ export default function ProjectHeader() {
                         style={{
                           padding: '2px 4px',
                           background: colors.background.l1,
-                          cursor: 'pointer',
+                          cursor:
+                            terminal.version === '1' ? 'pointer' : 'default',
                         }}
-                        onClick={() => setMigrateDrawerVisible(true)}
+                        onClick={() => {
+                          if (terminal.version !== '1') return
+                          setMigrateDrawerVisible(true)
+                        }}
                       >
                         v{terminal.version}
                       </span>

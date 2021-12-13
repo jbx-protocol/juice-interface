@@ -1,13 +1,16 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Space, Tooltip } from 'antd'
+import { Button, Checkbox, Select, Space, Tooltip } from 'antd'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
-import { layouts } from 'constants/styles/layouts'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { TerminalVersion } from 'models/terminal-version'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+
+import { layouts } from 'constants/styles/layouts'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
@@ -16,12 +19,19 @@ const pageSize = 20
 export default function Projects() {
   const [selectedTab, setSelectedTab] = useState<ProjectState>('active')
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
+  const [includeV1, setIncludeV1] = useState<boolean>(true)
+  const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
 
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const terminalVersion: TerminalVersion | undefined = useMemo(() => {
+    if (includeV1 && !includeV1_1) return '1'
+    if (!includeV1 && includeV1_1) return '1.1'
+  }, [includeV1, includeV1_1])
 
   const {
     data: pages,
@@ -34,6 +44,7 @@ export default function Projects() {
     pageSize,
     orderDirection: 'desc',
     filter: selectedTab,
+    terminalVersion,
   })
 
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
@@ -116,7 +127,23 @@ export default function Projects() {
         </div>
 
         <div>
-          <Space direction="horizontal">
+          <Space direction="horizontal" size="large">
+            <Space direction="horizontal" size="middle">
+              <div>
+                <Checkbox
+                  checked={includeV1}
+                  onChange={() => setIncludeV1(!includeV1)}
+                />{' '}
+                V1
+              </div>
+              <div>
+                <Checkbox
+                  checked={includeV1_1}
+                  onChange={() => setIncludeV1_1(!includeV1_1)}
+                />{' '}
+                V1.1
+              </div>
+            </Space>
             <Select
               value={orderBy}
               onChange={setOrderBy}
@@ -125,7 +152,7 @@ export default function Projects() {
               <Select.Option value="totalPaid">Volume</Select.Option>
               <Select.Option value="createdAt">Created</Select.Option>
             </Select>
-            <a href="/#/create" style={{ marginLeft: 10 }}>
+            <a href="/#/create">
               <Button>New project</Button>
             </a>
           </Space>
@@ -175,7 +202,7 @@ export default function Projects() {
         </div>
       )}
 
-      {!isFetchingNextPage && !isLoading && (
+      {!isFetchingNextPage && !isLoading && !concatenatedPages?.length && (
         <div
           style={{
             padding: 20,

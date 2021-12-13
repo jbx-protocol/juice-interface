@@ -1,8 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { readNetwork } from 'constants/networks'
-import { ContractName } from 'models/contract-name'
+import { getTerminalAddress } from 'utils/terminal-versions'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
+import { TerminalVersion } from 'models/terminal-version'
+import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 
 import { archivedProjectIds } from '../constants/archived-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -30,7 +31,6 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
 }
 
 interface ProjectsOptions {
-  terminal?: string
   pageNumber?: number
   projectId?: BigNumber
   handle?: string
@@ -40,115 +40,81 @@ interface ProjectsOptions {
   pageSize?: number
   filter?: ProjectState
   keys?: (keyof Project)[]
+  terminalVersion?: TerminalVersion
 }
 
-let defaultPageSize = 20
+const staleTime = 60000
 
-const terminalV1_1Address: string =
-  require(`@jbx-protocol/contracts-v1/deployments/${readNetwork.name}/${ContractName.TerminalV1_1}.json`)?.address
+const queryOpts = (
+  opts: ProjectsOptions,
+): Partial<
+  | GraphQueryOpts<'project', EntityKeys<'project'>>
+  | InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>
+> => {
+  const terminalAddress = getTerminalAddress(opts.terminalVersion)
 
-export function useProjectsQuery({
-  pageNumber,
-  projectId,
-  keys,
-  handle,
-  uri,
-  orderBy,
-  orderDirection,
-  pageSize = defaultPageSize,
-  filter,
-}: ProjectsOptions) {
-  return useSubgraphQuery(
-    {
-      entity: 'project',
-      keys: keys ?? [
-        'id',
-        'handle',
-        'creator',
-        'createdAt',
-        'uri',
-        'currentBalance',
-        'totalPaid',
-        'totalRedeemed',
-      ],
-      first: pageSize,
-      skip: pageNumber ? pageNumber * pageSize : undefined,
-      orderDirection: orderDirection ?? 'desc',
-      orderBy: orderBy ?? 'totalPaid',
-      where: projectId
+  return {
+    entity: 'project',
+    keys: [
+      'id',
+      'handle',
+      'creator',
+      'createdAt',
+      'uri',
+      'currentBalance',
+      'totalPaid',
+      'totalRedeemed',
+    ],
+    orderDirection: opts.orderDirection ?? 'desc',
+    orderBy: opts.orderBy ?? 'totalPaid',
+    pageSize: opts.pageSize,
+    where: [
+      ...(opts.projectId
         ? [
             {
               key: 'id',
-              value: projectId.toString(),
-            },
-            {
-              key: 'terminal',
-              value: terminalV1_1Address,
+              value: opts.projectId.toString(),
             },
           ]
-        : undefined,
+        : []),
+      ...(terminalAddress
+        ? [
+            {
+              key: 'terminal',
+              value: terminalAddress,
+            },
+          ]
+        : []),
+    ],
+  }
+}
+
+export function useProjectsQuery(opts: ProjectsOptions) {
+  return useSubgraphQuery(
+    {
+      ...(queryOpts(opts) as GraphQueryOpts<'project', EntityKeys<'project'>>),
+      first: opts.pageSize,
+      skip:
+        opts.pageNumber && opts.pageSize
+          ? opts.pageNumber * opts.pageSize
+          : undefined,
     },
     {
-      staleTime: 60000,
-      select: data => filterOutArchivedProjects(data, filter),
+      staleTime,
+      select: data => filterOutArchivedProjects(data, opts.filter),
     },
   )
 }
 
-export function useInfiniteProjectsQuery({
-  projectId,
-  keys,
-  handle,
-  uri,
-  orderBy,
-  orderDirection,
-  pageSize = defaultPageSize,
-  filter,
-}: ProjectsOptions) {
-  console.log('asdf', terminalV1_1Address)
-
+export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
+    queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,
     {
-      pageSize,
-      entity: 'project',
-      keys: keys ?? [
-        'id',
-        'handle',
-        'creator',
-        'createdAt',
-        'uri',
-        'currentBalance',
-        'totalPaid',
-        'totalRedeemed',
-      ],
-      orderDirection: orderDirection ?? 'desc',
-      orderBy: orderBy ?? 'totalPaid',
-      where: [
-        ...(projectId
-          ? [
-              {
-                key: 'id',
-                value: projectId.toString(),
-              },
-            ]
-          : []),
-        ...(terminalV1_1Address
-          ? [
-              {
-                key: 'terminal',
-                value: terminalV1_1Address,
-              },
-            ]
-          : []),
-      ],
-    },
-    {
-      staleTime: 60000,
-
+      staleTime,
       select: data => ({
         ...data,
         pages: data.pages.map(pageData =>
-          filterOutArchivedProjects(pageData, filter),
+          filterOutArchivedProjects(pageData, opts.filter),
         ),
       }),
     },

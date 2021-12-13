@@ -3,9 +3,10 @@ import {
   ToolOutlined,
   TwitterOutlined,
 } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import Discord from 'components/icons/Discord'
 import EditProjectModal from 'components/modals/EditProjectModal'
+import MigrateV1Pt1Modal from 'components/modals/MigrateV1Pt1Modal'
 import ProjectToolDrawerModal from 'components/modals/ProjectToolDrawerModal'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import { ProjectContext } from 'contexts/projectContext'
@@ -19,8 +20,10 @@ export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] =
     useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
+  const [migrateDrawerVisible, setMigrateDrawerVisible] =
+    useState<boolean>(false)
 
-  const { projectId, handle, metadata, isPreviewMode, isArchived } =
+  const { projectId, handle, metadata, isPreviewMode, isArchived, terminal } =
     useContext(ProjectContext)
 
   const {
@@ -112,7 +115,21 @@ export default function ProjectHeader() {
                     paddingRight: 10,
                   }}
                 >
-                  ID: {projectId.toNumber()}
+                  ID: {projectId.toNumber()}{' '}
+                  {terminal?.version && (
+                    <Tooltip title="Version of the terminal contract used by this project.">
+                      <span
+                        style={{
+                          padding: '2px 4px',
+                          background: colors.background.l1,
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => setMigrateDrawerVisible(true)}
+                      >
+                        v{terminal.version}
+                      </span>
+                    </Tooltip>
+                  )}
                 </span>
 
                 <div>
@@ -234,6 +251,11 @@ export default function ProjectHeader() {
       <ProjectToolDrawerModal
         visible={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
+      />
+
+      <MigrateV1Pt1Modal
+        visible={migrateDrawerVisible}
+        onCancel={() => setMigrateDrawerVisible(false)}
       />
     </div>
   )

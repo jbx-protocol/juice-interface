@@ -30,6 +30,7 @@ export const decodeFundingCycleMetadata = (
           .toNumber(),
         ticketPrintingIsAllowed: Boolean(metadata.shr(31).and(0b01)),
         payIsPaused: Boolean(metadata.shr(32)),
+        treasuryExtension: metadata.shr(33).toHexString(),
       }
     : undefined
 
@@ -39,6 +40,7 @@ export const encodeFundingCycleMetadata = (
   reconfigurationBondingCurveRate: BigNumberish,
   payIsPaused: boolean,
   ticketPrintingIsAllowed: boolean,
+  treasuryExtension: string,
 ): BigNumber =>
   BigNumber.from(0)
     .or(BigNumber.from(reserved).shl(7))
@@ -46,6 +48,7 @@ export const encodeFundingCycleMetadata = (
     .or(BigNumber.from(reconfigurationBondingCurveRate).shl(23))
     .or(BigNumber.from(payIsPaused ? 1 : 0).shl(31))
     .or(BigNumber.from(ticketPrintingIsAllowed ? 1 : 0).shl(32))
+    .or(BigNumber.from(treasuryExtension).shl(33))
 
 export const isRecurring = (fundingCycle: FundingCycle | EditingFundingCycle) =>
   fundingCycle.discountRate.lt(201)

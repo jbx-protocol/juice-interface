@@ -1,10 +1,10 @@
+import axios from 'axios'
 import {
+  useQuery,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useQuery,
   UseQueryOptions,
 } from 'react-query'
-import axios from 'axios'
 
 import {
   EntityKey,
@@ -12,6 +12,7 @@ import {
   formatGraphQuery,
   formatGraphResponse,
   GraphQueryOpts,
+  InfiniteGraphQueryOpts,
   SubgraphEntities,
   SubgraphError,
   SubgraphQueryReturnTypes,
@@ -74,17 +75,6 @@ export default function useSubgraphQuery<
       ...reactQueryOptions,
     },
   )
-}
-
-// Re-type GraphQueryOpts to remove skip and add pageSize.
-// This is so we can calculate our own `skip` value based on
-// the react-query managed page number multiplied by the provided
-// page size.
-type InfiniteGraphQueryOpts<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
-> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
-  pageSize: number
 }
 
 export function useInfiniteSubgraphQuery<

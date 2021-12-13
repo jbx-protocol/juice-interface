@@ -23,7 +23,7 @@ export default function MigrateV1Pt1Modal({
     setLoading(true)
 
     transactor(
-      contracts.TerminalV1_1,
+      contracts.TerminalV1,
       'migrate',
       [projectId.toHexString(), terminalV1_1Address],
       {

@@ -7,6 +7,7 @@ const archivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     11, // @pxdao
     27, // @svspool002
     32, // @fidenza420
+    146, // @santadao
     180, // @inflationlessdao
   ],
   [NetworkName.rinkeby]: [],

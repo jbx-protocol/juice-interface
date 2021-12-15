@@ -61,9 +61,9 @@ Next, copy the following fields into your `.env` file:
 
 - **Project ID**. In the `.env` file, copy the **Project ID** into the
   `REACT_APP_INFURA_ID` variable.
-- **Endpoint**. This is the Ethereum network that will be used for testing. If
+- **Endpoint name**. This is the Ethereum network that will be used for testing. If
   you don't know which endpoint to use, select **mainnet**. In the `.env` file,
-  copy the network name into the `REACT_APP_INFURA_NETWORK` variable.
+  copy the network name, e.g. 'mainnet' (not the URL), into the `REACT_APP_INFURA_NETWORK` variable.
 
 #### Piñata
 

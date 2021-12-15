@@ -8,6 +8,7 @@ import { useProjectsQuery } from 'hooks/Projects'
 
 import { CSSProperties, useContext } from 'react'
 import { t, Trans } from '@lingui/macro'
+import { Link } from 'react-router-dom'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
@@ -219,9 +220,9 @@ export default function Landing() {
                 )}
               </div>
               <div style={{ textAlign: 'center', marginTop: 20 }}>
-                <a href="/#/projects">
+                <Link to="/projects">
                   <Button>All projects</Button>
-                </a>
+                </Link>
               </div>
             </Col>
             <Col xs={24} md={12} style={{ marginBottom: 100 }}>

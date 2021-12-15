@@ -8,6 +8,7 @@ import { useInfiniteProjectsQuery } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
+import { Link } from 'react-router-dom'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -127,9 +128,9 @@ export default function Projects() {
               <Select.Option value="totalPaid">Volume</Select.Option>
               <Select.Option value="createdAt">Created</Select.Option>
             </Select>
-            <a href="/#/create" style={{ marginLeft: 10 }}>
+            <Link to="/create" style={{ marginLeft: 10 }}>
               <Button>New project</Button>
-            </a>
+            </Link>
           </Space>
         </div>
       </div>

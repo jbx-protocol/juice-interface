@@ -1,4 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { utils } from 'ethers'
@@ -25,14 +26,14 @@ export default function ProjectHandle({
   return link ? (
     <Tooltip
       title={
-        <a
+        <Link
           style={{ fontWeight: 400 }}
-          href={`https://juicebox.money/#/${handle}`}
+          to={`/${handle}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           @{handle} <LinkOutlined />
-        </a>
+        </Link>
       }
     >
       <span style={{ cursor: 'default', ...style }}>@{handle}</span>

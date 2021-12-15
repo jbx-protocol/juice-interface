@@ -8,7 +8,7 @@ import { useContext, useLayoutEffect, useState } from 'react'
 import { readNetwork } from 'constants/networks'
 
 import Navbar from './Navbar'
-import Router from './Router'
+import Routes, { Router } from './Router'
 
 function App() {
   const [switchNetworkModalVisible, setSwitchNetworkModalVisible] =
@@ -30,7 +30,7 @@ function App() {
   }, [networkName, signerNetwork])
 
   return (
-    <>
+    <Router>
       <Layout
         style={{
           display: 'flex',
@@ -41,7 +41,7 @@ function App() {
       >
         <Navbar />
         <Content>
-          <Router />
+          <Routes />
         </Content>
       </Layout>
 
@@ -76,7 +76,7 @@ function App() {
           </Space>
         </div>
       </Modal>
-    </>
+    </Router>
   )
 }
 

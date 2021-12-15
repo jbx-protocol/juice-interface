@@ -7,12 +7,16 @@ import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
 
+import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
+
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Account from './Account'
 import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
+  const history = useHistory()
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
   const {
@@ -22,7 +26,12 @@ export default function Navbar() {
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
-
+    const _onClick = () => {
+      onClick && onClick()
+      if (route) {
+        history.push(route)
+      }
+    }
     return (
       <a
         className="hover-opacity"
@@ -30,8 +39,7 @@ export default function Navbar() {
           fontWeight: 600,
           color: colors.text.primary,
         }}
-        href={route}
-        onClick={onClick}
+        onClick={_onClick}
         {...(external
           ? {
               target: '_blank',
@@ -61,9 +69,9 @@ export default function Navbar() {
   const menu = () => {
     return (
       <>
-        {menuItem(t`Projects`, '/#/projects')}
+        {menuItem(t`Projects`, '/projects')}
         {menuItem(t`FAQ`, undefined, () => {
-          window.location.hash = '/'
+          history.push('/')
           setTimeout(() => {
             document
               .getElementById('faq')
@@ -88,9 +96,9 @@ export default function Navbar() {
       }}
     >
       <Space size="large" style={{ flex: 1 }}>
-        <a href="/" style={{ display: 'inline-block' }}>
+        <Link to="/" style={{ display: 'inline-block' }}>
           {logo()}
-        </a>
+        </Link>
         {menu()}
       </Space>
       <Space size="middle">

@@ -39,6 +39,8 @@ import {
 } from 'utils/ipfs'
 import { feeForAmount } from 'utils/math'
 
+import { useHistory } from 'react-router'
+
 import BudgetForm from './BudgetForm'
 import ConfirmDeployProject from './ConfirmDeployProject'
 import IncentivesForm from './IncentivesForm'
@@ -77,6 +79,7 @@ export default function Create() {
     payoutMods: editingPayoutMods,
   } = useAppSelector(state => state.editingProject)
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   useEffect(() => {
     if (adminFeePercent) {
@@ -254,7 +257,7 @@ export default function Create() {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
 
-          window.location.hash = '/p/' + editingProjectInfo.handle
+          history.push('/p/' + editingProjectInfo.handle)
         },
       },
     )
@@ -265,6 +268,7 @@ export default function Create() {
     editingProjectInfo.handle,
     editingProjectInfo.metadata,
     editingTicketMods,
+    history,
     transactor,
     userAddress,
   ])

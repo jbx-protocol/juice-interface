@@ -5,6 +5,7 @@ import { BigNumber } from 'ethers'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/project'
 import { useContext } from 'react'
+import { useHistory } from 'react-router'
 import { formatDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
@@ -17,6 +18,7 @@ export default function ProjectCard({
 }: {
   project: Pick<Project, 'handle' | 'uri' | 'totalPaid' | 'createdAt'>
 }) {
+  const history = useHistory()
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
@@ -38,7 +40,7 @@ export default function ProjectCard({
       }}
       className="clickable-border"
       key={project?.handle}
-      onClick={() => (window.location.hash = '/p/' + project.handle)}
+      onClick={() => history.push('/p/' + project.handle)}
     >
       {metadata ? (
         <div

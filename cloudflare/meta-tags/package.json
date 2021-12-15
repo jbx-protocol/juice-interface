@@ -1,7 +1,7 @@
 {
-  "name": "worker-typescript-template",
+  "name": "juicebox-metatag-cloudflare-worker",
   "version": "1.0.0",
-  "description": "Cloudflare worker TypeScript template",
+  "description": "Cloudflare worker that rewrites meta tags for juicebox project pages",
   "main": "dist/worker.js",
   "scripts": {
     "build": "webpack",
@@ -47,11 +47,14 @@
   },
   "babel": {
     "presets": [
-      ["@babel/preset-env", {
-        "targets": {
-          "esmodules": true
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "esmodules": true
+          }
         }
-      }],
+      ],
       "@babel/preset-typescript"
     ]
   }

@@ -49,14 +49,20 @@ export default function FundingCycleDetails({
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
-        {hasFundingTarget(fundingCycle) && (
+        {
           <Descriptions.Item label="Target">
-            <CurrencySymbol
-              currency={fundingCycle.currency.toNumber() as CurrencyOption}
-            />
-            {formatWad(fundingCycle.target)}
+            {hasFundingTarget(fundingCycle) ? (
+              <>
+                <CurrencySymbol
+                  currency={fundingCycle.currency.toNumber() as CurrencyOption}
+                />
+                {formatWad(fundingCycle.target)}
+              </>
+            ) : (
+              'No target'
+            )}
           </Descriptions.Item>
-        )}
+        }
 
         <Descriptions.Item label="Duration">
           {fundingCycle.duration.gt(0)
@@ -70,7 +76,7 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {hasFundingTarget(fundingCycle) && fundingCycle.duration.gt(0) && (
+        {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
         )}
 
@@ -85,7 +91,7 @@ export default function FundingCycleDetails({
           {fromPerbicent(metadata?.reservedRate)}%
         </Descriptions.Item>
 
-        {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+        {isRecurring(fundingCycle) && (
           <Descriptions.Item
             label={
               <TooltipLabel
@@ -98,7 +104,7 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+        {isRecurring(fundingCycle) && (
           <Descriptions.Item
             label={
               <TooltipLabel
@@ -116,7 +122,7 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {isRecurring(fundingCycle) && hasFundingTarget(fundingCycle) && (
+        {isRecurring(fundingCycle) && (
           <Descriptions.Item
             span={2}
             label={

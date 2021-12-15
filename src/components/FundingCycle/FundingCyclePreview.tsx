@@ -28,13 +28,12 @@ export default function FundingCyclePreview({
     .mul(1000)
 
   let headerText = ''
-  if (hasFundingTarget(fundingCycle)) {
-    if (isRecurring(fundingCycle) && fundingCycle.duration.gt(0)) {
-      headerText = `${detailedTimeString(endTime)} until #${fundingCycle.number
-        .add(1)
-        .toString()}`
-    } else if (fundingCycle.duration.gt(0))
-      headerText = detailedTimeString(endTime) + ' left'
+  if (isRecurring(fundingCycle) && fundingCycle.duration.gt(0)) {
+    headerText = `${detailedTimeString(endTime)} until #${fundingCycle.number
+      .add(1)
+      .toString()}`
+  } else if (fundingCycle.duration.gt(0)) {
+    headerText = detailedTimeString(endTime) + ' left'
   }
 
   return (

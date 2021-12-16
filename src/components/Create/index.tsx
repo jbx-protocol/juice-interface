@@ -137,6 +137,19 @@ export default function Create() {
     [editingFC.reserved, ticketingForm],
   )
 
+  const resetRestrictedActionsForm = useCallback(
+    () =>
+      restrictedActionsForm.setFieldsValue({
+        payIsPaused: editingFC.payIsPaused,
+        ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
+      }),
+    [
+      editingFC.payIsPaused,
+      editingFC.ticketPrintingIsAllowed,
+      restrictedActionsForm,
+    ],
+  )
+
   useLayoutEffect(() => {
     dispatch(editingProjectActions.resetState())
     // Disable exhaustive-deps because we only need to reset the first time
@@ -150,6 +163,10 @@ export default function Create() {
   useEffect(() => {
     resetTicketingForm()
   }, [resetTicketingForm])
+
+  useEffect(() => {
+    resetRestrictedActionsForm()
+  }, [resetRestrictedActionsForm])
 
   const onPayModsFormSaved = (mods: PayoutMod[]) =>
     dispatch(editingProjectActions.setPayoutMods(mods))
@@ -523,6 +540,11 @@ export default function Create() {
               title: 'Incentives',
               description: 'Adjust incentivizes for paying your project.',
               callback: () => setIncentivesFormModalVisible(true),
+            },
+            {
+              title: 'Restricted actions',
+              description: 'Restrict payments and printing tokens.',
+              callback: () => setRestrictedActionsFormModalVisible(true),
             },
           ])}
         </Col>

@@ -28,7 +28,7 @@ export default function RestrictedActionsForm({
         <Form.Item
           name="payIsPaused"
           label="Pause payments"
-          extra="Your project cannot receive payments while this is enabled."
+          extra="Your project cannot receive direct payments while paused."
           valuePropName="checked"
         >
           <Switch />

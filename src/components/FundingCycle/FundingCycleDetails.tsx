@@ -168,11 +168,11 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {metadata?.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}%
+          {metadata?.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'}
         </Descriptions.Item>
 
         <Descriptions.Item span={2} label={<TooltipLabel label="Payments" />}>
-          {metadata?.payIsPaused ? 'Paused' : 'Enabled'}%
+          {metadata?.payIsPaused ? 'Paused' : 'Enabled'}
         </Descriptions.Item>
       </Descriptions>
 

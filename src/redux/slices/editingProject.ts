@@ -63,7 +63,7 @@ export const defaultProjectState: EditingProjectState = {
     configured: BigNumber.from(0),
     ballot: constants.AddressZero,
     payIsPaused: false,
-    ticketPrintingIsAllowed: false,
+    ticketPrintingIsAllowed: true,
   }),
   payoutMods: [],
   ticketMods: [],

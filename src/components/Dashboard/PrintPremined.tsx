@@ -56,8 +56,8 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
         Mint tokens
       </Button>
       <div>
-        Note: You may only manually mint tokens before your project has received
-        its first payment!
+        Note: Tokens can be minted manually when allowed in the current funding
+        cycle. This can be changed by the project owner for upcoming cycles.
       </div>
 
       <Modal

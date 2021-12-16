@@ -81,45 +81,54 @@ export default function RedeemModal({
     args: projectId ? [projectId.toHexString()] : null,
   })
 
-  const metadata = decodeFCMetadata(currentFC?.metadata)
-
-  const bondingCurveRate =
-    currentBallotState === BallotState.Active
-      ? metadata?.reconfigurationBondingCurveRate
-      : metadata?.bondingCurveRate
-
-  const base =
-    totalSupply && redeemAmount && currentOverflow
-      ? currentOverflow?.mul(parseWad(redeemAmount)).div(totalSupply)
-      : BigNumber.from(0)
-
   const rewardAmount = useMemo(() => {
+    const metadata = decodeFCMetadata(currentFC?.metadata)
+
+    const bondingCurveRate =
+      currentBallotState === BallotState.Active
+        ? metadata?.reconfigurationBondingCurveRate
+        : metadata?.bondingCurveRate
+
+    const base =
+      totalSupply && redeemAmount && currentOverflow
+        ? currentOverflow.mul(parseWad(redeemAmount)).div(totalSupply)
+        : BigNumber.from(0)
+
     if (
       !bondingCurveRate ||
       !totalSupply ||
       !base ||
       !redeemAmount ||
       !currentOverflow
-    )
+    ) {
       return undefined
+    }
 
     if (totalSupply.sub(parseWad(redeemAmount)).isNegative()) {
       return currentOverflow
     }
 
-    const number = base
-    const numerator = parseWad(bondingCurveRate).add(
+    const numerator = BigNumber.from(bondingCurveRate).add(
       parseWad(redeemAmount)
-        .mul(parseWad(200).sub(parseWad(bondingCurveRate)))
+        .mul(200 - bondingCurveRate)
         .div(totalSupply),
     )
-    const denominator = parseWad(200)
+    const denominator = 200
 
-    return number.mul(numerator).div(denominator)
-  }, [redeemAmount, base, bondingCurveRate, totalSupply, currentOverflow])
+    // Formula: https://www.desmos.com/calculator/sp9ru6zbpk
+    return base.mul(numerator).div(denominator)
+  }, [
+    redeemAmount,
+    totalSupply,
+    currentOverflow,
+    currentBallotState,
+    currentFC,
+  ])
 
-  // 0.5% slippage
-  const minAmount = rewardAmount?.mul(1000).div(1005)
+  // 0.5% slippage for USD-denominated projects
+  const minAmount = currentFC?.currency.eq(1)
+    ? rewardAmount?.mul(1000).div(1005)
+    : rewardAmount
 
   function redeem() {
     if (!transactor || !contracts || !rewardAmount) return
@@ -211,7 +220,7 @@ export default function RedeemModal({
               onChange={val => setRedeemAmount(val)}
             />
             <div style={{ fontWeight: 500, marginTop: 20 }}>
-              You will receive minimum{' '}
+              You will receive {currentFC?.currency.eq(1) ? 'minimum ' : ' '}
               {formatWad(minAmount, { decimals: 8 }) || '--'} ETH
             </div>
           </div>

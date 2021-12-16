@@ -93,6 +93,14 @@ export default function Rewards({
     valueDidChange: bigNumbersDiff,
     updateOn: ticketsUpdateOn,
   })
+  const totalBalance = useContractReader<BigNumber>({
+    contract: ContractName.TicketBooth,
+    functionName: 'balanceOf',
+    args:
+      userAddress && projectId ? [userAddress, projectId.toHexString()] : null,
+    valueDidChange: bigNumbersDiff,
+    updateOn: ticketsUpdateOn,
+  })
 
   const metadata = decodeFCMetadata(currentFC?.metadata)
 
@@ -112,8 +120,6 @@ export default function Rewards({
     args: projectId ? [projectId?.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })?.add(reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0))
-
-  const totalBalance = iouBalance?.add(ticketsBalance ?? 0)
 
   const share = formatPercent(totalBalance, totalSupply)
 

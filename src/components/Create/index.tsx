@@ -207,7 +207,7 @@ export default function Create() {
         ? editingFC.discountRate.toNumber()
         : 0,
       cycleLimit: editingFC.cycleLimit.toNumber(),
-      ballot: constants.AddressZero,
+      ballot: editingFC.ballot,
     }
 
     const metadata: Omit<FCMetadata, 'version'> = {

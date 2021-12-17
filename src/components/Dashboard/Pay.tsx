@@ -78,7 +78,7 @@ export default function Pay() {
       )
     } else if (
       fcMetadata?.reservedRate === 200 ||
-      fcMetadata?.payIsPaused ||
+      (fcMetadata?.payIsPaused && fcMetadata?.version > 0) ||
       overridePayDisabled
     ) {
       return (

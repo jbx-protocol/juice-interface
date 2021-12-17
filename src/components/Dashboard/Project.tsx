@@ -73,7 +73,7 @@ export default function Project({
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
           <Space direction="vertical" style={{ width: '100%' }} size="large">
-            {fcMetadata.ticketPrintingIsAllowed &&
+            {(fcMetadata.ticketPrintingIsAllowed || fcMetadata.version === 0) &&
               hasPrintPreminePermission &&
               projectId.gt(0) && <PrintPremined projectId={projectId} />}
             <Pay />

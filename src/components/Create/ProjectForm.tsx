@@ -24,7 +24,7 @@ export default function ProjectForm({
 }) {
   return (
     <Space direction="vertical" size="large">
-      <h1>Appearance</h1>
+      <h1>Project details</h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectName
@@ -44,6 +44,7 @@ export default function ProjectForm({
           requireState="notExist"
           formItemProps={{
             dependencies: ['name'],
+            extra: 'Project handle must be unique.',
           }}
           required
         />
@@ -72,7 +73,7 @@ export default function ProjectForm({
               onSave()
             }}
           >
-            Save
+            Save project details
           </Button>
         </Form.Item>
       </Form>

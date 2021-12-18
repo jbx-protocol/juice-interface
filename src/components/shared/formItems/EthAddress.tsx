@@ -84,7 +84,11 @@ export default function EthAddress({
         onChange={e => onInputChange(e.target.value)}
         value={displayValue}
       />
-      <Form.Item name={name} style={{ height: 0, maxHeight: 0, margin: 0 }}>
+      <Form.Item
+        name={name}
+        style={{ height: 0, maxHeight: 0, margin: 0 }}
+        rules={formItemProps?.rules ?? []} // rules weren't being applied to inner FormItem
+      >
         {/* Hidden input allows for address value to be used in form, while visible input can display ENS name */}
         <Input hidden type="string" autoComplete="off" />
       </Form.Item>

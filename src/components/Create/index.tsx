@@ -454,13 +454,13 @@ export default function Create() {
 
           {buildSteps([
             {
-              title: 'Appearance',
+              title: 'Project details',
               description: 'Project name, handle, links, and other details.',
               callback: () => setProjectFormModalVisible(true),
             },
             {
               title: 'Funding',
-              description: 'How your project will earn and manage funds.',
+              description: "Your project's funding cycle target and duration.",
               callback: () => setBudgetFormModalVisible(true),
             },
             {

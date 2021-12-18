@@ -144,7 +144,7 @@ export default function ProjectHandleFormItem({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : formItemProps?.label ?? 'Unique handle'}
+      label={hideLabel ? undefined : formItemProps?.label ?? 'Project handle'}
       {...formItemProps}
       rules={[{ required }, { validator }, ...(formItemProps?.rules ?? [])]}
       validateTrigger={false}

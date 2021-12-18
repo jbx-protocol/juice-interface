@@ -34,8 +34,6 @@ export default function Pay() {
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
-  console.log('asdf', fcMetadata)
-
   const weiPayAmt =
     payIn === 1 ? converter.usdToWei(payAmount) : parseEther(payAmount ?? '0')
 

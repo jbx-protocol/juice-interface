@@ -6,10 +6,11 @@ import { constants } from 'ethers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useLayoutEffect, useState, useMemo } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
+import { helpPagePath } from 'utils/helpPageHelper'
 
 export default function BudgetForm({
   initialCurrency,
@@ -43,25 +44,47 @@ export default function BudgetForm({
   }, [editingFC, initialCurrency, initialDuration, initialTarget])
 
   const maxIntStr = fromWad(constants.MaxUint256)
+  const hasTarget = useMemo(() => {
+    return target !== maxIntStr
+  }, [target, maxIntStr])
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <h1>Funding</h1>
 
+      <p>
+        Your project is funded across funding cycles. A funding cycle has a
+        funding target and a duration. Your project's funding cycle
+        configuration will depend on the kind of project you're starting.{' '}
+        <a
+          href={helpPagePath('protocol/learn/topics/funding-cycle')}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Learn more
+        </a>{' '}
+        about funding cycles.
+      </p>
+
       <Form layout="vertical">
         <div style={{ color: colors.text.secondary }}>
-          <h4>Target</h4>
+          <h4>Funding target</h4>
           <p>
-            No more than the target can be distributed from the project in a
-            single funding cycle. Whenever a new funding cycle starts, any
-            overflow automatically goes towards that cycle's target amount,
-            acting as a project's runway.
+            Set the amount of funds you'd like to raise each funding cycle. Any
+            funds raised within the funding target can be distributed by
+            project, and can't be redeemed by holders of your project's token.
           </p>
           <p>
-            A funding target allows you to redistribute surplus revenue to your
-            community. When a project's balance is greater than its funding
-            target, the overflow (surplus funds) can by redeemed by the
-            community by burning their project tokens.
+            Overflow is created if your project's balance exceeds your funding
+            target. Overflow can be redeemed by holders of your project's token.{' '}
+            <a
+              href={helpPagePath('protocol/learn/topics/overflow')}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Learn more
+            </a>{' '}
+            about overflow.
           </p>
         </div>
 
@@ -79,11 +102,11 @@ export default function BudgetForm({
           </Space>
         </Form.Item>
 
-        {target === maxIntStr && (
+        {!hasTarget && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>No target:</span> All funds can be
-            distributed by the project, and the project will have no overflow.
-            (This is the same as setting the target to infinity.)
+            <span style={{ fontWeight: 600 }}>No target set.</span> All funds
+            can be distributed by the project. The project will have no overflow
+            (the same as setting the target to infinity).
           </p>
         )}
 
@@ -101,11 +124,18 @@ export default function BudgetForm({
           />
         )}
 
-        {showFundingFields && (
+        {showFundingFields && target === '0' && (
           <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>If target is 0:</span> No funds
-            can be distributed by the project, and the project's entire balance
-            will be considered overflow.
+            <span style={{ fontWeight: 600 }}>Target is 0.</span> The project's
+            entire balance will be considered overflow.{' '}
+            <a
+              href={helpPagePath('protocol/learn/topics/overflow')}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Learn more
+            </a>{' '}
+            about overflow.
           </p>
         )}
 
@@ -117,14 +147,28 @@ export default function BudgetForm({
         />
 
         <div>
-          <h4>Duration</h4>
+          <h4>Funding cycle duration</h4>
           <p style={{ color: colors.text.secondary }}>
-            This duration determines how long your funding cycles will last. No
-            more than the target amount (if a target has been set) can be
-            distributed by the project in a single funding cycle, and funding
-            reconfigurations won't take effect until the start of the next
-            funding cycle.
+            Set the length of your funding cycles.{' '}
+            <a
+              href={helpPagePath('protocol/learn/topics/funding-cycle')}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Learn more
+            </a>{' '}
+            about funding cycle duration.
           </p>
+
+          {hasTarget && (
+            <p style={{ color: colors.text.secondary }}>
+              <span style={{ fontWeight: 600 }}>
+                You have set a target amount.
+              </span>{' '}
+              No more than the target amount can be distributed by the project
+              in a single funding cycle.
+            </p>
+          )}
         </div>
 
         <FormItems.ProjectDuration
@@ -143,9 +187,9 @@ export default function BudgetForm({
 
         {duration === '0' && (
           <p style={{ color: colors.text.primary, marginTop: 20 }}>
-            <span style={{ fontWeight: 600 }}>Duration not set:</span> Funding
-            can be reconfigured at any time, which will start a new funding
-            cycle.
+            <span style={{ fontWeight: 600 }}>No duration set.</span> Funding
+            can be reconfigured at any time. Reconfigurations will start a new
+            funding cycle.
           </p>
         )}
 
@@ -156,7 +200,7 @@ export default function BudgetForm({
             type="primary"
             onClick={() => onSave(currency, target, duration)}
           >
-            Save
+            Save funding configuration
           </Button>
         </Form.Item>
       </Form>

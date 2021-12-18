@@ -24,29 +24,34 @@ export default function Navbar() {
     forThemeOption,
   } = useContext(ThemeContext)
 
-  const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
+  const navLinkStyleProps = {
+    className: 'hover-opacity',
+    style: {
+      fontWeight: 600,
+      color: colors.text.primary,
+    },
+  }
+
+  const menuItem = (text: string, route: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
-    const _onClick = () => {
-      onClick && onClick()
-      if (route) {
-        history.push(route)
-      }
+    if (external) {
+      return (
+        <a href={route} target="_blank" rel="noreferrer" {...navLinkStyleProps}>
+          {text}
+        </a>
+      )
+    } else {
+      return (
+        <Link to={route} {...navLinkStyleProps}>
+          {text}
+        </Link>
+      )
     }
+  }
+
+  const menuItemWithOnClickHandler = (text: string, onClick: VoidFunction) => {
     return (
-      <a
-        className="hover-opacity"
-        style={{
-          fontWeight: 600,
-          color: colors.text.primary,
-        }}
-        onClick={_onClick}
-        {...(external
-          ? {
-              target: '_blank',
-              rel: 'noreferrer',
-            }
-          : {})}
-      >
+      <a onClick={onClick} {...navLinkStyleProps}>
         {text}
       </a>
     )
@@ -70,7 +75,7 @@ export default function Navbar() {
     return (
       <>
         {menuItem(t`Projects`, '/projects')}
-        {menuItem(t`FAQ`, undefined, () => {
+        {menuItemWithOnClickHandler(t`FAQ`, () => {
           history.push('/')
           setTimeout(() => {
             document

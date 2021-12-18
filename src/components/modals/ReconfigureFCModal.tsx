@@ -123,7 +123,6 @@ export default function ReconfigureFCModal({
 
   const onRestrictedActionsFormSaved = () => {
     const fields = restrictedActionsForm.getFieldsValue(true)
-    console.log('fields', fields)
     dispatch(
       editingProjectActions.setticketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,

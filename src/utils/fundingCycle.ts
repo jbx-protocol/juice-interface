@@ -14,20 +14,22 @@ import { EditingFundingCycle } from './serializers'
 // T: ticketPrintingIsAllowed (bits 33)
 // t: treasuryExtension (bits 34-194)
 
+const bits8 = 0b11111111
+const bits1 = 0b1
+
 export const decodeFundingCycleMetadata = (
   metadata?: BigNumber,
 ): FundingCycleMetadata | undefined =>
   metadata
     ? {
-        version: metadata.and(0b11111111).toNumber(),
-        reservedRate: metadata.shr(8).and(0b11111111).toNumber(),
-        bondingCurveRate: metadata.shr(16).and(0b11111111).toNumber(),
-        reconfigurationBondingCurveRate: metadata
-          .shr(24)
-          .and(0b11111111)
-          .toNumber(),
-        ticketPrintingIsAllowed: Boolean(metadata.shr(32).and(0b1)),
-        payIsPaused: Boolean(metadata.shr(33).and(0b1)),
+        version: metadata.and(bits8).toNumber(),
+        reservedRate: metadata.shr(8).and(bits8).toNumber(),
+        bondingCurveRate: metadata.shr(16).and(bits8).toNumber(),
+        reconfigurationBondingCurveRate: metadata.shr(24).and(bits8).toNumber(),
+        ticketPrintingIsAllowed: Boolean(
+          metadata.shr(32).and(bits1).toNumber(),
+        ),
+        payIsPaused: Boolean(metadata.shr(33).and(bits1).toNumber()),
         treasuryExtension: metadata.shr(34).toHexString(),
       }
     : undefined

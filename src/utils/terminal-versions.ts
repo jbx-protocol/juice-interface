@@ -4,7 +4,10 @@ import { TerminalVersion } from 'models/terminal-version'
 
 import { readNetwork } from 'constants/networks'
 
-const loadTerminalAddress = (network: NetworkName, terminal: ContractName) =>
+const loadTerminalAddress = (
+  network: NetworkName,
+  terminal: ContractName,
+): string =>
   require(`@jbx-protocol/contracts-v1/deployments/${network}/${terminal}.json`)
     .address
 
@@ -48,7 +51,7 @@ export const getTerminalName = ({
 
   if (!_version) return
 
-  switch (version) {
+  switch (_version) {
     case '1':
       return ContractName.TerminalV1
     case '1.1':

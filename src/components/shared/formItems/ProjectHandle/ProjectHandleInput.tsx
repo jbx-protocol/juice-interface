@@ -43,7 +43,6 @@ export function ProjectHandleInput({
   // initialValue can be a string (the human-readable handle)
   // or a project ID.
   useEffect(() => {
-    console.log('CHANGED', initialValue)
     if (typeof initialValue === 'string') {
       setInputContents(initialValue)
       triggerChange(initialValue)

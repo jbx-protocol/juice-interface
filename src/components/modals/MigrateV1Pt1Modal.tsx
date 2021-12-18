@@ -1,4 +1,4 @@
-import { Modal } from 'antd'
+import { Button, Modal } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { useContext, useState } from 'react'
@@ -11,16 +11,19 @@ export default function MigrateV1Pt1Modal({
   visible: boolean
   onCancel: VoidFunction
 }) {
-  const [loading, setLoading] = useState<boolean>()
+  const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
+  const [loadingMigrate, setLoadingMigrate] = useState<boolean>()
   const { contracts, transactor } = useContext(UserContext)
-  const { projectId } = useContext(ProjectContext)
+  const { projectId, balance, handle } = useContext(ProjectContext)
+
+  const needsBalance = balance?.eq(0)
 
   function migrate() {
     const terminalV1_1Address = getTerminalAddress('1.1')
 
     if (!transactor || !contracts || !projectId || !terminalV1_1Address) return
 
-    setLoading(true)
+    setLoadingMigrate(true)
 
     transactor(
       contracts.TerminalV1,
@@ -28,9 +31,25 @@ export default function MigrateV1Pt1Modal({
       [projectId.toHexString(), terminalV1_1Address],
       {
         onDone: () => {
-          setLoading(false)
+          setLoadingMigrate(false)
           onCancel()
         },
+      },
+    )
+  }
+
+  function add1Gwei() {
+    if (!transactor || !contracts || !projectId) return
+
+    setLoadingAddToBalance(true)
+
+    transactor(
+      contracts.TerminalV1,
+      'addToBalance',
+      [projectId.toHexString()],
+      {
+        value: '0x01',
+        onDone: () => setLoadingAddToBalance(false),
       },
     )
   }
@@ -42,7 +61,8 @@ export default function MigrateV1Pt1Modal({
       onCancel={onCancel}
       okText="Migrate to V1.1"
       okType="primary"
-      confirmLoading={loading}
+      confirmLoading={loadingMigrate}
+      okButtonProps={{ disabled: needsBalance }}
     >
       <h2>Migrate to v1.1</h2>
       <p>
@@ -63,6 +83,22 @@ export default function MigrateV1Pt1Modal({
           Documentation on v1.1 contracts
         </a>
       </p>
+
+      {needsBalance && (
+        <div>
+          <p>
+            <b>NOTE:</b> Projects cannot be migrated without a balance, and this
+            project currently has a balance of 0. To migrate this project, first
+            pay it or use the button below to deposit 1 gwei
+            (0.000000000000000001 ETH).
+          </p>
+          <p>
+            <Button block onClick={add1Gwei} loading={loadingAddToBalance}>
+              Deposit 1 gwei to @{handle}
+            </Button>
+          </p>
+        </div>
+      )}
     </Modal>
   )
 }

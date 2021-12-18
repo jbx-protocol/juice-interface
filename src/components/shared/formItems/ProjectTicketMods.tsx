@@ -16,9 +16,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
-const MODAL_MODE_EDIT = 'Edit'
-const MODAL_MODE_ADD = 'Add'
-type MODAL_MODE = 'Add' | 'Edit'
+type ModalMode = 'Add' | 'Edit' | undefined
 
 export default function ProjectTicketMods({
   name,
@@ -37,7 +35,7 @@ export default function ProjectTicketMods({
     lockedUntil: moment.Moment
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
-  const [modalMode, setModalMode] = useState<MODAL_MODE>() //either 'Add', 'Edit' or undefined
+  const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
   const { owner } = useContext(ProjectContext)
 
   const {
@@ -82,7 +80,7 @@ export default function ProjectTicketMods({
                   : undefined,
               })
               setEditingModIndex(index)
-              setModalMode(MODAL_MODE_EDIT)
+              setModalMode('Edit')
             }}
           >
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
@@ -228,7 +226,7 @@ export default function ProjectTicketMods({
       return Promise.reject('Address is required')
     else if (address === constants.AddressZero)
       return Promise.reject('Cannot use zero address.')
-    else if (mods.filter(mod => mod.beneficiary === address).length > 0)
+    else if (mods.some(mod => mod.beneficiary === address))
       return Promise.reject('Address already in use.')
     else return Promise.resolve()
   }
@@ -287,7 +285,7 @@ export default function ProjectTicketMods({
           type="dashed"
           onClick={() => {
             setEditingModIndex(mods.length)
-            setModalMode(MODAL_MODE_ADD)
+            setModalMode('Add')
             form.resetFields()
           }}
           block
@@ -298,16 +296,12 @@ export default function ProjectTicketMods({
 
       <Modal
         title={
-          modalMode === MODAL_MODE_ADD
-            ? 'Add token receiver'
-            : 'Edit token receiver'
+          modalMode === 'Add' ? 'Add token receiver' : 'Edit token receiver'
         } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         okText={
-          modalMode === MODAL_MODE_ADD
-            ? 'Add token receiver'
-            : 'Save token receiver'
+          modalMode === 'Add' ? 'Add token receiver' : 'Save token receiver'
         }
         onCancel={() => {
           form.resetFields()

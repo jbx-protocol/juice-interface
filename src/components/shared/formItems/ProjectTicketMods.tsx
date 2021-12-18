@@ -16,6 +16,10 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
+const MODAL_MODE_EDIT = 'Edit'
+const MODAL_MODE_ADD = 'Add'
+type MODAL_MODE = 'Add' | 'Edit'
+
 export default function ProjectTicketMods({
   name,
   lockedMods,
@@ -32,7 +36,8 @@ export default function ProjectTicketMods({
     percent: number
     lockedUntil: moment.Moment
   }>()
-  const [editingModIndex, setEditingModIndex] = useState<number>()
+  const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
+  const [modalMode, setModalMode] = useState<MODAL_MODE>() //either 'Add', 'Edit' or undefined
   const { owner } = useContext(ProjectContext)
 
   const {
@@ -77,6 +82,7 @@ export default function ProjectTicketMods({
                   : undefined,
               })
               setEditingModIndex(index)
+              setModalMode(MODAL_MODE_EDIT)
             }}
           >
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
@@ -200,8 +206,31 @@ export default function ProjectTicketMods({
     )
 
     setEditingModIndex(undefined)
+    setModalMode(undefined)
 
     form.resetFields()
+  }
+
+  // Validates new reserved token receiving address
+  const validateReservedTokenReceiver = (
+    rule: any,
+    value: any,
+    callback: any,
+  ) => {
+    const address = form.getFieldValue('beneficiary')
+    if (
+      modalMode === 'Edit' &&
+      address === mods[editingModIndex ?? 0]?.beneficiary
+    )
+      return Promise.resolve()
+    // if user edits an (already approved) address and doesn't change it, we accept
+    else if (!address || !utils.isAddress(address))
+      return Promise.reject('Address is required')
+    else if (address === constants.AddressZero)
+      return Promise.reject('Cannot use zero address.')
+    else if (mods.filter(mod => mod.beneficiary === address).length > 0)
+      return Promise.reject('Address already in use.')
+    else return Promise.resolve()
   }
 
   return (
@@ -258,6 +287,7 @@ export default function ProjectTicketMods({
           type="dashed"
           onClick={() => {
             setEditingModIndex(mods.length)
+            setModalMode(MODAL_MODE_ADD)
             form.resetFields()
           }}
           block
@@ -267,13 +297,22 @@ export default function ProjectTicketMods({
       </Space>
 
       <Modal
-        title="Add token receiver"
+        title={
+          modalMode === MODAL_MODE_ADD
+            ? 'Add token receiver'
+            : 'Edit token receiver'
+        } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText="Add token receiver"
+        okText={
+          modalMode === MODAL_MODE_ADD
+            ? 'Add token receiver'
+            : 'Save token receiver'
+        }
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
+          setModalMode(undefined)
         }}
         destroyOnClose
       >
@@ -292,14 +331,7 @@ export default function ProjectTicketMods({
               extra: 'The address that should receive the tokens.',
               rules: [
                 {
-                  validator: (rule: any, value: any) => {
-                    const address = form.getFieldValue('beneficiary')
-                    if (!address || !utils.isAddress(address))
-                      return Promise.reject('Address is required')
-                    else if (address === constants.AddressZero)
-                      return Promise.reject('Cannot use zero address.')
-                    else return Promise.resolve()
-                  },
+                  validator: validateReservedTokenReceiver,
                 },
               ],
             }}

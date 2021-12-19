@@ -19,8 +19,10 @@
     ]
   },
   "dependencies": {
+    "@types/lodash.flow": "^3.5.6",
     "axios": "^0.24.0",
-    "ethers": "^5.5.2"
+    "ethers": "^5.5.2",
+    "lodash.flow": "^3.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

@@ -1,17 +1,29 @@
 name = "juicebox"
 type = "webpack"
 account_id = "dc724e5a3245a509f7a1bb7e16920e3f"
-route = "juicebox.money/*"
 webpack_config = "webpack.config.js"
 compatibility_date = "2021-12-11"
+workers_dev = true
+
+[vars]
+ORIGIN_URL = "https://bafybeid6hizzc6wzb26nyjm4goadmup62sirg5lpgangocxqmjtwnvvyx4.on.fleek.co"
 
 [env.staging]
-zone_id = "206fc2d0e9542f44c72fede8077369af"
+workers_dev = false
 route = "dev.bananamilk.net/*"
-workers_dev = true
+zone_id = "206fc2d0e9542f44c72fede8077369af"
 
-[env.dev]
-workers_dev = true
+[env.staging.vars]
+ORIGIN_URL = "https://bafybeid6hizzc6wzb26nyjm4goadmup62sirg5lpgangocxqmjtwnvvyx4.on.fleek.co"
+
+[env.production]
+workers_dev = false
+route = "juicebox.money/*"
+zone_id = "206fc2d0e9542f44c72fede8077369af"
+
+[env.production.vars]
+ORIGIN_URL = "https://juice.on.fleek.co"
+
 
 [build]
 command = "npm install && npm run build"

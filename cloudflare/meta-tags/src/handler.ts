@@ -1,7 +1,11 @@
 import { utils } from 'ethers'
 import { querySubgraph } from './graph'
 import { fetchProjectMetadata, ProjectMetadata } from './ipfs'
-import { rewriteMetaTags } from './rewrite-meta'
+import {
+  withCloudflareMeta,
+  withOGBasicMeta,
+  withOGImageUrlMeta,
+} from './html-rewriter'
 
 /**
  * Cache time in seconds for resources that
@@ -18,7 +22,7 @@ function isAssetRoute(url: string): boolean {
 }
 
 function isProjectRoute(url: string): boolean {
-  return url.includes(VISITING_URL + '/p/')
+  return url.includes('/p/')
 }
 
 async function fetchWithCache(url: string) {
@@ -47,34 +51,39 @@ async function getMetadata(
 }
 
 export async function handleRequest(request: Request): Promise<Response> {
+  const visitingUrl = new URL(request.url).origin
   // Routes: Assets (like images, css, robots)
   if (isAssetRoute(request.url)) {
     // Let urls pass through
-    const fetchUrl = request.url.replace(VISITING_URL, ORIGIN_URL)
+    const fetchUrl = request.url.replace(visitingUrl, ORIGIN_URL)
     return await fetchWithCache(fetchUrl)
   }
 
+  let rewriter = new HTMLRewriter()
+  rewriter = withCloudflareMeta()(rewriter)
+
+  const res = await fetchWithCache(ORIGIN_URL)
+
   // Routes: Projects (/p/*)
   if (isProjectRoute(request.url)) {
-    const res = await fetchWithCache(ORIGIN_URL)
-
     // Parse handle from url
-    const handle = request.url.replace(VISITING_URL + '/p/', '')
+    const handle = request.url.replace(visitingUrl + '/p/', '')
 
     // Get metadata
     const metadata = await getMetadata(handle)
 
     if (metadata) {
-      // Add metatags
-      return rewriteMetaTags(res, {
+      rewriter = withOGBasicMeta({
         title: metadata.name ?? '',
         description: metadata.description ?? '',
         url: request.url,
-        imageUrl: metadata.logoUri,
-      })
+      })(rewriter)
+      if (metadata.logoUri) {
+        rewriter = withOGImageUrlMeta({ imageUrl: metadata.logoUri })(rewriter)
+      }
     }
   }
 
   // All other routes
-  return await fetchWithCache(ORIGIN_URL)
+  return rewriter.transform(res)
 }

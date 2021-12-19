@@ -1,16 +1,17 @@
-name = "meta-tags"
-workers_dev = true
+name = "juicebox"
 type = "webpack"
 account_id = "dc724e5a3245a509f7a1bb7e16920e3f"
+route = "juicebox.money/*"
 webpack_config = "webpack.config.js"
 compatibility_date = "2021-12-11"
 
-[env.production]
-# The ID of the domain to deploying to
-zone_id = "$yourZoneId"
+[env.staging]
+zone_id = "206fc2d0e9542f44c72fede8077369af"
+route = "dev.bananamilk.net/*"
+workers_dev = true
 
-# The route pattern your Workers application will be served at
-route = "example.com/*"
+[env.dev]
+workers_dev = true
 
 [build]
 command = "npm install && npm run build"

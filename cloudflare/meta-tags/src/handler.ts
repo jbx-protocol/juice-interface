@@ -9,16 +9,6 @@ import { rewriteMetaTags } from './rewrite-meta'
  */
 const CACHE_TTL = 60 //seconds
 
-/**
- * URL that's being requested.
- */
-const VISITING_URL = 'https://juicebox.money'
-
-/**
- * URL where we're fetching the app from.
- */
-const ORIGIN_URL = 'https://juicebox.fleek.co'
-
 function isAssetRoute(url: string): boolean {
   return (
     url.includes('/assets/') ||

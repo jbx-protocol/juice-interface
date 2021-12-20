@@ -42,6 +42,7 @@ import {
 
 export interface SubgraphEntities {
   project: Project
+  projectSearch: Project
   payEvent: PayEvent
   redeemEvent: RedeemEvent
   participant: Participant
@@ -53,6 +54,7 @@ export interface SubgraphEntities {
 
 export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
+  projectSearch: { projects: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
@@ -105,6 +107,7 @@ export type EntityKeys<E extends EntityKey> = keyof SubgraphEntities[E]
 
 export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   entity: E
+  text?: string
   first?: number
   skip?: number
   orderBy?: keyof SubgraphEntities[E]
@@ -147,6 +150,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     args += (args.length ? ', ' : '') + `${name}: ` + value
   }
 
+  addArg('text', opts.text ? `"${opts.text}"` : undefined)
   addArg('first', opts.first)
   addArg('skip', opts.skip)
   addArg('orderBy', opts.orderBy)
@@ -171,7 +175,9 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  return `{ ${opts.entity}s${args ? `(${args})` : ''} { id${opts.keys.reduce(
+  return `{ ${opts.entity}${opts.entity === 'projectSearch' ? '' : 's'}${
+    args ? `(${args})` : ''
+  } { id${opts.keys.reduce(
     (acc, key) =>
       typeof key === 'string' ||
       typeof key === 'number' ||

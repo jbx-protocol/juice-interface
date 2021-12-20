@@ -5,18 +5,20 @@ import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useInfiniteProjectsQuery } from 'hooks/Projects'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
 import { TerminalVersion } from 'models/terminal-version'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import { layouts } from 'constants/styles/layouts'
+import Search from 'antd/lib/input/Search'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
 
 const pageSize = 20
 
 export default function Projects() {
+  const [searchText, setSearchText] = useState<string>()
   const [selectedTab, setSelectedTab] = useState<ProjectState>('active')
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
@@ -47,6 +49,8 @@ export default function Projects() {
     terminalVersion,
   })
 
+  const { data: searchPages } = useProjectsSearch(searchText)
+
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
     if (loadMoreContainerRef.current) {
@@ -66,10 +70,9 @@ export default function Projects() {
     }
   }, [fetchNextPage, hasNextPage])
 
-  const concatenatedPages = pages?.pages?.reduce(
-    (prev, group) => [...prev, ...group],
-    [],
-  )
+  const concatenatedPages =
+    searchPages ??
+    pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   const tab = (tab: ProjectState) => (
     <div
@@ -127,19 +130,18 @@ export default function Projects() {
           </Space>
         </div>
 
+        <Search
+          style={{ marginBottom: 20 }}
+          prefix="@"
+          placeholder="Search projects by handle"
+          onSearch={val => {
+            setSearchText(val)
+          }}
+        />
+
         <div>
-          <Space
-            direction="horizontal"
-            size="large"
-            style={{
-              flexWrap: 'wrap',
-            }}
-          >
-            <Space
-              direction="horizontal"
-              size="middle"
-              style={{ minWidth: 200 }}
-            >
+          <Space direction="horizontal" size="large">
+            <Space direction="horizontal" size="middle">
               <div>
                 <Checkbox
                   checked={includeV1}

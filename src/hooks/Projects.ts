@@ -41,6 +41,7 @@ interface ProjectsOptions {
   filter?: ProjectState
   keys?: (keyof Project)[]
   terminalVersion?: TerminalVersion
+  searchText?: string
 }
 
 const staleTime = 60000
@@ -102,6 +103,27 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     {
       staleTime,
       select: data => filterOutArchivedProjects(data, opts.filter),
+    },
+  )
+}
+
+export function useProjectsSearch(text: string | undefined) {
+  return useSubgraphQuery(
+    {
+      text,
+      entity: 'projectSearch',
+      keys: [
+        'handle',
+        'creator',
+        'createdAt',
+        'uri',
+        'currentBalance',
+        'totalPaid',
+        'totalRedeemed',
+      ],
+    },
+    {
+      staleTime,
     },
   )
 }

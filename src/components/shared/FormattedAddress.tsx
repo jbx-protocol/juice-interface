@@ -39,8 +39,10 @@ export default function FormattedAddress({
   useEffect(() => {
     if (!address || !utils.isAddress(address)) return
 
+    const _address = address.toLowerCase()
+
     const tryUpdateENSDict = async () => {
-      const record = getEnsDict()[address]
+      const record = getEnsDict()[_address]
 
       if (record?.expires > now) {
         setEnsName(record.name)
@@ -53,13 +55,13 @@ export default function FormattedAddress({
       } as EnsRecord
 
       try {
-        const name = await readProvider.lookupAddress(address)
+        const name = await readProvider.lookupAddress(_address)
 
         // Reverse lookup to check validity
         if (
           name &&
           (await readProvider.resolveName(name))?.toLowerCase() ===
-            address.toLowerCase()
+            _address.toLowerCase()
         ) {
           newRecord.name = name
         }
@@ -71,7 +73,7 @@ export default function FormattedAddress({
         getStorageKey(),
         JSON.stringify({
           ...getEnsDict(),
-          [address]: newRecord,
+          [_address]: newRecord,
         }),
       )
 

@@ -28,16 +28,17 @@ export default function Paragraph({
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }
-      />
-      {CHARACTER_LIMIT_EXCEEDED && (
-        <Button
-          type="link"
-          style={{ paddingTop: 0, paddingBottom: 0, height: 'auto' }}
-          onClick={() => toggleExpanded()}
-        >
-          {expanded ? 'Read less' : 'Read more'}
-        </Button>
-      )}
+      >
+        {CHARACTER_LIMIT_EXCEEDED && (
+          <Button
+            type="link"
+            style={{ padding: 0, paddingBottom: 0, height: 'auto' }}
+            onClick={() => toggleExpanded()}
+          >
+            {expanded ? 'Read less' : 'Read more'}
+          </Button>
+        )}
+      </RichNote>
     </div>
   )
 }

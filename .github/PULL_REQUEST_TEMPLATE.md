@@ -10,6 +10,4 @@ changes._
 
 ## Acceptance checklist
 
-- [ ] I have evaluted the
-      [Approval Guidelines](../../CONTRIBUTING.md#approval-guidelines) for this
-      PR.
+- [ ] I have evaluted the [Approval Guidelines](../../CONTRIBUTING.md#approval-guidelines) for this PR.

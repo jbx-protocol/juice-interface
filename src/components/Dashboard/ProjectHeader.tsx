@@ -13,7 +13,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { useContext, useState } from 'react'
 
-import ProjectDescription from '../shared/Paragraph'
+import Paragraph from '../shared/Paragraph'
 
 export default function ProjectHeader() {
   const [editProjectModalVisible, setEditProjectModalVisible] =
@@ -63,7 +63,13 @@ export default function ProjectHeader() {
           alignItems: 'flex-start',
         }}
       >
-        <div style={{ marginRight: 20, height: '100%' }}>
+        <div
+          style={{
+            marginRight: '1.25rem',
+            marginBottom: '1.25rem',
+            height: '100%',
+          }}
+        >
           <ProjectLogo
             uri={metadata?.logoUri}
             name={metadata?.name}
@@ -71,7 +77,7 @@ export default function ProjectHeader() {
           />
         </div>
 
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, minWidth: '70%' }}>
           <div
             style={{
               display: 'flex',
@@ -208,7 +214,7 @@ export default function ProjectHeader() {
             )}
           </div>
           {metadata?.description && (
-            <ProjectDescription
+            <Paragraph
               description={metadata.description}
               characterLimit={250}
             />

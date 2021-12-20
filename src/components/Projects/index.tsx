@@ -116,10 +116,11 @@ export default function Projects() {
           justifyContent: 'space-between',
           alignItems: 'baseline',
           flexWrap: 'wrap',
+          maxWidth: '100vw',
           marginBottom: 40,
         }}
       >
-        <div style={{ height: 40 }}>
+        <div style={{ height: 40, marginBottom: 20 }}>
           <Space direction="horizontal" size="large">
             {tab('active')}
             {tab('archived')}
@@ -127,8 +128,18 @@ export default function Projects() {
         </div>
 
         <div>
-          <Space direction="horizontal" size="large">
-            <Space direction="horizontal" size="middle">
+          <Space
+            direction="horizontal"
+            size="large"
+            style={{
+              flexWrap: 'wrap',
+            }}
+          >
+            <Space
+              direction="horizontal"
+              size="middle"
+              style={{ minWidth: 200 }}
+            >
               <div>
                 <Checkbox
                   checked={includeV1}

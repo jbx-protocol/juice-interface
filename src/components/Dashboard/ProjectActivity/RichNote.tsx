@@ -4,15 +4,16 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContentType } from 'hooks/ContentType'
 import { useContext, useMemo } from 'react'
 
+type RichNoteProps = {
+  note: string | undefined
+  style?: React.CSSProperties | undefined
+}
+
 export default function RichNote({
   note,
   style,
   children,
-}: {
-  children?: any
-  note: string | undefined
-  style?: React.CSSProperties | undefined
-}) {
+}: React.PropsWithChildren<RichNoteProps>) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

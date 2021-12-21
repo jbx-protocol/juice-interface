@@ -74,15 +74,16 @@ export default function EthAddress({
 
     readENSName()
   }, [defaultValue])
-  console.log('formItemProps?.extra: ', formItemProps?.extra)
+
   return (
     <Form.Item
       {...formItemProps}
       className={
+        // if we pass form.item an 'extra', need to set different padding for error message
         formItemProps?.extra
           ? 'ant-form-item-control-input-extra-and-error'
           : ''
-      } // if we pass form.item an 'extra', need to set different padding for error message
+      }
     >
       <Input
         placeholder={'juicebox.eth / ' + constants.AddressZero}

@@ -74,9 +74,16 @@ export default function EthAddress({
 
     readENSName()
   }, [defaultValue])
-
+  console.log('formItemProps?.extra: ', formItemProps?.extra)
   return (
-    <Form.Item {...formItemProps}>
+    <Form.Item
+      {...formItemProps}
+      className={
+        formItemProps?.extra
+          ? 'ant-form-item-control-input-extra-and-error'
+          : ''
+      } // if we pass form.item an 'extra', need to set different padding for error message
+    >
       <Input
         placeholder={'juicebox.eth / ' + constants.AddressZero}
         type="string"
@@ -84,6 +91,11 @@ export default function EthAddress({
         onChange={e => onInputChange(e.target.value)}
         value={displayValue}
       />
+      {addressForENS?.length ? (
+        <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
+          <CheckCircleFilled /> {addressForENS}
+        </div>
+      ) : null}
       <Form.Item
         name={name}
         style={{ height: 0, maxHeight: 0, margin: 0 }}
@@ -92,11 +104,6 @@ export default function EthAddress({
         {/* Hidden input allows for address value to be used in form, while visible input can display ENS name */}
         <Input hidden type="string" autoComplete="off" />
       </Form.Item>
-      {addressForENS?.length ? (
-        <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
-          <CheckCircleFilled /> {addressForENS}
-        </div>
-      ) : null}
     </Form.Item>
   )
 }

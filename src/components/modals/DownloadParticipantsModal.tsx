@@ -1,6 +1,7 @@
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 import { readProvider } from 'constants/readProvider'
 import { ProjectContext } from 'contexts/projectContext'
@@ -135,30 +136,7 @@ export default function DownloadParticipantsModal({
       <div>
         <h4>Download CSV of {tokenSymbol || 'token'} holders</h4>
 
-        {erc20IsUntracked && (
-          <p>
-            <b>Notice:</b> {tokenSymbol} ERC20 tokens have not been indexed by
-            Juicebox, meaning that the balances reflected below will be
-            inaccurate for users who have unstaked and transferred their tokens.
-            This will be solved with the release of{' '}
-            <a
-              href="https://app.gitbook.com/@jbx/s/juicebox/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Juicebox V2
-            </a>
-            . If this is a big issue for your project, let us know in the{' '}
-            <a
-              href="https://discord.gg/6jXrJSyDFf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Discord
-            </a>
-            .
-          </p>
-        )}
+        {erc20IsUntracked && <UntrackedErc20Notice tokenSymbol={tokenSymbol} />}
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           Block number

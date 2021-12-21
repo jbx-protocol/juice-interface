@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { getTerminalAddress } from 'utils/terminal-versions'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
 import { TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
+import { getTerminalAddress } from 'utils/terminal-versions'
 
 import { archivedProjectIds } from '../constants/archived-projects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -107,10 +107,10 @@ export function useProjectsQuery(opts: ProjectsOptions) {
   )
 }
 
-export function useProjectsSearch(text: string | undefined) {
+export function useProjectsSearch(handle: string | undefined) {
   return useSubgraphQuery(
     {
-      text,
+      text: `${handle}:*`,
       entity: 'projectSearch',
       keys: [
         'handle',

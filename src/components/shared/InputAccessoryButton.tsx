@@ -7,22 +7,28 @@ export default function InputAccessoryButton({
   onClick,
   withArrow,
   placement,
+  disabled,
 }: {
   content: string | JSX.Element | undefined
   withArrow?: boolean
   onClick?: VoidFunction
   placement?: 'prefix' | 'suffix'
+  disabled?: boolean
 }) {
   const { colors, radii } = useContext(ThemeContext).theme
 
   return content ? (
     <div
       style={{
-        cursor: onClick ? 'pointer' : 'default',
-        color: onClick ? colors.text.action.primary : colors.text.primary,
-        background: onClick
-          ? colors.background.action.secondary
-          : colors.background.l1,
+        cursor: onClick && !disabled ? 'pointer' : 'default',
+        color:
+          onClick && !disabled
+            ? colors.text.action.primary
+            : colors.text.primary,
+        background:
+          onClick && !disabled
+            ? colors.background.action.secondary
+            : colors.background.l1,
         fontWeight: 500,
         whiteSpace: 'nowrap',
         padding: '1px 6px',

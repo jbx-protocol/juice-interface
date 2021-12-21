@@ -215,4 +215,19 @@ input:-webkit-autofill-selected {
 // added this rule for when an the 'extra' prop is passed to FormItem (error message needs more space in this case)
 .ant-form-item-control-input-extra-and-error .ant-form-item-control-input {
   min-height: 23px;
+.ant-input-group-addon {
+  background: transparent;
+}
+
+.ant-input-search-button {
+  border: 1px solid var(--stroke-primary);
+  color: var(--icon-action-primary) !important;
+}
+
+.anticon.ant-input-clear-icon {
+  color: var(--icon-secondary);
+
+  &:hover {
+    color: var(--icon-primary);
+  }
 }

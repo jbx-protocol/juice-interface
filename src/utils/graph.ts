@@ -54,7 +54,7 @@ export interface SubgraphEntities {
 
 export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
-  projectSearch: { projects: ProjectJson[] }
+  projectSearch: { projectSearch: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
@@ -175,7 +175,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  return `{ ${opts.entity}${opts.entity === 'projectSearch' ? '' : 's'}${
+  return `{ ${opts.entity}${isPluralQuery(opts.entity) ? 's' : ''}${
     args ? `(${args})` : ''
   } { id${opts.keys.reduce(
     (acc, key) =>
@@ -240,6 +240,12 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.projects.map(parseProjectJson)
       }
       break
+    case 'projectSearch':
+      if ('projectSearch' in response) {
+        // @ts-ignore
+        return response.projectSearch.map(parseProjectJson)
+      }
+      break
     case 'payEvent':
       if ('payEvents' in response) {
         // @ts-ignore
@@ -289,4 +295,10 @@ export function formatGraphResponse<E extends EntityKey>(
   }
 
   return []
+}
+
+const isPluralQuery = (key: EntityKey): boolean => {
+  if (key === 'projectSearch') return false
+
+  return true
 }

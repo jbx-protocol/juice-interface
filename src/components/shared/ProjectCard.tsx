@@ -33,7 +33,6 @@ export default function ProjectCard({
   return (
     <div
       style={{
-        padding: 20,
         borderRadius: radii.lg,
         cursor: 'pointer',
         overflow: 'hidden',
@@ -51,15 +50,15 @@ export default function ProjectCard({
             overflow: 'hidden',
           }}
         >
-          <div style={{ marginRight: 20 }}>
+          <div>
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
-              size={80}
+              size={125}
             />
           </div>
 
-          <div style={{ minWidth: 0 }}>
+          <div style={{ minWidth: 0, padding: '10px 20px' }}>
             <h2
               style={{
                 color: colors.text.primary,
@@ -71,8 +70,12 @@ export default function ProjectCard({
               {metadata.name}
             </h2>
 
-            <div style={{ color: colors.text.tertiary }}>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+            <div style={{ color: colors.text.primary, fontWeight: 500 }}>
+              @{project.handle}
+            </div>
+
+            <div style={{ color: colors.text.secondary }}>
+              <span>
                 <CurrencySymbol currency={CURRENCY_ETH} />
                 {formatWad(project.totalPaid, { decimals })}{' '}
               </span>

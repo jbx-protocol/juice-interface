@@ -4,6 +4,7 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import TokenAMMPriceBadge from 'components/shared/TokenAMMPriceBadge'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
@@ -27,8 +28,14 @@ export default function Pay() {
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const { projectId, currentFC, metadata, tokenSymbol, isArchived } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    currentFC,
+    metadata,
+    tokenSymbol,
+    isArchived,
+    tokenAddress,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -106,6 +113,16 @@ export default function Pay() {
 
   return (
     <div>
+      <div style={{ marginBottom: '0.5rem' }}>
+        {tokenSymbol && tokenAddress && (
+          <TokenAMMPriceBadge
+            exchangeName="Uniswap"
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+            exchangeLink={`https://app.uniswap.org/#/swap?&inputCurrency=${tokenAddress}&outputCurrency=ETH`}
+          />
+        )}
+      </div>
       <div
         style={{
           display: 'flex',
@@ -138,8 +155,7 @@ export default function Pay() {
                   (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
                     BigNumber.from(0),
                 )}{' '}
-                {tokenSymbol ?? 'tokens'}/
-                <CurrencySymbol currency={payIn} />
+                {tokenSymbol ?? 'tokens'}/{currencyName(payIn)}
               </span>
             )}
           </div>

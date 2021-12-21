@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { readNetwork } from 'constants/networks'
 import { utils } from 'ethers'
-
 import { NetworkName } from 'models/network-name'
 
 import { Participant } from './participant'
-import { readNetwork } from 'constants/networks'
 
 export interface Project {
   terminal?: string

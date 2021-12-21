@@ -405,6 +405,7 @@ export default function ProjectPayoutMods({
               defaultValue={form.getFieldValue('beneficiary')}
               formItemProps={{
                 label: 'Address',
+                // extra: 'The address that should receive the tokens.',
                 rules: [
                   {
                     validator: (rule: any, value: any) => {

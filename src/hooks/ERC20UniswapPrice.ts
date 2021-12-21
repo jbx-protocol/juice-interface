@@ -100,7 +100,6 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       tickSpacing,
       maxLiquidityPerTick,
     }
-
     return immutables
   }
 
@@ -119,7 +118,6 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       feeProtocol: slot[5],
       unlocked: slot[6],
     }
-
     return PoolState
   }
 

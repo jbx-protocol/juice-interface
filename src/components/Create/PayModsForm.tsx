@@ -1,11 +1,12 @@
-import { Button, Form, Space } from 'antd'
+import { Button, Form, Space, Input } from 'antd'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
+import { useForm } from 'antd/lib/form/Form'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad, fromPermyriad } from 'utils/formatNumber'
 
 export default function PayModsForm({
   initialMods,
@@ -23,13 +24,40 @@ export default function PayModsForm({
   // State objects avoid antd form input dependency rerendering issues
   const [mods, setMods] = useState<PayoutMod[]>([])
 
+  const [form] = useForm<{
+    totalPercent: number
+  }>()
+
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
+  // Calculates sum of percentages of given payouts
+  function calculateTotalPercentage(new_mods: any) {
+    return (
+      new_mods?.reduce(
+        (acc: any, curr: any) =>
+          acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
+        0,
+      ) ?? 0
+    )
+  }
+
   useLayoutEffect(() => {
     setMods(initialMods)
   }, [initialMods])
+
+  async function validateAndSaveMods() {
+    await form.validateFields()
+    onSave(mods)
+  }
+
+  // Validates the total distribution percentage
+  const validateTotalDistributions = (rule: any, value: any, callback: any) => {
+    if (form.getFieldValue('totalPercent') > 100)
+      return Promise.reject('Percentages must add up to less than 100%')
+    else return Promise.resolve()
+  }
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -49,12 +77,30 @@ export default function PayModsForm({
         </p>
       </div>
 
-      <Form layout="vertical">
+      <Form form={form} layout="vertical">
+        <Form.Item
+          name={'totalPercent'}
+          rules={[
+            {
+              validator: validateTotalDistributions,
+            },
+          ]}
+        >
+          {/* Added a hidden input here because Form.Item needs 
+           a child Input to work. Need the parent Form.Item to 
+           validate totalPercent */}
+          <Input hidden type="string" autoComplete="off" />
+        </Form.Item>
         <FormItems.ProjectPayoutMods
           mods={mods}
           target={fromWad(target)}
           currency={currency}
-          onModsChanged={setMods}
+          onModsChanged={new_mods => {
+            setMods(new_mods)
+            form.setFieldsValue({
+              totalPercent: calculateTotalPercentage(new_mods) ?? 0,
+            })
+          }}
           fee={fee}
         />
         <Form.Item>
@@ -62,7 +108,7 @@ export default function PayModsForm({
             style={{ marginTop: 20 }}
             htmlType="submit"
             type="primary"
-            onClick={() => onSave(mods)}
+            onClick={validateAndSaveMods}
           >
             Save
           </Button>

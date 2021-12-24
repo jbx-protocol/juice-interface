@@ -33,7 +33,7 @@ export default function PayModsForm({
   } = useContext(ThemeContext)
 
   // Calculates sum of percentages of given payouts
-  function calculateTotalPercentage(new_mods: any) {
+  function calculateTotalPercentage(newMods: any) {
     return (
       new_mods?.reduce(
         (acc: any, curr: any) =>
@@ -56,7 +56,7 @@ export default function PayModsForm({
   const validateTotalDistributions = (rule: any, value: any, callback: any) => {
     if (form.getFieldValue('totalPercent') > 100)
       return Promise.reject('Percentages must add up to less than 100%')
-    else return Promise.resolve()
+    return Promise.resolve()
   }
 
   return (
@@ -98,7 +98,7 @@ export default function PayModsForm({
           onModsChanged={new_mods => {
             setMods(new_mods)
             form.setFieldsValue({
-              totalPercent: calculateTotalPercentage(new_mods) ?? 0,
+              totalPercent: calculateTotalPercentage(new_mods),
             })
           }}
           fee={fee}

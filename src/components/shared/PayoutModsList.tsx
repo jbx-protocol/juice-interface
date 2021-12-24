@@ -31,7 +31,7 @@ export default function PayoutModsList({
   total?: BigNumber
 }) {
   const [form] = useForm<{
-    total_percent: number
+    totalPercent: number
   }>()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)

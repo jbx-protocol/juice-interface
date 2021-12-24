@@ -96,7 +96,7 @@ export default function PayoutModsList({
 
   const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
-  const total_percentage =
+  const totalPercentage =
     editingMods?.reduce(
       (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
       0,
@@ -216,7 +216,7 @@ export default function PayoutModsList({
               rules={[
                 {
                   validator: () => {
-                    if (total_percentage > 100)
+                    if (totalPercentage > 100)
                       return Promise.reject(
                         'Percentages must add up to less than 100%',
                       )
@@ -230,7 +230,7 @@ export default function PayoutModsList({
                 hidden
                 type="string"
                 autoComplete="off"
-                value={total_percentage}
+                value={totalPercentage}
               />
             </Form.Item>
 

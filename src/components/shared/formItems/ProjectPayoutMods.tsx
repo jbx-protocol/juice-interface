@@ -26,6 +26,8 @@ import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
+import { validateEthAddress } from '../FormHelpers'
+
 type ModType = 'project' | 'address'
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -322,11 +324,7 @@ export default function ProjectPayoutMods({
   }
 
   // Validates the distribution percent for an individual payout
-  const validateDistributionPercent = (
-    rule: any,
-    value: any,
-    callback: any,
-  ) => {
+  const validateDistributionPercent = () => {
     let percent = form.getFieldValue('percent')
     if (percent === undefined || percent === 0)
       return Promise.reject('Required')
@@ -334,21 +332,13 @@ export default function ProjectPayoutMods({
   }
 
   // Validates new payout receiving address
-  const validatePayoutAddress = (rule: any, value: any, callback: any) => {
-    const address = form.getFieldValue('beneficiary')
-    if (
-      modalMode === 'Edit' &&
-      address === mods[editingModIndex ?? 0]?.beneficiary
+  const validatePayoutAddress = () => {
+    return validateEthAddress(
+      form.getFieldValue('beneficiary'),
+      mods,
+      modalMode,
+      editingModIndex,
     )
-      return Promise.resolve()
-    //if user edits an (already approved) address and doesn't change it, we accept
-    else if (!address || !utils.isAddress(address))
-      return Promise.reject('Address is required')
-    else if (address === constants.AddressZero)
-      return Promise.reject('Cannot use zero address.')
-    else if (mods.some(mod => mod.beneficiary === address))
-      return Promise.reject('Address already in use.')
-    else return Promise.resolve()
   }
 
   return (

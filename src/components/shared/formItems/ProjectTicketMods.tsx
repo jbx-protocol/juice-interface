@@ -2,7 +2,6 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
-import { constants, utils } from 'ethers'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
@@ -15,6 +14,8 @@ import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
+
+import { validateEthAddress } from '../FormHelpers'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -210,25 +211,13 @@ export default function ProjectTicketMods({
   }
 
   // Validates new reserved token receiving address
-  const validateReservedTokenReceiver = (
-    rule: any,
-    value: any,
-    callback: any,
-  ) => {
-    const address = form.getFieldValue('beneficiary')
-    if (
-      modalMode === 'Edit' &&
-      address === mods[editingModIndex ?? 0]?.beneficiary
+  const validateReservedTokenReceiver = () => {
+    return validateEthAddress(
+      form.getFieldValue('beneficiary'),
+      mods,
+      modalMode,
+      editingModIndex,
     )
-      return Promise.resolve()
-    // if user edits an (already approved) address and doesn't change it, we accept
-    else if (!address || !utils.isAddress(address))
-      return Promise.reject('Address is required')
-    else if (address === constants.AddressZero)
-      return Promise.reject('Cannot use zero address.')
-    else if (mods.some(mod => mod.beneficiary === address))
-      return Promise.reject('Address already in use.')
-    else return Promise.resolve()
   }
 
   return (
@@ -237,7 +226,7 @@ export default function ProjectTicketMods({
       {...formItemProps}
       rules={[
         {
-          validator: (rule: any, value: any) => {
+          validator: () => {
             if (total > 100)
               return Promise.reject('Percentages must add up to less than 100%')
 

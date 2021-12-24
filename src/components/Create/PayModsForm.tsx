@@ -6,7 +6,9 @@ import { useForm } from 'antd/lib/form/Form'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { fromWad, fromPermyriad } from 'utils/formatNumber'
+import { fromWad } from 'utils/formatNumber'
+
+import { getTotalPercentage } from '../shared/FormHelpers'
 
 export default function PayModsForm({
   initialMods,
@@ -33,14 +35,8 @@ export default function PayModsForm({
   } = useContext(ThemeContext)
 
   // Calculates sum of percentages of given payouts
-  function calculateTotalPercentage(newMods: any) {
-    return (
-      new_mods?.reduce(
-        (acc: any, curr: any) =>
-          acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
-        0,
-      ) ?? 0
-    )
+  function calculateTotalPercentage(newMods: PayoutMod[] | undefined) {
+    return getTotalPercentage(newMods)
   }
 
   useLayoutEffect(() => {
@@ -53,7 +49,7 @@ export default function PayModsForm({
   }
 
   // Validates the total distribution percentage
-  const validateTotalDistributions = (rule: any, value: any, callback: any) => {
+  const validateTotalDistributions = () => {
     if (form.getFieldValue('totalPercent') > 100)
       return Promise.reject('Percentages must add up to less than 100%')
     return Promise.resolve()

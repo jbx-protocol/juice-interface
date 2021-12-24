@@ -468,7 +468,7 @@ export default function ProjectPayoutMods({
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1, marginRight: 10 }}>
                 <NumberSlider
-                  onChange={(percent: any) => {
+                  onChange={(percent: number | undefined) => {
                     form.setFieldsValue({ percent })
                     setEditingPercent(percent)
                   }}

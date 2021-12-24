@@ -13,6 +13,8 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
+import { getTotalPercentage } from './FormHelpers'
+
 import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 
 export default function PayoutModsList({
@@ -96,11 +98,7 @@ export default function PayoutModsList({
 
   const hasEditPermission = useHasPermission(OperatorPermission.SetPayoutMods)
 
-  const totalPercentage =
-    editingMods?.reduce(
-      (acc, curr) => acc + parseFloat(fromPermyriad(curr.percent ?? '0')),
-      0,
-    ) ?? 0
+  const totalPercentage = getTotalPercentage(editingMods)
 
   if (!fundingCycle) return null
 

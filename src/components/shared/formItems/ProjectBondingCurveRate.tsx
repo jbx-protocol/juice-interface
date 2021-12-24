@@ -192,7 +192,7 @@ export default function ProjectBondingCurveRate({
         step={0.5}
         sliderValue={parseFloat(value ?? '0')}
         disabled={disabled}
-        onChange={(val: any) => {
+        onChange={(val: number | undefined) => {
           graphCurve(val)
           onChange(val)
         }}

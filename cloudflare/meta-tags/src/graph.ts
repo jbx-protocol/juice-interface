@@ -108,9 +108,6 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   )} } }`
 }
 
-const subgraphUrl =
-  'https://api.studio.thegraph.com/query/9534/juicebox-rinkeby/v0.0.2'
-
 export const querySubgraph = async <
   E extends EntityKey,
   K extends EntityKeys<E>,
@@ -118,7 +115,7 @@ export const querySubgraph = async <
   opts: GraphQueryOpts<E, K>,
 ): Promise<SubgraphQueryReturnTypes[E] | undefined> => {
   try {
-    const res = await fetch(subgraphUrl, {
+    const res = await fetch(SUBGRAPH_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

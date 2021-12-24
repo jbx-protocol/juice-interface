@@ -7,6 +7,7 @@ workers_dev = true
 
 [vars]
 ORIGIN_URL = "https://bafybeid6hizzc6wzb26nyjm4goadmup62sirg5lpgangocxqmjtwnvvyx4.on.fleek.co"
+SUBGRAPH_URL = "https://api.studio.thegraph.com/query/9534/juicebox-rinkeby/v0.0.2"
 
 [env.staging]
 workers_dev = false
@@ -15,6 +16,7 @@ zone_id = "206fc2d0e9542f44c72fede8077369af"
 
 [env.staging.vars]
 ORIGIN_URL = "https://bafybeid6hizzc6wzb26nyjm4goadmup62sirg5lpgangocxqmjtwnvvyx4.on.fleek.co"
+SUBGRAPH_URL = "https://api.studio.thegraph.com/query/9534/juicebox-rinkeby/v0.0.2"
 
 [env.production]
 workers_dev = false
@@ -23,7 +25,7 @@ zone_id = "206fc2d0e9542f44c72fede8077369af"
 
 [env.production.vars]
 ORIGIN_URL = "https://juice.on.fleek.co"
-
+SUBGRAPH_URL = "https://api.studio.thegraph.com/query/9534/juicebox-rinkeby/v0.0.2"
 
 [build]
 command = "npm install && npm run build"

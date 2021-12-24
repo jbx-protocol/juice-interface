@@ -492,7 +492,7 @@ export default function ProjectPayoutMods({
               </span>
 
               {parseWad(target).lt(constants.MaxUint256) && (
-                <span style={{ color: colors.text.primary, marginBottom: 22 }}>
+                <span style={{ color: colors.text.primary }}>
                   <CurrencySymbol currency={currency} />
                   {formatWad(
                     amountSubFee(parseWad(target), fee)

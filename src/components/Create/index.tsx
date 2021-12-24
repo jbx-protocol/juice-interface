@@ -24,14 +24,7 @@ import { FundingCycleMetadata } from 'models/funding-cycle-metadata'
 import { FCProperties } from 'models/funding-cycle-properties'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { TerminalVersion } from 'models/terminal-version'
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromPerbicent, fromPermille, fromWad } from 'utils/formatNumber'
 import {
@@ -155,12 +148,6 @@ export default function Create() {
     editingFC?.ticketPrintingIsAllowed,
     restrictedActionsForm,
   ])
-
-  useLayoutEffect(() => {
-    dispatch(editingProjectActions.resetState())
-    // Disable exhaustive-deps because we only need to reset the first time
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
 
   useEffect(() => {
     resetProjectForm()

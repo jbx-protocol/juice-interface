@@ -33,7 +33,7 @@ export default function PayModsForm({
   } = useContext(ThemeContext)
 
   // Calculates sum of percentages of given payouts
-  function calculateTotalPercentage(new_mods: any) {
+  function calculateTotalPercentage(newMods: any) {
     return (
       new_mods?.reduce(
         (acc: any, curr: any) =>

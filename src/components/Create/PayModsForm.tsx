@@ -98,7 +98,7 @@ export default function PayModsForm({
           onModsChanged={new_mods => {
             setMods(new_mods)
             form.setFieldsValue({
-              totalPercent: calculateTotalPercentage(new_mods) ?? 0,
+              totalPercent: calculateTotalPercentage(new_mods),
             })
           }}
           fee={fee}

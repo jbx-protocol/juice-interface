@@ -47,6 +47,7 @@ export default function TicketingForm({
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved
           value={form.getFieldValue('reserved')}
+          name="reserved"
           onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
         />
         <FormItems.ProjectTicketMods

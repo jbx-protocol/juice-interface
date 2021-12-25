@@ -12,6 +12,11 @@ export function getTotalPercentage(mods: PayoutMod[] | undefined) {
   )
 }
 
+export function validateDistributionPercent(percent: number | undefined) {
+  if (percent === undefined || percent === 0) return Promise.reject('Required')
+  return Promise.resolve()
+}
+
 // Validates an eth address from a modal where the address
 // is being added to a set of addresses (such as payout or
 // reserved token receivers)

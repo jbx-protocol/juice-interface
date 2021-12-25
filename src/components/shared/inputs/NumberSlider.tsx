@@ -12,6 +12,7 @@ export default function NumberSlider({
   onChange,
   defaultValue,
   disabled,
+  name,
   formItemProps,
 }: {
   min?: number
@@ -50,7 +51,7 @@ export default function NumberSlider({
         defaultValue={defaultValue}
         disabled={disabled}
       />
-      <Form.Item name={'percent'} rules={formItemProps?.rules ?? []}>
+      <Form.Item name={name} rules={formItemProps?.rules ?? []}>
         <InputNumber
           {...inputConfig}
           value={_value}

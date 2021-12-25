@@ -475,6 +475,7 @@ export default function ProjectPayoutMods({
                   step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}
                   suffix="%"
+                  name="percent"
                   formItemProps={{
                     rules: [{ validator: validateDistributionPercent }],
                   }}

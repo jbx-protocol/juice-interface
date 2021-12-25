@@ -12,7 +12,7 @@ export default function NumberSlider({
   onChange,
   defaultValue,
   disabled,
-  name,
+  name, // Without the name prop, the InputNumber will not update according to its parent Form.Item
   formItemProps,
 }: {
   min?: number

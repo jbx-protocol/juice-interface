@@ -15,7 +15,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
-import { validateEthAddress } from '../FormHelpers'
+import { validateEthAddress, validateDistributionPercent } from '../FormHelpers'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -220,6 +220,11 @@ export default function ProjectTicketMods({
     )
   }
 
+  // Validates slider (ensures percent !== 0)
+  const validateSlider = () => {
+    return validateDistributionPercent(form.getFieldValue('percent'))
+  }
+
   return (
     <Form.Item
       name={name}
@@ -329,6 +334,10 @@ export default function ProjectTicketMods({
               step={0.01}
               defaultValue={form.getFieldValue('percent') || 0}
               suffix="%"
+              name="percent"
+              formItemProps={{
+                rules: [{ validator: validateSlider }],
+              }}
             />
           </Form.Item>
 

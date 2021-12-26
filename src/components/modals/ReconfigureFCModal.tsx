@@ -10,7 +10,7 @@ import RulesForm from 'components/Create/RulesForm'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import TicketModsList from 'components/shared/TicketModsList'
-
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { UserContext } from 'contexts/userContext'
@@ -39,8 +39,6 @@ import {
 } from 'utils/fundingCycle'
 import { amountSubFee } from 'utils/math'
 import { serializeFundingCycle } from 'utils/serializers'
-
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 import BudgetForm from '../Create/BudgetForm'
 import IncentivesForm from '../Create/IncentivesForm'
@@ -87,7 +85,7 @@ export default function ReconfigureFCModal({
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
   const dispatch = useAppDispatch()
-  const { currentFC, terminal } = useContext(ProjectContext)
+  const { currentFC, terminal, isPreviewMode } = useContext(ProjectContext)
   const terminalFee = useTerminalFee(terminal?.version, contracts)
 
   const resetTicketingForm = () =>
@@ -144,9 +142,11 @@ export default function ReconfigureFCModal({
   }
 
   useLayoutEffect(() => {
-    if (!fundingCycle || !ticketMods || !payoutMods) return
+    if (!fundingCycle || !ticketMods || !payoutMods || isPreviewMode) return
+
     const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
     if (!metadata) return
+
     dispatch(
       editingProjectActions.setFundingCycle(
         serializeFundingCycle({
@@ -173,11 +173,11 @@ export default function ReconfigureFCModal({
     ticketMods,
     ticketingForm,
     restrictedActionsForm,
+    isPreviewMode,
   ])
 
   async function reconfigure() {
-    if (!transactor || !contracts?.TerminalV1_1 || !fundingCycle || !projectId)
-      return
+    if (!transactor || !contracts?.TerminalV1_1 || !projectId) return
 
     setLoading(true)
 

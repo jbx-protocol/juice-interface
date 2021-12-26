@@ -448,7 +448,7 @@ export default function Create() {
       metadata: encodeFundingCycleMetadata(
         editingFC.reserved,
         editingFC.bondingCurveRate,
-        1000,
+        200,
         editingFC.payIsPaused,
         editingFC.ticketPrintingIsAllowed,
         constants.AddressZero,
@@ -730,9 +730,11 @@ export default function Create() {
         <Modal
           visible={deployProjectModalVisible}
           okText={
-            signerNetwork
-              ? 'Deploy project on ' + signerNetwork
-              : 'Deploy project'
+            userAddress
+              ? signerNetwork
+                ? 'Deploy project on ' + signerNetwork
+                : 'Deploy project'
+              : 'Connect wallet to deploy'
           }
           onOk={deployProject}
           confirmLoading={loadingCreate}

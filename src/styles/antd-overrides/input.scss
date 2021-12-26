@@ -163,6 +163,28 @@ input:-webkit-autofill-selected {
   }
 }
 
+// Specific to language Select in top nav
+.language-selector {
+  .ant-select-selector {
+    height: 24px;
+    border-color: var(--stroke-action-secondary) !important;
+  }
+  .ant-select-arrow {
+    transition: 0.3s;
+  }
+}
+
+.language-selector:hover {
+  .ant-select-selector {
+    color: var(--stroke-action-primary);
+    border-color: var(--stroke-action-primary) !important;
+  }
+  .ant-select-arrow,
+  .ant-select-selection-item {
+    color: var(--stroke-action-primary);
+  }
+}
+
 .ant-upload-list,
 .ant-upload-list-text {
   color: var(--text-secondary);

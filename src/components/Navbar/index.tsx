@@ -11,6 +11,7 @@ import { ThemeOption } from 'constants/theme/theme-option'
 
 import Account from './Account'
 import ThemePicker from './ThemePicker'
+import LanguageSelector from './NavLanguageSelector'
 
 export default function Navbar() {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
@@ -94,6 +95,7 @@ export default function Navbar() {
         {menu()}
       </Space>
       <Space size="middle">
+        <LanguageSelector />
         <ThemePicker />
         <div className="hide-mobile">
           <Account />

@@ -172,21 +172,23 @@ input:-webkit-autofill-selected {
     height: 24px;
     width: 50px !important;
     padding: 0 8px !important;
-    border: none !important;
+    border: 1px solid transparent !important;
   }
   .ant-select-arrow {
     display: none;
   }
   .ant-select-selection-item {
     text-align: center;
-    padding: 1px 0 0 !important;
+    padding: 0 !important;
   }
 }
 
 .language-selector:hover {
+  // border: var(--stroke-action-secondary) !important;
+
   .ant-select-selector {
     color: var(--stroke-action-primary);
-    border-color: var(--stroke-action-primary) !important;
+    border: 1px solid var(--stroke-action-secondary) !important;
   }
   .ant-select-arrow,
   .ant-select-selection-item {

@@ -95,8 +95,8 @@ export default function Navbar() {
         {menu()}
       </Space>
       <Space size="middle">
-        <LanguageSelector />
         <ThemePicker />
+        <LanguageSelector />
         <div className="hide-mobile">
           <Account />
         </div>

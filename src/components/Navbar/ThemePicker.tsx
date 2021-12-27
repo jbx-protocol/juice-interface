@@ -38,6 +38,7 @@ export default function ThemePicker() {
         width: size * 2 + padding * 4,
         height,
         borderRadius: height / 2,
+        marginRight: -33,
       }}
       onClick={() =>
         setThemeOption(

@@ -34,7 +34,7 @@ export default function Footer() {
   function setLanguage(newLanguage: string) {
     localStorage.setItem('lang', newLanguage)
     window.location.reload()
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0) // scroll to top of page after reload
   }
 
   return (

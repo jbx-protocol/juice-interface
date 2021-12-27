@@ -16,7 +16,9 @@ export default function LanguageSelector() {
 
   // Renders Select Option for each language available on Juicebox
   const renderLanguageOption = (lang: string) => (
-    <Select.Option value={lang}>{Languages[lang].long}</Select.Option>
+    <Select.Option class="language-select-option" value={lang}>
+      <div>{Languages[lang].long}</div>
+    </Select.Option>
   )
 
   let currentSelectedLanguage = localStorage.getItem('lang') || 'en'
@@ -33,7 +35,7 @@ export default function LanguageSelector() {
       className="medium language-selector"
       style={{
         ...selectStyle,
-        width: 100,
+        width: 82,
       }}
       value={Languages[currentSelectedLanguage].short}
       onChange={newLanguage => {

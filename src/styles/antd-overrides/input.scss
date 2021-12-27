@@ -165,12 +165,21 @@ input:-webkit-autofill-selected {
 
 // Specific to language Select in top nav
 .language-selector {
+  padding-left: 30px !important;
+  border: none !important;
+
   .ant-select-selector {
     height: 24px;
-    border-color: var(--stroke-action-secondary) !important;
+    width: 50px !important;
+    padding: 0 8px !important;
+    border: none !important;
   }
   .ant-select-arrow {
-    transition: 0.3s;
+    display: none;
+  }
+  .ant-select-selection-item {
+    text-align: center;
+    padding: 1px 0 0 !important;
   }
 }
 

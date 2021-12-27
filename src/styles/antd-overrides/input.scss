@@ -184,8 +184,6 @@ input:-webkit-autofill-selected {
 }
 
 .language-selector:hover {
-  // border: var(--stroke-action-secondary) !important;
-
   .ant-select-selector {
     color: var(--stroke-action-primary);
     border: 1px solid var(--stroke-action-secondary) !important;

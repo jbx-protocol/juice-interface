@@ -101,125 +101,130 @@ export default function Projects() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <h1>
-        <Trans>Projects on Juicebox</Trans>
-      </h1>
-
-      <div>
-        <p style={{ maxWidth: 800, marginBottom: 20 }}>
-          <Trans>
-            <InfoCircleOutlined /> The Juicebox protocol is open to anyone, and
-            project configurations can vary widely. There are risks associated
-            with interacting with all projects on the protocol. Projects built
-            on the protocol are not endorsed or vetted by JuiceboxDAO, so you
-            should do your own research and understand the risks before
-            committing your funds.
-          </Trans>
-        </p>
-
-        <Search
-          autoFocus
-          style={{ marginBottom: 20 }}
-          prefix="@"
-          placeholder="Search projects by handle"
-          onSearch={val => setSearchText(val)}
-          allowClear
-        />
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          flexWrap: 'wrap',
-          maxWidth: '100vw',
-          marginBottom: 40,
-        }}
-      >
-        <div style={{ height: 40, marginBottom: 10 }}>
-          <Space direction="horizontal" size="large">
-            {tab('active')}
-            {tab('archived')}
-          </Space>
-        </div>
-
+      <div style={{ marginBottom: 40 }}>
         <div
           style={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'baseline',
-            whiteSpace: 'pre',
+          }}
+        >
+          <h1>
+            <Trans>Projects on Juicebox</Trans>
+          </h1>
+
+          <a href="/#/create">
+            <Button>New project</Button>
+          </a>
+        </div>
+
+        <div>
+          <p style={{ maxWidth: 800, marginBottom: 20 }}>
+            <Trans>
+              <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
+              and project configurations can vary widely. There are risks
+              associated with interacting with all projects on the protocol.
+              Projects built on the protocol are not endorsed or vetted by
+              JuiceboxDAO, so you should do your own research and understand the
+              risks before committing your funds.
+            </Trans>
+          </p>
+
+          <Search
+            autoFocus
+            style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
+            prefix="@"
+            placeholder="Search projects by handle"
+            onSearch={val => setSearchText(val)}
+            allowClear
+          />
+        </div>
+
+        <div
+          hidden={!!searchText}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
             flexWrap: 'wrap',
             maxWidth: '100vw',
           }}
         >
-          <Space
-            direction="horizontal"
-            size="middle"
-            style={{ marginRight: 20, marginTop: 10, marginBottom: 10 }}
-          >
-            <div>
-              <Checkbox
-                checked={includeV1}
-                onChange={() => setIncludeV1(!includeV1)}
-              />{' '}
-              V1
-            </div>
-            <div>
-              <Checkbox
-                checked={includeV1_1}
-                onChange={() => setIncludeV1_1(!includeV1_1)}
-              />{' '}
-              V1.1
-            </div>
-          </Space>
+          <div style={{ height: 40, marginTop: 10, marginBottom: 10 }}>
+            <Space direction="horizontal" size="large">
+              {tab('active')}
+              {tab('archived')}
+            </Space>
+          </div>
 
           <div
             style={{
-              display: 'flex',
               alignItems: 'baseline',
-              marginTop: 10,
-              marginBottom: 10,
+              whiteSpace: 'pre',
+              flexWrap: 'wrap',
+              maxWidth: '100vw',
             }}
           >
+            <Space
+              direction="horizontal"
+              size="middle"
+              style={{ marginRight: 20, marginTop: 10, marginBottom: 10 }}
+            >
+              <div>
+                <Checkbox
+                  checked={includeV1}
+                  onChange={() => setIncludeV1(!includeV1)}
+                />{' '}
+                V1
+              </div>
+              <div>
+                <Checkbox
+                  checked={includeV1_1}
+                  onChange={() => setIncludeV1_1(!includeV1_1)}
+                />{' '}
+                V1.1
+              </div>
+            </Space>
+
             <Select
               value={orderBy}
               onChange={setOrderBy}
-              style={{ width: 120, marginRight: 10 }}
+              style={{
+                width: 180,
+                marginTop: 10,
+                marginBottom: 10,
+              }}
             >
               <Select.Option value="totalPaid">Volume</Select.Option>
               <Select.Option value="createdAt">Created</Select.Option>
             </Select>
-            <a href="/#/create">
-              <Button>New project</Button>
-            </a>
           </div>
         </div>
-      </div>
 
-      {selectedTab === 'archived' && (
-        <p style={{ marginBottom: 40, maxWidth: 800 }}>
-          <Trans>
-            <InfoCircleOutlined /> Archived projects have not been modified or
-            deleted on the blockchain, and can still be interacted with directly
-            through the Juicebox contracts.
-          </Trans>
-          <Tooltip
-            title={t`If you have a project you'd like to archive, let the Juicebox team know in Discord.`}
-          >
-            <span
-              style={{
-                color: colors.text.action.primary,
-                fontWeight: 500,
-                cursor: 'default',
-              }}
+        {selectedTab === 'archived' && (
+          <p style={{ marginBottom: 40, maxWidth: 800 }}>
+            <Trans>
+              <InfoCircleOutlined /> Archived projects have not been modified or
+              deleted on the blockchain, and can still be interacted with
+              directly through the Juicebox contracts.
+            </Trans>
+            <Tooltip
+              title={t`If you have a project you'd like to archive, let the Juicebox team know in Discord.`}
             >
-              {' '}
-              <Trans>How do I archive a project?</Trans>
-            </span>
-          </Tooltip>
-        </p>
-      )}
+              <span
+                style={{
+                  color: colors.text.action.primary,
+                  fontWeight: 500,
+                  cursor: 'default',
+                }}
+              >
+                {' '}
+                <Trans>How do I archive a project?</Trans>
+              </span>
+            </Tooltip>
+          </p>
+        )}
+      </div>
 
       {concatenatedPages && <ProjectsGrid projects={concatenatedPages} />}
       {(isLoading || isFetchingNextPage) && <Loading />}
@@ -250,7 +255,8 @@ export default function Projects() {
             padding: 20,
           }}
         >
-          {concatenatedPages?.length} projects
+          {concatenatedPages?.length}{' '}
+          {concatenatedPages?.length === 1 ? 'project' : 'projects'}
         </div>
       )}
 

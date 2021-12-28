@@ -51,7 +51,7 @@ export default function PayModsForm({
   // Validates the total distribution percentage
   const validateTotalDistributions = () => {
     if (form.getFieldValue('totalPercent') > 100)
-      return Promise.reject('Percentages must add up to less than 100%')
+      return Promise.reject('Percentages must add up to 100% or less')
     return Promise.resolve()
   }
 

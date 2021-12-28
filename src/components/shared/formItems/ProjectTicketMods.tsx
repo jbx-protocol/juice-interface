@@ -228,7 +228,7 @@ export default function ProjectTicketMods({
         {
           validator: () => {
             if (total > 100)
-              return Promise.reject('Percentages must add up to less than 100%')
+              return Promise.reject('Percentages must add up to 100% or less')
 
             return Promise.resolve()
           },

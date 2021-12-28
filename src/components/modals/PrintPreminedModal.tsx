@@ -1,11 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { FormItems } from 'components/shared/formItems'
+import InputAccessoryButton from 'components/shared/InputAccessoryButton'
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { CURRENCY_ETH } from 'constants/currency'
 import { ProjectContext } from 'contexts/projectContext'
 import { UserContext } from 'contexts/userContext'
 import { constants, utils } from 'ethers'
-import { CurrencyOption } from 'models/currency-option'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
@@ -24,7 +25,6 @@ export default function PrintPreminedModal({
     memo: string
   }>()
 
-  const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [value, setValue] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
 
@@ -41,7 +41,7 @@ export default function PrintPreminedModal({
       [
         projectId.toHexString(),
         parseWad(value).toHexString(),
-        BigNumber.from(currency).toHexString(),
+        BigNumber.from(CURRENCY_ETH).toHexString(),
         form.getFieldValue('beneficary') ?? '',
         form.getFieldValue('memo') ?? '',
         form.getFieldValue('preferUnstaked'),
@@ -92,16 +92,15 @@ export default function PrintPreminedModal({
         >
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
-        <FormItems.ProjectTarget
+        <FormattedNumberInput
           formItemProps={{
             label: 'Payment equivalent',
             extra:
               'The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.',
           }}
-          currency={currency}
-          onCurrencyChange={setCurrency}
           value={value}
-          onValueChange={val => setValue(val ?? '0')}
+          onChange={val => setValue(val ?? '0')}
+          accessory={<InputAccessoryButton content="ETH" />}
         />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />

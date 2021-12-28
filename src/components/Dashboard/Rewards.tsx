@@ -12,17 +12,12 @@ import useContractReader, { ContractUpdateOn } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { OperatorPermission, useHasPermission } from 'hooks/HasPermission'
 import { ContractName } from 'models/contract-name'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 
+import PrintPreminedModal from '../modals/PrintPreminedModal'
 import IssueTickets from './IssueTickets'
 import SectionHeader from './SectionHeader'
 
@@ -34,6 +29,7 @@ export default function Rewards({
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
+  const [mintModalVisible, setMintModalVisible] = useState<boolean>()
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
   const { userAddress } = useContext(NetworkContext)
@@ -136,9 +132,8 @@ export default function Rewards({
     : false
 
   const hasIssueTicketsPermission = useHasPermission(OperatorPermission.Issue)
-  const closeParticipantsModal = useCallback(
-    () => setParticipantsModalVisible(false),
-    [],
+  const hasPrintPreminePermission = useHasPermission(
+    OperatorPermission.PrintTickets,
   )
 
   const labelStyle: CSSProperties = {
@@ -262,6 +257,13 @@ export default function Rewards({
         centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
+          {(metadata?.ticketPrintingIsAllowed || metadata?.version === 0) &&
+            hasPrintPreminePermission &&
+            projectId?.gt(0) && (
+              <Button onClick={() => setMintModalVisible(true)} block>
+                Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens
+              </Button>
+            )}
           <Button onClick={() => setRedeemModalVisible(true)} block>
             Return my ETH
           </Button>
@@ -287,7 +289,11 @@ export default function Rewards({
       />
       <ParticipantsModal
         visible={participantsModalVisible}
-        onCancel={closeParticipantsModal}
+        onCancel={() => setParticipantsModalVisible(false)}
+      />
+      <PrintPreminedModal
+        visible={mintModalVisible}
+        onCancel={() => setMintModalVisible(false)}
       />
     </div>
   )

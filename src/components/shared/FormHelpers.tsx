@@ -12,7 +12,7 @@ export function getTotalPercentage(mods: PayoutMod[] | undefined) {
   )
 }
 
-export function validateDistributionPercent(percent: number | undefined) {
+export function validateGreaterThanZero(percent: number | undefined) {
   if (percent === undefined || percent === 0) return Promise.reject('Required')
   return Promise.resolve()
 }

@@ -132,9 +132,9 @@ If you need help at any stage, reach out in the
    })
    ```
 
-1. Extract the strings marked for translation. This creates a directory for the
+1. Extract and compile the strings marked for translation. This creates a directory for the
    locale within the `./locale/` directory:
 
    ```bash
-   yarn i18n:extract
+   yarn i18n:compile
    ```

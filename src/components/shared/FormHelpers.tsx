@@ -31,8 +31,8 @@ export function validateEthAddress(
   else if (!address || !utils.isAddress(address))
     return Promise.reject('Address is required')
   else if (address === constants.AddressZero)
-    return Promise.reject('Cannot use zero address.')
+    return Promise.reject('Cannot use zero address')
   else if (mods.some(mod => mod.beneficiary === address))
-    return Promise.reject('Address already in use.')
+    return Promise.reject('A payout for this address already exists')
   else return Promise.resolve()
 }

@@ -216,7 +216,7 @@ export default function PayoutModsList({
                   validator: () => {
                     if (totalPercentage > 100)
                       return Promise.reject(
-                        'Percentages must add up to less than 100%',
+                        'Percentages must add up to 100% or less',
                       )
 
                     return Promise.resolve()

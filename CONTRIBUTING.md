@@ -81,6 +81,11 @@ means you need a GitHub account.
    > the given `msgid` in the `./locales/en/messages.po` file (the source
    > locale).
 
+   > If the `msgid` you're looking for doesn't exist, find where the text is
+   > being rendered in the code and wrap it in either a <Trans> tag or a `t()`
+   > function (import both from "@lingui/macro"). Then run `yarn i18n:extract`
+   > to generate the new `msgid's`in the `.po` files.
+
 1. Add the translation in the `msgstr` field.
 
    ```diff

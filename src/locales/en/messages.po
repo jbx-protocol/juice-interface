@@ -25,6 +25,10 @@ msgstr ""
 msgid "<0/>The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO, so you should do your own research and understand the risks before committing your funds."
 msgstr ""
 
+#: src/components/shared/formItems/ProjectTwitter.tsx
+msgid "@"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "A bonding curve rewards people who wait longer to redeem your tokens for overflow."
 msgstr ""
@@ -43,6 +47,10 @@ msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Almost definitely."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "An invite link to your project's Discord server."
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -100,6 +108,10 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Design your project"
 msgstr "Design your project"
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "Discord"
+msgstr ""
 
 #: src/components/Landing/Faq.tsx
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -201,6 +213,10 @@ msgstr ""
 msgid "Latest payments"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectLogoUri.tsx
+msgid "Logo"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
 msgstr ""
@@ -208,6 +224,22 @@ msgstr ""
 #: src/components/Landing/index.tsx
 msgid "Open source businesses"
 msgstr "Open source businesses"
+
+#: src/components/shared/formItems/ProjectPayButton.tsx
+msgid "Pay"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectPayButton.tsx
+msgid "Pay button text"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectPayDisclosure.tsx
+msgid "Pay disclosure"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectName.tsx
+msgid "Peach's Juicebox Stand"
+msgstr ""
 
 #: src/components/Landing/Faq.tsx
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
@@ -219,6 +251,22 @@ msgstr "Powered by public smart contracts on <0>Ethereum</0>."
 
 #: src/components/Landing/index.tsx
 msgid "Programmable spending"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDescription.tsx
+msgid "Project description"
+msgstr ""
+
+#: src/components/Create/ProjectForm.tsx
+msgid "Project details"
+msgstr ""
+
+#: src/components/Create/ProjectForm.tsx
+msgid "Project handle must be unique."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectName.tsx
+msgid "Project name"
 msgstr ""
 
 #: src/components/Navbar/index.tsx
@@ -249,6 +297,10 @@ msgstr ""
 msgid "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
 msgstr "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
 
+#: src/components/Create/ProjectForm.tsx
+msgid "Save project details"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
@@ -259,6 +311,10 @@ msgstr ""
 
 #: src/components/Navbar/Account.tsx
 msgid "Sign out"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectPayButton.tsx
+msgid "Text displayed on your project's \"pay\" button. Leave this blank to use the default."
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -301,6 +357,10 @@ msgstr ""
 msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
 msgstr ""
 
+#: src/components/shared/formItems/ProjectPayDisclosure.tsx
+msgid "This text will be displayed to your supporters before they complete their payment."
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
 msgstr ""
@@ -309,8 +369,20 @@ msgstr ""
 msgid "Transparency & accountability"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectTwitter.tsx
+msgid "Twitter"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectLogoUri.tsx
+msgid "Upload"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app)."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectLink.tsx
+msgid "Website"
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -367,6 +439,34 @@ msgstr ""
 
 #: src/components/Navbar/index.tsx
 msgid "Workspace"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectTwitter.tsx
+msgid "Your project's Twitter handle."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectLink.tsx
+msgid "Your project's website."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDescription.tsx
+msgid "characters max"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
+msgid "handle"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectDiscord.tsx
+msgid "https://discord.gg/abcdefgh"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectLink.tsx
+msgid "https://your-project.com"
+msgstr ""
+
+#: src/components/shared/formItems/ProjectTwitter.tsx
+msgid "juiceboxETH\""
 msgstr ""
 
 #: src/components/modals/DistributeTokensModal.tsx

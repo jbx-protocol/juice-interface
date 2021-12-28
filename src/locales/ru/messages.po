@@ -51,7 +51,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "An invite link to your project's Discord server."
-msgstr ""
+msgstr "Ссылка для приглашения на сервер Discord вашего проекта."
 
 #: src/components/Landing/Faq.tsx
 msgid "Anyone can deploy and use another governance smart contract to override this scheme."
@@ -215,7 +215,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Logo"
-msgstr ""
+msgstr "Логотип"
 
 #: src/components/Landing/index.tsx
 msgid "Note: Juicebox is new, unaudited, and not guaranteed to work perfectly. Before spending money, do your own research: <0>ask questions</0>, <1>check out the code</1>, and understand the risks!"
@@ -227,19 +227,19 @@ msgstr "开源业务"
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
 msgid "Pay"
-msgstr ""
+msgstr "Платить"
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
 msgid "Pay button text"
-msgstr ""
+msgstr "Кнопка оплаты"
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "Pay disclosure"
-msgstr ""
+msgstr "Раскрытие информации о платеже"
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Peach's Juicebox Stand"
-msgstr ""
+msgstr "Рандомное имя"
 
 #: src/components/Landing/Faq.tsx
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
@@ -255,19 +255,19 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "Project description"
-msgstr ""
+msgstr "Описание Проекта"
 
 #: src/components/Create/ProjectForm.tsx
 msgid "Project details"
-msgstr ""
+msgstr "Внешность проекта"
 
 #: src/components/Create/ProjectForm.tsx
 msgid "Project handle must be unique."
-msgstr ""
+msgstr "Уникальное никнейм"
 
 #: src/components/shared/formItems/ProjectName.tsx
 msgid "Project name"
-msgstr ""
+msgstr "Название проекта"
 
 #: src/components/Navbar/index.tsx
 msgid "Projects"
@@ -299,7 +299,7 @@ msgstr "从你的钱包中扣除 {0} ERC20 代币，并把这些代币锁在Juic
 
 #: src/components/Create/ProjectForm.tsx
 msgid "Save project details"
-msgstr ""
+msgstr "Сохранить"
 
 #: src/components/Landing/index.tsx
 msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."
@@ -315,7 +315,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayButton.tsx
 msgid "Text displayed on your project's \"pay\" button. Leave this blank to use the default."
-msgstr ""
+msgstr "Текст, отображаемый на кнопке \"оплатить\" вашего проекта. Оставьте это поле пустым, чтобы использовать значение по умолчанию."
 
 #: src/components/Landing/Faq.tsx
 msgid "That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet."
@@ -359,7 +359,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectPayDisclosure.tsx
 msgid "This text will be displayed to your supporters before they complete their payment."
-msgstr ""
+msgstr "Этот текст будет показан всем, кто оплачивает ваш проект, до того, как они завершат свою оплату."
 
 #: src/components/Landing/Faq.tsx
 msgid "This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol.)"
@@ -371,11 +371,11 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Twitter"
-msgstr ""
+msgstr "Твиттер"
 
 #: src/components/shared/formItems/ProjectLogoUri.tsx
 msgid "Upload"
-msgstr ""
+msgstr "загрузить"
 
 #: src/components/Landing/Faq.tsx
 msgid "Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app)."
@@ -383,7 +383,7 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectLink.tsx
 msgid "Website"
-msgstr ""
+msgstr "Веб-сайт"
 
 #: src/components/Landing/Faq.tsx
 msgid "What are community tokens?"
@@ -443,27 +443,27 @@ msgstr ""
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "Your project's Twitter handle."
-msgstr ""
+msgstr "Описание вашего проекта в Твиттере."
 
 #: src/components/shared/formItems/ProjectLink.tsx
 msgid "Your project's website."
-msgstr ""
+msgstr "Сайт вашего проекта."
 
 #: src/components/shared/formItems/ProjectDescription.tsx
 msgid "characters max"
-msgstr ""
+msgstr "символов mаксимум"
 
 #: src/components/shared/formItems/ProjectHandle/ProjectHandleInput.tsx
 msgid "handle"
-msgstr ""
+msgstr "никнейм"
 
 #: src/components/shared/formItems/ProjectDiscord.tsx
 msgid "https://discord.gg/abcdefgh"
-msgstr ""
+msgstr "https://discord.gg/abcdefgh"
 
 #: src/components/shared/formItems/ProjectLink.tsx
 msgid "https://your-project.com"
-msgstr ""
+msgstr "https://your-project.com"
 
 #: src/components/shared/formItems/ProjectTwitter.tsx
 msgid "juiceboxETH\""

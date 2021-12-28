@@ -1,7 +1,11 @@
 import { Button, Form, FormInstance, Space } from 'antd'
+import { t } from '@lingui/macro'
+
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
+
+import { Trans } from '@lingui/macro'
 
 export type ProjectFormFields = {
   name: string
@@ -24,7 +28,9 @@ export default function ProjectForm({
 }) {
   return (
     <Space direction="vertical" size="large">
-      <h1>Project details</h1>
+      <h1>
+        <Trans>Project details</Trans>
+      </h1>
 
       <Form form={form} layout="vertical">
         <FormItems.ProjectName
@@ -44,7 +50,7 @@ export default function ProjectForm({
           requireState="notExist"
           formItemProps={{
             dependencies: ['name'],
-            extra: 'Project handle must be unique.',
+            extra: t`Project handle must be unique.`,
           }}
           required
         />
@@ -73,7 +79,7 @@ export default function ProjectForm({
               onSave()
             }}
           >
-            Save project details
+            <Trans>Save project details</Trans>
           </Button>
         </Form.Item>
       </Form>

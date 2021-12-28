@@ -15,7 +15,7 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
-import { validateEthAddress, validateDistributionPercent } from '../FormHelpers'
+import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -222,7 +222,7 @@ export default function ProjectTicketMods({
 
   // Validates slider (ensures percent !== 0)
   const validateSlider = () => {
-    return validateDistributionPercent(form.getFieldValue('percent'))
+    return validateGreaterThanZero(form.getFieldValue('percent'))
   }
 
   return (

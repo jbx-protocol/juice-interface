@@ -26,7 +26,7 @@ import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
-import { validateEthAddress, validateDistributionPercent } from '../FormHelpers'
+import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
 
 type ModType = 'project' | 'address'
 type ModalMode = 'Add' | 'Edit' | undefined
@@ -325,7 +325,7 @@ export default function ProjectPayoutMods({
 
   // Validates the slider (ensures percent !== 0)
   const validateSlider = () => {
-    return validateDistributionPercent(form.getFieldValue('percent'))
+    return validateGreaterThanZero(form.getFieldValue('percent'))
   }
 
   // Validates new payout receiving address

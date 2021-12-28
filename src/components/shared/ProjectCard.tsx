@@ -45,17 +45,22 @@ export default function ProjectCard({
             alignItems: 'center',
             whiteSpace: 'pre',
             overflow: 'hidden',
+            padding: 20,
           }}
         >
-          <div>
+          <div style={{ marginRight: 20 }}>
             <ProjectLogo
               uri={metadata.logoUri}
               name={metadata.name}
-              size={125}
+              size={110}
             />
           </div>
 
-          <div style={{ minWidth: 0, padding: '10px 20px' }}>
+          <div
+            style={{
+              minWidth: 0,
+            }}
+          >
             <h2
               style={{
                 color: colors.text.primary,

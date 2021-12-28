@@ -140,6 +140,8 @@ export type InfiniteGraphQueryOpts<
 export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
 ) => {
+  if (!opts) return
+
   let args = ''
 
   const addArg = (
@@ -193,8 +195,8 @@ const subgraphUrl = process.env.REACT_APP_SUBGRAPH_URL
 export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
-) =>
-  subgraphUrl
+) => {
+  return subgraphUrl && opts
     ? axios
         .post(
           subgraphUrl,
@@ -208,6 +210,7 @@ export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
         )
         .catch(err => console.log('Error getting ' + opts.entity + 's', err))
     : Promise.reject('Missing url for subgraph query')
+}
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')
 

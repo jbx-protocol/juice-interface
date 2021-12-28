@@ -46,6 +46,16 @@ interface ProjectsOptions {
 
 const staleTime = 60000
 
+const keys: (keyof Project)[] = [
+  'handle',
+  'creator',
+  'createdAt',
+  'uri',
+  'currentBalance',
+  'totalPaid',
+  'totalRedeemed',
+]
+
 const queryOpts = (
   opts: ProjectsOptions,
 ): Partial<
@@ -56,16 +66,7 @@ const queryOpts = (
 
   return {
     entity: 'project',
-    keys: [
-      'id',
-      'handle',
-      'creator',
-      'createdAt',
-      'uri',
-      'currentBalance',
-      'totalPaid',
-      'totalRedeemed',
-    ],
+    keys: opts.keys ?? keys,
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,
@@ -109,19 +110,13 @@ export function useProjectsQuery(opts: ProjectsOptions) {
 
 export function useProjectsSearch(handle: string | undefined) {
   return useSubgraphQuery(
-    {
-      text: `${handle}:*`,
-      entity: 'projectSearch',
-      keys: [
-        'handle',
-        'creator',
-        'createdAt',
-        'uri',
-        'currentBalance',
-        'totalPaid',
-        'totalRedeemed',
-      ],
-    },
+    handle
+      ? {
+          text: `${handle}:*`,
+          entity: 'projectSearch',
+          keys,
+        }
+      : null,
     {
       staleTime,
     },

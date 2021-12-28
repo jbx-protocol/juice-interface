@@ -2,6 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { utils } from 'ethers'
 
 import { Participant } from './participant'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/network-name'
 
 export interface Project {
   createdAt?: number
@@ -23,7 +25,10 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
   ...project,
   id: project.id ? BigNumber.from(project.id) : undefined,
   createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
-  handle: project.handle ? utils.parseBytes32String(project.handle) : undefined,
+  handle:
+    readNetwork.name === NetworkName.mainnet
+      ? utils.parseBytes32String(project.handle) // Temporarily handle difference between mainnet subgraph (Bytes32 handle) and testnet (string handle)
+      : project.handle,
   currentBalance: project.currentBalance
     ? BigNumber.from(project.currentBalance)
     : undefined,

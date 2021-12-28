@@ -21,6 +21,7 @@ interface EditingProjectInfo {
 }
 
 export interface EditingProjectState {
+  version: number
   info: EditingProjectInfo
   fundingCycle: SerializedFundingCycle
   payoutMods: PayoutMod[]
@@ -31,6 +32,10 @@ const defaultDiscountRate = parsePermille(0)
 const defaultBondingCurveRate = parsePerbicent(100)
 
 export const defaultProjectState: EditingProjectState = {
+  // Increment this version by 1 when making breaking changes.
+  // When users return to the site and their local version is less than
+  // this number, their state will be reset.
+  version: 1,
   info: {
     metadata: {
       name: '',

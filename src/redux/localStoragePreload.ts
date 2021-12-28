@@ -1,12 +1,11 @@
 import { Middleware } from '@reduxjs/toolkit'
+import { defaultProjectState } from './slices/editingProject'
 
 import { RootState } from './store'
 
 const KEY = 'jb_redux_preloadedState'
 
 interface PreloadedState {
-  // Date last updated
-  lastUpdated: number
   reduxState: RootState
 }
 
@@ -18,7 +17,6 @@ export const localStoragePreloadMiddleware: Middleware =
     localStorage.setItem(
       KEY,
       JSON.stringify({
-        lastUpdated: Date.now(),
         reduxState: store.getState(),
       } as PreloadedState),
     )
@@ -35,12 +33,12 @@ export default function getLocalStoragePreloadedState(): RootState | undefined {
 
     const parsedState: PreloadedState = JSON.parse(stateString)
 
-    // If the localStorage state is valid but over 7 days old, discard it.
-    // We don't want to try hydrating an invalid state causing some unusual UX.
+    // If the localStorage `version` is the same, we can proceed and
+    // hydrate our preloaded state with it.
+    // If not, we should effectively discard it.
     if (
-      parsedState.reduxState &&
-      parsedState.lastUpdated &&
-      Date.now() - parsedState.lastUpdated < 6.048e8
+      parsedState?.reduxState?.editingProject?.version ===
+      defaultProjectState.version
     ) {
       return parsedState.reduxState
     } else {

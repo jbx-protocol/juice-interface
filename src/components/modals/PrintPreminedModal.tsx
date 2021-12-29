@@ -109,6 +109,7 @@ export default function PrintPreminedModal({
         <Form.Item
           name="preferUnstaked"
           label="Mint as ERC-20"
+          valuePropName="checked"
           extra={
             erc20Issued
               ? `Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise staked ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the recever.`

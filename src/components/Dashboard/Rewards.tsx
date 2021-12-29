@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Descriptions, Modal, Space, Statistic } from 'antd'
+import { Button, Descriptions, Modal, Space, Statistic, Tooltip } from 'antd'
 import ConfirmUnstakeTokensModal from 'components/modals/ConfirmUnstakeTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import RedeemModal from 'components/modals/RedeemModal'
@@ -48,6 +48,12 @@ export default function Rewards({
   } = useContext(ThemeContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
+
+  const canPrintPreminedV1Tickets = useContractReader<boolean>({
+    contract: ContractName.TerminalV1,
+    functionName: 'canPrintPreminedTickets',
+    args: projectId ? [projectId.toHexString()] : null,
+  })
 
   const ticketsUpdateOn: ContractUpdateOn = useMemo(
     () => [
@@ -135,6 +141,12 @@ export default function Rewards({
   const hasPrintPreminePermission = useHasPermission(
     OperatorPermission.PrintTickets,
   )
+
+  const mintingTokensIsAllowed =
+    metadata &&
+    (metadata.version === 0
+      ? canPrintPreminedV1Tickets
+      : metadata.ticketPrintingIsAllowed)
 
   const labelStyle: CSSProperties = {
     width: 128,
@@ -257,19 +269,23 @@ export default function Rewards({
         centered
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          {(metadata?.ticketPrintingIsAllowed || metadata?.version === 0) &&
-            hasPrintPreminePermission &&
-            projectId?.gt(0) && (
-              <Button onClick={() => setMintModalVisible(true)} block>
-                Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens
-              </Button>
-            )}
           <Button onClick={() => setRedeemModalVisible(true)} block>
             Return my ETH
           </Button>
           <Button onClick={() => setUnstakeModalVisible(true)} block>
             Claim {tokenSymbol || 'tokens'} as ERC20
           </Button>
+          {hasPrintPreminePermission && projectId?.gt(0) && (
+            <Tooltip title="Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle.">
+              <Button
+                disabled={!mintingTokensIsAllowed}
+                onClick={() => setMintModalVisible(true)}
+                block
+              >
+                Mint {tokenSymbol ? tokenSymbol + ' ' : ''}tokens{' '}
+              </Button>
+            </Tooltip>
+          )}
         </Space>
       </Modal>
       <RedeemModal

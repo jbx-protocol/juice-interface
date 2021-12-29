@@ -196,20 +196,21 @@ export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
 ) => {
-  return subgraphUrl && opts
-    ? axios
-        .post(
-          subgraphUrl,
-          {
-            query: formatGraphQuery(opts),
-          },
-          { headers: { 'Content-Type': 'application/json' } },
-        )
-        .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
-          callback(res.data?.data),
-        )
-        .catch(err => console.log('Error getting ' + opts.entity + 's', err))
-    : Promise.reject('Missing url for subgraph query')
+  if (!opts) return Promise.resolve()
+  if (!subgraphUrl) return Promise.reject('Missing url for subgraph query')
+
+  return axios
+    .post(
+      subgraphUrl,
+      {
+        query: formatGraphQuery(opts),
+      },
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+    .then((res: AxiosResponse<{ data?: SubgraphQueryReturnTypes[E] }>) =>
+      callback(res.data?.data),
+    )
+    .catch(err => console.log('Error getting ' + opts.entity + 's', err))
 }
 
 export const trimHexZero = (hexStr: string) => hexStr.replace('0x0', '0x')

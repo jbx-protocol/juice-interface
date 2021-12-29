@@ -7,7 +7,7 @@ export default function UntrackedErc20Notice({
     <p>
       <b>Notice:</b> {tokenSymbol} ERC20 tokens have not been indexed by
       Juicebox, meaning that the balances reflected below will be inaccurate for
-      users who have unstaked and transferred their tokens. This will be solved
+      users who have claimed and transferred their tokens. This will be solved
       with the release of{' '}
       <a
         href="https://app.gitbook.com/@jbx/s/juicebox/"

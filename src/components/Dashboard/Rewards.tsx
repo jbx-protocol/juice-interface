@@ -276,7 +276,7 @@ export default function Rewards({
             Claim {tokenSymbol || 'tokens'} as ERC20
           </Button>
           {hasPrintPreminePermission && projectId?.gt(0) && (
-            <Tooltip title="Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle.">
+            <Tooltip title="Minting tokens can be enabled or disabled by reconfiguring a v1.1 project's funding cycle. Tokens can only be minted by the project owner.">
               <Button
                 disabled={!mintingTokensIsAllowed}
                 onClick={() => setMintModalVisible(true)}

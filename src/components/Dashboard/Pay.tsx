@@ -79,15 +79,18 @@ export default function Pay() {
       (fcMetadata?.payIsPaused && fcMetadata?.version > 0) ||
       overridePayDisabled
     ) {
+      let disabledMessage: string
+      if (fcMetadata?.reservedRate === 200) {
+        disabledMessage =
+          'Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.'
+      } else if (fcMetadata?.payIsPaused && fcMetadata?.version > 0) {
+        disabledMessage = 'Payments are paused for the current funding cycle.'
+      } else {
+        disabledMessage = 'Paying this project is currently disabled.'
+      }
+
       return (
-        <Tooltip
-          title={
-            fcMetadata?.reservedRate === 200
-              ? 'Paying this project is currently disabled, because the token reserved rate is 100% and no tokens will be earned by making a payment.'
-              : 'Paying this project is currently disabled.'
-          }
-          className="block"
-        >
+        <Tooltip title={disabledMessage} className="block">
           <Button style={{ width: '100%' }} type="primary" disabled>
             {payButtonText}
           </Button>

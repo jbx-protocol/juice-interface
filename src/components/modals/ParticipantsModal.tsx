@@ -258,11 +258,11 @@ export default function ParticipantsModal({
           for some projects.
         </p>
 
-        <p style={{ padding: 10, background: colors.background.l1 }}>
-          {erc20IsUntracked && (
+        {erc20IsUntracked && (
+          <p style={{ padding: 10, background: colors.background.l1 }}>
             <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
-          )}
-        </p>
+          </p>
+        )}
 
         {list}
 

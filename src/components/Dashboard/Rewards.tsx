@@ -268,7 +268,6 @@ export default function Rewards({
         visible={redeemModalVisible}
         redeemDisabled={redeemDisabled}
         totalBalance={totalBalance}
-        totalSupply={totalSupply}
         onOk={() => {
           setRedeemModalVisible(false)
         }}

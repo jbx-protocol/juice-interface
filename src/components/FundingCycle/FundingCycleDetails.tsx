@@ -18,6 +18,7 @@ import { ProjectContext } from 'contexts/projectContext'
 
 import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 import TooltipLabel from '../shared/TooltipLabel'
+import { useRedeemRate } from '../../hooks/RedeemRate'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -29,6 +30,11 @@ export default function FundingCycleDetails({
   } = useContext(ThemeContext)
 
   const { tokenSymbol } = useContext(ProjectContext)
+
+  const redeemRate = useRedeemRate({
+    tokenAmount: '1',
+    fundingCycle,
+  })
 
   if (!fundingCycle) return null
 
@@ -106,24 +112,6 @@ export default function FundingCycleDetails({
 
         {isRecurring(fundingCycle) && (
           <Descriptions.Item
-            label={
-              <TooltipLabel
-                label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
-                tip={`${
-                  tokenSymbol ?? 'Tokens'
-                } received per ETH paid to the treasury. This will change according to the project's discount rate over time, as well as its reserved tokens amount.`}
-              />
-            }
-          >
-            {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
-              decimals: 0,
-            })}{' '}
-            {tokenSymbol ?? 'tokens'}
-          </Descriptions.Item>
-        )}
-
-        {isRecurring(fundingCycle) && (
-          <Descriptions.Item
             span={2}
             label={
               <TooltipLabel
@@ -135,6 +123,37 @@ export default function FundingCycleDetails({
             {fromPerbicent(metadata?.bondingCurveRate)}%
           </Descriptions.Item>
         )}
+
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
+              tip={`${
+                tokenSymbol ?? 'Tokens'
+              } received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
+            />
+          }
+        >
+          {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
+            decimals: 0,
+          })}{' '}
+          {tokenSymbol ?? 'tokens'}
+        </Descriptions.Item>
+
+        <Descriptions.Item
+          span={2}
+          label={
+            <TooltipLabel
+              label={tokenSymbol ? 'ETH/' + tokenSymbol : 'ETH/tokens'}
+              tip={`The value in ETH that one ${
+                tokenSymbol ? tokenSymbol + ' token' : 'token'
+              } can be redeemed for through Juicebox. This can change over time according to the bonding curve of future funding cycles.`}
+            />
+          }
+        >
+          <CurrencySymbol currency={0} />
+          {formatWad(redeemRate)}
+        </Descriptions.Item>
       </Descriptions>
 
       <div>

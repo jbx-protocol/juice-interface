@@ -1,4 +1,6 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
@@ -268,7 +270,7 @@ export default function ProjectTicketMods({
                 color: total > 100 ? colors.text.warn : colors.text.secondary,
               }}
             >
-              Total:{' '}
+              <Trans>Total</Trans>:{' '}
               {total
                 .toString()
                 .split('.')
@@ -278,7 +280,8 @@ export default function ProjectTicketMods({
             </span>
           </div>
           <div>
-            {100 - total}% to <FormattedAddress address={owner} />
+            {100 - total}% <Trans>to</Trans>{' '}
+            <FormattedAddress address={owner} />
           </div>
         </div>
         <Button
@@ -290,7 +293,7 @@ export default function ProjectTicketMods({
           }}
           block
         >
-          Add token receiver
+          <Trans>Add token receiver</Trans>
         </Button>
       </Space>
 

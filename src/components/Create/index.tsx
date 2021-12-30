@@ -1,4 +1,5 @@
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
+import { t } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -454,32 +455,32 @@ export default function Create() {
 
           {buildSteps([
             {
-              title: 'Project details',
+              title: t`Project details`,
               description: 'Project name, handle, links, and other details.',
               callback: () => setProjectFormModalVisible(true),
             },
             {
-              title: 'Funding',
+              title: t`Funding`,
               description: "Your project's funding cycle target and duration.",
               callback: () => setBudgetFormModalVisible(true),
             },
             {
-              title: 'Distribution',
+              title: t`Distribution`,
               description: 'How your project will distribute funds.',
               callback: () => setPayModsFormModalVisible(true),
             },
             {
-              title: 'Reserved Tokens',
+              title: t`Reserved Tokens`,
               description: 'Reward specific community members with tokens.',
               callback: () => setTicketingFormModalVisible(true),
             },
             {
-              title: 'Reconfiguration',
+              title: t`Reconfiguration`,
               description: 'Rules for how changes can be made to your project.',
               callback: () => setRulesFormModalVisible(true),
             },
             {
-              title: 'Incentives',
+              title: t`Incentives`,
               description: 'Adjust incentivizes for paying your project.',
               callback: () => setIncentivesFormModalVisible(true),
             },
@@ -629,12 +630,12 @@ export default function Create() {
             initialBondingCurveRate={fromPerbicent(editingFC.bondingCurveRate)}
             disableDiscountRate={
               editingFC.duration.eq(0)
-                ? 'Discount rate disabled while funding cycle duration is 0.'
+                ? t`Discount rate disabled while funding cycle duration is 0.`
                 : undefined
             }
             disableBondingCurve={
               !hasFundingTarget(editingFC)
-                ? 'Bonding curve disabled while no funding target is set.'
+                ? t`Bonding curve disabled while no funding target is set.`
                 : undefined
             }
             onSave={async (discountRate: string, bondingCurveRate: string) => {

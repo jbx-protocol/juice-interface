@@ -1,4 +1,5 @@
 import { CaretRightFilled } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -250,15 +251,19 @@ export default function ReconfigureFCModal({
       onOk={reconfigure}
       confirmLoading={loading}
       onCancel={onDone}
-      okText="Save reconfiguration"
+      okText={t`Save reconfiguration`}
       width={600}
     >
       <div>
-        <h1 style={{ marginBottom: 20 }}>Reconfigure funding</h1>
+        <h1 style={{ marginBottom: 20 }}>
+          <Trans>Reconfigure funding</Trans>
+        </h1>
 
         {currentFC?.duration.gt(0) && (
           <p>
-            All changes will be applied to the <b>upcoming</b> funding cycle.
+            <Trans>
+              All changes will be applied to the <b>upcoming</b> funding cycle.
+            </Trans>
           </p>
         )}
 
@@ -266,29 +271,29 @@ export default function ReconfigureFCModal({
           <div>
             {buildSteps([
               {
-                title: 'Funding',
+                title: t`Funding`,
                 callback: () => setBudgetFormModalVisible(true),
               },
               ...(editingFC.target.gt(0)
                 ? [
                     {
-                      title: 'Spending',
+                      title: t`Spending`,
                       callback: () => setPayModsFormModalVisible(true),
                     },
                   ]
                 : []),
               {
-                title: 'Reserved tokens',
+                title: t`Reserved tokens`,
                 callback: () => setTicketingFormModalVisible(true),
               },
               {
-                title: 'Rules',
+                title: t`Rules`,
                 callback: () => setRulesFormModalVisible(true),
               },
               ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
                 ? [
                     {
-                      title: 'Incentives',
+                      title: t`Incentives`,
                       callback: () => setIncentivesFormModalVisible(true),
                     },
                   ]
@@ -359,7 +364,7 @@ export default function ReconfigureFCModal({
               isRecurring(editingFC) &&
               hasFundingTarget(editingFC) && (
                 <Statistic
-                  title="Bonding curve rate"
+                  title={t`Bonding curve rate`}
                   value={fromPerbicent(editingFC.bondingCurveRate)}
                   suffix="%"
                 />

@@ -1,4 +1,5 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
@@ -353,7 +354,7 @@ export default function ProjectPayoutMods({
               color: total > 100 ? colors.text.warn : colors.text.secondary,
             }}
           >
-            Total: {total.toFixed(2)}%
+            <Trans>Total</Trans>: {total.toFixed(2)}%
           </div>
           <div>
             {(100 - total).toFixed(2)}% to <FormattedAddress address={owner} />
@@ -369,7 +370,7 @@ export default function ProjectPayoutMods({
           }}
           block
         >
-          Add a payout
+          <Trans>Add a payout</Trans>
         </Button>
       </Space>
 
@@ -428,7 +429,7 @@ export default function ProjectPayoutMods({
               requireState="exists"
               initialValue={editingModProjectId}
               formItemProps={{
-                label: 'Project handle',
+                label: t`Project handle`,
               }}
               required
             />
@@ -438,9 +439,8 @@ export default function ProjectPayoutMods({
               name="beneficiary"
               defaultValue={form.getFieldValue('beneficiary')}
               formItemProps={{
-                label: 'Address',
-                extra:
-                  'The address that should receive the tokens minted from paying this project.',
+                label: t`Address`,
+                extra: t`The address that should receive the tokens minted from paying this project.`,
                 rules: [
                   {
                     validator: (rule: any, value: any) => {

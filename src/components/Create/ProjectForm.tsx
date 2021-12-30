@@ -1,11 +1,9 @@
 import { Button, Form, FormInstance, Space } from 'antd'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from 'components/shared/formItems'
 import { normalizeHandle } from 'utils/formatHandle'
 import { cidFromUrl, unpinIpfsFileByCid } from 'utils/ipfs'
-
-import { Trans } from '@lingui/macro'
 
 export type ProjectFormFields = {
   name: string

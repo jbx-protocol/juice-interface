@@ -1,4 +1,5 @@
 import { Form } from 'antd'
+import { t } from '@lingui/macro'
 
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -16,9 +17,9 @@ export default function ProjectDiscountRate({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra="The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
+      extra={t`The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later.`}
       name={name}
-      label={hideLabel ? undefined : 'Discount rate'}
+      label={hideLabel ? undefined : t`Discount rate`}
       {...formItemProps}
     >
       <NumberSlider

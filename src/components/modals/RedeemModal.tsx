@@ -1,4 +1,5 @@
 import { Modal, Space } from 'antd'
+import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
@@ -184,23 +185,26 @@ export default function RedeemModal({
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
-          Balance: {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
+          <Trans>Balance</Trans>:{' '}
+          {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
           {tokenSymbol ?? 'tokens'}
         </div>
         <p>
-          Currently worth: <CurrencySymbol currency={0} />
+          <Trans>Currently worth</Trans>: <CurrencySymbol currency={0} />
           {formatWad(maxClaimable, { decimals: 4 })}
         </p>
         <p>
-          Tokens can be redeemed for a portion of this project's ETH overflow,
-          according to the bonding curve rate of the current funding cycle.{' '}
+          <Trans>
+            Tokens can be redeemed for a portion of this project's ETH overflow,
+            according to the bonding curve rate of the current funding cycle.
+          </Trans>{' '}
           <span style={{ fontWeight: 500, color: colors.text.warn }}>
-            Tokens are burned when they are redeemed.
+            <Trans>Tokens are burned when they are redeemed.</Trans>
           </span>
         </p>
         {redeemDisabled && (
           <div style={{ color: colors.text.secondary, fontWeight: 500 }}>
-            You can redeem tokens once this project has overflow.
+            <Trans>You can redeem tokens once this project has overflow.</Trans>
           </div>
         )}
         {!redeemDisabled && (

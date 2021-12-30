@@ -1,4 +1,5 @@
 import { Button, Form, Space } from 'antd'
+import { Trans } from '@lingui/macro'
 import { FormItems } from 'components/shared/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from 'ethers'
@@ -34,18 +35,24 @@ export default function PayModsForm({
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <div style={{ color: colors.text.secondary }}>
-        <h1>Distribution</h1>
+        <h1>
+          <Trans>Distribution</Trans>
+        </h1>
 
         <p>
-          Payouts let you commit portions of every withdrawal to other Ethereum
-          wallets or Juicebox projects. Use this to pay contributors, charities,
-          other projects you depend on, or anyone else. Payouts will be
-          distributed automatically whenever a withdrawal is made from your
-          project.
+          <Trans>
+            Payouts let you commit portions of every withdrawal to other
+            Ethereum wallets or Juicebox projects. Use this to pay contributors,
+            charities, other projects you depend on, or anyone else. Payouts
+            will be distributed automatically whenever a withdrawal is made from
+            your project.
+          </Trans>
         </p>
         <p>
-          Payouts are optional. By default, all unallocated revenue will be
-          withdrawable to the project owner's wallet.
+          <Trans>
+            Payouts are optional. By default, all unallocated revenue will be
+            withdrawable to the project owner's wallet.
+          </Trans>
         </p>
       </div>
 
@@ -64,7 +71,7 @@ export default function PayModsForm({
             type="primary"
             onClick={() => onSave(mods)}
           >
-            Save
+            <Trans>Save</Trans>
           </Button>
         </Form.Item>
       </Form>

@@ -330,7 +330,9 @@ export default function ProjectTicketMods({
 
           <Form.Item label="Percent" rules={[{ required: true }]}>
             <NumberSlider
-              onChange={(percent: any) => form.setFieldsValue({ percent })}
+              onChange={(percent: number | undefined) =>
+                form.setFieldsValue({ percent })
+              }
               step={0.01}
               defaultValue={form.getFieldValue('percent') || 0}
               suffix="%"

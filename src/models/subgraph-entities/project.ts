@@ -26,7 +26,7 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
   id: project.id ? BigNumber.from(project.id) : undefined,
   createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
   handle:
-    readNetwork.name === NetworkName.mainnet
+    readNetwork.name === NetworkName.mainnet && project.handle
       ? utils.parseBytes32String(project.handle) // Temporarily handle difference between mainnet subgraph (Bytes32 handle) and testnet (string handle)
       : project.handle,
   currentBalance: project.currentBalance

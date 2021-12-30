@@ -1,24 +1,29 @@
+import { parseEther } from '@ethersproject/units'
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+import { ProjectContext } from 'contexts/projectContext'
+import { ThemeContext } from 'contexts/themeContext'
 import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
+import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fromPerbicent,
+  fromPermille,
+  parseWad,
+} from 'utils/formatNumber'
 import {
   decodeFCMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/fundingCycle'
-
-import { useContext } from 'react'
-import { ThemeContext } from 'contexts/themeContext'
 import { weightedRate } from 'utils/math'
-import { parseEther } from '@ethersproject/units'
-import { ProjectContext } from 'contexts/projectContext'
 
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
-import TooltipLabel from '../shared/TooltipLabel'
 import { useRedeemRate } from '../../hooks/RedeemRate'
+import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -86,17 +91,6 @@ export default function FundingCycleDetails({
           <Descriptions.Item label="End">{formattedEndTime}</Descriptions.Item>
         )}
 
-        <Descriptions.Item
-          label={
-            <TooltipLabel
-              label="Reserved"
-              tip='Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.'
-            />
-          }
-        >
-          {fromPerbicent(metadata?.reservedRate)}%
-        </Descriptions.Item>
-
         {isRecurring(fundingCycle) && (
           <Descriptions.Item
             label={
@@ -127,7 +121,18 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={tokenSymbol ? tokenSymbol + '/ETH' : 'Tokens/ETH'}
+              label={`Reserved ${tokenSymbol ?? 'tokens'}`}
+              tip='Whenever someone pays your project, this percentage of tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can "mint" them, which distributes them to their intended receivers.'
+            />
+          }
+        >
+          {fromPerbicent(metadata?.reservedRate)}%
+        </Descriptions.Item>
+
+        <Descriptions.Item
+          label={
+            <TooltipLabel
+              label="Issue rate"
               tip={`${
                 tokenSymbol ?? 'Tokens'
               } received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
@@ -137,22 +142,30 @@ export default function FundingCycleDetails({
           {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
             decimals: 0,
           })}{' '}
-          {tokenSymbol ?? 'tokens'}
+          {metadata?.reservedRate
+            ? `(+${formatWad(
+                weightedRate(fundingCycle, parseEther('1'), 'reserved'),
+                {
+                  decimals: 0,
+                },
+              )} reserved)`
+            : ''}{' '}
+          {tokenSymbol ?? 'tokens'}/ETH
         </Descriptions.Item>
 
         <Descriptions.Item
           span={2}
           label={
             <TooltipLabel
-              label={tokenSymbol ? 'ETH/' + tokenSymbol : 'ETH/tokens'}
-              tip={`The value in ETH that one ${
+              label="Burn rate"
+              tip={`The amount of ${
                 tokenSymbol ? tokenSymbol + ' token' : 'token'
-              } can be redeemed for through Juicebox. This can change over time according to the bonding curve of future funding cycles.`}
+              } that must be burned in exchange for one ETH of overflow. This can change over time according to the bonding curve of future funding cycles.`}
             />
           }
         >
-          <CurrencySymbol currency={0} />
-          {formatWad(redeemRate)}
+          {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
+          {tokenSymbol ?? 'tokens'}/ETH
         </Descriptions.Item>
       </Descriptions>
 

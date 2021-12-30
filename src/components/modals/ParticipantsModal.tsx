@@ -253,7 +253,16 @@ export default function ParticipantsModal({
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
 
-        {erc20IsUntracked && <UntrackedErc20Notice tokenSymbol={tokenSymbol} />}
+        <p style={{ padding: 10, background: colors.background.l1 }}>
+          This list is using an experimental data index and may be inaccurate
+          for some projects.
+        </p>
+
+        <p style={{ padding: 10, background: colors.background.l1 }}>
+          {erc20IsUntracked && (
+            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
+          )}
+        </p>
 
         {list}
 

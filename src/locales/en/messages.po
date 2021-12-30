@@ -228,6 +228,10 @@ msgstr ""
 msgid "ERC20 community tokens"
 msgstr ""
 
+#: src/components/Landing/Faq.tsx
+msgid "Each project has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a project gets a newly minted supply of tokens in return."
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Ethereum protocols and DAOs"
 msgstr "Ethereum protocols and DAOs"
@@ -315,6 +319,10 @@ msgstr "Indie artists, devs, creators"
 
 #: src/components/Landing/Faq.tsx
 msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it—just let us know in Discord. Keep in mind people will still be able to use your project by interacting directly with the contract."
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "It'd be a lot cooler if you did"
 msgstr ""
 
 #: src/components/Landing/Faq.tsx
@@ -645,6 +653,10 @@ msgstr ""
 
 #: src/components/Create/TicketingForm.tsx
 msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
+msgstr ""
+
+#: src/components/Landing/Faq.tsx
+msgid "Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there."
 msgstr ""
 
 #: src/components/modals/RedeemModal.tsx

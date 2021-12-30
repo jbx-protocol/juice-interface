@@ -33,13 +33,13 @@ const QAs: {
   {
     q: t`What are community tokens?`,
     a: [
-      `Each project has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a project gets a newly minted supply of tokens in return. `,
+      t`Each project has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a project gets a newly minted supply of tokens in return. `,
     ],
   },
   {
     q: t`Why should I want to own a project's tokens?`,
     a: [
-      `Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there.`,
+      t`Tokens can be redeemed for a portion of a project's overflow, letting you benefit from its success. After all, you helped it get there.`,
     ],
   },
   {
@@ -128,7 +128,7 @@ const QAs: {
     q: t`Do I have to make my project open source to use Juicebox as its business model?`,
     img: {
       src: '/assets/cooler_if_you_did.png',
-      alt: "It'd be a lot cooler if you did",
+      alt: t`It'd be a lot cooler if you did`,
     },
   },
 ]

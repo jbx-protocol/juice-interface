@@ -5,6 +5,7 @@ import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
 import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 import { readProvider } from 'constants/readProvider'
 import { ProjectContext } from 'contexts/projectContext'
+import { ThemeContext } from 'contexts/themeContext'
 import { NetworkName } from 'models/network-name'
 import { parseParticipantJson } from 'models/subgraph-entities/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -22,6 +23,9 @@ export default function DownloadParticipantsModal({
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
   const { projectId, tokenSymbol, handle } = useContext(ProjectContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -136,7 +140,11 @@ export default function DownloadParticipantsModal({
       <div>
         <h4>Download CSV of {tokenSymbol || 'token'} holders</h4>
 
-        {erc20IsUntracked && <UntrackedErc20Notice tokenSymbol={tokenSymbol} />}
+        <p style={{ padding: 10, background: colors.background.l1 }}>
+          {erc20IsUntracked && (
+            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
+          )}
+        </p>
 
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           Block number

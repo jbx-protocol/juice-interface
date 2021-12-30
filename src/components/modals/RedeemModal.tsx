@@ -153,10 +153,10 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            Redeem rate:{' '}
+            Burn rate:{' '}
             <span>
-              {formatWad(redeemRate)} ETH/
-              {tokenSymbol ?? 'token'}
+              {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
+              {tokenSymbol ?? 'tokens'}/ETH
             </span>
           </p>
           <p style={statsStyle}>

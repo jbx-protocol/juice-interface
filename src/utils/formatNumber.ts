@@ -34,6 +34,11 @@ export const formatWad = (amt?: BigNumberish, config?: FormatConfig) => {
   return formattedNum(fromWad(_amt), config)
 }
 
+// Strips string of all commas
+export const stripCommas = (string: string) => {
+  return string.replace(/,/g, '')
+}
+
 // Permyriad: x/10000
 export const parsePermyriad = (amt?: string | number) =>
   BigNumber.from(amt ? Math.floor(parseFloat(amt.toString()) * 100) : 0)

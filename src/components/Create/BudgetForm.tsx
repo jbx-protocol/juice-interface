@@ -8,9 +8,13 @@ import { useEditingFundingCycleSelector } from 'hooks/AppSelector'
 import { CurrencyOption } from 'models/currency-option'
 import { useContext, useLayoutEffect, useState, useMemo } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromWad } from 'utils/formatNumber'
 import { hasFundingTarget, isRecurring } from 'utils/fundingCycle'
 import { helpPagePath } from 'utils/helpPageHelper'
+import { fromWad } from 'utils/formatNumber'
+import {
+  targetToTargetSubFeeFormatted,
+  targetSubFeeToTargetFormatted,
+} from 'components/shared/formItems/formHelpers'
 
 export default function BudgetForm({
   initialCurrency,
@@ -29,6 +33,7 @@ export default function BudgetForm({
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyOption>(0)
   const [target, setTarget] = useState<string>('0')
+  const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
   const editingFC = useEditingFundingCycleSelector()
@@ -39,9 +44,18 @@ export default function BudgetForm({
   useLayoutEffect(() => {
     setCurrency(initialCurrency)
     setTarget(initialTarget)
+    setTargetSubFee(
+      targetToTargetSubFeeFormatted(initialTarget, adminFeePercent),
+    )
     setDuration(initialDuration)
     setShowFundingFields(hasFundingTarget(editingFC))
-  }, [editingFC, initialCurrency, initialDuration, initialTarget])
+  }, [
+    editingFC,
+    initialCurrency,
+    initialDuration,
+    initialTarget,
+    adminFeePercent,
+  ])
 
   const maxIntStr = fromWad(constants.MaxUint256)
   const hasTarget = useMemo(() => {
@@ -122,8 +136,23 @@ export default function BudgetForm({
               rules: [{ required: true }],
               extra: null,
             }}
-            value={target.toString()}
-            onValueChange={val => setTarget(val || '0')}
+            target={target}
+            targetSubFee={targetSubFee}
+            onTargetChange={target => {
+              setTarget(target || '0')
+              setTargetSubFee(
+                targetToTargetSubFeeFormatted(target || '0', adminFeePercent),
+              )
+            }}
+            onTargetSubFeeChange={targetSubFee => {
+              setTargetSubFee(targetSubFee || '0')
+              setTarget(
+                targetSubFeeToTargetFormatted(
+                  targetSubFee || '0',
+                  adminFeePercent,
+                ),
+              )
+            }}
             currency={currency}
             onCurrencyChange={setCurrency}
             fee={adminFeePercent}

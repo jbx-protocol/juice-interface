@@ -13,7 +13,7 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, fromPermyriad, fromWad } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
-import { getTotalPercentage } from './FormHelpers'
+import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 
 import ProjectPayoutMods from './formItems/ProjectPayoutMods'
 import { CURRENCY_ETH } from 'constants/currency'

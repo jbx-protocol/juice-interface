@@ -213,6 +213,7 @@ msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "Discount rate"
 msgstr ""
@@ -558,6 +559,7 @@ msgstr ""
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Create/TicketingForm.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved tokens"

@@ -213,6 +213,7 @@ msgstr "Дискорд"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/FundingCycle/FundingCycleDetails.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/shared/formItems/ProjectDiscountRate.tsx
 msgid "Discount rate"
 msgstr "Учетная ставка "
@@ -311,7 +312,7 @@ msgstr "Финансирование Цель"
 
 #: src/components/Dashboard/Rewards.tsx
 msgid "Holders"
-msgstr ""
+msgstr "Держатели"
 
 #: src/components/Landing/Faq.tsx
 msgid "Holding these tokens entitles a project to a portion of its own overflow."
@@ -558,6 +559,7 @@ msgstr "Зарезервированные Токены"
 
 #: src/components/Create/ConfirmDeployProject.tsx
 #: src/components/Create/TicketingForm.tsx
+#: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/modals/ReconfigureFCModal.tsx
 #: src/components/shared/formItems/ProjectReserved.tsx
 msgid "Reserved tokens"

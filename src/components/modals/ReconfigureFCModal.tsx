@@ -347,7 +347,7 @@ export default function ReconfigureFCModal({
 
           <Space size="large" align="end">
             <Statistic
-              title="Reserved tokens"
+              title={t`Reserved tokens`}
               value={fromPerbicent(editingFC.reserved)}
               suffix="%"
             />
@@ -355,7 +355,7 @@ export default function ReconfigureFCModal({
               isRecurring(editingFC) &&
               hasFundingTarget(editingFC) && (
                 <Statistic
-                  title="Discount rate"
+                  title={t`Discount rate`}
                   value={fromPermille(editingFC.discountRate)}
                   suffix="%"
                 />

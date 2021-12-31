@@ -5,6 +5,7 @@ import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
 import { formattedNum } from 'utils/formatNumber'
 import UniswapLogo from 'components/icons/Uniswap'
 import { Tooltip } from 'antd'
+import { t } from '@lingui/macro'
 
 type exchangeName = 'Uniswap'
 
@@ -47,11 +48,12 @@ export default function TokenAMMPriceBadge({
     <Tooltip
       title={
         isLoading
-          ? `Loading ${exchangeName} price for ${tokenSymbol}...`
+          ? t`Loading ${exchangeName} price for ${tokenSymbol}...`
           : hasAMMPrice
-          ? `${tokenSymbol}/ETH exchange rate on ${exchangeName}.`
-          : `${exchangeName} has no liquidity pool for ${tokenSymbol}.`
+          ? t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`
+          : t`${exchangeName} has no liquidity pool for ${tokenSymbol}.`
       }
+      placement="topLeft"
     >
       <a
         className="quiet"

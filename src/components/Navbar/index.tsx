@@ -72,6 +72,10 @@ export default function Navbar() {
         })}
         {menuItem(t`Docs`, 'https://docs.juicebox.money')}
         {menuItem(t`Blog`, 'https://blog.juicebox.money')}
+        {menuItem(
+          t`Podcast`,
+          'https://juicebox.notion.site/The-Juicebox-Podcast-ecd79f3b6b8f488bb5f422686811de40',
+        )}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {menuItem(t`Workspace`, 'https://juicebox.notion.site')}
       </>

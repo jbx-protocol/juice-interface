@@ -451,37 +451,39 @@ export default function Create() {
             paddingRight: spacing,
           }}
         >
-          <h1 style={{ marginBottom: spacing / 2 }}>Design your project 🎨</h1>
+          <h1 style={{ marginBottom: spacing / 2 }}>
+            <Trans>Design your project</Trans> 🎨
+          </h1>
 
           {buildSteps([
             {
               title: t`Project details`,
-              description: 'Project name, handle, links, and other details.',
+              description: t`Project name, handle, links, and other details.`,
               callback: () => setProjectFormModalVisible(true),
             },
             {
               title: t`Funding`,
-              description: "Your project's funding cycle target and duration.",
+              description: t`Your project's funding cycle target and duration.`,
               callback: () => setBudgetFormModalVisible(true),
             },
             {
               title: t`Distribution`,
-              description: 'How your project will distribute funds.',
+              description: t`How your project will distribute funds.`,
               callback: () => setPayModsFormModalVisible(true),
             },
             {
               title: t`Reserved Tokens`,
-              description: 'Reward specific community members with tokens.',
+              description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },
             {
               title: t`Reconfiguration`,
-              description: 'Rules for how changes can be made to your project.',
+              description: t`Rules for how changes can be made to your project.`,
               callback: () => setRulesFormModalVisible(true),
             },
             {
               title: t`Incentives`,
-              description: 'Adjust incentivizes for paying your project.',
+              description: t`Adjust incentivizes for paying your project.`,
               callback: () => setIncentivesFormModalVisible(true),
             },
           ])}
@@ -497,7 +499,7 @@ export default function Create() {
               paddingRight: spacing,
             }}
           >
-            Preview:
+            <Trans>Preview</Trans>:
           </h3>
 
           <div

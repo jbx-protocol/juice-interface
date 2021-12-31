@@ -1,4 +1,5 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { ProjectContext } from 'contexts/projectContext'
@@ -58,12 +59,12 @@ export default function Mod({
                 }}
               >
                 <TooltipLabel
-                  label={'Tokens:'}
-                  tip={`This address will receive any tokens minted when the recipient project gets paid.`}
+                  label={t`Tokens` + ':'}
+                  tip={t`This address will receive any tokens minted when the recipient project gets paid.`}
                 />{' '}
                 <FormattedAddress address={mod.beneficiary} />{' '}
                 {owner === mod.beneficiary && (
-                  <Tooltip title="Project owner">
+                  <Tooltip title={t`Project owner`}>
                     <CrownFilled />
                   </Tooltip>
                 )}
@@ -74,7 +75,7 @@ export default function Mod({
               <FormattedAddress address={mod.beneficiary} />
               {owner === mod.beneficiary && (
                 <span style={{ marginLeft: 5 }}>
-                  <Tooltip title="Project owner">
+                  <Tooltip title={t`Project owner`}>
                     <CrownFilled />
                   </Tooltip>
                 </span>
@@ -85,7 +86,7 @@ export default function Mod({
         </div>
         {mod.lockedUntil ? (
           <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
-            <LockOutlined /> until{' '}
+            <LockOutlined /> <Trans>until</Trans>{' '}
             {mod.lockedUntil
               ? formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')
               : null}

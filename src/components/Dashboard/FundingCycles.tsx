@@ -1,4 +1,5 @@
 import { Button, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
@@ -88,8 +89,8 @@ export default function FundingCycles({
         }}
       >
         <SectionHeader
-          text="Funding cycle"
-          tip="A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
+          text={t`Funding cycle`}
+          tip={t`A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle.`}
           style={{
             marginBottom: 12,
           }}
@@ -109,7 +110,7 @@ export default function FundingCycles({
           size="small"
           disabled={isPreviewMode}
         >
-          Reconfigure funding
+          <Trans>Reconfigure funding</Trans>
         </Button>
       )}
 

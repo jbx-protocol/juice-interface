@@ -1,5 +1,9 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
+import {
+  validateEthAddress,
+  validateGreaterThanZero,
+} from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -25,8 +29,6 @@ import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
-
-import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
 
 type ModType = 'project' | 'address'
 type ModalMode = 'Add' | 'Edit' | undefined

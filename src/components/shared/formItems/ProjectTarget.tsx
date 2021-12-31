@@ -9,16 +9,20 @@ import { FormItemExt } from './formItemExt'
 export default function ProjectTarget({
   name,
   hideLabel,
-  value,
+  target,
+  targetSubFee,
   currency,
-  onValueChange,
+  onTargetChange,
+  onTargetSubFeeChange,
   onCurrencyChange,
   disabled,
   formItemProps,
   fee,
 }: {
-  value: string | undefined
-  onValueChange: (val: string | undefined) => void
+  target: string | undefined
+  targetSubFee: string | undefined
+  onTargetChange: (val: string | undefined) => void
+  onTargetSubFeeChange: (val: string | undefined) => void
   currency: CurrencyOption
   onCurrencyChange: (val: CurrencyOption) => void
   disabled?: boolean
@@ -32,8 +36,10 @@ export default function ProjectTarget({
       {...formItemProps}
     >
       <BudgetTargetInput
-        value={value}
-        onValueChange={onValueChange}
+        target={target}
+        targetSubFee={targetSubFee}
+        onTargetChange={onTargetChange}
+        onTargetSubFeeChange={onTargetSubFeeChange}
         currency={currency}
         onCurrencyChange={onCurrencyChange}
         disabled={disabled}

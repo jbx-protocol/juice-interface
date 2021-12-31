@@ -8,7 +8,7 @@ import { PayoutMod } from 'models/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 
-import { getTotalPercentage } from '../shared/FormHelpers'
+import { getTotalPercentage } from 'components/shared/formItems/formHelpers'
 
 export default function PayModsForm({
   initialMods,

@@ -18,19 +18,19 @@ export function useRedeemRate({
   tokenAmount: string | undefined
   fundingCycle: FundingCycle | undefined
 }) {
-  const { projectId } = useContext(ProjectContext)
+  const { projectId, terminal } = useContext(ProjectContext)
 
   const metadata = decodeFundingCycleMetadata(fundingCycle?.metadata)
 
   const currentOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'currentOverflowOf',
     args: projectId ? [projectId.toHexString()] : null,
     valueDidChange: bigNumbersDiff,
   })
 
   const reservedTicketBalance = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
+    contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && metadata?.reservedRate

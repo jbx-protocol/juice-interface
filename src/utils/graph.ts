@@ -79,7 +79,7 @@ export type OrderDirection = 'asc' | 'desc'
 
 export type WhereConfig = {
   key: string
-  value: string | number | boolean
+  value: string | number | boolean | Array<string | number | boolean>
   operator?:
     | 'not'
     | 'gt'
@@ -156,7 +156,11 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
           )} }`
         : `{ ${opts.where.key}${
             opts.where.operator ? '_' + opts.where.operator : ''
-          }: "${opts.where.value}" }`
+          }: ${
+            opts.where.operator === 'in'
+              ? '[' + opts.where.value + ']'
+              : '"' + opts.where.value + '"'
+          } }`
       : undefined,
   )
 

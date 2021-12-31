@@ -31,6 +31,7 @@ function filterOutArchivedProjects<T extends { id?: BigNumber }>(
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: BigNumber
+  projectIds?: BigNumber[]
   handle?: string
   uri?: string
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
@@ -45,6 +46,7 @@ let defaultPageSize = 20
 export function useProjectsQuery({
   pageNumber,
   projectId,
+  projectIds,
   keys,
   handle,
   uri,
@@ -76,6 +78,12 @@ export function useProjectsQuery({
               key: 'id',
               value: projectId.toString(),
             }
+          : projectIds != null
+          ? {
+              key: 'id',
+              operator: 'in',
+              value: projectIds.map(id => '"' + id.toString() + '"').join(','),
+            }
           : undefined,
     },
     {
@@ -85,8 +93,20 @@ export function useProjectsQuery({
   )
 }
 
+export function useParticipantsQuery(wallet: string) {
+  return useSubgraphQuery({
+    entity: 'participant',
+    keys: [{ entity: 'project', keys: ['id'] }],
+    where: {
+      key: 'wallet',
+      value: wallet,
+    },
+  })
+}
+
 export function useInfiniteProjectsQuery({
   projectId,
+  projectIds,
   keys,
   handle,
   uri,
@@ -116,6 +136,12 @@ export function useInfiniteProjectsQuery({
           ? {
               key: 'id',
               value: projectId.toString(),
+            }
+          : projectIds != null
+          ? {
+              key: 'id',
+              operator: 'in',
+              value: projectIds.map(id => '"' + id.toString() + '"').join(','),
             }
           : undefined,
     },

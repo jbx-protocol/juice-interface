@@ -92,8 +92,8 @@ export default function Projects() {
         <Trans>Projects on Juicebox</Trans>
       </h1>
       <p style={{ marginBottom: 40, maxWidth: 800 }}>
+        <InfoCircleOutlined />{' '}
         <Trans>
-          <InfoCircleOutlined />
           The Juicebox protocol is open to anyone, and project configurations
           can vary widely. There are risks associated with interacting with all
           projects on the protocol. Projects built on the protocol are not
@@ -151,6 +151,7 @@ export default function Projects() {
                 cursor: 'default',
               }}
             >
+              {' '}
               <Trans>How do I archive a project?</Trans>
             </span>
           </Tooltip>

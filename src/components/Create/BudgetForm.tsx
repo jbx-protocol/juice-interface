@@ -60,8 +60,8 @@ export default function BudgetForm({
         <Trans>
           Your project is funded across funding cycles. A funding cycle has a
           funding target and a duration. Your project's funding cycle
-          configuration will depend on the kind of project you're starting.{' '}
-        </Trans>
+          configuration will depend on the kind of project you're starting.
+        </Trans>{' '}
         <a
           href={helpPagePath('protocol/learn/topics/funding-cycle')}
           rel="noopener noreferrer"
@@ -120,7 +120,7 @@ export default function BudgetForm({
         {!hasTarget && (
           <p style={{ color: colors.text.primary }}>
             <span style={{ fontWeight: 600 }}>
-              <Trans>No target set.</Trans>
+              <Trans>No target set.</Trans>{' '}
             </span>
             <Trans>
               All funds can be distributed by the project. The project will have
@@ -215,7 +215,7 @@ export default function BudgetForm({
         {duration === '0' && (
           <p style={{ color: colors.text.primary, marginTop: 20 }}>
             <span style={{ fontWeight: 600 }}>
-              <Trans>No duration set.</Trans>
+              <Trans>No duration set.</Trans>{' '}
             </span>
             <Trans>
               Funding can be reconfigured at any time. Reconfigurations will

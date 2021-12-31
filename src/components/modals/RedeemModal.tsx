@@ -155,7 +155,9 @@ export default function RedeemModal({
           <p style={statsStyle}>
             Burn rate:{' '}
             <span>
-              {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
+              {redeemRate && !redeemRate.isZero()
+                ? formattedNum(parseWad(1).div(redeemRate))
+                : '--'}{' '}
               {tokenSymbol ?? 'tokens'}/ETH
             </span>
           </p>

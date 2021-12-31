@@ -13,7 +13,6 @@ import { useCallback, useContext, useState } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
-
 import { hasFundingTarget } from 'utils/fundingCycle'
 
 import FundingCycleDetails from '../FundingCycle/FundingCycleDetails'
@@ -43,7 +42,7 @@ export default function FundingHistory({
     contract: ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,
-    valueDidChange: (a, b) => !deepEqFundingCycles(a, b),
+    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
     callback: useCallback(
       cycle => {
         if (

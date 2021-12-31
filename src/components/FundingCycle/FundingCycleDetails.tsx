@@ -155,7 +155,9 @@ export default function FundingCycleDetails({
             />
           }
         >
-          {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
+          {redeemRate && redeemRate?.gt(0)
+            ? formattedNum(parseWad(1).div(redeemRate))
+            : '--'}{' '}
           {tokenSymbol ?? 'tokens'}/ETH
         </Descriptions.Item> */}
 

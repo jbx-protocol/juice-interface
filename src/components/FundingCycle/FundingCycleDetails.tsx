@@ -8,13 +8,7 @@ import { CurrencyOption } from 'models/currency-option'
 import { FundingCycle } from 'models/funding-cycle'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import {
-  formattedNum,
-  formatWad,
-  fromPerbicent,
-  fromPermille,
-  parseWad,
-} from 'utils/formatNumber'
+import { formatWad, fromPerbicent, fromPermille } from 'utils/formatNumber'
 import {
   decodeFCMetadata,
   hasFundingTarget,
@@ -22,7 +16,6 @@ import {
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
-import { useRedeemRate } from '../../hooks/RedeemRate'
 import TooltipLabel from '../shared/TooltipLabel'
 
 export default function FundingCycleDetails({
@@ -35,11 +28,6 @@ export default function FundingCycleDetails({
   } = useContext(ThemeContext)
 
   const { tokenSymbol } = useContext(ProjectContext)
-
-  const redeemRate = useRedeemRate({
-    tokenAmount: '1',
-    fundingCycle,
-  })
 
   if (!fundingCycle) return null
 
@@ -138,6 +126,7 @@ export default function FundingCycleDetails({
               } received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles.`}
             />
           }
+          span={2}
         >
           {formatWad(weightedRate(fundingCycle, parseEther('1'), 'payer'), {
             decimals: 0,
@@ -153,7 +142,7 @@ export default function FundingCycleDetails({
           {tokenSymbol ?? 'tokens'}/ETH
         </Descriptions.Item>
 
-        <Descriptions.Item
+        {/* <Descriptions.Item
           span={2}
           label={
             <TooltipLabel
@@ -166,7 +155,7 @@ export default function FundingCycleDetails({
         >
           {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
           {tokenSymbol ?? 'tokens'}/ETH
-        </Descriptions.Item>
+        </Descriptions.Item> */}
       </Descriptions>
 
       <div>

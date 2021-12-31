@@ -1,5 +1,10 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
+import {
+  validateEthAddress,
+  validateGreaterThanZero,
+} from 'components/shared/formItems/formHelpers'
+
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -14,8 +19,6 @@ import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
-
-import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 

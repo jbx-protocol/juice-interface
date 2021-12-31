@@ -8,6 +8,11 @@ import { CurrencyOption } from 'models/currency-option'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
+import {
+  targetToTargetSubFeeFormatted,
+  targetSubFeeToTargetFormatted,
+} from 'components/shared/formItems/formHelpers'
+
 export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
   const { contracts, transactor } = useContext(UserContext)
   const [form] = useForm<{
@@ -17,9 +22,11 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
   }>()
 
   const [currency, setCurrency] = useState<CurrencyOption>(0)
-  const [value, setValue] = useState<string>('0')
+  const [target, setTarget] = useState<string>('0')
+  const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
   const [modalVisible, setModalVisible] = useState<boolean>()
+  const { adminFeePercent } = useContext(UserContext)
 
   async function mint() {
     if (!contracts || !projectId || !transactor) return
@@ -33,7 +40,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
       'printPreminedTickets',
       [
         projectId.toHexString(),
-        parseWad(value).toHexString(),
+        parseWad(target).toHexString(),
         BigNumber.from(currency).toHexString(),
         form.getFieldValue('beneficary') ?? '',
         form.getFieldValue('memo') ?? '',
@@ -42,7 +49,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
       {
         onConfirmed: () => {
           form.resetFields()
-          setValue('0')
+          setTarget('0')
           setModalVisible(false)
         },
         onDone: () => setLoading(false),
@@ -92,8 +99,23 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
             }}
             currency={currency}
             onCurrencyChange={setCurrency}
-            value={value}
-            onValueChange={val => setValue(val ?? '0')}
+            target={target}
+            targetSubFee={targetSubFee}
+            onTargetChange={target => {
+              setTarget(target || '0')
+              setTargetSubFee(
+                targetToTargetSubFeeFormatted(target || '0', adminFeePercent),
+              )
+            }}
+            onTargetSubFeeChange={targetSubFee => {
+              setTargetSubFee(targetSubFee || '0')
+              setTarget(
+                targetSubFeeToTargetFormatted(
+                  targetSubFee || '0',
+                  adminFeePercent,
+                ),
+              )
+            }}
           />
           <Form.Item label="Memo" name="memo">
             <Input placeholder="Memo included on-chain (optional)" />

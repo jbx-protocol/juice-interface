@@ -113,7 +113,11 @@ export default function BudgetForm({
             <Switch
               checked={showFundingFields}
               onChange={checked => {
-                setTarget(checked ? '10000' : maxIntStr || '0')
+                let target = checked ? '10000' : maxIntStr || '0'
+                setTarget(target)
+                setTargetSubFee(
+                  targetToTargetSubFeeFormatted(target, adminFeePercent),
+                )
                 setCurrency(1)
                 setShowFundingFields(checked)
               }}

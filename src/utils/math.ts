@@ -37,5 +37,5 @@ export const amountSubFee = (amount?: BigNumber, feePercent?: BigNumber) => {
 
 export const amountAddFee = (amount?: BigNumber, feePercent?: BigNumber) => {
   if (!feePercent || !amount) return
-  return amount.add(feeForAmount(amount, feePercent) ?? 0)
+  return amount.add(amount.mul(100).div(feePercent.mul(200)))
 }

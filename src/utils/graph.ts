@@ -77,8 +77,8 @@ export interface SubgraphError {
 
 export type OrderDirection = 'asc' | 'desc'
 
-export type WhereConfig = {
-  key: string
+export type WhereConfig<E extends EntityKey> = {
+  key: EntityKeys<E>
   value: string | number | boolean
   operator?:
     | 'not'
@@ -119,7 +119,7 @@ export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
       }
   )[]
   orderDirection?: OrderDirection
-  where?: WhereConfig | WhereConfig[]
+  where?: WhereConfig<E> | WhereConfig<E>[]
 }
 
 // https://thegraph.com/docs/graphql-api#filtering

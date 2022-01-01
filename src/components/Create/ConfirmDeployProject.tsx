@@ -79,7 +79,10 @@ export default function ConfirmDeployProject() {
                         editingFC?.currency.toNumber() as CurrencyOption
                       }
                     />
-                    {formatWad(amountSubFee(editingFC.target, adminFeePercent))}{' '}
+                    {formatWad(
+                      amountSubFee(editingFC.target, adminFeePercent),
+                      { decimals: 4 },
+                    )}{' '}
                     after JBX fee)
                   </span>
                 )}

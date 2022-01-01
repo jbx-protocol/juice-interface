@@ -136,6 +136,8 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     args += (args.length ? ', ' : '') + `${name}: ` + value
   }
 
+  if (!opts.keys.includes('id' as K)) opts.keys.push('id' as K)
+
   addArg('first', opts.first)
   addArg('skip', opts.skip)
   addArg('orderBy', opts.orderBy)
@@ -151,8 +153,8 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     'where',
     opts.where
       ? Array.isArray(opts.where)
-        ? `{ ${opts.where.map(
-            w => `${w.key}${w.operator ? '_' + w.operator : ''}: "${w.value}" `,
+        ? `{${opts.where.map(
+            w => ` ${w.key}${w.operator ? '_' + w.operator : ''}: "${w.value}"`,
           )} }`
         : `{ ${opts.where.key}${
             opts.where.operator ? '_' + opts.where.operator : ''
@@ -160,13 +162,13 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       : undefined,
   )
 
-  return `{ ${opts.entity}s${args ? `(${args})` : ''} { id${opts.keys.reduce(
+  return `{ ${opts.entity}s${args ? `(${args})` : ''} {${opts.keys.reduce(
     (acc, key) =>
       typeof key === 'string' ||
       typeof key === 'number' ||
       typeof key === 'symbol'
         ? acc + ' ' + key.toString()
-        : acc + ` ${key.entity}{ ${key.keys.map(k => k + ' ')} }`,
+        : acc + ` ${key.entity} { ${key.keys.join(' ')} }`,
     '',
   )} } }`
 }

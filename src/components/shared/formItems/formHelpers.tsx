@@ -16,8 +16,10 @@ export function getTotalPercentage(mods: PayoutMod[] | undefined) {
   )
 }
 
-export function validateGreaterThanZero(percent: number | undefined) {
+// Ensures value is greater than 0 and less than 100
+export function validatePercentage(percent: number | undefined) {
   if (percent === undefined || percent === 0) return Promise.reject('Required')
+  else if (percent > 100) return Promise.reject('Invalid')
   return Promise.resolve()
 }
 
@@ -48,16 +50,44 @@ export function validateEthAddress(
 
 export const targetToTargetSubFeeFormatted = (
   target: string,
-  adminFeePercent: BigNumber | undefined,
+  fee: BigNumber | undefined,
 ) => {
-  let newTargetSubFee = amountSubFee(parseWad(target ?? '0'), adminFeePercent)
+  let newTargetSubFee = amountSubFee(parseWad(target ?? ''), fee)
   return stripCommas(formatWad(newTargetSubFee, { decimals: 4 }) || '0') // formatWad returns formatted bigNum with commas, must remove
 }
 
 export const targetSubFeeToTargetFormatted = (
   targetSubFee: string,
-  adminFeePercent: BigNumber | undefined,
+  fee: BigNumber | undefined,
 ) => {
-  let newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), adminFeePercent)
+  let newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), fee)
   return stripCommas(formatWad(newTarget, { decimals: 4 }) || '0')
+}
+
+export function getAmountFromPercent(
+  percent: number,
+  target: string,
+  fee: BigNumber | undefined,
+) {
+  return parseInt(
+    stripCommas(
+      formatWad(
+        amountSubFee(parseWad(stripCommas(target)), fee)
+          ?.mul(Math.floor((percent ?? 0) * 100))
+          .div(10000),
+        { decimals: 4, padEnd: true },
+      ) ?? '0',
+    ),
+  )
+}
+
+export function getPercentFromAmount(
+  amount: number | undefined,
+  target: string,
+  fee: BigNumber | undefined,
+) {
+  let targetSubFeeBN = amountSubFee(parseWad(stripCommas(target)), fee)
+  let targetSubFee = parseInt(stripCommas(formatWad(targetSubFeeBN) ?? '0'))
+  let percent = amount ?? 0 / (targetSubFee ?? 1)
+  return percent / 1000
 }

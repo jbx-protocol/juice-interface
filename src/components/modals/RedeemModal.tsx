@@ -69,10 +69,6 @@ export default function RedeemModal({
     ),
   })
 
-  const redeemRate = useRedeemRate({
-    tokenAmount: '1',
-    fundingCycle: currentFC,
-  })
   const rewardAmount = useRedeemRate({
     tokenAmount: redeemAmount,
     fundingCycle: currentFC,
@@ -152,13 +148,15 @@ export default function RedeemModal({
               %
             </span>
           </p>
-          <p style={statsStyle}>
+          {/* <p style={statsStyle}>
             Burn rate:{' '}
             <span>
-              {redeemRate ? formattedNum(parseWad(1).div(redeemRate)) : '--'}{' '}
+              {redeemRate && !redeemRate.isZero()
+                ? formattedNum(parseWad(1).div(redeemRate))
+                : '--'}{' '}
               {tokenSymbol ?? 'tokens'}/ETH
             </span>
-          </p>
+          </p> */}
           <p style={statsStyle}>
             {tokenSymbol ?? 'Token'} balance:{' '}
             <span>

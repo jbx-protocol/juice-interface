@@ -23,6 +23,8 @@ import {
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
+import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+
 import { FormItems } from '.'
 import CurrencySymbol from '../CurrencySymbol'
 import FormattedAddress from '../FormattedAddress'
@@ -61,6 +63,7 @@ export default function ProjectPayoutMods({
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
+  const [editingAmount, setEditingAmount] = useState<string>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
@@ -96,6 +99,15 @@ export default function ProjectPayoutMods({
   } = useContext(ThemeContext)
 
   const gutter = 10
+
+  // const getAmountFromPercent = (percent : number) => {
+  //   return formatWad(
+  //     amountSubFee(parseWad(target), fee)
+  //       ?.mul(Math.floor((percent ?? 0) * 100))
+  //       .div(10000),
+  //     { decimals: 4, padEnd: true },
+  //   )
+  // }
 
   const modInput = useCallback(
     (mod: EditingPayoutMod, index: number, locked?: boolean) => {
@@ -140,6 +152,7 @@ export default function ProjectPayoutMods({
               setModalMode('Edit')
               setEditingModIndex(index)
               setEditingPercent(percent)
+              setEditingAmount(getAmountFromPercent(percent, target, fee))
               setEditingModProjectId(mod.projectId)
             }}
           >
@@ -340,6 +353,11 @@ export default function ProjectPayoutMods({
     )
   }
 
+  const onAmountChange = (amount: string | undefined) => {
+    console.log('changing: ', amount)
+    setEditingAmount(amount ?? '0')
+  }
+
   return (
     <Form.Item {...formItemProps}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
@@ -480,7 +498,12 @@ export default function ProjectPayoutMods({
                   }}
                 />
               </span>
-
+              <FormattedNumberInput
+                value={editingAmount}
+                placeholder={'0'}
+                // disabled={disabled}
+                onChange={target => onAmountChange(target?.toString())}
+              />
               {parseWad(target).lt(constants.MaxUint256) && (
                 <span style={{ color: colors.text.primary, marginBottom: 22 }}>
                   <CurrencySymbol currency={currency} />

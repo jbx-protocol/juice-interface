@@ -61,3 +61,16 @@ export const targetSubFeeToTargetFormatted = (
   let newTarget = amountAddFee(parseWad(targetSubFee ?? '0'), adminFeePercent)
   return stripCommas(formatWad(newTarget, { decimals: 4 }) || '0')
 }
+
+export function getAmountFromPercent(
+  percent: number,
+  target: string,
+  fee: BigNumber | undefined,
+) {
+  return formatWad(
+    amountSubFee(parseWad(target), fee)
+      ?.mul(Math.floor((percent ?? 0) * 100))
+      .div(10000),
+    { decimals: 4, padEnd: true },
+  )
+}

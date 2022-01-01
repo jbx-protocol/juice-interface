@@ -326,6 +326,7 @@ export default function ReconfigureFCModal({
                           />
                           {formatWad(
                             amountSubFee(editingFC.target, adminFeePercent),
+                            { decimals: 4 },
                           )}{' '}
                           after JBX fee
                         </span>

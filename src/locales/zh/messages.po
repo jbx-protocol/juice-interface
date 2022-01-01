@@ -213,6 +213,10 @@ msgstr "开源业务"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr ""
 
+#: src/components/Navbar/index.tsx
+msgid "Podcast"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "由<0>以太坊</0>公共智能合约提供支持。"

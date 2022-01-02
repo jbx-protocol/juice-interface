@@ -329,11 +329,6 @@ export default function ProjectPayoutMods({
         : [...mods, newMod],
     )
 
-    // if (handle) {
-    //   setSettingHandle(handle)
-    //   setSettingHandleIndex(editingModIndex)
-    // }
-
     setEditingModIndex(undefined)
 
     form.resetFields()

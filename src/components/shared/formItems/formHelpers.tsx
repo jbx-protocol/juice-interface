@@ -48,6 +48,8 @@ export function validateEthAddress(
   else return Promise.resolve()
 }
 
+// Returns formatted 'funding target after fee'
+// given 'funding target'
 export const targetToTargetSubFeeFormatted = (
   target: string,
   fee: BigNumber | undefined,
@@ -56,6 +58,8 @@ export const targetToTargetSubFeeFormatted = (
   return stripCommas(formatWad(newTargetSubFee, { decimals: 4 }) || '0') // formatWad returns formatted bigNum with commas, must remove
 }
 
+// Returns formatted 'funding target' given
+// 'funding target after fee'
 export const targetSubFeeToTargetFormatted = (
   targetSubFee: string,
   fee: BigNumber | undefined,
@@ -64,6 +68,8 @@ export const targetSubFeeToTargetFormatted = (
   return stripCommas(formatWad(newTarget, { decimals: 4 }) || '0')
 }
 
+// Returns amount from a given percentage of the
+// 'funding target after fee'
 export function getAmountFromPercent(
   percent: number,
   target: string,
@@ -81,6 +87,8 @@ export function getAmountFromPercent(
   )
 }
 
+// Return percent of 'funding target after fee' from
+// a given amount
 export function getPercentFromAmount(
   amount: number | undefined,
   target: string,
@@ -92,6 +100,7 @@ export function getPercentFromAmount(
   return percent / 1000
 }
 
+// Returns number of decimal places in a given number
 export function countDecimals(value: number | undefined) {
   if (value && Math.floor(value ?? 1) === value) return 0
   return value?.toString().split('.')[1].length || 0

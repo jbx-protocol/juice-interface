@@ -38,6 +38,8 @@ export default function ThemePicker() {
         width: size * 2 + padding * 4,
         height,
         borderRadius: height / 2,
+        backgroundColor:
+          themeOption === ThemeOption.light ? '#ffffff52' : '#0000002b',
       }}
       onClick={() =>
         setThemeOption(

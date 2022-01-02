@@ -1,10 +1,13 @@
 import { Collapse, Space } from 'antd'
+import { Button } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { NetworkContext } from 'contexts/networkContext'
+
 import { useContext, useState } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
@@ -20,6 +23,8 @@ export default function Navbar() {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
+
+  const { onLogOut, signingProvider } = useContext(NetworkContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -94,41 +99,51 @@ export default function Navbar() {
         </a>
         {menu()}
       </Space>
-      <Space size="middle" className="top-nav-collapse">
-        <Collapse style={{ border: 'none' }} activeKey={activeKey}>
-          <CollapsePanel
-            style={{
-              border: 'none',
-            }}
-            key={0}
-            showArrow={false}
-            header={
-              <Space
-                onClick={e => {
-                  setActiveKey(activeKey === 0 ? undefined : 0)
-                  e.stopPropagation()
-                }}
-              >
-                <MenuOutlined
-                  style={{
-                    fontSize: '1.5em',
-                    color: colors.icon.primary,
+
+      <Space size="middle">
+        <div className="hide-mobile" style={{ marginRight: 85 }}>
+          <Account />
+        </div>
+        <div className="top-nav-collapse">
+          <Collapse style={{ border: 'none' }} activeKey={activeKey}>
+            <CollapsePanel
+              style={{
+                border: 'none',
+              }}
+              key={0}
+              showArrow={false}
+              header={
+                <Space
+                  onClick={e => {
+                    setActiveKey(activeKey === 0 ? undefined : 0)
+                    e.stopPropagation()
                   }}
-                />
-              </Space>
-            }
-          >
-            <div>
-              <ThemePicker />
-            </div>
-            <div>
-              <LanguageSelector />
-            </div>
-            <div className="hide-mobile">
-              <Account />
-            </div>
-          </CollapsePanel>
-        </Collapse>
+                >
+                  <MenuOutlined
+                    style={{
+                      fontSize: '1.5em',
+                      color: colors.icon.primary,
+                    }}
+                  />
+                </Space>
+              }
+            >
+              <div>
+                <ThemePicker />
+              </div>
+              <div>
+                <LanguageSelector />
+              </div>
+              {signingProvider ? (
+                <div className="hide-mobile">
+                  <Button onClick={onLogOut} style={{ padding: '0 5px' }}>
+                    <Trans>Sign out</Trans>
+                  </Button>
+                </div>
+              ) : null}
+            </CollapsePanel>
+          </Collapse>
+        </div>
       </Space>
     </Header>
   ) : (

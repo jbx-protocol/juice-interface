@@ -1,40 +1,37 @@
-import { Button, Col, Row } from 'antd'
+import { Col, Row, Button } from 'antd'
 import { NetworkContext } from 'contexts/networkContext'
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { Trans } from '@lingui/macro'
 
 import Balance from './Balance'
 import Wallet from './Wallet'
 
 export default function Account() {
-  const { signingProvider, userAddress, onSelectWallet, onLogOut } =
+  const { userAddress, signingProvider, onSelectWallet } =
     useContext(NetworkContext)
 
   return (
-    <div className="account">
-      <Col>
-        {userAddress && (
-          <Row>
-            <Wallet userAddress={userAddress}></Wallet>
-          </Row>
+    <div>
+      <Row gutter={10} align="middle">
+        {!signingProvider ? (
+          <Button onClick={onSelectWallet}>
+            <Trans>Connect</Trans>
+          </Button>
+        ) : (
+          <React.Fragment>
+            {userAddress && (
+              <Col>
+                <Balance address={userAddress} showEthPrice />
+              </Col>
+            )}
+            {userAddress && (
+              <Col>
+                <Wallet userAddress={userAddress}></Wallet>
+              </Col>
+            )}
+          </React.Fragment>
         )}
-        {userAddress && (
-          <Row>
-            <Balance address={userAddress} showEthPrice />
-          </Row>
-        )}
-        <Row>
-          {!signingProvider ? (
-            <Button onClick={onSelectWallet}>
-              <Trans>Connect</Trans>
-            </Button>
-          ) : (
-            <Button onClick={onLogOut}>
-              <Trans>Sign out</Trans>
-            </Button>
-          )}
-        </Row>
-      </Col>
+      </Row>
     </div>
   )
 }

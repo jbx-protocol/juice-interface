@@ -165,12 +165,10 @@ input:-webkit-autofill-selected {
 
 // Specific to language Select in top nav
 .language-selector {
-  padding-left: 30px !important;
   border: none !important;
 
   .ant-select-selector {
     height: 24px;
-    width: 50px !important;
     padding: 0 8px !important;
     border: 1px solid transparent !important;
   }

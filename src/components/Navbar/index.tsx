@@ -94,12 +94,41 @@ export default function Navbar() {
         </a>
         {menu()}
       </Space>
-      <Space size="middle">
-        <ThemePicker />
-        <LanguageSelector />
-        <div className="hide-mobile">
-          <Account />
-        </div>
+      <Space size="middle" className="top-nav-collapse">
+        <Collapse style={{ border: 'none' }} activeKey={activeKey}>
+          <CollapsePanel
+            style={{
+              border: 'none',
+            }}
+            key={0}
+            showArrow={false}
+            header={
+              <Space
+                onClick={e => {
+                  setActiveKey(activeKey === 0 ? undefined : 0)
+                  e.stopPropagation()
+                }}
+              >
+                <MenuOutlined
+                  style={{
+                    fontSize: '1.5em',
+                    color: colors.icon.primary,
+                  }}
+                />
+              </Space>
+            }
+          >
+            <div>
+              <ThemePicker />
+            </div>
+            <div>
+              <LanguageSelector />
+            </div>
+            <div className="hide-mobile">
+              <Account />
+            </div>
+          </CollapsePanel>
+        </Collapse>
       </Space>
     </Header>
   ) : (

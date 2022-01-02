@@ -37,7 +37,7 @@ export default function LanguageSelector() {
         ...selectStyle,
         width: 82,
       }}
-      value={Languages[currentSelectedLanguage].short}
+      value={Languages[currentSelectedLanguage].long}
       onChange={newLanguage => {
         setLanguage(newLanguage)
       }}

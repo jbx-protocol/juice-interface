@@ -11,19 +11,19 @@ export default function Account() {
     useContext(NetworkContext)
 
   return (
-    <div>
-      <Row gutter={10} align="middle">
+    <div className="account">
+      <Col>
         {userAddress && (
-          <Col>
-            <Balance address={userAddress} showEthPrice />
-          </Col>
-        )}
-        {userAddress && (
-          <Col>
+          <Row>
             <Wallet userAddress={userAddress}></Wallet>
-          </Col>
+          </Row>
         )}
-        <Col>
+        {userAddress && (
+          <Row>
+            <Balance address={userAddress} showEthPrice />
+          </Row>
+        )}
+        <Row>
           {!signingProvider ? (
             <Button onClick={onSelectWallet}>
               <Trans>Connect</Trans>
@@ -33,8 +33,8 @@ export default function Account() {
               <Trans>Sign out</Trans>
             </Button>
           )}
-        </Col>
-      </Row>
+        </Row>
+      </Col>
     </div>
   )
 }

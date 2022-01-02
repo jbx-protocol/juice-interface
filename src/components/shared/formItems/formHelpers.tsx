@@ -91,3 +91,8 @@ export function getPercentFromAmount(
   let percent = amount ?? 0 / (targetSubFee ?? 1)
   return percent / 1000
 }
+
+export function countDecimals(value: number | undefined) {
+  if (value && Math.floor(value ?? 1) === value) return 0
+  return value?.toString().split('.')[1].length || 0
+}

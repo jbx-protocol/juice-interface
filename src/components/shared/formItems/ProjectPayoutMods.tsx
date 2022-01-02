@@ -5,6 +5,7 @@ import {
   validatePercentage,
   getAmountFromPercent,
   getPercentFromAmount,
+  countDecimals,
 } from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
@@ -482,7 +483,18 @@ export default function ProjectPayoutMods({
               }
             />
           ) : null}
-          <Form.Item label="Amount">
+          <Form.Item
+            label="Amount"
+            // Display message to user if the amount they inputted
+            // will result in percentage with > 2 decimal places
+            extra={
+              countDecimals(form.getFieldValue('percent')) > 2
+                ? `Will be rounded to ${form
+                    .getFieldValue('percent')
+                    .toFixed(2)}%`
+                : ''
+            }
+          >
             <div
               style={{
                 display: 'flex',

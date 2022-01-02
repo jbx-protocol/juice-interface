@@ -284,7 +284,6 @@ export default function ProjectPayoutMods({
     await form.validateFields()
 
     const handle = form.getFieldValue('handle')
-    console.log('about to submit handle: ', handle)
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
@@ -308,6 +307,11 @@ export default function ProjectPayoutMods({
           )
         : [...mods, newMod],
     )
+
+    if (handle) {
+      setSettingHandle(handle)
+      setSettingHandleIndex(editingModIndex)
+    }
 
     setEditingModIndex(undefined)
 

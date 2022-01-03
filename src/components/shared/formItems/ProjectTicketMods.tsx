@@ -9,6 +9,7 @@ import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { ProjectContext } from 'contexts/projectContext'
+import { Trans } from '@lingui/macro'
 
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
@@ -135,7 +136,8 @@ export default function ProjectTicketMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={19}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  <Trans>until</Trans>{' '}
+                  {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </Col>
               </Row>
             ) : null}

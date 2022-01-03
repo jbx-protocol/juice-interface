@@ -1,5 +1,6 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
+import { t } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -318,7 +319,7 @@ export default function ProjectTicketMods({
             defaultValue={form.getFieldValue('beneficiary')}
             formItemProps={{
               label: 'Beneficiary',
-              extra: 'The address that should receive the tokens.',
+              extra: t`The address that should receive the tokens.`,
               rules: [
                 {
                   validator: validateReservedTokenReceiver,

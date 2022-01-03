@@ -14,6 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Extract translations
         run: 'yarn i18n:extract'
 

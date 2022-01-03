@@ -1,0 +1,32 @@
+name: Crowdin upload
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  synchronize-with-crowdin:
+    name: Upload sources to Crowdin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Extract translations
+        run: 'yarn i18n:extract'
+
+      - name: Upload to Crowdin
+        uses: crowdin/github-action@1.4.4
+        with:
+          config: 'crowdin.yml'
+          upload_translations: true
+          download_translations: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}

@@ -1,13 +1,15 @@
-name: Crowdin upload
+name: Crowdin download
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: '0 * * * *' # every hour we download translations and update the pr from crowdin
+
+  # manual trigger
+  workflow_dispatch:
 
 jobs:
-  synchronize-with-crowdin:
-    name: Upload sources to Crowdin
+  download-translations:
+    name: Download translations from Crowdin
     runs-on: ubuntu-latest
 
     steps:
@@ -20,12 +22,13 @@ jobs:
       - name: Extract translations
         run: 'yarn i18n:extract'
 
-      - name: Sync
+      - name: Download from Crowdin
         uses: crowdin/github-action@1.4.4
         with:
           config: 'crowdin.yml'
-          upload_translations: true
-          download_translations: false
+          upload_translations: false
+          download_translations: true
+          create_pull_request: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}

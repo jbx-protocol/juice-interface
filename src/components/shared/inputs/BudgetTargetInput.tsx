@@ -47,40 +47,45 @@ export default function BudgetTargetInput({
 
   if (_currency === undefined) return null
 
+  function renderCurrencySwitch() {
+    if (onCurrencyChange)
+      return (
+        <InputAccessoryButton
+          onClick={() => {
+            const newCurrency = _currency === 1 ? 0 : 1
+            setCurrency(newCurrency)
+            onCurrencyChange(newCurrency)
+          }}
+          content={currencyName(_currency)}
+          withArrow={true}
+          placement="suffix"
+        />
+      )
+    return (
+      <InputAccessoryButton
+        content={currencyName(_currency)}
+        placement="suffix"
+      />
+    )
+  }
+
   return (
     <div>
       <FormattedNumberInput
         value={target}
         placeholder={placeholder}
         disabled={disabled}
-        accessory={
-          onCurrencyChange ? (
-            <InputAccessoryButton
-              onClick={() => {
-                const newCurrency = _currency === 1 ? 0 : 1
-                setCurrency(newCurrency)
-                onCurrencyChange(newCurrency)
-              }}
-              content={currencyName(_currency)}
-              withArrow={true}
-              placement="suffix"
-            />
-          ) : (
-            <InputAccessoryButton
-              content={currencyName(_currency)}
-              placement="suffix"
-            />
-          )
-        }
+        accessory={renderCurrencySwitch()}
         onChange={target => onTargetChange(target?.toString())}
       />
       {fee?.gt(0) && (
         <div style={targetSubFeeStyles}>
-          <div style={{ fontWeight: 500, width: 100, marginRight: 8 }}>
+          <div style={{ fontWeight: 500, width: 150, marginRight: 8 }}>
             <FormattedNumberInput
               value={targetSubFee}
               placeholder={placeholder}
               disabled={disabled}
+              accessory={renderCurrencySwitch()}
               onChange={newTargetSubFee =>
                 onTargetSubFeeChange(newTargetSubFee?.toString())
               }

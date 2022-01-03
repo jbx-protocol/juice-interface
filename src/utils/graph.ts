@@ -136,8 +136,6 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     args += (args.length ? ', ' : '') + `${name}: ` + value
   }
 
-  if (!opts.keys.includes('id' as K)) opts.keys.push('id' as K)
-
   addArg('first', opts.first)
   addArg('skip', opts.skip)
   addArg('orderBy', opts.orderBy)

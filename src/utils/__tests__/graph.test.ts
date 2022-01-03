@@ -9,15 +9,6 @@ test('format basic queries', () => {
   expect(query).toBe('{ projects { id creator uri } }')
 })
 
-test('includes id key by default', () => {
-  const query = formatGraphQuery({
-    entity: 'project',
-    keys: [],
-  })
-
-  expect(query).toBe('{ projects { id } }')
-})
-
 test('format with first & skip', () => {
   const query = formatGraphQuery({
     entity: 'project',

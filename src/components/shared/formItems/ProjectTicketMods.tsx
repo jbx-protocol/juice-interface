@@ -292,7 +292,7 @@ export default function ProjectTicketMods({
 
       <Modal
         title={
-          modalMode === 'Add' ? 'Add token receiver' : 'Edit token receiver'
+          modalMode === 'Add' ? t`Add token receiver` : 'Edit token receiver'
         } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}

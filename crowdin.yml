@@ -14,9 +14,10 @@
 #
 # Files configuration
 #
-files: [
+files:
+  [
     {
-      'source': 'src/locales/**/**.po', # recursively selects all .po files in locales for upload
+      'source': 'src/locales/en/messages.po',
       'translation': 'src/locales/%two_letters_code%/%original_file_name%',
     },
   ]

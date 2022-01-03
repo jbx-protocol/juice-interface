@@ -1,6 +1,8 @@
 import { InputNumber, Slider, Form } from 'antd'
 import { useEffect, useState } from 'react'
 
+import { roundDown } from 'components/shared/formItems/formHelpers'
+
 import { FormItemExt } from '../formItems/formItemExt'
 
 export default function NumberSlider({
@@ -60,7 +62,7 @@ export default function NumberSlider({
             let _val = val?.toString() ?? '0'
 
             if (_val.includes('.') && _val.split('.')[1].length > decimals) {
-              _val = parseFloat(_val).toFixed(decimals)
+              _val = roundDown(parseFloat(_val), decimals).toString()
             }
 
             return `${_val ?? ''}${suffix ?? ''}`

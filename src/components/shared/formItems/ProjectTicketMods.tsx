@@ -292,12 +292,12 @@ export default function ProjectTicketMods({
 
       <Modal
         title={
-          modalMode === 'Add' ? t`Add token receiver` : 'Edit token receiver'
+          modalMode === 'Add' ? t`Add token receiver` : t`Edit token receiver`
         } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         okText={
-          modalMode === 'Add' ? 'Add token receiver' : 'Save token receiver'
+          modalMode === 'Add' ? 'Add token receiver' : t`Save token receiver`
         }
         onCancel={() => {
           form.resetFields()

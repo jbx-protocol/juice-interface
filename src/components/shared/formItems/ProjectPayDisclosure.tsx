@@ -1,4 +1,5 @@
 import { Form } from 'antd'
+import { t } from '@lingui/macro'
 import TextArea from 'antd/lib/input/TextArea'
 
 import { FormItemExt } from './formItemExt'
@@ -11,7 +12,7 @@ export default function ProjectPayDisclosure({
   return (
     <Form.Item
       name={name}
-      label={hideLabel ? undefined : 'Pay disclosure'}
+      label={hideLabel ? undefined : t`Pay disclosure`}
       extra={`This text will be displayed to your supporters before they complete their payment.`}
       {...formItemProps}
     >

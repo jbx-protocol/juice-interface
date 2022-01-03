@@ -68,15 +68,21 @@ export default function BudgetForm({
 
       <Form layout="vertical">
         <div style={{ color: colors.text.secondary }}>
-          <h4>Funding target</h4>
+          <h4>Funding cycle target</h4>
           <p>
             Set the amount of funds you'd like to raise each funding cycle. Any
-            funds raised within the funding target can be distributed by
-            project, and can't be redeemed by holders of your project's token.
+            funds raised within the funding cycle target can be distributed by
+            the project, and can't be redeemed by your project's token holders.
+          </p>
+          <p>
+            Funds within the funding cycle target can be distributed at any time
+            during the funding cycle. Distributing funds is a public action;
+            anyone can call the transaction on your behalf.
           </p>
           <p>
             Overflow is created if your project's balance exceeds your funding
-            target. Overflow can be redeemed by holders of your project's token.{' '}
+            cycle target. Overflow can be redeemed by your project's token
+            holders.{' '}
             <a
               href={helpPagePath('protocol/learn/topics/overflow')}
               rel="noopener noreferrer"
@@ -98,7 +104,7 @@ export default function BudgetForm({
                 setShowFundingFields(checked)
               }}
             />
-            <label>Set a funding target</label>
+            <label>Set a funding cycle target</label>
           </Space>
         </Form.Item>
 
@@ -163,10 +169,10 @@ export default function BudgetForm({
           {hasTarget && (
             <p style={{ color: colors.text.secondary }}>
               <span style={{ fontWeight: 600 }}>
-                You have set a target amount.
+                You have set a funding cycle target.
               </span>{' '}
-              No more than the target amount can be distributed by the project
-              in a single funding cycle.
+              No more than the funding cycle target can be distributed by the
+              project in a single funding cycle.
             </p>
           )}
         </div>

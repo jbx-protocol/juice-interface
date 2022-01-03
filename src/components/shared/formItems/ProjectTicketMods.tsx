@@ -9,7 +9,7 @@ import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { ProjectContext } from 'contexts/projectContext'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
@@ -235,7 +235,7 @@ export default function ProjectTicketMods({
         {
           validator: () => {
             if (total > 100)
-              return Promise.reject('Percentages must add up to 100% or less')
+              return Promise.reject(t`Percentages must add up to 100% or less`)
 
             return Promise.resolve()
           },
@@ -286,7 +286,7 @@ export default function ProjectTicketMods({
           }}
           block
         >
-          Add token receiver
+          <Trans>Add token receiver</Trans>
         </Button>
       </Space>
 

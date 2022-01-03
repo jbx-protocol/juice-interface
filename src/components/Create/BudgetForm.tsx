@@ -16,6 +16,8 @@ import {
   targetSubFeeToTargetFormatted,
 } from 'components/shared/formItems/formHelpers'
 
+const DEFAULT_TARGET = '10000'
+
 export default function BudgetForm({
   initialCurrency,
   initialTarget,
@@ -113,7 +115,7 @@ export default function BudgetForm({
             <Switch
               checked={showFundingFields}
               onChange={checked => {
-                let target = checked ? '10000' : maxIntStr || '0'
+                const target = checked ? DEFAULT_TARGET : maxIntStr || '0'
                 setTarget(target)
                 setTargetSubFee(
                   targetToTargetSubFeeFormatted(target, adminFeePercent),
@@ -143,16 +145,16 @@ export default function BudgetForm({
             target={target}
             targetSubFee={targetSubFee}
             onTargetChange={target => {
-              setTarget(target || '0')
+              setTarget(target ?? '0')
               setTargetSubFee(
-                targetToTargetSubFeeFormatted(target || '0', adminFeePercent),
+                targetToTargetSubFeeFormatted(target ?? '0', adminFeePercent),
               )
             }}
             onTargetSubFeeChange={targetSubFee => {
-              setTargetSubFee(targetSubFee || '0')
+              setTargetSubFee(targetSubFee ?? '0')
               setTarget(
                 targetSubFeeToTargetFormatted(
-                  targetSubFee || '0',
+                  targetSubFee ?? '0',
                   adminFeePercent,
                 ),
               )

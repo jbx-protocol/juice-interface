@@ -52,8 +52,8 @@
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "i18n:extract": "lingui extract",
-    "i18n:compile": "lingui compile",
-    "postinstall": "yarn i18n:extract && yarn i18n:compile"
+    "i18n:compile": "yarn i18n:extract && lingui compile",
+    "postinstall": "yarn i18n:compile"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [

@@ -13,7 +13,7 @@ export default function ProjectPayDisclosure({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Pay disclosure`}
-      extra={`This text will be displayed to your supporters before they complete their payment.`}
+      extra={t`This text will be displayed to your supporters before they complete their payment.`}
       {...formItemProps}
     >
       <TextArea autoComplete="off" />

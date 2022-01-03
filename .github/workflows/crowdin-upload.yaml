@@ -18,7 +18,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Extract translations
-        run: 'yarn i18n:extract'
+        run: 'yarn i18n:compile'
 
       - name: Upload to Crowdin
         uses: crowdin/github-action@1.4.4

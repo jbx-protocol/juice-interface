@@ -5,7 +5,9 @@ import {
   validatePercentage,
   getAmountFromPercent,
   getPercentFromAmount,
-  countDecimals,
+  countDecimalPlaces,
+  roundDown,
+  ModalMode,
 } from 'components/shared/formItems/formHelpers'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
@@ -36,7 +38,6 @@ import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
 type ModType = 'project' | 'address'
-type ModalMode = 'Add' | 'Edit' | undefined
 
 type EditingPayoutMod = PayoutMod & { handle?: string }
 
@@ -67,7 +68,6 @@ export default function ProjectPayoutMods({
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
-  // const [editingAmount, setEditingAmount] = useState<number>()
   const [settingHandleIndex, setSettingHandleIndex] = useState<number>()
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [settingHandle, setSettingHandle] = useState<string>()
@@ -483,10 +483,11 @@ export default function ProjectPayoutMods({
             // Display message to user if the amount they inputted
             // will result in percentage with > 2 decimal places
             extra={
-              countDecimals(form.getFieldValue('percent')) > 2
-                ? `Will be rounded to ${form
-                    .getFieldValue('percent')
-                    .toFixed(2)}%`
+              countDecimalPlaces(form.getFieldValue('percent')) > 2
+                ? `Will be rounded to ${roundDown(
+                    form.getFieldValue('percent'),
+                    2,
+                  )}%`
                 : ''
             }
           >

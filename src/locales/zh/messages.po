@@ -8,19 +8,19 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-03 10:43\n"
+"PO-Revision-Date: 2022-01-03 21:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: juicebox-interface\n"
 "X-Crowdin-Project-ID: 492549\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /src/locales/ru/messages.po\n"
-"X-Crowdin-File-ID: 25\n"
+"X-Crowdin-File: /src/locales/en/messages.po\n"
+"X-Crowdin-File-ID: 9\n"
 
 #: src/components/Landing/Faq.tsx
 msgid "5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time."
-msgstr ""
+msgstr "项目提供的所有资金的5%用于支付Juicebox本身的维护和开发费用。 作为交换，项目获得Juicebox tokens ($JBX)，随着生态系统的逐步发展，这将具有更大的价值。"
 
 #: src/components/Projects/index.tsx
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
@@ -214,6 +214,10 @@ msgstr ""
 msgid "Open source businesses"
 msgstr ""
 
+#: src/components/shared/formItems/ProjectPayDisclosure.tsx
+msgid "Pay disclosure"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr ""
@@ -304,6 +308,10 @@ msgstr ""
 
 #: src/components/Landing/Faq.tsx
 msgid "This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down."
+msgstr ""
+
+#: src/components/shared/formItems/ProjectPayDisclosure.tsx
+msgid "This text will be displayed to your supporters before they complete their payment."
 msgstr ""
 
 #: src/components/Landing/Faq.tsx

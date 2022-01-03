@@ -1,6 +1,6 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
@@ -10,7 +10,6 @@ import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { ProjectContext } from 'contexts/projectContext'
-import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
@@ -108,6 +107,7 @@ export default function ProjectTicketMods({
             <Row gutter={gutter} style={{ width: '100%' }} align="middle">
               <Col span={5}>
                 <label>Percentage</label>
+                <Trans>Translate this shit</Trans>
               </Col>
               <Col span={19}>
                 <div

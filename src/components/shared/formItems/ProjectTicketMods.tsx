@@ -9,6 +9,7 @@ import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
 
 import { ProjectContext } from 'contexts/projectContext'
+import { t, Trans } from '@lingui/macro'
 
 import { FormItems } from '.'
 import FormattedAddress from '../FormattedAddress'
@@ -135,7 +136,8 @@ export default function ProjectTicketMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={19}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  <Trans>until</Trans>{' '}
+                  {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
                 </Col>
               </Row>
             ) : null}
@@ -233,7 +235,7 @@ export default function ProjectTicketMods({
         {
           validator: () => {
             if (total > 100)
-              return Promise.reject('Percentages must add up to 100% or less')
+              return Promise.reject(t`Percentages must add up to 100% or less`)
 
             return Promise.resolve()
           },
@@ -284,18 +286,18 @@ export default function ProjectTicketMods({
           }}
           block
         >
-          Add token receiver
+          <Trans>Add token receiver</Trans>
         </Button>
       </Space>
 
       <Modal
         title={
-          modalMode === 'Add' ? 'Add token receiver' : 'Edit token receiver'
+          modalMode === 'Add' ? t`Add token receiver` : t`Edit token receiver`
         } // Full sentences for translation purposes
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
         okText={
-          modalMode === 'Add' ? 'Add token receiver' : 'Save token receiver'
+          modalMode === 'Add' ? 'Add token receiver' : t`Save token receiver`
         }
         onCancel={() => {
           form.resetFields()

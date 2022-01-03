@@ -213,7 +213,7 @@ export default function Create() {
   }
 
   const onRestrictedActionsFormSaved = () => {
-    const fields = ticketingForm.getFieldsValue(true)
+    const fields = restrictedActionsForm.getFieldsValue(true)
     dispatch(
       editingProjectActions.setticketPrintingIsAllowed(
         fields.ticketPrintingIsAllowed,

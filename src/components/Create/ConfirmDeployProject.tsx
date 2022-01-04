@@ -3,6 +3,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
 import TicketModsList from 'components/shared/TicketModsList'
+import { t } from '@lingui/macro'
 
 import { UserContext } from 'contexts/userContext'
 import {
@@ -94,7 +95,7 @@ export default function ConfirmDeployProject() {
         }
       />
       <Statistic
-        title="Pay button"
+        title={t`Pay button`}
         value={orEmpty(editingProject?.metadata.payButton)}
       />
       <Statistic

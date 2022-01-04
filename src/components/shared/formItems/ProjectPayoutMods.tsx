@@ -495,9 +495,10 @@ export default function ProjectPayoutMods({
             label="Amount"
             // Display message to user if the amount they inputted
             // will result in percentage with > 2 decimal places
+            // and no error is present
             className="ant-form-item-extra-only"
             extra={
-              isPercentBeingRounded()
+              isPercentBeingRounded() && !(form.getFieldValue('percent') > 100)
                 ? `Will be rounded to $${roundedDownAmount()}`
                 : ''
             }
@@ -509,12 +510,10 @@ export default function ProjectPayoutMods({
                 alignItems: 'center',
               }}
             >
-              <div style={{ marginRight: 5 }}>
-                <CurrencySymbol currency={currency} />
-              </div>
               <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
+                currency={<CurrencySymbol currency={currency} />}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
                 formItemProps={{
                   rules: [{ validator: validatePayout }],

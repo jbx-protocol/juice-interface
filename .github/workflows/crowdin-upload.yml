@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+  # manual trigger from Github UI - Action tab
+  workflow_dispatch:
+
 jobs:
   synchronize-with-crowdin:
     name: Upload sources to Crowdin
@@ -25,9 +28,9 @@ jobs:
         with:
           upload_translations: true
           download_translations: false
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+          token: ${{ secrets.CROWDIN_API_TOKEN }}
           source: 'src/locales/en/messages.po'
           translation: 'src/locales/%two_letters_code%/%original_file_name%'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}

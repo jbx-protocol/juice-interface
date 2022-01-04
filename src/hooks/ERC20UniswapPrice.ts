@@ -6,8 +6,13 @@ import { Contract } from '@ethersproject/contracts'
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import { abi as IUniswapV3FactoryABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 
+import { constants as ethersConstants } from 'ethers'
+
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
+import { WETH } from 'constants/tokens'
+import { UNISWAP_V3_FACTORY } from 'constants/contracts'
+import { WAD_PRECISION } from 'constants/numbers'
 
 interface Immutables {
   factory: string
@@ -34,27 +39,42 @@ type Props = {
   tokenAddress: string
 }
 
-// https://docs.uniswap.org/protocol/reference/deployments
-const UNISWAP_V3_FACTORY_ADDRESS = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
-const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-const UNISWAP_FEE = 10000
+/**
+ * Pools are created at a specific fee tier.
+ * https://docs.uniswap.org/protocol/concepts/V3-overview/fees#pool-fees-tiers
+ */
+const UNISWAP_FEES_BPS = [10000, 3000, 500]
 const networkId = readNetwork.chainId
-const wadPrecision = 18
 
 export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   const factoryContract = new Contract(
-    UNISWAP_V3_FACTORY_ADDRESS,
+    UNISWAP_V3_FACTORY,
     IUniswapV3FactoryABI,
     readProvider,
   )
 
-  // TODO cache probably
-  const getPoolAddress = async () => {
-    return await factoryContract.getPool(
-      tokenAddress,
-      WETH_ADDRESS,
-      UNISWAP_FEE,
-    )
+  /**
+   * Recursively attempts to find liquidty pool at a given [fee].
+   * Recurs through each fee tier until a pool is found.
+   * If no pool is found, return undefined.
+   * @returns contract address of liquidty pool
+   */
+  const getPoolAddress = async (
+    fee: number | undefined = UNISWAP_FEES_BPS[0],
+  ): Promise<string | undefined> => {
+    const poolAddress = await factoryContract.getPool(tokenAddress, WETH, fee)
+
+    if (poolAddress && poolAddress !== ethersConstants.AddressZero) {
+      return poolAddress
+    }
+
+    // If we've got no more fees to search on, bail.
+    const feeIdx = UNISWAP_FEES_BPS.findIndex(f => f === fee)
+    if (feeIdx === UNISWAP_FEES_BPS.length - 1) {
+      return undefined
+    }
+
+    return getPoolAddress(UNISWAP_FEES_BPS[feeIdx + 1])
   }
 
   async function getPoolImmutables(poolContract: Contract) {
@@ -76,6 +96,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       tickSpacing,
       maxLiquidityPerTick,
     }
+
     return immutables
   }
 
@@ -94,6 +115,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       feeProtocol: slot[5],
       unlocked: slot[6],
     }
+
     return PoolState
   }
 
@@ -102,6 +124,9 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
     async () => {
       try {
         const poolAddress = await getPoolAddress()
+        if (!poolAddress) {
+          throw new Error('No liquidity pool found.')
+        }
 
         const poolContract = new Contract(
           poolAddress,
@@ -117,13 +142,13 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
         const PROJECT_TOKEN = new Token(
           networkId,
           immutables.token0,
-          wadPrecision,
+          WAD_PRECISION,
           tokenSymbol,
         )
         const WETH = new Token(
           networkId,
           immutables.token1,
-          wadPrecision,
+          WAD_PRECISION,
           'WETH',
         )
 
@@ -149,7 +174,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       }
     },
     {
-      refetchInterval: 30000,
+      refetchInterval: 30000, // refetch every 30 seconds
     },
   )
 }

@@ -100,9 +100,8 @@ export function getPercentFromAmount(
 ) {
   const targetSubFeeBN = amountSubFee(parseWad(stripCommas(target)), fee)
   const targetSubFee = stripCommas(formatWad(targetSubFeeBN) ?? '0')
-  console.log('amount:', amount)
-  console.log('targetSubFee: ', targetSubFee)
-  return (((amount ?? 0) * 1.0) / parseFloat(targetSubFee)) * 100
+  const percent = (((amount ?? 0) * 1.0) / parseFloat(targetSubFee)) * 100
+  return parseFloat(percent.toFixed(8))
 }
 
 // Returns number of decimal places in a given number

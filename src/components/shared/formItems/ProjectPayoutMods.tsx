@@ -350,6 +350,7 @@ export default function ProjectPayoutMods({
   }
 
   const onAmountChange = (newAmount: number | undefined) => {
+    console.log('newamount:', newAmount?.toString())
     let newPercent = getPercentFromAmount(newAmount, target, fee)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
@@ -504,7 +505,7 @@ export default function ProjectPayoutMods({
               <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
-                onChange={amount => onAmountChange(parseInt(amount || '0'))}
+                onChange={amount => onAmountChange(parseFloat(amount || '0'))}
               />
             </div>
           </Form.Item>

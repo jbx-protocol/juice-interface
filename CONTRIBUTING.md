@@ -65,7 +65,7 @@ Juicebox uses [`lingui.js`](https://lingui.js.org) for internationlization
 language.
 
 Developers should mark strings for translation using one of the `lingui.js`
-[macros](https://lingui.js.org/ref/macro.html) (`t/`Example text/` ` or `<Trans>Text</Trans>`). Strings marked for translation
+[macros](https://lingui.js.org/ref/macro.html) (``t`Example text` `` or `<Trans>Text</Trans>`). Strings marked for translation
 will be extracted at build-time and added to `messages.po` files within the
 `./locale` directory.
 

@@ -25,6 +25,7 @@ import {
   fromPermyriad,
   parsePermyriad,
   parseWad,
+  fromWad,
 } from 'utils/formatNumber'
 import { amountSubFee } from 'utils/math'
 
@@ -349,8 +350,15 @@ export default function ProjectPayoutMods({
     )
   }
 
+  const roundedDownAmount = () => {
+    const percent = roundDown(form.getFieldValue('percent'), 2)
+    const targetSubFee = parseFloat(
+      fromWad(amountSubFee(parseWad(target), fee)),
+    )
+    return parseFloat(((percent * targetSubFee) / 100).toFixed(4))
+  }
+
   const onAmountChange = (newAmount: number | undefined) => {
-    console.log('newamount:', newAmount?.toString())
     let newPercent = getPercentFromAmount(newAmount, target, fee)
     setEditingPercent(newPercent)
     form.setFieldsValue({ amount: newAmount })
@@ -485,10 +493,7 @@ export default function ProjectPayoutMods({
             // will result in percentage with > 2 decimal places
             extra={
               countDecimalPlaces(form.getFieldValue('percent')) > 2
-                ? `Will be rounded to ${roundDown(
-                    form.getFieldValue('percent'),
-                    2,
-                  )}%`
+                ? `Will be rounded to $${roundedDownAmount()}`
                 : ''
             }
           >

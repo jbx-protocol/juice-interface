@@ -335,8 +335,8 @@ export default function ProjectPayoutMods({
     form.resetFields()
   }
 
-  // Validates the slider (ensures percent !== 0)
-  const validateSlider = () => {
+  // Validates the amount and percentage (ensures percent !== 0 or > 100)
+  const validatePayout = () => {
     return validatePercentage(form.getFieldValue('percent'))
   }
 
@@ -348,6 +348,10 @@ export default function ProjectPayoutMods({
       modalMode,
       editingModIndex,
     )
+  }
+
+  const isPercentBeingRounded = () => {
+    return countDecimalPlaces(form.getFieldValue('percent')) > 2
   }
 
   const roundedDownAmount = () => {
@@ -491,8 +495,9 @@ export default function ProjectPayoutMods({
             label="Amount"
             // Display message to user if the amount they inputted
             // will result in percentage with > 2 decimal places
+            className="ant-form-item-extra-only"
             extra={
-              countDecimalPlaces(form.getFieldValue('percent')) > 2
+              isPercentBeingRounded()
                 ? `Will be rounded to $${roundedDownAmount()}`
                 : ''
             }
@@ -511,6 +516,9 @@ export default function ProjectPayoutMods({
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
+                formItemProps={{
+                  rules: [{ validator: validatePayout }],
+                }}
               />
             </div>
           </Form.Item>
@@ -534,7 +542,7 @@ export default function ProjectPayoutMods({
                   suffix="%"
                   name="percent"
                   formItemProps={{
-                    rules: [{ validator: validateSlider }],
+                    rules: [{ validator: validatePayout }],
                   }}
                 />
               </span>

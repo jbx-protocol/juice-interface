@@ -27,7 +27,7 @@ export function getTotalPercentage(mods: PayoutMod[] | undefined) {
 // Ensures value is greater than 0 and less than 100
 export function validatePercentage(percent: number | undefined) {
   if (percent === undefined || percent === 0) return Promise.reject('Required')
-  else if (percent > 100) return Promise.reject('Invalid')
+  else if (percent > 100) return Promise.reject('')
   return Promise.resolve()
 }
 

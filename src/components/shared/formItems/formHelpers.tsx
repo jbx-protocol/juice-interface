@@ -7,6 +7,7 @@ import {
   stripCommas,
   formatWad,
   parseWad,
+  fromWad,
   parsePermyriad,
 } from 'utils/formatNumber'
 import { amountSubFee, amountAddFee } from 'utils/math'
@@ -82,16 +83,12 @@ export function getAmountFromPercent(
   target: string,
   fee: BigNumber | undefined,
 ) {
-  return parseInt(
-    stripCommas(
-      formatWad(
-        amountSubFee(parseWad(stripCommas(target)), fee)
-          ?.mul(Math.floor((percent ?? 0) * 100))
-          .div(10000),
-        { decimals: 4, padEnd: true },
-      ) ?? '0',
-    ),
+  const amount = fromWad(
+    amountSubFee(parseWad(stripCommas(target)), fee)
+      ?.mul(Math.floor((percent ?? 0) * 100))
+      .div(10000),
   )
+  return parseFloat(amount)
 }
 
 // Return percent of 'funding target after fee' from
@@ -101,9 +98,10 @@ export function getPercentFromAmount(
   target: string,
   fee: BigNumber | undefined,
 ) {
-  let targetSubFeeBN = amountSubFee(parseWad(stripCommas(target)), fee)
-  let targetSubFee = stripCommas(formatWad(targetSubFeeBN) ?? '0')
-
+  const targetSubFeeBN = amountSubFee(parseWad(stripCommas(target)), fee)
+  const targetSubFee = stripCommas(formatWad(targetSubFeeBN) ?? '0')
+  console.log('amount:', amount)
+  console.log('targetSubFee: ', targetSubFee)
   return (((amount ?? 0) * 1.0) / parseFloat(targetSubFee)) * 100
 }
 

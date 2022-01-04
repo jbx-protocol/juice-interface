@@ -80,7 +80,7 @@ export default function BudgetTargetInput({
       />
       {fee?.gt(0) && (
         <div style={targetSubFeeStyles}>
-          <div style={{ fontWeight: 500, width: 150, marginRight: 8 }}>
+          <div style={{ fontWeight: 500, flexGrow: 1, marginRight: 8 }}>
             <FormattedNumberInput
               value={targetSubFee}
               placeholder={placeholder}
@@ -91,7 +91,7 @@ export default function BudgetTargetInput({
               }
             />
           </div>
-          after {fromPerbicent(fee?.toString())}% JBX fee
+          <div>after {fromPerbicent(fee?.toString())}% JBX fee</div>
         </div>
       )}
     </div>

@@ -60,59 +60,61 @@ export default function FormattedNumberInput({
   }, [accessoryId])
 
   return (
-    <Form.Item name={'numberValidator'} {...formItemProps}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          ...style,
-        }}
-      >
-        <InputNumber
-          className={accessory ? 'antd-no-number-handler' : ''}
-          min={min}
-          max={max}
-          style={{ width: '100%' }}
-          value={value !== undefined ? parseFloat(value) : undefined}
-          step={step ?? 1}
-          stringMode={true}
-          placeholder={placeholder}
-          formatter={(val?: string | number | undefined) =>
-            _prefix +
-            (val
-              ? formattedNum(val, {
-                  thousandsSeparator,
-                  decimalSeparator,
-                })
-              : '') +
-            _suffix
-          }
-          parser={(val?: string) =>
-            parseFloat(
-              (val !== undefined ? val : '0')
-                .replace(new RegExp(thousandsSeparator, 'g'), '')
-                .replace(_prefix, '')
-                .replace(_suffix, '')
-                .split('')
-                .filter(char => allowedValueChars.includes(char))
-                .join('') || '0',
-            )
-          }
-          disabled={disabled}
-          onChange={_value => {
-            if (onChange) onChange(_value?.toString())
-          }}
-        />
+    <div className="formatted-number-input">
+      <Form.Item name={'numberValidator'} {...formItemProps}>
         <div
           style={{
-            marginLeft: accessoryWidth * -1 - 5,
-            zIndex: 1,
-            fontSize: '.8rem',
+            display: 'flex',
+            alignItems: 'center',
+            ...style,
           }}
         >
-          {accessory && <div id={accessoryId}>{accessory}</div>}
+          <InputNumber
+            className={accessory ? 'antd-no-number-handler' : ''}
+            min={min}
+            max={max}
+            style={{ width: '100%' }}
+            value={value !== undefined ? parseFloat(value) : undefined}
+            step={step ?? 1}
+            stringMode={true}
+            placeholder={placeholder}
+            formatter={(val?: string | number | undefined) =>
+              _prefix +
+              (val
+                ? formattedNum(val, {
+                    thousandsSeparator,
+                    decimalSeparator,
+                  })
+                : '') +
+              _suffix
+            }
+            parser={(val?: string) =>
+              parseFloat(
+                (val !== undefined ? val : '0')
+                  .replace(new RegExp(thousandsSeparator, 'g'), '')
+                  .replace(_prefix, '')
+                  .replace(_suffix, '')
+                  .split('')
+                  .filter(char => allowedValueChars.includes(char))
+                  .join('') || '0',
+              )
+            }
+            disabled={disabled}
+            onChange={_value => {
+              if (onChange) onChange(_value?.toString())
+            }}
+          />
+          <div
+            style={{
+              marginLeft: accessoryWidth * -1 - 5,
+              zIndex: 1,
+              fontSize: '.8rem',
+            }}
+          >
+            {accessory && <div id={accessoryId}>{accessory}</div>}
+          </div>
         </div>
-      </div>
-    </Form.Item>
+      </Form.Item>
+    </div>
   )
 }

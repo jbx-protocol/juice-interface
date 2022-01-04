@@ -53,21 +53,12 @@ All changes to the `main` branch will be automatically deployed via
 
 Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for managing translations. This workflow uploads new strings for translation to the Crowdin project whenever code using the lingui translation macros is merged into main.
 
-Every day, translations are synced back down from Crowdin to a pull request to `main`, rather than downloading translations directly to `main`, so that builds are easily reproducible. We then merge these PR's into `main` manually.
+Every day, translations are synced back down from Crowdin to a pull request to `main`. We then merge these PR's into `main` manually.
 
-If you are a developer, please mark any new text that you add in the interface for translation with the lingui macros (``t/`Example text/` `` or `<Trans>Text</Trans>`). Feel free to edit any existing text that hasn't yet been marked for translations. 
+If you are a developer, please mark any new text that you add in the interface for translation with the lingui [macros](https://lingui.js.org/ref/macro.html) (``t`Example text` `` or `<Trans>Text</Trans>`). Feel free to edit any existing text that hasn't yet been marked for translations. 
 
 ### Contributing translations
 For details of how to contribute as a translator, see our [How to become a Juicebox translator](https://www.notion.so/juicebox/How-to-become-a-Juicebox-translator-81fdd9344ef043909a48bd7373ef73d7) Notion page. 
-
-Juicebox uses [`lingui.js`](https://lingui.js.org) for internationlization
-(i18n). Languages we support are defined in `.linguirc.json`. `en` is our source
-language.
-
-Developers should mark strings for translation using one of the `lingui.js`
-[macros](https://lingui.js.org/ref/macro.html) (``t`Example text` `` or `<Trans>Text</Trans>`). Strings marked for translation
-will be extracted at build-time and added to `messages.po` files within the
-`./locale` directory.
 
 
 ### Adding a language (for devs)

@@ -35,7 +35,8 @@ merge – to avoid polluting the commit history with spurious merges.
 about the differences between merge and rebase Git workflows.
 
 #### Rebase procedure
-You can rebase your feature branch using with the following procedure, where `feature-branch` is the name of your branch:
+
+You can rebase your feature branch with the following procedure, where `feature-branch` is the name of your branch:
 
 1. `git checkout feature-branch`
 2. `git fetch origin main`

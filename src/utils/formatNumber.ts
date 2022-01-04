@@ -1,6 +1,8 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 
+import { WAD_PRECISION } from 'constants/numbers'
+
 type FormatConfig = {
   empty?: string
   thousandsSeparator?: string
@@ -9,15 +11,14 @@ type FormatConfig = {
   padEnd?: boolean
 }
 
-const wadPrecision = 18
 const decimalSeparator = '.'
 const thousandsSeparator = ','
 
 // Wad: x/1e18
 export const parseWad = (amt?: BigNumberish) =>
-  parseUnits(amt?.toString() || '0', wadPrecision)
+  parseUnits(amt?.toString() || '0', WAD_PRECISION)
 export const fromWad = (amt?: BigNumberish) => {
-  const result = formatUnits(amt ?? '0', wadPrecision)
+  const result = formatUnits(amt ?? '0', WAD_PRECISION)
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result

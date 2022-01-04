@@ -34,6 +34,14 @@ merge – to avoid polluting the commit history with spurious merges.
 [Learn more](https://www.atlassian.com/git/articles/git-team-workflows-merge-or-rebase)
 about the differences between merge and rebase Git workflows.
 
+#### Rebase procedure
+You can rebase your feature branch using with the following procedure, where `feature-branch` is the name of your branch:
+
+1. `git checkout feature-branch`
+2. `git fetch origin main`
+3. `git rebase origin/main`
+4. `git push --force-with-lease`
+
 ### Approval guidelines
 
 Before your PR is merged, it must meet the following criteria:

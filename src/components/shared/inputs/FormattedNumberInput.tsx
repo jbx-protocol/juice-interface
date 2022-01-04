@@ -12,6 +12,7 @@ export default function FormattedNumberInput({
   value,
   disabled,
   placeholder,
+  currency,
   suffix,
   prefix,
   accessory,
@@ -24,6 +25,7 @@ export default function FormattedNumberInput({
   step?: number
   value?: string
   placeholder?: string
+  currency?: JSX.Element
   disabled?: boolean
   suffix?: string
   prefix?: string
@@ -61,6 +63,9 @@ export default function FormattedNumberInput({
 
   return (
     <div className="formatted-number-input">
+      {currency ? (
+        <div style={{ marginRight: 5, marginTop: 4 }}>{currency}</div>
+      ) : null}
       <Form.Item name={'numberValidator'} {...formItemProps}>
         <div
           style={{

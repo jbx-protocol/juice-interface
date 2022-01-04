@@ -253,15 +253,21 @@ export default function Paid() {
         currentFC.target.gt(0) &&
         (totalOverflow?.gt(0) ? (
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Progress
-              style={{
-                width: (1 - percentOverflow) * 100 + '%',
-                minWidth: 10,
-              }}
-              percent={100}
-              showInfo={false}
-              strokeColor={colors.text.brand.primary}
-            />
+            <Tooltip
+              title={
+                <>Funding target: {formatCurrencyAmount(currentFC.target)}</>
+              }
+            >
+              <Progress
+                style={{
+                  width: (1 - percentOverflow) * 100 + '%',
+                  minWidth: 10,
+                }}
+                percent={100}
+                showInfo={false}
+                strokeColor={colors.text.brand.primary}
+              />
+            </Tooltip>
             <div
               style={{
                 minWidth: 4,
@@ -273,15 +279,19 @@ export default function Paid() {
                 marginTop: 3,
               }}
             ></div>
-            <Progress
-              style={{
-                width: percentOverflow * 100 + '%',
-                minWidth: 10,
-              }}
-              percent={100}
-              showInfo={false}
-              strokeColor={colors.text.brand.primary}
-            />
+            <Tooltip
+              title={<>Overflow: {formatCurrencyAmount(overflowInCurrency)}</>}
+            >
+              <Progress
+                style={{
+                  width: percentOverflow * 100 + '%',
+                  minWidth: 10,
+                }}
+                percent={100}
+                showInfo={false}
+                strokeColor={colors.text.brand.primary}
+              />
+            </Tooltip>
           </div>
         ) : (
           <Progress

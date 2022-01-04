@@ -55,7 +55,7 @@ Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for mana
 
 Every day, translations are synced back down from Crowdin to a pull request to `main`, rather than downloading translations directly to `main`, so that builds are easily reproducible. We then merge these PR's into `main` manually.
 
-If you are a developer, please mark any new text that you add in the interface for translation with the lingui macros (`t/`Example text/` ` or `<Trans>Text</Trans>`). Feel free to edit any existing text that hasn't yet been marked for translations. 
+If you are a developer, please mark any new text that you add in the interface for translation with the lingui macros (``t/`Example text/` `` or `<Trans>Text</Trans>`). Feel free to edit any existing text that hasn't yet been marked for translations. 
 
 ### Contributing translations
 For details of how to contribute as a translator, see our [How to become a Juicebox translator](https://www.notion.so/juicebox/How-to-become-a-Juicebox-translator-81fdd9344ef043909a48bd7373ef73d7) Notion page. 

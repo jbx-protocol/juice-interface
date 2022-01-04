@@ -36,7 +36,7 @@ about the differences between merge and rebase Git workflows.
 
 #### Rebase procedure
 
-You can rebase your feature branch with the following procedure, where `feature-branch` is the name of your branch:
+You can rebase your feature branch with the following procedure, where `feature-branch` is the name of your branch. Further explanation of rebase and its options can be found [here](https://docs.gitlab.com/ee/topics/git/git_rebase.html).
 
 1. `git checkout feature-branch`
 2. `git fetch origin main`

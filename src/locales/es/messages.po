@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-03 21:56\n"
+"PO-Revision-Date: 2022-01-04 01:23\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/components/Landing/Faq.tsx
 msgid "5% of all money made by projects is sent to help pay for the maintenance and development of Juicebox itself. In exchange, projects get Juicebox tokens ($JBX), which will be worth more as the ecosystem grows over time."
-msgstr ""
+msgstr "El 5% de todo el dinero obtenido por proyectos se envía para ayudar a pagar el mantenimiento y desarrollo de Juicebox mismo. A cambio, los proyectos obtienen tokens de Juicebox ($JBX), que valdrán más a medida que el ecosistema crezca con el tiempo."
 
 #: src/components/Projects/index.tsx
 msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."

@@ -113,16 +113,16 @@ export default function Pay() {
 
   return (
     <div>
-      <div style={{ marginBottom: '0.5rem' }}>
-        {tokenSymbol && tokenAddress && (
+      {tokenSymbol && tokenAddress && (
+        <div style={{ marginBottom: '0.5rem' }}>
           <TokenAMMPriceBadge
             exchangeName="Uniswap"
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
             exchangeLink={`https://app.uniswap.org/#/swap?&inputCurrency=${tokenAddress}&outputCurrency=ETH`}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div
         style={{
           display: 'flex',

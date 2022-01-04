@@ -46,6 +46,10 @@ type Props = {
 const UNISWAP_FEES_BPS = [10000, 3000, 500]
 const networkId = readNetwork.chainId
 
+/**
+ * Hook to fetch the Uniswap price for a given token.
+ * Uniswap-related code inspired by https://docs.uniswap.org/sdk/guides/fetching-prices.
+ */
 export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   const factoryContract = new Contract(
     UNISWAP_V3_FACTORY,

@@ -7,7 +7,7 @@ import UniswapLogo from 'components/icons/Uniswap'
 import { Tooltip } from 'antd'
 import { t } from '@lingui/macro'
 
-type exchangeName = 'Uniswap'
+type ExchangeName = 'Uniswap'
 
 const LOGOS = {
   Uniswap: UniswapLogo,
@@ -18,7 +18,7 @@ const QUERIES = {
 }
 
 type Props = {
-  exchangeName: exchangeName
+  exchangeName: ExchangeName
   tokenSymbol: string
   tokenAddress: string
   exchangeLink: string

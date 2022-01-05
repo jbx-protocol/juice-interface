@@ -6,6 +6,7 @@ import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+
 import useContractReader from './ContractReader'
 
 // Returns the value in ETH that an amount of tokens can be redeemed for

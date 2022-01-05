@@ -1,5 +1,4 @@
 import { NetworkName } from 'models/network-name'
-import { Set } from 'typescript'
 
 // IDs of projects with pay disabled
 export const disablePayOverrides: Partial<Record<NetworkName, Set<number>>> = {

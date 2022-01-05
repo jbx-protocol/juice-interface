@@ -112,6 +112,7 @@ export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
   skip?: number
   orderBy?: keyof SubgraphEntities[E]
   block?: BlockConfig
+  url?: string
 
   // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
   keys: (
@@ -196,12 +197,13 @@ export const querySubgraph = <E extends EntityKey, K extends EntityKeys<E>>(
   opts: GraphQueryOpts<E, K>,
   callback: (res?: SubgraphQueryReturnTypes[E]) => void,
 ) => {
-  if (!opts) return Promise.resolve()
-  if (!subgraphUrl) return Promise.reject('Missing url for subgraph query')
+  const url = opts.url || subgraphUrl
+
+  if (!url) return Promise.reject('Missing url for subgraph query')
 
   return axios
     .post(
-      subgraphUrl,
+      url,
       {
         query: formatGraphQuery(opts),
       },

@@ -5,11 +5,10 @@ import {
 } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Modal, Select } from 'antd'
-import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-
+import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
@@ -21,14 +20,10 @@ import {
 } from 'models/subgraph-entities/participant'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
-import { formatHistoricalDate } from 'utils/formatDate'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 
-import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
-
 import DownloadParticipantsModal from './DownloadParticipantsModal'
-import { CURRENCY_ETH } from 'constants/currency'
 
 const pageSize = 100
 
@@ -42,7 +37,7 @@ export default function ParticipantsModal({
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
   const [sortPayerReports, setSortPayerReports] =
-    useState<keyof Participant>('tokenBalance')
+    useState<keyof Participant>('balance')
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
@@ -64,8 +59,15 @@ export default function ParticipantsModal({
 
     querySubgraph(
       {
+        url: 'https://api.studio.thegraph.com/query/2231/juicebox/1.0.19',
         entity: 'participant',
-        keys: ['wallet', 'totalPaid', 'lastPaidTimestamp', 'tokenBalance'],
+        keys: [
+          'wallet',
+          'totalPaid',
+          'lastPaidTimestamp',
+          'balance',
+          'stakedBalance',
+        ],
         first: pageSize,
         skip: pageNumber * pageSize,
         orderBy: sortPayerReports,
@@ -104,19 +106,19 @@ export default function ParticipantsModal({
     [tokenSymbol, totalTokenSupply],
   )
 
-  const formattedPaid = (amount: BigNumber | undefined) => (
-    <span>
-      <CurrencySymbol currency={CURRENCY_ETH} />
-      {formatWad(amount, { decimals: 6 })}
-    </span>
-  )
+  // const formattedPaid = (amount: BigNumber | undefined) => (
+  //   <span>
+  //     <CurrencySymbol currency={0} />
+  //     {formatWad(amount, { decimals: 6 })}
+  //   </span>
+  // )
 
-  const lastPaid = (lastPaidTimestamp: number | undefined) =>
-    lastPaidTimestamp ? (
-      <span>Last paid {formatHistoricalDate(lastPaidTimestamp * 1000)}</span>
-    ) : (
-      <span>No payments</span>
-    )
+  // const lastPaid = (lastPaidTimestamp: number | undefined) =>
+  //   lastPaidTimestamp ? (
+  //     <span>Last paid {formatHistoricalDate(lastPaidTimestamp * 1000)}</span>
+  //   ) : (
+  //     <span>No payments</span>
+  //   )
 
   const list = useMemo(() => {
     const smallHeaderStyle = {
@@ -169,6 +171,7 @@ export default function ParticipantsModal({
             type="text"
             icon={<DownloadOutlined />}
             onClick={() => setDownloadModalVisible(true)}
+            disabled
           />
         </div>
 
@@ -197,11 +200,9 @@ export default function ParticipantsModal({
                 >
                   <FormattedAddress address={p.wallet} />
                 </div>
-                <div style={smallHeaderStyle}>
-                  {sortPayerReports === 'tokenBalance'
-                    ? lastPaid(p.lastPaidTimestamp)
-                    : formattedTokenBalance(p.tokenBalance)}
-                </div>
+                {/* <div style={smallHeaderStyle}>
+                  {lastPaid(p.lastPaidTimestamp)}
+                </div> */}
               </div>
 
               <div style={{ textAlign: 'right' }}>
@@ -210,17 +211,14 @@ export default function ParticipantsModal({
                     lineHeight: contentLineHeight,
                   }}
                 >
-                  {sortPayerReports === 'tokenBalance'
-                    ? formattedTokenBalance(p.tokenBalance)
-                    : formattedPaid(p.totalPaid)}
+                  {formattedTokenBalance(p.balance)}
                 </div>
                 <div style={smallHeaderStyle}>
-                  {sortPayerReports === 'tokenBalance' ? (
-                    <span>{formattedPaid(p.totalPaid)} total contributed</span>
-                  ) : (
-                    lastPaid(p.lastPaidTimestamp)
-                  )}
+                  {formatWad(p.stakedBalance, { decimals: 0 })} staked
                 </div>
+                {/* <div style={smallHeaderStyle}>
+                  <span>{formattedPaid(p.totalPaid)} total contributed</span>
+                </div> */}
               </div>
             </div>
           </div>

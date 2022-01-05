@@ -26,10 +26,10 @@ export const decodeFundingCycleMetadata = (
         reservedRate: metadata.shr(8).and(bits8).toNumber(),
         bondingCurveRate: metadata.shr(16).and(bits8).toNumber(),
         reconfigurationBondingCurveRate: metadata.shr(24).and(bits8).toNumber(),
+        payIsPaused: Boolean(metadata.shr(32).and(bits1).toNumber()),
         ticketPrintingIsAllowed: Boolean(
-          metadata.shr(32).and(bits1).toNumber(),
+          metadata.shr(33).and(bits1).toNumber(),
         ),
-        payIsPaused: Boolean(metadata.shr(33).and(bits1).toNumber()),
         treasuryExtension: metadata.shr(34).toHexString(),
       }
     : undefined

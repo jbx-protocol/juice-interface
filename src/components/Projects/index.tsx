@@ -251,24 +251,13 @@ export default function Projects() {
         <div
           style={{
             textAlign: 'center',
-            color: colors.text.secondary,
+            color: colors.text.disabled,
             padding: 20,
           }}
         >
           {concatenatedPages?.length}{' '}
           {concatenatedPages?.length === 1 ? 'project' : 'projects'}
-        </div>
-      )}
-
-      {!isFetchingNextPage && !isLoading && !concatenatedPages?.length && (
-        <div
-          style={{
-            padding: 20,
-            textAlign: 'center',
-            color: colors.text.disabled,
-          }}
-        >
-          No projects {searchText ? ` matching ${searchText}` : ''}
+          {searchText ? ` matching "${searchText}"` : ''}
         </div>
       )}
     </div>

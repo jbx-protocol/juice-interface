@@ -4,7 +4,7 @@ import ConfirmPayOwnerModal from 'components/modals/ConfirmPayOwnerModal'
 import PayWarningModal from 'components/modals/PayWarningModal'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
-import TokenAMMPriceBadge from 'components/shared/TokenAMMPriceBadge'
+import AMMPrices from 'components/shared/AMMPrices'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { parseEther } from 'ethers/lib/utils'
@@ -114,14 +114,11 @@ export default function Pay() {
   return (
     <div>
       {tokenSymbol && tokenAddress && (
-        <div style={{ marginBottom: '0.5rem' }}>
-          <TokenAMMPriceBadge
-            exchangeName="Uniswap"
-            tokenSymbol={tokenSymbol}
-            tokenAddress={tokenAddress}
-            exchangeLink={`https://app.uniswap.org/#/swap?&inputCurrency=${tokenAddress}&outputCurrency=ETH`}
-          />
-        </div>
+        <AMMPrices
+          tokenSymbol={tokenSymbol}
+          tokenAddress={tokenAddress}
+          style={{ marginBottom: '0.5rem' }}
+        />
       )}
       <div
         style={{

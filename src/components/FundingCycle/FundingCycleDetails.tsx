@@ -1,7 +1,7 @@
 import { parseEther } from '@ethersproject/units'
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
-import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { CurrencyOption } from 'models/currency-option'
@@ -15,6 +15,8 @@ import {
   isRecurring,
 } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
+
+import { getBallotStrategyByAddress } from 'constants/ballot-strategies'
 
 import TooltipLabel from '../shared/TooltipLabel'
 

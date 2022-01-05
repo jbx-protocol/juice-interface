@@ -1,9 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { utils } from 'ethers'
 
+import { NetworkName } from 'models/network-name'
+
 import { Participant } from './participant'
 import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
 
 export interface Project {
   createdAt?: number

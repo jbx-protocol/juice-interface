@@ -73,7 +73,7 @@ export default function Projects() {
       <p style={{ marginBottom: 40, maxWidth: 800 }}>
         <Trans>
           <InfoCircleOutlined />
-          These are all projects built on the Juicebox protocol that you're
+          Juicebox projects that you've contributed to.
           currently a member of.
         </Trans>
       </p>

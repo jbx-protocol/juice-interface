@@ -473,11 +473,16 @@ export default function Create() {
               description: 'Reward specific community members with tokens.',
               callback: () => setTicketingFormModalVisible(true),
             },
-            {
-              title: 'Reconfiguration',
-              description: 'Rules for how changes can be made to your project.',
-              callback: () => setRulesFormModalVisible(true),
-            },
+            ...(editingFC.duration.gt(0)
+              ? [
+                  {
+                    title: 'Reconfiguration',
+                    description:
+                      'Rules for how changes can be made to your project.',
+                    callback: () => setRulesFormModalVisible(true),
+                  },
+                ]
+              : []),
             {
               title: 'Incentives',
               description: 'Adjust incentivizes for paying your project.',
@@ -655,7 +660,7 @@ export default function Create() {
           }
           onOk={deployProject}
           confirmLoading={loadingCreate}
-          width={600}
+          width={800}
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />

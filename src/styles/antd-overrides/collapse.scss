@@ -38,37 +38,70 @@
   }
 }
 
-.top-nav-right {
+// Right side of the top nav
+.top-nav-right-section {
   display: flex;
   align-items: flex-start;
   position: absolute;
-  top: 10px;
-  right: 130px;
+  top: 0px;
+  right: 69px;
 
-  .ant-collapse {
-    width: 110px;
-    margin-right: -50px;
-    background-color: rgba(0, 0, 0, 0);
+  .ant-collapse-header {
+    color: var(--text-primary) !important;
+    padding-bottom: 8px !important;
   }
-
+  .ant-collapse-content {
+    float: right;
+    margin-right: 21px;
+  }
   .ant-collapse-content-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
+    padding: 10px 2px;
     background-color: var(--background-l2);
-    border-radius: 2px;
+    border-radius: 7px;
   }
-  .ant-collapse-content-box > div {
+  .nav-dropdown-item {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    border: none;
+    padding-left: 10px;
     width: 100%;
-    height: 60px;
-    border-bottom: 1px solid var(--stroke-tertiary);
+    height: 31px;
+    color: var(--text-primary);
+    font-weight: 400;
   }
-  .ant-collapse-content-box > div:last-child {
-    border-bottom: none;
+
+  .nav-dropdown-item:hover {
+    color: var(--text-action-primary);
+  }
+}
+
+// Specific to the dotdotdot dropdown
+.top-nav-options {
+  margin-top: 11px;
+  .ant-collapse {
+    width: 110px;
+    text-align: right;
+    margin-right: -10px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .ant-collapse-content-box {
+    width: 150px;
+    margin-right: -22px;
+  }
+}
+
+// Specific to the account (ETH address/balance) dropdown
+.accountDropdown {
+  .ant-collapse {
+    margin-right: -50px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .ant-collapse-content-box {
+    width: 140px;
   }
 }

@@ -23,7 +23,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
         userSelect: 'all',
       }}
     >
-      <FormattedAddress address={userAddress} />
+      <FormattedAddress address={userAddress} linkDisabled />
       <Balance address={userAddress} />
     </span>
   )

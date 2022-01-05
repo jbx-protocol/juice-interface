@@ -1,12 +1,11 @@
 import { Collapse, Space } from 'antd'
-import { Button } from 'antd'
+// import { Button } from 'antd'
 import { MoreOutlined, MenuOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { useContext, useState } from 'react'
 
@@ -23,8 +22,6 @@ export default function Navbar() {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
-
-  const { onLogOut, signingProvider } = useContext(NetworkContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -64,16 +61,6 @@ export default function Navbar() {
     />
   )
 
-  const disconnectBtn = () => {
-    return (
-      <div className="ant-btn-tertiary">
-        <Button onClick={onLogOut} style={{ padding: '0 5px' }}>
-          <Trans>Disconnect</Trans>
-        </Button>
-      </div>
-    )
-  }
-
   const menu = () => {
     return (
       <>
@@ -111,39 +98,40 @@ export default function Navbar() {
       </Space>
 
       <Space size="middle" style={{ alignItems: 'flex-end' }}>
-        <div className="top-nav-right">
-          <Collapse style={{ border: 'none' }} activeKey={activeKey}>
-            <CollapsePanel
-              style={{
-                border: 'none',
-              }}
-              key={0}
-              showArrow={false}
-              header={
-                <Space
-                  onClick={e => {
-                    setActiveKey(activeKey === 0 ? undefined : 0)
-                    e.stopPropagation()
-                  }}
-                >
-                  <MoreOutlined
-                    style={{
-                      fontSize: '1.5em',
-                      color: colors.icon.primary,
+        <div className="top-nav-right-section">
+          <div className="top-nav-options">
+            <Collapse style={{ border: 'none' }} activeKey={activeKey}>
+              <CollapsePanel
+                style={{
+                  border: 'none',
+                }}
+                key={0}
+                showArrow={false}
+                header={
+                  <Space
+                    onClick={e => {
+                      setActiveKey(activeKey === 0 ? undefined : 0)
+                      e.stopPropagation()
                     }}
-                  />
-                </Space>
-              }
-            >
-              <div>
-                <ThemePicker />
-              </div>
-              <div>
-                <LanguageSelector />
-              </div>
-              {signingProvider ? disconnectBtn() : null}
-            </CollapsePanel>
-          </Collapse>
+                  >
+                    <MoreOutlined
+                      style={{
+                        fontSize: '1.5em',
+                        color: colors.icon.primary,
+                      }}
+                    />
+                  </Space>
+                }
+              >
+                <div className="nav-dropdown-item">
+                  <ThemePicker />
+                </div>
+                <div className="nav-dropdown-item">
+                  <LanguageSelector />
+                </div>
+              </CollapsePanel>
+            </Collapse>
+          </div>
           <div className="hide-mobile">
             <Account />
           </div>
@@ -188,7 +176,6 @@ export default function Navbar() {
           <Space direction="vertical" size="middle">
             {menu()}
             <Account />
-            {signingProvider ? disconnectBtn() : null}
           </Space>
         </CollapsePanel>
       </Collapse>

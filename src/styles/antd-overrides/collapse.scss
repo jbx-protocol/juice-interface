@@ -38,17 +38,19 @@
   }
 }
 
-.top-nav-collapse {
+.top-nav-right {
+  display: flex;
+  align-items: flex-start;
+  position: absolute;
+  top: 10px;
+  right: 130px;
+
   .ant-collapse {
-    position: absolute;
-    top: 10px;
-    right: 75px;
-    width: 100px;
+    width: 110px;
+    margin-right: -50px;
     background-color: rgba(0, 0, 0, 0);
   }
-  .ant-collapse-header {
-    text-align: right;
-  }
+
   .ant-collapse-content-box {
     display: flex;
     flex-direction: column;
@@ -56,7 +58,7 @@
     align-items: center;
     padding: 0;
     background-color: var(--background-l2);
-    border-radius: 15px;
+    border-radius: 2px;
   }
   .ant-collapse-content-box > div {
     display: flex;

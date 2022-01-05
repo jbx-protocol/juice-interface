@@ -1,6 +1,6 @@
 import { Collapse, Space } from 'antd'
 import { Button } from 'antd'
-import { MenuOutlined } from '@ant-design/icons'
+import { MoreOutlined, MenuOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
 import { t, Trans } from '@lingui/macro'
@@ -64,6 +64,16 @@ export default function Navbar() {
     />
   )
 
+  const disconnectBtn = () => {
+    return (
+      <div className="ant-btn-tertiary">
+        <Button onClick={onLogOut} style={{ padding: '0 5px' }}>
+          <Trans>Disconnect</Trans>
+        </Button>
+      </div>
+    )
+  }
+
   const menu = () => {
     return (
       <>
@@ -100,11 +110,8 @@ export default function Navbar() {
         {menu()}
       </Space>
 
-      <Space size="middle">
-        <div className="hide-mobile" style={{ marginRight: 85 }}>
-          <Account />
-        </div>
-        <div className="top-nav-collapse">
+      <Space size="middle" style={{ alignItems: 'flex-end' }}>
+        <div className="top-nav-right">
           <Collapse style={{ border: 'none' }} activeKey={activeKey}>
             <CollapsePanel
               style={{
@@ -119,7 +126,7 @@ export default function Navbar() {
                     e.stopPropagation()
                   }}
                 >
-                  <MenuOutlined
+                  <MoreOutlined
                     style={{
                       fontSize: '1.5em',
                       color: colors.icon.primary,
@@ -134,15 +141,12 @@ export default function Navbar() {
               <div>
                 <LanguageSelector />
               </div>
-              {signingProvider ? (
-                <div className="hide-mobile">
-                  <Button onClick={onLogOut} style={{ padding: '0 5px' }}>
-                    <Trans>Sign out</Trans>
-                  </Button>
-                </div>
-              ) : null}
+              {signingProvider ? disconnectBtn() : null}
             </CollapsePanel>
           </Collapse>
+          <div className="hide-mobile">
+            <Account />
+          </div>
         </div>
       </Space>
     </Header>
@@ -174,11 +178,17 @@ export default function Navbar() {
               <MenuOutlined style={{ color: colors.icon.primary }} />
             </Space>
           }
-          extra={<ThemePicker />}
+          extra={
+            <div style={{ display: 'flex' }}>
+              <LanguageSelector />
+              <ThemePicker />
+            </div>
+          }
         >
           <Space direction="vertical" size="middle">
             {menu()}
             <Account />
+            {signingProvider ? disconnectBtn() : null}
           </Space>
         </CollapsePanel>
       </Collapse>

@@ -3,7 +3,6 @@ import { NetworkContext } from 'contexts/networkContext'
 import React, { useContext } from 'react'
 import { Trans } from '@lingui/macro'
 
-import Balance from './Balance'
 import Wallet from './Wallet'
 
 export default function Account() {
@@ -14,20 +13,19 @@ export default function Account() {
     <div>
       <Row gutter={10} align="middle">
         {!signingProvider ? (
-          <Button onClick={onSelectWallet}>
-            <Trans>Connect</Trans>
-          </Button>
+          <div style={{ marginTop: -10 }}>
+            <Button onClick={onSelectWallet}>
+              <Trans>Connect</Trans>
+            </Button>
+          </div>
         ) : (
           <React.Fragment>
             {userAddress && (
-              <Col>
-                <Balance address={userAddress} showEthPrice />
-              </Col>
-            )}
-            {userAddress && (
-              <Col>
-                <Wallet userAddress={userAddress}></Wallet>
-              </Col>
+              <div style={{ marginTop: 0 }}>
+                <Col>
+                  <Wallet userAddress={userAddress}></Wallet>
+                </Col>
+              </div>
             )}
           </React.Fragment>
         )}

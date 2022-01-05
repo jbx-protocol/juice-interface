@@ -102,7 +102,9 @@ export default function FormattedAddress({
         </span>
       }
     >
-      <span style={{ cursor: 'default', userSelect: 'all' }}>{formatted}</span>
+      <div style={{ cursor: 'default', userSelect: 'all', lineHeight: '22px' }}>
+        {formatted}
+      </div>
     </Tooltip>
   )
 }

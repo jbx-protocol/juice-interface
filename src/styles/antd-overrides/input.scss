@@ -217,6 +217,7 @@ input:-webkit-autofill-selected {
   min-height: 23px;
 }
 
+// To align new currency prop in FormattedNumberInput
 .formatted-number-input {
   display: flex;
 }
@@ -224,4 +225,5 @@ input:-webkit-autofill-selected {
 // added a wrapping Form.Item on FormattedNumberInput which gave it Form.Item's margin-bottom
 .formatted-number-input .ant-form-item {
   margin-bottom: 0;
+  width: 100%;
 }

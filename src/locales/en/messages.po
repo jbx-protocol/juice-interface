@@ -213,6 +213,10 @@ msgstr "Open source businesses"
 msgid "People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange."
 msgstr ""
 
+#: src/components/Navbar/index.tsx
+msgid "Podcast"
+msgstr ""
+
 #: src/components/Landing/index.tsx
 msgid "Powered by public smart contracts on <0>Ethereum</0>."
 msgstr "Powered by public smart contracts on <0>Ethereum</0>."

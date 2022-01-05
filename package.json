@@ -53,7 +53,8 @@
     "prepare": "husky install",
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile",
-    "postinstall": "yarn i18n:extract && yarn i18n:compile"
+    "postinstall": "yarn i18n:extract && yarn i18n:compile",
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
@@ -86,6 +87,7 @@
     "husky": "^7.0.0",
     "less": "^4.1.1",
     "lint-staged": "^12.1.1",
-    "prettier": "2.4.1"
+    "prettier": "2.4.1",
+    "source-map-explorer": "^2.5.2"
   }
 }

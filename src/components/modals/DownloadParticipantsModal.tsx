@@ -45,7 +45,9 @@ export default function DownloadParticipantsModal({
     const rows = [
       [
         'Wallet address',
-        'Token balance',
+        `Total ${tokenSymbol ?? 'token'} balance`,
+        'Staked balance',
+        'Unstaked balance',
         'Total ETH paid',
         'Last paid timestamp',
       ], // CSV header row
@@ -55,10 +57,17 @@ export default function DownloadParticipantsModal({
       querySubgraph(
         {
           entity: 'participant',
-          keys: ['wallet', 'totalPaid', 'lastPaidTimestamp', 'tokenBalance'],
+          keys: [
+            'wallet',
+            'totalPaid',
+            'lastPaidTimestamp',
+            'balance',
+            'stakedBalance',
+            'unstakedBalance',
+          ],
           first: pageSize,
           skip: pageSize * pageNumber,
-          orderBy: 'tokenBalance',
+          orderBy: 'balance',
           orderDirection: 'desc',
           block: blockNumber
             ? {
@@ -84,7 +93,9 @@ export default function DownloadParticipantsModal({
 
             rows.push([
               p.wallet ?? '--',
-              fromWad(p.tokenBalance),
+              fromWad(p.balance),
+              fromWad(p.stakedBalance),
+              fromWad(p.unstakedBalance),
               fromWad(p.totalPaid),
               date,
             ])
@@ -119,7 +130,7 @@ export default function DownloadParticipantsModal({
     }
 
     query()
-  }, [projectId, setLoading, blockNumber, handle])
+  }, [projectId, setLoading, blockNumber, handle, tokenSymbol])
 
   const erc20IsUntracked =
     tokenSymbol &&

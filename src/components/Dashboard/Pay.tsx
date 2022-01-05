@@ -5,6 +5,7 @@ import PayWarningModal from 'components/modals/PayWarningModal'
 import AMMPrices from 'components/shared/AMMPrices'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
+import { CURRENCY_ETH } from 'constants/currency'
 import { readNetwork } from 'constants/networks'
 import { disablePayOverrides } from 'constants/overrides'
 import { ProjectContext } from 'contexts/projectContext'
@@ -18,7 +19,6 @@ import { decodeFundingCycleMetadata } from 'utils/fundingCycle'
 import { weightedRate } from 'utils/math'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
-import { CURRENCY_ETH } from 'constants/currency'
 
 export default function Pay() {
   const [payIn, setPayIn] = useState<CurrencyOption>(0)

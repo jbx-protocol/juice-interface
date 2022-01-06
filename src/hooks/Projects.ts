@@ -47,6 +47,7 @@ interface ProjectsOptions {
 const staleTime = 60000
 
 const keys: (keyof Project)[] = [
+  'id',
   'handle',
   'creator',
   'createdAt',

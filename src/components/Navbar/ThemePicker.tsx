@@ -8,7 +8,9 @@ import React, { useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
-export default function ThemePicker() {
+import MobileThemePicker from './MobileThemePicker'
+
+export default function ThemePicker({ mobile }: { mobile?: boolean }) {
   const { themeOption, setThemeOption } = useContext(ThemeContext)
 
   const size = 18
@@ -29,19 +31,25 @@ export default function ThemePicker() {
         )
       }
     >
-      {themeOption === ThemeOption.dark ? (
-        <React.Fragment>
-          <Sun size={size} />
-          <div style={{ margin: '0 0 2px 13px' }}>
-            <Trans>Light theme</Trans>
-          </div>
-        </React.Fragment>
+      {mobile ? (
+        <MobileThemePicker />
       ) : (
         <React.Fragment>
-          <Moon size={size} />
-          <div style={{ margin: '0 0 2px 13px' }}>
-            <Trans>Dark theme</Trans>
-          </div>
+          {themeOption === ThemeOption.dark ? (
+            <React.Fragment>
+              <Sun size={size} />
+              <div style={{ margin: '0 0 2px 13px' }}>
+                <Trans>Light theme</Trans>
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Moon size={size} />
+              <div style={{ margin: '0 0 2px 13px' }}>
+                <Trans>Dark theme</Trans>
+              </div>
+            </React.Fragment>
+          )}
         </React.Fragment>
       )}
     </div>

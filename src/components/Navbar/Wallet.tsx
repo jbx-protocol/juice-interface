@@ -3,8 +3,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { Tooltip } from 'antd'
 
-import Balance from './Balance'
 import EtherscanLink from 'components/shared/EtherscanLink'
+
+import Balance from './Balance'
 
 export default function Wallet({ userAddress }: { userAddress: string }) {
   const { colors } = useContext(ThemeContext).theme
@@ -24,7 +25,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
       <span
         style={{
           height,
-          borderRadius: height / 2,
+          borderRadius: 2,
           padding: '4px 19px 7px',
           display: 'flex',
           flexDirection: 'column',

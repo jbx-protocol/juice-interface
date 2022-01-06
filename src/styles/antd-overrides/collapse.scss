@@ -40,13 +40,18 @@
 
 // Top Nav Select
 // Right side of the top nav
-.top-nav-right-section {
+.top-nav {
   display: flex;
-  align-items: flex-start;
-  position: absolute;
-  top: 10px;
-  right: 50px;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-l0);
 
+  .nav-menu-item {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+  }
+
+  // Resources dropdown and options (dotdotdot) menu
   .ant-collapse-header {
     color: var(--text-primary) !important;
     padding-bottom: 8px !important;
@@ -68,6 +73,7 @@
     box-shadow: none !important;
     padding: 0;
     width: 100%;
+    background-color: var(--background-l0);
   }
   .ant-select-arrow {
     display: none;
@@ -92,15 +98,71 @@
   }
 }
 
-// Specific to the dotdotdot dropdown (in case we want to put another select in)
-.top-nav-options {
+.top-nav-mobile {
+  height: 50px;
+  padding: 8px;
+  .ant-collapse {
+    position: absolute; // collapses need absolutes
+    top: 0;
+    width: 100%;
+  }
+  .resouces-dropdown {
+    top: 162px;
+    left: -2px;
+    .ant-collapse-content-box {
+      z-index: 1000;
+      margin-top: -2px;
+      width: 110px;
+    }
+  }
+  .ant-collapse-content {
+    float: left;
+    margin-left: 8px;
+    // padding-top: 3px;
+  }
+  .account-badge {
+    margin-top: 23px;
+  }
+}
+
+// Logo and links
+.top-left-nav {
+  flex: 1;
+}
+
+// Specific to the resources dropdown in the top nav
+.resouces-dropdown {
+  position: absolute;
+  top: 9px;
+  left: 320px;
+  .ant-collapse-header {
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+  }
+  .ant-collapse-content {
+    width: 100px;
+  }
+  .ant-select-arrow {
+    display: block;
+  }
+}
+
+// Dotdotdot menu and wallet/balance
+.top-right-nav {
+  display: flex;
+  align-items: flex-start;
+  position: absolute;
+  top: 10px;
+  right: 50px;
   margin-right: 10px;
-  // margin-top: 10px;
+}
+
+// Dotdotdot menu in top right
+.top-nav-options {
   .ant-collapse {
     width: 110px;
     text-align: right;
     margin-right: -10px;
-    // background-color: rgba(0, 0, 0, 0);
   }
   .ant-collapse-content {
     width: 170px;

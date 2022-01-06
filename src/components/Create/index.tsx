@@ -291,17 +291,22 @@ export default function Create() {
             name: logoNameForHandle(editingProjectInfo.handle),
           })
 
+          resetProjectForm()
+          dispatch(editingProjectActions.resetState())
+
           window.location.hash = '/p/' + editingProjectInfo.handle
         },
       },
     )
   }, [
     contracts,
+    dispatch,
     editingFC,
     editingPayoutMods,
     editingProjectInfo.handle,
     editingProjectInfo.metadata,
     editingTicketMods,
+    resetProjectForm,
     transactor,
     userAddress,
   ])

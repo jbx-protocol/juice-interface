@@ -28,7 +28,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # config: 'crowdin.yml'
           upload_translations: true
           download_translations: false
           project_id: '492549'

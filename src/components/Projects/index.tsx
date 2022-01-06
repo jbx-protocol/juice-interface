@@ -2,6 +2,7 @@ import { Button, Select, Space, Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
+import { Tab, TabGroup } from 'components/shared/Tab'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery } from 'hooks/Projects'
@@ -62,30 +63,6 @@ export default function Projects() {
     [],
   )
 
-  const tab = (tab: ProjectState) => (
-    <div
-      style={{
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        borderBottom: '2px solid transparent',
-        paddingBottom: 6,
-        ...(tab === selectedTab
-          ? {
-              color: colors.text.primary,
-              fontWeight: 500,
-              borderColor: colors.text.primary,
-            }
-          : {
-              color: colors.text.secondary,
-              borderColor: 'transparent',
-            }),
-      }}
-      onClick={() => setSelectedTab(tab)}
-    >
-      {tab}
-    </div>
-  )
-
   return (
     <div style={{ ...layouts.maxWidth }}>
       <h1>
@@ -111,10 +88,10 @@ export default function Projects() {
         }}
       >
         <div style={{ height: 40 }}>
-          <Space direction="horizontal" size="large">
-            {tab('active')}
-            {tab('archived')}
-          </Space>
+          <TabGroup value={{ selectedTab, setSelectedTab }}>
+            <Tab value="active" text="all" />
+            <Tab value="archived" />
+          </TabGroup>
         </div>
 
         <div>

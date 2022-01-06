@@ -5,7 +5,6 @@ import { Header } from 'antd/lib/layout/layout'
 import { t } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { NetworkContext } from 'contexts/networkContext'
 import { useContext, useState } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
@@ -20,8 +19,6 @@ export default function Navbar() {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
-
-  let { userAddress } = useContext(NetworkContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -65,7 +62,6 @@ export default function Navbar() {
     return (
       <>
         {menuItem(t`Projects`, '/#/projects')}
-        {userAddress && menuItem(t`My Projects`, '/#/my-projects')}
         {menuItem(t`FAQ`, undefined, () => {
           window.location.hash = '/'
           setTimeout(() => {

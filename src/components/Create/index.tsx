@@ -78,6 +78,7 @@ export default function Create() {
   ] = useState<boolean>(false)
   const [deployProjectModalVisible, setDeployProjectModalVisible] =
     useState<boolean>(false)
+  const [confirmStartOverVisible, setConfirmStartOverVisible] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState<boolean>()
   const [projectForm] = useForm<ProjectFormFields>()
   const [ticketingForm] = useForm<TicketingFormFields>()
@@ -408,16 +409,31 @@ export default function Create() {
           </Trans>
         </p>
 
-        <Button
-          onClick={() => setDeployProjectModalVisible(true)}
-          type="primary"
-          block
-          disabled={
-            !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
-          }
+        <div
+          style={{
+            display: 'flex',
+          }}
         >
-          Review & Deploy
-        </Button>
+          <Button
+            onClick={() => setConfirmStartOverVisible(true)}
+            type="ghost"
+            block
+            style={{ marginRight: 8 }}
+          >
+            Start Over
+          </Button>
+
+          <Button
+            onClick={() => setDeployProjectModalVisible(true)}
+            type="primary"
+            block
+            disabled={
+              !editingProjectInfo?.metadata.name || !editingProjectInfo.handle
+            }
+          >
+            Review & Deploy
+          </Button>
+        </div>
       </Space>
     ),
     [
@@ -740,6 +756,21 @@ export default function Create() {
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />
+        </Modal>
+
+        <Modal
+          visible={confirmStartOverVisible}
+          okText="Start Over"
+          okType="danger"
+          title="Are you sure you want to start over?"
+          onOk={() => {
+            resetProjectForm()
+            dispatch(editingProjectActions.resetState())
+            setConfirmStartOverVisible(false)
+          }}
+          onCancel={() => setConfirmStartOverVisible(false)}
+        >
+          This will erase of your all changes.
         </Modal>
       </Row>
     </ProjectContext.Provider>

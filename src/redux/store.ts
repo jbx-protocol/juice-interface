@@ -9,15 +9,19 @@ const rootReducer = combineReducers({
   editingProject: editingProjectReducer,
 })
 
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production',
-  preloadedState: getLocalStoragePreloadedState(),
-  middleware: getDefaultMiddleware => [
-    ...getDefaultMiddleware(),
-    localStoragePreloadMiddleware,
-  ],
-})
+export function createStore() {
+  return configureStore({
+    reducer: rootReducer,
+    devTools: process.env.NODE_ENV !== 'production',
+    preloadedState: getLocalStoragePreloadedState(),
+    middleware: getDefaultMiddleware => [
+      ...getDefaultMiddleware(),
+      localStoragePreloadMiddleware,
+    ],
+  })
+}
+
+const store = createStore()
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch

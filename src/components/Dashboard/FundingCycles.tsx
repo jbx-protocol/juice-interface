@@ -1,6 +1,5 @@
-import { Button, Space } from 'antd'
-import { t, Trans } from '@lingui/macro'
-import ReconfigureFCModal from 'components/modals/ReconfigureFCModal'
+import { Space } from 'antd'
+import { t } from '@lingui/macro'
 import { CardSection } from 'components/shared/CardSection'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -11,6 +10,7 @@ import CurrentFundingCycle from '../FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from '../FundingCycle/QueuedFundingCycle'
 import FundingHistory from './FundingHistory'
 import SectionHeader from './SectionHeader'
+import ReconfigureFundingModalTrigger from '../FundingCycle/ReconfigureFundingModalTrigger'
 
 type TabOption = 'current' | 'upcoming' | 'history'
 
@@ -20,20 +20,9 @@ export default function FundingCycles({
   showCurrentDetail?: boolean
 }) {
   const [selectedTab, setSelectedTab] = useState<TabOption>('current')
-  const [reconfigureModalVisible, setReconfigureModalVisible] =
-    useState<boolean>(false)
   const [hoverTab, setHoverTab] = useState<TabOption>()
 
-  const {
-    projectId,
-    currentFC,
-    queuedFC,
-    queuedPayoutMods,
-    queuedTicketMods,
-    currentPayoutMods,
-    currentTicketMods,
-    isPreviewMode,
-  } = useContext(ProjectContext)
+  const { projectId, currentFC } = useContext(ProjectContext)
 
   const {
     theme: { colors },
@@ -103,29 +92,7 @@ export default function FundingCycles({
       </div>
       <div>{tabContent}</div>
 
-      {canReconfigure && (
-        <Button
-          style={{ marginTop: 20 }}
-          onClick={() => setReconfigureModalVisible(true)}
-          size="small"
-          disabled={isPreviewMode}
-        >
-          <Trans>Reconfigure funding</Trans>
-        </Button>
-      )}
-
-      <ReconfigureFCModal
-        visible={reconfigureModalVisible}
-        fundingCycle={queuedFC?.number.gt(0) ? queuedFC : currentFC}
-        payoutMods={
-          queuedFC?.number.gt(0) ? queuedPayoutMods : currentPayoutMods
-        }
-        ticketMods={
-          queuedFC?.number.gt(0) ? queuedTicketMods : currentTicketMods
-        }
-        projectId={projectId}
-        onDone={() => setReconfigureModalVisible(false)}
-      />
+      {canReconfigure && <ReconfigureFundingModalTrigger />}
     </div>
   )
 }

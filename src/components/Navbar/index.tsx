@@ -1,11 +1,12 @@
 import { Collapse, Space } from 'antd'
 // import { Button } from 'antd'
-import { MoreOutlined, MenuOutlined } from '@ant-design/icons'
+import { MoreOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { NetworkContext } from 'contexts/networkContext'
 
 import { useContext, useState } from 'react'
 
@@ -22,6 +23,8 @@ export default function Navbar() {
     theme: { colors },
     forThemeOption,
   } = useContext(ThemeContext)
+
+  const { signingProvider, onLogOut } = useContext(NetworkContext)
 
   const menuItem = (text: string, route?: string, onClick?: VoidFunction) => {
     const external = route?.startsWith('http')
@@ -129,6 +132,16 @@ export default function Navbar() {
                 <div className="nav-dropdown-item">
                   <LanguageSelector />
                 </div>
+                {signingProvider ? (
+                  <div className="nav-dropdown-item">
+                    <LogoutOutlined />
+                    <div onClick={onLogOut}>
+                      <div style={{ margin: '0 0 2px 13px' }}>
+                        <Trans>Disconnect</Trans>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </CollapsePanel>
             </Collapse>
           </div>

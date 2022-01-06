@@ -38,30 +38,39 @@
   }
 }
 
+// Top Nav Select
 // Right side of the top nav
 .top-nav-right-section {
   display: flex;
   align-items: flex-start;
   position: absolute;
-  top: 0px;
-  right: 69px;
+  top: 10px;
+  right: 50px;
 
   .ant-collapse-header {
     color: var(--text-primary) !important;
     padding-bottom: 8px !important;
   }
+
   .ant-collapse-content {
     float: right;
     margin-right: 21px;
-  }
-  .ant-collapse-content-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 10px 2px;
-    background-color: var(--background-l2);
+    background-color: var(--background-l0);
     border-radius: 7px;
+  }
+  .ant-collapse-content-box {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0;
+    width: 100%;
+  }
+  .ant-select-arrow {
+    display: none;
   }
   .nav-dropdown-item {
     display: flex;
@@ -70,38 +79,31 @@
     border: none;
     padding-left: 10px;
     width: 100%;
-    height: 31px;
+    height: 40px;
     color: var(--text-primary);
     font-weight: 400;
+    cursor: pointer;
   }
-
+  .ant-collapse-content-inactive {
+    display: none;
+  }
   .nav-dropdown-item:hover {
-    color: var(--text-action-primary);
+    background-color: var(--background-l1);
   }
 }
 
-// Specific to the dotdotdot dropdown
+// Specific to the dotdotdot dropdown (in case we want to put another select in)
 .top-nav-options {
-  margin-top: 11px;
+  margin-right: 10px;
+  // margin-top: 10px;
   .ant-collapse {
     width: 110px;
     text-align: right;
     margin-right: -10px;
-    background-color: rgba(0, 0, 0, 0);
+    // background-color: rgba(0, 0, 0, 0);
   }
-  .ant-collapse-content-box {
-    width: 150px;
+  .ant-collapse-content {
+    width: 170px;
     margin-right: -22px;
-  }
-}
-
-// Specific to the account (ETH address/balance) dropdown
-.accountDropdown {
-  .ant-collapse {
-    margin-right: -50px;
-    background-color: rgba(0, 0, 0, 0);
-  }
-  .ant-collapse-content-box {
-    width: 140px;
   }
 }

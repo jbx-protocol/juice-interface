@@ -23,7 +23,7 @@ export default function EtherscanLink({
 
   return (
     <a
-      className={showText ? 'nav-dropdown-item' : 'quiet'}
+      className={'quiet'}
       href={`https://${subdomain}etherscan.io/${type}/${value}`}
       target="_blank"
       rel="noopener noreferrer"

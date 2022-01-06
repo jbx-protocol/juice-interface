@@ -177,9 +177,15 @@ input:-webkit-autofill-selected {
     display: none;
   }
   .ant-select-selection-item {
-    text-align: center;
+    text-align: left;
     padding: 0 !important;
+    font-weight: 400;
   }
+}
+
+.language-selector.ant-select-focused .ant-select-selector {
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .ant-upload-list,

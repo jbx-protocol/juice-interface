@@ -5,7 +5,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import CatchallRedirect from './CatchallRedirect'
 import Create from './Create'
 import Projects from './Projects'
-import MyProjects from './MyProjects'
 
 export default function Router() {
   return (
@@ -22,9 +21,6 @@ export default function Router() {
         </Route>
         <Route path="/projects">
           <Projects />
-        </Route>
-        <Route path="/my-projects">
-          <MyProjects />
         </Route>
         <Route path="/p/:handle">
           <Dashboard />

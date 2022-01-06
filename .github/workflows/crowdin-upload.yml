@@ -26,11 +26,9 @@ jobs:
       - name: Upload to Crowdin
         uses: crowdin/github-action@1.4.4
         with:
-          # config: 'crowdin.yml'
+          config: 'crowdin.yml'
           upload_translations: true
           download_translations: false
-          project_id: 492549
-          api_token: ${{ secrets.CROWDIN_API_TOKEN }}
           source: 'src/locales/en/messages.po'
           translation: 'src/locales/%two_letters_code%/%original_file_name%'
         env:

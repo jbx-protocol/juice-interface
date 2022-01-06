@@ -385,4 +385,3 @@ msgstr ""
 #: src/components/modals/DistributeTokensModal.tsx
 msgid "{0, plural, one {# token} other {# tokens}}"
 msgstr ""
-

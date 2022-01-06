@@ -2,8 +2,7 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/shared/InputAccessoryButton'
 import FormattedNumberInput from 'components/shared/inputs/FormattedNumberInput'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
-import { readProvider } from 'constants/readProvider'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkName } from 'models/network-name'
@@ -11,6 +10,9 @@ import { parseParticipantJson } from 'models/subgraph-entities/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
+
+import { readProvider } from 'constants/readProvider'
+import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 
 export default function DownloadParticipantsModal({
   visible,

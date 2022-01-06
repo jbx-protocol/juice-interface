@@ -44,9 +44,9 @@ export default function TicketingForm({
         <p>
           <Trans>
             You'll be able to issue ERC-20 tokens once your project contract has
-            been deployed. Until then, your project will use staked tokens,
-            allowing your supporters to still track their balance and redeem for
-            overflow in the meantime.
+            been deployed. Until then, the protocol will track token balances,
+            allowing your supporters to earn tokens and redeem for overflow in the
+            meantime.
           </Trans>
         </p>
       </div>
@@ -54,6 +54,7 @@ export default function TicketingForm({
       <Form form={form} layout="vertical">
         <FormItems.ProjectReserved
           value={form.getFieldValue('reserved')}
+          name="reserved"
           onChange={(val?: number) => form.setFieldsValue({ reserved: val })}
         />
         <FormItems.ProjectTicketMods

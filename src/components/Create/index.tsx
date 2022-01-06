@@ -196,12 +196,8 @@ export default function Create() {
 
     if (!fee) return
 
-    const targetWithFee = editingFC.target
-      ?.add(hasFundingTarget(editingFC) ? fee : 0)
-      .toHexString()
-
     const properties: Record<keyof FCProperties, any> = {
-      target: targetWithFee,
+      target: editingFC.target.toHexString(),
       currency: hasFundingTarget(editingFC) ? editingFC.currency.toNumber() : 0,
       duration: editingFC.duration.toNumber(),
       discountRate: editingFC.duration.gt(0)
@@ -476,11 +472,16 @@ export default function Create() {
               description: t`Reward specific community members with tokens.`,
               callback: () => setTicketingFormModalVisible(true),
             },
-            {
-              title: t`Reconfiguration`,
-              description: t`Rules for how changes can be made to your project.`,
-              callback: () => setRulesFormModalVisible(true),
-            },
+            ...(editingFC.duration.gt(0)
+              ? [
+                  {
+                    title: t`Reconfiguration`,
+                    description:
+                      t`Rules for how changes can be made to your project.`,
+                    callback: () => setRulesFormModalVisible(true),
+                  },
+                ]
+              : []),
             {
               title: t`Incentives`,
               description: t`Adjust incentivizes for paying your project.`,
@@ -658,7 +659,7 @@ export default function Create() {
           }
           onOk={deployProject}
           confirmLoading={loadingCreate}
-          width={600}
+          width={800}
           onCancel={() => setDeployProjectModalVisible(false)}
         >
           <ConfirmDeployProject />

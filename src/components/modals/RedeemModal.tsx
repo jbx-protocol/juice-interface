@@ -10,25 +10,24 @@ import { UserContext } from 'contexts/userContext'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
-import { BallotState } from 'models/funding-cycle'
-import { useContext, useMemo, useState } from 'react'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { decodeFCMetadata } from 'utils/fundingCycle'
+
+import { useRedeemRate } from '../../hooks/RedeemRate'
 
 export default function RedeemModal({
   visible,
   redeemDisabled,
   onOk,
   onCancel,
-  totalSupply,
   totalBalance,
 }: {
   visible?: boolean
   redeemDisabled?: boolean
   onOk: VoidFunction | undefined
   onCancel: VoidFunction | undefined
-  totalSupply: BigNumber | undefined
   totalBalance: BigNumber | undefined
 }) {
   const [redeemAmount, setRedeemAmount] = useState<string>()
@@ -41,12 +40,7 @@ export default function RedeemModal({
   const { contracts, transactor } = useContext(UserContext)
   const { projectId, tokenSymbol, currentFC } = useContext(ProjectContext)
 
-  const currentOverflow = useContractReader<BigNumber>({
-    contract: ContractName.TerminalV1,
-    functionName: 'currentOverflowOf',
-    args: projectId ? [projectId.toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
-  })
+  const fcMetadata = decodeFCMetadata(currentFC?.metadata)
 
   const maxClaimable = useContractReader<BigNumber>({
     contract: ContractName.TerminalV1,
@@ -76,55 +70,10 @@ export default function RedeemModal({
     ),
   })
 
-  const currentBallotState = useContractReader<BallotState>({
-    contract: ContractName.FundingCycles,
-    functionName: 'currentBallotStateOf',
-    args: projectId ? [projectId.toHexString()] : null,
+  const rewardAmount = useRedeemRate({
+    tokenAmount: redeemAmount,
+    fundingCycle: currentFC,
   })
-
-  const rewardAmount = useMemo(() => {
-    const metadata = decodeFCMetadata(currentFC?.metadata)
-
-    const bondingCurveRate =
-      currentBallotState === BallotState.Active
-        ? metadata?.reconfigurationBondingCurveRate
-        : metadata?.bondingCurveRate
-
-    const base =
-      totalSupply && redeemAmount && currentOverflow
-        ? currentOverflow.mul(parseWad(redeemAmount)).div(totalSupply)
-        : BigNumber.from(0)
-
-    if (
-      !bondingCurveRate ||
-      !totalSupply ||
-      !base ||
-      !redeemAmount ||
-      !currentOverflow
-    ) {
-      return undefined
-    }
-
-    if (totalSupply.sub(parseWad(redeemAmount)).isNegative()) {
-      return currentOverflow
-    }
-
-    const numerator = BigNumber.from(bondingCurveRate).add(
-      parseWad(redeemAmount)
-        .mul(200 - bondingCurveRate)
-        .div(totalSupply),
-    )
-    const denominator = 200
-
-    // Formula: https://www.desmos.com/calculator/sp9ru6zbpk
-    return base.mul(numerator).div(denominator)
-  }, [
-    redeemAmount,
-    totalSupply,
-    currentOverflow,
-    currentBallotState,
-    currentFC,
-  ])
 
   // 0.5% slippage for USD-denominated projects
   const minAmount = currentFC?.currency.eq(1)
@@ -158,6 +107,12 @@ export default function RedeemModal({
     )
   }
 
+  const statsStyle: CSSProperties = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+  }
+
   return (
     <Modal
       title={`Burn ${tokenSymbol ? tokenSymbol + ' tokens' : 'tokens'} for ETH`}
@@ -185,19 +140,42 @@ export default function RedeemModal({
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         <div>
-          <Trans>Balance</Trans>:{' '}
-          {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
-          {tokenSymbol ?? 'tokens'}
+          <p style={statsStyle}>
+            <Trans>Bonding curve:</Trans>{' '}
+            <span>
+              {fcMetadata?.bondingCurveRate !== undefined
+                ? fcMetadata.bondingCurveRate / 2
+                : '--'}
+              %
+            </span>
+          </p>
+          {/* <p style={statsStyle}>
+            Burn rate:{' '}
+            <span>
+              {redeemRate && !redeemRate.isZero()
+                ? formattedNum(parseWad(1).div(redeemRate))
+                : '--'}{' '}
+              {tokenSymbol ?? 'tokens'}/ETH
+            </span>
+          </p> */}
+          <p style={statsStyle}>
+            {tokenSymbol ?? 'Token'} balance:{' '}
+            <span>
+              {formatWad(totalBalance ?? 0, { decimals: 0 })}{' '}
+              {tokenSymbol ?? 'tokens'}
+            </span>
+          </p>
+          <p style={statsStyle}>
+            Currently worth:{' '}
+            <span>
+              <CurrencySymbol currency={0} />
+              {formatWad(maxClaimable, { decimals: 4 })}
+            </span>
+          </p>
         </div>
         <p>
-          <Trans>Currently worth</Trans>: <CurrencySymbol currency={0} />
-          {formatWad(maxClaimable, { decimals: 4 })}
-        </p>
-        <p>
-          <Trans>
-            Tokens can be redeemed for a portion of this project's ETH overflow,
-            according to the bonding curve rate of the current funding cycle.
-          </Trans>{' '}
+          <Trans>Tokens can be redeemed for a portion of this project's ETH overflow,
+            according to the bonding curve rate of the current funding cycle.</Trans>{' '}
           <span style={{ fontWeight: 500, color: colors.text.warn }}>
             <Trans>Tokens are burned when they are redeemed.</Trans>
           </span>

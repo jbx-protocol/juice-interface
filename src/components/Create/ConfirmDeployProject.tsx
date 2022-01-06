@@ -141,18 +141,20 @@ export default function ConfirmDeployProject() {
           />
         )}
       </Space>
-      <Statistic
-        title={t`Reconfiguration strategy`}
-        valueRender={() => {
-          const ballot = getBallotStrategyByAddress(editingFC.ballot)
-          return (
-            <div>
-              {ballot.name}{' '}
-              <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
-            </div>
-          )
-        }}
-      />
+      {editingFC.duration.gt(0) && (
+        <Statistic
+          title={t`Reconfiguration strategy`}
+          valueRender={() => {
+            const ballot = getBallotStrategyByAddress(editingFC.ballot)
+            return (
+              <div>
+                {ballot.name}{' '}
+                <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+              </div>
+            )
+          }}
+        />
+      )}
       <Statistic
         title="Spending"
         valueRender={() => (

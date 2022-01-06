@@ -25,6 +25,7 @@ export default function ProjectReserved({
         sliderValue={value}
         suffix="%"
         onChange={onChange}
+        name={name}
         step={0.5}
       />
     </Form.Item>

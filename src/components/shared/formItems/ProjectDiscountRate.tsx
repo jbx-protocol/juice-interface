@@ -26,6 +26,7 @@ export default function ProjectDiscountRate({
         max={20}
         sliderValue={parseFloat(value ?? '0')}
         suffix="%"
+        name={name}
         onChange={onChange}
         step={0.1}
         disabled={disabled}

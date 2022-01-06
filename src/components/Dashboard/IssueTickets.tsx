@@ -40,8 +40,7 @@ export default function IssueTickets({
         </Button>
         <Tooltip
           title="Issue an ERC-20 to be used as this project's token. Once
-          issued, current staked token holders will be able to claim their
-          balance in the new token."
+          issued, anyone can claim their existing token balance in the new token."
         >
           <InfoCircleOutlined style={{ color: undefined }} />
         </Tooltip>
@@ -55,9 +54,8 @@ export default function IssueTickets({
         onCancel={() => setModalVisible(false)}
       >
         <p>
-          Issue an ERC-20 token for this project. Once issued, current staked
-          token holders will be able to claim their existing balance in the new
-          token.
+          Issue an ERC-20 token for this project. Once issued, anyone can claim
+          their existing token balance in the new token.
         </p>
         <Form form={form} layout="vertical">
           <Form.Item name="name" label="Token name">

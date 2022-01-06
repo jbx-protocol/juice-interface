@@ -27,7 +27,10 @@ import NumberSlider from '../inputs/NumberSlider'
 import ProjectHandle from '../ProjectHandle'
 import { FormItemExt } from './formItemExt'
 
+import { validateEthAddress, validateGreaterThanZero } from '../FormHelpers'
+
 type ModType = 'project' | 'address'
+type ModalMode = 'Add' | 'Edit' | undefined
 
 type EditingPayoutMod = PayoutMod & { handle?: string }
 
@@ -53,6 +56,7 @@ export default function ProjectPayoutMods({
     percent: number
     lockedUntil: moment.Moment
   }>()
+  const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
   const [editingModIndex, setEditingModIndex] = useState<number>()
   const [editingPercent, setEditingPercent] = useState<number>()
@@ -132,6 +136,7 @@ export default function ProjectPayoutMods({
                   ? moment.default(mod.lockedUntil * 1000)
                   : undefined,
               })
+              setModalMode('Edit')
               setEditingModIndex(index)
               setEditingPercent(percent)
               setEditingModProjectId(mod.projectId)
@@ -319,20 +324,23 @@ export default function ProjectPayoutMods({
     form.resetFields()
   }
 
-  return (
-    <Form.Item
-      {...formItemProps}
-      rules={[
-        {
-          validator: () => {
-            if (total > 100)
-              return Promise.reject('Percentages must add up to less than 100%')
+  // Validates the slider (ensures percent !== 0)
+  const validateSlider = () => {
+    return validateGreaterThanZero(form.getFieldValue('percent'))
+  }
 
-            return Promise.resolve()
-          },
-        },
-      ]}
-    >
+  // Validates new payout receiving address
+  const validatePayoutAddress = () => {
+    return validateEthAddress(
+      form.getFieldValue('beneficiary'),
+      mods,
+      modalMode,
+      editingModIndex,
+    )
+  }
+
+  return (
+    <Form.Item {...formItemProps}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         {lockedMods ? (
           <Space style={{ width: '100%' }} direction="vertical" size="small">
@@ -363,6 +371,7 @@ export default function ProjectPayoutMods({
         <Button
           type="dashed"
           onClick={() => {
+            setModalMode('Add')
             setEditingModIndex(mods.length)
             setEditingPercent(0)
             setEditingModProjectId(undefined)
@@ -375,10 +384,10 @@ export default function ProjectPayoutMods({
       </Space>
 
       <Modal
-        title={editingModProjectId ? 'Edit existing payout' : 'Add a payout'}
+        title={modalMode === 'Edit' ? 'Edit existing payout' : 'Add a payout'}
         visible={editingModIndex !== undefined}
         onOk={setReceiver}
-        okText={editingModProjectId ? 'Save payout' : 'Add payout'}
+        okText={modalMode === 'Edit' ? 'Save payout' : 'Add payout'}
         onCancel={() => {
           form.resetFields()
           setEditingModIndex(undefined)
@@ -408,14 +417,7 @@ export default function ProjectPayoutMods({
                 label: 'Address',
                 rules: [
                   {
-                    validator: (rule: any, value: any) => {
-                      const address = form.getFieldValue('beneficiary')
-                      if (!address || !utils.isAddress(address))
-                        return Promise.reject('Address is required')
-                      else if (address === constants.AddressZero)
-                        return Promise.reject('Cannot use zero address.')
-                      else return Promise.resolve()
-                    },
+                    validator: validatePayoutAddress,
                   },
                 ],
               }}
@@ -459,22 +461,26 @@ export default function ProjectPayoutMods({
               }
             />
           ) : null}
-          <Form.Item label="Percent" rules={[{ required: true }]}>
+          <Form.Item label="Percent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ flex: 1, marginRight: 10 }}>
                 <NumberSlider
-                  onChange={percent => {
+                  onChange={(percent: number | undefined) => {
                     form.setFieldsValue({ percent })
                     setEditingPercent(percent)
                   }}
                   step={0.01}
                   defaultValue={form.getFieldValue('percent') || 0}
                   suffix="%"
+                  name="percent"
+                  formItemProps={{
+                    rules: [{ validator: validateSlider }],
+                  }}
                 />
               </span>
 
               {parseWad(target).lt(constants.MaxUint256) && (
-                <span style={{ color: colors.text.primary }}>
+                <span style={{ color: colors.text.primary, marginBottom: 22 }}>
                   <CurrencySymbol currency={currency} />
                   {formatWad(
                     amountSubFee(parseWad(target), fee)

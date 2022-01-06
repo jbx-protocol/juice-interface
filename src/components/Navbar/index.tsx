@@ -1,5 +1,4 @@
 import { Collapse, Space } from 'antd'
-// import { Button } from 'antd'
 import { MoreOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
@@ -80,6 +79,10 @@ export default function Navbar() {
         {menuItem(t`Blog`, 'https://blog.juicebox.money')}
         {menuItem('Discord', 'https://discord.gg/6jXrJSyDFf')}
         {menuItem(t`Workspace`, 'https://juicebox.notion.site')}
+        {menuItem(
+          t`Podcast`,
+          'https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8',
+        )}
       </>
     )
   }

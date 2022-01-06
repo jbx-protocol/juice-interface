@@ -101,7 +101,7 @@ export default function PrintPremined({ projectId }: { projectId: BigNumber }) {
           <Form.Item
             name="preferUnstaked"
             label="Mint as ERC-20"
-            extra="You can mint ERC-20 tokens if they have been issued for this project. Otherwise staked tokens will be minted, which can be claimed later as ERC-20 by the recever."
+            extra="You can mint ERC-20 tokens if they have been issued for this project. Otherwise token balances will be tracked by the contract, and can be claimed later as ERC-20 by the recever."
             initialValue={false}
           >
             <Switch />

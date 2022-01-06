@@ -33,7 +33,7 @@ const QAs: {
   {
     q: t`What are community tokens?`,
     a: [
-      `Each project has its own tokens which can either be staked or withdrawn as ERC-20s. Everyone who funds a project gets a newly minted supply of tokens in return. `,
+      `Each project has its own tokens. Everyone who funds a project gets a newly minted supply of tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are issued by the project owner`,
     ],
   },
   {

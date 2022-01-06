@@ -1,5 +1,7 @@
-import { InputNumber, Slider } from 'antd'
+import { InputNumber, Slider, Form } from 'antd'
 import { useEffect, useState } from 'react'
+
+import { FormItemExt } from '../formItems/formItemExt'
 
 export default function NumberSlider({
   min,
@@ -10,6 +12,8 @@ export default function NumberSlider({
   onChange,
   defaultValue,
   disabled,
+  name, // Without the name prop, the InputNumber will not update according to its parent Form.Item
+  formItemProps,
 }: {
   min?: number
   max?: number
@@ -18,8 +22,7 @@ export default function NumberSlider({
   suffix?: string
   onChange?: (num: number | undefined) => void
   defaultValue?: number
-  disabled?: boolean
-}) {
+} & FormItemExt) {
   const [_value, setValue] = useState<number>()
 
   const inputConfig = {
@@ -48,29 +51,31 @@ export default function NumberSlider({
         defaultValue={defaultValue}
         disabled={disabled}
       />
-      <InputNumber
-        {...inputConfig}
-        value={_value}
-        disabled={disabled}
-        formatter={(val?: string | number | undefined) => {
-          let _val = val?.toString() ?? '0'
+      <Form.Item name={name} rules={formItemProps?.rules ?? []}>
+        <InputNumber
+          {...inputConfig}
+          value={_value}
+          disabled={disabled}
+          formatter={(val?: string | number | undefined) => {
+            let _val = val?.toString() ?? '0'
 
-          if (_val.includes('.') && _val.split('.')[1].length > decimals) {
-            _val = parseFloat(_val).toFixed(decimals)
+            if (_val.includes('.') && _val.split('.')[1].length > decimals) {
+              _val = parseFloat(_val).toFixed(decimals)
+            }
+
+            return `${_val ?? ''}${suffix ?? ''}`
+          }}
+          parser={(val?: string) =>
+            parseFloat(val?.replace(suffix ?? '', '') ?? '0')
           }
-
-          return `${_val ?? ''}${suffix ?? ''}`
-        }}
-        parser={(val?: string) =>
-          parseFloat(val?.replace(suffix ?? '', '') ?? '0')
-        }
-        onChange={(val: string | number | null | undefined) => {
-          const newVal =
-            (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
-          updateValue(newVal)
-        }}
-        defaultValue={defaultValue}
-      />
+          onChange={(val: string | number | null | undefined) => {
+            const newVal =
+              (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
+            updateValue(newVal)
+          }}
+          defaultValue={defaultValue}
+        />
+      </Form.Item>
     </div>
   )
 }

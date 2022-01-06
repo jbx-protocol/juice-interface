@@ -9,7 +9,7 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import Loading from 'components/shared/Loading'
 import UntrackedErc20Notice from 'components/shared/UntrackedErc20Notice'
-import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
+
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/ContractReader'
@@ -24,6 +24,8 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatPercent, formatWad } from 'utils/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
+
+import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 
 import DownloadParticipantsModal from './DownloadParticipantsModal'
 
@@ -253,7 +255,16 @@ export default function ParticipantsModal({
       <div>
         <h4>{tokenSymbol || 'Token'} holders</h4>
 
-        {erc20IsUntracked && <UntrackedErc20Notice tokenSymbol={tokenSymbol} />}
+        <p style={{ padding: 10, background: colors.background.l1 }}>
+          This list is using an experimental data index and may be inaccurate
+          for some projects.
+        </p>
+
+        {erc20IsUntracked && (
+          <p style={{ padding: 10, background: colors.background.l1 }}>
+            <UntrackedErc20Notice tokenSymbol={tokenSymbol} />
+          </p>
+        )}
 
         {list}
 

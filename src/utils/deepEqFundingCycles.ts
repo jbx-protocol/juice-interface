@@ -7,6 +7,7 @@ export const deepEqFundingCycles = (a?: FundingCycle, b?: FundingCycle) => {
     a?.ballot === b?.ballot &&
     a?.configured.eq(b?.configured ?? -1) &&
     a?.currency === (b?.currency ?? -1) &&
+    a?.cycleLimit === (b?.cycleLimit ?? -1) &&
     a?.discountRate.eq(b?.discountRate ?? -1) &&
     a?.duration.eq(b?.duration ?? -1) &&
     a?.fee.eq(b?.fee ?? -1) &&

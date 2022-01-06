@@ -27,11 +27,11 @@ jobs:
         uses: crowdin/github-action@1.4.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
         with:
-          config: 'crowdin.yml'
+          # config: 'crowdin.yml'
           upload_translations: true
           download_translations: false
+          project_id: '492549'
+          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           source: 'src/locales/en/messages.po'
           translation: 'src/locales/%two_letters_code%/%original_file_name%'

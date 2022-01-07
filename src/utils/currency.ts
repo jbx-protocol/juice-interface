@@ -1,18 +1,20 @@
 import { CurrencyOption } from 'models/currency-option'
 import { CSSProperties } from 'react'
 
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+
 const currencies: Record<
   CurrencyOption,
   { name: 'ETH' | 'USD'; symbol: 'Ξ' | '$'; style?: CSSProperties }
 > = {
-  '0': {
+  [CURRENCY_ETH]: {
     name: 'ETH',
     symbol: 'Ξ',
     style: {
       fontFamily: 'sans-serif',
     },
   },
-  '1': {
+  [CURRENCY_USD]: {
     name: 'USD',
     symbol: '$',
   },

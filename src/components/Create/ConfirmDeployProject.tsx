@@ -1,4 +1,5 @@
 import { Space, Statistic } from 'antd'
+import { t } from '@lingui/macro'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import PayoutModsList from 'components/shared/PayoutModsList'
 import ProjectLogo from 'components/shared/ProjectLogo'
@@ -183,7 +184,7 @@ export default function ConfirmDeployProject() {
         )}
       />
       <Statistic
-        title="Reserved token allocations"
+        title={t`Reserved token allocations`}
         valueRender={() => (
           <TicketModsList
             mods={ticketMods}

@@ -9,7 +9,7 @@ export default function UniswapLogo({ size, fill }: Props): JSX.Element {
 
   return (
     <svg
-      style={{ height: `${height}`, width: `${widthToHeight * height}` }}
+      style={{ height: `${height}px`, width: `${widthToHeight * height}px` }}
       width="168.3"
       height="193.8"
       enableBackground="new 0 0 168.3 193.8"

@@ -28,6 +28,7 @@ import { OrderDirection, querySubgraph } from 'utils/graph'
 import { indexedProjectERC20s } from 'constants/indexed-project-erc20s'
 
 import DownloadParticipantsModal from './DownloadParticipantsModal'
+import { CURRENCY_ETH } from 'constants/currency'
 
 const pageSize = 100
 
@@ -105,7 +106,7 @@ export default function ParticipantsModal({
 
   const formattedPaid = (amount: BigNumber | undefined) => (
     <span>
-      <CurrencySymbol currency={0} />
+      <CurrencySymbol currency={CURRENCY_ETH} />
       {formatWad(amount, { decimals: 6 })}
     </span>
   )

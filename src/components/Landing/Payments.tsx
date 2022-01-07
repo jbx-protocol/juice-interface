@@ -9,6 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import FormattedAddress from 'components/shared/FormattedAddress'
 
 import useSubgraphQuery from '../../hooks/SubgraphQuery'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function Payments() {
   const {
@@ -69,7 +70,7 @@ export default function Payments() {
                 }}
               >
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                  <CurrencySymbol currency={0} />
+                  <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(e.amount, { decimals: 4 })}
                 </span>
                 <span>

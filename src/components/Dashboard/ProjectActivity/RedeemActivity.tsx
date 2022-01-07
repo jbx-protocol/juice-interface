@@ -10,6 +10,7 @@ import { formatWad } from 'utils/formatNumber'
 import { contentLineHeight, smallHeaderStyle } from './styles'
 import { useInfiniteSubgraphQuery } from '../../../hooks/SubgraphQuery'
 import ActivityTabContent from './ActivityTabContent'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export function RedeemActivity({ pageSize }: { pageSize: number }) {
   const { projectId, tokenSymbol } = useContext(ProjectContext)
@@ -111,7 +112,7 @@ export function RedeemActivity({ pageSize }: { pageSize: number }) {
               </div>
 
               <div style={{ color: colors.text.secondary }}>
-                <CurrencySymbol currency={0} />
+                <CurrencySymbol currency={CURRENCY_ETH} />
                 {formatWad(e.returnAmount, { decimals: 4 })} overflow received
               </div>
             </div>

@@ -15,6 +15,8 @@ import { currencyName } from 'utils/currency'
 import { formatWad, fromPerbicent, fromWad, parseWad } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
 
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
+
 export default function WithdrawModal({
   visible,
   onCancel,
@@ -66,7 +68,7 @@ export default function WithdrawModal({
     }
 
     const minAmount = (
-      currentFC.currency.eq(1)
+      currentFC.currency.eq(CURRENCY_USD)
         ? converter.usdToWei(tapAmount)
         : parseWad(tapAmount)
     )?.sub(1e12) // Arbitrary value subtracted
@@ -173,10 +175,10 @@ export default function WithdrawModal({
 
           <div style={{ color: colors.text.primary, marginBottom: 10 }}>
             <span style={{ fontWeight: 500 }}>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(
                 amountSubFee(
-                  currentFC.currency.eq(1)
+                  currentFC.currency.eq(CURRENCY_USD)
                     ? converter.usdToWei(tapAmount)
                     : parseWad(tapAmount),
                   currentFC.fee,
@@ -201,10 +203,10 @@ export default function WithdrawModal({
           </div>
         ) : (
           <p>
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={CURRENCY_ETH} />
             {formatWad(
               amountSubFee(
-                currentFC.currency.eq(1)
+                currentFC.currency.eq(CURRENCY_USD)
                   ? converter.usdToWei(tapAmount)
                   : parseWad(tapAmount),
                 currentFC.fee,

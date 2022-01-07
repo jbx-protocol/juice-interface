@@ -22,6 +22,7 @@ import { hasFundingTarget } from 'utils/fundingCycle'
 import { readNetwork } from 'constants/networks'
 
 import BalancesModal from '../modals/BalancesModal'
+import { CURRENCY_ETH, CURRENCY_USD } from 'constants/currency'
 
 export default function Paid() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
@@ -103,12 +104,12 @@ export default function Paid() {
   const formatCurrencyAmount = (amt: BigNumber | undefined) =>
     amt ? (
       <>
-        {currentFC.currency.eq(1) ? (
+        {currentFC.currency.eq(CURRENCY_USD) ? (
           <span>
             <Tooltip
               title={
                 <span>
-                  <CurrencySymbol currency={0} />
+                  <CurrencySymbol currency={CURRENCY_ETH} />
                   {formatWad(converter.usdToWei(fromWad(amt)), {
                     decimals: 2,
                     padEnd: true,
@@ -116,13 +117,13 @@ export default function Paid() {
                 </span>
               }
             >
-              <CurrencySymbol currency={1} />
+              <CurrencySymbol currency={CURRENCY_USD} />
               {formatWad(amt, { decimals: 2, padEnd: true })}
             </Tooltip>
           </span>
         ) : (
           <span>
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={CURRENCY_ETH} />
             {formatWad(amt, { decimals: 2, padEnd: true })}
           </span>
         )}
@@ -151,7 +152,7 @@ export default function Paid() {
         <span style={primaryTextStyle}>
           {isConstitutionDAO && (
             <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={1} />
+              <CurrencySymbol currency={CURRENCY_USD} />
               {formatWad(converter.wadToCurrency(earned, 1, 0), {
                 decimals: 2,
                 padEnd: true,
@@ -165,7 +166,7 @@ export default function Paid() {
                 : colors.text.primary,
             }}
           >
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={CURRENCY_ETH} />
             {earned?.lt(parseWad('1')) && earned.gt(0)
               ? '<1'
               : formatWad(earned, { decimals: 0 })}
@@ -197,9 +198,9 @@ export default function Paid() {
             marginLeft: 10,
           }}
         >
-          {currentFC.currency.eq(1) ? (
+          {currentFC.currency.eq(CURRENCY_USD) ? (
             <span style={secondaryTextStyle}>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(balance, { decimals: 2, padEnd: true })}{' '}
             </span>
           ) : (
@@ -324,7 +325,7 @@ export default function Paid() {
             +{' '}
           </span>
           <span style={primaryTextStyle}>
-            <CurrencySymbol currency={0} />
+            <CurrencySymbol currency={CURRENCY_ETH} />
             {formatWad(ownerBalance, { decimals: 2, padEnd: true })}
           </span>
         </span>

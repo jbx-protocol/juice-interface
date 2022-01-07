@@ -10,6 +10,7 @@ import { formatWad } from 'utils/formatNumber'
 
 import { smallHeaderStyle } from '../styles'
 import useSubgraphQuery from '../../../hooks/SubgraphQuery'
+import { CURRENCY_ETH } from 'constants/currency'
 
 export default function TapEventElem({
   tapEvent,
@@ -98,7 +99,7 @@ export default function TapEventElem({
             </div>
 
             <div style={{ color: colors.text.secondary }}>
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(e.modCut, { decimals: 4 })}
             </div>
           </div>
@@ -126,7 +127,7 @@ export default function TapEventElem({
                   : { fontWeight: 500 }
               }
             >
-              <CurrencySymbol currency={0} />
+              <CurrencySymbol currency={CURRENCY_ETH} />
               {formatWad(tapEvent.beneficiaryTransferAmount, { decimals: 4 })}
             </div>
           </div>
@@ -141,7 +142,7 @@ export default function TapEventElem({
             textAlign: 'right',
           }}
         >
-          <CurrencySymbol currency={0} />
+          <CurrencySymbol currency={CURRENCY_ETH} />
           {formatWad(tapEvent.netTransferAmount, { decimals: 4 })}
         </div>
       ) : null}

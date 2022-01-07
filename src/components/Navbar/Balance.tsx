@@ -1,8 +1,11 @@
 import EthPrice from 'components/Navbar/EthPrice'
+
 import { ThemeContext } from 'contexts/themeContext'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useContext } from 'react'
 import { formatWad } from 'utils/formatNumber'
+
+import { CURRENCY_ETH } from 'constants/currency'
 
 import CurrencySymbol from '../shared/CurrencySymbol'
 
@@ -26,7 +29,7 @@ export default function Balance({
         lineHeight: 1,
       }}
     >
-      <CurrencySymbol currency={0} />
+      <CurrencySymbol currency={CURRENCY_ETH} />
       {formatWad(balance, { decimals: 4 }) ?? '--'}
       {showEthPrice && (
         <div style={{ color: colors.text.tertiary }}>

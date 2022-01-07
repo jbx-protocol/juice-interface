@@ -1,8 +1,13 @@
 name: Crowdin download
 
+# on:
+#   schedule:
+#     - cron: '0 1 * * *' # every day at 1am we download translations from Crowdin and make PR to main
+
 on:
-  schedule:
-    - cron: '0 1 * * *' # every day at 1am we download translations from Crowdin and make PR to main
+  push:
+    branches:
+      - crowdin-integration
 
   # manual trigger from Github UI - Action tab
   workflow_dispatch:

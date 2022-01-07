@@ -13,7 +13,12 @@ export default function Account({ mobile }: { mobile?: boolean }) {
   return (
     <Row className="account-badge" gutter={10} align="middle">
       {!signingProvider ? (
-        <div style={{ marginLeft: mobile ? 'auto' : 10, marginTop: -10 }}>
+        <div
+          style={{
+            marginLeft: mobile ? 'auto' : 10,
+            marginTop: mobile ? -3 : -10,
+          }}
+        >
           <Button onClick={onSelectWallet}>
             <Trans>Connect</Trans>
           </Button>

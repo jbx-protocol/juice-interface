@@ -140,13 +140,13 @@
 // Logo and links
 .top-left-nav {
   flex: 1;
+  position: absolute;
 }
 
 // Specific to the resources dropdown in the top nav
 .resouces-dropdown {
   position: absolute;
   top: 9px;
-  left: 320px;
   .ant-collapse-header {
     font-weight: 600 !important;
     color: var(--text-primary) !important;

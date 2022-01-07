@@ -193,6 +193,10 @@ msgstr ""
 msgid "Juicebox is experimental software. Although the founding contributors have done their part to shape the smart contracts for public use and have run the code through tons of tests, there still may be bugs."
 msgstr ""
 
+#: src/components/Navbar/index.tsx
+msgid "Juicebox logo"
+msgstr ""
+
 #: src/components/Landing/Faq.tsx
 msgid "Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business."
 msgstr ""
@@ -248,6 +252,10 @@ msgstr ""
 #: src/components/modals/ConfirmStakeTokensModal.tsx
 msgid "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
 msgstr "Remove {0} ERC20 tokens from your wallet and lock them in the Juicebox protocol."
+
+#: src/components/Create/ConfirmDeployProject.tsx
+msgid "Reserved token allocations"
+msgstr ""
 
 #: src/components/Landing/index.tsx
 msgid "Set a funding target to cover predictable expenses. Any extra revenue can be claimed by anyone holding your project's tokens alongside you."

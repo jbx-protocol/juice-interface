@@ -110,6 +110,18 @@ If you need help at any stage, reach out in the
 
 ### Adding a language
 
+1. Add the locale code, english name, and short and long alias's to
+   `constants/languages/language-options.ts`.
+
+   ```diff
+   export const Languages: Language = {
+      en: { code: 'en', name: 'english', short: 'EN', long: 'English' },
+      zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
+      ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
+   +  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+   }
+   ```
+
 1. Add the locale code to `./linguirc.json`.
 
    ```diff

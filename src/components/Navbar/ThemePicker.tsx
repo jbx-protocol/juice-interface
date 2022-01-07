@@ -13,7 +13,7 @@ import MobileThemePicker from './MobileThemePicker'
 export default function ThemePicker({ mobile }: { mobile?: boolean }) {
   const { themeOption, setThemeOption } = useContext(ThemeContext)
 
-  const size = 18
+  const iconSize = 16
 
   return (
     <div
@@ -37,15 +37,15 @@ export default function ThemePicker({ mobile }: { mobile?: boolean }) {
         <React.Fragment>
           {themeOption === ThemeOption.dark ? (
             <React.Fragment>
-              <Sun size={size} />
-              <div style={{ margin: '0 0 2px 13px' }}>
+              <Sun size={iconSize} />
+              <div style={{ margin: '0 0 2px 10px' }}>
                 <Trans>Light theme</Trans>
               </div>
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Moon size={size} />
-              <div style={{ margin: '0 0 2px 13px' }}>
+              <Moon size={iconSize} />
+              <div style={{ margin: '0 0 2px 10px' }}>
                 <Trans>Dark theme</Trans>
               </div>
             </React.Fragment>

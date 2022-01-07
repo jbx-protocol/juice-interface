@@ -14,6 +14,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import ThemePicker from './ThemePicker'
 import Logo from './Logo'
 import Account from './Account'
+import LanguageSelector from './NavLanguageSelector'
 
 export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
   const [activeKey, setActiveKey] = useState<0 | undefined>()
@@ -25,7 +26,6 @@ export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
     <Header
       className="top-nav top-nav-mobile"
       onClick={e => {
-        setActiveKey(undefined)
         e.stopPropagation()
       }}
     >
@@ -47,22 +47,26 @@ export default function MobileCollapse({ menu }: { menu: JSX.Element }) {
           }
           extra={
             <div style={{ display: 'flex' }}>
-              {/* <LanguageSelector /> */}
               <ThemePicker mobile={true} />
             </div>
           }
         >
-          <Space direction="vertical" size="middle">
-            {menu}
-            <Account mobile={true} />
-            {signingProvider ? (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button onClick={onLogOut}>
-                  <Trans>Disonnect</Trans>
-                </Button>
-              </div>
-            ) : null}
-          </Space>
+          {menu}
+          <LanguageSelector />
+          <Account mobile={true} />
+          {signingProvider ? (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}
+            >
+              <Button onClick={onLogOut}>
+                <Trans>Disconnect</Trans>
+              </Button>
+            </div>
+          ) : null}
         </CollapsePanel>
       </Collapse>
     </Header>

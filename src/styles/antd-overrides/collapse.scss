@@ -66,10 +66,10 @@
     align-items: center;
     padding: 10px 2px;
     background-color: var(--background-l0);
-    border-radius: 7px;
+    border-radius: 2px;
   }
   .ant-collapse-content-box {
-    border: none !important;
+    border: 1px solid var(--stroke-secondary);
     box-shadow: none !important;
     padding: 0;
     width: 100%;
@@ -105,23 +105,35 @@
     position: absolute; // collapses need absolutes
     top: 0;
     width: 100%;
-  }
-  .resouces-dropdown {
-    top: 162px;
-    left: -2px;
-    .ant-collapse-content-box {
-      z-index: 1000;
-      margin-top: -2px;
-      width: 110px;
-    }
+    height: 45px;
   }
   .ant-collapse-content {
     float: left;
     margin-left: 8px;
-    // padding-top: 3px;
+    width: 150px;
+  }
+  .ant-collapse-content-box {
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    margin-top: -2px;
+    width: 150px;
+    padding: 7px 0;
+  }
+  .nav-menu-item {
+    padding: 10px 15px;
+  }
+  .resouces-dropdown {
+    top: 190px;
+    left: 12px;
+    .ant-collapse-content-box {
+      padding: 0 6px;
+      margin-left: 16px;
+    }
   }
   .account-badge {
-    margin-top: 23px;
+    margin: auto !important;
+    margin-top: 15px !important;
   }
 }
 
@@ -140,7 +152,7 @@
     color: var(--text-primary) !important;
   }
   .ant-collapse-content {
-    width: 100px;
+    width: 110px;
   }
   .ant-select-arrow {
     display: block;

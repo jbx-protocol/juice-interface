@@ -32,13 +32,12 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="language-selector">
       <GlobalOutlined />
       <Select
-        className="medium language-selector"
+        className="medium"
         style={{
           ...selectStyle,
-          width: 82,
         }}
         value={Languages[currentSelectedLanguage].long}
         onChange={newLanguage => {

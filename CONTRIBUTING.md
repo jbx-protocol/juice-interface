@@ -71,50 +71,26 @@ Juicebox supports the following web browsers:
 
 ## Translations
 
-Juicebox uses [`lingui.js`](https://lingui.js.org) for internationlization
-(i18n). Languages we support are defined in `.linguirc.json`. `en` is our source
-language.
+Juicebox uses [Crowdin](https://crowdin.com/project/juicebox-interface) for
+managing translations. This workflow uploads new strings for translation to the
+Crowdin project whenever code using the lingui translation macros is merged into
+main.
 
-Developers should mark strings for translation using one of the `lingui.js`
-[macros](https://lingui.js.org/ref/macro.html). Strings marked for translation
-will be extracted at build-time and added to `messages.po` files within the
-`./locale` directory.
+Every day, translations are synced back down from Crowdin to a pull request to
+`main`. We then merge these PR's into `main` manually.
+
+If you are a developer, please mark any new text that you add in the interface
+for translation with the lingui [macros](https://lingui.js.org/ref/macro.html)
+(`` t`Example text`  `` or `<Trans>Text</Trans>`). Feel free to edit any
+existing text that hasn't yet been marked for translations.
 
 ### Contributing translations
 
-The following steps describe how to contribute translations for a given
-language. You will contribute translations directly to this repository. This
-means you need a GitHub account.
+For details of how to contribute as a translator, see our
+[How to become a Juicebox translator](https://www.notion.so/juicebox/How-to-become-a-Juicebox-translator-81fdd9344ef043909a48bd7373ef73d7)
+Notion page.
 
-1. Create a
-   [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of this
-   repository.
-1. Clone your fork to your local machine.
-
-1. Open the `messages.po` file for the locale you want to add translations for.
-   For example, to add Chinese translations, open the `./locale/zh/messages.po`
-   file.
-
-1. Locate the string you want translate in the `msgid` field.
-
-   > For strings where a `msgid` has been manually set, find the `msgstr` for
-   > the given `msgid` in the `./locales/en/messages.po` file (the source
-   > locale).
-
-1. Add the translation in the `msgstr` field.
-
-   ```diff
-   msgid "Community funding for people and projects"
-   - msgstr ""
-   + msgstr "为个人和项目提供社区资助"
-   ```
-
-1. Commit the changes and create a pull request on GitHub.
-
-If you need help at any stage, reach out in the
-[Discord](https://discord.gg/6jXrJSyDFf).
-
-### Adding a language
+### Adding a language (for devs)
 
 1. Add the locale code to `./linguirc.json`.
 
@@ -147,9 +123,9 @@ If you need help at any stage, reach out in the
    })
    ```
 
-1. Extract the strings marked for translation. This creates a directory for the
-   locale within the `./locale/` directory:
+1. Extract the strings marked for translation and compile them. This creates a
+   directory for the locale within the `./locale/` directory:
 
    ```bash
-   yarn i18n:extract
+   yarn i18n:compile
    ```

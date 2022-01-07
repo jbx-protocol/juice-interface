@@ -3,7 +3,7 @@ name: Crowdin upload
 on:
   push:
     branches:
-      - main
+      - crowdin-integration
 
   # manual trigger from Github UI - Action tab
   workflow_dispatch:
@@ -31,6 +31,7 @@ jobs:
           upload_translations: true
           download_translations: false
           project_id: '492549'
-          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          # token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ3UUVxdmhVM3ZMT2EyWGljbVV5VCIsImp0aSI6ImE1ODFlMTZlMjRmYzAwOWVlMzgzYjVlYTE4Mzg3YjlhNmQ5MjVjZmVkNzg3M2UyMmU4ZDIxOGM4MDI0ZDMwOWJlMzY3ZmUyN2VmZjc3YmUxIiwiaWF0IjoxNjQxMTc4NDE0LCJuYmYiOjE2NDExNzg0MTQsImV4cCI6MTY0Mzc3MDQxNCwic3ViIjoiMTUwODc4NDciLCJkb21haW4iOm51bGwsInNjb3BlcyI6WyJwcm9qZWN0Il0sImFzc29jaWF0aW9ucyI6WyIqIl0sInNlc3Npb24iOjB9.hJ-PPDgbqGqEQnA4RKR1PaLaSZJ-vYYwCkJvvi4vdaxRJTjHgG7Y3u6vA32TH3fUDtWaLpqr52HYMdVSgvDvFOK_wQwqxurPqJ4SPhntWjHJfoF2d22CFcIMn7HIzYVD7cqWLXUGlgHQggiHsU-WKU42PzVGst-7nKtvlSYjPVZj_-XsZUbH0iHYF7AutXZcY1P0eeD2z6dLPhl252J5GYTwMXuWSAZjNeiZq3RtZkrflmgyWOlva_aoGGy15A6iZI2VXs7qhvkq4FebXrYBrUMWO3x_gwg_Oi2rN6Q8Ay_tw7ZtqWMjk_LYIweQtX6U9d_tvGO1Fr6N9xDe8MErAp_pSWICLpHpTpMujWo5UUXZfJq_HL8N1tU9ycTa-MOOQVKBI8zissCVB0eem7f4izfb2_D14xD90l-sd_uoTEyyyksEE3Hl3-kcD49nykkfZp0XucaafDxDkWmKLtn9XcCk4Sf2juPYrCv5nd--md0JblYa1gduhvo98lGb1gmdKEF1SHrPD5Joalm48WP9A0dvNCkQ6jRKV5Qp27iZakGoUL8UNNRC_-V0o6uOtiwr4tu-P_c_saCPisep71JHfj8keoBSMsrzD2ktP2DmJheouEjan7GGmBOMhJNfob-VN0jbckk5avBbpuZyKBCUHmRuhihekarfEy5i_765ABw'
           source: 'src/locales/en/messages.po'
           translation: 'src/locales/%two_letters_code%/%original_file_name%'

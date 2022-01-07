@@ -71,7 +71,13 @@ export default function Mod({
               </div>
             </div>
           ) : (
-            <div style={{ fontWeight: 500 }}>
+            <div
+              style={{
+                fontWeight: 500,
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
               <FormattedAddress address={mod.beneficiary} />
               {owner === mod.beneficiary && (
                 <span style={{ marginLeft: 5 }}>

@@ -421,6 +421,8 @@ msgstr ""
 
 #: src/components/Create/BudgetForm.tsx
 msgid "No target set."
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "Loading {exchangeName} price for {tokenSymbol}..."
 msgstr ""
 
 #: src/components/Landing/index.tsx
@@ -950,3 +952,11 @@ msgstr ""
 #: src/components/modals/DistributeTokensModal.tsx
 msgid "{0, plural, one {# token} other {# tokens}}"
 msgstr "{0, plural, one {# 代币} other {# 代币}}"
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{exchangeName} has no liquidity pool for {tokenSymbol}."
+msgstr ""
+
+#: src/components/shared/TokenAMMPriceBadge.tsx
+msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
+msgstr ""
